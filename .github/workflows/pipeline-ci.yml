@@ -1,0 +1,123 @@
+name: ✅ Pipeline CI — Validación TTL & Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ─────────────────────────────────────────
+  # JOB 1: Validación de archivos TTL
+  # ─────────────────────────────────────────
+  validate-ttl:
+    name: 🔍 Validar Ontologías TTL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install rdflib
+
+      - name: Validar todos los archivos .ttl
+        run: |
+          python - <<'EOF'
+          import sys
+          from pathlib import Path
+          from rdflib import Graph
+
+          errors = []
+          ttl_files = list(Path("ontologies").rglob("*.ttl"))
+
+          if not ttl_files:
+            print("⚠️  No se encontraron archivos TTL en /ontologies")
+            sys.exit(0)
+
+          for f in ttl_files:
+            g = Graph()
+            try:
+              g.parse(f, format="turtle")
+              print(f"  ✅ {f} ({len(g)} tripletas)")
+            except Exception as e:
+              errors.append(f"  ❌ {f}: {e}")
+
+          if errors:
+            print("\n--- ERRORES DE VALIDACIÓN ---")
+            for e in errors:
+              print(e)
+            sys.exit(1)
+          else:
+            print(f"\n✅ Todos los archivos TTL son válidos.")
+          EOF
+
+  # ─────────────────────────────────────────
+  # JOB 2: Tests unitarios
+  # ─────────────────────────────────────────
+  unit-tests:
+    name: 🧪 Tests Unitarios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt
+
+      - name: Ejecutar tests
+        run: pytest tests/ -v --tb=short
+
+  # ─────────────────────────────────────────
+  # JOB 3: Validación de SPARQL
+  # ─────────────────────────────────────────
+  validate-sparql:
+    name: 🔎 Validar Consultas SPARQL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install rdflib
+
+      - name: Validar consultas SPARQL del golden set
+        run: |
+          python - <<'EOF'
+          import sys
+          from pathlib import Path
+          from rdflib.plugins.sparql import prepareQuery
+
+          errors = []
+          sparql_files = list(Path("data/golden_set").rglob("*.sparql"))
+
+          if not sparql_files:
+            print("⚠️  No se encontraron archivos .sparql en /data/golden_set")
+            sys.exit(0)
+
+          for f in sparql_files:
+            try:
+              query = f.read_text()
+              prepareQuery(query)
+              print(f"  ✅ {f}")
+            except Exception as e:
+              errors.append(f"  ❌ {f}: {e}")
+
+          if errors:
+            print("\n--- ERRORES SPARQL ---")
+            for e in errors:
+              print(e)
+            sys.exit(1)
+          EOF

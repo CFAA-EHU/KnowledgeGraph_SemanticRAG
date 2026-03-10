@@ -1,22 +1,47 @@
-# KnowledgeGraph_SemanticRAG
-Pipeline de Knowledge Graph con RAG semántico
+# Knowledge Graph Pipeline — Semantic RAG
 
-/
-├── .github/
-│   ├── workflows/          # CI/CD (validación TTL, tests)
-│   └── ISSUE_TEMPLATE/     # Plantillas para bugs, features
-├── docs/                   # Documentación del pipeline
-├── src/
-│   ├── 1_ingestion/        # Tarea 1: Chunking dinámico
-│   ├── 2_extraction/       # Tarea 2: Extracción CoT → TTL
-│   ├── 3_merging/          # Tarea 3: Fusión del grafo
-│   ├── 4_evaluation_set/   # Tarea 4: Dataset de preguntas
-│   ├── 5_sparql/           # Tarea 5: Generación y validación SPARQL
-│   ├── 6_execution/        # Tarea 6: Evaluación de respuestas
-│   ├── 7_diagnostics/      # Tarea 7: Diagnóstico de fallos
-│   └── 8_refinement/       # Tarea 8: Bucle iterativo
-├── ontologies/             # Archivos .ttl generados
-├── data/
-│   ├── raw/                # Manuales originales
-│   └── golden_set/         # Preguntas + respuestas esperadas
-└── tests/
+Pipeline completo de extracción, construcción y consulta de grafos de conocimiento a partir de manuales técnicos, con bucle de refinamiento iterativo.
+
+## Arquitectura del Pipeline
+
+```
+Manual Técnico (PDF/TXT)
+        │
+        ▼
+┌─────────────────────┐
+│  Tarea 1: Ingesta   │  → Chunking dinámico con análisis de densidad
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Tarea 2: Extracción│  → CoT → Entidades + Relaciones → TTL
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  Tarea 3: Merging   │  → Fusión en Triple Store (GraphDB)
+└─────────┬───────────┘
+          │
+        ┌─┴──────────────────────┐
+        ▼                        ▼
+┌──────────────┐       ┌─────────────────────┐
+│  Tarea 4:    │       │  Tarea 5: SPARQL     │
+│  Golden Set  │       │  Generación + Val.   │
+└──────┬───────┘       └──────────┬──────────┘
+       │                          │
+       └──────────┬───────────────┘
+                  ▼
+        ┌─────────────────────┐
+        │  Tarea 6: Ejecución │  → Métricas vs Golden Set
+        └─────────┬───────────┘
+                  │
+                  ▼
+        ┌─────────────────────┐
+        │  Tarea 7: Diagnóst. │  → Clasificación de errores
+        └─────────┬───────────┘
+                  │
+                  ▼
+        ┌─────────────────────┐
+        │  Tarea 8: Refinem.  │  → Inyección + Re-loop ↺
+        └─────────────────────┘
+```

@@ -1,20 +1,26 @@
+import json
 import rdflib
 from rdflib import Graph, Namespace, RDF, RDFS, OWL
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+from mistralai import Mistral
 
 ############################################
 # CONFIG
 ############################################
 
 INPUT_TTL = "ontology_3.ttl"
-OUTPUT_TTL = "ontology_dd_3.ttl"
+OUTPUT_TTL = "ontology_dd_4.ttl"
 
 EX = Namespace("https://vocab.cfaa.eus/broaching/")
 
 SIM_THRESHOLD = 0.90
 
+API_KEY = "MISTRAL_API_KEY"
+MODEL = "mistral-small-latest"
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
+client = Mistral(api_key=API_KEY)
 
 ############################################
 # LOAD GRAPH
@@ -46,7 +52,6 @@ for s, p, o in g:
     elif (s, RDF.type, OWL.DatatypeProperty) in g:
         data_props.add(s)
 
-# detectar individuos correctamente
 for s in g.subjects(RDF.type, None):
 
     if (s, RDF.type, OWL.Class) not in g \
@@ -72,7 +77,6 @@ def get_label(uri):
 
     return str(uri).split("/")[-1]
 
-
 ############################################
 # SEMANTIC MERGE
 ############################################
@@ -80,8 +84,6 @@ def get_label(uri):
 def semantic_merge(entities):
 
     entities = list(entities)
-
-    print("Entities to compare:", len(entities))
 
     if len(entities) < 2:
         return {}
@@ -105,7 +107,6 @@ def semantic_merge(entities):
                 e1 = entities[i]
                 e2 = entities[j]
 
-                # elegir representante canónico (URI más corta)
                 rep = min([e1, e2], key=lambda x: len(str(x)))
 
                 if e1 != rep:
@@ -120,9 +121,8 @@ def semantic_merge(entities):
 
     return mapping
 
-
 ############################################
-# TRANSITIVE RESOLUTION (SAFE)
+# RESOLVE TRANSITIVE MERGE
 ############################################
 
 def resolve_transitive(mapping):
@@ -137,7 +137,6 @@ def resolve_transitive(mapping):
         while current in mapping:
 
             if current in visited:
-                # ciclo detectado
                 break
 
             visited.add(current)
@@ -146,7 +145,6 @@ def resolve_transitive(mapping):
         resolved[k] = current
 
     return resolved
-
 
 ############################################
 # BUILD GLOBAL MAPPING
@@ -174,8 +172,8 @@ print("\nTotal merged entities:", len(mapping))
 # APPLY MERGE
 ############################################
 
-new_graph = Graph()
-new_graph.bind("ex", EX)
+merged_graph = Graph()
+merged_graph.bind("ex", EX)
 
 for s, p, o in g:
 
@@ -183,14 +181,118 @@ for s, p, o in g:
     p_new = mapping.get(p, p)
     o_new = mapping.get(o, o)
 
-    new_graph.add((s_new, p_new, o_new))
+    merged_graph.add((s_new, p_new, o_new))
 
-print("\nFinal triples:", len(new_graph))
+print("\nTriples after semantic merge:", len(merged_graph))
 
 ############################################
-# SAVE
+# ONTOLOGY CONSISTENCY CHECK PROMPT
 ############################################
 
-new_graph.serialize(OUTPUT_TTL, format="turtle")
+CONSISTENCY_PROMPT = """
+You are an ontology validation expert.
 
-print("\nSaved ontology:", OUTPUT_TTL)
+Analyse the ontology below and detect structural problems.
+
+Check for:
+- redundant classes
+- redundant properties
+- incorrect domains
+- incorrect ranges
+- instances without classes
+- relations that clearly contradict the ontology
+
+Return ONLY JSON:
+
+{
+  "merge_classes":[{"source":"","target":""}],
+  "merge_properties":[{"source":"","target":""}],
+  "remove_triples":[{"subject":"","predicate":"","object":""}]
+}
+
+Use ONLY entities that appear in the ontology.
+Return ONLY JSON.
+
+Ontology:
+"""
+
+############################################
+# LLM CONSISTENCY CHECK
+############################################
+
+def ontology_consistency_check(graph):
+
+    ttl = graph.serialize(format="turtle")
+
+    prompt = CONSISTENCY_PROMPT + ttl
+
+    response = client.chat.complete(
+        model=MODEL,
+        messages=[{"role":"user","content":prompt}]
+    )
+
+    text = response.choices[0].message.content
+
+    text = text.replace("```json","").replace("```","")
+
+    try:
+        return json.loads(text)
+    except:
+        print("Invalid JSON from LLM")
+        print(text)
+        return None
+
+############################################
+# APPLY FIXES
+############################################
+
+def apply_fixes(graph, fixes):
+
+    if not fixes:
+        return graph
+
+    # merge classes
+    for m in fixes.get("merge_classes",[]):
+
+        src = EX[m["source"]]
+        tgt = EX[m["target"]]
+
+        for s,p,o in list(graph):
+
+            if s == src:
+                graph.add((tgt,p,o))
+                graph.remove((s,p,o))
+
+            if o == src:
+                graph.add((s,p,tgt))
+                graph.remove((s,p,o))
+
+    # remove triples
+    for t in fixes.get("remove_triples",[]):
+
+        s = EX[t["subject"]]
+        p = EX[t["predicate"]]
+        o = EX[t["object"]]
+
+        graph.remove((s,p,o))
+
+    return graph
+
+############################################
+# RUN CONSISTENCY CHECK
+############################################
+
+print("\nRunning ontology consistency check...")
+
+fixes = ontology_consistency_check(merged_graph)
+
+merged_graph = apply_fixes(merged_graph, fixes)
+
+############################################
+# SAVE FINAL ONTOLOGY
+############################################
+
+merged_graph.serialize(OUTPUT_TTL, format="turtle")
+
+print("\nFinal triples:", len(merged_graph))
+print("Saved ontology:", OUTPUT_TTL)

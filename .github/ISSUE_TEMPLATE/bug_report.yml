@@ -1,0 +1,83 @@
+name: 🐛 Bug Report — Error en Pipeline
+description: Reportar un error en cualquier etapa del pipeline
+title: "[BUG] <descripción breve>"
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: pipeline-stage
+    attributes:
+      label: Etapa del Pipeline
+      description: ¿En qué tarea ocurrió el error?
+      options:
+        - "Tarea 1: Ingesta y Segmentación"
+        - "Tarea 2: Extracción Atómica (CoT)"
+        - "Tarea 3: Merging del Grafo"
+        - "Tarea 4: Dataset de Evaluación"
+        - "Tarea 5: Interfaz SPARQL"
+        - "Tarea 6: Ejecución y Evaluación"
+        - "Tarea 7: Diagnóstico de Fallos"
+        - "Tarea 8: Refinamiento Iterativo"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: error-type
+    attributes:
+      label: Tipo de Error (Tarea 7)
+      description: Si aplica, indica el nivel de diagnóstico
+      options:
+        - "SPARQL_SYNTAX — Error de sintaxis en parser"
+        - "schema_mismatch — URI inexistente o violación de dominio/rango"
+        - "empty_results — Consulta válida pero sin datos"
+        - "logic_error — Datos incorrectos o incompletos"
+        - "No aplica"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción del Error
+      description: Describe claramente qué ocurrió
+      placeholder: "Al ejecutar el chunker con densidad alta, el chunk corta en mitad de una frase..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Pasos para Reproducir
+      description: Comandos o acciones que reproducen el error
+      value: |
+        1. Ejecutar `python src/.../...py --args`
+        2. Observar el output en...
+        3. El error aparece cuando...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamiento Esperado
+      description: ¿Qué debería haber ocurrido?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Stack Trace
+      description: Pega aquí el error completo
+      render: shell
+
+  - type: input
+    id: ttl-file
+    attributes:
+      label: Archivo TTL afectado (si aplica)
+      placeholder: "ontologies/fragmento_seccion_3.ttl"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto adicional
+      description: Versión de Python, modelo LLM usado, endpoint de GraphDB, etc.

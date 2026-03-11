@@ -25,8 +25,6 @@ The number of generated questions depends on the **information density of the ch
 
 ---
 
----
-
 # Dataset Generation Strategy
 
 The dataset is generated according to the following principles:

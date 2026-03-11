@@ -42,26 +42,7 @@ The system performs the following steps:
 
 Pipeline workflow:
 
-Technical Manual
-│
-▼
-Chunk Extraction
-│
-▼
-LLM Ontology Extraction
-│
-▼
-Structured JSON
-│
-▼
-RDF Graph Construction
-│
-▼
-Fragment Graph Merge
-│
-▼
-Final Ontology (TTL)
-
+Technical Manual --> Chunk Extraction --> LLM Ontology Extraction --> Structured JSON --> RDF Graph Construction --> Fragment Graph Merge --> Final Ontology (TTL)
 
 ---
 
@@ -86,11 +67,10 @@ General domain concepts.
 
 Example:
 
-
-Machine
-Manual
-Company
-SafetyInstruction
+- Machine  
+- Manual  
+- Company  
+- SafetyInstruction  
 
 ---
 
@@ -99,11 +79,9 @@ Relationships between entities.
 
 Example:
 
-
-hasManual
-hasManufacturer
-containsSection
-
+- hasManual  
+- hasManufacturer  
+- containsSection  
 
 ---
 
@@ -112,12 +90,10 @@ Attributes of entities.
 
 Example:
 
-
-hasEmail
-hasPhone
-hasModel
-hasYear
-
+- hasEmail  
+- hasPhone  
+- hasModel  
+- hasYear  
 
 ---
 
@@ -126,11 +102,9 @@ Specific real-world entities appearing in the manual.
 
 Example:
 
-
-EKIN
-A218
-ManualA218
-
+- EKIN  
+- A218  
+- ManualA218  
 
 ---
 

@@ -129,6 +129,6 @@ Anti-hallucination rules ensure that:
 | File | Description |
 |-----|-------------|
 | `ontology_generation_merge.py` | Main ontology extraction script |
-| `chunks_b.txt` | Input text fragments from the manual |
+| `chunks_manual_instrucciones_a218.txt` | Input text fragments from the manual |
 | `ontology_3.ttl` | Generated ontology |
 | `README.md` | Project documentation |

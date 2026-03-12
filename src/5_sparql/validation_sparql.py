@@ -10,8 +10,9 @@ from mistralai import Mistral
 ############################################
 
 ONTOLOGY_FILE = "ontology_dd_4.ttl"
+SPARQL_FILE = "consultas_sparql.txt"
 
-API_KEY = "MISTRAL_API_KEY"
+API_KEY = "HMXKoCPyStwJ9DjLnGQbKYMg2KqCiEUs"
 MODEL = "mistral-small-latest"
 
 COSINE_THRESHOLD = 0.85
@@ -19,6 +20,19 @@ COSINE_THRESHOLD = 0.85
 client = Mistral(api_key=API_KEY)
 
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
+
+############################################
+# LOAD SPARQL QUERIES
+############################################
+
+def load_sparql():
+
+    with open(SPARQL_FILE, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    queries = re.findall(r"<SPARQL>(.*?)</SPARQL>", text, re.DOTALL)
+
+    return [q.strip() for q in queries]
 
 ############################################
 # LOAD ONTOLOGY
@@ -37,7 +51,7 @@ classes = set()
 obj_props = set()
 data_props = set()
 
-for s,p,o in g:
+for s, p, o in g:
 
     if (s, RDF.type, OWL.Class) in g:
         classes.add(str(s))
@@ -60,9 +74,12 @@ print("DatatypeProperties:", len(data_props))
 
 def extract_sparql_entities(query):
 
-    entities = re.findall(r'(\w+:\w+)', query)
+    # remove PREFIX lines
+    query = re.sub(r'PREFIX\s+\w+:\s*<[^>]+>', '', query, flags=re.IGNORECASE)
 
-    return entities
+    entities = re.findall(r'\b[a-zA-Z_]+:[a-zA-Z0-9_]+\b', query)
+
+    return list(set(entities))
 
 ############################################
 # 5.2 T-BOX VALIDATION
@@ -81,7 +98,7 @@ def validate_tbox(query):
         found = False
 
         for s in schema_entities:
-            if uri in s:
+            if s.endswith(uri):
                 found = True
                 break
 
@@ -107,26 +124,36 @@ def get_domain_range(prop):
     domain = None
     range_ = None
 
-    for s,p,o in g.triples((prop, RDFS.domain, None)):
+    for s, p, o in g.triples((prop, RDFS.domain, None)):
         domain = o
 
-    for s,p,o in g.triples((prop, RDFS.range, None)):
+    for s, p, o in g.triples((prop, RDFS.range, None)):
         range_ = o
 
     return domain, range_
 
 
+def extract_triples(query):
+
+    pattern = r'(\?\w+|\w+:\w+)\s+(\w+:\w+)\s+(\?\w+|\w+:\w+|\".*?\")'
+
+    triples = re.findall(pattern, query)
+
+    return triples
+
+
 def validate_domain_range(query):
 
-    triples = re.findall(r'(\?\w+|\w+:\w+)\s+(\w+:\w+)\s+(\?\w+|\w+:\w+)', query)
+    triples = extract_triples(query)
 
     for subj, pred, obj in triples:
 
         prop_uri = None
 
         for s in obj_props.union(data_props):
-            if pred.split(":")[1] in s:
+            if s.endswith(pred.split(":")[1]):
                 prop_uri = rdflib.URIRef(s)
+                break
 
         if not prop_uri:
             continue
@@ -160,7 +187,7 @@ SPARQL query:
 
     response = client.chat.complete(
         model=MODEL,
-        messages=[{"role":"user","content":prompt}]
+        messages=[{"role": "user", "content": prompt}]
     )
 
     return response.choices[0].message.content.strip()
@@ -218,22 +245,19 @@ def validate_query(question, sparql):
 
     return True
 
-
 ############################################
-# EXAMPLE
+# RUN VALIDATION FOR ALL QUERIES
 ############################################
 
 if __name__ == "__main__":
 
-    question = "What model does the A218 machine have?"
+    queries = load_sparql()
 
-    sparql_query = """
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+    print("\nLoaded SPARQL queries:", len(queries))
 
-SELECT ?model
-WHERE {
-    ex:A218 ex:hasModel ?model .
-}
-"""
+    for i, q in enumerate(queries):
 
-    validate_query(question, sparql_query)
+        question = f"Question {i+1}"
+
+        validate_query(question, q)
+

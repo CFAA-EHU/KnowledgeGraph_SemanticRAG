@@ -1,13 +1,12 @@
 """
 prompt_assembler.py
-Generador dinámico de prompts estructurados para extracción T-Box.
-Cruza el texto del manual (density_report.json) con las URIs ontológicas (terms_cache.json).
+Generador dinámico de prompts estructurados (CoT) para extracción atómica T-Box.
+Integra metadatos de sección, reglas de normalización y vocabularios ontológicos.
 """
 
 import json
 from pathlib import Path
 
-# Configuración de rutas
 DENSITY_REPORT_PATH = Path("data/raw/density_report.json")
 TERMS_CACHE_PATH = Path("cache/terms_cache.json")
 OUTPUT_PROMPTS_PATH = Path("data/processed/tbox_prompts.json")
@@ -19,35 +18,40 @@ def load_json_data(filepath: Path) -> list | dict:
         return json.load(f)
 
 def crear_diccionario_uris(terms_cache: list[dict]) -> dict:
-    """Convierte la lista del caché en un diccionario {termino: uri} para búsqueda rápida."""
     return {item["termino"]: item["uri"] for item in terms_cache}
 
 def ensamblar_prompts(chunks_report: list[dict], dict_uris: dict) -> list[dict]:
     prompts_generados = []
     
-    prompt_base = """Actúa como un ingeniero de conocimiento experto en web semántica. Genera un modelo conceptual T-Box en formato TTL basado en el texto proporcionado.
+    prompt_base = """Actúa como un ingeniero de conocimiento experto en web semántica. Genera un modelo conceptual T-Box en formato Turtle (TTL) extrayendo el conocimiento de este fragmento de manual técnico. Aplica razonamiento paso a paso (Chain of Thought) internamente, pero tu ÚNICA salida debe ser el código TTL válido, sin texto conversacional.
 
-Reglas arquitectónicas críticas:
-1. CERO instanciamientos: No generes individuos A-Box. Limítate a owl:Class, owl:ObjectProperty y owl:DatatypeProperty.
-2. Vocabulario Controlado: Si el texto contiene conceptos de la lista 'Vocabulario Restringido', debes declararlos como clases (owl:Class) usando exactamente el nombre indicado.
-3. Trazabilidad: Para cada clase del vocabulario restringido, incluye una propiedad rdfs:isDefinedBy apuntando a su URI origen.
+CONTEXTO DEL FRAGMENTO (Usa esto para situar el texto y resolver anáforas):
+- Páginas: {paginas}
+- Sección: {seccion}
+- Título: {titulo}
 
-Vocabulario Restringido (Término | URI Origen):
+REGLAS ARQUITECTÓNICAS Y NORMALIZACIÓN:
+1. Cero Instanciamientos: Genera exclusivamente owl:Class, owl:ObjectProperty y owl:DatatypeProperty. Prohibido crear individuos (A-Box).
+2. Namespaces Dinámicos: Define y utiliza prefijos lógicos según el dominio (ej. @prefix mecanica: <...>, @prefix elec: <...>, @prefix base: <...>).
+3. Nomenclatura Estricta: Usa PascalCase para Clases (ej. base:BombaHidraulica) y camelCase para Propiedades (ej. mecanica:estaConectadoA).
+4. Resolución de Anáforas: Si el texto menciona "el componente" o "el sistema", asócialo explícitamente a la entidad descrita en el Título o Sección.
+5. Anti-Alucinación (Flags de Incompletitud): Si identificas una relación válida pero la entidad destino no está claramente definida en el texto, genérala y añade la anotación `rdfs:comment "Incompleto: Requiere resolución externa"`.
+6. Vocabulario Controlado: Si el texto contiene los conceptos listados abajo, decláralos como owl:Class (ajustando a PascalCase) y añade exactamente la URI origen usando rdfs:isDefinedBy.
+
+VOCABULARIO RESTRINGIDO (Término detectado | URI Origen):
 {vocabulario_dinamico}
 
-Texto fuente a modelar:
+TEXTO FUENTE A MODELAR:
 {texto_chunk}
 """
 
     for chunk in chunks_report:
-        # Ignorar chunks vacíos o con texto irrelevante
-        if not chunk["texto"] or len(chunk["texto"]) < 50:
+        texto = chunk.get("texto", "")
+        if not texto or len(texto) < 50:
             continue
             
         terminos_encontrados = chunk.get("terms_found", [])
-        texto = chunk["texto"]
         
-        # Construir el bloque de vocabulario para este chunk específico
         if not terminos_encontrados:
             vocabulario_str = "No se requiere vocabulario controlado para este fragmento."
         else:
@@ -57,8 +61,10 @@ Texto fuente a modelar:
                 lineas_vocab.append(f"- {term} | {uri}")
             vocabulario_str = "\n".join(lineas_vocab)
             
-        # Interpolar el prompt
         prompt_final = prompt_base.format(
+            paginas=chunk.get("paginas", "N/A"),
+            seccion=chunk.get("seccion", "N/A"),
+            titulo=chunk.get("titulo", "N/A"),
             vocabulario_dinamico=vocabulario_str,
             texto_chunk=texto
         )
@@ -82,7 +88,6 @@ if __name__ == "__main__":
     report_data = load_json_data(DENSITY_REPORT_PATH)
     cache_data = load_json_data(TERMS_CACHE_PATH)
     
-    # Extraer el array de términos dependiendo de la estructura exacta de cache_data
     terms_list = cache_data if isinstance(cache_data, list) else cache_data.get("terms", [])
     
     diccionario_semantico = crear_diccionario_uris(terms_list)

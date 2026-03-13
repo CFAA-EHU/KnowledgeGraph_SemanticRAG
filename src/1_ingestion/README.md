@@ -1,137 +1,53 @@
 # Tarea 1: Ingesta y Segmentación Dinámica
 
-Módulo encargado de analizar la densidad técnica del manual y segmentarlo en chunks adaptativos, respetando la estructura semántica del documento.
+Módulo encargado de descubrir categorías ontológicas dinámicamente mediante procesamiento de lenguaje natural y segmentar físicamente el manual en bloques adaptativos respetando límites de tokens y semántica de oraciones.
+
+## Archivos y Flujo de Datos
+
+### termLoader.py
+Descubre, carga y serializa los términos técnicos del dominio desde fuentes ontológicas externas mediante extracción Bottom-Up.
+
+**Lógica de Extracción:**
+- **Descubrimiento NLP:** Analiza el texto crudo del manual utilizando spaCy para aislar morfología nominal (sustantivos frecuentes).
+- **ESDBpedia:** Cruza los sustantivos descubiertos mediante consultas SPARQL a es.dbpedia.org/sparql para identificar categorías enciclopédicas reales del equipo y extraer los términos técnicos asociados.
+- **AAS / ECLASS:** Conceptos industriales paramétricos en inglés, traducidos al español con el modelo Helsinki-NLP (opus-mt-en-es).
+
+**Caché:**
+- La primera ejecución procesa el texto, consulta ontologías, traduce y guarda el resultado en cache/terms_cache.json.
+- Estructura de salida: Lista de diccionarios conteniendo termino y uri. Expira a los 30 días.
 
 ---
 
-## Archivos
+### density_analyzer.py
+Ejecuta el análisis de densidad técnica y la partición física del texto (chunking). Actúa como inyector de dependencias para termLoader.py.
 
-### `term_loader.py`
-Carga y cachea los términos técnicos del dominio desde fuentes ontológicas externas.
+**Entrada:** Archivo .txt con el manual pre-segmentado en cabeceras lógicas.
 
-**Fuentes:**
-- **ESDBpedia** (`es.dbpedia.org/sparql`) — términos en español via SPARQL
-- **AAS / ECLASS** — conceptos industriales en inglés, traducidos al español con Helsinki-NLP (`opus-mt-en-es`)
+**Lógica de Densidad y Partición Física:**
+1. **Medición de Densidad:** Calcula el ratio de términos técnicos (validados contra termLoader.py) sobre el total de palabras de una sección lógica.
+2. **Parametrización:** - Densidad alta (≥ 5%): Límite de 256 tokens por bloque físico.
+   - Densidad baja (< 5%): Límite de 512 tokens por bloque físico.
+3. **Segmentación Segura (Sentence-safe):** Utiliza spaCy (sentencizer) para dividir el texto en oraciones lógicas. Nunca corta una frase a la mitad.
+4. **Conteo de Tokens:** Emplea tiktoken (modelo cl100k_base) para medir la longitud estricta de las oraciones.
+5. **Solapamiento Matemático (Overlap):** Retrocede dinámicamente en el array de oraciones previas hasta cubrir el 15% del límite de tokens del nuevo bloque. Esto preserva la trazabilidad de anáforas.
 
-**Comportamiento del cache:**
-- Primera ejecución → consulta las ontologías, traduce y guarda `cache/terms_cache.json`
-- Ejecuciones siguientes → usa el cache directamente (mucho más rápido)
-- El cache expira cada 30 días y se regenera automáticamente
-
-**Salida:** `cache/terms_cache.json`
-
----
-
-### `density_analyzer.py`
-Analiza la densidad de términos técnicos en cada sección del manual para determinar el tamaño óptimo del chunk.
-
-**Entrada:** archivo `.txt` con el manual segmentado en secciones con el siguiente formato:
-```
---- Páginas: [N] | Sección: X.X | Título: - ---
-Texto de la sección...
-```
-
-**Lógica:**
-- Calcula un score de densidad por sección: `términos técnicos / total palabras`
-- Si densidad ≥ 5% → nivel **alto** → chunk de 256 tokens (evita saturación)
-- Si densidad < 5% → nivel **bajo** → chunk de 512 tokens (maximiza contexto)
-- Solapamiento del 15% entre chunks
-
-**Salida:** `data/raw/density_report.json`
-```json
-{
-  "chunk_id": 1,
-  "paginas": "[3]",
-  "seccion": "0.2",
-  "word_count": 87,
-  "technical_terms_count": 3,
-  "terms_found": ["mantenimiento", "máquina", "montaje"],
-  "density_score": 0.034,
-  "density_level": "baja",
-  "chunk_size_tokens": 512,
-  "overlap_tokens": 76
-}
-```
-
-> **Nota:** `density_report.json` no se versiona en el repo (ver `.gitignore`). Se regenera ejecutando el script.
-
----
-
-### `chunker.py`
-Segmenta el manual en chunks adaptativos listos para la extracción de entidades (Tarea 2).
-
-**Entrada:** archivo `.txt` del manual + `density_report.json`
-
-**Autodetección:** si `density_report.json` no existe, ejecuta `density_analyzer.py` automáticamente antes de continuar.
-
-**Reglas de segmentación:**
-- **Header-bound:** cada nueva sección del manual fuerza el inicio de un chunk nuevo
-- **Sentence-safe:** nunca corta una frase a la mitad (respeta `.`, `!`, `?`)
-- **Ventana adaptativa:** tamaño del chunk según el nivel de densidad de la sección
-- **Overlap:** los últimos ~15% de tokens del chunk anterior se copian al inicio del siguiente para mantener continuidad de contexto
-
-**Salida:** `data/raw/chunks_output.json`
-```json
-{
-  "chunk_id": 1,
-  "seccion": "0.2",
-  "titulo": "-",
-  "paginas": "[3]",
-  "density_level": "baja",
-  "max_tokens": 512,
-  "tokens_approx": 134,
-  "text": "USO DEL MANUAL Este manual proporciona..."
-}
-```
-
-> **Nota:** `chunks_output.json` no se versiona en el repo. Se regenera ejecutando el script.
+**Salida:** data/raw/density_report.json
+El JSON resultante aplana la estructura, convirtiendo N secciones lógicas en M sub-bloques físicos (chunk_id), inyectando el texto cortado, la cuenta de tokens real y los metadatos de contexto (páginas, sección, título).
 
 ---
 
 ## Uso
 
+Ejecutar análisis y partición física:
 ```bash
-# Opción 1: ejecutar todo el pipeline de ingesta de una vez
-python src/1_ingestion/chunker.py --input data/raw/chunks_manual_instrucciones_a218_reduced.txt
-
-# Opción 2: ejecutar paso a paso
-python src/1_ingestion/density_analyzer.py --input data/raw/chunks_manual_instrucciones_a218_reduced.txt
-python src/1_ingestion/chunker.py --input data/raw/chunks_manual_instrucciones_a218_reduced.txt
-
-# Forzar regeneración del cache de términos ontológicos
-python src/1_ingestion/density_analyzer.py --input data/raw/... --refresh-terms
-```
-
----
+python src/1_ingestion/density_analyzer.py --input data/raw/chunks_manual_instrucciones_a218.txt
 
 ## Dependencias
+Requiere instalación estricta de procesadores de lenguaje y clientes de red:
 
-```
-rdflib
-SPARQLWrapper
-transformers
-sentencepiece
-requests
-```
+pip install SPARQLWrapper requests transformers sentencepiece spacy tiktoken
+python -m spacy download es_core_news_sm
 
-Instalación:
-```bash
-pip install SPARQLWrapper requests transformers sentencepiece
-```
+**Integración con Tarea 2**
 
----
-
-## Archivos generados (no versionados)
-
-| Archivo | Generado por | Descripción |
-|---|---|---|
-| `cache/terms_cache.json` | `term_loader.py` | Cache de términos ontológicos (30 días TTL) |
-| `data/raw/density_report.json` | `density_analyzer.py` | Score de densidad por sección |
-| `data/raw/chunks_output.json` | `chunker.py` | Chunks finales listos para Tarea 2 |
-
----
-
-## Relación con otros módulos
-
-- **Siguiente paso:** `src/2_extraction/` consume `chunks_output.json` para la extracción de entidades y relaciones (Tarea 2)
-- **Issues relacionados:** `#1 Density Analyzer` (cerrado), `#2 Chunker`
+El archivo de salida density_report.json y el vocabulario en cache/terms_cache.json son consumidos directamente por src/2_extraction/prompt_assembler.py. Este script filtra bloques irrelevantes (< 50 caracteres) y ensambla las instrucciones dinámicas con Chain of Thought (CoT), inyectando metadatos para la resolución de anáforas y previniendo alucinaciones en la generación T-Box del LLM.

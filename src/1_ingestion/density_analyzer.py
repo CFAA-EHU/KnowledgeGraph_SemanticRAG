@@ -1,23 +1,10 @@
-<<<<<<< HEAD
-print("hello world")
-=======
 """
 density_analyzer.py
 Issue #1 — Análisis de densidad de términos técnicos por chunk.
 
-Usa term_loader.py para obtener los términos técnicos desde
-ESDBpedia (español) y AAS/ECLASS (inglés + traducción Helsinki-NLP),
-con cacheo local en cache/terms_cache.json.
-
 Uso:
-    # Primera ejecución (construye el cache de términos):
     python src/1_ingestion/density_analyzer.py --input data/raw/chunks_manual_instrucciones_a218_reduced.txt
-
-    # Forzar renovación del cache de términos:
     python src/1_ingestion/density_analyzer.py --input data/raw/... --refresh-terms
-
-Salida:
-    data/raw/density_report.json
 """
 
 import sys
@@ -26,33 +13,15 @@ import argparse
 import re
 from pathlib import Path
 
-# Asegurar que Python encuentra term_loader aunque se ejecute desde la raíz del proyecto
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from termLoader import get_terms
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# CONFIGURACIÓN
-# ─────────────────────────────────────────────────────────────────────────────
-
-CHUNK_SIZE_HIGH_DENSITY = 256   # Alta densidad → chunks pequeños
-CHUNK_SIZE_LOW_DENSITY  = 512   # Baja densidad → chunks grandes
-OVERLAP_RATIO           = 0.15  # Solapamiento del 15%
-HIGH_DENSITY_THRESHOLD  = 0.05  # 5 términos técnicos por cada 100 palabras
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# PARSING DEL ARCHIVO
-# ─────────────────────────────────────────────────────────────────────────────
+CHUNK_SIZE_HIGH_DENSITY = 256
+CHUNK_SIZE_LOW_DENSITY  = 512
+OVERLAP_RATIO           = 0.15
+HIGH_DENSITY_THRESHOLD  = 0.05
 
 def parse_chunks(filepath: str) -> list[dict]:
-    """
-    Lee el archivo y separa cada bloque en metadatos + texto.
-
-    Formato esperado:
-        --- Páginas: [N] | Sección: X.X | Título: - ---
-        Texto del chunk...
-    """
     path = Path(filepath)
     if not path.exists():
         raise FileNotFoundError(f"No se encontró el archivo: {filepath}")
@@ -79,33 +48,24 @@ def parse_chunks(filepath: str) -> list[dict]:
     print(f"✅ Parseados {len(chunks)} chunks desde {filepath}")
     return chunks
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# ANÁLISIS DE DENSIDAD
-# ─────────────────────────────────────────────────────────────────────────────
-
-def count_technical_terms(text: str, terms: list[str]) -> tuple[int, list[str]]:
-    """Cuenta términos técnicos encontrados en el texto."""
+def count_technical_terms(text: str, terms: list[dict]) -> tuple[int, list[str]]:
     text_lower = text.lower()
     found = []
-    for term in terms:
-        pattern = r'\b' + re.escape(term.lower()) + r'\b'
+    for item in terms:
+        term = item["termino"]
+        pattern = r'\b' + re.escape(term) + r'\b'
         if re.search(pattern, text_lower):
             found.append(term)
     return len(found), found
 
-
-def calculate_density(text: str, terms: list[str]) -> float:
-    """Densidad = nº términos técnicos únicos / nº total de palabras."""
+def calculate_density(text: str, terms: list[dict]) -> float:
     words = text.split()
     if not words:
         return 0.0
     term_count, _ = count_technical_terms(text, terms)
     return round(term_count / len(words), 4)
 
-
 def get_chunk_config(density: float) -> dict:
-    """Devuelve configuración de chunking según nivel de densidad."""
     is_high = density >= HIGH_DENSITY_THRESHOLD
     chunk_size = CHUNK_SIZE_HIGH_DENSITY if is_high else CHUNK_SIZE_LOW_DENSITY
     return {
@@ -114,9 +74,7 @@ def get_chunk_config(density: float) -> dict:
         "overlap_tokens":    round(chunk_size * OVERLAP_RATIO),
     }
 
-
-def analyze(filepath: str, terms: list[str]) -> list[dict]:
-    """Analiza todos los chunks y devuelve el reporte completo."""
+def analyze(filepath: str, terms: list[dict]) -> list[dict]:
     raw_chunks = parse_chunks(filepath)
     report = []
 
@@ -131,6 +89,7 @@ def analyze(filepath: str, terms: list[str]) -> list[dict]:
             "paginas":               chunk["paginas"],
             "seccion":               chunk["seccion"],
             "titulo":                chunk["titulo"],
+            "texto":                 texto,  # LÍNEA AÑADIDA OBLIGATORIA
             "text_preview":          texto[:100] + "..." if len(texto) > 100 else texto,
             "word_count":            len(texto.split()),
             "technical_terms_count": count,
@@ -140,11 +99,6 @@ def analyze(filepath: str, terms: list[str]) -> list[dict]:
         })
 
     return report
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# SALIDA
-# ─────────────────────────────────────────────────────────────────────────────
 
 def print_summary(report: list[dict], total_terms: int):
     total = len(report)
@@ -168,23 +122,17 @@ def print_summary(report: list[dict], total_terms: int):
         print(f"  Preview  : {r['text_preview']}")
         print()
 
-
 def save_report(report: list[dict], input_path: str):
     output_path = Path(input_path).parent / "density_report.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
     print(f"💾 Reporte guardado en: {output_path}")
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# MAIN
-# ─────────────────────────────────────────────────────────────────────────────
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Análisis de densidad técnica por chunk")
     parser.add_argument(
         "--input",
-        default="data/raw/chunks_manual_instrucciones_a218_reduced.txt",
+        default="data/raw/chunks_manual_instrucciones_a218.txt",
         help="Ruta al archivo de chunks"
     )
     parser.add_argument(
@@ -194,13 +142,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # 1. Cargar términos técnicos desde ontologías (o cache)
-    terms = get_terms(force_refresh=args.refresh_terms)
+    terms = get_terms(filepath=args.input, force_refresh=args.refresh_terms)
 
-    # 2. Analizar los chunks
     report = analyze(args.input, terms)
 
-    # 3. Mostrar y guardar resultados
     print_summary(report, total_terms=len(terms))
     save_report(report, args.input)
->>>>>>> 98ca477 (feat(#1): density analyzer completo — ESDBpedia + AAS/Helsinki-NLP + reporte generado)

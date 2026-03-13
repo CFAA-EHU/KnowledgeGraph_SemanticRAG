@@ -11,8 +11,8 @@ from mistralai import Mistral
 API_KEY = "MISTRAL_API_KEY"
 MODEL = "mistral-small-latest"
 
-INPUT_FILE = "chunks_b.txt"
-OUTPUT_ONTOLOGY = "ontology_3.ttl"
+INPUT_FILE = "chunks_manual_instrucciones_a218.txt"
+OUTPUT_ONTOLOGY = "ontology_merged.ttl"
 
 client = Mistral(api_key=API_KEY)
 

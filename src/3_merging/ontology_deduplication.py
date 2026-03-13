@@ -9,8 +9,8 @@ from mistralai import Mistral
 # CONFIG
 ############################################
 
-INPUT_TTL = "ontology_3.ttl"
-OUTPUT_TTL = "ontology_dd_4.ttl"
+INPUT_TTL = "ontology_merged.ttl"
+OUTPUT_TTL = "deduplicated_ontology.ttl"
 
 EX = Namespace("https://vocab.cfaa.eus/broaching/")
 

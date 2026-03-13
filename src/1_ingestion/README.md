@@ -37,17 +37,17 @@ El JSON resultante aplana la estructura, convirtiendo N secciones lógicas en M 
 ---
 
 ## Uso
-
 Ejecutar análisis y partición física:
-```bash
+```
 python src/1_ingestion/density_analyzer.py --input data/raw/chunks_manual_instrucciones_a218.txt
+```
 
 ## Dependencias
 Requiere instalación estricta de procesadores de lenguaje y clientes de red:
-
+```
 pip install SPARQLWrapper requests transformers sentencepiece spacy tiktoken
 python -m spacy download es_core_news_sm
-
-**Integración con Tarea 2**
+```
+## **Integración con Tarea 2**
 
 El archivo de salida density_report.json y el vocabulario en cache/terms_cache.json son consumidos directamente por src/2_extraction/prompt_assembler.py. Este script filtra bloques irrelevantes (< 50 caracteres) y ensambla las instrucciones dinámicas con Chain of Thought (CoT), inyectando metadatos para la resolución de anáforas y previniendo alucinaciones en la generación T-Box del LLM.

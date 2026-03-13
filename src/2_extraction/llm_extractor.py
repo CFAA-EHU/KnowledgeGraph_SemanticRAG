@@ -5,15 +5,15 @@ import os
 import sys
 from pathlib import Path
 
-from mistralai import Mistral
+from mistralai.client import Mistral
 from rdflib import Graph
 
 PROMPTS_PATH = Path("data/processed/tbox_prompts.json")
 OUTPUT_DIR = Path("data/processed/graphs/")
-MAX_CONCURRENCY = 5
+MAX_CONCURRENCY = 1
 MODEL = "mistral-small-latest"
 
-api_key = os.environ.get("MISTRAL_API_KEY")
+api_key = "HMXKoCPyStwJ9DjLnGQbKYMg2KqCiEUs" #os.environ.get("MISTRAL_API_KEY")
 if not api_key:
     print("Error: Define la variable de entorno MISTRAL_API_KEY antes de ejecutar.")
     sys.exit(1)
@@ -37,42 +37,48 @@ def validar_sintaxis_rdf(ttl_data: str) -> bool:
         return False
 
 async def procesar_chunk(semaforo: asyncio.Semaphore, chunk_data: dict):
-    async with semaforo:
-        chunk_id = chunk_data["chunk_id"]
-        prompt = chunk_data["prompt"]
-        archivo_salida = OUTPUT_DIR / f"chunk_{chunk_id:03d}.ttl"
-        
-        if archivo_salida.exists():
-            return chunk_id, "Omitido"
+    chunk_id = chunk_data["chunk_id"]
+    prompt = chunk_data["prompt"]
+    archivo_salida = OUTPUT_DIR / f"chunk_{chunk_id:03d}.ttl"
+    
+    if archivo_salida.exists():
+        return chunk_id, "Omitido"
 
-        try:
-            respuesta = await client.chat.complete_async(
-                model=MODEL,
-                temperature=0.0,
-                messages=[
-                    {
-                        "role": "system", 
-                        "content": "Eres un motor de serialización RDF. Responde exclusivamente con sintaxis Turtle (TTL) válida. Omite explicaciones o texto conversacional. Genera modelo T-Box, prohíbe individuos A-Box."
-                    },
-                    {
-                        "role": "user", 
-                        "content": prompt
-                    }
-                ]
-            )
-            
-            ttl_puro = aislar_sintaxis_ttl(respuesta.choices[0].message.content)
-            
-            if not validar_sintaxis_rdf(ttl_puro):
-                return chunk_id, "Error: Sintaxis TTL inválida"
-            
-            with open(archivo_salida, "w", encoding="utf-8") as f:
-                f.write(ttl_puro)
+    async with semaforo:
+        for intento in range(3):
+            try:
+                respuesta = await client.chat.complete_async(
+                    model=MODEL,
+                    temperature=0.0,
+                    messages=[
+                        {
+                            "role": "system", 
+                            "content": "Eres un motor de serialización RDF. Responde exclusivamente con sintaxis Turtle (TTL) válida. Omite explicaciones o texto conversacional. Genera modelo T-Box, prohíbe individuos A-Box."
+                        },
+                        {
+                            "role": "user", 
+                            "content": prompt
+                        }
+                    ]
+                )
                 
-            return chunk_id, "OK"
-            
-        except Exception as e:
-            return chunk_id, f"Error: {str(e)}"
+                ttl_puro = aislar_sintaxis_ttl(respuesta.choices[0].message.content)
+                
+                if not validar_sintaxis_rdf(ttl_puro):
+                    if intento == 2:
+                        return chunk_id, "Error: Sintaxis TTL inválida persistente"
+                    await asyncio.sleep(2)
+                    continue
+                
+                with open(archivo_salida, "w", encoding="utf-8") as f:
+                    f.write(ttl_puro)
+                    
+                return chunk_id, "OK"
+                
+            except Exception as e:
+                if intento == 2:
+                    return chunk_id, f"Error de red: {str(e)}"
+                await asyncio.sleep(5)
 
 async def orquestar_extraccion():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

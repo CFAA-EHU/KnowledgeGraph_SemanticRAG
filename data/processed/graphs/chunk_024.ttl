@@ -1,0 +1,59 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:Maquina a owl:Class ;
+    rdfs:label "Máquina" .
+
+base:PanelMantenimiento a owl:Class ;
+    rdfs:label "Panel de mantenimiento" ;
+    rdfs:subClassOf base:Componente .
+
+base:PuertaControlada a owl:Class ;
+    rdfs:label "Puerta controlada" ;
+    rdfs:subClassOf base:Componente .
+
+base:InterruptorSeguridad a owl:Class ;
+    rdfs:label "Interruptor de seguridad" ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:EnclavamientoElectronico a owl:Class ;
+    rdfs:label "Enclavamiento electrónico" ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:tienePanelMantenimiento a owl:ObjectProperty ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:PanelMantenimiento .
+
+base:tienePuertaControlada a owl:ObjectProperty ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:PuertaControlada .
+
+base:tieneInterruptorSeguridad a owl:ObjectProperty ;
+    rdfs:domain base:PuertaControlada ;
+    rdfs:range base:InterruptorSeguridad .
+
+base:tieneEnclavamientoElectronico a owl:ObjectProperty ;
+    rdfs:domain base:PuertaControlada ;
+    rdfs:range base:EnclavamientoElectronico .
+
+base:estaAtornillado a owl:DatatypeProperty ;
+    rdfs:domain base:PanelMantenimiento ;
+    rdfs:range rdfs:Literal .
+
+base:requiereHerramienta a owl:DatatypeProperty ;
+    rdfs:domain base:PanelMantenimiento ;
+    rdfs:range rdfs:Literal .
+
+base:estaCerrado a owl:DatatypeProperty ;
+    rdfs:domain base:PanelMantenimiento ;
+    rdfs:range rdfs:Literal .
+
+base:estaCerrada a owl:DatatypeProperty ;
+    rdfs:domain base:PuertaControlada ;
+    rdfs:range rdfs:Literal .
+
+base:tieneAccionamientoManual a owl:DatatypeProperty ;
+    rdfs:domain base:PuertaControlada ;
+    rdfs:range rdfs:Literal .

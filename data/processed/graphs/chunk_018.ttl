@@ -1,0 +1,46 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix seguridad: <http://example.org/seguridad#> .
+
+base:MaquinaBrochadoExterior a owl:Class ;
+    rdfs:comment "Máquina concebida exclusivamente para el brochado exterior con esfuerzo inferior a 70KN y carro portabrochas de longitud menor a 3000mm." .
+
+base:BrochadoExterior a owl:Class ;
+    rdfs:comment "Proceso de mecanizado al que está destinada la máquina." .
+
+base:CarroPortabrochas a owl:Class ;
+    rdfs:comment "Componente de la máquina con longitud menor a 3000mm." .
+
+base:SistemaTierras a owl:Class ;
+    rdfs:comment "Sistema al que debe conectarse la máquina antes de su puesta en marcha." .
+
+base:UtilAmarre a owl:Class ;
+    rdfs:comment "Útil de amarre que debe estar adaptado a las piezas que se van a brochar." .
+
+mecanica:tieneEsfuerzoMaximo a owl:DatatypeProperty ;
+    rdfs:domain base:MaquinaBrochadoExterior ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneLongitudMaxima a owl:DatatypeProperty ;
+    rdfs:domain base:CarroPortabrochas ;
+    rdfs:range rdfs:Literal .
+
+mecanica:estaConectadoA a owl:ObjectProperty ;
+    rdfs:domain base:MaquinaBrochadoExterior ;
+    rdfs:range base:SistemaTierras .
+
+mecanica:estaAdaptadoA a owl:ObjectProperty ;
+    rdfs:domain base:UtilAmarre ;
+    rdfs:range rdfs:Resource ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+seguridad:cumpleNormas a owl:DatatypeProperty ;
+    rdfs:domain base:MaquinaBrochadoExterior ;
+    rdfs:range rdfs:Literal .
+
+seguridad:requiereCumplimientoManual a owl:DatatypeProperty ;
+    rdfs:domain base:MaquinaBrochadoExterior ;
+    rdfs:range rdfs:Literal .

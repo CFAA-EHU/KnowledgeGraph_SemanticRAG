@@ -1,0 +1,65 @@
+@prefix : <http://example.org/aireComprimido#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:SistemaAireComprimido a owl:Class ;
+    rdfs:label "Sistema de Aire Comprimido"@es .
+
+:Presion a owl:Class ;
+    rdfs:label "Presión"@es .
+
+:Caudal a owl:Class ;
+    rdfs:label "Caudal"@es .
+
+:Filtracion a owl:Class ;
+    rdfs:label "Filtración"@es .
+
+:Secado a owl:Class ;
+    rdfs:label "Secado"@es .
+
+:tienePresion a owl:ObjectProperty ;
+    rdfs:domain :SistemaAireComprimido ;
+    rdfs:range :Presion .
+
+:tieneCaudal a owl:ObjectProperty ;
+    rdfs:domain :SistemaAireComprimido ;
+    rdfs:range :Caudal .
+
+:tieneFiltracion a owl:ObjectProperty ;
+    rdfs:domain :SistemaAireComprimido ;
+    rdfs:range :Filtracion .
+
+:tieneSecado a owl:ObjectProperty ;
+    rdfs:domain :SistemaAireComprimido ;
+    rdfs:range :Secado .
+
+:valorPresion a owl:DatatypeProperty ;
+    rdfs:domain :Presion ;
+    rdfs:range xsd:decimal .
+
+:valorCaudal a owl:DatatypeProperty ;
+    rdfs:domain :Caudal ;
+    rdfs:range xsd:decimal .
+
+:SistemaAireComprimidoExemplo a owl:NamedIndividual ,
+                        :SistemaAireComprimido ;
+    :tienePresion :PresionExemplo ;
+    :tieneCaudal :CaudalExemplo ;
+    :tieneFiltracion :FiltracionExemplo ;
+    :tieneSecado :SecadoExemplo .
+
+:PresionExemplo a owl:NamedIndividual ,
+                 :Presion ;
+    :valorPresion "6"^^xsd:decimal .
+
+:CaudalExemplo a owl:NamedIndividual ,
+               :Caudal ;
+    :valorCaudal "225"^^xsd:decimal .
+
+:FiltracionExemplo a owl:NamedIndividual ,
+                    :Filtracion .
+
+:SecadoExemplo a owl:NamedIndividual ,
+                :Secado .

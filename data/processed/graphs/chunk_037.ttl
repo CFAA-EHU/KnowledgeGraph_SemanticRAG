@@ -1,0 +1,37 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:ColumnaMecanoSoldadoEstabilizado a owl:Class ;
+    rdfs:label "Columna mecano-soldado estabilizado" .
+
+base:CarroPortaPieza a owl:Class ;
+    rdfs:label "Carro porta-pieza" .
+
+base:Servomotor a owl:Class ;
+    rdfs:label "Servomotor" .
+
+base:Cremallera a owl:Class ;
+    rdfs:label "Cremallera" .
+
+base:ConjuntoGuiado a owl:Class ;
+    rdfs:label "Conjunto guiado" .
+
+mecanica:tieneAccionamiento a owl:ObjectProperty ;
+    rdfs:domain base:CarroPortaPieza ;
+    rdfs:range base:Servomotor .
+
+mecanica:tieneCremallera a owl:ObjectProperty ;
+    rdfs:domain base:CarroPortaPieza ;
+    rdfs:range base:Cremallera .
+
+mecanica:tieneConjuntoGuiado a owl:ObjectProperty ;
+    rdfs:domain base:CarroPortaPieza ;
+    rdfs:range base:ConjuntoGuiado .
+
+mecanica:tieneModelo a owl:DatatypeProperty ;
+    rdfs:domain [ a owl:Class ;
+        owl:unionOf ( base:ColumnaMecanoSoldadoEstabilizado base:CarroPortaPieza base:Servomotor base:Cremallera base:ConjuntoGuiado ) ] ;
+    rdfs:range rdf:langString .

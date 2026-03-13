@@ -1,0 +1,104 @@
+@prefix : <http://example.org/teclado#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Teclado a owl:Class ;
+    rdfs:label "Teclado" .
+
+:VersiónTeclado a owl:Class ;
+    rdfs:label "VersiónTeclado" .
+
+:Keyboard a :VersiónTeclado ;
+    rdfs:label "Keyboard" .
+
+:Jog a :VersiónTeclado ;
+    rdfs:label "Jog" .
+
+:ModoTrabajo a owl:Class ;
+    rdfs:label "ModoTrabajo" .
+
+:Auto a :ModoTrabajo ;
+    rdfs:label "Auto" .
+
+:Manual a :ModoTrabajo ;
+    rdfs:label "Manual" .
+
+:Pantalla a owl:Class ;
+    rdfs:label "Pantalla" .
+
+:PantallaMovimientosManuales a :Pantalla ;
+    rdfs:label "PantallaMovimientosManuales" .
+
+:Botón a owl:Class ;
+    rdfs:label "Botón" .
+
+:Custom a :Botón ;
+    rdfs:label "Custom" .
+
+:BotónCambioVersión a :Botón ;
+    rdfs:label "BotónCambioVersión" .
+
+:BotónMovimiento a :Botón ;
+    rdfs:label "BotónMovimiento" .
+
+:ZMas a :BotónMovimiento ;
+    rdfs:label "Z+" .
+
+:ZMenos a :BotónMovimiento ;
+    rdfs:label "Z-" .
+
+:CMas a :BotónMovimiento ;
+    rdfs:label "C+" .
+
+:CMenos a :BotónMovimiento ;
+    rdfs:label "C-" .
+
+:Componente a owl:Class ;
+    rdfs:label "Componente" .
+
+:Carro a :Componente ;
+    rdfs:label "Carro" .
+
+:Mesa a :Componente ;
+    rdfs:label "Mesa" .
+
+:Máquina a :Componente ;
+    rdfs:label "Máquina" .
+
+:tieneVersión a owl:ObjectProperty ;
+    rdfs:label "tieneVersión" ;
+    rdfs:domain :Teclado ;
+    rdfs:range :VersiónTeclado .
+
+:permiteSeleccionarModoTrabajo a owl:ObjectProperty ;
+    rdfs:label "permiteSeleccionarModoTrabajo" ;
+    rdfs:domain :VersiónTeclado ;
+    rdfs:range :ModoTrabajo .
+
+:daAcceso a owl:ObjectProperty ;
+    rdfs:label "daAcceso" ;
+    rdfs:domain :VersiónTeclado ;
+    rdfs:range :Pantalla .
+
+:tieneBotón a owl:ObjectProperty ;
+    rdfs:label "tieneBotón" ;
+    rdfs:domain :Teclado ;
+    rdfs:range :Botón .
+
+:permiteCambiarVersión a owl:ObjectProperty ;
+    rdfs:label "permiteCambiarVersión" ;
+    rdfs:domain :BotónCambioVersión ;
+    rdfs:range :VersiónTeclado .
+
+:permiteMover a owl:ObjectProperty ;
+    rdfs:label "permiteMover" ;
+    rdfs:domain :BotónMovimiento ;
+    rdfs:range :Componente ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+:estáEnModo a owl:ObjectProperty ;
+    rdfs:label "estáEnModo" ;
+    rdfs:domain :Máquina ;
+    rdfs:range :ModoTrabajo .

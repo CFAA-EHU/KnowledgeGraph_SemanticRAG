@@ -1,0 +1,48 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:ModoSetUp a owl:Class ;
+    rdfs:label "Modo Set-up" .
+
+base:Máquina a owl:Class ;
+    rdfs:label "Máquina" .
+
+base:PresiónGeneralDeAire a owl:Class ;
+    rdfs:label "Presión general de aire" .
+
+base:Puerta a owl:Class ;
+    rdfs:label "Puerta" .
+
+base:EnclavamientoDeSeguridad a owl:Class ;
+    rdfs:label "Enclavamiento de seguridad" .
+
+base:PanelOperador a owl:Class ;
+    rdfs:label "Panel operador" .
+
+base:SelectorDeSetUp a owl:Class ;
+    rdfs:label "Selector de Set-up" .
+
+base:CicloDeBrochado a owl:Class ;
+    rdfs:label "Ciclo de brochado" .
+
+base:Carro a owl:Class ;
+    rdfs:label "Carro" .
+
+base:Diente a owl:Class ;
+    rdfs:label "Diente" .
+
+base:BotónAperturaPuertas a owl:Class ;
+    rdfs:label "Botón Apertura puertas" .
+
+base:ModoSetUp base:requiereMáquinaEnServicio base:Máquina .
+base:ModoSetUp base:requierePresiónGeneralDeAireOK base:PresiónGeneralDeAire .
+base:ModoSetUp base:requierePuertasCerradasYBloqueadas base:Puerta .
+base:Puerta base:tieneEnclavamientoDeSeguridad base:EnclavamientoDeSeguridad .
+base:ModoSetUp base:habilitaSelectorDeSetUp base:SelectorDeSetUp .
+base:SelectorDeSetUp rdfs:subClassOf base:PanelOperador .
+base:ModoSetUp base:permiteAperturaDePuertas base:Puerta .
+base:ModoSetUp base:permiteVerificaciónDePosición base:Carro .
+base:Carro base:tienePosiciónRespectoA base:Diente .
+base:ModoSetUp base:requierePulsarBotónAperturaPuertas base:BotónAperturaPuertas .

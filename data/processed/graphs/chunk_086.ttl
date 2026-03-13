@@ -1,0 +1,120 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+
+base:PortonFrontal a owl:Class ;
+    rdfs:label "Portón frontal"@es .
+
+base:PuertaCorrederaLateral a owl:Class ;
+    rdfs:label "Puerta corredera lateral"@es .
+
+base:DispositivoSeguridad a owl:Class ;
+    rdfs:label "Dispositivo de seguridad"@es .
+
+base:BloqueoMecanico a owl:Class ;
+    rdfs:label "Bloqueo mecánico"@es .
+
+base:DesbloqueoElectrico a owl:Class ;
+    rdfs:label "Desbloqueo eléctrico"@es .
+
+base:MaquinaEnEmergencia a owl:Class ;
+    rdfs:label "Máquina en emergencia"@es .
+
+base:MaquinaEnServicio a owl:Class ;
+    rdfs:label "Máquina en servicio"@es .
+
+base:BotonAperturaPuertas a owl:Class ;
+    rdfs:label "Botón de apertura de puertas"@es .
+
+base:CicloCambioCremallera a owl:Class ;
+    rdfs:label "Ciclo de cambio de cremallera"@es .
+
+base:CarroPortaPieza a owl:Class ;
+    rdfs:label "Carro porta-pieza"@es .
+
+base:PosicionInferior a owl:Class ;
+    rdfs:label "Posición inferior"@es .
+
+base:ModoSetUp a owl:Class ;
+    rdfs:label "Modo set-up"@es .
+
+base:MovimientoPuertasAbiertas a owl:Class ;
+    rdfs:label "Movimiento con puertas abiertas"@es .
+
+base:VelocidadReducida a owl:Class ;
+    rdfs:label "Velocidad reducida"@es .
+
+mecanica:tieneDispositivoSeguridad a owl:ObjectProperty ;
+    rdfs:domain base:PortonFrontal ;
+    rdfs:range base:DispositivoSeguridad .
+
+mecanica:tieneDispositivoSeguridad a owl:ObjectProperty ;
+    rdfs:domain base:PuertaCorrederaLateral ;
+    rdfs:range base:DispositivoSeguridad .
+
+mecanica:tieneBloqueoMecanico a owl:ObjectProperty ;
+    rdfs:domain base:DispositivoSeguridad ;
+    rdfs:range base:BloqueoMecanico .
+
+mecanica:tieneDesbloqueoElectrico a owl:ObjectProperty ;
+    rdfs:domain base:DispositivoSeguridad ;
+    rdfs:range base:DesbloqueoElectrico .
+
+mecanica:requiereEmergenciaParaApertura a owl:ObjectProperty ;
+    rdfs:domain base:PortonFrontal ;
+    rdfs:range base:MaquinaEnEmergencia .
+
+mecanica:requiereEmergenciaParaApertura a owl:ObjectProperty ;
+    rdfs:domain base:PuertaCorrederaLateral ;
+    rdfs:range base:MaquinaEnEmergencia .
+
+mecanica:requiereServicioYPulsarBoton a owl:ObjectProperty ;
+    rdfs:domain base:PortonFrontal ;
+    rdfs:range base:MaquinaEnServicio .
+
+mecanica:requiereServicioYPulsarBoton a owl:ObjectProperty ;
+    rdfs:domain base:PuertaCorrederaLateral ;
+    rdfs:range base:MaquinaEnServicio .
+
+mecanica:requierePulsarBoton a owl:ObjectProperty ;
+    rdfs:domain base:MaquinaEnServicio ;
+    rdfs:range base:BotonAperturaPuertas .
+
+mecanica:requiereCicloCambioCremallera a owl:ObjectProperty ;
+    rdfs:domain base:PortonFrontal ;
+    rdfs:range base:CicloCambioCremallera .
+
+mecanica:requiereCicloCambioCremallera a owl:ObjectProperty ;
+    rdfs:domain base:PuertaCorrederaLateral ;
+    rdfs:range base:CicloCambioCremallera .
+
+mecanica:tieneCarroPortaPieza a owl:ObjectProperty ;
+    rdfs:domain base:CicloCambioCremallera ;
+    rdfs:range base:CarroPortaPieza .
+
+mecanica:estaEnPosicionInferior a owl:ObjectProperty ;
+    rdfs:domain base:CarroPortaPieza ;
+    rdfs:range base:PosicionInferior .
+
+mecanica:requiereModoSetUpYPulsarBoton a owl:ObjectProperty ;
+    rdfs:domain base:PortonFrontal ;
+    rdfs:range base:ModoSetUp .
+
+mecanica:requiereModoSetUpYPulsarBoton a owl:ObjectProperty ;
+    rdfs:domain base:PuertaCorrederaLateral ;
+    rdfs:range base:ModoSetUp .
+
+mecanica:requierePulsarBotonEnSetUp a owl:ObjectProperty ;
+    rdfs:domain base:ModoSetUp ;
+    rdfs:range base:BotonAperturaPuertas .
+
+mecanica:permiteMovimientoConPuertasAbiertas a owl:ObjectProperty ;
+    rdfs:domain base:ModoSetUp ;
+    rdfs:range base:MovimientoPuertasAbiertas .
+
+mecanica:tieneVelocidadReducida a owl:ObjectProperty ;
+    rdfs:domain base:MovimientoPuertasAbiertas ;
+    rdfs:range base:VelocidadReducida .

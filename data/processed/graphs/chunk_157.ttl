@@ -1,0 +1,46 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+@prefix admin: <https://admin-shell.io/dictionary/> .
+
+base:LlaveParaBloqueoPuertaTwin a owl:Class ;
+    rdfs:label "Llave para Bloqueo Puerta Twin" .
+
+base:InterruptorDeSeguridadConBloqueo a owl:Class ;
+    rdfs:label "Interruptor de seguridad con bloqueo y sistema electrónico de evaluación" .
+
+base:ActuadorRectoParaTransponderCodificado a owl:Class ;
+    rdfs:label "Straight actuator for Transponder-coded" ;
+    rdfs:subClassOf admin:Actuator .
+
+base:ConexionCabezaLectora a owl:Class ;
+    rdfs:label "Conexion Cabeza Lectora" .
+
+base:FuenteAlimentacionEstabilizada a owl:Class ;
+    rdfs:label "Fuente de alimentación estabilizada" .
+
+base:Transformador a owl:Class ;
+    rdfs:label "Transformador" .
+
+mecanica:estaConectadoA a owl:ObjectProperty ;
+    rdfs:domain base:ConexionCabezaLectora ;
+    rdfs:range base:SensorConectorHembraM12 .
+
+base:SensorConectorHembraM12 a owl:Class ;
+    rdfs:label "Sensor Conector hembra M12" ;
+    rdfs:subClassOf admin:Sensor .
+
+elec:tieneEntrada a owl:ObjectProperty ;
+    rdfs:domain base:FuenteAlimentacionEstabilizada ;
+    rdfs:range elec:EntradaElectricidad .
+
+elec:EntradaElectricidad a owl:Class ;
+    rdfs:label "Entrada de electricidad" ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+elec:tieneTransformador a owl:ObjectProperty ;
+    rdfs:domain base:FuenteAlimentacionEstabilizada ;
+    rdfs:range base:Transformador .

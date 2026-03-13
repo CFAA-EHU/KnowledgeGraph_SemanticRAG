@@ -1,0 +1,73 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:ManualDeInstrucciones a owl:Class ;
+    rdfs:label "ManualDeInstrucciones" .
+
+base:DepartamentoDeAsistenciaAlCliente a owl:Class ;
+    rdfs:label "DepartamentoDeAsistenciaAlCliente" .
+
+base:PersonalDeMantenimiento a owl:Class ;
+    rdfs:label "PersonalDeMantenimiento" .
+
+base:Máquina a owl:Class ;
+    rdfs:label "Máquina" .
+
+base:Resguardo a owl:Class ;
+    rdfs:label "Resguardo" .
+
+base:EquipoEléctrico a owl:Class ;
+    rdfs:label "EquipoEléctrico" .
+
+base:InterruptorGeneral a owl:Class ;
+    rdfs:label "InterruptorGeneral" .
+
+base:ArmarioEléctrico a owl:Class ;
+    rdfs:label "ArmarioEléctrico" .
+
+base:CartelDeAdvertencia a owl:Class ;
+    rdfs:label "CartelDeAdvertencia" .
+
+base:Candado a owl:Class ;
+    rdfs:label "Candado" .
+
+mecanica:requiereConsulta a owl:ObjectProperty ;
+    rdfs:domain base:Máquina ;
+    rdfs:range base:ManualDeInstrucciones .
+
+mecanica:requiereContactoCon a owl:ObjectProperty ;
+    rdfs:domain base:Máquina ;
+    rdfs:range base:DepartamentoDeAsistenciaAlCliente .
+
+mecanica:tieneConocimientosDe a owl:ObjectProperty ;
+    rdfs:domain base:PersonalDeMantenimiento ;
+    rdfs:range rdfs:Resource .
+
+mecanica:requiereConsignación a owl:ObjectProperty ;
+    rdfs:domain base:Máquina ;
+    rdfs:range base:Resguardo .
+
+elec:requiereTrabajosSinTensión a owl:ObjectProperty ;
+    rdfs:domain base:EquipoEléctrico ;
+    rdfs:range base:Máquina .
+
+elec:requierePersonalCompetente a owl:ObjectProperty ;
+    rdfs:domain base:EquipoEléctrico ;
+    rdfs:range base:PersonalDeMantenimiento ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+elec:tieneInterruptorGeneral a owl:ObjectProperty ;
+    rdfs:domain base:ArmarioEléctrico ;
+    rdfs:range base:InterruptorGeneral .
+
+elec:requiereCartelDeAdvertencia a owl:ObjectProperty ;
+    rdfs:domain base:InterruptorGeneral ;
+    rdfs:range base:CartelDeAdvertencia .
+
+elec:requiereCandado a owl:ObjectProperty ;
+    rdfs:domain base:InterruptorGeneral ;
+    rdfs:range base:Candado .

@@ -1,0 +1,72 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:Maquina a owl:Class ;
+    rdfs:label "Máquina" .
+
+base:UtilDeAmarre a owl:Class ;
+    rdfs:label "Útil de amarre" .
+
+base:Pieza a owl:Class ;
+    rdfs:label "Pieza" .
+
+base:ArmarioElectrico a owl:Class ;
+    rdfs:label "Armario eléctrico" .
+
+base:Puerta a owl:Class ;
+    rdfs:label "Puerta" .
+
+base:Herramienta a owl:Class ;
+    rdfs:label "Herramienta" .
+
+base:ModoDeTrabajo a owl:Class ;
+    rdfs:label "Modo de trabajo" .
+
+mecanica:estaAdaptadoA a owl:ObjectProperty ;
+    rdfs:domain base:UtilDeAmarre ;
+    rdfs:range base:Pieza ;
+    rdfs:label "está adaptado a" .
+
+mecanica:debeEstarCerradaYBloqueada a owl:ObjectProperty ;
+    rdfs:domain base:Puerta ;
+    rdfs:range base:ArmarioElectrico ;
+    rdfs:label "debe estar cerrada y bloqueada" .
+
+mecanica:exponerA a owl:ObjectProperty ;
+    rdfs:domain base:Puerta ;
+    rdfs:range elec:TensionElectrica ;
+    rdfs:label "exponer a" .
+
+elec:TensionElectrica a owl:Class ;
+    rdfs:label "Tensión eléctrica" ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+mecanica:debeEmplear a owl:ObjectProperty ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:Herramienta ;
+    rdfs:label "debe emplear" .
+
+mecanica:noDebeSobrepasar a owl:ObjectProperty ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:CapacidadDeTrabajo ;
+    rdfs:label "no debe sobrepasar" .
+
+base:CapacidadDeTrabajo a owl:Class ;
+    rdfs:label "Capacidad de trabajo" .
+
+mecanica:verificarPresenciaEnInterior a owl:ObjectProperty ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:Persona ;
+    rdfs:label "verificar presencia en interior" .
+
+base:Persona a owl:Class ;
+    rdfs:label "Persona" .
+
+mecanica:ponerEnFuncionamiento a owl:ObjectProperty ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:ModoDeTrabajo ;
+    rdfs:label "poner en funcionamiento" .

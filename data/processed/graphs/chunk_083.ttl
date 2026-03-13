@@ -1,0 +1,40 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ui: <http://example.org/ui#> .
+@prefix param: <http://example.org/param#> .
+@prefix action: <http://example.org/action#> .
+
+base:PantallaParametrosBrochado a owl:Class ;
+    rdfs:label "Pantalla de Parámetros de Brochado" .
+
+base:CicloTrabajo a owl:Class ;
+    rdfs:label "Ciclo de Trabajo" .
+
+base:Programa a owl:Class ;
+    rdfs:label "Programa" .
+
+ui:VentanaEmergente a owl:Class ;
+    rdfs:label "Ventana Emergente" .
+
+param:ParametroBrochado a owl:Class ;
+    rdfs:label "Parámetro de Brochado" .
+
+action:ReemplazarParametros a owl:Class ;
+    rdfs:label "Acción de Reemplazar Parámetros" .
+
+action:EjecutarPrograma a owl:Class ;
+    rdfs:label "Acción de Ejecutar Programa" .
+
+base:PantallaParametrosBrochado base:tieneParametro base:ParametroBrochado .
+
+base:PantallaParametrosBrochado base:muestraVentanaEmergente ui:VentanaEmergente .
+
+ui:VentanaEmergente base:tieneOpcion action:ReemplazarParametros .
+
+action:ReemplazarParametros base:afectaA base:Programa .
+
+base:Programa base:tieneCicloTrabajo base:CicloTrabajo .
+
+action:EjecutarPrograma base:ejecuta base:Programa .

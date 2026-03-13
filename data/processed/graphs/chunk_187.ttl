@@ -1,0 +1,118 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+### Clases ###
+base:Puerto a owl:Class .
+base:Pin a owl:Class .
+base:Conector a owl:Class .
+base:Línea a owl:Class .
+base:Sensor a owl:Class .
+base:Actuador a owl:Class .
+base:VálvulaNeumática a owl:Class .
+base:Relé a owl:Class .
+base:Módulo a owl:Class .
+base:Latiguillo a owl:Class .
+base:Born a owl:Class .
+base:Bloque a owl:Class .
+
+### Propiedades de Objeto ###
+mecanica:muestraPines a owl:ObjectProperty ;
+    rdfs:domain base:Puerto ;
+    rdfs:range base:Pin .
+
+mecanica:tieneReferenciasCruzadas a owl:ObjectProperty ;
+    rdfs:domain base:Pin ;
+    rdfs:range base:Pin .
+
+mecanica:tieneCódigosCableado a owl:ObjectProperty ;
+    rdfs:domain base:Pin ;
+    rdfs:range rdfs:Literal .
+
+mecanica:separaJerarquíaVisual a owl:ObjectProperty ;
+    rdfs:domain base:Puerto ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneLíneas a owl:ObjectProperty ;
+    rdfs:domain base:EsquemaCableado ;
+    rdfs:range base:Línea .
+
+mecanica:tieneConectores a owl:ObjectProperty ;
+    rdfs:domain base:EsquemaCableado ;
+    rdfs:range base:Conector .
+
+mecanica:tieneLatiguillo a owl:ObjectProperty ;
+    rdfs:domain base:EsquemaCableado ;
+    rdfs:range base:Latiguillo .
+
+mecanica:tieneDireccionalidad a owl:ObjectProperty ;
+    rdfs:domain base:Línea ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneBloques a owl:ObjectProperty ;
+    rdfs:domain base:EsquemaCableado ;
+    rdfs:range base:Bloque .
+
+mecanica:tieneEntradasDigitales a owl:ObjectProperty ;
+    rdfs:domain base:Bloque ;
+    rdfs:range base:Pin .
+
+mecanica:tieneSalidas a owl:ObjectProperty ;
+    rdfs:domain base:Bloque ;
+    rdfs:range base:Pin .
+
+mecanica:tieneSensores a owl:ObjectProperty ;
+    rdfs:domain base:Bloque ;
+    rdfs:range base:Sensor .
+
+mecanica:tieneActuadores a owl:ObjectProperty ;
+    rdfs:domain base:Bloque ;
+    rdfs:range base:Actuador .
+
+mecanica:tieneVálvulasNeumáticas a owl:ObjectProperty ;
+    rdfs:domain base:Bloque ;
+    rdfs:range base:VálvulaNeumática .
+
+mecanica:tieneRelés a owl:ObjectProperty ;
+    rdfs:domain base:EsquemaCableado ;
+    rdfs:range base:Relé .
+
+mecanica:tieneMódulos a owl:ObjectProperty ;
+    rdfs:domain base:EsquemaCableado ;
+    rdfs:range base:Módulo .
+
+mecanica:tieneBorn a owl:ObjectProperty ;
+    rdfs:domain base:Bloque ;
+    rdfs:range base:Born .
+
+### Propiedades de Datos ###
+mecanica:tieneLongitudCable a owl:DatatypeProperty ;
+    rdfs:domain base:Pin ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneSecciónCable a owl:DatatypeProperty ;
+    rdfs:domain base:Pin ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tienePolaridad a owl:DatatypeProperty ;
+    rdfs:domain base:Línea ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneRetorno a owl:DatatypeProperty ;
+    rdfs:domain base:Línea ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneEtiqueta a owl:DatatypeProperty ;
+    rdfs:domain base:Conector ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneSímbolo a owl:DatatypeProperty ;
+    rdfs:domain base:Actuador ;
+    rdfs:range rdfs:Literal .
+
+mecanica:tieneTrazado a owl:DatatypeProperty ;
+    rdfs:domain base:Actuador ;
+    rdfs:range rdfs:Literal .

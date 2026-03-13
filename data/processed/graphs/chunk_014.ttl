@@ -1,0 +1,44 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:MaquinaEKIN a owl:Class ;
+    rdfs:label "MaquinaEKIN" ;
+    rdfs:comment "Máquinas fabricadas por EKIN, S. Coop." .
+
+base:InstruccionSeguridad a owl:Class ;
+    rdfs:label "InstruccionSeguridad" ;
+    rdfs:comment "Instrucciones de seguridad para las máquinas EKIN, S. Coop." .
+
+base:DepartamentoAsistenciaCliente a owl:Class ;
+    rdfs:label "DepartamentoAsistenciaCliente" ;
+    rdfs:comment "Departamento de asistencia al cliente de EKIN, S. Coop." .
+
+base:Persona a owl:Class ;
+    rdfs:label "Persona" ;
+    rdfs:comment "Persona que interactúa con las máquinas EKIN, S. Coop." .
+
+base:ComponenteMaquina a owl:Class ;
+    rdfs:label "ComponenteMaquina" ;
+    rdfs:comment "Componente de la máquina EKIN, S. Coop." .
+
+base:tieneInstruccionSeguridad a owl:ObjectProperty ;
+    rdfs:domain base:MaquinaEKIN ;
+    rdfs:range base:InstruccionSeguridad ;
+    rdfs:comment "Relación entre una máquina EKIN y sus instrucciones de seguridad." .
+
+base:requiereConsulta a owl:ObjectProperty ;
+    rdfs:domain base:Persona ;
+    rdfs:range base:DepartamentoAsistenciaCliente ;
+    rdfs:comment "Relación entre una persona y el departamento de asistencia al cliente." .
+
+base:puedeCausarLesion a owl:ObjectProperty ;
+    rdfs:domain base:InstruccionSeguridad ;
+    rdfs:range base:Persona ;
+    rdfs:comment "Relación entre una instrucción de seguridad y las lesiones que puede causar." .
+
+base:puedeCausarDano a owl:ObjectProperty ;
+    rdfs:domain base:InstruccionSeguridad ;
+    rdfs:range base:ComponenteMaquina ;
+    rdfs:comment "Relación entre una instrucción de seguridad y los daños que puede causar a los componentes de la máquina." .

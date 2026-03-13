@@ -1,0 +1,78 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+
+base:SistemaDeEngrase a owl:Class ;
+    rdfs:label "Sistema de engrase" ;
+    rdfs:comment "Sistema de engrase situado en la parte posterior de la máquina, debajo del sistema neumático." .
+
+base:EngraseAutomatico a owl:Class ;
+    rdfs:label "Engrase automático" ;
+    rdfs:comment "Componente del sistema de engrase que lubrica el sistema piñón-cremallera." .
+
+base:EngraseManual a owl:Class ;
+    rdfs:label "Engrase manual" ;
+    rdfs:comment "Componente del sistema de engrase que lubrica los rodamientos de los piñones superiores." .
+
+base:CentralDeLubricacion a owl:Class ;
+    rdfs:label "Central de lubricación" ;
+    rdfs:comment "Componente del engrase automático que suministra grasa al piñón de lubricación." .
+
+base:PinonDeLubricacion a owl:Class ;
+    rdfs:label "Piñón de lubricación" ;
+    rdfs:comment "Piñón de espuma de poliuretano de célula abierta que garantiza un suministro óptimo de lubricante." .
+
+base:BombaDeEmbolo a owl:Class ;
+    rdfs:label "Bomba de émbolo" ;
+    rdfs:comment "Componente del engrase manual que lubrica los rodamientos de los piñones superiores." .
+
+base:SistemaPiñonCremallera a owl:Class ;
+    rdfs:label "Sistema piñón-cremallera" ;
+    rdfs:comment "Sistema que es lubricado por el engrase automático." .
+
+mecanica:estaCompuestoPor a owl:ObjectProperty ;
+    rdfs:label "está compuesto por" ;
+    rdfs:domain base:SistemaDeEngrase ;
+    rdfs:range owl:Class .
+
+mecanica:estaSituadoEn a owl:ObjectProperty ;
+    rdfs:label "está situado en" ;
+    rdfs:domain base:SistemaDeEngrase ;
+    rdfs:range rdfs:Literal .
+
+mecanica:lubrica a owl:ObjectProperty ;
+    rdfs:label "lubrica" ;
+    rdfs:domain base:EngraseAutomatico ;
+    rdfs:range base:SistemaPiñonCremallera .
+
+mecanica:recibeGrasaDe a owl:ObjectProperty ;
+    rdfs:label "recibe grasa de" ;
+    rdfs:domain base:PinonDeLubricacion ;
+    rdfs:range base:CentralDeLubricacion .
+
+mecanica:empleaGrasa a owl:ObjectProperty ;
+    rdfs:label "emplea grasa" ;
+    rdfs:domain base:EngraseAutomatico ;
+    rdfs:range rdfs:Literal .
+
+mecanica:empleaAceite a owl:ObjectProperty ;
+    rdfs:label "emplea aceite" ;
+    rdfs:domain base:EngraseManual ;
+    rdfs:range rdfs:Literal .
+
+mecanica:actuaLimpiando a owl:ObjectProperty ;
+    rdfs:label "actúa limpiando" ;
+    rdfs:domain base:PinonDeLubricacion ;
+    rdfs:range rdfs:Literal .
+
+mecanica:seEncuargaDe a owl:ObjectProperty ;
+    rdfs:label "se encarga de" ;
+    rdfs:domain base:BombaDeEmbolo ;
+    rdfs:range rdfs:Literal .
+
+mecanica:ejecutarEmboladaPorSemana a owl:DatatypeProperty ;
+    rdfs:label "ejecutar embolada por semana" ;
+    rdfs:domain base:EngraseManual ;
+    rdfs:range rdfs:Literal .

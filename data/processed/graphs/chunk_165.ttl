@@ -1,0 +1,104 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:Plato a owl:Class ;
+    rdfs:label "Plato" ;
+    rdfs:comment "Componente mecánico que forma parte de la base de la máquina." .
+
+base:Base a owl:Class ;
+    rdfs:label "Base" ;
+    rdfs:comment "Estructura base de la máquina." .
+
+base:Tornillo a owl:Class ;
+    rdfs:label "Tornillo" ;
+    rdfs:comment "Elemento de fijación utilizado en la estructura de la máquina." .
+
+base:Plataforma a owl:Class ;
+    rdfs:label "Plataforma" ;
+    rdfs:comment "Estructura que soporta componentes o permite acceso a la máquina." .
+
+base:PortaBrochas a owl:Class ;
+    rdfs:label "PortaBrochas" ;
+    rdfs:comment "Componente que sostiene brochas en la máquina." .
+
+base:Columna a owl:Class ;
+    rdfs:label "Columna" ;
+    rdfs:comment "Estructura vertical que soporta otros componentes." .
+
+base:CarroPortaPiezas a owl:Class ;
+    rdfs:label "CarroPortaPiezas" ;
+    rdfs:comment "Componente móvil que transporta piezas en la máquina." .
+
+mecanica:estaConectadoA a owl:ObjectProperty ;
+    rdfs:label "estaConectadoA" ;
+    rdfs:comment "Relación que indica que un componente está conectado a otro." ;
+    rdfs:domain base:Plato ;
+    rdfs:range base:Base .
+
+mecanica:tieneTornillos a owl:ObjectProperty ;
+    rdfs:label "tieneTornillos" ;
+    rdfs:comment "Relación que indica que un componente tiene tornillos asociados." ;
+    rdfs:domain base:Plato ;
+    rdfs:range base:Tornillo .
+
+mecanica:tienePlataformas a owl:ObjectProperty ;
+    rdfs:label "tienePlataformas" ;
+    rdfs:comment "Relación que indica que un componente tiene plataformas asociadas." ;
+    rdfs:domain base:Base ;
+    rdfs:range base:Plataforma .
+
+mecanica:tienePortaBrochas a owl:ObjectProperty ;
+    rdfs:label "tienePortaBrochas" ;
+    rdfs:comment "Relación que indica que un componente tiene un porta-brochas asociado." ;
+    rdfs:domain base:Columna ;
+    rdfs:range base:PortaBrochas .
+
+mecanica:estaAlineadoCon a owl:ObjectProperty ;
+    rdfs:label "estaAlineadoCon" ;
+    rdfs:comment "Relación que indica que un componente está alineado con otro." ;
+    rdfs:domain base:PortaBrochas ;
+    rdfs:range base:CarroPortaPiezas .
+
+mecanica:tieneEjeVertical a owl:ObjectProperty ;
+    rdfs:label "tieneEjeVertical" ;
+    rdfs:comment "Relación que indica que un componente tiene un eje vertical." ;
+    rdfs:domain base:Columna ;
+    rdfs:range base:EjeVertical .
+
+base:EjeVertical a owl:Class ;
+    rdfs:label "EjeVertical" ;
+    rdfs:comment "Eje vertical de la máquina." .
+
+mecanica:tienePosicionesTrabajo a owl:ObjectProperty ;
+    rdfs:label "tienePosicionesTrabajo" ;
+    rdfs:comment "Relación que indica que un componente tiene posiciones de trabajo asociadas." ;
+    rdfs:domain base:Base ;
+    rdfs:range base:PosicionTrabajo .
+
+base:PosicionTrabajo a owl:Class ;
+    rdfs:label "PosicionTrabajo" ;
+    rdfs:comment "Posición de trabajo en la máquina." .
+
+mecanica:tienePuertaAcceso a owl:ObjectProperty ;
+    rdfs:label "tienePuertaAcceso" ;
+    rdfs:comment "Relación que indica que un componente tiene una puerta de acceso asociada." ;
+    rdfs:domain base:Base ;
+    rdfs:range base:PuertaAcceso .
+
+base:PuertaAcceso a owl:Class ;
+    rdfs:label "PuertaAcceso" ;
+    rdfs:comment "Puerta de acceso a la máquina." .
+
+mecanica:tieneTornilleria a owl:ObjectProperty ;
+    rdfs:label "tieneTornilleria" ;
+    rdfs:comment "Relación que indica que un componente tiene tornillería asociada." ;
+    rdfs:domain base:Plataforma ;
+    rdfs:range base:Tornilleria .
+
+base:Tornilleria a owl:Class ;
+    rdfs:label "Tornilleria" ;
+    rdfs:comment "Conjunto de tornillos en la máquina." ;
+    rdfs:isDefinedBy "Incompleto: Requiere resolución externa" .

@@ -1,0 +1,37 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:PanelOperador a owl:Class ;
+    rdfs:label "Panel Operador"@es .
+
+mecanica:VelocidadDeBrochado a owl:Class ;
+    rdfs:label "Velocidad de Brochado"@es .
+
+mecanica:VelocidadDeRetroceso a owl:Class ;
+    rdfs:label "Velocidad de Retroceso"@es .
+
+mecanica:ajustarVelocidad a owl:DatatypeProperty ;
+    rdfs:domain base:PanelOperador ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "ajustar velocidad"@es .
+
+mecanica:límiteDeVelocidad a owl:DatatypeProperty ;
+    rdfs:domain [ a owl:Restriction ;
+        owl:onProperty mecanica:ajustarVelocidad ;
+        owl:hasValue 40.0 ] ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "límite de velocidad"@es .
+
+mecanica:tieneLímiteDeVelocidad a owl:ObjectProperty ;
+    rdfs:domain mecanica:VelocidadDeBrochado ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "tiene límite de velocidad"@es .
+
+mecanica:tieneLímiteDeVelocidad a owl:ObjectProperty ;
+    rdfs:domain mecanica:VelocidadDeRetroceso ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "tiene límite de velocidad"@es .

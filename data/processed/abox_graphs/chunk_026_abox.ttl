@@ -1,0 +1,83 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+ex:PlataformaInteriorCambioHerramienta a owl:Class ;
+    rdfs:label "PlataformaInteriorCambioHerramienta"@es ;
+    rdfs:comment "Plataforma utilizada para realizar el cambio de herramienta en la parte superior del carro porta-piezas."@es .
+
+ex:Trampilla a owl:Class ;
+    rdfs:label "Trampilla"@es ;
+    rdfs:comment "Trampilla en la parte central de la plataforma que se abre para realizar el cambio del plato divisor."@es .
+
+ex:EnclavamientoElectronicoSeguridad a owl:Class ;
+    rdfs:label "EnclavamientoElectronicoSeguridad"@es ;
+    rdfs:comment "Enclavamiento electrónico de seguridad (25SQ1) EUCHNER que se acciona automáticamente cuando la máquina está en funcionamiento."@es .
+
+ex:Interruptor a owl:Class ;
+    rdfs:label "Interruptor"@es ;
+    rdfs:comment "Interruptor que se acciona al abrir la trampilla, abriendo el circuito eléctrico de la máquina."@es .
+
+ex:MicroDeSeguridad a owl:Class ;
+    rdfs:label "MicroDeSeguridad"@es ;
+    rdfs:comment "Micro de seguridad (25SQ1) asociado a la trampilla."@es .
+
+ex:CarroPortaPiezas a owl:Class ;
+    rdfs:label "CarroPortaPiezas"@es ;
+    rdfs:comment "Carro porta-piezas en cuya parte superior se instala la plataforma de cambio de herramienta."@es .
+
+ex:PlatoDivisor a owl:Class ;
+    rdfs:label "PlatoDivisor"@es ;
+    rdfs:comment "Plato divisor que se cambia a través de la trampilla central de la plataforma."@es .
+
+ex:tieneTrampilla a owl:ObjectProperty ;
+    rdfs:label "tieneTrampilla"@es ;
+    rdfs:domain ex:PlataformaInteriorCambioHerramienta ;
+    rdfs:range ex:Trampilla .
+
+ex:tieneEnclavamientoElectronicoSeguridad a owl:ObjectProperty ;
+    rdfs:label "tieneEnclavamientoElectronicoSeguridad"@es ;
+    rdfs:domain ex:Trampilla ;
+    rdfs:range ex:EnclavamientoElectronicoSeguridad .
+
+ex:tieneInterruptor a owl:ObjectProperty ;
+    rdfs:label "tieneInterruptor"@es ;
+    rdfs:domain ex:Trampilla ;
+    rdfs:range ex:Interruptor .
+
+ex:tieneMicroDeSeguridad a owl:ObjectProperty ;
+    rdfs:label "tieneMicroDeSeguridad"@es ;
+    rdfs:domain ex:Trampilla ;
+    rdfs:range ex:MicroDeSeguridad .
+
+ex:tienePlataformaInteriorCambioHerramienta a owl:ObjectProperty ;
+    rdfs:label "tienePlataformaInteriorCambioHerramienta"@es ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:PlataformaInteriorCambioHerramienta .
+
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:label "tienePlatoDivisor"@es ;
+    rdfs:domain ex:PlataformaInteriorCambioHerramienta ;
+    rdfs:range ex:PlatoDivisor .
+
+ex:seAccionaAutomaticamente a owl:ObjectProperty ;
+    rdfs:label "seAccionaAutomaticamente"@es ;
+    rdfs:domain ex:EnclavamientoElectronicoSeguridad ;
+    rdfs:range ex:Maquina .
+
+ex:abreCircuitoElectrico a owl:ObjectProperty ;
+    rdfs:label "abreCircuitoElectrico"@es ;
+    rdfs:domain ex:Interruptor ;
+    rdfs:range ex:Maquina .
+
+ex:estaCerrada a owl:DatatypeProperty ;
+    rdfs:label "estaCerrada"@es ;
+    rdfs:domain ex:Trampilla ;
+    rdfs:range xsd:boolean .
+
+ex:estaEnFuncionamiento a owl:DatatypeProperty ;
+    rdfs:label "estaEnFuncionamiento"@es ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:boolean .

@@ -74,6 +74,6 @@ Initial Ontology (Task 2) --> Ontology Loading --> Entity Detection --> Semantic
 | File | Description |
 |-----|-------------|
 | `ontology_deduplication.py` | Ontology synthesis and refinement pipeline |
-| `ontology_merged.ttl` | Ontology generated in Task 2 |
+| `ontology_merged.ttl` | Ontology generated in Task 1 |
 | `deduplicated_ontology.ttl` | Final refined ontology |
 | `README.md` | Documentation |

@@ -1,6 +1,6 @@
 # Evaluation Dataset Generation from Technical Manuals
 
-This module implements **Task 4: Evaluation Dataset Generation** of the ontology-based QA pipeline.
+This module implements **Task 3: Evaluation Dataset Generation** of the ontology-based QA pipeline.
 
 The goal is to automatically generate **semantic questions and reference answers** from fragments of a technical manual.  
 These question–answer pairs are used as a **gold evaluation dataset** for assessing a semantic question answering system operating over an ontology.

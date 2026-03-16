@@ -1,0 +1,69 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:VentanaAvisos a owl:Class ;
+    rdfs:label "VentanaAvisos" .
+
+base:Brochadora a owl:Class ;
+    rdfs:label "Brochadora" .
+
+base:Botón a owl:Class ;
+    rdfs:label "Botón" .
+
+base:BotónReset a owl:Class ;
+    rdfs:subClassOf base:Botón ;
+    rdfs:label "BotónReset" .
+
+base:BotónPuestaServicio a owl:Class ;
+    rdfs:subClassOf base:Botón ;
+    rdfs:label "BotónPuestaServicio" .
+
+base:Emergencia a owl:Class ;
+    rdfs:label "Emergencia" .
+
+base:Máquina a owl:Class ;
+    rdfs:label "Máquina" .
+
+base:Tensión a owl:Class ;
+    rdfs:label "Tensión" .
+
+base:VentanaAvisos rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:Brochadora base:tieneBotón base:BotónReset ;
+    base:tieneBotón base:BotónPuestaServicio .
+
+base:Máquina base:tieneTensión base:Tensión ;
+    base:tieneEmergencia base:Emergencia .
+
+base:tieneBotón a owl:ObjectProperty ;
+    rdfs:domain base:Brochadora ;
+    rdfs:range base:Botón ;
+    rdfs:label "tieneBotón" .
+
+base:tieneTensión a owl:ObjectProperty ;
+    rdfs:domain base:Máquina ;
+    rdfs:range base:Tensión ;
+    rdfs:label "tieneTensión" .
+
+base:tieneEmergencia a owl:ObjectProperty ;
+    rdfs:domain base:Máquina ;
+    rdfs:range base:Emergencia ;
+    rdfs:label "tieneEmergencia" .
+
+base:estaPulsada a owl:ObjectProperty ;
+    rdfs:domain base:Emergencia ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "estaPulsada" .
+
+base:estaEnTensión a owl:ObjectProperty ;
+    rdfs:domain base:Máquina ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "estaEnTensión" .
+
+base:estaEnServicio a owl:ObjectProperty ;
+    rdfs:domain base:Brochadora ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "estaEnServicio" .

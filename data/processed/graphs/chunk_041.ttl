@@ -1,0 +1,38 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix motor: <https://admin-shell.io/dictionary/Motor> .
+
+base:MotorTrasvaseRefrigerante a owl:Class ;
+    rdfs:label "Motor Trasvase Refrigerante" ;
+    rdfs:isDefinedBy <http://example.org/base#> .
+
+base:MotorRefrigeranteMaquina a owl:Class ;
+    rdfs:label "Motor Refrigerante Máquina" ;
+    rdfs:isDefinedBy <http://example.org/base#> .
+
+base:SistemaRiegoFiltracionExtraccionVirutas a owl:Class ;
+    rdfs:label "Sistema Riego, Filtración y Extracción de Virutas" ;
+    rdfs:isDefinedBy <http://example.org/base#> .
+
+base:MotorTrasvaseRefrigerante rdfs:subClassOf base:SistemaRiegoFiltracionExtraccionVirutas .
+base:MotorRefrigeranteMaquina rdfs:subClassOf base:SistemaRiegoFiltracionExtraccionVirutas .
+
+base:tieneModelo a owl:DatatypeProperty ;
+    rdfs:label "tiene modelo" ;
+    rdfs:domain base:MotorTrasvaseRefrigerante ;
+    rdfs:range rdfs:Literal .
+
+base:tieneModelo a owl:DatatypeProperty ;
+    rdfs:label "tiene modelo" ;
+    rdfs:domain base:MotorRefrigeranteMaquina ;
+    rdfs:range rdfs:Literal .
+
+base:MotorTrasvaseRefrigerante rdfs:subClassOf [ a owl:Restriction ;
+    owl:onProperty base:tieneModelo ;
+    owl:hasValue "SEWABLOCK F50-215GV100L (KSB)" ] .
+
+base:MotorRefrigeranteMaquina rdfs:subClassOf [ a owl:Restriction ;
+    owl:onProperty base:tieneModelo ;
+    owl:hasValue "MG90LC2-24FT115-D1 (GRUNDFOS)" ] .

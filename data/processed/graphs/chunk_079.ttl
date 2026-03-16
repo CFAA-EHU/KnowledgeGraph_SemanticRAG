@@ -1,0 +1,176 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:CicloBrochado a owl:Class ;
+    rdfs:label "Ciclo de brochado"@es .
+
+base:PantallaPrincipal a owl:Class ;
+    rdfs:label "Pantalla principal"@es .
+
+base:PantallaCicloBrochado a owl:Class ;
+    rdfs:label "Pantalla de ciclo de brochado"@es .
+
+base:TipoPieza a owl:Class ;
+    rdfs:label "Tipo de pieza"@es .
+
+base:PiezaAnillo a owl:Class ;
+    rdfs:label "Pieza en forma de anillo"@es ;
+    rdfs:subClassOf base:TipoPieza .
+
+base:PiezaPlana a owl:Class ;
+    rdfs:label "Pieza plana"@es ;
+    rdfs:subClassOf base:TipoPieza .
+
+base:TipoOperacion a owl:Class ;
+    rdfs:label "Tipo de operación"@es .
+
+base:Desbaste a owl:Class ;
+    rdfs:label "Desbaste"@es ;
+    rdfs:subClassOf base:TipoOperacion .
+
+base:Acabado a owl:Class ;
+    rdfs:label "Acabado"@es ;
+    rdfs:subClassOf base:TipoOperacion .
+
+base:Refrigeracion a owl:Class ;
+    rdfs:label "Refrigeración"@es .
+
+base:ConRefrigerante a owl:Class ;
+    rdfs:label "Con refrigerante"@es ;
+    rdfs:subClassOf base:Refrigeracion .
+
+base:SinRefrigerante a owl:Class ;
+    rdfs:label "Sin refrigerante"@es ;
+    rdfs:subClassOf base:Refrigeracion .
+
+base:ParametroBrochado a owl:Class ;
+    rdfs:label "Parámetro de brochado"@es .
+
+base:AvanceDesbaste a owl:Class ;
+    rdfs:label "Avance de desbaste"@es ;
+    rdfs:subClassOf base:ParametroBrochado .
+
+base:AvanceAcabado a owl:Class ;
+    rdfs:label "Avance de acabado"@es ;
+    rdfs:subClassOf base:ParametroBrochado .
+
+base:PosicionInicialPlato a owl:Class ;
+    rdfs:label "Posición inicial del plato"@es ;
+    rdfs:subClassOf base:ParametroBrochado .
+
+base:NúmeroRanuras a owl:Class ;
+    rdfs:label "Número de ranuras"@es ;
+    rdfs:subClassOf base:ParametroBrochado .
+
+base:PasoEntreRanuras a owl:Class ;
+    rdfs:label "Paso entre ranuras"@es ;
+    rdfs:subClassOf base:ParametroBrochado .
+
+base:CicloInspeccion a owl:Class ;
+    rdfs:label "Ciclo de inspección"@es .
+
+base:SimulacionCiclo a owl:Class ;
+    rdfs:label "Simulación de ciclo"@es .
+
+base:EjecucionCiclo a owl:Class ;
+    rdfs:label "Ejecución de ciclo"@es .
+
+base:MemorizacionCiclo a owl:Class ;
+    rdfs:label "Memorización de ciclo"@es .
+
+base:PasoIncremento a owl:Class ;
+    rdfs:label "Paso incremento"@es ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:tieneTipoPieza a owl:ObjectProperty ;
+    rdfs:label "tiene tipo de pieza"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:TipoPieza .
+
+base:tieneTipoOperacion a owl:ObjectProperty ;
+    rdfs:label "tiene tipo de operación"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:TipoOperacion .
+
+base:tieneRefrigeracion a owl:ObjectProperty ;
+    rdfs:label "tiene refrigeración"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:Refrigeracion .
+
+base:tieneParametroBrochado a owl:ObjectProperty ;
+    rdfs:label "tiene parámetro de brochado"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:ParametroBrochado .
+
+base:tieneCicloInspeccion a owl:ObjectProperty ;
+    rdfs:label "tiene ciclo de inspección"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:CicloInspeccion .
+
+base:tieneSimulacionCiclo a owl:ObjectProperty ;
+    rdfs:label "tiene simulación de ciclo"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:SimulacionCiclo .
+
+base:tieneEjecucionCiclo a owl:ObjectProperty ;
+    rdfs:label "tiene ejecución de ciclo"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:EjecucionCiclo .
+
+base:tieneMemorizacionCiclo a owl:ObjectProperty ;
+    rdfs:label "tiene memorización de ciclo"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:MemorizacionCiclo .
+
+base:tienePasoIncremento a owl:ObjectProperty ;
+    rdfs:label "tiene paso incremento"@es ;
+    rdfs:domain base:CicloBrochado ;
+    rdfs:range base:PasoIncremento ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:accederAPantalla a owl:ObjectProperty ;
+    rdfs:label "acceder a pantalla"@es ;
+    rdfs:domain base:PantallaPrincipal ;
+    rdfs:range base:PantallaCicloBrochado .
+
+base:seleccionarTipoPieza a owl:ObjectProperty ;
+    rdfs:label "seleccionar tipo de pieza"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:TipoPieza .
+
+base:seleccionarTipoOperacion a owl:ObjectProperty ;
+    rdfs:label "seleccionar tipo de operación"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:TipoOperacion .
+
+base:activarRefrigerante a owl:ObjectProperty ;
+    rdfs:label "activar refrigerante"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:Refrigeracion .
+
+base:modificarParametroBrochado a owl:ObjectProperty ;
+    rdfs:label "modificar parámetro de brochado"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:ParametroBrochado .
+
+base:simularCiclo a owl:ObjectProperty ;
+    rdfs:label "simular ciclo"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:SimulacionCiclo .
+
+base:ejecutarCiclo a owl:ObjectProperty ;
+    rdfs:label "ejecutar ciclo"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:EjecucionCiclo .
+
+base:memorizarCiclo a owl:ObjectProperty ;
+    rdfs:label "memorizar ciclo"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:MemorizacionCiclo .
+
+base:incorporarCicloInspeccion a owl:ObjectProperty ;
+    rdfs:label "incorporar ciclo de inspección"@es ;
+    rdfs:domain base:PantallaCicloBrochado ;
+    rdfs:range base:CicloInspeccion .

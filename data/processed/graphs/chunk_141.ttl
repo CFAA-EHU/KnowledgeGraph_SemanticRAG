@@ -1,0 +1,66 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+@prefix sensor: <https://admin-shell.io/dictionary/Sensor> .
+@prefix actuator: <https://admin-shell.io/dictionary/Actuator> .
+
+base:Componente a owl:Class ;
+    rdfs:label "Componente" ;
+    rdfs:comment "Clase base para todos los componentes del sistema." .
+
+base:SensorSinContacto a owl:Class ;
+    rdfs:subClassOf base:Componente ;
+    rdfs:label "SensorSinContacto" ;
+    rdfs:isDefinedBy sensor: .
+
+base:ActuadorRecto a owl:Class ;
+    rdfs:subClassOf base:Componente ;
+    rdfs:label "ActuadorRecto" ;
+    rdfs:isDefinedBy actuator: .
+
+base:InterruptorSeguridadCodificadoTransponder a owl:Class ;
+    rdfs:subClassOf base:Componente ;
+    rdfs:label "InterruptorSeguridadCodificadoTransponder" ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:FuenteAlimentacion a owl:Class ;
+    rdfs:subClassOf base:Componente ;
+    rdfs:label "FuenteAlimentacion" .
+
+base:Transformador a owl:Class ;
+    rdfs:subClassOf base:Componente ;
+    rdfs:label "Transformador" .
+
+mecanica:estaConectadoA a owl:ObjectProperty ;
+    rdfs:domain base:Componente ;
+    rdfs:range base:Componente ;
+    rdfs:label "estaConectadoA" .
+
+mecanica:tieneLongitud a owl:DatatypeProperty ;
+    rdfs:domain base:Componente ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneLongitud" .
+
+mecanica:tieneFabricante a owl:DatatypeProperty ;
+    rdfs:domain base:Componente ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneFabricante" .
+
+mecanica:tieneModelo a owl:DatatypeProperty ;
+    rdfs:domain base:Componente ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneModelo" .
+
+mecanica:tieneCantidad a owl:DatatypeProperty ;
+    rdfs:domain base:Componente ;
+    rdfs:range xsd:integer ;
+    rdfs:label "tieneCantidad" .
+
+mecanica:tieneUbicacion a owl:DatatypeProperty ;
+    rdfs:domain base:Componente ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneUbicacion" .

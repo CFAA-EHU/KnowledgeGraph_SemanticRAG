@@ -1,0 +1,73 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sensor: <https://admin-shell.io/dictionary/Sensor#> .
+
+base:CaudalimetroMecatronico a owl:Class ;
+    rdfs:label "Caudalímetro mecatrónico"@es ;
+    rdfs:comment "Caudalímetro mecatrónico, con válvula de retención, DC, Con pantalla"@es .
+
+base:SensorNivelElectronico a owl:Class ;
+    rdfs:label "Sensor electrónico de nivel"@es ;
+    rdfs:comment "Sensor electrónico de nivel, DC PNP, Conexión por conector, Display"@es .
+
+base:SensorNivelTON a owl:Class ;
+    rdfs:label "Sensor de nivel TON"@es ;
+    rdfs:comment "Sensor de nivel TON (salida digital), DC PNP, contactos dorados, Conexión"@es .
+
+base:ManometroConSensor a owl:Class ;
+    rdfs:label "Manómetro con sensor"@es ;
+    rdfs:comment "Manómetro con sensor (D.E. 42.5), Rango manómetro: 10 (1.0 MPa), Rosca de conexión: 01 (R1/8), LED"@es .
+
+base:ModuloSeleccion a owl:Class ;
+    rdfs:label "Módulo de selección"@es ;
+    rdfs:comment "SITOP PSE200U 10 A MÓDULO DE SELECT."@es .
+
+mecanica:estaConectadoA a owl:ObjectProperty ;
+    rdfs:domain base:CaudalimetroMecatronico ;
+    rdfs:range base:VálvulaRetención .
+
+mecanica:tienePantalla a owl:DatatypeProperty ;
+    rdfs:domain base:CaudalimetroMecatronico ;
+    rdfs:range rdfs:Literal .
+
+elec:tieneConexion a owl:ObjectProperty ;
+    rdfs:domain base:SensorNivelElectronico ;
+    rdfs:range base:Conector .
+
+elec:tieneDisplay a owl:DatatypeProperty ;
+    rdfs:domain base:SensorNivelElectronico ;
+    rdfs:range rdfs:Literal .
+
+elec:tieneSalidaDigital a owl:DatatypeProperty ;
+    rdfs:domain base:SensorNivelTON ;
+    rdfs:range rdfs:Literal .
+
+elec:tieneContactosDorados a owl:DatatypeProperty ;
+    rdfs:domain base:SensorNivelTON ;
+    rdfs:range rdfs:Literal .
+
+base:tieneRango a owl:DatatypeProperty ;
+    rdfs:domain base:ManometroConSensor ;
+    rdfs:range rdfs:Literal .
+
+base:tieneRoscaConexion a owl:DatatypeProperty ;
+    rdfs:domain base:ManometroConSensor ;
+    rdfs:range rdfs:Literal .
+
+base:tieneLED a owl:DatatypeProperty ;
+    rdfs:domain base:ManometroConSensor ;
+    rdfs:range rdfs:Literal .
+
+base:tieneCorriente a owl:DatatypeProperty ;
+    rdfs:domain base:ModuloSeleccion ;
+    rdfs:range rdfs:Literal .
+
+base:VálvulaRetención a owl:Class ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:Conector a owl:Class ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .

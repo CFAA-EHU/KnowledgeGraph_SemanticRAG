@@ -1,0 +1,50 @@
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix elec: <http://example.org/elec#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:PlanDeMantenimiento a owl:Class ;
+    rdfs:label "Plan de Mantenimiento"@es .
+
+base:Maquina a owl:Class ;
+    rdfs:label "Máquina"@es .
+
+base:ValvulaManualDeEntradaGeneralDeAire a owl:Class ;
+    rdfs:label "Válvula Manual de Entrada General de Aire"@es .
+
+elec:SeccionadorGeneralDelArmarioElectrico a owl:Class ;
+    rdfs:label "Seccionador General del Armario Eléctrico"@es .
+
+base:MastilAnticaidas a owl:Class ;
+    rdfs:label "Mástil Anticaídas"@es .
+
+base:InterruptorGeneralDelArmarioElectrico a owl:Class ;
+    rdfs:label "Interruptor General del Armario Eléctrico"@es .
+
+mecanica:requiereBloqueoDe a owl:ObjectProperty ;
+    rdfs:label "requiere bloqueo de"@es ;
+    rdfs:domain base:PlanDeMantenimiento ;
+    rdfs:range base:Componente .
+
+mecanica:requiereUsoDe a owl:ObjectProperty ;
+    rdfs:label "requiere uso de"@es ;
+    rdfs:domain base:PlanDeMantenimiento ;
+    rdfs:range base:EquipoDeProteccion .
+
+mecanica:requiereConsignacionDe a owl:ObjectProperty ;
+    rdfs:label "requiere consignación de"@es ;
+    rdfs:domain base:PlanDeMantenimiento ;
+    rdfs:range base:Maquina .
+
+base:Componente a owl:Class ;
+    rdfs:label "Componente"@es .
+
+base:EquipoDeProteccion a owl:Class ;
+    rdfs:label "Equipo de Protección"@es .
+
+base:PlanDeMantenimiento mecanica:requiereBloqueoDe base:ValvulaManualDeEntradaGeneralDeAire .
+base:PlanDeMantenimiento mecanica:requiereBloqueoDe elec:SeccionadorGeneralDelArmarioElectrico .
+base:PlanDeMantenimiento mecanica:requiereUsoDe base:MastilAnticaidas .
+base:PlanDeMantenimiento mecanica:requiereConsignacionDe base:Maquina .

@@ -1,0 +1,44 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix base: <http://example.org/base#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+
+base:ComprobacionDeApriete a owl:Class ;
+    rdfs:label "Comprobación de apriete"@es .
+
+mecanica:Tornillo a owl:Class ;
+    rdfs:label "Tornillo"@es .
+
+mecanica:Tuerca a owl:Class ;
+    rdfs:label "Tuerca"@es .
+
+mecanica:comprobarEstado a owl:ObjectProperty ;
+    rdfs:domain base:ComprobacionDeApriete ;
+    rdfs:range [ a owl:Restriction ;
+                 owl:onProperty mecanica:tieneEstado ;
+                 owl:hasValue mecanica:EstadoSuelto ] .
+
+mecanica:apretar a owl:ObjectProperty ;
+    rdfs:domain base:ComprobacionDeApriete ;
+    rdfs:range [ a owl:Restriction ;
+                 owl:onProperty mecanica:tieneEstado ;
+                 owl:hasValue mecanica:EstadoApretado ] .
+
+mecanica:tieneEstado a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+                  owl:unionOf ( mecanica:Tornillo mecanica:Tuerca ) ] ;
+    rdfs:range mecanica:Estado .
+
+mecanica:Estado a owl:Class ;
+    rdfs:label "Estado"@es .
+
+mecanica:EstadoSuelto a owl:NamedIndividual ,
+                    owl:Thing ;
+    rdfs:label "Estado suelto"@es ;
+    rdfs:subClassOf mecanica:Estado .
+
+mecanica:EstadoApretado a owl:NamedIndividual ,
+                     owl:Thing ;
+    rdfs:label "Estado apretado"@es ;
+    rdfs:subClassOf mecanica:Estado .

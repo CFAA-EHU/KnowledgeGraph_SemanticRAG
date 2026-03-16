@@ -1,0 +1,86 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:AceiteUsado a owl:Class ;
+    rdfs:label "AceiteUsado" ;
+    rdfs:comment "Todo aceite industrial o lubricante, con base mineral o sintética, que se haya vuelto inadecuado para el uso que se le hubiere asignado inicialmente." .
+
+base:ResiduoPeligroso a owl:Class ;
+    rdfs:label "ResiduoPeligroso" .
+
+base:Agua a owl:Class ;
+    rdfs:label "Agua" .
+
+base:ResiduoOleaginoso a owl:Class ;
+    rdfs:label "ResiduoOleaginoso" .
+
+base:Instalacion a owl:Class ;
+    rdfs:label "Instalacion" ;
+    rdfs:comment "Instalaciones que permiten la conservación del aceite usado hasta su recogida." .
+
+base:VehiculoRecogida a owl:Class ;
+    rdfs:label "VehiculoRecogida" ;
+    rdfs:comment "Vehículos encargados de efectuar la recogida del aceite usado." .
+
+base:AguaSuperficial a owl:Class ;
+    rdfs:label "AguaSuperficial" .
+
+base:AguaInterior a owl:Class ;
+    rdfs:label "AguaInterior" .
+
+base:AguaSubterranea a owl:Class ;
+    rdfs:label "AguaSubterranea" .
+
+base:ZonaMarTerritorial a owl:Class ;
+    rdfs:label "ZonaMarTerritorial" .
+
+base:SistemaAlcantarillado a owl:Class ;
+    rdfs:label "SistemaAlcantarillado" ;
+    rdfs:comment "Sistemas de alcantarillado o evacuación de aguas residuales." .
+
+base:Suelo a owl:Class ;
+    rdfs:label "Suelo" .
+
+base:ResiduoDerivadoTratamiento a owl:Class ;
+    rdfs:label "ResiduoDerivadoTratamiento" ;
+    rdfs:comment "Residuos derivados de tratamiento del aceite usado." .
+
+base:ContaminacionAtmosferica a owl:Class ;
+    rdfs:label "ContaminacionAtmosferica" ;
+    rdfs:comment "Contaminación atmosférica superior al nivel establecido por la legislación vigente." .
+
+base:almacenarEnCondicionesSatisfactorias a owl:ObjectProperty ;
+    rdfs:domain base:AceiteUsado ;
+    rdfs:range base:Instalacion .
+
+base:evitarMezclaCon a owl:ObjectProperty ;
+    rdfs:domain base:AceiteUsado ;
+    rdfs:range [ a owl:Class ;
+                 owl:unionOf ( base:ResiduoPeligroso base:Agua base:ResiduoOleaginoso ) ] .
+
+base:disponerDeInstalaciones a owl:ObjectProperty ;
+    rdfs:domain base:AceiteUsado ;
+    rdfs:range base:Instalacion .
+
+base:serAccesibleA a owl:ObjectProperty ;
+    rdfs:domain base:Instalacion ;
+    rdfs:range base:VehiculoRecogida .
+
+base:prohibirVertidoEn a owl:ObjectProperty ;
+    rdfs:domain base:AceiteUsado ;
+    rdfs:range [ a owl:Class ;
+                 owl:unionOf ( base:AguaSuperficial base:AguaInterior base:AguaSubterranea base:ZonaMarTerritorial base:SistemaAlcantarillado ) ] .
+
+base:prohibirDepositoEn a owl:ObjectProperty ;
+    rdfs:domain base:AceiteUsado ;
+    rdfs:range base:Suelo .
+
+base:prohibirVertidoIncontroladoDe a owl:ObjectProperty ;
+    rdfs:domain base:AceiteUsado ;
+    rdfs:range base:ResiduoDerivadoTratamiento .
+
+base:prohibirTratamientoQueProvoque a owl:ObjectProperty ;
+    rdfs:domain base:AceiteUsado ;
+    rdfs:range base:ContaminacionAtmosferica .

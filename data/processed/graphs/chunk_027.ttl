@@ -1,0 +1,47 @@
+@prefix base: <http://example.org/base#> .
+@prefix elec: <http://example.org/electricidad#> .
+@prefix mecanica: <http://example.org/mecanica#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:ArmarioElectrico a owl:Class .
+base:BotoneraMaquina a owl:Class .
+base:PulsadorParadaEmergencia a owl:Class .
+elec:Relé a owl:Class .
+mecanica:Sistema a owl:Class .
+mecanica:Motor a owl:Class .
+
+elec:tienePulsadorParadaEmergencia a owl:ObjectProperty ;
+    rdfs:domain base:ArmarioElectrico ;
+    rdfs:range base:PulsadorParadaEmergencia .
+
+elec:tienePulsadorParadaEmergencia a owl:ObjectProperty ;
+    rdfs:domain base:BotoneraMaquina ;
+    rdfs:range base:PulsadorParadaEmergencia .
+
+elec:produceCaidaDe a owl:ObjectProperty ;
+    rdfs:domain base:PulsadorParadaEmergencia ;
+    rdfs:range elec:Relé .
+
+elec:conllevaDesconexionDe a owl:ObjectProperty ;
+    rdfs:domain elec:Relé ;
+    rdfs:range mecanica:Sistema .
+
+elec:conllevaDesconexionDe a owl:ObjectProperty ;
+    rdfs:domain elec:Relé ;
+    rdfs:range mecanica:Motor .
+
+elec:seDebeEmplearEn a owl:ObjectProperty ;
+    rdfs:domain base:PulsadorParadaEmergencia ;
+    rdfs:range base:SituacionEmergencia .
+
+base:SituacionEmergencia a owl:Class ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+elec:noSeDebeEmplearEn a owl:ObjectProperty ;
+    rdfs:domain base:PulsadorParadaEmergencia ;
+    rdfs:range base:SituacionNormal .
+
+base:SituacionNormal a owl:Class ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .

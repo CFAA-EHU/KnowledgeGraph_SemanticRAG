@@ -1,0 +1,36 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:CarroPortaPiezas a owl:Class ;
+    rdfs:label "Carro Porta-Piezas" .
+
+base:Contrapeso a owl:Class ;
+    rdfs:label "Contrapeso" .
+
+base:Patin a owl:Class ;
+    rdfs:label "Patín" .
+
+base:ElementoLubricado a owl:Class ;
+    rdfs:label "Elemento Lubricado" .
+
+base:tienePatines a owl:ObjectProperty ;
+    rdfs:domain base:CarroPortaPiezas ;
+    rdfs:range base:Patin .
+
+base:tieneContrapesos a owl:ObjectProperty ;
+    rdfs:domain base:CarroPortaPiezas ;
+    rdfs:range base:Contrapeso .
+
+base:requiereLubricacion a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Restriction ;
+        owl:onProperty base:tienePatines ;
+        owl:someValuesFrom base:Patin ] ;
+    rdfs:range base:ElementoLubricado .
+
+base:requiereLubricacion a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Restriction ;
+        owl:onProperty base:tieneContrapesos ;
+        owl:someValuesFrom base:Contrapeso ] ;
+    rdfs:range base:ElementoLubricado .

@@ -1,0 +1,66 @@
+@prefix base: <http://example.org/manual#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:Manual a owl:Class ;
+    rdfs:label "Manual"@es ;
+    rdfs:comment "Documento técnico que contiene información sobre un sistema o componente."@es .
+
+base:Empresa a owl:Class ;
+    rdfs:label "Empresa"@es ;
+    rdfs:comment "Entidad responsable de la creación y derechos de autor del manual."@es .
+
+base:DerechoDeAutor a owl:Class ;
+    rdfs:label "DerechoDeAutor"@es ;
+    rdfs:comment "Derechos legales sobre la reproducción, alteración, difusión y divulgación del manual."@es .
+
+base:Autorizacion a owl:Class ;
+    rdfs:label "Autorizacion"@es ;
+    rdfs:comment "Permiso requerido para realizar acciones sobre el manual."@es ;
+    rdfs:isDefinedBy <http://example.org/manual#Autorizacion> .
+
+base:Alteracion a owl:Class ;
+    rdfs:label "Alteracion"@es ;
+    rdfs:comment "Modificación de la información contenida en el manual."@es ;
+    rdfs:isDefinedBy <http://example.org/manual#Alteracion> .
+
+base:Reproduccion a owl:Class ;
+    rdfs:label "Reproduccion"@es ;
+    rdfs:comment "Copiado del contenido del manual."@es ;
+    rdfs:isDefinedBy <http://example.org/manual#Reproduccion> .
+
+base:Difusion a owl:Class ;
+    rdfs:label "Difusion"@es ;
+    rdfs:comment "Distribución del contenido del manual."@es ;
+    rdfs:isDefinedBy <http://example.org/manual#Difusion> .
+
+base:Divulgacion a owl:Class ;
+    rdfs:label "Divulgacion"@es ;
+    rdfs:comment "Compartir el contenido del manual con terceros."@es ;
+    rdfs:isDefinedBy <http://example.org/manual#Divulgacion> .
+
+base:InformacionManual a owl:Class ;
+    rdfs:label "InformacionManual"@es ;
+    rdfs:comment "Contenido del manual que puede sufrir alteraciones."@es .
+
+base:tieneDerechosDeAutor a owl:ObjectProperty ;
+    rdfs:domain base:Empresa ;
+    rdfs:range base:DerechoDeAutor ;
+    rdfs:comment "Relación entre una empresa y los derechos de autor de un manual."@es .
+
+base:requiereAutorizacion a owl:ObjectProperty ;
+    rdfs:domain base:DerechoDeAutor ;
+    rdfs:range base:Autorizacion ;
+    rdfs:comment "Relación entre los derechos de autor y la autorización requerida."@es .
+
+base:prohibe a owl:ObjectProperty ;
+    rdfs:domain base:DerechoDeAutor ;
+    rdfs:range [ a owl:Class ;
+                 owl:unionOf ( base:Reproduccion base:Alteracion base:Difusion base:Divulgacion ) ] ;
+    rdfs:comment "Relación entre los derechos de autor y las acciones prohibidas."@es .
+
+base:puedeSufrirAlteraciones a owl:ObjectProperty ;
+    rdfs:domain base:InformacionManual ;
+    rdfs:range base:Alteracion ;
+    rdfs:comment "Relación entre la información del manual y las posibles alteraciones."@es .

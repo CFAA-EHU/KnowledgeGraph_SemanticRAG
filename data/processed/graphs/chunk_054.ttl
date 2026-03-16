@@ -1,0 +1,64 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix base: <http://example.org/sistemaNeumatico#> .
+@prefix comp: <http://example.org/componenteNeumatico#> .
+
+base:SistemaNeumatico a owl:Class ;
+    rdfs:label "Sistema Neumático" ;
+    rdfs:comment "Sistema neumático situado en la parte posterior de la máquina" .
+
+comp:ValvulaNeumaticaDeMandoManual a owl:Class ;
+    rdfs:label "Válvula Neumática de Mando Manual" .
+
+comp:FiltroReguladorDePresion a owl:Class ;
+    rdfs:label "Filtro Regulador de Presión" .
+
+comp:SecadorDeAire a owl:Class ;
+    rdfs:label "Secador de Aire" .
+
+comp:Manometro a owl:Class ;
+    rdfs:label "Manómetro" .
+
+comp:Lubricador a owl:Class ;
+    rdfs:label "Lubricador" .
+
+comp:Presostato a owl:Class ;
+    rdfs:label "Presostato" .
+
+comp:ReguladorDePresion a owl:Class ;
+    rdfs:label "Regulador de Presión" .
+
+comp:Electrovalvula a owl:Class ;
+    rdfs:label "Electroválvula" .
+
+comp:Silenciador a owl:Class ;
+    rdfs:label "Silenciador" .
+
+base:SistemaNeumatico rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty base:tieneComponente ;
+    owl:someValuesFrom comp:ComponenteNeumatico
+] .
+
+base:tieneComponente a owl:ObjectProperty ;
+    rdfs:domain base:SistemaNeumatico ;
+    rdfs:range comp:ComponenteNeumatico .
+
+base:acciona a owl:ObjectProperty ;
+    rdfs:domain base:SistemaNeumatico ;
+    rdfs:range comp:ComponenteNeumatico ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:corta a owl:ObjectProperty ;
+    rdfs:domain base:SistemaNeumatico ;
+    rdfs:range comp:ComponenteNeumatico ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+base:presuriza a owl:ObjectProperty ;
+    rdfs:domain base:SistemaNeumatico ;
+    rdfs:range comp:ComponenteNeumatico ;
+    rdfs:comment "Incompleto: Requiere resolución externa" .
+
+comp:ComponenteNeumatico a owl:Class ;
+    rdfs:label "Componente Neumático" .

@@ -1,0 +1,46 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+base:SeguridadConMateriales a owl:Class ;
+    rdfs:label "Seguridad con Materiales"@es .
+
+base:SustanciaQuimica a owl:Class ;
+    rdfs:label "Sustancia Química"@es .
+
+base:MaterialDeServicio a owl:Class ;
+    rdfs:label "Material de Servicio"@es .
+
+base:PiezaDeRecambio a owl:Class ;
+    rdfs:label "Pieza de Recambio"@es .
+
+base:Residuo a owl:Class ;
+    rdfs:label "Residuo"@es .
+
+base:NormativaVigente a owl:Class ;
+    rdfs:label "Normativa Vigente"@es .
+
+base:LegislacionVigente a owl:Class ;
+    rdfs:label "Legislación Vigente"@es .
+
+base:cumpleNormativa a owl:ObjectProperty ;
+    rdfs:label "cumple normativa"@es ;
+    rdfs:domain base:SustanciaQuimica ;
+    rdfs:range base:NormativaVigente .
+
+base:requiereEliminacionSegura a owl:ObjectProperty ;
+    rdfs:label "requiere eliminación segura"@es ;
+    rdfs:domain [ a owl:Class ;
+        owl:unionOf ( base:MaterialDeServicio base:PiezaDeRecambio ) ] ;
+    rdfs:range base:Residuo .
+
+base:almacenamientoResiduo a owl:ObjectProperty ;
+    rdfs:label "almacenamiento de residuo"@es ;
+    rdfs:domain base:Residuo ;
+    rdfs:range base:LegislacionVigente .
+
+base:deshechoResiduo a owl:ObjectProperty ;
+    rdfs:label "deshecho de residuo"@es ;
+    rdfs:domain base:Residuo ;
+    rdfs:range base:LegislacionVigente .

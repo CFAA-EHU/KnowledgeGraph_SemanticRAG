@@ -1,0 +1,24 @@
+@prefix base: <http://example.org/base#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+base:ArmarioElectrico a owl:Class ;
+    rdfs:label "Armario eléctrico"@es .
+
+base:Maquina a owl:Class ;
+    rdfs:label "Máquina"@es .
+
+base:PLC a owl:Class ;
+    rdfs:label "Controlador Lógico Programable"@es .
+
+base:Mecanismo a owl:Class ;
+    rdfs:label "Mecanismo"@es .
+
+base:ArmarioElectrico base:estaUbicadoEn base:Maquina ;
+    base:tieneVoltaje "380"^^xsd:integer ;
+    base:tieneFrecuencia "50"^^xsd:integer ;
+    base:tieneControlador base:PLC .
+
+base:PLC base:controlaMovimiento base:Mecanismo .

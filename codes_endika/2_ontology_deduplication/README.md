@@ -53,7 +53,7 @@ The pipeline processes an existing ontology and performs several refinement step
 
 Pipeline workflow:
 
-Initial Ontology (Task 2) --> Ontology Loading --> Entity Detection --> Semantic Deduplication (Embeddings) --> Entity Merging --> Ontology Consistency Check (LLM) --> Automatic Ontology Repair --> Final Refined Ontology (TTL)
+Initial Ontology (Task 1) --> Ontology Loading --> Entity Detection --> Semantic Deduplication (Embeddings) --> Entity Merging --> Ontology Consistency Check (LLM) --> Automatic Ontology Repair --> Final Refined Ontology (TTL)
 
 ---
 

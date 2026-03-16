@@ -1,0 +1,89 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+ex:DerechosDeAutor a owl:Class ;
+    rdfs:label "DerechosDeAutor" ;
+    rdfs:comment "Clase que representa los derechos de autor del manual." .
+
+ex:Manual a owl:Class ;
+    rdfs:label "Manual" ;
+    rdfs:comment "Clase que representa el manual técnico." .
+
+ex:Empresa a owl:Class ;
+    rdfs:label "Empresa" ;
+    rdfs:comment "Clase que representa la empresa EKIN S. Coop." .
+
+ex:Reproducción a owl:Class ;
+    rdfs:label "Reproducción" ;
+    rdfs:comment "Clase que representa la reproducción del manual." .
+
+ex:Alteración a owl:Class ;
+    rdfs:label "Alteración" ;
+    rdfs:comment "Clase que representa la alteración del manual." .
+
+ex:Difusión a owl:Class ;
+    rdfs:label "Difusión" ;
+    rdfs:comment "Clase que representa la difusión del manual." .
+
+ex:Divulgación a owl:Class ;
+    rdfs:label "Divulgación" ;
+    rdfs:comment "Clase que representa la divulgación del manual." .
+
+ex:Autorización a owl:Class ;
+    rdfs:label "Autorización" ;
+    rdfs:comment "Clase que representa la autorización para la reproducción o alteración del manual." .
+
+ex:InformaciónManual a owl:Class ;
+    rdfs:label "InformaciónManual" ;
+    rdfs:comment "Clase que representa la información del manual." .
+
+ex:AlteraciónInformación a owl:Class ;
+    rdfs:label "AlteraciónInformación" ;
+    rdfs:comment "Clase que representa la alteración de la información del manual." .
+
+ex:Desarrollo a owl:Class ;
+    rdfs:label "Desarrollo" ;
+    rdfs:comment "Clase que representa el desarrollo constante de la empresa." .
+
+ex:Calidad a owl:Class ;
+    rdfs:label "Calidad" ;
+    rdfs:comment "Clase que representa la calidad del manual." .
+
+ex:tieneDerechosDeAutor a owl:ObjectProperty ;
+    rdfs:label "tieneDerechosDeAutor" ;
+    rdfs:domain ex:Manual ;
+    rdfs:range ex:DerechosDeAutor .
+
+ex:prohíbe a owl:ObjectProperty ;
+    rdfs:label "prohíbe" ;
+    rdfs:domain ex:DerechosDeAutor ;
+    rdfs:range [ a owl:Class ;
+                rdfs:subClassOf ex:Reproducción, ex:Alteración, ex:Difusión, ex:Divulgación ] .
+
+ex:requiere a owl:ObjectProperty ;
+    rdfs:label "requiere" ;
+    rdfs:domain [ a owl:Class ;
+                 rdfs:subClassOf ex:Reproducción, ex:Alteración, ex:Difusión, ex:Divulgación ] ;
+    rdfs:range ex:Autorización .
+
+ex:contiene a owl:ObjectProperty ;
+    rdfs:label "contiene" ;
+    rdfs:domain ex:Manual ;
+    rdfs:range ex:InformaciónManual .
+
+ex:puedeSufrir a owl:ObjectProperty ;
+    rdfs:label "puedeSufrir" ;
+    rdfs:domain ex:InformaciónManual ;
+    rdfs:range ex:AlteraciónInformación .
+
+ex:busca a owl:ObjectProperty ;
+    rdfs:label "busca" ;
+    rdfs:domain ex:Empresa ;
+    rdfs:range ex:Calidad .
+
+ex:enVirtudDe a owl:ObjectProperty ;
+    rdfs:label "enVirtudDe" ;
+    rdfs:domain ex:AlteraciónInformación ;
+    rdfs:range ex:Desarrollo .

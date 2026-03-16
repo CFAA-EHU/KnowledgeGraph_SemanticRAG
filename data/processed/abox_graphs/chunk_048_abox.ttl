@@ -1,0 +1,115 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+ex:PlatoDivisor a owl:Class ;
+    rdfs:label "Plato Divisor"@es ;
+    rdfs:comment "Componente de la máquina que permite realizar divisiones angulares."@es.
+
+ex:Servomotor a owl:Class ;
+    rdfs:label "Servomotor"@es ;
+    rdfs:comment "Componente que gira el plato divisor."@es.
+
+ex:CilindroHidraulico a owl:Class ;
+    rdfs:label "Cilindro Hidráulico"@es ;
+    rdfs:comment "Componente que permite el movimiento vertical del engranaje superior del dentado Hirth."@es.
+
+ex:EngranajeSuperior a owl:Class ;
+    rdfs:label "Engranaje Superior"@es ;
+    rdfs:comment "Parte del dentado Hirth que se mueve verticalmente."@es.
+
+ex:DentadoHirth a owl:Class ;
+    rdfs:label "Dentado Hirth"@es ;
+    rdfs:comment "Sistema de engranaje que permite la división angular."@es.
+
+ex:TorretaDeMicros a owl:Class ;
+    rdfs:label "Torreta de Micros"@es ;
+    rdfs:comment "Componente que se activa al girar el plato divisor."@es.
+
+ex:Leva a owl:Class ;
+    rdfs:label "Leva"@es ;
+    rdfs:comment "Componente que activa las señales al girar el plato divisor."@es.
+
+ex:BasePlana a owl:Class ;
+    rdfs:label "Base Plana"@es ;
+    rdfs:comment "Base del plato divisor para brochar a 0º."@es.
+
+ex:BaseInclinada a owl:Class ;
+    rdfs:label "Base Inclinada"@es ;
+    rdfs:comment "Base del plato divisor para brochar a 15º."@es.
+
+ex:DiscoIconel a owl:Class ;
+    rdfs:label "Disco Iconel"@es ;
+    rdfs:comment "Pieza a brochar que se amarra al plato divisor."@es.
+
+ex:tieneDentadoHirth a owl:ObjectProperty ;
+    rdfs:label "tiene dentado Hirth"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:DentadoHirth.
+
+ex:tieneServomotor a owl:ObjectProperty ;
+    rdfs:label "tiene servomotor"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:Servomotor.
+
+ex:tieneCilindroHidraulico a owl:ObjectProperty ;
+    rdfs:label "tiene cilindro hidráulico"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:CilindroHidraulico.
+
+ex:tieneEngranajeSuperior a owl:ObjectProperty ;
+    rdfs:label "tiene engranaje superior"@es ;
+    rdfs:domain ex:DentadoHirth ;
+    rdfs:range ex:EngranajeSuperior.
+
+ex:tieneTorretaDeMicros a owl:ObjectProperty ;
+    rdfs:label "tiene torreta de micros"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:TorretaDeMicros.
+
+ex:tieneLeva a owl:ObjectProperty ;
+    rdfs:label "tiene leva"@es ;
+    rdfs:domain ex:TorretaDeMicros ;
+    rdfs:range ex:Leva.
+
+ex:tieneBasePlana a owl:ObjectProperty ;
+    rdfs:label "tiene base plana"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:BasePlana.
+
+ex:tieneBaseInclinada a owl:ObjectProperty ;
+    rdfs:label "tiene base inclinada"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:BaseInclinada.
+
+ex:tieneDiscoIconel a owl:ObjectProperty ;
+    rdfs:label "tiene disco Iconel"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:DiscoIconel.
+
+ex:liberaDentadoHirth a owl:ObjectProperty ;
+    rdfs:label "libera dentado Hirth"@es ;
+    rdfs:domain ex:CilindroHidraulico ;
+    rdfs:range ex:DentadoHirth.
+
+ex:giraPlatoDivisor a owl:ObjectProperty ;
+    rdfs:label "gira plato divisor"@es ;
+    rdfs:domain ex:Servomotor ;
+    rdfs:range ex:PlatoDivisor.
+
+ex:activaSeñales a owl:ObjectProperty ;
+    rdfs:label "activa señales"@es ;
+    rdfs:domain ex:Leva ;
+    rdfs:range ex:TorretaDeMicros.
+
+ex:tieneCapacidad a owl:DatatypeProperty ;
+    rdfs:label "tiene capacidad"@es ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range xsd:string.
+
+ex:tieneAngulo a owl:DatatypeProperty ;
+    rdfs:label "tiene ángulo"@es ;
+    rdfs:domain ex:BaseInclinada ;
+    rdfs:range xsd:decimal.

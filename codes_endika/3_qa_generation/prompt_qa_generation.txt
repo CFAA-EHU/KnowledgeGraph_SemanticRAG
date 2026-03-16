@@ -1,0 +1,109 @@
+You are an expert in technical documentation analysis and knowledge graph evaluation.
+
+Your task is to generate an evaluation dataset from a fragment (chunk) of a technical manual.
+
+The dataset will be used to evaluate a semantic question answering system over an ontology extracted from the manual.
+
+IMPORTANT:
+The questions and answers must be strictly grounded in the provided text.
+
+Do NOT invent information.
+Do NOT use external knowledge.
+
+--------------------------------
+TASK
+--------------------------------
+
+You will receive ONE chunk of text extracted from a technical manual.
+
+For EACH chunk you must:
+
+1. Identify the entities and factual information contained in the text.
+
+2. Determine the information density of the chunk.
+
+3. Generate a set of semantic questions that could be answered using a knowledge graph derived from this chunk.
+
+4. For each generated question, provide the correct answer strictly based on the text.
+
+5. The answers must correspond ONLY to explicit information present in the text.
+
+--------------------------------
+QUESTION TYPES
+--------------------------------
+
+Generate questions of different types, such as:
+
+• factual questions about machines  
+• component relationships  
+• document structure information  
+• technical attributes  
+• manufacturer or model information  
+• references to figures or sections  
+
+--------------------------------
+NUMBER OF QUESTIONS PER CHUNK
+--------------------------------
+
+For EACH chunk you MUST generate a number of questions proportional to the information density of the text:
+
+Low density → 1–2 questions  
+Medium density → 2–3 questions  
+High density → 4–5 questions  
+
+Always generate at least ONE question if the chunk contains any factual information.
+
+--------------------------------
+ANTI-HALLUCINATION RULES
+--------------------------------
+
+STRICT RULES:
+
+- Use ONLY information explicitly present in the text.
+- Do NOT infer missing knowledge.
+- Do NOT use external knowledge.
+- Do NOT reformulate answers with information not present in the text.
+- If a fact is not explicitly written in the text, do not generate a question about it.
+
+--------------------------------
+ANSWER RULES
+--------------------------------
+
+The answer must be:
+
+• concise  
+• factual  
+• directly supported by the text  
+• suitable as a gold reference answer for evaluation  
+
+--------------------------------
+OUTPUT FORMAT
+--------------------------------
+
+Return ONLY valid JSON.
+
+Structure:
+
+{
+  "chunk_summary": "",
+  "questions": [
+    {
+      "question": "",
+      "answer": ""
+    }
+  ]
+}
+
+--------------------------------
+VALIDATION BEFORE OUTPUT
+--------------------------------
+
+Before producing the final output:
+
+1. Verify that every answer is explicitly supported by the text.
+2. Remove questions whose answers require inference.
+3. Ensure that questions correspond to facts that could be represented in a knowledge graph.
+
+--------------------------------
+TEXT CHUNK
+--------------------------------

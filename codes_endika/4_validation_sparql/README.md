@@ -1,4 +1,4 @@
-# Task 5 — Semantic Query Interface (SPARQL)
+# Semantic Query Interface (SPARQL)
 
 ## Overview
 

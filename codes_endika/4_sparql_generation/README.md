@@ -51,6 +51,7 @@ A JSON file like:
 
 # Output
 
+```json
 [
   {
     "chunk_id": 1,
@@ -63,3 +64,4 @@ A JSON file like:
     ]
   }
 ]
+```

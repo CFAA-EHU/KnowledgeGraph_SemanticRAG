@@ -1,45 +1,70 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix siemens: <http://www.siemens.com/> .
+@prefix weidmuller: <http://www.weidmuller.com/> .
 
-ex:Contacto a owl:Class ;
-    rdfs:label "Contacto"@es ;
-    rdfs:comment "Clase que representa un contacto eléctrico."@es .
-
-ex:AcopladorPorRelé a owl:Class ;
-    rdfs:label "AcopladorPorRelé"@es ;
-    rdfs:comment "Clase que representa un acoplador por relé."@es .
+ex:Contactor a owl:Class ;
+    rdfs:label "Contactor"@es ;
+    rdfs:comment "Contactor AC-3, 5,5KW/400V, 1NA+1NC, DC 24V, 3POL, TAMANO S0"@es ;
+    rdfs:isDefinedBy siemens: .
 
 ex:LimitadorSobretension a owl:Class ;
-    rdfs:label "LimitadorSobretension"@es ;
-    rdfs:comment "Clase que representa un limitador de sobretensión."@es .
+    rdfs:label "Limitador de Sobretensión"@es ;
+    rdfs:comment "Limitador de sobretensión con varistor, AC 24...48V, DC 24...70V"@es ;
+    rdfs:isDefinedBy siemens: .
 
-ex:Varistor a owl:Class ;
-    rdfs:label "Varistor"@es ;
-    rdfs:comment "Clase que representa un varistor."@es .
-
-ex:Relé a owl:Class ;
-    rdfs:label "Relé"@es ;
-    rdfs:comment "Clase que representa un relé."@es .
-
-ex:ContactoNormalmenteAbierto a owl:Class ;
-    rdfs:label "ContactoNormalmenteAbierto"@es ;
-    rdfs:comment "Clase que representa un contacto normalmente abierto."@es .
-
-ex:ContactoNormalmenteCerrado a owl:Class ;
-    rdfs:label "ContactoNormalmenteCerrado"@es ;
-    rdfs:comment "Clase que representa un contacto normalmente cerrado."@es .
+ex:AcopladorPorRelé a owl:Class ;
+    rdfs:label "Acoplador por Relé"@es ;
+    rdfs:comment "Acoplador por relé MICROSERIES, Número de contactos: 1 Contacto"@es ;
+    rdfs:isDefinedBy weidmuller: .
 
 ex:BornesDeResorte a owl:Class ;
-    rdfs:label "BornesDeResorte"@es ;
-    rdfs:comment "Clase que representa bornes de resorte."@es .
+    rdfs:label "Bornes de Resorte"@es .
+
+ex:Varistor a owl:Class ;
+    rdfs:label "Varistor"@es .
 
 ex:SiemensAG a owl:Class ;
-    rdfs:label "SiemensAG"@es ;
-    rdfs:comment "Clase que representa la empresa Siemens AG."@es .
+    rdfs:label "Siemens AG"@es .
 
-ex:Weidmüller a owl:Class ;
-    rdfs:label "Weidmüller"@es ;
-    rdfs:comment "Clase que representa la empresa Weidmüller."@es .
+ex:Weidmuller a owl:Class ;
+    rdfs:label "Weidmuller"@es .
+
+ex:tieneBornesDeResorte a owl:ObjectProperty ;
+    rdfs:domain ex:Contactor ;
+    rdfs:range ex:BornesDeResorte .
+
+ex:tieneVaristor a owl:ObjectProperty ;
+    rdfs:domain ex:LimitadorSobretension ;
+    rdfs:range ex:Varistor .
+
+ex:tieneFabricante a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Restriction ;
+        owl:onProperty ex:tieneFabricante ;
+        owl:someValuesFrom ex:SiemensAG ] ;
+    rdfs:range ex:SiemensAG .
+
+ex:tieneFabricante a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Restriction ;
+        owl:onProperty ex:tieneFabricante ;
+        owl:someValuesFrom ex:Weidmuller ] ;
+    rdfs:range ex:Weidmuller .
+
+ex:tieneNumeroContactos a owl:DatatypeProperty ;
+    rdfs:domain ex:AcopladorPorRelé ;
+    rdfs:range xsd:integer .
+
+ex:tieneTension a owl:DatatypeProperty ;
+    rdfs:domain ex:Contactor ;
+    rdfs:range xsd:string .
+
+ex:tienePotencia a owl:DatatypeProperty ;
+    rdfs:domain ex:Contactor ;
+    rdfs:range xsd:string .
+
+ex:tieneRangoTension a owl:DatatypeProperty ;
+    rdfs:domain ex:LimitadorSobretension ;
+    rdfs:range xsd:string .

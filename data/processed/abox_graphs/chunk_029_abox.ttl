@@ -1,63 +1,99 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base#> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica#> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/elec#> .
 
-ex:Personal a owl:Class ;
-    rdfs:label "Personal"@es ;
-    rdfs:comment "Clase que representa al personal formado e instruido para el manejo y mantenimiento de la máquina."@es.
+base:FormacionPersonal a owl:Class ;
+    rdfs:label "Formación del Personal" ;
+    rdfs:comment "Clase que representa la formación y competencias del personal para el manejo y mantenimiento de la máquina." .
 
-ex:Competencia a owl:Class ;
-    rdfs:label "Competencia"@es ;
-    rdfs:comment "Clase que representa las competencias del personal para la instalación, manejo y mantenimiento de la máquina."@es.
+base:Personal a owl:Class ;
+    rdfs:label "Personal" ;
+    rdfs:comment "Clase que representa al personal involucrado en el manejo y mantenimiento de la máquina." .
 
-ex:ResponsableMaquina a owl:Class ;
-    rdfs:label "ResponsableMaquina"@es ;
-    rdfs:comment "Clase que representa al responsable de la máquina, quien tiene competencias para denegar acciones que comprometan la seguridad."@es.
+base:ResponsableMaquina a owl:Class ;
+    rdfs:label "Responsable de Máquina" ;
+    rdfs:comment "Clase que representa al responsable de la máquina, con competencias para denegar acciones que comprometan la seguridad." .
 
-ex:Formacion a owl:Class ;
-    rdfs:label "Formacion"@es ;
-    rdfs:comment "Clase que representa la formación y conocimientos necesarios para el manejo y mantenimiento de la máquina."@es.
+base:BrochadoraElectromecanicaExteriores a owl:Class ;
+    rdfs:label "Brochadora Electromecánica de Exteriores" ;
+    rdfs:comment "Clase que representa la máquina brochadora electromecánica de exteriores." ;
+    rdfs:isDefinedBy "A218/RASHEM 7x3000x500" .
 
-ex:Mantenimiento a owl:Class ;
-    rdfs:label "Mantenimiento"@es ;
-    rdfs:comment "Clase que representa el mantenimiento regular de la máquina y las averías más comunes."@es.
+base:InstruccionesSeguridad a owl:Class ;
+    rdfs:label "Instrucciones de Seguridad" ;
+    rdfs:comment "Clase que representa las instrucciones de seguridad para el manejo y mantenimiento de la máquina." .
 
-ex:Documentacion a owl:Class ;
-    rdfs:label "Documentacion"@es ;
-    rdfs:comment "Clase que representa los planos, esquemas y toda la documentación relacionada con la máquina."@es.
+base:ManualInstrucciones a owl:Class ;
+    rdfs:label "Manual de Instrucciones" ;
+    rdfs:comment "Clase que representa el manual de instrucciones de la máquina." .
 
-ex:BrochadoraElectromecanicaDeExteriores a owl:Class ;
-    rdfs:label "BrochadoraElectromecanicaDeExteriores"@es ;
-    rdfs:comment "Clase que representa la máquina brochadora electromecánica de exteriores."@es.
+base:Planos a owl:Class ;
+    rdfs:label "Planos" ;
+    rdfs:comment "Clase que representa los planos de la máquina." .
 
-ex:estudiarDocumentacion a owl:ObjectProperty ;
-    rdfs:domain ex:Personal ;
-    rdfs:range ex:Documentacion ;
-    rdfs:label "estudiarDocumentacion"@es ;
-    rdfs:comment "Propiedad que indica que el personal debe estudiar la documentación de la máquina."@es.
+base:Esquemas a owl:Class ;
+    rdfs:label "Esquemas" ;
+    rdfs:comment "Clase que representa los esquemas de la máquina." .
 
-ex:tieneCompetencia a owl:ObjectProperty ;
-    rdfs:domain ex:Personal ;
-    rdfs:range ex:Competencia ;
-    rdfs:label "tieneCompetencia"@es ;
-    rdfs:comment "Propiedad que indica que el personal tiene competencias para la instalación, manejo y mantenimiento de la máquina."@es.
+base:Documentacion a owl:Class ;
+    rdfs:label "Documentación" ;
+    rdfs:comment "Clase que representa la documentación de la máquina." .
 
-ex:tieneResponsableMaquina a owl:ObjectProperty ;
-    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
-    rdfs:range ex:ResponsableMaquina ;
-    rdfs:label "tieneResponsableMaquina"@es ;
-    rdfs:comment "Propiedad que indica que la máquina tiene un responsable."@es.
+mecanica:tieneCompetencias a owl:ObjectProperty ;
+    rdfs:label "tiene competencias" ;
+    rdfs:domain base:Personal ;
+    rdfs:range base:FormacionPersonal .
 
-ex:requiereFormacion a owl:ObjectProperty ;
-    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
-    rdfs:range ex:Formacion ;
-    rdfs:label "requiereFormacion"@es ;
-    rdfs:comment "Propiedad que indica que la máquina requiere formación específica para su manejo y mantenimiento."@es.
+mecanica:actuaEnMaquina a owl:ObjectProperty ;
+    rdfs:label "actúa en la máquina" ;
+    rdfs:domain base:Personal ;
+    rdfs:range base:BrochadoraElectromecanicaExteriores .
 
-ex:requiereMantenimiento a owl:ObjectProperty ;
-    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
-    rdfs:range ex:Mantenimiento ;
-    rdfs:label "requiereMantenimiento"@es ;
-    rdfs:comment "Propiedad que indica que la máquina requiere mantenimiento regular."@es.
+mecanica:tieneConocimientos a owl:ObjectProperty ;
+    rdfs:label "tiene conocimientos" ;
+    rdfs:domain base:Personal ;
+    rdfs:range base:FormacionPersonal .
+
+mecanica:tieneResponsable a owl:ObjectProperty ;
+    rdfs:label "tiene responsable" ;
+    rdfs:domain base:BrochadoraElectromecanicaExteriores ;
+    rdfs:range base:ResponsableMaquina .
+
+mecanica:deniegaAcciones a owl:ObjectProperty ;
+    rdfs:label "deniega acciones" ;
+    rdfs:domain base:ResponsableMaquina ;
+    rdfs:range rdfs:Resource .
+
+mecanica:estudiarDocumentacion a owl:ObjectProperty ;
+    rdfs:label "estudiar documentación" ;
+    rdfs:domain base:Personal ;
+    rdfs:range base:Documentacion .
+
+elec:tieneInstruccionesSeguridad a owl:ObjectProperty ;
+    rdfs:label "tiene instrucciones de seguridad" ;
+    rdfs:domain base:BrochadoraElectromecanicaExteriores ;
+    rdfs:range base:InstruccionesSeguridad .
+
+elec:tieneManualInstrucciones a owl:ObjectProperty ;
+    rdfs:label "tiene manual de instrucciones" ;
+    rdfs:domain base:BrochadoraElectromecanicaExteriores ;
+    rdfs:range base:ManualInstrucciones .
+
+elec:tienePlanos a owl:ObjectProperty ;
+    rdfs:label "tiene planos" ;
+    rdfs:domain base:BrochadoraElectromecanicaExteriores ;
+    rdfs:range base:Planos .
+
+elec:tieneEsquemas a owl:ObjectProperty ;
+    rdfs:label "tiene esquemas" ;
+    rdfs:domain base:BrochadoraElectromecanicaExteriores ;
+    rdfs:range base:Esquemas .
+
+elec:tieneDocumentacion a owl:ObjectProperty ;
+    rdfs:label "tiene documentación" ;
+    rdfs:domain base:BrochadoraElectromecanicaExteriores ;
+    rdfs:range base:Documentacion .

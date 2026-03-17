@@ -1,72 +1,68 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-ex:CentralitaDeEngraseManual a owl:Class ;
-    rdfs:label "Centralita de Engrase Manual" ;
-    rdfs:comment "Dispositivo para engrase manual de la máquina." .
+ex:CentralitaEngraseManual a owl:Class ;
+    rdfs:label "Centralita de engrase manual" ;
+    rdfs:comment "Componente que requiere llenado con aceite ISO 3498 G220" .
 
-ex:CentralitaDeEngraseAutomatico a owl:Class ;
-    rdfs:label "Centralita de Engrase Automático" ;
-    rdfs:comment "Dispositivo para engrase automático de la máquina." .
+ex:CentralitaEngraseAutomatica a owl:Class ;
+    rdfs:label "Centralita de engrase automática" ;
+    rdfs:comment "Componente que requiere cartucho de grasa LUE+400-05-1" .
 
 ex:GrupoHidraulico a owl:Class ;
-    rdfs:label "Grupo Hidráulico" ;
-    rdfs:comment "Sistema hidráulico de la máquina." .
+    rdfs:label "Grupo hidráulico" ;
+    rdfs:comment "Componente que requiere llenado con aceite ISO 3498 HM46" .
 
 ex:DepositoRefrigerante a owl:Class ;
-    rdfs:label "Depósito de Refrigerante" ;
-    rdfs:comment "Depósito para el refrigerante de la máquina." .
+    rdfs:label "Depósito de refrigerante" ;
+    rdfs:comment "Componente que requiere llenado con aceite de corte CUT-MAX S 5029-1" .
 
-ex:AceiteISO3498G220 a owl:Class ;
+ex:SuministroAire a owl:Class ;
+    rdfs:label "Suministro de aire" ;
+    rdfs:comment "Conexión del suministro de aire máx. a 6 bar" .
+
+ex:RedElectrica a owl:Class ;
+    rdfs:label "Red eléctrica" ;
+    rdfs:comment "Conexión a red trifásica de 380 V y 50 Hz" .
+
+ex:aceiteISO3498G220 a owl:Class ;
     rdfs:label "Aceite ISO 3498 G220" ;
-    rdfs:comment "Tipo de aceite para engrase manual." .
+    rdfs:comment "Aceite utilizado para llenar la centralita de engrase manual" .
 
-ex:AceiteISO3498HM46 a owl:Class ;
+ex:cartuchoGrasaLUE400051 a owl:Class ;
+    rdfs:label "Cartucho de grasa LUE+400-05-1" ;
+    rdfs:comment "Cartucho de grasa utilizado en la centralita de engrase automática" .
+
+ex:aceiteISO3498HM46 a owl:Class ;
     rdfs:label "Aceite ISO 3498 HM46" ;
-    rdfs:comment "Tipo de aceite para el grupo hidráulico." .
+    rdfs:comment "Aceite utilizado para llenar el grupo hidráulico" .
 
-ex:AceiteDeCorteCUTMAXS50291 a owl:Class ;
-    rdfs:label "Aceite de Corte CUT-MAX S 5029-1" ;
-    rdfs:comment "Tipo de aceite de corte para el depósito de refrigerante." .
+ex:aceiteCorteCUTMAXS50291 a owl:Class ;
+    rdfs:label "Aceite de corte CUT-MAX S 5029-1" ;
+    rdfs:comment "Aceite de corte utilizado para llenar el depósito de refrigerante" .
 
-ex:CartuchoDeGrasaLUE400051 a owl:Class ;
-    rdfs:label "Cartucho de Grasa LUE+400-05-1" ;
-    rdfs:comment "Cartucho de grasa para la centralita de engrase automático." .
+ex:conectarSuministroAire a owl:ObjectProperty ;
+    rdfs:label "conectar suministro de aire" ;
+    rdfs:comment "Propiedad que indica la conexión del suministro de aire" .
 
-ex:SuministroDeAire a owl:Class ;
-    rdfs:label "Suministro de Aire" ;
-    rdfs:comment "Suministro de aire a la máquina." .
+ex:conectarRedElectrica a owl:ObjectProperty ;
+    rdfs:label "conectar red eléctrica" ;
+    rdfs:comment "Propiedad que indica la conexión a red eléctrica" .
 
-ex:RedTrifasica a owl:Class ;
-    rdfs:label "Red Trifásica" ;
-    rdfs:comment "Red eléctrica trifásica de 380 V y 50 Hz." .
+ex:llenarCentralitaEngraseManual a owl:ObjectProperty ;
+    rdfs:label "llenar centralita de engrase manual" ;
+    rdfs:comment "Propiedad que indica el llenado de la centralita de engrase manual" .
 
-ex:conectar a owl:ObjectProperty ;
-    rdfs:label "conectar" ;
-    rdfs:comment "Propiedad que indica la conexión de un componente a otro." .
+ex:colocarCartuchoGrasa a owl:ObjectProperty ;
+    rdfs:label "colocar cartucho de grasa" ;
+    rdfs:comment "Propiedad que indica la colocación del cartucho de grasa" .
 
-ex:llenar a owl:ObjectProperty ;
-    rdfs:label "llenar" ;
-    rdfs:comment "Propiedad que indica el llenado de un componente con un fluido." .
+ex:llenarGrupoHidraulico a owl:ObjectProperty ;
+    rdfs:label "llenar grupo hidráulico" ;
+    rdfs:comment "Propiedad que indica el llenado del grupo hidráulico" .
 
-ex:colocar a owl:ObjectProperty ;
-    rdfs:label "colocar" ;
-    rdfs:comment "Propiedad que indica la colocación de un componente en otro." .
-
-ex:tienePresionMaxima a owl:DatatypeProperty ;
-    rdfs:label "tienePresionMaxima" ;
-    rdfs:comment "Propiedad que indica la presión máxima de un componente." ;
-    rdfs:range xsd:decimal .
-
-ex:tieneVoltaje a owl:DatatypeProperty ;
-    rdfs:label "tieneVoltaje" ;
-    rdfs:comment "Propiedad que indica el voltaje de un componente." ;
-    rdfs:range xsd:decimal .
-
-ex:tieneFrecuencia a owl:DatatypeProperty ;
-    rdfs:label "tieneFrecuencia" ;
-    rdfs:comment "Propiedad que indica la frecuencia de un componente." ;
-    rdfs:range xsd:decimal .
+ex:llenarDepositoRefrigerante a owl:ObjectProperty ;
+    rdfs:label "llenar depósito de refrigerante" ;
+    rdfs:comment "Propiedad que indica el llenado del depósito de refrigerante" .

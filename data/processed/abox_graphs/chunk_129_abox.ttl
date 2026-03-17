@@ -1,65 +1,75 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix siemens: <http://www.siemens.com/> .
+@prefix rittal: <http://www.rittal.com/> .
+@prefix ccea: <http://www.ccea.it/> .
 
-ex:ModuloDeSeleccionDe4Canales a owl:Class ;
-    rdfs:label "Módulo de Selección de 4 Canales"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+ex:ModuloSeleccionDe4Canales a owl:Class ;
+    rdfs:label "Módulo de selección de 4 canales" ;
+    rdfs:comment "Componente de selección de 4 canales" .
 
 ex:SystemLightLED a owl:Class ;
-    rdfs:label "System Light LED"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
-
-ex:CableConexion a owl:Class ;
-    rdfs:label "Cable de Conexión"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+    rdfs:label "System Light LED" ;
+    rdfs:comment "Sistema de iluminación LED" .
 
 ex:SoporteIluminacionMaquina a owl:Class ;
-    rdfs:label "Soporte de Iluminación de Máquina"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+    rdfs:label "Soporte de iluminación máquina" ;
+    rdfs:comment "Soporte para iluminación de máquina" .
 
 ex:LamparaIluminacionMaquina a owl:Class ;
-    rdfs:label "Lámpara de Iluminación de Máquina"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+    rdfs:label "Lámpara de iluminación máquina" ;
+    rdfs:comment "Lámpara para iluminación de máquina" .
 
-ex:LamparaDeSeñalizacion a owl:Class ;
-    rdfs:label "Lámpara de Señalización"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+ex:LamparaSeñalizacion a owl:Class ;
+    rdfs:label "Lámpara de señalización" ;
+    rdfs:comment "Lámpara para señalización de tensión" .
 
-ex:SITOP_PSE200U_10A a ex:ModuloDeSeleccionDe4Canales ;
-    rdfs:label "SITOP PSE200U 10 A Módulo de Selección de 4 Canales"@es ;
-    ex:fabricante "SIEMENS AG" ;
-    ex:referencia "6EP1961-2BA21" ;
-    ex:numeroPagina 1 .
+ex:tieneModelo a owl:ObjectProperty ;
+    rdfs:domain ex:ModuloSeleccionDe4Canales ;
+    rdfs:range rdfs:Literal .
 
-ex:SystemLightLED_1200Lumen a ex:SystemLightLED ;
-    rdfs:label "System Light LED, 1200 Lumen, length 437 mm, 100-240 V, with integral motion detector"@es ;
-    ex:fabricante "RITTAL" ;
-    ex:referencia "SZ.2500310" ;
-    ex:numeroPagina 1 .
+ex:tieneFabricante a owl:ObjectProperty ;
+    rdfs:domain ex:ModuloSeleccionDe4Canales ;
+    rdfs:range rdfs:Literal .
 
-ex:CableConexion_3Polos a ex:CableConexion ;
-    rdfs:label "Cable de Conexión, 3 polos, 100-240 V ca"@es ;
-    ex:fabricante "RITTAL" ;
-    ex:referencia "SZ.2500400" ;
-    ex:numeroPagina 1 .
+ex:tieneCodigo a owl:ObjectProperty ;
+    rdfs:domain ex:ModuloSeleccionDe4Canales ;
+    rdfs:range rdfs:Literal .
 
-ex:SoporteIluminacionMaquina_CCEA a ex:SoporteIluminacionMaquina ;
-    rdfs:label "Soporte de Iluminación de Máquina"@es ;
-    ex:fabricante "CCEA iluminazione tecnica" ;
-    ex:referencia "CALPHAFX01" ;
-    ex:numeroPagina 1 .
+ex:tieneLuminosidad a owl:ObjectProperty ;
+    rdfs:domain ex:SystemLightLED ;
+    rdfs:range rdfs:Literal .
 
-ex:LamparaIluminacionMaquina_CCEA a ex:LamparaIluminacionMaquina ;
-    rdfs:label "Lámpara de Iluminación de Máquina (230VAC - 19,5W)"@es ;
-    ex:fabricante "CCEA iluminazione tecnica" ;
-    ex:referencia "TRACKALPHA.3.50.230" ;
-    ex:numeroPagina 1 .
+ex:tieneLongitud a owl:ObjectProperty ;
+    rdfs:domain ex:SystemLightLED ;
+    rdfs:range rdfs:Literal .
 
-ex:LamparaSeñalizacionTransparente a ex:LamparaDeSeñalizacion ;
-    rdfs:label "Lámpara de Señalización, Transparente"@es ;
-    ex:fabricante "SIEMENS AG" ;
-    ex:referencia "3SU1051-6AA60-0AA0" ;
-    ex:numeroPagina 1 .
+ex:tieneVoltaje a owl:ObjectProperty ;
+    rdfs:domain ex:SystemLightLED ;
+    rdfs:range rdfs:Literal .
+
+ex:tieneFabricanteIluminacion a owl:ObjectProperty ;
+    rdfs:domain ex:SoporteIluminacionMaquina ;
+    rdfs:range rdfs:Literal .
+
+ex:tieneCodigoIluminacion a owl:ObjectProperty ;
+    rdfs:domain ex:SoporteIluminacionMaquina ;
+    rdfs:range rdfs:Literal .
+
+ex:tieneVoltajeLampara a owl:ObjectProperty ;
+    rdfs:domain ex:LamparaIluminacionMaquina ;
+    rdfs:range rdfs:Literal .
+
+ex:tienePotenciaLampara a owl:ObjectProperty ;
+    rdfs:domain ex:LamparaIluminacionMaquina ;
+    rdfs:range rdfs:Literal .
+
+ex:tieneFabricanteSeñalizacion a owl:ObjectProperty ;
+    rdfs:domain ex:LamparaSeñalizacion ;
+    rdfs:range rdfs:Literal .
+
+ex:tieneCodigoSeñalizacion a owl:ObjectProperty ;
+    rdfs:domain ex:LamparaSeñalizacion ;
+    rdfs:range rdfs:Literal .

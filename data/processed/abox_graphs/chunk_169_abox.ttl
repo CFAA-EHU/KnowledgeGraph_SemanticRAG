@@ -6,106 +6,208 @@
 @prefix elec: <https://vocab.cfaa.eus/electrica/> .
 @prefix base: <https://vocab.cfaa.eus/base/> .
 
-ex:CapturaJOG a owl:Class ;
-    rdfs:label "Captura JOG" ;
+ex:TecladoJOG a owl:Class ;
+    rdfs:label "TecladoJOG" ;
     rdfs:comment "Captura JOG con controles Z+/Z- y C+/C- destacados. Zonas de estado en la parte inferior y lateral; contraste claro entre teclas activas/inactivas para la conducción manual de ejes." .
 
-ex:Teclado a owl:Class ;
-    rdfs:label "Teclado" ;
-    rdfs:comment "Teclado con controles Z+/Z- y C+/C- destacados. Zonas de estado en la parte inferior y lateral; contraste claro entre teclas activas/inactivas para la conducción manual de ejes." .
-
 ex:PantallaPrincipal a owl:Class ;
-    rdfs:label "Pantalla principal" ;
+    rdfs:label "PantallaPrincipal" ;
     rdfs:comment "Sinóptico con lecturas de ejes Z, Z1 y C, avance y propiedades del ciclo. Softkeys resaltadas (Inspección, Ciclo brochado). Estructura por paneles oscuros con texto claro que prioriza valores en tiempo real." .
 
-ex:Sinoptico a owl:Class ;
-    rdfs:label "Sinóptico" ;
-    rdfs:comment "Sinóptico con lecturas de ejes Z, Z1 y C, avance y propiedades del ciclo." .
-
-ex:Softkey a owl:Class ;
-    rdfs:label "Softkey" ;
-    rdfs:comment "Softkeys resaltadas (Inspección, Ciclo brochado)." .
-
 ex:InterfazMovimientosManuales a owl:Class ;
-    rdfs:label "Interfaz para movimientos manuales" ;
+    rdfs:label "InterfazMovimientosManuales" ;
     rdfs:comment "Interfaz para llevar el carro a posiciones superior/intermedia/inferior y subir/bajar/girar la mesa. Indicadores de frenos MAYR, consumos y temperaturas; flechas y etiquetas guían direccionalidad y estados." .
 
-ex:IndicadorFrenos a owl:Class ;
-    rdfs:label "Indicador de frenos" ;
-    rdfs:comment "Indicadores de frenos MAYR." .
-
-ex:IndicadorConsumos a owl:Class ;
-    rdfs:label "Indicador de consumos" ;
-    rdfs:comment "Indicadores de consumos." .
-
-ex:IndicadorTemperaturas a owl:Class ;
-    rdfs:label "Indicador de temperaturas" ;
-    rdfs:comment "Indicadores de temperaturas." .
-
 ex:PanelArranqueMotores a owl:Class ;
-    rdfs:label "Panel de arranque de motores" ;
+    rdfs:label "PanelArranqueMotores" ;
     rdfs:comment "Panel con cuatro columnas (Marcha, Motor, Disyuntor, Señales). Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase) y alarmas de nivel/caudal; jerarquía orientada a diagnóstico." .
 
-ex:IndicadorCircular a owl:Class ;
-    rdfs:label "Indicador circular" ;
-    rdfs:comment "Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase) y alarmas de nivel/caudal." .
-
-ex:SecuenciaCicloCambioBrocha a owl:Class ;
-    rdfs:label "Secuencia de ciclo de cambio de brocha" ;
+ex:PantallaCicloCambioBrocha a owl:Class ;
+    rdfs:label "PantallaCicloCambioBrocha" ;
     rdfs:comment "Secuencia guiada de pasos con conmutadores de verificación; disposición en dos columnas que ordena la ejecución del procedimiento sin habilitar movimientos desde esta pantalla." .
 
-ex:ConmutadorVerificacion a owl:Class ;
-    rdfs:label "Conmutador de verificación" ;
-    rdfs:comment "Conmutadores de verificación." .
-
-ex:MatrizSeñalizadores a owl:Class ;
-    rdfs:label "Matriz de señalizadores" ;
+ex:PantallaCondicionesMaquina a owl:Class ;
+    rdfs:label "PantallaCondicionesMaquina" ;
     rdfs:comment "Matriz de señalizadores de diagnóstico OK/Error. Presentación plana y repetitiva que facilita la detección rápida de incidencias de sensores y subsistemas." .
 
-ex:SeñalizadorDiagnostico a owl:Class ;
-    rdfs:label "Señalizador de diagnóstico" ;
-    rdfs:comment "Señalizadores de diagnóstico OK/Error." .
+mec:tieneControles a owl:ObjectProperty ;
+    rdfs:domain ex:TecladoJOG ;
+    rdfs:range ex:Control .
 
-mec:estaCompuestoPor a owl:ObjectProperty ;
-    rdfs:label "esta compuesto por" ;
-    rdfs:comment "Relación que indica que un elemento está compuesto por otros elementos." .
+mec:tieneZonasDeEstado a owl:ObjectProperty ;
+    rdfs:domain ex:TecladoJOG ;
+    rdfs:range ex:ZonaDeEstado .
 
-mec:tieneIndicador a owl:ObjectProperty ;
-    rdfs:label "tiene indicador" ;
-    rdfs:comment "Relación que indica que un elemento tiene un indicador." .
+mec:tieneContraste a owl:ObjectProperty ;
+    rdfs:domain ex:TecladoJOG ;
+    rdfs:range ex:Contraste .
 
-mec:tieneSoftkey a owl:ObjectProperty ;
-    rdfs:label "tiene softkey" ;
-    rdfs:comment "Relación que indica que un elemento tiene un softkey." .
+mec:tieneLecturasDeEjes a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaPrincipal ;
+    rdfs:range ex:LecturaDeEje .
 
-mec:tieneConmutador a owl:ObjectProperty ;
-    rdfs:label "tiene conmutador" ;
-    rdfs:comment "Relación que indica que un elemento tiene un conmutador." .
+mec:tieneAvance a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaPrincipal ;
+    rdfs:range ex:Avance .
 
-mec:tieneSeñalizador a owl:ObjectProperty ;
-    rdfs:label "tiene señalizador" ;
-    rdfs:comment "Relación que indica que un elemento tiene un señalizador." .
+mec:tienePropiedadesDelCiclo a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaPrincipal ;
+    rdfs:range ex:PropiedadDelCiclo .
 
-elec:tienePantalla a owl:ObjectProperty ;
-    rdfs:label "tiene pantalla" ;
-    rdfs:comment "Relación que indica que un elemento tiene una pantalla." .
+mec:tieneSoftkeys a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaPrincipal ;
+    rdfs:range ex:Softkey .
 
-elec:tieneInterfaz a owl:ObjectProperty ;
-    rdfs:label "tiene interfaz" ;
-    rdfs:comment "Relación que indica que un elemento tiene una interfaz." .
+mec:tieneEstructuraPorPaneles a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaPrincipal ;
+    rdfs:range ex:EstructuraPorPaneles .
 
-elec:tienePanel a owl:ObjectProperty ;
-    rdfs:label "tiene panel" ;
-    rdfs:comment "Relación que indica que un elemento tiene un panel." .
+mec:tieneTextoClaro a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaPrincipal ;
+    rdfs:range ex:TextoClaro .
 
-elec:tieneSecuencia a owl:ObjectProperty ;
-    rdfs:label "tiene secuencia" ;
-    rdfs:comment "Relación que indica que un elemento tiene una secuencia." .
+mec:tieneValoresEnTiempoReal a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaPrincipal ;
+    rdfs:range ex:ValorEnTiempoReal .
 
-elec:tieneMatriz a owl:ObjectProperty ;
-    rdfs:label "tiene matriz" ;
-    rdfs:comment "Relación que indica que un elemento tiene una matriz." .
+mec:tieneInterfazParaLlevarElCarro a owl:ObjectProperty ;
+    rdfs:domain ex:InterfazMovimientosManuales ;
+    rdfs:range ex:InterfazParaLlevarElCarro .
 
-base:Motor a owl:Class ;
-    rdfs:label "Motor" ;
-    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Motor> .
+mec:tieneIndicadoresDeFrenos a owl:ObjectProperty ;
+    rdfs:domain ex:InterfazMovimientosManuales ;
+    rdfs:range ex:IndicadorDeFrenos .
+
+mec:tieneConsumos a owl:ObjectProperty ;
+    rdfs:domain ex:InterfazMovimientosManuales ;
+    rdfs:range ex:Consumo .
+
+mec:tieneTemperaturas a owl:ObjectProperty ;
+    rdfs:domain ex:InterfazMovimientosManuales ;
+    rdfs:range ex:Temperatura .
+
+mec:tieneFlechas a owl:ObjectProperty ;
+    rdfs:domain ex:InterfazMovimientosManuales ;
+    rdfs:range ex:Flecha .
+
+mec:tieneEtiquetas a owl:ObjectProperty ;
+    rdfs:domain ex:InterfazMovimientosManuales ;
+    rdfs:range ex:Etiqueta .
+
+mec:tienePanelConCuatroColumnas a owl:ObjectProperty ;
+    rdfs:domain ex:PanelArranqueMotores ;
+    rdfs:range ex:PanelConCuatroColumnas .
+
+mec:tieneIndicadoresCirculares a owl:ObjectProperty ;
+    rdfs:domain ex:PanelArranqueMotores ;
+    rdfs:range ex:IndicadorCircular .
+
+mec:tieneAlarmasDeNivelCaudal a owl:ObjectProperty ;
+    rdfs:domain ex:PanelArranqueMotores ;
+    rdfs:range ex:AlarmaDeNivelCaudal .
+
+mec:tieneJerarquíaOrientadaADiagnóstico a owl:ObjectProperty ;
+    rdfs:domain ex:PanelArranqueMotores ;
+    rdfs:range ex:JerarquíaOrientadaADiagnóstico .
+
+mec:tieneSecuenciaGuiadaDePasos a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaCicloCambioBrocha ;
+    rdfs:range ex:SecuenciaGuiadaDePasos .
+
+mec:tieneConmutadoresDeVerificación a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaCicloCambioBrocha ;
+    rdfs:range ex:ConmutadorDeVerificación .
+
+mec:tieneDisposiciónEnDosColumnas a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaCicloCambioBrocha ;
+    rdfs:range ex:DisposiciónEnDosColumnas .
+
+mec:tieneMatrizDeSeñalizadores a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaCondicionesMaquina ;
+    rdfs:range ex:MatrizDeSeñalizadores .
+
+mec:tienePresentaciónPlana a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaCondicionesMaquina ;
+    rdfs:range ex:PresentaciónPlana .
+
+mec:facilitaDetecciónRápidaDeIncidencias a owl:ObjectProperty ;
+    rdfs:domain ex:PantallaCondicionesMaquina ;
+    rdfs:range ex:DetecciónRápidaDeIncidencias .
+
+ex:Control a owl:Class ;
+    rdfs:label "Control" .
+
+ex:ZonaDeEstado a owl:Class ;
+    rdfs:label "ZonaDeEstado" .
+
+ex:Contraste a owl:Class ;
+    rdfs:label "Contraste" .
+
+ex:LecturaDeEje a owl:Class ;
+    rdfs:label "LecturaDeEje" .
+
+ex:Avance a owl:Class ;
+    rdfs:label "Avance" .
+
+ex:PropiedadDelCiclo a owl:Class ;
+    rdfs:label "PropiedadDelCiclo" .
+
+ex:Softkey a owl:Class ;
+    rdfs:label "Softkey" .
+
+ex:EstructuraPorPaneles a owl:Class ;
+    rdfs:label "EstructuraPorPaneles" .
+
+ex:TextoClaro a owl:Class ;
+    rdfs:label "TextoClaro" .
+
+ex:ValorEnTiempoReal a owl:Class ;
+    rdfs:label "ValorEnTiempoReal" .
+
+ex:InterfazParaLlevarElCarro a owl:Class ;
+    rdfs:label "InterfazParaLlevarElCarro" .
+
+ex:IndicadorDeFrenos a owl:Class ;
+    rdfs:label "IndicadorDeFrenos" .
+
+ex:Consumo a owl:Class ;
+    rdfs:label "Consumo" .
+
+ex:Temperatura a owl:Class ;
+    rdfs:label "Temperatura" .
+
+ex:Flecha a owl:Class ;
+    rdfs:label "Flecha" .
+
+ex:Etiqueta a owl:Class ;
+    rdfs:label "Etiqueta" .
+
+ex:PanelConCuatroColumnas a owl:Class ;
+    rdfs:label "PanelConCuatroColumnas" .
+
+ex:IndicadorCircular a owl:Class ;
+    rdfs:label "IndicadorCircular" .
+
+ex:AlarmaDeNivelCaudal a owl:Class ;
+    rdfs:label "AlarmaDeNivelCaudal" .
+
+ex:JerarquíaOrientadaADiagnóstico a owl:Class ;
+    rdfs:label "JerarquíaOrientadaADiagnóstico" .
+
+ex:SecuenciaGuiadaDePasos a owl:Class ;
+    rdfs:label "SecuenciaGuiadaDePasos" .
+
+ex:ConmutadorDeVerificación a owl:Class ;
+    rdfs:label "ConmutadorDeVerificación" .
+
+ex:DisposiciónEnDosColumnas a owl:Class ;
+    rdfs:label "DisposiciónEnDosColumnas" .
+
+ex:MatrizDeSeñalizadores a owl:Class ;
+    rdfs:label "MatrizDeSeñalizadores" .
+
+ex:PresentaciónPlana a owl:Class ;
+    rdfs:label "PresentaciónPlana" .
+
+ex:DetecciónRápidaDeIncidencias a owl:Class ;
+    rdfs:label "DetecciónRápidaDeIncidencias" .

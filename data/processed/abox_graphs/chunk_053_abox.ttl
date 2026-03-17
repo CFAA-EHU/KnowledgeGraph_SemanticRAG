@@ -1,132 +1,57 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:SistemaLimpiezaBrochas a owl:Class ;
     rdfs:label "Sistema de limpieza de brochas" ;
-    rdfs:comment "Sistema de limpieza de brochas situado en la parte superior del carro porta-piezas" .
+    rdfs:comment "Sistema de limpieza de brochas situado en la parte superior del carro porta-piezas compuesto por un cilindro neumático guiado y unos cepillos." .
 
 ex:CilindroNeumatico a owl:Class ;
     rdfs:label "Cilindro neumático" ;
-    rdfs:comment "Cilindro neumático guiado que forma parte del sistema de limpieza de brochas" .
+    rdfs:comment "Cilindro neumático guiado que forma parte del sistema de limpieza de brochas." .
 
 ex:Cepillo a owl:Class ;
     rdfs:label "Cepillo" ;
-    rdfs:comment "Cepillos que limpian la brocha en el sistema de limpieza" .
+    rdfs:comment "Cepillos que limpian la brocha mientras el carro porta-piezas desciende." .
 
 ex:CarroPortaPiezas a owl:Class ;
     rdfs:label "Carro porta-piezas" ;
-    rdfs:comment "Carro porta-piezas que se mueve durante el proceso de brochado" .
-
-ex:PosicionSuperior a owl:Class ;
-    rdfs:label "Posición superior" ;
-    rdfs:comment "Posición superior del carro porta-piezas" .
-
-ex:MovimientoSubida a owl:Class ;
-    rdfs:label "Movimiento de subida" ;
-    rdfs:comment "Movimiento de subida del carro porta-piezas" .
-
-ex:MovimientoBajada a owl:Class ;
-    rdfs:label "Movimiento de bajada" ;
-    rdfs:comment "Movimiento de bajada del carro porta-piezas" .
+    rdfs:comment "Carro porta-piezas que se mueve durante el proceso de brochado." .
 
 ex:Señal a owl:Class ;
     rdfs:label "Señal" ;
-    rdfs:comment "Señales del sistema de limpieza de brochas" .
+    rdfs:comment "Señales del sistema de limpieza de brochas." .
 
-ex:BQ740 a owl:Class ;
+ex:BQ740 a ex:Señal ;
     rdfs:label "BQ740" ;
-    rdfs:comment "Señal de cepillo avanzado" .
+    rdfs:comment "Señal CEPILLO AVANZADO del sistema de limpieza de brochas." .
 
-ex:BQ741 a owl:Class ;
+ex:BQ741 a ex:Señal ;
     rdfs:label "BQ741" ;
-    rdfs:comment "Señal de cepillo retrocedido" .
+    rdfs:comment "Señal CEPILLO RETROCEDIDO del sistema de limpieza de brochas." .
 
-ex:estaCompuestoPor a owl:ObjectProperty ;
-    rdfs:label "esta compuesto por" ;
-    rdfs:comment "Relación que indica que un sistema está compuesto por ciertos componentes" .
-
-ex:avanza a owl:ObjectProperty ;
-    rdfs:label "avanza" ;
-    rdfs:comment "Relación que indica que un componente avanza" .
-
-ex:retrocede a owl:ObjectProperty ;
-    rdfs:label "retrocede" ;
-    rdfs:comment "Relación que indica que un componente retrocede" .
-
-ex:limpia a owl:ObjectProperty ;
-    rdfs:label "limpia" ;
-    rdfs:comment "Relación que indica que un componente limpia otro" .
-
-ex:desciende a owl:ObjectProperty ;
-    rdfs:label "desciende" ;
-    rdfs:comment "Relación que indica que un componente desciende" .
-
-ex:llega a owl:ObjectProperty ;
-    rdfs:label "llega" ;
-    rdfs:comment "Relación que indica que un componente llega a una posición" .
-
-ex:permanece a owl:ObjectProperty ;
-    rdfs:label "permanece" ;
-    rdfs:comment "Relación que indica que un componente permanece en una posición" .
+ex:tieneComponente a owl:ObjectProperty ;
+    rdfs:domain ex:SistemaLimpiezaBrochas ;
+    rdfs:range owl:Class .
 
 ex:tieneSeñal a owl:ObjectProperty ;
-    rdfs:label "tiene señal" ;
-    rdfs:comment "Relación que indica que un sistema tiene ciertas señales" .
+    rdfs:domain ex:SistemaLimpiezaBrochas ;
+    rdfs:range ex:Señal .
 
-ex:tienePosicion a owl:ObjectProperty ;
-    rdfs:label "tiene posición" ;
-    rdfs:comment "Relación que indica que un componente tiene una posición" .
+ex:avanza a owl:ObjectProperty ;
+    rdfs:domain ex:CilindroNeumatico ;
+    rdfs:range xsd:boolean .
 
-ex:tieneMovimiento a owl:ObjectProperty ;
-    rdfs:label "tiene movimiento" ;
-    rdfs:comment "Relación que indica que un componente tiene un movimiento" .
+ex:retrocede a owl:ObjectProperty ;
+    rdfs:domain ex:Cepillo ;
+    rdfs:range xsd:boolean .
 
-ex:tieneVastago a owl:ObjectProperty ;
-    rdfs:label "tiene vástago" ;
-    rdfs:comment "Relación que indica que un cilindro tiene un vástago" .
+ex:limpia a owl:ObjectProperty ;
+    rdfs:domain ex:Cepillo ;
+    rdfs:range ex:Brocha .
 
-ex:tieneCepillos a owl:ObjectProperty ;
-    rdfs:label "tiene cepillos" ;
-    rdfs:comment "Relación que indica que un sistema tiene cepillos" .
-
-ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
-    rdfs:label "tiene carro porta-piezas" ;
-    rdfs:comment "Relación que indica que un sistema tiene un carro porta-piezas" .
-
-ex:tieneCilindroNeumatico a owl:ObjectProperty ;
-    rdfs:label "tiene cilindro neumático" ;
-    rdfs:comment "Relación que indica que un sistema tiene un cilindro neumático" .
-
-ex:tieneSistemaLimpiezaBrochas a owl:ObjectProperty ;
-    rdfs:label "tiene sistema de limpieza de brochas" ;
-    rdfs:comment "Relación que indica que una máquina tiene un sistema de limpieza de brochas" .
-
-ex:tieneSeñalBQ740 a owl:ObjectProperty ;
-    rdfs:label "tiene señal BQ740" ;
-    rdfs:comment "Relación que indica que un sistema tiene la señal BQ740" .
-
-ex:tieneSeñalBQ741 a owl:ObjectProperty ;
-    rdfs:label "tiene señal BQ741" ;
-    rdfs:comment "Relación que indica que un sistema tiene la señal BQ741" .
-
-ex:tieneFigura a owl:ObjectProperty ;
-    rdfs:label "tiene figura" ;
-    rdfs:comment "Relación que indica que un sistema tiene una figura" .
-
-ex:tieneDescripcion a owl:ObjectProperty ;
-    rdfs:label "tiene descripción" ;
-    rdfs:comment "Relación que indica que un sistema tiene una descripción" .
-
-ex:tieneTitulo a owl:ObjectProperty ;
-    rdfs:label "tiene título" ;
-    rdfs:comment "Relación que indica que un sistema tiene un título" .
-
-ex:tieneSeccion a owl:ObjectProperty ;
-    rdfs:label "tiene sección" ;
-    rdfs:comment "Relación que indica que un sistema tiene una sección" .
-
-ex:tienePagina a owl:ObjectProperty ;
-    rdfs:label "tiene página" ;
-    rdfs:comment "Relación que indica que un sistema tiene una página" .
+ex:desciende a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range xsd:boolean .

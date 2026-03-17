@@ -1,0 +1,30 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix mec: <https://vocab.cfaa.eus/broaching/mecanica#>.
+@prefix elec: <https://vocab.cfaa.eus/broaching/electrica#>.
+@prefix base: <https://vocab.cfaa.eus/broaching/base/>.
+
+ex:MotorTrasvaseRefrigerante a owl:Class ;
+    rdfs:label "Motor trasvase refrigerante" ;
+    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Motor> ;
+    rdfs:comment "Modelo: SEWABLOCK F50-215GV100L (KSB)" .
+
+ex:MotorRefrigeranteMaquina a owl:Class ;
+    rdfs:label "Motor refrigerante máquina" ;
+    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Motor> ;
+    rdfs:comment "Modelo: MG90LC2-24FT115-D1 (GRUNDFOS)" .
+
+mec:estaConectadoA a owl:ObjectProperty ;
+    rdfs:domain ex:MotorTrasvaseRefrigerante ;
+    rdfs:range ex:SistemaDeRefrigeracion .
+
+mec:tieneModelo a owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( ex:MotorTrasvaseRefrigerante ex:MotorRefrigeranteMaquina ) ] ;
+    rdfs:range xsd:string .
+
+mec:tieneFabricante a owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( ex:MotorTrasvaseRefrigerante ex:MotorRefrigeranteMaquina ) ] ;
+    rdfs:range xsd:string .

@@ -1,40 +1,108 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-ex:IndicacionDeAdvertencia a owl:Class ;
-    rdfs:label "IndicacionDeAdvertencia" ;
-    rdfs:comment "Indicación de advertencia relacionada con la seguridad." .
+ex:IndicacionDeAdvertenciaYSeguridad a owl:Class ;
+    rdfs:label "Indicación de advertencia y seguridad" ;
+    rdfs:comment "Clase que representa las indicaciones de advertencia y seguridad en el manual técnico." .
+
+ex:IndicacionDePeligro a owl:Class ;
+    rdfs:subClassOf ex:IndicacionDeAdvertenciaYSeguridad ;
+    rdfs:label "Indicación de peligro" ;
+    rdfs:comment "Clase que representa las indicaciones de peligro en el manual técnico." .
 
 ex:IndicacionDePrecaucion a owl:Class ;
-    rdfs:label "IndicacionDePrecaucion" ;
-    rdfs:comment "Indicación de precaución relacionada con la seguridad." .
+    rdfs:subClassOf ex:IndicacionDeAdvertenciaYSeguridad ;
+    rdfs:label "Indicación de precaución" ;
+    rdfs:comment "Clase que representa las indicaciones de precaución en el manual técnico." .
 
 ex:NotaInformativa a owl:Class ;
-    rdfs:label "NotaInformativa" ;
-    rdfs:comment "Nota informativa relacionada con la seguridad." .
+    rdfs:subClassOf ex:IndicacionDeAdvertenciaYSeguridad ;
+    rdfs:label "Nota informativa" ;
+    rdfs:comment "Clase que representa las notas informativas en el manual técnico." .
 
-ex:IndicacionMedioAmbiente a owl:Class ;
-    rdfs:label "IndicacionMedioAmbiente" ;
-    rdfs:comment "Indicación relacionada con el medio ambiente." .
+ex:IndicacionDeMedioAmbiente a owl:Class ;
+    rdfs:subClassOf ex:IndicacionDeAdvertenciaYSeguridad ;
+    rdfs:label "Indicación de medio ambiente" ;
+    rdfs:comment "Clase que representa las indicaciones de medio ambiente en el manual técnico." .
 
-ex:tieneObjetivo a owl:ObjectProperty ;
-    rdfs:label "tieneObjetivo" ;
-    rdfs:comment "Propiedad que relaciona una indicación con su objetivo." .
+ex:tieneComoObjetivo a owl:ObjectProperty ;
+    rdfs:domain ex:IndicacionDeAdvertenciaYSeguridad ;
+    rdfs:range ex:Objetivo ;
+    rdfs:label "tiene como objetivo" ;
+    rdfs:comment "Propiedad que relaciona una indicación de advertencia y seguridad con su objetivo." .
 
-ex:tieneDefinicion a owl:ObjectProperty ;
-    rdfs:label "tieneDefinicion" ;
-    rdfs:comment "Propiedad que relaciona una indicación con su definición." .
+ex:Objetivo a owl:Class ;
+    rdfs:label "Objetivo" ;
+    rdfs:comment "Clase que representa los objetivos de las indicaciones de advertencia y seguridad." .
 
-ex:tieneConsecuencia a owl:ObjectProperty ;
-    rdfs:label "tieneConsecuencia" ;
-    rdfs:comment "Propiedad que relaciona una indicación con su consecuencia." .
+ex:resaltarInstruccionesImportantes a owl:ObjectProperty ;
+    rdfs:domain ex:Objetivo ;
+    rdfs:range ex:Instruccion ;
+    rdfs:label "resaltar instrucciones importantes" ;
+    rdfs:comment "Propiedad que relaciona un objetivo con las instrucciones importantes que se deben resaltar." .
 
-ex:tieneRecomendacion a owl:ObjectProperty ;
-    rdfs:label "tieneRecomendacion" ;
-    rdfs:comment "Propiedad que relaciona una indicación con su recomendación." .
+ex:Instruccion a owl:Class ;
+    rdfs:label "Instrucción" ;
+    rdfs:comment "Clase que representa las instrucciones en el manual técnico." .
 
-ex:tieneImpacto a owl:ObjectProperty ;
-    rdfs:label "tieneImpacto" ;
-    rdfs:comment "Propiedad que relaciona una indicación con su impacto." .
+ex:relacionadaConSeguridad a owl:ObjectProperty ;
+    rdfs:domain ex:Instruccion ;
+    rdfs:range ex:Seguridad ;
+    rdfs:label "relacionada con seguridad" ;
+    rdfs:comment "Propiedad que relaciona una instrucción con aspectos de seguridad." .
+
+ex:Seguridad a owl:Class ;
+    rdfs:label "Seguridad" ;
+    rdfs:comment "Clase que representa los aspectos de seguridad en el manual técnico." .
+
+ex:puedenProducirseLesionesPersonalesGravas a owl:ObjectProperty ;
+    rdfs:domain ex:Seguridad ;
+    rdfs:range ex:Lesion ;
+    rdfs:label "pueden producirse lesiones personales graves" ;
+    rdfs:comment "Propiedad que relaciona un aspecto de seguridad con las lesiones personales graves que pueden producirse." .
+
+ex:Lesion a owl:Class ;
+    rdfs:label "Lesión" ;
+    rdfs:comment "Clase que representa las lesiones personales graves." .
+
+ex:puedenProducirseDanos a owl:ObjectProperty ;
+    rdfs:domain ex:Seguridad ;
+    rdfs:range ex:Dano ;
+    rdfs:label "pueden producirse daños" ;
+    rdfs:comment "Propiedad que relaciona un aspecto de seguridad con los daños que pueden producirse." .
+
+ex:Dano a owl:Class ;
+    rdfs:label "Daño" ;
+    rdfs:comment "Clase que representa los daños que pueden producirse en la máquina." .
+
+ex:puedenProducirseDestruccionPartesMaquina a owl:ObjectProperty ;
+    rdfs:domain ex:Seguridad ;
+    rdfs:range ex:Destruccion ;
+    rdfs:label "pueden producirse destrucción de partes de la máquina" ;
+    rdfs:comment "Propiedad que relaciona un aspecto de seguridad con la destrucción de partes de la máquina." .
+
+ex:Destruccion a owl:Class ;
+    rdfs:label "Destrucción" ;
+    rdfs:comment "Clase que representa la destrucción de partes de la máquina." .
+
+ex:seRecomiendaCumplimiento a owl:ObjectProperty ;
+    rdfs:domain ex:NotaInformativa ;
+    rdfs:range ex:Cumplimiento ;
+    rdfs:label "se recomienda cumplimiento" ;
+    rdfs:comment "Propiedad que relaciona una nota informativa con el cumplimiento recomendado." .
+
+ex:Cumplimiento a owl:Class ;
+    rdfs:label "Cumplimiento" ;
+    rdfs:comment "Clase que representa el cumplimiento recomendado de las notas informativas." .
+
+ex:considerarRepercusionesMedioAmbiente a owl:ObjectProperty ;
+    rdfs:domain ex:IndicacionDeMedioAmbiente ;
+    rdfs:range ex:RepercusionesMedioAmbiente ;
+    rdfs:label "considerar repercusiones medio ambiente" ;
+    rdfs:comment "Propiedad que relaciona una indicación de medio ambiente con las repercusiones en el medio ambiente." .
+
+ex:RepercusionesMedioAmbiente a owl:Class ;
+    rdfs:label "Repercusiones medio ambiente" ;
+    rdfs:comment "Clase que representa las repercusiones en el medio ambiente." .

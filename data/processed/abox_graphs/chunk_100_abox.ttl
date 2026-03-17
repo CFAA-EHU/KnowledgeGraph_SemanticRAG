@@ -1,44 +1,45 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:ComprobarFugasAceite a owl:Class ;
-    rdfs:label "ComprobarFugasAceite" ;
-    rdfs:comment "Clase que representa la acción de comprobar fugas de aceite.".
+ex:ComprobacionDeFugas a owl:Class ;
+    rdfs:label "Comprobación de fugas"@es ;
+    rdfs:comment "Proceso de verificación de fugas de fluidos en tuberías"@es .
 
-ex:Deposito a owl:Class ;
-    rdfs:label "Deposito" ;
-    rdfs:comment "Clase que representa un depósito de fluidos.".
+ex:Tuberias a owl:Class ;
+    rdfs:label "Tuberías"@es ;
+    rdfs:comment "Elementos conductores de fluidos en la máquina"@es .
 
-ex:Fluido a owl:Class ;
-    rdfs:label "Fluido" ;
-    rdfs:comment "Clase que representa un fluido.".
+ex:Racores a owl:Class ;
+    rdfs:label "Racores"@es ;
+    rdfs:comment "Componentes para apretar y sellar tuberías"@es .
 
-ex:Racor a owl:Class ;
-    rdfs:label "Racor" ;
-    rdfs:comment "Clase que representa un racor.".
+ex:DepositoEngrase a owl:Class ;
+    rdfs:label "Depósito de engrase"@es ;
+    rdfs:comment "Contenedor para el fluido de engrase"@es .
 
-ex:comprobarNivelDepositoHidraulico a owl:ObjectProperty ;
-    rdfs:label "comprobarNivelDepositoHidraulico" ;
-    rdfs:comment "Propiedad que indica la acción de comprobar el nivel de fluido en un depósito hidráulico." ;
-    rdfs:domain ex:ComprobarFugasAceite ;
-    rdfs:range ex:Deposito.
+ex:DepositoHidraulico a owl:Class ;
+    rdfs:label "Depósito hidráulico"@es ;
+    rdfs:comment "Contenedor para el fluido hidráulico"@es .
 
-ex:apretar a owl:ObjectProperty ;
-    rdfs:label "apretar" ;
-    rdfs:comment "Propiedad que indica la acción de apretar un racor." ;
-    rdfs:domain ex:ComprobarFugasAceite ;
-    rdfs:range ex:Racor.
+ex:DepositoRefrigeracion a owl:Class ;
+    rdfs:label "Depósito de refrigeración"@es ;
+    rdfs:comment "Contenedor para el fluido de refrigeración"@es .
 
-ex:comprobarNivelDepositoEngrase a owl:ObjectProperty ;
-    rdfs:label "comprobarNivelDepositoEngrase" ;
-    rdfs:comment "Propiedad que indica la acción de comprobar el nivel de fluido en un depósito de engrase." ;
-    rdfs:domain ex:ComprobarFugasAceite ;
-    rdfs:range ex:Deposito.
+ex:comprobarExistenciaFugas a owl:ObjectProperty ;
+    rdfs:domain ex:ComprobacionDeFugas ;
+    rdfs:range ex:Tuberias ;
+    rdfs:label "comprobar existencia de fugas"@es .
 
-ex:comprobarNivelDepositoRefrigeracion a owl:ObjectProperty ;
-    rdfs:label "comprobarNivelDepositoRefrigeracion" ;
-    rdfs:comment "Propiedad que indica la acción de comprobar el nivel de fluido en un depósito de refrigeración." ;
-    rdfs:domain ex:ComprobarFugasAceite ;
-    rdfs:range ex:Deposito.
+ex:apretarRacores a owl:ObjectProperty ;
+    rdfs:domain ex:ComprobacionDeFugas ;
+    rdfs:range ex:Racores ;
+    rdfs:label "apretar racores"@es .
+
+ex:comprobarNivelesFluidos a owl:ObjectProperty ;
+    rdfs:domain ex:ComprobacionDeFugas ;
+    rdfs:range [ a owl:Class ;
+                 owl:unionOf ( ex:DepositoEngrase ex:DepositoHidraulico ex:DepositoRefrigeracion ) ] ;
+    rdfs:label "comprobar niveles de fluidos"@es .

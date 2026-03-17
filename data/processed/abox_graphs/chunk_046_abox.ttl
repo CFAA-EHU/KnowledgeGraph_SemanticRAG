@@ -1,81 +1,72 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica/> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/elec/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base/> .
 
 ex:Zocalo a owl:Class ;
-    rdfs:label "Zocalo" ;
-    rdfs:comment "Base sobre la cual se monta la columna." .
+    rdfs:label "Zocalo" .
 
 ex:Columna a owl:Class ;
-    rdfs:label "Columna" ;
-    rdfs:comment "Estructura que soporta el carro porta-piezas y las guías lineales." .
+    rdfs:label "Columna" .
 
 ex:GuiaLineal a owl:Class ;
-    rdfs:label "GuiaLineal" ;
-    rdfs:comment "Guía por la cual se desplaza el carro porta-piezas." .
+    rdfs:label "GuiaLineal" .
 
 ex:CarroPortaPiezas a owl:Class ;
-    rdfs:label "CarroPortaPiezas" ;
-    rdfs:comment "Carro que porta las piezas y se desplaza a lo largo de la columna." .
+    rdfs:label "CarroPortaPiezas" .
 
 ex:ReglaLineal a owl:Class ;
-    rdfs:label "ReglaLineal" ;
-    rdfs:comment "Regla utilizada para controlar la posición del carro." .
+    rdfs:label "ReglaLineal" .
 
 ex:Cremallera a owl:Class ;
-    rdfs:label "Cremallera" ;
-    rdfs:comment "Componente del sistema piñón/cremallera." .
+    rdfs:label "Cremallera" .
 
 ex:Pinon a owl:Class ;
-    rdfs:label "Pinon" ;
-    rdfs:comment "Componente del sistema piñón/cremallera." .
+    rdfs:label "Pinon" .
 
 ex:Servomotor a owl:Class ;
-    rdfs:label "Servomotor" ;
-    rdfs:comment "Motor que acciona el sistema piñón/cremallera." .
+    rdfs:label "Servomotor" .
 
-ex:SistemaPinonCremallera a owl:Class ;
-    rdfs:label "SistemaPinonCremallera" ;
-    rdfs:comment "Sistema compuesto por un piñón y una cremallera." .
+mecanica:tieneComponente a owl:ObjectProperty ;
+    rdfs:domain ex:Zocalo ;
+    rdfs:range ex:Columna .
 
-ex:tieneRecorridoMaximo a owl:DatatypeProperty ;
-    rdfs:label "tieneRecorridoMaximo" ;
-    rdfs:domain ex:CarroPortaPiezas ;
-    rdfs:range xsd:decimal .
-
-ex:tieneVelocidadMaxima a owl:DatatypeProperty ;
-    rdfs:label "tieneVelocidadMaxima" ;
-    rdfs:domain ex:CarroPortaPiezas ;
-    rdfs:range xsd:decimal .
-
-ex:tieneFuerzaMaxima a owl:DatatypeProperty ;
-    rdfs:label "tieneFuerzaMaxima" ;
-    rdfs:domain ex:CarroPortaPiezas ;
-    rdfs:range xsd:decimal .
-
-ex:estaMontadoSobre a owl:ObjectProperty ;
-    rdfs:label "estaMontadoSobre" ;
+mecanica:tieneGuia a owl:ObjectProperty ;
     rdfs:domain ex:Columna ;
-    rdfs:range ex:Zocalo .
+    rdfs:range ex:GuiaLineal .
 
-ex:seDesplazaPor a owl:ObjectProperty ;
-    rdfs:label "seDesplazaPor" ;
+mecanica:seDesplazanPor a owl:ObjectProperty ;
     rdfs:domain ex:CarroPortaPiezas ;
     rdfs:range ex:GuiaLineal .
 
-ex:controlaPosicion a owl:ObjectProperty ;
-    rdfs:label "controlaPosicion" ;
+mecanica:controla a owl:ObjectProperty ;
     rdfs:domain ex:ReglaLineal ;
     rdfs:range ex:CarroPortaPiezas .
 
-ex:acciona a owl:ObjectProperty ;
-    rdfs:label "acciona" ;
-    rdfs:domain ex:Servomotor ;
-    rdfs:range ex:SistemaPinonCremallera .
+mecanica:disponeDe a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:Cremallera .
 
-ex:provocaMovimiento a owl:ObjectProperty ;
-    rdfs:label "provocaMovimiento" ;
-    rdfs:domain ex:SistemaPinonCremallera ;
+mecanica:accionadosPor a owl:ObjectProperty ;
+    rdfs:domain ex:Cremallera ;
+    rdfs:range ex:Servomotor .
+
+mecanica:provocan a owl:ObjectProperty ;
+    rdfs:domain ex:Servomotor ;
     rdfs:range ex:CarroPortaPiezas .
+
+mecanica:tieneVelocidadMaxima a owl:DatatypeProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range xsd:decimal .
+
+mecanica:tieneFuerzaMaxima a owl:DatatypeProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range xsd:decimal .
+
+mecanica:tieneRecorridoMaximo a owl:DatatypeProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range xsd:decimal .

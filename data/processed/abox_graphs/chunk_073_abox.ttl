@@ -1,0 +1,56 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sensor: <https://admin-shell.io/dictionary/Sensor> .
+
+ex:Señalizador a owl:Class ;
+    rdfs:label "Señalizador" ;
+    rdfs:comment "Dispositivo que cambia de color dependiendo del estado de un actuador o sinóptico." .
+
+ex:Actuador a owl:Class ;
+    rdfs:label "Actuador" ;
+    rdfs:comment "Componente que puede ser monitorizado por un sensor." .
+
+ex:Sinóptico a owl:Class ;
+    rdfs:label "Sinóptico" ;
+    rdfs:comment "Representación visual del estado de un sistema." .
+
+ex:BotónSeñalizador a owl:Class ;
+    rdfs:label "BotónSeñalizador" ;
+    rdfs:comment "Botón asociado a un señalizador que cambia de color dependiendo del estado." .
+
+ex:Estado a owl:Class ;
+    rdfs:label "Estado" ;
+    rdfs:comment "Estado de un componente que puede ser activado o desactivado." .
+
+ex:cambiarColorDependiendoDelEstado a owl:ObjectProperty ;
+    rdfs:label "cambiarColorDependiendoDelEstado" ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range ex:Estado .
+
+ex:estaAsociadoA a owl:ObjectProperty ;
+    rdfs:label "estaAsociadoA" ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range [ a owl:Class ;
+                owl:unionOf ( ex:Actuador ex:Sinóptico ) ] .
+
+ex:tieneTexto a owl:ObjectProperty ;
+    rdfs:label "tieneTexto" ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range xsd:string .
+
+ex:tieneBotón a owl:ObjectProperty ;
+    rdfs:label "tieneBotón" ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range ex:BotónSeñalizador .
+
+ex:tieneColor a owl:DatatypeProperty ;
+    rdfs:label "tieneColor" ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range xsd:string .
+
+ex:Sensor a owl:Class ;
+    rdfs:subClassOf sensor:Sensor ;
+    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Sensor> .

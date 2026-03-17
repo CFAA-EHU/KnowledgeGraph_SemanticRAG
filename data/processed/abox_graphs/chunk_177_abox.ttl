@@ -1,109 +1,207 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/electricidad/> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base/> .
 
 ex:AlimentacionGeneral a owl:Class ;
-    rdfs:label "Alimentación general"@es ;
-    rdfs:comment "Esquema de servicios a 230 VAC"@es .
-
-ex:EsquemaServicios a owl:Class ;
-    rdfs:label "Esquema de servicios"@es ;
-    rdfs:comment "Bloques con magnetotérmicos y reles"@es .
-
-ex:Magnetotermico a owl:Class ;
-    rdfs:label "Magnetotérmico"@es .
-
-ex:Rel a owl:Class ;
-    rdfs:label "Relé"@es .
-
-ex:Cableado a owl:Class ;
-    rdfs:label "Cableado"@es .
+    rdfs:label "Alimentación general" ;
+    rdfs:comment "Esquema de servicios a 230 VAC (iluminación máquina/pupitre, tomas de corriente, transformador 11TR1 1000 VA, luminarias 11HL3–5). Bloques con magnetotérmicos (11QF1–6) y reles (11KA1); cableado rotulado y pasos por XT1/XT2." .
 
 ex:Alimentacion24VDC a owl:Class ;
-    rdfs:label "Alimentación 24VDC"@es ;
-    rdfs:comment "Arquitectura 24 V DC"@es .
-
-ex:SITOP a owl:Class ;
-    rdfs:label "SITOP"@es .
-
-ex:Modulo a owl:Class ;
-    rdfs:label "Módulo"@es .
-
-ex:PLC a owl:Class ;
-    rdfs:label "PLC"@es .
-
-ex:Safety a owl:Class ;
-    rdfs:label "Safety"@es .
-
-ex:Panel a owl:Class ;
-    rdfs:label "Panel"@es .
-
-ex:CNC a owl:Class ;
-    rdfs:label "CNC"@es .
-
-ex:IOExterno a owl:Class ;
-    rdfs:label "I/O Externo"@es .
-
-ex:Borne a owl:Class ;
-    rdfs:label "Borne"@es .
-
-ex:Piloto a owl:Class ;
-    rdfs:label "Piloto"@es .
+    rdfs:label "Alimentación 24VDC" ;
+    rdfs:comment "Arquitectura 24 V DC: SITOP 12T1 40 A y módulos 12F1/12F2 (4 salidas/10 A). Distribución a PLC, Safety, Panel, CNC, I/O Externos (rótulos 24API/24EBC/24VAN/24E/24SAFE/24PNL/24S/24CNC). Bornes XT1/XTP1, piloto 12HL1; líneas rojas (positivo) y verdes (retorno/PE)." .
 
 ex:ClimatizadorArmario a owl:Class ;
-    rdfs:label "Climatizador armario"@es ;
-    rdfs:comment "Bloque funcional de climatizador 1000 W"@es .
+    rdfs:label "Climatizador armario" ;
+    rdfs:comment "Bloque funcional de climatizador 1000 W (Rittal SK.3304540) con protección 13QF1 y señal “Climatizador ON”. Representación del módulo con bornes X1–X3, conexión trifásica y control por 24E; flechas de flujo eléctrico hacia el equipo." .
 
-ex:Proteccion a owl:Class ;
-    rdfs:label "Protección"@es .
+ex:MotoresCA a owl:Class ;
+    rdfs:label "Motores de C.A" ;
+    rdfs:comment "Cadena de magnetotérmicos (14QM1–5) y contactores (KA00–KA04) alimentando M1–M6 (refrigerante, extractor viruta, trasvase, filtro, hidráulico)." .
 
-ex:Señal a owl:Class ;
-    rdfs:label "Señal"@es .
+elec:tieneMagnetotermico a owl:ObjectProperty ;
+    rdfs:domain ex:AlimentacionGeneral ;
+    rdfs:range ex:Magnetotermico .
 
-ex:ModuloClimatizador a owl:Class ;
-    rdfs:label "Módulo climatizador"@es .
+elec:tieneRelé a owl:ObjectProperty ;
+    rdfs:domain ex:AlimentacionGeneral ;
+    rdfs:range ex:Relé .
 
-ex:Conexion a owl:Class ;
-    rdfs:label "Conexión"@es .
+elec:tieneTransformador a owl:ObjectProperty ;
+    rdfs:domain ex:AlimentacionGeneral ;
+    rdfs:range ex:Transformador .
 
-ex:MotorCA a owl:Class ;
-    rdfs:label "Motor de C.A"@es ;
-    rdfs:comment "Cadena de magnetotérmicos y contactores"@es .
+elec:tieneLuminaria a owl:ObjectProperty ;
+    rdfs:domain ex:AlimentacionGeneral ;
+    rdfs:range ex:Luminaria .
 
-ex:Contactor a owl:Class ;
-    rdfs:label "Contactor"@es .
+elec:tieneCableadoRotulado a owl:ObjectProperty ;
+    rdfs:domain ex:AlimentacionGeneral ;
+    rdfs:range ex:Cableado .
 
-ex:MotorRefrigerante a owl:Class ;
-    rdfs:label "Motor refrigerante"@es .
+elec:tienePasosPor a owl:ObjectProperty ;
+    rdfs:domain ex:AlimentacionGeneral ;
+    rdfs:range ex:Paso .
 
-ex:MotorExtractorVirutas a owl:Class ;
-    rdfs:label "Motor extractor virutas"@es .
+elec:tieneSITOP a owl:ObjectProperty ;
+    rdfs:domain ex:Alimentacion24VDC ;
+    rdfs:range ex:SITOP .
 
-ex:MotorTrasvase a owl:Class ;
-    rdfs:label "Motor trasvase"@es .
+elec:tieneModulo a owl:ObjectProperty ;
+    rdfs:domain ex:Alimentacion24VDC ;
+    rdfs:range ex:Modulo .
 
-ex:MotorFiltro a owl:Class ;
-    rdfs:label "Motor filtro"@es .
+elec:tieneDistribucion a owl:ObjectProperty ;
+    rdfs:domain ex:Alimentacion24VDC ;
+    rdfs:range ex:Distribucion .
 
-ex:MotorHidraulico a owl:Class ;
-    rdfs:label "Motor hidráulico"@es .
+elec:tieneBornes a owl:ObjectProperty ;
+    rdfs:domain ex:Alimentacion24VDC ;
+    rdfs:range ex:Borne .
 
-ex:estaConectadoA a owl:ObjectProperty ;
-    rdfs:label "está conectado a"@es .
+elec:tienePiloto a owl:ObjectProperty ;
+    rdfs:domain ex:Alimentacion24VDC ;
+    rdfs:range ex:Piloto .
 
-ex:tieneProteccion a owl:ObjectProperty ;
-    rdfs:label "tiene protección"@es .
+elec:tieneLineas a owl:ObjectProperty ;
+    rdfs:domain ex:Alimentacion24VDC ;
+    rdfs:range ex:Linea .
 
-ex:tieneSeñal a owl:ObjectProperty ;
-    rdfs:label "tiene señal"@es .
+elec:tieneProteccion a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Proteccion .
 
-ex:tieneModulo a owl:ObjectProperty ;
-    rdfs:label "tiene módulo"@es .
+elec:tieneSeñal a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Señal .
 
-ex:tieneConexion a owl:ObjectProperty ;
-    rdfs:label "tiene conexión"@es .
+elec:tieneBornesModulo a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Borne .
 
-ex:tieneMotor a owl:ObjectProperty ;
-    rdfs:label "tiene motor"@es .
+elec:tieneConexionTrifasica a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Conexion .
+
+elec:tieneControlPor a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Control .
+
+elec:tieneFlechasFlujo a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Flecha .
+
+elec:tieneCadenaMagnetotermicos a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Magnetotermico .
+
+elec:tieneContactores a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Contactor .
+
+elec:tieneMotores a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Motor .
+
+elec:tieneRefrigerante a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Refrigerante .
+
+elec:tieneExtractorViruta a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:ExtractorViruta .
+
+elec:tieneTrasvase a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Trasvase .
+
+elec:tieneFiltro a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Filtro .
+
+elec:tieneHidraulico a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Hidraulico .
+
+elec:tieneAlimentacion a owl:ObjectProperty ;
+    rdfs:domain ex:Magnetotermico ;
+    rdfs:range ex:Alimentacion .
+
+elec:tieneSalidas a owl:ObjectProperty ;
+    rdfs:domain ex:Modulo ;
+    rdfs:range ex:Salida .
+
+elec:tieneDistribucionA a owl:ObjectProperty ;
+    rdfs:domain ex:Distribucion ;
+    rdfs:range ex:DistribucionA .
+
+elec:tieneRótulos a owl:ObjectProperty ;
+    rdfs:domain ex:Distribucion ;
+    rdfs:range ex:Rótulo .
+
+elec:tienePiloto12HL1 a owl:ObjectProperty ;
+    rdfs:domain ex:Distribucion ;
+    rdfs:range ex:Piloto .
+
+elec:tieneLineasRojas a owl:ObjectProperty ;
+    rdfs:domain ex:Distribucion ;
+    rdfs:range ex:Linea .
+
+elec:tieneLineasVerdes a owl:ObjectProperty ;
+    rdfs:domain ex:Distribucion ;
+    rdfs:range ex:Linea .
+
+elec:tieneProteccion13QF1 a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Proteccion .
+
+elec:tieneSeñalClimatizadorON a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Señal .
+
+elec:tieneBornesX1X3 a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Borne .
+
+elec:tieneConexionTrifasicaControlPor24E a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Conexion .
+
+elec:tieneFlechasFlujoElectrico a owl:ObjectProperty ;
+    rdfs:domain ex:ClimatizadorArmario ;
+    rdfs:range ex:Flecha .
+
+elec:tieneCadenaMagnetotermicos14QM15 a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Magnetotermico .
+
+elec:tieneContactoresKA00KA04 a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Contactor .
+
+elec:tieneMotoresM1M6 a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Motor .
+
+elec:tieneRefrigeranteExtractorVirutaTrasvaseFiltroHidraulico a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Refrigerante .
+
+elec:tieneExtractorViruta a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:ExtractorViruta .
+
+elec:tieneTrasvase a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Trasvase .
+
+elec:tieneFiltro a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Filtro .
+
+elec:tieneHidraulico a owl:ObjectProperty ;
+    rdfs:domain ex:MotoresCA ;
+    rdfs:range ex:Hidraulico .

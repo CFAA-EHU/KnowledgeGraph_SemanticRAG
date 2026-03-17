@@ -1,39 +1,43 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:PuertaControlada a owl:Class ;
-    rdfs:label "PuertaControlada" ;
-    rdfs:comment "Puerta controlada con interruptor de seguridad." .
+    rdfs:label "Puerta controlada con interruptor de seguridad" .
 
 ex:InterruptorDeSeguridad a owl:Class ;
-    rdfs:label "InterruptorDeSeguridad" ;
-    rdfs:comment "Interruptor de seguridad para puertas." .
+    rdfs:label "Interruptor de seguridad" .
+
+ex:ServicioAutomatico a owl:Class ;
+    rdfs:label "Servicio automático" .
 
 ex:Servomotor a owl:Class ;
-    rdfs:label "Servomotor" ;
-    rdfs:comment "Servomotor de la máquina." .
+    rdfs:label "Servomotor" .
 
-ex:Sistema a owl:Class ;
-    rdfs:label "Sistema" ;
-    rdfs:comment "Sistema de la máquina." .
+ex:Maquina a owl:Class ;
+    rdfs:label "Máquina" .
 
-ex:provocaParada a owl:ObjectProperty ;
-    rdfs:label "provocaParada" ;
-    rdfs:domain ex:InterruptorDeSeguridad ;
-    rdfs:range ex:Maquina .
-
-ex:desconecta a owl:ObjectProperty ;
-    rdfs:label "desconecta" ;
-    rdfs:domain ex:InterruptorDeSeguridad ;
-    rdfs:range ex:Servomotor .
-
-ex:desconectaSistema a owl:ObjectProperty ;
-    rdfs:label "desconectaSistema" ;
+ex:provocaDesconexion a owl:ObjectProperty ;
     rdfs:domain ex:InterruptorDeSeguridad ;
     rdfs:range ex:Sistema .
 
-ex:Maquina a owl:Class ;
-    rdfs:label "Maquina" ;
-    rdfs:comment "Máquina que tiene puertas controladas." .
+ex:provocaParada a owl:ObjectProperty ;
+    rdfs:domain ex:InterruptorDeSeguridad ;
+    rdfs:range ex:Maquina .
+
+ex:tieneInterruptorDeSeguridad a owl:ObjectProperty ;
+    rdfs:domain ex:PuertaControlada ;
+    rdfs:range ex:InterruptorDeSeguridad .
+
+ex:requiereNoAperturaDuranteServicioAutomatico a owl:ObjectProperty ;
+    rdfs:domain ex:PuertaControlada ;
+    rdfs:range ex:ServicioAutomatico .
+
+ex:Sistema a owl:Class ;
+    rdfs:label "Sistema" .
+
+ex:desconectarServomotor a owl:ObjectProperty ;
+    rdfs:domain ex:Sistema ;
+    rdfs:range ex:Servomotor .

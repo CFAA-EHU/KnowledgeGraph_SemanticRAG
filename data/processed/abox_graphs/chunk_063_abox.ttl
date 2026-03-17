@@ -1,60 +1,77 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica#> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base#> .
 
-ex:MaquinaBrochadoExterior a owl:Class ;
-    rdfs:label "MaquinaBrochadoExterior" ;
-    rdfs:comment "Clase que representa una máquina de brochado exterior." .
+# Clases
+ex:Maquina a owl:Class ;
+    rdfs:comment "Clase que representa una máquina en general." .
 
 ex:ElementoAntivibracion a owl:Class ;
-    rdfs:label "ElementoAntivibracion" ;
     rdfs:comment "Clase que representa un elemento de antivibración." .
 
-ex:Mesa a owl:Class ;
-    rdfs:label "Mesa" ;
-    rdfs:comment "Clase que representa la mesa de la máquina." .
+ex:PlanoImplantacion a owl:Class ;
+    rdfs:comment "Clase que representa un plano de implantación." .
 
 ex:NivelBurbujas a owl:Class ;
-    rdfs:label "NivelBurbujas" ;
     rdfs:comment "Clase que representa un nivel de burbujas." .
 
-ex:PlanoImplantacion a owl:Class ;
-    rdfs:label "PlanoImplantacion" ;
-    rdfs:comment "Clase que representa el plano de implantación de la máquina." .
+ex:Mesa a owl:Class ;
+    rdfs:comment "Clase que representa una mesa." .
 
-ex:tieneDimensiones a owl:ObjectProperty ;
-    rdfs:label "tieneDimensiones" ;
-    rdfs:comment "Propiedad que relaciona una máquina con sus dimensiones." ;
-    rdfs:domain ex:MaquinaBrochadoExterior ;
-    rdfs:range rdfs:Literal .
+# Propiedades de objeto
+mecanica:tienePeso a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:decimal .
 
-ex:tienePeso a owl:DatatypeProperty ;
-    rdfs:label "tienePeso" ;
-    rdfs:comment "Propiedad que relaciona una máquina con su peso." ;
-    rdfs:domain ex:MaquinaBrochadoExterior ;
-    rdfs:range rdf:Literal .
+mecanica:tieneDimensiones a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:string .
 
-ex:tieneElementoAntivibracion a owl:ObjectProperty ;
-    rdfs:label "tieneElementoAntivibracion" ;
-    rdfs:comment "Propiedad que relaciona una máquina con sus elementos de antivibración." ;
-    rdfs:domain ex:MaquinaBrochadoExterior ;
+mecanica:tieneElementoAntivibracion a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
     rdfs:range ex:ElementoAntivibracion .
 
-ex:tieneMesa a owl:ObjectProperty ;
-    rdfs:label "tieneMesa" ;
-    rdfs:comment "Propiedad que relaciona una máquina con su mesa." ;
-    rdfs:domain ex:MaquinaBrochadoExterior ;
-    rdfs:range ex:Mesa .
+mecanica:tienePlanoImplantacion a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range ex:PlanoImplantacion .
 
-ex:tieneNivelBurbujas a owl:ObjectProperty ;
-    rdfs:label "tieneNivelBurbujas" ;
-    rdfs:comment "Propiedad que relaciona una máquina con su nivel de burbujas." ;
-    rdfs:domain ex:MaquinaBrochadoExterior ;
+mecanica:tieneNivelBurbujas a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
     rdfs:range ex:NivelBurbujas .
 
-ex:tienePlanoImplantacion a owl:ObjectProperty ;
-    rdfs:label "tienePlanoImplantacion" ;
-    rdfs:comment "Propiedad que relaciona una máquina con su plano de implantación." ;
-    rdfs:domain ex:MaquinaBrochadoExterior ;
-    rdfs:range ex:PlanoImplantacion .
+mecanica:tieneMesa a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range ex:Mesa .
+
+mecanica:nivelarMaquina a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range ex:NivelBurbujas .
+
+# Propiedades de datos
+base:pesoTotal a owl:DatatypeProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:decimal .
+
+base:dimensionesMaximas a owl:DatatypeProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:string .
+
+base:capacidadSustentadora a owl:DatatypeProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:decimal .
+
+base:numeroElementosAntivibracion a owl:DatatypeProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:integer .
+
+base:modeloElementoAntivibracion a owl:DatatypeProperty ;
+    rdfs:domain ex:ElementoAntivibracion ;
+    rdfs:range xsd:string .
+
+base:fabricanteElementoAntivibracion a owl:DatatypeProperty ;
+    rdfs:domain ex:ElementoAntivibracion ;
+    rdfs:range xsd:string .

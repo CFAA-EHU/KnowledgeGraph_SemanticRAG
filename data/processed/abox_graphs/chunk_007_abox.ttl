@@ -1,89 +1,96 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:DerechosDeAutor a owl:Class ;
-    rdfs:label "DerechosDeAutor" ;
-    rdfs:comment "Clase que representa los derechos de autor del manual." .
-
-ex:Manual a owl:Class ;
-    rdfs:label "Manual" ;
-    rdfs:comment "Clase que representa el manual técnico." .
+ex:DerechoDeAutor a owl:Class ;
+    rdfs:label "Derecho de Autor"@es ;
+    rdfs:comment "Clase que representa los derechos de autor del manual."@es .
 
 ex:Empresa a owl:Class ;
-    rdfs:label "Empresa" ;
-    rdfs:comment "Clase que representa la empresa EKIN S. Coop." .
+    rdfs:label "Empresa"@es ;
+    rdfs:comment "Clase que representa una empresa."@es .
 
-ex:Reproducción a owl:Class ;
-    rdfs:label "Reproducción" ;
-    rdfs:comment "Clase que representa la reproducción del manual." .
+ex:Manual a owl:Class ;
+    rdfs:label "Manual"@es ;
+    rdfs:comment "Clase que representa un manual técnico."@es .
 
-ex:Alteración a owl:Class ;
-    rdfs:label "Alteración" ;
-    rdfs:comment "Clase que representa la alteración del manual." .
+ex:Alteracion a owl:Class ;
+    rdfs:label "Alteración"@es ;
+    rdfs:comment "Clase que representa una alteración en la información."@es .
 
-ex:Difusión a owl:Class ;
-    rdfs:label "Difusión" ;
-    rdfs:comment "Clase que representa la difusión del manual." .
+ex:Reproduccion a owl:Class ;
+    rdfs:label "Reproducción"@es ;
+    rdfs:comment "Clase que representa la reproducción de documentos."@es .
 
-ex:Divulgación a owl:Class ;
-    rdfs:label "Divulgación" ;
-    rdfs:comment "Clase que representa la divulgación del manual." .
+ex:Divulgacion a owl:Class ;
+    rdfs:label "Divulgación"@es ;
+    rdfs:comment "Clase que representa la divulgación de información."@es .
 
-ex:Autorización a owl:Class ;
-    rdfs:label "Autorización" ;
-    rdfs:comment "Clase que representa la autorización para la reproducción o alteración del manual." .
-
-ex:InformaciónManual a owl:Class ;
-    rdfs:label "InformaciónManual" ;
-    rdfs:comment "Clase que representa la información del manual." .
-
-ex:AlteraciónInformación a owl:Class ;
-    rdfs:label "AlteraciónInformación" ;
-    rdfs:comment "Clase que representa la alteración de la información del manual." .
+ex:Autorizacion a owl:Class ;
+    rdfs:label "Autorización"@es ;
+    rdfs:comment "Clase que representa una autorización."@es .
 
 ex:Desarrollo a owl:Class ;
-    rdfs:label "Desarrollo" ;
-    rdfs:comment "Clase que representa el desarrollo constante de la empresa." .
+    rdfs:label "Desarrollo"@es ;
+    rdfs:comment "Clase que representa el desarrollo de una empresa."@es .
 
 ex:Calidad a owl:Class ;
-    rdfs:label "Calidad" ;
-    rdfs:comment "Clase que representa la calidad del manual." .
+    rdfs:label "Calidad"@es ;
+    rdfs:comment "Clase que representa la calidad de un producto o servicio."@es .
 
-ex:tieneDerechosDeAutor a owl:ObjectProperty ;
-    rdfs:label "tieneDerechosDeAutor" ;
+ex:tieneDerechoDeAutor a owl:ObjectProperty ;
     rdfs:domain ex:Manual ;
-    rdfs:range ex:DerechosDeAutor .
+    rdfs:range ex:DerechoDeAutor ;
+    rdfs:comment "Propiedad que relaciona un manual con sus derechos de autor."@es .
 
-ex:prohíbe a owl:ObjectProperty ;
-    rdfs:label "prohíbe" ;
-    rdfs:domain ex:DerechosDeAutor ;
-    rdfs:range [ a owl:Class ;
-                rdfs:subClassOf ex:Reproducción, ex:Alteración, ex:Difusión, ex:Divulgación ] .
+ex:tieneEmpresa a owl:ObjectProperty ;
+    rdfs:domain ex:Manual ;
+    rdfs:range ex:Empresa ;
+    rdfs:comment "Propiedad que relaciona un manual con la empresa que lo posee."@es .
+
+ex:prohibe a owl:ObjectProperty ;
+    rdfs:domain ex:DerechoDeAutor ;
+    rdfs:range ex:Reproduccion ;
+    rdfs:comment "Propiedad que indica que los derechos de autor prohíben la reproducción."@es .
+
+ex:prohibe a owl:ObjectProperty ;
+    rdfs:domain ex:DerechoDeAutor ;
+    rdfs:range ex:Alteracion ;
+    rdfs:comment "Propiedad que indica que los derechos de autor prohíben la alteración."@es .
+
+ex:prohibe a owl:ObjectProperty ;
+    rdfs:domain ex:DerechoDeAutor ;
+    rdfs:range ex:Divulgacion ;
+    rdfs:comment "Propiedad que indica que los derechos de autor prohíben la divulgación."@es .
 
 ex:requiere a owl:ObjectProperty ;
-    rdfs:label "requiere" ;
-    rdfs:domain [ a owl:Class ;
-                 rdfs:subClassOf ex:Reproducción, ex:Alteración, ex:Difusión, ex:Divulgación ] ;
-    rdfs:range ex:Autorización .
+    rdfs:domain ex:Reproduccion ;
+    rdfs:range ex:Autorizacion ;
+    rdfs:comment "Propiedad que indica que la reproducción requiere autorización."@es .
 
-ex:contiene a owl:ObjectProperty ;
-    rdfs:label "contiene" ;
-    rdfs:domain ex:Manual ;
-    rdfs:range ex:InformaciónManual .
+ex:requiere a owl:ObjectProperty ;
+    rdfs:domain ex:Alteracion ;
+    rdfs:range ex:Autorizacion ;
+    rdfs:comment "Propiedad que indica que la alteración requiere autorización."@es .
+
+ex:requiere a owl:ObjectProperty ;
+    rdfs:domain ex:Divulgacion ;
+    rdfs:range ex:Autorizacion ;
+    rdfs:comment "Propiedad que indica que la divulgación requiere autorización."@es .
 
 ex:puedeSufrir a owl:ObjectProperty ;
-    rdfs:label "puedeSufrir" ;
-    rdfs:domain ex:InformaciónManual ;
-    rdfs:range ex:AlteraciónInformación .
-
-ex:busca a owl:ObjectProperty ;
-    rdfs:label "busca" ;
-    rdfs:domain ex:Empresa ;
-    rdfs:range ex:Calidad .
+    rdfs:domain ex:Manual ;
+    rdfs:range ex:Alteracion ;
+    rdfs:comment "Propiedad que indica que un manual puede sufrir alteraciones."@es .
 
 ex:enVirtudDe a owl:ObjectProperty ;
-    rdfs:label "enVirtudDe" ;
-    rdfs:domain ex:AlteraciónInformación ;
-    rdfs:range ex:Desarrollo .
+    rdfs:domain ex:Alteracion ;
+    rdfs:range ex:Desarrollo ;
+    rdfs:comment "Propiedad que indica que las alteraciones son en virtud del desarrollo."@es .
+
+ex:busca a owl:ObjectProperty ;
+    rdfs:domain ex:Desarrollo ;
+    rdfs:range ex:Calidad ;
+    rdfs:comment "Propiedad que indica que el desarrollo busca mejorar la calidad."@es .

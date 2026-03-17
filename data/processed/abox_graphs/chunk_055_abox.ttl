@@ -1,78 +1,65 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:SistemaDeEngrase a owl:Class ;
-    rdfs:label "Sistema de engrase"@es ;
-    rdfs:comment "Sistema de engrase situado en la parte posterior de la máquina, debajo del sistema neumático."@es.
+    rdfs:label "Sistema de engrase" ;
+    rdfs:comment "Compuesto por engrase automático de grasa y engrase manual de aceite." .
 
 ex:CentralDeLubricacion a owl:Class ;
-    rdfs:label "Central de lubricación"@es ;
-    rdfs:comment "Componente del sistema de engrase automático que suministra grasa."@es.
+    rdfs:label "Central de lubricación" ;
+    rdfs:comment "Parte del sistema de engrase automático." .
 
 ex:PiñonDeLubricacion a owl:Class ;
-    rdfs:label "Piñón de lubricación"@es ;
-    rdfs:comment "Piñón de espuma de poliuretano de célula abierta que garantiza un suministro óptimo de lubricante."@es.
-
-ex:BombaDeEmbolo a owl:Class ;
-    rdfs:label "Bomba de émbolo"@es ;
-    rdfs:comment "Componente del sistema de engrase manual que lubrica los rodamientos de los piñones superiores."@es.
+    rdfs:label "Piñón de lubricación" ;
+    rdfs:comment "De espuma de poliuretano de célula abierta." .
 
 ex:SistemaPiñonCremallera a owl:Class ;
-    rdfs:label "Sistema piñón-cremallera"@es ;
-    rdfs:comment "Sistema que es lubricado por el piñón de lubricación."@es.
+    rdfs:label "Sistema piñón-cremallera" ;
+    rdfs:comment "Parte del sistema de engrase automático." .
+
+ex:BombaDeEmbolo a owl:Class ;
+    rdfs:label "Bomba de émbolo" ;
+    rdfs:comment "Parte del sistema de engrase manual." .
+
+ex:Rodamiento a owl:Class ;
+    rdfs:label "Rodamiento" ;
+    rdfs:comment "Parte lubricada por el sistema de engrase manual." .
 
 ex:GrasaAlphaG11NLGI01 a owl:Class ;
-    rdfs:label "Grasa Alpha G11 NLGI 0-1"@es ;
-    rdfs:comment "Grasa empleada en el sistema de engrase automático."@es.
+    rdfs:label "Grasa Alpha G11 NLGI 0-1" ;
+    rdfs:comment "176cSt – 40ºC." .
 
 ex:AceiteG220ISO3498 a owl:Class ;
-    rdfs:label "Aceite G220 según ISO 3498"@es ;
-    rdfs:comment "Aceite empleado en el sistema de engrase manual."@es.
+    rdfs:label "Aceite G220 según ISO 3498" ;
+    rdfs:comment "220cSt – 40ºC." .
 
 ex:tieneComponente a owl:ObjectProperty ;
-    rdfs:label "tieneComponente"@es ;
     rdfs:domain ex:SistemaDeEngrase ;
-    rdfs:range owl:Class.
+    rdfs:range owl:Class .
 
-ex:estaCompuestoPor a owl:ObjectProperty ;
-    rdfs:label "estaCompuestoPor"@es ;
-    rdfs:domain ex:SistemaDeEngrase ;
-    rdfs:range owl:Class.
-
-ex:emplea a owl:ObjectProperty ;
-    rdfs:label "emplea"@es ;
-    rdfs:domain ex:SistemaDeEngrase ;
-    rdfs:range owl:Class.
-
-ex:lubrica a owl:ObjectProperty ;
-    rdfs:label "lubrica"@es ;
+ex:tieneMaterial a owl:ObjectProperty ;
     rdfs:domain ex:PiñonDeLubricacion ;
-    rdfs:range ex:SistemaPiñonCremallera.
+    rdfs:range owl:Class .
 
-ex:recibeGrasaDe a owl:ObjectProperty ;
-    rdfs:label "recibeGrasaDe"@es ;
+ex:tieneFuncion a owl:ObjectProperty ;
     rdfs:domain ex:PiñonDeLubricacion ;
-    rdfs:range ex:CentralDeLubricacion.
+    rdfs:range owl:Class .
 
-ex:actuaLimpiando a owl:ObjectProperty ;
-    rdfs:label "actuaLimpiando"@es ;
-    rdfs:domain ex:PiñonDeLubricacion ;
-    rdfs:range xsd:string.
-
-ex:ejecutarEmboladaPorSemana a owl:DatatypeProperty ;
-    rdfs:label "ejecutarEmboladaPorSemana"@es ;
+ex:tieneFrecuencia a owl:ObjectProperty ;
     rdfs:domain ex:BombaDeEmbolo ;
-    rdfs:range xsd:boolean.
+    rdfs:range owl:Class .
 
-ex:tieneTemperatura a owl:DatatypeProperty ;
-    rdfs:label "tieneTemperatura"@es ;
-    rdfs:domain ex:GrasaAlphaG11NLGI01 ;
-    rdfs:range xsd:decimal.
+ex:tieneLubricante a owl:ObjectProperty ;
+    rdfs:domain ex:SistemaDeEngrase ;
+    rdfs:range owl:Class .
 
 ex:tieneViscosidad a owl:DatatypeProperty ;
-    rdfs:label "tieneViscosidad"@es ;
-    rdfs:domain ex:AceiteG220ISO3498 ;
-    rdfs:range xsd:decimal.
+    rdfs:domain owl:Class ;
+    rdfs:range xsd:string .
+
+ex:tieneTemperatura a owl:DatatypeProperty ;
+    rdfs:domain owl:Class ;
+    rdfs:range xsd:string .

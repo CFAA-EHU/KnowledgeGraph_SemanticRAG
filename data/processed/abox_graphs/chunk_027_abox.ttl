@@ -1,54 +1,107 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base#> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/electricidadElectronica#> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica#> .
 
-ex:ArmarioElectrico a owl:Class ;
-    rdfs:label "ArmarioEléctrico"@es ;
-    rdfs:comment "Armario eléctrico de la máquina"@es.
+base:ArmarioElectrico a owl:Class ;
+    rdfs:label "Armario eléctrico" ;
+    rdfs:comment "Componente de la máquina que contiene elementos eléctricos." .
 
-ex:Botonera a owl:Class ;
-    rdfs:label "Botonera"@es ;
-    rdfs:comment "Botonera de la máquina"@es.
+base:BotoneraMaquina a owl:Class ;
+    rdfs:label "Botonera de la máquina" ;
+    rdfs:comment "Componente de la máquina que contiene pulsadores y botones de control." .
 
-ex:PulsadorParadaEmergencia a owl:Class ;
-    rdfs:label "PulsadorParadaEmergencia"@es ;
-    rdfs:comment "Pulsador de parada de emergencia"@es.
+elec:PulsadorParadaEmergencia a owl:Class ;
+    rdfs:label "Pulsador de parada de emergencia" ;
+    rdfs:comment "Dispositivo de seguridad para detener la máquina en situaciones de emergencia." .
 
-ex:Relé a owl:Class ;
-    rdfs:label "Relé"@es ;
-    rdfs:comment "Relé del sistema"@es.
+elec:Relé a owl:Class ;
+    rdfs:label "Relé" ;
+    rdfs:comment "Dispositivo eléctrico que conmutan circuitos, permitiendo el control de circuitos de potencia con señales de bajo nivel." .
 
-ex:Sistema a owl:Class ;
-    rdfs:label "Sistema"@es ;
-    rdfs:comment "Sistema de la máquina"@es.
+base:Sistema a owl:Class ;
+    rdfs:label "Sistema" ;
+    rdfs:comment "Conjunto de componentes que trabajan juntos para realizar una función específica." .
 
-ex:Motor a owl:Class ;
-    rdfs:label "Motor"@es ;
-    rdfs:comment "Motor de la máquina"@es.
+base:Motor a owl:Class ;
+    rdfs:label "Motor" ;
+    rdfs:comment "Dispositivo que convierte energía eléctrica en energía mecánica." .
 
-ex:producirCaidaRelé a owl:ObjectProperty ;
-    rdfs:label "producirCaidaRelé"@es ;
-    rdfs:domain ex:PulsadorParadaEmergencia ;
-    rdfs:range ex:Relé.
+elec:caerRelé a owl:ObjectProperty ;
+    rdfs:label "caer relé" ;
+    rdfs:comment "Acción de que el relé deje de estar activado." .
 
-ex:conllevarDesconexion a owl:ObjectProperty ;
-    rdfs:label "conllevarDesconexion"@es ;
-    rdfs:domain ex:Relé ;
-    rdfs:range ex:Sistema.
+elec:conectar a owl:ObjectProperty ;
+    rdfs:label "conectar" ;
+    rdfs:comment "Establecer una conexión entre componentes." .
 
-ex:conllevarDesconexionMotor a owl:ObjectProperty ;
-    rdfs:label "conllevarDesconexionMotor"@es ;
-    rdfs:domain ex:Relé ;
-    rdfs:range ex:Motor.
+elec:desconectar a owl:ObjectProperty ;
+    rdfs:label "desconectar" ;
+    rdfs:comment "Interrumpir una conexión entre componentes." .
 
-ex:debeEmplearEnEmergencia a owl:ObjectProperty ;
-    rdfs:label "debeEmplearEnEmergencia"@es ;
-    rdfs:domain ex:PulsadorParadaEmergencia ;
-    rdfs:range xsd:string.
+elec:emplear a owl:ObjectProperty ;
+    rdfs:label "emplear" ;
+    rdfs:comment "Utilizar un componente para una función específica." .
 
-ex:prohibirUsoNormal a owl:ObjectProperty ;
-    rdfs:label "prohibirUsoNormal"@es ;
-    rdfs:domain ex:PulsadorParadaEmergencia ;
-    rdfs:range xsd:string.
+elec:producir a owl:ObjectProperty ;
+    rdfs:label "producir" ;
+    rdfs:comment "Causar un efecto o acción." .
+
+mecanica:dañar a owl:ObjectProperty ;
+    rdfs:label "dañar" ;
+    rdfs:comment "Causar daño o perjuicio a un componente." .
+
+mecanica:resultar a owl:ObjectProperty ;
+    rdfs:label "resultar" ;
+    rdfs:comment "Ser el resultado de una acción o evento." .
+
+elec:tienePulsadorParadaEmergencia a owl:ObjectProperty ;
+    rdfs:label "tiene pulsador de parada de emergencia" ;
+    rdfs:comment "Relación que indica que un componente tiene un pulsador de parada de emergencia." .
+
+base:tieneRelé a owl:ObjectProperty ;
+    rdfs:label "tiene relé" ;
+    rdfs:comment "Relación que indica que un componente tiene un relé." .
+
+base:tieneSistema a owl:ObjectProperty ;
+    rdfs:label "tiene sistema" ;
+    rdfs:comment "Relación que indica que un componente tiene un sistema." .
+
+base:tieneMotor a owl:ObjectProperty ;
+    rdfs:label "tiene motor" ;
+    rdfs:comment "Relación que indica que un componente tiene un motor." .
+
+elec:producirCaidaRelé a owl:ObjectProperty ;
+    rdfs:label "producir caída del relé" ;
+    rdfs:comment "Acción de que el pulsador de parada de emergencia cause la caída del relé." .
+
+elec:desconectarSistemasMotores a owl:ObjectProperty ;
+    rdfs:label "desconectar sistemas y motores" ;
+    rdfs:comment "Acción de que la caída del relé cause la desconexión de los sistemas y motores." .
+
+elec:emplearPulsadorParadaEmergencia a owl:ObjectProperty ;
+    rdfs:label "emplear pulsador de parada de emergencia" ;
+    rdfs:comment "Acción de utilizar el pulsador de parada de emergencia." .
+
+elec:producirDesconexion a owl:ObjectProperty ;
+    rdfs:label "producir desconexión" ;
+    rdfs:comment "Acción de que la caída del relé cause la desconexión." .
+
+elec:producirCaidaRelé a owl:ObjectProperty ;
+    rdfs:label "producir caída del relé" ;
+    rdfs:comment "Acción de que el pulsador de parada de emergencia cause la caída del relé." .
+
+elec:desconectarSistemasMotores a owl:ObjectProperty ;
+    rdfs:label "desconectar sistemas y motores" ;
+    rdfs:comment "Acción de que la caída del relé cause la desconexión de los sistemas y motores." .
+
+elec:emplearPulsadorParadaEmergencia a owl:ObjectProperty ;
+    rdfs:label "emplear pulsador de parada de emergencia" ;
+    rdfs:comment "Acción de utilizar el pulsador de parada de emergencia." .
+
+elec:producirDesconexion a owl:ObjectProperty ;
+    rdfs:label "producir desconexión" ;
+    rdfs:comment "Acción de que la caída del relé cause la desconexión." .

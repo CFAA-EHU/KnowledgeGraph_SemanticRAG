@@ -1,64 +1,106 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:UtilDeAmarre a owl:Class ;
-    rdfs:label "UtilDeAmarre" ;
-    rdfs:comment "Herramienta específica para amarre en la máquina de brochado." .
+ex:UtilAmarre a owl:Class ;
+    rdfs:label "Util de amarre" ;
+    rdfs:comment "Herramienta específica para amarrar piezas en la máquina de brochado." .
 
 ex:ArmarioElectrico a owl:Class ;
-    rdfs:label "ArmarioElectrico" ;
+    rdfs:label "Armario eléctrico" ;
     rdfs:comment "Armario que contiene componentes eléctricos de la máquina." .
 
 ex:Puerta a owl:Class ;
     rdfs:label "Puerta" ;
-    rdfs:comment "Puerta del armario eléctrico." .
-
-ex:Maquina a owl:Class ;
-    rdfs:label "Maquina" ;
-    rdfs:comment "Máquina de brochado." .
-
-ex:ModoDeTrabajo a owl:Class ;
-    rdfs:label "ModoDeTrabajo" ;
-    rdfs:comment "Modo de operación de la máquina." .
-
-ex:Persona a owl:Class ;
-    rdfs:label "Persona" ;
-    rdfs:comment "Persona que opera o mantiene la máquina." .
+    rdfs:comment "Puerta de acceso a los armarios eléctricos." .
 
 ex:Herramienta a owl:Class ;
     rdfs:label "Herramienta" ;
-    rdfs:comment "Herramienta específica para la máquina." .
+    rdfs:comment "Herramienta específica para la máquina de brochado." .
 
-ex:CapacidadDeTrabajo a owl:Class ;
-    rdfs:label "CapacidadDeTrabajo" ;
+ex:Maquina a owl:Class ;
+    rdfs:label "Máquina" ;
+    rdfs:comment "Máquina de brochado." .
+
+ex:ModoTrabajo a owl:Class ;
+    rdfs:label "Modo de trabajo" ;
+    rdfs:comment "Modo de operación de la máquina." .
+
+ex:CapacidadTrabajo a owl:Class ;
+    rdfs:label "Capacidad de trabajo" ;
     rdfs:comment "Capacidad máxima de trabajo de la máquina." .
 
-ex:estaAdaptadoA a owl:ObjectProperty ;
-    rdfs:label "estaAdaptadoA" ;
-    rdfs:comment "Relación que indica que un útil de amarre está adaptado a una pieza." .
+ex:Persona a owl:Class ;
+    rdfs:label "Persona" ;
+    rdfs:comment "Persona que opera la máquina." .
 
-ex:debeEstarCerradaYBloqueada a owl:ObjectProperty ;
-    rdfs:label "debeEstarCerradaYBloqueada" ;
-    rdfs:comment "Relación que indica que las puertas del armario eléctrico deben estar cerradas y bloqueadas." .
+ex:adaptadoA a owl:ObjectProperty ;
+    rdfs:domain ex:UtilAmarre ;
+    rdfs:range ex:Pieza .
+
+ex:estaCerradaYBloqueada a owl:ObjectProperty ;
+    rdfs:domain ex:Puerta ;
+    rdfs:range xsd:boolean .
 
 ex:exponerA a owl:ObjectProperty ;
-    rdfs:label "exponerA" ;
-    rdfs:comment "Relación que indica que abrir las puertas expone a tensiones eléctricas peligrosas." .
+    rdfs:domain ex:Puerta ;
+    rdfs:range ex:TensionElectrica .
 
-ex:debeEmplear a owl:ObjectProperty ;
-    rdfs:label "debeEmplear" ;
-    rdfs:comment "Relación que indica que se deben emplear herramientas específicas." .
+ex:emplear a owl:ObjectProperty ;
+    rdfs:domain ex:Persona ;
+    rdfs:range ex:Herramienta .
 
-ex:noDebeSobrepasar a owl:ObjectProperty ;
-    rdfs:label "noDebeSobrepasar" ;
-    rdfs:comment "Relación que indica que no se debe sobrepasar la capacidad de trabajo de la máquina." .
+ex:especificadaPor a owl:ObjectProperty ;
+    rdfs:domain ex:Herramienta ;
+    rdfs:range ex:Empresa .
 
-ex:debeVerificar a owl:ObjectProperty ;
-    rdfs:label "debeVerificar" ;
-    rdfs:comment "Relación que indica que se debe verificar que no hay nadie en el interior de la máquina." .
+ex:sobrepasar a owl:ObjectProperty ;
+    rdfs:domain ex:Persona ;
+    rdfs:range ex:CapacidadTrabajo .
 
-ex:estaEnFuncionamiento a owl:ObjectProperty ;
-    rdfs:label "estaEnFuncionamiento" ;
-    rdfs:comment "Relación que indica que la máquina está en funcionamiento." .
+ex:ponerEnFuncionamiento a owl:ObjectProperty ;
+    rdfs:domain ex:Persona ;
+    rdfs:range ex:Maquina .
+
+ex:verificar a owl:ObjectProperty ;
+    rdfs:domain ex:Persona ;
+    rdfs:range ex:Persona .
+
+ex:encuentraEn a owl:ObjectProperty ;
+    rdfs:domain ex:Persona ;
+    rdfs:range ex:Maquina .
+
+ex:estaEnModo a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range ex:ModoTrabajo .
+
+ex:TensionElectrica a owl:Class ;
+    rdfs:label "Tensión eléctrica" ;
+    rdfs:comment "Tensión eléctrica peligrosa." .
+
+ex:Empresa a owl:Class ;
+    rdfs:label "Empresa" ;
+    rdfs:comment "Empresa fabricante de la máquina." ;
+    rdfs:isDefinedBy "http://www.e-kin.com" .
+
+ex:adaptadoA rdfs:comment "Relación que indica que el útil de amarre está adaptado a las piezas." .
+
+ex:estaCerradaYBloqueada rdfs:comment "Relación que indica que las puertas de los armarios eléctricos están cerradas y bloqueadas." .
+
+ex:exponerA rdfs:comment "Relación que indica que abrir las puertas expone a tensiones eléctricas peligrosas." .
+
+ex:emplear rdfs:comment "Relación que indica que se deben emplear herramientas específicas." .
+
+ex:especificadaPor rdfs:comment "Relación que indica que las herramientas son especificadas por la empresa EKIN S. COOP." .
+
+ex:sobrepasar rdfs:comment "Relación que indica que no se debe sobrepasar la capacidad de trabajo de la máquina." .
+
+ex:ponerEnFuncionamiento rdfs:comment "Relación que indica que no se debe poner en funcionamiento la máquina sin verificar ciertas condiciones." .
+
+ex:verificar rdfs:comment "Relación que indica que se debe verificar que no hay nadie en el interior de la máquina." .
+
+ex:encuentraEn rdfs:comment "Relación que indica que una persona se encuentra en el interior de la máquina." .
+
+ex:estaEnModo rdfs:comment "Relación que indica que la máquina está en un modo de trabajo específico." .

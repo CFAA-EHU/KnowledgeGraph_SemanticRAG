@@ -1,106 +1,91 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:EnclavamientoDeSeguridad a owl:Class ;
-    rdfs:label "Enclavamiento de Seguridad" ;
-    rdfs:comment "Mecanismo de seguridad que no debe anularse." .
-
-ex:CarroDeLaMaquina a owl:Class ;
-    rdfs:label "Carro de la Máquina" ;
-    rdfs:comment "Componente de la máquina que no debe ponerse en marcha sin asegurar las piezas." .
+    rdfs:label "Enclavamiento de seguridad"@es .
 
 ex:PiezaABrochar a owl:Class ;
-    rdfs:label "Pieza a Brochar" ;
-    rdfs:comment "Pieza que debe estar correctamente colocada en el util de amarre." .
+    rdfs:label "Pieza a brochar"@es .
 
-ex:UtilAmarre a owl:Class ;
-    rdfs:label "Util de Amarre" ;
-    rdfs:comment "Dispositivo donde se colocan las piezas a brochar." .
+ex:UtilDeAmarre a owl:Class ;
+    rdfs:label "Util de amarre"@es .
 
 ex:Fluido a owl:Class ;
-    rdfs:label "Fluido" ;
-    rdfs:comment "Sustancia que no debe tener efectos perjudiciales para la salud." .
+    rdfs:label "Fluido"@es .
 
 ex:AceiteDeCorte a owl:Class ;
-    rdfs:label "Aceite de Corte" ;
-    rdfs:comment "Tipo de fluido que puede ser perjudicial para la salud." .
+    rdfs:label "Aceite de corte"@es .
 
 ex:Taladrina a owl:Class ;
-    rdfs:label "Taladrina" ;
-    rdfs:comment "Tipo de fluido que puede ser perjudicial para la salud." .
+    rdfs:label "Taladrina"@es .
 
 ex:DefensaDeLaMaquina a owl:Class ;
-    rdfs:label "Defensa de la Máquina" ;
-    rdfs:comment "Protección de la máquina que debe estar en su posición correcta." .
+    rdfs:label "Defensa de la máquina"@es .
 
 ex:ElementoEnMovimiento a owl:Class ;
-    rdfs:label "Elemento en Movimiento" ;
-    rdfs:comment "Componente de la máquina que está en movimiento." .
+    rdfs:label "Elemento en movimiento"@es .
 
 ex:MedioDeElevacion a owl:Class ;
-    rdfs:label "Medio de Elevación" ;
-    rdfs:comment "Dispositivo para manipular piezas de más de 10kg." .
+    rdfs:label "Medio de elevación"@es .
 
 ex:Grúa a owl:Class ;
-    rdfs:label "Grúa" ;
-    rdfs:comment "Tipo de medio de elevación." .
+    rdfs:label "Grúa"@es .
 
 ex:Pluma a owl:Class ;
-    rdfs:label "Pluma" ;
-    rdfs:comment "Tipo de medio de elevación." .
+    rdfs:label "Pluma"@es .
 
 ex:LegislacionVigente a owl:Class ;
-    rdfs:label "Legislación Vigente" ;
-    rdfs:comment "Normativa que debe seguirse durante las operaciones de movimiento de la máquina." .
+    rdfs:label "Legislación vigente"@es .
 
 ex:noDebeAnularse a owl:ObjectProperty ;
-    rdfs:label "no debe anularse" ;
     rdfs:domain ex:EnclavamientoDeSeguridad ;
-    rdfs:range ex:EnclavamientoDeSeguridad .
+    rdfs:range xsd:boolean .
 
-ex:noDebePonerseEnMarchaSinAsegurar a owl:ObjectProperty ;
-    rdfs:label "no debe ponerse en marcha sin asegurar" ;
+ex:noDebePonerseEnMarchaSinAsegurarseDeQue a owl:ObjectProperty ;
     rdfs:domain ex:CarroDeLaMaquina ;
     rdfs:range ex:PiezaABrochar .
 
-ex:debeEstarCorrectamenteColocadaEn a owl:ObjectProperty ;
-    rdfs:label "debe estar correctamente colocada en" ;
-    rdfs:domain ex:PiezaABrochar ;
-    rdfs:range ex:UtilAmarre .
-
 ex:noDebenEmplearse a owl:ObjectProperty ;
-    rdfs:label "no deben emplearse" ;
     rdfs:domain ex:Fluido ;
-    rdfs:range ex:Fluido .
+    rdfs:range xsd:boolean .
 
-ex:muestranEfectosPerjudicialesParaLaSalud a owl:ObjectProperty ;
-    rdfs:label "muestran efectos perjudiciales para la salud" ;
+ex:debeSolicitarse a owl:ObjectProperty ;
     rdfs:domain ex:Fluido ;
-    rdfs:range ex:Fluido .
-
-ex:debeSolicitarseLasMedidasDeSeguridad a owl:ObjectProperty ;
-    rdfs:label "debe solicitarse las medidas de seguridad" ;
-    rdfs:domain ex:Fluido ;
-    rdfs:range ex:Fluido .
+    rdfs:range ex:MedidasDeSeguridad .
 
 ex:debenEstarSituadasEnSuPosicionCorrecta a owl:ObjectProperty ;
-    rdfs:label "deben estar situadas en su posición correcta" ;
     rdfs:domain ex:DefensaDeLaMaquina ;
-    rdfs:range ex:DefensaDeLaMaquina .
+    rdfs:range xsd:boolean .
 
-ex:noDebePonerseLasManosUObjetosMasAllaDe a owl:ObjectProperty ;
-    rdfs:label "no debe ponerse las manos u objetos más allá de" ;
-    rdfs:domain ex:DefensaDeLaMaquina ;
-    rdfs:range ex:DefensaDeLaMaquina .
+ex:noDebePonerseLasManosUObjetosMasAllaDeLasDefensasDuranteElFuncionamientoDeLaMaquina a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:boolean .
 
 ex:debenEmplearse a owl:ObjectProperty ;
-    rdfs:label "deben emplearse" ;
-    rdfs:domain ex:PiezaABrochar ;
+    rdfs:domain ex:Pieza ;
     rdfs:range ex:MedioDeElevacion .
 
-ex:debenEfectuarseSiguiendo a owl:ObjectProperty ;
-    rdfs:label "deben efectuarse siguiendo" ;
-    rdfs:domain ex:CarroDeLaMaquina ;
+ex:debenEfectuarseSiguiendoLaLegislacionVigenteEnElPaisDeUtilizacion a owl:ObjectProperty ;
+    rdfs:domain ex:Operacion ;
     rdfs:range ex:LegislacionVigente .
+
+ex:tieneEfectoPerjudicialParaLaSalud a owl:ObjectProperty ;
+    rdfs:domain ex:Fluido ;
+    rdfs:range xsd:boolean .
+
+ex:tienePeso a owl:ObjectProperty ;
+    rdfs:domain ex:Pieza ;
+    rdfs:range xsd:decimal .
+
+ex:tieneMedidasDeSeguridad a owl:ObjectProperty ;
+    rdfs:domain ex:Fluido ;
+    rdfs:range ex:MedidasDeSeguridad .
+
+ex:MedidasDeSeguridad a owl:Class ;
+    rdfs:label "Medidas de seguridad"@es .
+
+ex:CarroDeLaMaquina a owl:Class ;
+    rdfs:label "Carro de la máquina"@es .

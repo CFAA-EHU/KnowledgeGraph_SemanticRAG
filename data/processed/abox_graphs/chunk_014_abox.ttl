@@ -1,85 +1,52 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base#> .
+@prefix seguridad: <https://vocab.cfaa.eus/broaching/seguridad#> .
+@prefix empresa: <https://vocab.cfaa.eus/broaching/empresa#> .
 
-ex:MaquinaBrochadora a owl:Class ;
-    rdfs:label "MaquinaBrochadora" ;
-    rdfs:comment "Clase que representa una máquina de brochado." .
+base:Maquina a owl:Class ;
+    rdfs:label "Máquina" ;
+    rdfs:comment "Clase base para máquinas EKIN, S. Coop." .
 
-ex:DepartamentoAsistenciaCliente a owl:Class ;
-    rdfs:label "DepartamentoAsistenciaCliente" ;
-    rdfs:comment "Clase que representa el departamento de asistencia al cliente." .
+base:InstruccionSeguridad a owl:Class ;
+    rdfs:label "Instrucción de Seguridad" ;
+    rdfs:comment "Instrucciones de seguridad para el funcionamiento de las máquinas EKIN, S. Coop." .
 
-ex:Persona a owl:Class ;
-    rdfs:label "Persona" ;
-    rdfs:comment "Clase que representa a una persona." .
+base:DepartamentoAsistenciaCliente a owl:Class ;
+    rdfs:label "Departamento de Asistencia al Cliente" ;
+    rdfs:comment "Departamento de asistencia al cliente de EKIN, S. Coop." .
 
-ex:InstruccionSeguridad a owl:Class ;
-    rdfs:label "InstruccionSeguridad" ;
-    rdfs:comment "Clase que representa una instrucción de seguridad." .
+seguridad:cumpleNormasSeguridad a owl:ObjectProperty ;
+    rdfs:label "cumple normas de seguridad" ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:InstruccionSeguridad .
 
-ex:SeguridadMaquina a owl:Class ;
-    rdfs:label "SeguridadMaquina" ;
-    rdfs:comment "Clase que representa la seguridad de la máquina." .
+seguridad:requierePrecaucion a owl:ObjectProperty ;
+    rdfs:label "requiere precaución" ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:InstruccionSeguridad .
 
-ex:Componente a owl:Class ;
-    rdfs:label "Componente" ;
-    rdfs:comment "Clase que representa un componente de la máquina." .
+seguridad:evitarAccidentes a owl:ObjectProperty ;
+    rdfs:label "evitar accidentes" ;
+    rdfs:domain base:Maquina ;
+    rdfs:range base:InstruccionSeguridad .
 
-ex:EKIN a owl:Class ;
-    rdfs:label "EKIN" ;
-    rdfs:comment "Clase que representa la empresa EKIN." .
+seguridad:consultarDepartamentoAsistencia a owl:ObjectProperty ;
+    rdfs:label "consultar departamento de asistencia" ;
+    rdfs:domain base:InstruccionSeguridad ;
+    rdfs:range base:DepartamentoAsistenciaCliente .
 
-ex:lesion a owl:Class ;
-    rdfs:label "Lesion" ;
-    rdfs:comment "Clase que representa una lesión." .
+empresa:fabricadoPor a owl:ObjectProperty ;
+    rdfs:label "fabricado por" ;
+    rdfs:domain base:Maquina ;
+    rdfs:range empresa:Empresa .
 
-ex:dano a owl:Class ;
-    rdfs:label "Dano" ;
-    rdfs:comment "Clase que representa un daño." .
+empresa:Empresa a owl:Class ;
+    rdfs:label "Empresa" ;
+    rdfs:comment "Clase para empresas fabricantes de máquinas." .
 
-ex:consultar a owl:ObjectProperty ;
-    rdfs:label "consultar" ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:DepartamentoAsistenciaCliente .
-
-ex:leer a owl:ObjectProperty ;
-    rdfs:label "leer" ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:InstruccionSeguridad .
-
-ex:cumplir a owl:ObjectProperty ;
-    rdfs:label "cumplir" ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:InstruccionSeguridad .
-
-ex:proceder a owl:ObjectProperty ;
-    rdfs:label "proceder" ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:MaquinaBrochadora .
-
-ex:fabricar a owl:ObjectProperty ;
-    rdfs:label "fabricar" ;
-    rdfs:domain ex:EKIN ;
-    rdfs:range ex:MaquinaBrochadora .
-
-ex:evitar a owl:ObjectProperty ;
-    rdfs:label "evitar" ;
-    rdfs:domain ex:MaquinaBrochadora ;
-    rdfs:range ex:lesion .
-
-ex:causar a owl:ObjectProperty ;
-    rdfs:label "causar" ;
-    rdfs:domain ex:InstruccionSeguridad ;
-    rdfs:range ex:lesion .
-
-ex:causarDano a owl:ObjectProperty ;
-    rdfs:label "causarDano" ;
-    rdfs:domain ex:InstruccionSeguridad ;
-    rdfs:range ex:dano .
-
-ex:tenerPrecaucion a owl:ObjectProperty ;
-    rdfs:label "tenerPrecaucion" ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:InstruccionSeguridad .
+empresa:EKIN a empresa:Empresa ;
+    rdfs:label "EKIN, S. Coop." ;
+    rdfs:comment "Empresa fabricante de máquinas EKIN, S. Coop." .

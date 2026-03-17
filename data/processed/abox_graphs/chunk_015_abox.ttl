@@ -1,78 +1,264 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:ManualDeInstrucciones a owl:Class ;
-    rdfs:label "ManualDeInstrucciones" ;
-    rdfs:comment "Clase que representa el manual de instrucciones de la máquina." .
-
-ex:MedidaDeSeguridad a owl:Class ;
-    rdfs:label "MedidaDeSeguridad" ;
-    rdfs:comment "Clase que representa las medidas de seguridad a seguir." .
+ex:MedidaDeProteccion a owl:Class ;
+    rdfs:label "Medida de protección"@es .
 
 ex:ElementoDeSeguridad a owl:Class ;
-    rdfs:label "ElementoDeSeguridad" ;
-    rdfs:comment "Clase que representa los elementos de seguridad de la máquina." .
+    rdfs:label "Elemento de seguridad"@es .
 
-ex:Persona a owl:Class ;
-    rdfs:label "Persona" ;
-    rdfs:comment "Clase que representa a las personas que operan la máquina." .
+ex:PersonalInstruido a owl:Class ;
+    rdfs:label "Personal instruido"@es .
+
+ex:ManualDeInstrucciones a owl:Class ;
+    rdfs:label "Manual de instrucciones"@es .
+
+ex:CartelDeAdvertencia a owl:Class ;
+    rdfs:label "Cartel de advertencia"@es .
+
+ex:PlacaDeAdvertencia a owl:Class ;
+    rdfs:label "Placa de advertencia"@es .
+
+ex:PersonaCompetente a owl:Class ;
+    rdfs:label "Persona competente"@es .
+
+ex:DepartamentoHerramientas a owl:Class ;
+    rdfs:label "Departamento de herramientas"@es .
 
 ex:PiezaDeRecambio a owl:Class ;
-    rdfs:label "PiezaDeRecambio" ;
-    rdfs:comment "Clase que representa las piezas de recambio de la máquina." .
+    rdfs:label "Pieza de recambio"@es .
 
 ex:ZonaDeTrabajo a owl:Class ;
-    rdfs:label "ZonaDeTrabajo" ;
-    rdfs:comment "Clase que representa la zona de trabajo de la máquina." .
+    rdfs:label "Zona de trabajo"@es .
 
-ex:Cartel a owl:Class ;
-    rdfs:label "Cartel" ;
-    rdfs:comment "Clase que representa los carteles de advertencia o instrucción en la máquina." .
+ex:MedidaDeSeguridad a owl:Class ;
+    rdfs:label "Medida de seguridad"@es .
+
+ex:Modificacion a owl:Class ;
+    rdfs:label "Modificación"@es .
+
+ex:Procedimiento a owl:Class ;
+    rdfs:label "Procedimiento"@es .
+
+ex:Operacion a owl:Class ;
+    rdfs:label "Operación"@es .
+
+ex:Maquina a owl:Class ;
+    rdfs:label "Máquina"@es .
 
 ex:EKIN a owl:Class ;
-    rdfs:label "EKIN" ;
-    rdfs:comment "Clase que representa a la empresa EKIN, S.Coop." .
+    rdfs:label "EKIN"@es .
 
-ex:debeSeguir a owl:ObjectProperty ;
-    rdfs:label "debeSeguir" ;
-    rdfs:comment "Propiedad que indica que una persona debe seguir las medidas de seguridad." ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:MedidaDeSeguridad .
+ex:FormacionPersonal a owl:Class ;
+    rdfs:label "Formación del personal"@es .
 
-ex:debeVerificar a owl:ObjectProperty ;
-    rdfs:label "debeVerificar" ;
-    rdfs:comment "Propiedad que indica que el estado de los elementos de seguridad debe ser verificado." ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:ElementoDeSeguridad .
+ex:Peligro a owl:Class ;
+    rdfs:label "Peligro"@es .
 
-ex:debeMantener a owl:ObjectProperty ;
-    rdfs:label "debeMantener" ;
-    rdfs:comment "Propiedad que indica que la zona de trabajo debe mantenerse libre de objetos." ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:ZonaDeTrabajo .
+ex:PrendaDeProteccion a owl:Class ;
+    rdfs:label "Prenda de protección"@es .
 
-ex:debeUtilizar a owl:ObjectProperty ;
-    rdfs:label "debeUtilizar" ;
-    rdfs:comment "Propiedad que indica que se deben utilizar las piezas de recambio originales." ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:PiezaDeRecambio .
+ex:Accion a owl:Class ;
+    rdfs:label "Acción"@es .
+
+ex:Reglamentacion a owl:Class ;
+    rdfs:label "Reglamentación"@es .
+
+ex:PrevencionAccidentes a owl:Class ;
+    rdfs:label "Prevención de accidentes"@es .
+
+ex:ProteccionMedioAmbiente a owl:Class ;
+    rdfs:label "Protección del medio ambiente"@es .
+
+ex:verificarEstado a owl:ObjectProperty ;
+    rdfs:label "verificar estado"@es ;
+    rdfs:domain ex:ElementoDeSeguridad ;
+    rdfs:range ex:Maquina .
 
 ex:debeRespetar a owl:ObjectProperty ;
-    rdfs:label "debeRespetar" ;
-    rdfs:comment "Propiedad que indica que se deben respetar los carteles de advertencia o instrucción." ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:Cartel .
+    rdfs:label "debe respetar"@es ;
+    rdfs:domain ex:PersonalInstruido ;
+    rdfs:range ex:ManualDeInstrucciones .
+
+ex:debeSerInstruidoEn a owl:ObjectProperty ;
+    rdfs:label "debe ser instruido en"@es ;
+    rdfs:domain ex:PersonalInstruido ;
+    rdfs:range ex:Maquina .
+
+ex:debeUtilizar a owl:ObjectProperty ;
+    rdfs:label "debe utilizar"@es ;
+    rdfs:domain ex:PersonalInstruido ;
+    rdfs:range ex:PrendaDeProteccion .
+
+ex:debeAdoptar a owl:ObjectProperty ;
+    rdfs:label "debe adoptar"@es ;
+    rdfs:domain ex:PersonalInstruido ;
+    rdfs:range ex:MedidaDeSeguridad .
 
 ex:debeComunicar a owl:ObjectProperty ;
-    rdfs:label "debeComunicar" ;
-    rdfs:comment "Propiedad que indica que se debe comunicar la avería a la persona o departamento competentes." ;
-    rdfs:domain ex:Persona ;
-    rdfs:range ex:Persona .
+    rdfs:label "debe comunicar"@es ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range ex:PersonaCompetente .
+
+ex:debeDetenerse a owl:ObjectProperty ;
+    rdfs:label "debe detenerse"@es ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range xsd:boolean .
+
+ex:debeMantenerseLibreDe a owl:ObjectProperty ;
+    rdfs:label "debe mantenerse libre de"@es ;
+    rdfs:domain ex:ZonaDeTrabajo ;
+    rdfs:range ex:Objeto .
+
+ex:debeObservar a owl:ObjectProperty ;
+    rdfs:label "debe observar"@es ;
+    rdfs:domain ex:PersonalInstruido ;
+    rdfs:range ex:MedidaDeSeguridad .
 
 ex:debeAprobar a owl:ObjectProperty ;
-    rdfs:label "debeAprobar" ;
-    rdfs:comment "Propiedad que indica que las modificaciones deben ser aprobadas por EKIN, S.Coop." ;
-    rdfs:domain ex:Persona ;
+    rdfs:label "debe aprobar"@es ;
+    rdfs:domain ex:Modificacion ;
     rdfs:range ex:EKIN .
+
+ex:afectar a owl:ObjectProperty ;
+    rdfs:label "afectar"@es ;
+    rdfs:domain ex:Modificacion ;
+    rdfs:range ex:Seguridad .
+
+ex:debeRespetarReglamentaciones a owl:ObjectProperty ;
+    rdfs:label "debe respetar reglamentaciones"@es ;
+    rdfs:domain ex:PersonalInstruido ;
+    rdfs:range ex:Reglamentacion .
+
+ex:debeIncluir a owl:ObjectProperty ;
+    rdfs:label "debe incluir"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Peligro .
+
+ex:debeIncluirMedidas a owl:ObjectProperty ;
+    rdfs:label "debe incluir medidas"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:MedidaDeSeguridad .
+
+ex:debeIncluirPrendas a owl:ObjectProperty ;
+    rdfs:label "debe incluir prendas"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:PrendaDeProteccion .
+
+ex:debeIncluirAcciones a owl:ObjectProperty ;
+    rdfs:label "debe incluir acciones"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Accion .
+
+ex:debeIncluirProcedimientos a owl:ObjectProperty ;
+    rdfs:label "debe incluir procedimientos"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Procedimiento .
+
+ex:debeIncluirOperaciones a owl:ObjectProperty ;
+    rdfs:label "debe incluir operaciones"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Operacion .
+
+ex:debeIncluirPiezasDeRecambio a owl:ObjectProperty ;
+    rdfs:label "debe incluir piezas de recambio"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:PiezaDeRecambio .
+
+ex:debeIncluirCartelesDeAdvertencia a owl:ObjectProperty ;
+    rdfs:label "debe incluir carteles de advertencia"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:CartelDeAdvertencia .
+
+ex:debeIncluirPlacasDeAdvertencia a owl:ObjectProperty ;
+    rdfs:label "debe incluir placas de advertencia"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:PlacaDeAdvertencia .
+
+ex:debeIncluirDepartamentoHerramientas a owl:ObjectProperty ;
+    rdfs:label "debe incluir departamento de herramientas"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:DepartamentoHerramientas .
+
+ex:debeIncluirManualDeInstrucciones a owl:ObjectProperty ;
+    rdfs:label "debe incluir manual de instrucciones"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:ManualDeInstrucciones .
+
+ex:debeIncluirPersonaCompetente a owl:ObjectProperty ;
+    rdfs:label "debe incluir persona competente"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:PersonaCompetente .
+
+ex:debeIncluirZonaDeTrabajo a owl:ObjectProperty ;
+    rdfs:label "debe incluir zona de trabajo"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:ZonaDeTrabajo .
+
+ex:debeIncluirMedidaDeSeguridad a owl:ObjectProperty ;
+    rdfs:label "debe incluir medida de seguridad"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:MedidaDeSeguridad .
+
+ex:debeIncluirModificacion a owl:ObjectProperty ;
+    rdfs:label "debe incluir modificación"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Modificacion .
+
+ex:debeIncluirProcedimiento a owl:ObjectProperty ;
+    rdfs:label "debe incluir procedimiento"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Procedimiento .
+
+ex:debeIncluirOperacion a owl:ObjectProperty ;
+    rdfs:label "debe incluir operación"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Operacion .
+
+ex:debeIncluirMaquina a owl:ObjectProperty ;
+    rdfs:label "debe incluir máquina"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Maquina .
+
+ex:debeIncluirEKIN a owl:ObjectProperty ;
+    rdfs:label "debe incluir EKIN"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:EKIN .
+
+ex:debeIncluirFormacionPersonal a owl:ObjectProperty ;
+    rdfs:label "debe incluir formación del personal"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:FormacionPersonal .
+
+ex:debeIncluirPeligro a owl:ObjectProperty ;
+    rdfs:label "debe incluir peligro"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Peligro .
+
+ex:debeIncluirPrendaDeProteccion a owl:ObjectProperty ;
+    rdfs:label "debe incluir prenda de protección"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:PrendaDeProteccion .
+
+ex:debeIncluirAccion a owl:ObjectProperty ;
+    rdfs:label "debe incluir acción"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Accion .
+
+ex:debeIncluirReglamentacion a owl:ObjectProperty ;
+    rdfs:label "debe incluir reglamentación"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:Reglamentacion .
+
+ex:debeIncluirPrevencionAccidentes a owl:ObjectProperty ;
+    rdfs:label "debe incluir prevención de accidentes"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:PrevencionAccidentes .
+
+ex:debeIncluirProteccionMedioAmbiente a owl:ObjectProperty ;
+    rdfs:label "debe incluir protección del medio ambiente"@es ;
+    rdfs:domain ex:FormacionPersonal ;
+    rdfs:range ex:ProteccionMedioAmbiente .

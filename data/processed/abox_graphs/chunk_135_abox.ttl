@@ -1,113 +1,141 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base/> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/electrico/> .
+@prefix meca: <https://vocab.cfaa.eus/broaching/mecanico/> .
+@prefix norm: <https://vocab.cfaa.eus/broaching/normativa/> .
 
-ex:ProteccionSelect a owl:Class ;
-    rdfs:label "ProteccionSelect" ;
-    rdfs:comment "Clase para ProteccionSelect" .
+# =============================================================================
+# Clases
+# =============================================================================
 
-ex:InterruptorProteccionSelectiva a owl:Class ;
-    rdfs:label "InterruptorProteccionSelectiva" ;
-    rdfs:comment "Clase para InterruptorProteccionSelectiva" .
+elec:InterruptorProteccionSelectiva
+    a owl:Class ;
+    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/InterruptorProteccionSelectiva> ;
+    rdfs:label "Interruptor de Protección Selectiva"@es ;
+    rdfs:comment "Interruptor de protección selectiva para circuitos eléctricos"@es .
 
-ex:InterruptorAutomatico a owl:Class ;
-    rdfs:label "InterruptorAutomatico" ;
-    rdfs:comment "Clase para InterruptorAutomatico" .
+elec:InterruptorAutomatico
+    a owl:Class ;
+    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/InterruptorAutomatico> ;
+    rdfs:label "Interruptor Automático"@es ;
+    rdfs:comment "Dispositivo de protección contra sobrecorrientes y cortocircuitos"@es .
 
-ex:BloqueContactoAuxiliarTransversal a owl:Class ;
-    rdfs:label "BloqueContactoAuxiliarTransversal" ;
-    rdfs:comment "Clase para BloqueContactoAuxiliarTransversal" .
+elec:BloqueCAuxTransversal
+    a owl:Class ;
+    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/BloqueCAuxTransversal> ;
+    rdfs:label "Bloque de Contactos Auxiliares Transversales"@es ;
+    rdfs:comment "Bloque de contactos auxiliares para conexión transversal en cuadros eléctricos"@es .
 
-ex:Climatizador a owl:Class ;
-    rdfs:label "Climatizador" ;
-    rdfs:comment "Clase para Climatizador" .
+elec:Guardamotor
+    a owl:Class ;
+    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/Guardamotor> ;
+    rdfs:label "Guardamotor"@es ;
+    rdfs:comment "Dispositivo de protección para motores contra sobrecargas y cortocircuitos"@es .
 
-ex:Guardamotor a owl:Class ;
-    rdfs:label "Guardamotor" ;
-    rdfs:comment "Clase para Guardamotor" .
+# =============================================================================
+# Propiedades
+# =============================================================================
 
-ex:MotorRefrigeranteMaquina a owl:Class ;
-    rdfs:label "MotorRefrigeranteMaquina" ;
-    rdfs:comment "Clase para MotorRefrigeranteMaquina" .
+elec:tieneTensionNominal
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorProteccionSelectiva ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene tensión nominal"@es ;
+    rdfs:comment "Tensión nominal de operación del interruptor de protección selectiva"@es .
 
-ex:ArmarioElectrico a owl:Class ;
-    rdfs:label "ArmarioElectrico" ;
-    rdfs:comment "Clase para ArmarioElectrico" .
+elec:tieneCorrienteInterrupcion
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorProteccionSelectiva ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene corriente de interrupción"@es ;
+    rdfs:comment "Capacidad de interrupción del interruptor de protección selectiva"@es .
 
-ex:SiemensAG a owl:Class ;
-    rdfs:label "SiemensAG" ;
-    rdfs:comment "Clase para SiemensAG" .
+elec:tienePolos
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorProteccionSelectiva ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene polos"@es ;
+    rdfs:comment "Número de polos del interruptor de protección selectiva"@es .
 
-ex:tieneVoltaje a owl:DatatypeProperty ;
-    rdfs:label "tieneVoltaje" ;
-    rdfs:comment "Propiedad para el voltaje" ;
-    rdfs:domain ex:ProteccionSelect ;
-    rdfs:range xsd:decimal .
+elec:tieneCurvaCaracteristica
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorProteccionSelectiva ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene curva característica"@es ;
+    rdfs:comment "Curva característica de disparo del interruptor de protección selectiva (ej. C)"@es .
 
-ex:tieneIntensidad a owl:DatatypeProperty ;
-    rdfs:label "tieneIntensidad" ;
-    rdfs:comment "Propiedad para la intensidad" ;
-    rdfs:domain ex:ProteccionSelect ;
-    rdfs:range xsd:decimal .
+elec:tieneCorrienteNominal
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorProteccionSelectiva ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene corriente nominal"@es ;
+    rdfs:comment "Corriente nominal del interruptor de protección selectiva"@es .
 
-ex:tieneNumeroPolos a owl:DatatypeProperty ;
-    rdfs:label "tieneNumeroPolos" ;
-    rdfs:comment "Propiedad para el número de polos" ;
-    rdfs:domain ex:ProteccionSelect ;
-    rdfs:range xsd:integer .
+elec:tienePaso
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorProteccionSelectiva ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene paso"@es ;
+    rdfs:comment "Paso o separación entre bornes del interruptor de protección selectiva"@es .
 
-ex:tieneProteccion a owl:DatatypeProperty ;
-    rdfs:label "tieneProteccion" ;
-    rdfs:comment "Propiedad para la protección" ;
-    rdfs:domain ex:ProteccionSelect ;
-    rdfs:range xsd:string .
+elec:tieneTipoBornes
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorAutomatico ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene tipo de bornes"@es ;
+    rdfs:comment "Tipo de bornes del interruptor automático (ej. bornes de tornillo)"@es .
 
-ex:tieneFabricante a owl:ObjectProperty ;
-    rdfs:label "tieneFabricante" ;
-    rdfs:comment "Propiedad para el fabricante" ;
-    rdfs:domain ex:ProteccionSelect ;
-    rdfs:range ex:SiemensAG .
+elec:tieneCorrienteProteccion
+    a owl:DatatypeProperty ;
+    rdfs:domain elec:InterruptorAutomatico ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene corriente de protección"@es ;
+    rdfs:comment "Corriente de protección del interruptor automático"@es .
 
-ex:tieneModelo a owl:DatatypeProperty ;
-    rdfs:label "tieneModelo" ;
-    rdfs:comment "Propiedad para el modelo" ;
-    rdfs:domain ex:ProteccionSelect ;
-    rdfs:range xsd:string .
+elec:protegeComponente
+    a owl:ObjectProperty ;
+    rdfs:domain elec:InterruptorProteccionSelectiva ;
+    rdfs:range meca:ComponenteElectrico ;
+    rdfs:label "protege componente"@es ;
+    rdfs:comment "Relación que indica qué componente eléctrico es protegido por el interruptor"@es .
 
-ex:tieneCantidad a owl:DatatypeProperty ;
-    rdfs:label "tieneCantidad" ;
-    rdfs:comment "Propiedad para la cantidad" ;
-    rdfs:domain ex:ProteccionSelect ;
-    rdfs:range xsd:integer .
+elec:protegeSistema
+    a owl:ObjectProperty ;
+    rdfs:domain elec:InterruptorAutomatico ;
+    rdfs:range meca:SistemaElectrico ;
+    rdfs:label "protege sistema"@es ;
+    rdfs:comment "Relación que indica qué sistema eléctrico es protegido por el interruptor automático"@es .
 
-ex:tieneProteccionGeneral a owl:ObjectProperty ;
-    rdfs:label "tieneProteccionGeneral" ;
-    rdfs:comment "Propiedad para la protección general" ;
-    rdfs:domain ex:ArmarioElectrico ;
-    rdfs:range ex:InterruptorAutomatico .
+elec:tieneFabricante
+    a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (elec:InterruptorProteccionSelectiva elec:InterruptorAutomatico elec:BloqueCAuxTransversal elec:Guardamotor)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene fabricante"@es ;
+    rdfs:comment "Fabricante del componente eléctrico"@es .
 
-ex:tieneProteccionClimatizador a owl:ObjectProperty ;
-    rdfs:label "tieneProteccionClimatizador" ;
-    rdfs:comment "Propiedad para la protección del climatizador" ;
-    rdfs:domain ex:ArmarioElectrico ;
-    rdfs:range ex:InterruptorAutomatico .
+elec:tieneReferenciaFabricante
+    a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (elec:InterruptorProteccionSelectiva elec:InterruptorAutomatico elec:BloqueCAuxTransversal elec:Guardamotor)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "tiene referencia de fabricante"@es ;
+    rdfs:comment "Referencia del componente según el fabricante"@es .
 
-ex:tieneProteccionGuardamotorEngrase a owl:ObjectProperty ;
-    rdfs:label "tieneProteccionGuardamotorEngrase" ;
-    rdfs:comment "Propiedad para la protección del guardamotor de engrase" ;
-    rdfs:domain ex:ArmarioElectrico ;
-    rdfs:range ex:InterruptorAutomatico .
-
-ex:tieneProteccionGuardamotorRefrigeranteBrocha a owl:ObjectProperty ;
-    rdfs:label "tieneProteccionGuardamotorRefrigeranteBrocha" ;
-    rdfs:comment "Propiedad para la protección del guardamotor del refrigerante de brocha" ;
-    rdfs:domain ex:ArmarioElectrico ;
-    rdfs:range ex:InterruptorAutomatico .
-
-ex:tieneBloqueContactoAuxiliarTransversal a owl:ObjectProperty ;
-    rdfs:label "tieneBloqueContactoAuxiliarTransversal" ;
-    rdfs:comment "Propiedad para el bloque de contacto auxiliar transversal" ;
-    rdfs:domain ex:ArmarioElectrico ;
-    rdfs:range ex:BloqueContactoAuxiliarTransversal .
+elec:tieneCantidad
+    a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (elec:InterruptorProteccionSelectiva elec:InterruptorAutomatico elec:BloqueCAuxTransversal elec:Guardamotor)
+    ] ;
+    rdfs:range xsd:integer ;
+    rdfs:label "tiene cantidad"@es ;
+    rdfs:comment "Cantidad de unidades del componente en el sistema"@es .

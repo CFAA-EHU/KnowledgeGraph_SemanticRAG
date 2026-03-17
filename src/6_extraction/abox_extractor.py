@@ -4,18 +4,22 @@ import re
 import os
 import sys
 from pathlib import Path
-
 from mistralai.client import Mistral
 from rdflib import Graph
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+import logging
+import tempfile
+
+logger = logging.getLogger(__name__)
 
 PROMPTS_PATH = Path("data/processed/tbox_prompts.json")
 TBOX_PATH = Path("data/processed/ontology_aligned.ttl")
 OUTPUT_DIR = Path("data/processed/abox_graphs/")
-MAX_CONCURRENCY = 1
+MAX_CONCURRENCY = 2
 MODEL = "mistral-small-latest"
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 
-api_key = api_key = "HMXKoCPyStwJ9DjLnGQbKYMg2KqCiEUs" #os.environ.get("MISTRAL_API_KEY")
+api_key = os.environ.get("MISTRAL_API_KEY")
 if not api_key:
     print("Error: Define la variable de entorno MISTRAL_API_KEY antes de ejecutar.")
     sys.exit(1)
@@ -24,47 +28,39 @@ client = Mistral(api_key=api_key)
 
 def compilar_vocabulario_tbox() -> str:
     if not TBOX_PATH.exists():
-        print(f"Error: No se encuentra el T-Box en {TBOX_PATH}")
+        logger.error(f"Error: No se encuentra T-Box en {TBOX_PATH}")
         sys.exit(1)
-
     g = Graph()
     g.parse(TBOX_PATH, format="turtle")
-    
-    clases = set()
-    obj_props = set()
-    data_props = set()
-    
+    clases, obj_props, data_props = set(), set(), set()
     for s, p, o in g:
         tipo = str(o)
         nombre = str(s).split("#")[-1] if "#" in str(s) else str(s).split("/")[-1]
-        if "Class" in tipo:
-            clases.add(nombre)
-        elif "ObjectProperty" in tipo:
-            obj_props.add(nombre)
-        elif "DatatypeProperty" in tipo:
-            data_props.add(nombre)
-            
-    return f"""
-    VOCABULARIO ESTRICTO PERMITIDO:
-    - Clases: {', '.join(clases)}
-    - Propiedades de Objeto: {', '.join(obj_props)}
-    - Propiedades de Datos: {', '.join(data_props)}
-    """
+        if "Class" in tipo: clases.add(nombre)
+        elif "ObjectProperty" in tipo: obj_props.add(nombre)
+        elif "DatatypeProperty" in tipo: data_props.add(nombre)
+    return f"- Clases: {', '.join(clases)}\n- ObjProps: {', '.join(obj_props)}\n- DataProps: {', '.join(data_props)}"
 
 def aislar_sintaxis_ttl(respuesta_llm: str) -> str:
     patron = r"`{3}(?:turtle|ttl)?\n(.*?)`{3}"
     match = re.search(patron, respuesta_llm, re.DOTALL | re.IGNORECASE)
-    if match:
-        return match.group(1).strip()
-    return respuesta_llm.strip()
+    return match.group(1).strip() if match else respuesta_llm.strip()
 
 def validar_sintaxis_rdf(ttl_data: str) -> bool:
     try:
-        g = Graph()
-        g.parse(data=ttl_data, format="turtle")
+        Graph().parse(data=ttl_data, format="turtle")
         return True
-    except Exception:
+    except:
         return False
+
+@retry(
+    stop=stop_after_attempt(5),
+    wait=wait_exponential(multiplier=2, min=5, max=60),
+    retry=retry_if_exception_type(Exception)
+)
+async def llamada_llm_con_reintento(mensajes: list) -> str:
+    respuesta = await client.chat.complete_async(model=MODEL, temperature=0.0, messages=mensajes)
+    return respuesta.choices[0].message.content
 
 async def procesar_chunk_abox(semaforo: asyncio.Semaphore, chunk_data: dict, vocabulario: str):
     chunk_id = chunk_data["chunk_id"]
@@ -74,50 +70,38 @@ async def procesar_chunk_abox(semaforo: asyncio.Semaphore, chunk_data: dict, voc
     if archivo_salida.exists():
         return chunk_id, "Omitido"
 
+    prompt_sistema = f"""
+    Eres un extractor de grafos de conocimiento RDF (A-Box). Usa el prefijo ex: <{BASE_URI}>.
+    
+    REGLAS CRÍTICAS DE EXTRACCIÓN:
+    1. Usa estrictamente las Clases y Propiedades de este vocabulario:
+    {vocabulario}
+    
+    2. ES OBLIGATORIO extraer valores literales específicos mencionados en el texto (correos electrónicos, códigos como 'A218', normativas como '2006/42/CE', nombres de empresas o advertencias).
+    3. Si no existe una DatatypeProperty exacta en el vocabulario para guardar ese valor, DEBES asociar el valor literal a la instancia usando `rdfs:label` o `rdfs:comment`.
+    Ejemplo: ex:InstanciaMaquina rdfs:comment "Modelo A218 / RASHEM - 7x3000x500" .
+    """
+
     async with semaforo:
-        for intento in range(3):
-            try:
-                respuesta = await client.chat.complete_async(
-                    model=MODEL,
-                    temperature=0.0,
-                    messages=[
-                        {
-                            "role": "system", 
-                            "content": f"Eres un extractor de grafos de conocimiento RDF (A-Box). Extrae individuos e instancias del texto proporcionado. Usa el prefijo ex: <{BASE_URI}>. ESTÁ ESTRICTAMENTE PROHIBIDO inventar nuevas clases o propiedades que no estén en la siguiente lista. Si un concepto no encaja, omítelo.\n\n{vocabulario}"
-                        },
-                        {
-                            "role": "user", 
-                            "content": f"Extrae los individuos de este texto en formato Turtle (TTL) válido. No incluyas explicaciones:\n\n{texto_original}"
-                        }
-                    ]
-                )
-                
-                ttl_puro = aislar_sintaxis_ttl(respuesta.choices[0].message.content)
-                
-                if not validar_sintaxis_rdf(ttl_puro):
-                    if intento == 2:
-                        return chunk_id, "Error: Sintaxis TTL inválida persistente"
-                    await asyncio.sleep(2)
-                    continue
-                
-                with open(archivo_salida, "w", encoding="utf-8") as f:
-                    f.write(ttl_puro)
-                    
-                return chunk_id, "OK"
-                
-            except Exception as e:
-                if intento == 2:
-                    return chunk_id, f"Error de red/API: {str(e)}"
-                await asyncio.sleep(5)
+        try:
+            contenido = await llamada_llm_con_reintento([
+                {"role": "system", "content": prompt_sistema},
+                {"role": "user", "content": f"Extrae los individuos en formato Turtle (TTL):\n\n{texto_original}"}
+            ])
+            
+            ttl_puro = aislar_sintaxis_ttl(contenido)
+            if not validar_sintaxis_rdf(ttl_puro):
+                return chunk_id, "Error: Sintaxis TTL inválida"
+            
+            with open(archivo_salida, "w", encoding="utf-8") as f:
+                f.write(ttl_puro)
+            return chunk_id, "OK"
+            
+        except Exception as e:
+            return chunk_id, f"Error persistente: {str(e)}"
 
 async def orquestar_extraccion_abox():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    
-    if not PROMPTS_PATH.exists():
-        print(f"Error: Archivo de datos no encontrado en {PROMPTS_PATH}")
-        sys.exit(1)
-
-    print("Compilando vocabulario del T-Box...")
     vocabulario = compilar_vocabulario_tbox()
 
     with open(PROMPTS_PATH, "r", encoding="utf-8") as f:
@@ -131,14 +115,9 @@ async def orquestar_extraccion_abox():
     
     exitos = sum(1 for _, estado in resultados if estado == "OK")
     omitidos = sum(1 for _, estado in resultados if estado == "Omitido")
-    errores = sum(1 for _, estado in resultados if estado.startswith("Error"))
+    errores = sum(1 for _, estado in resultados if "Error" in estado)
     
-    print("-" * 40)
-    print("RESUMEN DE EXTRACCIÓN A-BOX")
-    print("-" * 40)
-    print(f"Generados válidos  : {exitos}")
-    print(f"Omitidos (caché)   : {omitidos}")
-    print(f"Errores totales    : {errores}")
+    print(f"Generados válidos: {exitos} | Omitidos: {omitidos} | Errores: {errores}")
 
 if __name__ == "__main__":
     asyncio.run(orquestar_extraccion_abox())

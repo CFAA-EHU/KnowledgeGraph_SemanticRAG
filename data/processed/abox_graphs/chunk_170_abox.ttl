@@ -1,133 +1,285 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:Selector a owl:Class ;
-    rdfs:label "Selector" ;
-    rdfs:comment "Selector con iconos conmutables de pieza (ANILLO/PLANA), operación (DESBASTE/ACABADO) y refrigeración (CON/SIN); gráfico circular contextualiza trayectorias." .
+    rdfs:label "Selector con iconos conmutables" ;
+    rdfs:comment "Selector con iconos conmutables de pieza (ANILLO/PLANA), operación (DESBASTE/ACABADO) y refrigeración (CON/SIN)" .
+
+ex:GraficoCircular a owl:Class ;
+    rdfs:label "Gráfico circular" ;
+    rdfs:comment "Gráfico circular contextualiza trayectorias" .
 
 ex:Botoneria a owl:Class ;
-    rdfs:label "Botoneria" ;
-    rdfs:comment "Botonería con softkeys para ejecutar/simular/memorizar." .
+    rdfs:label "Botonería" ;
+    rdfs:comment "Botonería con softkeys para ejecutar/simular/memorizar" .
 
 ex:Teclado a owl:Class ;
     rdfs:label "Teclado" ;
-    rdfs:comment "Fragmento de teclado con Reset / Auto / Manual enfatizados por color (rojo/amarillo/verde). Flechas rojas subrayan la secuencia de puesta en servicio y cambio de modo." .
+    rdfs:comment "Fragmento de teclado con Reset / Auto / Manual enfatizados por color (rojo/amarillo/verde)" .
 
 ex:PanelInfografico a owl:Class ;
-    rdfs:label "PanelInfografico" ;
-    rdfs:comment "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas." .
+    rdfs:label "Panel infográfico" ;
+    rdfs:comment "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas" .
 
 ex:Columna a owl:Class ;
     rdfs:label "Columna" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
-ex:Carro a owl:Class ;
-    rdfs:label "Carro" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:CarroPortaPiezas a owl:Class ;
+    rdfs:label "Carro porta-piezas" ;
+    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
 ex:PlatoDivisor a owl:Class ;
-    rdfs:label "PlatoDivisor" ;
-    rdfs:comment "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2). Paleta de colores separa elementos y facilita la correspondencia con referencias comerciales." .
+    rdfs:label "Plato divisor" ;
+    rdfs:comment "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2). Paleta de colores separa elementos y facilita la correspondencia con referencias comerciales" .
 
-ex:Servomotor a owl:Class ;
-    rdfs:label "Servomotor" ;
-    rdfs:comment "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2). Paleta de colores separa elementos y facilita la correspondencia con referencias comerciales." .
+ex:tieneIconos a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:Icono .
 
-ex:GraficoCircular a owl:Class ;
-    rdfs:label "GraficoCircular" ;
-    rdfs:comment "Selector con iconos conmutables de pieza (ANILLO/PLANA), operación (DESBASTE/ACABADO) y refrigeración (CON/SIN); gráfico circular contextualiza trayectorias." .
+ex:tieneGraficoCircular a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:GraficoCircular .
 
-ex:Softkey a owl:Class ;
-    rdfs:label "Softkey" ;
-    rdfs:comment "Botonería con softkeys para ejecutar/simular/memorizar." .
+ex:tieneBotoneria a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:Botoneria .
 
-ex:Pictograma a owl:Class ;
-    rdfs:label "Pictograma" ;
-    rdfs:comment "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas." .
+ex:tieneTeclado a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:Teclado .
 
-ex:Cremallera a owl:Class ;
-    rdfs:label "Cremallera" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tienePanelInfografico a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:PanelInfografico .
 
-ex:Guia a owl:Class ;
-    rdfs:label "Guia" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:Columna .
 
-ex:Freno a owl:Class ;
-    rdfs:label "Freno" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:CarroPortaPiezas .
 
-ex:Fuelle a owl:Class ;
-    rdfs:label "Fuelle" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:domain ex:Selector ;
+    rdfs:range ex:PlatoDivisor .
 
-ex:Sensor a owl:Class ;
-    rdfs:label "Sensor" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tieneIconos a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:Icono .
 
-ex:Bancada a owl:Class ;
-    rdfs:label "Bancada" ;
-    rdfs:comment "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2). Paleta de colores separa elementos y facilita la correspondencia con referencias comerciales." .
+ex:tieneGraficoCircular a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:GraficoCircular .
 
-ex:PaletaDeColores a owl:Class ;
-    rdfs:label "PaletaDeColores" ;
-    rdfs:comment "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2). Paleta de colores separa elementos y facilita la correspondencia con referencias comerciales." .
+ex:tieneBotoneria a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:Botoneria .
 
-ex:GlobosNumerados a owl:Class ;
-    rdfs:label "GlobosNumerados" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tieneTeclado a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:Teclado .
 
-ex:Recuadro a owl:Class ;
-    rdfs:label "Recuadro" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tienePanelInfografico a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:PanelInfografico .
 
-ex:CodificacionVisual a owl:Class ;
-    rdfs:label "CodificacionVisual" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:Columna .
 
-ex:ReferenciaComercial a owl:Class ;
-    rdfs:label "ReferenciaComercial" ;
-    rdfs:comment "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2). Paleta de colores separa elementos y facilita la correspondencia con referencias comerciales." .
+ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:CarroPortaPiezas .
+
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:domain ex:Botoneria ;
+    rdfs:range ex:PlatoDivisor .
+
+ex:tieneIconos a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:Icono .
+
+ex:tieneGraficoCircular a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:GraficoCircular .
+
+ex:tieneBotoneria a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:Botoneria .
+
+ex:tieneTeclado a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:Teclado .
+
+ex:tienePanelInfografico a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:PanelInfografico .
+
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:Columna .
+
+ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:CarroPortaPiezas .
+
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:domain ex:Teclado ;
+    rdfs:range ex:PlatoDivisor .
+
+ex:tieneIconos a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:Icono .
+
+ex:tieneGraficoCircular a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:GraficoCircular .
+
+ex:tieneBotoneria a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:Botoneria .
+
+ex:tieneTeclado a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:Teclado .
+
+ex:tienePanelInfografico a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:PanelInfografico .
+
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:Columna .
+
+ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:CarroPortaPiezas .
+
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:domain ex:PanelInfografico ;
+    rdfs:range ex:PlatoDivisor .
+
+ex:tieneIconos a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:Icono .
+
+ex:tieneGraficoCircular a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:GraficoCircular .
+
+ex:tieneBotoneria a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:Botoneria .
+
+ex:tieneTeclado a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:Teclado .
+
+ex:tienePanelInfografico a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:PanelInfografico .
+
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:Columna .
+
+ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:CarroPortaPiezas .
+
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:PlatoDivisor .
+
+ex:tieneIconos a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:Icono .
+
+ex:tieneGraficoCircular a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:GraficoCircular .
+
+ex:tieneBotoneria a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:Botoneria .
+
+ex:tieneTeclado a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:Teclado .
+
+ex:tienePanelInfografico a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:PanelInfografico .
+
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:Columna .
+
+ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:CarroPortaPiezas .
+
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPiezas ;
+    rdfs:range ex:PlatoDivisor .
+
+ex:tieneIconos a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:Icono .
+
+ex:tieneGraficoCircular a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:GraficoCircular .
+
+ex:tieneBotoneria a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:Botoneria .
+
+ex:tieneTeclado a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:Teclado .
+
+ex:tienePanelInfografico a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:PanelInfografico .
+
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:Columna .
+
+ex:tieneCarroPortaPiezas a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:CarroPortaPiezas .
+
+ex:tienePlatoDivisor a owl:ObjectProperty ;
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range ex:PlatoDivisor .
 
 ex:Icono a owl:Class ;
-    rdfs:label "Icono" ;
-    rdfs:comment "Selector con iconos conmutables de pieza (ANILLO/PLANA), operación (DESBASTE/ACABADO) y refrigeración (CON/SIN); gráfico circular contextualiza trayectorias." .
+    rdfs:label "Icono" .
 
-ex:Trayectoria a owl:Class ;
-    rdfs:label "Trayectoria" ;
-    rdfs:comment "Selector con iconos conmutables de pieza (ANILLO/PLANA), operación (DESBASTE/ACABADO) y refrigeración (CON/SIN); gráfico circular contextualiza trayectorias." .
+ex:GraficoCircular a owl:Class ;
+    rdfs:label "Gráfico circular" .
 
-ex:PuestaEnServicio a owl:Class ;
-    rdfs:label "PuestaEnServicio" ;
-    rdfs:comment "Fragmento de teclado con Reset / Auto / Manual enfatizados por color (rojo/amarillo/verde). Flechas rojas subrayan la secuencia de puesta en servicio y cambio de modo." .
+ex:Botoneria a owl:Class ;
+    rdfs:label "Botonería" .
 
-ex:CambioDeModo a owl:Class ;
-    rdfs:label "CambioDeModo" ;
-    rdfs:comment "Fragmento de teclado con Reset / Auto / Manual enfatizados por color (rojo/amarillo/verde). Flechas rojas subrayan la secuencia de puesta en servicio y cambio de modo." .
+ex:Teclado a owl:Class ;
+    rdfs:label "Teclado" .
 
-ex:Advertencia a owl:Class ;
-    rdfs:label "Advertencia" ;
-    rdfs:comment "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas." .
+ex:PanelInfografico a owl:Class ;
+    rdfs:label "Panel infográfico" .
 
-ex:Consignacion a owl:Class ;
-    rdfs:label "Consignacion" ;
-    rdfs:comment "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas." .
+ex:Columna a owl:Class ;
+    rdfs:label "Columna" .
 
-ex:ProhibicionAirePresion a owl:Class ;
-    rdfs:label "ProhibicionAirePresion" ;
-    rdfs:comment "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas." .
+ex:CarroPortaPiezas a owl:Class ;
+    rdfs:label "Carro porta-piezas" .
 
-ex:MastilAnticaidas a owl:Class ;
-    rdfs:label "MastilAnticaidas" ;
-    rdfs:comment "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas." .
-
-ex:ElementoComercial a owl:Class ;
-    rdfs:label "ElementoComercial" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
-
-ex:ElementoDesgaste a owl:Class ;
-    rdfs:label "ElementoDesgaste" ;
-    rdfs:comment "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." .
+ex:PlatoDivisor a owl:Class ;
+    rdfs:label "Plato divisor" .

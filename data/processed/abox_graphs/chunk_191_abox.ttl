@@ -1,268 +1,160 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix plano: <https://vocab.cfaa.eus/broaching/plano/> .
+@prefix bornes: <https://vocab.cfaa.eus/broaching/bornes/> .
+@prefix sistema: <https://vocab.cfaa.eus/broaching/sistema/> .
+@prefix conexion: <https://vocab.cfaa.eus/broaching/conexion/> .
+@prefix funcion: <https://vocab.cfaa.eus/broaching/funcion/> .
+@prefix alimentacion: <https://vocab.cfaa.eus/broaching/alimentacion/> .
+@prefix seguridad: <https://vocab.cfaa.eus/broaching/seguridad/> .
+@prefix motor: <https://vocab.cfaa.eus/broaching/motor/> .
+@prefix señal: <https://vocab.cfaa.eus/broaching/señal/> .
+@prefix diagrama: <https://vocab.cfaa.eus/broaching/diagrama/> .
 
-ex:PlanoDeBornes a owl:Class ;
+# Clases
+plano:PlanoDeBornes a owl:Class ;
     rdfs:label "Plano de bornes" ;
-    rdfs:comment "Representa un plano de bornes en esquemas eléctricos." .
+    rdfs:comment "Representa un plano de bornes en el sistema de la máquina." .
 
-ex:DiagramaMatricial a owl:Class ;
-    rdfs:label "Diagrama matricial" ;
-    rdfs:comment "Representa un diagrama matricial en esquemas eléctricos." .
-
-ex:Borne a owl:Class ;
+bornes:Borne a owl:Class ;
     rdfs:label "Borne" ;
-    rdfs:comment "Representa un borne en esquemas eléctricos." .
+    rdfs:comment "Representa un borne en el plano de bornes." .
 
-ex:Funcion a owl:Class ;
-    rdfs:label "Función" ;
-    rdfs:comment "Representa una función en esquemas eléctricos." .
-
-ex:ReferenciaHoja a owl:Class ;
-    rdfs:label "Referencia de hoja" ;
-    rdfs:comment "Representa una referencia de hoja en esquemas eléctricos." .
-
-ex:EsquemaConexiones a owl:Class ;
-    rdfs:label "Esquema de conexiones" ;
-    rdfs:comment "Representa un esquema de conexiones en esquemas eléctricos." .
-
-ex:Motor a owl:Class ;
-    rdfs:label "Motor" ;
-    rdfs:comment "Representa un motor en esquemas eléctricos." .
-
-ex:Climatizador a owl:Class ;
-    rdfs:label "Climatizador" ;
-    rdfs:comment "Representa un climatizador en esquemas eléctricos." .
-
-ex:Sistema a owl:Class ;
+sistema:Sistema a owl:Class ;
     rdfs:label "Sistema" ;
-    rdfs:comment "Representa un sistema en esquemas eléctricos." .
+    rdfs:comment "Representa un sistema en la máquina." .
 
-ex:API a owl:Class ;
-    rdfs:label "API" ;
-    rdfs:comment "Representa un sistema API en esquemas eléctricos." .
+conexion:Conexion a owl:Class ;
+    rdfs:label "Conexion" ;
+    rdfs:comment "Representa una conexión en el plano de bornes." .
 
-ex:CNC a owl:Class ;
-    rdfs:label "CNC" ;
-    rdfs:comment "Representa un sistema CNC en esquemas eléctricos." .
+funcion:Funcion a owl:Class ;
+    rdfs:label "Funcion" ;
+    rdfs:comment "Representa una función en la máquina." .
 
-ex:PNL a owl:Class ;
-    rdfs:label "PNL" ;
-    rdfs:comment "Representa un sistema PNL en esquemas eléctricos." .
+alimentacion:Alimentacion a owl:Class ;
+    rdfs:label "Alimentacion" ;
+    rdfs:comment "Representa una alimentación en la máquina." .
 
-ex:SAFE a owl:Class ;
-    rdfs:label "SAFE" ;
-    rdfs:comment "Representa un sistema SAFE en esquemas eléctricos." .
+seguridad:Seguridad a owl:Class ;
+    rdfs:label "Seguridad" ;
+    rdfs:comment "Representa un componente de seguridad en la máquina." .
 
-ex:Puerta a owl:Class ;
-    rdfs:label "Puerta" ;
-    rdfs:comment "Representa una puerta en esquemas eléctricos." .
+motor:Motor a owl:Class ;
+    rdfs:label "Motor" ;
+    rdfs:comment "Representa un motor en la máquina." .
 
-ex:ColumnaLuminosa a owl:Class ;
-    rdfs:label "Columna luminosa" ;
-    rdfs:comment "Representa una columna luminosa en esquemas eléctricos." .
+señal:Señal a owl:Class ;
+    rdfs:label "Señal" ;
+    rdfs:comment "Representa una señal en la máquina." .
 
-ex:Servomotor a owl:Class ;
-    rdfs:label "Servomotor" ;
-    rdfs:comment "Representa un servomotor en esquemas eléctricos." .
+diagrama:Diagrama a owl:Class ;
+    rdfs:label "Diagrama" ;
+    rdfs:comment "Representa un diagrama en el sistema de la máquina." .
 
-ex:Mesa a owl:Class ;
-    rdfs:label "Mesa" ;
-    rdfs:comment "Representa una mesa en esquemas eléctricos." .
+# Propiedades de objeto
+plano:tieneBorne a owl:ObjectProperty ;
+    rdfs:domain plano:PlanoDeBornes ;
+    rdfs:range bornes:Borne ;
+    rdfs:label "tieneBorne" ;
+    rdfs:comment "Relaciona un plano de bornes con un borne." .
 
-ex:Alimentacion a owl:Class ;
-    rdfs:label "Alimentación" ;
-    rdfs:comment "Representa una alimentación en esquemas eléctricos." .
+bornes:estaAsignadoA a owl:ObjectProperty ;
+    rdfs:domain bornes:Borne ;
+    rdfs:range sistema:Sistema ;
+    rdfs:label "estaAsignadoA" ;
+    rdfs:comment "Relaciona un borne con un sistema." .
 
-ex:EntradaSalida a owl:Class ;
-    rdfs:label "Entrada/Salida" ;
-    rdfs:comment "Representa una entrada/salida en esquemas eléctricos." .
+bornes:estaConectadoA a owl:ObjectProperty ;
+    rdfs:domain bornes:Borne ;
+    rdfs:range conexion:Conexion ;
+    rdfs:label "estaConectadoA" ;
+    rdfs:comment "Relaciona un borne con una conexión." .
 
-ex:GrupoFuncional a owl:Class ;
-    rdfs:label "Grupo funcional" ;
-    rdfs:comment "Representa un grupo funcional en esquemas eléctricos." .
+conexion:tieneFuncion a owl:ObjectProperty ;
+    rdfs:domain conexion:Conexion ;
+    rdfs:range funcion:Funcion ;
+    rdfs:label "tieneFuncion" ;
+    rdfs:comment "Relaciona una conexión con una función." .
 
-ex:Numeracion a owl:Class ;
-    rdfs:label "Numeración" ;
-    rdfs:comment "Representa una numeración en esquemas eléctricos." .
+funcion:requiereAlimentacion a owl:ObjectProperty ;
+    rdfs:domain funcion:Funcion ;
+    rdfs:range alimentacion:Alimentacion ;
+    rdfs:label "requiereAlimentacion" ;
+    rdfs:comment "Relaciona una función con una alimentación." .
 
-ex:PaginaFuncional a owl:Class ;
-    rdfs:label "Página funcional" ;
-    rdfs:comment "Representa una página funcional en esquemas eléctricos." .
+alimentacion:tieneSeguridad a owl:ObjectProperty ;
+    rdfs:domain alimentacion:Alimentacion ;
+    rdfs:range seguridad:Seguridad ;
+    rdfs:label "tieneSeguridad" ;
+    rdfs:comment "Relaciona una alimentación con un componente de seguridad." .
 
-ex:tienePrecondicion a owl:ObjectProperty ;
-    rdfs:label "tiene precondición" ;
-    rdfs:comment "Relación que indica que un elemento tiene una precondición." .
+motor:tieneSeñal a owl:ObjectProperty ;
+    rdfs:domain motor:Motor ;
+    rdfs:range señal:Señal ;
+    rdfs:label "tieneSeñal" ;
+    rdfs:comment "Relaciona un motor con una señal." .
 
-ex:tieneFilas a owl:ObjectProperty ;
-    rdfs:label "tiene filas" ;
-    rdfs:comment "Relación que indica que un diagrama tiene filas." .
+señal:estaEnDiagrama a owl:ObjectProperty ;
+    rdfs:domain señal:Señal ;
+    rdfs:range diagrama:Diagrama ;
+    rdfs:label "estaEnDiagrama" ;
+    rdfs:comment "Relaciona una señal con un diagrama." .
 
-ex:tieneBornes a owl:ObjectProperty ;
-    rdfs:label "tiene bornes" ;
-    rdfs:comment "Relación que indica que un sistema tiene bornes." .
+# Propiedades de datos
+bornes:tieneReferencia a owl:DatatypeProperty ;
+    rdfs:domain bornes:Borne ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneReferencia" ;
+    rdfs:comment "Indica la referencia de un borne." .
 
-ex:tieneFuncion a owl:ObjectProperty ;
-    rdfs:label "tiene función" ;
-    rdfs:comment "Relación que indica que un borne tiene una función." .
+bornes:tieneNumero a owl:DatatypeProperty ;
+    rdfs:domain bornes:Borne ;
+    rdfs:range xsd:integer ;
+    rdfs:label "tieneNumero" ;
+    rdfs:comment "Indica el número de un borne." .
 
-ex:tieneReferenciaHoja a owl:ObjectProperty ;
-    rdfs:label "tiene referencia de hoja" ;
-    rdfs:comment "Relación que indica que un borne tiene una referencia de hoja." .
+conexion:tieneEtiqueta a owl:DatatypeProperty ;
+    rdfs:domain conexion:Conexion ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneEtiqueta" ;
+    rdfs:comment "Indica la etiqueta de una conexión." .
 
-ex:tieneEsquemaConexiones a owl:ObjectProperty ;
-    rdfs:label "tiene esquema de conexiones" ;
-    rdfs:comment "Relación que indica que un sistema tiene un esquema de conexiones." .
+funcion:tieneDescripcion a owl:DatatypeProperty ;
+    rdfs:domain funcion:Funcion ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneDescripcion" ;
+    rdfs:comment "Indica la descripción de una función." .
 
-ex:tieneMotor a owl:ObjectProperty ;
-    rdfs:label "tiene motor" ;
-    rdfs:comment "Relación que indica que un sistema tiene un motor." .
+alimentacion:tieneVoltaje a owl:DatatypeProperty ;
+    rdfs:domain alimentacion:Alimentacion ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "tieneVoltaje" ;
+    rdfs:comment "Indica el voltaje de una alimentación." .
 
-ex:tieneClimatizador a owl:ObjectProperty ;
-    rdfs:label "tiene climatizador" ;
-    rdfs:comment "Relación que indica que un sistema tiene un climatizador." .
+seguridad:tieneTipo a owl:DatatypeProperty ;
+    rdfs:domain seguridad:Seguridad ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneTipo" ;
+    rdfs:comment "Indica el tipo de un componente de seguridad." .
 
-ex:tieneSistema a owl:ObjectProperty ;
-    rdfs:label "tiene sistema" ;
-    rdfs:comment "Relación que indica que un sistema tiene otro sistema." .
+motor:tieneModelo a owl:DatatypeProperty ;
+    rdfs:domain motor:Motor ;
+    rdfs:range xsd:string ;
+    rdfs:label "tieneModelo" ;
+    rdfs:comment "Indica el modelo de un motor." .
 
-ex:tieneAPI a owl:ObjectProperty ;
-    rdfs:label "tiene API" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema API." .
+señal:tieneValor a owl:DatatypeProperty ;
+    rdfs:domain señal:Señal ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "tieneValor" ;
+    rdfs:comment "Indica el valor de una señal." .
 
-ex:tieneCNC a owl:ObjectProperty ;
-    rdfs:label "tiene CNC" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema CNC." .
-
-ex:tienePNL a owl:ObjectProperty ;
-    rdfs:label "tiene PNL" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema PNL." .
-
-ex:tieneSAFE a owl:ObjectProperty ;
-    rdfs:label "tiene SAFE" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema SAFE." .
-
-ex:tienePuerta a owl:ObjectProperty ;
-    rdfs:label "tiene puerta" ;
-    rdfs:comment "Relación que indica que un sistema tiene una puerta." .
-
-ex:tieneColumnaLuminosa a owl:ObjectProperty ;
-    rdfs:label "tiene columna luminosa" ;
-    rdfs:comment "Relación que indica que un sistema tiene una columna luminosa." .
-
-ex:tieneServomotor a owl:ObjectProperty ;
-    rdfs:label "tiene servomotor" ;
-    rdfs:comment "Relación que indica que un sistema tiene un servomotor." .
-
-ex:tieneMesa a owl:ObjectProperty ;
-    rdfs:label "tiene mesa" ;
-    rdfs:comment "Relación que indica que un sistema tiene una mesa." .
-
-ex:tieneAlimentacion a owl:ObjectProperty ;
-    rdfs:label "tiene alimentación" ;
-    rdfs:comment "Relación que indica que un sistema tiene una alimentación." .
-
-ex:tieneEntradaSalida a owl:ObjectProperty ;
-    rdfs:label "tiene entrada/salida" ;
-    rdfs:comment "Relación que indica que un sistema tiene una entrada/salida." .
-
-ex:tieneGrupoFuncional a owl:ObjectProperty ;
-    rdfs:label "tiene grupo funcional" ;
-    rdfs:comment "Relación que indica que un sistema tiene un grupo funcional." .
-
-ex:tieneNumeracion a owl:ObjectProperty ;
-    rdfs:label "tiene numeración" ;
-    rdfs:comment "Relación que indica que un sistema tiene una numeración." .
-
-ex:tienePaginaFuncional a owl:ObjectProperty ;
-    rdfs:label "tiene página funcional" ;
-    rdfs:comment "Relación que indica que un sistema tiene una página funcional." .
-
-ex:tienePrecondicion a owl:ObjectProperty ;
-    rdfs:label "tiene precondición" ;
-    rdfs:comment "Relación que indica que un elemento tiene una precondición." .
-
-ex:tieneFilas a owl:ObjectProperty ;
-    rdfs:label "tiene filas" ;
-    rdfs:comment "Relación que indica que un diagrama tiene filas." .
-
-ex:tieneBornes a owl:ObjectProperty ;
-    rdfs:label "tiene bornes" ;
-    rdfs:comment "Relación que indica que un sistema tiene bornes." .
-
-ex:tieneFuncion a owl:ObjectProperty ;
-    rdfs:label "tiene función" ;
-    rdfs:comment "Relación que indica que un borne tiene una función." .
-
-ex:tieneReferenciaHoja a owl:ObjectProperty ;
-    rdfs:label "tiene referencia de hoja" ;
-    rdfs:comment "Relación que indica que un borne tiene una referencia de hoja." .
-
-ex:tieneEsquemaConexiones a owl:ObjectProperty ;
-    rdfs:label "tiene esquema de conexiones" ;
-    rdfs:comment "Relación que indica que un sistema tiene un esquema de conexiones." .
-
-ex:tieneMotor a owl:ObjectProperty ;
-    rdfs:label "tiene motor" ;
-    rdfs:comment "Relación que indica que un sistema tiene un motor." .
-
-ex:tieneClimatizador a owl:ObjectProperty ;
-    rdfs:label "tiene climatizador" ;
-    rdfs:comment "Relación que indica que un sistema tiene un climatizador." .
-
-ex:tieneSistema a owl:ObjectProperty ;
-    rdfs:label "tiene sistema" ;
-    rdfs:comment "Relación que indica que un sistema tiene otro sistema." .
-
-ex:tieneAPI a owl:ObjectProperty ;
-    rdfs:label "tiene API" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema API." .
-
-ex:tieneCNC a owl:ObjectProperty ;
-    rdfs:label "tiene CNC" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema CNC." .
-
-ex:tienePNL a owl:ObjectProperty ;
-    rdfs:label "tiene PNL" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema PNL." .
-
-ex:tieneSAFE a owl:ObjectProperty ;
-    rdfs:label "tiene SAFE" ;
-    rdfs:comment "Relación que indica que un sistema tiene un sistema SAFE." .
-
-ex:tienePuerta a owl:ObjectProperty ;
-    rdfs:label "tiene puerta" ;
-    rdfs:comment "Relación que indica que un sistema tiene una puerta." .
-
-ex:tieneColumnaLuminosa a owl:ObjectProperty ;
-    rdfs:label "tiene columna luminosa" ;
-    rdfs:comment "Relación que indica que un sistema tiene una columna luminosa." .
-
-ex:tieneServomotor a owl:ObjectProperty ;
-    rdfs:label "tiene servomotor" ;
-    rdfs:comment "Relación que indica que un sistema tiene un servomotor." .
-
-ex:tieneMesa a owl:ObjectProperty ;
-    rdfs:label "tiene mesa" ;
-    rdfs:comment "Relación que indica que un sistema tiene una mesa." .
-
-ex:tieneAlimentacion a owl:ObjectProperty ;
-    rdfs:label "tiene alimentación" ;
-    rdfs:comment "Relación que indica que un sistema tiene una alimentación." .
-
-ex:tieneEntradaSalida a owl:ObjectProperty ;
-    rdfs:label "tiene entrada/salida" ;
-    rdfs:comment "Relación que indica que un sistema tiene una entrada/salida." .
-
-ex:tieneGrupoFuncional a owl:ObjectProperty ;
-    rdfs:label "tiene grupo funcional" ;
-    rdfs:comment "Relación que indica que un sistema tiene un grupo funcional." .
-
-ex:tieneNumeracion a owl:ObjectProperty ;
-    rdfs:label "tiene numeración" ;
-    rdfs:comment "Relación que indica que un sistema tiene una numeración." .
-
-ex:tienePaginaFuncional a owl:ObjectProperty ;
-    rdfs:label "tiene página funcional" ;
-    rdfs:comment "Relación que indica que un sistema tiene una página funcional." .
+diagrama:tienePagina a owl:DatatypeProperty ;
+    rdfs:domain diagrama:Diagrama ;
+    rdfs:range xsd:integer ;
+    rdfs:label "tienePagina" ;
+    rdfs:comment "Indica la página de un diagrama." .

@@ -1,112 +1,154 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix base: <https://admin-shell.io/dictionary/> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix admin: <https://admin-shell.io/dictionary/>.
 
-ex:SistemaDeRefrigeracion a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+owl:Ontology ;
+    rdfs:label "Ontología para Sistema de Refrigeración en Brochado" ;
+    owl:imports admin: .
+
+ex:SistemaRefrigeracion a owl:Class ;
+    rdfs:label "Sistema de Refrigeración" ;
+    rdfs:comment "Sistema encargado de evitar el calentamiento excesivo de la herramienta y la pieza durante el brochado." .
 
 ex:Motor a owl:Class ;
-    rdfs:isDefinedBy base:Motor .
-
-ex:Bomba a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
-
-ex:Filtro a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
-
-ex:Zocalo a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:subClassOf ex:Componente ;
+    rdfs:label "Motor" ;
+    rdfs:isDefinedBy admin:Motor .
 
 ex:MotorRefrigeranteFiltroPapel a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:subClassOf ex:Motor ;
+    rdfs:label "Motor Refrigerante de Filtro Papel" .
 
 ex:MotorRefrigeranteMaquina a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:subClassOf ex:Motor ;
+    rdfs:label "Motor Refrigerante Máquina" .
 
 ex:MotorTrasvaseRefrigerante a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:subClassOf ex:Motor ;
+    rdfs:label "Motor Trasvase Refrigerante" .
 
 ex:MotorExtractorVirutas a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:subClassOf ex:Motor ;
+    rdfs:label "Motor Extractor de Virutas" .
+
+ex:Zocalo a owl:Class ;
+    rdfs:label "Zócalo" ;
+    rdfs:comment "Estructura donde se acumula el aceite de corte utilizado durante el proceso de brochado." .
+
+ex:Bomba a owl:Class ;
+    rdfs:label "Bomba" ;
+    rdfs:comment "Componente que envía el aceite de corte al sistema de filtración." .
+
+ex:SistemaFiltracion a owl:Class ;
+    rdfs:label "Sistema de Filtración" ;
+    rdfs:comment "Sistema encargado de filtrar el aceite de corte sin virutas." .
 
 ex:NivelRefrigeranteSucio a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:label "Nivel Refrigerante Sucio" ;
+    rdfs:comment "Sensor que indica el nivel de refrigerante sucio." .
 
 ex:PresenciaPapel a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:label "Presencia de Papel" ;
+    rdfs:comment "Sensor que indica la presencia de papel en el sistema de filtración." .
 
 ex:NivelRefrigerante a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:label "Nivel Refrigerante" ;
+    rdfs:comment "Sensor que indica el nivel de refrigerante." .
 
 ex:CaudalRefrigerante a owl:Class ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/> .
+    rdfs:label "Caudal Refrigerante" ;
+    rdfs:comment "Sensor que indica el caudal de refrigerante." .
+
+ex:Señal a owl:Class ;
+    rdfs:label "Señal" ;
+    rdfs:comment "Señal del sistema de refrigeración." .
 
 ex:evitarCalentamientoExcesivo a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:Herramienta .
-
-ex:evitarQuedarVirutas a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:Lugar .
+    rdfs:domain ex:SistemaRefrigeracion ;
+    rdfs:range ex:Componente ;
+    rdfs:label "evitarCalentamientoExcesivo" .
 
 ex:acumularAceiteCorte a owl:ObjectProperty ;
     rdfs:domain ex:Zocalo ;
-    rdfs:range ex:AceiteCorte .
+    rdfs:range ex:AceiteCorte ;
+    rdfs:label "acumularAceiteCorte" .
 
 ex:enviarAceiteCorte a owl:ObjectProperty ;
     rdfs:domain ex:Bomba ;
-    rdfs:range ex:SistemaDeFiltracion .
+    rdfs:range ex:SistemaFiltracion ;
+    rdfs:label "enviarAceiteCorte" .
 
 ex:filtrarAceiteCorte a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeFiltracion ;
-    rdfs:range ex:AceiteCorte .
+    rdfs:domain ex:SistemaFiltracion ;
+    rdfs:range ex:AceiteCorte ;
+    rdfs:label "filtrarAceiteCorte" .
 
-ex:enviarAceiteCorteRefrigerar a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeFiltracion ;
-    rdfs:range ex:Maquina .
+ex:enviarAceiteCorteMáquina a owl:ObjectProperty ;
+    rdfs:domain ex:SistemaFiltracion ;
+    rdfs:range ex:Maquina ;
+    rdfs:label "enviarAceiteCorteMáquina" .
 
-ex:refrigerarPiezaHerramienta a owl:ObjectProperty ;
+ex:refrigerar a owl:ObjectProperty ;
     rdfs:domain ex:Maquina ;
-    rdfs:range ex:Pieza .
+    rdfs:range ex:Componente ;
+    rdfs:label "refrigerar" .
 
-ex:refrigerarHerramienta a owl:ObjectProperty ;
-    rdfs:domain ex:Maquina ;
-    rdfs:range ex:Herramienta .
+ex:indicarNivelRefrigeranteSucio a owl:ObjectProperty ;
+    rdfs:domain ex:NivelRefrigeranteSucio ;
+    rdfs:range ex:Nivel ;
+    rdfs:label "indicarNivelRefrigeranteSucio" .
 
-ex:tieneSeñales a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:Señal .
+ex:indicarPresenciaPapel a owl:ObjectProperty ;
+    rdfs:domain ex:PresenciaPapel ;
+    rdfs:range ex:Presencia ;
+    rdfs:label "indicarPresenciaPapel" .
 
-ex:tieneMotorRefrigeranteFiltroPapel a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:MotorRefrigeranteFiltroPapel .
+ex:indicarNivelRefrigerante a owl:ObjectProperty ;
+    rdfs:domain ex:NivelRefrigerante ;
+    rdfs:range ex:Nivel ;
+    rdfs:label "indicarNivelRefrigerante" .
 
-ex:tieneMotorRefrigeranteMaquina a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:MotorRefrigeranteMaquina .
+ex:indicarCaudalRefrigerante a owl:ObjectProperty ;
+    rdfs:domain ex:CaudalRefrigerante ;
+    rdfs:range ex:Caudal ;
+    rdfs:label "indicarCaudalRefrigerante" .
 
-ex:tieneMotorTrasvaseRefrigerante a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:MotorTrasvaseRefrigerante .
+ex:tieneSeñal a owl:ObjectProperty ;
+    rdfs:domain ex:SistemaRefrigeracion ;
+    rdfs:range ex:Señal ;
+    rdfs:label "tieneSeñal" .
 
-ex:tieneMotorExtractorVirutas a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:MotorExtractorVirutas .
+ex:evitarQuedarVirutas a owl:ObjectProperty ;
+    rdfs:domain ex:SistemaRefrigeracion ;
+    rdfs:range ex:Viruta ;
+    rdfs:label "evitarQuedarVirutas" .
 
-ex:tieneNivelRefrigeranteSucio a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:NivelRefrigeranteSucio .
+ex:Componente a owl:Class ;
+    rdfs:label "Componente" ;
+    rdfs:comment "Clase base para componentes del sistema de refrigeración." .
 
-ex:tienePresenciaPapel a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:PresenciaPapel .
+ex:AceiteCorte a owl:Class ;
+    rdfs:label "Aceite de Corte" ;
+    rdfs:comment "Aceite utilizado durante el proceso de brochado." .
 
-ex:tieneNivelRefrigerante a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:NivelRefrigerante .
+ex:Maquina a owl:Class ;
+    rdfs:label "Máquina" ;
+    rdfs:comment "Máquina de brochado." .
 
-ex:tieneCaudalRefrigerante a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeRefrigeracion ;
-    rdfs:range ex:CaudalRefrigerante .
+ex:Viruta a owl:Class ;
+    rdfs:label "Viruta" ;
+    rdfs:comment "Viruta generada durante el proceso de brochado." .
+
+ex:Nivel a owl:Class ;
+    rdfs:label "Nivel" ;
+    rdfs:comment "Nivel de un componente." .
+
+ex:Presencia a owl:Class ;
+    rdfs:label "Presencia" ;
+    rdfs:comment "Presencia de un componente." .
+
+ex:Caudal a owl:Class ;
+    rdfs:label "Caudal" ;
+    rdfs:comment "Caudal de un componente." .

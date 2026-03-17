@@ -1,34 +1,81 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:Señalizador rdf:type owl:Class.
-ex:Refrigerante rdf:type owl:Class.
-ex:GrupoHidraulico rdf:type owl:Class.
-ex:Caudal rdf:type owl:Class.
-ex:ErrorEngrase rdf:type owl:Class.
-ex:Pantalla rdf:type owl:Class.
-ex:Operario rdf:type owl:Class.
-ex:CambioDeHerramienta rdf:type owl:Class.
+ex:Señalizador a owl:Class ;
+    rdfs:label "Señalizador" ;
+    rdfs:comment "Componente que indica niveles o estados específicos en la máquina." .
 
-ex:tieneSeñalizador rdf:type owl:ObjectProperty.
-ex:tieneCaudal rdf:type owl:ObjectProperty.
-ex:tieneErrorEngrase rdf:type owl:ObjectProperty.
-ex:guiaOperario rdf:type owl:ObjectProperty.
-ex:ejecutarMovimiento rdf:type owl:ObjectProperty.
+ex:NivelMinimo a owl:Class ;
+    rdfs:label "NivelMínimo" ;
+    rdfs:comment "Indicador de nivel mínimo de un fluido o componente." .
 
-ex:tieneSeñalizador rdfs:domain ex:Señalizador.
-ex:tieneSeñalizador rdfs:range ex:Señalizador.
+ex:Refrigerante a owl:Class ;
+    rdfs:label "Refrigerante" ;
+    rdfs:comment "Fluido utilizado para refrigerar la máquina." .
 
-ex:tieneCaudal rdfs:domain ex:Caudal.
-ex:tieneCaudal rdfs:range ex:Caudal.
+ex:GrupoHidraulico a owl:Class ;
+    rdfs:label "GrupoHidraulico" ;
+    rdfs:comment "Conjunto de componentes hidráulicos de la máquina." .
 
-ex:tieneErrorEngrase rdfs:domain ex:ErrorEngrase.
-ex:tieneErrorEngrase rdfs:range ex:ErrorEngrase.
+ex:Caudal a owl:Class ;
+    rdfs:label "Caudal" ;
+    rdfs:comment "Medida del flujo de un fluido." .
 
-ex:guiaOperario rdfs:domain ex:Pantalla.
-ex:guiaOperario rdfs:range ex:Operario.
+ex:ErrorEngrase a owl:Class ;
+    rdfs:label "ErrorEngrase" ;
+    rdfs:comment "Error relacionado con el sistema de engrase de la máquina." .
 
-ex:ejecutarMovimiento rdfs:domain ex:Pantalla.
-ex:ejecutarMovimiento rdfs:range ex:CambioDeHerramienta.
+ex:Embolada a owl:Class ;
+    rdfs:label "Embolada" ;
+    rdfs:comment "Proceso de inyección de grasa en el sistema de engrase." .
+
+ex:Pantalla a owl:Class ;
+    rdfs:label "Pantalla" ;
+    rdfs:comment "Interfaz de usuario para la interacción con la máquina." .
+
+ex:CambioDeHerramienta a owl:Class ;
+    rdfs:label "CambioDeHerramienta" ;
+    rdfs:comment "Proceso de cambio de herramienta en la máquina." .
+
+ex:Movimiento a owl:Class ;
+    rdfs:label "Movimiento" ;
+    rdfs:comment "Acción de movimiento de un componente de la máquina." .
+
+ex:Operario a owl:Class ;
+    rdfs:label "Operario" ;
+    rdfs:comment "Persona que opera la máquina." .
+
+ex:Paso a owl:Class ;
+    rdfs:label "Paso" ;
+    rdfs:comment "Etapa en un proceso." .
+
+ex:señalizaNivelMinimo a owl:ObjectProperty ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range ex:NivelMinimo .
+
+ex:señalizaCaudal a owl:ObjectProperty ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range ex:Caudal .
+
+ex:señalizaErrorEngrase a owl:ObjectProperty ;
+    rdfs:domain ex:Señalizador ;
+    rdfs:range ex:ErrorEngrase .
+
+ex:guiaOperario a owl:ObjectProperty ;
+    rdfs:domain ex:Pantalla ;
+    rdfs:range ex:Operario .
+
+ex:ejecutaMovimiento a owl:ObjectProperty ;
+    rdfs:domain ex:Pantalla ;
+    rdfs:range ex:Movimiento .
+
+ex:realizarCambioDeHerramienta a owl:ObjectProperty ;
+    rdfs:domain ex:Operario ;
+    rdfs:range ex:CambioDeHerramienta .
+
+ex:tienePasos a owl:ObjectProperty ;
+    rdfs:domain ex:CambioDeHerramienta ;
+    rdfs:range ex:Paso .

@@ -1,61 +1,137 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:BrochadoraElectromecanicaDeExteriores a owl:Class ;
     rdfs:label "Brochadora Electromecánica de Exteriores"@es ;
-    rdfs:comment "Máquina utilizada para el brochado de exteriores"@es.
+    rdfs:comment "Máquina para el brochado de exteriores"@es .
 
-ex:ListaDeRepuestos a owl:Class ;
-    rdfs:label "Lista de Repuestos"@es ;
-    rdfs:comment "Lista de repuestos necesarios para el mantenimiento y montaje/desmontaje de la máquina"@es.
+ex:ElementoMecanico a owl:Class ;
+    rdfs:label "Elemento Mecánico"@es ;
+    rdfs:comment "Componente mecánico de la máquina"@es .
 
 ex:ElementoComercial a owl:Class ;
     rdfs:label "Elemento Comercial"@es ;
-    rdfs:comment "Elemento comercial utilizado en la máquina"@es.
-
-ex:ElementoDeDesgaste a owl:Class ;
-    rdfs:label "Elemento de Desgaste"@es ;
-    rdfs:comment "Elemento que sufre desgaste durante el funcionamiento de la máquina"@es.
+    rdfs:comment "Componente comercial de la máquina"@es .
 
 ex:Columna a owl:Class ;
     rdfs:label "Columna"@es ;
-    rdfs:comment "Estructura vertical de la máquina"@es.
+    rdfs:comment "Estructura vertical de soporte de la máquina"@es .
 
 ex:CarroPortaBrochas a owl:Class ;
     rdfs:label "Carro Porta Brochas"@es ;
-    rdfs:comment "Carro que porta las brochas en la máquina"@es.
+    rdfs:comment "Carro que porta las brochas de la máquina"@es .
 
 ex:Mantenimiento a owl:Class ;
     rdfs:label "Mantenimiento"@es ;
-    rdfs:comment "Proceso de mantenimiento de la máquina"@es.
+    rdfs:comment "Tareas de mantenimiento de la máquina"@es .
 
 ex:MontajeDesmontaje a owl:Class ;
     rdfs:label "Montaje/Desmontaje"@es ;
-    rdfs:comment "Proceso de montaje y desmontaje de la máquina"@es.
+    rdfs:comment "Proceso de montaje y desmontaje de la máquina"@es .
+
+ex:ListaDeRepuestos a owl:Class ;
+    rdfs:label "Lista de Repuestos"@es ;
+    rdfs:comment "Lista de repuestos necesarios para la máquina"@es .
 
 ex:Tabla a owl:Class ;
     rdfs:label "Tabla"@es ;
-    rdfs:comment "Tabla que contiene información relevante"@es.
+    rdfs:comment "Tabla de elementos de la máquina"@es .
 
 ex:Descripcion a owl:Class ;
     rdfs:label "Descripción"@es ;
-    rdfs:comment "Descripción de los elementos"@es.
+    rdfs:comment "Descripción de los elementos de la máquina"@es .
 
 ex:Cantidad a owl:Class ;
     rdfs:label "Cantidad"@es ;
-    rdfs:comment "Cantidad de elementos necesarios"@es.
+    rdfs:comment "Cantidad de elementos necesarios"@es .
 
-ex:BrochadoraElectromecanicaDeExteriores rdfs:subClassOf ex:MaquinaBrochadora.
-ex:ListaDeRepuestos rdfs:subClassOf ex:Carpeta.
-ex:ElementoComercial rdfs:subClassOf ex:Elemento.
-ex:ElementoDeDesgaste rdfs:subClassOf ex:Elemento.
-ex:Columna rdfs:subClassOf ex:Estructura.
-ex:CarroPortaBrochas rdfs:subClassOf ex:Carro.
-ex:Mantenimiento rdfs:subClassOf ex:Proceso.
-ex:MontajeDesmontaje rdfs:subClassOf ex:Proceso.
-ex:Tabla rdfs:subClassOf ex:Documento.
-ex:Descripcion rdfs:subClassOf ex:Texto.
-ex:Cantidad rdfs:subClassOf ex:Numero.
+ex:ElementoDesgaste a owl:Class ;
+    rdfs:label "Elemento de Desgaste"@es ;
+    rdfs:comment "Elemento que sufre desgaste en la máquina"@es .
+
+ex:Pagina a owl:Class ;
+    rdfs:label "Página"@es ;
+    rdfs:comment "Página del manual técnico"@es .
+
+ex:Capitulo a owl:Class ;
+    rdfs:label "Capítulo"@es ;
+    rdfs:comment "Capítulo del manual técnico"@es .
+
+ex:Modelo a owl:Class ;
+    rdfs:label "Modelo"@es ;
+    rdfs:comment "Modelo de la máquina"@es .
+
+ex:tieneElementoMecanico a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:ElementoMecanico .
+
+ex:tieneElementoComercial a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:ElementoComercial .
+
+ex:tieneColumna a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:Columna .
+
+ex:tieneCarroPortaBrochas a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:CarroPortaBrochas .
+
+ex:tieneMantenimiento a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:Mantenimiento .
+
+ex:tieneMontajeDesmontaje a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:MontajeDesmontaje .
+
+ex:tieneListaDeRepuestos a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:ListaDeRepuestos .
+
+ex:tieneTabla a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:Tabla .
+
+ex:tieneDescripcion a owl:ObjectProperty ;
+    rdfs:domain ex:Tabla ;
+    rdfs:range ex:Descripcion .
+
+ex:tieneCantidad a owl:ObjectProperty ;
+    rdfs:domain ex:Tabla ;
+    rdfs:range ex:Cantidad .
+
+ex:tieneElementoDesgaste a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:ElementoDesgaste .
+
+ex:tienePagina a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:Pagina .
+
+ex:tieneCapitulo a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:Capitulo .
+
+ex:tieneModelo a owl:ObjectProperty ;
+    rdfs:domain ex:BrochadoraElectromecanicaDeExteriores ;
+    rdfs:range ex:Modelo .
+
+ex:tieneNumeroItem a owl:DatatypeProperty ;
+    rdfs:domain ex:Tabla ;
+    rdfs:range xsd:integer .
+
+ex:tieneModelo a owl:DatatypeProperty ;
+    rdfs:domain ex:Modelo ;
+    rdfs:range xsd:string .
+
+ex:tieneDescripcion a owl:DatatypeProperty ;
+    rdfs:domain ex:Descripcion ;
+    rdfs:range xsd:string .
+
+ex:tieneCantidad a owl:DatatypeProperty ;
+    rdfs:domain ex:Cantidad ;
+    rdfs:range xsd:integer .

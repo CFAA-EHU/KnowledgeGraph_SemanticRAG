@@ -1,40 +1,39 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica/> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/elec/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base/> .
 
 ex:ColumnaMecanoSoldadoEstabilizado a owl:Class ;
-    rdfs:label "Columna mecano-soldado estabilizado"@es ;
-    rdfs:comment "Columna mecano-soldado estabilizado con especificaciones RASHEM - 7x3000x500"@es.
+    rdfs:label "Columna mecano-soldado estabilizado" ;
+    rdfs:comment "Modelo RASHEM - 7x3000x500" .
 
 ex:CarroPortaPieza a owl:Class ;
-    rdfs:label "Carro porta-pieza"@es ;
-    rdfs:comment "Carro porta-pieza con accionamiento electromecánico (piñón-cremallera)"@es.
+    rdfs:label "Carro porta-pieza" .
 
 ex:Servomotor a owl:Class ;
-    rdfs:label "Servomotor"@es ;
-    rdfs:comment "Servomotor de accionamiento carro porta-pieza (FAGOR) FKM85.20A.A3.310.11"@es.
+    rdfs:label "Servomotor" ;
+    rdfs:comment "Modelo FAGOR FKM85.20A.A3.310.11" .
 
 ex:Cremallera a owl:Class ;
-    rdfs:label "Cremallera"@es ;
-    rdfs:comment "Cremallera de accionamiento carro porta-pieza"@es.
+    rdfs:label "Cremallera" ;
+    rdfs:comment "Modelos ZST 500-324-500-R1C-60 y ZST 500-324-1000-R1C-60 de WITTENSTEIN" .
 
 ex:ConjuntoGuiado a owl:Class ;
-    rdfs:label "Conjunto guiado"@es ;
-    rdfs:comment "Conjunto guiado carro porta-pieza (EKIN-IKO) A21811005 / A21811006"@es.
+    rdfs:label "Conjunto guiado" ;
+    rdfs:comment "Modelos A21811005 y A21811006 de EKIN-IKO" .
 
-ex:accionamientoElectromecanico a owl:ObjectProperty ;
-    rdfs:label "accionamiento electromecánico"@es ;
+mecanica:accionamientoElectromecanico a owl:ObjectProperty ;
     rdfs:domain ex:CarroPortaPieza ;
-    rdfs:range ex:Cremallera.
+    rdfs:range ex:Servomotor .
 
-ex:accionamientoCarroPortaPieza a owl:ObjectProperty ;
-    rdfs:label "accionamiento carro porta-pieza"@es ;
-    rdfs:domain ex:Servomotor ;
-    rdfs:range ex:CarroPortaPieza.
+mecanica:accionamientoCremallera a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPieza ;
+    rdfs:range ex:Cremallera .
 
-ex:conjuntoGuiadoCarroPortaPieza a owl:ObjectProperty ;
-    rdfs:label "conjunto guiado carro porta-pieza"@es ;
-    rdfs:domain ex:ConjuntoGuiado ;
-    rdfs:range ex:CarroPortaPieza.
+mecanica:conjuntoGuiadoCarroPortaPieza a owl:ObjectProperty ;
+    rdfs:domain ex:CarroPortaPieza ;
+    rdfs:range ex:ConjuntoGuiado .

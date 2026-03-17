@@ -1,81 +1,63 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:ModoSetUp a owl:Class ;
-    rdfs:label "Modo Set-up" ;
-    rdfs:comment "Modo de configuración para la apertura de puertas durante el ciclo de brochado." .
+    rdfs:label "Modo Set-up"@es .
 
 ex:MaquinaEnServicio a owl:Class ;
-    rdfs:label "Máquina en servicio" ;
-    rdfs:comment "Estado de la máquina cuando está operativa." .
+    rdfs:label "Máquina en servicio"@es .
 
 ex:PresionGeneralDeAire a owl:Class ;
-    rdfs:label "Presión general de aire" ;
-    rdfs:comment "Presión del sistema neumático de la máquina." .
+    rdfs:label "Presión general de aire"@es .
 
 ex:Puerta a owl:Class ;
-    rdfs:label "Puerta" ;
-    rdfs:comment "Elemento de la máquina que puede ser abierta o cerrada." .
+    rdfs:label "Puerta"@es .
 
 ex:EnclavamientoDeSeguridad a owl:Class ;
-    rdfs:label "Enclavamiento de seguridad" ;
-    rdfs:comment "Mecanismo de seguridad para bloquear las puertas." .
+    rdfs:label "Enclavamiento de seguridad"@es .
 
 ex:PanelOperador a owl:Class ;
-    rdfs:label "Panel operador" ;
-    rdfs:comment "Interfaz de control de la máquina." .
+    rdfs:label "Panel operador"@es .
 
 ex:Selector a owl:Class ;
-    rdfs:label "Selector" ;
-    rdfs:comment "Dispositivo para seleccionar modos de operación." .
+    rdfs:label "Selector"@es .
 
 ex:Boton a owl:Class ;
-    rdfs:label "Botón" ;
-    rdfs:comment "Elemento de control para realizar acciones específicas." .
+    rdfs:label "Botón"@es .
 
 ex:Carro a owl:Class ;
-    rdfs:label "Carro" ;
-    rdfs:comment "Componente móvil de la máquina." .
+    rdfs:label "Carro"@es .
 
 ex:Diente a owl:Class ;
-    rdfs:label "Diente" ;
-    rdfs:comment "Parte de la herramienta de brochado." .
+    rdfs:label "Diente"@es .
 
-ex:habilitar a owl:ObjectProperty ;
-    rdfs:label "habilitar" ;
-    rdfs:comment "Accionar un selector o botón para activar una función." .
+ex:habilitarSelector a owl:ObjectProperty ;
+    rdfs:domain ex:PanelOperador ;
+    rdfs:range ex:Selector .
 
-ex:pulsar a owl:ObjectProperty ;
-    rdfs:label "pulsar" ;
-    rdfs:comment "Accionar un botón para realizar una acción." .
+ex:pulsarBoton a owl:ObjectProperty ;
+    rdfs:domain ex:PanelOperador ;
+    rdfs:range ex:Boton .
 
-ex:servirPara a owl:ObjectProperty ;
-    rdfs:label "servir para" ;
-    rdfs:comment "Indica el propósito de un modo o función." .
+ex:abrirPuertas a owl:ObjectProperty ;
+    rdfs:domain ex:PanelOperador ;
+    rdfs:range ex:Puerta .
 
-ex:requerir a owl:ObjectProperty ;
-    rdfs:label "requerir" ;
-    rdfs:comment "Indica una condición necesaria para realizar una acción." .
+ex:verificarPosicion a owl:ObjectProperty ;
+    rdfs:domain ex:Carro ;
+    rdfs:range ex:Diente .
 
-ex:estaConectadoA a owl:ObjectProperty ;
-    rdfs:label "está conectado a" ;
-    rdfs:comment "Indica la conexión entre componentes." .
+ex:estaCerradaYBloqueada a owl:ObjectProperty ;
+    rdfs:domain ex:Puerta ;
+    rdfs:range ex:EnclavamientoDeSeguridad .
 
-ex:tiene a owl:ObjectProperty ;
-    rdfs:label "tiene" ;
-    rdfs:comment "Indica una relación de posesión o inclusión." .
+ex:estaEnServicio a owl:ObjectProperty ;
+    rdfs:domain ex:MaquinaEnServicio ;
+    rdfs:range xsd:boolean .
 
-ex:ModoSetUp ex:servirPara ex:AperturaPuertas .
-ex:ModoSetUp ex:requerir ex:MaquinaEnServicio .
-ex:ModoSetUp ex:requerir ex:PresionGeneralDeAire .
-ex:ModoSetUp ex:requerir [ a ex:Puerta ;
-                            ex:tiene ex:EnclavamientoDeSeguridad ] .
-ex:ModoSetUp ex:habilitar ex:Selector .
-ex:Selector ex:estaConectadoA ex:PanelOperador .
-ex:ModoSetUp ex:pulsar ex:Boton .
-ex:Boton rdfs:label "Apertura puertas" .
-ex:ModoSetUp ex:servirPara ex:VerificacionPosicionCarro .
-ex:VerificacionPosicionCarro ex:estaConectadoA ex:Carro .
-ex:VerificacionPosicionCarro ex:estaConectadoA ex:Diente .
+ex:tienePresionGeneralDeAireOK a owl:ObjectProperty ;
+    rdfs:domain ex:MaquinaEnServicio ;
+    rdfs:range xsd:boolean .

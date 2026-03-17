@@ -1,35 +1,31 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:FinalCarrera a owl:Class ;
-    rdfs:label "FinalCarrera"@es ;
-    rdfs:comment "Clase que representa los finales de carrera en el sistema."@es.
+ex:FinalDeCarrera a owl:Class ;
+    rdfs:label "Final de carrera"@es .
 
 ex:DetectorProximidad a owl:Class ;
-    rdfs:label "DetectorProximidad"@es ;
-    rdfs:comment "Clase que representa los detectores de proximidad en el sistema."@es.
+    rdfs:label "Detector de proximidad"@es .
 
-ex:ComprobarFuncionamiento a owl:Class ;
-    rdfs:label "ComprobarFuncionamiento"@es ;
-    rdfs:comment "Clase que representa la acción de comprobar el funcionamiento de un componente."@es.
+ex:comprobarFuncionamiento a owl:ObjectProperty ;
+    rdfs:domain ex:FinalDeCarrera ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Propiedad para comprobar el funcionamiento de un final de carrera"@es .
 
-ex:Reemplazar a owl:Class ;
-    rdfs:label "Reemplazar"@es ;
-    rdfs:comment "Clase que representa la acción de reemplazar un componente."@es.
-
-ex:comprobarFuncionamientoCorrecto a owl:ObjectProperty ;
-    rdfs:label "comprobarFuncionamientoCorrecto"@es ;
-    rdfs:comment "Propiedad que indica que un componente debe comprobar su funcionamiento correcto."@es ;
-    rdfs:domain ex:ComprobarFuncionamiento ;
-    rdfs:range [ a owl:Class ;
-                owl:unionOf ( ex:FinalCarrera ex:DetectorProximidad ) ] .
+ex:comprobarFuncionamiento a owl:ObjectProperty ;
+    rdfs:domain ex:DetectorProximidad ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Propiedad para comprobar el funcionamiento de un detector de proximidad"@es .
 
 ex:requiereReemplazo a owl:ObjectProperty ;
-    rdfs:label "requiereReemplazo"@es ;
-    rdfs:comment "Propiedad que indica que un componente requiere ser reemplazado."@es ;
-    rdfs:domain [ a owl:Class ;
-                 owl:unionOf ( ex:FinalCarrera ex:DetectorProximidad ) ] ;
-    rdfs:range ex:Reemplazar .
+    rdfs:domain ex:FinalDeCarrera ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Propiedad para indicar si un final de carrera requiere reemplazo"@es .
+
+ex:requiereReemplazo a owl:ObjectProperty ;
+    rdfs:domain ex:DetectorProximidad ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Propiedad para indicar si un detector de proximidad requiere reemplazo"@es .

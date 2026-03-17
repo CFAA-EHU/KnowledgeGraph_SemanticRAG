@@ -1,61 +1,81 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:Recinto a owl:Class ;
     rdfs:label "Recinto" ;
-    rdfs:comment "Área cerrada y protegida de fenómenos atmosféricos para la instalación de la máquina." .
+    rdfs:comment "Área donde se instala la máquina." .
 
 ex:Maquina a owl:Class ;
     rdfs:label "Máquina" ;
-    rdfs:comment "Máquina que requiere condiciones específicas de instalación." .
+    rdfs:comment "Equipo que requiere instalación en un recinto cerrado y protegido." .
 
 ex:Suelo a owl:Class ;
     rdfs:label "Suelo" ;
-    rdfs:comment "Superficie donde se instala la máquina, debe tener consistencia suficiente para soportar el peso de la máquina." .
+    rdfs:comment "Superficie donde se instala la máquina." .
 
 ex:Dimensiones a owl:Class ;
     rdfs:label "Dimensiones" ;
-    rdfs:comment "Medidas de la máquina y del espacio disponible para su instalación." .
+    rdfs:comment "Medidas de la máquina y del espacio disponible." .
 
 ex:Peso a owl:Class ;
     rdfs:label "Peso" ;
-    rdfs:comment "Peso de la máquina que debe ser considerado para la instalación." .
-
-ex:Temperatura a owl:Class ;
-    rdfs:label "Temperatura" ;
-    rdfs:comment "Rango de temperatura adecuado para el funcionamiento de la máquina." .
+    rdfs:comment "Peso de la máquina y del espacio disponible." .
 
 ex:EspacioDisponible a owl:Class ;
     rdfs:label "EspacioDisponible" ;
     rdfs:comment "Área destinada para la instalación de la máquina." .
 
-ex:tieneConsistencia a owl:ObjectProperty ;
-    rdfs:label "tieneConsistencia" ;
-    rdfs:domain ex:Suelo ;
-    rdfs:range ex:Consistencia .
+ex:Temperatura a owl:Class ;
+    rdfs:label "Temperatura" ;
+    rdfs:comment "Rango de temperatura adecuado para el funcionamiento de la máquina." .
+
+ex:ProteccionAtmosferica a owl:Class ;
+    rdfs:label "ProteccionAtmosferica" ;
+    rdfs:comment "Protección contra fenómenos atmosféricos." .
+
+ex:ConsistenciaSuelo a owl:Class ;
+    rdfs:label "ConsistenciaSuelo" ;
+    rdfs:comment "Capacidad del suelo para soportar el peso de la máquina." .
+
+ex:tieneTemperatura a owl:ObjectProperty ;
+    rdfs:domain ex:Recinto ;
+    rdfs:range ex:Temperatura .
+
+ex:tieneSuelo a owl:ObjectProperty ;
+    rdfs:domain ex:Recinto ;
+    rdfs:range ex:Suelo .
 
 ex:tieneDimensiones a owl:ObjectProperty ;
-    rdfs:label "tieneDimensiones" ;
     rdfs:domain ex:Maquina ;
     rdfs:range ex:Dimensiones .
 
 ex:tienePeso a owl:ObjectProperty ;
-    rdfs:label "tienePeso" ;
     rdfs:domain ex:Maquina ;
     rdfs:range ex:Peso .
 
-ex:tieneTemperatura a owl:ObjectProperty ;
-    rdfs:label "tieneTemperatura" ;
-    rdfs:domain ex:Recinto ;
-    rdfs:range ex:Temperatura .
-
 ex:tieneEspacioDisponible a owl:ObjectProperty ;
-    rdfs:label "tieneEspacioDisponible" ;
     rdfs:domain ex:Maquina ;
     rdfs:range ex:EspacioDisponible .
 
-ex:Consistencia a owl:Class ;
-    rdfs:label "Consistencia" ;
-    rdfs:comment "Capacidad del suelo para soportar el peso de la máquina." .
+ex:requiereProteccionAtmosferica a owl:ObjectProperty ;
+    rdfs:domain ex:Recinto ;
+    rdfs:range ex:ProteccionAtmosferica .
+
+ex:tieneConsistenciaSuelo a owl:ObjectProperty ;
+    rdfs:domain ex:Suelo ;
+    rdfs:range ex:ConsistenciaSuelo .
+
+ex:tieneRangoTemperatura a owl:DatatypeProperty ;
+    rdfs:domain ex:Temperatura ;
+    rdfs:range xsd:string .
+
+ex:tieneValorPeso a owl:DatatypeProperty ;
+    rdfs:domain ex:Peso ;
+    rdfs:range xsd:decimal .
+
+ex:tieneValorDimensiones a owl:DatatypeProperty ;
+    rdfs:domain ex:Dimensiones ;
+    rdfs:range xsd:string .

@@ -1,23 +1,24 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:Zocalo a owl:Class ;
     rdfs:label "Zócalo" ;
-    rdfs:comment "Base de la máquina sobre el que se monta la columna. Actúa como depósito de refrigerante." .
+    rdfs:comment "Base de la máquina sobre la que se monta la columna y que actúa como depósito de refrigerante." .
 
 ex:Columna a owl:Class ;
     rdfs:label "Columna" ;
-    rdfs:comment "Parte de la máquina que se monta sobre el zócalo." .
+    rdfs:comment "Componente montado sobre el zócalo." .
 
 ex:DepositoRefrigerante a owl:Class ;
-    rdfs:label "DepositoRefrigerante" ;
+    rdfs:label "Depósito de Refrigerante" ;
     rdfs:comment "Depósito donde se acumula el aceite y la viruta durante el proceso de brochado." .
 
 ex:ExtractorVirutas a owl:Class ;
-    rdfs:label "ExtractorVirutas" ;
-    rdfs:comment "Sistema que separa el aceite de la viruta." .
+    rdfs:label "Extractor de Virutas" ;
+    rdfs:comment "Componente que separa el aceite de la viruta." .
 
 ex:Aceite a owl:Class ;
     rdfs:label "Aceite" ;
@@ -25,23 +26,43 @@ ex:Aceite a owl:Class ;
 
 ex:Viruta a owl:Class ;
     rdfs:label "Viruta" ;
-    rdfs:comment "Material resultante del proceso de brochado." .
+    rdfs:comment "Residuo generado durante el proceso de brochado." .
 
 ex:ProcesoBrochado a owl:Class ;
-    rdfs:label "ProcesoBrochado" ;
-    rdfs:comment "Proceso durante el cual se acumula el aceite y la viruta en el depósito de refrigerante." .
+    rdfs:label "Proceso de Brochado" ;
+    rdfs:comment "Proceso mecánico que genera viruta y utiliza refrigerante." .
 
-ex:ZocaloAntiVibratorios a owl:Class ;
-    rdfs:label "ZocaloAntiVibratorios" ;
-    rdfs:comment "Tipo específico de zócalo con características anti-vibratorias." .
+ex:estaMontadoSobre a owl:ObjectProperty ;
+    rdfs:domain ex:Columna ;
+    rdfs:range ex:Zocalo ;
+    rdfs:label "está montado sobre" .
 
-ex:Figura a owl:Class ;
-    rdfs:label "Figura" ;
-    rdfs:comment "Representación gráfica o diagrama." .
+ex:actuaComo a owl:ObjectProperty ;
+    rdfs:domain ex:Zocalo ;
+    rdfs:range ex:DepositoRefrigerante ;
+    rdfs:label "actúa como" .
 
-ex:ZocaloAntiVibratoriosFigura41 a ex:Figura ;
-    rdfs:label "ZocaloAntiVibratoriosFigura41" ;
-    rdfs:comment "Figura 4-1 que representa el zócalo anti-vibratorios." .
+ex:acumula a owl:ObjectProperty ;
+    rdfs:domain ex:DepositoRefrigerante ;
+    rdfs:range ex:Aceite ;
+    rdfs:label "acumula" .
 
-ex:Zocalo rdfs:subClassOf ex:DepositoRefrigerante .
-ex:ZocaloAntiVibratorios rdfs:subClassOf ex:Zocalo .
+ex:envia a owl:ObjectProperty ;
+    rdfs:domain ex:DepositoRefrigerante ;
+    rdfs:range ex:ExtractorVirutas ;
+    rdfs:label "envía" .
+
+ex:separa a owl:ObjectProperty ;
+    rdfs:domain ex:ExtractorVirutas ;
+    rdfs:range ex:Aceite ;
+    rdfs:label "separa" .
+
+ex:genera a owl:ObjectProperty ;
+    rdfs:domain ex:ProcesoBrochado ;
+    rdfs:range ex:Viruta ;
+    rdfs:label "genera" .
+
+ex:utiliza a owl:ObjectProperty ;
+    rdfs:domain ex:ProcesoBrochado ;
+    rdfs:range ex:DepositoRefrigerante ;
+    rdfs:label "utiliza" .

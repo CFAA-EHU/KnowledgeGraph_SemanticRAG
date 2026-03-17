@@ -1,48 +1,173 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica/> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/elec/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base/> .
 
-ex:IB_IL_24_DO_8_HD_ECO a owl:Class ;
-    rdfs:label "Módulo Inline Inline ECO, Módulo de salida digital, Salidas digitales: 8, 24 V DC, 500 mA" ;
-    rdfs:comment "PHOENIX CONTACT" .
+### Clases ###
+ex:ModuloInline a owl:Class ;
+    rdfs:label "Módulo Inline" ;
+    rdfs:comment "Módulo Inline" .
 
-ex:IB_IL_24_PWR_IN_PAC a owl:Class ;
-    rdfs:label "Módulo Inline Módulo de alimentación Inline, completo con accesorios (conector y)" ;
-    rdfs:comment "PHOENIX CONTACT" .
+ex:ModuloSalidaDigital a owl:Class ;
+    rdfs:label "Módulo de salida digital" ;
+    rdfs:comment "Módulo de salida digital" .
 
-ex:IB_IL_AI_4_U_PAC a owl:Class ;
-    rdfs:label "Módulo Inline Inline, Módulo de entrada analógica, Entradas analógicas: 4, 0 V ... 10 V, -10" ;
-    rdfs:comment "PHOENIX CONTACT" .
+ex:ModuloAlimentacionInline a owl:Class ;
+    rdfs:label "Módulo de alimentación Inline" ;
+    rdfs:comment "Módulo de alimentación Inline" .
 
-ex:VX_8285000 a owl:Class ;
-    rdfs:label "VX Baying enclosure system, WHD:" ;
-    rdfs:comment "RITTAL" .
+ex:ModuloEntradaAnalogica a owl:Class ;
+    rdfs:label "Módulo de entrada analógica" ;
+    rdfs:comment "Módulo de entrada analógica" .
 
-ex:VX_8185245 a owl:Class ;
-    rdfs:label "VX Side panel, screw-fastened, for HD:" ;
-    rdfs:comment "RITTAL" .
+ex:VXBayingEnclosureSystem a owl:Class ;
+    rdfs:label "VX Baying enclosure system" ;
+    rdfs:comment "VX Baying enclosure system" .
 
-ex:TS_4116000 a owl:Class ;
-    rdfs:label "SZ PORTAESQUEMAS METALICO 600MM" ;
-    rdfs:comment "RITTAL" .
+ex:VXSidePanel a owl:Class ;
+    rdfs:label "VX Side panel" ;
+    rdfs:comment "VX Side panel" .
 
-ex:TS_4638600 a owl:Class ;
-    rdfs:label "PS Utility lectern, for TS, SE, CM, PC, for door" ;
-    rdfs:comment "RITTAL" .
+ex:PortaEsquemasMetalico a owl:Class ;
+    rdfs:label "SZ PORTAESQUEMAS METALICO" ;
+    rdfs:comment "SZ PORTAESQUEMAS METALICO" .
 
-ex:TS_8602200 a owl:Class ;
-    rdfs:label "Base/plinth components front and rear, 200" ;
-    rdfs:comment "RITTAL" .
+ex:PSUtilityLectern a owl:Class ;
+    rdfs:label "PS Utility lectern" ;
+    rdfs:comment "PS Utility lectern" .
 
-ex:TS_8602050 a owl:Class ;
-    rdfs:label "TS Trim panel, sides, H: 200 mm, for W: 500" ;
-    rdfs:comment "RITTAL" .
+ex:BasePlinthComponents a owl:Class ;
+    rdfs:label "Base/plinth components" ;
+    rdfs:comment "Base/plinth components" .
 
-ex:DK_7888612 a owl:Class ;
-    rdfs:label "Juego de escobillas Anchura: 19 mm Longitud: 590 mm Long. de las cerdas: 48 mm Unidad de" ;
-    rdfs:comment "RITTAL" .
+ex:TrimPanel a owl:Class ;
+    rdfs:label "TS Trim panel" ;
+    rdfs:comment "TS Trim panel" .
 
-ex:SBG54IF0FRKG a owl:Class ;
-    rdfs:label "Caudalímetro mecatrónico Caudalímetro mecatrónico, con válvula de retención, DC, Con pantalla" ;
-    rdfs:comment "IFM electronic GmbH" .
+ex:JuegoDeEscobillas a owl:Class ;
+    rdfs:label "Juego de escobillas" ;
+    rdfs:comment "Juego de escobillas" .
+
+ex:CaudalimetroMecatronico a owl:Class ;
+    rdfs:label "Caudalímetro mecatrónico" ;
+    rdfs:comment "Caudalímetro mecatrónico" .
+
+### Propiedades de Objeto ###
+mecanica:tieneSalidasDigitales a owl:ObjectProperty ;
+    rdfs:domain ex:ModuloSalidaDigital ;
+    rdfs:range xsd:integer .
+
+mecanica:tieneEntradasAnalogicas a owl:ObjectProperty ;
+    rdfs:domain ex:ModuloEntradaAnalogica ;
+    rdfs:range xsd:integer .
+
+mecanica:tieneFabricante a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+mecanica:tieneAnchura a owl:ObjectProperty ;
+    rdfs:domain ex:JuegoDeEscobillas ;
+    rdfs:range xsd:integer .
+
+mecanica:tieneLongitud a owl:ObjectProperty ;
+    rdfs:domain ex:JuegoDeEscobillas ;
+    rdfs:range xsd:integer .
+
+mecanica:tieneLongitudCerdas a owl:ObjectProperty ;
+    rdfs:domain ex:JuegoDeEscobillas ;
+    rdfs:range xsd:integer .
+
+### Propiedades de Datos ###
+elec:tieneSalidasDigitales a owl:DatatypeProperty ;
+    rdfs:domain ex:ModuloSalidaDigital ;
+    rdfs:range xsd:integer .
+
+elec:tieneEntradasAnalogicas a owl:DatatypeProperty ;
+    rdfs:domain ex:ModuloEntradaAnalogica ;
+    rdfs:range xsd:integer .
+
+elec:tieneVoltaje a owl:DatatypeProperty ;
+    rdfs:domain ex:ModuloSalidaDigital ;
+    rdfs:range xsd:integer .
+
+elec:tieneCorriente a owl:DatatypeProperty ;
+    rdfs:domain ex:ModuloSalidaDigital ;
+    rdfs:range xsd:integer .
+
+elec:tieneRango a owl:DatatypeProperty ;
+    rdfs:domain ex:ModuloEntradaAnalogica ;
+    rdfs:range xsd:string .
+
+mecanica:tieneAnchura a owl:DatatypeProperty ;
+    rdfs:domain ex:JuegoDeEscobillas ;
+    rdfs:range xsd:integer .
+
+mecanica:tieneLongitud a owl:DatatypeProperty ;
+    rdfs:domain ex:JuegoDeEscobillas ;
+    rdfs:range xsd:integer .
+
+mecanica:tieneLongitudCerdas a owl:DatatypeProperty ;
+    rdfs:domain ex:JuegoDeEscobillas ;
+    rdfs:range xsd:integer .
+
+### Individuos ###
+ex:IB_IL_24_DO_8_HD_ECO a ex:ModuloSalidaDigital ;
+    rdfs:label "IB IL 24 DO 8/HD-ECO" ;
+    elec:tieneSalidasDigitales "8"^^xsd:integer ;
+    elec:tieneVoltaje "24"^^xsd:integer ;
+    elec:tieneCorriente "500"^^xsd:integer ;
+    mecanica:tieneFabricante "PHOENIX CONTACT" .
+
+ex:IB_IL_24_PWR_IN_PAC a ex:ModuloAlimentacionInline ;
+    rdfs:label "IB IL 24 PWR IN-PAC" ;
+    mecanica:tieneFabricante "PHOENIX CONTACT" .
+
+ex:IB_IL_AI_4_U_PAC a ex:ModuloEntradaAnalogica ;
+    rdfs:label "IB IL AI 4/U-PAC" ;
+    elec:tieneEntradasAnalogicas "4"^^xsd:integer ;
+    elec:tieneRango "0 V ... 10 V, -10" ;
+    mecanica:tieneFabricante "PHOENIX CONTACT" .
+
+ex:VX_8285000 a ex:VXBayingEnclosureSystem ;
+    rdfs:label "VX.8285000" ;
+    mecanica:tieneFabricante "RITTAL" .
+
+ex:VX_8185245 a ex:VXSidePanel ;
+    rdfs:label "VX.8185245" ;
+    mecanica:tieneFabricante "RITTAL" .
+
+ex:TS_4116000 a ex:PortaEsquemasMetalico ;
+    rdfs:label "TS.4116000" ;
+    rdfs:comment "SZ PORTAESQUEMAS METALICO 600MM" ;
+    mecanica:tieneFabricante "RITTAL" .
+
+ex:TS_4638600 a ex:PSUtilityLectern ;
+    rdfs:label "TS.4638600" ;
+    rdfs:comment "PS Utility lectern, for TS, SE, CM, PC, for door" ;
+    mecanica:tieneFabricante "RITTAL" .
+
+ex:TS_8602200 a ex:BasePlinthComponents ;
+    rdfs:label "TS.8602200" ;
+    rdfs:comment "Base/plinth components front and rear, 200" ;
+    mecanica:tieneFabricante "RITTAL" .
+
+ex:TS_8602050 a ex:TrimPanel ;
+    rdfs:label "TS.8602050" ;
+    rdfs:comment "TS Trim panel, sides, H: 200 mm, for W: 500" ;
+    mecanica:tieneFabricante "RITTAL" .
+
+ex:DK_7888612 a ex:JuegoDeEscobillas ;
+    rdfs:label "DK.7888612" ;
+    mecanica:tieneAnchura "19"^^xsd:integer ;
+    mecanica:tieneLongitud "590"^^xsd:integer ;
+    mecanica:tieneLongitudCerdas "48"^^xsd:integer ;
+    mecanica:tieneFabricante "RITTAL" .
+
+ex:SBG54IF0FRKG a ex:CaudalimetroMecatronico ;
+    rdfs:label "SBG54IF0FRKG" ;
+    rdfs:comment "Caudalímetro mecatrónico, con válvula de retención, DC, Con pantalla" ;
+    mecanica:tieneFabricante "IFM electronic GmbH" .

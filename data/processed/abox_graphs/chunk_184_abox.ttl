@@ -1,192 +1,119 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/electric/> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica/> .
 
-ex:Piloto a owl:Class ;
+### Clases ###
+elec:Piloto a owl:Class ;
     rdfs:label "Piloto" ;
-    rdfs:comment "Clase que representa un piloto en el sistema eléctrico.".
+    rdfs:comment "Componente eléctrico de señalización" .
 
-ex:BorneDeSalidaDigital a owl:Class ;
-    rdfs:label "BorneDeSalidaDigital" ;
-    rdfs:comment "Clase que representa un borne de salida digital en el sistema eléctrico.".
+elec:BorneSalidaDigital a owl:Class ;
+    rdfs:label "Borne de salida digital" ;
+    rdfs:comment "Punto de conexión para salidas digitales" .
 
-ex:Módulo a owl:Class ;
-    rdfs:label "Módulo" ;
-    rdfs:comment "Clase que representa un módulo en el sistema eléctrico.".
+elec:ModuloAlimentacion a owl:Class ;
+    rdfs:label "Módulo de alimentación" ;
+    rdfs:comment "Módulo que proporciona alimentación eléctrica" .
 
-ex:ContactoIntermedio a owl:Class ;
-    rdfs:label "ContactoIntermedio" ;
-    rdfs:comment "Clase que representa un contacto intermedio en el sistema eléctrico.".
-
-ex:Relé a owl:Class ;
+elec:Relé a owl:Class ;
     rdfs:label "Relé" ;
-    rdfs:comment "Clase que representa un relé en el sistema eléctrico.".
+    rdfs:comment "Dispositivo electromecánico para conmutar circuitos" .
 
-ex:Contactor a owl:Class ;
-    rdfs:label "Contactor" ;
-    rdfs:comment "Clase que representa un contactor en el sistema eléctrico.".
+elec:ContactoIntermedio a owl:Class ;
+    rdfs:label "Contacto intermedio" ;
+    rdfs:comment "Contacto auxiliar en relés o contactores" .
 
-ex:BloqueDeEntradasDiferenciales a owl:Class ;
-    rdfs:label "BloqueDeEntradasDiferenciales" ;
-    rdfs:comment "Clase que representa un bloque de entradas diferenciales en el sistema eléctrico.".
+elec:Contacto a owl:Class ;
+    rdfs:label "Contacto" ;
+    rdfs:comment "Punto de conexión en un relé o contactor" .
 
-ex:PowerModule a owl:Class ;
-    rdfs:label "PowerModule" ;
-    rdfs:comment "Clase que representa un módulo de alimentación de riel en el sistema eléctrico.".
+elec:Bobina a owl:Class ;
+    rdfs:label "Bobina" ;
+    rdfs:comment "Componente que activa un relé o contactor" .
 
-ex:tieneCodificaciónCromática a owl:ObjectProperty ;
-    rdfs:label "tieneCodificaciónCromática" ;
-    rdfs:comment "Propiedad que indica la codificación cromática de un elemento.".
+elec:Contacto a owl:Class ;
+    rdfs:label "Contacto" ;
+    rdfs:comment "Punto de conexión en un relé o contactor" .
 
-ex:tieneRótulo a owl:ObjectProperty ;
-    rdfs:label "tieneRótulo" ;
-    rdfs:comment "Propiedad que indica el rótulo de un elemento.".
+elec:BloqueEntradasDiferenciales a owl:Class ;
+    rdfs:label "Bloque de entradas diferenciales" ;
+    rdfs:comment "Bloque que gestiona entradas diferenciales" .
 
-ex:tieneSalidas a owl:ObjectProperty ;
-    rdfs:label "tieneSalidas" ;
-    rdfs:comment "Propiedad que indica las salidas de un módulo.".
+### Propiedades de Objeto ###
+elec:agrupaEn a owl:ObjectProperty ;
+    rdfs:label "agrupa en" ;
+    rdfs:comment "Relación que indica que un componente se agrupa en otro" .
 
-ex:tieneContactosIntermedios a owl:ObjectProperty ;
-    rdfs:label "tieneContactosIntermedios" ;
-    rdfs:comment "Propiedad que indica los contactos intermedios de un elemento.".
+elec:acciona a owl:ObjectProperty ;
+    rdfs:label "acciona" ;
+    rdfs:comment "Relación que indica que un componente acciona otro" .
 
-ex:tieneRelés a owl:ObjectProperty ;
-    rdfs:label "tieneRelés" ;
-    rdfs:comment "Propiedad que indica los relés de un módulo.".
+elec:seMuestraAlimentadoDesde a owl:ObjectProperty ;
+    rdfs:label "se muestra alimentado desde" ;
+    rdfs:comment "Relación que indica la fuente de alimentación de un componente" .
 
-ex:tieneBornes a owl:ObjectProperty ;
-    rdfs:label "tieneBornes" ;
-    rdfs:comment "Propiedad que indica los bornes de un módulo.".
+elec:tieneConexion a owl:ObjectProperty ;
+    rdfs:label "tiene conexión" ;
+    rdfs:comment "Relación que indica la conexión de un componente" .
 
-ex:tieneContactores a owl:ObjectProperty ;
-    rdfs:label "tieneContactores" ;
-    rdfs:comment "Propiedad que indica los contactores de un módulo.".
+elec:tienePolaridad a owl:ObjectProperty ;
+    rdfs:label "tiene polaridad" ;
+    rdfs:comment "Relación que indica la polaridad de un componente" .
 
-ex:tieneBloqueDeEntradasDiferenciales a owl:ObjectProperty ;
-    rdfs:label "tieneBloqueDeEntradasDiferenciales" ;
-    rdfs:comment "Propiedad que indica el bloque de entradas diferenciales de un módulo.".
+elec:tieneReferencia a owl:ObjectProperty ;
+    rdfs:label "tiene referencia" ;
+    rdfs:comment "Relación que indica la referencia de un componente" .
 
-ex:tieneCanalesReservados a owl:ObjectProperty ;
-    rdfs:label "tieneCanalesReservados" ;
-    rdfs:comment "Propiedad que indica los canales reservados de un bloque de entradas diferenciales.".
+elec:tieneAsignacion a owl:ObjectProperty ;
+    rdfs:label "tiene asignación" ;
+    rdfs:comment "Relación que indica la asignación de un componente" .
 
-ex:tienePolaridad a owl:ObjectProperty ;
-    rdfs:label "tienePolaridad" ;
-    rdfs:comment "Propiedad que indica la polaridad de un canal.".
+### Propiedades de Datos ###
+elec:tieneCodificacionCromatica a owl:DatatypeProperty ;
+    rdfs:label "tiene codificación cromática" ;
+    rdfs:comment "Indica la codificación cromática de un componente" ;
+    rdfs:range xsd:string .
 
-ex:tieneReferencias a owl:ObjectProperty ;
-    rdfs:label "tieneReferencias" ;
-    rdfs:comment "Propiedad que indica las referencias de un canal.".
+elec:tieneRótulo a owl:DatatypeProperty ;
+    rdfs:label "tiene rótulo" ;
+    rdfs:comment "Indica el rótulo de un componente" ;
+    rdfs:range xsd:string .
 
-ex:tieneAsignación a owl:ObjectProperty ;
-    rdfs:label "tieneAsignación" ;
-    rdfs:comment "Propiedad que indica la asignación de un canal.".
+elec:tieneSalidas a owl:DatatypeProperty ;
+    rdfs:label "tiene salidas" ;
+    rdfs:comment "Indica las salidas de un módulo" ;
+    rdfs:range xsd:string .
 
-ex:tieneBobina a owl:ObjectProperty ;
-    rdfs:label "tieneBobina" ;
-    rdfs:comment "Propiedad que indica la bobina de un contactor.".
+elec:tieneBornes a owl:DatatypeProperty ;
+    rdfs:label "tiene bornes" ;
+    rdfs:comment "Indica los bornes de un módulo" ;
+    rdfs:range xsd:string .
 
-ex:tieneParesDeContactos a owl:ObjectProperty ;
-    rdfs:label "tieneParesDeContactos" ;
-    rdfs:comment "Propiedad que indica los pares de contactos de un contactor.".
+elec:tieneRelés a owl:DatatypeProperty ;
+    rdfs:label "tiene relés" ;
+    rdfs:comment "Indica los relés de un módulo" ;
+    rdfs:range xsd:string .
 
-ex:tieneConexionesDePotencia a owl:ObjectProperty ;
-    rdfs:label "tieneConexionesDePotencia" ;
-    rdfs:comment "Propiedad que indica las conexiones de potencia de un contactor.".
+elec:tieneContactos a owl:DatatypeProperty ;
+    rdfs:label "tiene contactos" ;
+    rdfs:comment "Indica los contactos de un módulo" ;
+    rdfs:range xsd:string .
 
-ex:tieneFlechas a owl:ObjectProperty ;
-    rdfs:label "tieneFlechas" ;
-    rdfs:comment "Propiedad que indica las flechas de un módulo.".
+elec:tieneBobinas a owl:DatatypeProperty ;
+    rdfs:label "tiene bobinas" ;
+    rdfs:comment "Indica las bobinas de un módulo" ;
+    rdfs:range xsd:string .
 
-ex:tieneLínea a owl:ObjectProperty ;
-    rdfs:label "tieneLínea" ;
-    rdfs:comment "Propiedad que indica la línea de un módulo.".
+elec:tieneCanales a owl:DatatypeProperty ;
+    rdfs:label "tiene canales" ;
+    rdfs:comment "Indica los canales de un módulo" ;
+    rdfs:range xsd:string .
 
-ex:tieneRetorno a owl:ObjectProperty ;
-    rdfs:label "tieneRetorno" ;
-    rdfs:comment "Propiedad que indica el retorno de un módulo.".
-
-ex:tieneAlimentación a owl:ObjectProperty ;
-    rdfs:label "tieneAlimentación" ;
-    rdfs:comment "Propiedad que indica la alimentación de un módulo.".
-
-ex:tieneConexión a owl:ObjectProperty ;
-    rdfs:label "tieneConexión" ;
-    rdfs:comment "Propiedad que indica la conexión de un módulo.".
-
-ex:tieneBornesDeSalidaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de salida digital de un módulo.".
-
-ex:tieneMóduloDeAlimentación a owl:ObjectProperty ;
-    rdfs:label "tieneMóduloDeAlimentación" ;
-    rdfs:comment "Propiedad que indica el módulo de alimentación de un módulo.".
-
-ex:tieneBornesDeEntradaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada digital de un módulo.".
-
-ex:tieneBornesDeSalida a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalida" ;
-    rdfs:comment "Propiedad que indica los bornes de salida de un módulo.".
-
-ex:tieneBornesDeEntrada a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntrada" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada de un módulo.".
-
-ex:tieneBornesDeSalidaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de salida analógica de un módulo.".
-
-ex:tieneBornesDeEntradaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada analógica de un módulo.".
-
-ex:tieneBornesDeSalidaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de salida digital de un módulo.".
-
-ex:tieneBornesDeEntradaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada digital de un módulo.".
-
-ex:tieneBornesDeSalidaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de salida analógica de un módulo.".
-
-ex:tieneBornesDeEntradaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada analógica de un módulo.".
-
-ex:tieneBornesDeSalidaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de salida digital de un módulo.".
-
-ex:tieneBornesDeEntradaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada digital de un módulo.".
-
-ex:tieneBornesDeSalidaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de salida analógica de un módulo.".
-
-ex:tieneBornesDeEntradaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada analógica de un módulo.".
-
-ex:tieneBornesDeSalidaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de salida digital de un módulo.".
-
-ex:tieneBornesDeEntradaDigital a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaDigital" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada digital de un módulo.".
-
-ex:tieneBornesDeSalidaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeSalidaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de salida analógica de un módulo.".
-
-ex:tieneBornesDeEntradaAnalógica a owl:ObjectProperty ;
-    rdfs:label "tieneBornesDeEntradaAnalógica" ;
-    rdfs:comment "Propiedad que indica los bornes de entrada analógica de un módulo.".
+elec:tienePolaridadIndicada a owl:DatatypeProperty ;
+    rdfs:label "tiene polaridad indicada" ;
+    rdfs:comment "Indica la polaridad de un canal" ;
+    rdfs:range xsd:string .

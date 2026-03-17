@@ -1,45 +1,53 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-
-ex:Ilustracion a owl:Class ;
-    rdfs:label "Ilustracion"@es ;
-    rdfs:comment "Clase que representa las ilustraciones en el manual técnico."@es .
-
-ex:EsquemaDeComponente a owl:Class ;
-    rdfs:label "EsquemaDeComponente"@es ;
-    rdfs:comment "Clase que representa los esquemas de componentes en el manual técnico."@es .
-
-ex:EsquemaDeConjunto a owl:Class ;
-    rdfs:label "EsquemaDeConjunto"@es ;
-    rdfs:comment "Clase que representa los esquemas de conjuntos en el manual técnico."@es .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:Dibujo a owl:Class ;
-    rdfs:label "Dibujo"@es ;
-    rdfs:comment "Clase que representa los dibujos en el manual técnico."@es .
+    rdfs:label "Dibujo" ;
+    rdfs:comment "Representación gráfica de componentes o conjuntos." .
 
-ex:representa a owl:ObjectProperty ;
-    rdfs:label "representa"@es ;
-    rdfs:comment "Propiedad que indica que una ilustración representa un componente o conjunto."@es ;
-    rdfs:domain ex:Ilustracion ;
-    rdfs:range [owl:unionOf (ex:EsquemaDeComponente ex:EsquemaDeConjunto ex:Dibujo)] .
+ex:EsquemaDeComponente a owl:Class ;
+    rdfs:label "Esquema de Componente" ;
+    rdfs:comment "Representación esquemática de un componente." .
 
-ex:estaSimplificado a owl:ObjectProperty ;
-    rdfs:label "estaSimplificado"@es ;
-    rdfs:comment "Propiedad que indica que una ilustración está simplificada."@es ;
-    rdfs:domain ex:Ilustracion ;
-    rdfs:range xsd:boolean .
+ex:EsquemaDeConjunto a owl:Class ;
+    rdfs:label "Esquema de Conjunto" ;
+    rdfs:comment "Representación esquemática de un conjunto de componentes." .
+
+ex:RepresentacionParcial a owl:Class ;
+    rdfs:label "Representación Parcial" ;
+    rdfs:comment "Representación que no incluye todos los detalles." .
+
+ex:Simplificado a owl:Class ;
+    rdfs:label "Simplificado" ;
+    rdfs:comment "Representación simplificada de un componente o conjunto." .
+
+ex:Informativo a owl:Class ;
+    rdfs:label "Informativo" ;
+    rdfs:comment "Representación que carece de validez contractual." .
+
+ex:tieneRepresentacionParcial a owl:ObjectProperty ;
+    rdfs:domain ex:Dibujo ;
+    rdfs:range ex:RepresentacionParcial .
+
+ex:tieneEsquemaDeComponente a owl:ObjectProperty ;
+    rdfs:domain ex:Dibujo ;
+    rdfs:range ex:EsquemaDeComponente .
+
+ex:tieneEsquemaDeConjunto a owl:ObjectProperty ;
+    rdfs:domain ex:Dibujo ;
+    rdfs:range ex:EsquemaDeConjunto .
+
+ex:tieneRepresentacionSimplificada a owl:ObjectProperty ;
+    rdfs:domain ex:Dibujo ;
+    rdfs:range ex:Simplificado .
 
 ex:esInformativo a owl:ObjectProperty ;
-    rdfs:label "esInformativo"@es ;
-    rdfs:comment "Propiedad que indica que una ilustración es meramente informativa."@es ;
-    rdfs:domain ex:Ilustracion ;
-    rdfs:range xsd:boolean .
+    rdfs:domain ex:Dibujo ;
+    rdfs:range ex:Informativo .
 
 ex:careceDeValidezContractual a owl:ObjectProperty ;
-    rdfs:label "careceDeValidezContractual"@es ;
-    rdfs:comment "Propiedad que indica que una ilustración carece de validez contractual."@es ;
-    rdfs:domain ex:Ilustracion ;
+    rdfs:domain ex:Informativo ;
     rdfs:range xsd:boolean .

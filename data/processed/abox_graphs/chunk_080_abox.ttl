@@ -1,67 +1,34 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:PantallaCicloBrochado a owl:Class ;
-    rdfs:label "PantallaCicloBrochado" ;
-    rdfs:comment "Pantalla donde se seleccionan los parámetros de brochado." .
+    rdfs:label "Pantalla de ciclo de brochado" .
 
 ex:Programa a owl:Class ;
-    rdfs:label "Programa" ;
-    rdfs:comment "Programa donde se guardan los parámetros de brochado." .
+    rdfs:label "Programa" .
 
-ex:Parámetro a owl:Class ;
-    rdfs:label "Parámetro" ;
-    rdfs:comment "Parámetro de brochado seleccionado en la pantalla de ciclo de brochado." .
+ex:ParámetroBrochado a owl:Class ;
+    rdfs:label "Parámetro de brochado" .
 
-ex:MemorizarCiclo a owl:Class ;
-    rdfs:label "MemorizarCiclo" ;
-    rdfs:comment "Acción de memorizar el ciclo de brochado." .
-
-ex:PonerNombre a owl:Class ;
-    rdfs:label "PonerNombre" ;
-    rdfs:comment "Acción de poner un nombre al programa." .
-
-ex:PulsarParámetros a owl:Class ;
-    rdfs:label "PulsarParámetros" ;
-    rdfs:comment "Acción de pulsar los parámetros para volcarlos al programa." .
-
-ex:AñadirM30 a owl:Class ;
-    rdfs:label "AñadirM30" ;
-    rdfs:comment "Acción de añadir un M30 al final del programa." .
-
-ex:seleccionarParámetros a owl:ObjectProperty ;
-    rdfs:label "seleccionarParámetros" ;
+ex:MemorizarCiclo a owl:ObjectProperty ;
     rdfs:domain ex:PantallaCicloBrochado ;
-    rdfs:range ex:Parámetro .
+    rdfs:range ex:Programa ;
+    rdfs:label "Memorizar ciclo" .
 
-ex:memorizarCiclo a owl:ObjectProperty ;
-    rdfs:label "memorizarCiclo" ;
+ex:PonerNombre a owl:ObjectProperty ;
+    rdfs:domain ex:Programa ;
+    rdfs:range xsd:string ;
+    rdfs:label "Poner nombre" .
+
+ex:PulsarParámetros a owl:ObjectProperty ;
     rdfs:domain ex:PantallaCicloBrochado ;
-    rdfs:range ex:MemorizarCiclo .
+    rdfs:range ex:Programa ;
+    rdfs:label "Pulsar parámetros" .
 
-ex:crearNuevoPrograma a owl:ObjectProperty ;
-    rdfs:label "crearNuevoPrograma" ;
-    rdfs:domain ex:MemorizarCiclo ;
-    rdfs:range ex:Programa .
-
-ex:ponerNombre a owl:ObjectProperty ;
-    rdfs:label "ponerNombre" ;
+ex:AñadirM30 a owl:ObjectProperty ;
     rdfs:domain ex:Programa ;
-    rdfs:range ex:PonerNombre .
-
-ex:pulsarParámetros a owl:ObjectProperty ;
-    rdfs:label "pulsarParámetros" ;
-    rdfs:domain ex:PonerNombre ;
-    rdfs:range ex:PulsarParámetros .
-
-ex:volcarParámetros a owl:ObjectProperty ;
-    rdfs:label "volcarParámetros" ;
-    rdfs:domain ex:PulsarParámetros ;
-    rdfs:range ex:Programa .
-
-ex:añadirM30 a owl:ObjectProperty ;
-    rdfs:label "añadirM30" ;
-    rdfs:domain ex:Programa ;
-    rdfs:range ex:AñadirM30 .
+    rdfs:range xsd:string ;
+    rdfs:label "Añadir M30" .

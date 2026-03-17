@@ -1,73 +1,114 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/electricos/> .
+@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica/> .
 
-ex:ContactoIntermedio a owl:Class ;
-    rdfs:label "ContactoIntermedio"@es ;
-    rdfs:comment "Clase que representa los contactos intermedios en esquemas eléctricos."@es .
+### Clases ###
+elec:ContactoIntermedio a owl:Class ;
+    rdfs:label "ContactoIntermedio" ;
+    rdfs:comment "Clase para representar contactos intermedios en esquemas eléctricos." .
 
-ex:BorneEntradaDigital a owl:Class ;
-    rdfs:label "BorneEntradaDigital"@es ;
-    rdfs:comment "Clase que representa los bornes de entrada digital en esquemas eléctricos."@es .
+elec:Bobina a owl:Class ;
+    rdfs:label "Bobina" ;
+    rdfs:comment "Clase para representar bobinas en esquemas eléctricos." .
 
-ex:Sensor a owl:Class ;
-    rdfs:label "Sensor"@es ;
-    rdfs:comment "Clase que representa los sensores en esquemas eléctricos."@es .
+elec:EntradaDigital a owl:Class ;
+    rdfs:label "EntradaDigital" ;
+    rdfs:comment "Clase para representar entradas digitales en esquemas eléctricos." .
 
-ex:Conector a owl:Class ;
-    rdfs:label "Conector"@es ;
-    rdfs:comment "Clase que representa los conectores en esquemas eléctricos."@es .
+elec:Sensor a owl:Class ;
+    rdfs:label "Sensor" ;
+    rdfs:comment "Clase para representar sensores en esquemas eléctricos." .
 
-ex:BorneSalidaDigital a owl:Class ;
-    rdfs:label "BorneSalidaDigital"@es ;
-    rdfs:comment "Clase que representa los bornes de salida digital en esquemas eléctricos."@es .
+elec:Conector a owl:Class ;
+    rdfs:label "Conector" ;
+    rdfs:comment "Clase para representar conectores en esquemas eléctricos." .
 
-ex:PilotoLuminoso a owl:Class ;
-    rdfs:label "PilotoLuminoso"@es ;
-    rdfs:comment "Clase que representa los pilotos luminosos en esquemas eléctricos."@es .
+elec:SalidaDigital a owl:Class ;
+    rdfs:label "SalidaDigital" ;
+    rdfs:comment "Clase para representar salidas digitales en esquemas eléctricos." .
 
-ex:ColumnaLuminosa a owl:Class ;
-    rdfs:label "ColumnaLuminosa"@es ;
-    rdfs:comment "Clase que representa las columnas luminosas en esquemas eléctricos."@es .
+elec:Piloto a owl:Class ;
+    rdfs:label "Piloto" ;
+    rdfs:comment "Clase para representar pilotos en esquemas eléctricos." .
 
-ex:tieneEntradas a owl:ObjectProperty ;
-    rdfs:label "tieneEntradas"@es ;
-    rdfs:domain ex:BorneEntradaDigital ;
+elec:Lampara a owl:Class ;
+    rdfs:label "Lampara" ;
+    rdfs:comment "Clase para representar lámparas en esquemas eléctricos." .
+
+### Propiedades de Objeto ###
+elec:enlaza a owl:ObjectProperty ;
+    rdfs:label "enlaza" ;
+    rdfs:comment "Propiedad que indica que un componente enlaza la lógica con otro." ;
+    rdfs:domain elec:ContactoIntermedio ;
+    rdfs:range elec:Bobina .
+
+elec:representa a owl:ObjectProperty ;
+    rdfs:label "representa" ;
+    rdfs:comment "Propiedad que indica que un símbolo representa un sensor." ;
+    rdfs:domain elec:Sensor ;
+    rdfs:range elec:Sensor .
+
+elec:tieneConector a owl:ObjectProperty ;
+    rdfs:label "tieneConector" ;
+    rdfs:comment "Propiedad que indica que un componente tiene un conector." ;
+    rdfs:domain elec:Sensor ;
+    rdfs:range elec:Conector .
+
+elec:tieneLongitudCable a owl:ObjectProperty ;
+    rdfs:label "tieneLongitudCable" ;
+    rdfs:comment "Propiedad que indica la longitud del cable de un componente." ;
+    rdfs:domain elec:Sensor ;
     rdfs:range xsd:string .
 
-ex:tieneSalidas a owl:ObjectProperty ;
-    rdfs:label "tieneSalidas"@es ;
-    rdfs:domain ex:BorneSalidaDigital ;
+elec:tieneSalidaDigital a owl:ObjectProperty ;
+    rdfs:label "tieneSalidaDigital" ;
+    rdfs:comment "Propiedad que indica que un módulo tiene una salida digital." ;
+    rdfs:domain elec:Modulo ;
+    rdfs:range elec:SalidaDigital .
+
+elec:tienePiloto a owl:ObjectProperty ;
+    rdfs:label "tienePiloto" ;
+    rdfs:comment "Propiedad que indica que un bloque tiene un piloto." ;
+    rdfs:domain elec:Bloque ;
+    rdfs:range elec:Piloto .
+
+elec:tieneLampara a owl:ObjectProperty ;
+    rdfs:label "tieneLampara" ;
+    rdfs:comment "Propiedad que indica que un piloto tiene una lámpara." ;
+    rdfs:domain elec:Piloto ;
+    rdfs:range elec:Lampara .
+
+### Propiedades de Datos ###
+elec:tieneCodigo a owl:DatatypeProperty ;
+    rdfs:label "tieneCodigo" ;
+    rdfs:comment "Propiedad que indica el código de un componente." ;
+    rdfs:domain elec:ContactoIntermedio ;
     rdfs:range xsd:string .
 
-ex:tieneSensores a owl:ObjectProperty ;
-    rdfs:label "tieneSensores"@es ;
-    rdfs:domain ex:BorneEntradaDigital ;
-    rdfs:range ex:Sensor .
-
-ex:tieneConectores a owl:ObjectProperty ;
-    rdfs:label "tieneConectores"@es ;
-    rdfs:domain ex:BorneEntradaDigital ;
-    rdfs:range ex:Conector .
-
-ex:tienePilotosLuminosos a owl:ObjectProperty ;
-    rdfs:label "tienePilotosLuminosos"@es ;
-    rdfs:domain ex:BorneSalidaDigital ;
-    rdfs:range ex:PilotoLuminoso .
-
-ex:tieneColumnasLuminosas a owl:ObjectProperty ;
-    rdfs:label "tieneColumnasLuminosas"@es ;
-    rdfs:domain ex:BorneSalidaDigital ;
-    rdfs:range ex:ColumnaLuminosa .
-
-ex:tieneLongitudCable a owl:DatatypeProperty ;
-    rdfs:label "tieneLongitudCable"@es ;
-    rdfs:domain ex:Conector ;
+elec:tieneModulo a owl:DatatypeProperty ;
+    rdfs:label "tieneModulo" ;
+    rdfs:comment "Propiedad que indica el módulo de una entrada digital." ;
+    rdfs:domain elec:EntradaDigital ;
     rdfs:range xsd:string .
 
-ex:tieneCodificacionCromatica a owl:DatatypeProperty ;
-    rdfs:label "tieneCodificacionCromatica"@es ;
-    rdfs:domain ex:PilotoLuminoso ;
+elec:tieneReferencia a owl:DatatypeProperty ;
+    rdfs:label "tieneReferencia" ;
+    rdfs:comment "Propiedad que indica la referencia de una entrada digital." ;
+    rdfs:domain elec:EntradaDigital ;
+    rdfs:range xsd:string .
+
+elec:tieneEtiqueta a owl:DatatypeProperty ;
+    rdfs:label "tieneEtiqueta" ;
+    rdfs:comment "Propiedad que indica la etiqueta de una entrada digital." ;
+    rdfs:domain elec:EntradaDigital ;
+    rdfs:range xsd:string .
+
+elec:tieneColor a owl:DatatypeProperty ;
+    rdfs:label "tieneColor" ;
+    rdfs:comment "Propiedad que indica el color de una lámpara." ;
+    rdfs:domain elec:Lampara ;
     rdfs:range xsd:string .

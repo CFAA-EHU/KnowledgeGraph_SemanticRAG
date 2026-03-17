@@ -29,9 +29,7 @@ The script performs the following pipeline:
 
 # Input
 
-## 1. QA Dataset
-
-A JSON file like:
+A JSON file (QA Dataset) like:
 
 ```json
 [

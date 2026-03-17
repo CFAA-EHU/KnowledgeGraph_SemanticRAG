@@ -1,38 +1,49 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:SeguridadConMateriales a owl:Class ;
-    rdfs:label "SeguridadConMateriales" ;
-    rdfs:comment "Clase que representa la seguridad con materiales utilizados en la máquina." .
+    rdfs:label "Seguridad con materiales"@es ;
+    rdfs:comment "Clase que representa las medidas de seguridad relacionadas con los materiales utilizados en la máquina."@es .
 
 ex:NormativaVigente a owl:Class ;
-    rdfs:label "NormativaVigente" ;
-    rdfs:comment "Clase que representa la normativa vigente para la protección del medio ambiente." .
+    rdfs:label "Normativa vigente"@es ;
+    rdfs:comment "Clase que representa las normativas y legislaciones aplicables."@es .
 
 ex:ResiduoPeligroso a owl:Class ;
-    rdfs:label "ResiduoPeligroso" ;
-    rdfs:comment "Clase que representa los residuos peligrosos generados por la máquina." .
+    rdfs:label "Residuo peligroso"@es ;
+    rdfs:comment "Clase que representa los residuos que pueden causar problemas medioambientales."@es .
 
-ex:LegislacionVigente a owl:Class ;
-    rdfs:label "LegislacionVigente" ;
-    rdfs:comment "Clase que representa la legislación vigente en el país de utilización de la máquina." .
+ex:MedioAmbiente a owl:Class ;
+    rdfs:label "Medio ambiente"@es ;
+    rdfs:comment "Clase que representa el entorno natural y las medidas para su protección."@es .
+
+ex:MaterialDeServicio a owl:Class ;
+    rdfs:label "Material de servicio"@es ;
+    rdfs:comment "Clase que representa los materiales auxiliares y de servicio utilizados en la máquina."@es .
+
+ex:PiezaDeRecambio a owl:Class ;
+    rdfs:label "Pieza de recambio"@es ;
+    rdfs:comment "Clase que representa las piezas de recambio de la máquina."@es .
 
 ex:cumpleNormativa a owl:ObjectProperty ;
-    rdfs:label "cumpleNormativa" ;
     rdfs:domain ex:SeguridadConMateriales ;
     rdfs:range ex:NormativaVigente ;
-    rdfs:comment "Propiedad que indica que la seguridad con materiales cumple la normativa vigente." .
+    rdfs:label "cumple normativa"@es .
 
 ex:requiereEliminacionSegura a owl:ObjectProperty ;
-    rdfs:label "requiereEliminacionSegura" ;
-    rdfs:domain ex:SeguridadConMateriales ;
-    rdfs:range ex:ResiduoPeligroso ;
-    rdfs:comment "Propiedad que indica que la seguridad con materiales requiere la eliminación segura de residuos peligrosos." .
+    rdfs:domain ex:MaterialDeServicio ;
+    rdfs:range ex:PiezaDeRecambio ;
+    rdfs:label "requiere eliminación segura"@es .
 
-ex:requiereCumplimientoLegislacion a owl:ObjectProperty ;
-    rdfs:label "requiereCumplimientoLegislacion" ;
+ex:protegeMedioAmbiente a owl:ObjectProperty ;
     rdfs:domain ex:SeguridadConMateriales ;
-    rdfs:range ex:LegislacionVigente ;
-    rdfs:comment "Propiedad que indica que la seguridad con materiales requiere el cumplimiento de la legislación vigente." .
+    rdfs:range ex:MedioAmbiente ;
+    rdfs:label "protege medio ambiente"@es .
+
+ex:generaResiduoPeligroso a owl:ObjectProperty ;
+    rdfs:domain ex:MaterialDeServicio ;
+    rdfs:range ex:ResiduoPeligroso ;
+    rdfs:label "genera residuo peligroso"@es .

@@ -1,148 +1,254 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:ModoAutomatico a owl:Class ;
-    rdfs:label "ModoAutomatico" ;
-    rdfs:comment "Modo de trabajo automático de la máquina" .
+    rdfs:label "Modo de trabajo automático"@es .
 
-ex:MaquinaEnServicio a owl:Class ;
-    rdfs:label "MaquinaEnServicio" ;
-    rdfs:comment "Estado de la máquina en servicio" .
-
-ex:PresionGeneralDeAire a owl:Class ;
-    rdfs:label "PresionGeneralDeAire" ;
-    rdfs:comment "Presión general de aire de la máquina" .
-
-ex:Puerta a owl:Class ;
-    rdfs:label "Puerta" ;
-    rdfs:comment "Puerta de la máquina" .
-
-ex:EnclavamientoDeSeguridad a owl:Class ;
-    rdfs:label "EnclavamientoDeSeguridad" ;
-    rdfs:comment "Enclavamiento de seguridad de la máquina" .
+ex:ModoTrabajo a owl:Class ;
+    rdfs:label "Modo de trabajo"@es .
 
 ex:CicloInspeccion a owl:Class ;
-    rdfs:label "CicloInspeccion" ;
-    rdfs:comment "Ciclo de inspección de la máquina" .
-
-ex:Carro a owl:Class ;
-    rdfs:label "Carro" ;
-    rdfs:comment "Carro de la máquina" .
-
-ex:Plato a owl:Class ;
-    rdfs:label "Plato" ;
-    rdfs:comment "Plato de la máquina" .
-
-ex:PosicionInspeccion a owl:Class ;
-    rdfs:label "PosicionInspeccion" ;
-    rdfs:comment "Posición de inspección del carro" .
+    rdfs:label "Ciclo de inspección"@es .
 
 ex:CicloPlana a owl:Class ;
-    rdfs:label "CicloPlana" ;
-    rdfs:comment "Ciclo plana de la máquina" .
-
-ex:PiezaABrochar a owl:Class ;
-    rdfs:label "PiezaABrochar" ;
-    rdfs:comment "Pieza a brochar" .
-
-ex:Desbaste a owl:Class ;
-    rdfs:label "Desbaste" ;
-    rdfs:comment "Operación de desbaste" .
-
-ex:Acabado a owl:Class ;
-    rdfs:label "Acabado" ;
-    rdfs:comment "Operación de acabado" .
+    rdfs:label "Ciclo plana"@es .
 
 ex:CicloAnilloDesbaste a owl:Class ;
-    rdfs:label "CicloAnilloDesbaste" ;
-    rdfs:comment "Ciclo de anillo desbaste" .
-
-ex:Anilla a owl:Class ;
-    rdfs:label "Anilla" ;
-    rdfs:comment "Anilla de la máquina" .
+    rdfs:label "Ciclo anillo desbaste"@es .
 
 ex:CicloAnilloAcabado a owl:Class ;
-    rdfs:label "CicloAnilloAcabado" ;
-    rdfs:comment "Ciclo de anillo acabado" .
+    rdfs:label "Ciclo anillo acabado"@es .
 
-ex:CotaInspeccion a owl:Class ;
-    rdfs:label "CotaInspeccion" ;
-    rdfs:comment "Cota de inspección" .
+ex:Carro a owl:Class ;
+    rdfs:label "Carro"@es .
+
+ex:PlatoDivisor a owl:Class ;
+    rdfs:label "Plato divisor"@es .
+
+ex:Puerta a owl:Class ;
+    rdfs:label "Puerta"@es .
+
+ex:EnclavamientoDeSeguridad a owl:Class ;
+    rdfs:label "Enclavamiento de seguridad"@es .
+
+ex:PiezaABrochar a owl:Class ;
+    rdfs:label "Pieza a brochar"@es .
+
+ex:Desbaste a owl:Class ;
+    rdfs:label "Desbaste"@es .
+
+ex:Acabado a owl:Class ;
+    rdfs:label "Acabado"@es .
+
+ex:VelocidadBrochado a owl:Class ;
+    rdfs:label "Velocidad de brochado"@es .
+
+ex:Incremento a owl:Class ;
+    rdfs:label "Incremento"@es .
 
 ex:Diente a owl:Class ;
-    rdfs:label "Diente" ;
-    rdfs:comment "Diente de la anilla" .
+    rdfs:label "Diente"@es .
+
+ex:Anilla a owl:Class ;
+    rdfs:label "Anilla"@es .
+
+ex:Posicion a owl:Class ;
+    rdfs:label "Posición"@es .
+
+ex:MarchaCiclo a owl:Class ;
+    rdfs:label "Marcha ciclo"@es .
+
+ex:PuntoInspeccion a owl:Class ;
+    rdfs:label "Punto de inspección"@es .
+
+ex:Ranura a owl:Class ;
+    rdfs:label "Ranura"@es .
+
+ex:MaquinaEnServicio a owl:Class ;
+    rdfs:label "Máquina en servicio"@es .
+
+ex:PresionGeneralDeAire a owl:Class ;
+    rdfs:label "Presión general de aire"@es .
 
 ex:seleccionarModoAutomatico a owl:ObjectProperty ;
-    rdfs:label "seleccionarModoAutomatico" ;
-    rdfs:comment "Seleccionar el modo automático" .
+    rdfs:domain ex:ModoTrabajo ;
+    rdfs:range ex:ModoAutomatico .
 
 ex:ejecutarCiclo a owl:ObjectProperty ;
-    rdfs:label "ejecutarCiclo" ;
-    rdfs:comment "Ejecutar un ciclo" .
+    rdfs:domain ex:ModoAutomatico ;
+    rdfs:range ex:CicloInspeccion .
+
+ex:ejecutarCiclo a owl:ObjectProperty ;
+    rdfs:domain ex:ModoAutomatico ;
+    rdfs:range ex:CicloPlana .
+
+ex:ejecutarCiclo a owl:ObjectProperty ;
+    rdfs:domain ex:ModoAutomatico ;
+    rdfs:range ex:CicloAnilloDesbaste .
+
+ex:ejecutarCiclo a owl:ObjectProperty ;
+    rdfs:domain ex:ModoAutomatico ;
+    rdfs:range ex:CicloAnilloAcabado .
 
 ex:subirCarro a owl:ObjectProperty ;
-    rdfs:label "subirCarro" ;
-    rdfs:comment "Subir el carro a una posición" .
-
-ex:abrirPuertas a owl:ObjectProperty ;
-    rdfs:label "abrirPuertas" ;
-    rdfs:comment "Abrir las puertas" .
-
-ex:moverCarro a owl:ObjectProperty ;
-    rdfs:label "moverCarro" ;
-    rdfs:comment "Mover el carro a una posición" .
-
-ex:cerrarPuertas a owl:ObjectProperty ;
-    rdfs:label "cerrarPuertas" ;
-    rdfs:comment "Cerrar las puertas" .
-
-ex:cogerPosicion a owl:ObjectProperty ;
-    rdfs:label "cogerPosicion" ;
-    rdfs:comment "Coger la posición actual" .
-
-ex:hacerMovimiento a owl:ObjectProperty ;
-    rdfs:label "hacerMovimiento" ;
-    rdfs:comment "Hacer un movimiento" .
-
-ex:pararCarro a owl:ObjectProperty ;
-    rdfs:label "pararCarro" ;
-    rdfs:comment "Parar el carro" .
-
-ex:colocarPiezaABrochar a owl:ObjectProperty ;
-    rdfs:label "colocarPiezaABrochar" ;
-    rdfs:comment "Colocar la pieza a brochar" .
-
-ex:seleccionarDesbaste a owl:ObjectProperty ;
-    rdfs:label "seleccionarDesbaste" ;
-    rdfs:comment "Seleccionar la operación de desbaste" .
-
-ex:seleccionarAcabado a owl:ObjectProperty ;
-    rdfs:label "seleccionarAcabado" ;
-    rdfs:comment "Seleccionar la operación de acabado" .
-
-ex:aproximarCarro a owl:ObjectProperty ;
-    rdfs:label "aproximarCarro" ;
-    rdfs:comment "Aproximar el carro a una posición" .
-
-ex:verificarPosicion a owl:ObjectProperty ;
-    rdfs:label "verificarPosicion" ;
-    rdfs:comment "Verificar la posición de la anilla" .
-
-ex:darMarchaCiclo a owl:ObjectProperty ;
-    rdfs:label "darMarchaCiclo" ;
-    rdfs:comment "Dar marcha al ciclo" .
-
-ex:seleccionarCicloInspeccion a owl:ObjectProperty ;
-    rdfs:label "seleccionarCicloInspeccion" ;
-    rdfs:comment "Seleccionar el ciclo de inspección" .
-
-ex:posicionarCarro a owl:ObjectProperty ;
-    rdfs:label "posicionarCarro" ;
-    rdfs:comment "Posicionar el carro en la cota de inspección" .
+    rdfs:domain ex:Carro ;
+    rdfs:range ex:Posicion .
 
 ex:girarPlato a owl:ObjectProperty ;
-    rdfs:label "girarPlato" ;
-    rdfs:comment "Girar el plato al primer diente" .
+    rdfs:domain ex:PlatoDivisor ;
+    rdfs:range xsd:integer .
+
+ex:abrirPuertas a owl:ObjectProperty ;
+    rdfs:domain ex:Puerta ;
+    rdfs:range xsd:boolean .
+
+ex:cerrarPuertas a owl:ObjectProperty ;
+    rdfs:domain ex:Puerta ;
+    rdfs:range xsd:boolean .
+
+ex:verificarPosicion a owl:ObjectProperty ;
+    rdfs:domain ex:Anilla ;
+    rdfs:range xsd:boolean .
+
+ex:seleccionarDesbaste a owl:ObjectProperty ;
+    rdfs:domain ex:Desbaste ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:seleccionarAcabado a owl:ObjectProperty ;
+    rdfs:domain ex:Acabado ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:seleccionarIncremento a owl:ObjectProperty ;
+    rdfs:domain ex:Incremento ;
+    rdfs:range xsd:integer .
+
+ex:seleccionarDiente a owl:ObjectProperty ;
+    rdfs:domain ex:Diente ;
+    rdfs:range xsd:integer .
+
+ex:seleccionarCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloDesbaste ;
+    rdfs:range xsd:boolean .
+
+ex:seleccionarCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range xsd:boolean .
+
+ex:tieneEnclavamientoDeSeguridad a owl:ObjectProperty ;
+    rdfs:domain ex:Puerta ;
+    rdfs:range ex:EnclavamientoDeSeguridad .
+
+ex:tienePiezaABrochar a owl:ObjectProperty ;
+    rdfs:domain ex:CicloPlana ;
+    rdfs:range ex:PiezaABrochar .
+
+ex:tieneVelocidadBrochado a owl:ObjectProperty ;
+    rdfs:domain ex:Desbaste ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:tieneVelocidadBrochado a owl:ObjectProperty ;
+    rdfs:domain ex:Acabado ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:tieneIncremento a owl:ObjectProperty ;
+    rdfs:domain ex:CicloInspeccion ;
+    rdfs:range ex:Incremento .
+
+ex:tieneDiente a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloDesbaste ;
+    rdfs:range ex:Diente .
+
+ex:tieneDiente a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:Diente .
+
+ex:tieneCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloDesbaste ;
+    rdfs:range xsd:boolean .
+
+ex:tieneCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range xsd:boolean .
+
+ex:tieneEnclavamientoDeSeguridad a owl:ObjectProperty ;
+    rdfs:domain ex:Puerta ;
+    rdfs:range ex:EnclavamientoDeSeguridad .
+
+ex:tienePiezaABrochar a owl:ObjectProperty ;
+    rdfs:domain ex:CicloPlana ;
+    rdfs:range ex:PiezaABrochar .
+
+ex:tieneVelocidadBrochado a owl:ObjectProperty ;
+    rdfs:domain ex:Desbaste ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:tieneVelocidadBrochado a owl:ObjectProperty ;
+    rdfs:domain ex:Acabado ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:tieneIncremento a owl:ObjectProperty ;
+    rdfs:domain ex:CicloInspeccion ;
+    rdfs:range ex:Incremento .
+
+ex:tieneDiente a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloDesbaste ;
+    rdfs:range ex:Diente .
+
+ex:tieneDiente a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:Diente .
+
+ex:tieneCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloDesbaste ;
+    rdfs:range xsd:boolean .
+
+ex:tieneCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range xsd:boolean .
+
+ex:tieneMaquinaEnServicio a owl:ObjectProperty ;
+    rdfs:domain ex:ModoAutomatico ;
+    rdfs:range ex:MaquinaEnServicio .
+
+ex:tienePresionGeneralDeAire a owl:ObjectProperty ;
+    rdfs:domain ex:ModoAutomatico ;
+    rdfs:range ex:PresionGeneralDeAire .
+
+ex:tieneEnclavamientoDeSeguridad a owl:ObjectProperty ;
+    rdfs:domain ex:Puerta ;
+    rdfs:range ex:EnclavamientoDeSeguridad .
+
+ex:tienePiezaABrochar a owl:ObjectProperty ;
+    rdfs:domain ex:CicloPlana ;
+    rdfs:range ex:PiezaABrochar .
+
+ex:tieneVelocidadBrochado a owl:ObjectProperty ;
+    rdfs:domain ex:Desbaste ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:tieneVelocidadBrochado a owl:ObjectProperty ;
+    rdfs:domain ex:Acabado ;
+    rdfs:range ex:VelocidadBrochado .
+
+ex:tieneIncremento a owl:ObjectProperty ;
+    rdfs:domain ex:CicloInspeccion ;
+    rdfs:range ex:Incremento .
+
+ex:tieneDiente a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloDesbaste ;
+    rdfs:range ex:Diente .
+
+ex:tieneDiente a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:Diente .
+
+ex:tieneCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloDesbaste ;
+    rdfs:range xsd:boolean .
+
+ex:tieneCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range xsd:boolean .

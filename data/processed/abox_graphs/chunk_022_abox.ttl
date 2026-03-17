@@ -1,35 +1,28 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix base: <https://vocab.cfaa.eus/broaching/base#> .
+@prefix seguridad: <https://vocab.cfaa.eus/broaching/seguridad#> .
+@prefix mantenimiento: <https://vocab.cfaa.eus/broaching/mantenimiento#> .
+@prefix plan: <https://vocab.cfaa.eus/broaching/plan#> .
 
-ex:SistemaDeSeguridad a owl:Class ;
-    rdfs:label "SistemaDeSeguridad" ;
-    rdfs:comment "Sistema de seguridad de la máquina brochadora." .
+base:MaquinaBrochadora a owl:Class ;
+    rdfs:label "Máquina Brochadora" ;
+    rdfs:comment "Máquina brochadora de EKIN" .
 
-ex:PlanDeMantenimiento a owl:Class ;
-    rdfs:label "PlanDeMantenimiento" ;
-    rdfs:comment "Plan de mantenimiento especificado por EKIN para la máquina brochadora." .
+seguridad:SistemaSeguridad a owl:Class ;
+    rdfs:label "Sistema de Seguridad" ;
+    rdfs:comment "Sistemas de seguridad de la máquina brochadora" .
 
-ex:MaquinaBrochadora a owl:Class ;
-    rdfs:label "MaquinaBrochadora" ;
-    rdfs:comment "Máquina brochadora de EKIN." .
+mantenimiento:PlanMantenimiento a owl:Class ;
+    rdfs:label "Plan de Mantenimiento" ;
+    rdfs:comment "Plan de mantenimiento especificado por EKIN para la máquina brochadora" .
 
-ex:EKIN a owl:Class ;
-    rdfs:label "EKIN" ;
-    rdfs:comment "Fabricante de la máquina brochadora." .
+plan:Apartado7_1 a owl:Class ;
+    rdfs:label "Apartado 7.1" ;
+    rdfs:comment "Apartado del plan de mantenimiento" .
 
-ex:revisarSistemasDeSeguridad a owl:ObjectProperty ;
-    rdfs:label "revisarSistemasDeSeguridad" ;
-    rdfs:domain ex:MaquinaBrochadora ;
-    rdfs:range ex:SistemaDeSeguridad .
-
-ex:seguirPlanDeMantenimiento a owl:ObjectProperty ;
-    rdfs:label "seguirPlanDeMantenimiento" ;
-    rdfs:domain ex:MaquinaBrochadora ;
-    rdfs:range ex:PlanDeMantenimiento .
-
-ex:especificarPlanDeMantenimiento a owl:ObjectProperty ;
-    rdfs:label "especificarPlanDeMantenimiento" ;
-    rdfs:domain ex:EKIN ;
-    rdfs:range ex:PlanDeMantenimiento .
+base:MaquinaBrochadora ex:tieneSistemaSeguridad seguridad:SistemaSeguridad .
+base:MaquinaBrochadora ex:debeSeguirPlan mantenimiento:PlanMantenimiento .
+mantenimiento:PlanMantenimiento ex:verApartado plan:Apartado7_1 .

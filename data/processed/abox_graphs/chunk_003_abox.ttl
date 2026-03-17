@@ -1,168 +1,88 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:Manual a owl:Class ;
-    rdfs:label "Manual" ;
-    rdfs:comment "Clase que representa un manual técnico." .
-
-ex:Capitulo a owl:Class ;
-    rdfs:label "Capitulo" ;
-    rdfs:comment "Clase que representa un capítulo del manual." .
-
-ex:MantenimientoPreventivo a owl:Class ;
-    rdfs:label "MantenimientoPreventivo" ;
-    rdfs:comment "Clase que representa el mantenimiento preventivo de la máquina." .
-
-ex:ListaDeArticulos a owl:Class ;
-    rdfs:label "ListaDeArticulos" ;
-    rdfs:comment "Clase que representa una lista de artículos o repuestos." .
-
-ex:Proveedor a owl:Class ;
-    rdfs:label "Proveedor" ;
-    rdfs:comment "Clase que representa un proveedor de repuestos." .
-
-ex:SeguridadOperario a owl:Class ;
-    rdfs:label "SeguridadOperario" ;
-    rdfs:comment "Clase que representa las medidas de seguridad para el operario." .
-
-ex:SeguridadMaquina a owl:Class ;
-    rdfs:label "SeguridadMaquina" ;
-    rdfs:comment "Clase que representa las medidas de seguridad para la máquina." .
-
-ex:MaterialDesechable a owl:Class ;
-    rdfs:label "MaterialDesechable" ;
-    rdfs:comment "Clase que representa los materiales desechables empleados." .
-
-ex:Plano a owl:Class ;
-    rdfs:label "Plano" ;
-    rdfs:comment "Clase que representa un plano técnico." .
-
-ex:Esquema a owl:Class ;
-    rdfs:label "Esquema" ;
-    rdfs:comment "Clase que representa un esquema técnico." .
-
-ex:Instruccion a owl:Class ;
-    rdfs:label "Instruccion" ;
-    rdfs:comment "Clase que representa una instrucción técnica." .
-
-ex:Maquina a owl:Class ;
-    rdfs:label "Maquina" ;
-    rdfs:comment "Clase que representa una máquina." .
-
-ex:Componente a owl:Class ;
-    rdfs:label "Componente" ;
-    rdfs:comment "Clase que representa un componente de la máquina." .
-
-ex:Descripcion a owl:Class ;
-    rdfs:label "Descripcion" ;
-    rdfs:comment "Clase que representa una descripción técnica." .
-
-ex:Funcionamiento a owl:Class ;
-    rdfs:label "Funcionamiento" ;
-    rdfs:comment "Clase que representa el funcionamiento de un componente." .
-
-ex:Personal a owl:Class ;
-    rdfs:label "Personal" ;
-    rdfs:comment "Clase que representa el personal que trabaja con la máquina." .
-
-ex:InstruccionesSeguridad a owl:Class ;
-    rdfs:label "InstruccionesSeguridad" ;
-    rdfs:comment "Clase que representa las instrucciones de seguridad." .
+ex:Manual rdfs:subClassOf owl:Thing .
+ex:Capitulo rdfs:subClassOf owl:Thing .
+ex:InformacionGeneral rdfs:subClassOf owl:Thing .
+ex:DescripcionComponente rdfs:subClassOf owl:Thing .
+ex:FuncionamientoComponente rdfs:subClassOf owl:Thing .
+ex:MantenimientoPreventivo rdfs:subClassOf owl:Thing .
+ex:ListaRepuestos rdfs:subClassOf owl:Thing .
+ex:Proveedor rdfs:subClassOf owl:Thing .
+ex:SeguridadOperario rdfs:subClassOf owl:Thing .
+ex:SeguridadMaquina rdfs:subClassOf owl:Thing .
+ex:SeguridadMaterialesDesechables rdfs:subClassOf owl:Thing .
+ex:Plano rdfs:subClassOf owl:Thing .
+ex:Esquema rdfs:subClassOf owl:Thing .
+ex:InstruccionSeguridad rdfs:subClassOf owl:Thing .
 
 ex:tieneCapitulo a owl:ObjectProperty ;
-    rdfs:label "tieneCapitulo" ;
-    rdfs:comment "Propiedad que relaciona un manual con sus capítulos." ;
     rdfs:domain ex:Manual ;
     rdfs:range ex:Capitulo .
 
+ex:tieneInformacionGeneral a owl:ObjectProperty ;
+    rdfs:domain ex:Capitulo ;
+    rdfs:range ex:InformacionGeneral .
+
+ex:tieneDescripcionComponente a owl:ObjectProperty ;
+    rdfs:domain ex:Capitulo ;
+    rdfs:range ex:DescripcionComponente .
+
+ex:tieneFuncionamientoComponente a owl:ObjectProperty ;
+    rdfs:domain ex:Capitulo ;
+    rdfs:range ex:FuncionamientoComponente .
+
 ex:tieneMantenimientoPreventivo a owl:ObjectProperty ;
-    rdfs:label "tieneMantenimientoPreventivo" ;
-    rdfs:comment "Propiedad que relaciona un manual con el mantenimiento preventivo." ;
-    rdfs:domain ex:Manual ;
+    rdfs:domain ex:Capitulo ;
     rdfs:range ex:MantenimientoPreventivo .
 
-ex:tieneListaDeArticulos a owl:ObjectProperty ;
-    rdfs:label "tieneListaDeArticulos" ;
-    rdfs:comment "Propiedad que relaciona un manual con la lista de artículos." ;
-    rdfs:domain ex:Manual ;
-    rdfs:range ex:ListaDeArticulos .
+ex:tieneListaRepuestos a owl:ObjectProperty ;
+    rdfs:domain ex:Capitulo ;
+    rdfs:range ex:ListaRepuestos .
 
 ex:tieneProveedor a owl:ObjectProperty ;
-    rdfs:label "tieneProveedor" ;
-    rdfs:comment "Propiedad que relaciona un artículo con su proveedor." ;
-    rdfs:domain ex:ListaDeArticulos ;
+    rdfs:domain ex:ListaRepuestos ;
     rdfs:range ex:Proveedor .
 
 ex:tieneSeguridadOperario a owl:ObjectProperty ;
-    rdfs:label "tieneSeguridadOperario" ;
-    rdfs:comment "Propiedad que relaciona un capítulo de seguridad con las medidas para el operario." ;
     rdfs:domain ex:Capitulo ;
     rdfs:range ex:SeguridadOperario .
 
 ex:tieneSeguridadMaquina a owl:ObjectProperty ;
-    rdfs:label "tieneSeguridadMaquina" ;
-    rdfs:comment "Propiedad que relaciona un capítulo de seguridad con las medidas para la máquina." ;
     rdfs:domain ex:Capitulo ;
     rdfs:range ex:SeguridadMaquina .
 
-ex:tieneMaterialDesechable a owl:ObjectProperty ;
-    rdfs:label "tieneMaterialDesechable" ;
-    rdfs:comment "Propiedad que relaciona un capítulo de seguridad con los materiales desechables." ;
+ex:tieneSeguridadMaterialesDesechables a owl:ObjectProperty ;
     rdfs:domain ex:Capitulo ;
-    rdfs:range ex:MaterialDesechable .
+    rdfs:range ex:SeguridadMaterialesDesechables .
 
 ex:tienePlano a owl:ObjectProperty ;
-    rdfs:label "tienePlano" ;
-    rdfs:comment "Propiedad que relaciona un manual con los planos técnicos." ;
-    rdfs:domain ex:Manual ;
+    rdfs:domain ex:Capitulo ;
     rdfs:range ex:Plano .
 
 ex:tieneEsquema a owl:ObjectProperty ;
-    rdfs:label "tieneEsquema" ;
-    rdfs:comment "Propiedad que relaciona un manual con los esquemas técnicos." ;
-    rdfs:domain ex:Manual ;
+    rdfs:domain ex:Capitulo ;
     rdfs:range ex:Esquema .
 
-ex:tieneInstruccion a owl:ObjectProperty ;
-    rdfs:label "tieneInstruccion" ;
-    rdfs:comment "Propiedad que relaciona un manual con las instrucciones técnicas." ;
+ex:tieneInstruccionSeguridad a owl:ObjectProperty ;
+    rdfs:domain ex:Capitulo ;
+    rdfs:range ex:InstruccionSeguridad .
+
+ex:numeroCapitulo a owl:DatatypeProperty ;
+    rdfs:domain ex:Capitulo ;
+    rdfs:range xsd:integer .
+
+ex:tituloCapitulo a owl:DatatypeProperty ;
+    rdfs:domain ex:Capitulo ;
+    rdfs:range xsd:string .
+
+ex:contenidoManual a owl:DatatypeProperty ;
     rdfs:domain ex:Manual ;
-    rdfs:range ex:Instruccion .
+    rdfs:range xsd:string .
 
-ex:tieneMaquina a owl:ObjectProperty ;
-    rdfs:label "tieneMaquina" ;
-    rdfs:comment "Propiedad que relaciona un manual con la máquina." ;
+ex:advertenciaManual a owl:DatatypeProperty ;
     rdfs:domain ex:Manual ;
-    rdfs:range ex:Maquina .
-
-ex:tieneComponente a owl:ObjectProperty ;
-    rdfs:label "tieneComponente" ;
-    rdfs:comment "Propiedad que relaciona una máquina con sus componentes." ;
-    rdfs:domain ex:Maquina ;
-    rdfs:range ex:Componente .
-
-ex:tieneDescripcion a owl:ObjectProperty ;
-    rdfs:label "tieneDescripcion" ;
-    rdfs:comment "Propiedad que relaciona un componente con su descripción." ;
-    rdfs:domain ex:Componente ;
-    rdfs:range ex:Descripcion .
-
-ex:tieneFuncionamiento a owl:ObjectProperty ;
-    rdfs:label "tieneFuncionamiento" ;
-    rdfs:comment "Propiedad que relaciona un componente con su funcionamiento." ;
-    rdfs:domain ex:Componente ;
-    rdfs:range ex:Funcionamiento .
-
-ex:tienePersonal a owl:ObjectProperty ;
-    rdfs:label "tienePersonal" ;
-    rdfs:comment "Propiedad que relaciona una máquina con el personal que la opera." ;
-    rdfs:domain ex:Maquina ;
-    rdfs:range ex:Personal .
-
-ex:tieneInstruccionesSeguridad a owl:ObjectProperty ;
-    rdfs:label "tieneInstruccionesSeguridad" ;
-    rdfs:comment "Propiedad que relaciona un manual con las instrucciones de seguridad." ;
-    rdfs:domain ex:Manual ;
-    rdfs:range ex:InstruccionesSeguridad .
+    rdfs:range xsd:string .

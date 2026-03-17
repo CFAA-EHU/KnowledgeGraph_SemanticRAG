@@ -1,54 +1,63 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:CicloAnilloAcabado a owl:Class ;
-    rdfs:label "CicloAnilloAcabado"@es ;
-    rdfs:comment "Clase que representa el ciclo de acabado en anillo."@es .
+    rdfs:label "CicloAnilloAcabado" ;
+    rdfs:comment "Ciclo que inicia con el carro posicionándose en la cota de inspección con el plato girado en el primer diente." .
+
+ex:CicloInspeccion a owl:Class ;
+    rdfs:label "CicloInspeccion" ;
+    rdfs:comment "Ciclo que puede ser seleccionado para verificar visualmente que el primer diente concuerda." .
 
 ex:Carro a owl:Class ;
-    rdfs:label "Carro"@es ;
-    rdfs:comment "Clase que representa el carro de la máquina."@es .
-
-ex:Cota a owl:Class ;
-    rdfs:label "Cota"@es ;
-    rdfs:comment "Clase que representa una cota de referencia."@es .
+    rdfs:label "Carro" ;
+    rdfs:comment "Componente que se posiciona en la cota de inspección y baja para posicionar el plato." .
 
 ex:Plato a owl:Class ;
-    rdfs:label "Plato"@es ;
-    rdfs:comment "Clase que representa el plato giratorio."@es .
+    rdfs:label "Plato" ;
+    rdfs:comment "Componente que se gira en el primer diente durante el ciclo anillo acabado." .
 
-ex:Diente a owl:Class ;
-    rdfs:label "Diente"@es ;
-    rdfs:comment "Clase que representa un diente del plato."@es .
+ex:CotaDeInspeccion a owl:Class ;
+    rdfs:label "CotaDeInspeccion" ;
+    rdfs:comment "Posición en la que se posiciona el carro al inicio del ciclo anillo acabado." .
 
 ex:Puerta a owl:Class ;
-    rdfs:label "Puerta"@es ;
-    rdfs:comment "Clase que representa las puertas de la máquina."@es .
+    rdfs:label "Puerta" ;
+    rdfs:comment "Componente que puede ser abierto para verificar visualmente que el primer diente concuerda." .
 
-ex:Posicionar a owl:ObjectProperty ;
-    rdfs:label "posicionar"@es ;
-    rdfs:domain ex:Carro ;
-    rdfs:range ex:Plato .
+ex:Diente a owl:Class ;
+    rdfs:label "Diente" ;
+    rdfs:comment "Componente que debe concordar visualmente durante el ciclo de inspección." .
 
-ex:Girar a owl:ObjectProperty ;
-    rdfs:label "girar"@es ;
-    rdfs:domain ex:Plato ;
-    rdfs:range ex:Diente .
+ex:iniciarConCarroPosicionado a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:Carro ;
+    rdfs:comment "Propiedad que indica que el ciclo inicia con el carro posicionado en la cota de inspección." .
 
-ex:Abrir a owl:ObjectProperty ;
-    rdfs:label "abrir"@es ;
-    rdfs:domain ex:Puerta ;
-    rdfs:range ex:Carro .
+ex:seleccionarCicloInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:CicloInspeccion ;
+    rdfs:comment "Propiedad que indica que se puede seleccionar si se desea con ciclo inspección o no." .
 
-ex:Verificar a owl:ObjectProperty ;
-    rdfs:label "verificar"@es ;
-    rdfs:domain ex:Carro ;
-    rdfs:range ex:Diente .
+ex:abrirPuertasParaVerificar a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:Puerta ;
+    rdfs:comment "Propiedad que indica que se pueden abrir las puertas para verificar visualmente que el primer diente concuerda." .
 
-ex:Bajar a owl:ObjectProperty ;
-    rdfs:label "bajar"@es ;
-    rdfs:domain ex:Carro ;
-    rdfs:range ex:Plato .
+ex:bajarCarroParaPosicionarPlato a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:Carro ;
+    rdfs:comment "Propiedad que indica que el carro baja para posicionar el plato." .
+
+ex:girarPlatoEnPrimerDiente a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:Plato ;
+    rdfs:comment "Propiedad que indica que el plato se gira en el primer diente durante el ciclo anillo acabado." .
+
+ex:posicionarCarroEnCotaDeInspeccion a owl:ObjectProperty ;
+    rdfs:domain ex:CicloAnilloAcabado ;
+    rdfs:range ex:CotaDeInspeccion ;
+    rdfs:comment "Propiedad que indica que el carro se posiciona en la cota de inspección al inicio del ciclo anillo acabado." .

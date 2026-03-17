@@ -1,114 +1,131 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix admin: <https://admin-shell.io/dictionary/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix base: <https://vocab.cfaa.eus/broaching/> .
+@prefix elec: <https://vocab.cfaa.eus/broaching/electrico#> .
+@prefix meca: <https://vocab.cfaa.eus/broaching/mecanico#> .
+@prefix fluidos: <https://vocab.cfaa.eus/broaching/fluidos#> .
+@prefix act: <https://admin-shell.io/dictionary/> .
 
-ex:ConexionCabezaLectora a owl:Class ;
-    rdfs:label "Conexion Cabeza Lectora"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:ActuadorRectoParaTransponderCodificado
+    a owl:Class ;
+    rdfs:isDefinedBy act:Actuator ;
+    rdfs:label "Actuador recto para interruptor de seguridad codificado por transponder"@es ;
+    rdfs:comment "Clase que representa un actuador recto para interruptor de seguridad codificado por transponder (ej. CTP de EUCHNER)"@es .
 
-ex:SensorSinContacto a owl:Class ;
-    rdfs:label "Sensor sin Contacto"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:SensorSinContacto
+    a owl:Class ;
+    rdfs:isDefinedBy act:Sensor ;
+    rdfs:label "Sensor sin contacto"@es ;
+    rdfs:comment "Clase que representa un sensor sin contacto (ej. tipo 100179 de EUCHNER)"@es .
 
-ex:PuertaIzquierda a owl:Class ;
-    rdfs:label "Puerta Izquierda"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:TransformadorPrimario
+    a owl:Class ;
+    rdfs:label "Transformador primario"@es ;
+    rdfs:comment "Clase que representa un transformador primario de 400 VAC con tolerancia +/-5%"@es .
 
-ex:PuertaDerecha a owl:Class ;
-    rdfs:label "Puerta Derecha"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:FuenteAlimentacionSITOP
+    a owl:Class ;
+    rdfs:label "Fuente de alimentación SITOP"@es ;
+    rdfs:comment "Clase que representa una fuente de alimentación SITOP modelo PSU300S"@es .
 
-ex:EscotillaInterior a owl:Class ;
-    rdfs:label "Escotilla Interior"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:InterruptorSeguridadCodificadoTransponder
+    a owl:Class ;
+    rdfs:label "Interruptor de seguridad codificado por transponder"@es ;
+    rdfs:comment "Clase que representa un interruptor de seguridad codificado por transponder (ej. CTP de EUCHNER)"@es .
 
-ex:ActuadorRectoParaTransponderCodificado a owl:Class ;
-    rdfs:label "Actuador Recto para Transponder Codificado"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:PuertaSeguridad
+    a owl:Class ;
+    rdfs:label "Puerta de seguridad"@es ;
+    rdfs:comment "Clase que representa una puerta de seguridad en la máquina brochadora"@es .
 
-ex:InterruptorDeSeguridadCodificadoPorTransponder a owl:Class ;
-    rdfs:label "Interruptor de Seguridad Codificado por Transponder"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:EscotillaInterior
+    a owl:Class ;
+    rdfs:label "Escotilla interior"@es ;
+    rdfs:comment "Clase que representa una escotilla interior en la máquina brochadora"@es .
 
-ex:SITOPPSU300S a owl:Class ;
-    rdfs:label "SITOP PSU300S"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:tieneActuador
+    a owl:ObjectProperty ;
+    rdfs:label "tiene actuador"@es ;
+    rdfs:domain base:InterruptorSeguridadCodificadoTransponder ;
+    rdfs:range base:ActuadorRectoParaTransponderCodificado ;
+    rdfs:comment "Relación que indica que un interruptor de seguridad codificado por transponder tiene asociado un actuador recto"@es .
 
-ex:TransformadorPrimario a owl:Class ;
-    rdfs:label "Transformador Primario"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+base:tieneSensor
+    a owl:ObjectProperty ;
+    rdfs:label "tiene sensor"@es ;
+    rdfs:domain base:InterruptorSeguridadCodificadoTransponder ;
+    rdfs:range base:SensorSinContacto ;
+    rdfs:comment "Relación que indica que un interruptor de seguridad codificado por transponder tiene asociado un sensor sin contacto"@es .
 
-admin:Actuator a owl:Class ;
-    rdfs:label "Actuator"@en ;
-    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Actuator>.
+base:tieneTransformador
+    a owl:ObjectProperty ;
+    rdfs:label "tiene transformador"@es ;
+    rdfs:domain base:SistemaElectrico ;
+    rdfs:range base:TransformadorPrimario ;
+    rdfs:comment "Relación que indica que un sistema eléctrico tiene un transformador primario"@es .
 
-admin:Sensor a owl:Class ;
-    rdfs:label "Sensor"@en ;
-    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Sensor>.
+base:tieneFuenteAlimentacion
+    a owl:ObjectProperty ;
+    rdfs:label "tiene fuente de alimentación"@es ;
+    rdfs:domain base:SistemaElectrico ;
+    rdfs:range base:FuenteAlimentacionSITOP ;
+    rdfs:comment "Relación que indica que un sistema eléctrico tiene una fuente de alimentación SITOP"@es .
 
-ex:tieneFabricante a owl:ObjectProperty ;
-    rdfs:label "tiene fabricante"@es ;
-    rdfs:domain ex:ConexionCabezaLectora ;
-    rdfs:range ex:Fabricante.
+base:tieneConexionCabezaLectora
+    a owl:ObjectProperty ;
+    rdfs:label "tiene conexión cabeza lectora"@es ;
+    rdfs:domain base:InterruptorSeguridadCodificadoTransponder ;
+    rdfs:range base:SensorSinContacto ;
+    rdfs:comment "Relación que indica que un interruptor de seguridad codificado por transponder tiene una conexión a cabeza lectora (sensor sin contacto)"@es .
 
-ex:tieneModelo a owl:ObjectProperty ;
+base:estaAsociadoA
+    a owl:ObjectProperty ;
+    rdfs:label "está asociado a"@es ;
+    rdfs:domain base:PuertaSeguridad ;
+    rdfs:range base:InterruptorSeguridadCodificadoTransponder ;
+    rdfs:comment "Relación que indica que una puerta de seguridad está asociada a un interruptor de seguridad codificado por transponder"@es .
+
+base:estaAsociadoA
+    a owl:ObjectProperty ;
+    rdfs:label "está asociado a"@es ;
+    rdfs:domain base:EscotillaInterior ;
+    rdfs:range base:InterruptorSeguridadCodificadoTransponder ;
+    rdfs:comment "Relación que indica que una escotilla interior está asociada a un interruptor de seguridad codificado por transponder"@es .
+
+elec:tieneModelo
+    a owl:DatatypeProperty ;
     rdfs:label "tiene modelo"@es ;
-    rdfs:domain ex:ConexionCabezaLectora ;
-    rdfs:range xsd:string.
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (base:ActuadorRectoParaTransponderCodificado base:InterruptorSeguridadCodificadoTransponder base:FuenteAlimentacionSITOP base:TransformadorPrimario)
+    ] ;
+    rdfs:range xsd:string .
 
-ex:tieneCantidad a owl:ObjectProperty ;
-    rdfs:label "tiene cantidad"@es ;
-    rdfs:domain ex:ConexionCabezaLectora ;
-    rdfs:range xsd:integer.
-
-ex:tieneFabricante a owl:ObjectProperty ;
+elec:tieneFabricante
+    a owl:DatatypeProperty ;
     rdfs:label "tiene fabricante"@es ;
-    rdfs:domain ex:ActuadorRectoParaTransponderCodificado ;
-    rdfs:range ex:Fabricante.
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (base:ActuadorRectoParaTransponderCodificado base:InterruptorSeguridadCodificadoTransponder base:FuenteAlimentacionSITOP base:TransformadorPrimario)
+    ] ;
+    rdfs:range xsd:string .
 
-ex:tieneModelo a owl:ObjectProperty ;
-    rdfs:label "tiene modelo"@es ;
-    rdfs:domain ex:ActuadorRectoParaTransponderCodificado ;
-    rdfs:range xsd:string.
+elec:tieneReferencia
+    a owl:DatatypeProperty ;
+    rdfs:label "tiene referencia"@es ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (base:ActuadorRectoParaTransponderCodificado base:InterruptorSeguridadCodificadoTransponder base:FuenteAlimentacionSITOP base:TransformadorPrimario)
+    ] ;
+    rdfs:range xsd:string .
 
-ex:tieneCantidad a owl:ObjectProperty ;
+elec:tieneCantidad
+    a owl:DatatypeProperty ;
     rdfs:label "tiene cantidad"@es ;
-    rdfs:domain ex:ActuadorRectoParaTransponderCodificado ;
-    rdfs:range xsd:integer.
-
-ex:tieneFabricante a owl:ObjectProperty ;
-    rdfs:label "tiene fabricante"@es ;
-    rdfs:domain ex:SITOPPSU300S ;
-    rdfs:range ex:Fabricante.
-
-ex:tieneModelo a owl:ObjectProperty ;
-    rdfs:label "tiene modelo"@es ;
-    rdfs:domain ex:SITOPPSU300S ;
-    rdfs:range xsd:string.
-
-ex:tieneCantidad a owl:ObjectProperty ;
-    rdfs:label "tiene cantidad"@es ;
-    rdfs:domain ex:SITOPPSU300S ;
-    rdfs:range xsd:integer.
-
-ex:tieneFabricante a owl:ObjectProperty ;
-    rdfs:label "tiene fabricante"@es ;
-    rdfs:domain ex:TransformadorPrimario ;
-    rdfs:range ex:Fabricante.
-
-ex:tieneModelo a owl:ObjectProperty ;
-    rdfs:label "tiene modelo"@es ;
-    rdfs:domain ex:TransformadorPrimario ;
-    rdfs:range xsd:string.
-
-ex:tieneCantidad a owl:ObjectProperty ;
-    rdfs:label "tiene cantidad"@es ;
-    rdfs:domain ex:TransformadorPrimario ;
-    rdfs:range xsd:integer.
-
-ex:Fabricante a owl:Class ;
-    rdfs:label "Fabricante"@es ;
-    rdfs:isDefinedBy <https://vocab.cfaa.eus/broaching/>.
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (base:ActuadorRectoParaTransponderCodificado base:InterruptorSeguridadCodificadoTransponder base:FuenteAlimentacionSITOP base:TransformadorPrimario)
+    ] ;
+    rdfs:range xsd:integer .

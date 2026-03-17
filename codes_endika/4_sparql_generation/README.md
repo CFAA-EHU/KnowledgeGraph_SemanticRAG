@@ -45,14 +45,11 @@ A JSON file like:
     ]
   }
 ]
+```
 
 ---
 
 # Output
-
-## 1. QA Dataset
-
-A JSON file like:
 
 [
   {

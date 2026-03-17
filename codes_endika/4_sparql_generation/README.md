@@ -1,94 +1,68 @@
-# Evaluation Dataset Generation from Technical Manuals
+# SPARQL Query Generation from QA Dataset using Ontology Subgraphs
 
-This module implements **Task 3: Evaluation Dataset Generation** of the ontology-based QA pipeline.
+This script generates **SPARQL queries automatically from a QA dataset** using a combination of:
 
-The goal is to automatically generate **semantic questions and reference answers** from fragments of a technical manual.  
-These question–answer pairs are used as a **gold evaluation dataset** for assessing a semantic question answering system operating over an ontology.
+- **Ontology parsing (RDF/TTL)**
+- **Semantic similarity (SentenceTransformers)**
+- **Subgraph extraction (schema linking)**
+- **Mistral LLM for SPARQL generation**
 
-The dataset is generated using a **Large Language Model (LLM)** guided by a structured prompt and strict anti-hallucination rules.
+The goal is to transform natural language questions into **valid SPARQL queries grounded in an ontology**.
 
 ---
 
 # Overview
 
-The system generates evaluation data from manual fragments (*chunks*).
+The script performs the following pipeline:
 
-For each chunk:
-
-1. The text fragment is analyzed.
-2. Entities and factual information are identified.
-3. Semantic questions are generated.
-4. Correct answers are extracted directly from the text.
-5. The result is stored as a structured JSON dataset.
-
-The number of generated questions depends on the **information density of the chunk**.
-
----
-
-# Dataset Generation Strategy
-
-The dataset is generated according to the following principles:
-
-- Questions must be **grounded strictly in the text**.
-- Answers must correspond to **explicit information present in the chunk**.
-- External knowledge is **not allowed**.
-- The dataset must reflect the **semantic structure of the manual**.
-
-This ensures that the generated dataset can be used as a **reliable benchmark for ontology-based question answering systems**.
+1. Loads a **QA dataset** (questions + answers).
+2. Loads an **ontology in Turtle format (`.ttl`)**.
+3. For each question:
+   - Computes semantic similarity with ontology terms.
+   - Selects the most relevant terms (**schema linking**).
+   - Extracts a **subgraph of relevant triples**.
+   - Sends the subgraph + question to **Mistral**.
+   - Generates a **SPARQL query**.
+4. Stores results in a new JSON file.
 
 ---
 
-# Question Types
+# Input
 
-Questions are generated across different semantic categories:
+## 1. QA Dataset
 
-- factual questions about machines
-- component relationships
-- document structure information
-- technical attributes
-- manufacturer or model information
-- references to figures or sections
-
----
-
-# Number of Questions per Chunk
-
-The number of generated questions depends on the **information density** of the chunk.
-
-| Information Density | Questions Generated |
-|--------------------|--------------------|
-| Low density | 1–2 questions |
-| Medium density | 2–3 questions |
-| High density | 4–5 questions |
-
-At least **one question must be generated** if the chunk contains factual information.
-
----
-
-# Anti-Hallucination Rules
-
-To ensure dataset reliability, strict constraints are applied:
-
-- Only information **explicitly present in the text** may be used.
-- No external knowledge may be introduced.
-- Missing information must **not be inferred**.
-- Questions must not rely on implicit assumptions.
-
-If a fact does not appear explicitly in the text, **no question should be generated about it**.
-
----
-
-# Output Format
-
-The generated dataset follows a strict JSON schema:
+A JSON file like:
 
 ```json
-{
-  "chunk_summary": "",
-  "questions": [
-    {
-      "question": "",
-      "answer": ""
-    }
-  ]
-}
+[
+  {
+    "chunk_id": 1,
+    "questions": [
+      {
+        "question": "What is the model name of the machine?",
+        "answer": "A218/RASHEM 7x3000x500"
+      }
+    ]
+  }
+]
+
+---
+
+# Output
+
+## 1. QA Dataset
+
+A JSON file like:
+
+[
+  {
+    "chunk_id": 1,
+    "questions": [
+      {
+        "question": "What is the model name of the machine?",
+        "answer": "A218/RASHEM 7x3000x500",
+        "sparql": "SELECT ?model WHERE { ?machine :modelName ?model . }"
+      }
+    ]
+  }
+]

@@ -1,0 +1,124 @@
+{
+  "catalog_version": "t12_v1",
+  "families": [
+    {
+      "family_id": "machine_directive_compliance",
+      "template_id": "MH_T1_machine_directive",
+      "intent": "regulatory_lookup",
+      "hop_depth": 2,
+      "example_question": "Que directiva cumple la maquina de brochado exterior?",
+      "expected_path": [
+        "MaquinaBrochadoExterior_18",
+        "cumpleNormativa",
+        "DirectivaSeguridadUnionEuropea_18"
+      ],
+      "seed_uris": [
+        "https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18"
+      ],
+      "step_modes": [
+        "fixed_seed",
+        "relation_traverse",
+        "describe_entities"
+      ],
+      "relations": [
+        "cumpleNormativa"
+      ]
+    },
+    {
+      "family_id": "system_maintenance_plan",
+      "template_id": "MH_T2_system_maintenance",
+      "intent": "regulatory_lookup",
+      "hop_depth": 2,
+      "example_question": "Que plan de mantenimiento requiere el sistema de seguridad de la maquina?",
+      "expected_path": [
+        "SistemaSeguridadMaquina",
+        "requiereMantenimiento",
+        "PlanMantenimientoEKIN"
+      ],
+      "seed_uris": [
+        "https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina"
+      ],
+      "step_modes": [
+        "fixed_seed",
+        "relation_traverse",
+        "describe_entities"
+      ],
+      "relations": [
+        "requiereMantenimiento"
+      ]
+    },
+    {
+      "family_id": "manual_figure_reference",
+      "template_id": "MH_T3_manual_figure",
+      "intent": "figure_or_reference_lookup",
+      "hop_depth": 2,
+      "example_question": "Que figura queda asociada al manual A218?",
+      "expected_path": [
+        "Figura0-1-1",
+        "ilustradoEn",
+        "ManualBrochadoraA218"
+      ],
+      "seed_uris": [
+        "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218"
+      ],
+      "step_modes": [
+        "fixed_seed",
+        "relation_traverse",
+        "describe_entities"
+      ],
+      "relations": [
+        "ilustradoEn"
+      ]
+    },
+    {
+      "family_id": "column_component_control_chain",
+      "template_id": "MH_T5_parent_component_control",
+      "intent": "component_relation_lookup",
+      "hop_depth": 3,
+      "example_question": "Que regla lineal queda controlada por un componente de la Columna_46 y que descripcion tiene?",
+      "expected_path": [
+        "Columna_46",
+        "tieneComponente",
+        "CarroPortaPiezas_46",
+        "controla",
+        "ReglaLineal_46_1"
+      ],
+      "seed_uris": [
+        "https://vocab.cfaa.eus/broaching/Columna_46"
+      ],
+      "step_modes": [
+        "fixed_seed",
+        "relation_traverse",
+        "relation_traverse",
+        "describe_entities"
+      ],
+      "relations": [
+        "tieneComponente",
+        "controla"
+      ]
+    },
+    {
+      "family_id": "component_control_chain",
+      "template_id": "MH_T4_component_control",
+      "intent": "component_relation_lookup",
+      "hop_depth": 2,
+      "example_question": "Que regla lineal controla el carro porta-piezas 46?",
+      "expected_path": [
+        "CarroPortaPiezas_46",
+        "controla",
+        "ReglaLineal_46_1"
+      ],
+      "seed_uris": [
+        "https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46"
+      ],
+      "step_modes": [
+        "fixed_seed",
+        "relation_traverse",
+        "describe_entities"
+      ],
+      "relations": [
+        "controla"
+      ]
+    }
+  ]
+}

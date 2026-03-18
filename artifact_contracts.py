@@ -43,6 +43,10 @@ CANONICAL_SPARQL_EXECUTION_REPORT_PATH = PROCESSED_DATA_DIR / "canonical_sparql_
 CANONICAL_VS_GENERATED_COMPARISON_PATH = PROCESSED_DATA_DIR / "canonical_vs_generated_comparison.json"
 QUERYABILITY_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "queryability_decision_report.json"
 QA_MULTIHOP_PATH = GOLDEN_SET_DIR / "QA_multihop.json"
+MULTIHOP_PLAN_CATALOG_PATH = PROCESSED_DATA_DIR / "multihop_plan_catalog.json"
+MULTIHOP_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "multihop_eval_report.json"
+MULTIHOP_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "multihop_debug_report.json"
+MULTIHOP_PLANNER_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "multihop_planner_decision_report.json"
 
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
@@ -69,6 +73,10 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "canonical_vs_generated_comparison": CANONICAL_VS_GENERATED_COMPARISON_PATH,
     "queryability_decision_report": QUERYABILITY_DECISION_REPORT_PATH,
     "qa_multihop": QA_MULTIHOP_PATH,
+    "multihop_plan_catalog": MULTIHOP_PLAN_CATALOG_PATH,
+    "multihop_eval_report": MULTIHOP_EVAL_REPORT_PATH,
+    "multihop_debug_report": MULTIHOP_DEBUG_REPORT_PATH,
+    "multihop_planner_decision_report": MULTIHOP_PLANNER_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {

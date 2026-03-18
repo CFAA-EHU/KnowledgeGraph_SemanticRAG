@@ -1,0 +1,104 @@
+{
+  "task": "T12",
+  "decision_date": "2026-03-18",
+  "dataset": "data\\golden_set\\QA_multihop.json",
+  "planner_status": "shared_multihop_operational",
+  "summary": {
+    "total_questions": 7,
+    "successful_questions": 7,
+    "avg_precision": 0.1705,
+    "avg_recall": 1.0,
+    "fallback_count": 0,
+    "classification_counts": {
+      "ok": 7
+    },
+    "hop_depth_counts": {
+      "2": 6,
+      "3": 1
+    },
+    "plan_family_counts": {
+      "system_maintenance_plan": 2,
+      "manual_figure_reference": 2,
+      "machine_directive_compliance": 1,
+      "component_control_chain": 1,
+      "column_component_control_chain": 1
+    }
+  },
+  "family_assessment": [
+    {
+      "family_id": "machine_directive_compliance",
+      "template_id": "MH_T1_machine_directive",
+      "hop_depth": 2,
+      "example_question": "Que directiva cumple la maquina de brochado exterior?",
+      "benchmark_questions": 1,
+      "reliability": "reliable",
+      "bounded_steps": 3,
+      "non_bounded_steps": []
+    },
+    {
+      "family_id": "system_maintenance_plan",
+      "template_id": "MH_T2_system_maintenance",
+      "hop_depth": 2,
+      "example_question": "Que plan de mantenimiento requiere el sistema de seguridad de la maquina?",
+      "benchmark_questions": 2,
+      "reliability": "reliable",
+      "bounded_steps": 9,
+      "non_bounded_steps": []
+    },
+    {
+      "family_id": "manual_figure_reference",
+      "template_id": "MH_T3_manual_figure",
+      "hop_depth": 2,
+      "example_question": "Que figura queda asociada al manual A218?",
+      "benchmark_questions": 2,
+      "reliability": "reliable",
+      "bounded_steps": 6,
+      "non_bounded_steps": []
+    },
+    {
+      "family_id": "column_component_control_chain",
+      "template_id": "MH_T5_parent_component_control",
+      "hop_depth": 3,
+      "example_question": "Que regla lineal queda controlada por un componente de la Columna_46 y que descripcion tiene?",
+      "benchmark_questions": 1,
+      "reliability": "reliable",
+      "bounded_steps": 8,
+      "non_bounded_steps": []
+    },
+    {
+      "family_id": "component_control_chain",
+      "template_id": "MH_T4_component_control",
+      "hop_depth": 2,
+      "example_question": "Que regla lineal controla el carro porta-piezas 46?",
+      "benchmark_questions": 1,
+      "reliability": "reliable",
+      "bounded_steps": 3,
+      "non_bounded_steps": []
+    }
+  ],
+  "residual_failures": {
+    "boundedness": [],
+    "synthesis": [],
+    "graph_gap": [],
+    "query_generation_gap": []
+  },
+  "answers": {
+    "families_resolved_reliably": [
+      "machine_directive_compliance",
+      "system_maintenance_plan",
+      "manual_figure_reference",
+      "column_component_control_chain",
+      "component_control_chain"
+    ],
+    "remaining_failures_and_steps": [],
+    "boundedness_residual": "none_on_multihop_benchmark",
+    "synthesis_residual": "none_on_multihop_benchmark",
+    "graph_gap_residual": "none_observed_for_benchmarked_multihop_routes"
+  },
+  "next_bottleneck": "planner_generalization_and_boundedness_tuning_outside_seeded_multihop_families",
+  "recommended_t13": {
+    "focus": "planner_generalization",
+    "why": "The shared planner now resolves all benchmarked 2-hop and 3-hop families with bounded steps and no fallback, so the next useful gain is to extend the same multihop planning discipline beyond the seeded benchmark families into the broader canonical QA set.",
+    "secondary_focus": "boundedness_fine_tuning_for_non_benchmark_questions"
+  }
+}

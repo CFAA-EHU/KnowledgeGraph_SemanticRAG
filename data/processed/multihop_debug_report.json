@@ -1,0 +1,967 @@
+[
+  {
+    "question": "Que plan de mantenimiento requiere el sistema de seguridad de la maquina?",
+    "intent": "regulatory_lookup",
+    "plan_family": "system_maintenance_plan",
+    "predicted_hop_depth": 2,
+    "anchor_text": "seguridad",
+    "anchor_candidates": [
+      "seguridad",
+      "plan",
+      "mantenimiento",
+      "requiere",
+      "sistema"
+    ],
+    "template_id": "MH_T2_system_maintenance",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_safety_system",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina"
+        ],
+        "sample_rows": [
+          [
+            "SistemaSeguridadMaquina"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "system_to_plan",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina> }\n  ?source <https://vocab.cfaa.eus/broaching/requiereMantenimiento> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 6",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN"
+        ],
+        "sample_rows": [
+          [
+            "SistemaSeguridadMaquina",
+            "PlanMantenimientoEKIN"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "plan_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 5,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN",
+          "https://vocab.cfaa.eus/broaching/TareaMantenimiento",
+          "https://vocab.cfaa.eus/broaching/Directiva"
+        ],
+        "sample_rows": [
+          [
+            "PlanMantenimientoEKIN",
+            "label",
+            "plan de mantenimiento especificado por EKIN"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "textoExtracto",
+            "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "textoExtracto",
+            "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "type",
+            "TareaMantenimiento"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "type",
+            "Directiva"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Que texto describe el plan de mantenimiento requerido por el sistema de seguridad de la maquina?",
+    "intent": "regulatory_lookup",
+    "plan_family": "system_maintenance_plan",
+    "predicted_hop_depth": 2,
+    "anchor_text": "seguridad",
+    "anchor_candidates": [
+      "seguridad",
+      "texto",
+      "describe",
+      "plan",
+      "mantenimiento",
+      "requerido",
+      "sistema"
+    ],
+    "template_id": "MH_T2_system_maintenance",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_safety_system",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina"
+        ],
+        "sample_rows": [
+          [
+            "SistemaSeguridadMaquina"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "system_to_plan",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina> }\n  ?source <https://vocab.cfaa.eus/broaching/requiereMantenimiento> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 6",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN"
+        ],
+        "sample_rows": [
+          [
+            "SistemaSeguridadMaquina",
+            "PlanMantenimientoEKIN"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "plan_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 5,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN",
+          "https://vocab.cfaa.eus/broaching/TareaMantenimiento",
+          "https://vocab.cfaa.eus/broaching/Directiva"
+        ],
+        "sample_rows": [
+          [
+            "PlanMantenimientoEKIN",
+            "label",
+            "plan de mantenimiento especificado por EKIN"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "textoExtracto",
+            "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "textoExtracto",
+            "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "type",
+            "TareaMantenimiento"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "type",
+            "Directiva"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Que figura queda asociada al manual A218?",
+    "intent": "figure_or_reference_lookup",
+    "plan_family": "manual_figure_reference",
+    "predicted_hop_depth": 2,
+    "anchor_text": "a218",
+    "anchor_candidates": [
+      "a218",
+      "figura",
+      "asociada"
+    ],
+    "template_id": "MH_T3_manual_figure",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_manual",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218"
+        ],
+        "sample_rows": [
+          [
+            "ManualBrochadoraA218"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "manual_to_figure",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?target ?source WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> }\n  ?target <https://vocab.cfaa.eus/broaching/ilustradoEn> ?source .\n  FILTER(isIRI(?target))\n} LIMIT 10",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Figura0-1-1"
+        ],
+        "sample_rows": [
+          [
+            "Figura0-1-1",
+            "ManualBrochadoraA218"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "figure_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Figura0-1-1> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/ilustradoEn> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 3,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Figura0-1-1",
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218",
+          "https://vocab.cfaa.eus/broaching/Figura"
+        ],
+        "sample_rows": [
+          [
+            "Figura0-1-1",
+            "textoExtracto",
+            "Figura 0-1-1. Información mostrada en páginas."
+          ],
+          [
+            "Figura0-1-1",
+            "ilustradoEn",
+            "ManualBrochadoraA218"
+          ],
+          [
+            "Figura0-1-1",
+            "type",
+            "Figura"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Que descripcion textual tiene la figura asociada al manual A218?",
+    "intent": "figure_or_reference_lookup",
+    "plan_family": "manual_figure_reference",
+    "predicted_hop_depth": 2,
+    "anchor_text": "a218",
+    "anchor_candidates": [
+      "a218",
+      "descripcion",
+      "textual",
+      "figura",
+      "asociada"
+    ],
+    "template_id": "MH_T3_manual_figure",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_manual",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218"
+        ],
+        "sample_rows": [
+          [
+            "ManualBrochadoraA218"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "manual_to_figure",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?target ?source WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> }\n  ?target <https://vocab.cfaa.eus/broaching/ilustradoEn> ?source .\n  FILTER(isIRI(?target))\n} LIMIT 10",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Figura0-1-1"
+        ],
+        "sample_rows": [
+          [
+            "Figura0-1-1",
+            "ManualBrochadoraA218"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "figure_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Figura0-1-1> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/ilustradoEn> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 3,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Figura0-1-1",
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218",
+          "https://vocab.cfaa.eus/broaching/Figura"
+        ],
+        "sample_rows": [
+          [
+            "Figura0-1-1",
+            "textoExtracto",
+            "Figura 0-1-1. Información mostrada en páginas."
+          ],
+          [
+            "Figura0-1-1",
+            "ilustradoEn",
+            "ManualBrochadoraA218"
+          ],
+          [
+            "Figura0-1-1",
+            "type",
+            "Figura"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Que directiva cumple la maquina de brochado exterior?",
+    "intent": "regulatory_lookup",
+    "plan_family": "machine_directive_compliance",
+    "predicted_hop_depth": 2,
+    "anchor_text": null,
+    "anchor_candidates": [
+      "directiva",
+      "cumple",
+      "brochado",
+      "exterior"
+    ],
+    "template_id": "MH_T1_machine_directive",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_machine",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18"
+        ],
+        "sample_rows": [
+          [
+            "MaquinaBrochadoExterior_18"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "machine_to_directive",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18> }\n  ?source <https://vocab.cfaa.eus/broaching/cumpleNormativa> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 6",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18"
+        ],
+        "sample_rows": [
+          [
+            "MaquinaBrochadoExterior_18",
+            "DirectivaSeguridadUnionEuropea_18"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "directive_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 2,
+        "raw_result_count": 3,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18",
+          "https://vocab.cfaa.eus/broaching/Directiva"
+        ],
+        "sample_rows": [
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "identificador",
+            "DirectivaSeguridadUnionEuropea"
+          ],
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "textoExtracto",
+            "cumpliendo todos los requisitos necesarios para el MARCADO Véase apartado 2.4. Equipo para la seguridad personal. Antes de efectuar la puesta en marcha de la máquina, ésta debe conectarse al sistema de tierras del usuario y dicho sistema debe cumplir con lo exigido por las leyes nacionales."
+          ],
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "type",
+            "Directiva"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Que regla lineal controla el carro porta-piezas 46?",
+    "intent": "component_relation_lookup",
+    "plan_family": "component_control_chain",
+    "predicted_hop_depth": 2,
+    "anchor_text": "46",
+    "anchor_candidates": [
+      "46",
+      "regla",
+      "lineal",
+      "controla",
+      "carro",
+      "porta-piezas"
+    ],
+    "template_id": "MH_T4_component_control",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_component",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46"
+        ],
+        "sample_rows": [
+          [
+            "CarroPortaPiezas_46"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "component_to_rule",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46> }\n  ?source <https://vocab.cfaa.eus/broaching/controla> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 8",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_1",
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_2"
+        ],
+        "sample_rows": [
+          [
+            "CarroPortaPiezas_46",
+            "ReglaLineal_46_1"
+          ],
+          [
+            "CarroPortaPiezas_46",
+            "ReglaLineal_46_2"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "rule_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ReglaLineal_46_1> <https://vocab.cfaa.eus/broaching/ReglaLineal_46_2> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 4,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_1",
+          "https://vocab.cfaa.eus/broaching/ComponenteMecanico",
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_2"
+        ],
+        "sample_rows": [
+          [
+            "ReglaLineal_46_1",
+            "textoExtracto",
+            "dos reglas lineales colocadas en el lateral de la columna"
+          ],
+          [
+            "ReglaLineal_46_1",
+            "type",
+            "ComponenteMecanico"
+          ],
+          [
+            "ReglaLineal_46_2",
+            "textoExtracto",
+            "dos reglas lineales colocadas en el lateral de la columna"
+          ],
+          [
+            "ReglaLineal_46_2",
+            "type",
+            "ComponenteMecanico"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Que regla lineal queda controlada por un componente de la Columna_46 y que descripcion tiene?",
+    "intent": "component_relation_lookup",
+    "plan_family": "column_component_control_chain",
+    "predicted_hop_depth": 3,
+    "anchor_text": "columna_46",
+    "anchor_candidates": [
+      "columna_46",
+      "regla",
+      "lineal",
+      "controlada",
+      "componente",
+      "descripcion"
+    ],
+    "template_id": "MH_T5_parent_component_control",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_parent_component",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Columna_46> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Columna_46"
+        ],
+        "sample_rows": [
+          [
+            "Columna_46"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "parent_to_child_component",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/Columna_46> }\n  ?source <https://vocab.cfaa.eus/broaching/tieneComponente> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 10",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46"
+        ],
+        "sample_rows": [
+          [
+            "Columna_46",
+            "CarroPortaPiezas_46"
+          ],
+          [
+            "Columna_46",
+            "GuiaLineal_46_1"
+          ],
+          [
+            "Columna_46",
+            "GuiaLineal_46_2"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_2",
+        "purpose": "child_component_to_rule",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46> }\n  ?source <https://vocab.cfaa.eus/broaching/controla> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 8",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_1",
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_2"
+        ],
+        "sample_rows": [
+          [
+            "CarroPortaPiezas_46",
+            "ReglaLineal_46_1"
+          ],
+          [
+            "CarroPortaPiezas_46",
+            "ReglaLineal_46_2"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "rule_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ReglaLineal_46_1> <https://vocab.cfaa.eus/broaching/ReglaLineal_46_2> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 4,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_1",
+          "https://vocab.cfaa.eus/broaching/ComponenteMecanico",
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_2"
+        ],
+        "sample_rows": [
+          [
+            "ReglaLineal_46_1",
+            "textoExtracto",
+            "dos reglas lineales colocadas en el lateral de la columna"
+          ],
+          [
+            "ReglaLineal_46_1",
+            "type",
+            "ComponenteMecanico"
+          ],
+          [
+            "ReglaLineal_46_2",
+            "textoExtracto",
+            "dos reglas lineales colocadas en el lateral de la columna"
+          ],
+          [
+            "ReglaLineal_46_2",
+            "type",
+            "ComponenteMecanico"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Que plan de mantenimiento requiere el sistema de seguridad de la maquina?",
+    "intent": "regulatory_lookup",
+    "plan_family": "system_maintenance_plan",
+    "predicted_hop_depth": 2,
+    "anchor_text": "seguridad",
+    "anchor_candidates": [
+      "seguridad",
+      "plan",
+      "mantenimiento",
+      "requiere",
+      "sistema"
+    ],
+    "template_id": "MH_T2_system_maintenance",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_safety_system",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina"
+        ],
+        "sample_rows": [
+          [
+            "SistemaSeguridadMaquina"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "system_to_plan",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/SistemaSeguridadMaquina> }\n  ?source <https://vocab.cfaa.eus/broaching/requiereMantenimiento> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 6",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN"
+        ],
+        "sample_rows": [
+          [
+            "SistemaSeguridadMaquina",
+            "PlanMantenimientoEKIN"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "plan_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 5,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN",
+          "https://vocab.cfaa.eus/broaching/Directiva",
+          "https://vocab.cfaa.eus/broaching/TareaMantenimiento"
+        ],
+        "sample_rows": [
+          [
+            "PlanMantenimientoEKIN",
+            "label",
+            "plan de mantenimiento especificado por EKIN"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "textoExtracto",
+            "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "textoExtracto",
+            "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "type",
+            "Directiva"
+          ],
+          [
+            "PlanMantenimientoEKIN",
+            "type",
+            "TareaMantenimiento"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "semantic_rag_multihop"
+  },
+  {
+    "question": "Que regla lineal queda controlada por un componente de la Columna_46 y que descripcion tiene?",
+    "intent": "component_relation_lookup",
+    "plan_family": "column_component_control_chain",
+    "predicted_hop_depth": 3,
+    "anchor_text": "columna_46",
+    "anchor_candidates": [
+      "columna_46",
+      "regla",
+      "lineal",
+      "controlada",
+      "componente",
+      "descripcion"
+    ],
+    "template_id": "MH_T5_parent_component_control",
+    "fallback_used": false,
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_parent_component",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Columna_46> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Columna_46"
+        ],
+        "sample_rows": [
+          [
+            "Columna_46"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "parent_to_child_component",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/Columna_46> }\n  ?source <https://vocab.cfaa.eus/broaching/tieneComponente> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 10",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46"
+        ],
+        "sample_rows": [
+          [
+            "Columna_46",
+            "CarroPortaPiezas_46"
+          ],
+          [
+            "Columna_46",
+            "GuiaLineal_46_1"
+          ],
+          [
+            "Columna_46",
+            "GuiaLineal_46_2"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "rel_2",
+        "purpose": "child_component_to_rule",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46> }\n  ?source <https://vocab.cfaa.eus/broaching/controla> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 8",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_1",
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_2"
+        ],
+        "sample_rows": [
+          [
+            "CarroPortaPiezas_46",
+            "ReglaLineal_46_1"
+          ],
+          [
+            "CarroPortaPiezas_46",
+            "ReglaLineal_46_2"
+          ]
+        ],
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "rule_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ReglaLineal_46_1> <https://vocab.cfaa.eus/broaching/ReglaLineal_46_2> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 3,
+        "raw_result_count": 4,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_1",
+          "https://vocab.cfaa.eus/broaching/ComponenteMecanico",
+          "https://vocab.cfaa.eus/broaching/ReglaLineal_46_2"
+        ],
+        "sample_rows": [
+          [
+            "ReglaLineal_46_1",
+            "textoExtracto",
+            "dos reglas lineales colocadas en el lateral de la columna"
+          ],
+          [
+            "ReglaLineal_46_1",
+            "type",
+            "ComponenteMecanico"
+          ],
+          [
+            "ReglaLineal_46_2",
+            "textoExtracto",
+            "dos reglas lineales colocadas en el lateral de la columna"
+          ],
+          [
+            "ReglaLineal_46_2",
+            "type",
+            "ComponenteMecanico"
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "notes": "semantic_rag_multihop"
+  }
+]

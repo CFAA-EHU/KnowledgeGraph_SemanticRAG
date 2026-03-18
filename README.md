@@ -1,32 +1,27 @@
 # KnowledgeGraph_SemanticRAG
 
-Pipeline experimental y operativo para convertir manuales técnicos industriales en un knowledge graph RDF/OWL consultable con SPARQL, y usar ese grafo como base de un Semantic RAG trazable.
+Pipeline experimental y operativo para transformar manuales técnicos industriales en un knowledge graph RDF/OWL consultable con SPARQL y usar ese grafo como base de un Semantic RAG trazable.
 
-El caso de uso actual es el manual de la brochadora electromecánica **A218 / RASHEM - 7x3000x500**. El objetivo ya no es una extracción abierta de ontología, sino un carril operativo estable basado en:
-
-- **T-Box canónica fija**
-- **extracción A-Box restringida**
-- **consulta SPARQL guiada por intención**
-- **evaluación reproducible**
-- **validación de queryability, boundedness y multi-hop**
+El caso de uso actual es el manual de la brochadora electromecánica **A218 / RASHEM - 7x3000x500**.
 
 ---
 
 ## Estado actual del proyecto
 
-El repositorio contiene **dos carriles**:
+El repositorio mantiene dos carriles:
 
 ### Carril operativo
-Es el flujo por defecto del proyecto y el único que debe usarse para build, consulta y evaluación actuales.
+Es el flujo oficial para build, consulta y evaluación.
 
-- **T-Box operativa:** `data/processed/ontology_aligned.ttl`
-- **Input operativo A-Box:** `data/processed/abox_input.json`
-- **A-Box operativa:** `data/processed/abox_merged.ttl`
-- **Schema condensado:** `data/processed/schema_condensed.txt`
-- **Dataset canónico de evaluación:** `data/golden_set/QA_canonical.json`
+Artefactos canónicos:
+- `data/processed/ontology_aligned.ttl`
+- `data/processed/abox_input.json`
+- `data/processed/abox_merged.ttl`
+- `data/processed/schema_condensed.txt`
+- `data/golden_set/QA_canonical.json`
 
 ### Carril experimental
-Se conserva para investigación y prototipado, pero ya no define el flujo principal.
+Se conserva para investigación y comparación, pero no define el flujo principal.
 
 Ejemplos:
 - `data/processed/tbox_prompts.json`
@@ -37,44 +32,118 @@ Ejemplos:
 
 ## Arquitectura actual
 
-```text
 Manual técnico
    │
-   ├── Tarea 1: Ingesta y chunking semántico
-   │      └── data/raw/density_report.json
+   ├── 1_ingestion
+   │      └── density_report.json
    │
-   ├── Tarea 2: Carril experimental T-Box
-   │      ├── src/2_extraction/prompt_assembler.py
-   │      └── src/2_extraction/llm_extractor.py
+   ├── 2_extraction (experimental T-Box)
+   │      ├── prompt_assembler.py
+   │      └── llm_extractor.py
    │
-   ├── Tarea 3–5: Consolidación / validación / alineamiento experimental
+   ├── 5_alignment (experimental)
+   │      └── semantic_reduction.py
    │
-   ├── Tarea 6: Extracción A-Box operativa
-   │      ├── src/6_extraction/abox_input_builder.py
-   │      ├── src/6_extraction/abox_extractor.py
-   │      ├── src/6_extraction/abox_resume_policy.py
-   │      ├── src/6_extraction/abox_ttl_validator.py
-   │      ├── src/6_extraction/abox_semantic_validator.py
-   │      └── src/6_extraction/abox_merger.py
+   ├── 6_extraction (operativo A-Box)
+   │      ├── abox_input_builder.py
+   │      ├── abox_extractor.py
+   │      ├── abox_resume_policy.py
+   │      ├── abox_ttl_validator.py
+   │      ├── abox_semantic_validator.py
+   │      └── abox_merger.py
    │
-   ├── Tarea 7: Store SPARQL embebido
-   │      └── src/7_database/embedded_store.py
+   ├── 7_database
+   │      └── embedded_store.py
    │
-   ├── Tarea 8: Retrieval y evaluación
-   │      ├── src/8_retrieval/schema_condenser.py
-   │      ├── src/8_retrieval/text_to_sparql.py
-   │      └── src/8_retrieval/qa_evaluator.py
+   ├── 8_retrieval
+   │      ├── schema_condenser.py
+   │      ├── text_to_sparql.py
+   │      └── qa_evaluator.py
    │
-   ├── Tarea 9: Orquestación RAG
-   │      └── src/9_rag_orchestrator/semantic_rag.py
+   ├── 9_rag_orchestrator
+   │      └── semantic_rag.py
    │
-   └── Tarea 10–11: Planner compartido, suite SPARQL canónica y validación multi-hop
-          ├── data/processed/query_intent_catalog.json
-          ├── data/processed/query_debug_report.json
-          ├── data/processed/queryability_target_matrix.json
-          ├── data/processed/ontology_queryability_audit.json
-          ├── data/processed/canonical_sparql_suite.json
-          ├── data/processed/canonical_sparql_execution_report.json
-          ├── data/processed/canonical_vs_generated_comparison.json
-          ├── data/golden_set/QA_multihop.json
-          └── query_workbench.py
+   └── query_workbench.py
+
+## Build operativo
+
+El entrypoint oficial del build es:
+- `python run_operational_pipeline.py --mode resume-compatible`
+
+Modos disponibles:
+
+- resume-compatible
+- force-stale
+- force-all
+
+Este flujo ejecuta:
+
+- 'src/6_extraction/abox_input_builder.py'
+- 'src/6_extraction/abox_extractor.py'
+- 'src/6_extraction/abox_merger.py'
+
+## Query layer actual
+
+El query layer compartido vive en:
+
+'src/8_retrieval/text_to_sparql.py'
+
+## Estado tras T12:
+
+- expone planes de consulta explícitos
+- soporta 1, 2 y 3 hops
+- usa familias multi-hop validadas
+- ejecuta recuperación por pasos
+- controla boundedness por salto
+- deja trazabilidad completa de ejecución
+- funciona como capa compartida entre:
+
+>> src/8_retrieval/qa_evaluator.py
+>> src/9_rag_orchestrator/semantic_rag.py
+>> query_workbench.py
+
+## Queryability y SPARQL canónica
+
+La validación de queryability del grafo quedó persistida en:
+- 'data/processed/queryability_target_matrix.json'
+- 'data/processed/ontology_queryability_audit.json'
+- 'data/processed/canonical_sparql_suite.json'
+- 'data/processed/canonical_sparql_execution_report.json'
+- 'data/processed/canonical_vs_generated_comparison.json'
+
+Resultado actual:
+
+- el grafo soporta consultas bounded y usable de 1, 2 y 3 hops
+- la suite canónica validó 11 consultas
+- el benchmark multi-hop validó 7/7 preguntas
+- el siguiente cuello de botella ya no es ontología, sino generalización del planner fuera de las familias seedadas
+
+## Workbench para preguntas nuevas
+
+Existe una herramienta de inspección manual en:
+
+- 'query_workbench.py'
+
+Permite ver:
+- intención detectada
+- ancla detectada
+- hop previsto
+- familia/plantilla elegida
+- queries por paso
+- resultados crudos
+- boundedness y fallback si aplica
+
+Uso típico:
+
+- 'python query_workbench.py'
+
+## Contratos y documentación
+
+La fuente única de verdad de rutas y artefactos es:
+
+- 'artifact_contracts.py'
+
+Documentación complementaria:
+
+- docs/operational_artifact_contract.md
+- docs/operational_pipeline_runbook.md

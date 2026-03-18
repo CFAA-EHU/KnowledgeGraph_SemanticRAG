@@ -36,26 +36,26 @@ except ModuleNotFoundError:
         return None
 
 from artifact_contracts import (
+    MULTIHOP_DEBUG_REPORT_PATH,
+    MULTIHOP_EVAL_REPORT_PATH,
+    MULTIHOP_PLANNER_DECISION_REPORT_PATH,
     OPERATIONAL_ABOX_PATH,
     OPERATIONAL_TBOX_PATH,
     QA_CANONICAL_PATH,
     QA_EVAL_REPORT_PATH,
     QA_FAILURE_ANALYSIS_PATH,
+    QA_MULTIHOP_PATH,
     QUERY_DEBUG_REPORT_PATH,
     SCHEMA_CONDENSED_PATH,
 )
+
 RETRIEVAL_DIR = Path(__file__).resolve().parent
 if str(RETRIEVAL_DIR) not in sys.path:
     sys.path.insert(0, str(RETRIEVAL_DIR))
 
-from text_to_sparql import (
-    append_query_debug_record,
-    build_query_plan,
-    execute_query_plan,
-)
+from text_to_sparql import append_query_debug_record, build_query_plan, execute_query_plan
 
 logger = logging.getLogger(__name__)
-
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 ABOX_PATH = OPERATIONAL_ABOX_PATH
 MODEL = "mistral-small-latest"
@@ -67,20 +67,31 @@ STOPWORDS = {
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluacion del runtime operativo sobre el golden set canonico.")
-    parser.add_argument("--qa-file", type=Path, default=QA_CANONICAL_PATH, help="Dataset QA canonico a evaluar.")
-    parser.add_argument("--report-path", type=Path, default=QA_EVAL_REPORT_PATH, help="Reporte detallado por pregunta.")
-    parser.add_argument("--failure-analysis-path", type=Path, default=QA_FAILURE_ANALYSIS_PATH, help="Analisis agregado de fallos.")
-    parser.add_argument("--limit", type=int, default=0, help="Limita el numero de preguntas evaluadas para pruebas rapidas.")
-    parser.add_argument("--sleep-seconds", type=float, default=0.0, help="Pausa opcional entre preguntas.")
+    parser = argparse.ArgumentParser(description="Evaluate the operational runtime over canonical or multihop QA datasets.")
+    parser.add_argument("--qa-file", type=Path, default=QA_CANONICAL_PATH, help="QA dataset to evaluate.")
+    parser.add_argument("--report-path", type=Path, default=None, help="Detailed per-question report path.")
+    parser.add_argument("--failure-analysis-path", type=Path, default=None, help="Aggregated analysis path.")
+    parser.add_argument("--debug-report-path", type=Path, default=None, help="Query trace debug path.")
+    parser.add_argument("--limit", type=int, default=0, help="Limit questions for quick runs.")
+    parser.add_argument("--sleep-seconds", type=float, default=0.0, help="Optional pause between questions.")
     return parser.parse_args()
+
+
+
+def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analysis_path: Path | None, debug_report_path: Path | None) -> tuple[Path, Path, Path]:
+    is_multihop = qa_file.resolve() == QA_MULTIHOP_PATH.resolve()
+    resolved_report = report_path or (MULTIHOP_EVAL_REPORT_PATH if is_multihop else QA_EVAL_REPORT_PATH)
+    resolved_failure = failure_analysis_path or (MULTIHOP_PLANNER_DECISION_REPORT_PATH if is_multihop else QA_FAILURE_ANALYSIS_PATH)
+    resolved_debug = debug_report_path or (MULTIHOP_DEBUG_REPORT_PATH if is_multihop else QUERY_DEBUG_REPORT_PATH)
+    return resolved_report, resolved_failure, resolved_debug
+
 
 
 def cargar_grafo_memoria() -> Graph:
     if not TBOX_PATH.exists():
-        raise SystemExit(f"Error: No se encuentra T-Box en {TBOX_PATH}")
+        raise SystemExit(f"Error: Missing T-Box at {TBOX_PATH}")
     if not ABOX_PATH.exists():
-        raise SystemExit(f"Error: No se encuentra A-Box en {ABOX_PATH}")
+        raise SystemExit(f"Error: Missing A-Box at {ABOX_PATH}")
     graph = Graph()
     graph.parse(TBOX_PATH, format="turtle")
     graph.parse(ABOX_PATH, format="turtle")
@@ -88,14 +99,14 @@ def cargar_grafo_memoria() -> Graph:
 
 
 class EvaluadorRAG:
-    def __init__(self, qa_file: Path, report_path: Path, failure_analysis_path: Path):
+    def __init__(self, qa_file: Path, report_path: Path, failure_analysis_path: Path, debug_report_path: Path):
         api_key = os.environ.get("MISTRAL_API_KEY")
         if not api_key:
-            raise SystemExit("Error: Variable MISTRAL_API_KEY no definida.")
-
+            raise SystemExit("Error: Variable MISTRAL_API_KEY not defined.")
         self.qa_file = qa_file
         self.report_path = report_path
         self.failure_analysis_path = failure_analysis_path
+        self.debug_report_path = debug_report_path
         self.client = Mistral(api_key=api_key)
         self.grafo = cargar_grafo_memoria()
         self.esquema = self._cargar_esquema_condensado()
@@ -105,7 +116,7 @@ class EvaluadorRAG:
         stop=stop_after_attempt(4),
         wait=wait_exponential(multiplier=2, min=4, max=45),
         retry=retry_if_exception_type(Exception),
-        before_sleep=lambda retry_state: print(f"Rate limit detectado. Reintentando llamada al LLM (intento {retry_state.attempt_number})..."),
+        before_sleep=lambda retry_state: print(f"Rate limit detected. Retrying LLM call (attempt {retry_state.attempt_number})..."),
     )
     def _llamada_llm_segura(self, mensajes: list) -> str:
         respuesta = self.client.chat.complete(model=MODEL, temperature=0.0, messages=mensajes)
@@ -113,7 +124,7 @@ class EvaluadorRAG:
 
     def _cargar_esquema_condensado(self) -> str:
         if not SCHEMA_CONDENSED_PATH.exists():
-            return "No disponible."
+            return "Not available."
         return SCHEMA_CONDENSED_PATH.read_text(encoding="utf-8")
 
     def _normalizar_uri(self, uri: str) -> str:
@@ -137,30 +148,59 @@ class EvaluadorRAG:
         return tokens
 
     def _cargar_dataset(self) -> list[dict]:
-        with open(self.qa_file, "r", encoding="utf-8") as handle:
-            payload = json.load(handle)
-        if not isinstance(payload, list):
-            raise ValueError("El dataset QA canonico debe ser una lista de bloques.")
-        return payload
+        payload = json.loads(self.qa_file.read_text(encoding="utf-8"))
+        bank: list[dict] = []
+        if isinstance(payload, list):
+            for block_index, bloque in enumerate(payload):
+                for question_index, item in enumerate(bloque.get("questions", [])):
+                    bank.append({
+                        "block_index": block_index,
+                        "question_index": question_index,
+                        "chunk_summary": bloque.get("chunk_summary"),
+                        "question": item["question"],
+                        "answer": item["answer"],
+                        "expected_uris": item.get("expected_uris", []),
+                        "source_dataset": item.get("source_dataset", bloque.get("source_dataset", self.qa_file.name)),
+                        "reconciliation_label": item.get("reconciliation_label"),
+                        "hop_depth": item.get("hop_depth"),
+                        "expected_path": item.get("expected_path"),
+                        "canonical_sparql_id": item.get("canonical_sparql_id"),
+                    })
+            return bank
+        if isinstance(payload, dict):
+            for question_index, item in enumerate(payload.get("questions", [])):
+                bank.append({
+                    "block_index": 0,
+                    "question_index": question_index,
+                    "chunk_summary": item.get("notes"),
+                    "question": item["question"],
+                    "answer": item.get("answer", item.get("notes", "")),
+                    "expected_uris": item.get("expected_uris", []),
+                    "source_dataset": self.qa_file.name,
+                    "reconciliation_label": item.get("notes"),
+                    "hop_depth": item.get("hop_depth"),
+                    "expected_path": item.get("expected_path"),
+                    "canonical_sparql_id": item.get("canonical_sparql_id"),
+                })
+            return bank
+        raise ValueError("Unsupported QA dataset shape.")
 
     def sintetizar_respuesta(self, pregunta: str, tripletas_crudas: list[tuple[str, str, str]]) -> str:
         if not tripletas_crudas:
-            return "[VACIO] No se encontraron relaciones en el grafo para esta pregunta."
-
+            return "[EMPTY] No graph relations were recovered for this question."
         contexto_str = "\n".join([f"- {s} | {p} | {o}" for s, p, o in tripletas_crudas])
-        prompt = """
-        Eres el asistente de un sistema RAG semantico.
-        Responde a la pregunta basandote UNICAMENTE en el contexto extraido.
-        Redacta una respuesta directa y concisa.
-        Si el contexto no permite responder, dilo claramente.
-        """
+        prompt = (
+            "You are the final assistant of a semantic RAG system. "
+            "Answer using only the extracted graph context. "
+            "If the context is insufficient, say so clearly."
+        )
         mensajes = [
             {"role": "system", "content": prompt},
-            {"role": "user", "content": f"Pregunta: {pregunta}\n\nContexto extraido:\n{contexto_str}"},
+            {"role": "user", "content": f"Question: {pregunta}\n\nExtracted graph context:\n{contexto_str}"},
         ]
         return self._llamada_llm_segura(mensajes)
 
-    def _extraer_resultados(self, pregunta: str) -> tuple[object, list[tuple[str, str, str]], set[str]]:
+    def _extraer_resultados(self, pregunta: str):
         plan = build_query_plan(pregunta, self.esquema, self.grafo)
         execution = execute_query_plan(plan, self.grafo)
         uris_recuperadas = set()
@@ -174,41 +214,24 @@ class EvaluadorRAG:
         fragmentos = []
         uri_ref = URIRef(uri)
         for _, predicate, obj in self.grafo.triples((uri_ref, None, None)):
-            if isinstance(obj, URIRef):
-                obj_text = self._normalizar_uri(obj)
-            else:
-                obj_text = str(obj)
+            obj_text = self._normalizar_uri(obj) if isinstance(obj, URIRef) else str(obj)
             fragmentos.append(f"{self._normalizar_uri(predicate)} {obj_text}")
         return self._normalizar_texto(" ".join(fragmentos))
 
-    def _clasificar_pregunta(
-        self,
-        *,
-        expected_uris: list[str],
-        precision: float,
-        recall: float,
-        tripletas_limpias: list[tuple[str, str, str]],
-        synthesized_answer: str,
-        query_error: str | None,
-        synthesis_error: str | None,
-        question: str,
-    ) -> str:
+    def _clasificar_pregunta(self, *, expected_uris: list[str], precision: float, recall: float, tripletas_limpias: list[tuple[str, str, str]], synthesized_answer: str, query_error: str | None, synthesis_error: str | None, question: str) -> str:
         if not expected_uris:
             return "golden_set_mismatch_or_ambiguity"
         if query_error:
             return "query_generation_failed"
         if synthesis_error:
             return "answer_synthesis_failed"
-
         answer_norm = self._normalizar_texto(synthesized_answer)
-        negative_markers = ["[vacio]", "no se encuentra", "no dispongo", "no hay informacion", "no se encontraron"]
+        negative_markers = ["[empty]", "no se encuentra", "no dispongo", "no hay informacion", "no se encontraron", "context is insufficient"]
         answer_is_negative = any(marker in answer_norm for marker in negative_markers)
-
         expected_exists = all(uri in self.subject_uris for uri in expected_uris)
         neighborhood = " ".join(self._vecindario_uri(uri) for uri in expected_uris if uri in self.subject_uris)
         question_tokens = self._tokenizar_pregunta(question)
         token_hits = sum(1 for token in question_tokens if token in neighborhood)
-
         if not expected_exists:
             return "graph_coverage_missing"
         if not tripletas_limpias:
@@ -222,68 +245,48 @@ class EvaluadorRAG:
         return "query_too_broad_or_too_narrow"
 
     def ejecutar_evaluacion(self, *, limit: int = 0, sleep_seconds: float = 0.0) -> tuple[dict, dict]:
-        datos_qa = self._cargar_dataset()
-        banco_preguntas = []
-        for block_index, bloque in enumerate(datos_qa):
-            for question_index, item in enumerate(bloque.get("questions", [])):
-                banco_preguntas.append({
-                    "block_index": block_index,
-                    "question_index": question_index,
-                    "chunk_summary": bloque.get("chunk_summary"),
-                    "question": item["question"],
-                    "answer": item["answer"],
-                    "expected_uris": item.get("expected_uris", []),
-                    "source_dataset": item.get("source_dataset", bloque.get("source_dataset", self.qa_file.name)),
-                    "reconciliation_label": item.get("reconciliation_label"),
-                })
-
+        banco_preguntas = self._cargar_dataset()
         if limit > 0:
             banco_preguntas = banco_preguntas[:limit]
-
-        QUERY_DEBUG_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-        QUERY_DEBUG_REPORT_PATH.write_text("[]", encoding="utf-8")
-
-        print(f"Iniciando evaluacion de {len(banco_preguntas)} preguntas usando {self.qa_file}...\n")
+        self.debug_report_path.parent.mkdir(parents=True, exist_ok=True)
+        self.debug_report_path.write_text("[]", encoding="utf-8")
+        print(f"Starting evaluation of {len(banco_preguntas)} questions using {self.qa_file}...\n")
         resultados = []
-
         for index, item in enumerate(banco_preguntas, 1):
             pregunta = item["question"]
-            respuesta_esperada = item["answer"]
             expected_uris = item.get("expected_uris", [])
+            execution = None
             query_plan = None
-            tripletas_limpias = []
+            tripletas_limpias: list[tuple[str, str, str]] = []
             uris_recuperadas = set()
             respuesta_final = ""
             query_error = None
             synthesis_error = None
-
             print("=" * 70)
-            print(f"PREGUNTA {index}/{len(banco_preguntas)}: {pregunta}")
-            print(f"ESPERADA: {respuesta_esperada}")
+            print(f"QUESTION {index}/{len(banco_preguntas)}: {pregunta}")
+            print(f"EXPECTED: {item['answer']}")
             print("-" * 70)
-
             try:
                 execution, tripletas_limpias, uris_recuperadas = self._extraer_resultados(pregunta)
                 query_plan = execution.plan
-                print(f"PLAN -> intent={query_plan.intent} | template={query_plan.template_id} | fallback={query_plan.fallback_used}")
-                print("QUERY PRINCIPAL:\n" + query_plan.sparql)
-                print(f"Resultados recuperados: {len(tripletas_limpias)}")
+                print(f"PLAN -> family={query_plan.plan_family} | template={query_plan.template_id} | hops={query_plan.predicted_hop_depth} | fallback={query_plan.fallback_used}")
+                print(f"Recovered rows: {len(tripletas_limpias)}")
             except Exception as exc:
                 query_error = str(exc)
-                print(f"Error en query planning/exec: {query_error}")
+                print(f"Error in query planning/execution: {query_error}")
 
             recovered_norm = {self._normalizar_uri(uri) for uri in uris_recuperadas if self._normalizar_uri(uri)}
             expected_norm = {self._normalizar_uri(uri) for uri in expected_uris if self._normalizar_uri(uri)}
-            nodos_correctos = recovered_norm.intersection(expected_norm)
-            precision = len(nodos_correctos) / len(recovered_norm) if recovered_norm else 0.0
-            recall = len(nodos_correctos) / len(expected_norm) if expected_norm else 0.0
+            matching = recovered_norm.intersection(expected_norm)
+            precision = len(matching) / len(recovered_norm) if recovered_norm else 0.0
+            recall = len(matching) / len(expected_norm) if expected_norm else 0.0
 
             if query_error is None:
                 try:
                     respuesta_final = self.sintetizar_respuesta(pregunta, tripletas_limpias)
                 except Exception as exc:
                     synthesis_error = str(exc)
-                    print(f"Error en synthesis: {synthesis_error}")
+                    print(f"Error in synthesis: {synthesis_error}")
 
             classification = self._clasificar_pregunta(
                 expected_uris=expected_uris,
@@ -296,31 +299,34 @@ class EvaluadorRAG:
                 question=pregunta,
             )
 
-            if query_plan is not None:
+            if query_plan is not None and execution is not None:
                 append_query_debug_record({
                     "question": pregunta,
                     "intent": query_plan.intent,
+                    "plan_family": query_plan.plan_family,
+                    "predicted_hop_depth": query_plan.predicted_hop_depth,
                     "anchor_text": query_plan.anchor_text,
                     "anchor_candidates": query_plan.anchor_candidates,
                     "template_id": query_plan.template_id,
-                    "candidate_count": query_plan.debug.get("candidate_count", 0),
-                    "result_count": len(tripletas_limpias),
                     "fallback_used": query_plan.fallback_used,
-                    "queries": [asdict(step) for step in query_plan.queries],
+                    "trace": [asdict(step) for step in execution.trace.steps],
                     "notes": classification,
-                })
+                }, path=self.debug_report_path)
 
-            print(f"METRICAS -> Precision: {precision:.2f} | Recall: {recall:.2f} | Clasificacion: {classification}")
-            print(f"SINTETIZADA: {respuesta_final}")
+            print(f"METRICS -> precision={precision:.2f} | recall={recall:.2f} | classification={classification}")
+            print(f"ANSWER: {respuesta_final}")
 
             resultados.append({
                 **item,
                 "intent": query_plan.intent if query_plan else None,
+                "plan_family": query_plan.plan_family if query_plan else None,
+                "predicted_hop_depth": query_plan.predicted_hop_depth if query_plan else None,
                 "template_id": query_plan.template_id if query_plan else None,
                 "fallback_used": query_plan.fallback_used if query_plan else None,
                 "anchor_text": query_plan.anchor_text if query_plan else None,
                 "anchor_candidates": query_plan.anchor_candidates if query_plan else [],
-                "queries": [asdict(step) for step in query_plan.queries] if query_plan else [],
+                "queries": [asdict(step) for step in query_plan.steps] if query_plan else [],
+                "trace": [asdict(step) for step in execution.trace.steps] if execution else [],
                 "query_debug": query_plan.debug if query_plan else {},
                 "sparql_query": query_plan.sparql if query_plan else "",
                 "sparql_error": query_error,
@@ -328,14 +334,13 @@ class EvaluadorRAG:
                 "retrieved_uris": sorted(uris_recuperadas),
                 "retrieved_uris_normalized": sorted(recovered_norm),
                 "expected_uris_normalized": sorted(expected_norm),
-                "matching_uris_normalized": sorted(nodos_correctos),
+                "matching_uris_normalized": sorted(matching),
                 "precision": round(precision, 4),
                 "recall": round(recall, 4),
                 "synthesized_answer": respuesta_final,
                 "synthesis_error": synthesis_error,
                 "classification": classification,
             })
-
             print("=" * 70 + "\n")
             if sleep_seconds > 0:
                 time.sleep(sleep_seconds)
@@ -347,62 +352,50 @@ class EvaluadorRAG:
             "successful_questions": sum(1 for row in resultados if row["classification"] == "ok"),
             "classification_counts": dict(Counter(row["classification"] for row in resultados)),
             "intent_counts": dict(Counter(row["intent"] for row in resultados if row["intent"])),
+            "plan_family_counts": dict(Counter(row["plan_family"] for row in resultados if row["plan_family"])),
+            "hop_depth_counts": dict(Counter(str(row["predicted_hop_depth"]) for row in resultados if row["predicted_hop_depth"] is not None)),
             "fallback_count": sum(1 for row in resultados if row["fallback_used"]),
             "dataset_path": str(self.qa_file),
             "tbox_path": str(TBOX_PATH),
             "abox_path": str(ABOX_PATH),
             "schema_condensed_path": str(SCHEMA_CONDENSED_PATH),
-            "query_debug_report_path": str(QUERY_DEBUG_REPORT_PATH),
+            "debug_report_path": str(self.debug_report_path),
         }
         report = {"summary": metricas, "results": resultados}
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
         self.report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
         failure_examples = []
-        for category in [
-            "graph_coverage_missing",
-            "query_generation_failed",
-            "query_too_broad_or_too_narrow",
-            "answer_synthesis_failed",
-            "naming_mismatch",
-            "golden_set_mismatch_or_ambiguity",
-        ]:
+        for category in ["graph_coverage_missing", "query_generation_failed", "query_too_broad_or_too_narrow", "answer_synthesis_failed", "naming_mismatch", "golden_set_mismatch_or_ambiguity"]:
             for row in resultados:
                 if row["classification"] == category:
                     failure_examples.append({
                         "category": category,
                         "question": row["question"],
-                        "intent": row["intent"],
+                        "plan_family": row["plan_family"],
                         "template_id": row["template_id"],
-                        "fallback_used": row["fallback_used"],
+                        "predicted_hop_depth": row["predicted_hop_depth"],
                         "precision": row["precision"],
                         "recall": row["recall"],
-                        "sparql_query": row["sparql_query"],
-                        "retrieved_uris_normalized": row["retrieved_uris_normalized"][:10],
-                        "expected_uris_normalized": row["expected_uris_normalized"],
+                        "trace": row["trace"],
                     })
                     break
 
         ordered_failures = Counter(row["classification"] for row in resultados if row["classification"] != "ok").most_common()
-        next_change = "mejorar text_to_sparql"
+        next_change = "planner_multi_hop"
         if ordered_failures:
             top_failure = ordered_failures[0][0]
-            if top_failure == "naming_mismatch":
-                next_change = "normalizar nombres entre preguntas y grafo"
-            elif top_failure == "answer_synthesis_failed":
-                next_change = "ajustar sintesis final"
+            if top_failure == "answer_synthesis_failed":
+                next_change = "answer_synthesis"
             elif top_failure == "graph_coverage_missing":
-                next_change = "completar cobertura factual del grafo"
-            else:
-                next_change = "mejorar text_to_sparql"
+                next_change = "graph_modeling"
+            elif top_failure == "query_too_broad_or_too_narrow":
+                next_change = "boundedness_or_planner"
 
         failure_analysis = {
             "summary": metricas,
             "failure_distribution": dict(ordered_failures),
-            "top_representative_questions": sorted(
-                resultados,
-                key=lambda row: (row["classification"] == "ok", row["recall"], row["precision"]),
-            )[:5],
+            "top_representative_questions": sorted(resultados, key=lambda row: (row["classification"] == "ok", row["recall"], row["precision"]))[:5],
             "failure_examples": failure_examples,
             "recommended_next_change": next_change,
         }
@@ -413,5 +406,6 @@ class EvaluadorRAG:
 
 if __name__ == "__main__":
     args = parse_args()
-    evaluador = EvaluadorRAG(args.qa_file, args.report_path, args.failure_analysis_path)
+    report_path, failure_path, debug_path = resolve_output_paths(args.qa_file, args.report_path, args.failure_analysis_path, args.debug_report_path)
+    evaluador = EvaluadorRAG(args.qa_file, report_path, failure_path, debug_path)
     evaluador.ejecutar_evaluacion(limit=args.limit, sleep_seconds=args.sleep_seconds)

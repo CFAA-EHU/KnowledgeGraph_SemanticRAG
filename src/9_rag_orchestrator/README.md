@@ -1,6 +1,6 @@
-# src/9_rag_orchestrator — Orquestación final del Semantic RAG
+﻿# src/9_rag_orchestrator
 
-Este directorio contiene la capa de respuesta final al usuario sobre el runtime operativo.
+Capa conversacional final del Semantic RAG operativo.
 
 ## Script principal
 
@@ -8,79 +8,36 @@ Este directorio contiene la capa de respuesta final al usuario sobre el runtime 
 Consume:
 - `data/processed/ontology_aligned.ttl`
 - `data/processed/abox_merged.ttl`
-- el query layer compartido de `src/8_retrieval/text_to_sparql.py`
+- `data/processed/schema_condensed.txt`
+- el planner compartido de `src/8_retrieval/text_to_sparql.py`
 
 Responsabilidades:
-- interpretar la pregunta del usuario
-- invocar el planner compartido
-- ejecutar las consultas SPARQL resultantes
-- sintetizar una respuesta final a partir de los resultados
+- recibir la pregunta del usuario
+- construir y ejecutar el mismo `QueryPlan` compartido que usa el evaluador
+- mostrar familia, confianza, boundedness y accion recomendada
+- sintetizar una respuesta final sobre el contexto recuperado
 
----
+## Estado tras T13
 
-## Estado actual tras T12
+El orquestador ya no depende solo de familias multi-hop benchmarkeadas. Ahora tambien aprovecha:
+- familias generalizadas fuera del benchmark
+- normalizacion de anclas
+- boundedness final del plan
+- pruning por paso cuando aplica
+- senal explicita de `recommended_action`
 
-El orquestador ya no usa una lógica de consulta separada del evaluador.
+Eso permite distinguir mejor:
+- fallo de planner/generalizacion
+- fallo de boundedness
+- fallo de sintesis
 
-Ahora comparte:
-- intención detectada
-- ancla detectada
-- familia de plan
-- profundidad prevista
-- ejecución por pasos
-- boundedness por salto
-- fallback controlado
+## Uso con preguntas nuevas
 
-Eso significa que las diferencias entre evaluación y runtime conversacional ya no vienen de dos generadores de consulta distintos, sino principalmente de:
-- generalización del planner
-- boundedness residual
-- síntesis final
+Para depurar primero el planner, usa `query_workbench.py`.
+Cuando el plan ya sea razonable, usa `semantic_rag.py` para comprobar si la sintesis introduce ruido adicional.
 
----
+## Siguiente cuello de botella
 
-## Qué soporta ahora
-
-El runtime conversacional ya puede trabajar con:
-- preguntas de `1` hop
-- preguntas de `2` hops
-- preguntas de `3` hops dentro de las familias multi-hop benchmarkeadas
-
-Las familias multi-hop validadas en T12 incluyen rutas como:
-- `Machine -> cumpleNormativa -> Directive`
-- `Manual <- ilustradoEn -> Figure`
-- `SistemaSeguridadMaquina -> requiereMantenimiento -> PlanMantenimientoEKIN`
-- `Columna_46 -> tieneComponente -> CarroPortaPiezas_46 -> controla -> ReglaLineal_46_1`
-
----
-
-## Qué comprobar aquí
-
-Este módulo se usa para comprobar:
-- calidad de la respuesta final al usuario
-- si la síntesis introduce errores adicionales
-- si el planner compartido mantiene su comportamiento dentro del flujo conversacional
-
-No se usa para demostrar queryability del grafo. Para eso existen:
-- la suite SPARQL canónica
-- el benchmark multi-hop
-- `query_workbench.py`
-
----
-
-## Relación con otras piezas
-
-- `src/7_database/embedded_store.py` aporta el grafo en memoria
-- `src/8_retrieval/text_to_sparql.py` aporta el planner compartido
-- `src/8_retrieval/qa_evaluator.py` mide el comportamiento
-- `query_workbench.py` permite probar preguntas nuevas y depurar consultas por pasos
-
----
-
-## Limitación actual
-
-Tras T12, el grafo y el planner ya soportan multi-hop benchmarkeado de forma fiable.
-
-El siguiente cuello de botella aquí ya no es soporte multi-hop básico, sino:
-- generalizar el planner fuera de las familias seedadas
-- mejorar boundedness en preguntas no benchmark
-- y, solo después, seguir afinando la síntesis final si hiciera falta
+Tras T13, el planner deja de ser el limite principal del runtime actual. Lo siguiente a mejorar aqui es:
+- sintesis final mas natural
+- mejor renderizado de identificadores, direcciones y valores literales

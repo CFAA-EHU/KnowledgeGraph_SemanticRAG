@@ -1,149 +1,69 @@
-# KnowledgeGraph_SemanticRAG
+﻿# KnowledgeGraph_SemanticRAG
 
-Pipeline experimental y operativo para transformar manuales técnicos industriales en un knowledge graph RDF/OWL consultable con SPARQL y usar ese grafo como base de un Semantic RAG trazable.
+Pipeline operativo y experimental para convertir manuales tecnicos industriales en un knowledge graph RDF/OWL consultable con SPARQL y reutilizable en un Semantic RAG trazable.
 
-El caso de uso actual es el manual de la brochadora electromecánica **A218 / RASHEM - 7x3000x500**.
+El caso de uso actual es el manual de la brochadora electromecanica A218 / RASHEM - 7x3000x500.
 
----
-
-## Estado actual del proyecto
-
-El repositorio mantiene dos carriles:
+## Carriles del repositorio
 
 ### Carril operativo
-Es el flujo oficial para build, consulta y evaluación.
+Es el camino oficial de build, consulta y evaluacion.
 
-Artefactos canónicos:
+Artefactos canonicos:
 - `data/processed/ontology_aligned.ttl`
 - `data/processed/abox_input.json`
 - `data/processed/abox_merged.ttl`
 - `data/processed/schema_condensed.txt`
 - `data/golden_set/QA_canonical.json`
+- `data/golden_set/QA_multihop.json`
 
 ### Carril experimental
-Se conserva para investigación y comparación, pero no define el flujo principal.
-
-Ejemplos:
-- `data/processed/tbox_prompts.json`
-- `data/processed/ontology_merged.ttl`
-- `data/processed/abox_aligned.ttl`
-
----
-
-## Arquitectura actual
-
-Manual técnico
-   │
-   ├── 1_ingestion
-   │      └── density_report.json
-   │
-   ├── 2_extraction (experimental T-Box)
-   │      ├── prompt_assembler.py
-   │      └── llm_extractor.py
-   │
-   ├── 5_alignment (experimental)
-   │      └── semantic_reduction.py
-   │
-   ├── 6_extraction (operativo A-Box)
-   │      ├── abox_input_builder.py
-   │      ├── abox_extractor.py
-   │      ├── abox_resume_policy.py
-   │      ├── abox_ttl_validator.py
-   │      ├── abox_semantic_validator.py
-   │      └── abox_merger.py
-   │
-   ├── 7_database
-   │      └── embedded_store.py
-   │
-   ├── 8_retrieval
-   │      ├── schema_condenser.py
-   │      ├── text_to_sparql.py
-   │      └── qa_evaluator.py
-   │
-   ├── 9_rag_orchestrator
-   │      └── semantic_rag.py
-   │
-   └── query_workbench.py
+Se conserva para exploracion, pero no define el runtime por defecto.
 
 ## Build operativo
 
-El entrypoint oficial del build es:
+Entrypoint oficial:
 - `python run_operational_pipeline.py --mode resume-compatible`
 
-Modos disponibles:
+El flujo ejecuta:
+- `src/6_extraction/abox_input_builder.py`
+- `src/6_extraction/abox_extractor.py`
+- `src/6_extraction/abox_merger.py`
 
-- resume-compatible
-- force-stale
-- force-all
+## Query layer tras T13
 
-Este flujo ejecuta:
+El planner compartido vive en `src/8_retrieval/text_to_sparql.py` y ahora:
+- mantiene el benchmark multi-hop en `7/7`
+- generaliza fuera de las familias seedadas del benchmark
+- usa normalizacion de anclas y variantes lexicas
+- aplica boundedness explicito por familia
+- emite confianza, accion recomendada y boundedness final
+- alimenta sin divergencia a `qa_evaluator.py`, `semantic_rag.py` y `query_workbench.py`
 
-- 'src/6_extraction/abox_input_builder.py'
-- 'src/6_extraction/abox_extractor.py'
-- 'src/6_extraction/abox_merger.py'
+Artefactos principales de T13:
+- `data/processed/planner_generalization_catalog.json`
+- `data/processed/boundedness_policy_matrix.json`
+- `data/processed/query_regression_set.json`
+- `data/processed/generalization_eval_report.json`
+- `data/processed/planner_generalization_decision_report.json`
 
-## Query layer actual
+## Estado actual
 
-El query layer compartido vive en:
+- `QA_multihop` sigue en `7/7`, con `fallback_count = 0`
+- `QA_canonical` queda resuelto con `13/13`
+- el planner ya no es el cuello de botella principal del runtime actual
+- el siguiente cuello de botella pasa a ser el pulido de sintesis y normalizacion de valores en la respuesta final
 
-'src/8_retrieval/text_to_sparql.py'
+## Workbench
 
-## Estado tras T12:
+`query_workbench.py` sirve para probar preguntas nuevas y ver:
+- intencion y ancla detectadas
+- familia y profundidad previstas
+- confianza del plan
+- boundedness por paso y final
+- pruning, fallback y gap provisional
+- resultados crudos y, opcionalmente, sintesis
 
-- expone planes de consulta explícitos
-- soporta 1, 2 y 3 hops
-- usa familias multi-hop validadas
-- ejecuta recuperación por pasos
-- controla boundedness por salto
-- deja trazabilidad completa de ejecución
-- funciona como capa compartida entre:
+## Fuente unica de verdad
 
->> src/8_retrieval/qa_evaluator.py
->> src/9_rag_orchestrator/semantic_rag.py
->> query_workbench.py
-
-## Queryability y SPARQL canónica
-
-La validación de queryability del grafo quedó persistida en:
-- 'data/processed/queryability_target_matrix.json'
-- 'data/processed/ontology_queryability_audit.json'
-- 'data/processed/canonical_sparql_suite.json'
-- 'data/processed/canonical_sparql_execution_report.json'
-- 'data/processed/canonical_vs_generated_comparison.json'
-
-Resultado actual:
-
-- el grafo soporta consultas bounded y usable de 1, 2 y 3 hops
-- la suite canónica validó 11 consultas
-- el benchmark multi-hop validó 7/7 preguntas
-- el siguiente cuello de botella ya no es ontología, sino generalización del planner fuera de las familias seedadas
-
-## Workbench para preguntas nuevas
-
-Existe una herramienta de inspección manual en:
-
-- 'query_workbench.py'
-
-Permite ver:
-- intención detectada
-- ancla detectada
-- hop previsto
-- familia/plantilla elegida
-- queries por paso
-- resultados crudos
-- boundedness y fallback si aplica
-
-Uso típico:
-
-- 'python query_workbench.py'
-
-## Contratos y documentación
-
-La fuente única de verdad de rutas y artefactos es:
-
-- 'artifact_contracts.py'
-
-Documentación complementaria:
-
-- docs/operational_artifact_contract.md
-- docs/operational_pipeline_runbook.md
+Las rutas y artefactos compartidos viven en `artifact_contracts.py`.

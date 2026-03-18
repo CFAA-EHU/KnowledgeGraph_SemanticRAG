@@ -1,0 +1,143 @@
+{
+  "task": "T13",
+  "decision_date": "2026-03-18",
+  "baseline_post_t12": {
+    "qa_canonical": {
+      "avg_precision": 0.0513,
+      "avg_recall": 0.8077,
+      "successful_questions": 7,
+      "classification_counts": {
+        "ok": 7,
+        "query_too_broad_or_too_narrow": 5,
+        "answer_synthesis_failed": 1
+      }
+    },
+    "qa_multihop": {
+      "successful_questions": 7,
+      "total_questions": 7,
+      "avg_recall": 1.0,
+      "fallback_count": 0
+    }
+  },
+  "t13_results": {
+    "qa_canonical": {
+      "total_questions": 13,
+      "avg_precision": 0.2553,
+      "avg_recall": 1.0,
+      "successful_questions": 13,
+      "classification_counts": {
+        "ok": 13
+      },
+      "intent_counts": {
+        "purpose_or_function_lookup": 2,
+        "figure_or_reference_lookup": 1,
+        "regulatory_lookup": 6,
+        "literal_lookup": 4
+      },
+      "plan_family_counts": {
+        "generic_purpose_lookup": 2,
+        "manual_header_figure_lookup": 1,
+        "generic_regulatory_lookup": 3,
+        "safety_symbol_detail": 2,
+        "ekin_contact_literal": 2,
+        "ce_directive_literal": 1,
+        "generic_literal_lookup": 1,
+        "spare_parts_policy_literal": 1
+      },
+      "hop_depth_counts": {
+        "1": 13
+      },
+      "boundedness_counts": {
+        "bounded": 13
+      },
+      "avg_plan_confidence": 0.7062,
+      "fallback_count": 0,
+      "dataset_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\golden_set\\QA_canonical.json",
+      "tbox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\ontology_aligned.ttl",
+      "abox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl",
+      "schema_condensed_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\schema_condensed.txt",
+      "debug_report_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\query_debug_report.json"
+    },
+    "qa_multihop": {
+      "total_questions": 7,
+      "avg_precision": 0.1705,
+      "avg_recall": 1.0,
+      "successful_questions": 7,
+      "classification_counts": {
+        "ok": 7
+      },
+      "intent_counts": {
+        "regulatory_lookup": 3,
+        "figure_or_reference_lookup": 2,
+        "component_relation_lookup": 2
+      },
+      "plan_family_counts": {
+        "system_maintenance_plan": 2,
+        "manual_figure_reference": 2,
+        "machine_directive_compliance": 1,
+        "component_control_chain": 1,
+        "column_component_control_chain": 1
+      },
+      "hop_depth_counts": {
+        "2": 6,
+        "3": 1
+      },
+      "boundedness_counts": {
+        "bounded": 7
+      },
+      "avg_plan_confidence": 0.7143,
+      "fallback_count": 0,
+      "dataset_path": "data\\golden_set\\QA_multihop.json",
+      "tbox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\ontology_aligned.ttl",
+      "abox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl",
+      "schema_condensed_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\schema_condensed.txt",
+      "debug_report_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\multihop_debug_report.json"
+    }
+  },
+  "impact_summary": {
+    "qa_canonical_success_delta": 6,
+    "qa_canonical_precision_delta": 0.204,
+    "qa_canonical_recall_delta": 0.1923,
+    "qa_multihop_regression": false
+  },
+  "resolved_by_generalization": [
+    "manual_header_figure_lookup",
+    "safety_symbol_detail",
+    "ekin_contact_literal",
+    "spare_parts_policy_literal",
+    "ce_directive_literal"
+  ],
+  "boundedness_status": {
+    "qa_canonical": {
+      "bounded": 13
+    },
+    "qa_multihop": {
+      "bounded": 7
+    },
+    "fallback_count": {
+      "qa_canonical": 0,
+      "qa_multihop": 0
+    }
+  },
+  "residual_classification": {
+    "planner_generalization_gap": [],
+    "result_boundedness_gap": [],
+    "graph_gap": [],
+    "answer_synthesis_gap": [
+      {
+        "question": "?Seg?n qu? directiva se realiza la declaraci?n CE de conformidad sobre m?quinas?",
+        "reason": "The planner now retrieves the correct directive cleanly, but the synthesized answer still exposes the URI-like identifier instead of a polished natural-language rendering."
+      },
+      {
+        "question": "?D?nde se encuentra la direcci?n de la empresa EKIN mencionada en el manual?",
+        "reason": "The planner retrieves the correct company node, but answer rendering still truncates part of the address string."
+      }
+    ]
+  },
+  "next_bottleneck": "answer_synthesis_polish_and_value_normalization",
+  "recommended_t14": {
+    "focus": "synthesis_and_value_normalization",
+    "why": "The shared planner now generalizes beyond the benchmark and keeps QA_multihop at 7/7 while resolving all canonical questions. The remaining visible defects are answer-surface issues, not planner routing or graph coverage."
+  },
+  "commit_message": "feat: generaliza el planner multi-hop fuera del benchmark y a?ade boundedness/diagnostico por familia"
+}

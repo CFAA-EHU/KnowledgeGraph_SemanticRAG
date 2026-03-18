@@ -38,6 +38,7 @@ except ModuleNotFoundError:
 from artifact_contracts import (
     MULTIHOP_DEBUG_REPORT_PATH,
     MULTIHOP_EVAL_REPORT_PATH,
+    GENERALIZATION_EVAL_REPORT_PATH,
     MULTIHOP_PLANNER_DECISION_REPORT_PATH,
     OPERATIONAL_ABOX_PATH,
     OPERATIONAL_TBOX_PATH,
@@ -80,7 +81,7 @@ def parse_args() -> argparse.Namespace:
 
 def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analysis_path: Path | None, debug_report_path: Path | None) -> tuple[Path, Path, Path]:
     is_multihop = qa_file.resolve() == QA_MULTIHOP_PATH.resolve()
-    resolved_report = report_path or (MULTIHOP_EVAL_REPORT_PATH if is_multihop else QA_EVAL_REPORT_PATH)
+    resolved_report = report_path or (MULTIHOP_EVAL_REPORT_PATH if is_multihop else GENERALIZATION_EVAL_REPORT_PATH if qa_file.resolve() == QA_CANONICAL_PATH.resolve() else QA_EVAL_REPORT_PATH)
     resolved_failure = failure_analysis_path or (MULTIHOP_PLANNER_DECISION_REPORT_PATH if is_multihop else QA_FAILURE_ANALYSIS_PATH)
     resolved_debug = debug_report_path or (MULTIHOP_DEBUG_REPORT_PATH if is_multihop else QUERY_DEBUG_REPORT_PATH)
     return resolved_report, resolved_failure, resolved_debug
@@ -309,6 +310,9 @@ class EvaluadorRAG:
                     "anchor_candidates": query_plan.anchor_candidates,
                     "template_id": query_plan.template_id,
                     "fallback_used": query_plan.fallback_used,
+                    "recommended_action": query_plan.recommended_action,
+                    "confidence": query_plan.confidence,
+                    "final_boundedness": query_plan.final_boundedness,
                     "trace": [asdict(step) for step in execution.trace.steps],
                     "notes": classification,
                 }, path=self.debug_report_path)
@@ -323,6 +327,9 @@ class EvaluadorRAG:
                 "predicted_hop_depth": query_plan.predicted_hop_depth if query_plan else None,
                 "template_id": query_plan.template_id if query_plan else None,
                 "fallback_used": query_plan.fallback_used if query_plan else None,
+                "recommended_action": query_plan.recommended_action if query_plan else None,
+                "confidence": query_plan.confidence if query_plan else {},
+                "final_boundedness": query_plan.final_boundedness if query_plan else None,
                 "anchor_text": query_plan.anchor_text if query_plan else None,
                 "anchor_candidates": query_plan.anchor_candidates if query_plan else [],
                 "queries": [asdict(step) for step in query_plan.steps] if query_plan else [],
@@ -354,6 +361,8 @@ class EvaluadorRAG:
             "intent_counts": dict(Counter(row["intent"] for row in resultados if row["intent"])),
             "plan_family_counts": dict(Counter(row["plan_family"] for row in resultados if row["plan_family"])),
             "hop_depth_counts": dict(Counter(str(row["predicted_hop_depth"]) for row in resultados if row["predicted_hop_depth"] is not None)),
+            "boundedness_counts": dict(Counter(row["final_boundedness"] for row in resultados if row.get("final_boundedness"))),
+            "avg_plan_confidence": round(mean([row.get("confidence", {}).get("overall", 0.0) for row in resultados]) if resultados else 0.0, 4),
             "fallback_count": sum(1 for row in resultados if row["fallback_used"]),
             "dataset_path": str(self.qa_file),
             "tbox_path": str(TBOX_PATH),

@@ -2,27 +2,90 @@
   {
     "question": "¿Para qué sirve el manual de la brochadora A218 / RASHEM - 7x3000x500?",
     "intent": "purpose_or_function_lookup",
-    "anchor_text": "a218",
+    "plan_family": "generic_purpose_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "manual_a218",
     "anchor_candidates": [
+      "manual_a218",
       "a218",
       "7x3000x500",
       "brochadora",
       "rashem"
     ],
     "template_id": "T6_purpose_lookup",
-    "candidate_count": 8,
-    "result_count": 29,
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.92,
+      "family": 0.72,
+      "overall": 0.75
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"a218\") || CONTAINS(LCASE(STR(?o)), \"a218\") || CONTAINS(LCASE(STR(?s)), \"7x3000x500\") || CONTAINS(LCASE(STR(?o)), \"7x3000x500\") || CONTAINS(LCASE(STR(?s)), \"brochadora\") || CONTAINS(LCASE(STR(?o)), \"brochadora\") || CONTAINS(LCASE(STR(?s)), \"rashem\") || CONTAINS(LCASE(STR(?o)), \"rashem\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_from_candidates",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> <https://vocab.cfaa.eus/broaching/Maquina_A218_RASHEM_7x3000x500> } }",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218",
+          "https://vocab.cfaa.eus/broaching/Maquina_A218_RASHEM_7x3000x500"
+        ],
+        "sample_rows": [
+          [
+            "ManualBrochadoraA218"
+          ],
+          [
+            "Maquina_A218_RASHEM_7x3000x500"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "purpose_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/BroachadoraElectromecanicaExteriores_A218_RASHEM_7x3000x500> <https://vocab.cfaa.eus/broaching/BroachadoraElectromecanicaExterioresA218Rashem7x3000x500> <https://vocab.cfaa.eus/broaching/BrochadoraElectromecanicaExteriores_A218_RASHEM_7x3000x500> <https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006> <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> <https://vocab.cfaa.eus/broaching/Maquina_A218_RASHEM7x3000x500> <https://vocab.cfaa.eus/broaching/Maquina_A218_RASHEM_7x3000x500> <https://vocab.cfaa.eus/broaching/BrochadoraElectromecanicaExteriores> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "describe_candidates",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> <https://vocab.cfaa.eus/broaching/Maquina_A218_RASHEM_7x3000x500> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 16",
+        "input_candidate_count": 2,
+        "raw_result_count": 4,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218",
+          "https://vocab.cfaa.eus/broaching/Maquina_A218_RASHEM_7x3000x500"
+        ],
+        "sample_rows": [
+          [
+            "ManualBrochadoraA218",
+            "identificador",
+            "A218 / RASHEM - 7x3000x500"
+          ],
+          [
+            "ManualBrochadoraA218",
+            "textoExtracto",
+            "USO DEL MANUAL Este manual proporciona la información necesaria para el mantenimiento de la Brochadora A218 / RASHEM - 7x3000x500 Cada página, en sus encabezados y pies de página, contiene la información que se muestra en la siguiente figura: Nombre del Fabricante de capítulo la máquina Nombre de Capitulo Nº la máquina Modelo de la máquina Contenido Página/Capítulo Nombre del fichero"
+          ],
+          [
+            "Maquina_A218_RASHEM_7x3000x500",
+            "label",
+            "BROCHADORA ELECTROMECÁNICA DE EXTERIORES — A218/ RASHEM 7×3000×500"
+          ],
+          [
+            "Maquina_A218_RASHEM_7x3000x500",
+            "textoExtracto",
+            "Lámina de identificación del manual con el logotipo del fabricante, denominación de la máquina y datos de contacto. Diseño limpio con bloques de texto centrados, actuando como carátula final del dossier técnico."
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
     "notes": "ok"
@@ -30,34 +93,109 @@
   {
     "question": "¿Qué figura muestra la información que aparece en los encabezados y pies de página del manual?",
     "intent": "figure_or_reference_lookup",
-    "anchor_text": null,
+    "plan_family": "manual_header_figure_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "figure_header_footer",
     "anchor_candidates": [
+      "figure_header_footer",
       "figura",
       "encabezados",
       "pies",
       "pagina"
     ],
-    "template_id": "T2_reference_lookup",
-    "candidate_count": 8,
-    "result_count": 35,
+    "template_id": "GX_T1_manual_header_figure",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.95,
+      "family": 0.75,
+      "overall": 0.77
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"figura\") || CONTAINS(LCASE(STR(?o)), \"figura\") || CONTAINS(LCASE(STR(?s)), \"encabezados\") || CONTAINS(LCASE(STR(?o)), \"encabezados\") || CONTAINS(LCASE(STR(?s)), \"pies\") || CONTAINS(LCASE(STR(?o)), \"pies\") || CONTAINS(LCASE(STR(?s)), \"pagina\") || CONTAINS(LCASE(STR(?o)), \"pagina\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_header_figure",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Figura0_1_1InformacionMostradaEnPaginas> <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> } }",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Figura0_1_1InformacionMostradaEnPaginas",
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218"
+        ],
+        "sample_rows": [
+          [
+            "Figura0_1_1InformacionMostradaEnPaginas"
+          ],
+          [
+            "ManualBrochadoraA218"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "incoming_reference_expansion",
-        "sparql": "SELECT DISTINCT ?x ?p ?s WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Figura> <https://vocab.cfaa.eus/broaching/Figura0_1_1InformacionMostradaEnPaginas> <https://vocab.cfaa.eus/broaching/Figura2_1> <https://vocab.cfaa.eus/broaching/Figura2_2> <https://vocab.cfaa.eus/broaching/Figura2_3> <https://vocab.cfaa.eus/broaching/Figura2_5> <https://vocab.cfaa.eus/broaching/Figura4_11> <https://vocab.cfaa.eus/broaching/Figura4_13> }\n  ?x ?p ?s .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "header_figure_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Figura0_1_1InformacionMostradaEnPaginas> <https://vocab.cfaa.eus/broaching/ManualBrochadoraA218> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 10",
+        "input_candidate_count": 2,
+        "raw_result_count": 6,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Figura0_1_1InformacionMostradaEnPaginas",
+          "https://vocab.cfaa.eus/broaching/ManualBrochadoraA218"
+        ],
+        "sample_rows": [
+          [
+            "Figura0_1_1InformacionMostradaEnPaginas",
+            "label",
+            "Figura 0-1-1. Información mostrada en páginas"
+          ],
+          [
+            "Figura0_1_1InformacionMostradaEnPaginas",
+            "textoExtracto",
+            "Diagrama con flechas y rótulos que identifican, en cabecera y pie, fabricante, número y nombre de capítulo, modelo de máquina, nombre de fichero, contenido y paginación; establece la jerarquía visual de metadatos del documento."
+          ],
+          [
+            "Figura0_1_1InformacionMostradaEnPaginas",
+            "type",
+            "Figura"
+          ],
+          [
+            "ManualBrochadoraA218",
+            "textoExtracto",
+            "USO DEL MANUAL Este manual proporciona la información necesaria para el mantenimiento de la Brochadora A218 / RASHEM - 7x3000x500 Cada página, en sus encabezados y pies de página, contiene la información que se muestra en la siguiente figura: Nombre del Fabricante de capítulo la máquina Nombre de Capitulo Nº la máquina Modelo de la máquina Contenido Página/Capítulo Nombre del fichero"
+          ],
+          [
+            "ManualBrochadoraA218",
+            "identificador",
+            "A218 / RASHEM - 7x3000x500"
+          ],
+          [
+            "ManualBrochadoraA218",
+            "type",
+            "Manual"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
-    "notes": "query_too_broad_or_too_narrow"
+    "notes": "ok"
   },
   {
     "question": "¿Qué objetivo tienen los símbolos de advertencia y seguridad del manual?",
     "intent": "regulatory_lookup",
+    "plan_family": "generic_regulatory_lookup",
+    "predicted_hop_depth": 1,
     "anchor_text": "seguridad",
     "anchor_candidates": [
       "seguridad",
@@ -67,19 +205,82 @@
       "advertencia"
     ],
     "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 20,
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute_with_pruning",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.55,
+      "family": 0.58,
+      "overall": 0.58
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"seguridad\") || CONTAINS(LCASE(STR(?o)), \"seguridad\") || CONTAINS(LCASE(STR(?s)), \"objetivo\") || CONTAINS(LCASE(STR(?o)), \"objetivo\") || CONTAINS(LCASE(STR(?s)), \"tienen\") || CONTAINS(LCASE(STR(?o)), \"tienen\") || CONTAINS(LCASE(STR(?s)), \"simbolos\") || CONTAINS(LCASE(STR(?o)), \"simbolos\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_from_candidates",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/ElementoSeguridad> <https://vocab.cfaa.eus/broaching/AvisoSeguridad> <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> } }",
+        "input_candidate_count": 4,
+        "raw_result_count": 4,
+        "output_candidate_count": 4,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad",
+          "https://vocab.cfaa.eus/broaching/ElementoSeguridad",
+          "https://vocab.cfaa.eus/broaching/AvisoSeguridad",
+          "https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18"
+        ],
+        "sample_rows": [
+          [
+            "IndicacionAdvertenciaSeguridad"
+          ],
+          [
+            "ElementoSeguridad"
+          ],
+          [
+            "AvisoSeguridad"
+          ],
+          [
+            "DirectivaSeguridadUnionEuropea_18"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/AvisoSeguridad> <https://vocab.cfaa.eus/broaching/AvisoSeguridad_1> <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/InstruccionesSeguridadCapitulo2> <https://vocab.cfaa.eus/broaching/InstruccionSeguridad_19_5> <https://vocab.cfaa.eus/broaching/Aviso_Manual_3> <https://vocab.cfaa.eus/broaching/DispositivoSeguridadBloqueoMecanico> <https://vocab.cfaa.eus/broaching/ElementoSeguridad> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "describe_candidates",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/ElementoSeguridad> <https://vocab.cfaa.eus/broaching/AvisoSeguridad> <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 16",
+        "input_candidate_count": 4,
+        "raw_result_count": 3,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad",
+          "https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18"
+        ],
+        "sample_rows": [
+          [
+            "IndicacionAdvertenciaSeguridad",
+            "textoExtracto",
+            "Todas las indicaciones del presente manual que vayan acompañadas de los siguientes símbolos tienen como objetivo resaltar instrucciones importantes y relevantes relacionadas con la seguridad."
+          ],
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "identificador",
+            "DirectivaSeguridadUnionEuropea"
+          ],
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "textoExtracto",
+            "cumpliendo todos los requisitos necesarios para el MARCADO Véase apartado 2.4. Equipo para la seguridad personal. Antes de efectuar la puesta en marcha de la máquina, ésta debe conectarse al sistema de tierras del usuario y dicho sistema debe cumplir con lo exigido por las leyes nacionales."
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
     "notes": "ok"
@@ -87,63 +288,158 @@
   {
     "question": "¿Qué puede ocurrir si no se tiene en cuenta una advertencia de peligro?",
     "intent": "regulatory_lookup",
+    "plan_family": "safety_symbol_detail",
+    "predicted_hop_depth": 1,
     "anchor_text": "peligro",
     "anchor_candidates": [
       "peligro",
       "puede",
       "ocurrir",
-      "tiene",
       "cuenta",
       "advertencia"
     ],
-    "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 33,
+    "template_id": "GX_T2_safety_symbol",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.96,
+      "family": 0.75,
+      "overall": 0.77
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"peligro\") || CONTAINS(LCASE(STR(?o)), \"peligro\") || CONTAINS(LCASE(STR(?s)), \"puede\") || CONTAINS(LCASE(STR(?o)), \"puede\") || CONTAINS(LCASE(STR(?s)), \"ocurrir\") || CONTAINS(LCASE(STR(?o)), \"ocurrir\") || CONTAINS(LCASE(STR(?s)), \"tiene\") || CONTAINS(LCASE(STR(?o)), \"tiene\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_symbol",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Peligro> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Peligro"
+        ],
+        "sample_rows": [
+          [
+            "Peligro"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/Peligro> <https://vocab.cfaa.eus/broaching/ResiduoPeligroso> <https://vocab.cfaa.eus/broaching/AccionProhibidaUsoNoAcordado_18> <https://vocab.cfaa.eus/broaching/AlmacenamientoAceiteUsado> <https://vocab.cfaa.eus/broaching/CarroTraccion> <https://vocab.cfaa.eus/broaching/EPI_CascoSeguridad> <https://vocab.cfaa.eus/broaching/ModoAutomatico> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "symbol_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Peligro> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 8",
+        "input_candidate_count": 1,
+        "raw_result_count": 2,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Peligro"
+        ],
+        "sample_rows": [
+          [
+            "Peligro",
+            "textoExtracto",
+            "Peligro  SI NO SE TIENE EN CUENTA ESTA ADVERTENCIA, O NO SE LLEVAN A CABO CORRECTAMENTE LAS INSTRUCCIONES QUE FIGURAN EN ELLA, PUEDEN PRODUCIRSE LESIONES PERSONALES GRAVES, INCLUSO MORTALES."
+          ],
+          [
+            "Peligro",
+            "type",
+            "AvisoSeguridad"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
-    "notes": "query_too_broad_or_too_narrow"
+    "notes": "ok"
   },
   {
     "question": "¿Qué indica una señal de precaución en el manual?",
     "intent": "regulatory_lookup",
+    "plan_family": "safety_symbol_detail",
+    "predicted_hop_depth": 1,
     "anchor_text": "precaucion",
     "anchor_candidates": [
       "precaucion",
       "indica",
       "senal"
     ],
-    "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 28,
+    "template_id": "GX_T2_safety_symbol",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.96,
+      "family": 0.75,
+      "overall": 0.77
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"precaucion\") || CONTAINS(LCASE(STR(?o)), \"precaucion\") || CONTAINS(LCASE(STR(?s)), \"indica\") || CONTAINS(LCASE(STR(?o)), \"indica\") || CONTAINS(LCASE(STR(?s)), \"senal\") || CONTAINS(LCASE(STR(?o)), \"senal\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_symbol",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Precaucion> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Precaucion"
+        ],
+        "sample_rows": [
+          [
+            "Precaucion"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/Precaucion> <https://vocab.cfaa.eus/broaching/ColumnaSenales> <https://vocab.cfaa.eus/broaching/IndicadorDeNivelConTermometroLS_127_1TM121> <https://vocab.cfaa.eus/broaching/IndicadorDeNivelConTermometroLS_127_1TM122> <https://vocab.cfaa.eus/broaching/LAMPARA_DE_SENALIZACION_3SU1051_6AA60_0AA0> <https://vocab.cfaa.eus/broaching/Lampara_de_Senalizacion_Transparente> <https://vocab.cfaa.eus/broaching/LamparaSenalizacion12HL1> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "symbol_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Precaucion> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 8",
+        "input_candidate_count": 1,
+        "raw_result_count": 2,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Precaucion"
+        ],
+        "sample_rows": [
+          [
+            "Precaucion",
+            "textoExtracto",
+            "Precaución  SI NO SE TIENE EN CUENTA ESTA INDICACIÓN, O SI LAS INSTRUCCIONES QUE FIGURAN EN ELLA NO SE REALIZAN CORRECTAMENTE, PUEDEN PRODUCIRSE DAÑOS Y/O LA DESTRUCCIÓN DE PARTES DE LA MÁQUINA."
+          ],
+          [
+            "Precaucion",
+            "type",
+            "AvisoSeguridad"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
-    "notes": "answer_synthesis_failed"
+    "notes": "ok"
   },
   {
     "question": "¿Qué tipo de información representa la indicación de medio ambiente?",
-    "intent": "regulatory_lookup",
+    "intent": "purpose_or_function_lookup",
+    "plan_family": "generic_purpose_lookup",
+    "predicted_hop_depth": 1,
     "anchor_text": "medio ambiente",
     "anchor_candidates": [
       "medio ambiente",
@@ -152,47 +448,180 @@
       "medio",
       "ambiente"
     ],
-    "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 32,
+    "template_id": "T6_purpose_lookup",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute_with_pruning",
+    "confidence": {
+      "intent": 0.75,
+      "anchor": 0.55,
+      "family": 0.58,
+      "overall": 0.63
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"medio ambiente\") || CONTAINS(LCASE(STR(?o)), \"medio ambiente\") || CONTAINS(LCASE(STR(?s)), \"representa\") || CONTAINS(LCASE(STR(?o)), \"representa\") || CONTAINS(LCASE(STR(?s)), \"indicacion\") || CONTAINS(LCASE(STR(?o)), \"indicacion\") || CONTAINS(LCASE(STR(?s)), \"medio\") || CONTAINS(LCASE(STR(?o)), \"medio\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_from_candidates",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/NormativaMedioambiente_32> <https://vocab.cfaa.eus/broaching/MedioAmbiente> <https://vocab.cfaa.eus/broaching/ContactoIntermedio26SBL1> } }",
+        "input_candidate_count": 4,
+        "raw_result_count": 4,
+        "output_candidate_count": 4,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad",
+          "https://vocab.cfaa.eus/broaching/NormativaMedioambiente_32",
+          "https://vocab.cfaa.eus/broaching/MedioAmbiente",
+          "https://vocab.cfaa.eus/broaching/ContactoIntermedio26SBL1"
+        ],
+        "sample_rows": [
+          [
+            "IndicacionAdvertenciaSeguridad"
+          ],
+          [
+            "NormativaMedioambiente_32"
+          ],
+          [
+            "MedioAmbiente"
+          ],
+          [
+            "ContactoIntermedio26SBL1"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/0E> <https://vocab.cfaa.eus/broaching/24E> <https://vocab.cfaa.eus/broaching/27KA7> <https://vocab.cfaa.eus/broaching/27KA8> <https://vocab.cfaa.eus/broaching/62U1> <https://vocab.cfaa.eus/broaching/ActuadorYP80x> <https://vocab.cfaa.eus/broaching/ArmarioElectrico_190_167> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "describe_candidates",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad> <https://vocab.cfaa.eus/broaching/NormativaMedioambiente_32> <https://vocab.cfaa.eus/broaching/MedioAmbiente> <https://vocab.cfaa.eus/broaching/ContactoIntermedio26SBL1> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 16",
+        "input_candidate_count": 4,
+        "raw_result_count": 5,
+        "output_candidate_count": 4,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/IndicacionAdvertenciaSeguridad",
+          "https://vocab.cfaa.eus/broaching/NormativaMedioambiente_32",
+          "https://vocab.cfaa.eus/broaching/MedioAmbiente",
+          "https://vocab.cfaa.eus/broaching/ContactoIntermedio26SBL1"
+        ],
+        "sample_rows": [
+          [
+            "IndicacionAdvertenciaSeguridad",
+            "textoExtracto",
+            "Todas las indicaciones del presente manual que vayan acompañadas de los siguientes símbolos tienen como objetivo resaltar instrucciones importantes y relevantes relacionadas con la seguridad."
+          ],
+          [
+            "NormativaMedioambiente_32",
+            "textoExtracto",
+            "SEGURIDAD CON MATERIALES UTILIZADOS LOS ACEITES, GRASAS, FLUIDOS Y DEMÁS SUSTANCIAS QUÍMICAS UTILIZADAS EN LA MÁQUINA DEBEN CUMPLIR LAS NORMATIVAS VIGENTES PARA LA PROTECCIÓN DEL MEDIOAMBIENTE."
+          ],
+          [
+            "MedioAmbiente",
+            "textoExtracto",
+            "Medio ambiente  SE TRATA DE DESCRIPCIONES TANTO DE PROCEDIMIENTOS COMO DE CARACTERÍSTICAS EN LAS QUE SE ACONSEJA CONSIDERAR LAS POSIBLES REPERCUSIONES EN EL MEDIO AMBIENTE DE DETERMINADAS ACCIONES O ELECCIONES, FUNDAMENTALMENTE DE PRODUCTOS A UTILIZAR."
+          ],
+          [
+            "ContactoIntermedio26SBL1",
+            "identificador",
+            "26SBL1"
+          ],
+          [
+            "ContactoIntermedio26SBL1",
+            "textoExtracto",
+            "contactos intermedios (26SBL1, 34SBL2)"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
-    "notes": "query_too_broad_or_too_narrow"
+    "notes": "ok"
   },
   {
     "question": "¿A quién pertenecen los derechos de autor del manual?",
     "intent": "literal_lookup",
-    "anchor_text": null,
+    "plan_family": "ekin_contact_literal",
+    "predicted_hop_depth": 1,
+    "anchor_text": "ekin_company",
     "anchor_candidates": [
+      "ekin_company",
       "pertenecen",
       "derechos",
       "autor"
     ],
-    "template_id": "T1_literal_anchor",
-    "candidate_count": 3,
-    "result_count": 13,
+    "template_id": "GX_T3_ekin_contact",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.94,
+      "family": 0.75,
+      "overall": 0.76
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"pertenecen\") || CONTAINS(LCASE(STR(?o)), \"pertenecen\") || CONTAINS(LCASE(STR(?s)), \"derechos\") || CONTAINS(LCASE(STR(?o)), \"derechos\") || CONTAINS(LCASE(STR(?s)), \"autor\") || CONTAINS(LCASE(STR(?o)), \"autor\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_contact_entity",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop"
+        ],
+        "sample_rows": [
+          [
+            "Empresa_EKIN_S_Coop"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "targeted_literal_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> <https://vocab.cfaa.eus/broaching/EsquemaHidraulicoGrupo104> <https://vocab.cfaa.eus/broaching/Manual_Documento_Reservado> }\n  ?s ?p ?o .\n} LIMIT 25"
+        "step_id": "detail",
+        "purpose": "contact_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/2000/01/rdf-schema#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 10",
+        "input_candidate_count": 1,
+        "raw_result_count": 4,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop"
+        ],
+        "sample_rows": [
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Dirección: Barrio Boroa, s/n, 48340 AMOREBIETA (España) (www.ekin.es) Teléfono: (+34) 94 673 11 12 Fax: (+34) 94 630 04 51 Email: ekin@ekin.es"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Los derechos de autor de este manual están reservados a EKIN S. Coop."
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "identificador",
+            "EKIN S. Coop"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "type",
+            "Empresa"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
     "notes": "ok"
@@ -200,27 +629,85 @@
   {
     "question": "¿Según qué directiva se realiza la declaración CE de conformidad sobre máquinas?",
     "intent": "regulatory_lookup",
-    "anchor_text": null,
+    "plan_family": "ce_directive_literal",
+    "predicted_hop_depth": 1,
+    "anchor_text": "directive_2006_42_ce",
     "anchor_candidates": [
+      "directive_2006_42_ce",
       "directiva",
       "declaracion",
       "conformidad",
       "maquinas"
     ],
-    "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 22,
+    "template_id": "GX_T5_ce_directive",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.75,
+      "anchor": 0.94,
+      "family": 0.75,
+      "overall": 0.81
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"directiva\") || CONTAINS(LCASE(STR(?o)), \"directiva\") || CONTAINS(LCASE(STR(?s)), \"declaracion\") || CONTAINS(LCASE(STR(?o)), \"declaracion\") || CONTAINS(LCASE(STR(?s)), \"conformidad\") || CONTAINS(LCASE(STR(?o)), \"conformidad\") || CONTAINS(LCASE(STR(?s)), \"maquinas\") || CONTAINS(LCASE(STR(?o)), \"maquinas\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_ce_directive",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Directiva2006_42_CE"
+        ],
+        "sample_rows": [
+          [
+            "Directiva2006_42_CE"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Directiva> <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE> <https://vocab.cfaa.eus/broaching/Directiva2014_30_UE> <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> <https://vocab.cfaa.eus/broaching/InstruccionesSeguridadCapitulo2> <https://vocab.cfaa.eus/broaching/Capitulo1> <https://vocab.cfaa.eus/broaching/EslingaHomologada_59> <https://vocab.cfaa.eus/broaching/EslingaHomologadaCE> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "ce_directive_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/2000/01/rdf-schema#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 8",
+        "input_candidate_count": 1,
+        "raw_result_count": 4,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Directiva2006_42_CE"
+        ],
+        "sample_rows": [
+          [
+            "Directiva2006_42_CE",
+            "textoExtracto",
+            "Año de construcción: Suministrada a su cliente CFAA, cumple con todas las disposiciones aplicables de la directiva de máquinas 2006/42/CE."
+          ],
+          [
+            "Directiva2006_42_CE",
+            "textoExtracto",
+            "DECLARACIÓN “CE” DE CONFORMIDAD SOBRE MÁQUINAS (SEGÚN LA DIRECTIVA 2006/42/CE)"
+          ],
+          [
+            "Directiva2006_42_CE",
+            "identificador",
+            "2006/42/CE"
+          ],
+          [
+            "Directiva2006_42_CE",
+            "type",
+            "Directiva"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
     "notes": "ok"
@@ -228,27 +715,85 @@
   {
     "question": "¿Dónde se encuentra la dirección de la empresa EKIN mencionada en el manual?",
     "intent": "literal_lookup",
-    "anchor_text": "ekin",
+    "plan_family": "ekin_contact_literal",
+    "predicted_hop_depth": 1,
+    "anchor_text": "ekin_company",
     "anchor_candidates": [
-      "ekin",
+      "ekin_company",
       "encuentra",
       "direccion",
-      "empresa"
+      "empresa",
+      "ekin"
     ],
-    "template_id": "T1_literal_anchor",
-    "candidate_count": 8,
-    "result_count": 25,
+    "template_id": "GX_T3_ekin_contact",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.94,
+      "family": 0.75,
+      "overall": 0.76
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"ekin\") || CONTAINS(LCASE(STR(?o)), \"ekin\") || CONTAINS(LCASE(STR(?s)), \"encuentra\") || CONTAINS(LCASE(STR(?o)), \"encuentra\") || CONTAINS(LCASE(STR(?s)), \"direccion\") || CONTAINS(LCASE(STR(?o)), \"direccion\") || CONTAINS(LCASE(STR(?s)), \"empresa\") || CONTAINS(LCASE(STR(?o)), \"empresa\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_contact_entity",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop"
+        ],
+        "sample_rows": [
+          [
+            "Empresa_EKIN_S_Coop"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "targeted_literal_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/DepartamentoAsistenciaClienteEKIN> <https://vocab.cfaa.eus/broaching/DepartamentoHerramientasEKIN_119_86> <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> <https://vocab.cfaa.eus/broaching/EmpresaEKIN> <https://vocab.cfaa.eus/broaching/EmpresaEKIN_18> <https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006> <https://vocab.cfaa.eus/broaching/MarcaEKINS_10> <https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN> }\n  ?s ?p ?o .\n} LIMIT 25"
+        "step_id": "detail",
+        "purpose": "contact_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/2000/01/rdf-schema#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 10",
+        "input_candidate_count": 1,
+        "raw_result_count": 4,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop"
+        ],
+        "sample_rows": [
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Dirección: Barrio Boroa, s/n, 48340 AMOREBIETA (España) (www.ekin.es) Teléfono: (+34) 94 673 11 12 Fax: (+34) 94 630 04 51 Email: ekin@ekin.es"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Los derechos de autor de este manual están reservados a EKIN S. Coop."
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "identificador",
+            "EKIN S. Coop"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "type",
+            "Empresa"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
     "notes": "ok"
@@ -256,6 +801,8 @@
   {
     "question": "¿Cuál es el correo electrónico de contacto de EKIN indicado en el manual?",
     "intent": "literal_lookup",
+    "plan_family": "generic_literal_lookup",
+    "predicted_hop_depth": 1,
     "anchor_text": "ekin",
     "anchor_candidates": [
       "ekin",
@@ -264,19 +811,98 @@
       "contacto"
     ],
     "template_id": "T1_literal_anchor",
-    "candidate_count": 8,
-    "result_count": 25,
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute_with_pruning",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.55,
+      "family": 0.58,
+      "overall": 0.58
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"ekin\") || CONTAINS(LCASE(STR(?o)), \"ekin\") || CONTAINS(LCASE(STR(?s)), \"correo\") || CONTAINS(LCASE(STR(?o)), \"correo\") || CONTAINS(LCASE(STR(?s)), \"electronico\") || CONTAINS(LCASE(STR(?o)), \"electronico\") || CONTAINS(LCASE(STR(?s)), \"contacto\") || CONTAINS(LCASE(STR(?o)), \"contacto\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_from_candidates",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006> <https://vocab.cfaa.eus/broaching/ComponenteElectrico> <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> <https://vocab.cfaa.eus/broaching/EnclavamientoElectronicoSeguridad_25SQ1> } }",
+        "input_candidate_count": 4,
+        "raw_result_count": 4,
+        "output_candidate_count": 4,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+          "https://vocab.cfaa.eus/broaching/ComponenteElectrico",
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop",
+          "https://vocab.cfaa.eus/broaching/EnclavamientoElectronicoSeguridad_25SQ1"
+        ],
+        "sample_rows": [
+          [
+            "ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006"
+          ],
+          [
+            "ComponenteElectrico"
+          ],
+          [
+            "Empresa_EKIN_S_Coop"
+          ],
+          [
+            "EnclavamientoElectronicoSeguridad_25SQ1"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "targeted_literal_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/DepartamentoAsistenciaClienteEKIN> <https://vocab.cfaa.eus/broaching/DepartamentoHerramientasEKIN_119_86> <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> <https://vocab.cfaa.eus/broaching/EmpresaEKIN> <https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006> <https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN> <https://vocab.cfaa.eus/broaching/Empresa_1> <https://vocab.cfaa.eus/broaching/CarroPortaPieza> }\n  ?s ?p ?o .\n} LIMIT 25"
+        "step_id": "detail",
+        "purpose": "describe_candidates",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006> <https://vocab.cfaa.eus/broaching/ComponenteElectrico> <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> <https://vocab.cfaa.eus/broaching/EnclavamientoElectronicoSeguridad_25SQ1> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 16",
+        "input_candidate_count": 4,
+        "raw_result_count": 9,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop",
+          "https://vocab.cfaa.eus/broaching/EnclavamientoElectronicoSeguridad_25SQ1"
+        ],
+        "sample_rows": [
+          [
+            "ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+            "label",
+            "Conjunto guiado carro porta-pieza (EKIN-IKO) A21811005 / A21811006"
+          ],
+          [
+            "ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+            "identificador",
+            "A21811005 / A21811006"
+          ],
+          [
+            "ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+            "textoExtracto",
+            "Conjunto guiado carro porta-pieza ......................... (EKIN-IKO) A21811005 / A21811006"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "identificador",
+            "EKIN S. Coop"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Dirección: Barrio Boroa, s/n, 48340 AMOREBIETA (España) (www.ekin.es) Teléfono: (+34) 94 673 11 12 Fax: (+34) 94 630 04 51 Email: ekin@ekin.es"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Los derechos de autor de este manual están reservados a EKIN S. Coop."
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
     "notes": "ok"
@@ -284,34 +910,89 @@
   {
     "question": "¿A quién se debe consultar en caso de dudas sobre la seguridad de la máquina?",
     "intent": "regulatory_lookup",
-    "anchor_text": "seguridad",
+    "plan_family": "generic_regulatory_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "client_support_department",
     "anchor_candidates": [
-      "seguridad",
+      "client_support_department",
       "consultar",
       "caso",
-      "dudas"
+      "dudas",
+      "seguridad"
     ],
     "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 19,
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.91,
+      "family": 0.72,
+      "overall": 0.74
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"seguridad\") || CONTAINS(LCASE(STR(?o)), \"seguridad\") || CONTAINS(LCASE(STR(?s)), \"consultar\") || CONTAINS(LCASE(STR(?o)), \"consultar\") || CONTAINS(LCASE(STR(?s)), \"caso\") || CONTAINS(LCASE(STR(?o)), \"caso\") || CONTAINS(LCASE(STR(?s)), \"dudas\") || CONTAINS(LCASE(STR(?o)), \"dudas\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_from_candidates",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/DepartamentoAsistenciaClienteEKIN> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/DepartamentoAsistenciaClienteEKIN"
+        ],
+        "sample_rows": [
+          [
+            "DepartamentoAsistenciaClienteEKIN"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/AvisoSeguridad> <https://vocab.cfaa.eus/broaching/AvisoSeguridad_1> <https://vocab.cfaa.eus/broaching/AvisoSeguridadPuestaMarcha_18> <https://vocab.cfaa.eus/broaching/InstruccionesSeguridadCapitulo2> <https://vocab.cfaa.eus/broaching/InstruccionSeguridad_19_5> <https://vocab.cfaa.eus/broaching/Aviso_Manual_3> <https://vocab.cfaa.eus/broaching/ElementoSeguridad> <https://vocab.cfaa.eus/broaching/InterruptorSeguridadTransponder_CTP_L1_AP_M_HA_AZ_SA_124727> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "describe_candidates",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/DepartamentoAsistenciaClienteEKIN> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 16",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/DepartamentoAsistenciaClienteEKIN"
+        ],
+        "sample_rows": [
+          [
+            "DepartamentoAsistenciaClienteEKIN",
+            "textoExtracto",
+            "EN CASO NECESARIO DEBE PONERSE EN CONTACTO CON DEPARTAMENTO DE ASISTENCIA AL CLIENTE DE EKIN."
+          ],
+          [
+            "DepartamentoAsistenciaClienteEKIN",
+            "textoExtracto",
+            "CONSULTAR DEPARTAMENTO DE ASISTENCIA AL CLIENTE DE EKIN"
+          ],
+          [
+            "DepartamentoAsistenciaClienteEKIN",
+            "textoExtracto",
+            "DEPARTAMENTO DE ASISTENCIA AL CLIENTE DE EKIN"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
-    "notes": "query_too_broad_or_too_narrow"
+    "notes": "ok"
   },
   {
     "question": "¿Qué se debe verificar regularmente para garantizar la seguridad de la máquina?",
     "intent": "regulatory_lookup",
+    "plan_family": "generic_regulatory_lookup",
+    "predicted_hop_depth": 1,
     "anchor_text": "seguridad",
     "anchor_candidates": [
       "seguridad",
@@ -320,19 +1001,98 @@
       "garantizar"
     ],
     "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 18,
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute_with_pruning",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.55,
+      "family": 0.58,
+      "overall": 0.58
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"seguridad\") || CONTAINS(LCASE(STR(?o)), \"seguridad\") || CONTAINS(LCASE(STR(?s)), \"verificar\") || CONTAINS(LCASE(STR(?o)), \"verificar\") || CONTAINS(LCASE(STR(?s)), \"regularmente\") || CONTAINS(LCASE(STR(?o)), \"regularmente\") || CONTAINS(LCASE(STR(?s)), \"garantizar\") || CONTAINS(LCASE(STR(?o)), \"garantizar\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_from_candidates",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ElementoSeguridad_1> <https://vocab.cfaa.eus/broaching/Maquina_1> <https://vocab.cfaa.eus/broaching/ElementoSeguridad> <https://vocab.cfaa.eus/broaching/ModoAutomatico> } }",
+        "input_candidate_count": 4,
+        "raw_result_count": 4,
+        "output_candidate_count": 4,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ElementoSeguridad_1",
+          "https://vocab.cfaa.eus/broaching/Maquina_1",
+          "https://vocab.cfaa.eus/broaching/ElementoSeguridad",
+          "https://vocab.cfaa.eus/broaching/ModoAutomatico"
+        ],
+        "sample_rows": [
+          [
+            "ElementoSeguridad_1"
+          ],
+          [
+            "Maquina_1"
+          ],
+          [
+            "ElementoSeguridad"
+          ],
+          [
+            "ModoAutomatico"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/AvisoSeguridad> <https://vocab.cfaa.eus/broaching/InstruccionesSeguridadCapitulo2> <https://vocab.cfaa.eus/broaching/InstruccionSeguridad_19_4> <https://vocab.cfaa.eus/broaching/InstruccionSeguridad_19_5> <https://vocab.cfaa.eus/broaching/ElementoSeguridad> <https://vocab.cfaa.eus/broaching/ElementoSeguridad_1> <https://vocab.cfaa.eus/broaching/InterruptorSeguridadTransponder_CTP_L1_AP_M_HA_AZ_SA_124727> <https://vocab.cfaa.eus/broaching/PuertaControladaInterruptorSeguridad> }\n  ?s ?p ?o .\n} LIMIT 35"
+        "step_id": "detail",
+        "purpose": "describe_candidates",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ElementoSeguridad_1> <https://vocab.cfaa.eus/broaching/Maquina_1> <https://vocab.cfaa.eus/broaching/ElementoSeguridad> <https://vocab.cfaa.eus/broaching/ModoAutomatico> }\n  VALUES ?p { <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 16",
+        "input_candidate_count": 4,
+        "raw_result_count": 11,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ElementoSeguridad_1",
+          "https://vocab.cfaa.eus/broaching/Maquina_1",
+          "https://vocab.cfaa.eus/broaching/ModoAutomatico"
+        ],
+        "sample_rows": [
+          [
+            "ElementoSeguridad_1",
+            "textoExtracto",
+            "EL ESTADO DE LOS ELEMENTOS DE SEGURIDAD DE LA MÁQUINA SE DEBE VERIFICAR REGULARMENTE PARA GARANTIZAR LA SEGURIDAD DE LA MISMA."
+          ],
+          [
+            "Maquina_1",
+            "textoExtracto",
+            "La zona de trabajo y el interior de la máquina se deben mantener libres de herramientas, materiales auxiliares y cualquier otro objeto."
+          ],
+          [
+            "Maquina_1",
+            "textoExtracto",
+            "No se deben emprender modificaciones, montajes o reconversiones de la máquina que afecten a su seguridad sin la aprobación de EKIN, S.Coop."
+          ],
+          [
+            "Maquina_1",
+            "textoExtracto",
+            "SE DEBEN OBSERVAR SIEMPRE LAS MEDIDAS DE SEGURIDAD EXPRESADAS EN LOS CARTELES ADOSADOS A LA MÁQUINA Y EN EL MANUAL DE INSTRUCCIONES."
+          ],
+          [
+            "Maquina_1",
+            "textoExtracto",
+            "En caso de alteraciones que afecten de manera relevante a la seguridad de la máquina o al procedimiento en las operaciones, o si la máquina sufre daños funcionales, ésta se debe detener de inmediato y comunicar la avería a la persona o departamento competentes."
+          ],
+          [
+            "Maquina_1",
+            "textoExtracto",
+            "EL ESTADO DE LOS ELEMENTOS DE SEGURIDAD DE LA MÁQUINA SE DEBE VERIFICAR REGULARMENTE PARA GARANTIZAR LA SEGURIDAD DE LA MISMA."
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
     "notes": "ok"
@@ -340,115 +1100,101 @@
   {
     "question": "¿Qué tipo de piezas de recambio deben emplearse según el manual?",
     "intent": "literal_lookup",
-    "anchor_text": null,
+    "plan_family": "spare_parts_policy_literal",
+    "predicted_hop_depth": 1,
+    "anchor_text": "spare_parts_policy",
     "anchor_candidates": [
+      "spare_parts_policy",
       "piezas",
       "recambio",
       "emplearse"
     ],
-    "template_id": "T1_literal_anchor",
-    "candidate_count": 8,
-    "result_count": 25,
+    "template_id": "GX_T4_spare_parts",
     "fallback_used": false,
-    "queries": [
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.93,
+      "family": 0.75,
+      "overall": 0.68
+    },
+    "final_boundedness": "bounded",
+    "trace": [
       {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"piezas\") || CONTAINS(LCASE(STR(?o)), \"piezas\") || CONTAINS(LCASE(STR(?s)), \"recambio\") || CONTAINS(LCASE(STR(?o)), \"recambio\") || CONTAINS(LCASE(STR(?s)), \"emplearse\") || CONTAINS(LCASE(STR(?o)), \"emplearse\"))\n} LIMIT 10"
+        "step_id": "seed",
+        "purpose": "seed_spare_parts_policy",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/PiezaRecambio_1> <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> } }",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PiezaRecambio_1",
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop"
+        ],
+        "sample_rows": [
+          [
+            "PiezaRecambio_1"
+          ],
+          [
+            "Empresa_EKIN_S_Coop"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       },
       {
-        "step_id": "expansion",
-        "purpose": "targeted_literal_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/BloqueoHidraulico2> <https://vocab.cfaa.eus/broaching/BR882319> <https://vocab.cfaa.eus/broaching/CarroPortaPiezas> <https://vocab.cfaa.eus/broaching/CarroPortapiezas> <https://vocab.cfaa.eus/broaching/CarroPortapiezas_43> <https://vocab.cfaa.eus/broaching/CarroPortaPiezas_46> <https://vocab.cfaa.eus/broaching/CarroPortaPiezas_49_1> <https://vocab.cfaa.eus/broaching/CarroPortapiezasCompleto> }\n  ?s ?p ?o .\n} LIMIT 25"
+        "step_id": "detail",
+        "purpose": "spare_parts_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/PiezaRecambio_1> <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/2000/01/rdf-schema#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 10",
+        "input_candidate_count": 2,
+        "raw_result_count": 6,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/PiezaRecambio_1",
+          "https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop"
+        ],
+        "sample_rows": [
+          [
+            "PiezaRecambio_1",
+            "textoExtracto",
+            "Las piezas de recambio deben respetar los requisitos técnicos fijados por EKIN S.Coop. Esto se garantiza siempre empleando las piezas de recambio originales."
+          ],
+          [
+            "PiezaRecambio_1",
+            "type",
+            "PiezaRecambio"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Dirección: Barrio Boroa, s/n, 48340 AMOREBIETA (España) (www.ekin.es) Teléfono: (+34) 94 673 11 12 Fax: (+34) 94 630 04 51 Email: ekin@ekin.es"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "textoExtracto",
+            "Los derechos de autor de este manual están reservados a EKIN S. Coop."
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "identificador",
+            "EKIN S. Coop"
+          ],
+          [
+            "Empresa_EKIN_S_Coop",
+            "type",
+            "Empresa"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
       }
     ],
-    "notes": "query_too_broad_or_too_narrow"
-  },
-  {
-    "question": "?Seg?n qu? directiva se realiza la declaraci?n CE de conformidad sobre m?quinas?",
-    "intent": "regulatory_lookup",
-    "anchor_text": null,
-    "anchor_candidates": [
-      "seg",
-      "directiva",
-      "declaraci",
-      "conformidad",
-      "quinas"
-    ],
-    "template_id": "T3_regulatory_lookup",
-    "candidate_count": 8,
-    "result_count": 20,
-    "fallback_used": false,
-    "queries": [
-      {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"seg\") || CONTAINS(LCASE(STR(?o)), \"seg\") || CONTAINS(LCASE(STR(?s)), \"directiva\") || CONTAINS(LCASE(STR(?o)), \"directiva\") || CONTAINS(LCASE(STR(?s)), \"declaraci\") || CONTAINS(LCASE(STR(?o)), \"declaraci\") || CONTAINS(LCASE(STR(?s)), \"conformidad\") || CONTAINS(LCASE(STR(?o)), \"conformidad\"))\n} LIMIT 10"
-      },
-      {
-        "step_id": "expansion",
-        "purpose": "regulatory_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Aviso_Manual_3> <https://vocab.cfaa.eus/broaching/AvisoSeguridad> <https://vocab.cfaa.eus/broaching/Directiva> <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE> <https://vocab.cfaa.eus/broaching/Directiva2014_30_UE> <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> <https://vocab.cfaa.eus/broaching/Capitulo1> <https://vocab.cfaa.eus/broaching/CCESO_A_MAQUINA_Y_SEGURIDADES> }\n  ?s ?p ?o .\n} LIMIT 35"
-      }
-    ],
-    "notes": "semantic_rag"
-  },
-  {
-    "question": "?Cu?l es el correo electr?nico de contacto de EKIN indicado en el manual?",
-    "intent": "literal_lookup",
-    "anchor_text": "ekin",
-    "anchor_candidates": [
-      "ekin",
-      "correo",
-      "electr",
-      "nico",
-      "contacto"
-    ],
-    "template_id": "T1_literal_anchor",
-    "candidate_count": 8,
-    "result_count": 25,
-    "fallback_used": false,
-    "queries": [
-      {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"ekin\") || CONTAINS(LCASE(STR(?o)), \"ekin\") || CONTAINS(LCASE(STR(?s)), \"correo\") || CONTAINS(LCASE(STR(?o)), \"correo\") || CONTAINS(LCASE(STR(?s)), \"electr\") || CONTAINS(LCASE(STR(?o)), \"electr\") || CONTAINS(LCASE(STR(?s)), \"nico\") || CONTAINS(LCASE(STR(?o)), \"nico\"))\n} LIMIT 10"
-      },
-      {
-        "step_id": "expansion",
-        "purpose": "targeted_literal_expansion",
-        "sparql": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/DepartamentoAsistenciaClienteEKIN> <https://vocab.cfaa.eus/broaching/DepartamentoHerramientasEKIN_119_86> <https://vocab.cfaa.eus/broaching/Empresa_EKIN_S_Coop> <https://vocab.cfaa.eus/broaching/EmpresaEKIN> <https://vocab.cfaa.eus/broaching/EmpresaEKIN_18> <https://vocab.cfaa.eus/broaching/ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006> <https://vocab.cfaa.eus/broaching/MarcaEKINS_10> <https://vocab.cfaa.eus/broaching/PlanMantenimientoEKIN> }\n  ?s ?p ?o .\n} LIMIT 25"
-      }
-    ],
-    "notes": "semantic_rag"
-  },
-  {
-    "question": "?Qu? figura muestra la informaci?n que aparece en los encabezados y pies de p?gina del manual?",
-    "intent": "figure_or_reference_lookup",
-    "anchor_text": null,
-    "anchor_candidates": [
-      "figura",
-      "informaci",
-      "encabezados",
-      "pies",
-      "gina"
-    ],
-    "template_id": "T2_reference_lookup",
-    "candidate_count": 8,
-    "result_count": 35,
-    "fallback_used": false,
-    "queries": [
-      {
-        "step_id": "candidate",
-        "purpose": "candidate_retrieval",
-        "sparql": "SELECT DISTINCT ?s WHERE {\n  ?s ?p ?o .\n  FILTER(CONTAINS(LCASE(STR(?s)), \"figura\") || CONTAINS(LCASE(STR(?o)), \"figura\") || CONTAINS(LCASE(STR(?s)), \"informaci\") || CONTAINS(LCASE(STR(?o)), \"informaci\") || CONTAINS(LCASE(STR(?s)), \"encabezados\") || CONTAINS(LCASE(STR(?o)), \"encabezados\") || CONTAINS(LCASE(STR(?s)), \"pies\") || CONTAINS(LCASE(STR(?o)), \"pies\"))\n} LIMIT 10"
-      },
-      {
-        "step_id": "expansion",
-        "purpose": "incoming_reference_expansion",
-        "sparql": "SELECT DISTINCT ?x ?p ?s WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Figura> <https://vocab.cfaa.eus/broaching/Figura0-1-1> <https://vocab.cfaa.eus/broaching/Figura0_1_1InformacionMostradaEnPaginas> <https://vocab.cfaa.eus/broaching/Figura2_1> <https://vocab.cfaa.eus/broaching/Figura2_1ElementosSeguridadDeLaMaquina> <https://vocab.cfaa.eus/broaching/Figura2_2> <https://vocab.cfaa.eus/broaching/Figura2_3> <https://vocab.cfaa.eus/broaching/Figura2_6> }\n  ?x ?p ?s .\n} LIMIT 35"
-      }
-    ],
-    "notes": "semantic_rag"
+    "notes": "ok"
   }
 ]

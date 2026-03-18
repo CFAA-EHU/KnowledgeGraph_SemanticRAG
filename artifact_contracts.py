@@ -47,6 +47,11 @@ MULTIHOP_PLAN_CATALOG_PATH = PROCESSED_DATA_DIR / "multihop_plan_catalog.json"
 MULTIHOP_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "multihop_eval_report.json"
 MULTIHOP_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "multihop_debug_report.json"
 MULTIHOP_PLANNER_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "multihop_planner_decision_report.json"
+PLANNER_GENERALIZATION_CATALOG_PATH = PROCESSED_DATA_DIR / "planner_generalization_catalog.json"
+BOUNDEDNESS_POLICY_MATRIX_PATH = PROCESSED_DATA_DIR / "boundedness_policy_matrix.json"
+QUERY_REGRESSION_SET_PATH = PROCESSED_DATA_DIR / "query_regression_set.json"
+GENERALIZATION_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "generalization_eval_report.json"
+PLANNER_GENERALIZATION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "planner_generalization_decision_report.json"
 
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
@@ -77,6 +82,11 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "multihop_eval_report": MULTIHOP_EVAL_REPORT_PATH,
     "multihop_debug_report": MULTIHOP_DEBUG_REPORT_PATH,
     "multihop_planner_decision_report": MULTIHOP_PLANNER_DECISION_REPORT_PATH,
+    "planner_generalization_catalog": PLANNER_GENERALIZATION_CATALOG_PATH,
+    "boundedness_policy_matrix": BOUNDEDNESS_POLICY_MATRIX_PATH,
+    "query_regression_set": QUERY_REGRESSION_SET_PATH,
+    "generalization_eval_report": GENERALIZATION_EVAL_REPORT_PATH,
+    "planner_generalization_decision_report": PLANNER_GENERALIZATION_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {

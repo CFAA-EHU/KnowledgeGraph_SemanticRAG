@@ -72,6 +72,11 @@ def main() -> None:
     schema = load_schema()
     plan = build_query_plan(args.question, schema, graph)
     execution = execute_query_plan(plan, graph)
+    provisional_gap = 'planner_generalization_gap'
+    if plan.final_boundedness == 'too_broad' or plan.final_boundedness == 'too_narrow':
+        provisional_gap = 'boundedness_gap'
+    elif not execution.rows:
+        provisional_gap = 'graph_gap'
     output = {
         'question': args.question,
         'intent': plan.intent,
@@ -81,6 +86,10 @@ def main() -> None:
         'predicted_hop_depth': plan.predicted_hop_depth,
         'template_id': plan.template_id,
         'fallback_used': plan.fallback_used,
+        'confidence': plan.confidence,
+        'recommended_action': plan.recommended_action,
+        'final_boundedness': plan.final_boundedness,
+        'provisional_gap': provisional_gap,
         'query_plan': asdict(plan),
         'trace': asdict(execution.trace),
         'result_count': len(execution.rows),
@@ -98,6 +107,14 @@ def main() -> None:
             'anchor_candidates': plan.anchor_candidates,
             'template_id': plan.template_id,
             'fallback_used': plan.fallback_used,
+            'confidence': plan.confidence,
+            'recommended_action': plan.recommended_action,
+            'final_boundedness': plan.final_boundedness,
+            'provisional_gap': provisional_gap,
+        'confidence': plan.confidence,
+        'recommended_action': plan.recommended_action,
+        'final_boundedness': plan.final_boundedness,
+        'provisional_gap': provisional_gap,
             'trace': [asdict(step) for step in execution.trace.steps],
             'result_count': len(execution.rows),
         }, path=MULTIHOP_DEBUG_REPORT_PATH)

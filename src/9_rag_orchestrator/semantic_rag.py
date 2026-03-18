@@ -100,8 +100,9 @@ class MotorRAGSemantico:
         plan = build_query_plan(pregunta, self.esquema, self.grafo)
         execution = execute_query_plan(plan, self.grafo)
         print(f'   -> family={plan.plan_family} | template={plan.template_id} | hops={plan.predicted_hop_depth} | fallback={plan.fallback_used}')
+        print(f"   -> confidence={plan.confidence.get('overall', 0.0):.2f} | recommended_action={plan.recommended_action}")
         for trace in execution.trace.steps:
-            print(f"   step={trace.step_id} mode={trace.mode} raw={trace.raw_result_count} out={trace.output_candidate_count} boundedness={trace.boundedness_status}")
+            print(f"   step={trace.step_id} mode={trace.mode} raw={trace.raw_result_count} out={trace.output_candidate_count} boundedness={trace.boundedness_status} prune_reason={trace.prune_reason}")
         print('2. Graph retrieval complete...')
         print(f'   -> Recovered {len(execution.rows)} semantic rows.')
         append_query_debug_record({
@@ -113,6 +114,9 @@ class MotorRAGSemantico:
             'anchor_candidates': plan.anchor_candidates,
             'template_id': plan.template_id,
             'fallback_used': plan.fallback_used,
+            'recommended_action': plan.recommended_action,
+            'confidence': plan.confidence,
+            'final_boundedness': plan.final_boundedness,
             'trace': [asdict(step) for step in execution.trace.steps],
             'notes': 'semantic_rag_multihop',
         }, path=MULTIHOP_DEBUG_REPORT_PATH)

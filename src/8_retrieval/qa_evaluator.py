@@ -8,7 +8,6 @@ if str(REPO_ROOT) not in sys.path:
 import argparse
 import json
 import logging
-import os
 import re
 import time
 import unicodedata
@@ -16,29 +15,12 @@ from collections import Counter
 from dataclasses import asdict
 from statistics import mean
 
-from mistralai.client import Mistral
 from rdflib import Graph, URIRef
-try:
-    from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
-except ModuleNotFoundError:
-    def retry(*args, **kwargs):
-        def decorator(func):
-            return func
-        return decorator
-
-    def stop_after_attempt(*args, **kwargs):
-        return None
-
-    def wait_exponential(*args, **kwargs):
-        return None
-
-    def retry_if_exception_type(*args, **kwargs):
-        return None
 
 from artifact_contracts import (
+    GENERALIZATION_EVAL_REPORT_PATH,
     MULTIHOP_DEBUG_REPORT_PATH,
     MULTIHOP_EVAL_REPORT_PATH,
-    GENERALIZATION_EVAL_REPORT_PATH,
     MULTIHOP_PLANNER_DECISION_REPORT_PATH,
     OPERATIONAL_ABOX_PATH,
     OPERATIONAL_TBOX_PATH,
@@ -48,18 +30,21 @@ from artifact_contracts import (
     QA_MULTIHOP_PATH,
     QUERY_DEBUG_REPORT_PATH,
     SCHEMA_CONDENSED_PATH,
+    SYNTHESIS_DEBUG_REPORT_PATH,
+    SYNTHESIS_DECISION_REPORT_PATH,
+    SYNTHESIS_EVAL_REPORT_PATH,
 )
 
 RETRIEVAL_DIR = Path(__file__).resolve().parent
 if str(RETRIEVAL_DIR) not in sys.path:
     sys.path.insert(0, str(RETRIEVAL_DIR))
 
+from synthesis_pipeline import append_synthesis_debug_record, synthesize_answer
 from text_to_sparql import append_query_debug_record, build_query_plan, execute_query_plan
 
 logger = logging.getLogger(__name__)
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 ABOX_PATH = OPERATIONAL_ABOX_PATH
-MODEL = "mistral-small-latest"
 STOPWORDS = {
     "de", "la", "el", "los", "las", "del", "para", "por", "que", "una", "uno", "segun", "sobre",
     "esta", "este", "estos", "estas", "cual", "donde", "quien", "como", "manual", "maquina",
@@ -78,14 +63,12 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-
 def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analysis_path: Path | None, debug_report_path: Path | None) -> tuple[Path, Path, Path]:
     is_multihop = qa_file.resolve() == QA_MULTIHOP_PATH.resolve()
     resolved_report = report_path or (MULTIHOP_EVAL_REPORT_PATH if is_multihop else GENERALIZATION_EVAL_REPORT_PATH if qa_file.resolve() == QA_CANONICAL_PATH.resolve() else QA_EVAL_REPORT_PATH)
     resolved_failure = failure_analysis_path or (MULTIHOP_PLANNER_DECISION_REPORT_PATH if is_multihop else QA_FAILURE_ANALYSIS_PATH)
     resolved_debug = debug_report_path or (MULTIHOP_DEBUG_REPORT_PATH if is_multihop else QUERY_DEBUG_REPORT_PATH)
     return resolved_report, resolved_failure, resolved_debug
-
 
 
 def cargar_grafo_memoria() -> Graph:
@@ -101,27 +84,16 @@ def cargar_grafo_memoria() -> Graph:
 
 class EvaluadorRAG:
     def __init__(self, qa_file: Path, report_path: Path, failure_analysis_path: Path, debug_report_path: Path):
-        api_key = os.environ.get("MISTRAL_API_KEY")
-        if not api_key:
-            raise SystemExit("Error: Variable MISTRAL_API_KEY not defined.")
         self.qa_file = qa_file
         self.report_path = report_path
         self.failure_analysis_path = failure_analysis_path
         self.debug_report_path = debug_report_path
-        self.client = Mistral(api_key=api_key)
+        self.synthesis_eval_path = SYNTHESIS_EVAL_REPORT_PATH
+        self.synthesis_debug_path = SYNTHESIS_DEBUG_REPORT_PATH
+        self.synthesis_decision_path = SYNTHESIS_DECISION_REPORT_PATH
         self.grafo = cargar_grafo_memoria()
         self.esquema = self._cargar_esquema_condensado()
         self.subject_uris = {str(subject) for subject in self.grafo.subjects() if isinstance(subject, URIRef)}
-
-    @retry(
-        stop=stop_after_attempt(4),
-        wait=wait_exponential(multiplier=2, min=4, max=45),
-        retry=retry_if_exception_type(Exception),
-        before_sleep=lambda retry_state: print(f"Rate limit detected. Retrying LLM call (attempt {retry_state.attempt_number})..."),
-    )
-    def _llamada_llm_segura(self, mensajes: list) -> str:
-        respuesta = self.client.chat.complete(model=MODEL, temperature=0.0, messages=mensajes)
-        return respuesta.choices[0].message.content
 
     def _cargar_esquema_condensado(self) -> str:
         if not SCHEMA_CONDENSED_PATH.exists():
@@ -186,20 +158,21 @@ class EvaluadorRAG:
             return bank
         raise ValueError("Unsupported QA dataset shape.")
 
-    def sintetizar_respuesta(self, pregunta: str, tripletas_crudas: list[tuple[str, str, str]]) -> str:
-        if not tripletas_crudas:
-            return "[EMPTY] No graph relations were recovered for this question."
-        contexto_str = "\n".join([f"- {s} | {p} | {o}" for s, p, o in tripletas_crudas])
-        prompt = (
-            "You are the final assistant of a semantic RAG system. "
-            "Answer using only the extracted graph context. "
-            "If the context is insufficient, say so clearly."
-        )
-        mensajes = [
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f"Question: {pregunta}\n\nExtracted graph context:\n{contexto_str}"},
-        ]
-        return self._llamada_llm_segura(mensajes)
+    def sintetizar_respuesta(self, pregunta: str, tripletas_crudas: list[tuple[str, str, str]], plan) -> tuple[str, dict]:
+        respuesta, trace = synthesize_answer(pregunta, tripletas_crudas, plan)
+        return respuesta, asdict(trace)
+
+    def _rows_for_synthesis(self, execution) -> list[tuple[str, str, str]]:
+        rows: list[tuple[str, str, str]] = []
+        for row in execution.raw_bindings:
+            if len(row) != 3:
+                continue
+            subject, predicate, obj = row
+            subject_value = self._normalizar_uri(subject) if isinstance(subject, str) and subject.startswith("http") else str(subject)
+            predicate_value = self._normalizar_uri(predicate) if isinstance(predicate, str) and predicate.startswith("http") else str(predicate)
+            obj_value = self._normalizar_uri(obj) if isinstance(obj, str) and obj.startswith("http") else str(obj)
+            rows.append((subject_value, predicate_value, obj_value))
+        return rows
 
     def _extraer_resultados(self, pregunta: str):
         plan = build_query_plan(pregunta, self.esquema, self.grafo)
@@ -209,7 +182,7 @@ class EvaluadorRAG:
             for value in fila:
                 if isinstance(value, str) and value.startswith("http"):
                     uris_recuperadas.add(value)
-        return execution, execution.rows, uris_recuperadas
+        return execution, execution.rows, self._rows_for_synthesis(execution), uris_recuperadas
 
     def _vecindario_uri(self, uri: str) -> str:
         fragmentos = []
@@ -245,12 +218,72 @@ class EvaluadorRAG:
             return "ok"
         return "query_too_broad_or_too_narrow"
 
+    def _build_synthesis_summary(self, resultados: list[dict]) -> dict:
+        categories = Counter(row.get("synthesis_trace", {}).get("synthesis_category") for row in resultados if row.get("synthesis_trace"))
+        answer_modes = Counter(row.get("synthesis_trace", {}).get("answer_mode") for row in resultados if row.get("synthesis_trace"))
+        return {
+            "summary": {
+                "total_questions": len(resultados),
+                "synthesis_category_counts": dict(categories),
+                "answer_mode_counts": dict(answer_modes),
+                "questions_with_selected_evidence": sum(1 for row in resultados if row.get("synthesis_trace", {}).get("selected_evidence")),
+                "questions_with_surface_normalization": sum(1 for row in resultados if "surface_normalized" in row.get("synthesis_trace", {}).get("notes", [])),
+            },
+            "results": [
+                {
+                    "question": row["question"],
+                    "classification": row["classification"],
+                    "plan_family": row.get("plan_family"),
+                    "answer_mode": row.get("synthesis_trace", {}).get("answer_mode"),
+                    "selected_evidence": row.get("synthesis_trace", {}).get("selected_evidence", []),
+                    "normalized_values": row.get("synthesis_trace", {}).get("normalized_values", []),
+                    "rendered_answer": row.get("synthesized_answer"),
+                    "synthesis_category": row.get("synthesis_trace", {}).get("synthesis_category"),
+                    "notes": row.get("synthesis_trace", {}).get("notes", []),
+                }
+                for row in resultados
+            ],
+        }
+
+    def _build_synthesis_decision(self, resultados: list[dict], metricas: dict) -> dict:
+        category_counter = Counter(row.get("synthesis_trace", {}).get("synthesis_category") for row in resultados if row.get("synthesis_trace"))
+        category_counter.pop("ok", None)
+        next_change = "value_surface_polish_minor"
+        if category_counter:
+            top_category = category_counter.most_common(1)[0][0]
+            mapping = {
+                "wrong_value_prioritization": "post_retrieval_ranking",
+                "redundant_answer": "response_rendering",
+                "literal_formatting_issue": "value_normalization",
+                "answer_under-specified": "evidence_selection",
+                "answer_over-specified": "response_rendering",
+                "naming_surface_issue": "value_normalization",
+            }
+            next_change = mapping.get(top_category, "value_surface_polish_minor")
+        return {
+            "summary": metricas,
+            "residual_synthesis_categories": dict(category_counter),
+            "top_examples": [
+                {
+                    "question": row["question"],
+                    "plan_family": row.get("plan_family"),
+                    "synthesis_category": row.get("synthesis_trace", {}).get("synthesis_category"),
+                    "notes": row.get("synthesis_trace", {}).get("notes", []),
+                    "rendered_answer": row.get("synthesized_answer"),
+                }
+                for row in resultados[:5]
+            ],
+            "recommended_next_change": next_change,
+        }
+
     def ejecutar_evaluacion(self, *, limit: int = 0, sleep_seconds: float = 0.0) -> tuple[dict, dict]:
         banco_preguntas = self._cargar_dataset()
         if limit > 0:
             banco_preguntas = banco_preguntas[:limit]
         self.debug_report_path.parent.mkdir(parents=True, exist_ok=True)
         self.debug_report_path.write_text("[]", encoding="utf-8")
+        self.synthesis_debug_path.parent.mkdir(parents=True, exist_ok=True)
+        self.synthesis_debug_path.write_text("[]", encoding="utf-8")
         print(f"Starting evaluation of {len(banco_preguntas)} questions using {self.qa_file}...\n")
         resultados = []
         for index, item in enumerate(banco_preguntas, 1):
@@ -259,8 +292,10 @@ class EvaluadorRAG:
             execution = None
             query_plan = None
             tripletas_limpias: list[tuple[str, str, str]] = []
+            tripletas_sintesis: list[tuple[str, str, str]] = []
             uris_recuperadas = set()
             respuesta_final = ""
+            synthesis_trace: dict = {}
             query_error = None
             synthesis_error = None
             print("=" * 70)
@@ -268,7 +303,7 @@ class EvaluadorRAG:
             print(f"EXPECTED: {item['answer']}")
             print("-" * 70)
             try:
-                execution, tripletas_limpias, uris_recuperadas = self._extraer_resultados(pregunta)
+                execution, tripletas_limpias, tripletas_sintesis, uris_recuperadas = self._extraer_resultados(pregunta)
                 query_plan = execution.plan
                 print(f"PLAN -> family={query_plan.plan_family} | template={query_plan.template_id} | hops={query_plan.predicted_hop_depth} | fallback={query_plan.fallback_used}")
                 print(f"Recovered rows: {len(tripletas_limpias)}")
@@ -282,9 +317,9 @@ class EvaluadorRAG:
             precision = len(matching) / len(recovered_norm) if recovered_norm else 0.0
             recall = len(matching) / len(expected_norm) if expected_norm else 0.0
 
-            if query_error is None:
+            if query_error is None and query_plan is not None:
                 try:
-                    respuesta_final = self.sintetizar_respuesta(pregunta, tripletas_limpias)
+                    respuesta_final, synthesis_trace = self.sintetizar_respuesta(pregunta, tripletas_sintesis, query_plan)
                 except Exception as exc:
                     synthesis_error = str(exc)
                     print(f"Error in synthesis: {synthesis_error}")
@@ -316,6 +351,18 @@ class EvaluadorRAG:
                     "trace": [asdict(step) for step in execution.trace.steps],
                     "notes": classification,
                 }, path=self.debug_report_path)
+                append_synthesis_debug_record({
+                    "question": pregunta,
+                    "intent": query_plan.intent,
+                    "plan_family": query_plan.plan_family,
+                    "template_id": query_plan.template_id,
+                    "recommended_action": query_plan.recommended_action,
+                    "confidence": query_plan.confidence,
+                    "final_boundedness": query_plan.final_boundedness,
+                    "retrieved_results": [list(row) for row in tripletas_limpias],
+                    "synthesis_trace": synthesis_trace,
+                    "classification": classification,
+                }, path=self.synthesis_debug_path)
 
             print(f"METRICS -> precision={precision:.2f} | recall={recall:.2f} | classification={classification}")
             print(f"ANSWER: {respuesta_final}")
@@ -345,6 +392,7 @@ class EvaluadorRAG:
                 "precision": round(precision, 4),
                 "recall": round(recall, 4),
                 "synthesized_answer": respuesta_final,
+                "synthesis_trace": synthesis_trace,
                 "synthesis_error": synthesis_error,
                 "classification": classification,
             })
@@ -369,6 +417,7 @@ class EvaluadorRAG:
             "abox_path": str(ABOX_PATH),
             "schema_condensed_path": str(SCHEMA_CONDENSED_PATH),
             "debug_report_path": str(self.debug_report_path),
+            "synthesis_debug_report_path": str(self.synthesis_debug_path),
         }
         report = {"summary": metricas, "results": resultados}
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
@@ -387,16 +436,15 @@ class EvaluadorRAG:
                         "precision": row["precision"],
                         "recall": row["recall"],
                         "trace": row["trace"],
+                        "synthesis_trace": row.get("synthesis_trace", {}),
                     })
                     break
 
         ordered_failures = Counter(row["classification"] for row in resultados if row["classification"] != "ok").most_common()
-        next_change = "planner_multi_hop"
+        next_change = "answer_synthesis"
         if ordered_failures:
             top_failure = ordered_failures[0][0]
-            if top_failure == "answer_synthesis_failed":
-                next_change = "answer_synthesis"
-            elif top_failure == "graph_coverage_missing":
+            if top_failure == "graph_coverage_missing":
                 next_change = "graph_modeling"
             elif top_failure == "query_too_broad_or_too_narrow":
                 next_change = "boundedness_or_planner"
@@ -410,6 +458,14 @@ class EvaluadorRAG:
         }
         self.failure_analysis_path.parent.mkdir(parents=True, exist_ok=True)
         self.failure_analysis_path.write_text(json.dumps(failure_analysis, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        synthesis_eval = self._build_synthesis_summary(resultados)
+        self.synthesis_eval_path.parent.mkdir(parents=True, exist_ok=True)
+        self.synthesis_eval_path.write_text(json.dumps(synthesis_eval, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        synthesis_decision = self._build_synthesis_decision(resultados, metricas)
+        self.synthesis_decision_path.parent.mkdir(parents=True, exist_ok=True)
+        self.synthesis_decision_path.write_text(json.dumps(synthesis_decision, ensure_ascii=False, indent=2), encoding="utf-8")
         return report, failure_analysis
 
 

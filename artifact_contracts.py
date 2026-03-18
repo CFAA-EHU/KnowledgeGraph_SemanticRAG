@@ -52,6 +52,11 @@ BOUNDEDNESS_POLICY_MATRIX_PATH = PROCESSED_DATA_DIR / "boundedness_policy_matrix
 QUERY_REGRESSION_SET_PATH = PROCESSED_DATA_DIR / "query_regression_set.json"
 GENERALIZATION_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "generalization_eval_report.json"
 PLANNER_GENERALIZATION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "planner_generalization_decision_report.json"
+SYNTHESIS_ERROR_TAXONOMY_PATH = PROCESSED_DATA_DIR / "synthesis_error_taxonomy.json"
+VALUE_NORMALIZATION_RULES_PATH = PROCESSED_DATA_DIR / "value_normalization_rules.json"
+SYNTHESIS_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "synthesis_eval_report.json"
+SYNTHESIS_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "synthesis_debug_report.json"
+SYNTHESIS_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "synthesis_decision_report.json"
 
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
@@ -87,6 +92,11 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "query_regression_set": QUERY_REGRESSION_SET_PATH,
     "generalization_eval_report": GENERALIZATION_EVAL_REPORT_PATH,
     "planner_generalization_decision_report": PLANNER_GENERALIZATION_DECISION_REPORT_PATH,
+    "synthesis_error_taxonomy": SYNTHESIS_ERROR_TAXONOMY_PATH,
+    "value_normalization_rules": VALUE_NORMALIZATION_RULES_PATH,
+    "synthesis_eval_report": SYNTHESIS_EVAL_REPORT_PATH,
+    "synthesis_debug_report": SYNTHESIS_DEBUG_REPORT_PATH,
+    "synthesis_decision_report": SYNTHESIS_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {

@@ -32,7 +32,8 @@
     "tbox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\ontology_aligned.ttl",
     "abox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl",
     "schema_condensed_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\schema_condensed.txt",
-    "debug_report_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\multihop_debug_report.json"
+    "debug_report_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\multihop_debug_report.json",
+    "synthesis_debug_report_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\synthesis_debug_report.json"
   },
   "failure_distribution": {},
   "top_representative_questions": [
@@ -191,12 +192,12 @@
             [
               "PlanMantenimientoEKIN",
               "textoExtracto",
-              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
             ],
             [
               "PlanMantenimientoEKIN",
               "textoExtracto",
-              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
             ],
             [
               "PlanMantenimientoEKIN",
@@ -304,12 +305,12 @@
               [
                 "PlanMantenimientoEKIN",
                 "textoExtracto",
-                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
               ],
               [
                 "PlanMantenimientoEKIN",
                 "textoExtracto",
-                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
               ],
               [
                 "PlanMantenimientoEKIN",
@@ -344,12 +345,12 @@
         [
           "PlanMantenimientoEKIN",
           "textoExtracto",
-          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
         ],
         [
           "PlanMantenimientoEKIN",
           "textoExtracto",
-          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
         ],
         [
           "PlanMantenimientoEKIN",
@@ -390,7 +391,107 @@
       ],
       "precision": 0.125,
       "recall": 1.0,
-      "synthesized_answer": "El sistema de seguridad de la máquina requiere el **PlanMantenimientoEKIN**, que es un plan de mantenimiento especificado por EKIN. Se debe seguir este plan para la máquina brochadora, detallado en el apartado 7.1.",
+      "synthesized_answer": "plan de mantenimiento especificado por EKIN",
+      "synthesis_trace": {
+        "question": "Que plan de mantenimiento requiere el sistema de seguridad de la maquina?",
+        "intent": "regulatory_lookup",
+        "answer_mode": "generic",
+        "candidate_count": 6,
+        "evidence_candidates": [
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "label",
+            "obj": "plan de mantenimiento especificado por EKIN",
+            "score": 5.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "preferred_predicate:label"
+            ]
+          },
+          {
+            "subject": "SistemaSeguridadMaquina",
+            "predicate": "requiereMantenimiento",
+            "obj": "PlanMantenimientoEKIN",
+            "score": 4.8,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:5"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "textoExtracto",
+            "obj": "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA",
+            "score": 4.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "supporting_text"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "textoExtracto",
+            "obj": "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento).",
+            "score": 4.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "supporting_text"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "type",
+            "obj": "Directiva",
+            "score": 1.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "type_penalty"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "type",
+            "obj": "TareaMantenimiento",
+            "score": 1.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "type_penalty"
+            ]
+          }
+        ],
+        "selected_evidence": [
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "label",
+            "obj": "plan de mantenimiento especificado por EKIN",
+            "score": 5.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "preferred_predicate:label"
+            ]
+          }
+        ],
+        "normalized_values": [
+          {
+            "raw_value": "plan de mantenimiento especificado por EKIN",
+            "normalized_value": "plan de mantenimiento especificado por EKIN",
+            "value_type": "label",
+            "applied_rules": [
+              "whitespace_cleanup",
+              "deduplicate_values"
+            ]
+          }
+        ],
+        "rendered_answer": "plan de mantenimiento especificado por EKIN",
+        "synthesis_category": "ok",
+        "notes": []
+      },
       "synthesis_error": null,
       "classification": "ok"
     },
@@ -552,12 +653,12 @@
             [
               "PlanMantenimientoEKIN",
               "textoExtracto",
-              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
             ],
             [
               "PlanMantenimientoEKIN",
               "textoExtracto",
-              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+              "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
             ],
             [
               "PlanMantenimientoEKIN",
@@ -667,12 +768,12 @@
               [
                 "PlanMantenimientoEKIN",
                 "textoExtracto",
-                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
               ],
               [
                 "PlanMantenimientoEKIN",
                 "textoExtracto",
-                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+                "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
               ],
               [
                 "PlanMantenimientoEKIN",
@@ -707,12 +808,12 @@
         [
           "PlanMantenimientoEKIN",
           "textoExtracto",
-          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
+          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
         ],
         [
           "PlanMantenimientoEKIN",
           "textoExtracto",
-          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA"
+          "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)."
         ],
         [
           "PlanMantenimientoEKIN",
@@ -753,7 +854,107 @@
       ],
       "precision": 0.125,
       "recall": 1.0,
-      "synthesized_answer": "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento).",
+      "synthesized_answer": "plan de mantenimiento especificado por EKIN",
+      "synthesis_trace": {
+        "question": "Que texto describe el plan de mantenimiento requerido por el sistema de seguridad de la maquina?",
+        "intent": "regulatory_lookup",
+        "answer_mode": "generic",
+        "candidate_count": 6,
+        "evidence_candidates": [
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "label",
+            "obj": "plan de mantenimiento especificado por EKIN",
+            "score": 5.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "preferred_predicate:label"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "textoExtracto",
+            "obj": "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA",
+            "score": 5.1,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:3",
+              "supporting_text"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "textoExtracto",
+            "obj": "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento).",
+            "score": 5.1,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:3",
+              "supporting_text"
+            ]
+          },
+          {
+            "subject": "SistemaSeguridadMaquina",
+            "predicate": "requiereMantenimiento",
+            "obj": "PlanMantenimientoEKIN",
+            "score": 4.8,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:4"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "type",
+            "obj": "Directiva",
+            "score": 1.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "type_penalty"
+            ]
+          },
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "type",
+            "obj": "TareaMantenimiento",
+            "score": 1.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "type_penalty"
+            ]
+          }
+        ],
+        "selected_evidence": [
+          {
+            "subject": "PlanMantenimientoEKIN",
+            "predicate": "label",
+            "obj": "plan de mantenimiento especificado por EKIN",
+            "score": 5.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "preferred_predicate:label"
+            ]
+          }
+        ],
+        "normalized_values": [
+          {
+            "raw_value": "plan de mantenimiento especificado por EKIN",
+            "normalized_value": "plan de mantenimiento especificado por EKIN",
+            "value_type": "label",
+            "applied_rules": [
+              "whitespace_cleanup",
+              "deduplicate_values"
+            ]
+          }
+        ],
+        "rendered_answer": "plan de mantenimiento especificado por EKIN",
+        "synthesis_category": "ok",
+        "notes": []
+      },
       "synthesis_error": null,
       "classification": "ok"
     },
@@ -1078,7 +1279,85 @@
       ],
       "precision": 0.1429,
       "recall": 1.0,
-      "synthesized_answer": "La máquina de brochado exterior cumple la **DirectivaSeguridadUnionEuropea**.",
+      "synthesized_answer": "La declaracion CE de conformidad sobre maquinas se realiza segun la Directiva DirectivaSeguridadUnionEuropea_18.",
+      "synthesis_trace": {
+        "question": "Que directiva cumple la maquina de brochado exterior?",
+        "intent": "regulatory_lookup",
+        "answer_mode": "directive",
+        "candidate_count": 4,
+        "evidence_candidates": [
+          {
+            "subject": "MaquinaBrochadoExterior_18",
+            "predicate": "cumpleNormativa",
+            "obj": "DirectivaSeguridadUnionEuropea_18",
+            "score": 4.8,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:4"
+            ]
+          },
+          {
+            "subject": "DirectivaSeguridadUnionEuropea_18",
+            "predicate": "identificador",
+            "obj": "DirectivaSeguridadUnionEuropea",
+            "score": 4.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "preferred_predicate:identificador"
+            ]
+          },
+          {
+            "subject": "DirectivaSeguridadUnionEuropea_18",
+            "predicate": "textoExtracto",
+            "obj": "cumpliendo todos los requisitos necesarios para el MARCADO Véase apartado 2.4. Equipo para la seguridad personal. Antes de efectuar la puesta en marcha de la máquina, ésta debe conectarse al sistema de tierras del usuario y dicho sistema debe cumplir con lo exigido por las leyes nacionales.",
+            "score": 2.2,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "supporting_text",
+              "long_literal_penalty"
+            ]
+          },
+          {
+            "subject": "DirectivaSeguridadUnionEuropea_18",
+            "predicate": "type",
+            "obj": "Directiva",
+            "score": 0.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "type_penalty"
+            ]
+          }
+        ],
+        "selected_evidence": [
+          {
+            "subject": "MaquinaBrochadoExterior_18",
+            "predicate": "cumpleNormativa",
+            "obj": "DirectivaSeguridadUnionEuropea_18",
+            "score": 4.8,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:4"
+            ]
+          }
+        ],
+        "normalized_values": [
+          {
+            "raw_value": "DirectivaSeguridadUnionEuropea_18",
+            "normalized_value": "DirectivaSeguridadUnionEuropea_18",
+            "value_type": "directive",
+            "applied_rules": [
+              "whitespace_cleanup",
+              "deduplicate_values"
+            ]
+          }
+        ],
+        "rendered_answer": "La declaracion CE de conformidad sobre maquinas se realiza segun la Directiva DirectivaSeguridadUnionEuropea_18.",
+        "synthesis_category": "ok",
+        "notes": []
+      },
       "synthesis_error": null,
       "classification": "ok"
     },
@@ -1404,7 +1683,90 @@
       ],
       "precision": 0.1667,
       "recall": 1.0,
-      "synthesized_answer": "La figura asociada al manual A218 es **Figura0-1-1**.",
+      "synthesized_answer": "La figura que muestra esa informacion es la Figura 0-1-1.",
+      "synthesis_trace": {
+        "question": "Que figura queda asociada al manual A218?",
+        "intent": "figure_or_reference_lookup",
+        "answer_mode": "figure",
+        "candidate_count": 4,
+        "evidence_candidates": [
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "textoExtracto",
+            "obj": "Figura 0-1-1. Información mostrada en páginas.",
+            "score": 9.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "supporting_text",
+              "figure_match"
+            ]
+          },
+          {
+            "subject": "ManualBrochadoraA218",
+            "predicate": "ilustradoEn",
+            "obj": "Figura0-1-1",
+            "score": 9.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "figure_match"
+            ]
+          },
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "ilustradoEn",
+            "obj": "ManualBrochadoraA218",
+            "score": 3.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2"
+            ]
+          },
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "type",
+            "obj": "Figura",
+            "score": 0.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "type_penalty"
+            ]
+          }
+        ],
+        "selected_evidence": [
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "textoExtracto",
+            "obj": "Figura 0-1-1. Información mostrada en páginas.",
+            "score": 9.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "supporting_text",
+              "figure_match"
+            ]
+          }
+        ],
+        "normalized_values": [
+          {
+            "raw_value": "Figura 0-1-1. Información mostrada en páginas.",
+            "normalized_value": "Figura 0-1-1",
+            "value_type": "figure",
+            "applied_rules": [
+              "figure_extraction",
+              "whitespace_cleanup",
+              "deduplicate_values"
+            ]
+          }
+        ],
+        "rendered_answer": "La figura que muestra esa informacion es la Figura 0-1-1.",
+        "synthesis_category": "ok",
+        "notes": [
+          "surface_normalized"
+        ]
+      },
       "synthesis_error": null,
       "classification": "ok"
     },
@@ -1735,11 +2097,94 @@
       ],
       "precision": 0.1667,
       "recall": 1.0,
-      "synthesized_answer": "La descripción textual de la figura asociada al manual A218 es: **\"Figura 0-1-1. Información mostrada en páginas.\"**",
+      "synthesized_answer": "La figura que muestra esa informacion es la Figura 0-1-1.",
+      "synthesis_trace": {
+        "question": "Que descripcion textual tiene la figura asociada al manual A218?",
+        "intent": "figure_or_reference_lookup",
+        "answer_mode": "figure",
+        "candidate_count": 4,
+        "evidence_candidates": [
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "textoExtracto",
+            "obj": "Figura 0-1-1. Información mostrada en páginas.",
+            "score": 9.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "supporting_text",
+              "figure_match"
+            ]
+          },
+          {
+            "subject": "ManualBrochadoraA218",
+            "predicate": "ilustradoEn",
+            "obj": "Figura0-1-1",
+            "score": 9.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2",
+              "figure_match"
+            ]
+          },
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "ilustradoEn",
+            "obj": "ManualBrochadoraA218",
+            "score": 3.4,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:2"
+            ]
+          },
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "type",
+            "obj": "Figura",
+            "score": 0.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "type_penalty"
+            ]
+          }
+        ],
+        "selected_evidence": [
+          {
+            "subject": "Figura0-1-1",
+            "predicate": "textoExtracto",
+            "obj": "Figura 0-1-1. Información mostrada en páginas.",
+            "score": 9.7,
+            "reasons": [
+              "anchor_match",
+              "question_token_hits:1",
+              "supporting_text",
+              "figure_match"
+            ]
+          }
+        ],
+        "normalized_values": [
+          {
+            "raw_value": "Figura 0-1-1. Información mostrada en páginas.",
+            "normalized_value": "Figura 0-1-1",
+            "value_type": "figure",
+            "applied_rules": [
+              "figure_extraction",
+              "whitespace_cleanup",
+              "deduplicate_values"
+            ]
+          }
+        ],
+        "rendered_answer": "La figura que muestra esa informacion es la Figura 0-1-1.",
+        "synthesis_category": "ok",
+        "notes": [
+          "surface_normalized"
+        ]
+      },
       "synthesis_error": null,
       "classification": "ok"
     }
   ],
   "failure_examples": [],
-  "recommended_next_change": "planner_multi_hop"
+  "recommended_next_change": "answer_synthesis"
 }

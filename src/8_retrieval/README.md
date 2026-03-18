@@ -1,6 +1,6 @@
-ï»¿# src/8_retrieval
+# src/8_retrieval
 
-Capa de recuperacion SPARQL, evaluacion y planner compartido del runtime operativo.
+Capa de recuperacion SPARQL, evaluacion y sintesis compartida del runtime operativo.
 
 ## Componentes principales
 
@@ -8,7 +8,7 @@ Capa de recuperacion SPARQL, evaluacion y planner compartido del runtime operati
 Genera `data/processed/schema_condensed.txt` a partir de `data/processed/ontology_aligned.ttl`.
 
 ### `text_to_sparql.py`
-Es la fuente unica de planificacion de consulta del proyecto.
+Sigue siendo la fuente unica de planificacion de consulta del proyecto.
 
 Responsabilidades actuales:
 - parsing determinista de intencion
@@ -22,45 +22,56 @@ Responsabilidades actuales:
 - fallback controlado
 - export de catalogos y matriz de boundedness
 
+### `synthesis_pipeline.py`
+Nueva capa compartida de T14 para post-retrieval.
+
+Responsabilidades:
+- ranking de evidencia recuperada
+- seleccion de filas candidatas para respuesta
+- normalizacion determinista de valores
+- renderizado final de respuesta
+- trazabilidad de evidencia cruda, evidencia elegida y valores normalizados
+
 Artefactos que exporta o alimenta:
-- `data/processed/multihop_plan_catalog.json`
-- `data/processed/planner_generalization_catalog.json`
-- `data/processed/boundedness_policy_matrix.json`
-- `data/processed/query_debug_report.json`
-- `data/processed/multihop_debug_report.json`
+- `data/processed/value_normalization_rules.json`
+- `data/processed/synthesis_debug_report.json`
+- `data/processed/synthesis_eval_report.json`
+- `data/processed/synthesis_decision_report.json`
 
 ### `qa_evaluator.py`
 Evalua el runtime operativo sobre:
 - `data/golden_set/QA_canonical.json`
 - `data/golden_set/QA_multihop.json`
 
-Genera:
+Ahora persiste tanto retrieval como sintesis:
 - `data/processed/generalization_eval_report.json`
 - `data/processed/qa_failure_analysis.json`
 - `data/processed/multihop_eval_report.json`
-- `data/processed/query_regression_set.json`
-- `data/processed/planner_generalization_decision_report.json`
+- `data/processed/query_debug_report.json`
+- `data/processed/synthesis_debug_report.json`
+- `data/processed/synthesis_eval_report.json`
+- `data/processed/synthesis_decision_report.json`
 
-## Estado tras T13
+## Estado tras T14
 
 ### Lo ya conseguido
 - planner multi-hop compartido estable
 - `QA_multihop` conservado en `7/7`
-- `QA_canonical` resuelto en `13/13`
-- nuevas familias generalizadas para figura de cabecera, simbolos de seguridad, contacto EKIN, recambios y directiva CE
-- boundedness explicito por politica
-- confianza y accion recomendada visibles en evaluacion y workbench
+- `QA_canonical` conservado en `13/13`
+- ranking post-retrieval y seleccion de evidencia compartidos
+- normalizacion explicita de correo, direccion, directiva y figura
+- separacion trazable entre evidencia recuperada, evidencia seleccionada y respuesta final
 
 ### Lo que sigue pendiente
-El cuello de botella principal ya no es el planner, sino:
-- pulido de sintesis final
-- normalizacion de respuestas literales
-- presentacion mas natural de identificadores y valores
+El cuello de botella principal ya no es planner ni boundedness. Lo siguiente a mejorar aqui es:
+- pulido fino de superficie en respuestas largas
+- compresion de algunas respuestas de proposito/advertencia
+- renderizado mas natural en algunos casos limite ya resueltos a nivel de evidencia
 
 ## Regresion obligatoria
 
 Antes de cerrar cambios en esta capa, ejecutar al menos:
 - `python src/8_retrieval/qa_evaluator.py`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json`
-- `python src/8_retrieval/text_to_sparql.py --export-generalization-catalog`
-- `python src/8_retrieval/text_to_sparql.py --export-boundedness-matrix`
+- `python query_workbench.py "¿Cuál es el correo electrónico de contacto de EKIN indicado en el manual?" --with-synthesis`
+- `python query_workbench.py "¿Dónde se encuentra la dirección de la empresa EKIN mencionada en el manual?" --with-synthesis`

@@ -1,4 +1,4 @@
-﻿# docs
+# docs
 
 Documentacion operativa, contractual y transversal del proyecto.
 
@@ -10,20 +10,20 @@ Documentacion operativa, contractual y transversal del proyecto.
 - `operational_pipeline_runbook.md`
   Guia de ejecucion del build operativo.
 
-## Relacion con T13
+## Relacion con T14
 
-La documentacion de detalle del planner generalizado y de boundedness vive ya en los README de modulo:
+La documentacion de detalle del planner, retrieval y sintesis vive en los README de modulo:
 - `README.md`
 - `src/8_retrieval/README.md`
 - `src/9_rag_orchestrator/README.md`
 
-Los artefactos operativos que resumen T13 viven en `data/processed/`:
-- `planner_generalization_catalog.json`
-- `boundedness_policy_matrix.json`
-- `query_regression_set.json`
-- `generalization_eval_report.json`
-- `planner_generalization_decision_report.json`
+Los artefactos operativos que resumen T14 viven en `data/processed/`:
+- `synthesis_error_taxonomy.json`
+- `value_normalization_rules.json`
+- `synthesis_eval_report.json`
+- `synthesis_debug_report.json`
+- `synthesis_decision_report.json`
 
 ## Recomendacion
 
-Mantener aqui solo documentacion estable y transversal. La evolucion del planner y del runtime debe seguir documentandose en los README de los modulos afectados.
+Mantener aqui solo documentacion estable y transversal. La evolucion del planner, retrieval y sintesis debe seguir documentandose en los README de los modulos afectados.

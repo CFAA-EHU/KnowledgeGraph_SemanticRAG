@@ -1,0 +1,242 @@
+{
+  "baseline_source": "data/processed/generalization_eval_report.json",
+  "baseline_summary": {
+    "total_questions": 13,
+    "avg_precision": 0.2553,
+    "avg_recall": 1.0,
+    "successful_questions": 13,
+    "classification_counts": {
+      "ok": 13
+    },
+    "intent_counts": {
+      "purpose_or_function_lookup": 2,
+      "figure_or_reference_lookup": 1,
+      "regulatory_lookup": 6,
+      "literal_lookup": 4
+    },
+    "plan_family_counts": {
+      "generic_purpose_lookup": 2,
+      "manual_header_figure_lookup": 1,
+      "generic_regulatory_lookup": 3,
+      "safety_symbol_detail": 2,
+      "ekin_contact_literal": 2,
+      "ce_directive_literal": 1,
+      "generic_literal_lookup": 1,
+      "spare_parts_policy_literal": 1
+    },
+    "hop_depth_counts": {
+      "1": 13
+    },
+    "boundedness_counts": {
+      "bounded": 13
+    },
+    "avg_plan_confidence": 0.7062,
+    "fallback_count": 0,
+    "dataset_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\golden_set\\QA_canonical.json",
+    "tbox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\ontology_aligned.ttl",
+    "abox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl",
+    "schema_condensed_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\schema_condensed.txt",
+    "debug_report_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\query_debug_report.json"
+  },
+  "taxonomy": [
+    {
+      "category": "value_selection_noise",
+      "description": "Hay evidencia correcta, pero compite con filas vecinas menos relevantes.",
+      "examples": [
+        {
+          "question": "¿Qué objetivo tienen los símbolos de advertencia y seguridad del manual?",
+          "pre_t14_answer": "Los símbolos de advertencia y seguridad en el manual tienen como objetivo resaltar instrucciones importantes y relevantes relacionadas con la seguridad.",
+          "evidence_excerpt": [
+            [
+              "IndicacionAdvertenciaSeguridad",
+              "textoExtracto",
+              "Todas las indicaciones del presente manual que vayan acompañadas de los siguientes símbolos tienen como objetivo resaltar instrucciones importantes y relevantes relacionadas con la seguridad."
+            ],
+            [
+              "DirectivaSeguridadUnionEuropea_18",
+              "identificador",
+              "DirectivaSeguridadUnionEuropea"
+            ],
+            [
+              "DirectivaSeguridadUnionEuropea_18",
+              "textoExtracto",
+              "cumpliendo todos los requisitos necesarios para el MARCADO Véase apartado 2.4. Equipo para la seguridad personal. Antes de efectuar la puesta en marcha de la máquina, ésta debe conectarse al sistema de tierras del usuario y dicho sistema debe cumplir con lo exigido por las leyes nacionales."
+            ]
+          ],
+          "why": "La evidencia estaba acotada, pero seguian entrando filas laterales que obligaban a filtrar mejor antes del renderizado."
+        },
+        {
+          "question": "¿A quién se debe consultar en caso de dudas sobre la seguridad de la máquina?",
+          "pre_t14_answer": "En caso de dudas sobre la seguridad de la máquina, se debe consultar al **Departamento de Asistencia al Cliente de EKIN**.",
+          "evidence_excerpt": [
+            [
+              "DepartamentoAsistenciaClienteEKIN",
+              "textoExtracto",
+              "EN CASO NECESARIO DEBE PONERSE EN CONTACTO CON DEPARTAMENTO DE ASISTENCIA AL CLIENTE DE EKIN."
+            ],
+            [
+              "DepartamentoAsistenciaClienteEKIN",
+              "textoExtracto",
+              "CONSULTAR DEPARTAMENTO DE ASISTENCIA AL CLIENTE DE EKIN"
+            ],
+            [
+              "DepartamentoAsistenciaClienteEKIN",
+              "textoExtracto",
+              "DEPARTAMENTO DE ASISTENCIA AL CLIENTE DE EKIN"
+            ]
+          ],
+          "why": "La evidencia estaba acotada, pero seguian entrando filas laterales que obligaban a filtrar mejor antes del renderizado."
+        }
+      ]
+    },
+    {
+      "category": "literal_formatting_issue",
+      "description": "El valor correcto aparece incrustado en un literal mixto y necesita limpieza.",
+      "examples": [
+        {
+          "question": "¿Cuál es el correo electrónico de contacto de EKIN indicado en el manual?",
+          "pre_t14_answer": "El correo electrónico de contacto de EKIN indicado en el manual es: **ekin@ekin.es**.",
+          "evidence_excerpt": [
+            [
+              "ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+              "label",
+              " A21811006"
+            ],
+            [
+              "ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+              "identificador",
+              " A21811006"
+            ],
+            [
+              "ConjuntoGuiadoCarroPortaPieza_EKIN_IKO_A21811005_A21811006",
+              "textoExtracto",
+              " A21811006"
+            ]
+          ],
+          "why": "La evidencia correcta estaba en el grafo, pero la respuesta final dependia de un literal mixto de contacto sin normalizacion fina."
+        }
+      ]
+    },
+    {
+      "category": "wrong_value_prioritization",
+      "description": "La respuesta elige una fila correcta pero secundaria o menos util.",
+      "examples": [
+        {
+          "question": "¿Para qué sirve el manual de la brochadora A218 / RASHEM - 7x3000x500?",
+          "pre_t14_answer": "El manual de la brochadora **A218 / RASHEM - 7x3000x500** sirve como **lámina de identificación** del manual, incluyendo:\n- El logotipo del fabricante.\n- La denominación de la máquina.\n- Datos de contacto.\n- Diseño limpio con bloques de texto centrados, actuando como **carátula final del dossier técnico**.\n\n*(Contexto extraído: \"Lámina de identificación del manual con el logotipo del fabricante, denominación de la máquina y datos de contacto. Diseño limpio con bloques de texto centrados, actuando como carátula final del dossier técnico.\")*",
+          "evidence_excerpt": [
+            [
+              "ManualBrochadoraA218",
+              "identificador",
+              " RASHEM - 7x3000x500"
+            ],
+            [
+              "ManualBrochadoraA218",
+              "textoExtracto",
+              "Capítulo Nombre del fichero"
+            ],
+            [
+              "Maquina_A218_RASHEM_7x3000x500",
+              "label",
+              " RASHEM 7×3000×500"
+            ],
+            [
+              "Maquina_A218_RASHEM_7x3000x500",
+              "textoExtracto",
+              "Lámina de identificación del manual con el logotipo del fabricante, denominación de la máquina y datos de contacto. Diseño limpio con bloques de texto centrados, actuando como carátula final del dossier técnico."
+            ]
+          ],
+          "why": "Habia varias filas correctas y la respuesta final podia escoger una descripcion secundaria en vez del valor mas util."
+        },
+        {
+          "question": "¿Qué tipo de información representa la indicación de medio ambiente?",
+          "pre_t14_answer": "La indicación de medio ambiente representa descripciones tanto de procedimientos como de características en las que se aconseja considerar las posibles repercusiones en el medio ambiente de determinadas acciones o elecciones, fundamentalmente de productos a utilizar.",
+          "evidence_excerpt": [
+            [
+              "IndicacionAdvertenciaSeguridad",
+              "textoExtracto",
+              "Todas las indicaciones del presente manual que vayan acompañadas de los siguientes símbolos tienen como objetivo resaltar instrucciones importantes y relevantes relacionadas con la seguridad."
+            ],
+            [
+              "NormativaMedioambiente_32",
+              "textoExtracto",
+              "SEGURIDAD CON MATERIALES UTILIZADOS LOS ACEITES, GRASAS, FLUIDOS Y DEMÁS SUSTANCIAS QUÍMICAS UTILIZADAS EN LA MÁQUINA DEBEN CUMPLIR LAS NORMATIVAS VIGENTES PARA LA PROTECCIÓN DEL MEDIOAMBIENTE."
+            ],
+            [
+              "MedioAmbiente",
+              "textoExtracto",
+              "Medio ambiente  SE TRATA DE DESCRIPCIONES TANTO DE PROCEDIMIENTOS COMO DE CARACTERÍSTICAS EN LAS QUE SE ACONSEJA CONSIDERAR LAS POSIBLES REPERCUSIONES EN EL MEDIO AMBIENTE DE DETERMINADAS ACCIONES O ELECCIONES, FUNDAMENTALMENTE DE PRODUCTOS A UTILIZAR."
+            ],
+            [
+              "ContactoIntermedio26SBL1",
+              "identificador",
+              "26SBL1"
+            ]
+          ],
+          "why": "Habia varias filas correctas y la respuesta final podia escoger una descripcion secundaria en vez del valor mas util."
+        }
+      ]
+    },
+    {
+      "category": "answer_over-specified",
+      "description": "La respuesta arrastra demasiado contexto una vez recuperada la evidencia buena.",
+      "examples": [
+        {
+          "question": "¿Qué figura muestra la información que aparece en los encabezados y pies de página del manual?",
+          "pre_t14_answer": "La figura que muestra la información que aparece en los encabezados y pies de página del manual es:\n\n**Figura 0-1-1. Información mostrada en páginas**\n\n- **Texto/Extracto**: Diagrama con flechas y rótulos que identifican, en cabecera y pie, fabricante, número y nombre de capítulo, modelo de máquina, nombre de fichero, contenido y paginación; establece la jerarquía visual de metadatos del documento.\n- **Tipo**: Figura",
+          "evidence_excerpt": [
+            [
+              "Figura0_1_1InformacionMostradaEnPaginas",
+              "label",
+              "Figura 0-1-1. Información mostrada en páginas"
+            ],
+            [
+              "Figura0_1_1InformacionMostradaEnPaginas",
+              "textoExtracto",
+              "Diagrama con flechas y rótulos que identifican, en cabecera y pie, fabricante, número y nombre de capítulo, modelo de máquina, nombre de fichero, contenido y paginación; establece la jerarquía visual de metadatos del documento."
+            ],
+            [
+              "Figura0_1_1InformacionMostradaEnPaginas",
+              "type",
+              "Figura"
+            ],
+            [
+              "ManualBrochadoraA218",
+              "textoExtracto",
+              "Capítulo Nombre del fichero"
+            ]
+          ],
+          "why": "La figura se encontraba, pero la verbalizacion podia arrastrar mas contexto del necesario."
+        }
+      ]
+    },
+    {
+      "category": "naming_surface_issue",
+      "description": "La verbalizacion conserva demasiado la superficie interna del grafo.",
+      "examples": [
+        {
+          "question": "¿Según qué directiva se realiza la declaración CE de conformidad sobre máquinas?",
+          "pre_t14_answer": "Según la directiva **Directiva2006_42_CE**, se realiza la declaración CE de conformidad sobre máquinas.",
+          "evidence_excerpt": [
+            [
+              "Directiva2006_42_CE",
+              "textoExtracto",
+              "CE."
+            ],
+            [
+              "Directiva2006_42_CE",
+              "textoExtracto",
+              "CE)"
+            ],
+            [
+              "Directiva2006_42_CE",
+              "identificador",
+              "CE"
+            ]
+          ],
+          "why": "La directiva se recuperaba bien, pero la superficie textual seguia demasiado pegada al identificador interno."
+        }
+      ]
+    }
+  ]
+}

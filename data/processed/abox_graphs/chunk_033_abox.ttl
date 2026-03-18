@@ -1,120 +1,32 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix medioambiente: <https://vocab.cfaa.eus/broaching/medioambiente#> .
-@prefix residuo: <https://vocab.cfaa.eus/broaching/residuo#> .
-@prefix almacenamiento: <https://vocab.cfaa.eus/broaching/almacenamiento#> .
-@prefix tratamiento: <https://vocab.cfaa.eus/broaching/tratamiento#> .
-@prefix legislacion: <https://vocab.cfaa.eus/broaching/legislacion#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:AceiteUsado a ex:Consumible ;
+    rdfs:label "aceite industrial o lubricante"@es ;
+    ex:textoExtracto "todo aceite industrial o lubricante, con base mineral o sintética, que se haya vuelto inadecuado para el uso que se le hubiere asignado inicialmente"@es .
 
-medioambiente:AceiteUsado a owl:Class ;
-    rdfs:label "Aceite usado" ;
-    rdfs:comment "Todo aceite industrial o lubricante, con base mineral o sintética, que se haya vuelto inadecuado para el uso que se le hubiere asignado inicialmente." .
+ex:ResiduoPeligroso a ex:Consumible ;
+    ex:textoExtracto "residuos peligrosos"@es .
 
-residuo:ResiduoPeligroso a owl:Class ;
-    rdfs:label "Residuo peligroso" .
+ex:Agua a ex:Consumible ;
+    ex:textoExtracto "agua"@es .
 
-residuo:ResiduoOleaginoso a owl:Class ;
-    rdfs:label "Residuo oleaginoso" .
+ex:ResiduoOleaginoso a ex:Consumible ;
+    ex:textoExtracto "residuos oleaginosos"@es .
 
-almacenamiento:InstalacionAlmacenamiento a owl:Class ;
-    rdfs:label "Instalación de almacenamiento" ;
-    rdfs:comment "Instalaciones que permitan la conservación del aceite usado hasta su recogida y que sean accesibles a los vehículos encargados de efectuarla." .
+ex:VertidoAceiteUsado a ex:AccionProhibida ;
+    ex:textoExtracto "Todo vertido de aceite usado en aguas superficiales, interiores, subterráneas, en cualquier zona del mar territorial y en los sistemas de alcantarillado o evacuación de aguas residuales"@es .
 
-almacenamiento:CondicionAlmacenamiento a owl:Class ;
-    rdfs:label "Condición de almacenamiento" ;
-    rdfs:comment "Condiciones satisfactorias para almacenar el aceite usado, evitando la mezcla con otros residuos peligrosos, así como con agua y otros residuos oleaginosos." .
+ex:VertidoSueloAceiteUsado a ex:AccionProhibida ;
+    ex:textoExtracto "Todo depósito con efectos nocivos o vertido de aceite usado sobre el suelo"@es .
 
-tratamiento:TratamientoAceiteUsado a owl:Class ;
-    rdfs:label "Tratamiento de aceite usado" ;
-    rdfs:comment "Todo tratamiento del aceite usado que provoque una contaminación atmosférica superior al nivel establecido por la legislación vigente." .
+ex:VertidoIncontroladoTratamientoAceite a ex:AccionProhibida ;
+    ex:textoExtracto "todo vertido incontrolado de residuos derivados de tratamiento del aceite usado"@es .
 
-legislacion:NormativaVigente a owl:Class ;
-    rdfs:label "Normativa vigente" ;
-    rdfs:comment "Legislación vigente que establece los niveles de contaminación atmosférica permitidos." .
+ex:TratamientoContaminanteAceiteUsado a ex:AccionProhibida ;
+    ex:textoExtracto "Todo tratamiento del aceite usado que provoque una contaminación atmosférica superior al nivel establecido por la legislación vigente"@es .
 
-medioambiente:ZonaMarTerritorial a owl:Class ;
-    rdfs:label "Zona mar territorial" .
+ex:AlmacenamientoAceiteUsado a ex:TareaMantenimiento ;
+    ex:textoExtracto "Almacenar el aceite usado en condiciones satisfactorias, evitando la mezcla con otros residuos peligrosos, así como con agua y otros residuos oleaginosos"@es .
 
-medioambiente:SistemaAlcantarillado a owl:Class ;
-    rdfs:label "Sistema de alcantarillado" .
-
-medioambiente:AguaSuperficial a owl:Class ;
-    rdfs:label "Agua superficial" .
-
-medioambiente:AguaInterior a owl:Class ;
-    rdfs:label "Agua interior" .
-
-medioambiente:AguaSubterranea a owl:Class ;
-    rdfs:label "Agua subterránea" .
-
-medioambiente:Suelo a owl:Class ;
-    rdfs:label "Suelo" .
-
-medioambiente:ContaminacionAtmosferica a owl:Class ;
-    rdfs:label "Contaminación atmosférica" .
-
-almacenamiento:evitarMezclaCon a owl:ObjectProperty ;
-    rdfs:domain almacenamiento:CondicionAlmacenamiento ;
-    rdfs:range residuo:ResiduoPeligroso .
-
-almacenamiento:evitarMezclaCon a owl:ObjectProperty ;
-    rdfs:domain almacenamiento:CondicionAlmacenamiento ;
-    rdfs:range residuo:ResiduoOleaginoso .
-
-almacenamiento:evitarMezclaCon a owl:ObjectProperty ;
-    rdfs:domain almacenamiento:CondicionAlmacenamiento ;
-    rdfs:range medioambiente:AguaSuperficial .
-
-almacenamiento:evitarMezclaCon a owl:ObjectProperty ;
-    rdfs:domain almacenamiento:CondicionAlmacenamiento ;
-    rdfs:range medioambiente:AguaInterior .
-
-almacenamiento:evitarMezclaCon a owl:ObjectProperty ;
-    rdfs:domain almacenamiento:CondicionAlmacenamiento ;
-    rdfs:range medioambiente:AguaSubterranea .
-
-almacenamiento:disponerDeInstalaciones a owl:ObjectProperty ;
-    rdfs:domain almacenamiento:CondicionAlmacenamiento ;
-    rdfs:range almacenamiento:InstalacionAlmacenamiento .
-
-almacenamiento:prohibirVertidoEn a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range medioambiente:AguaSuperficial .
-
-almacenamiento:prohibirVertidoEn a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range medioambiente:AguaInterior .
-
-almacenamiento:prohibirVertidoEn a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range medioambiente:AguaSubterranea .
-
-almacenamiento:prohibirVertidoEn a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range medioambiente:ZonaMarTerritorial .
-
-almacenamiento:prohibirVertidoEn a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range medioambiente:SistemaAlcantarillado .
-
-almacenamiento:prohibirVertidoEn a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range medioambiente:Suelo .
-
-almacenamiento:prohibirVertidoIncontroladoDe a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range residuo:ResiduoPeligroso .
-
-almacenamiento:prohibirVertidoIncontroladoDe a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range residuo:ResiduoOleaginoso .
-
-tratamiento:prohibirTratamientoQueProvoque a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range medioambiente:ContaminacionAtmosferica .
-
-tratamiento:prohibirTratamientoQueProvoque a owl:ObjectProperty ;
-    rdfs:domain legislacion:NormativaVigente ;
-    rdfs:range tratamiento:TratamientoAceiteUsado .
+ex:InstalacionConservacionAceiteUsado a ex:Sistema ;
+    ex:textoExtracto "Disponer de instalaciones que permitan la conservación del aceite usado hasta su recogida y que sean accesibles a los vehículos encargados de efectuarla"@es .

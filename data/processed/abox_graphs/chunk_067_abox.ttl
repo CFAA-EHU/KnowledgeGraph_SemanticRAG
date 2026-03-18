@@ -1,57 +1,30 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:InterruptorGeneral a ex:Actuador ;
+    rdfs:label "Interruptor general"@es ;
+    ex:textoExtracto "colocando en ON la posición del interruptor general que se encuentra en la parte derecha del armario eléctrico visto de frente"@es ;
+    ex:identificador "Figura 6-1" .
 
-ex:InterruptorGeneral a owl:Class ;
-    rdfs:label "Interruptor general del armario eléctrico" ;
-    rdfs:comment "Interruptor general que se encuentra en la parte derecha del armario eléctrico visto de frente." .
+ex:ArmarioElectrico a ex:ComponenteElectrico ;
+    rdfs:label "Armario eléctrico"@es ;
+    ex:textoExtracto "en la parte derecha del armario eléctrico visto de frente"@es .
 
-ex:ArmarioElectrico a owl:Class ;
-    rdfs:label "Armario eléctrico" ;
-    rdfs:comment "Armario que contiene el interruptor general y la iluminación." .
+ex:TomaCorrienteInterior a ex:ComponenteElectrico ;
+    rdfs:label "Toma de corriente interior"@es ;
+    ex:textoExtracto "1 TOMA DE CORRIENTE EN EL INTERIOR DEL ARMARIO"@es ;
+    ex:valor "220VAC" .
 
-ex:TomaDeCorriente a owl:Class ;
-    rdfs:label "Toma de corriente" ;
-    rdfs:comment "Toma de corriente que puede estar en el interior del armario o en el exterior del panel principal." .
+ex:TomaCorrienteExterior a ex:ComponenteElectrico ;
+    rdfs:label "Toma de corriente exterior"@es ;
+    ex:textoExtracto "OTRA EN EL EXTERIOR DEL PANEL PRINCIPAL"@es ;
+    ex:valor "220VAC" .
 
-ex:Iluminacion a owl:Class ;
-    rdfs:label "Iluminación del armario" ;
-    rdfs:comment "Iluminación del armario eléctrico que está en tensión de 220VAC." .
+ex:IluminacionArmario a ex:ComponenteElectrico ;
+    rdfs:label "Iluminación del armario"@es ;
+    ex:textoExtracto "LA ILUMINACIÓN DEL ARMARIO QUE SÍ ESTÁN CON TENSIÓN DE 220VAC"@es ;
+    ex:valor "220VAC" .
 
-ex:PuestaEnTension a owl:Class ;
-    rdfs:label "Puesta en tensión" ;
-    rdfs:comment "Proceso de poner la máquina en tensión antes de ponerla en funcionamiento." .
-
-ex:InstruccionSeguridad a owl:Class ;
-    rdfs:label "Instrucciones de seguridad" ;
-    rdfs:comment "Instrucciones de seguridad que deben leerse atentamente antes de poner la máquina en funcionamiento." .
-
-ex:PanelPrincipal a owl:Class ;
-    rdfs:label "Panel principal" ;
-    rdfs:comment "Panel principal que contiene una toma de corriente en el exterior." .
-
-ex:estaEnTension a owl:ObjectProperty ;
-    rdfs:domain ex:ArmarioElectrico ;
-    rdfs:range ex:Iluminacion .
-
-ex:contiene a owl:ObjectProperty ;
-    rdfs:domain ex:ArmarioElectrico ;
-    rdfs:range [ a owl:Class ] .
-
-ex:seEncuentraEn a owl:ObjectProperty ;
-    rdfs:domain [ a owl:Class ] ;
-    rdfs:range ex:ArmarioElectrico .
-
-ex:tieneTension a owl:DatatypeProperty ;
-    rdfs:domain ex:Iluminacion ;
-    rdfs:range xsd:string .
-
-ex:tienePosicion a owl:DatatypeProperty ;
-    rdfs:domain ex:InterruptorGeneral ;
-    rdfs:range xsd:string .
-
-ex:tieneInstrucciones a owl:ObjectProperty ;
-    rdfs:domain ex:PuestaEnTension ;
-    rdfs:range ex:InstruccionSeguridad .
+ex:Figura6_1 a ex:Figura ;
+    rdfs:label "Figura 6-1"@es ;
+    ex:textoExtracto "ON Figura 6-1. Interruptor general del armario eléctrico."@es ;
+    ex:ilustradoEn ex:InterruptorGeneral .

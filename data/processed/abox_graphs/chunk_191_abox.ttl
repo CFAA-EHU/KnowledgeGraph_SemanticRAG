@@ -1,160 +1,75 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix plano: <https://vocab.cfaa.eus/broaching/plano/> .
-@prefix bornes: <https://vocab.cfaa.eus/broaching/bornes/> .
-@prefix sistema: <https://vocab.cfaa.eus/broaching/sistema/> .
-@prefix conexion: <https://vocab.cfaa.eus/broaching/conexion/> .
-@prefix funcion: <https://vocab.cfaa.eus/broaching/funcion/> .
-@prefix alimentacion: <https://vocab.cfaa.eus/broaching/alimentacion/> .
-@prefix seguridad: <https://vocab.cfaa.eus/broaching/seguridad/> .
-@prefix motor: <https://vocab.cfaa.eus/broaching/motor/> .
-@prefix señal: <https://vocab.cfaa.eus/broaching/señal/> .
-@prefix diagrama: <https://vocab.cfaa.eus/broaching/diagrama/> .
+ex:XT1M a ex:InterfazUsuario ;
+    ex:textoExtracto "Diagrama matricial del bloque XT1M con filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico) y climatizador." ;
+    ex:tieneComponente ex:MotorRefrigerante, ex:MotorTrasvase, ex:MotorExtractor, ex:GrupoHidraulico, ex:Climatizador .
 
-# Clases
-plano:PlanoDeBornes a owl:Class ;
-    rdfs:label "Plano de bornes" ;
-    rdfs:comment "Representa un plano de bornes en el sistema de la máquina." .
+ex:MotorRefrigerante a ex:ComponenteElectrico ;
+    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-bornes:Borne a owl:Class ;
-    rdfs:label "Borne" ;
-    rdfs:comment "Representa un borne en el plano de bornes." .
+ex:MotorTrasvase a ex:ComponenteElectrico ;
+    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-sistema:Sistema a owl:Class ;
-    rdfs:label "Sistema" ;
-    rdfs:comment "Representa un sistema en la máquina." .
+ex:MotorExtractor a ex:ComponenteElectrico ;
+    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-conexion:Conexion a owl:Class ;
-    rdfs:label "Conexion" ;
-    rdfs:comment "Representa una conexión en el plano de bornes." .
+ex:GrupoHidraulico a ex:ComponenteHidraulico ;
+    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-funcion:Funcion a owl:Class ;
-    rdfs:label "Funcion" ;
-    rdfs:comment "Representa una función en la máquina." .
+ex:Climatizador a ex:ComponenteElectrico ;
+    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico) y climatizador." .
 
-alimentacion:Alimentacion a owl:Class ;
-    rdfs:label "Alimentacion" ;
-    rdfs:comment "Representa una alimentación en la máquina." .
+ex:XT1 a ex:InterfazUsuario ;
+    ex:textoExtracto "Vista de bornes XT1 con asignaciones a 0V/24V de distintos sistemas (API, CNC, PNL, S, SAFE) y señales de puertas, columna luminosa y motores." ;
+    ex:tieneComponente ex:ColumnaLuminosa, ex:Motor, ex:Puerta ;
+    ex:compuestoPor ex:Borne0V, ex:Borne24V .
 
-seguridad:Seguridad a owl:Class ;
-    rdfs:label "Seguridad" ;
-    rdfs:comment "Representa un componente de seguridad en la máquina." .
+ex:ColumnaLuminosa a ex:ComponenteElectrico ;
+    ex:textoExtracto "señales de ... columna luminosa" .
 
-motor:Motor a owl:Class ;
-    rdfs:label "Motor" ;
-    rdfs:comment "Representa un motor en la máquina." .
+ex:Motor a ex:ComponenteElectrico ;
+    ex:textoExtracto "señales de ... motores" .
 
-señal:Señal a owl:Class ;
-    rdfs:label "Señal" ;
-    rdfs:comment "Representa una señal en la máquina." .
+ex:Puerta a ex:ElementoSeguridad ;
+    ex:textoExtracto "señales de ... puertas" .
 
-diagrama:Diagrama a owl:Class ;
-    rdfs:label "Diagrama" ;
-    rdfs:comment "Representa un diagrama en el sistema de la máquina." .
+ex:Borne0V a ex:ComponenteElectrico ;
+    ex:textoExtracto "asignaciones a 0V/24V de distintos sistemas" .
 
-# Propiedades de objeto
-plano:tieneBorne a owl:ObjectProperty ;
-    rdfs:domain plano:PlanoDeBornes ;
-    rdfs:range bornes:Borne ;
-    rdfs:label "tieneBorne" ;
-    rdfs:comment "Relaciona un plano de bornes con un borne." .
+ex:Borne24V a ex:ComponenteElectrico ;
+    ex:textoExtracto "asignaciones a 0V/24V de distintos sistemas" .
 
-bornes:estaAsignadoA a owl:ObjectProperty ;
-    rdfs:domain bornes:Borne ;
-    rdfs:range sistema:Sistema ;
-    rdfs:label "estaAsignadoA" ;
-    rdfs:comment "Relaciona un borne con un sistema." .
+ex:XT1_3_4 a ex:InterfazUsuario ;
+    ex:textoExtracto "Continuación de XT1 con líneas dedicadas a alimentaciones (24API/24CNC/24E/24EBC/24PNL/24S/24SAFE) y vínculos a servomotores (mesa e izquierda). Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety' y referencias cruzadas a páginas funcionales." ;
+    ex:tieneComponente ex:ServomotorMesa, ex:ServomotorIzquierda, ex:BorneAlimentacionEntradas, ex:BorneAlimentacionSalidas, ex:BorneAlimentacionSafety .
 
-bornes:estaConectadoA a owl:ObjectProperty ;
-    rdfs:domain bornes:Borne ;
-    rdfs:range conexion:Conexion ;
-    rdfs:label "estaConectadoA" ;
-    rdfs:comment "Relaciona un borne con una conexión." .
+ex:ServomotorMesa a ex:ComponenteElectrico ;
+    ex:textoExtracto "vínculos a servomotores (mesa e izquierda)" .
 
-conexion:tieneFuncion a owl:ObjectProperty ;
-    rdfs:domain conexion:Conexion ;
-    rdfs:range funcion:Funcion ;
-    rdfs:label "tieneFuncion" ;
-    rdfs:comment "Relaciona una conexión con una función." .
+ex:ServomotorIzquierda a ex:ComponenteElectrico ;
+    ex:textoExtracto "vínculos a servomotores (mesa e izquierda)" .
 
-funcion:requiereAlimentacion a owl:ObjectProperty ;
-    rdfs:domain funcion:Funcion ;
-    rdfs:range alimentacion:Alimentacion ;
-    rdfs:label "requiereAlimentacion" ;
-    rdfs:comment "Relaciona una función con una alimentación." .
+ex:BorneAlimentacionEntradas a ex:ComponenteElectrico ;
+    ex:textoExtracto "Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety'" .
 
-alimentacion:tieneSeguridad a owl:ObjectProperty ;
-    rdfs:domain alimentacion:Alimentacion ;
-    rdfs:range seguridad:Seguridad ;
-    rdfs:label "tieneSeguridad" ;
-    rdfs:comment "Relaciona una alimentación con un componente de seguridad." .
+ex:BorneAlimentacionSalidas a ex:ComponenteElectrico ;
+    ex:textoExtracto "Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety'" .
 
-motor:tieneSeñal a owl:ObjectProperty ;
-    rdfs:domain motor:Motor ;
-    rdfs:range señal:Señal ;
-    rdfs:label "tieneSeñal" ;
-    rdfs:comment "Relaciona un motor con una señal." .
+ex:BorneAlimentacionSafety a ex:ComponenteElectrico ;
+    ex:textoExtracto "Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety'" .
 
-señal:estaEnDiagrama a owl:ObjectProperty ;
-    rdfs:domain señal:Señal ;
-    rdfs:range diagrama:Diagrama ;
-    rdfs:label "estaEnDiagrama" ;
-    rdfs:comment "Relaciona una señal con un diagrama." .
+ex:XT1_4_4 a ex:InterfazUsuario ;
+    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización), alimentaciones de panel y señales SAFE (puertas/escotilla). El diagrama ordena por grupos funcionales y muestra numeración correlativa (1104, 1117, 1204, etc.) para localizar físicamente cada borne." ;
+    ex:tieneComponente ex:Toma, ex:Iluminacion, ex:Climatizacion, ex:BorneSAFE ;
+    ex:identificador "1104", "1117", "1204" .
 
-# Propiedades de datos
-bornes:tieneReferencia a owl:DatatypeProperty ;
-    rdfs:domain bornes:Borne ;
-    rdfs:range xsd:string ;
-    rdfs:label "tieneReferencia" ;
-    rdfs:comment "Indica la referencia de un borne." .
+ex:Toma a ex:ComponenteElectrico ;
+    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización)" .
 
-bornes:tieneNumero a owl:DatatypeProperty ;
-    rdfs:domain bornes:Borne ;
-    rdfs:range xsd:integer ;
-    rdfs:label "tieneNumero" ;
-    rdfs:comment "Indica el número de un borne." .
+ex:Iluminacion a ex:ComponenteElectrico ;
+    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización)" .
 
-conexion:tieneEtiqueta a owl:DatatypeProperty ;
-    rdfs:domain conexion:Conexion ;
-    rdfs:range xsd:string ;
-    rdfs:label "tieneEtiqueta" ;
-    rdfs:comment "Indica la etiqueta de una conexión." .
+ex:Climatizacion a ex:ComponenteElectrico ;
+    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización)" .
 
-funcion:tieneDescripcion a owl:DatatypeProperty ;
-    rdfs:domain funcion:Funcion ;
-    rdfs:range xsd:string ;
-    rdfs:label "tieneDescripcion" ;
-    rdfs:comment "Indica la descripción de una función." .
-
-alimentacion:tieneVoltaje a owl:DatatypeProperty ;
-    rdfs:domain alimentacion:Alimentacion ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "tieneVoltaje" ;
-    rdfs:comment "Indica el voltaje de una alimentación." .
-
-seguridad:tieneTipo a owl:DatatypeProperty ;
-    rdfs:domain seguridad:Seguridad ;
-    rdfs:range xsd:string ;
-    rdfs:label "tieneTipo" ;
-    rdfs:comment "Indica el tipo de un componente de seguridad." .
-
-motor:tieneModelo a owl:DatatypeProperty ;
-    rdfs:domain motor:Motor ;
-    rdfs:range xsd:string ;
-    rdfs:label "tieneModelo" ;
-    rdfs:comment "Indica el modelo de un motor." .
-
-señal:tieneValor a owl:DatatypeProperty ;
-    rdfs:domain señal:Señal ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "tieneValor" ;
-    rdfs:comment "Indica el valor de una señal." .
-
-diagrama:tienePagina a owl:DatatypeProperty ;
-    rdfs:domain diagrama:Diagrama ;
-    rdfs:range xsd:integer ;
-    rdfs:label "tienePagina" ;
-    rdfs:comment "Indica la página de un diagrama." .
+ex:BorneSAFE a ex:ComponenteElectrico ;
+    ex:textoExtracto "señales SAFE (puertas/escotilla)" .

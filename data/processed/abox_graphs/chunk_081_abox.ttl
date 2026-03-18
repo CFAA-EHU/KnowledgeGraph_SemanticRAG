@@ -1,40 +1,20 @@
-@prefix base: <https://vocab.cfaa.eus/broaching/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:AccionBorrarPrograma a ex:TareaMantenimiento ;
+    ex:textoExtracto "Para borrar un programa ya guardado, acceder al navegador de carpetas, para ello: Pulsar Utilities, Acceder a la carpeta C:\\FAGORCNC\\Users\\PRG, Seleccionar programa que se desea borrar, Pulsar Eliminar" .
 
-base:NavegadorDeCarpetas a owl:Class ;
-    rdfs:label "Navegador de carpetas"@es .
+ex:InterfazUsuarioNavegadorCarpetas a ex:InterfazUsuario ;
+    ex:textoExtracto "acceder al navegador de carpetas" .
 
-base:Programa a owl:Class ;
-    rdfs:label "Programa"@es .
+ex:SistemaArchivosFAGORCNC a ex:Sistema ;
+    ex:textoExtracto "Acceder a la carpeta C:\\FAGORCNC\\Users\\PRG" .
 
-base:Pulsar a owl:Class ;
-    rdfs:label "Pulsar"@es .
+ex:BotonUtilities a ex:Componente ;
+    ex:textoExtracto "Pulsar Utilities" .
 
-base:Acceder a owl:ObjectProperty ;
-    rdfs:label "acceder a"@es ;
-    rdfs:domain base:NavegadorDeCarpetas ;
-    rdfs:range base:Carpeta .
+ex:BotonEliminar a ex:Componente ;
+    ex:textoExtracto "Pulsar Eliminar" .
 
-base:Seleccionar a owl:ObjectProperty ;
-    rdfs:label "seleccionar"@es ;
-    rdfs:domain base:NavegadorDeCarpetas ;
-    rdfs:range base:Programa .
-
-base:Eliminar a owl:ObjectProperty ;
-    rdfs:label "eliminar"@es ;
-    rdfs:domain base:NavegadorDeCarpetas ;
-    rdfs:range base:Programa .
-
-base:tieneRuta a owl:DatatypeProperty ;
-    rdfs:label "tiene ruta"@es ;
-    rdfs:domain base:Carpeta ;
-    rdfs:range xsd:string .
-
-base:Carpeta a owl:Class ;
-    rdfs:label "Carpeta"@es .
-
-base:Utilities a owl:Class ;
-    rdfs:label "Utilities"@es .
+ex:AccionBorrarPrograma ex:ejecutadoPor ex:InterfazUsuarioNavegadorCarpetas ;
+    ex:compuestoPor ex:SistemaArchivosFAGORCNC ;
+    ex:compuestoPor ex:BotonUtilities ;
+    ex:compuestoPor ex:BotonEliminar .

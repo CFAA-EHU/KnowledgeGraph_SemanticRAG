@@ -1,63 +1,19 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:ModoSetUp a ex:ModoOperacion ;
+    ex:textoExtracto "Para seleccionar el modo set-up: Con máquina en servicio y presión general de aire OK.  Puertas con enclavamiento de seguridad cerradas y bloqueadas.  Habilitar el selector de Set-up en el panel operador.  Este modo sirve para la apertura de puertas durante el ciclo de brochado sin tener que salir del ciclo automático, por ejemplo, para la verificación de la posición del carro respecto al primer diente. Para poder abrir las puertas, una vez habilitado el selector de Set-up, hay que pulsar el botón “Apertura puertas”." .
 
-ex:ModoSetUp a owl:Class ;
-    rdfs:label "Modo Set-up"@es .
+ex:SelectorSetUp a ex:ComponenteElectrico ;
+    ex:textoExtracto "Habilitar el selector de Set-up en el panel operador." .
 
-ex:MaquinaEnServicio a owl:Class ;
-    rdfs:label "Máquina en servicio"@es .
+ex:PanelOperador a ex:InterfazUsuario ;
+    ex:textoExtracto "Habilitar el selector de Set-up en el panel operador." ;
+    ex:compuestoPor ex:SelectorSetUp .
 
-ex:PresionGeneralDeAire a owl:Class ;
-    rdfs:label "Presión general de aire"@es .
+ex:BotonAperturaPuertas a ex:ComponenteElectrico ;
+    ex:textoExtracto "Para poder abrir las puertas, una vez habilitado el selector de Set-up, hay que pulsar el botón “Apertura puertas”." .
 
-ex:Puerta a owl:Class ;
-    rdfs:label "Puerta"@es .
+ex:PuertaBrochado a ex:ElementoSeguridad ;
+    ex:textoExtracto "Puertas con enclavamiento de seguridad cerradas y bloqueadas." .
 
-ex:EnclavamientoDeSeguridad a owl:Class ;
-    rdfs:label "Enclavamiento de seguridad"@es .
-
-ex:PanelOperador a owl:Class ;
-    rdfs:label "Panel operador"@es .
-
-ex:Selector a owl:Class ;
-    rdfs:label "Selector"@es .
-
-ex:Boton a owl:Class ;
-    rdfs:label "Botón"@es .
-
-ex:Carro a owl:Class ;
-    rdfs:label "Carro"@es .
-
-ex:Diente a owl:Class ;
-    rdfs:label "Diente"@es .
-
-ex:habilitarSelector a owl:ObjectProperty ;
-    rdfs:domain ex:PanelOperador ;
-    rdfs:range ex:Selector .
-
-ex:pulsarBoton a owl:ObjectProperty ;
-    rdfs:domain ex:PanelOperador ;
-    rdfs:range ex:Boton .
-
-ex:abrirPuertas a owl:ObjectProperty ;
-    rdfs:domain ex:PanelOperador ;
-    rdfs:range ex:Puerta .
-
-ex:verificarPosicion a owl:ObjectProperty ;
-    rdfs:domain ex:Carro ;
-    rdfs:range ex:Diente .
-
-ex:estaCerradaYBloqueada a owl:ObjectProperty ;
-    rdfs:domain ex:Puerta ;
-    rdfs:range ex:EnclavamientoDeSeguridad .
-
-ex:estaEnServicio a owl:ObjectProperty ;
-    rdfs:domain ex:MaquinaEnServicio ;
-    rdfs:range xsd:boolean .
-
-ex:tienePresionGeneralDeAireOK a owl:ObjectProperty ;
-    rdfs:domain ex:MaquinaEnServicio ;
-    rdfs:range xsd:boolean .
+ex:CarroBrochado a ex:ComponenteMecanico ;
+    ex:textoExtracto "para la verificación de la posición del carro respecto al primer diente" .

@@ -1,57 +1,29 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-ex:SistemaLimpiezaBrochas a owl:Class ;
+ex:SistemaLimpiezaBrochas a ex:Sistema ;
     rdfs:label "Sistema de limpieza de brochas" ;
-    rdfs:comment "Sistema de limpieza de brochas situado en la parte superior del carro porta-piezas compuesto por un cilindro neumático guiado y unos cepillos." .
+    ex:textoExtracto "La máquina dispone de un sistema de limpieza de brochas situado en la parte superior del carro porta-piezas compuesto por un cilindro neumático guiado y unos cepillos." ;
+    ex:compuestoPor ex:CilindroNeumaticoGuiado, ex:Cepillos ;
+    ex:detalladoEnEsquema ex:Figura4_14 .
 
-ex:CilindroNeumatico a owl:Class ;
-    rdfs:label "Cilindro neumático" ;
-    rdfs:comment "Cilindro neumático guiado que forma parte del sistema de limpieza de brochas." .
+ex:CilindroNeumaticoGuiado a ex:Componente ;
+    rdfs:label "Cilindro neumático guiado" ;
+    ex:textoExtracto "compuesto por un cilindro neumático guiado" .
 
-ex:Cepillo a owl:Class ;
-    rdfs:label "Cepillo" ;
-    rdfs:comment "Cepillos que limpian la brocha mientras el carro porta-piezas desciende." .
+ex:Cepillos a ex:Componente ;
+    rdfs:label "Cepillos" ;
+    ex:textoExtracto "compuesto por ... unos cepillos" .
 
-ex:CarroPortaPiezas a owl:Class ;
-    rdfs:label "Carro porta-piezas" ;
-    rdfs:comment "Carro porta-piezas que se mueve durante el proceso de brochado." .
-
-ex:Señal a owl:Class ;
-    rdfs:label "Señal" ;
-    rdfs:comment "Señales del sistema de limpieza de brochas." .
-
-ex:BQ740 a ex:Señal ;
+ex:BQ740 a ex:Sensor ;
     rdfs:label "BQ740" ;
-    rdfs:comment "Señal CEPILLO AVANZADO del sistema de limpieza de brochas." .
+    ex:identificador "BQ740" ;
+    ex:textoExtracto "- BQ740: CEPILLO AVANZADO" .
 
-ex:BQ741 a ex:Señal ;
+ex:BQ741 a ex:Sensor ;
     rdfs:label "BQ741" ;
-    rdfs:comment "Señal CEPILLO RETROCEDIDO del sistema de limpieza de brochas." .
+    ex:identificador "BQ741" ;
+    ex:textoExtracto "- BQ741: CEPILLO RETROCEDIDO" .
 
-ex:tieneComponente a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaLimpiezaBrochas ;
-    rdfs:range owl:Class .
-
-ex:tieneSeñal a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaLimpiezaBrochas ;
-    rdfs:range ex:Señal .
-
-ex:avanza a owl:ObjectProperty ;
-    rdfs:domain ex:CilindroNeumatico ;
-    rdfs:range xsd:boolean .
-
-ex:retrocede a owl:ObjectProperty ;
-    rdfs:domain ex:Cepillo ;
-    rdfs:range xsd:boolean .
-
-ex:limpia a owl:ObjectProperty ;
-    rdfs:domain ex:Cepillo ;
-    rdfs:range ex:Brocha .
-
-ex:desciende a owl:ObjectProperty ;
-    rdfs:domain ex:CarroPortaPiezas ;
-    rdfs:range xsd:boolean .
+ex:Figura4_14 a ex:Figura ;
+    rdfs:label "Figura 4-14" ;
+    ex:textoExtracto "Figura 4-14. Sistema de limpieza" .

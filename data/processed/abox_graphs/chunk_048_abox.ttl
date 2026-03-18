@@ -1,105 +1,61 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-ex:PlatoDivisor a owl:Class ;
+ex:PlatoDivisor_48 a ex:ComponenteMecanico ;
     rdfs:label "Plato divisor" ;
-    rdfs:comment "Componente mecánico utilizado para dividir ángulos en la máquina." .
+    ex:textoExtracto "El plato divisor de la máquina va colocado sobre el carro porta-piezas y dispone de un dentado Hirth con capacidad para hacer divisiones de 1º." ;
+    ex:compuestoPor ex:DentadoHirth_48 ;
+    ex:tieneComponente ex:Base0_48, ex:Base15_48 ;
+    ex:detalladoEnEsquema ex:Figura4_4_48 .
 
-ex:Servomotor a owl:Class ;
-    rdfs:label "Servomotor" ;
-    rdfs:comment "Motor utilizado para girar el plato divisor." .
-
-ex:CilindroHidraulico a owl:Class ;
-    rdfs:label "Cilindro hidráulico" ;
-    rdfs:comment "Componente que permite el movimiento vertical del engranaje superior del dentado Hirth." .
-
-ex:DentadoHirth a owl:Class ;
+ex:DentadoHirth_48 a ex:ComponenteMecanico ;
     rdfs:label "Dentado Hirth" ;
-    rdfs:comment "Dentado con capacidad para hacer divisiones de 1º." .
+    ex:textoExtracto "dispone de un dentado Hirth con capacidad para hacer divisiones de 1º. El cilindro hidráulico permite que el engranaje superior del “DENTADO HIRTH” se mueva verticalmente, liberando los dientes del engranaje inferior. De esta manera se desbloquea el dentado HIRTH y el plato divisor está listo para girar." ;
+    ex:compuestoPor ex:EngranajeSuperior_48, ex:EngranajeInferior_48 ;
+    ex:tieneComponente ex:SQ46_48, ex:SQ47_48 .
 
-ex:DiscoIconel a owl:Class ;
-    rdfs:label "Disco Iconel" ;
-    rdfs:comment "Disco que se amarra al plato divisor para ser brochado." .
+ex:EngranajeSuperior_48 a ex:ComponenteMecanico ;
+    rdfs:label "Engranaje superior del dentado Hirth" ;
+    ex:textoExtracto "El cilindro hidráulico permite que el engranaje superior del “DENTADO HIRTH” se mueva verticalmente" .
 
-ex:TorretaDeMicros a owl:Class ;
-    rdfs:label "Torreta de micros" ;
-    rdfs:comment "Componente que se activa al girar el plato divisor." .
+ex:EngranajeInferior_48 a ex:ComponenteMecanico ;
+    rdfs:label "Engranaje inferior del dentado Hirth" ;
+    ex:textoExtracto "liberando los dientes del engranaje inferior" .
 
-ex:Leva a owl:Class ;
-    rdfs:label "Leva" ;
-    rdfs:comment "Componente que activa las señales al girar el plato divisor." .
+ex:Base0_48 a ex:ComponenteMecanico ;
+    rdfs:label "Base 0º" ;
+    ex:textoExtracto "El plato divisor dispone de dos bases, una plana para brochar a 0º" .
 
-ex:BasePlana a owl:Class ;
-    rdfs:label "Base plana" ;
-    rdfs:comment "Base del plato divisor para brochar a 0º." .
+ex:Base15_48 a ex:ComponenteMecanico ;
+    rdfs:label "Base 15º" ;
+    ex:textoExtracto "y otra inclinada para brochar a 15º." .
 
-ex:BaseInclinada a owl:Class ;
-    rdfs:label "Base inclinada" ;
-    rdfs:comment "Base del plato divisor para brochar a 15º." .
+ex:Servomotor_48 a ex:ComponenteElectrico ;
+    rdfs:label "Servomotor" ;
+    ex:textoExtracto "Para que el movimiento del plato divisor pueda llevarse a cabo interviene un servomotor y presión hidráulica. El servomotor gira el plato una vez que el dentado HIRTH está liberado. Además, dispone de una torreta de micros que al girar se activan por medio de unas levas dando las siguientes señales - SQ46: MESA ABAJO (BLOQUEADO) - SQ47: MESA ARRIBA (DESBLOQUEADO)" ;
+    ex:controla ex:PlatoDivisor_48 ;
+    ex:tieneComponente ex:SQ46_48, ex:SQ47_48 .
 
-ex:tieneServomotor a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:Servomotor .
+ex:SQ46_48 a ex:Sensor ;
+    rdfs:label "SQ46" ;
+    ex:identificador "SQ46" ;
+    ex:textoExtracto "SQ46: MESA ABAJO (BLOQUEADO)" .
 
-ex:tieneCilindroHidraulico a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:CilindroHidraulico .
+ex:SQ47_48 a ex:Sensor ;
+    rdfs:label "SQ47" ;
+    ex:identificador "SQ47" ;
+    ex:textoExtracto "SQ47: MESA ARRIBA (DESBLOQUEADO)" .
 
-ex:tieneDentadoHirth a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:DentadoHirth .
+ex:CilindroHidraulico_48 a ex:ComponenteHidraulico ;
+    rdfs:label "Cilindro hidráulico" ;
+    ex:textoExtracto "Para que el movimiento del plato divisor pueda llevarse a cabo interviene un servomotor y presión hidráulica. 1. El cilindro hidráulico permite que el engranaje superior del “DENTADO HIRTH” se mueva verticalmente" ;
+    ex:alimenta ex:EngranajeSuperior_48 .
 
-ex:tieneDiscoIconel a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:DiscoIconel .
+ex:Figura4_4_48 a ex:Figura ;
+    rdfs:label "Figura 4-4. Plato divisor" ;
+    ex:textoExtracto "Figura 4-4. Plato divisor" ;
+    ex:ilustradoEn ex:PlatoDivisor_48 .
 
-ex:tieneTorretaDeMicros a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:TorretaDeMicros .
-
-ex:tieneLeva a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:Leva .
-
-ex:tieneBasePlana a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:BasePlana .
-
-ex:tieneBaseInclinada a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:BaseInclinada .
-
-ex:liberaDentadoHirth a owl:ObjectProperty ;
-    rdfs:domain ex:CilindroHidraulico ;
-    rdfs:range ex:DentadoHirth .
-
-ex:giraPlatoDivisor a owl:ObjectProperty ;
-    rdfs:domain ex:Servomotor ;
-    rdfs:range ex:PlatoDivisor .
-
-ex:activaSeñales a owl:ObjectProperty ;
-    rdfs:domain ex:TorretaDeMicros ;
-    rdfs:range ex:Leva .
-
-ex:amarraDiscoIconel a owl:ObjectProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range ex:DiscoIconel .
-
-ex:permiteDivisiones a owl:DatatypeProperty ;
-    rdfs:domain ex:DentadoHirth ;
-    rdfs:range xsd:integer .
-
-ex:permiteAngulos a owl:DatatypeProperty ;
-    rdfs:domain ex:PlatoDivisor ;
-    rdfs:range xsd:integer .
-
-ex:tieneCapacidad a owl:DatatypeProperty ;
-    rdfs:domain ex:DentadoHirth ;
-    rdfs:range xsd:string .
-
-ex:tieneAngulo a owl:DatatypeProperty ;
-    rdfs:domain ex:BaseInclinada ;
-    rdfs:range xsd:integer .
+ex:Figura4_5_48 a ex:Figura ;
+    rdfs:label "Figura 4-5. Bases del plato divisor (0º y 15º)" ;
+    ex:textoExtracto "Figura 4-5. Bases del plato divisor (0º y 15º)" ;
+    ex:ilustradoEn ex:Base0_48, ex:Base15_48 .

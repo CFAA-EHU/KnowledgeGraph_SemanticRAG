@@ -1,12 +1,21 @@
 import sys
 from pathlib import Path
-from rdflib import Graph
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 import logging
+import sys
+
+from rdflib import Graph
+
+from artifact_contracts import OPERATIONAL_ABOX_PATH, OPERATIONAL_TBOX_PATH
 
 logger = logging.getLogger(__name__)
 
-TBOX_PATH = Path("data/processed/ontology_aligned.ttl")
-ABOX_PATH = Path("data/processed/abox_merged.ttl")
+TBOX_PATH = OPERATIONAL_TBOX_PATH
+ABOX_PATH = OPERATIONAL_ABOX_PATH
 
 class MotorGrafoEmbebido:
     def __init__(self):
@@ -17,13 +26,13 @@ class MotorGrafoEmbebido:
         if not TBOX_PATH.exists() or not ABOX_PATH.exists():
             print("Error: Faltan archivos T-Box o A-Box en el directorio.")
             sys.exit(1)
-        
+
         logger.info("Ingestando T-Box (Esquema)...")
         self.grafo.parse(TBOX_PATH, format="turtle")
-        
+
         logger.info("Ingestando A-Box (Instancias)...")
         self.grafo.parse(ABOX_PATH, format="turtle")
-        
+
         logger.info(f"Motor inicializado. Tripletas combinadas en memoria: {len(self.grafo)}")
 
     def ejecutar_sparql(self, query: str):
@@ -31,7 +40,7 @@ class MotorGrafoEmbebido:
 
 if __name__ == "__main__":
     motor = MotorGrafoEmbebido()
-    
+
     query_prueba = """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     SELECT ?clase (COUNT(?instancia) AS ?total)
@@ -43,11 +52,11 @@ if __name__ == "__main__":
     ORDER BY DESC(?total)
     LIMIT 10
     """
-    
+
     print("-" * 40)
-    print("TOP 10 CLASES CON MÁS INSTANCIAS")
+    print("TOP 10 CLASES CON MAS INSTANCIAS")
     print("-" * 40)
-    
+
     try:
         resultados = motor.ejecutar_sparql(query_prueba)
         for fila in resultados:
@@ -56,4 +65,4 @@ if __name__ == "__main__":
             total = int(fila.total)
             print(f"{clase:<35} | {total}")
     except Exception as e:
-        print(f"Error en ejecución SPARQL: {e}")
+        print(f"Error en ejecucion SPARQL: {e}")

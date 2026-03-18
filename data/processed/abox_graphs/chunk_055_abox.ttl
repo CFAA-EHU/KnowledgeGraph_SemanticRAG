@@ -1,65 +1,23 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:SistemaEngrase a ex:Sistema ;
+    ex:textoExtracto "El sistema de engrase se encuentra situado en la parte posterior de la máquina, debajo del sistema neumático." ;
+    ex:compuestoPor ex:EngraseAutomatico, ex:EngraseManual .
 
-ex:SistemaDeEngrase a owl:Class ;
-    rdfs:label "Sistema de engrase" ;
-    rdfs:comment "Compuesto por engrase automático de grasa y engrase manual de aceite." .
+ex:EngraseAutomatico a ex:Componente ;
+    ex:textoExtracto "El engrase automático está compuesto por una central de lubricación y un piñón que lubrica el sistema piñón-cremallera." ;
+    ex:compuestoPor ex:CentralLubricacion, ex:PinonLubricacion .
 
-ex:CentralDeLubricacion a owl:Class ;
-    rdfs:label "Central de lubricación" ;
-    rdfs:comment "Parte del sistema de engrase automático." .
+ex:CentralLubricacion a ex:ComponenteElectrico ;
+    ex:textoExtracto "El engrase automático está compuesto por una central de lubricación y un piñón que lubrica el sistema piñón-cremallera." .
 
-ex:PiñonDeLubricacion a owl:Class ;
-    rdfs:label "Piñón de lubricación" ;
-    rdfs:comment "De espuma de poliuretano de célula abierta." .
+ex:PinonLubricacion a ex:ComponenteMecanico ;
+    ex:textoExtracto "El piñón de lubricación es de espuma de poliuretano de célula abierta y garantiza un suministro óptimo de lubricante durante largos periodos de tiempo." ;
+    ex:valor "espuma de poliuretano de célula abierta" .
 
-ex:SistemaPiñonCremallera a owl:Class ;
-    rdfs:label "Sistema piñón-cremallera" ;
-    rdfs:comment "Parte del sistema de engrase automático." .
+ex:EngraseManual a ex:Componente ;
+    ex:textoExtracto "El engrase manual está compuesto por una bomba de émbolo con mando manual que se encarga de lubricar los rodamientos de los piñones superiores." ;
+    ex:compuestoPor ex:BombaEmboloManual .
 
-ex:BombaDeEmbolo a owl:Class ;
-    rdfs:label "Bomba de émbolo" ;
-    rdfs:comment "Parte del sistema de engrase manual." .
-
-ex:Rodamiento a owl:Class ;
-    rdfs:label "Rodamiento" ;
-    rdfs:comment "Parte lubricada por el sistema de engrase manual." .
-
-ex:GrasaAlphaG11NLGI01 a owl:Class ;
-    rdfs:label "Grasa Alpha G11 NLGI 0-1" ;
-    rdfs:comment "176cSt – 40ºC." .
-
-ex:AceiteG220ISO3498 a owl:Class ;
-    rdfs:label "Aceite G220 según ISO 3498" ;
-    rdfs:comment "220cSt – 40ºC." .
-
-ex:tieneComponente a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeEngrase ;
-    rdfs:range owl:Class .
-
-ex:tieneMaterial a owl:ObjectProperty ;
-    rdfs:domain ex:PiñonDeLubricacion ;
-    rdfs:range owl:Class .
-
-ex:tieneFuncion a owl:ObjectProperty ;
-    rdfs:domain ex:PiñonDeLubricacion ;
-    rdfs:range owl:Class .
-
-ex:tieneFrecuencia a owl:ObjectProperty ;
-    rdfs:domain ex:BombaDeEmbolo ;
-    rdfs:range owl:Class .
-
-ex:tieneLubricante a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaDeEngrase ;
-    rdfs:range owl:Class .
-
-ex:tieneViscosidad a owl:DatatypeProperty ;
-    rdfs:domain owl:Class ;
-    rdfs:range xsd:string .
-
-ex:tieneTemperatura a owl:DatatypeProperty ;
-    rdfs:domain owl:Class ;
-    rdfs:range xsd:string .
+ex:BombaEmboloManual a ex:ComponenteMecanico ;
+    ex:textoExtracto "El engrase manual está compuesto por una bomba de émbolo con mando manual que se encarga de lubricar los rodamientos de los piñones superiores." ;
+    ex:valor "bomba de émbolo con mando manual" .

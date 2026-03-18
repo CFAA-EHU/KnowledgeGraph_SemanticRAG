@@ -1,49 +1,29 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix base: <https://vocab.cfaa.eus/broaching/base#> .
-@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica#> .
-@prefix elec: <https://vocab.cfaa.eus/broaching/elec#> .
-@prefix seguridad: <https://vocab.cfaa.eus/broaching/seguridad#> .
+ex:ManualInstrucciones a ex:Manual ;
+    ex:textoExtracto "ANTES DE EFECTUAR REPARACIONES EN LA MÁQUINA, SE DEBE CONSULTAR ESTE MANUAL DE INSTRUCCIONES." .
 
-base:ManualDeInstrucciones a owl:Class .
-base:DepartamentoAsistenciaCliente a owl:Class .
-base:Personal a owl:Class .
-base:Conocimiento a owl:Class .
-base:Mecanica a owl:Class .
-base:Hidraulica a owl:Class .
-base:Neumatica a owl:Class .
-base:ElectricidadElectronica a owl:Class .
-base:Trabajo a owl:Class .
-base:FormacionPersonal a owl:Class .
-base:Resguardo a owl:Class .
-base:EquipoElectrico a owl:Class .
-base:PersonalCompetente a owl:Class .
-base:Herramienta a owl:Class .
-base:PrendaProteccionPersonal a owl:Class .
-base:LegislacionVigente a owl:Class .
-base:InterruptorGeneral a owl:Class .
-base:ArmarioElectrico a owl:Class .
-base:CartelAdvertencia a owl:Class .
-base:Candado a owl:Class .
+ex:DepartamentoAsistenciaClienteEKIN a ex:Empresa ;
+    ex:textoExtracto "EN CASO NECESARIO DEBE PONERSE EN CONTACTO CON DEPARTAMENTO DE ASISTENCIA AL CLIENTE DE EKIN." .
 
-mecanica:requiereConsulta a owl:ObjectProperty .
-mecanica:tieneConocimientos a owl:ObjectProperty .
-mecanica:desarrollarTrabajo a owl:ObjectProperty .
-mecanica:precisarRetirar a owl:ObjectProperty .
-mecanica:consignarMaquina a owl:ObjectProperty .
-mecanica:efectuarTrabajos a owl:ObjectProperty .
-mecanica:cumplirExigencia a owl:ObjectProperty .
-mecanica:efectuarTrabajosTension a owl:ObjectProperty .
-mecanica:asegurarContraReconexion a owl:ObjectProperty .
-mecanica:colocarCartel a owl:ObjectProperty .
-mecanica:prohibirPuestaTension a owl:ObjectProperty .
-mecanica:bloquearConCandado a owl:ObjectProperty .
+ex:PersonalMantenimiento a ex:Personal ;
+    ex:textoExtracto "EL PERSONAL QUE REPARA Y MANTIENE LA MÁQUINA DEBE TENER LOS CONOCIMIENTOS PRECISOS DE MECÁNICA, HIDRÁULICA, NEUMÁTICA, ELECTRICIDAD-ELECTRÓNICA, PARA QUE, EN FUNCIÓN DE SUS CONOCIMIENTOS ESPECÍFICOS, PUEDA DESARROLLAR LOS TRABAJOS ENCOMENDADOS." .
 
-elec:tieneTension a owl:DatatypeProperty .
-elec:tieneInterruptorGeneral a owl:ObjectProperty .
-elec:tieneArmarioElectrico a owl:ObjectProperty .
+ex:FormacionPersonal a ex:TareaMantenimiento ;
+    ex:textoExtracto "VER APARTADO 2.3 - FORMACIÓN DEL PERSONAL." .
 
-seguridad:requiereProteccionPersonal a owl:ObjectProperty .
-seguridad:cumpleLegislacion a owl:ObjectProperty .
+ex:Maquina a ex:Maquina ;
+    ex:textoExtracto "ANTES DE REALIZAR OPERACIONES DE MANTENIMIENTO QUE PRECISEN RETIRAR LOS RESGUARDOS, SE DEBE CONSIGNAR LA MÁQUINA." .
+
+ex:ArmarioElectrico a ex:ComponenteElectrico ;
+    ex:textoExtracto "LOS TRABAJOS EN EL EQUIPO ELÉCTRICO DEBEN EFECTUARSE SIN TENSIÓN Y CON LA MÁQUINA CONSIGNADA." ;
+    ex:compuestoPor ex:InterruptorGeneral .
+
+ex:InterruptorGeneral a ex:ComponenteElectrico ;
+    ex:textoExtracto "COLOCAR UN CARTEL DE ADVERTENCIA JUNTO AL INTERRUPTOR GENERAL, SITUADO EN UN COSTADO DEL ARMARIO ELÉCTRICO, PROHIBIENDO LA PUESTA EN TENSIÓN DE LA MÁQUINA Y TAMBIEN BLOQUEANDOLO CON UN CANDADO." .
+
+ex:AvisoConsignacion a ex:AvisoSeguridad ;
+    ex:textoExtracto "COLOCAR UN CARTEL DE ADVERTENCIA JUNTO AL INTERRUPTOR GENERAL, SITUADO EN UN COSTADO DEL ARMARIO ELÉCTRICO, PROHIBIENDO LA PUESTA EN TENSIÓN DE LA MÁQUINA Y TAMBIEN BLOQUEANDOLO CON UN CANDADO." ;
+    ex:detalladoEnEsquema ex:ArmarioElectrico .
+
+ex:PersonalCompetente a ex:Personal ;
+    ex:textoExtracto "EN CASO DE QUE ESTA EXIGENCIA NO PUEDA CUMPLIRSE, LOS TRABAJOS CON TENSIÓN DEBEN EFECTUARSE POR PERSONAL COMPETENTE E INSTRUIDO, CON LAS HERRAMIENTAS Y PRENDAS DE PROTECCIÓN PERSONAL DE ACUERDO CON LA LEGISLACIÓN VIGENTE EN EL PAÍS DE UTILIZACIÓN." .

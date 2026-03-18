@@ -1,213 +1,33 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix mec: <https://vocab.cfaa.eus/mecanica/> .
-@prefix elec: <https://vocab.cfaa.eus/electrica/> .
-@prefix base: <https://vocab.cfaa.eus/base/> .
+ex:TecladoJOG a ex:InterfazUsuario ;
+    ex:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados. Zonas de estado en la parte inferior y lateral; contraste claro entre teclas activas/inactivas para la conducción manual de ejes." .
 
-ex:TecladoJOG a owl:Class ;
-    rdfs:label "TecladoJOG" ;
-    rdfs:comment "Captura JOG con controles Z+/Z- y C+/C- destacados. Zonas de estado en la parte inferior y lateral; contraste claro entre teclas activas/inactivas para la conducción manual de ejes." .
+ex:PantallaPrincipal a ex:InterfazUsuario ;
+    ex:textoExtracto "Sinóptico con lecturas de ejes Z, Z1 y C, avance y propiedades del ciclo. Softkeys resaltadas (Inspección, Ciclo brochado). Estructura por paneles oscuros con texto claro que prioriza valores en tiempo real." .
 
-ex:PantallaPrincipal a owl:Class ;
-    rdfs:label "PantallaPrincipal" ;
-    rdfs:comment "Sinóptico con lecturas de ejes Z, Z1 y C, avance y propiedades del ciclo. Softkeys resaltadas (Inspección, Ciclo brochado). Estructura por paneles oscuros con texto claro que prioriza valores en tiempo real." .
+ex:MovimientosManuales a ex:InterfazUsuario ;
+    ex:textoExtracto "Interfaz para llevar el carro a posiciones superior/intermedia/inferior y subir/bajar/girar la mesa. Indicadores de frenos MAYR, consumos y temperaturas; flechas y etiquetas guían direccionalidad y estados." .
 
-ex:InterfazMovimientosManuales a owl:Class ;
-    rdfs:label "InterfazMovimientosManuales" ;
-    rdfs:comment "Interfaz para llevar el carro a posiciones superior/intermedia/inferior y subir/bajar/girar la mesa. Indicadores de frenos MAYR, consumos y temperaturas; flechas y etiquetas guían direccionalidad y estados." .
+ex:ArranqueMotores a ex:InterfazUsuario ;
+    ex:textoExtracto "Panel con cuatro columnas (Marcha, Motor, Disyuntor, Señales). Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase) y alarmas de nivel/caudal; jerarquía orientada a diagnóstico." .
 
-ex:PanelArranqueMotores a owl:Class ;
-    rdfs:label "PanelArranqueMotores" ;
-    rdfs:comment "Panel con cuatro columnas (Marcha, Motor, Disyuntor, Señales). Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase) y alarmas de nivel/caudal; jerarquía orientada a diagnóstico." .
+ex:CambioBrocha a ex:InterfazUsuario ;
+    ex:textoExtracto "Secuencia guiada de pasos con conmutadores de verificación; disposición en dos columnas que ordena la ejecución del procedimiento sin habilitar movimientos desde esta pantalla." .
 
-ex:PantallaCicloCambioBrocha a owl:Class ;
-    rdfs:label "PantallaCicloCambioBrocha" ;
-    rdfs:comment "Secuencia guiada de pasos con conmutadores de verificación; disposición en dos columnas que ordena la ejecución del procedimiento sin habilitar movimientos desde esta pantalla." .
+ex:CondicionesMaquina a ex:InterfazUsuario ;
+    ex:textoExtracto "Matriz de señalizadores de diagnóstico OK/Error. Presentación plana y repetitiva que facilita la detección rápida de incidencias de sensores y subsistemas." .
 
-ex:PantallaCondicionesMaquina a owl:Class ;
-    rdfs:label "PantallaCondicionesMaquina" ;
-    rdfs:comment "Matriz de señalizadores de diagnóstico OK/Error. Presentación plana y repetitiva que facilita la detección rápida de incidencias de sensores y subsistemas." .
+ex:MotorRefrigerante a ex:ComponenteElectrico ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase)" .
 
-mec:tieneControles a owl:ObjectProperty ;
-    rdfs:domain ex:TecladoJOG ;
-    rdfs:range ex:Control .
+ex:MotorTrasvase a ex:ComponenteElectrico ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase)" .
 
-mec:tieneZonasDeEstado a owl:ObjectProperty ;
-    rdfs:domain ex:TecladoJOG ;
-    rdfs:range ex:ZonaDeEstado .
+ex:MotorHidraulico a ex:ComponenteHidraulico ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase)" .
 
-mec:tieneContraste a owl:ObjectProperty ;
-    rdfs:domain ex:TecladoJOG ;
-    rdfs:range ex:Contraste .
+ex:MotorExtractor a ex:ComponenteElectrico ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase)" .
 
-mec:tieneLecturasDeEjes a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaPrincipal ;
-    rdfs:range ex:LecturaDeEje .
-
-mec:tieneAvance a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaPrincipal ;
-    rdfs:range ex:Avance .
-
-mec:tienePropiedadesDelCiclo a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaPrincipal ;
-    rdfs:range ex:PropiedadDelCiclo .
-
-mec:tieneSoftkeys a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaPrincipal ;
-    rdfs:range ex:Softkey .
-
-mec:tieneEstructuraPorPaneles a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaPrincipal ;
-    rdfs:range ex:EstructuraPorPaneles .
-
-mec:tieneTextoClaro a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaPrincipal ;
-    rdfs:range ex:TextoClaro .
-
-mec:tieneValoresEnTiempoReal a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaPrincipal ;
-    rdfs:range ex:ValorEnTiempoReal .
-
-mec:tieneInterfazParaLlevarElCarro a owl:ObjectProperty ;
-    rdfs:domain ex:InterfazMovimientosManuales ;
-    rdfs:range ex:InterfazParaLlevarElCarro .
-
-mec:tieneIndicadoresDeFrenos a owl:ObjectProperty ;
-    rdfs:domain ex:InterfazMovimientosManuales ;
-    rdfs:range ex:IndicadorDeFrenos .
-
-mec:tieneConsumos a owl:ObjectProperty ;
-    rdfs:domain ex:InterfazMovimientosManuales ;
-    rdfs:range ex:Consumo .
-
-mec:tieneTemperaturas a owl:ObjectProperty ;
-    rdfs:domain ex:InterfazMovimientosManuales ;
-    rdfs:range ex:Temperatura .
-
-mec:tieneFlechas a owl:ObjectProperty ;
-    rdfs:domain ex:InterfazMovimientosManuales ;
-    rdfs:range ex:Flecha .
-
-mec:tieneEtiquetas a owl:ObjectProperty ;
-    rdfs:domain ex:InterfazMovimientosManuales ;
-    rdfs:range ex:Etiqueta .
-
-mec:tienePanelConCuatroColumnas a owl:ObjectProperty ;
-    rdfs:domain ex:PanelArranqueMotores ;
-    rdfs:range ex:PanelConCuatroColumnas .
-
-mec:tieneIndicadoresCirculares a owl:ObjectProperty ;
-    rdfs:domain ex:PanelArranqueMotores ;
-    rdfs:range ex:IndicadorCircular .
-
-mec:tieneAlarmasDeNivelCaudal a owl:ObjectProperty ;
-    rdfs:domain ex:PanelArranqueMotores ;
-    rdfs:range ex:AlarmaDeNivelCaudal .
-
-mec:tieneJerarquíaOrientadaADiagnóstico a owl:ObjectProperty ;
-    rdfs:domain ex:PanelArranqueMotores ;
-    rdfs:range ex:JerarquíaOrientadaADiagnóstico .
-
-mec:tieneSecuenciaGuiadaDePasos a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaCicloCambioBrocha ;
-    rdfs:range ex:SecuenciaGuiadaDePasos .
-
-mec:tieneConmutadoresDeVerificación a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaCicloCambioBrocha ;
-    rdfs:range ex:ConmutadorDeVerificación .
-
-mec:tieneDisposiciónEnDosColumnas a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaCicloCambioBrocha ;
-    rdfs:range ex:DisposiciónEnDosColumnas .
-
-mec:tieneMatrizDeSeñalizadores a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaCondicionesMaquina ;
-    rdfs:range ex:MatrizDeSeñalizadores .
-
-mec:tienePresentaciónPlana a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaCondicionesMaquina ;
-    rdfs:range ex:PresentaciónPlana .
-
-mec:facilitaDetecciónRápidaDeIncidencias a owl:ObjectProperty ;
-    rdfs:domain ex:PantallaCondicionesMaquina ;
-    rdfs:range ex:DetecciónRápidaDeIncidencias .
-
-ex:Control a owl:Class ;
-    rdfs:label "Control" .
-
-ex:ZonaDeEstado a owl:Class ;
-    rdfs:label "ZonaDeEstado" .
-
-ex:Contraste a owl:Class ;
-    rdfs:label "Contraste" .
-
-ex:LecturaDeEje a owl:Class ;
-    rdfs:label "LecturaDeEje" .
-
-ex:Avance a owl:Class ;
-    rdfs:label "Avance" .
-
-ex:PropiedadDelCiclo a owl:Class ;
-    rdfs:label "PropiedadDelCiclo" .
-
-ex:Softkey a owl:Class ;
-    rdfs:label "Softkey" .
-
-ex:EstructuraPorPaneles a owl:Class ;
-    rdfs:label "EstructuraPorPaneles" .
-
-ex:TextoClaro a owl:Class ;
-    rdfs:label "TextoClaro" .
-
-ex:ValorEnTiempoReal a owl:Class ;
-    rdfs:label "ValorEnTiempoReal" .
-
-ex:InterfazParaLlevarElCarro a owl:Class ;
-    rdfs:label "InterfazParaLlevarElCarro" .
-
-ex:IndicadorDeFrenos a owl:Class ;
-    rdfs:label "IndicadorDeFrenos" .
-
-ex:Consumo a owl:Class ;
-    rdfs:label "Consumo" .
-
-ex:Temperatura a owl:Class ;
-    rdfs:label "Temperatura" .
-
-ex:Flecha a owl:Class ;
-    rdfs:label "Flecha" .
-
-ex:Etiqueta a owl:Class ;
-    rdfs:label "Etiqueta" .
-
-ex:PanelConCuatroColumnas a owl:Class ;
-    rdfs:label "PanelConCuatroColumnas" .
-
-ex:IndicadorCircular a owl:Class ;
-    rdfs:label "IndicadorCircular" .
-
-ex:AlarmaDeNivelCaudal a owl:Class ;
-    rdfs:label "AlarmaDeNivelCaudal" .
-
-ex:JerarquíaOrientadaADiagnóstico a owl:Class ;
-    rdfs:label "JerarquíaOrientadaADiagnóstico" .
-
-ex:SecuenciaGuiadaDePasos a owl:Class ;
-    rdfs:label "SecuenciaGuiadaDePasos" .
-
-ex:ConmutadorDeVerificación a owl:Class ;
-    rdfs:label "ConmutadorDeVerificación" .
-
-ex:DisposiciónEnDosColumnas a owl:Class ;
-    rdfs:label "DisposiciónEnDosColumnas" .
-
-ex:MatrizDeSeñalizadores a owl:Class ;
-    rdfs:label "MatrizDeSeñalizadores" .
-
-ex:PresentaciónPlana a owl:Class ;
-    rdfs:label "PresentaciónPlana" .
-
-ex:DetecciónRápidaDeIncidencias a owl:Class ;
-    rdfs:label "DetecciónRápidaDeIncidencias" .
+ex:MotorEngrase a ex:ComponenteMecanico ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase)" .

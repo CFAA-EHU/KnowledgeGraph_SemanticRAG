@@ -1,154 +1,36 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix admin: <https://admin-shell.io/dictionary/>.
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:SistemaRefrigeracion_57 a ex:Sistema ;
+    ex:textoExtracto "La máquina dispone de un sistema de refrigeración que tiene como objetico principal el evitar el calentamiento excesivo de la herramienta y de la pieza durante el brochado, además de evitar que se queden virutas en lugares indeseados." ;
+    ex:compuestoPor ex:MotorRefrigeranteFiltroPapel_57, ex:MotorRefrigeranteMaquina_57, ex:MotorTrasvaseRefrigerante_57, ex:MotorExtractorVirutas_57, ex:NivelRefrigeranteSucio_57, ex:PresenciaPapel_57, ex:NivelRefrigerante_57, ex:CaudalRefrigerante_57 .
 
-owl:Ontology ;
-    rdfs:label "Ontología para Sistema de Refrigeración en Brochado" ;
-    owl:imports admin: .
+ex:MotorRefrigeranteFiltroPapel_57 a ex:ComponenteElectrico ;
+    ex:identificador "M1" ;
+    ex:textoExtracto "M1: MOTOR REFRIGERANTE DE FILTRO PAPEL" .
 
-ex:SistemaRefrigeracion a owl:Class ;
-    rdfs:label "Sistema de Refrigeración" ;
-    rdfs:comment "Sistema encargado de evitar el calentamiento excesivo de la herramienta y la pieza durante el brochado." .
+ex:MotorRefrigeranteMaquina_57 a ex:ComponenteElectrico ;
+    ex:identificador "M3" ;
+    ex:textoExtracto "M3: MOTOR REFRIGERANTE MÁQUINA" .
 
-ex:Motor a owl:Class ;
-    rdfs:subClassOf ex:Componente ;
-    rdfs:label "Motor" ;
-    rdfs:isDefinedBy admin:Motor .
+ex:MotorTrasvaseRefrigerante_57 a ex:ComponenteElectrico ;
+    ex:identificador "M4" ;
+    ex:textoExtracto "M4: MOTOR TRASVASE REFRIGERANTE" .
 
-ex:MotorRefrigeranteFiltroPapel a owl:Class ;
-    rdfs:subClassOf ex:Motor ;
-    rdfs:label "Motor Refrigerante de Filtro Papel" .
+ex:MotorExtractorVirutas_57 a ex:ComponenteElectrico ;
+    ex:identificador "M5" ;
+    ex:textoExtracto "M5: MOTOR EXTRACTOR DE VIRUTAS" .
 
-ex:MotorRefrigeranteMaquina a owl:Class ;
-    rdfs:subClassOf ex:Motor ;
-    rdfs:label "Motor Refrigerante Máquina" .
+ex:NivelRefrigeranteSucio_57 a ex:Sensor ;
+    ex:identificador "BN41" ;
+    ex:textoExtracto "BN41: NIVEL REFRIGERANTE SUCIO" .
 
-ex:MotorTrasvaseRefrigerante a owl:Class ;
-    rdfs:subClassOf ex:Motor ;
-    rdfs:label "Motor Trasvase Refrigerante" .
+ex:PresenciaPapel_57 a ex:Sensor ;
+    ex:identificador "SQ40" ;
+    ex:textoExtracto "SQ40: PRESENCIA DE PAPEL" .
 
-ex:MotorExtractorVirutas a owl:Class ;
-    rdfs:subClassOf ex:Motor ;
-    rdfs:label "Motor Extractor de Virutas" .
+ex:NivelRefrigerante_57 a ex:Sensor ;
+    ex:identificador "BN42" ;
+    ex:textoExtracto "BN42: NIVEL REFRIGERANTE" .
 
-ex:Zocalo a owl:Class ;
-    rdfs:label "Zócalo" ;
-    rdfs:comment "Estructura donde se acumula el aceite de corte utilizado durante el proceso de brochado." .
-
-ex:Bomba a owl:Class ;
-    rdfs:label "Bomba" ;
-    rdfs:comment "Componente que envía el aceite de corte al sistema de filtración." .
-
-ex:SistemaFiltracion a owl:Class ;
-    rdfs:label "Sistema de Filtración" ;
-    rdfs:comment "Sistema encargado de filtrar el aceite de corte sin virutas." .
-
-ex:NivelRefrigeranteSucio a owl:Class ;
-    rdfs:label "Nivel Refrigerante Sucio" ;
-    rdfs:comment "Sensor que indica el nivel de refrigerante sucio." .
-
-ex:PresenciaPapel a owl:Class ;
-    rdfs:label "Presencia de Papel" ;
-    rdfs:comment "Sensor que indica la presencia de papel en el sistema de filtración." .
-
-ex:NivelRefrigerante a owl:Class ;
-    rdfs:label "Nivel Refrigerante" ;
-    rdfs:comment "Sensor que indica el nivel de refrigerante." .
-
-ex:CaudalRefrigerante a owl:Class ;
-    rdfs:label "Caudal Refrigerante" ;
-    rdfs:comment "Sensor que indica el caudal de refrigerante." .
-
-ex:Señal a owl:Class ;
-    rdfs:label "Señal" ;
-    rdfs:comment "Señal del sistema de refrigeración." .
-
-ex:evitarCalentamientoExcesivo a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaRefrigeracion ;
-    rdfs:range ex:Componente ;
-    rdfs:label "evitarCalentamientoExcesivo" .
-
-ex:acumularAceiteCorte a owl:ObjectProperty ;
-    rdfs:domain ex:Zocalo ;
-    rdfs:range ex:AceiteCorte ;
-    rdfs:label "acumularAceiteCorte" .
-
-ex:enviarAceiteCorte a owl:ObjectProperty ;
-    rdfs:domain ex:Bomba ;
-    rdfs:range ex:SistemaFiltracion ;
-    rdfs:label "enviarAceiteCorte" .
-
-ex:filtrarAceiteCorte a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaFiltracion ;
-    rdfs:range ex:AceiteCorte ;
-    rdfs:label "filtrarAceiteCorte" .
-
-ex:enviarAceiteCorteMáquina a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaFiltracion ;
-    rdfs:range ex:Maquina ;
-    rdfs:label "enviarAceiteCorteMáquina" .
-
-ex:refrigerar a owl:ObjectProperty ;
-    rdfs:domain ex:Maquina ;
-    rdfs:range ex:Componente ;
-    rdfs:label "refrigerar" .
-
-ex:indicarNivelRefrigeranteSucio a owl:ObjectProperty ;
-    rdfs:domain ex:NivelRefrigeranteSucio ;
-    rdfs:range ex:Nivel ;
-    rdfs:label "indicarNivelRefrigeranteSucio" .
-
-ex:indicarPresenciaPapel a owl:ObjectProperty ;
-    rdfs:domain ex:PresenciaPapel ;
-    rdfs:range ex:Presencia ;
-    rdfs:label "indicarPresenciaPapel" .
-
-ex:indicarNivelRefrigerante a owl:ObjectProperty ;
-    rdfs:domain ex:NivelRefrigerante ;
-    rdfs:range ex:Nivel ;
-    rdfs:label "indicarNivelRefrigerante" .
-
-ex:indicarCaudalRefrigerante a owl:ObjectProperty ;
-    rdfs:domain ex:CaudalRefrigerante ;
-    rdfs:range ex:Caudal ;
-    rdfs:label "indicarCaudalRefrigerante" .
-
-ex:tieneSeñal a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaRefrigeracion ;
-    rdfs:range ex:Señal ;
-    rdfs:label "tieneSeñal" .
-
-ex:evitarQuedarVirutas a owl:ObjectProperty ;
-    rdfs:domain ex:SistemaRefrigeracion ;
-    rdfs:range ex:Viruta ;
-    rdfs:label "evitarQuedarVirutas" .
-
-ex:Componente a owl:Class ;
-    rdfs:label "Componente" ;
-    rdfs:comment "Clase base para componentes del sistema de refrigeración." .
-
-ex:AceiteCorte a owl:Class ;
-    rdfs:label "Aceite de Corte" ;
-    rdfs:comment "Aceite utilizado durante el proceso de brochado." .
-
-ex:Maquina a owl:Class ;
-    rdfs:label "Máquina" ;
-    rdfs:comment "Máquina de brochado." .
-
-ex:Viruta a owl:Class ;
-    rdfs:label "Viruta" ;
-    rdfs:comment "Viruta generada durante el proceso de brochado." .
-
-ex:Nivel a owl:Class ;
-    rdfs:label "Nivel" ;
-    rdfs:comment "Nivel de un componente." .
-
-ex:Presencia a owl:Class ;
-    rdfs:label "Presencia" ;
-    rdfs:comment "Presencia de un componente." .
-
-ex:Caudal a owl:Class ;
-    rdfs:label "Caudal" ;
-    rdfs:comment "Caudal de un componente." .
+ex:CaudalRefrigerante_57 a ex:Sensor ;
+    ex:identificador "BC44" ;
+    ex:textoExtracto "BC44: CAUDAL REFRIGERANTE" .

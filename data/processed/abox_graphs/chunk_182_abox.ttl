@@ -1,210 +1,37 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix elec: <https://vocab.cfaa.eus/broaching/electric/> .
-@prefix mecanica: <https://vocab.cfaa.eus/broaching/mecanica/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-elec:BorneDeEntradaDigital a owl:Class ;
-    rdfs:label "Borne de entrada digital" ;
-    rdfs:comment "Componente eléctrico para monitorizar y controlar diversas funciones en la máquina." .
+ex:EntradasE10E17 a ex:ComponenteElectrico ;
+    rdfs:label "Entradas E10–E17 (módulo 19A3)" ;
+    ex:textoExtracto "Entradas E10–E17 (módulo 19A3) para monitorizar alimentaciones internas: CNC, salidas ET200SP, I/O externos (cabecero/salidas), panel operador, safety, entradas."@es .
 
-elec:ReléDeSeguridad a owl:Class ;
-    rdfs:label "Relé de seguridad" ;
-    rdfs:comment "Componente eléctrico utilizado para garantizar la seguridad en el sistema." .
+ex:EntradasE20E27 a ex:ComponenteElectrico ;
+    rdfs:label "Entradas E20–E27 (módulo 19A4)" ;
+    ex:textoExtracto "Entradas E20–E27 (módulo 19A4) asociadas a disyuntores y protecciones: motores de refrigerante, trasvase, limpieza bastidor, extractor de virutas, grupo hidráulico, protección fuente y enfriador de armario."@es .
 
-elec:PILZ a owl:Class ;
-    rdfs:label "PILZ" ;
-    rdfs:comment "Marca de relés de seguridad." .
+ex:EntradasE30E37 a ex:ComponenteElectrico ;
+    rdfs:label "Entradas E30–E37 (módulo 19A5)" ;
+    ex:textoExtracto "Entradas E30–E37 (módulo 19A5) para estados de motores en marcha (refrigerante, extractor, limpieza, trasvase, hidráulico), feedback frenos IZQ/DCH, modo setup y enable puertas."@es .
 
-elec:Flecha a owl:Class ;
-    rdfs:label "Flecha" ;
-    rdfs:comment "Elemento gráfico utilizado en esquemas eléctricos para indicar dirección o flujo." .
+ex:Modulo19A3 a ex:ComponenteElectrico ;
+    rdfs:label "módulo 19A3" ;
+    ex:textoExtracto "módulo 19A3"@es .
 
-elec:Ramal a owl:Class ;
-    rdfs:label "Ramal" ;
-    rdfs:comment "Parte de un circuito eléctrico que se desvía para conectar diferentes componentes." .
+ex:Modulo19A4 a ex:ComponenteElectrico ;
+    rdfs:label "módulo 19A4" ;
+    ex:textoExtracto "módulo 19A4"@es .
 
-elec:EntradaDigital a owl:Class ;
-    rdfs:label "Entrada digital" ;
-    rdfs:comment "Punto de entrada en un sistema eléctrico para señales digitales." .
+ex:Modulo19A5 a ex:ComponenteElectrico ;
+    rdfs:label "módulo 19A5" ;
+    ex:textoExtracto "módulo 19A5"@es .
 
-elec:Módulo a owl:Class ;
-    rdfs:label "Módulo" ;
-    rdfs:comment "Unidad funcional dentro de un sistema eléctrico." .
+ex:EsquemaElectricoBorneEntradaDigital a ex:Esquema ;
+    rdfs:label "Esquema eléctrico — Borne de entrada digital" ;
+    ex:textoExtracto "Discordancia relés de seguridad, PILZ OK. Las flechas desde 24E/0E y los rótulos en magenta sobre cada ramal clarifican la función de cada canal. --- Páginas: 137 | Sección: Esquemas eléctricos — Borne de entrada digital | Título: Borne de entrada digital ---"@es ;
+    ex:tieneComponente ex:EntradasE10E17, ex:EntradasE20E27, ex:EntradasE30E37, ex:Modulo19A3, ex:Modulo19A4, ex:Modulo19A5 .
 
-elec:CNC a owl:Class ;
-    rdfs:label "CNC" ;
-    rdfs:comment "Control Numérico Computarizado, sistema de control de máquinas herramientas." .
-
-elec:Salida a owl:Class ;
-    rdfs:label "Salida" ;
-    rdfs:comment "Punto de salida en un sistema eléctrico para señales o potencia." .
-
-elec:PanelOperador a owl:Class ;
-    rdfs:label "Panel operador" ;
-    rdfs:comment "Interfaz de control y monitorización de la máquina." .
-
-elec:Safety a owl:Class ;
-    rdfs:label "Safety" ;
-    rdfs:comment "Sistema de seguridad en el control de la máquina." .
-
-elec:Disyuntor a owl:Class ;
-    rdfs:label "Disyuntor" ;
-    rdfs:comment "Dispositivo de protección en circuitos eléctricos." .
-
-elec:Protección a owl:Class ;
-    rdfs:label "Protección" ;
-    rdfs:comment "Sistema o dispositivo para proteger componentes eléctricos." .
-
-elec:Motor a owl:Class ;
-    rdfs:label "Motor" ;
-    rdfs:comment "Componente mecánico que convierte energía eléctrica en energía mecánica." .
-
-elec:Refrigerante a owl:Class ;
-    rdfs:label "Refrigerante" ;
-    rdfs:comment "Sistema o componente para enfriar la máquina." .
-
-elec:Trasvase a owl:Class ;
-    rdfs:label "Trasvase" ;
-    rdfs:comment "Sistema para transferir fluidos entre recipientes." .
-
-elec:LimpiezaBastidor a owl:Class ;
-    rdfs:label "Limpieza bastidor" ;
-    rdfs:comment "Sistema para limpieza del bastidor de la máquina." .
-
-elec:ExtractorVirutas a owl:Class ;
-    rdfs:label "Extractor de virutas" ;
-    rdfs:comment "Sistema para extraer virutas de la máquina." .
-
-elec:GrupoHidraulico a owl:Class ;
-    rdfs:label "Grupo hidráulico" ;
-    rdfs:comment "Sistema hidráulico de la máquina." .
-
-elec:Fuente a owl:Class ;
-    rdfs:label "Fuente" ;
-    rdfs:comment "Fuente de alimentación eléctrica." .
-
-elec:EnfriadorArmario a owl:Class ;
-    rdfs:label "Enfriador de armario" ;
-    rdfs:comment "Sistema para enfriar el armario eléctrico." .
-
-elec:ContactoIntermedio a owl:Class ;
-    rdfs:label "Contacto intermedio" ;
-    rdfs:comment "Contacto utilizado en circuitos eléctricos para controlar otros componentes." .
-
-elec:Bobina a owl:Class ;
-    rdfs:label "Bobina" ;
-    rdfs:comment "Componente eléctrico que genera un campo magnético cuando se le aplica corriente." .
-
-elec:Lógica a owl:Class ;
-    rdfs:label "Lógica" ;
-    rdfs:comment "Sistema de control lógico en la máquina." .
-
-elec:tieneFlecha a owl:ObjectProperty ;
-    rdfs:domain elec:BorneDeEntradaDigital ;
-    rdfs:range elec:Flecha .
-
-elec:tieneRamal a owl:ObjectProperty ;
-    rdfs:domain elec:BorneDeEntradaDigital ;
-    rdfs:range elec:Ramal .
-
-elec:tieneEntradaDigital a owl:ObjectProperty ;
-    rdfs:domain elec:Módulo ;
-    rdfs:range elec:EntradaDigital .
-
-elec:tieneMódulo a owl:ObjectProperty ;
-    rdfs:domain elec:BorneDeEntradaDigital ;
-    rdfs:range elec:Módulo .
-
-elec:tieneCNC a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:CNC .
-
-elec:tieneSalida a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Salida .
-
-elec:tienePanelOperador a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:PanelOperador .
-
-elec:tieneSafety a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Safety .
-
-elec:tieneDisyuntor a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Disyuntor .
-
-elec:tieneProtección a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Protección .
-
-elec:tieneMotor a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Motor .
-
-elec:tieneRefrigerante a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Refrigerante .
-
-elec:tieneTrasvase a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Trasvase .
-
-elec:tieneLimpiezaBastidor a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:LimpiezaBastidor .
-
-elec:tieneExtractorVirutas a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:ExtractorVirutas .
-
-elec:tieneGrupoHidraulico a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:GrupoHidraulico .
-
-elec:tieneFuente a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:Fuente .
-
-elec:tieneEnfriadorArmario a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:EnfriadorArmario .
-
-elec:tieneContactoIntermedio a owl:ObjectProperty ;
-    rdfs:domain elec:EntradaDigital ;
-    rdfs:range elec:ContactoIntermedio .
-
-elec:tieneBobina a owl:ObjectProperty ;
-    rdfs:domain elec:ContactoIntermedio ;
-    rdfs:range elec:Bobina .
-
-elec:tieneLógica a owl:ObjectProperty ;
-    rdfs:domain elec:ContactoIntermedio ;
-    rdfs:range elec:Lógica .
-
-elec:tieneReléDeSeguridad a owl:ObjectProperty ;
-    rdfs:domain elec:BorneDeEntradaDigital ;
-    rdfs:range elec:ReléDeSeguridad .
-
-elec:tienePILZ a owl:ObjectProperty ;
-    rdfs:domain elec:ReléDeSeguridad ;
-    rdfs:range elec:PILZ .
-
-elec:tieneEtiqueta a owl:ObjectProperty ;
-    rdfs:domain elec:Ramal ;
-    rdfs:range rdfs:Literal .
-
-elec:tieneReferenciaCruzada a owl:ObjectProperty ;
-    rdfs:domain elec:Ramal ;
-    rdfs:range rdfs:Literal .
-
-elec:tieneTrazado a owl:ObjectProperty ;
-    rdfs:domain elec:Ramal ;
-    rdfs:range rdfs:Literal .
-
-elec:tieneSeñal a owl:ObjectProperty ;
-    rdfs:domain elec:Ramal ;
-    rdfs:range rdfs:Literal .
+ex:RelaySeguridadPilz a ex:ComponenteElectrico ;
+    rdfs:label "relés de seguridad PILZ" ;
+    ex:textoExtracto "Discordancia relés de seguridad, PILZ OK."@es .

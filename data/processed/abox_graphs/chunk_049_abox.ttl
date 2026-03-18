@@ -1,147 +1,42 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix mec: <https://vocab.cfaa.eus/mecanica/> .
-@prefix elec: <https://vocab.cfaa.eus/electrica/> .
-@prefix base: <https://vocab.cfaa.eus/base/> .
+ex:Motor_49_1 a ex:ComponenteMecanico ;
+    ex:textoExtracto "Desconectar los cables del motor y de la torreta de micros" .
 
-ex:CambioDeBase a owl:Class ;
-    rdfs:label "Cambio de base" ;
-    rdfs:comment "Procedimiento para realizar el cambio de base en la máquina" .
+ex:TuboHidraulico_49_1 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "soltar los tubos hidráulicos" .
 
-ex:ConsignacionMaquina a owl:Class ;
-    rdfs:label "Consignación de máquina" ;
-    rdfs:comment "Proceso de consignación de la máquina para realizar operaciones" .
+ex:TuboNeumatico_49_1 a ex:ComponenteElectrico ;
+    ex:textoExtracto "soltar ... el neumático" .
 
-ex:DesconexionComponentes a owl:Class ;
-    rdfs:label "Desconexión de componentes" ;
-    rdfs:comment "Proceso de desconexión de cables y tubos" .
+ex:PlatoDivisor_49_1 a ex:ComponenteMecanico ;
+    ex:textoExtracto "Soltar los tornillos que fijan la base del plato divisor al carro porta-piezas", "Soltar los tres tornillos que fijan las piezas de ajuste del plato", "Colocar el plato en la base plana", "Amarrar los siete tornillos que fijan el plato al carro porta-piezas y los tres tornillos que fijan las piezas de ajuste del plato" .
 
-ex:Cancamo a owl:Class ;
-    rdfs:label "Cáncamo" ;
-    rdfs:comment "Elemento utilizado para fijar y levantar componentes" .
+ex:BasePlato_49_1 a ex:ComponenteMecanico ;
+    ex:textoExtracto "Soltar los cuatro tornillos que fijan el plato a la base", "Colocar el plato en la base plana" .
 
-ex:AgujeroRoscado a owl:Class ;
-    rdfs:label "Agujero roscado" ;
-    rdfs:comment "Agujero con rosca para fijación de componentes" .
+ex:CarroPortaPiezas_49_1 a ex:ComponenteMecanico ;
+    ex:textoExtracto "fijan la base del plato divisor al carro porta-piezas", "introducir el conjunto ... hasta apoyarlo en el carro porta-piezas", "Amarrar los siete tornillos que fijan el plato al carro porta-piezas" .
 
-ex:Tornillo a owl:Class ;
-    rdfs:label "Tornillo" ;
-    rdfs:comment "Elemento de fijación" .
+ex:Tornillo_49_1 a ex:ComponenteMecanico ;
+    ex:identificador "M12" ;
+    ex:textoExtracto "Colocar dos cáncamos en los agujeros roscados (M12) de la cara superior del disco", "Soltar los tornillos que fijan la base del plato divisor al carro porta-piezas", "Soltar los tres tornillos que fijan las piezas de ajuste del plato", "Soltar los cuatro tornillos que fijan el plato a la base", "Amarrar los siete tornillos que fijan el plato al carro porta-piezas y los tres tornillos que fijan las piezas de ajuste del plato" .
 
-ex:PlataformaInterior a owl:Class ;
-    rdfs:label "Plataforma interior" ;
-    rdfs:comment "Plataforma interior de la máquina" .
+ex:Figura_4_6 a ex:Figura ;
+    ex:textoExtracto "Figura 4-6. Cambio de base (1)" ;
+    ex:ilustradoEn ex:PlatoDivisor_49_1, ex:Motor_49_1, ex:TuboHidraulico_49_1, ex:TuboNeumatico_49_1 .
 
-ex:Eslinga a owl:Class ;
-    rdfs:label "Eslinga" ;
-    rdfs:comment "Elemento utilizado para levantar componentes" .
+ex:Figura_4_7 a ex:Figura ;
+    ex:textoExtracto "Figura 4-7. Cambio de base (2)" ;
+    ex:ilustradoEn ex:PlatoDivisor_49_1, ex:Tornillo_49_1 .
 
-ex:Grúa a owl:Class ;
-    rdfs:label "Grúa" ;
-    rdfs:comment "Equipo utilizado para levantar y mover componentes pesados" .
+ex:Figura_4_8 a ex:Figura ;
+    ex:textoExtracto "Figura 4-8. Cambio de base (3)" ;
+    ex:ilustradoEn ex:PlatoDivisor_49_1, ex:Tornillo_49_1 .
 
-ex:PlatoDivisor a owl:Class ;
-    rdfs:label "Plato divisor" ;
-    rdfs:comment "Componente de la máquina que se cambia de base" .
+ex:Figura_4_9 a ex:Figura ;
+    ex:textoExtracto "Figura 4-9. Cambio de base (4)" ;
+    ex:ilustradoEn ex:PlatoDivisor_49_1, ex:BasePlato_49_1, ex:Tornillo_49_1 .
 
-ex:BasePlana a owl:Class ;
-    rdfs:label "Base plana" ;
-    rdfs:comment "Base plana donde se coloca el plato divisor" .
-
-ex:CarroPortaPiezas a owl:Class ;
-    rdfs:label "Carro porta-piezas" ;
-    rdfs:comment "Carro que porta las piezas de la máquina" .
-
-ex:PiezaDeAjuste a owl:Class ;
-    rdfs:label "Pieza de ajuste" ;
-    rdfs:comment "Pieza utilizada para ajustar el plato divisor" .
-
-mec:consignarMaquina a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:ConsignacionMaquina .
-
-mec:desconectarCables a owl:ObjectProperty ;
-    rdfs:domain ex:DesconexionComponentes ;
-    rdfs:range elec:Cable .
-
-mec:desconectarTubosHidraulicos a owl:ObjectProperty ;
-    rdfs:domain ex:DesconexionComponentes ;
-    rdfs:range base:TuboHidraulico .
-
-mec:desconectarNeumatico a owl:ObjectProperty ;
-    rdfs:domain ex:DesconexionComponentes ;
-    rdfs:range base:TuboNeumatico .
-
-mec:colocarCancamos a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:Cancamo .
-
-mec:colocarCancamosEn a owl:ObjectProperty ;
-    rdfs:domain ex:Cancamo ;
-    rdfs:range ex:AgujeroRoscado .
-
-mec:soltarTornillos a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:Tornillo .
-
-mec:abrirPlataformaInterior a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:PlataformaInterior .
-
-mec:colocarEslingas a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:Eslinga .
-
-mec:sacarPlatoDivisor a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:PlatoDivisor .
-
-mec:soltarBaseParaCambio a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range base:Base .
-
-mec:colocarPlatoEn a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:BasePlana .
-
-mec:introducirConjunto a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:PlatoDivisor .
-
-mec:amarrarTornillos a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:Tornillo .
-
-mec:soltarEslingas a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:Eslinga .
-
-mec:quitarCancamos a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:Cancamo .
-
-mec:retirarGrúa a owl:ObjectProperty ;
-    rdfs:domain ex:CambioDeBase ;
-    rdfs:range ex:Grúa .
-
-elec:Cable a owl:Class ;
-    rdfs:label "Cable" ;
-    rdfs:comment "Cable eléctrico" .
-
-base:TuboHidraulico a owl:Class ;
-    rdfs:label "Tubo hidráulico" ;
-    rdfs:comment "Tubo utilizado en sistemas hidráulicos" .
-
-base:TuboNeumatico a owl:Class ;
-    rdfs:label "Tubo neumático" ;
-    rdfs:comment "Tubo utilizado en sistemas neumáticos" .
-
-base:Base a owl:Class ;
-    rdfs:label "Base" ;
-    rdfs:comment "Base de la máquina" .
-
-ex:Motor a owl:Class ;
-    rdfs:label "Motor" ;
-    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Motor> .
+ex:Figura_4_10 a ex:Figura ;
+    ex:textoExtracto "Figura 4-10. Cambio de base (5)" ;
+    ex:ilustradoEn ex:PlatoDivisor_49_1, ex:CarroPortaPiezas_49_1, ex:Tornillo_49_1 .

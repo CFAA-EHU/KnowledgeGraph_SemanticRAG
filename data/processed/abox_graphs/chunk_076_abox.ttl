@@ -1,155 +1,92 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix mec: <https://vocab.cfaa.eus/broaching/mecanica/> .
-@prefix elec: <https://vocab.cfaa.eus/broaching/electrica/> .
-@prefix base: <https://vocab.cfaa.eus/broaching/base/> .
-@prefix motor: <https://admin-shell.io/dictionary/Motor> .
+ex:PantallaMovimientosManuales a ex:InterfazUsuario ;
+    rdfs:label "Pantallas de movimientos manuales" ;
+    ex:textoExtracto "Hay cuatro pantallas de movimientos manuales (Movimientos máquina, Arranque motores, Ciclo cambio de brocha y Condiciones máquina)." ;
+    ex:tieneComponente ex:BotonCUSTOM, ex:BotonOPMAN1_4 .
 
-ex:PantallaMovimientosManuales a owl:Class ;
-    rdfs:label "Pantalla de Movimientos Manuales" ;
-    rdfs:comment "Pantalla para controlar los movimientos de la máquina." .
+ex:BotonCUSTOM a ex:Componente ;
+    rdfs:label "Botón CUSTOM" ;
+    ex:textoExtracto "Para acceder a las pantallas hay que pulsar el botón “CUSTOM” desde el teclado." .
 
-ex:PantallaArranqueMotores a owl:Class ;
-    rdfs:label "Pantalla de Arranque de Motores" ;
-    rdfs:comment "Pantalla para controlar el estado y arranque de los motores de la máquina." .
-
-ex:PantallaCicloCambioBrocha a owl:Class ;
-    rdfs:label "Pantalla de Ciclo Cambio de Brocha" ;
-    rdfs:comment "Pantalla para controlar el ciclo de cambio de brocha." .
-
-ex:PantallaCondicionesMaquina a owl:Class ;
-    rdfs:label "Pantalla de Condiciones de Máquina" ;
-    rdfs:comment "Pantalla para controlar las condiciones de la máquina." .
-
-ex:BotonCustom a owl:Class ;
-    rdfs:label "Botón Custom" ;
-    rdfs:comment "Botón para acceder a las pantallas de movimientos manuales." .
-
-ex:BotonOPMan14 a owl:Class ;
+ex:BotonOPMAN1_4 a ex:Componente ;
     rdfs:label "Botón OP MAN 1/4" ;
-    rdfs:comment "Botón para cambiar entre las pantallas de movimientos manuales." .
+    ex:textoExtracto "Para cambiar de una pantalla a otra hay que pulsar el botón “OP MAN 1/4” de la parte superior." .
 
-ex:Ventana a owl:Class ;
-    rdfs:label "Ventana" ;
-    rdfs:comment "Ventana que se despliega para seleccionar una pantalla de movimientos manuales." .
+ex:PantallaMovimientosMaquina a ex:InterfazUsuario ;
+    rdfs:label "Pantalla Movimientos máquina" ;
+    ex:textoExtracto "Esta pantalla permite controlar los movimientos de la máquina. El carro de tracción se puede llevar a tres posiciones (superior, intermedio e inferior), mientras que la mesa giratoria se puede subir/bajar y girar. Además, dispone de varios señalizadores que indican el estado en el que se encuentran los frenos MAYR y los consumos de los motores de los ejes del carro de tracción y de la mesa giratoria. También muestra la temperatura de los motores y las posiciones de los ejes Z, Z1 y C." ;
+    ex:compuestoPor ex:CarroTraccion, ex:MesaGiratoria, ex:SenalizadorFrenosMAYR, ex:SenalizadorConsumosMotores, ex:SenalizadorTemperaturaMotores, ex:SenalizadorPosicionesEjes .
 
-ex:CarroTracion a owl:Class ;
-    rdfs:label "Carro de Tración" ;
-    rdfs:comment "Carro de tracción de la máquina." .
+ex:CarroTraccion a ex:ComponenteMecanico ;
+    rdfs:label "Carro de tracción" ;
+    ex:textoExtracto "El carro de tracción se puede llevar a tres posiciones (superior, intermedio e inferior)." .
 
-ex:MesaGiratoria a owl:Class ;
-    rdfs:label "Mesa Giratoria" ;
-    rdfs:comment "Mesa giratoria de la máquina." .
+ex:MesaGiratoria a ex:ComponenteMecanico ;
+    rdfs:label "Mesa giratoria" ;
+    ex:textoExtracto "la mesa giratoria se puede subir/bajar y girar." .
 
-ex:Señalizador a owl:Class ;
-    rdfs:label "Señalizador" ;
-    rdfs:comment "Señalizador que indica el estado de los frenos y consumos de los motores." .
+ex:SenalizadorFrenosMAYR a ex:Sensor ;
+    rdfs:label "Señalizadores de frenos MAYR" ;
+    ex:textoExtracto "dispone de varios señalizadores que indican el estado en el que se encuentran los frenos MAYR" .
 
-ex:FrenoMayr a owl:Class ;
-    rdfs:label "Freno MAYR" ;
-    rdfs:comment "Freno de la máquina." .
+ex:SenalizadorConsumosMotores a ex:Sensor ;
+    rdfs:label "Señalizadores de consumos de motores" ;
+    ex:textoExtracto "los consumos de los motores de los ejes del carro de tracción y de la mesa giratoria." .
 
-ex:MotorRefrigeranteABrochaBastidor a owl:Class ;
-    rdfs:label "Motor de Refrigerante a Brocha/Bastidor" ;
-    rdfs:comment "Motor para el sistema de refrigerante a brocha/bastidor." .
+ex:SenalizadorTemperaturaMotores a ex:Sensor ;
+    rdfs:label "Señalizadores de temperatura de motores" ;
+    ex:textoExtracto "También muestra la temperatura de los motores" .
 
-ex:MotorTrasvaseRefrigerante a owl:Class ;
-    rdfs:label "Motor de Trasvase de Refrigerante" ;
-    rdfs:comment "Motor para el trasvase de refrigerante." .
+ex:SenalizadorPosicionesEjes a ex:Sensor ;
+    rdfs:label "Señalizadores de posiciones de ejes" ;
+    ex:textoExtracto "las posiciones de los ejes Z, Z1 y C." .
 
-ex:GrupoHidraulico a owl:Class ;
-    rdfs:label "Grupo Hidráulico" ;
-    rdfs:comment "Grupo hidráulico de la máquina." .
+ex:PantallaArranqueMotores a ex:InterfazUsuario ;
+    rdfs:label "Pantalla Arranque motores" ;
+    ex:textoExtracto "Esta pantalla muestra el estado de todos los motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE) y dispone de cuatro columnas (MARCHA, MOTOR, DISYUNTOR y SEÑALES). La columna “MARCHA” permite arrancar y parar los motores de “REFRIGERANTE A BROCHA/BASTIDOR” y “EXTRACTOR DE VIRUTA” y activar una embolada de engrase. La columna “MOTOR” muestra el estado de los motores (si están activados o no) a través de unos señalizadores, mientras que la columna “DISYUNTOR” permite visualizar el estado de la protección eléctrica de los motores. En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." ;
+    ex:compuestoPor ex:ColumnaMarcha, ex:ColumnaMotor, ex:ColumnaDisyuntor, ex:ColumnaSenales .
 
-ex:MotorExtractorVirutas a owl:Class ;
-    rdfs:label "Motor de Extractor de Virutas" ;
-    rdfs:comment "Motor para el extractor de virutas." .
+ex:ColumnaMarcha a ex:InterfazUsuario ;
+    rdfs:label "Columna MARCHA" ;
+    ex:textoExtracto "La columna “MARCHA” permite arrancar y parar los motores de “REFRIGERANTE A BROCHA/BASTIDOR” y “EXTRACTOR DE VIRUTA” y activar una embolada de engrase." .
 
-ex:MotorEngrase a owl:Class ;
-    rdfs:label "Motor de Engrase" ;
-    rdfs:comment "Motor para el sistema de engrase." .
+ex:ColumnaMotor a ex:InterfazUsuario ;
+    rdfs:label "Columna MOTOR" ;
+    ex:textoExtracto "La columna “MOTOR” muestra el estado de los motores (si están activados o no) a través de unos señalizadores" .
 
-ex:Columna a owl:Class ;
-    rdfs:label "Columna" ;
-    rdfs:comment "Columna en la pantalla de arranque de motores." .
+ex:ColumnaDisyuntor a ex:InterfazUsuario ;
+    rdfs:label "Columna DISYUNTOR" ;
+    ex:textoExtracto "la columna “DISYUNTOR” permite visualizar el estado de la protección eléctrica de los motores." .
 
-ex:SeñalizadorNivelMinimo a owl:Class ;
-    rdfs:label "Señalizador de Nivel Mínimo" ;
-    rdfs:comment "Señalizador de nivel mínimo para refrigerante y grupo hidráulico." .
+ex:ColumnaSenales a ex:InterfazUsuario ;
+    rdfs:label "Columna SEÑALES" ;
+    ex:textoExtracto "En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
 
-mec:tienePosiciones a owl:ObjectProperty ;
-    rdfs:label "tiene posiciones" ;
-    rdfs:comment "Propiedad que indica las posiciones de un componente." .
+ex:MotorRefrigeranteBrochaBastidor a ex:ComponenteElectrico ;
+    rdfs:label "Motor REFRIGERANTE A BROCHA/BASTIDOR" ;
+    ex:textoExtracto "motores de “REFRIGERANTE A BROCHA/BASTIDOR”" .
 
-mec:permiteControlar a owl:ObjectProperty ;
-    rdfs:label "permite controlar" ;
-    rdfs:comment "Propiedad que indica que un componente permite controlar otro." .
+ex:MotorTrasvaseRefrigerante a ex:ComponenteElectrico ;
+    rdfs:label "Motor TRASVASE REFRIGERANTE" ;
+    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
 
-mec:muestraEstado a owl:ObjectProperty ;
-    rdfs:label "muestra estado" ;
-    rdfs:comment "Propiedad que indica que un componente muestra el estado de otro." .
+ex:GrupoHidraulico a ex:ComponenteHidraulico ;
+    rdfs:label "Grupo hidráulico" ;
+    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
 
-mec:permiteArrancarParar a owl:ObjectProperty ;
-    rdfs:label "permite arrancar parar" ;
-    rdfs:comment "Propiedad que indica que un componente permite arrancar o parar otro." .
+ex:MotorExtractorVirutas a ex:ComponenteElectrico ;
+    rdfs:label "Motor EXTRACTOR DE VIRUTAS" ;
+    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
 
-mec:activaEmboladaEngrase a owl:ObjectProperty ;
-    rdfs:label "activa embolada de engrase" ;
-    rdfs:comment "Propiedad que indica que un componente activa una embolada de engrase." .
+ex:MotorEngrase a ex:ComponenteElectrico ;
+    rdfs:label "Motor ENGRASE" ;
+    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
 
-mec:visualizarEstadoProteccion a owl:ObjectProperty ;
-    rdfs:label "visualizar estado de protección" ;
-    rdfs:comment "Propiedad que indica que un componente permite visualizar el estado de protección de otro." .
+ex:SenalizadorNivelMinimoRefrigerante a ex:Sensor ;
+    rdfs:label "Señalizador de nivel mínimo de refrigerante" ;
+    ex:textoExtracto "En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
 
-mec:tieneSeñalizadoresNivel a owl:ObjectProperty ;
-    rdfs:label "tiene señalizadores de nivel" ;
-    rdfs:comment "Propiedad que indica que un componente tiene señalizadores de nivel." .
-
-elec:tieneColumna a owl:ObjectProperty ;
-    rdfs:label "tiene columna" ;
-    rdfs:comment "Propiedad que indica que un componente tiene una columna." .
-
-elec:tieneSeñalizadores a owl:ObjectProperty ;
-    rdfs:label "tiene señalizadores" ;
-    rdfs:comment "Propiedad que indica que un componente tiene señalizadores." .
-
-base:tieneMotor a owl:ObjectProperty ;
-    rdfs:label "tiene motor" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un motor." .
-
-base:tieneSeñalizador a owl:ObjectProperty ;
-    rdfs:label "tiene señalizador" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un señalizador." .
-
-base:tieneFreno a owl:ObjectProperty ;
-    rdfs:label "tiene freno" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un freno." .
-
-base:tieneGrupoHidraulico a owl:ObjectProperty ;
-    rdfs:label "tiene grupo hidráulico" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un grupo hidráulico." .
-
-base:tieneExtractorVirutas a owl:ObjectProperty ;
-    rdfs:label "tiene extractor de virutas" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un extractor de virutas." .
-
-base:tieneEngrase a owl:ObjectProperty ;
-    rdfs:label "tiene engrase" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un sistema de engrase." .
-
-base:tieneRefrigerante a owl:ObjectProperty ;
-    rdfs:label "tiene refrigerante" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un sistema de refrigerante." .
-
-base:tieneColumna a owl:ObjectProperty ;
-    rdfs:label "tiene columna" ;
-    rdfs:comment "Propiedad que indica que un componente tiene una columna." .
-
-base:tieneSeñalizadorNivelMinimo a owl:ObjectProperty ;
-    rdfs:label "tiene señalizador de nivel mínimo" ;
-    rdfs:comment "Propiedad que indica que un componente tiene un señalizador de nivel mínimo." .
-
-motor:Motor a owl:Class ;
-    rdfs:isDefinedBy <https://admin-shell.io/dictionary/Motor> .
+ex:SenalizadorNivelMinimoGrupoHidraulico a ex:Sensor ;
+    rdfs:label "Señalizador de nivel mínimo de grupo hidráulico" ;
+    ex:textoExtracto "En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .

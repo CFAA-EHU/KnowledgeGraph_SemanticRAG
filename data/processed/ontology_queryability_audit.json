@@ -1,0 +1,155 @@
+{
+  "audit_version": "t11_v2",
+  "graph_summary": {
+    "triple_count": 5661,
+    "class_count": 31,
+    "property_count": 21
+  },
+  "queryability": [
+    {
+      "query_type": "literal_lookup",
+      "hop_depth": 1,
+      "status": "supported",
+      "anchor_entity": "Empresa_EKIN_S_Coop",
+      "expected_route": [
+        "Empresa_EKIN_S_Coop",
+        "textoExtracto",
+        "contact snippet"
+      ],
+      "observed_support": [
+        "identificador",
+        "textoExtracto"
+      ],
+      "notes": "Contact and ownership lookups are directly available as bounded literals on company nodes."
+    },
+    {
+      "query_type": "purpose_or_function_lookup",
+      "hop_depth": 1,
+      "status": "partially_supported",
+      "anchor_entity": "Maquina_A218_RASHEM_7x3000x500",
+      "expected_route": [
+        "Machine or Manual",
+        "textoExtracto",
+        "purpose snippet"
+      ],
+      "observed_support": [
+        "label",
+        "textoExtracto"
+      ],
+      "notes": "Purpose/function is recoverable from descriptive text but lacks a dedicated semantic property."
+    },
+    {
+      "query_type": "component_attribute_lookup",
+      "hop_depth": 1,
+      "status": "supported",
+      "anchor_entity": "ElementoSeguridad_1",
+      "expected_route": [
+        "ElementoSeguridad_1",
+        "textoExtracto",
+        "verification statement"
+      ],
+      "observed_support": [
+        "type",
+        "textoExtracto"
+      ],
+      "notes": "Attribute/state questions are answered cleanly through direct descriptive literals."
+    },
+    {
+      "query_type": "regulatory_lookup",
+      "hop_depth": 2,
+      "status": "supported",
+      "anchor_entity": "MaquinaBrochadoExterior_18",
+      "expected_route": [
+        "Machine",
+        "cumpleNormativa",
+        "Directive"
+      ],
+      "observed_support": [
+        "cumpleNormativa",
+        "requiereMantenimiento"
+      ],
+      "notes": "There are real structural routes for compliance and safety maintenance, although automatic anchoring is still noisy."
+    },
+    {
+      "query_type": "figure_or_reference_lookup",
+      "hop_depth": 2,
+      "status": "supported",
+      "anchor_entity": "ManualBrochadoraA218",
+      "expected_route": [
+        "Manual",
+        "incoming ilustradoEn",
+        "Figure"
+      ],
+      "observed_support": [
+        "ilustradoEn",
+        "textoExtracto"
+      ],
+      "notes": "Figure/reference queries are structurally supported through explicit illustration links."
+    },
+    {
+      "query_type": "component_relation_lookup",
+      "hop_depth": 2,
+      "status": "supported",
+      "anchor_entity": "CarroPortaPiezas_46",
+      "expected_route": [
+        "CarroPortaPiezas_46",
+        "controla",
+        "ReglaLineal_46_1"
+      ],
+      "observed_support": [
+        "controla",
+        "tieneComponente"
+      ],
+      "notes": "Explicit component-to-component relations are available and bounded."
+    },
+    {
+      "query_type": "component_relation_lookup",
+      "hop_depth": 3,
+      "status": "supported",
+      "anchor_entity": "Columna_46",
+      "expected_route": [
+        "Columna_46",
+        "tieneComponente",
+        "CarroPortaPiezas_46",
+        "controla",
+        "ReglaLineal_46_1"
+      ],
+      "observed_support": [
+        "tieneComponente",
+        "controla",
+        "textoExtracto"
+      ],
+      "notes": "True three-hop traversal exists and stays bounded enough for a benchmark."
+    },
+    {
+      "query_type": "literal_lookup",
+      "hop_depth": 2,
+      "status": "partially_supported",
+      "anchor_entity": "DepartamentoAsistenciaClienteEKIN",
+      "expected_route": [
+        "Safety instruction",
+        "should consult",
+        "DepartmentAsistenciaClienteEKIN"
+      ],
+      "observed_support": [
+        "textoExtracto only"
+      ],
+      "notes": "The answer exists textually, but the graph lacks an explicit edge linking safety instructions to the support department."
+    },
+    {
+      "query_type": "literal_lookup",
+      "hop_depth": 2,
+      "status": "partially_supported",
+      "anchor_entity": "PiezaRecambio_1",
+      "expected_route": [
+        "PiezaRecambio_1",
+        "technical requirement",
+        "Empresa_EKIN_S_Coop"
+      ],
+      "observed_support": [
+        "textoExtracto only"
+      ],
+      "notes": "Replacement-part policy is available as text, but the provenance link to EKIN is not modeled as a clean relation."
+    }
+  ]
+}

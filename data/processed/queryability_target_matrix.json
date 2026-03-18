@@ -1,0 +1,77 @@
+{
+  "dataset_version": "qa_canonical_v1",
+  "query_types": [
+    {
+      "query_type": "literal_lookup",
+      "hop_depth": 1,
+      "must_support": true,
+      "priority": "critical",
+      "example_questions": [
+        "Cual es el correo electronico de contacto de EKIN indicado en el manual?",
+        "A quien pertenecen los derechos de autor del manual?"
+      ],
+      "notes": "Entity anchored lookups over company/contact snippets and single literals."
+    },
+    {
+      "query_type": "purpose_or_function_lookup",
+      "hop_depth": 1,
+      "must_support": true,
+      "priority": "important",
+      "example_questions": [
+        "Para que sirve el manual de la brochadora A218 / RASHEM - 7x3000x500?"
+      ],
+      "notes": "Currently mostly supported through bounded text snippets rather than explicit functional properties."
+    },
+    {
+      "query_type": "component_attribute_lookup",
+      "hop_depth": 1,
+      "must_support": true,
+      "priority": "critical",
+      "example_questions": [
+        "Que se debe verificar regularmente para garantizar la seguridad de la maquina?"
+      ],
+      "notes": "Single entity to descriptive text/value lookups."
+    },
+    {
+      "query_type": "regulatory_lookup",
+      "hop_depth": 2,
+      "must_support": true,
+      "priority": "critical",
+      "example_questions": [
+        "Segun que directiva se realiza la declaracion CE de conformidad sobre maquinas?",
+        "Que objetivo tienen los simbolos de advertencia y seguridad del manual?"
+      ],
+      "notes": "Requires following explicit compliance or maintenance links, not only text search."
+    },
+    {
+      "query_type": "figure_or_reference_lookup",
+      "hop_depth": 2,
+      "must_support": true,
+      "priority": "important",
+      "example_questions": [
+        "Que figura muestra la informacion que aparece en los encabezados y pies de pagina del manual?"
+      ],
+      "notes": "Manual or component reference to figure/document nodes plus their descriptions."
+    },
+    {
+      "query_type": "component_relation_lookup",
+      "hop_depth": 2,
+      "must_support": true,
+      "priority": "important",
+      "example_questions": [
+        "Que componente controla el CarroPortaPiezas_46?"
+      ],
+      "notes": "Explicit component-to-component relations such as controla/tieneComponente."
+    },
+    {
+      "query_type": "component_relation_lookup",
+      "hop_depth": 3,
+      "must_support": true,
+      "priority": "stretch",
+      "example_questions": [
+        "Que regla lineal queda controlada por un componente de la Columna_46?"
+      ],
+      "notes": "True multi-hop traversal over structural relations is already present and should become benchmarked."
+    }
+  ]
+}

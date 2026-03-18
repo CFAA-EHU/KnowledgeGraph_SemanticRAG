@@ -1,34 +1,45 @@
 import sys
-import re
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+import re
+import sys
+
 from rdflib import Graph, URIRef
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import AgglomerativeClustering
 
-GRAPH_PATH = Path("data/processed/ontology_merged.ttl")
-OUTPUT_PATH = Path("data/processed/ontology_aligned.ttl")
-SIMILARITY_THRESHOLD = 0.15
+from artifact_contracts import EXPERIMENTAL_ABOX_ALIGNED_PATH, OPERATIONAL_ABOX_PATH
 
-def obtener_entidades_y_etiquetas(g: Graph, tipo_entidad: str) -> tuple[list, list]:
+GRAPH_PATH = OPERATIONAL_ABOX_PATH
+OUTPUT_PATH = EXPERIMENTAL_ABOX_ALIGNED_PATH
+SIMILARITY_THRESHOLD = 0.15
+BASE_URI = "https://vocab.cfaa.eus/broaching/"
+
+def obtener_entidades_y_etiquetas(g: Graph, clase_objetivo: str) -> tuple[list, list]:
     query = f"""
-    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX ex: <{BASE_URI}>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT DISTINCT ?e ?label WHERE {{
-        ?e a {tipo_entidad} .
-        OPTIONAL {{ ?e rdfs:label ?label . }}
+    SELECT DISTINCT ?e ?texto WHERE {{
+        ?e a {clase_objetivo} .
+        OPTIONAL {{ ?e ex:textoExtracto ?texto . }}
+        OPTIONAL {{ ?e rdfs:label ?texto . }}
         FILTER(isIRI(?e))
     }}
     """
-    
+
     entidades_dict = {}
     for row in g.query(query):
         uri = str(row.e)
-        if row.label:
-            entidades_dict[uri] = str(row.label)
+        if row.texto:
+            entidades_dict[uri] = str(row.texto)
         elif uri not in entidades_dict:
             base = uri.split("#")[-1] if "#" in uri else uri.split("/")[-1]
             entidades_dict[uri] = re.sub(r"([a-z])([A-Z])", r"\1 \2", base)
-            
+
     return list(entidades_dict.keys()), list(entidades_dict.values())
 
 def clusterizar_entidades(uris: list, labels: list, model: SentenceTransformer) -> dict:
@@ -36,12 +47,12 @@ def clusterizar_entidades(uris: list, labels: list, model: SentenceTransformer) 
         return {}
 
     embeddings = model.encode(labels)
-    
+
     clustering = AgglomerativeClustering(
-        n_clusters=None, 
-        distance_threshold=SIMILARITY_THRESHOLD, 
-        metric="cosine", 
-        linkage="average"
+        n_clusters=None,
+        distance_threshold=SIMILARITY_THRESHOLD,
+        metric="cosine",
+        linkage="average",
     )
     clusters = clustering.fit_predict(embeddings)
 
@@ -50,7 +61,7 @@ def clusterizar_entidades(uris: list, labels: list, model: SentenceTransformer) 
         grupos.setdefault(cluster_id, []).append(uris[idx])
 
     mapeo = {}
-    for cluster_id, lista_uris in grupos.items():
+    for _, lista_uris in grupos.items():
         if len(lista_uris) > 1:
             canonica = sorted(lista_uris, key=len)[0]
             for uri in lista_uris:
@@ -59,38 +70,36 @@ def clusterizar_entidades(uris: list, labels: list, model: SentenceTransformer) 
 
     return mapeo
 
-def alinear_ontologia():
+def alinear_instancias():
     if not GRAPH_PATH.exists():
-        print(f"Error: {GRAPH_PATH} no existe.")
+        print(f"Error: {GRAPH_PATH} no existe. Ejecuta primero abox_merger.py")
         sys.exit(1)
 
     g = Graph()
     g.parse(GRAPH_PATH, format="turtle")
 
-    uris_clases, labels_clases = obtener_entidades_y_etiquetas(g, "owl:Class")
-    uris_rdfs, labels_rdfs = obtener_entidades_y_etiquetas(g, "rdfs:Class")
-    
-    uris_clases_total = list(set(uris_clases + uris_rdfs))
-    labels_clases_total = [labels_clases[uris_clases.index(u)] if u in uris_clases else labels_rdfs[uris_rdfs.index(u)] for u in uris_clases_total]
+    clases_hardware = ["ex:Componente", "ex:PiezaRecambio", "ex:Sistema", "ex:Consumible"]
 
-    uris_op, labels_op = obtener_entidades_y_etiquetas(g, "owl:ObjectProperty")
-    uris_dp, labels_dp = obtener_entidades_y_etiquetas(g, "owl:DatatypeProperty")
+    uris_totales = []
+    labels_totales = []
+
+    for clase in clases_hardware:
+        uris, labels = obtener_entidades_y_etiquetas(g, clase)
+        uris_totales.extend(uris)
+        labels_totales.extend(labels)
 
     print("Cargando modelo all-MiniLM-L6-v2...")
     model = SentenceTransformer("all-MiniLM-L6-v2")
 
     mapeo_global = {}
 
-    print(f"Clusterizando {len(uris_clases_total)} Clases...")
-    mapeo_global.update(clusterizar_entidades(uris_clases_total, labels_clases_total, model))
+    if uris_totales:
+        print(f"Clusterizando {len(uris_totales)} instancias de hardware...")
+        mapeo_global.update(clusterizar_entidades(uris_totales, labels_totales, model))
+    else:
+        print("No se encontraron instancias de hardware para clusterizar.")
 
-    print(f"Clusterizando {len(uris_op)} Object Properties...")
-    mapeo_global.update(clusterizar_entidades(uris_op, labels_op, model))
-
-    print(f"Clusterizando {len(uris_dp)} Datatype Properties...")
-    mapeo_global.update(clusterizar_entidades(uris_dp, labels_dp, model))
-
-    print(f"Detectadas {len(mapeo_global)} URIs redundantes. Reescribiendo grafo...")
+    print(f"Detectadas {len(mapeo_global)} URIs redundantes. Reescribiendo grafo A-Box...")
 
     g_nuevo = Graph()
     for ns_prefix, ns_uri in g.namespaces():
@@ -108,17 +117,12 @@ def alinear_ontologia():
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     g_nuevo.serialize(destination=OUTPUT_PATH, format="turtle")
 
-    def count_remaining(uris):
-        return len(uris) - sum(1 for k in mapeo_global if str(k) in uris)
-
     print("-" * 40)
-    print("RESUMEN DE REDUCCIÓN SEMÁNTICA SEGREGADA")
+    print("RESUMEN DE ALINEAMIENTO DE ENTIDADES (A-BOX)")
     print("-" * 40)
     print(f"Tripletas mutadas       : {reemplazos}")
-    print(f"Clases consolidadas     : {count_remaining(uris_clases_total)}")
-    print(f"Obj Props consolidadas  : {count_remaining(uris_op)}")
-    print(f"Data Props consolidadas : {count_remaining(uris_dp)}")
+    print(f"Nodos fusionados        : {len(mapeo_global)}")
     print(f"Archivo generado        : {OUTPUT_PATH}")
 
 if __name__ == "__main__":
-    alinear_ontologia()
+    alinear_instancias()

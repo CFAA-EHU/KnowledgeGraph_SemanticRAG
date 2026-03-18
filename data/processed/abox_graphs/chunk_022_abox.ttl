@@ -1,28 +1,10 @@
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix base: <https://vocab.cfaa.eus/broaching/base#> .
-@prefix seguridad: <https://vocab.cfaa.eus/broaching/seguridad#> .
-@prefix mantenimiento: <https://vocab.cfaa.eus/broaching/mantenimiento#> .
-@prefix plan: <https://vocab.cfaa.eus/broaching/plan#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:SistemaSeguridadMaquina a ex:Sistema ;
+    rdfs:label "sistemas de seguridad de la máquina" ;
+    ex:textoExtracto "SE DEBEN REVISAR Y MANTENER REGULARMENTE LOS SISTEMAS DE SEGURIDAD DE LOS QUE VA PROVISTA LA MÁQUINA." ;
+    ex:requiereMantenimiento ex:PlanMantenimientoEKIN .
 
-base:MaquinaBrochadora a owl:Class ;
-    rdfs:label "Máquina Brochadora" ;
-    rdfs:comment "Máquina brochadora de EKIN" .
-
-seguridad:SistemaSeguridad a owl:Class ;
-    rdfs:label "Sistema de Seguridad" ;
-    rdfs:comment "Sistemas de seguridad de la máquina brochadora" .
-
-mantenimiento:PlanMantenimiento a owl:Class ;
-    rdfs:label "Plan de Mantenimiento" ;
-    rdfs:comment "Plan de mantenimiento especificado por EKIN para la máquina brochadora" .
-
-plan:Apartado7_1 a owl:Class ;
-    rdfs:label "Apartado 7.1" ;
-    rdfs:comment "Apartado del plan de mantenimiento" .
-
-base:MaquinaBrochadora ex:tieneSistemaSeguridad seguridad:SistemaSeguridad .
-base:MaquinaBrochadora ex:debeSeguirPlan mantenimiento:PlanMantenimiento .
-mantenimiento:PlanMantenimiento ex:verApartado plan:Apartado7_1 .
+ex:PlanMantenimientoEKIN a ex:Directiva ;
+    rdfs:label "plan de mantenimiento especificado por EKIN" ;
+    ex:textoExtracto "SE DEBE SEGUIR EL PLAN DE MANTENIMIENTO ESPECIFICADO POR EKIN PARA SU MÁQUINA BROCHADORA (VER APARTADO 7.1 plan de mantenimiento)." .

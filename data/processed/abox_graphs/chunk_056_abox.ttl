@@ -1,110 +1,36 @@
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix mech: <http://www.semanticweb.org/ontologies/2023/mechanics#> .
-@prefix elec: <http://www.semanticweb.org/ontologies/2023/electronics#> .
-@prefix base: <http://www.semanticweb.org/ontologies/2023/base#> .
-@prefix admin: <https://admin-shell.io/dictionary/> .
+ex:SistemaHidraulico429 a ex:Sistema ;
+    ex:textoExtracto "El sistema hidráulico se encuentra en el lateral izquierdo de la máquina y está compuesto por una bomba de pistones, un indicador de nivel con termómetro, un sensor de nivel, semi-acoplamientos, un motor, una reductora de presión, electroválvulas, un presostato electrónico, un manómetro vertical y un filtro." ;
+    ex:compuestoPor ex:BombaPistones429, ex:IndicadorNivelTermometro429, ex:SensorNivel429, ex:SemiAcoplamientos429, ex:MotorGrupoHidraulicoM6, ex:ReductoraPresion429, ex:Electrovalvulas429, ex:PresostatoElectronicoBP714, ex:ManometroVertical429, ex:Filtro429 .
 
-@prefix hidraulico: <http://www.semanticweb.org/ontologies/2023/hydraulic#> .
+ex:BombaPistones429 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "bomba de pistones" .
 
-owl:Ontology rdf:about "https://vocab.cfaa.eus/broaching/" ;
-    rdfs:label "Ontología de Brochado" ;
-    rdfs:comment "Ontología para el dominio de máquinas de brochado." .
+ex:IndicadorNivelTermometro429 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "indicador de nivel con termómetro" .
 
-# Clases
-hidraulico:SistemaHidraulico a owl:Class ;
-    rdfs:label "Sistema Hidráulico" ;
-    rdfs:comment "Sistema hidráulico de la máquina de brochado." .
+ex:SensorNivel429 a ex:Sensor ;
+    ex:textoExtracto "sensor de nivel" .
 
-hidraulico:BombaPistones a owl:Class ;
-    rdfs:label "Bomba de Pistones" ;
-    rdfs:comment "Bomba de pistones del sistema hidráulico." ;
-    rdfs:subClassOf ex:Bomba .
+ex:SemiAcoplamientos429 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "semi-acoplamientos" .
 
-hidraulico:IndicadorNivelTermometro a owl:Class ;
-    rdfs:label "Indicador de Nivel con Termómetro" ;
-    rdfs:comment "Indicador de nivel con termómetro del sistema hidráulico." ;
-    rdfs:subClassOf ex:IndicadorDeNivel .
+ex:MotorGrupoHidraulicoM6 a ex:ComponenteElectrico ;
+    ex:identificador "M6" ;
+    ex:textoExtracto "MOTOR GRUPO HIDRÁULICO" .
 
-hidraulico:SensorNivel a owl:Class ;
-    rdfs:label "Sensor de Nivel" ;
-    rdfs:comment "Sensor de nivel del sistema hidráulico." ;
-    rdfs:subClassOf admin:Sensor .
+ex:ReductoraPresion429 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "reductora de presión" .
 
-hidraulico:SemiAcoplamiento a owl:Class ;
-    rdfs:label "Semi-Acoplamiento" ;
-    rdfs:comment "Semi-acoplamiento del sistema hidráulico." ;
-    rdfs:subClassOf ex:SemiAcoplamiento .
+ex:Electrovalvulas429 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "electroválvulas" .
 
-hidraulico:Motor a owl:Class ;
-    rdfs:label "Motor" ;
-    rdfs:comment "Motor del sistema hidráulico." ;
-    rdfs:subClassOf admin:Motor .
+ex:PresostatoElectronicoBP714 a ex:Sensor ;
+    ex:identificador "BP714" ;
+    ex:textoExtracto "presostato electrónico" .
 
-hidraulico:ReductoraPresion a owl:Class ;
-    rdfs:label "Reductora de Presión" ;
-    rdfs:comment "Reductora de presión del sistema hidráulico." ;
-    rdfs:subClassOf ex:ReductoraPresion .
+ex:ManometroVertical429 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "manómetro vertical" .
 
-hidraulico:Electrovalvula a owl:Class ;
-    rdfs:label "Electroválvula" ;
-    rdfs:comment "Electroválvula del sistema hidráulico." ;
-    rdfs:subClassOf ex:Electrovalvula .
-
-hidraulico:PresostatoElectronico a owl:Class ;
-    rdfs:label "Presostato Electrónico" ;
-    rdfs:comment "Presostato electrónico del sistema hidráulico." ;
-    rdfs:subClassOf ex:Presostato .
-
-hidraulico:ManometroVertical a owl:Class ;
-    rdfs:label "Manómetro Vertical" ;
-    rdfs:comment "Manómetro vertical del sistema hidráulico." ;
-    rdfs:subClassOf ex:Manometro .
-
-hidraulico:Filtro a owl:Class ;
-    rdfs:label "Filtro" ;
-    rdfs:comment "Filtro del sistema hidráulico." ;
-    rdfs:subClassOf ex:Filtro .
-
-hidraulico:Mesa a owl:Class ;
-    rdfs:label "Mesa" ;
-    rdfs:comment "Mesa de la máquina de brochado." ;
-    rdfs:subClassOf ex:Mesa .
-
-hidraulico:CarroPortaPieza a owl:Class ;
-    rdfs:label "Carro Porta-Piezas" ;
-    rdfs:comment "Carro porta-piezas de la máquina de brochado." ;
-    rdfs:subClassOf ex:CarroPortaPieza .
-
-hidraulico:Contrapeso a owl:Class ;
-    rdfs:label "Contrapeso" ;
-    rdfs:comment "Contrapeso de la máquina de brochado." ;
-    rdfs:subClassOf ex:Contrapeso .
-
-# Propiedades de objeto
-mech:estaCompuestoPor a owl:ObjectProperty ;
-    rdfs:label "está compuesto por" ;
-    rdfs:comment "Relación que indica que un sistema está compuesto por componentes." .
-
-mech:ejecutaMovimiento a owl:ObjectProperty ;
-    rdfs:label "ejecuta movimiento" ;
-    rdfs:comment "Relación que indica que un sistema ejecuta movimientos." .
-
-mech:acciona a owl:ObjectProperty ;
-    rdfs:label "acciona" ;
-    rdfs:comment "Relación que indica que un sistema acciona componentes." .
-
-# Propiedades de datos
-base:tieneDatosDePlaca a owl:DatatypeProperty ;
-    rdfs:label "tiene datos de placa" ;
-    rdfs:comment "Relación que indica los datos de placa de un componente." .
-
-base:tieneModelo a owl:DatatypeProperty ;
-    rdfs:label "tiene modelo" ;
-    rdfs:comment "Relación que indica el modelo de un componente." .
-
-base:tieneCodigo a owl:DatatypeProperty ;
-    rdfs:label "tiene código" ;
-    rdfs:comment "Relación que indica el código de un componente." .
+ex:Filtro429 a ex:ComponenteHidraulico ;
+    ex:textoExtracto "filtro" .

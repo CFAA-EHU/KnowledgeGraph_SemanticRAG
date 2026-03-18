@@ -1,0 +1,65 @@
+{
+  "decision_version": "t11_v2",
+  "supports_well": [
+    "literal_lookup at 1 hop over bounded company/contact snippets",
+    "component_attribute_lookup at 1 hop via textoExtracto",
+    "regulatory_lookup at 2 hops when an explicit relation like cumpleNormativa or requiereMantenimiento exists",
+    "figure_or_reference_lookup at 2 hops through ilustradoEn",
+    "component_relation_lookup at 2 and 3 hops through controla and tieneComponente"
+  ],
+  "supported_only_with_canonical_queries": [
+    "figure/reference retrieval stays cleaner with a hand-written incoming-edge query than with current automatic candidate expansion",
+    "machine-to-directive compliance lookups are explicitly supported by the graph but still over-expanded by the automatic planner",
+    "maintenance-plan traversal exists structurally but is not yet exposed as a dedicated planner pattern"
+  ],
+  "requires_multi_hop_real": [
+    "Manual -> Figure -> Figure text",
+    "Machine safety system -> Maintenance plan -> Plan text",
+    "Columna_46 -> CarroPortaPiezas_46 -> ReglaLineal_46_1 -> textoExtracto"
+  ],
+  "multi_hop_supported_today": [
+    "requiereMantenimiento",
+    "ilustradoEn",
+    "cumpleNormativa",
+    "tieneComponente + controla",
+    "detalladoEnEsquema"
+  ],
+  "graph_gaps": [
+    "No explicit relation links safety doubts/instructions to DepartamentoAsistenciaClienteEKIN; answer is only recoverable from text snippets.",
+    "Replacement-part policy is textual on PiezaRecambio_1 but not structurally connected to Empresa_EKIN_S_Coop.",
+    "Purpose/function questions are mostly text-backed and lack a dedicated semantic property."
+  ],
+  "query_planner_gaps": [
+    "Current automatic figure and regulatory templates still over-expand candidate sets.",
+    "The planner does not yet distinguish explicit multi-hop routes from broad text-driven candidate retrieval.",
+    "There is no dedicated path planner for maintenance-plan or manual-reference traversals."
+  ],
+  "synthesis_gaps": [
+    "The precaution question still fails at synthesis despite bounded retrieval, so one synthesis-focused follow-up remains justified."
+  ],
+  "recommended_t12": "planner_multi_hop",
+  "recommended_t12_rationale": "The graph already supports several bounded 2-hop and 3-hop routes. The next highest-leverage step is to teach text_to_sparql.py to select explicit multi-hop path templates before falling back to broad candidate expansion.",
+  "canonical_suite_summary": {
+    "total_queries": 11,
+    "boundedness_counts": {
+      "bounded": 11
+    },
+    "utility_counts": {
+      "usable": 11
+    },
+    "hop_depth_counts": {
+      "1": 5,
+      "2": 5,
+      "3": 1
+    }
+  },
+  "comparison_summary": {
+    "total_compared_questions": 6,
+    "gap_counts": {
+      "query_generation_gap": 2,
+      "result_boundedness_gap": 1,
+      "graph_gap": 2,
+      "answer_synthesis_gap": 1
+    }
+  }
+}

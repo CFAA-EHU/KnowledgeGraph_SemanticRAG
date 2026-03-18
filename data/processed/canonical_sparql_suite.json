@@ -1,0 +1,108 @@
+{
+  "suite_version": "t11_v2",
+  "graph_paths": {
+    "tbox": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\ontology_aligned.ttl",
+    "abox": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl"
+  },
+  "queries": [
+    {
+      "query_id": "Q_LIT_001",
+      "query_type": "literal_lookup",
+      "hop_depth": 1,
+      "natural_language_goal": "Recover EKIN contact snippet containing the email address.",
+      "expected_result_shape": "single_literal",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?snippet WHERE { ex:Empresa_EKIN_S_Coop ex:textoExtracto ?snippet . FILTER(CONTAINS(LCASE(STR(?snippet)), 'email:')) } LIMIT 5"
+    },
+    {
+      "query_id": "Q_LIT_002",
+      "query_type": "literal_lookup",
+      "hop_depth": 1,
+      "natural_language_goal": "Recover the replacement-part policy text attached to the replacement part node.",
+      "expected_result_shape": "single_literal",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?snippet WHERE { ex:PiezaRecambio_1 ex:textoExtracto ?snippet . } LIMIT 5"
+    },
+    {
+      "query_id": "Q_LIT_003",
+      "query_type": "literal_lookup",
+      "hop_depth": 2,
+      "natural_language_goal": "Find the safety instruction snippet that mentions the EKIN customer-support department.",
+      "expected_result_shape": "small_entity_set",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?instruction ?text WHERE { ?instruction ex:textoExtracto ?text . FILTER(CONTAINS(LCASE(STR(?text)), 'departamento de asistencia al cliente de ekin')) } LIMIT 10"
+    },
+    {
+      "query_id": "Q_PUR_001",
+      "query_type": "purpose_or_function_lookup",
+      "hop_depth": 1,
+      "natural_language_goal": "Inspect the bounded descriptive snippet attached to the machine/manual pair.",
+      "expected_result_shape": "single_entity_with_attributes",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?p ?o WHERE { ex:Maquina_A218_RASHEM_7x3000x500 ?p ?o . FILTER(?p IN (ex:label, ex:textoExtracto)) } LIMIT 10"
+    },
+    {
+      "query_id": "Q_CATTR_001",
+      "query_type": "component_attribute_lookup",
+      "hop_depth": 1,
+      "natural_language_goal": "Get the safety-element verification requirement as a bounded attribute snippet.",
+      "expected_result_shape": "single_literal",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?snippet WHERE { ex:ElementoSeguridad_1 ex:textoExtracto ?snippet . } LIMIT 5"
+    },
+    {
+      "query_id": "Q_REG_001",
+      "query_type": "regulatory_lookup",
+      "hop_depth": 2,
+      "natural_language_goal": "Traverse from the machine node to the directive linked by explicit compliance.",
+      "expected_result_shape": "single_entity_with_attributes",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?directive ?identifier WHERE { ex:MaquinaBrochadoExterior_18 ex:cumpleNormativa ?directive . OPTIONAL { ?directive ex:identificador ?identifier . } } LIMIT 10"
+    },
+    {
+      "query_id": "Q_REG_002",
+      "query_type": "regulatory_lookup",
+      "hop_depth": 2,
+      "natural_language_goal": "Traverse from the machine safety system to the maintenance plan it requires.",
+      "expected_result_shape": "single_entity_with_attributes",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?plan ?label ?text WHERE { ex:SistemaSeguridadMaquina ex:requiereMantenimiento ?plan . OPTIONAL { ?plan rdfs:label ?label . } OPTIONAL { ?plan ex:textoExtracto ?text . } } LIMIT 10"
+    },
+    {
+      "query_id": "Q_REG_003",
+      "query_type": "regulatory_lookup",
+      "hop_depth": 1,
+      "natural_language_goal": "Read the bounded text attached to the precaution concept.",
+      "expected_result_shape": "single_literal",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?snippet WHERE { ex:Precaucion ex:textoExtracto ?snippet . } LIMIT 5"
+    },
+    {
+      "query_id": "Q_FIG_001",
+      "query_type": "figure_or_reference_lookup",
+      "hop_depth": 2,
+      "natural_language_goal": "Recover the figure attached to the manual and its descriptive snippet.",
+      "expected_result_shape": "single_entity_with_attributes",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?figure ?text WHERE { ?figure ex:ilustradoEn ex:ManualBrochadoraA218 . OPTIONAL { ?figure ex:textoExtracto ?text . } FILTER(CONTAINS(LCASE(STR(?figure)), 'figura0-1-1') || CONTAINS(LCASE(STR(?text)), '0-1-1')) } LIMIT 10"
+    },
+    {
+      "query_id": "Q_CREL_001",
+      "query_type": "component_relation_lookup",
+      "hop_depth": 2,
+      "natural_language_goal": "Recover the linear rules controlled by CarroPortaPiezas_46.",
+      "expected_result_shape": "small_entity_set",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?rule ?text WHERE { ex:CarroPortaPiezas_46 ex:controla ?rule . OPTIONAL { ?rule ex:textoExtracto ?text . } } LIMIT 10"
+    },
+    {
+      "query_id": "Q_MH_001",
+      "query_type": "component_relation_lookup",
+      "hop_depth": 3,
+      "natural_language_goal": "Traverse Columna_46 -> component -> controlled rule -> rule text.",
+      "expected_result_shape": "small_entity_set",
+      "boundedness_target": "bounded",
+      "sparql": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?carrier ?rule ?text WHERE { ex:Columna_46 ex:tieneComponente ?carrier . ?carrier ex:controla ?rule . OPTIONAL { ?rule ex:textoExtracto ?text . } } LIMIT 20"
+    }
+  ]
+}

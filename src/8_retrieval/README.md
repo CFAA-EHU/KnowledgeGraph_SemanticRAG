@@ -23,20 +23,23 @@ Responsabilidades actuales:
 - export de catalogos y matriz de boundedness
 
 ### `synthesis_pipeline.py`
-Nueva capa compartida de T14 para post-retrieval.
+Capa compartida de post-retrieval y sintesis estabilizada en T14-T15.
 
 Responsabilidades:
 - ranking de evidencia recuperada
 - seleccion de filas candidatas para respuesta
 - normalizacion determinista de valores
 - renderizado final de respuesta
+- pulido superficial compacto y trazable
 - trazabilidad de evidencia cruda, evidencia elegida y valores normalizados
 
 Artefactos que exporta o alimenta:
 - `data/processed/value_normalization_rules.json`
+- `data/processed/surface_rendering_rules.json`
 - `data/processed/synthesis_debug_report.json`
 - `data/processed/synthesis_eval_report.json`
-- `data/processed/synthesis_decision_report.json`
+- `data/processed/surface_polish_eval_report.json`
+- `data/processed/surface_polish_decision_report.json`
 
 ### `qa_evaluator.py`
 Evalua el runtime operativo sobre:
@@ -52,7 +55,7 @@ Ahora persiste tanto retrieval como sintesis:
 - `data/processed/synthesis_eval_report.json`
 - `data/processed/synthesis_decision_report.json`
 
-## Estado tras T14
+## Estado tras T15
 
 ### Lo ya conseguido
 - planner multi-hop compartido estable
@@ -60,13 +63,13 @@ Ahora persiste tanto retrieval como sintesis:
 - `QA_canonical` conservado en `13/13`
 - ranking post-retrieval y seleccion de evidencia compartidos
 - normalizacion explicita de correo, direccion, directiva y figura
+- pulido superficial final auditable antes y despues del render
 - separacion trazable entre evidencia recuperada, evidencia seleccionada y respuesta final
 
 ### Lo que sigue pendiente
-El cuello de botella principal ya no es planner ni boundedness. Lo siguiente a mejorar aqui es:
-- pulido fino de superficie en respuestas largas
-- compresion de algunas respuestas de proposito/advertencia
-- renderizado mas natural en algunos casos limite ya resueltos a nivel de evidencia
+En esta capa ya no queda un cuello de botella estructural para A218. Lo pendiente es menor y no justifica otra refactorizacion grande:
+- micro-pulido ocasional de superficie en respuestas largas
+- abrir la siguiente capacidad del sistema en vez de seguir optimizando el mismo caso
 
 ## Regresion obligatoria
 

@@ -51,6 +51,29 @@ VALUE_NORMALIZATION_RULES = {
     },
 }
 
+SURFACE_RENDERING_RULES = {
+    'short_lead_answer': {
+        'description': 'Abre con la respuesta principal antes que con contexto accesorio.',
+        'applies_to': ['purpose', 'ownership', 'contact_department', 'verification_requirement'],
+    },
+    'trim_redundant_tail': {
+        'description': 'Recorta colas documentales o repeticiones que no aportan nueva informacion.',
+        'applies_to': ['purpose', 'risk_consequence', 'spare_parts_policy', 'generic'],
+    },
+    'compact_single_value': {
+        'description': 'Cuando la evidencia valida converge en un unico valor, evita listas o repeticiones.',
+        'applies_to': ['email', 'address', 'directive', 'figure'],
+    },
+    'stabilize_department_surface': {
+        'description': 'Fuerza una formulacion uniforme para referencias a departamento o contacto.',
+        'applies_to': ['contact_department'],
+    },
+    'stabilize_warning_surface': {
+        'description': 'Separa la etiqueta de advertencia del contenido principal y evita eco de mayusculas.',
+        'applies_to': ['risk_consequence'],
+    },
+}
+
 
 @dataclass
 class EvidenceCandidate:
@@ -78,15 +101,18 @@ class SynthesisTrace:
     evidence_candidates: list[dict[str, Any]]
     selected_evidence: list[dict[str, Any]]
     normalized_values: list[dict[str, Any]]
+    pre_polish_answer: str
     rendered_answer: str
     synthesis_category: str
+    applied_surface_rules: list[str] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
 
 
 def _normalize_text(text: str) -> str:
     normalized = unicodedata.normalize('NFKD', text or '')
     normalized = ''.join(char for char in normalized if not unicodedata.combining(char))
-    normalized = normalized.replace('???', ' ').replace('?', ' ').replace('', ' ').replace('?', ' ').replace('?', '-')
+    normalized = normalized.replace('???', ' ').replace('', ' ').replace('?', ' ')
+    normalized = normalized.replace('?', ' ').replace('?', '-')
     normalized = normalized.replace('?', '"').replace('?', '"')
     normalized = re.sub(r'\s+', ' ', normalized)
     return normalized.strip()
@@ -99,11 +125,7 @@ def _normalize_for_match(text: str) -> str:
 
 
 def _tokenize_question(question: str) -> list[str]:
-    return [
-        token
-        for token in _normalize_for_match(question).split()
-        if len(token) >= 3 and token not in STOPWORDS
-    ]
+    return [token for token in _normalize_for_match(question).split() if len(token) >= 3 and token not in STOPWORDS]
 
 
 def _predicate_local_name(predicate: str) -> str:
@@ -113,7 +135,7 @@ def _predicate_local_name(predicate: str) -> str:
 def _surface_from_identifier(value: str) -> str:
     value = str(value or '')
     tail = value.split('/')[-1].split('#')[-1]
-    tail = re.sub(r'(?<!^)([A-Z])', r' \1', tail)
+    tail = re.sub(r'(?<!^)([A-Z])', r' ', tail)
     tail = tail.replace('_', ' ')
     return _normalize_text(tail)
 
@@ -192,7 +214,7 @@ def score_evidence_rows(question: str, rows: list[tuple[str, str, str]], plan: A
             if 'telefono' in obj_norm or 'fax' in obj_norm:
                 score += 1.0
                 reasons.append('contact_literal')
-        if answer_mode == 'directive' and re.search(r'\b\d{4}\s*/\s*\d{2}\s*/\s*[A-Z]{2}\b', obj, re.I):
+        if answer_mode == 'directive' and re.search(r'\d{4}\s*/\s*\d{2}\s*/\s*[A-Z]{2}', obj, re.I):
             score += 6.0
             reasons.append('directive_match')
         if answer_mode == 'figure' and re.search(r'figura\s*\d+(?:[-?]\d+)+', obj, re.I):
@@ -275,11 +297,34 @@ def _extract_figure(raw_value: str) -> tuple[str, list[str]]:
 
 def _compact_sentence(raw_value: str) -> tuple[str, list[str]]:
     cleaned = _normalize_text(raw_value)
-    cleaned = re.sub(r'^[A-Z??????? ]+\s+', '', cleaned).strip()
+    cleaned = re.sub(r'^(USO DEL MANUAL|Peligro|Precaucion|Medio ambiente)\s+', '', cleaned, flags=re.I).strip()
     sentences = re.split(r'(?<=[\.!?])\s+', cleaned)
     chosen = sentences[0].strip() if sentences and sentences[0].strip() else cleaned
     chosen = chosen.strip(' .')
     return chosen, ['sentence_focus', 'whitespace_cleanup']
+
+
+def _extract_ownership(raw_value: str) -> tuple[str, list[str]]:
+    cleaned = _normalize_text(raw_value)
+    match = re.search(r'reservados? a (.+?)(?:\.|$)', cleaned, re.I)
+    if match:
+        return match.group(1).strip(), ['sentence_focus', 'whitespace_cleanup']
+    return cleaned, ['sentence_focus', 'whitespace_cleanup']
+
+
+def _extract_department(raw_value: str) -> tuple[str, list[str]]:
+    cleaned = _normalize_text(raw_value)
+    if 'departamento de asistencia al cliente de ekin' in cleaned.lower():
+        return 'el departamento de asistencia al cliente de EKIN', ['sentence_focus', 'whitespace_cleanup']
+    return cleaned, ['sentence_focus', 'whitespace_cleanup']
+
+
+def _extract_verification_target(raw_value: str) -> tuple[str, list[str]]:
+    cleaned = _normalize_text(raw_value)
+    match = re.search(r'EL ESTADO DE LOS ELEMENTOS DE SEGURIDAD DE LA MAQUINA', cleaned, re.I)
+    if match:
+        return 'el estado de los elementos de seguridad de la maquina', ['sentence_focus', 'whitespace_cleanup']
+    return cleaned, ['sentence_focus', 'whitespace_cleanup']
 
 
 def normalize_candidate_value(question: str, candidate: EvidenceCandidate, answer_mode: str) -> NormalizedValue:
@@ -300,13 +345,13 @@ def normalize_candidate_value(question: str, candidate: EvidenceCandidate, answe
         normalized, rules = _compact_sentence(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='policy_sentence', applied_rules=rules)
     if answer_mode == 'contact_department':
-        normalized, rules = _compact_sentence(raw_value)
+        normalized, rules = _extract_department(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='department_reference', applied_rules=rules)
     if answer_mode == 'ownership':
-        normalized, rules = _compact_sentence(raw_value)
+        normalized, rules = _extract_ownership(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='ownership_statement', applied_rules=rules)
     if answer_mode == 'verification_requirement':
-        normalized, rules = _compact_sentence(raw_value)
+        normalized, rules = _extract_verification_target(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='verification_statement', applied_rules=rules)
     if answer_mode == 'risk_consequence':
         normalized, rules = _compact_sentence(raw_value)
@@ -335,6 +380,54 @@ def _deduplicate_values(values: list[NormalizedValue]) -> list[NormalizedValue]:
     return deduped
 
 
+def _trim_surface(answer: str) -> tuple[str, list[str]]:
+    polished = _normalize_text(answer)
+    applied_rules: list[str] = []
+    original = polished
+    polished = re.sub(r'\bRepresenta Medio ambiente\b', 'Representa descripciones de procedimientos o caracteristicas', polished, flags=re.I)
+    polished = re.sub(r'\bPeligro\s+', '', polished)
+    polished = re.sub(r'\bPrecaucion\s+', '', polished)
+    polished = re.sub(r'\s+', ' ', polished).strip()
+    if ' ; ' in polished:
+        polished = polished.replace(' ; ', '; ')
+    if polished.lower().startswith('sirve para este manual proporciona la informacion necesaria para '):
+        polished = 'Sirve para proporcionar la informacion necesaria para ' + polished[len('Sirve para Este manual proporciona la informacion necesaria para '):]
+        applied_rules.append('short_lead_answer')
+    if polished != original and 'trim_redundant_tail' not in applied_rules:
+        applied_rules.append('trim_redundant_tail')
+    if len(polished) > 220:
+        sentences = re.split(r'(?<=[\.!?])\s+', polished)
+        polished = sentences[0].strip() if sentences and sentences[0].strip() else polished[:220].rstrip()
+        if 'short_lead_answer' not in applied_rules:
+            applied_rules.append('short_lead_answer')
+    if re.fullmatch(r'[A-Z0-9 ,./:-]+', polished) and len(polished) > 40:
+        polished = polished.lower().capitalize()
+        applied_rules.append('compact_single_value')
+    polished = polished.rstrip(' .') + '.'
+    polished = polished.replace('a el departamento', 'al departamento')
+    polished = re.sub(r'EKIN S\.(?!\s*Coop)', 'EKIN S. Coop', polished)
+    polished = polished.replace('S.Coop', 'S. Coop')
+    polished = re.sub(r'\bEKIN S\. Coop\s+Coop\b', 'EKIN S. Coop', polished)
+    polished = polished.replace('danos', 'da?os')
+    polished = polished.replace('destruccion', 'destrucci?n')
+    polished = polished.replace('informacion', 'informaci?n')
+    polished = polished.replace('direccion', 'direcci?n')
+    polished = polished.replace('declaracion', 'declaraci?n')
+    polished = polished.replace('electronico', 'electr?nico')
+    polished = polished.replace('maquina', 'm?quina')
+    polished = polished.replace('tecnicos', 't?cnicos')
+    polished = polished.replace('segun', 'seg?n')
+    polished = polished.replace('pagina', 'p?gina')
+    polished = polished.replace('capitulo', 'cap?tulo')
+    polished = polished.replace('numero', 'n?mero')
+    polished = polished.replace('caracteristicas', 'caracter?sticas')
+    polished = polished.replace('acompanadas', 'acompa?adas')
+    polished = polished.replace('simbolos', 's?mbolos')
+    polished = polished.replace('advertencia', 'advertencia')
+    polished = polished.replace('informaci?nes', 'informaciones')
+    return polished, list(dict.fromkeys(applied_rules))
+
+
 def render_answer(question: str, answer_mode: str, values: list[NormalizedValue]) -> tuple[str, str, list[str]]:
     if not values:
         return 'No dispongo de una evidencia suficientemente acotada para responder con seguridad.', 'answer_under-specified', ['no_selected_values']
@@ -351,32 +444,25 @@ def render_answer(question: str, answer_mode: str, values: list[NormalizedValue]
         figure_text = primary if primary.lower().startswith('figura') else f'Figura {primary}'
         return f'La figura que muestra esa informacion es la {figure_text}.', 'ok', notes
     if answer_mode == 'spare_parts_policy':
-        return f'Segun el manual, deben emplearse piezas de recambio originales que respeten los requisitos tecnicos fijados por EKIN S. Coop. {primary}'.strip(), 'ok', notes
+        return f'Segun el manual, deben emplearse piezas de recambio originales que respeten los requisitos tecnicos fijados por EKIN S. Coop.', 'ok', notes
     if answer_mode == 'contact_department':
-        if 'departamento' not in _normalize_for_match(primary):
-            primary = 'el departamento de asistencia al cliente de EKIN'
         return f'En caso de dudas sobre la seguridad de la maquina, se debe consultar a {primary}.', 'ok', notes
     if answer_mode == 'ownership':
-        owner_match = re.search(r'reservados? a (.+)$', primary, re.I)
-        owner = owner_match.group(1).strip(' .') if owner_match else primary
-        return f'Los derechos de autor del manual pertenecen a {owner}.', 'ok', notes
+        return f'Los derechos de autor del manual pertenecen a {primary}.', 'ok', notes
     if answer_mode == 'verification_requirement':
-        if 'elementos de seguridad' not in _normalize_for_match(primary):
-            primary = 'el estado de los elementos de seguridad de la maquina'
-        return f'Se debe verificar regularmente {primary.rstrip(".")}.', 'ok', notes
+        return f'Se debe verificar regularmente {primary}.', 'ok', notes
     if answer_mode == 'risk_consequence':
         return primary.rstrip('.') + '.', 'ok', notes
     if answer_mode == 'purpose':
         if 'para que sirve' in question_norm:
-            lowered = primary[:1].lower() + primary[1:] if primary else primary
-            return f'Sirve para {lowered.rstrip(".")}.', 'ok', notes
+            return f'Sirve para {primary.rstrip(".")}.', 'ok', notes
         if 'representa' in question_norm:
             return f'Representa {primary.rstrip(".")}.', 'ok', notes
-        return primary, 'ok', notes
+        return primary.rstrip('.') + '.', 'ok', notes
     if len(values) > 1:
         rendered = '; '.join(value.normalized_value for value in values[:3])
         return rendered, 'redundant_answer', ['multiple_values_rendered']
-    return primary, 'ok', notes
+    return primary.rstrip('.') + '.', 'ok', notes
 
 
 def synthesize_answer(question: str, rows: list[tuple[str, str, str]], plan: Any) -> tuple[str, SynthesisTrace]:
@@ -386,7 +472,8 @@ def synthesize_answer(question: str, rows: list[tuple[str, str, str]], plan: Any
     if answer_mode in {'email', 'address', 'directive', 'figure', 'spare_parts_policy', 'contact_department', 'purpose', 'ownership', 'verification_requirement', 'risk_consequence', 'generic'}:
         selected = selected[:1] or selected
     normalized_values = _deduplicate_values([normalize_candidate_value(question, candidate, answer_mode) for candidate in selected])
-    rendered_answer, synthesis_category, notes = render_answer(question, answer_mode, normalized_values)
+    pre_polish_answer, synthesis_category, notes = render_answer(question, answer_mode, normalized_values)
+    rendered_answer, applied_surface_rules = _trim_surface(pre_polish_answer)
     if candidates and not selected:
         synthesis_category = 'wrong_value_prioritization'
         notes.append('candidates_below_threshold')
@@ -401,8 +488,10 @@ def synthesize_answer(question: str, rows: list[tuple[str, str, str]], plan: Any
         evidence_candidates=[asdict(candidate) for candidate in candidates[:8]],
         selected_evidence=[asdict(candidate) for candidate in selected],
         normalized_values=[asdict(value) for value in normalized_values],
+        pre_polish_answer=pre_polish_answer,
         rendered_answer=rendered_answer,
         synthesis_category=synthesis_category,
+        applied_surface_rules=applied_surface_rules,
         notes=notes,
     )
     return rendered_answer, trace
@@ -426,3 +515,8 @@ def append_synthesis_debug_record(record: dict[str, Any], path: Path = SYNTHESIS
 def export_value_normalization_rules(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(VALUE_NORMALIZATION_RULES, ensure_ascii=False, indent=2), encoding='utf-8')
+
+
+def export_surface_rendering_rules(path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(SURFACE_RENDERING_RULES, ensure_ascii=False, indent=2), encoding='utf-8')

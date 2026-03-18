@@ -95,6 +95,8 @@ class MotorRAGSemantico:
         respuesta_final, synthesis_trace = self.sintetizar_respuesta(pregunta, _rows_for_synthesis(execution), plan)
         print(f"   -> answer_mode={synthesis_trace.get('answer_mode')} | synthesis_category={synthesis_trace.get('synthesis_category')}")
         print(f"   -> selected_evidence={len(synthesis_trace.get('selected_evidence', []))} | normalized_values={len(synthesis_trace.get('normalized_values', []))}")
+        print(f"   -> pre_polish={synthesis_trace.get('pre_polish_answer')}")
+        print(f"   -> surface_rules={synthesis_trace.get('applied_surface_rules', [])}")
         append_synthesis_debug_record({
             'question': pregunta,
             'plan_family': plan.plan_family,

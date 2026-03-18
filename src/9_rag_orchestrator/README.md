@@ -22,11 +22,12 @@ Responsabilidades:
   - renderizado de respuesta
 - dejar trazabilidad suficiente para separar fallo de planner y fallo de sintesis
 
-## Estado tras T14
+## Estado tras T15
 
 El orquestador ya no depende de una fase final opaca. Ahora aprovecha:
 - ranking post-retrieval compartido
 - normalizacion de correo, direccion, directiva y otras superficies frecuentes
+- pulido superficial final antes y despues del render
 - trazabilidad de evidencia seleccionada y valores normalizados
 - diagnostico mas claro cuando la respuesta es debil o demasiado larga
 
@@ -41,8 +42,6 @@ Eso permite distinguir mejor:
 Para depurar primero planner y boundedness, usa `query_workbench.py`.
 Cuando el plan ya sea razonable, usa `semantic_rag.py` para comprobar si la sintesis comparte bien la misma evidencia y la verbaliza con calidad suficiente.
 
-## Siguiente cuello de botella
+## Siguiente direccion
 
-Tras T14, el planner deja de ser el limite principal del runtime actual. Lo siguiente a mejorar aqui es:
-- pulido fino de respuestas largas o demasiado literales
-- compresion y superficie de salida en casos ya resueltos a nivel de evidencia
+Tras T15, ni el planner ni la sintesis son ya cuellos de botella estructurales del caso A218. Lo siguiente aqui ya no deberia ser otra gran refactorizacion del runtime actual, sino abrir la siguiente capacidad del sistema con este caso ya consolidado.

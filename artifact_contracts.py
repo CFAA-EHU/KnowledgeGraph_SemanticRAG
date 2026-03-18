@@ -57,6 +57,9 @@ VALUE_NORMALIZATION_RULES_PATH = PROCESSED_DATA_DIR / "value_normalization_rules
 SYNTHESIS_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "synthesis_eval_report.json"
 SYNTHESIS_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "synthesis_debug_report.json"
 SYNTHESIS_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "synthesis_decision_report.json"
+SURFACE_RENDERING_RULES_PATH = PROCESSED_DATA_DIR / "surface_rendering_rules.json"
+SURFACE_POLISH_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "surface_polish_eval_report.json"
+SURFACE_POLISH_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "surface_polish_decision_report.json"
 
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
@@ -97,6 +100,9 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "synthesis_eval_report": SYNTHESIS_EVAL_REPORT_PATH,
     "synthesis_debug_report": SYNTHESIS_DEBUG_REPORT_PATH,
     "synthesis_decision_report": SYNTHESIS_DECISION_REPORT_PATH,
+    "surface_rendering_rules": SURFACE_RENDERING_RULES_PATH,
+    "surface_polish_eval_report": SURFACE_POLISH_EVAL_REPORT_PATH,
+    "surface_polish_decision_report": SURFACE_POLISH_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {

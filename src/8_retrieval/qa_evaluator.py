@@ -33,6 +33,8 @@ from artifact_contracts import (
     SYNTHESIS_DEBUG_REPORT_PATH,
     SYNTHESIS_DECISION_REPORT_PATH,
     SYNTHESIS_EVAL_REPORT_PATH,
+    SURFACE_POLISH_EVAL_REPORT_PATH,
+    SURFACE_POLISH_DECISION_REPORT_PATH,
 )
 
 RETRIEVAL_DIR = Path(__file__).resolve().parent
@@ -91,6 +93,8 @@ class EvaluadorRAG:
         self.synthesis_eval_path = SYNTHESIS_EVAL_REPORT_PATH
         self.synthesis_debug_path = SYNTHESIS_DEBUG_REPORT_PATH
         self.synthesis_decision_path = SYNTHESIS_DECISION_REPORT_PATH
+        self.surface_polish_eval_path = SURFACE_POLISH_EVAL_REPORT_PATH
+        self.surface_polish_decision_path = SURFACE_POLISH_DECISION_REPORT_PATH
         self.grafo = cargar_grafo_memoria()
         self.esquema = self._cargar_esquema_condensado()
         self.subject_uris = {str(subject) for subject in self.grafo.subjects() if isinstance(subject, URIRef)}
@@ -237,7 +241,9 @@ class EvaluadorRAG:
                     "answer_mode": row.get("synthesis_trace", {}).get("answer_mode"),
                     "selected_evidence": row.get("synthesis_trace", {}).get("selected_evidence", []),
                     "normalized_values": row.get("synthesis_trace", {}).get("normalized_values", []),
+                    "pre_polish_answer": row.get("synthesis_trace", {}).get("pre_polish_answer"),
                     "rendered_answer": row.get("synthesized_answer"),
+                    "applied_surface_rules": row.get("synthesis_trace", {}).get("applied_surface_rules", []),
                     "synthesis_category": row.get("synthesis_trace", {}).get("synthesis_category"),
                     "notes": row.get("synthesis_trace", {}).get("notes", []),
                 }
@@ -462,10 +468,14 @@ class EvaluadorRAG:
         synthesis_eval = self._build_synthesis_summary(resultados)
         self.synthesis_eval_path.parent.mkdir(parents=True, exist_ok=True)
         self.synthesis_eval_path.write_text(json.dumps(synthesis_eval, ensure_ascii=False, indent=2), encoding="utf-8")
+        self.surface_polish_eval_path.parent.mkdir(parents=True, exist_ok=True)
+        self.surface_polish_eval_path.write_text(json.dumps(synthesis_eval, ensure_ascii=False, indent=2), encoding="utf-8")
 
         synthesis_decision = self._build_synthesis_decision(resultados, metricas)
         self.synthesis_decision_path.parent.mkdir(parents=True, exist_ok=True)
         self.synthesis_decision_path.write_text(json.dumps(synthesis_decision, ensure_ascii=False, indent=2), encoding="utf-8")
+        self.surface_polish_decision_path.parent.mkdir(parents=True, exist_ok=True)
+        self.surface_polish_decision_path.write_text(json.dumps(synthesis_decision, ensure_ascii=False, indent=2), encoding="utf-8")
         return report, failure_analysis
 
 

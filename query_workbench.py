@@ -95,6 +95,8 @@ def main() -> None:
         'result_count': len(execution.rows),
         'rows': execution.rows[: args.max_rows],
         'synthesis_trace': synthesis_trace,
+        'pre_polish_answer': synthesis_trace.get('pre_polish_answer') if synthesis_trace else None,
+        'applied_surface_rules': synthesis_trace.get('applied_surface_rules') if synthesis_trace else [],
         'synthesized_answer': synthesized_answer,
     }
     if args.save_debug:

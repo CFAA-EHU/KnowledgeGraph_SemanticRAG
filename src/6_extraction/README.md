@@ -3,7 +3,7 @@
 Este directorio implementa el carril operativo de construccion de A-Box.
 
 ## Objetivo
-Transformar chunks del manual en instancias RDF validas, semanticamente aceptables, consolidadas sobre entidades canonicas y enriquecidas con linking/value surfaces antes del runtime.
+Transformar chunks del manual en instancias RDF validas, semanticamente aceptables, consolidadas sobre entidades canonicas, enriquecidas con linking/value surfaces genericos y rematadas con link completion residual antes del runtime.
 
 ## Flujo operativo
 
@@ -44,11 +44,30 @@ Carga `abox_canonical.ttl`, anade enlaces y surfaces utiles, y genera:
 - `data/processed/enrichment_surface_map.json`
 - `data/processed/enrichment_resolution_candidates.json`
 
+### 8. `link_completion_policy.py`
+Define la politica de link completion residual:
+- solo familias observadas realmente en T18
+- targets unicos y tipado compatible
+- derivacion desde texto solo con evidencia alta e inequivoca
+- rechazo explicito para familias bloqueadas o ambiguas
+
+Whitelist inicial de T19:
+- activas: `declaration_signatory_link`, `lockout_warning_link`, `panel_control_set_link`, `machine_operating_modes_link`, `manual_greasing_task_link`
+- bloqueadas: `emergency_button_usage_condition`, `operator_ppe_requirement`
+
+### 9. `abox_link_completer.py`
+Carga `abox_enriched.ttl`, materializa solo los enlaces residuales aprobados por whitelist y genera:
+- `data/processed/abox_linked.ttl`
+- `data/processed/link_completion_candidates.json`
+- `data/processed/link_completion_map.json`
+- `data/processed/link_completion_report.json`
+
 ## Contrato operativo actual
 - `abox_merged.ttl`: artefacto bruto intermedio
 - `abox_canonical.ttl`: artefacto canonico intermedio
-- `abox_enriched.ttl`: artefacto operativo final consumido por runtime
-- la trazabilidad de consolidacion y enrichment vive en JSON, no en duplicados vivos dentro del grafo operativo
+- `abox_enriched.ttl`: artefacto enriquecido intermedio
+- `abox_linked.ttl`: artefacto operativo final consumido por runtime
+- la trazabilidad de consolidacion, enrichment y link completion vive en JSON, no en duplicados vivos dentro del grafo operativo
 
 ## Ejecucion
 Normalmente este directorio se ejecuta via:

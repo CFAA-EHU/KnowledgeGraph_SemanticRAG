@@ -21,7 +21,7 @@ from text_to_sparql import append_query_debug_record, build_query_plan, execute_
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='Interactive workbench for the shared planner and synthesis layer over the enriched operational graph.')
+    parser = argparse.ArgumentParser(description='Interactive workbench for the shared planner and synthesis layer over the linked operational graph.')
     parser.add_argument('question', help='Natural-language question to inspect.')
     parser.add_argument('--with-synthesis', action='store_true', help='Run the shared synthesis pipeline and show evidence selection, normalization and rendering.')
     parser.add_argument('--max-rows', type=int, default=20, help='Maximum retrieved rows to print.')

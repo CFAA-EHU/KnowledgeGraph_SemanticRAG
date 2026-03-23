@@ -53,7 +53,7 @@ SURFACE_LITERAL_PREDICATES = {'label', 'identificador', 'textoExtracto', 'valor'
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='Run batch structural diagnostics over QA_sandbox using the real runtime pipeline, defaulting to the enriched operational A-Box.')
+    parser = argparse.ArgumentParser(description='Run batch structural diagnostics over QA_sandbox using the real runtime pipeline, defaulting to the linked operational A-Box.')
     parser.add_argument('--qa-file', type=Path, default=QA_SANDBOX_PATH, help='Sandbox QA dataset path.')
     parser.add_argument('--tbox-file', type=Path, default=OPERATIONAL_TBOX_PATH, help='T-Box path to load.')
     parser.add_argument('--abox-file', type=Path, default=OPERATIONAL_ABOX_PATH, help='A-Box path to load.')
@@ -619,7 +619,9 @@ def run_diagnostic(args: argparse.Namespace) -> None:
     next_change, dominant_issue = decide_next_change(summary_payload)
     decision_payload = {
         'summary': summary_payload['summary'],
+        'decision_stage': 'sandbox_structural_diagnostic',
         'dominant_structural_gap_category': dominant_issue,
+        'dominant_structural_gap_count': summary_payload['summary']['structural_gap_counts'].get(dominant_issue, 0),
         'distribution': summary_payload['summary']['structural_gap_counts'],
         'top_problematic_entities': summary_payload['top_problematic_entities'],
         'top_repeated_patterns': summary_payload['repeated_patterns'][:5],
@@ -628,7 +630,7 @@ def run_diagnostic(args: argparse.Namespace) -> None:
             for item in promotion_payload['results']
             if item['promote_to_formal_eval']
         ],
-        'recommended_t17_change': next_change,
+        'recommended_next_change': next_change,
     }
     write_json(args.decision_path, decision_payload)
 

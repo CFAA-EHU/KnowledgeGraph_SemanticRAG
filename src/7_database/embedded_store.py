@@ -25,13 +25,13 @@ class MotorGrafoEmbebido:
 
     def _cargar_datos(self):
         if not TBOX_PATH.exists() or not ABOX_PATH.exists():
-            print("Error: Faltan la T-Box canonica o la A-Box operativa enriquecida en el directorio.")
+            print("Error: Faltan la T-Box canonica o la A-Box operativa linked en el directorio.")
             sys.exit(1)
 
         logger.info("Ingestando T-Box canonica...")
         self.grafo.parse(TBOX_PATH, format="turtle")
 
-        logger.info("Ingestando A-Box operativa enriquecida...")
+        logger.info("Ingestando A-Box operativa linked...")
         self.grafo.parse(ABOX_PATH, format="turtle")
 
         logger.info(f"Motor inicializado. Tripletas combinadas en memoria: {len(self.grafo)}")

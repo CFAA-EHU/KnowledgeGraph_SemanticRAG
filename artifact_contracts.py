@@ -16,7 +16,8 @@ OPERATIONAL_TBOX_PATH = PROCESSED_DATA_DIR / "ontology_aligned.ttl"
 OPERATIONAL_ABOX_INPUT_PATH = PROCESSED_DATA_DIR / "abox_input.json"
 RAW_MERGED_ABOX_PATH = PROCESSED_DATA_DIR / "abox_merged.ttl"
 CANONICAL_ABOX_PATH = PROCESSED_DATA_DIR / "abox_canonical.ttl"
-OPERATIONAL_ABOX_PATH = PROCESSED_DATA_DIR / "abox_enriched.ttl"
+ENRICHED_ABOX_PATH = PROCESSED_DATA_DIR / "abox_enriched.ttl"
+OPERATIONAL_ABOX_PATH = PROCESSED_DATA_DIR / "abox_linked.ttl"
 OPERATIONAL_ABOX_MANIFEST_PATH = PROCESSED_DATA_DIR / "abox_generation_manifest.json"
 OPERATIONAL_BUILD_ENTRYPOINT = REPO_ROOT / "run_operational_pipeline.py"
 ABOX_SEMANTIC_AUDIT_PATH = PROCESSED_DATA_DIR / "abox_semantic_audit.json"
@@ -79,6 +80,11 @@ ENRICHMENT_SURFACE_MAP_PATH = PROCESSED_DATA_DIR / "enrichment_surface_map.json"
 ENRICHMENT_RESOLUTION_CANDIDATES_PATH = PROCESSED_DATA_DIR / "enrichment_resolution_candidates.json"
 ENRICHMENT_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "enrichment_eval_report.json"
 ENRICHMENT_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "enrichment_decision_report.json"
+LINK_COMPLETION_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_report.json"
+LINK_COMPLETION_MAP_PATH = PROCESSED_DATA_DIR / "link_completion_map.json"
+LINK_COMPLETION_CANDIDATES_PATH = PROCESSED_DATA_DIR / "link_completion_candidates.json"
+LINK_COMPLETION_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_eval_report.json"
+LINK_COMPLETION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_decision_report.json"
 
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
@@ -93,6 +99,7 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "abox": OPERATIONAL_ABOX_PATH,
     "abox_merged_raw": RAW_MERGED_ABOX_PATH,
     "abox_canonical": CANONICAL_ABOX_PATH,
+    "abox_enriched": ENRICHED_ABOX_PATH,
     "abox_semantic_audit": ABOX_SEMANTIC_AUDIT_PATH,
     "abox_debug": ABOX_DEBUG_DIR,
     "qa_dataset": QA_CANONICAL_PATH,
@@ -141,6 +148,11 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "enrichment_resolution_candidates": ENRICHMENT_RESOLUTION_CANDIDATES_PATH,
     "enrichment_eval_report": ENRICHMENT_EVAL_REPORT_PATH,
     "enrichment_decision_report": ENRICHMENT_DECISION_REPORT_PATH,
+    "link_completion_report": LINK_COMPLETION_REPORT_PATH,
+    "link_completion_map": LINK_COMPLETION_MAP_PATH,
+    "link_completion_candidates": LINK_COMPLETION_CANDIDATES_PATH,
+    "link_completion_eval_report": LINK_COMPLETION_EVAL_REPORT_PATH,
+    "link_completion_decision_report": LINK_COMPLETION_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {
@@ -151,6 +163,7 @@ OPERATIONAL_BUILD_PIPELINE = {
         REPO_ROOT / "src" / "6_extraction" / "abox_merger.py",
         REPO_ROOT / "src" / "6_extraction" / "abox_canonicalizer.py",
         REPO_ROOT / "src" / "6_extraction" / "abox_graph_enricher.py",
+        REPO_ROOT / "src" / "6_extraction" / "abox_link_completer.py",
     ],
 }
 
@@ -174,6 +187,7 @@ SCRIPT_CLASSIFICATIONS = {
     "src/6_extraction/abox_merger.py": "operational_producer",
     "src/6_extraction/abox_canonicalizer.py": "operational_producer",
     "src/6_extraction/abox_graph_enricher.py": "operational_producer",
+    "src/6_extraction/abox_link_completer.py": "operational_producer",
     "src/6_extraction/abox_semantic_validator.py": "operational_producer",
     "src/7_database/embedded_store.py": "operational_consumer",
     "src/8_retrieval/schema_condenser.py": "operational_consumer",

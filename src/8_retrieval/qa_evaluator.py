@@ -56,7 +56,7 @@ STOPWORDS = {
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate the operational runtime over the enriched operational A-Box and the formal QA datasets.")
+    parser = argparse.ArgumentParser(description="Evaluate the operational runtime over the linked operational A-Box and the formal QA datasets.")
     parser.add_argument("--qa-file", type=Path, default=QA_CANONICAL_PATH, help="QA dataset to evaluate.")
     parser.add_argument("--report-path", type=Path, default=None, help="Detailed per-question report path.")
     parser.add_argument("--failure-analysis-path", type=Path, default=None, help="Aggregated analysis path.")

@@ -7,7 +7,7 @@ Este directorio contiene el runtime minimo de carga y consulta del knowledge gra
 ### `embedded_store.py`
 Carga en memoria:
 - `data/processed/ontology_aligned.ttl`
-- `data/processed/abox_enriched.ttl`
+- `data/processed/abox_linked.ttl`
 
 Y expone ejecucion SPARQL sobre el grafo combinado.
 
@@ -21,6 +21,6 @@ Servir como backend simple para:
 ## Garantia de contrato
 El store consume solo artefactos del carril operativo final:
 - `ontology_aligned.ttl`
-- `abox_enriched.ttl`
+- `abox_linked.ttl`
 
-`abox_merged.ttl` queda reservado como snapshot bruto y `abox_canonical.ttl` como snapshot intermedio de consolidacion. Ninguno de los dos debe tratarse como runtime final.
+`abox_merged.ttl` queda reservado como snapshot bruto, `abox_canonical.ttl` como snapshot intermedio de consolidacion y `abox_enriched.ttl` como snapshot previo al link completion residual. Ninguno de ellos debe tratarse como runtime final.

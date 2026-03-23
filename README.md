@@ -14,12 +14,18 @@ Artefactos operativos clave:
 - `data/processed/abox_input.json`
 - `data/processed/abox_merged.ttl` como snapshot bruto post-merge
 - `data/processed/abox_canonical.ttl` como snapshot canonico intermedio
-- `data/processed/abox_enriched.ttl` como A-Box operativa final del runtime
+- `data/processed/abox_enriched.ttl` como snapshot enriquecido intermedio
+- `data/processed/abox_linked.ttl` como A-Box operativa final del runtime
 - `data/processed/canonical_entity_map.json`
 - `data/processed/canonicalization_report.json`
 - `data/processed/enrichment_report.json`
 - `data/processed/enrichment_link_map.json`
 - `data/processed/enrichment_surface_map.json`
+- `data/processed/link_completion_report.json`
+- `data/processed/link_completion_map.json`
+- `data/processed/link_completion_candidates.json`
+- `data/processed/link_completion_eval_report.json`
+- `data/processed/link_completion_decision_report.json`
 - `data/processed/schema_condensed.txt`
 - `data/golden_set/QA_canonical.json`
 - `data/golden_set/QA_multihop.json`
@@ -39,26 +45,29 @@ El flujo operativo completo ejecuta:
 - `src/6_extraction/abox_merger.py`
 - `src/6_extraction/abox_canonicalizer.py`
 - `src/6_extraction/abox_graph_enricher.py`
+- `src/6_extraction/abox_link_completer.py`
 
 ## Runtime operativo actual
 
 Planner, retrieval, evaluacion y orquestacion consumen:
 - `data/processed/ontology_aligned.ttl`
-- `data/processed/abox_enriched.ttl`
+- `data/processed/abox_linked.ttl`
 
-Eso deja separadas tres capas:
+Eso deja separadas cuatro capas:
 - `abox_merged.ttl`: snapshot bruto post-merge para diagnostico
 - `abox_canonical.ttl`: snapshot canonico intermedio para consolidacion estructural
-- `abox_enriched.ttl`: snapshot operativo final para store, planner, SPARQL y sintesis
+- `abox_enriched.ttl`: snapshot enriquecido intermedio para linking y value surfaces genericos
+- `abox_linked.ttl`: snapshot operativo final con link completion residual de alta confianza
 
-## Estado tras T18
+## Estado tras T19
 
 - `QA_canonical` se mantiene en `13/13`
 - `QA_multihop` se mantiene en `7/7`
 - T17 resolvio la deuda canonica dominante
-- T18 anade enrichment residual de linking y value surfaces sobre el grafo canonico
-- el sandbox ya se compara sobre el grafo enriquecido, separado del benchmark formal
-- el residuo principal deja de ser surface polishing amplio y queda centrado en linking selectivo de sandbox
+- T18 anadio enrichment residual de linking y value surfaces sobre el grafo canonico
+- T19 materializa link completion residual solo para familias observadas en T18
+- la whitelist de T19 queda cerrada a cinco familias activas y dos familias bloqueadas con motivo explicito
+- el residuo principal deja de justificar otra fase estructural amplia y pasa mas hacia seleccion de evidencia y surface rendering
 
 ## Sandbox diagnostico
 
@@ -67,7 +76,7 @@ Eso deja separadas tres capas:
 Runner batch:
 - `python src/8_retrieval/qa_sandbox_diagnostic.py`
 
-Artefactos principales de T16-T18:
+Artefactos principales de T16-T19:
 - `data/processed/sandbox_diagnostic_report.json`
 - `data/processed/sandbox_structural_gap_summary.json`
 - `data/processed/sandbox_entity_resolution_candidates.json`
@@ -77,6 +86,8 @@ Artefactos principales de T16-T18:
 - `data/processed/canonicalization_decision_report.json`
 - `data/processed/enrichment_eval_report.json`
 - `data/processed/enrichment_decision_report.json`
+- `data/processed/link_completion_eval_report.json`
+- `data/processed/link_completion_decision_report.json`
 
 ## Workbench
 
@@ -86,7 +97,7 @@ Artefactos principales de T16-T18:
 - boundedness por paso y final
 - evidencia recuperada
 - evidencia seleccionada para sintesis
-- respuesta final sobre el grafo enriquecido
+- respuesta final sobre el grafo linked
 
 ## Fuente unica de verdad
 

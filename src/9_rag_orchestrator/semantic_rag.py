@@ -49,7 +49,7 @@ def _rows_for_synthesis(execution) -> list[tuple[str, str, str]]:
 
 class MotorRAGSemantico:
     def __init__(self):
-        logger.info('Loading operational graph...')
+        logger.info('Loading enriched operational graph...')
         self.grafo = cargar_grafo_memoria()
         self.esquema = self._cargar_esquema_condensado()
         logger.info(f'Graph loaded with {len(self.grafo)} triples.')

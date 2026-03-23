@@ -2,17 +2,24 @@
 
 Pipeline operativo y experimental para convertir manuales tecnicos industriales en un knowledge graph RDF/OWL consultable con SPARQL y reutilizable en un Semantic RAG trazable.
 
-El caso de uso actual es el manual de la brochadora electromecanica A218 / RASHEM - 7x3000x500.
+El caso operativo consolidado sigue siendo el manual de la brochadora electromecanica A218 / RASHEM - 7x3000x500.
 
 ## Carriles del repositorio
 
 ### Carril operativo
 Es el camino oficial de build, consulta y evaluacion.
 
-Artefactos canonicos:
+Artefactos operativos clave:
 - `data/processed/ontology_aligned.ttl`
 - `data/processed/abox_input.json`
-- `data/processed/abox_merged.ttl`
+- `data/processed/abox_merged.ttl` como snapshot bruto post-merge
+- `data/processed/abox_canonical.ttl` como snapshot canonico intermedio
+- `data/processed/abox_enriched.ttl` como A-Box operativa final del runtime
+- `data/processed/canonical_entity_map.json`
+- `data/processed/canonicalization_report.json`
+- `data/processed/enrichment_report.json`
+- `data/processed/enrichment_link_map.json`
+- `data/processed/enrichment_surface_map.json`
 - `data/processed/schema_condensed.txt`
 - `data/golden_set/QA_canonical.json`
 - `data/golden_set/QA_multihop.json`
@@ -26,38 +33,32 @@ Se conserva para exploracion, pero no define el runtime por defecto.
 Entrypoint oficial:
 - `python run_operational_pipeline.py --mode resume-compatible`
 
-El flujo ejecuta:
+El flujo operativo completo ejecuta:
 - `src/6_extraction/abox_input_builder.py`
 - `src/6_extraction/abox_extractor.py`
 - `src/6_extraction/abox_merger.py`
+- `src/6_extraction/abox_canonicalizer.py`
+- `src/6_extraction/abox_graph_enricher.py`
 
-## Runtime tras T15
+## Runtime operativo actual
 
-El query layer compartido sigue viviendo en `src/8_retrieval/text_to_sparql.py`, pero el runtime operativo ya queda estabilizado de extremo a extremo para el caso A218.
+Planner, retrieval, evaluacion y orquestacion consumen:
+- `data/processed/ontology_aligned.ttl`
+- `data/processed/abox_enriched.ttl`
 
-Ahora el carril operativo completo incluye:
-- planner compartido con boundedness y multi-hop
-- seleccion post-retrieval de evidencia
-- normalizacion determinista de valores
-- renderizado final compacto, trazable y depurable
+Eso deja separadas tres capas:
+- `abox_merged.ttl`: snapshot bruto post-merge para diagnostico
+- `abox_canonical.ttl`: snapshot canonico intermedio para consolidacion estructural
+- `abox_enriched.ttl`: snapshot operativo final para store, planner, SPARQL y sintesis
 
-Artefactos principales de T14-T15:
-- `data/processed/synthesis_error_taxonomy.json`
-- `data/processed/value_normalization_rules.json`
-- `data/processed/surface_rendering_rules.json`
-- `data/processed/synthesis_eval_report.json`
-- `data/processed/synthesis_debug_report.json`
-- `data/processed/surface_polish_eval_report.json`
-- `data/processed/surface_polish_decision_report.json`
+## Estado tras T18
 
-## Estado actual
-
-- `QA_multihop` sigue en `7/7`, con `fallback_count = 0`
-- `QA_canonical` sigue en `13/13`
-- `avg_precision` en `QA_canonical` sube a `0.2681`
-- el planner y la sintesis dejan de ser cuellos de botella estructurales del runtime actual
-- el caso A218 queda esencialmente consolidado
-- la siguiente gran direccion del proyecto pasa a ser abrir una nueva capacidad, no seguir micro-optimizando este caso
+- `QA_canonical` se mantiene en `13/13`
+- `QA_multihop` se mantiene en `7/7`
+- T17 resolvio la deuda canonica dominante
+- T18 anade enrichment residual de linking y value surfaces sobre el grafo canonico
+- el sandbox ya se compara sobre el grafo enriquecido, separado del benchmark formal
+- el residuo principal deja de ser surface polishing amplio y queda centrado en linking selectivo de sandbox
 
 ## Sandbox diagnostico
 
@@ -66,26 +67,26 @@ Artefactos principales de T14-T15:
 Runner batch:
 - `python src/8_retrieval/qa_sandbox_diagnostic.py`
 
-Artefactos principales de T16:
+Artefactos principales de T16-T18:
 - `data/processed/sandbox_diagnostic_report.json`
 - `data/processed/sandbox_structural_gap_summary.json`
 - `data/processed/sandbox_entity_resolution_candidates.json`
 - `data/processed/sandbox_promotion_candidates.json`
 - `data/processed/sandbox_decision_report.json`
-
-Ese flujo sirve para clasificar gaps estructurales, detectar canonicidad/enlace y decidir que preguntas nuevas pueden promocionarse despues a benchmark formal con `expected_uris`.
+- `data/processed/canonicalization_eval_report.json`
+- `data/processed/canonicalization_decision_report.json`
+- `data/processed/enrichment_eval_report.json`
+- `data/processed/enrichment_decision_report.json`
 
 ## Workbench
 
 `query_workbench.py` sirve para probar preguntas nuevas y ver:
 - intencion y ancla detectadas
 - familia y profundidad previstas
-- confianza del plan
 - boundedness por paso y final
-- pruning, fallback y gap provisional
 - evidencia recuperada
 - evidencia seleccionada para sintesis
-- valores normalizados y respuesta final
+- respuesta final sobre el grafo enriquecido
 
 ## Fuente unica de verdad
 

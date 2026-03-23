@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 ABOX_PATH = OPERATIONAL_ABOX_PATH
 
+
 class MotorGrafoEmbebido:
     def __init__(self):
         self.grafo = Graph()
@@ -24,13 +25,13 @@ class MotorGrafoEmbebido:
 
     def _cargar_datos(self):
         if not TBOX_PATH.exists() or not ABOX_PATH.exists():
-            print("Error: Faltan archivos T-Box o A-Box en el directorio.")
+            print("Error: Faltan la T-Box canonica o la A-Box operativa enriquecida en el directorio.")
             sys.exit(1)
 
-        logger.info("Ingestando T-Box (Esquema)...")
+        logger.info("Ingestando T-Box canonica...")
         self.grafo.parse(TBOX_PATH, format="turtle")
 
-        logger.info("Ingestando A-Box (Instancias)...")
+        logger.info("Ingestando A-Box operativa enriquecida...")
         self.grafo.parse(ABOX_PATH, format="turtle")
 
         logger.info(f"Motor inicializado. Tripletas combinadas en memoria: {len(self.grafo)}")
@@ -38,28 +39,21 @@ class MotorGrafoEmbebido:
     def ejecutar_sparql(self, query: str):
         return self.grafo.query(query)
 
+
 if __name__ == "__main__":
     motor = MotorGrafoEmbebido()
 
     query_prueba = """
-    SELECT DISTINCT ?s ?p ?o WHERE {
-        {
-            VALUES ?s { <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> }
-            ?s ?p ?o .
-            FILTER(?o = <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE>)
-        }
-        UNION
-        {
-            VALUES ?s { <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE> }
-            ?s ?p ?o .
-            FILTER(?o = <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18>)
-        }
+    SELECT DISTINCT ?p ?o WHERE {
+        VALUES ?s { <https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18> }
+        ?s ?p ?o .
+        FILTER(CONTAINS(LCASE(STR(?o)), "directiva") || CONTAINS(LCASE(STR(?p)), "normativa"))
     }
-    ORDER BY ?s ?p ?o
+    ORDER BY ?p ?o
     """
 
     print("-" * 80)
-    print("NORMATIVAS QUE CUMPLE LA MAQUINA")
+    print("DIRECTIVAS ASOCIADAS A LA MAQUINA EN EL GRAFO ENRIQUECIDO")
     print("-" * 80)
 
     try:

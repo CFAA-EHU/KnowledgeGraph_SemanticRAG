@@ -9,10 +9,10 @@ import sys
 
 from rdflib import Graph
 
-from artifact_contracts import ABOX_CHUNKS_DIR, OPERATIONAL_ABOX_PATH
+from artifact_contracts import ABOX_CHUNKS_DIR, RAW_MERGED_ABOX_PATH
 
 INPUT_DIR = ABOX_CHUNKS_DIR
-OUTPUT_FILE = OPERATIONAL_ABOX_PATH
+OUTPUT_FILE = RAW_MERGED_ABOX_PATH
 
 def unificar_abox():
     if not INPUT_DIR.exists():

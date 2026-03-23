@@ -18,6 +18,7 @@ from statistics import mean
 from rdflib import Graph, URIRef
 
 from artifact_contracts import (
+    CANONICAL_ENTITY_MAP_PATH,
     GENERALIZATION_EVAL_REPORT_PATH,
     MULTIHOP_DEBUG_REPORT_PATH,
     MULTIHOP_EVAL_REPORT_PATH,
@@ -55,7 +56,7 @@ STOPWORDS = {
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate the operational runtime over canonical or multihop QA datasets.")
+    parser = argparse.ArgumentParser(description="Evaluate the operational runtime over the enriched operational A-Box and the formal QA datasets.")
     parser.add_argument("--qa-file", type=Path, default=QA_CANONICAL_PATH, help="QA dataset to evaluate.")
     parser.add_argument("--report-path", type=Path, default=None, help="Detailed per-question report path.")
     parser.add_argument("--failure-analysis-path", type=Path, default=None, help="Aggregated analysis path.")
@@ -98,11 +99,29 @@ class EvaluadorRAG:
         self.grafo = cargar_grafo_memoria()
         self.esquema = self._cargar_esquema_condensado()
         self.subject_uris = {str(subject) for subject in self.grafo.subjects() if isinstance(subject, URIRef)}
+        self.canonical_entity_map = self._cargar_canonical_entity_map()
 
     def _cargar_esquema_condensado(self) -> str:
         if not SCHEMA_CONDENSED_PATH.exists():
             return "Not available."
         return SCHEMA_CONDENSED_PATH.read_text(encoding="utf-8")
+
+    def _cargar_canonical_entity_map(self) -> dict[str, dict]:
+        if not CANONICAL_ENTITY_MAP_PATH.exists():
+            return {}
+        try:
+            payload = json.loads(CANONICAL_ENTITY_MAP_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+        return payload if isinstance(payload, dict) else {}
+
+    def _canonicalize_expected_uris(self, uris: list[str]) -> list[str]:
+        resolved: list[str] = []
+        for uri in uris or []:
+            canonical_uri = self.canonical_entity_map.get(uri, {}).get("canonical_uri", uri)
+            if canonical_uri not in resolved:
+                resolved.append(canonical_uri)
+        return resolved
 
     def _normalizar_uri(self, uri: str) -> str:
         if not uri:
@@ -294,7 +313,8 @@ class EvaluadorRAG:
         resultados = []
         for index, item in enumerate(banco_preguntas, 1):
             pregunta = item["question"]
-            expected_uris = item.get("expected_uris", [])
+            expected_uris_original = item.get("expected_uris", [])
+            expected_uris = self._canonicalize_expected_uris(expected_uris_original)
             execution = None
             query_plan = None
             tripletas_limpias: list[tuple[str, str, str]] = []
@@ -375,6 +395,8 @@ class EvaluadorRAG:
 
             resultados.append({
                 **item,
+                "expected_uris_original": expected_uris_original,
+                "expected_uris_canonicalized": expected_uris,
                 "intent": query_plan.intent if query_plan else None,
                 "plan_family": query_plan.plan_family if query_plan else None,
                 "predicted_hop_depth": query_plan.predicted_hop_depth if query_plan else None,

@@ -53,8 +53,10 @@ SURFACE_LITERAL_PREDICATES = {'label', 'identificador', 'textoExtracto', 'valor'
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='Run batch structural diagnostics over QA_sandbox using the real runtime pipeline.')
+    parser = argparse.ArgumentParser(description='Run batch structural diagnostics over QA_sandbox using the real runtime pipeline, defaulting to the enriched operational A-Box.')
     parser.add_argument('--qa-file', type=Path, default=QA_SANDBOX_PATH, help='Sandbox QA dataset path.')
+    parser.add_argument('--tbox-file', type=Path, default=OPERATIONAL_TBOX_PATH, help='T-Box path to load.')
+    parser.add_argument('--abox-file', type=Path, default=OPERATIONAL_ABOX_PATH, help='A-Box path to load.')
     parser.add_argument('--report-path', type=Path, default=SANDBOX_DIAGNOSTIC_REPORT_PATH, help='Detailed per-question report path.')
     parser.add_argument('--summary-path', type=Path, default=SANDBOX_STRUCTURAL_GAP_SUMMARY_PATH, help='Aggregated structural summary path.')
     parser.add_argument('--resolution-candidates-path', type=Path, default=SANDBOX_ENTITY_RESOLUTION_CANDIDATES_PATH, help='Entity resolution candidates path.')
@@ -164,10 +166,10 @@ def rows_for_synthesis(execution) -> list[tuple[str, str, str]]:
     return rows
 
 
-def load_graph() -> Graph:
+def load_graph(tbox_path: Path, abox_path: Path) -> Graph:
     graph = Graph()
-    graph.parse(OPERATIONAL_TBOX_PATH, format='turtle')
-    graph.parse(OPERATIONAL_ABOX_PATH, format='turtle')
+    graph.parse(tbox_path, format='turtle')
+    graph.parse(abox_path, format='turtle')
     return graph
 
 
@@ -516,7 +518,7 @@ def run_diagnostic(args: argparse.Namespace) -> None:
     dataset = load_dataset(args.qa_file)
     if args.limit > 0:
         dataset = dataset[: args.limit]
-    graph = load_graph()
+    graph = load_graph(args.tbox_file, args.abox_file)
     schema = load_schema()
     uri_index = build_local_uri_index(graph)
     planner_catalog = load_json_if_exists(PLANNER_GENERALIZATION_CATALOG_PATH)
@@ -586,8 +588,8 @@ def run_diagnostic(args: argparse.Namespace) -> None:
         'summary': {
             'total_questions': len(results),
             'dataset_path': str(args.qa_file),
-            'tbox_path': str(OPERATIONAL_TBOX_PATH),
-            'abox_path': str(OPERATIONAL_ABOX_PATH),
+            'tbox_path': str(args.tbox_file),
+            'abox_path': str(args.abox_file),
             'schema_condensed_path': str(SCHEMA_CONDENSED_PATH),
             'planner_catalog_loaded': planner_catalog is not None,
             'boundedness_matrix_loaded': boundedness_matrix is not None,

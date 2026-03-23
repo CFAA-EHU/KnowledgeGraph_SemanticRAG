@@ -40,8 +40,14 @@ Eso permite distinguir mejor:
 ## Uso con preguntas nuevas
 
 Para depurar primero planner y boundedness, usa `query_workbench.py`.
+Cuando quieras ver un lote completo sin `expected_uris`, usa `python src/8_retrieval/qa_sandbox_diagnostic.py`.
 Cuando el plan ya sea razonable, usa `semantic_rag.py` para comprobar si la sintesis comparte bien la misma evidencia y la verbaliza con calidad suficiente.
+
+Eso deja tres niveles claros:
+- benchmark formal: `qa_evaluator.py`
+- sandbox batch de diagnostico estructural: `qa_sandbox_diagnostic.py`
+- inspeccion interactiva de casos sueltos: `query_workbench.py`
 
 ## Siguiente direccion
 
-Tras T15, ni el planner ni la sintesis son ya cuellos de botella estructurales del caso A218. Lo siguiente aqui ya no deberia ser otra gran refactorizacion del runtime actual, sino abrir la siguiente capacidad del sistema con este caso ya consolidado.
+Tras T16, el siguiente paso ya debe salir del patron dominante detectado en `QA_sandbox`. Si se mantiene `graph_canonicalization_gap` como dominante, la siguiente tarea natural pasa a ser consolidacion canonica de entidades, no otra iteracion ciega de planner o sintesis.

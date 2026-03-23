@@ -10,14 +10,14 @@ Documentacion operativa, contractual y transversal del proyecto.
 - `operational_pipeline_runbook.md`
   Guia de ejecucion del build operativo.
 
-## Relacion con T14-T15
+## Relacion con T14-T16
 
 La documentacion de detalle del planner, retrieval y sintesis vive en los README de modulo:
 - `README.md`
 - `src/8_retrieval/README.md`
 - `src/9_rag_orchestrator/README.md`
 
-Los artefactos operativos que resumen T14-T15 viven en `data/processed/`:
+Los artefactos operativos y diagnosticos que resumen T14-T16 viven en `data/processed/`:
 - `synthesis_error_taxonomy.json`
 - `value_normalization_rules.json`
 - `surface_rendering_rules.json`
@@ -25,7 +25,12 @@ Los artefactos operativos que resumen T14-T15 viven en `data/processed/`:
 - `synthesis_debug_report.json`
 - `surface_polish_eval_report.json`
 - `surface_polish_decision_report.json`
+- `sandbox_diagnostic_report.json`
+- `sandbox_structural_gap_summary.json`
+- `sandbox_entity_resolution_candidates.json`
+- `sandbox_promotion_candidates.json`
+- `sandbox_decision_report.json`
 
 ## Recomendacion
 
-Mantener aqui solo documentacion estable y transversal. La evolucion del planner, retrieval y sintesis debe seguir documentandose en los README de los modulos afectados.
+Mantener aqui solo documentacion estable y transversal. La evolucion del planner, retrieval y sintesis debe seguir documentandose en los README de los modulos afectados, mientras que `QA_sandbox` debe tratarse como flujo diagnostico batch separado del benchmark formal.

@@ -794,5 +794,110 @@
       }
     ],
     "notes": "ok"
+  },
+  {
+    "question": "¿Qué directiva de máquinas cumple la brochadora A-218?",
+    "intent": "regulatory_lookup",
+    "plan_family": "machine_directive_compliance",
+    "predicted_hop_depth": 2,
+    "anchor_text": "218",
+    "anchor_candidates": [
+      "218",
+      "directiva",
+      "maquinas",
+      "cumple",
+      "brochadora",
+      "a-218"
+    ],
+    "template_id": "MH_T1_machine_directive",
+    "fallback_used": false,
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.7,
+      "family": 0.8,
+      "overall": 0.7
+    },
+    "recommended_action": "execute",
+    "final_boundedness": "bounded",
+    "provisional_gap": "planner_generalization_gap",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_machine",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18"
+        ],
+        "sample_rows": [
+          [
+            "MaquinaBrochadoExterior_18"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      },
+      {
+        "step_id": "rel_1",
+        "purpose": "machine_to_directive",
+        "mode": "relation_traverse",
+        "query_text": "SELECT DISTINCT ?source ?target WHERE {\n  VALUES ?source { <https://vocab.cfaa.eus/broaching/MaquinaBrochadoExterior_18> }\n  ?source <https://vocab.cfaa.eus/broaching/cumpleNormativa> ?target .\n  FILTER(isIRI(?target))\n} LIMIT 6",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18"
+        ],
+        "sample_rows": [
+          [
+            "MaquinaBrochadoExterior_18",
+            "DirectivaSeguridadUnionEuropea_18"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "directive_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/identificador> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18"
+        ],
+        "sample_rows": [
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "identificador",
+            "DirectivaSeguridadUnionEuropea"
+          ],
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "textoExtracto",
+            "cumpliendo todos los requisitos necesarios para el MARCADO Véase apartado 2.4. Equipo para la seguridad personal. Antes de efectuar la puesta en marcha de la máquina, ésta debe conectarse al sistema de tierras del usuario y dicho sistema debe cumplir con lo exigido por las leyes nacionales."
+          ],
+          [
+            "DirectivaSeguridadUnionEuropea_18",
+            "type",
+            "Directiva"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "result_count": 4
   }
 ]

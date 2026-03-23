@@ -16,6 +16,7 @@ Artefactos canonicos:
 - `data/processed/schema_condensed.txt`
 - `data/golden_set/QA_canonical.json`
 - `data/golden_set/QA_multihop.json`
+- `data/golden_set/QA_sandbox.json`
 
 ### Carril experimental
 Se conserva para exploracion, pero no define el runtime por defecto.
@@ -57,6 +58,22 @@ Artefactos principales de T14-T15:
 - el planner y la sintesis dejan de ser cuellos de botella estructurales del runtime actual
 - el caso A218 queda esencialmente consolidado
 - la siguiente gran direccion del proyecto pasa a ser abrir una nueva capacidad, no seguir micro-optimizando este caso
+
+## Sandbox diagnostico
+
+`QA_sandbox.json` se usa como lote de diagnostico estructural, no como benchmark formal.
+
+Runner batch:
+- `python src/8_retrieval/qa_sandbox_diagnostic.py`
+
+Artefactos principales de T16:
+- `data/processed/sandbox_diagnostic_report.json`
+- `data/processed/sandbox_structural_gap_summary.json`
+- `data/processed/sandbox_entity_resolution_candidates.json`
+- `data/processed/sandbox_promotion_candidates.json`
+- `data/processed/sandbox_decision_report.json`
+
+Ese flujo sirve para clasificar gaps estructurales, detectar canonicidad/enlace y decidir que preguntas nuevas pueden promocionarse despues a benchmark formal con `expected_uris`.
 
 ## Workbench
 

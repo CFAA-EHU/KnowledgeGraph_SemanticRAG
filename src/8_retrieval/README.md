@@ -55,6 +55,16 @@ Ahora persiste tanto retrieval como sintesis:
 - `data/processed/synthesis_eval_report.json`
 - `data/processed/synthesis_decision_report.json`
 
+### `qa_sandbox_diagnostic.py`
+Ejecuta `QA_sandbox.json` como lote de diagnostico estructural sobre el pipeline real, sin depender de `expected_uris`.
+
+Artefactos que genera:
+- `data/processed/sandbox_diagnostic_report.json`
+- `data/processed/sandbox_structural_gap_summary.json`
+- `data/processed/sandbox_entity_resolution_candidates.json`
+- `data/processed/sandbox_promotion_candidates.json`
+- `data/processed/sandbox_decision_report.json`
+
 ## Estado tras T15
 
 ### Lo ya conseguido
@@ -67,14 +77,15 @@ Ahora persiste tanto retrieval como sintesis:
 - separacion trazable entre evidencia recuperada, evidencia seleccionada y respuesta final
 
 ### Lo que sigue pendiente
-En esta capa ya no queda un cuello de botella estructural para A218. Lo pendiente es menor y no justifica otra refactorizacion grande:
-- micro-pulido ocasional de superficie en respuestas largas
-- abrir la siguiente capacidad del sistema en vez de seguir optimizando el mismo caso
+Tras T16, esta capa ya distingue mejor entre benchmark formal y sandbox diagnostico. El siguiente cambio de fondo ya no debe salir de preguntas sueltas, sino del patron dominante detectado en `QA_sandbox`:
+- consolidacion canonica de entidades si domina `graph_canonicalization_gap`
+- enriquecimiento de superficies si domina `missing_value_surface`
+- ajuste de planner o boundedness solo si el resumen batch lo justifica
 
-## Regresion obligatoria
+## Regresion y diagnostico
 
-Antes de cerrar cambios en esta capa, ejecutar al menos:
-- `python src/8_retrieval/qa_evaluator.py`
-- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json`
-- `python query_workbench.py "¿Cuál es el correo electrónico de contacto de EKIN indicado en el manual?" --with-synthesis`
-- `python query_workbench.py "¿Dónde se encuentra la dirección de la empresa EKIN mencionada en el manual?" --with-synthesis`
+Antes de cerrar cambios en esta capa, ejecutar segun el objetivo del cambio:
+- benchmark formal: `python src/8_retrieval/qa_evaluator.py`
+- benchmark multi-hop: `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json`
+- sandbox batch: `python src/8_retrieval/qa_sandbox_diagnostic.py`
+- preguntas nuevas interactivas: `python query_workbench.py "?Cu?l es el correo electr?nico de contacto de EKIN indicado en el manual?" --with-synthesis`

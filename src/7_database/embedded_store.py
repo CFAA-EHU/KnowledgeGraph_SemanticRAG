@@ -42,27 +42,35 @@ if __name__ == "__main__":
     motor = MotorGrafoEmbebido()
 
     query_prueba = """
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    SELECT ?clase (COUNT(?instancia) AS ?total)
-    WHERE {
-        ?instancia rdf:type ?clase .
-        FILTER(isIRI(?clase))
+    SELECT DISTINCT ?s ?p ?o WHERE {
+        {
+            VALUES ?s { <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18> }
+            ?s ?p ?o .
+            FILTER(?o = <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE>)
+        }
+        UNION
+        {
+            VALUES ?s { <https://vocab.cfaa.eus/broaching/Directiva2006_42_CE> }
+            ?s ?p ?o .
+            FILTER(?o = <https://vocab.cfaa.eus/broaching/DirectivaSeguridadUnionEuropea_18>)
+        }
     }
-    GROUP BY ?clase
-    ORDER BY DESC(?total)
-    LIMIT 10
+    ORDER BY ?s ?p ?o
     """
 
-    print("-" * 40)
-    print("TOP 10 CLASES CON MAS INSTANCIAS")
-    print("-" * 40)
+    print("-" * 80)
+    print("NORMATIVAS QUE CUMPLE LA MAQUINA")
+    print("-" * 80)
 
     try:
-        resultados = motor.ejecutar_sparql(query_prueba)
+        resultados = list(motor.ejecutar_sparql(query_prueba))
+
+        if not resultados:
+            print("No se obtuvieron resultados para la consulta.")
+            sys.exit(0)
+
         for fila in resultados:
-            clase_uri = str(fila.clase)
-            clase = clase_uri.split("#")[-1] if "#" in clase_uri else clase_uri.split("/")[-1]
-            total = int(fila.total)
-            print(f"{clase:<35} | {total}")
+            print([str(valor) for valor in fila])
+
     except Exception as e:
         print(f"Error en ejecucion SPARQL: {e}")

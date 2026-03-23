@@ -31,6 +31,7 @@ SCHEMA_CONDENSED_PATH = PROCESSED_DATA_DIR / "schema_condensed.txt"
 QA2_DATASET_PATH = GOLDEN_SET_DIR / "QA2.txt"
 QA3_DATASET_PATH = GOLDEN_SET_DIR / "QA3.json"
 QA_CANONICAL_PATH = GOLDEN_SET_DIR / "QA_canonical.json"
+QA_SANDBOX_PATH = GOLDEN_SET_DIR / "QA_sandbox.json"
 QA_RECONCILIATION_PATH = PROCESSED_DATA_DIR / "qa_dataset_reconciliation.json"
 QA_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "qa_eval_report.json"
 QA_FAILURE_ANALYSIS_PATH = PROCESSED_DATA_DIR / "qa_failure_analysis.json"
@@ -60,6 +61,11 @@ SYNTHESIS_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "synthesis_decision_report
 SURFACE_RENDERING_RULES_PATH = PROCESSED_DATA_DIR / "surface_rendering_rules.json"
 SURFACE_POLISH_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "surface_polish_eval_report.json"
 SURFACE_POLISH_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "surface_polish_decision_report.json"
+SANDBOX_DIAGNOSTIC_REPORT_PATH = PROCESSED_DATA_DIR / "sandbox_diagnostic_report.json"
+SANDBOX_STRUCTURAL_GAP_SUMMARY_PATH = PROCESSED_DATA_DIR / "sandbox_structural_gap_summary.json"
+SANDBOX_ENTITY_RESOLUTION_CANDIDATES_PATH = PROCESSED_DATA_DIR / "sandbox_entity_resolution_candidates.json"
+SANDBOX_PROMOTION_CANDIDATES_PATH = PROCESSED_DATA_DIR / "sandbox_promotion_candidates.json"
+SANDBOX_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "sandbox_decision_report.json"
 
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
@@ -75,6 +81,7 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "abox_semantic_audit": ABOX_SEMANTIC_AUDIT_PATH,
     "abox_debug": ABOX_DEBUG_DIR,
     "qa_dataset": QA_CANONICAL_PATH,
+    "qa_sandbox_dataset": QA_SANDBOX_PATH,
     "qa_eval_report": QA_EVAL_REPORT_PATH,
     "qa_failure_analysis": QA_FAILURE_ANALYSIS_PATH,
     "query_intent_catalog": QUERY_INTENT_CATALOG_PATH,
@@ -103,6 +110,11 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "surface_rendering_rules": SURFACE_RENDERING_RULES_PATH,
     "surface_polish_eval_report": SURFACE_POLISH_EVAL_REPORT_PATH,
     "surface_polish_decision_report": SURFACE_POLISH_DECISION_REPORT_PATH,
+    "sandbox_diagnostic_report": SANDBOX_DIAGNOSTIC_REPORT_PATH,
+    "sandbox_structural_gap_summary": SANDBOX_STRUCTURAL_GAP_SUMMARY_PATH,
+    "sandbox_entity_resolution_candidates": SANDBOX_ENTITY_RESOLUTION_CANDIDATES_PATH,
+    "sandbox_promotion_candidates": SANDBOX_PROMOTION_CANDIDATES_PATH,
+    "sandbox_decision_report": SANDBOX_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {

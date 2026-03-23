@@ -5,10 +5,10 @@ Documentacion operativa, contractual y transversal del proyecto.
 ## Documentos principales
 
 - `operational_artifact_contract.md`
-  Contrato de artefactos del carril operativo y experimental, incluyendo desde T19 la separacion entre A-Box bruta, canonica, enriquecida y linked.
+  Contrato de artefactos del carril operativo y experimental, incluyendo desde T20 la lexicalizacion multilingue ES/EN sobre el mismo grafo linked.
 
 - `operational_pipeline_runbook.md`
-  Guia de ejecucion del build operativo, ya con las fases post-merge de canonicalizacion, enrichment residual y link completion residual.
+  Guia de ejecucion del build operativo, ya con las fases post-merge de canonicalizacion, enrichment residual, link completion residual y reconstruccion del lexicon bilingue.
 
 ## Relacion con T16-T19
 
@@ -39,6 +39,11 @@ Los artefactos operativos y diagnosticos relevantes viven en `data/processed/`:
 - `link_completion_candidates.json`
 - `link_completion_eval_report.json`
 - `link_completion_decision_report.json`
+- `multilingual_lexicon.json`
+- `language_detection_report.json`
+- `bilingual_eval_report.json`
+- `bilingual_debug_report.json`
+- `bilingual_decision_report.json`
 - `sandbox_diagnostic_report.json`
 - `sandbox_structural_gap_summary.json`
 - `sandbox_entity_resolution_candidates.json`
@@ -47,4 +52,4 @@ Los artefactos operativos y diagnosticos relevantes viven en `data/processed/`:
 
 ## Recomendacion
 
-Mantener aqui solo documentacion estable y transversal. La evolucion del planner, retrieval y sintesis sigue documentandose en los README de modulo, mientras que benchmark formal, sandbox batch, canonicalizacion, enrichment y link completion deben tratarse como flujos estructurales separados.
+Mantener aqui solo documentacion estable y transversal. La evolucion del planner, retrieval y sintesis sigue documentandose en los README de modulo, mientras que benchmark formal, sandbox batch, canonicalizacion, enrichment, link completion y soporte bilingue deben tratarse como flujos estructurales separados.

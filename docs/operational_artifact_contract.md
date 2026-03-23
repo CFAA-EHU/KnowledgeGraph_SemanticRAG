@@ -25,8 +25,14 @@
 - Link completion candidates: `data/processed/link_completion_candidates.json`
 - Link completion eval report: `data/processed/link_completion_eval_report.json`
 - Link completion decision report: `data/processed/link_completion_decision_report.json`
+- Multilingual lexicon: `data/processed/multilingual_lexicon.json`
+- Language detection report: `data/processed/language_detection_report.json`
+- Bilingual benchmark dataset: `data/golden_set/QA_bilingual.json`
+- Bilingual eval report: `data/processed/bilingual_eval_report.json`
+- Bilingual debug report: `data/processed/bilingual_debug_report.json`
+- Bilingual decision report: `data/processed/bilingual_decision_report.json`
 
-The default operational build runs `abox_input_builder.py`, `abox_extractor.py`, `abox_merger.py`, `abox_canonicalizer.py`, `abox_graph_enricher.py`, and `abox_link_completer.py` in that order. The runtime graph contract for this phase is `ontology_aligned.ttl` plus `abox_linked.ttl`.
+The default operational build runs `abox_input_builder.py`, `abox_extractor.py`, `abox_merger.py`, `abox_canonicalizer.py`, `abox_graph_enricher.py`, `abox_link_completer.py`, and `multilingual_lexicon_builder.py` in that order. The runtime graph contract for this phase is `ontology_aligned.ttl` plus `abox_linked.ttl`, while bilingual lexicalization lives in `multilingual_lexicon.json`.
 
 ### Experimental lane
 
@@ -45,3 +51,5 @@ The default operational build runs `abox_input_builder.py`, `abox_extractor.py`,
 `data/processed/abox_linked.ttl` is the final operational A-Box consumed by store, retrieval, evaluation and orchestration.
 
 The canonicalization phase resolves entity clusters and rewrites links toward canonical URIs. The enrichment phase adds traceable linking/value-surface improvements. The link completion phase only materializes a small whitelist of residual high-confidence edges detected in sandbox diagnostics.
+
+`data/processed/multilingual_lexicon.json` adds ES/EN lexicalization on top of the single operational graph. It does not duplicate RDF entities or translate `textoExtracto`; it only exposes reusable bilingual surfaces for planner normalization and answer rendering.

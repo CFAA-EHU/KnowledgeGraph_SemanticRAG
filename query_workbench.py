@@ -79,6 +79,10 @@ def main() -> None:
     gap = provisional_gap(plan, execution, synthesis_trace)
     output = {
         'question': args.question,
+        'question_language': plan.question_language,
+        'question_language_confidence': plan.question_language_confidence,
+        'normalized_question': plan.normalized_question,
+        'multilingual_lexicon_hits': plan.multilingual_lexicon_hits,
         'intent': plan.intent,
         'plan_family': plan.plan_family,
         'anchor_text': plan.anchor_text,
@@ -97,6 +101,7 @@ def main() -> None:
         'rows': execution.rows[: args.max_rows],
         'synthesis_trace': synthesis_trace,
         'pre_polish_answer': synthesis_trace.get('pre_polish_answer') if synthesis_trace else None,
+        'answer_language': synthesis_trace.get('answer_language') if synthesis_trace else None,
         'applied_surface_rules': synthesis_trace.get('applied_surface_rules') if synthesis_trace else [],
         'synthesized_answer': synthesized_answer,
     }
@@ -104,6 +109,8 @@ def main() -> None:
         append_query_debug_record({
             'question': args.question,
             'intent': plan.intent,
+            'question_language': plan.question_language,
+            'normalized_question': plan.normalized_question,
             'plan_family': plan.plan_family,
             'predicted_hop_depth': plan.predicted_hop_depth,
             'anchor_text': plan.anchor_text,
@@ -120,6 +127,8 @@ def main() -> None:
         if synthesis_trace is not None:
             append_synthesis_debug_record({
                 'question': args.question,
+                'question_language': plan.question_language,
+                'answer_language': synthesis_trace.get('answer_language'),
                 'plan_family': plan.plan_family,
                 'template_id': plan.template_id,
                 'confidence': plan.confidence,

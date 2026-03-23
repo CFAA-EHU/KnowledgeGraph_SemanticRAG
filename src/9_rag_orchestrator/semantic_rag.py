@@ -71,6 +71,7 @@ class MotorRAGSemantico:
         plan = build_query_plan(pregunta, self.esquema, self.grafo)
         execution = execute_query_plan(plan, self.grafo)
         print(f'   -> family={plan.plan_family} | template={plan.template_id} | hops={plan.predicted_hop_depth} | fallback={plan.fallback_used}')
+        print(f"   -> question_language={plan.question_language} | normalized_question={plan.normalized_question}")
         print(f"   -> confidence={plan.confidence.get('overall', 0.0):.2f} | recommended_action={plan.recommended_action}")
         for trace in execution.trace.steps:
             print(f"   step={trace.step_id} mode={trace.mode} raw={trace.raw_result_count} out={trace.output_candidate_count} boundedness={trace.boundedness_status} prune_reason={trace.prune_reason}")
@@ -79,6 +80,8 @@ class MotorRAGSemantico:
         append_query_debug_record({
             'question': pregunta,
             'intent': plan.intent,
+            'question_language': plan.question_language,
+            'normalized_question': plan.normalized_question,
             'plan_family': plan.plan_family,
             'predicted_hop_depth': plan.predicted_hop_depth,
             'anchor_text': plan.anchor_text,
@@ -93,12 +96,14 @@ class MotorRAGSemantico:
         }, path=MULTIHOP_DEBUG_REPORT_PATH)
         print('3. Synthesis pipeline working...')
         respuesta_final, synthesis_trace = self.sintetizar_respuesta(pregunta, _rows_for_synthesis(execution), plan)
-        print(f"   -> answer_mode={synthesis_trace.get('answer_mode')} | synthesis_category={synthesis_trace.get('synthesis_category')}")
+        print(f"   -> answer_mode={synthesis_trace.get('answer_mode')} | answer_language={synthesis_trace.get('answer_language')} | synthesis_category={synthesis_trace.get('synthesis_category')}")
         print(f"   -> selected_evidence={len(synthesis_trace.get('selected_evidence', []))} | normalized_values={len(synthesis_trace.get('normalized_values', []))}")
         print(f"   -> pre_polish={synthesis_trace.get('pre_polish_answer')}")
         print(f"   -> surface_rules={synthesis_trace.get('applied_surface_rules', [])}")
         append_synthesis_debug_record({
             'question': pregunta,
+            'question_language': plan.question_language,
+            'answer_language': synthesis_trace.get('answer_language'),
             'plan_family': plan.plan_family,
             'template_id': plan.template_id,
             'confidence': plan.confidence,
@@ -117,6 +122,8 @@ class MotorRAGSemantico:
             'trace': asdict(execution.trace),
             'tripletas': execution.rows,
             'synthesis_trace': synthesis_trace,
+            'question_language': plan.question_language,
+            'normalized_question': plan.normalized_question,
             'respuesta': respuesta_final,
         }
 

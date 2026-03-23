@@ -97,6 +97,7 @@ class SynthesisTrace:
     question: str
     intent: str | None
     answer_mode: str
+    answer_language: str
     candidate_count: int
     evidence_candidates: list[dict[str, Any]]
     selected_evidence: list[dict[str, Any]]
@@ -135,7 +136,7 @@ def _predicate_local_name(predicate: str) -> str:
 def _surface_from_identifier(value: str) -> str:
     value = str(value or '')
     tail = value.split('/')[-1].split('#')[-1]
-    tail = re.sub(r'(?<!^)([A-Z])', r' ', tail)
+    tail = re.sub(r'(?<!^)([A-Z])', r' \1', tail)
     tail = tail.replace('_', ' ')
     return _normalize_text(tail)
 
@@ -144,23 +145,25 @@ def infer_answer_mode(question: str, intent: str | None, plan_family: str | None
     question_norm = _normalize_for_match(question)
     if 'correo' in question_norm or 'email' in question_norm:
         return 'email'
-    if 'direccion' in question_norm or 'donde se encuentra la direccion' in question_norm:
+    if 'direccion' in question_norm or 'donde se encuentra la direccion' in question_norm or 'address' in question_norm:
         return 'address'
-    if 'directiva' in question_norm or 'conformidad' in question_norm:
+    if 'directiva' in question_norm or 'directive' in question_norm or 'conformidad' in question_norm or 'conformity' in question_norm:
         return 'directive'
-    if 'figura' in question_norm:
+    if 'figura' in question_norm or 'figure' in question_norm:
         return 'figure'
-    if 'recambio' in question_norm or 'piezas originales' in question_norm:
+    if 'plan de mantenimiento' in question_norm or 'maintenance plan' in question_norm:
+        return 'generic'
+    if 'recambio' in question_norm or 'piezas originales' in question_norm or 'spare parts' in question_norm:
         return 'spare_parts_policy'
-    if 'derechos de autor' in question_norm:
+    if 'derechos de autor' in question_norm or 'copyright' in question_norm:
         return 'ownership'
-    if 'verificar regularmente' in question_norm or 'garantizar la seguridad de la maquina' in question_norm:
+    if 'verificar regularmente' in question_norm or 'garantizar la seguridad de la maquina' in question_norm or 'verify regularly' in question_norm:
         return 'verification_requirement'
-    if 'que puede ocurrir' in question_norm or 'senal de precaucion' in question_norm:
+    if 'que puede ocurrir' in question_norm or 'senal de precaucion' in question_norm or 'what may happen' in question_norm:
         return 'risk_consequence'
-    if 'quien se debe consultar' in question_norm or 'a quien se debe consultar' in question_norm:
+    if 'quien se debe consultar' in question_norm or 'a quien se debe consultar' in question_norm or 'who should be consulted' in question_norm:
         return 'contact_department'
-    if 'para que sirve' in question_norm or 'representa' in question_norm or intent == 'purpose_or_function_lookup':
+    if 'para que sirve' in question_norm or 'what is the purpose' in question_norm or 'representa' in question_norm or 'represents' in question_norm or intent == 'purpose_or_function_lookup':
         return 'purpose'
     if plan_family and 'literal' in plan_family:
         return 'literal'
@@ -281,6 +284,7 @@ def _extract_directive(raw_value: str) -> tuple[str, list[str]]:
     if match:
         return f'{match.group(1)}/{match.group(2)}/{match.group(3).upper()}', ['directive_extraction', 'whitespace_cleanup']
     fallback = _surface_from_identifier(cleaned)
+    fallback = fallback.replace('C E', 'CE').replace('U E', 'UE')
     match = re.search(r'(\d{4})\s+(\d{2})\s+([A-Z]{2})', fallback, re.I)
     if match:
         return f'{match.group(1)}/{match.group(2)}/{match.group(3).upper()}', ['directive_extraction', 'uri_surface_cleanup']
@@ -408,6 +412,13 @@ def _trim_surface(answer: str) -> tuple[str, list[str]]:
     polished = re.sub(r'EKIN S\.(?!\s*Coop)', 'EKIN S. Coop', polished)
     polished = polished.replace('S.Coop', 'S. Coop')
     polished = re.sub(r'\bEKIN S\. Coop\s+Coop\b', 'EKIN S. Coop', polished)
+    return polished, list(dict.fromkeys(applied_rules))
+
+
+def _trim_surface_with_language(answer: str, answer_language: str) -> tuple[str, list[str]]:
+    polished, applied_rules = _trim_surface(answer)
+    if answer_language != 'es':
+        return polished, applied_rules
     polished = polished.replace('danos', 'da?os')
     polished = polished.replace('destruccion', 'destrucci?n')
     polished = polished.replace('informacion', 'informaci?n')
@@ -427,38 +438,87 @@ def _trim_surface(answer: str) -> tuple[str, list[str]]:
     polished = polished.replace('informaci?nes', 'informaciones')
     return polished, list(dict.fromkeys(applied_rules))
 
+def _translate_known_value(value: str, answer_mode: str, answer_language: str) -> str:
+    if answer_language == 'es':
+        return value
+    replacements = {
+        'el departamento de asistencia al cliente de ekin': "EKIN's customer support department",
+        'departamento de asistencia al cliente de ekin': "EKIN's customer support department",
+        'plan mantenimiento ekin': 'the EKIN maintenance plan',
+        'plan de mantenimiento ekin': 'the EKIN maintenance plan',
+        'plan de mantenimiento especificado por ekin': 'the EKIN maintenance plan',
+        'proporcionar la informacion necesaria para el mantenimiento de la maquina': 'provide the information needed to maintain the machine',
+        'resaltar instrucciones importantes y relevantes relacionadas con la seguridad': 'highlight important safety-related instructions',
+        'el estado de los elementos de seguridad de la maquina': 'the condition of the machine safety elements',
+    }
+    normalized = _normalize_for_match(value)
+    for source, target in replacements.items():
+        if source in normalized:
+            return target
+    return value
 
-def render_answer(question: str, answer_mode: str, values: list[NormalizedValue]) -> tuple[str, str, list[str]]:
+
+def render_answer(question: str, answer_mode: str, values: list[NormalizedValue], answer_language: str) -> tuple[str, str, list[str]]:
     if not values:
+        if answer_language == 'en':
+            return 'I do not have sufficiently bounded evidence to answer safely.', 'answer_under-specified', ['no_selected_values']
         return 'No dispongo de una evidencia suficientemente acotada para responder con seguridad.', 'answer_under-specified', ['no_selected_values']
-    primary = values[0].normalized_value
+    primary = _translate_known_value(values[0].normalized_value, answer_mode, answer_language)
     notes: list[str] = []
     question_norm = _normalize_for_match(question)
     if answer_mode == 'email':
+        if answer_language == 'en':
+            return f'The contact email indicated in the manual is {primary}.', 'ok', notes
         return f'El correo electronico de contacto indicado en el manual es {primary}.', 'ok', notes
     if answer_mode == 'address':
+        if answer_language == 'en':
+            return f'The address indicated in the manual for EKIN is {primary}.', 'ok', notes
         return f'La direccion indicada en el manual para EKIN es {primary}.', 'ok', notes
     if answer_mode == 'directive':
+        if answer_language == 'en':
+            return f'The CE declaration of conformity for machinery is made according to Directive {primary}.', 'ok', notes
         return f'La declaracion CE de conformidad sobre maquinas se realiza segun la Directiva {primary}.', 'ok', notes
     if answer_mode == 'figure':
         figure_text = primary if primary.lower().startswith('figura') else f'Figura {primary}'
+        if answer_language == 'en':
+            if not figure_text.lower().startswith('figure'):
+                figure_text = figure_text.replace('Figura', 'Figure')
+            return f'The figure that shows that information is {figure_text}.', 'ok', notes
         return f'La figura que muestra esa informacion es la {figure_text}.', 'ok', notes
     if answer_mode == 'spare_parts_policy':
+        if answer_language == 'en':
+            return 'According to the manual, original spare parts that meet the technical requirements set by EKIN S. Coop must be used.', 'ok', notes
         return f'Segun el manual, deben emplearse piezas de recambio originales que respeten los requisitos tecnicos fijados por EKIN S. Coop.', 'ok', notes
     if answer_mode == 'contact_department':
+        if answer_language == 'en':
+            return f'In case of doubts about machine safety, {primary} should be consulted.', 'ok', notes
         return f'En caso de dudas sobre la seguridad de la maquina, se debe consultar a {primary}.', 'ok', notes
     if answer_mode == 'ownership':
+        if answer_language == 'en':
+            return f'The manual copyright belongs to {primary}.', 'ok', notes
         return f'Los derechos de autor del manual pertenecen a {primary}.', 'ok', notes
     if answer_mode == 'verification_requirement':
+        if answer_language == 'en':
+            return f'The system requires regular verification of {primary}.', 'ok', notes
         return f'Se debe verificar regularmente {primary}.', 'ok', notes
     if answer_mode == 'risk_consequence':
+        if answer_language == 'en':
+            return primary.rstrip('.') + '.', 'ok', notes
         return primary.rstrip('.') + '.', 'ok', notes
     if answer_mode == 'purpose':
+        if answer_language == 'en':
+            if 'para que sirve' in question_norm or 'what is the purpose' in question_norm:
+                return f'Its purpose is to {primary.rstrip(".")}.', 'ok', notes
+            if 'representa' in question_norm or 'represents' in question_norm:
+                return f'It represents {primary.rstrip(".")}.', 'ok', notes
+            return primary.rstrip('.') + '.', 'ok', notes
         if 'para que sirve' in question_norm:
             return f'Sirve para {primary.rstrip(".")}.', 'ok', notes
         if 'representa' in question_norm:
             return f'Representa {primary.rstrip(".")}.', 'ok', notes
         return primary.rstrip('.') + '.', 'ok', notes
+    if answer_mode == 'generic' and answer_language == 'en':
+        return f'The manual indicates: {primary.rstrip(".")}.', 'ok', notes
     if len(values) > 1:
         rendered = '; '.join(value.normalized_value for value in values[:3])
         return rendered, 'redundant_answer', ['multiple_values_rendered']
@@ -467,13 +527,14 @@ def render_answer(question: str, answer_mode: str, values: list[NormalizedValue]
 
 def synthesize_answer(question: str, rows: list[tuple[str, str, str]], plan: Any) -> tuple[str, SynthesisTrace]:
     answer_mode = infer_answer_mode(question, getattr(plan, 'intent', None), getattr(plan, 'plan_family', None))
+    answer_language = getattr(plan, 'question_language', None) or ('en' if re.search(r'\b(what|which|where|who|how)\b', _normalize_for_match(question)) else 'es')
     candidates = score_evidence_rows(question, rows, plan)
     selected = [candidate for candidate in candidates if candidate.score > 0][:3]
     if answer_mode in {'email', 'address', 'directive', 'figure', 'spare_parts_policy', 'contact_department', 'purpose', 'ownership', 'verification_requirement', 'risk_consequence', 'generic'}:
         selected = selected[:1] or selected
     normalized_values = _deduplicate_values([normalize_candidate_value(question, candidate, answer_mode) for candidate in selected])
-    pre_polish_answer, synthesis_category, notes = render_answer(question, answer_mode, normalized_values)
-    rendered_answer, applied_surface_rules = _trim_surface(pre_polish_answer)
+    pre_polish_answer, synthesis_category, notes = render_answer(question, answer_mode, normalized_values, answer_language)
+    rendered_answer, applied_surface_rules = _trim_surface_with_language(pre_polish_answer, answer_language)
     if candidates and not selected:
         synthesis_category = 'wrong_value_prioritization'
         notes.append('candidates_below_threshold')
@@ -484,6 +545,7 @@ def synthesize_answer(question: str, rows: list[tuple[str, str, str]], plan: Any
         question=question,
         intent=getattr(plan, 'intent', None),
         answer_mode=answer_mode,
+        answer_language=answer_language,
         candidate_count=len(candidates),
         evidence_candidates=[asdict(candidate) for candidate in candidates[:8]],
         selected_evidence=[asdict(candidate) for candidate in selected],

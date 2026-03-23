@@ -5,13 +5,23 @@ Este directorio implementa el carril operativo de construccion de A-Box.
 ## Objetivo
 Transformar chunks del manual en instancias RDF validas, semanticamente aceptables, consolidadas sobre entidades canonicas, enriquecidas con linking/value surfaces genericos y rematadas con link completion residual antes del runtime.
 
+Tras T20, este carril sigue produciendo un solo grafo operativo. El soporte bilingue no duplica entidades: preserva `source_language` en el onboarding y deja la lexicalizacion ES/EN reutilizable fuera del RDF, en `data/processed/multilingual_lexicon.json`.
+
 ## Flujo operativo
 
 ### 1. `abox_input_builder.py`
 Genera `data/processed/abox_input.json` a partir del material operativo limpio.
 
+Ahora arrastra tambien:
+- `source_language`
+- `language_confidence`
+
 ### 2. `abox_extractor.py`
 Lee `abox_input.json` y `ontology_aligned.ttl`, genera `data/processed/abox_graphs/*_abox.ttl` y mantiene `abox_generation_manifest.json` con validacion TTL y validacion semantica ligera.
+
+Regla bilingue de T20:
+- `textoExtracto` y citas textuales deben conservar el idioma original del chunk
+- las surfaces bilingues consultables no se generan aqui, sino despues en el lexicon multilingue
 
 ### 3. `abox_merger.py`
 Fusiona `data/processed/abox_graphs/*_abox.ttl` y genera `data/processed/abox_merged.ttl`.
@@ -61,6 +71,12 @@ Carga `abox_enriched.ttl`, materializa solo los enlaces residuales aprobados por
 - `data/processed/link_completion_candidates.json`
 - `data/processed/link_completion_map.json`
 - `data/processed/link_completion_report.json`
+
+### 10. `src/8_retrieval/multilingual_lexicon_builder.py`
+Se ejecuta despues del build estructural y produce:
+- `data/processed/multilingual_lexicon.json`
+
+Ese artefacto lexicaliza el grafo unico en ES/EN para planner y sintesis, sin duplicar URIs ni traducir `textoExtracto`.
 
 ## Contrato operativo actual
 - `abox_merged.ttl`: artefacto bruto intermedio

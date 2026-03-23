@@ -16,6 +16,8 @@ Artefactos operativos clave:
 - `data/processed/abox_canonical.ttl` como snapshot canonico intermedio
 - `data/processed/abox_enriched.ttl` como snapshot enriquecido intermedio
 - `data/processed/abox_linked.ttl` como A-Box operativa final del runtime
+- `data/processed/multilingual_lexicon.json` como lexicalizacion ES/EN sobre el mismo grafo canonico
+- `data/processed/language_detection_report.json`
 - `data/processed/canonical_entity_map.json`
 - `data/processed/canonicalization_report.json`
 - `data/processed/enrichment_report.json`
@@ -30,6 +32,7 @@ Artefactos operativos clave:
 - `data/golden_set/QA_canonical.json`
 - `data/golden_set/QA_multihop.json`
 - `data/golden_set/QA_sandbox.json`
+- `data/golden_set/QA_bilingual.json`
 
 ### Carril experimental
 Se conserva para exploracion, pero no define el runtime por defecto.
@@ -46,18 +49,30 @@ El flujo operativo completo ejecuta:
 - `src/6_extraction/abox_canonicalizer.py`
 - `src/6_extraction/abox_graph_enricher.py`
 - `src/6_extraction/abox_link_completer.py`
+- `src/8_retrieval/multilingual_lexicon_builder.py`
 
 ## Runtime operativo actual
 
 Planner, retrieval, evaluacion y orquestacion consumen:
 - `data/processed/ontology_aligned.ttl`
 - `data/processed/abox_linked.ttl`
+- `data/processed/multilingual_lexicon.json`
 
 Eso deja separadas cuatro capas:
 - `abox_merged.ttl`: snapshot bruto post-merge para diagnostico
 - `abox_canonical.ttl`: snapshot canonico intermedio para consolidacion estructural
 - `abox_enriched.ttl`: snapshot enriquecido intermedio para linking y value surfaces genericos
 - `abox_linked.ttl`: snapshot operativo final con link completion residual de alta confianza
+- `multilingual_lexicon.json`: lexicalizacion bilingue ES/EN sobre el mismo snapshot operativo final
+
+## Estado tras T20
+
+- el grafo sigue siendo unico y canonico; no se duplica por idioma
+- onboarding marca `source_language` y `language_confidence` por chunk
+- `textoExtracto` conserva el idioma original del fragmento
+- el planner normaliza preguntas ES/EN al mismo plan canonico
+- la sintesis responde en el idioma de la pregunta
+- `QA_bilingual` valida convergencia ES/EN sin contaminar `QA_canonical` ni `QA_multihop`
 
 ## Estado tras T19
 
@@ -72,6 +87,13 @@ Eso deja separadas cuatro capas:
 ## Sandbox diagnostico
 
 `QA_sandbox.json` se usa como lote de diagnostico estructural, no como benchmark formal.
+
+`QA_bilingual.json` se usa como sandbox formal bilingue de convergencia ES/EN:
+- misma intencion
+- misma ancla canonica
+- misma familia de plan
+- misma SPARQL
+- respuesta en el idioma de la pregunta
 
 Runner batch:
 - `python src/8_retrieval/qa_sandbox_diagnostic.py`
@@ -93,11 +115,12 @@ Artefactos principales de T16-T19:
 
 `query_workbench.py` sirve para probar preguntas nuevas y ver:
 - intencion y ancla detectadas
+- idioma detectado y pregunta normalizada
 - familia y profundidad previstas
 - boundedness por paso y final
 - evidencia recuperada
 - evidencia seleccionada para sintesis
-- respuesta final sobre el grafo linked
+- respuesta final en el idioma de la pregunta sobre el mismo grafo linked
 
 ## Fuente unica de verdad
 

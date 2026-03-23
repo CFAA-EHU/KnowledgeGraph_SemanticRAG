@@ -24,6 +24,7 @@ from artifact_contracts import (
     QUERY_DEBUG_REPORT_PATH,
     QUERY_INTENT_CATALOG_PATH,
 )
+from multilingual_query_normalizer import normalize_question
 
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 ABOX_PATH = OPERATIONAL_ABOX_PATH
@@ -36,15 +37,17 @@ STOPWORDS = {
     "esta", "este", "estos", "estas", "cual", "donde", "quien", "como", "manual", "maquina",
     "indicado", "indicada", "mencionada", "respecto", "debe", "deben", "tipo", "informacion", "aparece",
     "sirve", "hace", "muestra", "realiza", "utilizados", "pregunta", "queda", "tiene",
+    "the", "what", "which", "where", "when", "who", "does", "manual", "machine", "indicated",
+    "shown", "used", "according", "with", "about", "required", "require",
 }
 
 INTENT_TRIGGER_RULES = [
-    ("figure_or_reference_lookup", ["figura", "seccion", "capitulo", "referencia"]),
-    ("regulatory_lookup", ["directiva", "conformidad", "precaucion", "peligro", "medio ambiente", "seguridad", "mantenimiento"]),
-    ("literal_lookup", ["correo", "email", "direccion", "telefono", "codigo", "quien"]),
-    ("component_attribute_lookup", ["verificar", "estado", "elementos", "componente"]),
-    ("component_relation_lookup", ["regla lineal", "controla", "asociado", "relaciona", "subcomponente"]),
-    ("purpose_or_function_lookup", ["para que sirve", "objetivo", "indica", "representa", "funcion"]),
+    ("figure_or_reference_lookup", ["figura", "figure", "seccion", "section", "capitulo", "chapter", "referencia", "reference"]),
+    ("regulatory_lookup", ["directiva", "directive", "conformidad", "conformity", "precaucion", "peligro", "medio ambiente", "safety", "seguridad", "mantenimiento", "maintenance"]),
+    ("literal_lookup", ["correo", "email", "direccion", "address", "telefono", "codigo", "quien", "who", "consultar", "contacto", "contact"]),
+    ("component_attribute_lookup", ["verificar", "verify", "estado", "state", "elementos", "elements", "componente", "component"]),
+    ("component_relation_lookup", ["regla lineal", "linear guide", "controla", "controls", "asociado", "related", "relaciona", "subcomponente"]),
+    ("purpose_or_function_lookup", ["para que sirve", "what is the purpose", "objetivo", "purpose", "indica", "representa", "represents", "funcion", "function"]),
 ]
 
 BOUNDEDNESS_POLICIES = {
@@ -55,15 +58,15 @@ BOUNDEDNESS_POLICIES = {
 }
 
 ANCHOR_ALIAS_RULES = [
-    {"anchor_id": "manual_a218", "aliases": ["manual a218", "a218 rashem", "rashem 7x3000x500", "brochadora a218"], "seed_uris": [f"{BASE_URI}ManualBrochadoraA218", f"{BASE_URI}Maquina_A218_RASHEM_7x3000x500"], "preferred_intents": ["purpose_or_function_lookup", "figure_or_reference_lookup"], "confidence": 0.92},
-    {"anchor_id": "figure_header_footer", "aliases": ["encabezados y pies", "encabezados y pies de pagina", "pies de pagina", "informacion mostrada en paginas"], "seed_uris": [f"{BASE_URI}Figura0_1_1InformacionMostradaEnPaginas", f"{BASE_URI}ManualBrochadoraA218"], "preferred_intents": ["figure_or_reference_lookup"], "confidence": 0.95},
+    {"anchor_id": "manual_a218", "aliases": ["manual a218", "a218 rashem", "rashem 7x3000x500", "brochadora a218", "a218 machine", "a218 broaching machine", "a218 broaching machine manual"], "seed_uris": [f"{BASE_URI}ManualBrochadoraA218", f"{BASE_URI}Maquina_A218_RASHEM_7x3000x500"], "preferred_intents": ["purpose_or_function_lookup", "figure_or_reference_lookup"], "confidence": 0.92},
+    {"anchor_id": "figure_header_footer", "aliases": ["encabezados y pies", "encabezados y pies de pagina", "pies de pagina", "informacion mostrada en paginas", "headers and footers", "manual headers and footers", "information shown on pages"], "seed_uris": [f"{BASE_URI}Figura0_1_1InformacionMostradaEnPaginas", f"{BASE_URI}ManualBrochadoraA218"], "preferred_intents": ["figure_or_reference_lookup"], "confidence": 0.95},
     {"anchor_id": "precaucion", "aliases": ["precaucion", "senal de precaucion"], "seed_uris": [f"{BASE_URI}Precaucion"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.96},
     {"anchor_id": "peligro", "aliases": ["peligro", "advertencia de peligro"], "seed_uris": [f"{BASE_URI}Peligro"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.96},
     {"anchor_id": "medio_ambiente", "aliases": ["medio ambiente", "indicacion de medio ambiente"], "seed_uris": [f"{BASE_URI}MedioAmbiente"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.96},
-    {"anchor_id": "client_support_department", "aliases": ["dudas sobre la seguridad", "consultar en caso de dudas", "asistencia al cliente", "departamento de asistencia al cliente"], "seed_uris": [f"{BASE_URI}DepartamentoAsistenciaClienteEKIN"], "preferred_intents": ["regulatory_lookup", "literal_lookup"], "confidence": 0.91},
-    {"anchor_id": "ekin_company", "aliases": ["empresa ekin", "ekin s coop", "direccion de ekin", "direccion de la empresa ekin", "correo electronico de ekin", "correo electronico de contacto de ekin", "derechos de autor", "correo de contacto de ekin"], "seed_uris": [f"{BASE_URI}Empresa_EKIN_S_Coop"], "preferred_intents": ["literal_lookup"], "confidence": 0.94},
-    {"anchor_id": "spare_parts_policy", "aliases": ["piezas de recambio", "pieza de recambio", "recambios", "recambio original", "piezas originales"], "seed_uris": [f"{BASE_URI}PiezaRecambio_1", f"{BASE_URI}Empresa_EKIN_S_Coop"], "preferred_intents": ["literal_lookup"], "confidence": 0.93},
-    {"anchor_id": "directive_2006_42_ce", "aliases": ["declaracion ce", "directiva 2006 42 ce", "conformidad sobre maquinas"], "seed_uris": [f"{BASE_URI}Directiva2006_42_CE"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.94},
+    {"anchor_id": "client_support_department", "aliases": ["dudas sobre la seguridad", "consultar en caso de dudas", "asistencia al cliente", "departamento de asistencia al cliente", "customer support department", "customer service department", "doubts about machine safety"], "seed_uris": [f"{BASE_URI}DepartamentoAsistenciaClienteEKIN"], "preferred_intents": ["regulatory_lookup", "literal_lookup"], "confidence": 0.91},
+    {"anchor_id": "ekin_company", "aliases": ["empresa ekin", "ekin s coop", "direccion de ekin", "direccion de la empresa ekin", "correo electronico de ekin", "correo electronico de contacto de ekin", "derechos de autor", "correo de contacto de ekin", "ekin company", "ekin address", "ekin contact email", "copyright"], "seed_uris": [f"{BASE_URI}Empresa_EKIN_S_Coop"], "preferred_intents": ["literal_lookup"], "confidence": 0.94},
+    {"anchor_id": "spare_parts_policy", "aliases": ["piezas de recambio", "pieza de recambio", "recambios", "recambio original", "piezas originales", "spare parts", "original spare parts"], "seed_uris": [f"{BASE_URI}PiezaRecambio_1", f"{BASE_URI}Empresa_EKIN_S_Coop"], "preferred_intents": ["literal_lookup"], "confidence": 0.93},
+    {"anchor_id": "directive_2006_42_ce", "aliases": ["declaracion ce", "directiva 2006 42 ce", "conformidad sobre maquinas", "directive 2006 42 ce", "ce declaration", "declaration of conformity"], "seed_uris": [f"{BASE_URI}Directiva2006_42_CE"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.94},
 ]
 
 PREDICATE_URI_MAP = {
@@ -122,6 +125,10 @@ class QueryPlan:
     boundedness_policy: dict[str, Any] = field(default_factory=dict)
     recommended_action: str = "execute"
     final_boundedness: str = "unknown"
+    question_language: str = "es"
+    question_language_confidence: float = 0.0
+    normalized_question: str = ""
+    multilingual_lexicon_hits: list[dict[str, Any]] = field(default_factory=list)
     debug: dict[str, Any] = field(default_factory=dict)
 
 
@@ -404,7 +411,10 @@ def extract_anchor_text(question: str, intent: str) -> tuple[str | None, dict[st
     if refs:
         return refs[0], None, 0.7
     normalized = normalize_text(question)
-    for anchor in ["ekin", "a218", "precaucion", "peligro", "medio ambiente", "seguridad", "columna_46", "46"]:
+    for anchor in [
+        "ekin", "a218", "precaucion", "peligro", "medio ambiente", "seguridad",
+        "safety", "columna_46", "46", "maintenance plan", "machine safety system",
+    ]:
         if anchor in normalized:
             return anchor, None, 0.55
     return None, None, 0.2
@@ -644,8 +654,10 @@ def _build_generic_plan(parse: QuestionParse, graph: Graph | None, *, template_i
     )
 
 def build_query_plan(question: str, schema_text: str, graph: Graph | None = None) -> QueryPlan:
-    parse = build_question_parse(question)
-    family = select_plan_family(parse, question)
+    normalization = normalize_question(question)
+    planner_question = normalization["planner_question"]
+    parse = build_question_parse(planner_question)
+    family = select_plan_family(parse, planner_question)
     if family is not None:
         steps = [QueryStep(**step) for step in family["steps"]]
         seed_uris = _resolved_seed_uris_for_family(parse, family)
@@ -669,12 +681,21 @@ def build_query_plan(question: str, schema_text: str, graph: Graph | None = None
             },
             boundedness_policy=_policy_for_family(family.get("policy_id")),
             recommended_action="execute",
+            question_language=normalization["question_language"],
+            question_language_confidence=normalization["question_language_confidence"],
+            normalized_question=normalization["normalized_question"],
+            multilingual_lexicon_hits=normalization["multilingual_lexicon_hits"],
             debug={
                 "qualifiers": parse.qualifiers,
                 "question_parse": asdict(parse),
                 "schema_excerpt_used": bool(schema_text),
                 "family_type": family.get("family_type"),
                 "evidence_questions": family.get("evidence_questions", []),
+                "original_question": question,
+                "planner_question": planner_question,
+                "question_language": normalization["question_language"],
+                "question_language_confidence": normalization["question_language_confidence"],
+                "multilingual_lexicon_hits": normalization["multilingual_lexicon_hits"],
             },
         )
         return plan
@@ -688,7 +709,21 @@ def build_query_plan(question: str, schema_text: str, graph: Graph | None = None
     }
     template_id, family_id = generic_map.get(parse.intent, ("T1_literal_anchor", "generic_literal_lookup"))
     plan = _build_generic_plan(parse, graph, template_id=template_id, intent_family=family_id)
-    plan.debug.update({"question_parse": asdict(parse), "schema_excerpt_used": bool(schema_text)})
+    plan.question_language = normalization["question_language"]
+    plan.question_language_confidence = normalization["question_language_confidence"]
+    plan.normalized_question = normalization["normalized_question"]
+    plan.multilingual_lexicon_hits = normalization["multilingual_lexicon_hits"]
+    plan.debug.update(
+        {
+            "question_parse": asdict(parse),
+            "schema_excerpt_used": bool(schema_text),
+            "original_question": question,
+            "planner_question": planner_question,
+            "question_language": normalization["question_language"],
+            "question_language_confidence": normalization["question_language_confidence"],
+            "multilingual_lexicon_hits": normalization["multilingual_lexicon_hits"],
+        }
+    )
     return plan
 
 

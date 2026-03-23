@@ -544,6 +544,10 @@ def run_diagnostic(args: argparse.Namespace) -> None:
         result = {
             **item,
             'expected_answer_text': expected_answer_text,
+            'question_language': plan.question_language,
+            'question_language_confidence': plan.question_language_confidence,
+            'normalized_question': plan.normalized_question,
+            'multilingual_lexicon_hits': plan.multilingual_lexicon_hits,
             'plan_family': plan.plan_family,
             'template_id': plan.template_id,
             'predicted_hop_depth': plan.predicted_hop_depth,
@@ -559,6 +563,7 @@ def run_diagnostic(args: argparse.Namespace) -> None:
             'selected_evidence': selected_evidence,
             'normalized_values': normalized_values,
             'pre_polish_answer': synthesis_trace_dict.get('pre_polish_answer'),
+            'answer_language': synthesis_trace_dict.get('answer_language'),
             'synthesized_answer': synthesis_answer,
             'synthesis_trace': synthesis_trace_dict,
             'answer_match_mode': match_mode,

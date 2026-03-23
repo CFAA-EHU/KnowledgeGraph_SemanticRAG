@@ -4,10 +4,14 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
+INGESTION_DIR = REPO_ROOT / "src" / "1_ingestion"
+if str(INGESTION_DIR) not in sys.path:
+    sys.path.insert(0, str(INGESTION_DIR))
 
 import json
 
 from artifact_contracts import DENSITY_REPORT_PATH, OPERATIONAL_ABOX_INPUT_PATH, build_abox_chunk_hash
+from language_utils import detect_language
 
 
 def load_density_report() -> list[dict]:
@@ -24,6 +28,10 @@ def build_abox_input_entry(chunk: dict) -> dict | None:
     texto_fuente = (chunk.get("texto") or "").strip()
     if not texto_fuente:
         return None
+    detected_language, detected_confidence = detect_language(
+        texto_fuente,
+        metadata=[chunk.get("paginas", ""), chunk.get("seccion", ""), chunk.get("titulo", "")],
+    )
 
     entry = {
         "chunk_id": chunk["chunk_id"],
@@ -33,6 +41,8 @@ def build_abox_input_entry(chunk: dict) -> dict | None:
         "titulo": chunk.get("titulo", ""),
         "density_level": chunk.get("density_level", ""),
         "terms_found": chunk.get("terms_found", []),
+        "source_language": chunk.get("source_language") or detected_language,
+        "language_confidence": chunk.get("language_confidence") or detected_confidence,
         "source_path": str(DENSITY_REPORT_PATH),
     }
     entry["chunk_hash"] = build_abox_chunk_hash(entry)

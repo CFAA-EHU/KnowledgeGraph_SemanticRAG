@@ -18,6 +18,9 @@ from statistics import mean
 from rdflib import Graph, URIRef
 
 from artifact_contracts import (
+    BILINGUAL_DEBUG_REPORT_PATH,
+    BILINGUAL_DECISION_REPORT_PATH,
+    BILINGUAL_EVAL_REPORT_PATH,
     CANONICAL_ENTITY_MAP_PATH,
     GENERALIZATION_EVAL_REPORT_PATH,
     MULTIHOP_DEBUG_REPORT_PATH,
@@ -25,6 +28,7 @@ from artifact_contracts import (
     MULTIHOP_PLANNER_DECISION_REPORT_PATH,
     OPERATIONAL_ABOX_PATH,
     OPERATIONAL_TBOX_PATH,
+    QA_BILINGUAL_PATH,
     QA_CANONICAL_PATH,
     QA_EVAL_REPORT_PATH,
     QA_FAILURE_ANALYSIS_PATH,
@@ -68,9 +72,30 @@ def parse_args() -> argparse.Namespace:
 
 def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analysis_path: Path | None, debug_report_path: Path | None) -> tuple[Path, Path, Path]:
     is_multihop = qa_file.resolve() == QA_MULTIHOP_PATH.resolve()
-    resolved_report = report_path or (MULTIHOP_EVAL_REPORT_PATH if is_multihop else GENERALIZATION_EVAL_REPORT_PATH if qa_file.resolve() == QA_CANONICAL_PATH.resolve() else QA_EVAL_REPORT_PATH)
-    resolved_failure = failure_analysis_path or (MULTIHOP_PLANNER_DECISION_REPORT_PATH if is_multihop else QA_FAILURE_ANALYSIS_PATH)
-    resolved_debug = debug_report_path or (MULTIHOP_DEBUG_REPORT_PATH if is_multihop else QUERY_DEBUG_REPORT_PATH)
+    is_bilingual = qa_file.resolve() == QA_BILINGUAL_PATH.resolve()
+    resolved_report = report_path or (
+        MULTIHOP_EVAL_REPORT_PATH
+        if is_multihop
+        else BILINGUAL_EVAL_REPORT_PATH
+        if is_bilingual
+        else GENERALIZATION_EVAL_REPORT_PATH
+        if qa_file.resolve() == QA_CANONICAL_PATH.resolve()
+        else QA_EVAL_REPORT_PATH
+    )
+    resolved_failure = failure_analysis_path or (
+        MULTIHOP_PLANNER_DECISION_REPORT_PATH
+        if is_multihop
+        else BILINGUAL_DECISION_REPORT_PATH
+        if is_bilingual
+        else QA_FAILURE_ANALYSIS_PATH
+    )
+    resolved_debug = debug_report_path or (
+        MULTIHOP_DEBUG_REPORT_PATH
+        if is_multihop
+        else BILINGUAL_DEBUG_REPORT_PATH
+        if is_bilingual
+        else QUERY_DEBUG_REPORT_PATH
+    )
     return resolved_report, resolved_failure, resolved_debug
 
 
@@ -145,6 +170,8 @@ class EvaluadorRAG:
 
     def _cargar_dataset(self) -> list[dict]:
         payload = json.loads(self.qa_file.read_text(encoding="utf-8"))
+        if isinstance(payload, dict) and "pairs" in payload:
+            return payload["pairs"]
         bank: list[dict] = []
         if isinstance(payload, list):
             for block_index, bloque in enumerate(payload):
@@ -181,6 +208,14 @@ class EvaluadorRAG:
             return bank
         raise ValueError("Unsupported QA dataset shape.")
 
+    def _sparql_signature(self, plan) -> str:
+        payload = {
+            "plan_family": plan.plan_family,
+            "template_id": plan.template_id,
+            "steps": [asdict(step) for step in plan.steps],
+        }
+        return self._normalizar_texto(json.dumps(payload, ensure_ascii=False, sort_keys=True))
+
     def sintetizar_respuesta(self, pregunta: str, tripletas_crudas: list[tuple[str, str, str]], plan) -> tuple[str, dict]:
         respuesta, trace = synthesize_answer(pregunta, tripletas_crudas, plan)
         return respuesta, asdict(trace)
@@ -206,6 +241,107 @@ class EvaluadorRAG:
                 if isinstance(value, str) and value.startswith("http"):
                     uris_recuperadas.add(value)
         return execution, execution.rows, self._rows_for_synthesis(execution), uris_recuperadas
+
+    def _evaluar_pregunta(self, item: dict, debug_path: Path | None = None) -> dict:
+        pregunta = item["question"]
+        expected_uris_original = item.get("expected_uris", [])
+        expected_uris = self._canonicalize_expected_uris(expected_uris_original)
+        execution = None
+        query_plan = None
+        tripletas_limpias: list[tuple[str, str, str]] = []
+        tripletas_sintesis: list[tuple[str, str, str]] = []
+        uris_recuperadas = set()
+        respuesta_final = ""
+        synthesis_trace: dict = {}
+        query_error = None
+        synthesis_error = None
+
+        try:
+            execution, tripletas_limpias, tripletas_sintesis, uris_recuperadas = self._extraer_resultados(pregunta)
+            query_plan = execution.plan
+        except Exception as exc:
+            query_error = str(exc)
+
+        recovered_norm = {self._normalizar_uri(uri) for uri in uris_recuperadas if self._normalizar_uri(uri)}
+        expected_norm = {self._normalizar_uri(uri) for uri in expected_uris if self._normalizar_uri(uri)}
+        matching = recovered_norm.intersection(expected_norm)
+        precision = len(matching) / len(recovered_norm) if recovered_norm else 0.0
+        recall = len(matching) / len(expected_norm) if expected_norm else 0.0
+
+        if query_error is None and query_plan is not None:
+            try:
+                respuesta_final, synthesis_trace = self.sintetizar_respuesta(pregunta, tripletas_sintesis, query_plan)
+            except Exception as exc:
+                synthesis_error = str(exc)
+
+        classification = self._clasificar_pregunta(
+            expected_uris=expected_uris,
+            precision=precision,
+            recall=recall,
+            tripletas_limpias=tripletas_limpias,
+            synthesized_answer=respuesta_final,
+            query_error=query_error,
+            synthesis_error=synthesis_error,
+            question=pregunta,
+        )
+
+        if query_plan is not None and execution is not None and debug_path is not None:
+            append_query_debug_record({
+                "question": pregunta,
+                "intent": query_plan.intent,
+                "question_language": query_plan.question_language,
+                "normalized_question": query_plan.normalized_question,
+                "multilingual_lexicon_hits": query_plan.multilingual_lexicon_hits,
+                "plan_family": query_plan.plan_family,
+                "predicted_hop_depth": query_plan.predicted_hop_depth,
+                "anchor_text": query_plan.anchor_text,
+                "anchor_candidates": query_plan.anchor_candidates,
+                "template_id": query_plan.template_id,
+                "fallback_used": query_plan.fallback_used,
+                "recommended_action": query_plan.recommended_action,
+                "confidence": query_plan.confidence,
+                "final_boundedness": query_plan.final_boundedness,
+                "trace": [asdict(step) for step in execution.trace.steps],
+                "notes": classification,
+            }, path=debug_path)
+
+        return {
+            **item,
+            "expected_uris_original": expected_uris_original,
+            "expected_uris_canonicalized": expected_uris,
+            "intent": query_plan.intent if query_plan else None,
+            "question_language": query_plan.question_language if query_plan else None,
+            "question_language_confidence": query_plan.question_language_confidence if query_plan else None,
+            "normalized_question": query_plan.normalized_question if query_plan else None,
+            "multilingual_lexicon_hits": query_plan.multilingual_lexicon_hits if query_plan else [],
+            "answer_language": synthesis_trace.get("answer_language") if synthesis_trace else None,
+            "plan_family": query_plan.plan_family if query_plan else None,
+            "predicted_hop_depth": query_plan.predicted_hop_depth if query_plan else None,
+            "template_id": query_plan.template_id if query_plan else None,
+            "fallback_used": query_plan.fallback_used if query_plan else None,
+            "recommended_action": query_plan.recommended_action if query_plan else None,
+            "confidence": query_plan.confidence if query_plan else {},
+            "final_boundedness": query_plan.final_boundedness if query_plan else None,
+            "anchor_text": query_plan.anchor_text if query_plan else None,
+            "anchor_candidates": query_plan.anchor_candidates if query_plan else [],
+            "queries": [asdict(step) for step in query_plan.steps] if query_plan else [],
+            "trace": [asdict(step) for step in execution.trace.steps] if execution else [],
+            "query_debug": query_plan.debug if query_plan else {},
+            "sparql_query": query_plan.sparql if query_plan else "",
+            "sparql_signature": self._sparql_signature(query_plan) if query_plan else "",
+            "sparql_error": query_error,
+            "retrieved_results": [list(row) for row in tripletas_limpias],
+            "retrieved_uris": sorted(uris_recuperadas),
+            "retrieved_uris_normalized": sorted(recovered_norm),
+            "expected_uris_normalized": sorted(expected_norm),
+            "matching_uris_normalized": sorted(matching),
+            "precision": round(precision, 4),
+            "recall": round(recall, 4),
+            "synthesized_answer": respuesta_final,
+            "synthesis_trace": synthesis_trace,
+            "synthesis_error": synthesis_error,
+            "classification": classification,
+        }
 
     def _vecindario_uri(self, uri: str) -> str:
         fragmentos = []
@@ -301,8 +437,109 @@ class EvaluadorRAG:
             "recommended_next_change": next_change,
         }
 
+    def _ejecutar_evaluacion_bilingue(self, pares: list[dict], *, limit: int = 0, sleep_seconds: float = 0.0) -> tuple[dict, dict]:
+        if limit > 0:
+            pares = pares[:limit]
+        self.debug_report_path.parent.mkdir(parents=True, exist_ok=True)
+        self.debug_report_path.write_text("[]", encoding="utf-8")
+        print(f"Starting bilingual evaluation of {len(pares)} paired cases using {self.qa_file}...\n")
+
+        resultados: list[dict] = []
+        debug_rows: list[dict] = []
+        for index, pair in enumerate(pares, 1):
+            case_id = pair["case_id"]
+            print("=" * 70)
+            print(f"PAIR {index}/{len(pares)}: {case_id}")
+            print("-" * 70)
+            es_result = self._evaluar_pregunta(
+                {
+                    "question": pair["questions"]["es"],
+                    "answer": pair.get("expected_answer", ""),
+                    "expected_uris": pair.get("expected_uris", []),
+                    "case_id": case_id,
+                    "category": pair.get("category"),
+                    "expected_plan_family": pair.get("expected_plan_family"),
+                    "question_variant": "es",
+                },
+                debug_path=self.debug_report_path,
+            )
+            en_result = self._evaluar_pregunta(
+                {
+                    "question": pair["questions"]["en"],
+                    "answer": pair.get("expected_answer", ""),
+                    "expected_uris": pair.get("expected_uris", []),
+                    "case_id": case_id,
+                    "category": pair.get("category"),
+                    "expected_plan_family": pair.get("expected_plan_family"),
+                    "question_variant": "en",
+                },
+                debug_path=self.debug_report_path,
+            )
+            same_intent = es_result.get("intent") == en_result.get("intent")
+            same_plan_family = es_result.get("plan_family") == en_result.get("plan_family") == pair.get("expected_plan_family")
+            same_sparql_signature = es_result.get("sparql_signature") == en_result.get("sparql_signature") and bool(es_result.get("sparql_signature"))
+            same_anchor_resolution = (
+                es_result.get("anchor_text") == en_result.get("anchor_text")
+                or set(es_result.get("matching_uris_normalized", [])) == set(en_result.get("matching_uris_normalized", []))
+            )
+            answer_language_ok = es_result.get("answer_language") == "es" and en_result.get("answer_language") == "en"
+            pair_ok = all([same_intent, same_plan_family, same_sparql_signature, answer_language_ok])
+            result_row = {
+                "case_id": case_id,
+                "category": pair.get("category"),
+                "expected_plan_family": pair.get("expected_plan_family"),
+                "expected_uris": pair.get("expected_uris", []),
+                "same_intent": same_intent,
+                "same_anchor_resolution": same_anchor_resolution,
+                "same_plan_family": same_plan_family,
+                "same_sparql_signature": same_sparql_signature,
+                "answer_language_ok": answer_language_ok,
+                "pair_ok": pair_ok,
+                "questions": {
+                    "es": es_result,
+                    "en": en_result,
+                },
+            }
+            resultados.append(result_row)
+            debug_rows.append(result_row)
+            print(
+                f"same_intent={same_intent} | same_anchor={same_anchor_resolution} | "
+                f"same_plan_family={same_plan_family} | same_sparql={same_sparql_signature} | "
+                f"answer_language_ok={answer_language_ok}"
+            )
+            if sleep_seconds > 0:
+                time.sleep(sleep_seconds)
+
+        summary = {
+            "total_pairs": len(resultados),
+            "successful_pairs": sum(1 for row in resultados if row["pair_ok"]),
+            "same_intent_count": sum(1 for row in resultados if row["same_intent"]),
+            "same_anchor_resolution_count": sum(1 for row in resultados if row["same_anchor_resolution"]),
+            "same_plan_family_count": sum(1 for row in resultados if row["same_plan_family"]),
+            "same_sparql_signature_count": sum(1 for row in resultados if row["same_sparql_signature"]),
+            "answer_language_ok_count": sum(1 for row in resultados if row["answer_language_ok"]),
+            "dataset_path": str(self.qa_file),
+            "abox_path": str(ABOX_PATH),
+            "multilingual_runtime": True,
+        }
+        report = {"summary": summary, "results": resultados}
+        self.report_path.parent.mkdir(parents=True, exist_ok=True)
+        self.report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        self.debug_report_path.write_text(json.dumps(debug_rows, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        decision = {
+            "summary": summary,
+            "failing_cases": [row["case_id"] for row in resultados if not row["pair_ok"]],
+            "recommended_next_change": "lexical_surface_alignment" if summary["successful_pairs"] < summary["total_pairs"] else "promote_bilingual_pairs",
+        }
+        self.failure_analysis_path.parent.mkdir(parents=True, exist_ok=True)
+        self.failure_analysis_path.write_text(json.dumps(decision, ensure_ascii=False, indent=2), encoding="utf-8")
+        return report, decision
+
     def ejecutar_evaluacion(self, *, limit: int = 0, sleep_seconds: float = 0.0) -> tuple[dict, dict]:
         banco_preguntas = self._cargar_dataset()
+        if self.qa_file.resolve() == QA_BILINGUAL_PATH.resolve():
+            return self._ejecutar_evaluacion_bilingue(banco_preguntas, limit=limit, sleep_seconds=sleep_seconds)
         if limit > 0:
             banco_preguntas = banco_preguntas[:limit]
         self.debug_report_path.parent.mkdir(parents=True, exist_ok=True)
@@ -365,6 +602,10 @@ class EvaluadorRAG:
                 append_query_debug_record({
                     "question": pregunta,
                     "intent": query_plan.intent,
+                    "question_language": query_plan.question_language,
+                    "question_language_confidence": query_plan.question_language_confidence,
+                    "normalized_question": query_plan.normalized_question,
+                    "multilingual_lexicon_hits": query_plan.multilingual_lexicon_hits,
                     "plan_family": query_plan.plan_family,
                     "predicted_hop_depth": query_plan.predicted_hop_depth,
                     "anchor_text": query_plan.anchor_text,
@@ -380,6 +621,9 @@ class EvaluadorRAG:
                 append_synthesis_debug_record({
                     "question": pregunta,
                     "intent": query_plan.intent,
+                    "question_language": query_plan.question_language,
+                    "answer_language": synthesis_trace.get("answer_language"),
+                    "normalized_question": query_plan.normalized_question,
                     "plan_family": query_plan.plan_family,
                     "template_id": query_plan.template_id,
                     "recommended_action": query_plan.recommended_action,
@@ -398,6 +642,11 @@ class EvaluadorRAG:
                 "expected_uris_original": expected_uris_original,
                 "expected_uris_canonicalized": expected_uris,
                 "intent": query_plan.intent if query_plan else None,
+                "question_language": query_plan.question_language if query_plan else None,
+                "question_language_confidence": query_plan.question_language_confidence if query_plan else None,
+                "normalized_question": query_plan.normalized_question if query_plan else None,
+                "multilingual_lexicon_hits": query_plan.multilingual_lexicon_hits if query_plan else [],
+                "answer_language": synthesis_trace.get("answer_language") if synthesis_trace else None,
                 "plan_family": query_plan.plan_family if query_plan else None,
                 "predicted_hop_depth": query_plan.predicted_hop_depth if query_plan else None,
                 "template_id": query_plan.template_id if query_plan else None,

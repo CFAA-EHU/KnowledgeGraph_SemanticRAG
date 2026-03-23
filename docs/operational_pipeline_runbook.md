@@ -14,6 +14,7 @@ python run_operational_pipeline.py --mode resume-compatible
 4. `src/6_extraction/abox_canonicalizer.py`
 5. `src/6_extraction/abox_graph_enricher.py`
 6. `src/6_extraction/abox_link_completer.py`
+7. `src/8_retrieval/multilingual_lexicon_builder.py`
 
 ## Output expectations
 
@@ -22,6 +23,8 @@ After a successful run, the operational lane should contain:
 - `data/processed/abox_canonical.ttl`
 - `data/processed/abox_enriched.ttl`
 - `data/processed/abox_linked.ttl`
+- `data/processed/multilingual_lexicon.json`
+- `data/processed/language_detection_report.json`
 - `data/processed/canonical_entity_map.json`
 - `data/processed/canonicalization_report.json`
 - `data/processed/enrichment_report.json`
@@ -36,12 +39,16 @@ After a successful run, the operational lane should contain:
 The runtime must load:
 - `data/processed/ontology_aligned.ttl`
 - `data/processed/abox_linked.ttl`
+- `data/processed/multilingual_lexicon.json`
 
 `abox_merged.ttl`, `abox_canonical.ttl` and `abox_enriched.ttl` are diagnostic or intermediate artifacts. They must not be used as the default runtime graph.
+
+`multilingual_lexicon.json` is the bilingual ES/EN lexicalization layer used by planner normalization and answer rendering over the same single graph.
 
 ## Post-build validation
 
 Recommended checks after structural changes:
 - `python src/8_retrieval/qa_evaluator.py`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json`
+- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_bilingual.json`
 - `python src/8_retrieval/qa_sandbox_diagnostic.py`

@@ -8,6 +8,7 @@ import re
 from pathlib import Path
 from datetime import datetime, timedelta
 from collections import Counter
+from typing import Any
 
 import requests
 import spacy
@@ -33,6 +34,38 @@ AAS_CONCEPT_DESCRIPTIONS = [
 
 HELSINKI_MODEL = "Helsinki-NLP/opus-mt-en-es"
 TOP_N_CATEGORIES = 7
+
+
+def enrich_term_entry(entry: dict[str, Any]) -> dict[str, Any]:
+    termino = (entry.get("termino") or "").strip().lower()
+    surface_es = (entry.get("surface_es") or termino).strip().lower()
+    surface_en = (entry.get("surface_en") or "").strip().lower()
+    source_language = entry.get("source_language")
+    aliases = entry.get("aliases")
+    if not isinstance(aliases, list):
+        aliases = []
+    enriched_aliases: list[str] = []
+    for alias in [termino, surface_es, surface_en, *aliases]:
+        if isinstance(alias, str):
+            normalized = alias.strip().lower()
+            if normalized and normalized not in enriched_aliases:
+                enriched_aliases.append(normalized)
+    enriched = {
+        "termino": termino,
+        "uri": entry.get("uri", ""),
+        "source_language": source_language or ("en" if surface_en and surface_en != termino else "es"),
+        "surface_es": surface_es or termino,
+        "surface_en": surface_en,
+        "aliases": enriched_aliases,
+    }
+    for key, value in entry.items():
+        if key not in enriched:
+            enriched[key] = value
+    return enriched
+
+
+def enrich_term_entries(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [enrich_term_entry(entry) for entry in entries]
 
 def parsear_texto_crudo(filepath: str) -> list[str]:
     path = Path(filepath)
@@ -127,7 +160,15 @@ def fetch_esdbpedia_terms(categorias: list[str]) -> list[dict]:
                 uri = r["concept"]["value"]
                 
                 if len(label.split()) <= 4 and label not in terms_dict:
-                    terms_dict[label] = {"termino": label, "uri": uri}
+                    terms_dict[label] = enrich_term_entry(
+                        {
+                            "termino": label,
+                            "uri": uri,
+                            "source_language": "es",
+                            "surface_es": label,
+                            "aliases": [label],
+                        }
+                    )
             print(f"  [OK] {category}: {len(results['results']['bindings'])} términos procesados")
         except Exception as e:
             print(f"  [WARN] {category}: error — {e}")
@@ -148,7 +189,18 @@ def translate_terms_helsinki(terms_en: list[str]) -> list[dict]:
             uri = f"https://admin-shell.io/dictionary/{term}"
             
             if translated_text and len(translated_text.split()) <= 5:
-                translated_terms.append({"termino": translated_text, "uri": uri})
+                translated_terms.append(
+                    enrich_term_entry(
+                        {
+                            "termino": translated_text,
+                            "uri": uri,
+                            "source_language": "en",
+                            "surface_es": translated_text,
+                            "surface_en": term.strip().lower(),
+                            "aliases": [translated_text, term.strip().lower()],
+                        }
+                    )
+                )
         print("  [OK] Traduccion local completada")
 
     except Exception as e:
@@ -174,13 +226,46 @@ def translate_terms_helsinki(terms_en: list[str]) -> list[dict]:
                             t_text = r.get("translation_text", "").strip().lower()
                             
                         if t_text and len(t_text.split()) <= 5:
-                            translated_terms.append({"termino": t_text, "uri": uri})
+                            translated_terms.append(
+                                enrich_term_entry(
+                                    {
+                                        "termino": t_text,
+                                        "uri": uri,
+                                        "source_language": "en",
+                                        "surface_es": t_text,
+                                        "surface_en": original_term.strip().lower(),
+                                        "aliases": [t_text, original_term.strip().lower()],
+                                    }
+                                )
+                            )
                 else:
                     for t in batch:
-                        translated_terms.append({"termino": t.lower(), "uri": f"https://admin-shell.io/dictionary/{t}"})
+                        translated_terms.append(
+                            enrich_term_entry(
+                                {
+                                    "termino": t.lower(),
+                                    "uri": f"https://admin-shell.io/dictionary/{t}",
+                                    "source_language": "en",
+                                    "surface_es": t.lower(),
+                                    "surface_en": t.lower(),
+                                    "aliases": [t.lower()],
+                                }
+                            )
+                        )
             except Exception:
                 for t in batch:
-                    translated_terms.append({"termino": t.lower(), "uri": f"https://admin-shell.io/dictionary/{t}"})
+                    translated_terms.append(
+                        enrich_term_entry(
+                            {
+                                "termino": t.lower(),
+                                "uri": f"https://admin-shell.io/dictionary/{t}",
+                                "source_language": "en",
+                                "surface_es": t.lower(),
+                                "surface_en": t.lower(),
+                                "aliases": [t.lower()],
+                            }
+                        )
+                    )
             time.sleep(1)
 
     return translated_terms
@@ -218,7 +303,7 @@ def get_terms(filepath: str = None, force_refresh: bool = False) -> list[dict]:
     if not force_refresh:
         cache = load_cache()
         if cache:
-            return cache["terms"]
+            return enrich_term_entries(cache["terms"])
 
     if not filepath:
         print("Error crítico: Para forzar un refresh dinámico debes proporcionar la ruta del archivo de texto (--input).")
@@ -229,7 +314,7 @@ def get_terms(filepath: str = None, force_refresh: bool = False) -> list[dict]:
     aas_terms = fetch_aas_terms()
 
     merged_dict = {t["termino"]: t for t in esdbpedia_terms + aas_terms}
-    all_terms = list(merged_dict.values())
+    all_terms = enrich_term_entries(list(merged_dict.values()))
     all_terms.sort(key=lambda x: x["termino"])
 
     sources = {

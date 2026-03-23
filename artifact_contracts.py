@@ -35,9 +35,15 @@ QA2_DATASET_PATH = GOLDEN_SET_DIR / "QA2.txt"
 QA3_DATASET_PATH = GOLDEN_SET_DIR / "QA3.json"
 QA_CANONICAL_PATH = GOLDEN_SET_DIR / "QA_canonical.json"
 QA_SANDBOX_PATH = GOLDEN_SET_DIR / "QA_sandbox.json"
+QA_BILINGUAL_PATH = GOLDEN_SET_DIR / "QA_bilingual.json"
 QA_RECONCILIATION_PATH = PROCESSED_DATA_DIR / "qa_dataset_reconciliation.json"
 QA_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "qa_eval_report.json"
 QA_FAILURE_ANALYSIS_PATH = PROCESSED_DATA_DIR / "qa_failure_analysis.json"
+MULTILINGUAL_LEXICON_PATH = PROCESSED_DATA_DIR / "multilingual_lexicon.json"
+LANGUAGE_DETECTION_REPORT_PATH = PROCESSED_DATA_DIR / "language_detection_report.json"
+BILINGUAL_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "bilingual_eval_report.json"
+BILINGUAL_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "bilingual_debug_report.json"
+BILINGUAL_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "bilingual_decision_report.json"
 QUERY_INTENT_CATALOG_PATH = PROCESSED_DATA_DIR / "query_intent_catalog.json"
 QUERY_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "query_debug_report.json"
 QUERYABILITY_TARGET_MATRIX_PATH = PROCESSED_DATA_DIR / "queryability_target_matrix.json"
@@ -104,8 +110,14 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "abox_debug": ABOX_DEBUG_DIR,
     "qa_dataset": QA_CANONICAL_PATH,
     "qa_sandbox_dataset": QA_SANDBOX_PATH,
+    "qa_bilingual_dataset": QA_BILINGUAL_PATH,
     "qa_eval_report": QA_EVAL_REPORT_PATH,
     "qa_failure_analysis": QA_FAILURE_ANALYSIS_PATH,
+    "multilingual_lexicon": MULTILINGUAL_LEXICON_PATH,
+    "language_detection_report": LANGUAGE_DETECTION_REPORT_PATH,
+    "bilingual_eval_report": BILINGUAL_EVAL_REPORT_PATH,
+    "bilingual_debug_report": BILINGUAL_DEBUG_REPORT_PATH,
+    "bilingual_decision_report": BILINGUAL_DECISION_REPORT_PATH,
     "query_intent_catalog": QUERY_INTENT_CATALOG_PATH,
     "query_debug_report": QUERY_DEBUG_REPORT_PATH,
     "queryability_target_matrix": QUERYABILITY_TARGET_MATRIX_PATH,
@@ -164,6 +176,7 @@ OPERATIONAL_BUILD_PIPELINE = {
         REPO_ROOT / "src" / "6_extraction" / "abox_canonicalizer.py",
         REPO_ROOT / "src" / "6_extraction" / "abox_graph_enricher.py",
         REPO_ROOT / "src" / "6_extraction" / "abox_link_completer.py",
+        REPO_ROOT / "src" / "8_retrieval" / "multilingual_lexicon_builder.py",
     ],
 }
 
@@ -189,6 +202,7 @@ SCRIPT_CLASSIFICATIONS = {
     "src/6_extraction/abox_graph_enricher.py": "operational_producer",
     "src/6_extraction/abox_link_completer.py": "operational_producer",
     "src/6_extraction/abox_semantic_validator.py": "operational_producer",
+    "src/8_retrieval/multilingual_lexicon_builder.py": "operational_producer",
     "src/7_database/embedded_store.py": "operational_consumer",
     "src/8_retrieval/schema_condenser.py": "operational_consumer",
     "src/8_retrieval/qa_evaluator.py": "operational_consumer",

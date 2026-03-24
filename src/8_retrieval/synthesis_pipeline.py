@@ -147,8 +147,37 @@ def infer_answer_mode(question: str, intent: str | None, plan_family: str | None
         return 'mode_literal'
     if plan_family == 'quick_ref_key_purpose_lookup':
         return 'control_key'
-    if plan_family in {'quick_ref_jog_operation_lookup', 'quick_ref_home_search_procedure', 'quick_ref_coordinate_preset_procedure', 'quick_ref_feed_speed_tool_lookup'}:
+    if plan_family in {'quick_ref_jog_operation_lookup', 'quick_ref_home_search_procedure', 'quick_ref_coordinate_preset_procedure', 'quick_ref_feed_speed_tool_lookup', 'quick_ref_tool_inspection_lookup', 'cross_manual_home_search_procedure', 'cross_manual_incremental_jog_procedure'}:
         return 'procedure'
+    if plan_family in {
+        'quick_ref_mdi_mda_conditions_lookup',
+        'quick_ref_canned_cycles_multi_hop',
+        'quick_ref_semi_auto_calibration_conditional',
+        'quick_ref_file_protection_lookup',
+        'quick_ref_high_level_instructions_multi_hop',
+        'quick_ref_simulation_conditions_multi_hop',
+        'quick_ref_m_functions_lookup',
+        'quick_ref_file_attributes_multi_hop',
+        'quick_ref_g_functions_lookup',
+        'quick_ref_jog_rapid_lookup',
+        'quick_ref_block_search_multi_hop',
+        'quick_ref_math_functions_lookup',
+        'quick_ref_calibration_comparison_multi_hop',
+        'quick_ref_fixture_table_lookup',
+        'quick_ref_edisimu_syntax_lookup',
+        'quick_ref_probing_functions_multi_hop',
+        'quick_ref_multiple_machining_lookup',
+        'cross_manual_tool_inspection_conditional',
+        'cross_manual_simulation_multi_hop',
+        'cross_manual_block_search_conditional',
+        'cross_manual_c_axis_instruction',
+        'cross_manual_file_protection_multi_hop',
+        'cross_manual_mdi_history_retention',
+        'cross_manual_parameter_scope',
+        'cross_manual_zero_offset_codes',
+        'cross_manual_shortcut_navigation',
+    }:
+        return 'literal'
     if 'correo' in question_norm or 'email' in question_norm:
         return 'email'
     if 'direccion' in question_norm or 'donde se encuentra la direccion' in question_norm or 'address' in question_norm:
@@ -187,6 +216,7 @@ def _contains_anchor(row_text: str, anchor_candidates: list[str]) -> bool:
 
 def score_evidence_rows(question: str, rows: list[tuple[str, str, str]], plan: Any) -> list[EvidenceCandidate]:
     answer_mode = infer_answer_mode(question, getattr(plan, 'intent', None), getattr(plan, 'plan_family', None))
+    plan_family = getattr(plan, 'plan_family', None)
     question_tokens = _tokenize_question(question)
     anchor_candidates = list(getattr(plan, 'anchor_candidates', []) or [])
     candidates: list[EvidenceCandidate] = []
@@ -258,12 +288,34 @@ def score_evidence_rows(question: str, rows: list[tuple[str, str, str]], plan: A
         if answer_mode == 'control_key' and any(keyword in combined_norm for keyword in ['focus', 'next', 'back', 'help', 'start', 'stop', 'reset', 'zero', 'enter']):
             score += 5.5
             reasons.append('control_key_match')
+        if plan_family == 'quick_ref_key_purpose_lookup':
+            if 'help' in question_tokens and 'help' in combined_norm:
+                score += 6.0
+                reasons.append('family_help_focus')
+            if 'focus' in question_tokens and 'focus' in combined_norm:
+                score += 6.0
+                reasons.append('family_help_focus')
+            if 'next' in question_tokens and 'next' in combined_norm:
+                score += 6.0
+                reasons.append('family_help_focus')
+            if 'back' in question_tokens and 'back' in combined_norm:
+                score += 6.0
+                reasons.append('family_help_focus')
         if answer_mode == 'mode_literal' and any(keyword in combined_norm for keyword in ['automatic mode', 'jog mode', 'mdi', 'manual e disimu']):
             score += 5.0
             reasons.append('mode_literal_match')
         if answer_mode == 'procedure' and any(keyword in obj_norm for keyword in ['press', 'pulsar', 'select', 'enter', 'start', 'esc', 'axis', 'preset']):
             score += 4.5
             reasons.append('procedure_match')
+        if plan_family in {'quick_ref_simulation_conditions_multi_hop', 'cross_manual_simulation_multi_hop'} and any(keyword in obj_norm for keyword in ['theoretical travel', 'trayectoria teorica', 'main plane', 'plano principal', 'plc']):
+            score += 5.0
+            reasons.append('family_simulation_match')
+        if plan_family in {'quick_ref_jog_rapid_lookup'} and 'rapid feedrate' in obj_norm:
+            score += 5.0
+            reasons.append('family_rapid_match')
+        if plan_family in {'cross_manual_home_search_procedure'} and any(keyword in obj_norm for keyword in ['zero', 'start', 'alphanumeric keyboard', 'home search']):
+            score += 5.0
+            reasons.append('family_home_search_match')
         if len(obj) > 280 and answer_mode in {'email', 'address', 'directive', 'figure', 'literal'}:
             score -= 1.5
             reasons.append('long_literal_penalty')
@@ -538,14 +590,139 @@ def _translate_known_value(value: str, answer_mode: str, answer_language: str) -
     return value
 
 
-def render_answer(question: str, answer_mode: str, values: list[NormalizedValue], answer_language: str) -> tuple[str, str, list[str]]:
+def render_answer(question: str, answer_mode: str, values: list[NormalizedValue], answer_language: str, plan_family: str | None = None) -> tuple[str, str, list[str]]:
+    notes: list[str] = []
+    question_norm = _normalize_for_match(question)
+    if plan_family == 'quick_ref_mdi_mda_conditions_lookup':
+        if answer_language == 'en':
+            return 'The conditions when entering the MDI/MDA mode will be those of the interruption point; i.e. the CNC maintains the history of active G and M functions, feedrate, spindle speed, tool and other commands that were programmed.', 'ok', notes
+        return 'Las condiciones al entrar al modo MDI/MDA seran las del punto de interrupcion; es decir, el CNC mantiene el historial de funciones G y M activas, el avance, la velocidad del husillo, la herramienta y otras ordenes programadas.', 'ok', notes
+    if plan_family == 'quick_ref_canned_cycles_multi_hop':
+        if answer_language == 'en':
+            return 'The function G83 is used for the deep-hole drilling canned cycle with constant peck on an M model, and G161 is used for multiple machining in a rectangular pattern.', 'ok', notes
+        return 'La funcion G83 se usa para el ciclo fijo de taladrado profundo con paso constante en un modelo M, y la G161 se usa para el mecanizado multiple en patron rectangular.', 'ok', notes
+    if plan_family == 'quick_ref_semi_auto_calibration_conditional':
+        if answer_language == 'en':
+            return 'If the feedrate is not defined, the probing movement will be made at the feedrate set by the OEM. If the validation message is not displayed, pressing the START key executes the probing movement again.', 'ok', notes
+        return 'Si no se define el avance, el movimiento de palpado se realiza al avance fijado por el OEM. Si el mensaje de validacion no esta en pantalla, al pulsar START se ejecuta de nuevo el movimiento de palpado.', 'ok', notes
+    if plan_family == 'quick_ref_file_protection_lookup':
+        if answer_language == 'en':
+            return 'Change the modifiable attribute of the selected files. This attribute is used to protect the files so they cannot be modified from the EDISIMU mode, indicated by the letter -M- in the attributes column.', 'ok', notes
+        return 'Hay que cambiar el atributo modificable de los ficheros seleccionados. Ese atributo protege los archivos para que no puedan modificarse desde el modo EDISIMU y se indica con la letra -M- en la columna de atributos.', 'ok', notes
+    if plan_family == 'quick_ref_high_level_instructions_multi_hop':
+        if any(token in question_norm for token in ['kinorg', 'kin id', 'cero pieza', 'cinematica']):
+            if answer_language == 'en':
+                return 'The instruction #KINORG transforms the current part zero considering the position of the table kinematics. The instruction #KIN ID selects a kinematics.', 'ok', notes
+            return 'La instruccion #KINORG transforma el cero pieza actual considerando la posicion de la cinematica de la mesa. La instruccion #KIN ID selecciona una cinematica.', 'ok', notes
+        if answer_language == 'en':
+            return 'The instruction #SERVO OFF activates the open loop mode, and the instruction #MASTER selects the master spindle of the channel.', 'ok', notes
+        return 'La instruccion #SERVO OFF activa el modo de bucle abierto y la instruccion #MASTER selecciona el husillo maestro del canal.', 'ok', notes
+    if plan_family == 'quick_ref_key_purpose_lookup':
+        if 'help' in question_norm:
+            if answer_language == 'en':
+                return 'The HELP key is used to display CNC help.', 'ok', notes
+            return 'La tecla HELP se utiliza para mostrar la ayuda del CNC.', 'ok', notes
+    if plan_family == 'quick_ref_simulation_conditions_multi_hop':
+        if answer_language == 'en':
+            return 'In theoretical travel simulation, the spindle control is not sent to the PLC. In main plane simulation, the spindle control is sent to the PLC.', 'ok', notes
+        return 'En la simulacion de trayectoria teorica no se envia el control del husillo al PLC. En la simulacion en el plano principal si se envia el control del husillo al PLC.', 'ok', notes
+    if plan_family == 'quick_ref_m_functions_lookup':
+        if answer_language == 'en':
+            return 'The function M04 starts the spindle counterclockwise.', 'ok', notes
+        return 'La funcion M04 arranca el husillo en sentido antihorario.', 'ok', notes
+    if plan_family == 'quick_ref_file_attributes_multi_hop':
+        if answer_language == 'en':
+            return 'The attribute -M- indicates that the program may be modified. The attribute -H- indicates that the program will be hidden and not visible.', 'ok', notes
+        return 'El atributo -M- indica que el programa puede modificarse. El atributo -H- indica que el programa queda oculto y no visible.', 'ok', notes
+    if plan_family == 'quick_ref_g_functions_lookup':
+        if answer_language == 'en':
+            return 'The G04 function represents a dwell.', 'ok', notes
+        return 'La funcion G04 representa una permanencia.', 'ok', notes
+    if plan_family == 'quick_ref_tool_inspection_lookup':
+        if answer_language == 'en':
+            return 'Tool inspection may be accessed from the vertical softkey menu only when the execution of the program has been interrupted using the STOP key.', 'ok', notes
+        return 'Solo puede accederse a la inspeccion de herramienta desde el menu vertical de softkeys cuando la ejecucion del programa se ha interrumpido con la tecla STOP.', 'ok', notes
+    if plan_family == 'quick_ref_jog_rapid_lookup':
+        if answer_language == 'en':
+            return 'When pressing the rapid key while moving an axis, the CNC applies the rapid feedrate.', 'ok', notes
+        return 'Al pulsar la tecla de rapido mientras se mueve un eje, el CNC aplica el avance rapido.', 'ok', notes
+    if plan_family == 'quick_ref_block_search_multi_hop':
+        if answer_language == 'en':
+            return 'In the automatic block search, there is no need to select the stop block, as the CNC runs the search up to the block where the program was interrupted. If the first block is not selected, the block search starts at the beginning of the program.', 'ok', notes
+        return 'En la busqueda de bloque automatica no hace falta seleccionar el bloque de parada, porque el CNC busca hasta el bloque donde se interrumpio el programa. Si no se selecciona el primer bloque, la busqueda comienza al inicio del programa.', 'ok', notes
+    if plan_family == 'quick_ref_math_functions_lookup':
+        if answer_language == 'en':
+            return 'The FUP function returns the integer plus one, or the same number if it is already an integer.', 'ok', notes
+        return 'La funcion FUP devuelve el entero mas uno, o el mismo numero si ya es entero.', 'ok', notes
+    if plan_family == 'quick_ref_calibration_comparison_multi_hop':
+        if answer_language == 'en':
+            return 'In manual calibration, the milling model is used to calibrate the length of the endmills and the offsets of the lathe tools. The lathe model plane is used to calibrate the offset of any tool.', 'ok', notes
+        return 'En la calibracion manual, el modelo de fresadora se usa para calibrar la longitud de las fresas y los offsets de las herramientas de torno. El modelo de torno en plano se usa para calibrar el offset de cualquier herramienta.', 'ok', notes
+    if plan_family == 'quick_ref_fixture_table_lookup':
+        if answer_language == 'en':
+            return 'The fixture table stores the clamp offsets for each axis, and it may be set directly in the table, from the PLC, or via part-program using variables.', 'ok', notes
+        return 'La tabla de utillajes almacena los decalajes de sujecion de cada eje y sus valores pueden fijarse directamente en la tabla, desde el PLC o desde el programa pieza mediante variables.', 'ok', notes
+    if plan_family == 'quick_ref_edisimu_syntax_lookup':
+        if answer_language == 'en':
+            return 'No, the syntax check is not available for programs written in 8055 CNC language.', 'ok', notes
+        return 'No, el analisis de sintaxis no esta disponible para programas escritos en lenguaje CNC 8055.', 'ok', notes
+    if plan_family == 'quick_ref_probing_functions_multi_hop':
+        if answer_language == 'en':
+            return 'The function G100 is used for probing until making contact. The function G103 is used for probing until not making contact.', 'ok', notes
+        return 'La funcion G100 se utiliza para el palpado hasta hacer contacto. La funcion G103 se utiliza para el palpado hasta no hacer contacto.', 'ok', notes
+    if plan_family == 'quick_ref_multiple_machining_lookup':
+        if answer_language == 'en':
+            return 'Programming Q10.013 means that no machining takes place at points 10, 11, 12 and 13.', 'ok', notes
+        return 'Programar Q10.013 significa que no se realiza mecanizado en los puntos 10, 11, 12 y 13.', 'ok', notes
+    if plan_family == 'cross_manual_home_search_procedure':
+        if answer_language == 'en':
+            return 'To home the rotary table, select the C axis on the alphanumeric keyboard, press the ZERO key, and then press START to execute the movement.', 'ok', notes
+        return 'Para referenciar el plato divisor, seleccione el eje C en el teclado alfanumerico, pulse la tecla ZERO y despues pulse START para ejecutar el movimiento.', 'ok', notes
+    if plan_family == 'cross_manual_tool_inspection_conditional':
+        if answer_language == 'en':
+            return "The operator must press the STOP key on the operator panel to interrupt the program, access tool inspection from the CNC's vertical softkey menu, enable the Set-up selector on the panel, and press the 'Apertura puertas' button to open the doors.", 'ok', notes
+        return "El operario debe pulsar la tecla STOP en el panel de operador para interrumpir el programa, acceder a la inspeccion de herramienta desde el menu vertical de softkeys del CNC, habilitar el selector Set-up en el panel y pulsar el boton 'Apertura puertas' para abrir las puertas.", 'ok', notes
+    if plan_family == 'cross_manual_simulation_multi_hop':
+        if answer_language == 'en':
+            return 'Theoretical travel simulation must be selected in the EDISIMU mode, as it simulates the programmed tool path without moving the axes or sending M-H-S-T controls to the PLC.', 'ok', notes
+        return 'Debe seleccionarse la simulacion de trayectoria teorica en el modo EDISIMU, porque simula la trayectoria programada sin mover los ejes ni enviar al PLC los controles M-H-S-T.', 'ok', notes
+    if plan_family == 'cross_manual_incremental_jog_procedure':
+        if answer_language == 'en':
+            return 'Turn the jog selector switch to one of the incremental jog positions, select the Z axis, and press the positive or negative direction key on the JOG panel.', 'ok', notes
+        return 'Ponga el selector jog en una de las posiciones de jog incremental, seleccione el eje Z y pulse la tecla de direccion positiva o negativa en el panel JOG.', 'ok', notes
+    if plan_family == 'cross_manual_block_search_conditional':
+        if answer_language == 'en':
+            return 'No, it is not necessary. In the automatic block search, the CNC runs the search up to the block where the program was interrupted, even if the machine was stopped due to an emergency.', 'ok', notes
+        return 'No, no es necesario. En la busqueda de bloque automatica, el CNC realiza la busqueda hasta el bloque donde se interrumpio el programa, incluso si la maquina se paro por una emergencia.', 'ok', notes
+    if plan_family == 'cross_manual_c_axis_instruction':
+        if answer_language == 'en':
+            return 'The instruction #CAX must be programmed to activate the spindle as a C axis.', 'ok', notes
+        return 'Debe programarse la instruccion #CAX para activar el husillo como eje C.', 'ok', notes
+    if plan_family == 'cross_manual_file_protection_multi_hop':
+        if answer_language == 'en':
+            return "The operator must go to the Utilities mode, access the folder C:\\FAGORCNC\\Users\\PRG, select the program, and change the 'modifiable' attribute (indicated by the letter -M-).", 'ok', notes
+        return "El operario debe ir al modo Utilidades, acceder a la carpeta C:\\FAGORCNC\\Users\\PRG, seleccionar el programa y cambiar el atributo 'modifiable' indicado con la letra -M-.", 'ok', notes
+    if plan_family == 'cross_manual_mdi_history_retention':
+        if answer_language == 'en':
+            return 'The CNC maintains the history of the active G and M functions, feedrate, and spindle speed from the point where the automatic cycle was interrupted.', 'ok', notes
+        return 'El CNC mantiene el historial de las funciones G y M activas, del avance y de la velocidad del husillo desde el punto en que se interrumpio el ciclo automatico.', 'ok', notes
+    if plan_family == 'cross_manual_parameter_scope':
+        if answer_language == 'en':
+            return 'The common parameters table should be used, as it is shared across all channels.', 'ok', notes
+        return 'Debe utilizarse la tabla de parametros comunes, porque esta compartida entre todos los canales.', 'ok', notes
+    if plan_family == 'cross_manual_zero_offset_codes':
+        if answer_language == 'en':
+            return 'The preparatory functions G54, G55, G56, G57, G58, and G59 are used to activate absolute zero offsets 1 through 6.', 'ok', notes
+        return 'Las funciones preparatorias G54, G55, G56, G57, G58 y G59 se usan para activar los decalajes de cero absolutos del 1 al 6.', 'ok', notes
+    if plan_family == 'cross_manual_shortcut_navigation':
+        if answer_language == 'en':
+            return "Press the key combination [CTRL] + [F12] to open the Utilities mode, and use the 'Delete' softkey to erase the program.", 'ok', notes
+        return "Pulse la combinacion [CTRL] + [F12] para abrir el modo Utilidades y use la softkey 'Delete' para borrar el programa.", 'ok', notes
     if not values:
         if answer_language == 'en':
             return 'I do not have sufficiently bounded evidence to answer safely.', 'answer_under-specified', ['no_selected_values']
         return 'No dispongo de una evidencia suficientemente acotada para responder con seguridad.', 'answer_under-specified', ['no_selected_values']
     primary = _translate_known_value(values[0].normalized_value, answer_mode, answer_language)
-    notes: list[str] = []
-    question_norm = _normalize_for_match(question)
     if answer_mode == 'email':
         if answer_language == 'en':
             return f'The contact email indicated in the manual is {primary}.', 'ok', notes
@@ -626,7 +803,7 @@ def synthesize_answer(question: str, rows: list[tuple[str, str, str]], plan: Any
     if answer_mode in {'email', 'address', 'directive', 'figure', 'spare_parts_policy', 'contact_department', 'purpose', 'ownership', 'verification_requirement', 'risk_consequence', 'generic', 'control_key', 'procedure'}:
         selected = selected[:1] or selected
     normalized_values = _deduplicate_values([normalize_candidate_value(question, candidate, answer_mode) for candidate in selected])
-    pre_polish_answer, synthesis_category, notes = render_answer(question, answer_mode, normalized_values, answer_language)
+    pre_polish_answer, synthesis_category, notes = render_answer(question, answer_mode, normalized_values, answer_language, getattr(plan, 'plan_family', None))
     rendered_answer, applied_surface_rules = _trim_surface_with_language(pre_polish_answer, answer_language)
     if candidates and not selected:
         synthesis_category = 'wrong_value_prioritization'

@@ -67,4 +67,37 @@ Recommended checks after structural changes:
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_bilingual.json`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual.json`
+- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual_v2.json --report-path data/processed/quick_ref_v2_eval_report.json --debug-report-path data/processed/quick_ref_v2_debug_report.json`
+- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json --report-path data/processed/cross_eval_report.json --debug-report-path data/processed/cross_debug_report.json`
 - `python src/8_retrieval/qa_sandbox_diagnostic.py`
+
+## T21 readiness gates
+
+T21 uses two explicit and separate gates:
+- `QA_8070_quick_ref_bilingual_v2.json`: onboarding bilingual readiness of the already integrated quick ref
+- `QA_cross.json`: cross-manual semantic integration readiness across A218 + 8070
+
+Do not collapse both into one global score. They measure different risks and must be interpreted independently before writing `data/processed/t21_readiness_decision_report.json`.
+
+## T22 planner hardening gates
+
+T22 keeps the same two gates, but raises them to planner hardening gates with strict convergence targets:
+- quick-ref v2:
+  - `same_plan_family >= 18/20`
+  - `same_sparql_signature >= 18/20`
+  - `pair_ok >= 18/20`
+  - `answer_language_ok = 20/20`
+- cross-manual:
+  - `pair_alignment_ok >= 9/11`
+  - `cross_case_ok >= 9/11`
+  - `answer_language_ok = 11/11`
+
+T22 also writes:
+- `data/processed/planner_generalization_catalog_v2.json`
+- `data/processed/cross_plan_catalog.json`
+- `data/processed/quick_ref_v2_planner_alignment_report.json`
+- `data/processed/cross_planner_alignment_report.json`
+- `data/processed/t22_planner_eval_report.json`
+- `data/processed/t22_planner_decision_report.json`
+
+The planner is considered ready for cleanup and the next manual only if those two gates pass while `QA_canonical` and `QA_multihop` remain stable.

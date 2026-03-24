@@ -34,12 +34,25 @@ Artefactos operativos clave:
 - `data/golden_set/QA_sandbox.json`
 - `data/golden_set/QA_bilingual.json`
 - `data/golden_set/QA_8070_quick_ref_bilingual.json`
+- `data/golden_set/QA_8070_quick_ref_bilingual_v2.json`
+- `data/golden_set/QA_cross.json`
 - `data/processed/quick_ref_density_report.json`
 - `data/processed/quick_ref_abox_input.json`
 - `data/processed/quick_ref_onboarding_report.json`
 - `data/processed/quick_ref_bilingual_eval_report.json`
 - `data/processed/quick_ref_bilingual_debug_report.json`
 - `data/processed/quick_ref_integration_decision_report.json`
+- `data/processed/quick_ref_v2_eval_report.json`
+- `data/processed/quick_ref_v2_debug_report.json`
+- `data/processed/quick_ref_v2_planner_alignment_report.json`
+- `data/processed/cross_eval_report.json`
+- `data/processed/cross_debug_report.json`
+- `data/processed/cross_planner_alignment_report.json`
+- `data/processed/planner_generalization_catalog_v2.json`
+- `data/processed/cross_plan_catalog.json`
+- `data/processed/t21_readiness_decision_report.json`
+- `data/processed/t22_planner_eval_report.json`
+- `data/processed/t22_planner_decision_report.json`
 
 ### Carril experimental
 Se conserva para exploracion, pero no define el runtime por defecto.
@@ -89,8 +102,39 @@ Eso deja separadas cuatro capas:
 - existe un carril piloto reproducible para onboarding real de un manual nuevo con artefactos `quick_ref_*`
 - `chunks_8070_quick_ref.txt` reutiliza el mismo pipeline, el mismo grafo operativo y el mismo planner bilingue
 - `QA_8070_quick_ref_bilingual.json` valida convergencia ES/EN especifica del quick ref
+- `QA_8070_quick_ref_bilingual_v2.json` actua como gate ampliado de solidez del quick ref ya integrado
+- `QA_cross.json` actua como gate separado de integracion semantica cross-manual A218 + 8070
 - si faltan credenciales de extraccion, el pipeline deja `quick_ref_density_report.json`, `quick_ref_abox_input.json` y `quick_ref_onboarding_report.json` antes de bloquearse
 - la decision operativa del piloto queda en `quick_ref_integration_decision_report.json`
+- la decision de readiness antes de limpieza o siguiente manual queda en `t21_readiness_decision_report.json`
+
+## Estado tras T22
+
+- el planner usa un catalogo estricto quick-ref y un catalogo cross-manual minimo, sin duplicar arquitectura ni tocar el grafo
+- la prioridad efectiva de planning queda en:
+  - `cross_manual_strict`
+  - `quick_ref_strict`
+  - familias A218 ya consolidadas
+  - generalizadas y fallbacks genericos
+- `quick_ref_v2` queda en convergencia total operativa:
+  - `same_plan_family = 20/20`
+  - `same_sparql_signature = 20/20`
+  - `pair_ok = 20/20`
+  - `answer_language_ok = 20/20`
+- `QA_cross` queda tambien en convergencia total operativa:
+  - `pair_alignment_ok = 11/11`
+  - `cross_case_ok = 11/11`
+  - `answer_language_ok = 11/11`
+- el baseline se mantiene:
+  - `QA_canonical = 13/13`
+  - `QA_multihop = 7/7`
+- los artefactos que gobiernan el readiness post-planner son:
+  - `planner_generalization_catalog_v2.json`
+  - `cross_plan_catalog.json`
+  - `quick_ref_v2_planner_alignment_report.json`
+  - `cross_planner_alignment_report.json`
+  - `t22_planner_eval_report.json`
+  - `t22_planner_decision_report.json`
 
 ## Estado tras T19
 

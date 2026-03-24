@@ -43,3 +43,13 @@ Cuando el plan ya sea razonable, usa `semantic_rag.py` para comprobar si la sint
 Tras T20, las preguntas equivalentes en espanol e ingles deben converger a la misma familia y la misma SPARQL, cambiando solo el idioma del render final.
 
 Tras T21, esa misma propiedad se comprueba tambien sobre el manual `chunks_8070_quick_ref.txt`: las preguntas ES/EN del quick ref deben resolverse sobre el mismo `abox_linked.ttl`, no sobre un runtime paralelo.
+
+Tras T22, el orquestador hereda un planner endurecido con dos catalogos estrictos ya estabilizados:
+- quick-ref 8070 bilingue
+- cross-manual A218 + 8070
+
+Los gates que gobiernan el readiness antes de otro manual ya no son solo `QA_canonical` y `QA_multihop`, sino tambien:
+- `QA_8070_quick_ref_bilingual_v2.json`
+- `QA_cross.json`
+
+La decision consolidada del estado del planner queda en `data/processed/t22_planner_decision_report.json`.

@@ -16,10 +16,14 @@ from rdflib import Graph, URIRef
 
 from artifact_contracts import (
     BOUNDEDNESS_POLICY_MATRIX_PATH,
+    CROSS_PLAN_CATALOG_PATH,
     MULTIHOP_PLAN_CATALOG_PATH,
     OPERATIONAL_ABOX_PATH,
     OPERATIONAL_TBOX_PATH,
     PLANNER_GENERALIZATION_CATALOG_PATH,
+    PLANNER_GENERALIZATION_CATALOG_V2_PATH,
+    QA_8070_QUICK_REF_BILINGUAL_V2_PATH,
+    QA_CROSS_PATH,
     QA_MULTIHOP_PATH,
     QUERY_DEBUG_REPORT_PATH,
     QUERY_INTENT_CATALOG_PATH,
@@ -53,6 +57,8 @@ INTENT_TRIGGER_RULES = [
 BOUNDEDNESS_POLICIES = {
     "benchmark_seeded": {"seed_limit": 1, "candidate_limit": 4, "result_limit": 12, "too_broad_raw": 12, "too_narrow_min": 1, "degrade_to_fallback": False},
     "direct_seed_literal": {"seed_limit": 2, "candidate_limit": 2, "result_limit": 10, "too_broad_raw": 10, "too_narrow_min": 1, "degrade_to_fallback": False},
+    "quick_ref_strict": {"seed_limit": 6, "candidate_limit": 6, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
+    "cross_manual_strict": {"seed_limit": 8, "candidate_limit": 8, "result_limit": 28, "too_broad_raw": 28, "too_narrow_min": 1, "degrade_to_fallback": False},
     "generalized_lookup": {"seed_limit": 4, "candidate_limit": 5, "result_limit": 16, "too_broad_raw": 18, "too_narrow_min": 1, "degrade_to_fallback": True},
     "generic_fallback": {"seed_limit": 6, "candidate_limit": 8, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
 }
@@ -92,12 +98,531 @@ PREDICATE_URI_MAP = {
 }
 
 
+def _uri(local_name: str) -> str:
+    return f"{BASE_URI}{local_name}"
+
+
+STRICT_QUICK_REF_FAMILIES = [
+    {
+        "family_id": "quick_ref_mdi_mda_conditions_lookup",
+        "template_id": "QRV2_T1_mdi_mda_conditions",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "mdi_mda_conditions",
+        "anchor_groups_all": ["mdi_mda"],
+        "keywords_any": [["condiciones activas", "active conditions", "programa interrumpido", "interrupted program"]],
+        "seed_uris": [_uri("ToolInspection")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_mdi_mda_conditions", "mode": "fixed_seed", "fixed_uris": [_uri("ToolInspection")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "mdi_mda_conditions_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 1, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_canned_cycles_multi_hop",
+        "template_id": "QRV2_T2_canned_cycles",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "canned_cycles",
+        "anchor_groups_all": ["canned_cycles"],
+        "keywords_any": [
+            ["taladrado profundo", "deep-hole drilling"],
+            ["mecanizado multiple", "multiple machining"],
+            ["patron rectangular", "rectangular pattern"],
+        ],
+        "seed_uris": [_uri("G83"), _uri("G161")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_canned_cycles", "mode": "fixed_seed", "fixed_uris": [_uri("G83"), _uri("G161")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "canned_cycle_details", "mode": "describe_entities", "preferred_predicates": ["valor", "textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_semi_auto_calibration_conditional",
+        "template_id": "QRV2_T3_semi_auto_calibration",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "semi_auto_calibration",
+        "anchor_groups_all": ["tool_calibration"],
+        "keywords_any": [["semiautomatica", "semi-automatic"], ["avance", "feedrate", "palpado", "probing", "validation"]],
+        "seed_uris": [_uri("ModoCalibracionSemiAutomatica")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_semi_auto_calibration", "mode": "fixed_seed", "fixed_uris": [_uri("ModoCalibracionSemiAutomatica")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "semi_auto_calibration_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 1, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_file_protection_lookup",
+        "template_id": "QRV2_T4_file_protection",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "file_protection",
+        "anchor_groups_all": ["utilities_and_file_protection"],
+        "keywords_any": [["proteger", "protected", "protect"], ["modificable", "modifiable", "-m-", "edisimu"]],
+        "seed_uris": [_uri("SoftkeyChangeModifiableAttribute")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_file_protection", "mode": "fixed_seed", "fixed_uris": [_uri("SoftkeyChangeModifiableAttribute")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "file_protection_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 1, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_high_level_instructions_multi_hop",
+        "template_id": "QRV2_T5_high_level_instructions",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "high_level_instructions",
+        "anchor_groups_all": ["math_and_high_level"],
+        "keywords_any": [
+            ["bucle abierto", "open loop", "husillo maestro", "master spindle"],
+            ["cero pieza", "current part zero", "kinematics", "cinematica"],
+        ],
+        "seed_uris": [_uri("SERVO_OFF"), _uri("MASTER"), _uri("KINORG"), _uri("KIN_ID")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_high_level_instructions", "mode": "fixed_seed", "fixed_uris": [_uri("SERVO_OFF"), _uri("MASTER"), _uri("KINORG"), _uri("KIN_ID")], "max_candidates": 4, "max_results": 4},
+            {"step_id": "detail", "purpose": "high_level_instruction_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 4, "max_results": 16},
+        ],
+    },
+    {
+        "family_id": "quick_ref_key_purpose_lookup",
+        "template_id": "QRV2_T6_key_purpose",
+        "intent": "purpose_or_function_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "keyboard_help",
+        "keywords_any": [["help", "tecla help"], ["monitor y teclado", "monitor and keyboard", "keyboard"]],
+        "seed_uris": [_uri("TeclaHELP"), _uri("Teclado")],
+        "seed_token_map": {
+            "help": [_uri("TeclaHELP")],
+            "focus": [_uri("TeclaFOCUS")],
+            "next": [_uri("TeclaNEXT")],
+            "back": [_uri("TeclaBACK")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_help_key", "mode": "fixed_seed", "fixed_uris": [_uri("TeclaHELP"), _uri("Teclado")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "help_key_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_simulation_conditions_multi_hop",
+        "template_id": "QRV2_T7_simulation_conditions",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "simulation_conditions",
+        "anchor_groups_all": ["simulation"],
+        "keywords_any": [["trayectoria teorica", "theoretical travel", "plano principal", "main plane"], ["plc", "husillo", "spindle"]],
+        "seed_uris": [_uri("EDISIMU_MODE"), _uri("ProgramSimulation"), _uri("SimulatedExecution")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_simulation", "mode": "fixed_seed", "fixed_uris": [_uri("EDISIMU_MODE"), _uri("ProgramSimulation"), _uri("SimulatedExecution")], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "simulation_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 3, "max_results": 14},
+        ],
+    },
+    {
+        "family_id": "quick_ref_m_functions_lookup",
+        "template_id": "QRV2_T8_m_functions",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "m_functions",
+        "anchor_groups_all": ["g_m_functions"],
+        "technical_tokens_any": ["m04"],
+        "keywords_any": [["auxiliar", "auxiliary"], ["antihorario", "counterclockwise"]],
+        "seed_uris": [_uri("SpindleCounterclockwiseStartKey")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_m_functions", "mode": "fixed_seed", "fixed_uris": [_uri("SpindleCounterclockwiseStartKey")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "m_function_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 1, "max_results": 10},
+        ],
+    },
+    {
+        "family_id": "quick_ref_file_attributes_multi_hop",
+        "template_id": "QRV2_T9_file_attributes",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "file_attributes",
+        "anchor_groups_all": ["utilities_and_file_protection"],
+        "keywords_any": [["-m-", "modifiable"], ["-h-", "hidden"], ["atributos", "attributes"]],
+        "seed_uris": [_uri("SoftkeyChangeModifiableAttribute"), _uri("SoftkeyChangeHiddenAttribute")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_file_attributes", "mode": "fixed_seed", "fixed_uris": [_uri("SoftkeyChangeModifiableAttribute"), _uri("SoftkeyChangeHiddenAttribute")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "file_attribute_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_g_functions_lookup",
+        "template_id": "QRV2_T10_g_functions",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "g_functions",
+        "anchor_groups_all": ["g_m_functions"],
+        "technical_tokens_any": ["g04"],
+        "seed_uris": [_uri("G04")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_g_functions", "mode": "fixed_seed", "fixed_uris": [_uri("G04")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "g_function_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 1, "max_results": 10},
+        ],
+    },
+    {
+        "family_id": "quick_ref_tool_inspection_lookup",
+        "template_id": "QRV2_T11_tool_inspection",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "tool_inspection",
+        "anchor_groups_all": ["tool_inspection"],
+        "seed_uris": [_uri("ToolInspection"), _uri("Softkey_BeginToolInspection"), _uri("CycleStopKey")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_tool_inspection", "mode": "fixed_seed", "fixed_uris": [_uri("ToolInspection"), _uri("Softkey_BeginToolInspection"), _uri("CycleStopKey")], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "tool_inspection_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 3, "max_results": 14},
+        ],
+    },
+    {
+        "family_id": "quick_ref_jog_rapid_lookup",
+        "template_id": "QRV2_T12_jog_rapid",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "jog_rapid",
+        "anchor_groups_all": ["jog_and_home"],
+        "keywords_any": [["rapido", "rapid"], ["mover un eje", "moving an axis", "panel jog", "jog panel"]],
+        "seed_uris": [_uri("RapidKey"), _uri("JogPanel")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_jog_rapid", "mode": "fixed_seed", "fixed_uris": [_uri("RapidKey"), _uri("JogPanel")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "jog_rapid_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_block_search_multi_hop",
+        "template_id": "QRV2_T13_block_search",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "block_search",
+        "keywords_any": [["busqueda de bloque", "block search"], ["automatica", "automatic"], ["bloque de parada", "stop block", "primer bloque", "first block"]],
+        "seed_uris": [_uri("BusquedaBloqueAutomatica"), _uri("BusquedaBloque")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_block_search", "mode": "fixed_seed", "fixed_uris": [_uri("BusquedaBloqueAutomatica"), _uri("BusquedaBloque")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "block_search_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 14},
+        ],
+    },
+    {
+        "family_id": "quick_ref_math_functions_lookup",
+        "template_id": "QRV2_T14_math_functions",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "math_functions",
+        "anchor_groups_all": ["math_and_high_level"],
+        "keywords_any": [["funcion matematica", "mathematical function"], ["entero mas uno", "integer plus one"]],
+        "seed_uris": [],
+        "steps": [
+            {"step_id": "fallback", "purpose": "math_function_fallback", "mode": "fallback_query", "max_candidates": 3, "max_results": 10},
+        ],
+    },
+    {
+        "family_id": "quick_ref_calibration_comparison_multi_hop",
+        "template_id": "QRV2_T15_calibration_comparison",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "manual_calibration_comparison",
+        "anchor_groups_all": ["tool_calibration"],
+        "keywords_any": [["calibracion manual", "manual calibration"], ["fresadora", "milling model"], ["torno en plano", "lathe model plane"]],
+        "seed_uris": [_uri("MillingModelCalibration"), _uri("LatheModelPlaneCalibration"), _uri("ModeloFresadora"), _uri("ModeloTornoPlano")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_calibration_comparison", "mode": "fixed_seed", "fixed_uris": [_uri("MillingModelCalibration"), _uri("LatheModelPlaneCalibration"), _uri("ModeloFresadora"), _uri("ModeloTornoPlano")], "max_candidates": 4, "max_results": 4},
+            {"step_id": "detail", "purpose": "calibration_comparison_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 4, "max_results": 16},
+        ],
+    },
+    {
+        "family_id": "quick_ref_fixture_table_lookup",
+        "template_id": "QRV2_T16_fixture_table",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "fixture_table",
+        "anchor_groups_all": ["fixture_and_offsets"],
+        "keywords_any": [["fixture table", "tabla de utillajes"], ["configurarse", "set", "plc", "variables"]],
+        "seed_uris": [_uri("Tabla_27_2")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_fixture_table", "mode": "fixed_seed", "fixed_uris": [_uri("Tabla_27_2")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "fixture_table_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 1, "max_results": 10},
+        ],
+    },
+    {
+        "family_id": "quick_ref_edisimu_syntax_lookup",
+        "template_id": "QRV2_T17_edisimu_syntax",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "edisimu_syntax",
+        "anchor_groups_all": ["syntax"],
+        "seed_uris": [_uri("Syntax_check")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_syntax_check", "mode": "fixed_seed", "fixed_uris": [_uri("Syntax_check")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "syntax_check_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 1, "max_results": 10},
+        ],
+    },
+    {
+        "family_id": "quick_ref_probing_functions_multi_hop",
+        "template_id": "QRV2_T18_probing_functions",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "probing_functions",
+        "anchor_groups_any": ["g_m_functions"],
+        "keywords_any": [["palpado", "probing"], ["hacer contacto", "making contact"], ["no hacer contacto", "not making contact"]],
+        "seed_uris": [_uri("G100"), _uri("G103")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_probing_functions", "mode": "fixed_seed", "fixed_uris": [_uri("G100"), _uri("G103")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "probing_function_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "quick_ref_multiple_machining_lookup",
+        "template_id": "QRV2_T19_multiple_machining",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "quick_ref_strict",
+        "policy_id": "quick_ref_strict",
+        "canonical_anchor": "multiple_machining",
+        "anchor_groups_all": ["canned_cycles"],
+        "technical_tokens_all": ["q10.013"],
+        "seed_uris": [_uri("ParametroQ10_013"), _uri("AccionProhibidaNoMaquinadoQ10_013")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_multiple_machining", "mode": "fixed_seed", "fixed_uris": [_uri("ParametroQ10_013"), _uri("AccionProhibidaNoMaquinadoQ10_013")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "multiple_machining_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+]
+
+STRICT_CROSS_FAMILIES = [
+    {
+        "family_id": "cross_manual_home_search_procedure",
+        "template_id": "CROSS_T1_home_search",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_home_search_c_axis",
+        "anchor_groups_all": ["machine_c_axis_context", "jog_and_home"],
+        "keywords_any": [["plato divisor", "rotary table", "eje c", "c axis"], ["busqueda de referencia", "manual home search", "home search"]],
+        "seed_uris": [_uri("PlatoDivisor"), _uri("ManualHomeSearch")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_home_search", "mode": "fixed_seed", "fixed_uris": [_uri("PlatoDivisor"), _uri("ManualHomeSearch")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "cross_home_search_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 2, "max_results": 14},
+        ],
+    },
+    {
+        "family_id": "cross_manual_tool_inspection_conditional",
+        "template_id": "CROSS_T2_tool_inspection_setup",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_tool_inspection_setup",
+        "anchor_groups_all": ["machine_safety_to_cnc_operation"],
+        "require_keyword_match": True,
+        "keywords_any": [
+            ["tool inspection", "inspect", "inspeccionar"],
+            ["doors open", "puertas abiertas", "apertura puertas", "broach"],
+        ],
+        "seed_uris": [_uri("ToolInspection"), _uri("CycleStopKey"), _uri("SelectorSetUp"), _uri("BotonAperturaPuertas")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_tool_inspection", "mode": "fixed_seed", "fixed_uris": [_uri("ToolInspection"), _uri("CycleStopKey"), _uri("SelectorSetUp"), _uri("BotonAperturaPuertas")], "max_candidates": 4, "max_results": 4},
+            {"step_id": "detail", "purpose": "cross_tool_inspection_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 4, "max_results": 18},
+        ],
+    },
+    {
+        "family_id": "cross_manual_simulation_multi_hop",
+        "template_id": "CROSS_T3_simulation",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_simulation",
+        "anchor_groups_all": ["simulation", "machine_program_storage"],
+        "require_keyword_match": True,
+        "keywords_any": [
+            ["a218", "brochado", "broaching", "carro", "carriage"],
+            ["plc", "simulacion", "simulation", "ejes", "axes"],
+        ],
+        "seed_uris": [_uri("EDISIMU_MODE"), _uri("ProgramSimulation"), _uri("SimulatedExecution")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_simulation", "mode": "fixed_seed", "fixed_uris": [_uri("EDISIMU_MODE"), _uri("ProgramSimulation"), _uri("SimulatedExecution")], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "cross_simulation_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 3, "max_results": 16},
+        ],
+    },
+    {
+        "family_id": "cross_manual_incremental_jog_procedure",
+        "template_id": "CROSS_T4_incremental_jog",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_incremental_jog",
+        "anchor_groups_all": ["machine_axis_motion"],
+        "require_keyword_match": True,
+        "keywords_any": [["carro porta-piezas", "carriage", "eje z", "z axis"], ["incremental", "incremental distance", "manual controls", "mandos manuales"]],
+        "seed_uris": [_uri("CarroPortaPiezas_46"), _uri("JogPanel"), _uri("SelectorModoJog")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_incremental_jog", "mode": "fixed_seed", "fixed_uris": [_uri("CarroPortaPiezas_46"), _uri("JogPanel"), _uri("SelectorModoJog")], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "cross_incremental_jog_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 3, "max_results": 16},
+        ],
+    },
+    {
+        "family_id": "cross_manual_block_search_conditional",
+        "template_id": "CROSS_T5_block_search",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_block_search",
+        "anchor_groups_all": ["machine_program_recovery"],
+        "require_keyword_match": True,
+        "keywords_any": [["emergency", "emergencia", "restore the system", "restaurar el sistema"], ["block search", "busqueda de bloque"]],
+        "seed_uris": [_uri("BusquedaBloqueAutomatica"), _uri("BusquedaBloque")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_block_search", "mode": "fixed_seed", "fixed_uris": [_uri("BusquedaBloqueAutomatica"), _uri("BusquedaBloque")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "cross_block_search_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 16},
+        ],
+    },
+    {
+        "family_id": "cross_manual_c_axis_instruction",
+        "template_id": "CROSS_T6_c_axis_instruction",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_c_axis_instruction",
+        "anchor_groups_all": ["machine_c_axis_context"],
+        "require_keyword_match": True,
+        "keywords_any": [["high-level instruction", "instruccion de alto nivel"], ["activate the spindle", "activar el husillo", "c axis", "eje c"]],
+        "seed_uris": [_uri("PlatoDivisor"), _uri("Instruccion_CAX")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_c_axis", "mode": "fixed_seed", "fixed_uris": [_uri("PlatoDivisor"), _uri("Instruccion_CAX")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "cross_c_axis_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "cross_manual_file_protection_multi_hop",
+        "template_id": "CROSS_T7_file_protection",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_file_protection",
+        "anchor_groups_all": ["utilities_and_file_protection", "machine_program_storage"],
+        "require_keyword_match": True,
+        "keywords_any": [["prg", "fagorcnc", "users"], ["edisimu", "modifiable", "-m-"]],
+        "seed_uris": [_uri("ModoOperacion_UTILITIES"), _uri("SoftkeyChangeModifiableAttribute"), _uri("EDISIMU_MODE")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_file_protection", "mode": "fixed_seed", "fixed_uris": [_uri("ModoOperacion_UTILITIES"), _uri("SoftkeyChangeModifiableAttribute"), _uri("EDISIMU_MODE")], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "cross_file_protection_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 3, "max_results": 16},
+        ],
+    },
+    {
+        "family_id": "cross_manual_mdi_history_retention",
+        "template_id": "CROSS_T8_mdi_history",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_mdi_history",
+        "anchor_groups_all": ["mdi_mda", "machine_safety_to_cnc_operation"],
+        "require_keyword_match": True,
+        "keywords_any": [["mdi/mda", "modo mdi/mda", "set-up", "set up"], ["m and g functions", "funciones m y g", "feedrate", "spindle speed", "avance", "velocidad del husillo"]],
+        "seed_uris": [_uri("ToolInspection"), _uri("SelectorSetUp")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_mdi_history", "mode": "fixed_seed", "fixed_uris": [_uri("ToolInspection"), _uri("SelectorSetUp")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "cross_mdi_history_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 2, "max_results": 16},
+        ],
+    },
+    {
+        "family_id": "cross_manual_parameter_scope",
+        "template_id": "CROSS_T9_parameter_scope",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_parameter_scope",
+        "anchor_groups_all": ["machine_offsets_and_parameters"],
+        "require_keyword_match": True,
+        "keywords_any": [["parametro aritmetico", "arithmetic parameter"], ["todos los canales", "all channels", "shared"], ["common parameters", "parametros comunes"]],
+        "seed_uris": [_uri("Tabla_27_3")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_parameter_scope", "mode": "fixed_seed", "fixed_uris": [_uri("Tabla_27_3")], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "cross_parameter_scope_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 1, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "cross_manual_zero_offset_codes",
+        "template_id": "CROSS_T10_zero_offset_codes",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_zero_offsets",
+        "anchor_groups_any": ["fixture_and_offsets", "machine_offsets_and_parameters", "machine_c_axis_context"],
+        "require_keyword_match": True,
+        "keywords_any": [["decalajes de cero", "zero offsets", "absolute zero offsets"], ["g codes", "codigos g", "g54", "g55", "g56", "g57", "g58", "g59"]],
+        "seed_uris": [_uri("G54"), _uri("G55"), _uri("G56"), _uri("G57"), _uri("G58"), _uri("G59")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_zero_offsets", "mode": "fixed_seed", "fixed_uris": [_uri("G54"), _uri("G55"), _uri("G56"), _uri("G57"), _uri("G58"), _uri("G59")], "max_candidates": 6, "max_results": 6},
+            {"step_id": "detail", "purpose": "cross_zero_offset_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 6, "max_results": 18},
+        ],
+    },
+    {
+        "family_id": "cross_manual_shortcut_navigation",
+        "template_id": "CROSS_T11_shortcut_navigation",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "cross_manual_strict",
+        "policy_id": "cross_manual_strict",
+        "canonical_anchor": "cross_shortcut_navigation",
+        "anchor_groups_all": ["machine_utilities_navigation"],
+        "technical_tokens_any": ["ctrl+f12"],
+        "require_keyword_match": True,
+        "keywords_any": [["delete", "borrar", "erase"], ["utilities mode", "modo utilidades"]],
+        "seed_uris": [_uri("InterfazUsuario_3"), _uri("ModoOperacion_UTILITIES"), _uri("SoftkeyDelete"), _uri("TeclaF12")],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_cross_shortcut_navigation", "mode": "fixed_seed", "fixed_uris": [_uri("InterfazUsuario_3"), _uri("ModoOperacion_UTILITIES"), _uri("SoftkeyDelete"), _uri("TeclaF12")], "max_candidates": 4, "max_results": 4},
+            {"step_id": "detail", "purpose": "cross_shortcut_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label"], "max_candidates": 4, "max_results": 18},
+        ],
+    },
+]
+
+
 @dataclass
 class QuestionParse:
     intent: str
     anchor_text: str | None
     anchor_candidates: list[str]
     qualifiers: list[str]
+    anchor_groups: list[str] = field(default_factory=list)
+    technical_tokens: list[str] = field(default_factory=list)
     matched_seed_uris: list[str] = field(default_factory=list)
     matched_anchor_rule: str | None = None
     intent_confidence: float = 0.4
@@ -575,10 +1100,15 @@ def _seed_uris_from_lexicon_hits(lexicon_hits: list[dict[str, Any]] | None) -> l
             uri = candidate.get("canonical_uri")
             if isinstance(uri, str) and uri.startswith("http") and uri not in seed_uris:
                 seed_uris.append(uri)
-    return seed_uris[:4]
+    return seed_uris[:8]
 
 
-def extract_anchor_text(question: str, intent: str, lexicon_hits: list[dict[str, Any]] | None = None) -> tuple[str | None, dict[str, Any] | None, float, list[str]]:
+def extract_anchor_text(
+    question: str,
+    intent: str,
+    lexicon_hits: list[dict[str, Any]] | None = None,
+    anchor_groups: list[str] | None = None,
+) -> tuple[str | None, dict[str, Any] | None, float, list[str]]:
     refs = extract_reference_tokens(question)
     lexicon_seed_uris = _seed_uris_from_lexicon_hits(lexicon_hits)
     matched_rule = match_anchor_rule(question, intent)
@@ -586,6 +1116,8 @@ def extract_anchor_text(question: str, intent: str, lexicon_hits: list[dict[str,
         if not matched_rule["seed_uris"] and lexicon_seed_uris:
             matched_rule = {**matched_rule, "seed_uris": lexicon_seed_uris}
         return matched_rule["anchor_id"], matched_rule, matched_rule["confidence"], matched_rule.get("seed_uris", [])
+    if anchor_groups:
+        return anchor_groups[0], None, 0.82, lexicon_seed_uris
     if refs:
         return refs[0], None, 0.7, []
     if lexicon_hits:
@@ -604,9 +1136,21 @@ def extract_anchor_text(question: str, intent: str, lexicon_hits: list[dict[str,
 
 
 
-def build_question_parse(question: str, lexicon_hits: list[dict[str, Any]] | None = None) -> QuestionParse:
+def build_question_parse(
+    question: str,
+    lexicon_hits: list[dict[str, Any]] | None = None,
+    anchor_groups: list[str] | None = None,
+    technical_tokens: list[str] | None = None,
+) -> QuestionParse:
     intent, intent_confidence = detect_intent(question)
-    anchor_text, matched_rule, anchor_confidence, matched_seed_uris = extract_anchor_text(question, intent, lexicon_hits)
+    anchor_groups = anchor_groups or []
+    technical_tokens = technical_tokens or []
+    anchor_text, matched_rule, anchor_confidence, matched_seed_uris = extract_anchor_text(
+        question,
+        intent,
+        lexicon_hits,
+        anchor_groups,
+    )
     tokens = tokenize_question(question)
     candidates: list[str] = []
     if anchor_text:
@@ -624,6 +1168,8 @@ def build_question_parse(question: str, lexicon_hits: list[dict[str, Any]] | Non
         anchor_text=anchor_text,
         anchor_candidates=candidates[:8],
         qualifiers=qualifiers,
+        anchor_groups=anchor_groups[:8],
+        technical_tokens=technical_tokens[:8],
         matched_seed_uris=matched_seed_uris[:4],
         matched_anchor_rule=matched_rule["anchor_id"] if matched_rule else None,
         intent_confidence=round(intent_confidence, 2),
@@ -657,6 +1203,10 @@ def _matches_keyword_group(question_text: str, keyword_group: list[str]) -> bool
     return any(keyword in question_text for keyword in keyword_group)
 
 
+def _contains_all_keywords(question_text: str, keywords: list[str]) -> bool:
+    return all(keyword in question_text for keyword in keywords)
+
+
 
 def _policy_for_family(policy_id: str | None) -> dict[str, Any]:
     return dict(BOUNDEDNESS_POLICIES.get(policy_id or "generic_fallback", BOUNDEDNESS_POLICIES["generic_fallback"]))
@@ -667,8 +1217,14 @@ def _family_confidence(parse: QuestionParse, family: dict[str, Any]) -> float:
     confidence = 0.45
     if family.get("family_type") == "benchmark_seeded":
         confidence += 0.25
+    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict"}:
+        confidence += 0.28
     if parse.matched_anchor_rule:
         confidence += 0.15
+    if family.get("anchor_groups_all"):
+        confidence += 0.05
+    if family.get("technical_tokens_all") or family.get("technical_tokens_any"):
+        confidence += 0.03
     if family.get("anchor_rule_id") == parse.matched_anchor_rule or parse.matched_anchor_rule in family.get("anchor_rule_ids", []):
         confidence += 0.1
     if parse.anchor_confidence > 0.8:
@@ -678,6 +1234,12 @@ def _family_confidence(parse: QuestionParse, family: dict[str, Any]) -> float:
 
 
 def _resolved_seed_uris_for_family(parse: QuestionParse, family: dict[str, Any]) -> list[str]:
+    token_map = family.get("seed_token_map", {})
+    if token_map:
+        search_space = normalize_text(" ".join(parse.anchor_candidates + parse.qualifiers + parse.technical_tokens))
+        for token, uris in token_map.items():
+            if token in search_space:
+                return uris
     if family.get("anchor_rule_id") and parse.matched_anchor_rule == family["anchor_rule_id"]:
         for rule in ANCHOR_ALIAS_RULES:
             if rule["anchor_id"] == family["anchor_rule_id"]:
@@ -690,8 +1252,145 @@ def _resolved_seed_uris_for_family(parse: QuestionParse, family: dict[str, Any])
     return family.get("seed_uris", []) or parse.matched_seed_uris
 
 
+def _family_score(parse: QuestionParse, question: str, family: dict[str, Any]) -> float | None:
+    normalized = normalize_text(question)
+    score = 0.0
+    matched_evidence = False
+    keyword_matched = False
+    if family.get("intent") == parse.intent:
+        score += 1.0
+    if family.get("anchor_rule_id") == parse.matched_anchor_rule:
+        score += 5.0
+        matched_evidence = True
+    if parse.matched_anchor_rule and parse.matched_anchor_rule in family.get("anchor_rule_ids", []):
+        score += 4.0
+        matched_evidence = True
+    anchor_groups = set(parse.anchor_groups)
+    family_groups_all = set(family.get("anchor_groups_all", []))
+    family_groups_any = set(family.get("anchor_groups_any", []))
+    if family_groups_all:
+        if not family_groups_all.issubset(anchor_groups):
+            return None
+        score += 8.0 + len(family_groups_all)
+        matched_evidence = True
+    if family_groups_any:
+        matched_any = anchor_groups.intersection(family_groups_any)
+        if not matched_any:
+            return None
+        score += 4.0 + len(matched_any)
+        matched_evidence = True
+    technical_tokens = set(parse.technical_tokens)
+    family_tokens_all = set(family.get("technical_tokens_all", []))
+    family_tokens_any = set(family.get("technical_tokens_any", []))
+    if family_tokens_all:
+        if not family_tokens_all.issubset(technical_tokens):
+            return None
+        score += 8.0 + len(family_tokens_all)
+        matched_evidence = True
+    if family_tokens_any:
+        matched_tokens = technical_tokens.intersection(family_tokens_any)
+        if matched_tokens:
+            score += 3.0 + len(matched_tokens)
+            matched_evidence = True
+    for keyword_group in family.get("keywords_all", []):
+        if not _contains_all_keywords(normalized, keyword_group):
+            return None
+        score += 2.0
+        matched_evidence = True
+        keyword_matched = True
+    for keyword_group in family.get("keywords_any", []):
+        if _matches_keyword_group(normalized, keyword_group):
+            score += 1.5
+            matched_evidence = True
+            keyword_matched = True
+    if family.get("require_keyword_match") and not keyword_matched:
+        return None
+    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict"} and not matched_evidence:
+        return None
+    return score
+
+
+def _select_strict_family(parse: QuestionParse, question: str, families: list[dict[str, Any]]) -> dict[str, Any] | None:
+    ranked: list[tuple[float, dict[str, Any]]] = []
+    for family in families:
+        score = _family_score(parse, question, family)
+        if score is None:
+            continue
+        ranked.append((score, family))
+    if not ranked:
+        return None
+    ranked.sort(key=lambda item: (-item[0], item[1]["family_id"]))
+    return ranked[0][1]
+
+
+STRICT_RUNTIME_CUES = [
+    "8070",
+    "cnc",
+    "mdi",
+    "mda",
+    "edisimu",
+    "softkey",
+    "tecla",
+    "keyboard",
+    "monitor",
+    "jog",
+    "home search",
+    "busqueda de referencia",
+    "busqueda de bloque",
+    "block search",
+    "tool inspection",
+    "inspeccion de herramienta",
+    "g code",
+    "codigo g",
+    "g54",
+    "g83",
+    "g100",
+    "g103",
+    "g161",
+    "m04",
+    "#cax",
+    "ctrl",
+    "f12",
+    "utilities mode",
+    "modo utilidades",
+    "fagorcnc",
+    "users prg",
+]
+
+
+def _has_strict_runtime_context(parse: QuestionParse, question: str) -> bool:
+    strong_anchor_groups = {
+        "mdi_mda",
+        "canned_cycles",
+        "tool_calibration",
+        "utilities_and_file_protection",
+        "simulation",
+        "tool_inspection",
+        "jog_and_home",
+        "math_and_high_level",
+        "g_m_functions",
+        "fixture_and_offsets",
+        "syntax",
+        "machine_safety_to_cnc_operation",
+        "machine_program_recovery",
+        "machine_utilities_navigation",
+        "machine_program_storage",
+    }
+    if set(parse.anchor_groups).intersection(strong_anchor_groups) or parse.technical_tokens:
+        return True
+    normalized = normalize_text(question)
+    return any(cue in normalized for cue in STRICT_RUNTIME_CUES)
+
+
 
 def select_plan_family(parse: QuestionParse, question: str) -> dict[str, Any] | None:
+    if _has_strict_runtime_context(parse, question):
+        strict_cross = _select_strict_family(parse, question, STRICT_CROSS_FAMILIES)
+        if strict_cross is not None:
+            return strict_cross
+        strict_quick_ref = _select_strict_family(parse, question, STRICT_QUICK_REF_FAMILIES)
+        if strict_quick_ref is not None:
+            return strict_quick_ref
     normalized = normalize_text(question)
     if parse.matched_anchor_rule:
         for family in MULTIHOP_PLAN_FAMILIES:
@@ -844,22 +1543,38 @@ def _build_generic_plan(parse: QuestionParse, graph: Graph | None, *, template_i
 def build_query_plan(question: str, schema_text: str, graph: Graph | None = None) -> QueryPlan:
     normalization = normalize_question(question)
     planner_question = normalization["planner_question"]
-    parse = build_question_parse(planner_question, normalization["multilingual_lexicon_hits"])
+    parse = build_question_parse(
+        planner_question,
+        normalization["multilingual_lexicon_hits"],
+        normalization.get("anchor_groups", []),
+        normalization.get("technical_tokens", []),
+    )
     family = select_plan_family(parse, planner_question)
     if family is not None:
         steps = [QueryStep(**step) for step in family["steps"]]
         seed_uris = _resolved_seed_uris_for_family(parse, family)
         if seed_uris and steps and steps[0].mode == "fixed_seed":
             steps[0].fixed_uris = seed_uris[: steps[0].max_candidates]
+        sparql = ""
+        if steps and steps[0].mode == "fallback_query":
+            pattern_tokens = parse.technical_tokens or parse.anchor_candidates or parse.qualifiers or ["cnc"]
+            sparql = (
+                f"PREFIX ex: <{BASE_URI}>\n"
+                "SELECT DISTINCT ?s ?p ?o WHERE {\n"
+                "  ?s ?p ?o .\n"
+                f"  FILTER(REGEX(LCASE(STR(?s)), \"{build_regex_pattern(pattern_tokens)}\", \"i\") || "
+                f"REGEX(LCASE(STR(?o)), \"{build_regex_pattern(pattern_tokens)}\", \"i\"))\n"
+                "} LIMIT 10"
+            )
         plan = QueryPlan(
             intent=family["intent"],
-            anchor_text=parse.anchor_text,
+            anchor_text=family.get("canonical_anchor", parse.anchor_text),
             anchor_candidates=parse.anchor_candidates,
             template_id=family["template_id"],
             plan_family=family["family_id"],
             predicted_hop_depth=family["hop_depth"],
             fallback_used=False,
-            sparql="",
+            sparql=sparql,
             steps=steps,
             confidence={
                 "intent": parse.intent_confidence,
@@ -879,6 +1594,8 @@ def build_query_plan(question: str, schema_text: str, graph: Graph | None = None
                 "schema_excerpt_used": bool(schema_text),
                 "family_type": family.get("family_type"),
                 "evidence_questions": family.get("evidence_questions", []),
+                "anchor_groups": parse.anchor_groups,
+                "technical_tokens": parse.technical_tokens,
                 "original_question": question,
                 "planner_question": planner_question,
                 "question_language": normalization["question_language"],
@@ -910,6 +1627,8 @@ def build_query_plan(question: str, schema_text: str, graph: Graph | None = None
             "question_language": normalization["question_language"],
             "question_language_confidence": normalization["question_language_confidence"],
             "multilingual_lexicon_hits": normalization["multilingual_lexicon_hits"],
+            "anchor_groups": parse.anchor_groups,
+            "technical_tokens": parse.technical_tokens,
         }
     )
     return plan
@@ -1152,6 +1871,62 @@ def export_planner_generalization_catalog(output_path: Path = PLANNER_GENERALIZA
             "step_modes": [step["mode"] for step in family["steps"]],
         })
     payload = {"catalog_version": "t13_v1", "families": families}
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return payload
+
+
+def export_planner_generalization_catalog_v2(output_path: Path = PLANNER_GENERALIZATION_CATALOG_V2_PATH) -> dict[str, Any]:
+    dataset = json.loads(QA_8070_QUICK_REF_BILINGUAL_V2_PATH.read_text(encoding="utf-8-sig")) if QA_8070_QUICK_REF_BILINGUAL_V2_PATH.exists() else {"pairs": []}
+    expected_ids = {pair.get("expected_plan_family") for pair in dataset.get("pairs", [])}
+    families = []
+    for family in STRICT_QUICK_REF_FAMILIES:
+        if family["family_id"] not in expected_ids:
+            continue
+        families.append(
+            {
+                "family_id": family["family_id"],
+                "template_id": family["template_id"],
+                "intent": family["intent"],
+                "hop_depth": family["hop_depth"],
+                "family_type": family["family_type"],
+                "policy_id": family["policy_id"],
+                "canonical_anchor": family.get("canonical_anchor"),
+                "anchor_groups_all": family.get("anchor_groups_all", []),
+                "technical_tokens_all": family.get("technical_tokens_all", []),
+                "technical_tokens_any": family.get("technical_tokens_any", []),
+                "step_modes": [step["mode"] for step in family["steps"]],
+            }
+        )
+    payload = {"catalog_version": "t22_v1", "families": families}
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return payload
+
+
+def export_cross_plan_catalog(output_path: Path = CROSS_PLAN_CATALOG_PATH) -> dict[str, Any]:
+    dataset = json.loads(QA_CROSS_PATH.read_text(encoding="utf-8-sig")) if QA_CROSS_PATH.exists() else {"pairs": []}
+    expected_ids = {pair.get("expected_plan_family") for pair in dataset.get("pairs", [])}
+    families = []
+    for family in STRICT_CROSS_FAMILIES:
+        if family["family_id"] not in expected_ids:
+            continue
+        families.append(
+            {
+                "family_id": family["family_id"],
+                "template_id": family["template_id"],
+                "intent": family["intent"],
+                "hop_depth": family["hop_depth"],
+                "family_type": family["family_type"],
+                "policy_id": family["policy_id"],
+                "canonical_anchor": family.get("canonical_anchor"),
+                "anchor_groups_all": family.get("anchor_groups_all", []),
+                "technical_tokens_all": family.get("technical_tokens_all", []),
+                "technical_tokens_any": family.get("technical_tokens_any", []),
+                "step_modes": [step["mode"] for step in family["steps"]],
+            }
+        )
+    payload = {"catalog_version": "t22_v1", "families": families}
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return payload

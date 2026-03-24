@@ -50,6 +50,16 @@ Los artefactos operativos y diagnosticos relevantes viven en `data/processed/`:
 - `quick_ref_bilingual_eval_report.json`
 - `quick_ref_bilingual_debug_report.json`
 - `quick_ref_integration_decision_report.json`
+- `quick_ref_v2_eval_report.json`
+- `quick_ref_v2_debug_report.json`
+- `quick_ref_v2_planner_alignment_report.json`
+- `cross_eval_report.json`
+- `cross_debug_report.json`
+- `cross_planner_alignment_report.json`
+- `planner_generalization_catalog_v2.json`
+- `cross_plan_catalog.json`
+- `t22_planner_eval_report.json`
+- `t22_planner_decision_report.json`
 - `sandbox_diagnostic_report.json`
 - `sandbox_structural_gap_summary.json`
 - `sandbox_entity_resolution_candidates.json`
@@ -59,3 +69,9 @@ Los artefactos operativos y diagnosticos relevantes viven en `data/processed/`:
 ## Recomendacion
 
 Mantener aqui solo documentacion estable y transversal. La evolucion del planner, retrieval y sintesis sigue documentandose en los README de modulo, mientras que benchmark formal, sandbox batch, canonicalizacion, enrichment, link completion y soporte bilingue deben tratarse como flujos estructurales separados.
+
+Tras T22, el readiness post-planner queda gobernado por dos gates separados y no agregables:
+- `QA_8070_quick_ref_bilingual_v2.json`
+- `QA_cross.json`
+
+La trazabilidad fina de alineacion vive en `quick_ref_v2_planner_alignment_report.json` y `cross_planner_alignment_report.json`, mientras que la decision ejecutiva final vive en `t22_planner_decision_report.json`.

@@ -38,6 +38,8 @@ QA_CANONICAL_PATH = GOLDEN_SET_DIR / "QA_canonical.json"
 QA_SANDBOX_PATH = GOLDEN_SET_DIR / "QA_sandbox.json"
 QA_BILINGUAL_PATH = GOLDEN_SET_DIR / "QA_bilingual.json"
 QA_8070_QUICK_REF_BILINGUAL_PATH = GOLDEN_SET_DIR / "QA_8070_quick_ref_bilingual.json"
+QA_8070_QUICK_REF_BILINGUAL_V2_PATH = GOLDEN_SET_DIR / "QA_8070_quick_ref_bilingual_v2.json"
+QA_CROSS_PATH = GOLDEN_SET_DIR / "QA_cross.json"
 QA_RECONCILIATION_PATH = PROCESSED_DATA_DIR / "qa_dataset_reconciliation.json"
 QA_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "qa_eval_report.json"
 QA_FAILURE_ANALYSIS_PATH = PROCESSED_DATA_DIR / "qa_failure_analysis.json"
@@ -106,6 +108,17 @@ QUICK_REF_ONBOARDING_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_onboarding_re
 QUICK_REF_BILINGUAL_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_bilingual_eval_report.json"
 QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_bilingual_debug_report.json"
 QUICK_REF_INTEGRATION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_integration_decision_report.json"
+QUICK_REF_V2_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_v2_eval_report.json"
+QUICK_REF_V2_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_v2_debug_report.json"
+CROSS_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "cross_eval_report.json"
+CROSS_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "cross_debug_report.json"
+T21_READINESS_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t21_readiness_decision_report.json"
+QUICK_REF_V2_PLANNER_ALIGNMENT_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_v2_planner_alignment_report.json"
+CROSS_PLANNER_ALIGNMENT_REPORT_PATH = PROCESSED_DATA_DIR / "cross_planner_alignment_report.json"
+PLANNER_GENERALIZATION_CATALOG_V2_PATH = PROCESSED_DATA_DIR / "planner_generalization_catalog_v2.json"
+CROSS_PLAN_CATALOG_PATH = PROCESSED_DATA_DIR / "cross_plan_catalog.json"
+T22_PLANNER_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "t22_planner_eval_report.json"
+T22_PLANNER_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t22_planner_decision_report.json"
 
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
@@ -127,6 +140,8 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "qa_sandbox_dataset": QA_SANDBOX_PATH,
     "qa_bilingual_dataset": QA_BILINGUAL_PATH,
     "qa_8070_quick_ref_bilingual_dataset": QA_8070_QUICK_REF_BILINGUAL_PATH,
+    "qa_8070_quick_ref_bilingual_v2_dataset": QA_8070_QUICK_REF_BILINGUAL_V2_PATH,
+    "qa_cross_dataset": QA_CROSS_PATH,
     "qa_eval_report": QA_EVAL_REPORT_PATH,
     "qa_failure_analysis": QA_FAILURE_ANALYSIS_PATH,
     "multilingual_lexicon": MULTILINGUAL_LEXICON_PATH,
@@ -193,6 +208,17 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "quick_ref_bilingual_eval_report": QUICK_REF_BILINGUAL_EVAL_REPORT_PATH,
     "quick_ref_bilingual_debug_report": QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH,
     "quick_ref_integration_decision_report": QUICK_REF_INTEGRATION_DECISION_REPORT_PATH,
+    "quick_ref_v2_eval_report": QUICK_REF_V2_EVAL_REPORT_PATH,
+    "quick_ref_v2_debug_report": QUICK_REF_V2_DEBUG_REPORT_PATH,
+    "cross_eval_report": CROSS_EVAL_REPORT_PATH,
+    "cross_debug_report": CROSS_DEBUG_REPORT_PATH,
+    "t21_readiness_decision_report": T21_READINESS_DECISION_REPORT_PATH,
+    "quick_ref_v2_planner_alignment_report": QUICK_REF_V2_PLANNER_ALIGNMENT_REPORT_PATH,
+    "cross_planner_alignment_report": CROSS_PLANNER_ALIGNMENT_REPORT_PATH,
+    "planner_generalization_catalog_v2": PLANNER_GENERALIZATION_CATALOG_V2_PATH,
+    "cross_plan_catalog": CROSS_PLAN_CATALOG_PATH,
+    "t22_planner_eval_report": T22_PLANNER_EVAL_REPORT_PATH,
+    "t22_planner_decision_report": T22_PLANNER_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {

@@ -13,6 +13,7 @@ import time
 import unicodedata
 from collections import Counter
 from dataclasses import asdict
+from difflib import SequenceMatcher
 from statistics import mean
 
 from rdflib import Graph, URIRef
@@ -22,15 +23,21 @@ from artifact_contracts import (
     BILINGUAL_DECISION_REPORT_PATH,
     BILINGUAL_EVAL_REPORT_PATH,
     CANONICAL_ENTITY_MAP_PATH,
+    CROSS_PLAN_CATALOG_PATH,
+    CROSS_DEBUG_REPORT_PATH,
+    CROSS_EVAL_REPORT_PATH,
     GENERALIZATION_EVAL_REPORT_PATH,
     MULTIHOP_DEBUG_REPORT_PATH,
     MULTIHOP_EVAL_REPORT_PATH,
     MULTIHOP_PLANNER_DECISION_REPORT_PATH,
     OPERATIONAL_ABOX_PATH,
     OPERATIONAL_TBOX_PATH,
+    PLANNER_GENERALIZATION_CATALOG_V2_PATH,
     QA_BILINGUAL_PATH,
+    QA_CROSS_PATH,
     QA_CANONICAL_PATH,
     QA_8070_QUICK_REF_BILINGUAL_PATH,
+    QA_8070_QUICK_REF_BILINGUAL_V2_PATH,
     QA_EVAL_REPORT_PATH,
     QA_FAILURE_ANALYSIS_PATH,
     QA_MULTIHOP_PATH,
@@ -38,12 +45,19 @@ from artifact_contracts import (
     QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH,
     QUICK_REF_BILINGUAL_EVAL_REPORT_PATH,
     QUICK_REF_INTEGRATION_DECISION_REPORT_PATH,
+    QUICK_REF_V2_PLANNER_ALIGNMENT_REPORT_PATH,
+    QUICK_REF_V2_DEBUG_REPORT_PATH,
+    QUICK_REF_V2_EVAL_REPORT_PATH,
     SCHEMA_CONDENSED_PATH,
     SYNTHESIS_DEBUG_REPORT_PATH,
     SYNTHESIS_DECISION_REPORT_PATH,
     SYNTHESIS_EVAL_REPORT_PATH,
     SURFACE_POLISH_EVAL_REPORT_PATH,
     SURFACE_POLISH_DECISION_REPORT_PATH,
+    T21_READINESS_DECISION_REPORT_PATH,
+    T22_PLANNER_DECISION_REPORT_PATH,
+    T22_PLANNER_EVAL_REPORT_PATH,
+    CROSS_PLANNER_ALIGNMENT_REPORT_PATH,
 )
 
 RETRIEVAL_DIR = Path(__file__).resolve().parent
@@ -51,7 +65,13 @@ if str(RETRIEVAL_DIR) not in sys.path:
     sys.path.insert(0, str(RETRIEVAL_DIR))
 
 from synthesis_pipeline import append_synthesis_debug_record, synthesize_answer
-from text_to_sparql import append_query_debug_record, build_query_plan, execute_query_plan
+from text_to_sparql import (
+    append_query_debug_record,
+    build_query_plan,
+    execute_query_plan,
+    export_cross_plan_catalog,
+    export_planner_generalization_catalog_v2,
+)
 
 logger = logging.getLogger(__name__)
 TBOX_PATH = OPERATIONAL_TBOX_PATH
@@ -75,21 +95,53 @@ def parse_args() -> argparse.Namespace:
 
 
 def _load_dataset_payload(qa_file: Path):
-    return json.loads(qa_file.read_text(encoding="utf-8"))
+    return json.loads(qa_file.read_text(encoding="utf-8-sig"))
 
 
 def _is_bilingual_payload(payload) -> bool:
     return isinstance(payload, dict) and isinstance(payload.get("pairs"), list)
 
 
+def _path_equals(lhs: Path, rhs: Path) -> bool:
+    return lhs.resolve() == rhs.resolve()
+
+
+def _resolve_bilingual_mode(qa_file: Path, payload) -> str | None:
+    if not _is_bilingual_payload(payload):
+        return None
+    if _path_equals(qa_file, QA_8070_QUICK_REF_BILINGUAL_V2_PATH):
+        return "quick_ref_v2_mode"
+    if _path_equals(qa_file, QA_CROSS_PATH):
+        return "cross_manual_mode"
+    if _path_equals(qa_file, QA_8070_QUICK_REF_BILINGUAL_PATH):
+        return "quick_ref_mode"
+    return "baseline_bilingual_mode"
+
+
+def _default_decision_path_for_report(report_path: Path) -> Path:
+    report_name = report_path.name
+    if report_name.endswith("_eval_report.json"):
+        return report_path.with_name(report_name.replace("_eval_report.json", "_decision_report.json"))
+    if report_name.endswith("_report.json"):
+        return report_path.with_name(report_name.replace("_report.json", "_decision_report.json"))
+    return report_path.with_name(f"{report_path.stem}_decision.json")
+
+
 def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analysis_path: Path | None, debug_report_path: Path | None) -> tuple[Path, Path, Path]:
     payload = _load_dataset_payload(qa_file)
-    is_multihop = qa_file.resolve() == QA_MULTIHOP_PATH.resolve()
-    is_bilingual = _is_bilingual_payload(payload)
-    is_quick_ref_bilingual = qa_file.resolve() == QA_8070_QUICK_REF_BILINGUAL_PATH.resolve()
+    is_multihop = _path_equals(qa_file, QA_MULTIHOP_PATH)
+    bilingual_mode = _resolve_bilingual_mode(qa_file, payload)
+    is_bilingual = bilingual_mode is not None
+    is_quick_ref_bilingual = bilingual_mode == "quick_ref_mode"
+    is_quick_ref_v2 = bilingual_mode == "quick_ref_v2_mode"
+    is_cross = bilingual_mode == "cross_manual_mode"
     resolved_report = report_path or (
         MULTIHOP_EVAL_REPORT_PATH
         if is_multihop
+        else QUICK_REF_V2_EVAL_REPORT_PATH
+        if is_quick_ref_v2
+        else CROSS_EVAL_REPORT_PATH
+        if is_cross
         else QUICK_REF_BILINGUAL_EVAL_REPORT_PATH
         if is_quick_ref_bilingual
         else BILINGUAL_EVAL_REPORT_PATH
@@ -101,6 +153,10 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
     resolved_failure = failure_analysis_path or (
         MULTIHOP_PLANNER_DECISION_REPORT_PATH
         if is_multihop
+        else _default_decision_path_for_report(QUICK_REF_V2_EVAL_REPORT_PATH)
+        if is_quick_ref_v2
+        else _default_decision_path_for_report(CROSS_EVAL_REPORT_PATH)
+        if is_cross
         else QUICK_REF_INTEGRATION_DECISION_REPORT_PATH
         if is_quick_ref_bilingual
         else BILINGUAL_DECISION_REPORT_PATH
@@ -110,6 +166,10 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
     resolved_debug = debug_report_path or (
         MULTIHOP_DEBUG_REPORT_PATH
         if is_multihop
+        else QUICK_REF_V2_DEBUG_REPORT_PATH
+        if is_quick_ref_v2
+        else CROSS_DEBUG_REPORT_PATH
+        if is_cross
         else QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH
         if is_quick_ref_bilingual
         else BILINGUAL_DEBUG_REPORT_PATH
@@ -147,6 +207,7 @@ class EvaluadorRAG:
         self.canonical_entity_map = self._cargar_canonical_entity_map()
         self.dataset_payload = _load_dataset_payload(self.qa_file)
         self.is_bilingual_dataset = _is_bilingual_payload(self.dataset_payload)
+        self.bilingual_mode = _resolve_bilingual_mode(self.qa_file, self.dataset_payload)
 
     def _cargar_esquema_condensado(self) -> str:
         if not SCHEMA_CONDENSED_PATH.exists():
@@ -189,6 +250,273 @@ class EvaluadorRAG:
                 continue
             tokens.append(token)
         return tokens
+
+    def _canonicalizar_respuesta_bilingue(self, text: str) -> str:
+        normalized = self._normalizar_texto(text)
+        replacements = [
+            ("el manual indica", ""),
+            ("the manual indicates", ""),
+            ("las condiciones al entrar al modo", "the conditions when entering the mode"),
+            ("punto de interrupcion", "interruption point"),
+            ("historial de funciones g y m activas", "history of active g and m functions"),
+            ("funciones g y m activas", "active g and m functions"),
+            ("avance fijado por el oem", "feedrate set by the oem"),
+            ("si no se define el avance", "if the feedrate is not defined"),
+            ("movimiento de palpado", "probing movement"),
+            ("mensaje de validacion", "validation message"),
+            ("al pulsar start", "pressing the start key"),
+            ("cambiar el atributo modificable", "change the modifiable attribute"),
+            ("ficheros seleccionados", "selected files"),
+            ("archivos", "files"),
+            ("no puedan modificarse", "cannot be modified"),
+            ("columna de atributos", "attributes column"),
+            ("no hace falta seleccionar el bloque de parada", "there is no need to select the stop block"),
+            ("bloque donde se interrumpio el programa", "block where the program was interrupted"),
+            ("modelo de fresadora", "milling model"),
+            ("longitud de las fresas", "length of the endmills"),
+            ("herramientas de torno", "lathe tools"),
+            ("modelo de torno en plano", "lathe model plane"),
+            ("cualquier herramienta", "any tool"),
+            ("tabla de utillajes", "fixture table"),
+            ("decalajes de sujecion", "clamp offsets"),
+            ("programa pieza", "part-program"),
+            ("devuelve el entero mas uno", "returns the integer plus one"),
+            ("el mismo numero si ya es entero", "the same number if it is already an integer"),
+            ("operario", "operator"),
+            ("panel de operador", "operator panel"),
+            ("inspeccion de herramienta", "tool inspection"),
+            ("menu vertical de softkeys", "vertical softkey menu"),
+            ("selector set-up", "set-up selector"),
+            ("apertura puertas", "doors"),
+            ("no es necesario", "it is not necessary"),
+            ("se paro por una emergencia", "was stopped due to an emergency"),
+            ("tabla de parametros comunes", "common parameters table"),
+            ("esta compartida entre todos los canales", "is shared across all channels"),
+            ("la funcion", "the function"),
+            ("funcion", "function"),
+            ("la instruccion", "the instruction"),
+            ("instruccion", "instruction"),
+            ("la tecla", "the key"),
+            ("tecla", "key"),
+            ("se utiliza para", "is used for"),
+            ("se usa para", "is used for"),
+            ("sirve para mostrar", "is used to display"),
+            ("mostrar la ayuda del cnc", "display cnc help"),
+            ("ayuda del cnc", "cnc help"),
+            ("arranca el husillo en sentido antihorario", "starts the spindle counterclockwise"),
+            ("modo de bucle abierto", "open loop mode"),
+            ("husillo maestro", "master spindle"),
+            ("cero pieza", "part zero"),
+            ("cinematica de la mesa", "table kinematics"),
+            ("cinematica", "kinematics"),
+            ("palpado", "probing"),
+            ("hacer contacto", "making contact"),
+            ("no hacer contacto", "not making contact"),
+            ("decalajes de cero absolutos", "absolute zero offsets"),
+            ("decalajes de cero", "zero offsets"),
+            ("tabla de parametros comunes", "common parameters table"),
+            ("parametros comunes", "common parameters"),
+            ("todos los canales", "all channels"),
+            ("busqueda de referencia", "home search"),
+            ("plato divisor", "rotary table"),
+            ("modo utilidades", "utilities mode"),
+            ("borrar el programa", "erase the program"),
+            ("borrar el programa", "erase the program"),
+            ("simulacion de trayectoria teorica", "theoretical travel simulation"),
+            ("trayectoria teorica", "theoretical travel"),
+            ("plano principal", "main plane"),
+            ("debe utilizarse", "should be used"),
+            ("debe programarse", "must be programmed"),
+            ("debe seleccionarse", "must be selected"),
+            ("pulse", "press"),
+        ]
+        for source, target in replacements:
+            normalized = normalized.replace(source, target)
+        return re.sub(r"\s+", " ", normalized).strip()
+
+    def _answer_match_mode(self, expected_answer: str, synthesized_answer: str) -> str:
+        expected_norm = self._canonicalizar_respuesta_bilingue(expected_answer)
+        answer_norm = self._canonicalizar_respuesta_bilingue(synthesized_answer)
+        if not expected_norm:
+            return "not_applicable"
+        if not answer_norm:
+            return "none"
+        expected_tokens = {
+            token
+            for token in expected_norm.split()
+            if len(token) >= 2 and token not in STOPWORDS
+        }
+        answer_tokens = {
+            token
+            for token in answer_norm.split()
+            if len(token) >= 2 and token not in STOPWORDS
+        }
+        overlap = (
+            len(expected_tokens.intersection(answer_tokens)) / len(expected_tokens)
+            if expected_tokens
+            else 0.0
+        )
+        ratio = SequenceMatcher(None, expected_norm, answer_norm).ratio()
+        if expected_norm in answer_norm or answer_norm in expected_norm or ratio >= 0.92 or overlap >= 0.9:
+            return "exact"
+        if ratio >= 0.75 or overlap >= 0.7:
+            return "high_partial"
+        if ratio >= 0.45 or overlap >= 0.4:
+            return "partial"
+        if ratio >= 0.25 or overlap >= 0.2:
+            return "weak"
+        return "none"
+
+    def _has_runner_blocker(self, result: dict) -> bool:
+        return bool(result.get("sparql_error") or result.get("synthesis_error"))
+
+    def _answer_match_sufficient(self, match_mode: str) -> bool:
+        return match_mode in {"exact", "high_partial", "partial"}
+
+    def _classify_cross_failure_cause(
+        self,
+        *,
+        same_intent: bool,
+        same_plan_family: bool,
+        same_sparql_signature: bool,
+        answer_language_ok: bool,
+        es_result: dict,
+        en_result: dict,
+        es_match_mode: str,
+        en_match_mode: str,
+    ) -> str | None:
+        if self._has_runner_blocker(es_result) or self._has_runner_blocker(en_result):
+            return "benchmark_runner_blocker"
+        if not all([same_intent, same_plan_family, same_sparql_signature, answer_language_ok]):
+            return "cross_planner_gap"
+        es_rows = len(es_result.get("retrieved_results", []))
+        en_rows = len(en_result.get("retrieved_results", []))
+        if es_rows == 0 and en_rows == 0:
+            return "cross_document_coverage_gap"
+        if not all([self._answer_match_sufficient(es_match_mode), self._answer_match_sufficient(en_match_mode)]):
+            if es_rows > 0 or en_rows > 0:
+                return "cross_surface_gap"
+            return "cross_linking_gap"
+        return None
+
+    def _planner_failure_cause(self, row: dict) -> str | None:
+        if row.get("has_runner_blocker"):
+            return "benchmark_runner_blocker"
+        if not row.get("same_anchor_resolution"):
+            return "anchor_normalization_gap"
+        if not row.get("same_plan_family"):
+            return "family_selection_gap"
+        if not row.get("same_sparql_signature"):
+            return "sparql_convergence_gap"
+        if self.bilingual_mode == "cross_manual_mode" and not row.get("cross_case_ok"):
+            return "cross_family_missing"
+        return None
+
+    def _alignment_report_path_for_mode(self, mode: str | None) -> Path | None:
+        if mode == "quick_ref_v2_mode":
+            return QUICK_REF_V2_PLANNER_ALIGNMENT_REPORT_PATH
+        if mode == "cross_manual_mode":
+            return CROSS_PLANNER_ALIGNMENT_REPORT_PATH
+        return None
+
+    def _write_alignment_report(self, resultados: list[dict], mode: str | None) -> None:
+        report_path = self._alignment_report_path_for_mode(mode)
+        if report_path is None:
+            return
+        rows: list[dict] = []
+        for pair in resultados:
+            for question_language in ("es", "en"):
+                question_result = pair["questions"][question_language]
+                rows.append(
+                    {
+                        "case_id": pair["case_id"],
+                        "question_language": question_language,
+                        "normalized_question": question_result.get("normalized_question"),
+                        "expected_pair_id": pair["case_id"],
+                        "expected_plan_family": pair.get("expected_plan_family"),
+                        "predicted_intent": question_result.get("intent"),
+                        "predicted_anchor": question_result.get("anchor_text"),
+                        "predicted_plan_family": question_result.get("plan_family"),
+                        "sparql_signature": question_result.get("sparql_signature"),
+                        "pair_alignment_status": "aligned" if pair.get("pair_alignment_ok") else "misaligned",
+                        "failure_cause": self._planner_failure_cause(pair),
+                    }
+                )
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    def _write_t22_summary_if_ready(self) -> None:
+        required_paths = [
+            GENERALIZATION_EVAL_REPORT_PATH,
+            MULTIHOP_EVAL_REPORT_PATH,
+            QUICK_REF_V2_EVAL_REPORT_PATH,
+            CROSS_EVAL_REPORT_PATH,
+        ]
+        if not all(path.exists() for path in required_paths):
+            return
+        generalization = json.loads(GENERALIZATION_EVAL_REPORT_PATH.read_text(encoding="utf-8"))
+        multihop = json.loads(MULTIHOP_EVAL_REPORT_PATH.read_text(encoding="utf-8"))
+        quick_ref = json.loads(QUICK_REF_V2_EVAL_REPORT_PATH.read_text(encoding="utf-8"))
+        cross = json.loads(CROSS_EVAL_REPORT_PATH.read_text(encoding="utf-8"))
+        t21_decision = (
+            json.loads(T21_READINESS_DECISION_REPORT_PATH.read_text(encoding="utf-8"))
+            if T21_READINESS_DECISION_REPORT_PATH.exists()
+            else {}
+        )
+        quick_summary = quick_ref.get("summary", {})
+        cross_summary = cross.get("summary", {})
+        baseline_ok = (
+            generalization.get("summary", {}).get("successful_questions") == 13
+            and multihop.get("summary", {}).get("successful_questions") == 7
+        )
+        quick_ok = all(
+            [
+                quick_summary.get("same_plan_family_count", 0) >= 18,
+                quick_summary.get("same_sparql_signature_count", 0) >= 18,
+                quick_summary.get("successful_pairs", 0) >= 18,
+                quick_summary.get("answer_language_ok_count", 0) == quick_summary.get("total_pairs", 0) == 20,
+            ]
+        )
+        cross_ok = all(
+            [
+                cross_summary.get("pair_alignment_ok_count", 0) >= 9,
+                cross_summary.get("cross_case_ok_count", 0) >= 9,
+                cross_summary.get("answer_language_ok_count", 0) == cross_summary.get("total_pairs", 0) == 11,
+            ]
+        )
+        if baseline_ok and quick_ok and cross_ok:
+            readiness = "ready_for_cleanup_and_next_manual"
+        elif baseline_ok and (quick_ok or cross_ok):
+            readiness = "ready_for_small_final_planner_follow_up"
+        else:
+            readiness = "not_ready_yet"
+        planner_eval = {
+            "baseline": {
+                "generalization_successful_questions": generalization.get("summary", {}).get("successful_questions"),
+                "multihop_successful_questions": multihop.get("summary", {}).get("successful_questions"),
+                "baseline_ok": baseline_ok,
+            },
+            "quick_ref_v2": quick_summary,
+            "cross_manual": cross_summary,
+            "t21_baseline_decision": t21_decision,
+        }
+        planner_decision = {
+            "readiness_state": readiness,
+            "baseline_ok": baseline_ok,
+            "quick_ref_gate_ok": quick_ok,
+            "cross_gate_ok": cross_ok,
+            "recommended_next_step": (
+                "cleanup_and_next_manual"
+                if readiness == "ready_for_cleanup_and_next_manual"
+                else "small_final_planner_follow_up"
+                if readiness == "ready_for_small_final_planner_follow_up"
+                else "planner_hardening_continues"
+            ),
+        }
+        T22_PLANNER_EVAL_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        T22_PLANNER_EVAL_REPORT_PATH.write_text(json.dumps(planner_eval, ensure_ascii=False, indent=2), encoding="utf-8")
+        T22_PLANNER_DECISION_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        T22_PLANNER_DECISION_REPORT_PATH.write_text(json.dumps(planner_decision, ensure_ascii=False, indent=2), encoding="utf-8")
 
     def _cargar_dataset(self) -> list[dict]:
         payload = self.dataset_payload
@@ -488,7 +816,12 @@ class EvaluadorRAG:
             pares = pares[:limit]
         self.debug_report_path.parent.mkdir(parents=True, exist_ok=True)
         self.debug_report_path.write_text("[]", encoding="utf-8")
-        print(f"Starting bilingual evaluation of {len(pares)} paired cases using {self.qa_file}...\n")
+        mode = self.bilingual_mode or "baseline_bilingual_mode"
+        if mode == "quick_ref_v2_mode":
+            export_planner_generalization_catalog_v2()
+        elif mode == "cross_manual_mode":
+            export_cross_plan_catalog()
+        print(f"Starting bilingual evaluation of {len(pares)} paired cases using {self.qa_file} [{mode}]...\n")
 
         resultados: list[dict] = []
         debug_rows: list[dict] = []
@@ -529,7 +862,33 @@ class EvaluadorRAG:
                 or set(es_result.get("matching_uris_normalized", [])) == set(en_result.get("matching_uris_normalized", []))
             )
             answer_language_ok = es_result.get("answer_language") == "es" and en_result.get("answer_language") == "en"
-            pair_ok = all([same_intent, same_plan_family, same_sparql_signature, answer_language_ok])
+            es_answer_match_mode = self._answer_match_mode(pair.get("expected_answer", ""), es_result.get("synthesized_answer", ""))
+            en_answer_match_mode = self._answer_match_mode(pair.get("expected_answer", ""), en_result.get("synthesized_answer", ""))
+            has_runner_blocker = self._has_runner_blocker(es_result) or self._has_runner_blocker(en_result)
+            pair_alignment_ok = all([same_intent, same_anchor_resolution, same_plan_family, same_sparql_signature, answer_language_ok])
+            answer_match_ok = all([
+                self._answer_match_sufficient(es_answer_match_mode),
+                self._answer_match_sufficient(en_answer_match_mode),
+            ])
+            pair_ok = all([pair_alignment_ok, answer_match_ok, not has_runner_blocker])
+            cross_case_ok = pair_ok
+            dominant_failure_cause = self._classify_cross_failure_cause(
+                same_intent=same_intent,
+                same_plan_family=same_plan_family,
+                same_sparql_signature=same_sparql_signature,
+                answer_language_ok=answer_language_ok,
+                es_result=es_result,
+                en_result=en_result,
+                es_match_mode=es_answer_match_mode,
+                en_match_mode=en_answer_match_mode,
+            )
+            planner_failure_cause = self._planner_failure_cause({
+                "has_runner_blocker": has_runner_blocker,
+                "same_anchor_resolution": same_anchor_resolution,
+                "same_plan_family": same_plan_family,
+                "same_sparql_signature": same_sparql_signature,
+                "cross_case_ok": cross_case_ok,
+            })
             result_row = {
                 "case_id": case_id,
                 "category": pair.get("category"),
@@ -540,7 +899,14 @@ class EvaluadorRAG:
                 "same_plan_family": same_plan_family,
                 "same_sparql_signature": same_sparql_signature,
                 "answer_language_ok": answer_language_ok,
+                "es_answer_match_mode": es_answer_match_mode,
+                "en_answer_match_mode": en_answer_match_mode,
+                "has_runner_blocker": has_runner_blocker,
+                "pair_alignment_ok": pair_alignment_ok,
                 "pair_ok": pair_ok,
+                "cross_case_ok": cross_case_ok,
+                "dominant_failure_cause": dominant_failure_cause,
+                "failure_cause": planner_failure_cause,
                 "questions": {
                     "es": es_result,
                     "en": en_result,
@@ -551,11 +917,13 @@ class EvaluadorRAG:
             print(
                 f"same_intent={same_intent} | same_anchor={same_anchor_resolution} | "
                 f"same_plan_family={same_plan_family} | same_sparql={same_sparql_signature} | "
-                f"answer_language_ok={answer_language_ok}"
+                f"answer_language_ok={answer_language_ok} | es_match={es_answer_match_mode} | "
+                f"en_match={en_answer_match_mode} | blocker={has_runner_blocker}"
             )
             if sleep_seconds > 0:
                 time.sleep(sleep_seconds)
 
+        benchmark_runner_blocker_count = sum(1 for row in resultados if row["has_runner_blocker"])
         summary = {
             "total_pairs": len(resultados),
             "successful_pairs": sum(1 for row in resultados if row["pair_ok"]),
@@ -564,6 +932,17 @@ class EvaluadorRAG:
             "same_plan_family_count": sum(1 for row in resultados if row["same_plan_family"]),
             "same_sparql_signature_count": sum(1 for row in resultados if row["same_sparql_signature"]),
             "answer_language_ok_count": sum(1 for row in resultados if row["answer_language_ok"]),
+            "pair_alignment_ok_count": sum(1 for row in resultados if row["pair_alignment_ok"]),
+            "cross_case_ok_count": sum(1 for row in resultados if row["cross_case_ok"]),
+            "benchmark_runner_blocker_count": benchmark_runner_blocker_count,
+            "es_answer_match_mode_counts": dict(Counter(row["es_answer_match_mode"] for row in resultados)),
+            "en_answer_match_mode_counts": dict(Counter(row["en_answer_match_mode"] for row in resultados)),
+            "dominant_failure_cause_counts": dict(Counter(
+                row["dominant_failure_cause"]
+                for row in resultados
+                if row.get("dominant_failure_cause")
+            )),
+            "bilingual_mode": mode,
             "dataset_path": str(self.qa_file),
             "abox_path": str(ABOX_PATH),
             "multilingual_runtime": True,
@@ -572,14 +951,54 @@ class EvaluadorRAG:
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
         self.report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
         self.debug_report_path.write_text(json.dumps(debug_rows, ensure_ascii=False, indent=2), encoding="utf-8")
+        self._write_alignment_report(resultados, mode)
 
-        decision = {
-            "summary": summary,
-            "failing_cases": [row["case_id"] for row in resultados if not row["pair_ok"]],
-            "recommended_next_change": "lexical_surface_alignment" if summary["successful_pairs"] < summary["total_pairs"] else "promote_bilingual_pairs",
-        }
+        if mode == "quick_ref_v2_mode":
+            quick_ref_gate_solid = all([
+                summary["answer_language_ok_count"] == summary["total_pairs"],
+                summary["same_plan_family_count"] / summary["total_pairs"] >= 0.9 if summary["total_pairs"] else False,
+                summary["same_sparql_signature_count"] / summary["total_pairs"] >= 0.9 if summary["total_pairs"] else False,
+                summary["successful_pairs"] / summary["total_pairs"] >= 0.9 if summary["total_pairs"] else False,
+                summary["benchmark_runner_blocker_count"] == 0,
+            ])
+            decision = {
+                "summary": summary,
+                "gate_name": "quick_ref_v2",
+                "gate_status": "solid" if quick_ref_gate_solid else "not_solid",
+                "failing_cases": [row["case_id"] for row in resultados if not row["pair_ok"]],
+                "recommended_next_change": "promote_quick_ref_gate" if quick_ref_gate_solid else "lexical_surface_alignment",
+            }
+        elif mode == "cross_manual_mode":
+            dominant_failure_cause = None
+            if summary["dominant_failure_cause_counts"]:
+                dominant_failure_cause = max(
+                    summary["dominant_failure_cause_counts"].items(),
+                    key=lambda item: item[1],
+                )[0]
+            cross_gate_reasonable = all([
+                summary["pair_alignment_ok_count"] / summary["total_pairs"] >= 0.9 if summary["total_pairs"] else False,
+                summary["cross_case_ok_count"] / summary["total_pairs"] >= 0.9 if summary["total_pairs"] else False,
+                summary["benchmark_runner_blocker_count"] == 0,
+                dominant_failure_cause not in {"benchmark_runner_blocker"},
+            ])
+            decision = {
+                "summary": summary,
+                "gate_name": "cross_manual",
+                "gate_status": "reasonably_good" if cross_gate_reasonable else "below_threshold",
+                "failing_cases": [row["case_id"] for row in resultados if not row["cross_case_ok"]],
+                "dominant_failure_cause": dominant_failure_cause,
+                "recommended_next_change": "promote_cross_gate" if cross_gate_reasonable else "cross_manual_follow_up",
+            }
+        else:
+            decision = {
+                "summary": summary,
+                "gate_name": mode,
+                "failing_cases": [row["case_id"] for row in resultados if not row["pair_ok"]],
+                "recommended_next_change": "lexical_surface_alignment" if summary["successful_pairs"] < summary["total_pairs"] else "promote_bilingual_pairs",
+            }
         self.failure_analysis_path.parent.mkdir(parents=True, exist_ok=True)
         self.failure_analysis_path.write_text(json.dumps(decision, ensure_ascii=False, indent=2), encoding="utf-8")
+        self._write_t22_summary_if_ready()
         return report, decision
 
     def ejecutar_evaluacion(self, *, limit: int = 0, sleep_seconds: float = 0.0) -> tuple[dict, dict]:

@@ -1,0 +1,178 @@
+{
+  "task": "T21_readiness_validation",
+  "timestamp_utc_hint": "2026-03-24",
+  "benchmark_gates": {
+    "quick_ref_v2": "data/golden_set/QA_8070_quick_ref_bilingual_v2.json",
+    "cross_manual": "data/golden_set/QA_cross.json"
+  },
+  "benchmark_integrity_fixes_applied": [
+    "QA_8070_quick_ref_bilingual_v2.json was normalized into a single valid JSON payload without citation markers.",
+    "QA_cross.json was rewritten as valid UTF-8 JSON.",
+    "qa_evaluator.py now reads JSON datasets with utf-8-sig to avoid BOM-related runner blockers."
+  ],
+  "baseline": {
+    "qa_canonical_successful_questions": 13,
+    "qa_canonical_total_questions": 13,
+    "qa_multihop_successful_questions": 7,
+    "qa_multihop_total_questions": 7,
+    "status": "stable"
+  },
+  "quick_ref_v2_gate": {
+    "status": "not_solid",
+    "metrics": {
+      "answer_language_ok_count": 20,
+      "total_pairs": 20,
+      "same_plan_family_count": 0,
+      "same_sparql_signature_count": 2,
+      "pair_ok_count": 0,
+      "benchmark_runner_blocker_count": 0
+    },
+    "rates": {
+      "same_plan_family_rate": 0.0,
+      "same_sparql_signature_rate": 0.1,
+      "pair_ok_rate": 0.0
+    },
+    "thresholds": {
+      "answer_language_ok_count_equals_total_pairs": true,
+      "same_plan_family_rate_at_least": 0.9,
+      "same_sparql_signature_rate_at_least": 0.9,
+      "pair_ok_rate_at_least": 0.9,
+      "benchmark_runner_blocker_count_equals": 0
+    },
+    "dominant_failure_pattern": "planner_generalization_gap",
+    "top_failing_plan_families": [
+      [
+        "quick_ref_high_level_instructions_multi_hop",
+        2
+      ],
+      [
+        "quick_ref_mdi_mda_conditions_lookup",
+        1
+      ],
+      [
+        "quick_ref_canned_cycles_multi_hop",
+        1
+      ],
+      [
+        "quick_ref_semi_auto_calibration_conditional",
+        1
+      ],
+      [
+        "quick_ref_file_protection_lookup",
+        1
+      ],
+      [
+        "quick_ref_key_purpose_lookup",
+        1
+      ],
+      [
+        "quick_ref_simulation_conditions_multi_hop",
+        1
+      ],
+      [
+        "quick_ref_m_functions_lookup",
+        1
+      ]
+    ],
+    "top_failing_categories": [
+      [
+        "high_level_language",
+        3
+      ],
+      [
+        "technological_functions",
+        3
+      ],
+      [
+        "canned_cycles",
+        2
+      ],
+      [
+        "tool_calibration",
+        2
+      ],
+      [
+        "utilities_mode",
+        2
+      ],
+      [
+        "mdi_mda_mode",
+        1
+      ],
+      [
+        "monitor_keyboard",
+        1
+      ],
+      [
+        "simulation",
+        1
+      ]
+    ]
+  },
+  "cross_gate": {
+    "status": "below_threshold",
+    "metrics": {
+      "pair_alignment_ok_count": 0,
+      "cross_case_ok_count": 0,
+      "total_pairs": 11,
+      "benchmark_runner_blocker_count": 0
+    },
+    "rates": {
+      "pair_alignment_ok_rate": 0.0,
+      "cross_case_ok_rate": 0.0
+    },
+    "thresholds": {
+      "pair_alignment_ok_rate_at_least": 0.9,
+      "cross_case_ok_rate_at_least": 0.9,
+      "benchmark_runner_blocker_count_equals": 0
+    },
+    "dominant_failure_causes": [
+      [
+        "cross_planner_gap",
+        11
+      ]
+    ],
+    "top_failing_plan_families": [
+      [
+        "cross_manual_home_search_procedure",
+        1
+      ],
+      [
+        "cross_manual_tool_inspection_conditional",
+        1
+      ],
+      [
+        "cross_manual_simulation_multi_hop",
+        1
+      ],
+      [
+        "cross_manual_incremental_jog_procedure",
+        1
+      ],
+      [
+        "cross_manual_block_search_conditional",
+        1
+      ],
+      [
+        "cross_manual_c_axis_instruction",
+        1
+      ],
+      [
+        "cross_manual_file_protection_multi_hop",
+        1
+      ],
+      [
+        "cross_manual_mdi_history_retention",
+        1
+      ]
+    ]
+  },
+  "final_state": "not_ready_yet",
+  "recommended_t22": "targeted_quick_ref_v2_and_cross_manual_generalization_follow_up",
+  "rationale": [
+    "Baseline A218 remains stable at QA_canonical 13/13 and QA_multihop 7/7.",
+    "Quick-ref v2 does not meet the strict readiness threshold because same_plan_family and pair_ok stay far below 90%.",
+    "Cross-manual reasoning also remains below threshold, but the failures are attributable to planner/generalization rather than to a broken benchmark gate.",
+    "Cleanup can wait until the quick-ref v2 and cross-manual generalization gaps are addressed with a small, targeted follow-up."
+  ]
+}

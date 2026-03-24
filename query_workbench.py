@@ -12,10 +12,12 @@ if str(REPO_ROOT) not in sys.path:
 RETRIEVAL_DIR = REPO_ROOT / 'src' / '8_retrieval'
 if str(RETRIEVAL_DIR) not in sys.path:
     sys.path.insert(0, str(RETRIEVAL_DIR))
+DATABASE_DIR = REPO_ROOT / 'src' / '7_database'
+if str(DATABASE_DIR) not in sys.path:
+    sys.path.insert(0, str(DATABASE_DIR))
 
-from rdflib import Graph
-
-from artifact_contracts import MULTIHOP_DEBUG_REPORT_PATH, OPERATIONAL_ABOX_PATH, OPERATIONAL_TBOX_PATH, SCHEMA_CONDENSED_PATH, SYNTHESIS_DEBUG_REPORT_PATH
+from artifact_contracts import MULTIHOP_DEBUG_REPORT_PATH, OPERATIONAL_ABOX_PATH, SCHEMA_CONDENSED_PATH, SYNTHESIS_DEBUG_REPORT_PATH
+from graph_store import GraphDBGraphStore, RDFLibGraphStore
 from synthesis_pipeline import append_synthesis_debug_record, synthesize_answer
 from text_to_sparql import append_query_debug_record, build_query_plan, execute_query_plan
 
@@ -23,17 +25,21 @@ from text_to_sparql import append_query_debug_record, build_query_plan, execute_
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Interactive workbench for the shared planner and synthesis layer over the linked operational graph.')
     parser.add_argument('question', help='Natural-language question to inspect.')
+    parser.add_argument('--backend', choices=['rdflib', 'graphdb'], default='rdflib', help='Execution backend for SPARQL queries.')
     parser.add_argument('--with-synthesis', action='store_true', help='Run the shared synthesis pipeline and show evidence selection, normalization and rendering.')
     parser.add_argument('--max-rows', type=int, default=20, help='Maximum retrieved rows to print.')
     parser.add_argument('--save-debug', action='store_true', help='Append this run to the debug reports.')
     return parser.parse_args()
 
 
-def load_graph() -> Graph:
-    graph = Graph()
-    graph.parse(OPERATIONAL_TBOX_PATH, format='turtle')
-    graph.parse(OPERATIONAL_ABOX_PATH, format='turtle')
-    return graph
+def load_reference_graph():
+    return RDFLibGraphStore().raw_graph()
+
+
+def load_execution_graph(backend: str):
+    if backend == 'graphdb':
+        return GraphDBGraphStore()
+    return RDFLibGraphStore().raw_graph()
 
 
 def load_schema() -> str:
@@ -67,10 +73,11 @@ def provisional_gap(plan, execution, synthesis_trace: dict | None) -> str:
 
 def main() -> None:
     args = parse_args()
-    graph = load_graph()
+    graph = load_reference_graph()
+    execution_graph = load_execution_graph(args.backend)
     schema = load_schema()
     plan = build_query_plan(args.question, schema, graph)
-    execution = execute_query_plan(plan, graph)
+    execution = execute_query_plan(plan, execution_graph)
     synthesis_trace = None
     synthesized_answer = None
     if args.with_synthesis:
@@ -94,6 +101,7 @@ def main() -> None:
         'recommended_action': plan.recommended_action,
         'final_boundedness': plan.final_boundedness,
         'abox_path': str(OPERATIONAL_ABOX_PATH),
+        'backend': args.backend,
         'provisional_gap': gap,
         'query_plan': asdict(plan),
         'trace': asdict(execution.trace),

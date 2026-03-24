@@ -10,11 +10,17 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
+
 INGESTION_DIR = REPO_ROOT / "src" / "1_ingestion"
 if str(INGESTION_DIR) not in sys.path:
     sys.path.insert(0, str(INGESTION_DIR))
 
+RETRIEVAL_DIR = Path(__file__).resolve().parent
+if str(RETRIEVAL_DIR) not in sys.path:
+    sys.path.insert(0, str(RETRIEVAL_DIR))
+
 from artifact_contracts import MULTILINGUAL_LEXICON_PATH
+from bilingual_text_canonicalizer import canonicalize_technical_surface
 from language_utils import detect_language, normalize_text
 
 FULL_QUESTION_OVERRIDES = {
@@ -320,6 +326,40 @@ TECHNICAL_TOKEN_PATTERNS = {
     "ctrl+f12": r"\[?\s*ctrl\s*\]?\s*\+?\s*\[?\s*f12\s*\]?",
 }
 
+STRICT_RUNTIME_CUES = [
+    "8070",
+    "cnc",
+    "mdi",
+    "mda",
+    "edisimu",
+    "softkey",
+    "tecla",
+    "keyboard",
+    "monitor",
+    "jog",
+    "home search",
+    "busqueda de referencia",
+    "busqueda de bloque",
+    "block search",
+    "tool inspection",
+    "inspeccion de herramienta",
+    "g code",
+    "codigo g",
+    "g54",
+    "g83",
+    "g100",
+    "g103",
+    "g161",
+    "m04",
+    "#cax",
+    "ctrl",
+    "f12",
+    "utilities mode",
+    "modo utilidades",
+    "fagorcnc",
+    "users prg",
+]
+
 
 @lru_cache(maxsize=1)
 def load_multilingual_lexicon(path: str = str(MULTILINGUAL_LEXICON_PATH)) -> dict[str, Any]:
@@ -330,7 +370,7 @@ def load_multilingual_lexicon(path: str = str(MULTILINGUAL_LEXICON_PATH)) -> dic
     return payload if isinstance(payload, dict) else {"entries": [], "surface_index": {}}
 
 
-def _repair_mojibake(text: str) -> str:
+def repair_question_text(text: str) -> str:
     repaired = text or ""
     for _ in range(3):
         if "Ã" not in repaired and "Â" not in repaired:
@@ -345,8 +385,8 @@ def _repair_mojibake(text: str) -> str:
     return repaired
 
 
-def _replace_phrases(question: str) -> str:
-    repaired = _repair_mojibake(question)
+def canonicalize_query_surface(question: str, language: str | None = None) -> str:
+    repaired = repair_question_text(question)
     normalized = normalize_text(repaired)
     if normalized in FULL_QUESTION_OVERRIDES:
         return FULL_QUESTION_OVERRIDES[normalized]
@@ -372,13 +412,14 @@ def _surface_regex(surface: str) -> str:
 
 
 def _lexicon_hits(question: str, lexicon: dict[str, Any]) -> list[dict[str, Any]]:
-    normalized_question = normalize_text(_repair_mojibake(question))
+    normalized_question = normalize_text(repair_question_text(question))
     hits: list[dict[str, Any]] = []
     surface_index = lexicon.get("surface_index", {})
     for surface, candidates in surface_index.items():
         if not isinstance(surface, str) or not _surface_should_match(surface):
             continue
-        if not re.search(_surface_regex(normalize_text(surface)), normalized_question):
+        normalized_surface = normalize_text(surface)
+        if not re.search(_surface_regex(normalized_surface), normalized_question):
             continue
         filtered_candidates = []
         for candidate in candidates[:6]:
@@ -402,41 +443,69 @@ def _lexicon_hits(question: str, lexicon: dict[str, Any]) -> list[dict[str, Any]
     return deduped
 
 
-def _extract_anchor_groups(question: str) -> list[str]:
-    normalized = normalize_text(question)
+def _extract_anchor_groups(*question_variants: str) -> list[str]:
+    normalized_variants = [normalize_text(question) for question in question_variants if question]
     groups: list[str] = []
     for group_id, phrases in ANCHOR_GROUP_RULES.items():
-        if any(phrase in normalized for phrase in phrases):
+        if any(any(phrase in normalized for phrase in phrases) for normalized in normalized_variants):
             groups.append(group_id)
     return groups
 
 
-def _extract_technical_tokens(question: str) -> list[str]:
-    normalized = normalize_text(question)
+def _extract_technical_tokens(*question_variants: str) -> list[str]:
+    normalized_variants = [normalize_text(question) for question in question_variants if question]
     tokens: list[str] = []
     for token, pattern in TECHNICAL_TOKEN_PATTERNS.items():
-        if re.search(pattern, normalized):
+        if any(re.search(pattern, normalized) for normalized in normalized_variants):
             tokens.append(token)
     return tokens
 
 
+def _infer_runtime_context(
+    *,
+    anchor_groups: list[str],
+    technical_tokens: list[str],
+    canonical_question: str,
+) -> dict[str, Any]:
+    has_runtime_cue = any(cue in canonical_question for cue in STRICT_RUNTIME_CUES)
+    return {
+        "strict_runtime_candidate": bool(anchor_groups or technical_tokens or has_runtime_cue),
+        "has_runtime_cue": has_runtime_cue,
+    }
+
+
 def normalize_question(question: str) -> dict[str, Any]:
-    repaired_question = _repair_mojibake(question)
+    repaired_question = repair_question_text(question)
     language, confidence = detect_language(repaired_question)
     lexicon = load_multilingual_lexicon()
-    planner_question = _replace_phrases(repaired_question) if language == "en" else _replace_phrases(repaired_question)
+
+    normalized_question = normalize_text(repaired_question)
+    planner_question = canonicalize_query_surface(repaired_question, language=language)
+    canonical_question = canonicalize_technical_surface(planner_question)
+
     hits = _lexicon_hits(planner_question, lexicon)
     if not hits:
         hits = _lexicon_hits(repaired_question, lexicon)
-    anchor_groups = _extract_anchor_groups(planner_question)
-    technical_tokens = _extract_technical_tokens(planner_question)
+
+    anchor_groups = _extract_anchor_groups(planner_question, canonical_question)
+    technical_tokens = _extract_technical_tokens(planner_question, canonical_question)
+    canonical_concepts = sorted(set(anchor_groups + technical_tokens))
+    runtime_context = _infer_runtime_context(
+        anchor_groups=anchor_groups,
+        technical_tokens=technical_tokens,
+        canonical_question=canonical_question,
+    )
+
     return {
         "question_language": language,
         "question_language_confidence": round(confidence, 4),
-        "normalized_question": planner_question,
+        "repaired_question": repaired_question,
+        "normalized_question": normalized_question,
         "planner_question": planner_question,
+        "canonical_question": canonical_question,
         "multilingual_lexicon_hits": hits,
         "anchor_groups": anchor_groups,
         "technical_tokens": technical_tokens,
-        "repaired_question": repaired_question,
+        "canonical_concepts": canonical_concepts,
+        "runtime_context": runtime_context,
     }

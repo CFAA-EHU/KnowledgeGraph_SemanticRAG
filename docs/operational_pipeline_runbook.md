@@ -60,6 +60,43 @@ The runtime must load:
 
 `multilingual_lexicon.json` is the bilingual ES/EN lexicalization layer used by planner normalization and answer rendering over the same single graph.
 
+## GraphDB mirror backend
+
+T23 adds GraphDB as an optional mirror backend of the same operational graph:
+- default base URL: `http://localhost:7200`
+- default repository id: `semanticrag_operational_mirror`
+- `rdflib` remains the reference backend and safe fallback
+
+Publish the current operational graph to GraphDB:
+
+```bash
+python src/7_database/publish_to_graphdb.py
+```
+
+Run the GraphDB healthcheck:
+
+```bash
+python src/7_database/graphdb_healthcheck.py
+```
+
+Run the basic RDFLib vs GraphDB equivalence check:
+
+```bash
+python src/7_database/graph_store.py
+```
+
+Run the workbench against GraphDB:
+
+```bash
+python query_workbench.py "¿Qué directiva cumple la máquina?" --backend graphdb
+```
+
+If GraphDB fails, fall back immediately to RDFLib:
+
+```bash
+python query_workbench.py "¿Qué directiva cumple la máquina?" --backend rdflib
+```
+
 ## Post-build validation
 
 Recommended checks after structural changes:

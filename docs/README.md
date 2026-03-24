@@ -10,6 +10,18 @@ Documentacion operativa, contractual y transversal del proyecto.
 - `operational_pipeline_runbook.md`
   Guia de ejecucion del build operativo, ya con las fases post-merge de canonicalizacion, enrichment residual, link completion residual, reconstruccion del lexicon bilingue y onboarding piloto de manual ingles.
 
+## Infraestructura de almacenamiento y consulta
+
+Tras T23, el proyecto incorpora GraphDB como pieza de infraestructura adicional:
+- almacenamiento remoto del grafo operativo ya materializado
+- consulta SPARQL remota sobre el mismo snapshot operativo
+- exploracion visual del grafo cuando GraphDB este disponible
+
+Importante:
+- GraphDB entra como backend espejo
+- `rdflib` sigue siendo el backend de referencia
+- no se introduce todavia una migracion total del runtime
+
 ## Relacion con T16-T19
 
 La documentacion de detalle del planner, retrieval y sintesis vive en los README de modulo:
@@ -60,6 +72,9 @@ Los artefactos operativos y diagnosticos relevantes viven en `data/processed/`:
 - `cross_plan_catalog.json`
 - `t22_planner_eval_report.json`
 - `t22_planner_decision_report.json`
+- `graphdb_publication_report.json`
+- `graphdb_equivalence_report.json`
+- `t23_graphdb_decision_report.json`
 - `sandbox_diagnostic_report.json`
 - `sandbox_structural_gap_summary.json`
 - `sandbox_entity_resolution_candidates.json`

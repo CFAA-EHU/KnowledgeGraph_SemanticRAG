@@ -10,7 +10,6 @@ import json
 import logging
 import re
 import time
-import unicodedata
 from collections import Counter
 from dataclasses import asdict
 from difflib import SequenceMatcher
@@ -64,6 +63,7 @@ RETRIEVAL_DIR = Path(__file__).resolve().parent
 if str(RETRIEVAL_DIR) not in sys.path:
     sys.path.insert(0, str(RETRIEVAL_DIR))
 
+from bilingual_text_canonicalizer import canonicalize_technical_surface, normalize_for_matching
 from synthesis_pipeline import append_synthesis_debug_record, synthesize_answer
 from text_to_sparql import (
     append_query_debug_record,
@@ -76,15 +76,69 @@ from text_to_sparql import (
 logger = logging.getLogger(__name__)
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 ABOX_PATH = OPERATIONAL_ABOX_PATH
+
 STOPWORDS = {
     "de", "la", "el", "los", "las", "del", "para", "por", "que", "una", "uno", "segun", "sobre",
     "esta", "este", "estos", "estas", "cual", "donde", "quien", "como", "manual", "maquina",
     "indicado", "indicada", "mencionada", "respecto", "debe", "deben", "tipo", "informacion",
 }
 
+EVALUATOR_ONLY_REPLACEMENTS: list[tuple[str, str]] = [
+    ("el manual indica", ""),
+    ("the manual indicates", ""),
+    ("las condiciones al entrar al modo", "the conditions when entering the mode"),
+    ("punto de interrupcion", "interruption point"),
+    ("historial de funciones g y m activas", "history of active g and m functions"),
+    ("funciones g y m activas", "active g and m functions"),
+    ("avance fijado por el oem", "feedrate set by the oem"),
+    ("si no se define el avance", "if the feedrate is not defined"),
+    ("movimiento de palpado", "probing movement"),
+    ("mensaje de validacion", "validation message"),
+    ("al pulsar start", "pressing the start key"),
+    ("cambiar el atributo modificable", "change the modifiable attribute"),
+    ("ficheros seleccionados", "selected files"),
+    ("archivos", "files"),
+    ("no puedan modificarse", "cannot be modified"),
+    ("columna de atributos", "attributes column"),
+    ("no hace falta seleccionar el bloque de parada", "there is no need to select the stop block"),
+    ("bloque donde se interrumpio el programa", "block where the program was interrupted"),
+    ("modelo de fresadora", "milling model"),
+    ("longitud de las fresas", "length of the endmills"),
+    ("herramientas de torno", "lathe tools"),
+    ("modelo de torno en plano", "lathe model plane"),
+    ("cualquier herramienta", "any tool"),
+    ("programa pieza", "part-program"),
+    ("devuelve el entero mas uno", "returns the integer plus one"),
+    ("el mismo numero si ya es entero", "the same number if it is already an integer"),
+    ("operario", "operator"),
+    ("panel de operador", "operator panel"),
+    ("menu vertical de softkeys", "vertical softkey menu"),
+    ("selector set-up", "set-up selector"),
+    ("apertura puertas", "doors"),
+    ("no es necesario", "it is not necessary"),
+    ("se paro por una emergencia", "was stopped due to an emergency"),
+    ("esta compartida entre todos los canales", "is shared across all channels"),
+    ("la funcion", "the function"),
+    ("funcion", "function"),
+    ("la instruccion", "the instruction"),
+    ("instruccion", "instruction"),
+    ("la tecla", "the key"),
+    ("tecla", "key"),
+    ("se utiliza para", "is used for"),
+    ("se usa para", "is used for"),
+    ("sirve para mostrar", "is used to display"),
+    ("mostrar la ayuda del cnc", "display cnc help"),
+    ("debe utilizarse", "should be used"),
+    ("debe programarse", "must be programmed"),
+    ("debe seleccionarse", "must be selected"),
+    ("pulse", "press"),
+]
+
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate the operational runtime over the linked operational A-Box and the formal QA datasets.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate the operational runtime over the linked operational A-Box and the formal QA datasets."
+    )
     parser.add_argument("--qa-file", type=Path, default=QA_CANONICAL_PATH, help="QA dataset to evaluate.")
     parser.add_argument("--report-path", type=Path, default=None, help="Detailed per-question report path.")
     parser.add_argument("--failure-analysis-path", type=Path, default=None, help="Aggregated analysis path.")
@@ -127,7 +181,12 @@ def _default_decision_path_for_report(report_path: Path) -> Path:
     return report_path.with_name(f"{report_path.stem}_decision.json")
 
 
-def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analysis_path: Path | None, debug_report_path: Path | None) -> tuple[Path, Path, Path]:
+def resolve_output_paths(
+    qa_file: Path,
+    report_path: Path | None,
+    failure_analysis_path: Path | None,
+    debug_report_path: Path | None,
+) -> tuple[Path, Path, Path]:
     payload = _load_dataset_payload(qa_file)
     is_multihop = _path_equals(qa_file, QA_MULTIHOP_PATH)
     bilingual_mode = _resolve_bilingual_mode(qa_file, payload)
@@ -135,6 +194,7 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
     is_quick_ref_bilingual = bilingual_mode == "quick_ref_mode"
     is_quick_ref_v2 = bilingual_mode == "quick_ref_v2_mode"
     is_cross = bilingual_mode == "cross_manual_mode"
+
     resolved_report = report_path or (
         MULTIHOP_EVAL_REPORT_PATH
         if is_multihop
@@ -150,6 +210,7 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
         if qa_file.resolve() == QA_CANONICAL_PATH.resolve()
         else QA_EVAL_REPORT_PATH
     )
+
     resolved_failure = failure_analysis_path or (
         MULTIHOP_PLANNER_DECISION_REPORT_PATH
         if is_multihop
@@ -163,6 +224,7 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
         if is_bilingual
         else QA_FAILURE_ANALYSIS_PATH
     )
+
     resolved_debug = debug_report_path or (
         MULTIHOP_DEBUG_REPORT_PATH
         if is_multihop
@@ -176,6 +238,7 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
         if is_bilingual
         else QUERY_DEBUG_REPORT_PATH
     )
+
     return resolved_report, resolved_failure, resolved_debug
 
 
@@ -237,11 +300,7 @@ class EvaluadorRAG:
         return str(uri).split("/")[-1].split("#")[-1]
 
     def _normalizar_texto(self, text: str) -> str:
-        text = unicodedata.normalize("NFKD", text or "")
-        text = "".join(char for char in text if not unicodedata.combining(char))
-        text = text.lower()
-        text = re.sub(r"[^a-z0-9@/_-]+", " ", text)
-        return re.sub(r"\s+", " ", text).strip()
+        return normalize_for_matching(text)
 
     def _tokenizar_pregunta(self, pregunta: str) -> list[str]:
         tokens = []
@@ -252,85 +311,8 @@ class EvaluadorRAG:
         return tokens
 
     def _canonicalizar_respuesta_bilingue(self, text: str) -> str:
-        normalized = self._normalizar_texto(text)
-        replacements = [
-            ("el manual indica", ""),
-            ("the manual indicates", ""),
-            ("las condiciones al entrar al modo", "the conditions when entering the mode"),
-            ("punto de interrupcion", "interruption point"),
-            ("historial de funciones g y m activas", "history of active g and m functions"),
-            ("funciones g y m activas", "active g and m functions"),
-            ("avance fijado por el oem", "feedrate set by the oem"),
-            ("si no se define el avance", "if the feedrate is not defined"),
-            ("movimiento de palpado", "probing movement"),
-            ("mensaje de validacion", "validation message"),
-            ("al pulsar start", "pressing the start key"),
-            ("cambiar el atributo modificable", "change the modifiable attribute"),
-            ("ficheros seleccionados", "selected files"),
-            ("archivos", "files"),
-            ("no puedan modificarse", "cannot be modified"),
-            ("columna de atributos", "attributes column"),
-            ("no hace falta seleccionar el bloque de parada", "there is no need to select the stop block"),
-            ("bloque donde se interrumpio el programa", "block where the program was interrupted"),
-            ("modelo de fresadora", "milling model"),
-            ("longitud de las fresas", "length of the endmills"),
-            ("herramientas de torno", "lathe tools"),
-            ("modelo de torno en plano", "lathe model plane"),
-            ("cualquier herramienta", "any tool"),
-            ("tabla de utillajes", "fixture table"),
-            ("decalajes de sujecion", "clamp offsets"),
-            ("programa pieza", "part-program"),
-            ("devuelve el entero mas uno", "returns the integer plus one"),
-            ("el mismo numero si ya es entero", "the same number if it is already an integer"),
-            ("operario", "operator"),
-            ("panel de operador", "operator panel"),
-            ("inspeccion de herramienta", "tool inspection"),
-            ("menu vertical de softkeys", "vertical softkey menu"),
-            ("selector set-up", "set-up selector"),
-            ("apertura puertas", "doors"),
-            ("no es necesario", "it is not necessary"),
-            ("se paro por una emergencia", "was stopped due to an emergency"),
-            ("tabla de parametros comunes", "common parameters table"),
-            ("esta compartida entre todos los canales", "is shared across all channels"),
-            ("la funcion", "the function"),
-            ("funcion", "function"),
-            ("la instruccion", "the instruction"),
-            ("instruccion", "instruction"),
-            ("la tecla", "the key"),
-            ("tecla", "key"),
-            ("se utiliza para", "is used for"),
-            ("se usa para", "is used for"),
-            ("sirve para mostrar", "is used to display"),
-            ("mostrar la ayuda del cnc", "display cnc help"),
-            ("ayuda del cnc", "cnc help"),
-            ("arranca el husillo en sentido antihorario", "starts the spindle counterclockwise"),
-            ("modo de bucle abierto", "open loop mode"),
-            ("husillo maestro", "master spindle"),
-            ("cero pieza", "part zero"),
-            ("cinematica de la mesa", "table kinematics"),
-            ("cinematica", "kinematics"),
-            ("palpado", "probing"),
-            ("hacer contacto", "making contact"),
-            ("no hacer contacto", "not making contact"),
-            ("decalajes de cero absolutos", "absolute zero offsets"),
-            ("decalajes de cero", "zero offsets"),
-            ("tabla de parametros comunes", "common parameters table"),
-            ("parametros comunes", "common parameters"),
-            ("todos los canales", "all channels"),
-            ("busqueda de referencia", "home search"),
-            ("plato divisor", "rotary table"),
-            ("modo utilidades", "utilities mode"),
-            ("borrar el programa", "erase the program"),
-            ("borrar el programa", "erase the program"),
-            ("simulacion de trayectoria teorica", "theoretical travel simulation"),
-            ("trayectoria teorica", "theoretical travel"),
-            ("plano principal", "main plane"),
-            ("debe utilizarse", "should be used"),
-            ("debe programarse", "must be programmed"),
-            ("debe seleccionarse", "must be selected"),
-            ("pulse", "press"),
-        ]
-        for source, target in replacements:
+        normalized = canonicalize_technical_surface(text)
+        for source, target in EVALUATOR_ONLY_REPLACEMENTS:
             normalized = normalized.replace(source, target)
         return re.sub(r"\s+", " ", normalized).strip()
 
@@ -341,6 +323,7 @@ class EvaluadorRAG:
             return "not_applicable"
         if not answer_norm:
             return "none"
+
         expected_tokens = {
             token
             for token in expected_norm.split()
@@ -351,12 +334,14 @@ class EvaluadorRAG:
             for token in answer_norm.split()
             if len(token) >= 2 and token not in STOPWORDS
         }
+
         overlap = (
             len(expected_tokens.intersection(answer_tokens)) / len(expected_tokens)
             if expected_tokens
             else 0.0
         )
         ratio = SequenceMatcher(None, expected_norm, answer_norm).ratio()
+
         if expected_norm in answer_norm or answer_norm in expected_norm or ratio >= 0.92 or overlap >= 0.9:
             return "exact"
         if ratio >= 0.75 or overlap >= 0.7:
@@ -454,6 +439,7 @@ class EvaluadorRAG:
         ]
         if not all(path.exists() for path in required_paths):
             return
+
         generalization = json.loads(GENERALIZATION_EVAL_REPORT_PATH.read_text(encoding="utf-8"))
         multihop = json.loads(MULTIHOP_EVAL_REPORT_PATH.read_text(encoding="utf-8"))
         quick_ref = json.loads(QUICK_REF_V2_EVAL_REPORT_PATH.read_text(encoding="utf-8"))
@@ -463,33 +449,33 @@ class EvaluadorRAG:
             if T21_READINESS_DECISION_REPORT_PATH.exists()
             else {}
         )
+
         quick_summary = quick_ref.get("summary", {})
         cross_summary = cross.get("summary", {})
+
         baseline_ok = (
             generalization.get("summary", {}).get("successful_questions") == 13
             and multihop.get("summary", {}).get("successful_questions") == 7
         )
-        quick_ok = all(
-            [
-                quick_summary.get("same_plan_family_count", 0) >= 18,
-                quick_summary.get("same_sparql_signature_count", 0) >= 18,
-                quick_summary.get("successful_pairs", 0) >= 18,
-                quick_summary.get("answer_language_ok_count", 0) == quick_summary.get("total_pairs", 0) == 20,
-            ]
-        )
-        cross_ok = all(
-            [
-                cross_summary.get("pair_alignment_ok_count", 0) >= 9,
-                cross_summary.get("cross_case_ok_count", 0) >= 9,
-                cross_summary.get("answer_language_ok_count", 0) == cross_summary.get("total_pairs", 0) == 11,
-            ]
-        )
+        quick_ok = all([
+            quick_summary.get("same_plan_family_count", 0) >= 18,
+            quick_summary.get("same_sparql_signature_count", 0) >= 18,
+            quick_summary.get("successful_pairs", 0) >= 18,
+            quick_summary.get("answer_language_ok_count", 0) == quick_summary.get("total_pairs", 0) == 20,
+        ])
+        cross_ok = all([
+            cross_summary.get("pair_alignment_ok_count", 0) >= 9,
+            cross_summary.get("cross_case_ok_count", 0) >= 9,
+            cross_summary.get("answer_language_ok_count", 0) == cross_summary.get("total_pairs", 0) == 11,
+        ])
+
         if baseline_ok and quick_ok and cross_ok:
             readiness = "ready_for_cleanup_and_next_manual"
         elif baseline_ok and (quick_ok or cross_ok):
             readiness = "ready_for_small_final_planner_follow_up"
         else:
             readiness = "not_ready_yet"
+
         planner_eval = {
             "baseline": {
                 "generalization_successful_questions": generalization.get("summary", {}).get("successful_questions"),
@@ -513,6 +499,7 @@ class EvaluadorRAG:
                 else "planner_hardening_continues"
             ),
         }
+
         T22_PLANNER_EVAL_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
         T22_PLANNER_EVAL_REPORT_PATH.write_text(json.dumps(planner_eval, ensure_ascii=False, indent=2), encoding="utf-8")
         T22_PLANNER_DECISION_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -596,6 +583,7 @@ class EvaluadorRAG:
         pregunta = item["question"]
         expected_uris_original = item.get("expected_uris", [])
         expected_uris = self._canonicalize_expected_uris(expected_uris_original)
+
         execution = None
         query_plan = None
         tripletas_limpias: list[tuple[str, str, str]] = []
@@ -702,25 +690,37 @@ class EvaluadorRAG:
             fragmentos.append(f"{self._normalizar_uri(predicate)} {obj_text}")
         return self._normalizar_texto(" ".join(fragmentos))
 
-    def _clasificar_pregunta(self, *, expected_uris: list[str], expected_answer: str, precision: float, recall: float, tripletas_limpias: list[tuple[str, str, str]], synthesized_answer: str, query_error: str | None, synthesis_error: str | None, question: str) -> str:
+    def _clasificar_pregunta(
+        self,
+        *,
+        expected_uris: list[str],
+        expected_answer: str,
+        precision: float,
+        recall: float,
+        tripletas_limpias: list[tuple[str, str, str]],
+        synthesized_answer: str,
+        query_error: str | None,
+        synthesis_error: str | None,
+        question: str,
+    ) -> str:
         if not expected_uris:
             return "golden_set_mismatch_or_ambiguity"
         if query_error:
             return "query_generation_failed"
         if synthesis_error:
             return "answer_synthesis_failed"
+
         answer_norm = self._normalizar_texto(synthesized_answer)
         expected_answer_norm = self._normalizar_texto(expected_answer)
         negative_markers = ["[empty]", "no se encuentra", "no dispongo", "no hay informacion", "no se encontraron", "context is insufficient"]
         answer_is_negative = any(marker in answer_norm for marker in negative_markers)
+
         expected_answer_tokens = {
-            token
-            for token in expected_answer_norm.split()
+            token for token in expected_answer_norm.split()
             if len(token) >= 4 and token not in STOPWORDS
         }
         answer_tokens = {
-            token
-            for token in answer_norm.split()
+            token for token in answer_norm.split()
             if len(token) >= 4 and token not in STOPWORDS
         }
         answer_overlap = (
@@ -733,10 +733,12 @@ class EvaluadorRAG:
             or answer_norm in expected_answer_norm
             or answer_overlap >= 0.8
         )
+
         expected_exists = all(uri in self.subject_uris for uri in expected_uris)
         neighborhood = " ".join(self._vecindario_uri(uri) for uri in expected_uris if uri in self.subject_uris)
         question_tokens = self._tokenizar_pregunta(question)
         token_hits = sum(1 for token in question_tokens if token in neighborhood)
+
         if not expected_exists:
             return "graph_coverage_missing"
         if not tripletas_limpias:
@@ -752,15 +754,28 @@ class EvaluadorRAG:
         return "query_too_broad_or_too_narrow"
 
     def _build_synthesis_summary(self, resultados: list[dict]) -> dict:
-        categories = Counter(row.get("synthesis_trace", {}).get("synthesis_category") for row in resultados if row.get("synthesis_trace"))
-        answer_modes = Counter(row.get("synthesis_trace", {}).get("answer_mode") for row in resultados if row.get("synthesis_trace"))
+        categories = Counter(
+            row.get("synthesis_trace", {}).get("synthesis_category")
+            for row in resultados
+            if row.get("synthesis_trace")
+        )
+        answer_modes = Counter(
+            row.get("synthesis_trace", {}).get("answer_mode")
+            for row in resultados
+            if row.get("synthesis_trace")
+        )
         return {
             "summary": {
                 "total_questions": len(resultados),
                 "synthesis_category_counts": dict(categories),
                 "answer_mode_counts": dict(answer_modes),
-                "questions_with_selected_evidence": sum(1 for row in resultados if row.get("synthesis_trace", {}).get("selected_evidence")),
-                "questions_with_surface_normalization": sum(1 for row in resultados if "surface_normalized" in row.get("synthesis_trace", {}).get("notes", [])),
+                "questions_with_selected_evidence": sum(
+                    1 for row in resultados if row.get("synthesis_trace", {}).get("selected_evidence")
+                ),
+                "questions_with_surface_normalization": sum(
+                    1 for row in resultados
+                    if "surface_normalized" in row.get("synthesis_trace", {}).get("notes", [])
+                ),
             },
             "results": [
                 {
@@ -781,7 +796,11 @@ class EvaluadorRAG:
         }
 
     def _build_synthesis_decision(self, resultados: list[dict], metricas: dict) -> dict:
-        category_counter = Counter(row.get("synthesis_trace", {}).get("synthesis_category") for row in resultados if row.get("synthesis_trace"))
+        category_counter = Counter(
+            row.get("synthesis_trace", {}).get("synthesis_category")
+            for row in resultados
+            if row.get("synthesis_trace")
+        )
         category_counter.pop("ok", None)
         next_change = "value_surface_polish_minor"
         if category_counter:
@@ -811,25 +830,36 @@ class EvaluadorRAG:
             "recommended_next_change": next_change,
         }
 
-    def _ejecutar_evaluacion_bilingue(self, pares: list[dict], *, limit: int = 0, sleep_seconds: float = 0.0) -> tuple[dict, dict]:
+    def _ejecutar_evaluacion_bilingue(
+        self,
+        pares: list[dict],
+        *,
+        limit: int = 0,
+        sleep_seconds: float = 0.0,
+    ) -> tuple[dict, dict]:
         if limit > 0:
             pares = pares[:limit]
+
         self.debug_report_path.parent.mkdir(parents=True, exist_ok=True)
         self.debug_report_path.write_text("[]", encoding="utf-8")
         mode = self.bilingual_mode or "baseline_bilingual_mode"
+
         if mode == "quick_ref_v2_mode":
             export_planner_generalization_catalog_v2()
         elif mode == "cross_manual_mode":
             export_cross_plan_catalog()
+
         print(f"Starting bilingual evaluation of {len(pares)} paired cases using {self.qa_file} [{mode}]...\n")
 
         resultados: list[dict] = []
         debug_rows: list[dict] = []
+
         for index, pair in enumerate(pares, 1):
             case_id = pair["case_id"]
             print("=" * 70)
             print(f"PAIR {index}/{len(pares)}: {case_id}")
             print("-" * 70)
+
             es_result = self._evaluar_pregunta(
                 {
                     "question": pair["questions"]["es"],
@@ -854,6 +884,7 @@ class EvaluadorRAG:
                 },
                 debug_path=self.debug_report_path,
             )
+
             same_intent = es_result.get("intent") == en_result.get("intent")
             same_plan_family = es_result.get("plan_family") == en_result.get("plan_family") == pair.get("expected_plan_family")
             same_sparql_signature = es_result.get("sparql_signature") == en_result.get("sparql_signature") and bool(es_result.get("sparql_signature"))
@@ -862,8 +893,16 @@ class EvaluadorRAG:
                 or set(es_result.get("matching_uris_normalized", [])) == set(en_result.get("matching_uris_normalized", []))
             )
             answer_language_ok = es_result.get("answer_language") == "es" and en_result.get("answer_language") == "en"
-            es_answer_match_mode = self._answer_match_mode(pair.get("expected_answer", ""), es_result.get("synthesized_answer", ""))
-            en_answer_match_mode = self._answer_match_mode(pair.get("expected_answer", ""), en_result.get("synthesized_answer", ""))
+
+            es_answer_match_mode = self._answer_match_mode(
+                pair.get("expected_answer", ""),
+                es_result.get("synthesized_answer", ""),
+            )
+            en_answer_match_mode = self._answer_match_mode(
+                pair.get("expected_answer", ""),
+                en_result.get("synthesized_answer", ""),
+            )
+
             has_runner_blocker = self._has_runner_blocker(es_result) or self._has_runner_blocker(en_result)
             pair_alignment_ok = all([same_intent, same_anchor_resolution, same_plan_family, same_sparql_signature, answer_language_ok])
             answer_match_ok = all([
@@ -872,6 +911,7 @@ class EvaluadorRAG:
             ])
             pair_ok = all([pair_alignment_ok, answer_match_ok, not has_runner_blocker])
             cross_case_ok = pair_ok
+
             dominant_failure_cause = self._classify_cross_failure_cause(
                 same_intent=same_intent,
                 same_plan_family=same_plan_family,
@@ -889,6 +929,7 @@ class EvaluadorRAG:
                 "same_sparql_signature": same_sparql_signature,
                 "cross_case_ok": cross_case_ok,
             })
+
             result_row = {
                 "case_id": case_id,
                 "category": pair.get("category"),
@@ -914,12 +955,14 @@ class EvaluadorRAG:
             }
             resultados.append(result_row)
             debug_rows.append(result_row)
+
             print(
                 f"same_intent={same_intent} | same_anchor={same_anchor_resolution} | "
                 f"same_plan_family={same_plan_family} | same_sparql={same_sparql_signature} | "
                 f"answer_language_ok={answer_language_ok} | es_match={es_answer_match_mode} | "
                 f"en_match={en_answer_match_mode} | blocker={has_runner_blocker}"
             )
+
             if sleep_seconds > 0:
                 time.sleep(sleep_seconds)
 
@@ -948,6 +991,7 @@ class EvaluadorRAG:
             "multilingual_runtime": True,
         }
         report = {"summary": summary, "results": resultados}
+
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
         self.report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
         self.debug_report_path.write_text(json.dumps(debug_rows, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -996,6 +1040,7 @@ class EvaluadorRAG:
                 "failing_cases": [row["case_id"] for row in resultados if not row["pair_ok"]],
                 "recommended_next_change": "lexical_surface_alignment" if summary["successful_pairs"] < summary["total_pairs"] else "promote_bilingual_pairs",
             }
+
         self.failure_analysis_path.parent.mkdir(parents=True, exist_ok=True)
         self.failure_analysis_path.write_text(json.dumps(decision, ensure_ascii=False, indent=2), encoding="utf-8")
         self._write_t22_summary_if_ready()
@@ -1005,18 +1050,23 @@ class EvaluadorRAG:
         banco_preguntas = self._cargar_dataset()
         if self.is_bilingual_dataset:
             return self._ejecutar_evaluacion_bilingue(banco_preguntas, limit=limit, sleep_seconds=sleep_seconds)
+
         if limit > 0:
             banco_preguntas = banco_preguntas[:limit]
+
         self.debug_report_path.parent.mkdir(parents=True, exist_ok=True)
         self.debug_report_path.write_text("[]", encoding="utf-8")
         self.synthesis_debug_path.parent.mkdir(parents=True, exist_ok=True)
         self.synthesis_debug_path.write_text("[]", encoding="utf-8")
+
         print(f"Starting evaluation of {len(banco_preguntas)} questions using {self.qa_file}...\n")
         resultados = []
+
         for index, item in enumerate(banco_preguntas, 1):
             pregunta = item["question"]
             expected_uris_original = item.get("expected_uris", [])
             expected_uris = self._canonicalize_expected_uris(expected_uris_original)
+
             execution = None
             query_plan = None
             tripletas_limpias: list[tuple[str, str, str]] = []
@@ -1026,14 +1076,19 @@ class EvaluadorRAG:
             synthesis_trace: dict = {}
             query_error = None
             synthesis_error = None
+
             print("=" * 70)
             print(f"QUESTION {index}/{len(banco_preguntas)}: {pregunta}")
             print(f"EXPECTED: {item['answer']}")
             print("-" * 70)
+
             try:
                 execution, tripletas_limpias, tripletas_sintesis, uris_recuperadas = self._extraer_resultados(pregunta)
                 query_plan = execution.plan
-                print(f"PLAN -> family={query_plan.plan_family} | template={query_plan.template_id} | hops={query_plan.predicted_hop_depth} | fallback={query_plan.fallback_used}")
+                print(
+                    f"PLAN -> family={query_plan.plan_family} | template={query_plan.template_id} | "
+                    f"hops={query_plan.predicted_hop_depth} | fallback={query_plan.fallback_used}"
+                )
                 print(f"Recovered rows: {len(tripletas_limpias)}")
             except Exception as exc:
                 query_error = str(exc)
@@ -1084,6 +1139,7 @@ class EvaluadorRAG:
                     "trace": [asdict(step) for step in execution.trace.steps],
                     "notes": classification,
                 }, path=self.debug_report_path)
+
                 append_synthesis_debug_record({
                     "question": pregunta,
                     "intent": query_plan.intent,
@@ -1140,6 +1196,7 @@ class EvaluadorRAG:
                 "classification": classification,
             })
             print("=" * 70 + "\n")
+
             if sleep_seconds > 0:
                 time.sleep(sleep_seconds)
 
@@ -1167,7 +1224,14 @@ class EvaluadorRAG:
         self.report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
         failure_examples = []
-        for category in ["graph_coverage_missing", "query_generation_failed", "query_too_broad_or_too_narrow", "answer_synthesis_failed", "naming_mismatch", "golden_set_mismatch_or_ambiguity"]:
+        for category in [
+            "graph_coverage_missing",
+            "query_generation_failed",
+            "query_too_broad_or_too_narrow",
+            "answer_synthesis_failed",
+            "naming_mismatch",
+            "golden_set_mismatch_or_ambiguity",
+        ]:
             for row in resultados:
                 if row["classification"] == category:
                     failure_examples.append({
@@ -1195,7 +1259,10 @@ class EvaluadorRAG:
         failure_analysis = {
             "summary": metricas,
             "failure_distribution": dict(ordered_failures),
-            "top_representative_questions": sorted(resultados, key=lambda row: (row["classification"] == "ok", row["recall"], row["precision"]))[:5],
+            "top_representative_questions": sorted(
+                resultados,
+                key=lambda row: (row["classification"] == "ok", row["recall"], row["precision"]),
+            )[:5],
             "failure_examples": failure_examples,
             "recommended_next_change": next_change,
         }
@@ -1213,11 +1280,17 @@ class EvaluadorRAG:
         self.synthesis_decision_path.write_text(json.dumps(synthesis_decision, ensure_ascii=False, indent=2), encoding="utf-8")
         self.surface_polish_decision_path.parent.mkdir(parents=True, exist_ok=True)
         self.surface_polish_decision_path.write_text(json.dumps(synthesis_decision, ensure_ascii=False, indent=2), encoding="utf-8")
+
         return report, failure_analysis
 
 
 if __name__ == "__main__":
     args = parse_args()
-    report_path, failure_path, debug_path = resolve_output_paths(args.qa_file, args.report_path, args.failure_analysis_path, args.debug_report_path)
+    report_path, failure_path, debug_path = resolve_output_paths(
+        args.qa_file,
+        args.report_path,
+        args.failure_analysis_path,
+        args.debug_report_path,
+    )
     evaluador = EvaluadorRAG(args.qa_file, report_path, failure_path, debug_path)
     evaluador.ejecutar_evaluacion(limit=args.limit, sleep_seconds=args.sleep_seconds)

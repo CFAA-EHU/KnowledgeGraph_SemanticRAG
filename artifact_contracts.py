@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import asdict, dataclass
 from hashlib import sha256
@@ -95,6 +96,15 @@ LINK_COMPLETION_MAP_PATH = PROCESSED_DATA_DIR / "link_completion_map.json"
 LINK_COMPLETION_CANDIDATES_PATH = PROCESSED_DATA_DIR / "link_completion_candidates.json"
 LINK_COMPLETION_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_eval_report.json"
 LINK_COMPLETION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_decision_report.json"
+GRAPHDB_PUBLICATION_REPORT_PATH = PROCESSED_DATA_DIR / "graphdb_publication_report.json"
+GRAPHDB_EQUIVALENCE_REPORT_PATH = PROCESSED_DATA_DIR / "graphdb_equivalence_report.json"
+T23_GRAPHDB_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t23_graphdb_decision_report.json"
+
+GRAPHDB_BASE_URL = os.getenv("GRAPHDB_BASE_URL", "http://localhost:7200").rstrip("/")
+GRAPHDB_REPOSITORY_ID = os.getenv("GRAPHDB_REPOSITORY_ID", "semanticrag_operational_mirror")
+GRAPHDB_REPOSITORY_URL = f"{GRAPHDB_BASE_URL}/repositories/{GRAPHDB_REPOSITORY_ID}"
+GRAPHDB_SPARQL_ENDPOINT = GRAPHDB_REPOSITORY_URL
+GRAPHDB_STATEMENTS_ENDPOINT = f"{GRAPHDB_REPOSITORY_URL}/statements"
 
 QUICK_REF_SOURCE_PATH = RAW_DATA_DIR / "chunks_8070_quick_ref.txt"
 QUICK_REF_DENSITY_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_density_report.json"
@@ -196,6 +206,14 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "link_completion_candidates": LINK_COMPLETION_CANDIDATES_PATH,
     "link_completion_eval_report": LINK_COMPLETION_EVAL_REPORT_PATH,
     "link_completion_decision_report": LINK_COMPLETION_DECISION_REPORT_PATH,
+    "graphdb_base_url": GRAPHDB_BASE_URL,
+    "graphdb_repository_id": GRAPHDB_REPOSITORY_ID,
+    "graphdb_repository_url": GRAPHDB_REPOSITORY_URL,
+    "graphdb_sparql_endpoint": GRAPHDB_SPARQL_ENDPOINT,
+    "graphdb_statements_endpoint": GRAPHDB_STATEMENTS_ENDPOINT,
+    "graphdb_publication_report": GRAPHDB_PUBLICATION_REPORT_PATH,
+    "graphdb_equivalence_report": GRAPHDB_EQUIVALENCE_REPORT_PATH,
+    "t23_graphdb_decision_report": T23_GRAPHDB_DECISION_REPORT_PATH,
     "quick_ref_source": QUICK_REF_SOURCE_PATH,
     "quick_ref_density_report": QUICK_REF_DENSITY_REPORT_PATH,
     "quick_ref_language_detection_report": QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,
@@ -258,6 +276,10 @@ SCRIPT_CLASSIFICATIONS = {
     "src/6_extraction/abox_semantic_validator.py": "operational_producer",
     "src/8_retrieval/multilingual_lexicon_builder.py": "operational_producer",
     "src/7_database/embedded_store.py": "operational_consumer",
+    "src/7_database/graphdb_client.py": "operational_consumer",
+    "src/7_database/graph_store.py": "operational_consumer",
+    "src/7_database/publish_to_graphdb.py": "operational_consumer",
+    "src/7_database/graphdb_healthcheck.py": "operational_consumer",
     "src/8_retrieval/schema_condenser.py": "operational_consumer",
     "src/8_retrieval/qa_evaluator.py": "operational_consumer",
     "src/9_rag_orchestrator/semantic_rag.py": "operational_consumer",

@@ -81,6 +81,21 @@ Planner, retrieval, evaluacion y orquestacion consumen:
 - `data/processed/abox_linked.ttl`
 - `data/processed/multilingual_lexicon.json`
 
+Tras T23, el runtime mantiene dos backends de consulta:
+- `rdflib` en memoria como backend de referencia y por defecto
+- `GraphDB` como backend espejo opcional del mismo grafo operativo
+
+Scripts nuevos de T23:
+- `src/7_database/graphdb_client.py`
+- `src/7_database/graph_store.py`
+- `src/7_database/publish_to_graphdb.py`
+- `src/7_database/graphdb_healthcheck.py`
+
+Artefactos nuevos de T23:
+- `data/processed/graphdb_publication_report.json`
+- `data/processed/graphdb_equivalence_report.json`
+- `data/processed/t23_graphdb_decision_report.json`
+
 Eso deja separadas cuatro capas:
 - `abox_merged.ttl`: snapshot bruto post-merge para diagnostico
 - `abox_canonical.ttl`: snapshot canonico intermedio para consolidacion estructural
@@ -183,6 +198,12 @@ Artefactos principales de T16-T19:
 - evidencia recuperada
 - evidencia seleccionada para sintesis
 - respuesta final en el idioma de la pregunta sobre el mismo grafo linked
+
+Desde T23 admite:
+- `--backend rdflib`
+- `--backend graphdb`
+
+La planificacion sigue ocurriendo sobre el grafo local de referencia; el selector de backend solo cambia la ejecucion SPARQL del mismo runtime operativo.
 
 ## Fuente unica de verdad
 

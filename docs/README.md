@@ -8,7 +8,7 @@ Documentacion operativa, contractual y transversal del proyecto.
   Contrato de artefactos del carril operativo y experimental, incluyendo desde T20 la lexicalizacion multilingue ES/EN sobre el mismo grafo linked.
 
 - `operational_pipeline_runbook.md`
-  Guia de ejecucion del build operativo, ya con las fases post-merge de canonicalizacion, enrichment residual, link completion residual y reconstruccion del lexicon bilingue.
+  Guia de ejecucion del build operativo, ya con las fases post-merge de canonicalizacion, enrichment residual, link completion residual, reconstruccion del lexicon bilingue y onboarding piloto de manual ingles.
 
 ## Relacion con T16-T19
 
@@ -44,6 +44,12 @@ Los artefactos operativos y diagnosticos relevantes viven en `data/processed/`:
 - `bilingual_eval_report.json`
 - `bilingual_debug_report.json`
 - `bilingual_decision_report.json`
+- `quick_ref_density_report.json`
+- `quick_ref_abox_input.json`
+- `quick_ref_onboarding_report.json`
+- `quick_ref_bilingual_eval_report.json`
+- `quick_ref_bilingual_debug_report.json`
+- `quick_ref_integration_decision_report.json`
 - `sandbox_diagnostic_report.json`
 - `sandbox_structural_gap_summary.json`
 - `sandbox_entity_resolution_candidates.json`

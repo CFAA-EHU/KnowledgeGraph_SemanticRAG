@@ -65,6 +65,30 @@ def parse_args() -> argparse.Namespace:
         default="",
         help="Lista separada por comas de chunk_id a regenerar/validar para una corrida controlada.",
     )
+    parser.add_argument(
+        "--abox-input",
+        type=Path,
+        default=ABOX_INPUT_PATH,
+        help="Ruta del A-Box input a procesar.",
+    )
+    parser.add_argument(
+        "--manifest-path",
+        type=Path,
+        default=MANIFEST_PATH,
+        help="Ruta del manifest de reanudacion A-Box.",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=OUTPUT_DIR,
+        help="Directorio de salida para los fragmentos TTL A-Box.",
+    )
+    parser.add_argument(
+        "--debug-dir",
+        type=Path,
+        default=DEBUG_DIR,
+        help="Directorio de debug para fallos de extraccion A-Box.",
+    )
     return parser.parse_args()
 
 
@@ -128,8 +152,74 @@ def garantizar_prefijos_obligatorios(ttl_text: str) -> str:
     return "\n".join(prefijos + [ttl_limpio])
 
 
-def normalizar_vocabulario_canonico(ttl_text: str) -> str:
+def normalizar_puntuacion_problematica(ttl_text: str) -> str:
+    reemplazos = {
+        "\u201c": "'",
+        "\u201d": "'",
+        "\u2018": "'",
+        "\u2019": "'",
+        "â€œ": "'",
+        "â€\u009d": "'",
+        "â€˜": "'",
+        "â€™": "'",
+        "Â·": "·",
+        "Âº": "º",
+    }
     ttl_normalizado = ttl_text
+    for origen, destino in reemplazos.items():
+        ttl_normalizado = ttl_normalizado.replace(origen, destino)
+    return ttl_normalizado
+
+
+def escapar_comillas_internas_en_literales(ttl_text: str) -> str:
+    resultado: list[str] = []
+    i = 0
+    n = len(ttl_text)
+    dentro_literal = False
+
+    while i < n:
+        actual = ttl_text[i]
+
+        if not dentro_literal:
+            if ttl_text.startswith('"""', i):
+                fin = ttl_text.find('"""', i + 3)
+                if fin == -1:
+                    resultado.append(ttl_text[i:])
+                    break
+                resultado.append(ttl_text[i : fin + 3])
+                i = fin + 3
+                continue
+            if actual == '"' and (i == 0 or ttl_text[i - 1] != "\\"):
+                dentro_literal = True
+            resultado.append(actual)
+            i += 1
+            continue
+
+        if actual == '"' and (i == 0 or ttl_text[i - 1] != "\\"):
+            siguiente = ttl_text[i + 1] if i + 1 < n else ""
+            if siguiente in {"", ";", ",", ".", "@", "^", "]", ")"} or siguiente.isspace():
+                resultado.append(actual)
+                dentro_literal = False
+            else:
+                resultado.append('\\"')
+            i += 1
+            continue
+
+        resultado.append(actual)
+        i += 1
+
+    return "".join(resultado)
+
+
+def tipar_tablas_canonicas(ttl_text: str) -> str:
+    patron = re.compile(
+        r"(?m)^(ex:(?:Tabla|Operador|Funcion|Constante)[A-Za-z0-9_]+)\s+(?!a\b)(.+)$"
+    )
+    return patron.sub(r"\1 a ex:Tabla ;\n    \2", ttl_text)
+
+
+def normalizar_vocabulario_canonico(ttl_text: str) -> str:
+    ttl_normalizado = normalizar_puntuacion_problematica(ttl_text)
     reemplazos_directos = {
         "ex:textoExtractor": "ex:textoExtracto",
         "ex:textExtracto": "ex:textoExtracto",
@@ -143,6 +233,8 @@ def normalizar_vocabulario_canonico(ttl_text: str) -> str:
     }
     for origen, destino in reemplazos_directos.items():
         ttl_normalizado = ttl_normalizado.replace(origen, destino)
+    ttl_normalizado = tipar_tablas_canonicas(ttl_normalizado)
+    ttl_normalizado = escapar_comillas_internas_en_literales(ttl_normalizado)
     return ttl_normalizado
 
 
@@ -496,4 +588,8 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
 
 if __name__ == "__main__":
     args = parse_args()
+    ABOX_INPUT_PATH = args.abox_input
+    MANIFEST_PATH = args.manifest_path
+    OUTPUT_DIR = args.output_dir
+    DEBUG_DIR = args.debug_dir
     raise SystemExit(asyncio.run(orquestar_extraccion_abox(args.mode, parse_chunk_ids(args.chunk_ids))))

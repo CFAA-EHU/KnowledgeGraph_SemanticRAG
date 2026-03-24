@@ -41,3 +41,5 @@ Cuando quieras ver un lote completo sin `expected_uris`, usa `python src/8_retri
 Cuando el plan ya sea razonable, usa `semantic_rag.py` para comprobar si la sintesis comparte bien la misma evidencia y la verbaliza con calidad suficiente sobre el grafo linked.
 
 Tras T20, las preguntas equivalentes en espanol e ingles deben converger a la misma familia y la misma SPARQL, cambiando solo el idioma del render final.
+
+Tras T21, esa misma propiedad se comprueba tambien sobre el manual `chunks_8070_quick_ref.txt`: las preguntas ES/EN del quick ref deben resolverse sobre el mismo `abox_linked.ttl`, no sobre un runtime paralelo.

@@ -12,10 +12,10 @@ from typing import Any
 from rdflib import Graph, URIRef
 
 from artifact_contracts import (
+    CANONICAL_ABOX_PATH,
     CANONICAL_ENTITY_MAP_PATH,
     CANONICALIZATION_REPORT_PATH,
     CANONICALIZATION_RESOLUTION_CANDIDATES_PATH,
-    OPERATIONAL_ABOX_PATH,
     RAW_MERGED_ABOX_PATH,
     SANDBOX_DECISION_REPORT_PATH,
     SANDBOX_DIAGNOSTIC_REPORT_PATH,
@@ -39,7 +39,7 @@ from canonical_resolution_policy import (
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Canonicalize the operational merged A-Box after the merge stage.')
     parser.add_argument('--input', type=Path, default=RAW_MERGED_ABOX_PATH, help='Raw merged A-Box path.')
-    parser.add_argument('--output', type=Path, default=OPERATIONAL_ABOX_PATH, help='Canonical operational A-Box path.')
+    parser.add_argument('--output', type=Path, default=CANONICAL_ABOX_PATH, help='Canonical operational A-Box path.')
     parser.add_argument('--resolution-candidates-path', type=Path, default=CANONICALIZATION_RESOLUTION_CANDIDATES_PATH, help='Canonicalization resolution corpus path.')
     parser.add_argument('--entity-map-path', type=Path, default=CANONICAL_ENTITY_MAP_PATH, help='Absorbed-to-canonical mapping path.')
     parser.add_argument('--report-path', type=Path, default=CANONICALIZATION_REPORT_PATH, help='Canonicalization report path.')

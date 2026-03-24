@@ -143,6 +143,12 @@ def _surface_from_identifier(value: str) -> str:
 
 def infer_answer_mode(question: str, intent: str | None, plan_family: str | None = None) -> str:
     question_norm = _normalize_for_match(question)
+    if plan_family == 'quick_ref_work_mode_lookup':
+        return 'mode_literal'
+    if plan_family == 'quick_ref_key_purpose_lookup':
+        return 'control_key'
+    if plan_family in {'quick_ref_jog_operation_lookup', 'quick_ref_home_search_procedure', 'quick_ref_coordinate_preset_procedure', 'quick_ref_feed_speed_tool_lookup'}:
+        return 'procedure'
     if 'correo' in question_norm or 'email' in question_norm:
         return 'email'
     if 'direccion' in question_norm or 'donde se encuentra la direccion' in question_norm or 'address' in question_norm:
@@ -249,6 +255,15 @@ def score_evidence_rows(question: str, rows: list[tuple[str, str, str]], plan: A
             if any(keyword in obj_norm for keyword in ['proporciona', 'sirve', 'representa', 'aconseja', 'objetivo']):
                 score += 3.0
                 reasons.append('purpose_keyword')
+        if answer_mode == 'control_key' and any(keyword in combined_norm for keyword in ['focus', 'next', 'back', 'help', 'start', 'stop', 'reset', 'zero', 'enter']):
+            score += 5.5
+            reasons.append('control_key_match')
+        if answer_mode == 'mode_literal' and any(keyword in combined_norm for keyword in ['automatic mode', 'jog mode', 'mdi', 'manual e disimu']):
+            score += 5.0
+            reasons.append('mode_literal_match')
+        if answer_mode == 'procedure' and any(keyword in obj_norm for keyword in ['press', 'pulsar', 'select', 'enter', 'start', 'esc', 'axis', 'preset']):
+            score += 4.5
+            reasons.append('procedure_match')
         if len(obj) > 280 and answer_mode in {'email', 'address', 'directive', 'figure', 'literal'}:
             score -= 1.5
             reasons.append('long_literal_penalty')
@@ -331,6 +346,43 @@ def _extract_verification_target(raw_value: str) -> tuple[str, list[str]]:
     return cleaned, ['sentence_focus', 'whitespace_cleanup']
 
 
+def _extract_control_key(raw_value: str) -> tuple[str, list[str]]:
+    cleaned = _normalize_text(raw_value)
+    patterns = [
+        r'\[(CTRL\]\s*\+\s*\[F\d+\])',
+        r'\[(CTRL\]\s*\+\s*\[[A-Z]+\])',
+        r'\[(START|STOP|RESET|ESC|ENTER|ZERO|DEL|INS|CALC)\]',
+        r'\b(FOCUS|NEXT|BACK|HELP|AUTO|MANUAL|EDIT|MDI|TABLES|TOOLS|UTILITIES|CUSTOM)\b',
+        r'\b([FST])\b',
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, cleaned, re.I)
+        if match:
+            value = match.group(0).replace(' ]', ']').replace('[ ', '[').upper()
+            return value, ['sentence_focus', 'whitespace_cleanup']
+    return cleaned, ['sentence_focus', 'whitespace_cleanup']
+
+
+def _extract_mode_literal(raw_value: str) -> tuple[str, list[str]]:
+    cleaned = _normalize_text(raw_value)
+    matches = re.findall(r'(Automatic mode|Jog mode|MDI/MDA mode|EDIT|AUTO|MANUAL|MDI)', cleaned, re.I)
+    if matches:
+        ordered: list[str] = []
+        for item in matches:
+            normalized = _normalize_text(item)
+            if normalized not in ordered:
+                ordered.append(normalized)
+        return ", ".join(ordered), ['sentence_focus', 'whitespace_cleanup']
+    return cleaned, ['sentence_focus', 'whitespace_cleanup']
+
+
+def _extract_quick_ref_procedure(raw_value: str) -> tuple[str, list[str]]:
+    cleaned = _normalize_text(raw_value)
+    cleaned = cleaned.replace('go ahead with the home search', 'continue with the home search')
+    sentence, rules = _compact_sentence(cleaned)
+    return sentence, list(dict.fromkeys(rules))
+
+
 def normalize_candidate_value(question: str, candidate: EvidenceCandidate, answer_mode: str) -> NormalizedValue:
     raw_value = candidate.obj if candidate.obj else candidate.subject
     if answer_mode == 'email':
@@ -357,6 +409,15 @@ def normalize_candidate_value(question: str, candidate: EvidenceCandidate, answe
     if answer_mode == 'verification_requirement':
         normalized, rules = _extract_verification_target(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='verification_statement', applied_rules=rules)
+    if answer_mode == 'control_key':
+        normalized, rules = _extract_control_key(raw_value)
+        return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='control_key', applied_rules=rules)
+    if answer_mode == 'mode_literal':
+        normalized, rules = _extract_mode_literal(raw_value)
+        return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='mode_literal', applied_rules=rules)
+    if answer_mode == 'procedure':
+        normalized, rules = _extract_quick_ref_procedure(raw_value)
+        return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='procedure', applied_rules=rules)
     if answer_mode == 'risk_consequence':
         normalized, rules = _compact_sentence(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='risk_statement', applied_rules=rules)
@@ -440,6 +501,22 @@ def _trim_surface_with_language(answer: str, answer_language: str) -> tuple[str,
 
 def _translate_known_value(value: str, answer_mode: str, answer_language: str) -> str:
     if answer_language == 'es':
+        quick_ref_replacements = {
+            'switch between the different windows of the screen': 'cambiar entre las distintas ventanas de la pantalla',
+            'both keys axis and direction must be pressed to jog the axis': 'se deben pulsar la tecla del eje y la tecla de direccion para mover el eje',
+            'press [start] to continue with the home search or [esc] to cancel the operation': 'pulse [START] para continuar con la busqueda de referencia o [ESC] para cancelar la operacion',
+            'press [enter] to assume the entered value': 'pulse [ENTER] para asumir el valor introducido',
+            'press [f] at the alphanumeric keyboard': 'pulse [F] en el teclado alfanumerico',
+            'press [s] at the alphanumeric keyboard': 'pulse [S] en el teclado alfanumerico',
+            'press [t] on the alphanumeric keyboard': 'pulse [T] en el teclado alfanumerico',
+            'automatic mode': 'modo automatico',
+            'jog mode': 'modo jog',
+            'mdi/mda mode': 'modo mdi/mda',
+        }
+        normalized = _normalize_for_match(value)
+        for source, target in quick_ref_replacements.items():
+            if source in normalized:
+                return target
         return value
     replacements = {
         'el departamento de asistencia al cliente de ekin': "EKIN's customer support department",
@@ -450,6 +527,9 @@ def _translate_known_value(value: str, answer_mode: str, answer_language: str) -
         'proporcionar la informacion necesaria para el mantenimiento de la maquina': 'provide the information needed to maintain the machine',
         'resaltar instrucciones importantes y relevantes relacionadas con la seguridad': 'highlight important safety-related instructions',
         'el estado de los elementos de seguridad de la maquina': 'the condition of the machine safety elements',
+        'modo automatico': 'automatic mode',
+        'modo jog': 'jog mode',
+        'modo mdi/mda': 'mdi/mda mode',
     }
     normalized = _normalize_for_match(value)
     for source, target in replacements.items():
@@ -493,6 +573,19 @@ def render_answer(question: str, answer_mode: str, values: list[NormalizedValue]
         if answer_language == 'en':
             return f'In case of doubts about machine safety, {primary} should be consulted.', 'ok', notes
         return f'En caso de dudas sobre la seguridad de la maquina, se debe consultar a {primary}.', 'ok', notes
+    if answer_mode == 'control_key':
+        if answer_language == 'en':
+            return f'The key used is {primary}.', 'ok', notes
+        return f'La tecla que se utiliza es {primary}.', 'ok', notes
+    if answer_mode == 'mode_literal':
+        rendered_values = [value.normalized_value for value in values[:4]]
+        if answer_language == 'en':
+            return f'The available work modes are {", ".join(rendered_values)}.', 'ok', notes
+        return f'Los modos de trabajo disponibles son {", ".join(_translate_known_value(value, answer_mode, answer_language) for value in rendered_values)}.', 'ok', notes
+    if answer_mode == 'procedure':
+        if answer_language == 'en':
+            return f'The manual indicates: {primary.rstrip(".")}.', 'ok', notes
+        return f'El manual indica: {_translate_known_value(primary, answer_mode, answer_language).rstrip(".")}.', 'ok', notes
     if answer_mode == 'ownership':
         if answer_language == 'en':
             return f'The manual copyright belongs to {primary}.', 'ok', notes
@@ -530,7 +623,7 @@ def synthesize_answer(question: str, rows: list[tuple[str, str, str]], plan: Any
     answer_language = getattr(plan, 'question_language', None) or ('en' if re.search(r'\b(what|which|where|who|how)\b', _normalize_for_match(question)) else 'es')
     candidates = score_evidence_rows(question, rows, plan)
     selected = [candidate for candidate in candidates if candidate.score > 0][:3]
-    if answer_mode in {'email', 'address', 'directive', 'figure', 'spare_parts_policy', 'contact_department', 'purpose', 'ownership', 'verification_requirement', 'risk_consequence', 'generic'}:
+    if answer_mode in {'email', 'address', 'directive', 'figure', 'spare_parts_policy', 'contact_department', 'purpose', 'ownership', 'verification_requirement', 'risk_consequence', 'generic', 'control_key', 'procedure'}:
         selected = selected[:1] or selected
     normalized_values = _deduplicate_values([normalize_candidate_value(question, candidate, answer_mode) for candidate in selected])
     pre_polish_answer, synthesis_category, notes = render_answer(question, answer_mode, normalized_values, answer_language)

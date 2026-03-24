@@ -44,6 +44,12 @@ def parse_chunks(filepath: str) -> list[dict]:
         raise FileNotFoundError(f"No se encontro el archivo: {filepath}")
 
     content = path.read_text(encoding="utf-8")
+    content = re.sub(
+        r"(---\s*(?:P[aÃ¡]ginas|Pages):\s*)(?!\[)([^|\n]+?)(\s*\|)",
+        lambda match: f"{match.group(1)}[{match.group(2).strip()}]{match.group(3)}",
+        content,
+        flags=re.IGNORECASE,
+    )
     parts = HEADER_PATTERN.split(content)
     chunks: list[dict] = []
 
@@ -130,7 +136,7 @@ def split_text_sentence_safe(text: str, max_tokens: int, overlap_tokens: int) ->
     return chunks
 
 
-def analyze(filepath: str, terms: list[dict]) -> tuple[list[dict], dict]:
+def analyze(filepath: str, terms: list[dict], *, manual_id: str | None = None) -> tuple[list[dict], dict]:
     raw_chunks = parse_chunks(filepath)
     report: list[dict] = []
     language_rows: list[dict] = []
@@ -152,6 +158,8 @@ def analyze(filepath: str, terms: list[dict]) -> tuple[list[dict], dict]:
             report.append(
                 {
                     "chunk_id": global_chunk_id,
+                    "manual_id": manual_id,
+                    "source_path": str(Path(filepath).resolve()),
                     "paginas": chunk["paginas"],
                     "seccion": chunk["seccion"],
                     "titulo": chunk["titulo"],
@@ -170,6 +178,7 @@ def analyze(filepath: str, terms: list[dict]) -> tuple[list[dict], dict]:
             language_rows.append(
                 {
                     "chunk_id": global_chunk_id,
+                    "manual_id": manual_id,
                     "source_language": source_language,
                     "language_confidence": language_confidence,
                     "paginas": chunk["paginas"],
@@ -180,6 +189,7 @@ def analyze(filepath: str, terms: list[dict]) -> tuple[list[dict], dict]:
             global_chunk_id += 1
 
     summary = {
+        "manual_id": manual_id,
         "source_file": str(Path(filepath).resolve()),
         "total_chunks": len(report),
         "language_counts": {
@@ -212,25 +222,30 @@ def print_summary(report: list[dict], total_terms: int, language_summary: dict) 
     print("-" * 65)
 
 
-def save_report(report: list[dict], input_path: str, language_summary: dict) -> None:
-    output_path = Path(input_path).parent / "density_report.json"
+def save_report(report: list[dict], input_path: str, language_summary: dict, *, output_path: Path | None = None, language_report_path: Path | None = None) -> None:
+    output_path = output_path or (Path(input_path).parent / "density_report.json")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    LANGUAGE_DETECTION_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    LANGUAGE_DETECTION_REPORT_PATH.write_text(
+    language_report_path = language_report_path or LANGUAGE_DETECTION_REPORT_PATH
+    language_report_path.parent.mkdir(parents=True, exist_ok=True)
+    language_report_path.write_text(
         json.dumps(language_summary, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
     print(f"Reporte segmentado guardado en: {output_path}")
-    print(f"Reporte de deteccion de idioma guardado en: {LANGUAGE_DETECTION_REPORT_PATH}")
+    print(f"Reporte de deteccion de idioma guardado en: {language_report_path}")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Analisis de densidad y segmentacion fisica")
     parser.add_argument("--input", required=True, help="Ruta al archivo de chunks")
+    parser.add_argument("--manual-id", default="", help="Identificador opcional del manual para trazabilidad de onboarding.")
+    parser.add_argument("--output", type=Path, default=None, help="Ruta de salida opcional para el reporte de densidad.")
+    parser.add_argument("--language-report-path", type=Path, default=None, help="Ruta de salida opcional para el reporte de deteccion de idioma.")
     parser.add_argument("--refresh-terms", action="store_true", help="Forzar regeneracion del cache")
     args = parser.parse_args()
 
     terms = get_terms(filepath=args.input, force_refresh=args.refresh_terms)
-    report, language_summary = analyze(args.input, terms)
+    report, language_summary = analyze(args.input, terms, manual_id=args.manual_id or None)
     print_summary(report, total_terms=len(terms), language_summary=language_summary)
-    save_report(report, args.input, language_summary)
+    save_report(report, args.input, language_summary, output_path=args.output, language_report_path=args.language_report_path)

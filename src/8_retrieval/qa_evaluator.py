@@ -30,10 +30,14 @@ from artifact_contracts import (
     OPERATIONAL_TBOX_PATH,
     QA_BILINGUAL_PATH,
     QA_CANONICAL_PATH,
+    QA_8070_QUICK_REF_BILINGUAL_PATH,
     QA_EVAL_REPORT_PATH,
     QA_FAILURE_ANALYSIS_PATH,
     QA_MULTIHOP_PATH,
     QUERY_DEBUG_REPORT_PATH,
+    QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH,
+    QUICK_REF_BILINGUAL_EVAL_REPORT_PATH,
+    QUICK_REF_INTEGRATION_DECISION_REPORT_PATH,
     SCHEMA_CONDENSED_PATH,
     SYNTHESIS_DEBUG_REPORT_PATH,
     SYNTHESIS_DECISION_REPORT_PATH,
@@ -70,12 +74,24 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _load_dataset_payload(qa_file: Path):
+    return json.loads(qa_file.read_text(encoding="utf-8"))
+
+
+def _is_bilingual_payload(payload) -> bool:
+    return isinstance(payload, dict) and isinstance(payload.get("pairs"), list)
+
+
 def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analysis_path: Path | None, debug_report_path: Path | None) -> tuple[Path, Path, Path]:
+    payload = _load_dataset_payload(qa_file)
     is_multihop = qa_file.resolve() == QA_MULTIHOP_PATH.resolve()
-    is_bilingual = qa_file.resolve() == QA_BILINGUAL_PATH.resolve()
+    is_bilingual = _is_bilingual_payload(payload)
+    is_quick_ref_bilingual = qa_file.resolve() == QA_8070_QUICK_REF_BILINGUAL_PATH.resolve()
     resolved_report = report_path or (
         MULTIHOP_EVAL_REPORT_PATH
         if is_multihop
+        else QUICK_REF_BILINGUAL_EVAL_REPORT_PATH
+        if is_quick_ref_bilingual
         else BILINGUAL_EVAL_REPORT_PATH
         if is_bilingual
         else GENERALIZATION_EVAL_REPORT_PATH
@@ -85,6 +101,8 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
     resolved_failure = failure_analysis_path or (
         MULTIHOP_PLANNER_DECISION_REPORT_PATH
         if is_multihop
+        else QUICK_REF_INTEGRATION_DECISION_REPORT_PATH
+        if is_quick_ref_bilingual
         else BILINGUAL_DECISION_REPORT_PATH
         if is_bilingual
         else QA_FAILURE_ANALYSIS_PATH
@@ -92,6 +110,8 @@ def resolve_output_paths(qa_file: Path, report_path: Path | None, failure_analys
     resolved_debug = debug_report_path or (
         MULTIHOP_DEBUG_REPORT_PATH
         if is_multihop
+        else QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH
+        if is_quick_ref_bilingual
         else BILINGUAL_DEBUG_REPORT_PATH
         if is_bilingual
         else QUERY_DEBUG_REPORT_PATH
@@ -125,6 +145,8 @@ class EvaluadorRAG:
         self.esquema = self._cargar_esquema_condensado()
         self.subject_uris = {str(subject) for subject in self.grafo.subjects() if isinstance(subject, URIRef)}
         self.canonical_entity_map = self._cargar_canonical_entity_map()
+        self.dataset_payload = _load_dataset_payload(self.qa_file)
+        self.is_bilingual_dataset = _is_bilingual_payload(self.dataset_payload)
 
     def _cargar_esquema_condensado(self) -> str:
         if not SCHEMA_CONDENSED_PATH.exists():
@@ -169,7 +191,7 @@ class EvaluadorRAG:
         return tokens
 
     def _cargar_dataset(self) -> list[dict]:
-        payload = json.loads(self.qa_file.read_text(encoding="utf-8"))
+        payload = self.dataset_payload
         if isinstance(payload, dict) and "pairs" in payload:
             return payload["pairs"]
         bank: list[dict] = []
@@ -276,6 +298,7 @@ class EvaluadorRAG:
 
         classification = self._clasificar_pregunta(
             expected_uris=expected_uris,
+            expected_answer=item.get("answer", ""),
             precision=precision,
             recall=recall,
             tripletas_limpias=tripletas_limpias,
@@ -351,7 +374,7 @@ class EvaluadorRAG:
             fragmentos.append(f"{self._normalizar_uri(predicate)} {obj_text}")
         return self._normalizar_texto(" ".join(fragmentos))
 
-    def _clasificar_pregunta(self, *, expected_uris: list[str], precision: float, recall: float, tripletas_limpias: list[tuple[str, str, str]], synthesized_answer: str, query_error: str | None, synthesis_error: str | None, question: str) -> str:
+    def _clasificar_pregunta(self, *, expected_uris: list[str], expected_answer: str, precision: float, recall: float, tripletas_limpias: list[tuple[str, str, str]], synthesized_answer: str, query_error: str | None, synthesis_error: str | None, question: str) -> str:
         if not expected_uris:
             return "golden_set_mismatch_or_ambiguity"
         if query_error:
@@ -359,8 +382,29 @@ class EvaluadorRAG:
         if synthesis_error:
             return "answer_synthesis_failed"
         answer_norm = self._normalizar_texto(synthesized_answer)
+        expected_answer_norm = self._normalizar_texto(expected_answer)
         negative_markers = ["[empty]", "no se encuentra", "no dispongo", "no hay informacion", "no se encontraron", "context is insufficient"]
         answer_is_negative = any(marker in answer_norm for marker in negative_markers)
+        expected_answer_tokens = {
+            token
+            for token in expected_answer_norm.split()
+            if len(token) >= 4 and token not in STOPWORDS
+        }
+        answer_tokens = {
+            token
+            for token in answer_norm.split()
+            if len(token) >= 4 and token not in STOPWORDS
+        }
+        answer_overlap = (
+            len(expected_answer_tokens.intersection(answer_tokens)) / len(expected_answer_tokens)
+            if expected_answer_tokens
+            else 0.0
+        )
+        strong_answer_match = bool(expected_answer_norm) and (
+            expected_answer_norm in answer_norm
+            or answer_norm in expected_answer_norm
+            or answer_overlap >= 0.8
+        )
         expected_exists = all(uri in self.subject_uris for uri in expected_uris)
         neighborhood = " ".join(self._vecindario_uri(uri) for uri in expected_uris if uri in self.subject_uris)
         question_tokens = self._tokenizar_pregunta(question)
@@ -371,6 +415,8 @@ class EvaluadorRAG:
             return "naming_mismatch" if token_hits == 0 else "query_too_broad_or_too_narrow"
         if answer_is_negative and recall > 0:
             return "answer_synthesis_failed"
+        if strong_answer_match and not answer_is_negative:
+            return "ok"
         if precision == 0 and recall == 0:
             return "naming_mismatch" if token_hits == 0 else "query_too_broad_or_too_narrow"
         if recall == 1.0 and precision >= 0.05 and not answer_is_negative:
@@ -538,7 +584,7 @@ class EvaluadorRAG:
 
     def ejecutar_evaluacion(self, *, limit: int = 0, sleep_seconds: float = 0.0) -> tuple[dict, dict]:
         banco_preguntas = self._cargar_dataset()
-        if self.qa_file.resolve() == QA_BILINGUAL_PATH.resolve():
+        if self.is_bilingual_dataset:
             return self._ejecutar_evaluacion_bilingue(banco_preguntas, limit=limit, sleep_seconds=sleep_seconds)
         if limit > 0:
             banco_preguntas = banco_preguntas[:limit]
@@ -589,6 +635,7 @@ class EvaluadorRAG:
 
             classification = self._clasificar_pregunta(
                 expected_uris=expected_uris,
+                expected_answer=item.get("answer", ""),
                 precision=precision,
                 recall=recall,
                 tripletas_limpias=tripletas_limpias,

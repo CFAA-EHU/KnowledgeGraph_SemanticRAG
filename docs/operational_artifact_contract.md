@@ -28,11 +28,27 @@
 - Multilingual lexicon: `data/processed/multilingual_lexicon.json`
 - Language detection report: `data/processed/language_detection_report.json`
 - Bilingual benchmark dataset: `data/golden_set/QA_bilingual.json`
+- Quick-ref bilingual pilot dataset: `data/golden_set/QA_8070_quick_ref_bilingual.json`
 - Bilingual eval report: `data/processed/bilingual_eval_report.json`
 - Bilingual debug report: `data/processed/bilingual_debug_report.json`
 - Bilingual decision report: `data/processed/bilingual_decision_report.json`
+- Quick-ref density report: `data/processed/quick_ref_density_report.json`
+- Quick-ref language report: `data/processed/quick_ref_language_detection_report.json`
+- Quick-ref A-Box input: `data/processed/quick_ref_abox_input.json`
+- Quick-ref onboarding report: `data/processed/quick_ref_onboarding_report.json`
+- Quick-ref bilingual eval report: `data/processed/quick_ref_bilingual_eval_report.json`
+- Quick-ref bilingual debug report: `data/processed/quick_ref_bilingual_debug_report.json`
+- Quick-ref integration decision report: `data/processed/quick_ref_integration_decision_report.json`
 
 The default operational build runs `abox_input_builder.py`, `abox_extractor.py`, `abox_merger.py`, `abox_canonicalizer.py`, `abox_graph_enricher.py`, `abox_link_completer.py`, and `multilingual_lexicon_builder.py` in that order. The runtime graph contract for this phase is `ontology_aligned.ttl` plus `abox_linked.ttl`, while bilingual lexicalization lives in `multilingual_lexicon.json`.
+
+The pilot onboarding entrypoint reuses the same build with:
+
+```bash
+python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible
+```
+
+When extraction credentials are unavailable, the pilot lane must still persist density/input/onboarding artifacts and stop before `abox_extractor.py` with an explicit blocker.
 
 ### Experimental lane
 

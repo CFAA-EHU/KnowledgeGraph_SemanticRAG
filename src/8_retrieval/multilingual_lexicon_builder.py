@@ -68,6 +68,28 @@ CURATED_ENTITY_SURFACES: dict[str, dict[str, list[str]]] = {
     },
 }
 
+QUICK_REF_SURFACE_EQUIVALENTS: dict[str, dict[str, list[str]]] = {
+    "monitor keyboard": {"es": ["monitor y teclado", "monitor y teclado del cnc"], "en": ["monitor and keyboard", "monitor keyboard"]},
+    "keyboard shortcuts": {"es": ["atajos de teclado", "teclas rapidas del teclado"], "en": ["keyboard shortcuts"]},
+    "jog panel": {"es": ["panel jog", "panel de jog"], "en": ["jog panel"]},
+    "home search": {"es": ["busqueda de referencia", "busqueda de home"], "en": ["home search", "homing"]},
+    "coordinate preset": {"es": ["preset de coordenadas", "preseleccion de coordenadas"], "en": ["coordinate preset"]},
+    "feedrate": {"es": ["avance", "feedrate"], "en": ["feedrate", "feed rate"]},
+    "spindle speed": {"es": ["velocidad del husillo"], "en": ["spindle speed", "speed"]},
+    "tool": {"es": ["herramienta"], "en": ["tool"]},
+    "automatic mode": {"es": ["modo automatico"], "en": ["automatic mode", "auto mode"]},
+    "jog mode": {"es": ["modo jog", "modo manual jog"], "en": ["jog mode"]},
+    "mdi mda mode": {"es": ["modo mdi mda"], "en": ["mdi/mda mode", "mdi mode"]},
+    "focus": {"es": ["tecla focus", "focus"], "en": ["focus key", "focus"]},
+    "next": {"es": ["tecla next", "next"], "en": ["next key", "next"]},
+    "back": {"es": ["tecla back", "back"], "en": ["back key", "back"]},
+    "help": {"es": ["tecla help", "help"], "en": ["help key", "help"]},
+    "start": {"es": ["tecla start", "inicio de ciclo", "marcha ciclo"], "en": ["start key", "cycle start", "start"]},
+    "stop": {"es": ["tecla stop", "parada de ciclo"], "en": ["stop key", "cycle stop", "stop"]},
+    "reset": {"es": ["tecla reset", "reinicio"], "en": ["reset key", "reset"]},
+    "zero": {"es": ["tecla zero", "tecla de home", "busqueda de referencia"], "en": ["zero key", "homing key", "zero"]},
+}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build the multilingual ES/EN lexicon over the canonical operational graph.")
@@ -108,6 +130,38 @@ def guess_english_surface(surface: str) -> str:
         "piezas de recambio": "spare parts",
         "departamento de asistencia al cliente": "customer support department",
         "elemento de seguridad": "safety element",
+    }
+    translated = surface
+    for source, target in replacements.items():
+        translated = re.sub(source, target, translated, flags=re.IGNORECASE)
+    return translated
+
+
+def guess_spanish_surface(surface: str) -> str:
+    replacements = {
+        "monitor and keyboard": "monitor y teclado",
+        "keyboard shortcuts": "atajos de teclado",
+        "jog panel": "panel jog",
+        "home search": "busqueda de referencia",
+        "coordinate preset": "preset de coordenadas",
+        "feed rate": "avance",
+        "feedrate": "avance",
+        "spindle speed": "velocidad del husillo",
+        "automatic mode": "modo automatico",
+        "jog mode": "modo jog",
+        "mdi/mda mode": "modo mdi/mda",
+        "cycle start": "inicio de ciclo",
+        "cycle stop": "parada de ciclo",
+        "start key": "tecla start",
+        "stop key": "tecla stop",
+        "reset key": "tecla reset",
+        "homing key": "tecla de home",
+        "zero key": "tecla zero",
+        "focus key": "tecla focus",
+        "next key": "tecla next",
+        "back key": "tecla back",
+        "help key": "tecla help",
+        "tool": "herramienta",
     }
     translated = surface
     for source, target in replacements.items():
@@ -220,6 +274,27 @@ def enrich_entries(entries: dict[str, dict[str, Any]], graph: Graph, terms: list
                     if isinstance(surface, str) and surface.strip():
                         if surface not in entry["surfaces"][language]:
                             entry["surfaces"][language].append(surface)
+
+        for english_surface in list(entry["surfaces"]["en"]):
+            spanish_guess = guess_spanish_surface(english_surface)
+            if spanish_guess and spanish_guess not in entry["surfaces"]["es"]:
+                entry["surfaces"]["es"].append(spanish_guess)
+
+        observed_surfaces = {
+            normalize_surface(surface)
+            for language in ("es", "en")
+            for surface in entry["surfaces"][language]
+        }
+        observed_surfaces.update(normalize_surface(alias) for alias in entry["aliases"])
+        for trigger, equivalents in QUICK_REF_SURFACE_EQUIVALENTS.items():
+            if not any(trigger in observed for observed in observed_surfaces):
+                continue
+            for language in ("es", "en"):
+                for surface in equivalents[language]:
+                    if surface not in entry["surfaces"][language]:
+                        entry["surfaces"][language].append(surface)
+                    if surface not in entry["aliases"]:
+                        entry["aliases"].append(surface)
 
         source_languages = sorted(language for language in entry["source_languages"] if language in {"es", "en"})
         if not source_languages:

@@ -9,6 +9,9 @@ La ingesta sigue produciendo un solo carril operativo, pero ahora marca el idiom
 - `language_confidence`
 
 Ese metadato viaja despues a `density_report.json`, `abox_input.json` y `language_detection_report.json`.
+En T21 tambien se reutiliza para onboarding piloto real de `chunks_8070_quick_ref.txt`, generando:
+- `data/processed/quick_ref_density_report.json`
+- `data/processed/quick_ref_language_detection_report.json`
 
 ## Componentes principales
 
@@ -30,6 +33,7 @@ Ese metadato viaja despues a `density_report.json`, `abox_input.json` y `languag
 - segmenta el material de entrada respetando oraciones
 - calcula densidad tecnica
 - detecta idioma por chunk/manual
+- acepta rutas de salida parametrizadas para pilotos de onboarding
 - persiste:
   - `data/raw/density_report.json`
   - `data/processed/language_detection_report.json`
@@ -44,4 +48,8 @@ Ese metadato viaja despues a `density_report.json`, `abox_input.json` y `languag
 
 ```bash
 python src/1_ingestion/density_analyzer.py --input data/raw/chunks_manual_instrucciones_a218.txt
+```
+
+```bash
+python src/1_ingestion/density_analyzer.py --input data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --output data/processed/quick_ref_density_report.json --language-report-path data/processed/quick_ref_language_detection_report.json
 ```

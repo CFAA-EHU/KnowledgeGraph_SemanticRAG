@@ -60,13 +60,22 @@ BOUNDEDNESS_POLICIES = {
 ANCHOR_ALIAS_RULES = [
     {"anchor_id": "manual_a218", "aliases": ["manual a218", "a218 rashem", "rashem 7x3000x500", "brochadora a218", "a218 machine", "a218 broaching machine", "a218 broaching machine manual"], "seed_uris": [f"{BASE_URI}ManualBrochadoraA218", f"{BASE_URI}Maquina_A218_RASHEM_7x3000x500"], "preferred_intents": ["purpose_or_function_lookup", "figure_or_reference_lookup"], "confidence": 0.92},
     {"anchor_id": "figure_header_footer", "aliases": ["encabezados y pies", "encabezados y pies de pagina", "pies de pagina", "informacion mostrada en paginas", "headers and footers", "manual headers and footers", "information shown on pages"], "seed_uris": [f"{BASE_URI}Figura0_1_1InformacionMostradaEnPaginas", f"{BASE_URI}ManualBrochadoraA218"], "preferred_intents": ["figure_or_reference_lookup"], "confidence": 0.95},
+    {"anchor_id": "manual_safety_symbols", "aliases": ["simbolos de advertencia y seguridad", "advertencia y seguridad del manual", "warning and safety symbols", "manual safety symbols"], "seed_uris": [f"{BASE_URI}IndicacionAdvertenciaSeguridad"], "preferred_intents": ["purpose_or_function_lookup", "regulatory_lookup"], "confidence": 0.97},
     {"anchor_id": "precaucion", "aliases": ["precaucion", "senal de precaucion"], "seed_uris": [f"{BASE_URI}Precaucion"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.96},
     {"anchor_id": "peligro", "aliases": ["peligro", "advertencia de peligro"], "seed_uris": [f"{BASE_URI}Peligro"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.96},
-    {"anchor_id": "medio_ambiente", "aliases": ["medio ambiente", "indicacion de medio ambiente"], "seed_uris": [f"{BASE_URI}MedioAmbiente"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.96},
+    {"anchor_id": "medio_ambiente", "aliases": ["medio ambiente", "indicacion de medio ambiente", "environment indication", "environment warning"], "seed_uris": [f"{BASE_URI}MedioAmbiente"], "preferred_intents": ["regulatory_lookup", "purpose_or_function_lookup"], "confidence": 0.96},
+    {"anchor_id": "sistema_seguridad_maquina", "aliases": ["sistemas de seguridad de la maquina", "seguridad de la maquina", "verificar regularmente los sistemas de seguridad", "verify the safety elements"], "seed_uris": [f"{BASE_URI}SistemaSeguridadMaquina"], "preferred_intents": ["component_attribute_lookup", "regulatory_lookup"], "confidence": 0.95},
+    {"anchor_id": "elementos_seguridad_verificacion", "aliases": ["elementos de seguridad de la maquina", "verificar regularmente", "garantizar la seguridad de la maquina", "estado de los elementos de seguridad"], "seed_uris": [f"{BASE_URI}ElementoSeguridad_1"], "preferred_intents": ["component_attribute_lookup", "regulatory_lookup"], "confidence": 0.97},
     {"anchor_id": "client_support_department", "aliases": ["dudas sobre la seguridad", "consultar en caso de dudas", "asistencia al cliente", "departamento de asistencia al cliente", "customer support department", "customer service department", "doubts about machine safety"], "seed_uris": [f"{BASE_URI}DepartamentoAsistenciaClienteEKIN"], "preferred_intents": ["regulatory_lookup", "literal_lookup"], "confidence": 0.91},
     {"anchor_id": "ekin_company", "aliases": ["empresa ekin", "ekin s coop", "direccion de ekin", "direccion de la empresa ekin", "correo electronico de ekin", "correo electronico de contacto de ekin", "derechos de autor", "correo de contacto de ekin", "ekin company", "ekin address", "ekin contact email", "copyright"], "seed_uris": [f"{BASE_URI}Empresa_EKIN_S_Coop"], "preferred_intents": ["literal_lookup"], "confidence": 0.94},
     {"anchor_id": "spare_parts_policy", "aliases": ["piezas de recambio", "pieza de recambio", "recambios", "recambio original", "piezas originales", "spare parts", "original spare parts"], "seed_uris": [f"{BASE_URI}PiezaRecambio_1", f"{BASE_URI}Empresa_EKIN_S_Coop"], "preferred_intents": ["literal_lookup"], "confidence": 0.93},
     {"anchor_id": "directive_2006_42_ce", "aliases": ["declaracion ce", "directiva 2006 42 ce", "conformidad sobre maquinas", "directive 2006 42 ce", "ce declaration", "declaration of conformity"], "seed_uris": [f"{BASE_URI}Directiva2006_42_CE"], "preferred_intents": ["regulatory_lookup"], "confidence": 0.94},
+    {"anchor_id": "quick_ref_work_modes", "aliases": ["modos de trabajo", "modo de trabajo", "work modes", "work mode", "automatic mode", "modo automatico", "jog mode", "modo jog", "mdi/mda mode", "modo mdi/mda"], "seed_uris": [], "preferred_intents": ["literal_lookup", "purpose_or_function_lookup"], "confidence": 0.9},
+    {"anchor_id": "quick_ref_monitor_keyboard", "aliases": ["monitor y teclado", "monitor and keyboard", "monitor keyboard", "focus key", "tecla focus", "next key", "tecla next", "back key", "tecla back", "help key", "tecla help"], "seed_uris": [], "preferred_intents": ["literal_lookup", "purpose_or_function_lookup"], "confidence": 0.9},
+    {"anchor_id": "quick_ref_jog_panel", "aliases": ["panel jog", "jog panel", "rapid key", "tecla rapid", "jog selector", "selector jog", "handwheel", "volante"], "seed_uris": [], "preferred_intents": ["literal_lookup", "purpose_or_function_lookup"], "confidence": 0.9},
+    {"anchor_id": "quick_ref_home_search", "aliases": ["busqueda de referencia", "busqueda de home", "home search", "homing", "zero key", "tecla zero", "homing key"], "seed_uris": [], "preferred_intents": ["literal_lookup", "purpose_or_function_lookup"], "confidence": 0.9},
+    {"anchor_id": "quick_ref_coordinate_preset", "aliases": ["preset de coordenadas", "coordinate preset", "preset value", "valor preset"], "seed_uris": [], "preferred_intents": ["literal_lookup"], "confidence": 0.9},
+    {"anchor_id": "quick_ref_feed_speed_tool", "aliases": ["avance", "feedrate", "feed rate", "velocidad del husillo", "spindle speed", "tool", "herramienta", "start key", "tecla start", "stop key", "tecla stop", "reset key", "tecla reset"], "seed_uris": [], "preferred_intents": ["literal_lookup", "purpose_or_function_lookup"], "confidence": 0.9},
 ]
 
 PREDICATE_URI_MAP = {
@@ -89,6 +98,7 @@ class QuestionParse:
     anchor_text: str | None
     anchor_candidates: list[str]
     qualifiers: list[str]
+    matched_seed_uris: list[str] = field(default_factory=list)
     matched_anchor_rule: str | None = None
     intent_confidence: float = 0.4
     anchor_confidence: float = 0.0
@@ -255,6 +265,20 @@ MULTIHOP_PLAN_FAMILIES = [
         ],
     },
     {
+        "family_id": "manual_safety_symbols_purpose",
+        "template_id": "GX_T6_safety_symbols_purpose",
+        "intent": "purpose_or_function_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "manual_safety_symbols",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_manual_safety_symbols", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}IndicacionAdvertenciaSeguridad"], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "manual_safety_symbol_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "type"], "max_candidates": 1, "max_results": 8},
+        ],
+        "evidence_questions": ["Que objetivo tienen los simbolos de advertencia y seguridad del manual?"],
+    },
+    {
         "family_id": "manual_header_figure_lookup",
         "template_id": "GX_T1_manual_header_figure",
         "intent": "figure_or_reference_lookup",
@@ -281,6 +305,20 @@ MULTIHOP_PLAN_FAMILIES = [
             {"step_id": "detail", "purpose": "symbol_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "type"], "max_candidates": 2, "max_results": 8},
         ],
         "evidence_questions": ["Que puede ocurrir si no se tiene en cuenta una advertencia de peligro?", "Que indica una senal de precaucion en el manual?", "Que tipo de informacion representa la indicacion de medio ambiente?"],
+    },
+    {
+        "family_id": "environment_symbol_purpose",
+        "template_id": "GX_T7_environment_symbol",
+        "intent": "purpose_or_function_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "medio_ambiente",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_environment_symbol", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}MedioAmbiente"], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "environment_symbol_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "type"], "max_candidates": 1, "max_results": 8},
+        ],
+        "evidence_questions": ["Que tipo de informacion representa la indicacion de medio ambiente?"],
     },
     {
         "family_id": "ekin_contact_literal",
@@ -323,6 +361,119 @@ MULTIHOP_PLAN_FAMILIES = [
             {"step_id": "detail", "purpose": "ce_directive_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "identificador", "label", "type"], "max_candidates": 1, "max_results": 8},
         ],
         "evidence_questions": ["Segun que directiva se realiza la declaracion CE de conformidad sobre maquinas?"],
+    },
+    {
+        "family_id": "machine_safety_verification_requirement",
+        "template_id": "GX_T8_safety_verification",
+        "intent": "component_attribute_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "elementos_seguridad_verificacion",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_machine_safety_elements", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}ElementoSeguridad_1"], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "machine_safety_verification_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "type"], "max_candidates": 1, "max_results": 8},
+        ],
+        "evidence_questions": ["Que se debe verificar regularmente para garantizar la seguridad de la maquina?"],
+    },
+    {
+        "family_id": "machine_safety_verification_requirement_regulatory",
+        "template_id": "GX_T8_safety_verification",
+        "intent": "regulatory_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "elementos_seguridad_verificacion",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_machine_safety_elements", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}ElementoSeguridad_1"], "max_candidates": 1, "max_results": 1},
+            {"step_id": "detail", "purpose": "machine_safety_verification_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "type"], "max_candidates": 1, "max_results": 8},
+        ],
+        "evidence_questions": ["Que se debe verificar regularmente para garantizar la seguridad de la maquina?"],
+    },
+    {
+        "family_id": "quick_ref_work_mode_lookup",
+        "template_id": "QR_T1_work_modes",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "quick_ref_work_modes",
+        "keywords_any": [["modo", "work"], ["automatico", "automatic", "jog", "mdi"]],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_quick_ref_work_modes", "mode": "fixed_seed", "fixed_uris": [], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "quick_ref_work_mode_details", "mode": "describe_entities", "preferred_predicates": ["label", "textoExtracto", "identificador", "type"], "max_candidates": 3, "max_results": 12},
+        ],
+        "evidence_questions": ["Que modos de trabajo estan disponibles en el monitor y teclado?"],
+    },
+    {
+        "family_id": "quick_ref_key_purpose_lookup",
+        "template_id": "QR_T2_key_purpose",
+        "intent": "purpose_or_function_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_ids": ["quick_ref_monitor_keyboard", "quick_ref_feed_speed_tool"],
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_quick_ref_key", "mode": "fixed_seed", "fixed_uris": [], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "quick_ref_key_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 3, "max_results": 12},
+        ],
+        "evidence_questions": ["Para que sirve la tecla focus en el monitor y teclado?"],
+    },
+    {
+        "family_id": "quick_ref_jog_operation_lookup",
+        "template_id": "QR_T3_jog_operation",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "quick_ref_jog_panel",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_quick_ref_jog", "mode": "fixed_seed", "fixed_uris": [], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "quick_ref_jog_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 3, "max_results": 12},
+        ],
+        "evidence_questions": ["Que se debe pulsar para mover un eje desde el panel jog?"],
+    },
+    {
+        "family_id": "quick_ref_home_search_procedure",
+        "template_id": "QR_T4_home_search",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "quick_ref_home_search",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_quick_ref_home_search", "mode": "fixed_seed", "fixed_uris": [], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "quick_ref_home_search_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 3, "max_results": 12},
+        ],
+        "evidence_questions": ["Que tecla confirma la busqueda de referencia?"],
+    },
+    {
+        "family_id": "quick_ref_coordinate_preset_procedure",
+        "template_id": "QR_T5_coordinate_preset",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "quick_ref_coordinate_preset",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_quick_ref_coordinate_preset", "mode": "fixed_seed", "fixed_uris": [], "max_candidates": 3, "max_results": 3},
+            {"step_id": "detail", "purpose": "quick_ref_coordinate_preset_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 3, "max_results": 12},
+        ],
+        "evidence_questions": ["Que tecla confirma el valor del preset de coordenadas?"],
+    },
+    {
+        "family_id": "quick_ref_feed_speed_tool_lookup",
+        "template_id": "QR_T6_feed_speed_tool",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "generalized",
+        "policy_id": "direct_seed_literal",
+        "anchor_rule_id": "quick_ref_feed_speed_tool",
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_quick_ref_feed_speed_tool", "mode": "fixed_seed", "fixed_uris": [], "max_candidates": 4, "max_results": 4},
+            {"step_id": "detail", "purpose": "quick_ref_feed_speed_tool_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 4, "max_results": 12},
+        ],
+        "evidence_questions": ["Que teclas se utilizan para fijar el avance la velocidad o la herramienta?"],
     },
 ]
 
@@ -376,6 +527,20 @@ def extract_reference_tokens(question: str) -> list[str]:
 
 def detect_intent(question: str) -> tuple[str, float]:
     normalized = normalize_text(question)
+    if any(
+        phrase in normalized
+        for phrase in (
+            "home search",
+            "homing",
+            "busqueda de referencia",
+            "busqueda de home",
+            "preset de coordenadas",
+            "coordinate preset",
+            "panel jog",
+            "jog panel",
+        )
+    ):
+        return "literal_lookup", 0.88
     best_intent = "literal_lookup"
     best_score = 0
     for intent, triggers in INTENT_TRIGGER_RULES:
@@ -403,31 +568,53 @@ def match_anchor_rule(question: str, intent: str) -> dict[str, Any] | None:
 
 
 
-def extract_anchor_text(question: str, intent: str) -> tuple[str | None, dict[str, Any] | None, float]:
+def _seed_uris_from_lexicon_hits(lexicon_hits: list[dict[str, Any]] | None) -> list[str]:
+    seed_uris: list[str] = []
+    for hit in lexicon_hits or []:
+        for candidate in hit.get("candidates", []):
+            uri = candidate.get("canonical_uri")
+            if isinstance(uri, str) and uri.startswith("http") and uri not in seed_uris:
+                seed_uris.append(uri)
+    return seed_uris[:4]
+
+
+def extract_anchor_text(question: str, intent: str, lexicon_hits: list[dict[str, Any]] | None = None) -> tuple[str | None, dict[str, Any] | None, float, list[str]]:
     refs = extract_reference_tokens(question)
+    lexicon_seed_uris = _seed_uris_from_lexicon_hits(lexicon_hits)
     matched_rule = match_anchor_rule(question, intent)
     if matched_rule is not None:
-        return matched_rule["anchor_id"], matched_rule, matched_rule["confidence"]
+        if not matched_rule["seed_uris"] and lexicon_seed_uris:
+            matched_rule = {**matched_rule, "seed_uris": lexicon_seed_uris}
+        return matched_rule["anchor_id"], matched_rule, matched_rule["confidence"], matched_rule.get("seed_uris", [])
     if refs:
-        return refs[0], None, 0.7
+        return refs[0], None, 0.7, []
+    if lexicon_hits:
+        first_hit = lexicon_hits[0]
+        surface = first_hit.get("surface")
+        if isinstance(surface, str) and surface:
+            return surface, None, 0.72, lexicon_seed_uris
     normalized = normalize_text(question)
     for anchor in [
         "ekin", "a218", "precaucion", "peligro", "medio ambiente", "seguridad",
         "safety", "columna_46", "46", "maintenance plan", "machine safety system",
     ]:
         if anchor in normalized:
-            return anchor, None, 0.55
-    return None, None, 0.2
+            return anchor, None, 0.55, []
+    return None, None, 0.2, []
 
 
 
-def build_question_parse(question: str) -> QuestionParse:
+def build_question_parse(question: str, lexicon_hits: list[dict[str, Any]] | None = None) -> QuestionParse:
     intent, intent_confidence = detect_intent(question)
-    anchor_text, matched_rule, anchor_confidence = extract_anchor_text(question, intent)
+    anchor_text, matched_rule, anchor_confidence, matched_seed_uris = extract_anchor_text(question, intent, lexicon_hits)
     tokens = tokenize_question(question)
     candidates: list[str] = []
     if anchor_text:
         candidates.append(anchor_text)
+    for hit in lexicon_hits or []:
+        surface = hit.get("surface")
+        if isinstance(surface, str) and surface not in candidates:
+            candidates.append(surface)
     for token in extract_reference_tokens(question) + tokens:
         if token not in candidates:
             candidates.append(token)
@@ -437,6 +624,7 @@ def build_question_parse(question: str) -> QuestionParse:
         anchor_text=anchor_text,
         anchor_candidates=candidates[:8],
         qualifiers=qualifiers,
+        matched_seed_uris=matched_seed_uris[:4],
         matched_anchor_rule=matched_rule["anchor_id"] if matched_rule else None,
         intent_confidence=round(intent_confidence, 2),
         anchor_confidence=round(anchor_confidence, 2),
@@ -493,13 +681,13 @@ def _resolved_seed_uris_for_family(parse: QuestionParse, family: dict[str, Any])
     if family.get("anchor_rule_id") and parse.matched_anchor_rule == family["anchor_rule_id"]:
         for rule in ANCHOR_ALIAS_RULES:
             if rule["anchor_id"] == family["anchor_rule_id"]:
-                return rule["seed_uris"]
+                return rule["seed_uris"] or parse.matched_seed_uris
     for rule_id in family.get("anchor_rule_ids", []):
         if parse.matched_anchor_rule == rule_id:
             for rule in ANCHOR_ALIAS_RULES:
                 if rule["anchor_id"] == rule_id:
-                    return rule["seed_uris"]
-    return family.get("seed_uris", [])
+                    return rule["seed_uris"] or parse.matched_seed_uris
+    return family.get("seed_uris", []) or parse.matched_seed_uris
 
 
 
@@ -656,7 +844,7 @@ def _build_generic_plan(parse: QuestionParse, graph: Graph | None, *, template_i
 def build_query_plan(question: str, schema_text: str, graph: Graph | None = None) -> QueryPlan:
     normalization = normalize_question(question)
     planner_question = normalization["planner_question"]
-    parse = build_question_parse(planner_question)
+    parse = build_question_parse(planner_question, normalization["multilingual_lexicon_hits"])
     family = select_plan_family(parse, planner_question)
     if family is not None:
         steps = [QueryStep(**step) for step in family["steps"]]

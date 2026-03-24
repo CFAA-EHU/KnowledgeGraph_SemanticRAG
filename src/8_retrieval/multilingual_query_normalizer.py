@@ -26,6 +26,12 @@ FULL_QUESTION_OVERRIDES = {
     "who should be consulted in case of doubts about machine safety": "a quien se debe consultar en caso de dudas sobre la seguridad de la maquina",
     "what type of spare parts must be used according to the manual": "que tipo de piezas de recambio deben emplearse segun el manual",
     "according to which directive is the ce declaration of conformity for machinery made": "segun que directiva se realiza la declaracion ce de conformidad sobre maquinas",
+    "what work modes are available on the monitor and keyboard": "que modos de trabajo estan disponibles en el monitor y teclado",
+    "what does the focus key do on the monitor and keyboard": "para que sirve la tecla focus en el monitor y teclado",
+    "what must be pressed to jog an axis from the jog panel": "que se debe pulsar para mover un eje desde el panel jog",
+    "which key confirms the home search": "que tecla confirma la busqueda de referencia",
+    "which key confirms the coordinate preset value": "que tecla confirma el valor del preset de coordenadas",
+    "which keys are used to set the feedrate speed or tool": "que teclas se utilizan para fijar el avance la velocidad o la herramienta",
 }
 
 PHRASE_REPLACEMENTS = [
@@ -57,6 +63,37 @@ PHRASE_REPLACEMENTS = [
     ("ce declaration", "declaracion ce"),
     ("conformity", "conformidad"),
     ("machinery", "maquinas"),
+    ("monitor and keyboard", "monitor y teclado"),
+    ("monitor & keyboard", "monitor y teclado"),
+    ("keyboard shortcuts", "atajos de teclado"),
+    ("jog panel", "panel jog"),
+    ("work modes", "modos de trabajo"),
+    ("work mode", "modo de trabajo"),
+    ("automatic mode", "modo automatico"),
+    ("jog mode", "modo jog"),
+    ("mdi/mda mode", "modo mdi/mda"),
+    ("home search", "busqueda de referencia"),
+    ("homing", "busqueda de referencia"),
+    ("coordinate preset", "preset de coordenadas"),
+    ("feed rate", "avance"),
+    ("feedrate", "avance"),
+    ("spindle speed", "velocidad del husillo"),
+    ("cycle start", "inicio de ciclo"),
+    ("cycle stop", "parada de ciclo"),
+    ("focus key", "tecla focus"),
+    ("next key", "tecla next"),
+    ("back key", "tecla back"),
+    ("help key", "tecla help"),
+    ("start key", "tecla start"),
+    ("stop key", "tecla stop"),
+    ("reset key", "tecla reset"),
+    ("zero key", "tecla zero"),
+    ("homing key", "tecla zero"),
+    ("what key", "que tecla"),
+    ("which key", "que tecla"),
+    ("what does", "para que sirve"),
+    ("what must be pressed", "que se debe pulsar"),
+    ("which keys are used", "que teclas se utilizan"),
 ]
 
 
@@ -98,7 +135,9 @@ def normalize_question(question: str) -> dict[str, Any]:
         planner_question = _replace_phrases(question)
     else:
         planner_question = normalize_text(question)
-    hits = _lexicon_hits(planner_question if language == "es" else question, lexicon)
+    hits = _lexicon_hits(planner_question, lexicon)
+    if not hits and language == "en":
+        hits = _lexicon_hits(question, lexicon)
     return {
         "question_language": language,
         "question_language_confidence": round(confidence, 4),

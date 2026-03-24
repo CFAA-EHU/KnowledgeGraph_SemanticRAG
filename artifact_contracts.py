@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict, dataclass
 from hashlib import sha256
 from pathlib import Path
@@ -36,6 +37,7 @@ QA3_DATASET_PATH = GOLDEN_SET_DIR / "QA3.json"
 QA_CANONICAL_PATH = GOLDEN_SET_DIR / "QA_canonical.json"
 QA_SANDBOX_PATH = GOLDEN_SET_DIR / "QA_sandbox.json"
 QA_BILINGUAL_PATH = GOLDEN_SET_DIR / "QA_bilingual.json"
+QA_8070_QUICK_REF_BILINGUAL_PATH = GOLDEN_SET_DIR / "QA_8070_quick_ref_bilingual.json"
 QA_RECONCILIATION_PATH = PROCESSED_DATA_DIR / "qa_dataset_reconciliation.json"
 QA_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "qa_eval_report.json"
 QA_FAILURE_ANALYSIS_PATH = PROCESSED_DATA_DIR / "qa_failure_analysis.json"
@@ -92,6 +94,19 @@ LINK_COMPLETION_CANDIDATES_PATH = PROCESSED_DATA_DIR / "link_completion_candidat
 LINK_COMPLETION_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_eval_report.json"
 LINK_COMPLETION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_decision_report.json"
 
+QUICK_REF_SOURCE_PATH = RAW_DATA_DIR / "chunks_8070_quick_ref.txt"
+QUICK_REF_DENSITY_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_density_report.json"
+QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_language_detection_report.json"
+QUICK_REF_ABOX_INPUT_PATH = PROCESSED_DATA_DIR / "quick_ref_abox_input.json"
+QUICK_REF_ABOX_MANIFEST_PATH = PROCESSED_DATA_DIR / "quick_ref_abox_generation_manifest.json"
+QUICK_REF_ABOX_CHUNKS_DIR = PROCESSED_DATA_DIR / "quick_ref_abox_graphs"
+QUICK_REF_ABOX_DEBUG_DIR = PROCESSED_DATA_DIR / "quick_ref_abox_debug"
+QUICK_REF_RAW_MERGED_ABOX_PATH = PROCESSED_DATA_DIR / "quick_ref_merged.ttl"
+QUICK_REF_ONBOARDING_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_onboarding_report.json"
+QUICK_REF_BILINGUAL_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_bilingual_eval_report.json"
+QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_bilingual_debug_report.json"
+QUICK_REF_INTEGRATION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "quick_ref_integration_decision_report.json"
+
 ABOX_MAX_LOCAL_RETRIES = 3
 ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
 ABOX_RETRYABLE_ERROR_CAUSES = {"rate_limit", "timeout", "network_error", "api_error"}
@@ -111,6 +126,7 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "qa_dataset": QA_CANONICAL_PATH,
     "qa_sandbox_dataset": QA_SANDBOX_PATH,
     "qa_bilingual_dataset": QA_BILINGUAL_PATH,
+    "qa_8070_quick_ref_bilingual_dataset": QA_8070_QUICK_REF_BILINGUAL_PATH,
     "qa_eval_report": QA_EVAL_REPORT_PATH,
     "qa_failure_analysis": QA_FAILURE_ANALYSIS_PATH,
     "multilingual_lexicon": MULTILINGUAL_LEXICON_PATH,
@@ -165,6 +181,18 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "link_completion_candidates": LINK_COMPLETION_CANDIDATES_PATH,
     "link_completion_eval_report": LINK_COMPLETION_EVAL_REPORT_PATH,
     "link_completion_decision_report": LINK_COMPLETION_DECISION_REPORT_PATH,
+    "quick_ref_source": QUICK_REF_SOURCE_PATH,
+    "quick_ref_density_report": QUICK_REF_DENSITY_REPORT_PATH,
+    "quick_ref_language_detection_report": QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,
+    "quick_ref_abox_input": QUICK_REF_ABOX_INPUT_PATH,
+    "quick_ref_abox_manifest": QUICK_REF_ABOX_MANIFEST_PATH,
+    "quick_ref_abox_chunks_dir": QUICK_REF_ABOX_CHUNKS_DIR,
+    "quick_ref_abox_debug_dir": QUICK_REF_ABOX_DEBUG_DIR,
+    "quick_ref_merged": QUICK_REF_RAW_MERGED_ABOX_PATH,
+    "quick_ref_onboarding_report": QUICK_REF_ONBOARDING_REPORT_PATH,
+    "quick_ref_bilingual_eval_report": QUICK_REF_BILINGUAL_EVAL_REPORT_PATH,
+    "quick_ref_bilingual_debug_report": QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH,
+    "quick_ref_integration_decision_report": QUICK_REF_INTEGRATION_DECISION_REPORT_PATH,
 }
 
 OPERATIONAL_BUILD_PIPELINE = {
@@ -218,6 +246,75 @@ class AboxReuseSignature:
     prompt_version: str
     model_name: str
     extraction_mode: str
+
+
+@dataclass(frozen=True)
+class OnboardingArtifactProfile:
+    manual_id: str
+    artifact_prefix: str
+    source_path: Path
+    density_report_path: Path
+    language_detection_report_path: Path
+    abox_input_path: Path
+    abox_manifest_path: Path
+    abox_chunks_dir: Path
+    abox_debug_dir: Path
+    raw_merged_abox_path: Path
+    onboarding_report_path: Path
+    bilingual_dataset_path: Path | None = None
+    bilingual_eval_report_path: Path | None = None
+    bilingual_debug_report_path: Path | None = None
+    integration_decision_report_path: Path | None = None
+
+
+def derive_onboarding_artifact_prefix(source_path: Path, manual_id: str) -> str:
+    stem = source_path.stem.lower()
+    stem = re.sub(r"^chunks_", "", stem)
+    stem = re.sub(r"^\d+_", "", stem)
+    stem = re.sub(r"[^a-z0-9]+", "_", stem).strip("_")
+    if stem:
+        return stem
+    fallback = re.sub(r"[^a-z0-9]+", "_", manual_id.lower()).strip("_")
+    return fallback or "manual"
+
+
+def build_onboarding_profile(manual_id: str, source_path: Path) -> OnboardingArtifactProfile:
+    if source_path.resolve() == QUICK_REF_SOURCE_PATH.resolve():
+        return OnboardingArtifactProfile(
+            manual_id=manual_id,
+            artifact_prefix="quick_ref",
+            source_path=source_path,
+            density_report_path=QUICK_REF_DENSITY_REPORT_PATH,
+            language_detection_report_path=QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,
+            abox_input_path=QUICK_REF_ABOX_INPUT_PATH,
+            abox_manifest_path=QUICK_REF_ABOX_MANIFEST_PATH,
+            abox_chunks_dir=QUICK_REF_ABOX_CHUNKS_DIR,
+            abox_debug_dir=QUICK_REF_ABOX_DEBUG_DIR,
+            raw_merged_abox_path=QUICK_REF_RAW_MERGED_ABOX_PATH,
+            onboarding_report_path=QUICK_REF_ONBOARDING_REPORT_PATH,
+            bilingual_dataset_path=QA_8070_QUICK_REF_BILINGUAL_PATH,
+            bilingual_eval_report_path=QUICK_REF_BILINGUAL_EVAL_REPORT_PATH,
+            bilingual_debug_report_path=QUICK_REF_BILINGUAL_DEBUG_REPORT_PATH,
+            integration_decision_report_path=QUICK_REF_INTEGRATION_DECISION_REPORT_PATH,
+        )
+
+    prefix = derive_onboarding_artifact_prefix(source_path, manual_id)
+    return OnboardingArtifactProfile(
+        manual_id=manual_id,
+        artifact_prefix=prefix,
+        source_path=source_path,
+        density_report_path=PROCESSED_DATA_DIR / f"{prefix}_density_report.json",
+        language_detection_report_path=PROCESSED_DATA_DIR / f"{prefix}_language_detection_report.json",
+        abox_input_path=PROCESSED_DATA_DIR / f"{prefix}_abox_input.json",
+        abox_manifest_path=PROCESSED_DATA_DIR / f"{prefix}_abox_generation_manifest.json",
+        abox_chunks_dir=PROCESSED_DATA_DIR / f"{prefix}_abox_graphs",
+        abox_debug_dir=PROCESSED_DATA_DIR / f"{prefix}_abox_debug",
+        raw_merged_abox_path=PROCESSED_DATA_DIR / f"{prefix}_merged.ttl",
+        onboarding_report_path=PROCESSED_DATA_DIR / f"{prefix}_onboarding_report.json",
+        bilingual_eval_report_path=PROCESSED_DATA_DIR / f"{prefix}_bilingual_eval_report.json",
+        bilingual_debug_report_path=PROCESSED_DATA_DIR / f"{prefix}_bilingual_debug_report.json",
+        integration_decision_report_path=PROCESSED_DATA_DIR / f"{prefix}_integration_decision_report.json",
+    )
 
 
 def hash_text_content(text: str) -> str:

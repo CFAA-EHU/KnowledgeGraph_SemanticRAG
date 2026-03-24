@@ -15,12 +15,12 @@ from typing import Any
 from rdflib import Graph, Literal, URIRef
 
 from artifact_contracts import (
+    ENRICHED_ABOX_PATH,
     CANONICALIZATION_REPORT_PATH,
     ENRICHMENT_LINK_MAP_PATH,
     ENRICHMENT_REPORT_PATH,
     ENRICHMENT_RESOLUTION_CANDIDATES_PATH,
     ENRICHMENT_SURFACE_MAP_PATH,
-    OPERATIONAL_ABOX_PATH,
     CANONICAL_ABOX_PATH,
     SANDBOX_DECISION_REPORT_PATH,
     SANDBOX_DIAGNOSTIC_REPORT_PATH,
@@ -45,7 +45,7 @@ from enrichment_policy import (
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Enrich the canonical A-Box with residual linking and surface improvements before runtime consumption.')
     parser.add_argument('--input', type=Path, default=CANONICAL_ABOX_PATH, help='Canonical A-Box path.')
-    parser.add_argument('--output', type=Path, default=OPERATIONAL_ABOX_PATH, help='Enriched operational A-Box path.')
+    parser.add_argument('--output', type=Path, default=ENRICHED_ABOX_PATH, help='Enriched operational A-Box path.')
     parser.add_argument('--resolution-candidates-path', type=Path, default=ENRICHMENT_RESOLUTION_CANDIDATES_PATH, help='Enrichment candidate corpus path.')
     parser.add_argument('--link-map-path', type=Path, default=ENRICHMENT_LINK_MAP_PATH, help='Added link traceability path.')
     parser.add_argument('--surface-map-path', type=Path, default=ENRICHMENT_SURFACE_MAP_PATH, help='Added surface traceability path.')

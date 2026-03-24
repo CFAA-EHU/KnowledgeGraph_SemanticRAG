@@ -15,6 +15,10 @@ Genera `data/processed/abox_input.json` a partir del material operativo limpio.
 Ahora arrastra tambien:
 - `source_language`
 - `language_confidence`
+- `source_path`
+
+Para onboarding piloto real tambien admite rutas parametrizadas, por ejemplo:
+- `quick_ref_abox_input.json`
 
 ### 2. `abox_extractor.py`
 Lee `abox_input.json` y `ontology_aligned.ttl`, genera `data/processed/abox_graphs/*_abox.ttl` y mantiene `abox_generation_manifest.json` con validacion TTL y validacion semantica ligera.
@@ -22,6 +26,8 @@ Lee `abox_input.json` y `ontology_aligned.ttl`, genera `data/processed/abox_grap
 Regla bilingue de T20:
 - `textoExtracto` y citas textuales deben conservar el idioma original del chunk
 - las surfaces bilingues consultables no se generan aqui, sino despues en el lexicon multilingue
+
+T21 reutiliza exactamente este mismo carril para `chunks_8070_quick_ref.txt`; no existe un extractor paralelo para manuales en ingles.
 
 ### 3. `abox_merger.py`
 Fusiona `data/processed/abox_graphs/*_abox.ttl` y genera `data/processed/abox_merged.ttl`.
@@ -90,4 +96,10 @@ Normalmente este directorio se ejecuta via:
 
 ```bash
 python run_operational_pipeline.py --mode resume-compatible
+```
+
+Pilot lane reproducible:
+
+```bash
+python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible
 ```

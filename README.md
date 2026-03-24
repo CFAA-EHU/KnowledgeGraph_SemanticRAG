@@ -33,6 +33,13 @@ Artefactos operativos clave:
 - `data/golden_set/QA_multihop.json`
 - `data/golden_set/QA_sandbox.json`
 - `data/golden_set/QA_bilingual.json`
+- `data/golden_set/QA_8070_quick_ref_bilingual.json`
+- `data/processed/quick_ref_density_report.json`
+- `data/processed/quick_ref_abox_input.json`
+- `data/processed/quick_ref_onboarding_report.json`
+- `data/processed/quick_ref_bilingual_eval_report.json`
+- `data/processed/quick_ref_bilingual_debug_report.json`
+- `data/processed/quick_ref_integration_decision_report.json`
 
 ### Carril experimental
 Se conserva para exploracion, pero no define el runtime por defecto.
@@ -41,6 +48,9 @@ Se conserva para exploracion, pero no define el runtime por defecto.
 
 Entrypoint oficial:
 - `python run_operational_pipeline.py --mode resume-compatible`
+
+Onboarding piloto de un manual nuevo en ingles:
+- `python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible`
 
 El flujo operativo completo ejecuta:
 - `src/6_extraction/abox_input_builder.py`
@@ -73,6 +83,14 @@ Eso deja separadas cuatro capas:
 - el planner normaliza preguntas ES/EN al mismo plan canonico
 - la sintesis responde en el idioma de la pregunta
 - `QA_bilingual` valida convergencia ES/EN sin contaminar `QA_canonical` ni `QA_multihop`
+
+## Estado tras T21
+
+- existe un carril piloto reproducible para onboarding real de un manual nuevo con artefactos `quick_ref_*`
+- `chunks_8070_quick_ref.txt` reutiliza el mismo pipeline, el mismo grafo operativo y el mismo planner bilingue
+- `QA_8070_quick_ref_bilingual.json` valida convergencia ES/EN especifica del quick ref
+- si faltan credenciales de extraccion, el pipeline deja `quick_ref_density_report.json`, `quick_ref_abox_input.json` y `quick_ref_onboarding_report.json` antes de bloquearse
+- la decision operativa del piloto queda en `quick_ref_integration_decision_report.json`
 
 ## Estado tras T19
 

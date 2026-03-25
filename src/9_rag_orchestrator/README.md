@@ -13,6 +13,14 @@ Consume:
 - el planner compartido de `src/8_retrieval/text_to_sparql.py`
 - la sintesis compartida de `src/8_retrieval/synthesis_pipeline.py`
 
+## Responsabilidad del modulo
+
+Este modulo es la capa conversacional final.
+No sustituye:
+- `query_workbench.py` para depuracion manual de plan y backend
+- `qa_evaluator.py` para benchmark formal
+- `qa_sandbox_diagnostic.py` para diagnostico batch
+
 ## Responsabilidades
 - recibir la pregunta del usuario
 - construir y ejecutar el mismo `QueryPlan` compartido que usa el evaluador

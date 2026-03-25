@@ -107,9 +107,8 @@ def main() -> None:
         repo_exists = client.repository_exists()
         report["repository_existed_before"] = repo_exists
 
-        # CAMBIO CLAVE:
-        # - si el repo no existe: crear y NO limpiar
-        # - si el repo existe: borrar y recrear
+        # T23/T24 conservative behavior:
+        # recreate the mirror repository only when it already exists so publication remains deterministic.
         if repo_exists:
             deleted = client.delete_repository()
             report["repository_deleted_before_recreate"] = deleted

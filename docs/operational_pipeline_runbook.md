@@ -6,7 +6,7 @@
 python run_operational_pipeline.py --mode resume-compatible
 ```
 
-## Pilot onboarding for a new English manual
+## Pilot onboarding for a new manual
 
 ```bash
 python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible
@@ -19,7 +19,6 @@ This pilot lane writes manual-specific intermediate artifacts first:
 - `data/processed/quick_ref_onboarding_report.json`
 
 If `MISTRAL_API_KEY` is present, the pipeline continues through extraction, merge, canonicalization, enrichment, link completion and lexicon rebuild, publishing into the shared runtime graph.
-If `MISTRAL_API_KEY` is missing, the pilot lane must stop before `abox_extractor.py` and leave `quick_ref_integration_decision_report.json` with the blocker explicitly recorded.
 
 ## Operational build sequence
 
@@ -31,24 +30,6 @@ If `MISTRAL_API_KEY` is missing, the pilot lane must stop before `abox_extractor
 6. `src/6_extraction/abox_link_completer.py`
 7. `src/8_retrieval/multilingual_lexicon_builder.py`
 
-## Output expectations
-
-After a successful run, the operational lane should contain:
-- `data/processed/abox_merged.ttl`
-- `data/processed/abox_canonical.ttl`
-- `data/processed/abox_enriched.ttl`
-- `data/processed/abox_linked.ttl`
-- `data/processed/multilingual_lexicon.json`
-- `data/processed/language_detection_report.json`
-- `data/processed/canonical_entity_map.json`
-- `data/processed/canonicalization_report.json`
-- `data/processed/enrichment_report.json`
-- `data/processed/enrichment_link_map.json`
-- `data/processed/enrichment_surface_map.json`
-- `data/processed/link_completion_report.json`
-- `data/processed/link_completion_map.json`
-- `data/processed/link_completion_candidates.json`
-
 ## Runtime contract
 
 The runtime must load:
@@ -58,11 +39,26 @@ The runtime must load:
 
 `abox_merged.ttl`, `abox_canonical.ttl` and `abox_enriched.ttl` are diagnostic or intermediate artifacts. They must not be used as the default runtime graph.
 
-`multilingual_lexicon.json` is the bilingual ES/EN lexicalization layer used by planner normalization and answer rendering over the same single graph.
+## Manual question entrypoint
+
+Primary manual query entrypoint:
+
+```bash
+python query_workbench.py "¿Qué directiva cumple la máquina?" --backend rdflib
+```
+
+Use `query_workbench.py` when you need:
+- plan family
+- normalized question
+- execution trace
+- raw rows
+- optional synthesis
+
+Use `embedded_store.py` only for direct SPARQL inspection without planner or synthesis.
 
 ## GraphDB mirror backend
 
-T23 adds GraphDB as an optional mirror backend of the same operational graph:
+GraphDB is an optional mirror backend of the same operational graph:
 - default base URL: `http://localhost:7200`
 - default repository id: `semanticrag_operational_mirror`
 - `rdflib` remains the reference backend and safe fallback
@@ -97,44 +93,29 @@ If GraphDB fails, fall back immediately to RDFLib:
 python query_workbench.py "¿Qué directiva cumple la máquina?" --backend rdflib
 ```
 
-## Post-build validation
+## Benchmark and diagnostic entrypoints
 
-Recommended checks after structural changes:
-- `python src/8_retrieval/qa_evaluator.py`
+Formal benchmarks:
+- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_bilingual.json`
-- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual.json`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual_v2.json --report-path data/processed/quick_ref_v2_eval_report.json --debug-report-path data/processed/quick_ref_v2_debug_report.json`
 - `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json --report-path data/processed/cross_eval_report.json --debug-report-path data/processed/cross_debug_report.json`
+
+Sandbox diagnostic:
 - `python src/8_retrieval/qa_sandbox_diagnostic.py`
 
-## T21 readiness gates
+## Readiness gates currently in force
 
-T21 uses two explicit and separate gates:
-- `QA_8070_quick_ref_bilingual_v2.json`: onboarding bilingual readiness of the already integrated quick ref
-- `QA_cross.json`: cross-manual semantic integration readiness across A218 + 8070
+Formal baseline:
+- `QA_canonical = 13/13`
+- `QA_multihop = 7/7`
 
-Do not collapse both into one global score. They measure different risks and must be interpreted independently before writing `data/processed/t21_readiness_decision_report.json`.
+Planner hardening gates:
+- `QA_8070_quick_ref_bilingual_v2.json`
+- `QA_cross.json`
 
-## T22 planner hardening gates
-
-T22 keeps the same two gates, but raises them to planner hardening gates with strict convergence targets:
-- quick-ref v2:
-  - `same_plan_family >= 18/20`
-  - `same_sparql_signature >= 18/20`
-  - `pair_ok >= 18/20`
-  - `answer_language_ok = 20/20`
-- cross-manual:
-  - `pair_alignment_ok >= 9/11`
-  - `cross_case_ok >= 9/11`
-  - `answer_language_ok = 11/11`
-
-T22 also writes:
-- `data/processed/planner_generalization_catalog_v2.json`
-- `data/processed/cross_plan_catalog.json`
-- `data/processed/quick_ref_v2_planner_alignment_report.json`
-- `data/processed/cross_planner_alignment_report.json`
-- `data/processed/t22_planner_eval_report.json`
-- `data/processed/t22_planner_decision_report.json`
-
-The planner is considered ready for cleanup and the next manual only if those two gates pass while `QA_canonical` and `QA_multihop` remain stable.
+Graph backend mirror gates:
+- `graphdb_publication_report.json`
+- `graphdb_equivalence_report.json`
+- `t23_graphdb_decision_report.json`

@@ -23,9 +23,16 @@ from text_to_sparql import append_query_debug_record, build_query_plan, execute_
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='Interactive workbench for the shared planner and synthesis layer over the linked operational graph.')
+    parser = argparse.ArgumentParser(
+        description='Entrypoint principal para preguntas manuales, inspeccion de plan y trazas sobre el grafo operativo.'
+    )
     parser.add_argument('question', help='Natural-language question to inspect.')
-    parser.add_argument('--backend', choices=['rdflib', 'graphdb'], default='rdflib', help='Execution backend for SPARQL queries.')
+    parser.add_argument(
+        '--backend',
+        choices=['rdflib', 'graphdb'],
+        default='rdflib',
+        help='Backend de ejecucion SPARQL. No cambia el planner: la planificacion sigue usando el grafo local de referencia.',
+    )
     parser.add_argument('--with-synthesis', action='store_true', help='Run the shared synthesis pipeline and show evidence selection, normalization and rendering.')
     parser.add_argument('--max-rows', type=int, default=20, help='Maximum retrieved rows to print.')
     parser.add_argument('--save-debug', action='store_true', help='Append this run to the debug reports.')

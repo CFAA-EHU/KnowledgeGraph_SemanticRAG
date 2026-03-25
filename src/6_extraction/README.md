@@ -91,6 +91,20 @@ Ese artefacto lexicaliza el grafo unico en ES/EN para planner y sintesis, sin du
 - `abox_linked.ttl`: artefacto operativo final consumido por runtime
 - la trazabilidad de consolidacion, enrichment y link completion vive en JSON, no en duplicados vivos dentro del grafo operativo
 
+## Inputs y outputs relevantes
+
+Inputs principales:
+- `data/raw/*.txt` para onboarding por chunks
+- `data/processed/ontology_aligned.ttl`
+- `data/processed/density_report.json` o perfiles piloto equivalentes
+
+Outputs principales:
+- `data/processed/abox_input.json`
+- `data/processed/abox_merged.ttl`
+- `data/processed/abox_canonical.ttl`
+- `data/processed/abox_enriched.ttl`
+- `data/processed/abox_linked.ttl`
+
 ## Ejecucion
 Normalmente este directorio se ejecuta via:
 

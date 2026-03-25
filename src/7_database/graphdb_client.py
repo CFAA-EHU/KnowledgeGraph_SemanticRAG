@@ -12,6 +12,8 @@ class GraphDBClientError(RuntimeError):
 
 
 class GraphDBClient:
+    """Small GraphDB client for repository health, publication and direct SPARQL execution."""
+
     def __init__(self, base_url: str, repository_id: str, timeout: int = 60):
         self.base_url = base_url.rstrip("/")
         self.repository_id = repository_id

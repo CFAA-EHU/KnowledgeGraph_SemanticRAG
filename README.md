@@ -57,13 +57,30 @@ Artefactos operativos clave:
 ### Carril experimental
 Se conserva para exploracion, pero no define el runtime por defecto.
 
-## Build operativo
+## Entrypoints oficiales
 
-Entrypoint oficial:
+Pipeline operativo:
 - `python run_operational_pipeline.py --mode resume-compatible`
 
-Onboarding piloto de un manual nuevo en ingles:
+Onboarding piloto de un manual nuevo:
 - `python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible`
+
+Pregunta manual con plan, backend y trazas:
+- `python query_workbench.py "¿Qué directiva cumple la máquina?" --backend rdflib`
+- `python query_workbench.py "¿Qué directiva cumple la máquina?" --backend graphdb`
+
+Benchmark formal:
+- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json`
+- `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json`
+
+Sandbox diagnóstico:
+- `python src/8_retrieval/qa_sandbox_diagnostic.py`
+
+Publicación a GraphDB:
+- `python src/7_database/publish_to_graphdb.py`
+
+Healthcheck GraphDB:
+- `python src/7_database/graphdb_healthcheck.py`
 
 El flujo operativo completo ejecuta:
 - `src/6_extraction/abox_input_builder.py`
@@ -85,6 +102,11 @@ Tras T23, el runtime mantiene dos backends de consulta:
 - `rdflib` en memoria como backend de referencia y por defecto
 - `GraphDB` como backend espejo opcional del mismo grafo operativo
 
+Regla operativa:
+- `rdflib` sigue siendo el backend de referencia
+- GraphDB se usa como backend espejo para publicacion, verificacion, consulta remota y smoke tests
+- el planner y la sintesis no cambian por activar GraphDB
+
 Scripts nuevos de T23:
 - `src/7_database/graphdb_client.py`
 - `src/7_database/graph_store.py`
@@ -103,63 +125,15 @@ Eso deja separadas cuatro capas:
 - `abox_linked.ttl`: snapshot operativo final con link completion residual de alta confianza
 - `multilingual_lexicon.json`: lexicalizacion bilingue ES/EN sobre el mismo snapshot operativo final
 
-## Estado tras T20
+## Estado operativo consolidado
 
 - el grafo sigue siendo unico y canonico; no se duplica por idioma
-- onboarding marca `source_language` y `language_confidence` por chunk
-- `textoExtracto` conserva el idioma original del fragmento
-- el planner normaliza preguntas ES/EN al mismo plan canonico
-- la sintesis responde en el idioma de la pregunta
-- `QA_bilingual` valida convergencia ES/EN sin contaminar `QA_canonical` ni `QA_multihop`
-
-## Estado tras T21
-
-- existe un carril piloto reproducible para onboarding real de un manual nuevo con artefactos `quick_ref_*`
-- `chunks_8070_quick_ref.txt` reutiliza el mismo pipeline, el mismo grafo operativo y el mismo planner bilingue
-- `QA_8070_quick_ref_bilingual.json` valida convergencia ES/EN especifica del quick ref
-- `QA_8070_quick_ref_bilingual_v2.json` actua como gate ampliado de solidez del quick ref ya integrado
-- `QA_cross.json` actua como gate separado de integracion semantica cross-manual A218 + 8070
-- si faltan credenciales de extraccion, el pipeline deja `quick_ref_density_report.json`, `quick_ref_abox_input.json` y `quick_ref_onboarding_report.json` antes de bloquearse
-- la decision operativa del piloto queda en `quick_ref_integration_decision_report.json`
-- la decision de readiness antes de limpieza o siguiente manual queda en `t21_readiness_decision_report.json`
-
-## Estado tras T22
-
-- el planner usa un catalogo estricto quick-ref y un catalogo cross-manual minimo, sin duplicar arquitectura ni tocar el grafo
-- la prioridad efectiva de planning queda en:
-  - `cross_manual_strict`
-  - `quick_ref_strict`
-  - familias A218 ya consolidadas
-  - generalizadas y fallbacks genericos
-- `quick_ref_v2` queda en convergencia total operativa:
-  - `same_plan_family = 20/20`
-  - `same_sparql_signature = 20/20`
-  - `pair_ok = 20/20`
-  - `answer_language_ok = 20/20`
-- `QA_cross` queda tambien en convergencia total operativa:
-  - `pair_alignment_ok = 11/11`
-  - `cross_case_ok = 11/11`
-  - `answer_language_ok = 11/11`
-- el baseline se mantiene:
+- `textoExtracto` conserva idioma original
+- el planner converge en los benchmarks estabilizados de A218, quick-ref y cross-manual
+- el baseline actual se mantiene en:
   - `QA_canonical = 13/13`
   - `QA_multihop = 7/7`
-- los artefactos que gobiernan el readiness post-planner son:
-  - `planner_generalization_catalog_v2.json`
-  - `cross_plan_catalog.json`
-  - `quick_ref_v2_planner_alignment_report.json`
-  - `cross_planner_alignment_report.json`
-  - `t22_planner_eval_report.json`
-  - `t22_planner_decision_report.json`
-
-## Estado tras T19
-
-- `QA_canonical` se mantiene en `13/13`
-- `QA_multihop` se mantiene en `7/7`
-- T17 resolvio la deuda canonica dominante
-- T18 anadio enrichment residual de linking y value surfaces sobre el grafo canonico
-- T19 materializa link completion residual solo para familias observadas en T18
-- la whitelist de T19 queda cerrada a cinco familias activas y dos familias bloqueadas con motivo explicito
-- el residuo principal deja de justificar otra fase estructural amplia y pasa mas hacia seleccion de evidencia y surface rendering
+- GraphDB ya puede reflejar el mismo grafo operativo como backend espejo
 
 ## Sandbox diagnostico
 

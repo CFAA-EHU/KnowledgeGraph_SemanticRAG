@@ -10,7 +10,6 @@ if str(CURRENT_DIR) not in sys.path:
 
 import argparse
 import logging
-import sys
 
 from artifact_contracts import OPERATIONAL_ABOX_PATH, OPERATIONAL_TBOX_PATH
 from graph_store import GraphDBGraphStore, RDFLibGraphStore, build_graph_store
@@ -40,9 +39,16 @@ class MotorGrafoEmbebido:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Ejecutor manual de SPARQL sobre el runtime operativo.")
+    parser = argparse.ArgumentParser(
+        description="Herramienta secundaria de inspeccion SPARQL directa sobre el runtime operativo."
+    )
     parser.add_argument("--backend", choices=["rdflib", "graphdb"], default="rdflib", help="Backend RDF a usar.")
-    parser.add_argument("--query-file", type=Path, default=None, help="Archivo con la consulta SPARQL a ejecutar.")
+    parser.add_argument(
+        "--query-file",
+        type=Path,
+        default=None,
+        help="Archivo con la consulta SPARQL a ejecutar. Para preguntas manuales con plan y trazas, usar query_workbench.py.",
+    )
     return parser.parse_args()
 
 

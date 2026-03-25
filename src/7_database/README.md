@@ -12,6 +12,12 @@ Herramienta manual de SPARQL con selector:
 - `--backend graphdb`
 
 Mantiene `rdflib` como modo por defecto seguro.
+Uso recomendado:
+- inspeccion SPARQL directa
+- pruebas manuales sin planner ni sintesis
+
+Patron de uso deprecado:
+- no usarlo como sustituto de `query_workbench.py` para preguntas en lenguaje natural
 
 ### `graphdb_client.py`
 Cliente minimo reutilizable para GraphDB. Expone:
@@ -27,6 +33,7 @@ Capa minima comun de acceso al grafo con dos implementaciones:
 - `GraphDBGraphStore`
 
 Tambien puede generar la verificacion basica de equivalencia RDFLib vs GraphDB.
+No contiene logica de planner ni de sintesis.
 
 ### `publish_to_graphdb.py`
 Publica los artefactos operativos ya existentes en GraphDB:
@@ -76,6 +83,12 @@ Probar SPARQL manual en GraphDB:
 
 ```bash
 python src/7_database/embedded_store.py --backend graphdb
+```
+
+Probar una pregunta manual con planner y trazas:
+
+```bash
+python query_workbench.py "¿Qué directiva cumple la máquina?" --backend graphdb
 ```
 
 ## Garantia de contrato

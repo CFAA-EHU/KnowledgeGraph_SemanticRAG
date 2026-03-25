@@ -25,6 +25,8 @@ from graphdb_client import GraphDBClient, build_graphdb_client
 
 
 class BaseGraphStore(ABC):
+    """Minimal backend interface for direct SPARQL execution over the operational graph."""
+
     @abstractmethod
     def backend_name(self) -> str:
         raise NotImplementedError
@@ -205,6 +207,8 @@ def _equivalence_status(rdflib_rows: list[dict[str, str]], graphdb_rows: list[di
 
 
 def build_graphdb_equivalence_report(output_path: Path = GRAPHDB_EQUIVALENCE_REPORT_PATH) -> dict[str, Any]:
+    # This runner only checks basic backend equivalence for stable SPARQL cases.
+    # It is intentionally separate from planner, retrieval and synthesis logic.
     rdflib_store = RDFLibGraphStore()
     graphdb_store = GraphDBGraphStore()
     results = []

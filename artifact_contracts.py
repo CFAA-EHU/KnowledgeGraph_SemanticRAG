@@ -99,6 +99,11 @@ LINK_COMPLETION_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "link_completion_dec
 GRAPHDB_PUBLICATION_REPORT_PATH = PROCESSED_DATA_DIR / "graphdb_publication_report.json"
 GRAPHDB_EQUIVALENCE_REPORT_PATH = PROCESSED_DATA_DIR / "graphdb_equivalence_report.json"
 T23_GRAPHDB_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t23_graphdb_decision_report.json"
+T24_REPO_INVENTORY_PATH = PROCESSED_DATA_DIR / "t24_repo_inventory.json"
+T24_REDUNDANCY_ASSESSMENT_PATH = PROCESSED_DATA_DIR / "t24_redundancy_assessment.json"
+T24_CLEANUP_POLICY_PATH = PROCESSED_DATA_DIR / "t24_cleanup_policy.json"
+T24_CLEANUP_REPORT_PATH = PROCESSED_DATA_DIR / "t24_cleanup_report.json"
+T24_CLEANUP_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t24_cleanup_decision_report.json"
 
 GRAPHDB_BASE_URL = os.getenv("GRAPHDB_BASE_URL", "http://localhost:7200").rstrip("/")
 GRAPHDB_REPOSITORY_ID = os.getenv("GRAPHDB_REPOSITORY_ID", "semanticrag_operational_mirror")
@@ -214,6 +219,11 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "graphdb_publication_report": GRAPHDB_PUBLICATION_REPORT_PATH,
     "graphdb_equivalence_report": GRAPHDB_EQUIVALENCE_REPORT_PATH,
     "t23_graphdb_decision_report": T23_GRAPHDB_DECISION_REPORT_PATH,
+    "t24_repo_inventory": T24_REPO_INVENTORY_PATH,
+    "t24_redundancy_assessment": T24_REDUNDANCY_ASSESSMENT_PATH,
+    "t24_cleanup_policy": T24_CLEANUP_POLICY_PATH,
+    "t24_cleanup_report": T24_CLEANUP_REPORT_PATH,
+    "t24_cleanup_decision_report": T24_CLEANUP_DECISION_REPORT_PATH,
     "quick_ref_source": QUICK_REF_SOURCE_PATH,
     "quick_ref_density_report": QUICK_REF_DENSITY_REPORT_PATH,
     "quick_ref_language_detection_report": QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,

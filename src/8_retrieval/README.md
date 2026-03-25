@@ -61,6 +61,11 @@ La convergencia bilingue se persiste en:
 - `data/processed/t22_planner_eval_report.json`
 - `data/processed/t22_planner_decision_report.json`
 
+Uso principal:
+- benchmark formal
+- gates bilingues y cross ya estabilizados
+- comparacion contra datasets contractuales
+
 ### `qa_sandbox_diagnostic.py`
 Ejecuta `QA_sandbox.json` como lote de diagnostico estructural usando el pipeline real.
 
@@ -71,6 +76,11 @@ python src/8_retrieval/qa_sandbox_diagnostic.py --abox-file data/processed/abox_
 python src/8_retrieval/qa_sandbox_diagnostic.py --abox-file data/processed/abox_canonical.ttl
 python src/8_retrieval/qa_sandbox_diagnostic.py --abox-file data/processed/abox_merged.ttl
 ```
+
+Uso principal:
+- diagnostico estructural
+- comparacion entre snapshots del grafo
+- analisis fuera del benchmark formal
 
 ## Estado tras T19
 
@@ -102,3 +112,9 @@ Antes de cerrar cambios en esta capa, ejecutar segun el objetivo del cambio:
 - gate cross-manual: `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json --report-path data/processed/cross_eval_report.json --debug-report-path data/processed/cross_debug_report.json`
 - sandbox batch: `python src/8_retrieval/qa_sandbox_diagnostic.py`
 - preguntas nuevas interactivas: `python query_workbench.py "?Cual es el correo electronico de contacto de EKIN indicado en el manual?" --with-synthesis`
+
+## Entry points dentro del modulo
+
+- benchmark formal principal: `qa_evaluator.py`
+- sandbox diagnostico: `qa_sandbox_diagnostic.py`
+- pregunta manual con plan y backend: `query_workbench.py`

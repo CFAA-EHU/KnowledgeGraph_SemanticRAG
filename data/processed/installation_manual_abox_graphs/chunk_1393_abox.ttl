@@ -1,0 +1,51 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:Parametro_ACCEL a ex:Parametro ;
+    rdfs:label "ACCEL" ;
+    ex:textoExtracto "Se comparan dos parametrizaciones: (i) ACCEL máxima y ACCJERK mínimo; (ii) ACCEL menor y ACCJERK mayor, que acorta el tiempo hasta aceleración máxima y mantiene más tiempo la meseta. Fórmulas anotadas relacionan ACCEL y ACCJERK con G00FEED y t." ;
+    ex:valor "ACCEL = (3/2)·G00FEED/(60·t)" .
+
+ex:Parametro_ACCJERK a ex:Parametro ;
+    rdfs:label "ACCJERK" ;
+    ex:textoExtracto "Se comparan dos parametrizaciones: (i) ACCEL máxima y ACCJERK mínimo; (ii) ACCEL menor y ACCJERK mayor, que acorta el tiempo hasta aceleración máxima y mantiene más tiempo la meseta. Fórmulas anotadas relacionan ACCEL y ACCJERK con G00FEED y t." ;
+    ex:valor "ACCEL = (3/2)·G00FEED/(60·t) y ACCJERK = 3·ACCEL/t" .
+
+ex:Parametro_G00FEED a ex:Parametro ;
+    rdfs:label "G00FEED" ;
+    ex:textoExtracto "Fórmulas anotadas relacionan ACCEL y ACCJERK con G00FEED y t." .
+
+ex:Parametro_t a ex:Parametro ;
+    rdfs:label "t" ;
+    ex:textoExtracto "Fórmulas anotadas relacionan ACCEL y ACCJERK con G00FEED y t." .
+
+ex:Parametro_FEDYNFAC a ex:Parametro ;
+    rdfs:label "FEDYNFAC" ;
+    ex:textoExtracto "en el plano (Fe)–(F) se representa una zona sombreada con límites proporcionales a F (pendiente ±%FEDYNFAC)" .
+
+ex:Parametro_MAXFLWE a ex:Parametro ;
+    rdfs:label "MAXFLWE" ;
+    ex:textoExtracto "y el umbral MAXFLWE desde el que se activa la supervisión dinámica" .
+
+ex:Parametro_ABSOFF a ex:Parametro ;
+    rdfs:label "ABSOFF" ;
+    ex:textoExtracto "esquema de encoder lineal con referencia codificada: se dibuja la regla con el 'cero del cristal (OG)', el 'cero máquina (OM)' y el desplazamiento 'ABSOFF'. Una lupa esquematiza la serigrafía; la flecha de lectura indica que el origen de codificación puede quedar dentro o fuera de la regla. El diagrama contextualiza el uso de ABSOFF y EXTMULT en la referencia." .
+
+ex:Parametro_EXTMULT a ex:Parametro ;
+    rdfs:label "EXTMULT" ;
+    ex:textoExtracto "El diagrama contextualiza el uso de ABSOFF y EXTMULT en la referencia." .
+
+ex:Esquema_EncoderLineal a ex:Esquema ;
+    ex:textoExtracto "esquema de encoder lineal con referencia codificada: se dibuja la regla con el 'cero del cristal (OG)', el 'cero máquina (OM)' y el desplazamiento 'ABSOFF'. Una lupa esquematiza la serigrafía; la flecha de lectura indica que el origen de codificación puede quedar dentro o fuera de la regla. El diagrama contextualiza el uso de ABSOFF y EXTMULT en la referencia." ;
+    ex:tieneComponente ex:Parametro_OG, ex:Parametro_OM, ex:Parametro_ABSOFF, ex:Parametro_EXTMULT .
+
+ex:Parametro_OG a ex:Parametro ;
+    rdfs:label "OG" ;
+    ex:textoExtracto "esquema de encoder lineal con referencia codificada: se dibuja la regla con el 'cero del cristal (OG)', el 'cero máquina (OM)'" .
+
+ex:Parametro_OM a ex:Parametro ;
+    rdfs:label "OM" ;
+    ex:textoExtracto "esquema de encoder lineal con referencia codificada: se dibuja la regla con el 'cero del cristal (OG)', el 'cero máquina (OM)'" .
+
+ex:Grafico_BandaError a ex:InterfazUsuario ;
+    ex:textoExtracto "gráfico de banda de error para monitorización lineal del error de seguimiento: en el plano (Fe)–(F) se representa una zona sombreada con límites proporcionales a F (pendiente ±%FEDYNFAC) y el umbral MAXFLWE desde el que se activa la supervisión dinámica. Fuera de la banda se indica 'ERROR', visualizando el criterio de aceptación." ;
+    ex:tieneComponente ex:Parametro_FEDYNFAC, ex:Parametro_MAXFLWE .

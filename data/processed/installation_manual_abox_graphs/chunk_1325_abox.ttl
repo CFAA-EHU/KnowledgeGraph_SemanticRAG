@@ -1,0 +1,46 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:DMC a ex:ModoOperacion ;
+    rdfs:label "DMC" ;
+    ex:textoExtracto "El DMC es incompatible con algunos tipos de operaciones, como roscados, taladrados, etc." ;
+    ex:textoExtracto "El DMC se desactivará automáticamente si la herramienta activa no es de tipo 'Fresado' o 'Planeado'." ;
+    ex:textoExtracto "Las siguientes acciones relacionadas con la herramienta desactivan el DMC: Cambiar la herramienta, Cambiar el corrector, Ejecutar una M6, Cambiar alguna de las características del corrector que afecten al consumo de potencia del cabezal." ;
+    ex:textoExtracto "Al entrar en el modo de inspección de herramienta, el DMC se desactiva. Al finalizar la inspección de herramienta, el DMC se activa automáticamente y permite repetir la fase de aprendizaje pulsando la softkey 'Aprendizaje DMC'." .
+
+ex:ModoAutomatico a ex:ModoOperacion ;
+    rdfs:label "Modo automático" ;
+    ex:textoExtracto "El DMC sólo puede estar activo en modo automático; no se activa en modo manual." .
+
+ex:ModoManual a ex:ModoOperacion ;
+    rdfs:label "Modo manual" ;
+    ex:textoExtracto "El DMC no se activa en modo manual." .
+
+ex:ModoSimulacion a ex:ModoOperacion ;
+    rdfs:label "Simulación" ;
+    ex:textoExtracto "En simulación, el CNC analizará las sentencias de activación y desactivación, pero no pondrá en marcha el DMC." .
+
+ex:ModoEjecucion a ex:ModoOperacion ;
+    rdfs:label "Ejecución" ;
+    ex:textoExtracto "El DMC sólo puede estar activo en ejecución." .
+
+ex:TablaHerramientas a ex:Tabla ;
+    rdfs:label "Tabla de herramientas" ;
+    ex:textoExtracto "Para que el CNC pueda vigilar el avance por diente, hay que definir el número de dientes de la herramienta en la tabla de herramientas." .
+
+ex:InspeccionHerramienta a ex:TareaMantenimiento ;
+    rdfs:label "Inspección de herramienta" ;
+    ex:textoExtracto "Al entrar en la inspección de herramienta se desactiva [el DMC] y se recupera tras la reposición de ejes." ;
+    ex:textoExtracto "Al entrar en el modo de inspección de herramienta, el DMC se desactiva. Al finalizar la inspección de herramienta, el DMC se activa automáticamente y permite repetir la fase de aprendizaje pulsando la softkey 'Aprendizaje DMC'." .
+
+ex:AprendizajeDMC a ex:TareaMantenimiento ;
+    rdfs:label "Aprendizaje DMC" ;
+    ex:textoExtracto "Al finalizar la inspección de herramienta, el DMC se activa automáticamente y permite repetir la fase de aprendizaje pulsando la softkey 'Aprendizaje DMC'." .
+
+ex:SoftkeyAprendizajeDMC a ex:InterfazUsuario ;
+    rdfs:label "Softkey Aprendizaje DMC" ;
+    ex:textoExtracto "Al finalizar la inspección de herramienta, el DMC se activa automáticamente y permite repetir la fase de aprendizaje pulsando la softkey 'Aprendizaje DMC'." .
+
+ex:CNC a ex:Sistema ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC realiza una fase de aprendizaje para determinarla [potencia objetivo] si no se programa." ;
+    ex:textoExtracto "En simulación, el CNC analizará las sentencias de activación y desactivación, pero no pondrá en marcha el DMC." .

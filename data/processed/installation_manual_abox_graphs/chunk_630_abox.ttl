@@ -1,0 +1,22 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ModoMonoestable a ex:ModoOperacion ;
+    rdfs:label "Modo monoestable" ;
+    ex:textoExtracto "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG1 hasta que transcurre el tiempo indicado en la constante de tiempo." ;
+    ex:tieneComponente ex:EntradaTG1, ex:SalidaEstadoTemporizador, ex:EntradaTRS, ex:EntradaTEN .
+
+ex:EntradaTG1 a ex:Sensor ;
+    rdfs:label "Entrada TG1" ;
+    ex:textoExtracto "Con TEN=1 y TRS=0 el temporizador se activa al producirse un flanco de subida en la entrada TG1." .
+
+ex:SalidaEstadoTemporizador a ex:Sensor ;
+    rdfs:label "Salida de estado del temporizador (T)" ;
+    ex:textoExtracto "En este momento la salida de estado del temporizador (T) cambia de estado (T=1) y comienza la temporización t a partir del valor ꞏ0ꞏ." .
+
+ex:EntradaTRS a ex:Sensor ;
+    rdfs:label "Entrada TRS" ;
+    ex:textoExtracto "Si se produce un flanco de subida en la entrada TRS, durante la temporización o después de ella, el PLC inicializa el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta (la inicializa a 0)." .
+
+ex:EntradaTEN a ex:Sensor ;
+    rdfs:label "Entrada TEN" ;
+    ex:textoExtracto "Si una vez activado el temporizador se selecciona TEN=0, el PLC detiene la temporización, siendo necesario asignar TEN=1 para que dicha temporización continúe." .

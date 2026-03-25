@@ -1,0 +1,38 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:OEMSUB ex:textoExtracto "OEMSUB (G18x) Subrutinas asociadas a las funciones G180 a G189." ;
+    rdfs:label "OEMSUB (G18x)" ;
+    a ex:Sistema .
+
+ex:SubrutinaG180aG189 ex:textoExtracto "Subrutinas asociadas a las funciones G180 a G189." ;
+    rdfs:label "Subrutinas G180-G189" ;
+    a ex:TareaMantenimiento .
+
+ex:ParametroOEMSUB ex:textoExtracto "Estos parámetros indican el nombre de las subrutinas que se asocian a las funciones G180 a G189." ;
+    rdfs:label "Parámetro OEMSUB" ;
+    a ex:Parametro .
+
+ex:VariableMPGOEMSUB ex:textoExtracto "Variable asociada: (V.)[ch].MPG.OEMSUB1ꞏꞏ10" ;
+    rdfs:label "(V.)[ch].MPG.OEMSUB1ꞏꞏ10" ;
+    a ex:Parametro .
+
+ex:CNC ex:textoExtracto "Cada vez que el CNC ejecuta esta sentencia, efectúa una llamada a la subrutina asociada." ;
+    rdfs:label "CNC" ;
+    a ex:Maquina .
+
+ex:SentenciaCNC ex:textoExtracto "Cada vez que el CNC ejecuta esta sentencia, efectúa una llamada a la subrutina asociada." ;
+    rdfs:label "Sentencia CNC" ;
+    a ex:AccionProhibida .
+
+ex:FuncionG180aG189 a ex:Tabla ;
+    ex:textoExtracto "Cada vez que se ejecuta una de estas funciones se efectúa una llamada a la subrutina" ;
+    rdfs:label "Funciones G180-G189" ;
+    a ex:ModoOperacion .
+
+ex:OEMSUB ex:ejecutadoPor ex:CNC ;
+    ex:tieneComponente ex:SubrutinaG180aG189 ;
+    ex:monitoreaParametro ex:ParametroOEMSUB, ex:VariableMPGOEMSUB .
+
+ex:ParametroOEMSUB ex:detalladoEnEsquema ex:OEMSUB .
+
+ex:VariableMPGOEMSUB ex:detalladoEnEsquema ex:OEMSUB .

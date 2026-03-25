@@ -1,0 +1,24 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:PARK ex:textoExtracto "Cuando se ejecuta la sentencia de programación #PARK el CNC comprueba si se puede aparcar el eje requerido. En caso afirmativo, el CNC pone la marca PARK a (=1) para indicar al PLC que debe aparcar el eje correspondiente." ;
+    a ex:Parametro ;
+    ex:valor "1" .
+
+ex:PARKED ex:textoExtracto "Tras comprobar que el eje se ha aparcado (sensores de presencia) el PLC pone la marca PARKED a (=1)." ;
+    a ex:Parametro ;
+    ex:valor "1" .
+
+ex:UNPARK ex:textoExtracto "Cuando se ejecuta la sentencia de programación #UNPARK el CNC pone la marca UNPARK a (=1) para indicar al PLC que debe desaparcar el eje correspondiente." ;
+    a ex:Parametro ;
+    ex:valor "1" .
+
+ex:PLC ex:textoExtracto "el PLC debe quitar previamente la habilitación del regulador correspondiente al eje a aparcar (DRENA). Además, el CNC envía al regulador el comando para aparcar el eje. El PLC tras recibir la señal PARK aparca el eje requerido. Tras comprobar que el eje se ha aparcado (sensores de presencia) el PLC pone la marca PARKED a (=1). El PLC tras recibir la señal UNPARK desaparca el eje requerido. Tras comprobar que el eje se ha desaparcado (sensores de presencia) el PLC pone la marca PARKED a (=0). En el caso de ejes digitales el PLC activará la habilitación del regulador correspondiente al eje (DRENA)." ;
+    a ex:Sistema .
+
+ex:CNC ex:textoExtracto "el CNC comprueba si se puede aparcar el eje requerido. En caso afirmativo, el CNC pone la marca PARK a (=1) para indicar al PLC que debe aparcar el eje correspondiente. El CNC envía al regulador el comando para aparcar el eje. El CNC reconocerá que se ha aparcado el eje al detectar que se ha activado la señal PARKED. Se resetean las señales PARK y REFPOIN dando por finalizado el proceso. Cuando se ejecuta la sentencia de programación #UNPARK el CNC pone la marca UNPARK a (=1) para indicar al PLC que debe desaparcar el eje correspondiente. El CNC envía al regulador el comando para desaparcar el eje. El CNC reconocerá que se ha completado el proceso al detectar que se ha desactivado la señal PARKED. Se resetean las señales UNPARK y REFPOIN." ;
+    a ex:Sistema .
+
+ex:Regulador ex:textoExtracto "el PLC debe quitar previamente la habilitación del regulador correspondiente al eje a aparcar (DRENA). Además, el CNC envía al regulador el comando para aparcar el eje. El PLC tras recibir la señal PARK aparca el eje requerido. En el caso de ejes digitales el PLC activará la habilitación del regulador correspondiente al eje (DRENA)." ;
+    a ex:ComponenteElectrico .
+
+ex:SensorPresencia ex:textoExtracto "Tras comprobar que el eje se ha aparcado (sensores de presencia) el PLC pone la marca PARKED a (=1). Tras comprobar que el eje se ha desaparcado (sensores de presencia) el PLC pone la marca PARKED a (=0)." ;
+    a ex:Sensor .

@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+ex:G_KEY a ex:Parametro ;
+    ex:textoExtracto "La variable (V.)G.KEY guarda el código de la última tecla aceptada por el CNC (código de tecla pulsada). Esta variable es de lectura y escritura desde el PLC y de lectura desde el programa e interfaz." ;
+    ex:identificador "G.KEY" ;
+    rdfs:label "G.KEY" .
+
+ex:Comando_CNCRD a ex:InterfazUsuario ;
+    ex:textoExtracto "Para leer la variable desde el PLC utilizar el comando CNCRD. Lectura de una variable desde el PLC. El comando CNCRD guarda el código de la tecla en el registro R100." ;
+    rdfs:label "CNCRD" .
+
+ex:Registro_R100 a ex:Parametro ;
+    ex:textoExtracto "El comando CNCRD guarda el código de la tecla en el registro R100." ;
+    ex:identificador "R100" ;
+    rdfs:label "R100" .
+
+ex:Marca_M100 a ex:Parametro ;
+    ex:textoExtracto "El PLC activa la marca M100 cuando comienza la operación y la mantiene así hasta que finaliza la misma." ;
+    ex:identificador "M100" ;
+    rdfs:label "M100" .
+
+ex:PLC a ex:Sistema ;
+    ex:textoExtracto "Esta variable es de lectura y escritura desde el PLC y de lectura desde el programa e interfaz." ;
+    rdfs:label "PLC" .
+
+ex:Interfaz_CNC a ex:InterfazUsuario ;
+    ex:textoExtracto "Esta variable es de lectura y escritura desde el PLC y de lectura desde el programa e interfaz." ;
+    rdfs:label "interfaz" .
+
+ex:Comando_CNCRD ex:controla ex:Registro_R100 ;
+    ex:controla ex:Marca_M100 ;
+    ex:textoExtracto "{ condición} = CNCRD(G.KEY,R100,M100)" .
+
+ex:PLC ex:controla ex:G_KEY ;
+    ex:controla ex:Registro_R100 ;
+    ex:controla ex:Marca_M100 ;
+    ex:textoExtracto "{ condición} = CNCRD(G.KEY,R100,M100)" .
+
+ex:Interfaz_CNC ex:controla ex:G_KEY ;
+    ex:textoExtracto "Esta variable es de lectura y escritura desde el PLC y de lectura desde el programa e interfaz." .

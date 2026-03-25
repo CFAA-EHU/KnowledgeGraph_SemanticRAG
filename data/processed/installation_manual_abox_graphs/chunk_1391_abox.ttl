@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ProgrammedFeedrate a ex:Parametro ;
+    rdfs:label "Programmed Feedrate" ;
+    ex:textoExtracto "'Programmed Feedrate' alimenta un bloque 'FFGAIN'" .
+
+ex:FFGAIN a ex:ComponenteElectrico ;
+    rdfs:label "FFGAIN" ;
+    ex:textoExtracto "alimenta un bloque 'FFGAIN'" .
+
+ex:PROGAIN a ex:Parametro ;
+    rdfs:label "PROGAIN" ;
+    ex:textoExtracto "'Nominal Position' entra en un sumador con 'PROGAIN' y la señal de error 'ε'" .
+
+ex:NominalPosition a ex:Parametro ;
+    rdfs:label "Nominal Position" ;
+    ex:textoExtracto "'Nominal Position' entra en un sumador con 'PROGAIN' y la señal de error 'ε'" .
+
+ex:senalErrorEpsilon a ex:Parametro ;
+    rdfs:label "ε" ;
+    ex:textoExtracto "'Nominal Position' entra en un sumador con 'PROGAIN' y la señal de error 'ε'" .
+
+ex:ActualPosition a ex:Parametro ;
+    rdfs:label "Actual position" ;
+    ex:textoExtracto "la salida conjunta genera la 'Analog output' que actúa sobre la 'Actual position'" .
+
+ex:ActualFeed a ex:Sensor ;
+    rdfs:label "Actual Feed" ;
+    ex:textoExtracto "Se representan 'Actual Feed' y 'Following Error (E)' con icono de verificación" .
+
+ex:FollowingError a ex:Sensor ;
+    rdfs:label "Following Error (E)" ;
+    ex:textoExtracto "Se representan 'Actual Feed' y 'Following Error (E)' con icono de verificación" .
+
+ex:EsquemaFeedForward a ex:Esquema ;
+    rdfs:label "esquema de bloques de feed-forward" ;
+    ex:textoExtracto "esquema de bloques de feed-forward: 'Programmed Feedrate' alimenta un bloque 'FFGAIN'; 'Nominal Position' entra en un sumador con 'PROGAIN' y la señal de error 'ε'; la salida conjunta genera la 'Analog output' que actúa sobre la 'Actual position'. El diagrama representa la descomposición de la consigna en parte proporcional al avance programado y parte proporcional al error." ;
+    ex:compuestoPor ex:ProgrammedFeedrate, ex:FFGAIN, ex:PROGAIN, ex:NominalPosition, ex:senalErrorEpsilon, ex:ActualPosition .
+
+ex:OscilogramaAjusteCorrecto a ex:InterfazUsuario ;
+    rdfs:label "Ajuste correcto con feed forward" ;
+    ex:textoExtracto "oscilograma 'Ajuste correcto con feed forward'. Se representan 'Actual Feed' y 'Following Error (E)' con icono de verificación. El avance alcanza el valor objetivo con sobreimpulso mínimo y el error de seguimiento permanece acotado sin invertir signo; la escala indicada es 10 µm por cuadro." ;
+    ex:ilustradoEn ex:ActualFeed, ex:FollowingError .
+
+ex:OscilogramaAjusteIncorrecto a ex:InterfazUsuario ;
+    rdfs:label "Ajuste incorrecto con feed forward" ;
+    ex:textoExtracto "oscilograma 'Ajuste incorrecto con feed forward' con icono de equis. El 'Following Error (E)' presenta picos que invierten signo y oscilaciones amortiguadas, evidenciando exceso de feed-forward o ganancias mal calibradas. Misma escala (10 µm por cuadro)." ;
+    ex:ilustradoEn ex:FollowingError .
+
+ex:PanelAjusteApropiado a ex:InterfazUsuario ;
+    rdfs:label "Ajuste apropiado" ;
+    ex:textoExtracto "panel 'Ajuste apropiado' (icono de verificación) para AC-Forward: respuesta del sistema sin ganancia AC-forward (10 µm por cuadro) frente a respuesta con AC-forward (1 µm por cuadro)." .

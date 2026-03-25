@@ -1,0 +1,27 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:TecladoPanelJog1 a ex:InterfazUsuario ;
+    rdfs:label "teclado"@es ;
+    ex:textoExtracto "Al habilitar un teclado (marca PANELOFF) y cada vez que hay un cambio en un teclado (pulsar una tecla, modificar un conmutador, etc)"@es ;
+    ex:tieneComponente ex:TeclaReset1, ex:TeclaModoTrabajo1, ex:ConmutadorFeedOverride1 .
+
+ex:TeclaReset1 a ex:Componente ;
+    rdfs:label "tecla [RESET]"@es ;
+    ex:textoExtracto "La tecla [RESET] afecta al canal asociado al teclado desde el que se ha pulsado la tecla y a los canales que pertenecen a su mismo grupo."@es .
+
+ex:TeclaModoTrabajo1 a ex:Componente ;
+    rdfs:label "tecla para seleccionar el modo de trabajo"@es ;
+    ex:textoExtracto "Las teclas para seleccionar el modo de trabajo (automático, manual, etc) sólo afectan al canal activo."@es .
+
+ex:ConmutadorFeedOverride1 a ex:Componente ;
+    rdfs:label "conmutador feed override"@es ;
+    ex:textoExtracto "El conmutador feed override. Si el teclado está asociado a un canal en concreto, un cambio del override sólo afecta a ese canal, aunque forme parte de un grupo."@es .
+
+ex:PLC1 a ex:Componente ;
+    rdfs:label "PLC"@es ;
+    ex:textoExtracto "el canal asume el estado de las teclas y la posición de los conmutadores del nuevo teclado como los valores activos. En caso necesario, la maniobra del PLC debe incluir las restricciones adecuadas para evitar cambios bruscos en el avance debidas a posiciones diferentes del conmutador del feed override en los diferentes teclados."@es ;
+    ex:controla ex:TecladoPanelJog1 .
+
+ex:SistemaCanales1 a ex:Sistema ;
+    rdfs:label "sistema de canales"@es ;
+    ex:textoExtracto "un cambio de override afecta a todos los canales del sistema de forma simultánea, formen o no parte de un grupo."@es .

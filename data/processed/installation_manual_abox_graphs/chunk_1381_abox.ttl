@@ -1,0 +1,57 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:OpenPCS_Remoto a ex:Sistema ;
+    rdfs:label "OpenPCS remoto" ;
+    ex:textoExtracto "El OpenPCS deberá estar instalado en un PC externo, el cual podrá estar conectado al CNC a través de una red o un cable cruzado." ;
+    ex:compuestoPor ex:PC_Externo_OpenPCS .
+
+ex:PC_Externo_OpenPCS a ex:ComponenteElectrico ;
+    rdfs:label "PC externo para OpenPCS" ;
+    ex:textoExtracto "El OpenPCS deberá estar instalado en un PC externo" .
+
+ex:CNC a ex:Maquina ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC puede trabajar con su propio PLC, con un OpenPCS remoto o con ambos. El CNC debe estar en marcha y con la opción IEC activa para poder comunicarse con el OpenPCS y poder ejecutar el programa PLC remoto (IEC-61131)." .
+
+ex:Parametro_PLC_TYPE_MPG a ex:Parametro ;
+    rdfs:label "PLCTYPE MPG" ;
+    ex:identificador "PLCTYPE MPG" ;
+    ex:textoExtracto "Parámetro. | PLCTYPE MPG | Tipo de PLC; estándar IEC-61131 y/o Fagor." .
+
+ex:Parametro_MPG a ex:Parametro ;
+    rdfs:label "MPG" ;
+    ex:textoExtracto "[MPG].......Parámetros máquina generales. La siguiente tabla muestra a quién afecta el arranque (RUN) y la parada (STOP) del PLC en función de este parámetro, así como el estado de la marca PLCREADY." .
+
+ex:Modulo_Hardware_OpenPCS_Remoto a ex:ComponenteElectrico ;
+    rdfs:label "Módulo hardware del OpenPCS remoto" ;
+    ex:textoExtracto "Crear el módulo hardware del OpenPCS remoto. La información que necesita el OpenPCS para generar el PLC adecuado para el CNC está en la carpeta ..\\Fagor\\Plc\\Openpcs del propio CNC." .
+
+ex:Carpeta_Plc_OpenPCS a ex:Tabla ;
+    rdfs:label "Carpeta ..\\Fagor\\Plc\\Openpcs" ;
+    ex:textoExtracto "La información que necesita el OpenPCS para generar el PLC adecuado para el CNC está en la carpeta ..\\Fagor\\Plc\\Openpcs del propio CNC." .
+
+ex:Script_Generacion_Modulo a ex:Herramienta ;
+    rdfs:label "Script para generar módulo hardware" ;
+    ex:textoExtracto "La carpeta contiene un script que hay que copiar y ejecutar en el PC de trabajo. Este script crea el módulo hardware para el que se va a compilar el programa PLC, y también crea una conexión de red para poder descargar el programa en el CNC, monitorizarlo y depurarlo." .
+
+ex:Conexion_Red_OpenPCS a ex:ComponenteElectrico ;
+    rdfs:label "Conexión de red OpenPCS" ;
+    ex:textoExtracto "Este script crea una conexión de red para poder descargar el programa en el CNC, monitorizarlo y depurarlo. Configurar la dirección IP de la conexión en el módulo hardware. El script crea una conexión de red con una IP por defecto (la IP de loopback 127.0.0.1)." .
+
+ex:IP_Loopback_127_0_0_1 a ex:Parametro ;
+    rdfs:label "127.0.0.1" ;
+    ex:identificador "127.0.0.1" ;
+    ex:textoExtracto "El script crea una conexión de red con una IP por defecto (la IP de loopback 127.0.0.1)." .
+
+ex:Opcion_FagorCNCTCP a ex:Parametro ;
+    rdfs:label "FagorCNCTCP" ;
+    ex:identificador "FagorCNCTCP" ;
+    ex:textoExtracto "Para modificar la conexión, en el menú PLC > Connections seleccionar la opción FagorCNCTCP y pulsar Edit." .
+
+ex:Interfaz_Configuration_Disk a ex:InterfazUsuario ;
+    rdfs:label "Interfaz Configuration > Disk" ;
+    ex:textoExtracto "Captura de interfaz del panel 'Configuration > Disk' con lectura S.M.A.R.T. del disco M2-SATA." .
+
+ex:Disco_M2_SATA a ex:ComponenteElectrico ;
+    rdfs:label "Disco M2-SATA" ;
+    ex:textoExtracto "lectura S.M.A.R.T. del disco M2-SATA." .

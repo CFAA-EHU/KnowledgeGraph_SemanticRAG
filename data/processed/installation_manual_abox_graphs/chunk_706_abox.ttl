@@ -1,0 +1,56 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ComandoMFUN ex:textoExtracto """Comando MFUN*. Analizar si una función ha sido programada en el bloque.""" ;
+    a ex:Parametro ;
+    rdfs:label "MFUN*" .
+
+ex:TablaFuncionesAuxiliaresM a ex:Tabla ;
+    ex:textoExtracto """Dentro de los parámetros máquina del CNC, en la tabla de funciones auxiliares –M– se indica cuándo se envía la función y cuándo se sincroniza la ejecución del PLC.""" ;
+    a ex:Tabla ;
+    rdfs:label "tabla de funciones auxiliares –M–" .
+
+ex:FuncionM30 a ex:Tabla ;
+    ex:textoExtracto """Ejemplo para detectar M30. Si se ha programado devolverá un "1"; un "0" en caso contrario.""" ;
+    a ex:Parametro ;
+    rdfs:label "M30" .
+
+ex:SincronizacionSinSincronizacion ex:textoExtracto """M sin sincronización.""" ;
+    a ex:ModoOperacion ;
+    rdfs:label "sin sincronización" .
+
+ex:SincronizacionAntesAntes ex:textoExtracto """M antes del movimiento y sincronización antes del movimiento.""" ;
+    a ex:ModoOperacion ;
+    rdfs:label "antes del movimiento y sincronización antes del movimiento" .
+
+ex:SincronizacionAntesTras ex:textoExtracto """M antes del movimiento y sincronización tras el movimiento.""" ;
+    a ex:ModoOperacion ;
+    rdfs:label "antes del movimiento y sincronización tras el movimiento" .
+
+ex:SincronizacionTrasTras ex:textoExtracto """M tras el movimiento y sincronización tras el movimiento.""" ;
+    a ex:ModoOperacion ;
+    rdfs:label "tras el movimiento y sincronización tras el movimiento" .
+
+ex:FuncionM11 a ex:Tabla ;
+    ex:textoExtracto """M11 sin sincronización.""" ;
+    a ex:Parametro ;
+    rdfs:label "M11" .
+
+ex:FuncionM12 a ex:Tabla ;
+    ex:textoExtracto """M12 se envía antes y se sincroniza antes el movimiento.""" ;
+    a ex:Parametro ;
+    rdfs:label "M12" .
+
+ex:FuncionM13 a ex:Tabla ;
+    ex:textoExtracto """M13 se envía antes y se sincroniza tras el movimiento.""" ;
+    a ex:Parametro ;
+    rdfs:label "M13" .
+
+ex:FuncionM14 a ex:Tabla ;
+    ex:textoExtracto """M14 se envía después y se sincroniza tras el movimiento.""" ;
+    a ex:Parametro ;
+    rdfs:label "M14" .
+
+ex:BloqueProgramaX100F1000M11M12M13M14 ex:textoExtracto """Se ejecuta un bloque del siguiente tipo. X100 F1000 M11 M12 M13 M14 La transferencia de funciones se realiza de la siguiente manera. 1 Se envían las funciones M11, M12 y M13 al PLC. 2 Se espera a que el PLC ejecute la función M12. 3 El CNC desplaza el eje a la cota X100. 4 Se envía la función M14 al PLC.""" ;
+    a ex:Sistema ;
+    rdfs:label "bloque X100 F1000 M11 M12 M13 M14" ;
+    ex:compuestoPor ex:FuncionM11, ex:FuncionM12, ex:FuncionM13, ex:FuncionM14 .

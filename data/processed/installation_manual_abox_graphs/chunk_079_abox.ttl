@@ -1,0 +1,28 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:GrupoMultieje_79 a ex:Sistema ;
+    ex:textoExtracto "Requisitos y limitaciones de un grupo multieje. Los ejes asociados a un mismo regulador deben cumplir los siguientes requisitos. • Pueden formar parte de un grupo multieje cualquier eje o cabezal Sercos del sistema, excepto los que formen parte de los ejes tándem o gantry. • Como los ejes están controlados con el mismo regulador, todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID). • Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP). Si la captación externa (captación directa) del eje está conectada a un regulador, el eje podrá operar en modo Sercos posición o Sercos velocidad (se recomienda Sercos velocidad). Si la captación externa (captación directa) del eje está conectada a una entrada de contaje local o remota, el eje sólo podrá operar en modo Sercos velocidad. • Si la captación externa es local o remota, el CNC ejecuta la búsqueda de referencia como si el eje fuera analógico; el regulador desconoce que hay una búsqueda de referencia en marcha y no actualiza su cota, solo recibe consigna de velocidad. Si la captación externa está conectada a otro regulador, no estará disponible la búsqueda de referencia máquina en el eje. • La selección del eje que gobierna el regulador se realiza desde el PLC (marca SWITCH(axis)). El PLC debe aparcar o poner como visualizador los ejes que no gobierna el regulador. • Para un multieje donde el mismo motor controla varios ejes, el CNC permite realizar una gestión dinámica del multieje. Este tipo de gestión consiste en activar los ejes del grupo según se programan. Para hacer la gestión dinámica de un multieje, hay que configurar los ejes del grupo como ejes muertos y definir el parámetro DWELL>0. Los ejes utilizan el parámetro DWELL como tiempo de espera antes de dar error por no tener la marca SWITCH activa." .
+
+ex:ModoOperacion_SercosPosicion_79 a ex:ModoOperacion ;
+    ex:identificador "OPMODEP" ;
+    ex:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)." .
+
+ex:ModoOperacion_SercosVelocidad_79 a ex:ModoOperacion ;
+    ex:identificador "OPMODEP" ;
+    ex:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP). Si la captación externa (captación directa) del eje está conectada a un regulador, el eje podrá operar en modo Sercos posición o Sercos velocidad (se recomienda Sercos velocidad). Si la captación externa (captación directa) del eje está conectada a una entrada de contaje local o remota, el eje sólo podrá operar en modo Sercos velocidad." .
+
+ex:Parametro_DRIVEID_79 a ex:Parametro ;
+    ex:identificador "DRIVEID" ;
+    ex:textoExtracto "Como los ejes están controlados con el mismo regulador, todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID)." .
+
+ex:Parametro_DWELL_79 a ex:Parametro ;
+    ex:identificador "DWELL" ;
+    ex:textoExtracto "Para hacer la gestión dinámica de un multieje, hay que configurar los ejes del grupo como ejes muertos y definir el parámetro DWELL>0. Los ejes utilizan el parámetro DWELL como tiempo de espera antes de dar error por no tener la marca SWITCH activa." .
+
+ex:Regulador_79 a ex:Componente ;
+    ex:textoExtracto "Los ejes están controlados con el mismo regulador" .
+
+ex:PLC_79 a ex:Componente ;
+    ex:textoExtracto "La selección del eje que gobierna el regulador se realiza desde el PLC (marca SWITCH(axis)). El PLC debe aparcar o poner como visualizador los ejes que no gobierna el regulador." .
+
+ex:CNC_79 a ex:Componente ;
+    ex:textoExtracto "Si la captación externa es local o remota, el CNC ejecuta la búsqueda de referencia como si el eje fuera analógico" .

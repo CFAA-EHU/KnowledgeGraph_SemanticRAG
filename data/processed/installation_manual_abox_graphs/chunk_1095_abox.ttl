@@ -1,0 +1,44 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:BusquedaReferenciaMaquina a ex:ModoOperacion ;
+    ex:textoExtracto "La búsqueda de referencia es la operación mediante la cual se realiza la sincronización del sistema. Esta operación es necesaria cuando el CNC pierde la posición del origen (por ejemplo, apagando la máquina)." ;
+    ex:tieneComponente ex:CNC, ex:Sistema .
+
+ex:BusquedaReferenciaManual a ex:ModoOperacion ;
+    ex:textoExtracto "Búsqueda de referencia manual, desde el modo manual. Los ejes se referencian de uno en uno. El CNC no conserva el cero pieza y las cotas se visualizan respecto al cero máquina." ;
+    ex:ejecutadoPor ex:ModoManual ;
+    ex:tieneComponente ex:CNC, ex:Eje .
+
+ex:BusquedaReferenciaAutomatica a ex:ModoOperacion ;
+    ex:textoExtracto "Búsqueda de referencia automática, desde el modo manual. Este tipo sólo disponible cuando esta definida la subrutina de búsqueda de referencia asociada a la función G74 (parámetro REFPSUB). Todos los ejes se referencian a la vez. No se anulan los decalajes. Las cotas se visualizan en el sistema de referencia activo." ;
+    ex:ejecutadoPor ex:ModoManual ;
+    ex:tieneComponente ex:CNC, ex:Eje ;
+    ex:identificador "G74" ;
+    ex:identificador "REFPSUB" .
+
+ex:BusquedaReferenciaPorPrograma a ex:ModoOperacion ;
+    ex:textoExtracto "Búsqueda de referencia por programa o MDI, mediante la función G74. No se anulan los decalajes. Las cotas se visualizan en el sistema de referencia activo." ;
+    ex:ejecutadoPor ex:MDI ;
+    ex:identificador "G74" .
+
+ex:CeroMaquina a ex:Parametro ;
+    ex:textoExtracto "El cero máquina es el origen del sistema de referencia de la máquina, fijado por el fabricante de la máquina." .
+
+ex:PuntoReferenciaMaquina a ex:Parametro ;
+    ex:textoExtracto "El punto de referencia máquina es un punto de la máquina fijado por el fabricante y referenciado respecto al cero máquina. Este punto puede estar situado en cualquier parte de la máquina." ;
+    ex:tieneComponente ex:CeroMaquina .
+
+ex:SistemaReferencia a ex:Sistema ;
+    ex:textoExtracto "Sistema de referencia y el punto de referencia máquina." ;
+    ex:compuestoPor ex:CeroMaquina, ex:PuntoReferenciaMaquina .
+
+ex:ModoManual a ex:ModoOperacion ;
+    ex:textoExtracto "desde el modo manual" .
+
+ex:MDI a ex:InterfazUsuario ;
+    ex:textoExtracto "por programa o MDI" .
+
+ex:CNC a ex:ComponenteElectrico ;
+    ex:textoExtracto "el CNC" .
+
+ex:Eje a ex:ComponenteMecanico ;
+    ex:textoExtracto "Los ejes" .

@@ -1,0 +1,61 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:SistemaCNC a ex:Maquina ;
+    ex:textoExtracto "CNC" .
+
+ex:LimiteSoftwareEje a ex:Parametro ;
+    ex:textoExtracto "límites de software de los ejes" .
+
+ex:VentanaValidaSL1 a ex:Parametro ;
+    ex:textoExtracto "SL1" .
+
+ex:VentanaValidaSL2 a ex:Parametro ;
+    ex:textoExtracto "SL2" .
+
+ex:VolumenTrabajoCompensar a ex:Parametro ;
+    ex:textoExtracto "volumen de trabajo a compensar" .
+
+ex:TablaCompensacionVolumetrica a ex:Tabla ;
+    ex:textoExtracto "fichero CSV con tres columnas de datos etiquetables como 'Error X, Error Y, Error Z'" .
+
+ex:InterfazEditorCSV a ex:InterfazUsuario ;
+    ex:textoExtracto "Captura de interfaz de un editor mostrando un fichero CSV" .
+
+ex:EjeCartesianoX a ex:Componente ;
+    ex:textoExtracto "ejes cartesianos implícitos" .
+
+ex:EjeCartesianoY a ex:Componente ;
+    ex:textoExtracto "ejes cartesianos implícitos" .
+
+ex:EjeCartesianoZ a ex:Componente ;
+    ex:textoExtracto "ejes cartesianos implícitos" .
+
+ex:MesaMaquina a ex:ComponenteMecanico ;
+    ex:textoExtracto "mesa" .
+
+ex:ColumnaMaquina a ex:ComponenteMecanico ;
+    ex:textoExtracto "columna" .
+
+ex:HusilloMaquina a ex:ComponenteMecanico ;
+    ex:textoExtracto "husillo" .
+
+ex:SistemaCNC ex:controla ex:LimiteSoftwareEje ;
+    ex:textoExtracto "el CNC detiene la ejecución al intentar salir de SL" .
+
+ex:LimiteSoftwareEje ex:tieneComponente ex:VentanaValidaSL1, ex:VentanaValidaSL2 ;
+    ex:textoExtracto "dos grupos SL1/SL2 definen ventanas válidas" .
+
+ex:VentanaValidaSL1 ex:valor "superior" ;
+    ex:textoExtracto "el CNC aplica siempre el límite más restrictivo (superior e inferior)" .
+
+ex:VentanaValidaSL2 ex:valor "inferior" ;
+    ex:textoExtracto "el CNC aplica siempre el límite más restrictivo (superior e inferior)" .
+
+ex:VolumenTrabajoCompensar ex:compuestoPor ex:EjeCartesianoX, ex:EjeCartesianoY, ex:EjeCartesianoZ ;
+    ex:textoExtracto "un volumen cúbico transparente sobre la mesa que contiene una nube de puntos azules" .
+
+ex:TablaCompensacionVolumetrica a ex:Tabla ;
+    ex:detalladoEnEsquema ex:InterfazEditorCSV ;
+    ex:textoExtracto "formato de archivo exigido para cargar la tabla de compensación en el CNC" .
+
+ex:VolumenTrabajoCompensar ex:tieneComponente ex:MesaMaquina, ex:ColumnaMaquina, ex:HusilloMaquina ;
+    ex:textoExtracto "relación del volumen con los elementos de la máquina (mesa, columna y husillo)" .

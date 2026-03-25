@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:POSINREF a ex:Parametro ;
+    rdfs:label "POSINREF" ;
+    ex:textoExtracto "POSINREF Búsqueda de referencia con movimiento del eje al punto de referencia. Parámetro válido para ejes lineales y rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.POSINREF[set].xn Este parámetro indica si el eje se desplaza o no hasta al punto de referencia máquina (parámetro REFVALUE) durante la búsqueda de referencia." ;
+    ex:valor "Sí / No" ;
+    ex:identificador "(V.)[ch].MPA.POSINREF[set].xn" .
+
+ex:MAXDIFREF a ex:Parametro ;
+    rdfs:label "MAXDIFREF" ;
+    ex:textoExtracto "MAXDIFREF Máxima diferencia de posición permitida para considerar que no es necesario volver a referenciar. Parámetro válido para ejes lineales y rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0.0001 a 99999.0000 mm. Valores posibles (2): De de 0 a 3936.96850 inch. Valores posibles (3): De 0.0001 a 99999.0000 grados. Valor por defecto: 0.0200 mm / 0.00079 inch / 0.0200 grados. Variable asociada: (V.)[ch].MPA.MAXDIFREF[set].xn Captación absoluta (parámetro ABSFEEDBACK=Total/Una vuelta). Máxima diferencia de posición, entre la cota guardada por el CNC y la leída por el encóder, para volver a referenciar el eje (marca REFPOIN). Si la diferencia es menor que MAXDIFREF, el CNC arranca con la nueva posición calculada por el encóder y pone la marca de PLC REFPOIN = 1." ;
+    ex:valor "De 0.0001 a 99999.0000 mm / De 0 a 3936.96850 inch / De 0.0001 a 99999.0000 grados" ;
+    ex:identificador "(V.)[ch].MPA.MAXDIFREF[set].xn" .
+
+ex:REFVALUE a ex:Parametro ;
+    rdfs:label "REFVALUE" ;
+    ex:textoExtracto "Este parámetro indica si el eje se desplaza o no hasta al punto de referencia máquina (parámetro REFVALUE) durante la búsqueda de referencia." ;
+    ex:identificador "REFVALUE" .
+
+ex:ABSFEEDBACK a ex:Parametro ;
+    rdfs:label "ABSFEEDBACK" ;
+    ex:textoExtracto "Captación absoluta (parámetro ABSFEEDBACK=Total/Una vuelta)." ;
+    ex:valor "Total/Una vuelta" ;
+    ex:identificador "ABSFEEDBACK" .
+
+ex:REFPOIN a ex:Parametro ;
+    rdfs:label "REFPOIN" ;
+    ex:textoExtracto "para volver a referenciar el eje (marca REFPOIN). Si la diferencia es menor que MAXDIFREF, el CNC arranca con la nueva posición calculada por el encóder y pone la marca de PLC REFPOIN = 1." ;
+    ex:identificador "REFPOIN" .
+
+ex:captacionMotor a ex:ComponenteElectrico ;
+    rdfs:label "captación motor" ;
+    ex:textoExtracto "En ejes con captación motor absoluta, el CNC conoce en todo momento la posición relativa del eje por vuelta del motor." .
+
+ex:microDeReferencia a ex:Sensor ;
+    rdfs:label "micro de referencia" ;
+    ex:textoExtracto "En estos casos, en la búsqueda de referencia del eje, el CNC conoce su posición en cuanto éste pulsa el micro de referencia" .
+
+ex:encoder a ex:ComponenteElectrico ;
+    rdfs:label "encóder" ;
+    ex:textoExtracto "Máxima diferencia de posición, entre la cota guardada por el CNC y la leída por el encóder" .

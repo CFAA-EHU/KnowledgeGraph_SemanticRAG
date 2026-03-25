@@ -1,0 +1,42 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:EjeEsclavoSlave a ex:ComponenteMecanico ;
+    ex:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser" .
+
+ex:EjeC a ex:ComponenteMecanico ;
+    ex:textoExtracto "Configuración del eje C" .
+
+ex:EjeZ a ex:ComponenteMecanico ;
+    ex:textoExtracto "eje Z+" .
+
+ex:EjeX a ex:ComponenteMecanico ;
+    ex:textoExtracto "eje X+" .
+
+ex:EjeY a ex:ComponenteMecanico ;
+    ex:textoExtracto "eje Y+" .
+
+ex:PlanoTrabajoG18 a ex:Parametro ;
+    ex:textoExtracto "el plano de trabajo habitual es G18 (ZX)" .
+
+ex:PlanoTrabajoG17 a ex:Parametro ;
+    ex:textoExtracto "planos G17/G18/G19 según el orden de ejes del canal" .
+
+ex:PlanoTrabajoG19 a ex:Parametro ;
+    ex:textoExtracto "planos G17/G18/G19 según el orden de ejes del canal" .
+
+ex:SistemaCompensacionDispersion a ex:Sistema ;
+    ex:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser. Muestra triedro X-Y y el efecto del seguimiento (#FOLLOW): líneas sólidas y discontinuas marcan el recorrido óptico y el desplazamiento del eje esclavo para mantener constante la longitud del haz, minimizando variaciones en el punto de corte." ;
+    ex:tieneComponente ex:EjeEsclavoSlave .
+
+ex:SistemaConfiguracionGeometricaPlano a ex:Sistema ;
+    ex:textoExtracto "Ilustración 'Configuración de ejes tipo plano (torno)': máquina con dos ejes principales (Z+ y X+) representados; el plano de trabajo habitual es G18 (ZX)." ;
+    ex:tieneComponente ex:EjeZ, ex:EjeX ;
+    ex:compuestoPor ex:PlanoTrabajoG18 .
+
+ex:SistemaConfiguracionGeometricaTriedro a ex:Sistema ;
+    ex:textoExtracto "Ilustración 'Configuración de ejes tipo triedro': máquina con tres ejes (X+, Y+, Z+), propia de fresadora. Sirve para visualizar el triedro cartesiano y los planos G17/G18/G19 según el orden de ejes del canal, base para programar trayectorias en 3D." ;
+    ex:tieneComponente ex:EjeX, ex:EjeY, ex:EjeZ ;
+    ex:compuestoPor ex:PlanoTrabajoG17, ex:PlanoTrabajoG18, ex:PlanoTrabajoG19 .
+
+ex:SecuenciaAlignC a ex:TareaMantenimiento ;
+    ex:textoExtracto "Secuencia 'ALIGNC = Sí' (3 viñetas): mecanizado diametral con herramienta que sólo cubre media superficie; se muestra (1) avance hasta el centro, (2) giro de 180° del eje C y (3) retroceso para completar el mecanizado, indicando la necesidad de reorientar el eje para cubrir todo el diámetro." ;
+    ex:ejecutadoPor ex:EjeC .

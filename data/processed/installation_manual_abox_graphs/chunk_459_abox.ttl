@@ -1,0 +1,42 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:Enconder_CNC_459 a ex:Sensor ;
+    rdfs:label "Enconder"@es ;
+    ex:textoExtracto "El CNC obtiene esta información del propio encóder, por lo que estos parámetros no se pueden modificar."@es .
+
+ex:Tabla_Parametros_459 a ex:Tabla ;
+    rdfs:label "Tabla de parámetros"@es ;
+    ex:textoExtracto "En el caso de que los datos leídos del encóder no coincidan con los guardados en la tabla de parámetros, el CNC mostrará una nueva tabla con ambos grupos de valores."@es .
+
+ex:CNC_459 a ex:Sistema ;
+    rdfs:label "CNC"@es ;
+    ex:textoExtracto "El CNC obtiene esta información del propio encóder"@es .
+
+ex:Softkey_Salvar_459 a ex:InterfazUsuario ;
+    rdfs:label "Softkey para salvar datos"@es ;
+    ex:textoExtracto "Al mismo tiempo mostrará una softkey para salvar los nuevos datos en la tabla."@es .
+
+ex:Parametro_NAME_459 a ex:Parametro ;
+    rdfs:label "NAME Nomenclatura del encóder"@es ;
+    ex:textoExtracto "NAME Nomenclatura del encóder. Variable asociada (valor guardado en la tabla): (V.)[ch].MPA.DE_NAME[set].xn Variable asociada (valor leído del encóder): (V.)[ch].A.CDE_NAME[set].xn Parámetro no modificable; el CNC lee este parámetro del encóder."@es .
+
+ex:Parametro_TYPE_459 a ex:Parametro ;
+    rdfs:label "TYPE Tipo de encóder"@es ;
+    ex:textoExtracto "TYPE Tipo de encóder. Variable asociada (valor guardado en la tabla): (V.)[ch].MPA.DE_TYPE[set].xn Variable asociada (valor leído del encóder): (V.)[ch].A.CDE_TYPE[set].xn Parámetro no modificable; el CNC lee este parámetro del encóder."@es .
+
+ex:Parametro_RESOLUTION_459 a ex:Parametro ;
+    rdfs:label "RESOLUTION Resolución del encóder"@es ;
+    ex:textoExtracto "RESOLUTION Resolución del encóder. Variable asociada (valor guardado en la tabla): (V.)[ch].MPA.DE_RESOLUTION[set].xn Variable asociada (valor leído del encóder): (V.)[ch].A.CDE_RESOLUTION[set].xn Parámetro no modificable; el CNC lee este parámetro del encóder."@es .
+
+ex:Parametro_SERIALNUMBER_459 a ex:Parametro ;
+    rdfs:label "SERIALNUMBER Número de serie del encóder"@es ;
+    ex:textoExtracto "SERIALNUMBER Número de serie del encóder."@es .
+
+ex:CNC_459 ex:controla ex:Enconder_CNC_459 ;
+    ex:detalladoEnEsquema ex:Tabla_Parametros_459 ;
+    ex:monitoreaParametro ex:Parametro_NAME_459, ex:Parametro_TYPE_459, ex:Parametro_RESOLUTION_459, ex:Parametro_SERIALNUMBER_459 .
+
+ex:Tabla_Parametros_459 a ex:Tabla ;
+    ex:compuestoPor ex:Parametro_NAME_459, ex:Parametro_TYPE_459, ex:Parametro_RESOLUTION_459, ex:Parametro_SERIALNUMBER_459 .
+
+ex:Softkey_Salvar_459 ex:habilitadoPor ex:CNC_459 .

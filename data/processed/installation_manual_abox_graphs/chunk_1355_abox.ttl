@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:Q7A a ex:Maquina ;
+    ex:textoExtracto "La plataforma Q7-A dispone de bus EtherCAT para la comunicación con módulos remotos de I/Os (propios o de terceros)." .
+
+ex:BusEtherCAT a ex:Sistema ;
+    ex:textoExtracto "La plataforma Q7-A dispone de bus EtherCAT para la comunicación con módulos remotos de I/Os (propios o de terceros). El CNC es el elemento máster del bus, y el resto de recursos estará repartido por nodos (hasta 32). El máster del bus interpreta los ficheros ENI (EtherCAT Network Information) generados por un configurador, e inicializa los esclavos conectados al bus. Este bus es compatible con el bus CAN, encargado de la gestión de teclados y paneles de mando. El CNC puede tener I/Os remotas en ambos buses de forma simultánea (CAN/EtherCAT), siempre que ambos buses no usen los mismos recursos." ;
+    ex:tieneComponente ex:CNC_Q7A ;
+    ex:tieneComponente ex:BusCAN .
+
+ex:CNC_Q7A a ex:ComponenteElectrico ;
+    ex:textoExtracto "El CNC es el elemento máster del bus" ;
+    ex:identificador "CNC" .
+
+ex:BusCAN a ex:Sistema ;
+    ex:textoExtracto "Este bus es compatible con el bus CAN, encargado de la gestión de teclados y paneles de mando." .
+
+ex:ConfiguradorEtherCAT a ex:Herramienta ;
+    ex:textoExtracto "Utilizar el configurador \"KPA EtherCAT Studio\" para definir la topología del bus y generar el fichero ENI con la información de los dispositivos EtherCAT conectados al CNC." ;
+    ex:identificador "KPA EtherCAT Studio" .
+
+ex:FicheroENI a ex:Tabla ;
+    ex:textoExtracto "generar el fichero ENI (EtherCAT Network Information) generados por un configurador" ;
+    ex:identificador "ENI" .
+
+ex:MapperEtherCAT a ex:Herramienta ;
+    ex:textoExtracto "Utilizar el programa \"Fagor EtherCAT Mapper\" para mapear los recursos EtherCAT a recursos PLC (entradas, salidas y registros) y generar el archivo con la información del mapeo." ;
+    ex:identificador "Fagor EtherCAT Mapper" .
+
+ex:ParametroLOOPTIME a ex:Parametro ;
+    ex:textoExtracto "El tiempo de ciclo del bus está definido por el parámetro LOOPTIME." ;
+    ex:identificador "LOOPTIME" .
+
+ex:TablaRecursosBus a ex:Tabla ;
+    ex:textoExtracto "Recursos disponibles en el bus. | Recursos del bus. | Total en el bus. | Entradas digitales. | 1024 | Salidas digitales. | 1024 | Entradas analógicas de propósito general. | 40 | Salidas analógicas de propósito general. | 40 | Entradas analógicas para sondas de temperatura Pt100. | 10 |" ;
+    ex:tieneComponente ex:EntradasDigitales_1024, ex:SalidasDigitales_1024, ex:EntradasAnalogicasGenerales_40, ex:SalidasAnalogicasGenerales_40, ex:EntradasAnalogicasPt100_10 .
+
+ex:EntradasDigitales_1024 a ex:Sensor ;
+    ex:textoExtracto "Entradas digitales. | 1024" ;
+    ex:valor "1024" .
+
+ex:SalidasDigitales_1024 a ex:Actuador ;
+    ex:textoExtracto "Salidas digitales. | 1024" ;
+    ex:valor "1024" .
+
+ex:EntradasAnalogicasGenerales_40 a ex:Sensor ;
+    ex:textoExtracto "Entradas analógicas de propósito general. | 40" ;
+    ex:valor "40" .
+
+ex:SalidasAnalogicasGenerales_40 a ex:Actuador ;
+    ex:textoExtracto "Salidas analógicas de propósito general. | 40" ;
+    ex:valor "40" .
+
+ex:EntradasAnalogicasPt100_10 a ex:Sensor ;
+    ex:textoExtracto "Entradas analógicas para sondas de temperatura Pt100. | 10" ;
+    ex:valor "10" .

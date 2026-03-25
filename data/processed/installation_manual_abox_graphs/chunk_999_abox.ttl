@@ -1,0 +1,22 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:ProgramaRutinaM06 a ex:TareaMantenimiento ;
+    ex:textoExtracto """$BREAK $CASE 7 ; Dejar la herramienta del cabezal en tierra, y coger otra del almacén. ; Previamente, durante el mecanizado (al ejecutar T), se pone la herramienta del almacén en la pinza 1. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. LL SUB_ARM_BACK ; Retirar el brazo cambiador. $BREAK $CASE 8 ; Dejar la herramienta del cabezal en tierra y coger otra de tierra. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal. LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. $BREAK $CASE 9 ; Coger una herramienta de tierra y llevarla al almacén pasando por el cabezal. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2. LL SUB_ARM_BACK ; Retirar el brazo cambiador. LL SUB_CH2_TO_MZ ; Comenzar el envío del brazo cambiador al almacén para dejar la herramienta. V.PLC.M[1100]=1 ; Orden al PLC para que active la marca TCHANGEOK, indicando al gestor que puede continuar la ejecución.""" .
+
+ex:BrazoCambiador a ex:ComponenteMecanico ;
+    ex:textoExtracto """LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio.""" .
+
+ex:Pinza1 a ex:ComponenteMecanico ;
+    ex:textoExtracto """Previamente, durante el mecanizado (al ejecutar T), se pone la herramienta del almacén en la pinza 1.""" .
+
+ex:Pinza2 a ex:ComponenteMecanico ;
+    ex:textoExtracto """LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2.""" .
+
+ex:PuntoCambioManual a ex:ModoOperacion ;
+    ex:textoExtracto """LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual.""" .
+
+ex:PuntoCambioAutomatico a ex:ModoOperacion ;
+    ex:textoExtracto """LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático.""" .
+
+ex:MarcaTCHANGEOK a ex:Parametro ;
+    ex:identificador "V.PLC.M[1100]" ;
+    ex:textoExtracto """V.PLC.M[1100]=1 ; Orden al PLC para que active la marca TCHANGEOK, indicando al gestor que puede continuar la ejecución.""" .

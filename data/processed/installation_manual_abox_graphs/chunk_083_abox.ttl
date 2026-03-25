@@ -1,0 +1,48 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:EjeMaestro a ex:ComponenteMecanico ;
+    rdfs:label "eje maestro"@es ;
+    ex:textoExtracto "El primer eje del grupo será el eje maestro"@es .
+
+ex:Regulador a ex:ComponenteElectrico ;
+    rdfs:label "regulador"@es ;
+    ex:textoExtracto "el que por defecto utilizará el regulador"@es .
+
+ex:SistemaCNC a ex:Maquina ;
+    rdfs:label "CNC"@es ;
+    ex:textoExtracto "el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador"@es .
+
+ex:ParametroKEEPPOS a ex:Parametro ;
+    rdfs:label "KEEPPOS"@es ;
+    ex:identificador "(V.)MPG.KEEPPOSxn[nb]"@es ;
+    ex:textoExtracto "Parámetro incluido en la tabla MULTIAXIS // GROUP n. Para un grupo multieje, este parámetro define si el eje desactivado mantiene o no la cota, cuando se mueve el eje activo."@es .
+
+ex:TablaMULTIAXIS a ex:Tabla ;
+    rdfs:label "tabla MULTIAXIS // GROUP n"@es ;
+    ex:textoExtracto "Parámetro incluido en la tabla MULTIAXIS // GROUP n"@es .
+
+ex:ParametroHomogeneizacion a ex:Parametro ;
+    rdfs:label "parámetros para homogeneización"@es ;
+    ex:textoExtracto "el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador"@es .
+
+ex:EjeDesactivado a ex:ComponenteMecanico ;
+    rdfs:label "eje desactivado"@es ;
+    ex:textoExtracto "el eje desactivado mantiene su cota independientemente del eje activo"@es .
+
+ex:EjeActivo a ex:ComponenteMecanico ;
+    rdfs:label "eje activo"@es ;
+    ex:textoExtracto "cuando se mueve el eje activo"@es .
+
+ex:TablaMULTIAXIS a ex:Tabla ;
+    ex:tieneComponente ex:ParametroKEEPPOS ;
+    ex:textoExtracto "Parámetro incluido en la tabla MULTIAXIS // GROUP n"@es .
+
+ex:SistemaCNC ex:controla ex:EjeMaestro ;
+    ex:textoExtracto "el CNC utilizará los parámetros del eje maestro"@es .
+
+ex:Regulador ex:controla ex:EjeMaestro ;
+    ex:textoExtracto "el que por defecto utilizará el regulador"@es .
+
+ex:ParametroKEEPPOS ex:tieneComponente ex:EjeDesactivado ;
+    ex:tieneComponente ex:EjeActivo ;
+    ex:textoExtracto "este parámetro define si el eje desactivado mantiene o no la cota, cuando se mueve el eje activo"@es .

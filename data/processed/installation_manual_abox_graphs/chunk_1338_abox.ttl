@@ -1,0 +1,21 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:DMC a ex:Sistema ;
+    ex:textoExtracto "Para garantizar un funcionamiento correcto del DMC, la potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío." ;
+    ex:textoExtracto "Si el DMC detecta una situación de este tipo, muestra el aviso 3103." ;
+    ex:textoExtracto "Si los valores reales de la potencia en vacío y la potencia objetivo durante el mecanizado son parecidos, es posible que el DMC no pueda distinguir con exactitud las entradas y salidas de la pieza, o que detecte falsas entradas o salidas." .
+
+ex:Aviso3103 a ex:AvisoSeguridad ;
+    ex:identificador "3103" ;
+    ex:textoExtracto "Si el DMC detecta una situación de este tipo, muestra el aviso 3103." .
+
+ex:PotenciaObjetivo a ex:Parametro ;
+    ex:textoExtracto "la potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío" .
+
+ex:PotenciaVacio a ex:Parametro ;
+    ex:textoExtracto "la potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío" .
+
+ex:DMC ex:controla ex:PotenciaObjetivo ;
+    ex:controla ex:PotenciaVacio ;
+    ex:monitoreaParametro ex:PotenciaObjetivo ;
+    ex:monitoreaParametro ex:PotenciaVacio ;
+    ex:activaAlarma ex:Aviso3103 .

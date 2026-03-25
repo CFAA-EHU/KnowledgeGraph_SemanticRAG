@@ -104,6 +104,10 @@ T24_REDUNDANCY_ASSESSMENT_PATH = PROCESSED_DATA_DIR / "t24_redundancy_assessment
 T24_CLEANUP_POLICY_PATH = PROCESSED_DATA_DIR / "t24_cleanup_policy.json"
 T24_CLEANUP_REPORT_PATH = PROCESSED_DATA_DIR / "t24_cleanup_report.json"
 T24_CLEANUP_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t24_cleanup_decision_report.json"
+T25_PENDING_MANUALS_INVENTORY_PATH = PROCESSED_DATA_DIR / "t25_pending_manuals_inventory.json"
+T25_MANUAL_ORDER_PATH = PROCESSED_DATA_DIR / "t25_manual_order.json"
+T25_MULTI_MANUAL_INTEGRATION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_multi_manual_integration_report.json"
+T25_MULTI_MANUAL_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_multi_manual_decision_report.json"
 
 GRAPHDB_BASE_URL = os.getenv("GRAPHDB_BASE_URL", "http://localhost:7200").rstrip("/")
 GRAPHDB_REPOSITORY_ID = os.getenv("GRAPHDB_REPOSITORY_ID", "semanticrag_operational_mirror")
@@ -224,6 +228,10 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "t24_cleanup_policy": T24_CLEANUP_POLICY_PATH,
     "t24_cleanup_report": T24_CLEANUP_REPORT_PATH,
     "t24_cleanup_decision_report": T24_CLEANUP_DECISION_REPORT_PATH,
+    "t25_pending_manuals_inventory": T25_PENDING_MANUALS_INVENTORY_PATH,
+    "t25_manual_order": T25_MANUAL_ORDER_PATH,
+    "t25_multi_manual_integration_report": T25_MULTI_MANUAL_INTEGRATION_REPORT_PATH,
+    "t25_multi_manual_decision_report": T25_MULTI_MANUAL_DECISION_REPORT_PATH,
     "quick_ref_source": QUICK_REF_SOURCE_PATH,
     "quick_ref_density_report": QUICK_REF_DENSITY_REPORT_PATH,
     "quick_ref_language_detection_report": QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,
@@ -293,6 +301,7 @@ SCRIPT_CLASSIFICATIONS = {
     "src/8_retrieval/schema_condenser.py": "operational_consumer",
     "src/8_retrieval/qa_evaluator.py": "operational_consumer",
     "src/9_rag_orchestrator/semantic_rag.py": "operational_consumer",
+    "run_t25_sequential_integration.py": "operational_entrypoint",
 }
 
 

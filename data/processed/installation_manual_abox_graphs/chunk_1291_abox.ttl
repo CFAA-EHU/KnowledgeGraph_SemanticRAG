@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:GAPMIN a ex:Parametro ;
+    ex:identificador "GAPMIN" ;
+    ex:textoExtracto "Mínimo valor permitido para el gap; por debajo de este valor, el CNC mostrará o no un error según lo definido en el parámetro GAPERRORCANCEL." ;
+    ex:valor "Mínimo valor permitido para el gap" .
+
+ex:GAPMAX a ex:Parametro ;
+    ex:identificador "GAPMAX" ;
+    ex:textoExtracto "Máximo valor permitido para el gap; por encima de este valor, el CNC mostrará o no un error según lo definido en el parámetro GAPERRORCANCEL. Este parámetro debe ser inferior a GAPDISTLIMIT." ;
+    ex:valor "Máximo valor permitido para el gap" .
+
+ex:GAPTOL a ex:Parametro ;
+    ex:identificador "GAPTOL" ;
+    ex:textoExtracto "Este parámetro define una ventana de posicionamiento, sobre el gap programado, para dar por finalizado el bloque de aproximación." ;
+    ex:valor "Ventana de posicionamiento sobre el gap programado" .
+
+ex:GAPERRORCANCEL a ex:Parametro ;
+    ex:identificador "GAPERRORCANCEL" ;
+    ex:textoExtracto "Este parámetro indica si el CNC debe anular el error de gap fuera del rango, cuando el gap sobrepasa el rango GAPMIN - GAPMAX. Independientemente del valor de este parámetro, el CNC sigue vigilando la marca INPOSGAP." ;
+    ex:valor "Anulación de error de gap fuera de rango" .
+
+ex:GAPTOLCANCEL a ex:Parametro ;
+    ex:identificador "GAPTOLCANCEL" ;
+    ex:textoExtracto "Este parámetro indica si el CNC debe anular el error de gap fuera de tolerancia, cuando el gap supera el margen definido en el parámetro GAPTOL." ;
+    ex:valor "Anulación de error de gap fuera de tolerancia" .
+
+ex:INPOSGAP a ex:Parametro ;
+    ex:identificador "INPOSGAP" ;
+    ex:textoExtracto "El PLC desactiva la marca INPOSGAP si el gap sobrepasa el rango definido en los parámetros GAPMIN y GAPMAX." ;
+    ex:valor "Marca de posición del gap" .
+
+ex:INTOL a ex:Parametro ;
+    ex:identificador "INTOL" ;
+    ex:textoExtracto "El PLC desactiva la marca INTOL si el eje sobrepasa la tolerancia definida en el parámetro GAPTOL." ;
+    ex:valor "Marca de tolerancia del gap" .
+
+ex:TablaConfiguracionGap a ex:Tabla ;
+    ex:textoExtracto "Configurar los límites del gap. | Parámetro. | Significado. | GAPMIN | Mínimo valor permitido para el gap; por debajo de este valor, el CNC mostrará o no un error según lo definido en el parámetro GAPERRORCANCEL. | GAPMAX | Máximo valor permitido para el gap; por encima de este valor, el CNC mostrará o no un error según lo definido en el parámetro GAPERRORCANCEL. Este parámetro debe ser inferior a GAPDISTLIMIT. | GAPTOL | Este parámetro define una ventana de posicionamiento, sobre el gap programado, para dar por finalizado el bloque de aproximación." ;
+    ex:tieneComponente ex:GAPMIN, ex:GAPMAX, ex:GAPTOL .
+
+ex:TablaRespuestaCNC a ex:Tabla ;
+    ex:textoExtracto "Configurar la respuesta del CNC al sobrepasar los límites del gap. | Parámetro. | Significado. | GAPERRORCANCEL | Este parámetro indica si el CNC debe anular el error de gap fuera del rango, cuando el gap sobrepasa el rango GAPMIN - GAPMAX. Independientemente del valor de este parámetro, el CNC sigue vigilando la marca INPOSGAP. | GAPTOLCANCEL | Este parámetro indica si el CNC debe anular el error de gap fuera de tolerancia, cuando el gap supera el margen definido en el parámetro GAPTOL." ;
+    ex:tieneComponente ex:GAPERRORCANCEL, ex:GAPTOLCANCEL .

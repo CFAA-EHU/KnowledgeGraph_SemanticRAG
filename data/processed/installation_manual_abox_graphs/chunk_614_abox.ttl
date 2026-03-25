@@ -1,0 +1,30 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ProgramaPLC_614 a ex:Sistema ;
+    rdfs:label "Programa de PLC" ;
+    ex:textoExtracto "El programa de PLC puede combinar varios ficheros en lenguaje de mnemónicos (extensión \"plc\"), varios ficheros en lenguaje C (extensión \"c\") y un fichero en lenguaje de contactos (extensión \"ld\"). Todos los ficheros que componen el programa PLC deben estar en el directorio \\MTB \\PLC \\PROJECT. Se aconseja utilizar los ficheros en lenguaje de mnemónicos o de contactos como programa principal del PLC y los ficheros en lenguaje C para tareas auxiliares (por ejemplo, compensación de temperatura). Subrutinas en el programa de PLC. Las subrutinas del programa en lenguaje de mnemónicos o de contactos hay que definirlas fuera de los módulos, por ejemplo al final de programa tras la directiva END. Las subrutinas del fichero en lenguaje C hay que definirlas como externas al comienzo del programa en lenguaje de mnemónicos (extensión \"plc\") o de contactos (extensión \"ld\"). El nombre de la subrutina debe estar redactado en mayúsculas en ambos ficheros. La programación en lenguaje C dispone de una librería matemática (trigonométrica, logarítmica, etc.) y permite efectuar operaciones con tablas, arrays, variables de tipo float, etc." ;
+    ex:compuestoPor ex:FicheroMnemónicos_614_1, ex:FicheroC_614_1, ex:FicheroContactos_614_1, ex:FicheroMnemónicos_614_2, ex:FicheroC_614_2 .
+
+ex:FicheroMnemónicos_614_1 a ex:Componente ;
+    rdfs:label "Fichero en lenguaje de mnemónicos (Mnemónicos.plc)" ;
+    ex:identificador "Mnemónicos.plc" ;
+    ex:textoExtracto "Mnemónicos.plc PRG ()= MOV 1234 R201 = MOV 2345 R202 ()= CAL SUMA ··· END SUB SUMA ()= ADS R201 R202 R203 END" .
+
+ex:FicheroC_614_1 a ex:Componente ;
+    rdfs:label "Fichero en lenguaje C (Lenguajec.c)" ;
+    ex:identificador "Lenguajec.c" ;
+    ex:textoExtracto "#include \"plclib.h\" void SUMA (void) R203=R201+R202" .
+
+ex:FicheroContactos_614_1 a ex:Componente ;
+    rdfs:label "Fichero en lenguaje de contactos (extensión \"ld\")" ;
+    ex:textoExtracto "fichero en lenguaje de contactos (extensión \"ld\")" .
+
+ex:FicheroMnemónicos_614_2 a ex:Componente ;
+    rdfs:label "Fichero en lenguaje de mnemónicos con subrutina externa" ;
+    ex:identificador "Mnemónicos.plc" ;
+    ex:textoExtracto "Mnemónicos.plc EXTERN SUMA PRG ()= MOV 1234 R201 = MOV 2345 R202 ()= CAL SUMA END" .
+
+ex:FicheroC_614_2 a ex:Componente ;
+    rdfs:label "Fichero en lenguaje C con subrutina externa" ;
+    ex:identificador "Lenguajec.c" ;
+    ex:textoExtracto "#include \"plclib.h\" void SUMA (void) R203=R201+R202" .

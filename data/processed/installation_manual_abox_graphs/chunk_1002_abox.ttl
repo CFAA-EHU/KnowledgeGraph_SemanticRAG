@@ -1,0 +1,46 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:PLC_ProgramacionBasica ex:textoExtracto "Cuando se ejecuta la función –T– Cuando se ejecuta la función T el gestor envía al PLC el código TMOPERATION=11 para coger la próxima herramienta en el brazo y acercarla al cabezal durante el mecanizado. DFU TMOPSTROBE AND CPS TMOPERATION EQ 11 = ··· Hay que efectuar las siguientes operaciones: Enviar el brazo cambiador al almacén. Si LEAVEPOS indica una posición del almacén dejar la herramienta que está en la pinza 1 en dicha posición y activar la marca CH1TOMZ. Coger con la pinza 1 la herramienta que ocupa la posición de almacén que indica TAKEPOS. Activar la marca MZTOCH1 para indicar al gestor que se ha cogido la herramienta. Cuando se ejecuta la función –M06– Cada vez que la rutina M06 finaliza una acción se lo indica al PLC para que active la marca correspondiente del gestor. DFU M1100 = SET TCHANGEOK DFD TCHANGEOK = RES M1100 Se puede continuar con la ejecución del programa. DFU M1101 = SET MZTOCH1 DFD MZTOCH1 = RES M1101 La herramienta se ha llevado del almacén a la pinza 1. DFU M1102 = SET CH1TOSPDL DFD CH1TOSPDL = RES M1102 La herramienta se ha llevado de la pinza 1 al cabezal. DFU M1104 = SET SPDLTOCH2 DFD SPDLTOCH2 = RES M1104 La herramienta se ha llevado del cabezal a la pinza 2. DFU M1107 = SET SPDLTOGR DFD SPDLTOGR = RES M1104 La herramienta se ha llevado del cabezal a tierra. DFU M1108 = SET GRTOSPDL DFD GRTOSPDL = RES M1108 La herramienta se ha llevado de tierra al cabezal. La rutina M06 utiliza las siguientes funciones auxiliares M para indicar al PLC qué movimientos debe realizar. M101 Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1." ;
+    a ex:Sistema ;
+    rdfs:label "Sistema de programación básica del PLC"@es ;
+    ex:compuestoPor ex:FuncionT, ex:FuncionM06, ex:MarcaCH1TOMZ, ex:MarcaMZTOCH1, ex:MarcaTCHANGEOK, ex:MarcaCH1TOSPDL, ex:MarcaSPDLTOCH2, ex:MarcaSPDLTOGR, ex:MarcaGRTOSPDL, ex:FuncionM101 .
+
+ex:FuncionT a ex:ModoOperacion ;
+    ex:textoExtracto "función –T– ... TMOPERATION=11 para coger la próxima herramienta en el brazo y acercarla al cabezal durante el mecanizado" ;
+    rdfs:label "Función T"@es .
+
+ex:FuncionM06 a ex:ModoOperacion ;
+    ex:textoExtracto "función –M06– ... Cada vez que la rutina M06 finaliza una acción se lo indica al PLC para que active la marca correspondiente del gestor" ;
+    rdfs:label "Función M06"@es .
+
+ex:MarcaCH1TOMZ a ex:Parametro ;
+    ex:textoExtracto "activar la marca CH1TOMZ" ;
+    rdfs:label "Marca CH1TOMZ"@es .
+
+ex:MarcaMZTOCH1 a ex:Parametro ;
+    ex:textoExtracto "Activar la marca MZTOCH1 para indicar al gestor que se ha cogido la herramienta" ;
+    rdfs:label "Marca MZTOCH1"@es .
+
+ex:MarcaTCHANGEOK a ex:Parametro ;
+    ex:textoExtracto "DFU M1100 = SET TCHANGEOK DFD TCHANGEOK = RES M1100" ;
+    rdfs:label "Marca TCHANGEOK"@es .
+
+ex:MarcaCH1TOSPDL a ex:Parametro ;
+    ex:textoExtracto "DFU M1102 = SET CH1TOSPDL DFD CH1TOSPDL = RES M1102 La herramienta se ha llevado de la pinza 1 al cabezal" ;
+    rdfs:label "Marca CH1TOSPDL"@es .
+
+ex:MarcaSPDLTOCH2 a ex:Parametro ;
+    ex:textoExtracto "DFU M1104 = SET SPDLTOCH2 DFD SPDLTOCH2 = RES M1104 La herramienta se ha llevado del cabezal a la pinza 2" ;
+    rdfs:label "Marca SPDLTOCH2"@es .
+
+ex:MarcaSPDLTOGR a ex:Parametro ;
+    ex:textoExtracto "DFU M1107 = SET SPDLTOGR DFD SPDLTOGR = RES M1107 La herramienta se ha llevado del cabezal a tierra" ;
+    rdfs:label "Marca SPDLTOGR"@es .
+
+ex:MarcaGRTOSPDL a ex:Parametro ;
+    ex:textoExtracto "DFU M1108 = SET GRTOSPDL DFD GRTOSPDL = RES M1108 La herramienta se ha llevado de tierra al cabezal" ;
+    rdfs:label "Marca GRTOSPDL"@es .
+
+ex:FuncionM101 a ex:ModoOperacion ;
+    ex:textoExtracto "M101 Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1" ;
+    rdfs:label "Función M101"@es .

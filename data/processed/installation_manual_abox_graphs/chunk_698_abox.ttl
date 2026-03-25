@@ -1,0 +1,61 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ZonaTrabajo_1 a ex:ModoOperacion ;
+    rdfs:label "Zona 1" ;
+    ex:textoExtracto "Zona 1" ;
+    ex:identificador "[2].G.ZONEST[1]" .
+
+ex:EjeZ_1 a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z. Zona 1" ;
+    ex:textoExtracto "Eje Z. Zona 1" ;
+    ex:identificador "A.ZONEUPLIM[1].Z" .
+
+ex:EjeLogico_4_Zona1 a ex:ComponenteMecanico ;
+    rdfs:label "Eje con número lógico 4. Zona 1" ;
+    ex:textoExtracto "Eje con número lógico ꞏ4ꞏ. Zona 1" ;
+    ex:identificador "A.ZONEUPLIM[1].4" .
+
+ex:EjeIndice_1_Canal2_Zona1 a ex:ComponenteMecanico ;
+    rdfs:label "Eje con índice 1 en el canal 2. Zona 1" ;
+    ex:textoExtracto "Eje con índice ꞏ1ꞏ en el canal ꞏ2ꞏ. Zona 1" ;
+    ex:identificador "[2].A.ZONEUPLIM[1].1" .
+
+ex:ZonaProhibida_EjeX a ex:AccionProhibida ;
+    rdfs:label "Zona prohibida del eje X" ;
+    ex:textoExtracto "cómo se puede definir como zona prohibida del eje X la comprendida entre las cotas 0 y 100 mm (1000000 diezmilésimas de milímetro)" .
+
+ex:SistemaCNC a ex:Sistema ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "CNC" .
+
+ex:ProgramaPieza a ex:InterfazUsuario ;
+    rdfs:label "programa pieza" ;
+    ex:textoExtracto "programa pieza" .
+
+ex:PLC a ex:Sistema ;
+    rdfs:label "PLC" ;
+    ex:textoExtracto "PLC" .
+
+ex:ZonaTrabajo_1 ex:controla ex:EjeZ_1 ;
+    ex:textoExtracto "Zona 1" .
+
+ex:ZonaTrabajo_1 ex:controla ex:EjeLogico_4_Zona1 ;
+    ex:textoExtracto "Zona 1" .
+
+ex:ZonaTrabajo_1 ex:controla ex:EjeIndice_1_Canal2_Zona1 ;
+    ex:textoExtracto "Zona 1" .
+
+ex:ZonaProhibida_EjeX ex:mitigaRiesgo ex:ZonaTrabajo_1 ;
+    ex:textoExtracto "cómo se puede definir como zona prohibida del eje X la comprendida entre las cotas 0 y 100 mm (1000000 diezmilésimas de milímetro)" .
+
+ex:SistemaCNC ex:controla ex:ZonaProhibida_EjeX ;
+    ex:textoExtracto "MOV 0 R1 = CNCWR(R1, A.ZONELOWLIM[1].X, M1) = MOV 1000000 R1 = CNCWR(R1, A.ZONEUPLIM[1].X, M1) = MOV 1 R1 = CNCWR(R1, G.ZONEST[1], M1)" .
+
+ex:ProgramaPieza ex:ejecutadoPor ex:SistemaCNC ;
+    ex:textoExtracto "desde el programa pieza y el PLC" .
+
+ex:PLC ex:ejecutadoPor ex:SistemaCNC ;
+    ex:textoExtracto "desde el programa pieza y el PLC" .
+
+ex:PLC ex:controla ex:ZonaTrabajo_1 ;
+    ex:textoExtracto "Sincronizar cambios en las zonas de trabajo desde PLC" .

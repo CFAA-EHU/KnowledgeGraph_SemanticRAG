@@ -1,0 +1,33 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:PLCControlCabezal a ex:Sistema ;
+    rdfs:label "PLC de control de cabezal"@es ;
+    ex:textoExtracto "Cuando el PLC pone la marca PLCCNTL a (=1), el cabezal decelera con rampa hasta detenerse y pasa a estar controlado por el PLC."@es .
+
+ex:RegistroSANALOG a ex:Parametro ;
+    rdfs:label "Registro SANALOG"@es ;
+    ex:textoExtracto "El registro SANALOG fija la consigna de cabezal que se desea aplicar."@es .
+
+ex:ConsignaCabezal a ex:Parametro ;
+    rdfs:label "Consigna de cabezal"@es ;
+    ex:textoExtracto "El registro SANALOG fija la consigna de cabezal que se desea aplicar."@es .
+
+ex:CabezalAnalogico a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal analógico"@es ;
+    ex:textoExtracto "• Cabezal analógico. A 10 V de consigna corresponde SANALOG = 32767."@es .
+
+ex:CabezalSercosVelocidad a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal Sercos en velocidad"@es ;
+    ex:textoExtracto "• Cabezal Sercos en velocidad. La consigna en SANALOG vendrá expresada en diezmilésima de rpm."@es .
+
+ex:CabezalSercosPosicion a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal Sercos en posición"@es ;
+    ex:textoExtracto "• Cabezal Sercos en posición. La consigna en SANALOG vendrá expresada en diezmilésima de grado."@es .
+
+ex:PLCControlCabezal ex:controla ex:RegistroSANALOG ;
+    ex:controla ex:ConsignaCabezal ;
+    ex:controla ex:CabezalAnalogico ;
+    ex:controla ex:CabezalSercosVelocidad ;
+    ex:controla ex:CabezalSercosPosicion .
+
+ex:RegistroSANALOG ex:alimenta ex:ConsignaCabezal .

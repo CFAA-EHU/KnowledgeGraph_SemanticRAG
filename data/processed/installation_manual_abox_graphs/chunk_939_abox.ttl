@@ -1,0 +1,18 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:SUB_MZ_TO_CH1 a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1. M101 ; Función auxiliar para ejecutar acción. V.PLC.M[1101]=1 ; Marca MZTOCH1 al gestor. # WAIT FOR [V.PLC.M[1101]==0] #RET" .
+
+ex:SUB_CH1_TO_SPD a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. M102 ; Función auxiliar para ejecutar acción. V.PLC.M[1102]=1 ; Marca CH1TOSPDL al gestor. # WAIT FOR [V.PLC.M[1102]==0] #RET" .
+
+ex:SUB_SPD_TO_CH1 a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_SPD_TO_CH1 ; Coger la herramienta del cabezal con la pinza 1. M103 ; Función auxiliar para ejecutar acción. V.PLC.M[1103]=1 ; Marca SPDLTOCH1 al gestor. # WAIT FOR [V.PLC.M[1103]==0] #RET" .
+
+ex:SUB_CH1_TO_MZ a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_CH1_TO_MZ ; Llevar la herramienta de la pinza 1 al almacén. M105 ; Función auxiliar para ejecutar acción. V.PLC.M[1105]=1 ; Marca CH1TOMZ al gestor. # WAIT FOR [V.PLC.M[1105]==0] #RET" .
+
+ex:SUB_SPD_TO_GR a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_SPD_TO_GR ; Quitar la herramienta del cabezal (llevarla a tierra). # MSG [\"Extraer herramienta T%D y pulsar MARCHA\", V.TM.TOOL] ; Mensaje al operario para que quite la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje. V.PLC.M[1107]=1 ; Marca SPDLTOGR al gestor. # WAIT FOR [V.PLC.M[1107]==0] #RET" .
+
+ex:SUB_GR_TO_SPD a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. # MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje." .

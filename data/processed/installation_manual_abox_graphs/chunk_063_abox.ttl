@@ -1,0 +1,18 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:MASTERAXIS a ex:ModoOperacion ;
+    rdfs:label "MASTERAXIS" ;
+    ex:textoExtracto "MASTERAXIS Pareja tándem. Eje/cabezal maestro o principal. Valores posibles: Cualquier eje definido en AXISNAME o cabezal definido en SPDLNAME. Variable asociada: (V.)MPG.TMASTERAXIS[nb] Parámetro incluido en la tabla TANDEM. Este parámetro establece cuál es el eje o cabezal maestro de la pareja tándem. El motor maestro del tándem, además de generar par, es el responsable del posicionamiento. El CNC cierra el lazo de posición únicamente con la posición del eje maestro del tándem. La consigna de velocidad del eje/cabezal maestro del tándem se envía también al eje/cabezal esclavo del tándem cerrando el lazo de velocidad. El control del tándem modifica la consigna de velocidad del eje/cabezal maestro y del eje/cabezal esclavo en función de la distribución de par y la precarga seleccionada." .
+
+ex:SLAVEAXIS a ex:ModoOperacion ;
+    rdfs:label "SLAVEAXIS" ;
+    ex:textoExtracto "SLAVEAXIS Pareja tándem. Eje/cabezal esclavo. Valores posibles: Cualquier eje definido en AXISNAME o cabezal definido en SPDLNAME. Variable asociada: (V.)MPG.TSLAVEAXIS[nb] Parámetro incluido en la tabla TANDEM. Este parámetro establece cuál es el eje o cabezal esclavo de la pareja tándem. El motor esclavo únicamente suministra par. El CNC cierra el lazo de posición únicamente con la posición del eje maestro del tándem." .
+
+ex:TORQDIST a ex:Parametro ;
+    rdfs:label "TORQDIST" ;
+    ex:textoExtracto "TORQDIST Pareja tándem. Distribución del par. Valores posibles: De 1 a 99%. Valor por defecto: 50 %. Variable asociada: (V.)MPG.TORQDIST[nb] Parámetro incluido en la tabla TANDEM. Este parámetro establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem. El parámetro indica qué porcentaje debe dar el motor maestro. La diferencia entre el valor de este parámetro y el 100% es el porcentaje que se aplicará al motor esclavo." .
+
+ex:TablaTANDEM a ex:Tabla ;
+    rdfs:label "TANDEM" ;
+    ex:textoExtracto "Parámetro incluido en la tabla TANDEM." ;
+    ex:compuestoPor ex:MASTERAXIS, ex:SLAVEAXIS, ex:TORQDIST .

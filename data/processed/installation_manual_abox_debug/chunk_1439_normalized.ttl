@@ -1,0 +1,32 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+ex:SensorGap a a ex:Sensor ;
+    ex:textoExtracto "Esquema del control de gap con boquilla láser, superficie de pieza y eje asociado (X/Z según máquina). Muestra el sensor manteniendo una distancia fija (gap) y la compensación en el eje longitudinal para seguir irregularidades; incluye rótulos 'LASER', 'GAP' y 'Workpiece surface'." ;
+    ex:tieneComponente ex:BoquillaLaser, ex:SuperficiePieza, ex:EjeXZ .
+
+ex:BoquillaLaser a a ex:ComponenteMecanico ;
+    ex:textoExtracto "Esquema del control de gap con boquilla láser, superficie de pieza y eje asociado (X/Z según máquina)." .
+
+ex:SuperficiePieza a a ex:Componente ;
+    ex:textoExtracto "Esquema del control de gap con boquilla láser, superficie de pieza y eje asociado (X/Z según máquina)." .
+
+ex:EjeXZ a a ex:ComponenteMecanico ;
+    ex:textoExtracto "Esquema del control de gap con boquilla láser, superficie de pieza y eje asociado (X/Z según máquina)." .
+
+ex:ReguladorSercos a a ex:ComponenteElectrico ;
+    ex:textoExtracto "Diagrama eléctrico de conexión del sensor de gap a una entrada analógica del regulador Sercos. Representa bornes X7 (AI1+/AI1−), señal analógica ± y bloques 'CNC', 'DRIVE' y 'SERCOS', con flechas de señal entre módulos." ;
+    ex:identificador "Sercos" ;
+    ex:tieneComponente ex:EntradaAnalogicaAI1 .
+
+ex:EntradaAnalogicaAI1 a a ex:ComponenteElectrico ;
+    ex:textoExtracto "Diagrama eléctrico de conexión del sensor de gap a una entrada analógica del regulador Sercos. Representa bornes X7 (AI1+/AI1−), señal analógica ±" ;
+    ex:identificador "X7 (AI1+/AI1−)" .
+
+ex:ModuloRemotoCAN a a ex:ComponenteElectrico ;
+    ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena 'CNC – RIOR – CAN – GAP SENSOR', mostrando alternativa de cableado cuando no se usa el regulador." ;
+    ex:identificador "RIOR" ;
+    ex:tieneComponente ex:EntradaAnalogicaAI1_RIOR .
+
+ex:EntradaAnalogicaAI1_RIOR a a ex:ComponenteElectrico ;
+    ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1−" ;
+    ex:identificador "AI1+/AI1−" .

@@ -1,0 +1,47 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ModoUsuario a ex:ModoOperacion ;
+    rdfs:label "Modo usuario" ;
+    ex:textoExtracto "Modo usuario. Es el modo habitual de trabajo para el usuario, una vez terminada la puesta a punto. Este modo no permite actualizar el CNC ni acceder al sistema operativo. Algunas utilidades del sistema operativo (administrador de tareas, reloj) estarán disponibles desde el modo diagnosis. Los programas pieza deben guardarse en la carpeta ..\USERS; el CNC considera los archivos guardados en otras carpetas como archivos temporales y serán borrados al apagar el CNC. La gestión de ficheros de flash, pendrives, ethernet, etc se hará exclusivamente desde el explorador del modo utilidades. Nivel de protección. El modo usuario tiene el máximo nivel de protección, donde está desprotegido únicamente las carpetas y archivos susceptibles de ser modificados durante el trabajo normal de la máquina. Password de protección. El acceso a este modo no está protegido mediante la contraseña." ;
+    ex:identificador "Modo User" .
+
+ex:ModoSetup a ex:ModoOperacion ;
+    rdfs:label "Modo SETUP" ;
+    ex:textoExtracto "Modo SETUP (puesta a punto). En el encendido, el CNC mostrará un mensaje indicando que se encuentra en un modo no protegido y que la puesta a punto se encuentra sin finalizar. En esta situación el CNC no dispone de garantía Fagor. Transcurrido un determinado tiempo, con el siguiente reset, el CNC vuelve a mostrar el mensaje. Al cerrar la aplicación, el CNC pregunta si se ha finalizado la puesta a punto. • Si se selecciona sí, y existen passwords, el CNC hace la copia de seguridad y pasa a modo USER (proceso correcto). • Si se selecciona sí, y no hay passwords, el CNC saca un mensaje de aviso y no cierra la aplicación." ;
+    ex:identificador "Modo Setup" .
+
+ex:ModoDiagnosis a ex:ModoOperacion ;
+    rdfs:label "Modo diagnosis" ;
+    ex:textoExtracto "Algunas utilidades del sistema operativo (administrador de tareas, reloj) estarán disponibles desde el modo diagnosis." ;
+    ex:identificador "Modo Diagnosis" .
+
+ex:ParametrosMaquina a ex:InterfazUsuario ;
+    rdfs:label "Parámetros máquina" ;
+    ex:textoExtracto "'Parámetros máquina', definida en el modo utilidades." ;
+    ex:identificador "Parámetros máquina" .
+
+ex:ModoUtilidades a ex:InterfazUsuario ;
+    rdfs:label "Modo utilidades" ;
+    ex:textoExtracto "'Parámetros máquina', definida en el modo utilidades. La gestión de ficheros de flash, pendrives, ethernet, etc se hará exclusivamente desde el explorador del modo utilidades." ;
+    ex:identificador "Modo Utilidades" .
+
+ex:PasswordProteccion a ex:Parametro ;
+    rdfs:label "Password de protección" ;
+    ex:textoExtracto "Password de protección. El acceso a este modo no está protegido mediante la contraseña." ;
+    ex:identificador "Password de protección" .
+
+ex:MensajeAvisoSetup a ex:AvisoSeguridad ;
+    rdfs:label "Mensaje de aviso en modo SETUP" ;
+    ex:textoExtracto "el CNC saca un mensaje de aviso y no cierra la aplicación." .
+
+ex:MensajeNoProtegido a ex:AvisoSeguridad ;
+    rdfs:label "Mensaje de modo no protegido" ;
+    ex:textoExtracto "En el encendido, el CNC mostrará un mensaje indicando que se encuentra en un modo no protegido y que la puesta a punto se encuentra sin finalizar." .
+
+ex:MensajeSinFinalizarPuestaAPunto a ex:AvisoSeguridad ;
+    rdfs:label "Mensaje de puesta a punto sin finalizar" ;
+    ex:textoExtracto "Al cerrar la aplicación, el CNC pregunta si se ha finalizado la puesta a punto." .
+
+ex:SistemaOperativoCNC a ex:Sistema ;
+    rdfs:label "Sistema operativo del CNC" ;
+    ex:textoExtracto "Este modo no permite actualizar el CNC ni acceder al sistema operativo. Algunas utilidades del sistema operativo (administrador de tareas, reloj) estarán disponibles desde el modo diagnosis." .

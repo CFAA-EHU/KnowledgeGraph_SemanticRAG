@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:SistemaCNC a ex:Maquina ;
+    ex:textoExtracto "El CNC puede disponer de hasta cuatro cabezales. En un mismo bloque se podrán controlar todos ellos de forma independiente; es decir, a cada cabezal se le podrá dar una orden diferente. Si se dispone de canales, los cabezales pueden estar repartidos indistintamente entre ellos. En este caso, desde un canal se podrá controlar un cabezal situado en otro canal. Las marcas y registros harán referencia al cabezal, independientemente del canal en el que se encuentren. El número de cabezal viene determinado por su número lógico, que se establece según el orden en el que fue definido en el parámetro máquina SPDLNAME. Marcas y registros en la versión multicabezal. El CNC indica al PLC mediante los registros de 32 bits SFUN1 a SFUN4, las funciones S programadas en el bloque en ejecución. Estos registros hacen referencia al número de cabezal; son independientes del canal en el que se encuentra el cabezal. Cada uno de los registros indica el valor de una de las funciones S programadas. Si no se utilizan todos los registros, el CNC asigna el valor hexadecimal $FFFFFFFF a los que queden libres, los de numeración más alta. De esta forma si en un bloque se encuentran programadas las funciones S1000 y S1=550, el CNC pasará al PLC la siguiente información. | SFUN1 | SFUN2 | SFUN3 | SFUN4 | | --- | --- | --- | --- | | 1000 | 550 | $FFFFFFFF | $FFFFFFFF | Comandos SP1FUN* - SP4FUN*. Analizar si una función auxiliar ha sido programada para un cabezal. Teniendo en cuenta las posibles combinaciones de canales y cabezales, para facilitar la gestión de las funciones auxiliares M asociadas a cada cabezal, se dispone de los siguientes comandos. Cada uno de ellos indica si se ha programado en cualquier canal alguna función auxiliar M del tipo M3, M4, etc. SP1FUN* Para el cabezal 1. SP2FUN* Para el cabezal 2. SP3FUN* Para el cabezal 3. SP4FUN* Para el cabezal 4." .
+
+ex:Cabezal1 a ex:Componente ;
+    ex:identificador "1" ;
+    ex:textoExtracto "SP1FUN* Para el cabezal 1." .
+
+ex:Cabezal2 a ex:Componente ;
+    ex:identificador "2" ;
+    ex:textoExtracto "SP2FUN* Para el cabezal 2." .
+
+ex:Cabezal3 a ex:Componente ;
+    ex:identificador "3" ;
+    ex:textoExtracto "SP3FUN* Para el cabezal 3." .
+
+ex:Cabezal4 a ex:Componente ;
+    ex:identificador "4" ;
+    ex:textoExtracto "SP4FUN* Para el cabezal 4." .
+
+ex:SistemaCNC ex:tieneComponente ex:Cabezal1, ex:Cabezal2, ex:Cabezal3, ex:Cabezal4 .
+
+ex:RegistroSFUN1 a ex:ComponenteElectrico ;
+    ex:identificador "SFUN1" ;
+    ex:textoExtracto "El CNC indica al PLC mediante los registros de 32 bits SFUN1 a SFUN4, las funciones S programadas en el bloque en ejecución." .
+
+ex:RegistroSFUN2 a ex:ComponenteElectrico ;
+    ex:identificador "SFUN2" ;
+    ex:textoExtracto "El CNC indica al PLC mediante los registros de 32 bits SFUN1 a SFUN4, las funciones S programadas en el bloque en ejecución." .
+
+ex:RegistroSFUN3 a ex:ComponenteElectrico ;
+    ex:identificador "SFUN3" ;
+    ex:textoExtracto "El CNC indica al PLC mediante los registros de 32 bits SFUN1 a SFUN4, las funciones S programadas en el bloque en ejecución." .
+
+ex:RegistroSFUN4 a ex:ComponenteElectrico ;
+    ex:identificador "SFUN4" ;
+    ex:textoExtracto "El CNC indica al PLC mediante los registros de 32 bits SFUN1 a SFUN4, las funciones S programadas en el bloque en ejecución." .
+
+ex:SistemaCNC ex:tieneComponente ex:RegistroSFUN1, ex:RegistroSFUN2, ex:RegistroSFUN3, ex:RegistroSFUN4 .

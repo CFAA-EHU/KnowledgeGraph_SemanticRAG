@@ -475,6 +475,15 @@ def finalize_blocked_quick_ref_decision(profile, onboarding_result: dict) -> Non
     write_json(profile.integration_decision_report_path, decision_report)
 
 
+def should_finalize_bilingual_decision(profile) -> bool:
+    return bool(
+        profile is not None
+        and profile.bilingual_dataset_path is not None
+        and profile.bilingual_eval_report_path is not None
+        and profile.integration_decision_report_path is not None
+    )
+
+
 def main() -> None:
     args = parse_args()
     entrypoint = Path(OPERATIONAL_BUILD_PIPELINE["entrypoint"])
@@ -496,11 +505,11 @@ def main() -> None:
 
     validation_result = {"validation_stages": []}
     if onboarding_result.get("blocked"):
-        if onboarding_result.get("profile") is not None:
+        if should_finalize_bilingual_decision(onboarding_result.get("profile")):
             finalize_blocked_quick_ref_decision(onboarding_result["profile"], onboarding_result)
     else:
         validation_result = run_validation_suite(onboarding_result.get("profile") if isinstance(onboarding_result, dict) else None)
-        if onboarding_result.get("profile") is not None:
+        if should_finalize_bilingual_decision(onboarding_result.get("profile")):
             finalize_quick_ref_decision(onboarding_result["profile"], onboarding_result)
 
     profile = onboarding_result.get("profile") if isinstance(onboarding_result, dict) else None

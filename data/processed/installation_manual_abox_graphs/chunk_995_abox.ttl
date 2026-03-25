@@ -1,0 +1,37 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:M06 rdfs:label "M06" ;
+    a ex:ModoOperacion ;
+    ex:textoExtracto "%L SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. M121 ; Función auxiliar para ejecutar acción. # RET %L SUB_ARM_TO_MZ ; Llevar el brazo cambiador al almacén. M122 ; Función auxiliar para ejecutar acción. # RET %L SUB_ARM_BACK ; Retirar el brazo cambiador. M123 ; Función auxiliar para ejecutar acción. # RET %SUB_M6.nc #ESBLK ; Activar tratamiento de bloque único #DSTOP ; Deshabilitar tecla STOP M6 ; Orden al gestor para comenzar el cambio de herramienta. $IF [[[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]] $IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]] V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G. $ELSE V.S.EXECUTION = 1 ; Ejecución $ENDIF $ELSE V.S.EXECION = 0 ; Simulación $ENDIF $IF [V.S.EXECUTION == 1] ; CNC en ejecución $SWITCH V.PLC.TMOPERATION; Analiza el tipo de operación. $CASE 1 ; Coger una herramienta del almacén y ponerla en el cabezal. ; Previamente, durante el mecanizado (al ejecutar T), se pone la herramienta del almacén en la pinza 1. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. LL SUB_ARM_BACK ; Retirar el brazo cambiador. $BREAK $CASE 2 ; Dejar la herramienta del cabezal en el almacén. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio." .
+
+ex:SUB_ARM_TO_CHG rdfs:label "SUB_ARM_TO_CHG" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. M121 ; Función auxiliar para ejecutar acción. # RET" .
+
+ex:SUB_ARM_TO_MZ rdfs:label "SUB_ARM_TO_MZ" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_ARM_TO_MZ ; Llevar el brazo cambiador al almacén. M122 ; Función auxiliar para ejecutar acción. # RET" .
+
+ex:SUB_ARM_BACK rdfs:label "SUB_ARM_BACK" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_ARM_BACK ; Retirar el brazo cambiador. M123 ; Función auxiliar para ejecutar acción. # RET" .
+
+ex:SUB_SPD_AUTCHG rdfs:label "SUB_SPD_AUTCHG" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
+
+ex:SUB_CH1_TO_SPD rdfs:label "SUB_CH1_TO_SPD" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal." .
+
+ex:M121 rdfs:label "M121" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "M121 ; Función auxiliar para ejecutar acción." .
+
+ex:M122 rdfs:label "M122" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "M122 ; Función auxiliar para ejecutar acción." .
+
+ex:M123 rdfs:label "M123" ;
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "M123 ; Función auxiliar para ejecutar acción." .

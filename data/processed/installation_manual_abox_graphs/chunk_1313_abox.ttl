@@ -1,0 +1,76 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:Palpador1 a ex:Sensor ;
+    rdfs:label "palpador" ;
+    ex:textoExtracto "palpador" .
+
+ex:MesaRotativaAB1 a ex:Maquina ;
+    rdfs:label "mesa rotativa AB" ;
+    ex:textoExtracto "mesa rotativa AB" .
+
+ex:EjeA1 a ex:ComponenteMecanico ;
+    rdfs:label "eje A" ;
+    ex:textoExtracto "eje A" .
+
+ex:EjeB1 a ex:ComponenteMecanico ;
+    rdfs:label "eje B" ;
+    ex:textoExtracto "eje B" .
+
+ex:ParametroTYPE1 a ex:Parametro ;
+    rdfs:label "TYPE" ;
+    ex:valor "9" ;
+    ex:textoExtracto "parámetro TYPE con valor ꞏ9ꞏ" .
+
+ex:Cilindro1 a ex:ComponenteMecanico ;
+    rdfs:label "cilindro" ;
+    ex:textoExtracto "cilindro de diámetro conocido amarrado a la mesa" .
+
+ex:Cabezal1 a ex:ComponenteMecanico ;
+    rdfs:label "cabezal" ;
+    ex:textoExtracto "cabezal" .
+
+ex:CNC1 a ex:Sistema ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "CNC" .
+
+ex:Palpador2 a ex:Sensor ;
+    rdfs:label "palpador" ;
+    ex:textoExtracto "dos palpadores" .
+
+ex:ProgramaPieza1 a ex:InterfazUsuario ;
+    rdfs:label "programa pieza" ;
+    ex:textoExtracto "programa pieza" .
+
+ex:MDI1 a ex:InterfazUsuario ;
+    rdfs:label "MDI" ;
+    ex:textoExtracto "MDI" .
+
+ex:SentenciaSELECTPROBE1 a ex:Parametro ;
+    rdfs:label "#SELECT PROBE" ;
+    ex:textoExtracto "sentencia #SELECT PROBE" .
+
+ex:TDATA2 a ex:Parametro ;
+    rdfs:label "TDATA2" ;
+    ex:textoExtracto "TDATA2 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje X" .
+
+ex:TDATA3 a ex:Parametro ;
+    rdfs:label "TDATA3" ;
+    ex:textoExtracto "TDATA3 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje Y" .
+
+ex:TDATA4 a ex:Parametro ;
+    rdfs:label "TDATA4" ;
+    ex:textoExtracto "TDATA4 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje Z" .
+
+ex:TDATA5 a ex:Parametro ;
+    rdfs:label "TDATA5" ;
+    ex:textoExtracto "TDATA5 Indica la distancia entre el eje rotativo secundario y el principal" .
+
+ex:MesaRotativaAB1 ex:tieneComponente ex:EjeA1, ex:EjeB1, ex:Palpador1, ex:Palpador2, ex:Cilindro1, ex:Cabezal1 .
+ex:MesaRotativaAB1 ex:compuestoPor ex:TDATA2, ex:TDATA3, ex:TDATA4, ex:TDATA5 .
+ex:CNC1 ex:controla ex:MesaRotativaAB1 .
+ex:CNC1 ex:controla ex:Palpador1 .
+ex:CNC1 ex:controla ex:Palpador2 .
+ex:ProgramaPieza1 ex:ejecutadoPor ex:CNC1 .
+ex:MDI1 ex:ejecutadoPor ex:CNC1 .
+ex:SentenciaSELECTPROBE1 ex:habilitadoPor ex:ProgramaPieza1 .
+ex:SentenciaSELECTPROBE1 ex:habilitadoPor ex:MDI1 .

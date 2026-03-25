@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:Parametro_TYPE a ex:Parametro ;
+    ex:textoExtracto "definido en el parámetro TYPE" ;
+    rdfs:label "TYPE" .
+
+ex:Parametro_CNC a ex:Parametro ;
+    ex:textoExtracto "el CNC ofrece una serie de cinemáticas predefinidas y que se pueden configurar fácilmente desde los parámetros máquina" .
+
+ex:Sistema_CNC a ex:Sistema ;
+    ex:textoExtracto "el CNC ofrece una serie de cinemáticas predefinidas" ;
+    ex:compuestoPor ex:Parametro_CNC .
+
+ex:Maquina a ex:Maquina ;
+    ex:textoExtracto "para una misma máquina" .
+
+ex:ModoOperacion_PersonalizacionCinematica a ex:ModoOperacion ;
+    ex:textoExtracto "El fabricante puede personalizar hasta 6 cinemáticas distintas para una misma máquina" .
+
+ex:ModoOperacion_ConfiguracionCinematica a ex:ModoOperacion ;
+    ex:textoExtracto "el CNC ofrece una serie de cinemáticas predefinidas y que se pueden configurar fácilmente desde los parámetros máquina" .
+
+ex:ModoOperacion_ParametrizacionCinematica a ex:ModoOperacion ;
+    ex:textoExtracto "Las dimensiones que hay que parametrizar dependen del tipo de cinemática" .
+
+ex:Maquina_CinematicaPredefinida a ex:Maquina ;
+    ex:textoExtracto "una serie de cinemáticas predefinidas" ;
+    ex:compuestoPor ex:ModoOperacion_ConfiguracionCinematica .
+
+ex:Maquina_CinematicaAdicional a ex:Maquina ;
+    ex:textoExtracto "el OEM puede integrar 6 cinemáticas adicionales" .
+
+ex:Maquina_Cinematica a ex:Maquina ;
+    ex:textoExtracto "hasta 6 cinemáticas distintas para una misma máquina" ;
+    ex:compuestoPor ex:ModoOperacion_PersonalizacionCinematica, ex:Maquina_CinematicaPredefinida, ex:Maquina_CinematicaAdicional .

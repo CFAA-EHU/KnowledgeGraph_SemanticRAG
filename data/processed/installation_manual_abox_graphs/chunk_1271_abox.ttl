@@ -1,0 +1,46 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:Esquema1271_1 a ex:Esquema ;
+    ex:textoExtracto """| 24 + 48 entradas digitales. | 24 + 24 entradas digitales. |
+| 16 salidas digitales. | 16 + 32 salidas digitales. | 16 + 16 salidas digitales. |
+ Cada módulo RIO5 se debe configurar como un bloque lógico. Se desea configurar cada nodo RIO5 de la siguiente manera. • El primer nodo RIO5 como un bloque de 24 entradas a partir de la I1. • El segundo nodo RIO5 como tres bloques de 24 entradas a partir de la I49, I73 e I97. • El tercer nodo RIO5 como dos bloques de 24 entradas a partir de la I257 e I129.""" .
+
+ex:Esquema1271_2 a ex:Tabla ;
+    ex:textoExtracto """| Parámetro. | Valor. | Comentario. |
+| --- | --- | --- |
+| NDIMOD | 6 | En la serie RIO5, cada módulo se debe configurar como un
+bloque lógico. Cada módulo doble (módulo con dos placas)
+cuenta como dos bloques. |
+| DIMODADDR | - - - | Ver tabla inferior. |""" .
+
+ex:ParametroNDIMOD a ex:Parametro ;
+    ex:identificador "NDIMOD" ;
+    ex:valor "6" ;
+    ex:textoExtracto """| Parámetro. | Valor. | Comentario. |
+| --- | --- | --- |
+| NDIMOD | 6 | En la serie RIO5, cada módulo se debe configurar como un
+bloque lógico. Cada módulo doble (módulo con dos placas)
+cuenta como dos bloques. |""" ;
+    ex:documentadoEn ex:Esquema1271_2 .
+
+ex:ParametroDIMODADDR a ex:Parametro ;
+    ex:identificador "DIMODADDR" ;
+    ex:valor "-- -" ;
+    ex:textoExtracto """| Parámetro. | Valor. | Comentario. |
+| --- | --- | --- |
+| DIMODADDR | - - - | Ver tabla inferior. |""" ;
+    ex:documentadoEn ex:Esquema1271_2 .
+
+ex:ComponenteRIO5 a ex:ComponenteElectrico ;
+    ex:textoExtracto """Cada módulo RIO5 se debe configurar como un bloque lógico.""" .
+
+ex:BloqueLogico1 a ex:Componente ;
+    ex:textoExtracto """El primer nodo RIO5 como un bloque de 24 entradas a partir de la I1.""" ;
+    ex:compuestoPor ex:ComponenteRIO5 .
+
+ex:BloqueLogico2 a ex:Componente ;
+    ex:textoExtracto """El segundo nodo RIO5 como tres bloques de 24 entradas a partir de la I49, I73 e I97.""" ;
+    ex:compuestoPor ex:ComponenteRIO5 .
+
+ex:BloqueLogico3 a ex:Componente ;
+    ex:textoExtracto """El tercer nodo RIO5 como dos bloques de 24 entradas a partir de la I257 e I129.""" ;
+    ex:compuestoPor ex:ComponenteRIO5 .

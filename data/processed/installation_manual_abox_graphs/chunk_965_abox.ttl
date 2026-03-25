@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:ProgramaRutinaM06 a ex:Esquema ;
+    ex:textoExtracto """& 255]<9] | [[V.G.FULLSTATUS & 255]>13]] $IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]] V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G. $ELSE V.S.EXECUTION = 1 ; Ejecución $ENDIF $ELSE V.S.EXECUTION = 0 ; Simulación $ENDIF $IF [V.S.EXECUTION == 1] ; CNC en ejecución $SWITCH V.PLC.TMOPERATION; Analiza el tipo de operación. $CASE 1 ; Coger una herramienta del almacén y ponerla en el cabezal. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1. LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. $BREAK $CASE 2 ; Dejar la herramienta del cabezal en el almacén. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2. LL SUB_CH2_TO_MZ ; Dejar la herramienta de la pinza 2 en el almacén. $BREAK $CASE 3 ; Colocar la herramienta de tierra en el cabezal. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. $BREAK $CASE 4 ; Dejar la herramienta del cabezal en tierra. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal. $BREAK $CASE 5 ; Dejar la herramienta del cabezal en el almacén, y coger otra del almacén. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático.""" .
+
+ex:PLC_TMOPERATION a ex:Parametro ;
+    ex:textoExtracto "V.PLC.TMOPERATION; Analiza el tipo de operación." .
+
+ex:Subrutina_SPD_AUTCHG a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
+
+ex:Subrutina_MZ_TO_CH1 a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1." .
+
+ex:Subrutina_CH1_TO_SPD a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal." .
+
+ex:Subrutina_SPD_TO_CH2 a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2." .
+
+ex:Subrutina_CH2_TO_MZ a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_CH2_TO_MZ ; Dejar la herramienta de la pinza 2 en el almacén." .
+
+ex:Subrutina_SPD_GMCHG a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
+
+ex:Subrutina_GR_TO_SPD a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal." .
+
+ex:Subrutina_SPD_TO_GR a ex:TareaMantenimiento ;
+    ex:textoExtracto "LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal." .
+
+ex:ProgramaRutinaM06 ex:detalladoEnEsquema ex:ProgramaRutinaM06 .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:PLC_TMOPERATION .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_SPD_AUTCHG .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_MZ_TO_CH1 .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_CH1_TO_SPD .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_SPD_TO_CH2 .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_CH2_TO_MZ .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_SPD_GMCHG .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_GR_TO_SPD .
+ex:ProgramaRutinaM06 ex:compuestoPor ex:Subrutina_SPD_TO_GR .

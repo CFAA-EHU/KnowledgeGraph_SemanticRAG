@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+ex:HFUN1 a ex:HFUN7 a ex:Parametro ;
+    ex:identificador "HFUN1", "HFUN2", "HFUN3", "HFUN4", "HFUN5", "HFUN6", "HFUN7" ;
+    ex:textoExtracto "En un mismo bloque se pueden programar hasta 7 funciones M y 7 funciones H. El CNC indica al PLC mediante los registros de 32 bits HFUN1 a HFUN7, las funciones auxiliares H programadas en el bloque en ejecución." ;
+    ex:valor "$FFFFFFFF" .
+
+ex:FuncionH12 a ex:Parametro ;
+    ex:identificador "H12" ;
+    ex:textoExtracto "Si en un bloque se encuentran programadas las funciones H12, H20 y H35, el CNC pasará al PLC la siguiente información. | HFUN1 | HFUN2 | HFUN3 | HFUN4 - HFUN7 | | 12 | 20 | 35 | $FFFFFFFF" ;
+    ex:valor "12" .
+
+ex:FuncionH20 a ex:Parametro ;
+    ex:identificador "H20" ;
+    ex:textoExtracto "Si en un bloque se encuentran programadas las funciones H12, H20 y H35, el CNC pasará al PLC la siguiente información. | HFUN1 | HFUN2 | HFUN3 | HFUN4 - HFUN7 | | 12 | 20 | 35 | $FFFFFFFF" ;
+    ex:valor "20" .
+
+ex:FuncionH35 a ex:Parametro ;
+    ex:identificador "H35" ;
+    ex:textoExtracto "Si en un bloque se encuentran programadas las funciones H12, H20 y H35, el CNC pasará al PLC la siguiente información. | HFUN1 | HFUN2 | HFUN3 | HFUN4 - HFUN7 | | 12 | 20 | 35 | $FFFFFFFF" ;
+    ex:valor "35" .
+
+ex:BloqueProgramacion a ex:Sistema ;
+    ex:textoExtracto "En un mismo bloque se pueden programar hasta 7 funciones M y 7 funciones H." ;
+    ex:tieneComponente ex:HFUN1, ex:HFUN2, ex:HFUN3, ex:HFUN4, ex:HFUN5, ex:HFUN6, ex:HFUN7, ex:FuncionH12, ex:FuncionH20, ex:FuncionH35 .
+
+ex:ComandoHFUN a ex:Parametro ;
+    ex:identificador "HFUN*" ;
+    ex:textoExtracto "Comando HFUN*. Analizar si una función ha sido programada en el bloque. Para poder conocer si una determinada función H se encuentra programada en el bloque en ejecución, se puede utilizar uno de los siguientes métodos: • Analizar todos los registros HFUN uno a uno, hasta encontrar dicha función H o hasta que uno de ellos tenga el valor $FFFFFFFF. • Utilizar el formato HFUN* que permite analizar todos los registros HFUN a la vez. Ejemplo para detectar H77. Si se ha programado devolverá un \"1"; un "0" en caso contrario. CPS HFUN* EQ 77 = ..." .
+
+ex:SincronizacionFuncionH a ex:ModoOperacion ;
+    ex:textoExtracto \"Las funciones H no tienen sincronización y se envían al PLC al comienzo de la ejecución del bloque." .
+
+ex:TransferenciaFuncionesH a ex:TareaMantenimiento ;
+    ex:textoExtracto "La transferencia de las funciones auxiliares H está detallada más adelante en este mismo capítulo. Ver en la página '5.4 Transferencia de las funciones auxiliares –M–, –H–, –S–.' 400." .

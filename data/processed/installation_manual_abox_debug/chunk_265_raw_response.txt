@@ -1,0 +1,22 @@
+ex:ReguladorSercos a rdf:type ex:Sistema ;
+    ex:textoExtracto "el proceso de búsqueda de cero. • El error de seguimiento y la compensación de holgura se calculan en el CNC. • El feed forward y AC-Forward lo aplica el CNC. • Cuando el cabezal gira en lazo abierto, se simula la cota. Modo de operación del regulador en Sercos posición. • La consigna se envía al regulador en cotas absolutas, en diezmilésimas de milímetro (ejes lineales) o milésimas de grado (ejes rotativos). Cuando sea necesario utilizar la señal SANALOG desde PLC, su valor también vendrá expresado en diezmilésimas de milímetro o milésimas de grado. El regulador suaviza la consigna mediante una interpolación cúbica y cierra el lazo de posición cada 256 microsegundos. • El feedback del regulador al CNC llega como cota absoluta, en diezmilésimas de milímetro o milésimas de grado (igual que en el modo Sercos velocidad). • La búsqueda de cero la controla el regulador. Antes de comenzar la búsqueda de cero, el cabezal se detiene si previamente se encontraba girando. • El error de seguimiento se calcula en el regulador. • El feed forward y AC-Forward lo aplica el regulador. FBACKSRC Tipo de captación. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: Interna / Externa / Interna + Externa. Valor por defecto: Interna. Variable asociada: (V.)[ch].MPA.FBACKSRC.xn Parámetro incluido en la tabla SERCOSDATA. Tipo de captación utilizada para cerrar el lazo de posición. Consultar el manual del regulador para obtener más información. Si se utiliza captación interna, el valor de la posición se toma de la captación motor mientras que si utiliza captación externa se toma de la captación directa. Cuando el tipo de captación es interna+externa, desde el PLC se puede conmutar entre ambas captaciones con la marca FBACKSEL(axis)." ;
+    ex:tieneComponente ex:CaptacionMotor, ex:CaptacionExterna, ex:CaptacionInternaExterna ;
+    ex:tieneComponente ex:TablaSERCOSDATA ;
+    ex:tieneComponente ex:MarcaFBACKSEL .
+
+ex:CaptacionMotor a rdf:type ex:Sensor ;
+    ex:textoExtracto "Si se utiliza captación interna, el valor de la posición se toma de la captación motor" .
+
+ex:CaptacionExterna a rdf:type ex:Sensor ;
+    ex:textoExtracto "si utiliza captación externa se toma de la captación directa" .
+
+ex:CaptacionInternaExterna a rdf:type ex:Sensor ;
+    ex:textoExtracto "Cuando el tipo de captación es interna+externa" .
+
+ex:TablaSERCOSDATA a rdf:type ex:Tabla ;
+    ex:textoExtracto "Parámetro incluido en la tabla SERCOSDATA" ;
+    ex:identificador "SERCOSDATA" .
+
+ex:MarcaFBACKSEL a rdf:type ex:Parametro ;
+    ex:textoExtracto "desde el PLC se puede conmutar entre ambas captaciones con la marca FBACKSEL(axis)" ;
+    ex:identificador "FBACKSEL(axis)" .

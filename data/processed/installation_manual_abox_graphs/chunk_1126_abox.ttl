@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:ArchivoCompensacionVolumetrica ex:textoExtracto """El archivo con los datos a compensar será un archivo de texto (formato csv). El OEM o la empresa responsable de la calibración deben generar este archivo y definirlo en el parámetro máquina VCOMPFILE. Las unidades de los datos del archivo (milímetros o pulgadas) deben ser las definidas en el CNC (parámetro INCHES). Formato del archivo con los datos. El archivo de texto está formado por tres columnas de datos y tantas filas como puntos a compensar, donde los datos de cada fila están separados por el carácter "," (coma). Número de filas = NPOINTSAX1 × NPOINTSAX2 × NPOINTSAX3 Ejemplo. NPOINTSAX1=3 NPOINTSAX2=2 NPOINTSAX3=2 Número de filas de la tabla o puntos a compensar. NPOINTSAX1 × NPOINTSAX2 × NPOINTSAX3 = 3 × 2 × 2 = 12 • Las columnas corresponden a los ejes definidos en los parámetros VCOMPAXIS1 (primera columna), VCOMPAXIS2 (segunda columna) y VCOMPAXIS3 (tercera columna). • Las filas se van construyendo con las medidas consecutivas de error, según el orden de los eje definidos en MOVAXIS; primero todas las medidas en el primer eje; luego para cada posición en el segundo eje, otra vez todas las medidas en el primero; y para cada posición en el tercer eje, todas las medidas del primer eje en cada posición del segundo. VMOVAXIS1=X NPOINTSAX1=3 INCREAX1=30 VCOMPAXIS1=X VMOVAXIS2=Y NPOINTSAX2=2 INCREAX2=30 VCOMPAXIS2=Y VMOVAXIS3=Z NPOINTSAX3=2 INCREAX3=36 VCOMPAXIS3=Z Z 10 Error X, Error Y, Error Z Y 7
+
+-0.1685, 0.0703, -0.0135 11 -0.1441, 0.0932, -0.0109 8 -0.1550, 0.0964, -0.0009 12""" ;
+    a ex:Tabla ;
+    ex:compuestoPor ex:ColumnaEje1, ex:ColumnaEje2, ex:ColumnaEje3, ex:FilaPuntoCompensacion1, ex:FilaPuntoCompensacion2, ex:FilaPuntoCompensacion3 .
+
+ex:ColumnaEje1 a ex:Parametro ;
+    ex:identificador "VCOMPAXIS1" ;
+    ex:textoExtracto """Las columnas corresponden a los ejes definidos en los parámetros VCOMPAXIS1 (primera columna), VCOMPAXIS2 (segunda columna) y VCOMPAXIS3 (tercera columna).""" ;
+    ex:valor "X" .
+
+ex:ColumnaEje2 a ex:Parametro ;
+    ex:identificador "VCOMPAXIS2" ;
+    ex:textoExtracto """Las columnas corresponden a los ejes definidos en los parámetros VCOMPAXIS1 (primera columna), VCOMPAXIS2 (segunda columna) y VCOMPAXIS3 (tercera columna).""" ;
+    ex:valor "Y" .
+
+ex:ColumnaEje3 a ex:Parametro ;
+    ex:identificador "VCOMPAXIS3" ;
+    ex:textoExtracto """Las columnas corresponden a los ejes definidos en los parámetros VCOMPAXIS1 (primera columna), VCOMPAXIS2 (segunda columna) y VCOMPAXIS3 (tercera columna).""" ;
+    ex:valor "Z" .
+
+ex:FilaPuntoCompensacion1 a ex:Parametro ;
+    ex:identificador "NPOINTSAX1" ;
+    ex:textoExtracto """NPOINTSAX1=3 NPOINTSAX2=2 NPOINTSAX3=2 Número de filas de la tabla o puntos a compensar. NPOINTSAX1 × NPOINTSAX2 × NPOINTSAX3 = 3 × 2 × 2 = 12""" ;
+    ex:valor "3" .
+
+ex:FilaPuntoCompensacion2 a ex:Parametro ;
+    ex:identificador "NPOINTSAX2" ;
+    ex:textoExtracto """NPOINTSAX1=3 NPOINTSAX2=2 NPOINTSAX3=2 Número de filas de la tabla o puntos a compensar. NPOINTSAX1 × NPOINTSAX2 × NPOINTSAX3 = 3 × 2 × 2 = 12""" ;
+    ex:valor "2" .
+
+ex:FilaPuntoCompensacion3 a ex:Parametro ;
+    ex:identificador "NPOINTSAX3" ;
+    ex:textoExtracto """NPOINTSAX1=3 NPOINTSAX2=2 NPOINTSAX3=2 Número de filas de la tabla o puntos a compensar. NPOINTSAX1 × NPOINTSAX2 × NPOINTSAX3 = 3 × 2 × 2 = 12""" ;
+    ex:valor "2" .

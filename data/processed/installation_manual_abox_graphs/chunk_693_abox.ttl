@@ -1,0 +1,67 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:Palpador1 a ex:Sensor ;
+    rdfs:label "palpador indicado"@es ;
+    ex:textoExtracto "palpador indicado"@es .
+
+ex:MarcaIRESET a ex:Parametro ;
+    rdfs:label "IRESET(axis)"@en ;
+    ex:textoExtracto "marca IRESET(axis)"@es .
+
+ex:VariableLATCH1DONE a ex:Parametro ;
+    rdfs:label "LATCH1DONE(axis)"@en ;
+    ex:textoExtracto "LATCH1DONE(axis)"@en .
+
+ex:VariableLATCH2DONE a ex:Parametro ;
+    rdfs:label "LATCH2DONE(axis)"@en ;
+    ex:textoExtracto "LATCH2DONE(axis)"@en .
+
+ex:VariableLATCH1 a ex:Parametro ;
+    rdfs:label "V.[ch].A.LATCH1.xn"@en ;
+    ex:textoExtracto "V.[ch].A.LATCH1.xn Variable de lectura desde el programa, PLC e interfaz. Variable válida para ejes rotativos y lineales. La variable devuelve el valor de ejecución; su lectura detiene la preparación de bloques. Cota máquina obtenida del latcheo del palpador 1 en el eje ꞏxnꞏ. Sintaxis. ꞏchꞏ Número de canal. ꞏxnꞏ Nombre, número lógico o índice del eje."@es .
+
+ex:InterfazLatcheo a ex:InterfazUsuario ;
+    ex:textoExtracto "interfaz"@es .
+
+ex:PLC a ex:ComponenteElectrico ;
+    rdfs:label "PLC"@en ;
+    ex:textoExtracto "PLC"@en .
+
+ex:EjeXn a ex:ComponenteMecanico ;
+    rdfs:label "eje ꞏxnꞏ"@es ;
+    ex:textoExtracto "eje ꞏxnꞏ"@es .
+
+ex:ProcesoLatcheo a ex:AccionProhibida ;
+    rdfs:label "proceso de latcheo"@es ;
+    ex:textoExtracto "proceso de latcheo"@es .
+
+ex:ProcesoPalpadoG100 a ex:TareaMantenimiento ;
+    rdfs:label "proceso de palpado G100"@es ;
+    ex:textoExtracto "procesos de palpado G100"@es .
+
+ex:InterfazLatcheo ex:controla ex:ProcesoLatcheo ;
+    ex:textoExtracto "interfaz controla el proceso de latcheo"@es .
+
+ex:PLC ex:controla ex:ProcesoLatcheo ;
+    ex:textoExtracto "PLC activa la marca IRESET(axis) se cancela el proceso de latcheo"@es .
+
+ex:MarcaIRESET ex:habilitadoPor ex:PLC ;
+    ex:textoExtracto "PLC activa la marca IRESET(axis)"@es .
+
+ex:VariableLATCH1DONE ex:monitoreaParametro ex:ProcesoLatcheo ;
+    ex:textoExtracto "El interpolador independiente activa esta marca al producirse el evento de latch en el eje con el palpador indicado"@es .
+
+ex:VariableLATCH2DONE ex:monitoreaParametro ex:ProcesoLatcheo ;
+    ex:textoExtracto "El interpolador independiente activa esta marca al producirse el evento de latch en el eje con el palpador indicado"@es .
+
+ex:VariableLATCH1 ex:monitoreaParametro ex:ProcesoLatcheo ;
+    ex:textoExtracto "Variable de lectura desde el programa, PLC e interfaz. Variable válida para ejes rotativos y lineales. La variable devuelve el valor de ejecución; su lectura detiene la preparación de bloques. Cota máquina obtenida del latcheo del palpador 1 en el eje ꞏxnꞏ."@es .
+
+ex:Palpador1 ex:monitoreaParametro ex:ProcesoLatcheo ;
+    ex:textoExtracto "palpador indicado; la desactiva cuando finaliza el proceso de latcheo o cuando se cancela el proceso"@es .
+
+ex:ProcesoLatcheo ex:tieneComponente ex:EjeXn ;
+    ex:textoExtracto "proceso de latcheo en el eje ꞏxnꞏ"@es .
+
+ex:ProcesoPalpadoG100 ex:tieneComponente ex:EjeXn ;
+    ex:textoExtracto "procesos de palpado G100 en el eje ꞏxnꞏ"@es .

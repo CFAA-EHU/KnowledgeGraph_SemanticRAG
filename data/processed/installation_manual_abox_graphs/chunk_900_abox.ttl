@@ -1,0 +1,30 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:SUB_MZ_ROT a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_MZ_ROT V.PLC.M[1111]=1 #WAIT FOR [V.PLC.M[1111]==0]; Marca MZROT al gestor. # RET %L SUB_SPD_TO_GR ; Quitar la herramienta del cabezal (llevarla a tierra). # MSG [\"Extraer herramienta T%D y pulsar MARCHA\", V.TM.TOOL] ; Mensaje al operario para que quite la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje. V.PLC.M[1107]=1 ; Marca SPDLTOGR al gestor. # WAIT FOR [V.PLC.M[1107]==0] #RET %L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. # MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje. V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor. # WAIT FOR [V.PLC.M[1108]==0] #RET %L SUB_MZ_TO_SPD ; Coger la herramienta del almacén y ponerla en el cabezal. M109 ; Función auxiliar para ejecutar acción. V.PLC.M[1109]=1 ; Marca MZTOSPDL al gestor. # WAIT FOR [V.PLC.M[1109]==0] #RET %L SUB_SPD_TO_MZ ; Dejar la herramienta del cabezal en el almacén. M110 ; Función auxiliar para ejecutar acción. V.PLC.M[1110]=1 ; Marca SPDLTOGR al gestor. # WAIT FOR [V.PLC.M[1110]==0] #RET %L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal. # RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. G1 Z_ F_ ; Desplazar el cabezal. #" .
+
+ex:SUB_SPD_TO_GR a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_SPD_TO_GR ; Quitar la herramienta del cabezal (llevarla a tierra)." .
+
+ex:SUB_GR_TO_SPD a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal." .
+
+ex:SUB_MZ_TO_SPD a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_MZ_TO_SPD ; Coger la herramienta del almacén y ponerla en el cabezal." .
+
+ex:SUB_SPD_TO_MZ a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_SPD_TO_MZ ; Dejar la herramienta del cabezal en el almacén." .
+
+ex:SUB_SPD_GMCHG a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal." .
+
+ex:SUB_SPD_AUTCHG a ex:TareaMantenimiento ;
+    ex:textoExtracto "%L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. G1 Z_ F_ ; Desplazar el cabezal." .
+
+ex:M0 a ex:ModoOperacion ;
+    ex:textoExtracto "M0 ; Esperar a que finalice la operación." .
+
+ex:M109 a ex:ModoOperacion ;
+    ex:textoExtracto "M109 ; Función auxiliar para ejecutar acción." .
+
+ex:M110 a ex:ModoOperacion ;
+    ex:textoExtracto "M110 ; Función auxiliar para ejecutar acción." .

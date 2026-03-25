@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:MotorMaestroTandem1063 a ex:ComponenteMecanico ;
+    rdfs:label "motor maestro" ;
+    ex:textoExtracto "La distribución del par en el tándem se define con el parámetro TORQDIST, el cual indica qué porcentaje debe dar el motor maestro." ;
+    ex:identificador "TORQDIST" .
+
+ex:MotorEsclavoTandem1063 a ex:ComponenteMecanico ;
+    rdfs:label "motor esclavo" ;
+    ex:textoExtracto "La diferencia entre el valor de este parámetro y el 100% es el porcentaje que se aplicará al motor esclavo." .
+
+ex:ParametroPrecarga1063 a ex:Parametro ;
+    rdfs:label "PRELOAD" ;
+    ex:textoExtracto "La precarga se define con el parámetro PRELOAD, el cual indica qué porcentaje del par nominal del motor maestro se aplicará como precarga." ;
+    ex:valor "porcentaje del par nominal del motor maestro" .
+
+ex:ParametroDistribucionPar1063 a ex:Parametro ;
+    rdfs:label "TORQDIST" ;
+    ex:textoExtracto "La distribución del par en el tándem se define con el parámetro TORQDIST, el cual indica qué porcentaje debe dar el motor maestro." ;
+    ex:valor "porcentaje de par" .
+
+ex:ParametroTiempoPrecarga1063 a ex:Parametro ;
+    rdfs:label "PRELFITI" ;
+    ex:textoExtracto "Para aplicar la precarga de una forma gradual y evitar así escalones de par en la entrada del compensador tándem se puede definir el parámetro PRELFITI." ;
+    ex:valor "tiempo para aplicar la precarga" .
+
+ex:ParametroGananciaProporcional1063 a ex:Parametro ;
+    rdfs:label "TPROGAIN" ;
+    ex:textoExtracto "La ganancia proporcional se puede definir con el parámetro TPROGAIN." ;
+    ex:valor "ganancia proporcional (Kp)" .
+
+ex:SistemaTandem1063 a ex:Sistema ;
+    rdfs:label "tándem" ;
+    ex:textoExtracto "Distribución del par en el tándem. La distribución del par establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem." ;
+    ex:compuestoPor ex:MotorMaestroTandem1063, ex:MotorEsclavoTandem1063 ;
+    ex:tieneComponente ex:ParametroDistribucionPar1063, ex:ParametroPrecarga1063, ex:ParametroTiempoPrecarga1063, ex:ParametroGananciaProporcional1063 .

@@ -1,0 +1,69 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:Tabla951_7_10_1 a ex:Tabla ;
+    ex:textoExtracto """| Valor | Significado |
+| --- | --- |
+| 0 | No hay que hacer nada. |
+| # | Posición en el almacén. |
+| -4 | Herramienta de tierra. |""" .
+
+ex:Valor0 a ex:Parametro ;
+    ex:identificador "0" ;
+    ex:textoExtracto "0" ;
+    rdfs:label "No hay que hacer nada."@es .
+
+ex:ValorNumeral a ex:Parametro ;
+    ex:identificador "#" ;
+    ex:textoExtracto "#" ;
+    rdfs:label "Posición en el almacén."@es .
+
+ex:ValorMenos4 a ex:Parametro ;
+    ex:identificador "-4" ;
+    ex:textoExtracto "-4" ;
+    rdfs:label "Herramienta de tierra."@es .
+
+ex:TablaMarcas951_7_10_1 a ex:Tabla ;
+    ex:textoExtracto """A continuación se muestra una tabla resumen de los valores TAKEPOS y LEAVEPOS que utiliza el gestor en cada una de las operaciones, así como las marcas que debe activar el PLC al finalizar cada operación. En el caso de las marcas que aparecen entre paréntesis, el gestor puede ejecutar las operaciones en cualquier orden, pero siempre debe ejecutar ambas.""" .
+
+ex:TablaTM_PLC951_7_10_1 a ex:Tabla ;
+    ex:textoExtracto """| TM => PLC |  |  | PLC => TM |
+| --- | --- | --- | --- |
+| TMOPERATION | TAKEPOS | LEAVEPOS |  |
+| 5 | # | # | (SPDLTOCH2 & MZTOCH1) +
+(CH1TOSPDL & CH2TOMZ) |
+| 6 | -4 | # | SPDLTOCH2 +
+(CH2TOMZ & GRTOSPDL) |
+| 7 | # | -4 | (SPDLTOGR & MZTOCH1) +
+CH1TOSPDL |
+| 8 | 0 | 0 | SPDLTOGR + GRTOSPDL |
+| 9 | -4 | # | GRTOSPDL + SPDLTOCH2 +
+CH2TOMZ |
+| 10 | # | -4 | MZTOCH1 + CH1TOSPDL +
+SPDLTOGR |
+| 11 | 0 | 0 | MZROT |
+| 12 | # | # | SPDLTOCH2 + CH2TOMZ +
+MZTOCH1 + CH1TOSPDL |
+| 13 | # | 0 | MZROT + MZROT |
+| 14 | # | # | SPDLTOCH2 + CH2TOMZ +
+MZTOCH1 + CH1TOSPDL |""" .
+
+ex:ParametroTAKEPOS a ex:Parametro ;
+    ex:textoExtracto "TAKEPOS" .
+
+ex:ParametroLEAVEPOS a ex:Parametro ;
+    ex:textoExtracto "LEAVEPOS" .
+
+ex:ParametroTMOPERATION a ex:Parametro ;
+    ex:textoExtracto "TMOPERATION" .
+
+ex:SistemaGestor a ex:Sistema ;
+    ex:textoExtracto "gestor" .
+
+ex:SistemaPLC a ex:Sistema ;
+    ex:textoExtracto "PLC" .
+
+ex:SistemaCNC a ex:Sistema ;
+    ex:textoExtracto "CNC" .
+
+ex:TablaEjemploFuncionamiento951_7_10_1 a ex:Tabla ;
+    ex:textoExtracto """Ejemplo de funcionamiento. El siguiente ejemplo muestra, suponiendo que no hay herramienta en el cabezal, las funciones que ejecuta el CNC, los valores que envía el gestor al PLC en cada una de las operaciones y las marcas que debe activar el PLC en cada caso.""" .

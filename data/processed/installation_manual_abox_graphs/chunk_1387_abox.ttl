@@ -1,0 +1,59 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ALIGNC ex:textoExtracto "Secuencia 'ALIGNC = No' (2 viñetas): la herramienta puede mecanizar diametralmente toda la superficie sin girar el eje C." ;
+    a ex:Parametro ;
+    ex:identificador "ALIGNC" .
+
+ex:EjeC ex:textoExtracto "eje C" ;
+    a ex:ComponenteMecanico ;
+    rdfs:label "eje C" .
+
+ex:LINEAR ex:textoExtracto "LINEAR" ;
+    a ex:ModoOperacion .
+
+ex:TRAPEZOIDAL ex:textoExtracto "TRAPEZOIDAL" ;
+    a ex:ModoOperacion .
+
+ex:SQUARE_SINE ex:textoExtracto "SQUARE SINE" ;
+    a ex:ModoOperacion .
+
+ex:SLOPETYPE ex:textoExtracto "SLOPETYPE" ;
+    a ex:Parametro .
+
+ex:PRB1 ex:textoExtracto "PRB1" ;
+    a ex:Sensor .
+
+ex:PRB2 ex:textoExtracto "PRB2" ;
+    a ex:Sensor .
+
+ex:PRB3 ex:textoExtracto "PRB3" ;
+    a ex:Sensor .
+
+ex:PalpadorSobremesa ex:textoExtracto "palpador de sobremesa" ;
+    a ex:ComponenteMecanico ;
+    ex:tieneComponente ex:PRB1, ex:PRB2, ex:PRB3 .
+
+ex:LONGAXIS ex:textoExtracto "LONGAXIS" ;
+    a ex:Parametro .
+
+ex:FACEAXIS ex:textoExtracto "FACEAXIS" ;
+    a ex:Parametro .
+
+ex:CAXIS ex:textoExtracto "CAXIS" ;
+    a ex:Parametro .
+
+ex:Husillo ex:textoExtracto "husillo" ;
+    a ex:ComponenteMecanico ;
+    ex:tieneComponente ex:LONGAXIS, ex:FACEAXIS, ex:CAXIS .
+
+ex:EsquemaLimitesPRB ex:textoExtracto "Esquema de límites PRB1/PRB2/PRB3 (máximos y mínimos) del palpador sobre los tres primeros ejes del canal. Incluye un triedro X-Y-Z y vistas en planta con un bloque de referencia; flechas bidireccionales marcan cotas máximas y mínimas de cada eje, indicando que las posiciones se definen en coordenadas máquina (en torno, en radios)." ;
+    a ex:Esquema ;
+    ex:compuestoPor ex:PRB1, ex:PRB2, ex:PRB3 .
+
+ex:DiagramaPerfilesMovimiento ex:textoExtracto "Conjunto de tres gráficos comparativos de perfiles de movimiento: LINEAR, TRAPEZOIDAL y SQUARE SINE. Para cada uno se representan velocidad v(t), aceleración a(t) y jerk j(t)." ;
+    a ex:Esquema ;
+    ex:compuestoPor ex:LINEAR, ex:TRAPEZOIDAL, ex:SQUARE_SINE .
+
+ex:DiagramaHusilloEntorno ex:textoExtracto "Diagrama isométrico del husillo y su entorno inmediato que identifica la relación entre los parámetros LONGAXIS (eje longitudinal), FACEAXIS (eje transversal) y CAXIS (eje rotativo)." ;
+    a ex:Esquema ;
+    ex:compuestoPor ex:Husillo, ex:LONGAXIS, ex:FACEAXIS, ex:CAXIS .

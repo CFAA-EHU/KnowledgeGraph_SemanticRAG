@@ -1,0 +1,16 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:CNCOFF a ex:Parametro ;
+    ex:textoExtracto "Si el PLC pone esta marca a (=1) comienza la secuencia de apagado del CNC. Activar esta marca es equivalente a pulsar la combinación de teclas [ALT][F4]." ;
+    ex:valor "CNCOFF" .
+
+ex:SYNC a ex:Parametro ;
+    ex:textoExtracto "SYNC Hay un registro para cada canal. Los mnemónicos para cada canal son los siguientes. SYNC1 SYNC2 SYNC3 SYNC4 Este registro se utiliza cuando desde un canal se desea utilizar un cabezal determinado a efectos de sincronización, aunque el cabezal se encuentre en otro canal. Por ejemplo, en el caso de un torno de doble torreta con un único cabezal. • Con la función G33, cuando interesa roscar con un cabezal determinado. • Con la función G95, cuando se quiere programar el avance en función de la velocidad de giro de un cabezal determinado. Para ello, el PLC indica en el registro SYNC del canal el cabezal que deberá utilizarse, exclusivamente a efectos de sincronización. El registro SYNC tomará valores de ꞏ1ꞏ a ꞏ4ꞏ; si se asigna valor ꞏ0ꞏ, se utilizará el cabezal master del canal. El CNC evaluará el contenido de este registro al comienzo de bloque. Si el PLC modifica este registro durante la ejecución del bloque, el cambio no será efectivo hasta el comienzo del bloque siguiente." ;
+    ex:valor "SYNC" .
+
+ex:RETRACE a ex:Parametro ;
+    ex:textoExtracto "RETRACE Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. RETRACEC1 RETRACEC2 RETRACEC3 RETRACEC4 Si el PLC pone esta marca a (=1) durante la ejecución de un programa en modo automático, se activa la función retrace en el canal seleccionado. La función retrace detiene la ejecución del programa y comienza a ejecutar hacia atrás la trayectoria recorrida hasta ese momento en el bloque actual más los últimos n bloques ejecutados. El número máximo de bloques a ejecutar en retrace lo define el parámetro máquina NRETBLK. La función retrace se puede activar durante una interpolación, a mitad de un bloque, y también al final del bloque, tanto si la ejecución está detenida por M0 como por el modo bloque a bloque." ;
+    ex:valor "RETRACE" .
+
+ex:NRETBLK a ex:Parametro ;
+    ex:textoExtracto "El número máximo de bloques a ejecutar en retrace lo define el parámetro máquina NRETBLK." ;
+    ex:valor "NRETBLK" .

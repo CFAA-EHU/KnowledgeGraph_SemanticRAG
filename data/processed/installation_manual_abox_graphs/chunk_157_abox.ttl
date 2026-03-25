@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:GAPTOL rdfs:label "GAPTOL" ;
+    a ex:Parametro ;
+    ex:textoExtracto "GAPTOL Margen de tolerancia del error. Valores posibles: De 0 a 99999.9999 mm / De 0 a 3937.00787 inch. Valor por defecto: 0.1000 mm / 0.00394 inch. Variable asociada: (V.)MPG.GAPTOL Este parámetro define una ventana de posicionamiento, sobre el gap programado, para dar por finalizado el bloque de aproximación. Si el eje sobrepasa la tolerancia definida en el parámetro GAPTOL, el PLC desactiva la marca INTOL." ;
+    ex:valor "0.1000 mm / 0.00394 inch" .
+
+ex:GAPCOLLISIONMODE rdfs:label "GAPCOLLISIONMODE" ;
+    a ex:Parametro ;
+    ex:textoExtracto "GAPCOLLISIONMODE Comportamiento del CNC ante una colisión del sensor. Valores posibles: No mostrar error / Mostrar error. Valor por defecto: No dar error. Variable asociada: (V.)MPG.GAPCOLLISIONMODE El sensor para el control del gap puede disponer de una señal de colisión que se conecta al CNC, y que el PLC la debe gestionar a través de la marca GAPCOLLISION. Si el PLC activa la marca GAPCOLLISION, el CNC mostrará o no un error según lo definido en este parámetro. El error no activa la emergencia." ;
+    ex:valor "No dar error" .
+
+ex:GAPTONEG rdfs:label "GAPTONEG" ;
+    a ex:Parametro ;
+    ex:textoExtracto "GAPTONEG Bloque de movimiento en #GAPCTRL hacia cota descendente. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)MPG.GAPTONEG Este parámetro indica si el movimiento hacia abajo del eje Z para alcanzar el gap es en sentido negativo (condiciones normales) o positivo (eje Z invertido)." ;
+    ex:valor "Sí" .
+
+ex:MPG_GAPTOL rdfs:label "(V.)MPG.GAPTOL" ;
+    a ex:Parametro ;
+    ex:textoExtracto "Variable asociada: (V.)MPG.GAPTOL" .
+
+ex:MPG_GAPCOLLISIONMODE rdfs:label "(V.)MPG.GAPCOLLISIONMODE" ;
+    a ex:Parametro ;
+    ex:textoExtracto "Variable asociada: (V.)MPG.GAPCOLLISIONMODE" .
+
+ex:MPG_GAPTONEG rdfs:label "(V.)MPG.GAPTONEG" ;
+    a ex:Parametro ;
+    ex:textoExtracto "Variable asociada: (V.)MPG.GAPTONEG" .
+
+ex:GAPCOLLISION rdfs:label "GAPCOLLISION" ;
+    a ex:Sensor ;
+    ex:textoExtracto "El sensor para el control del gap puede disponer de una señal de colisión que se conecta al CNC, y que el PLC la debe gestionar a través de la marca GAPCOLLISION." .
+
+ex:CNC rdfs:label "CNC" ;
+    a ex:Sistema ;
+    ex:textoExtracto "El CNC anula el error de gap fuera de tolerancia y no detiene el movimiento de los ejes." , "El CNC da error de gap fuera de tolerancia y detiene el movimiento de los ejes, respetando la rampa de frenado y controlando el gap durante la rampa." .
+
+ex:PLC rdfs:label "PLC" ;
+    a ex:Sistema ;
+    ex:textoExtracto "el PLC desactiva la marca INTOL" , "el PLC la debe gestionar a través de la marca GAPCOLLISION" .

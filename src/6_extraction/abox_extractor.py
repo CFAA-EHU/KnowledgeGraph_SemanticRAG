@@ -42,7 +42,7 @@ MANIFEST_PATH = OPERATIONAL_ABOX_MANIFEST_PATH
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 OUTPUT_DIR = ABOX_CHUNKS_DIR
 DEBUG_DIR = ABOX_DEBUG_DIR
-MAX_CONCURRENCY = 2
+MAX_CONCURRENCY = int(os.environ.get("ABOX_MAX_CONCURRENCY", "2"))
 MODEL = "mistral-small-latest"
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 ABOX_PROMPT_VERSION = "semantic-guardrails-v3"
@@ -211,6 +211,80 @@ def escapar_comillas_internas_en_literales(ttl_text: str) -> str:
     return "".join(resultado)
 
 
+def escapar_barras_invertidas_en_literales(ttl_text: str) -> str:
+    resultado: list[str] = []
+    i = 0
+    n = len(ttl_text)
+    estado = "outside"
+    valid_simple_escapes = {'t', 'b', 'n', 'r', 'f', '"', "'", "\\"}
+
+    def _is_hex_escape(start_index: int, length: int) -> bool:
+        end_index = start_index + length
+        if end_index > n:
+            return False
+        return all(char in "0123456789abcdefABCDEF" for char in ttl_text[start_index:end_index])
+
+    while i < n:
+        if estado == "outside":
+            if ttl_text.startswith('"""', i):
+                resultado.append('"""')
+                estado = "long"
+                i += 3
+                continue
+            if ttl_text[i] == '"' and (i == 0 or ttl_text[i - 1] != "\\"):
+                resultado.append('"')
+                estado = "short"
+                i += 1
+                continue
+            resultado.append(ttl_text[i])
+            i += 1
+            continue
+
+        if estado == "long" and ttl_text.startswith('"""', i):
+            resultado.append('"""')
+            estado = "outside"
+            i += 3
+            continue
+
+        char = ttl_text[i]
+        if char == "\\":
+            next_char = ttl_text[i + 1] if i + 1 < n else ""
+            if next_char and next_char in valid_simple_escapes:
+                resultado.append("\\")
+                resultado.append(next_char)
+                i += 2
+                continue
+            if next_char == "u" and _is_hex_escape(i + 2, 4):
+                resultado.append("\\u")
+                resultado.extend(ttl_text[i + 2 : i + 6])
+                i += 6
+                continue
+            if next_char == "U" and _is_hex_escape(i + 2, 8):
+                resultado.append("\\U")
+                resultado.extend(ttl_text[i + 2 : i + 10])
+                i += 10
+                continue
+            resultado.append("\\\\")
+            i += 1
+            continue
+
+        if estado == "short" and char in {"\n", "\r"}:
+            resultado.append(" ")
+            i += 1
+            continue
+
+        if estado == "short" and char == '"' and (i == 0 or ttl_text[i - 1] != "\\"):
+            resultado.append('"')
+            estado = "outside"
+            i += 1
+            continue
+
+        resultado.append(char)
+        i += 1
+
+    return "".join(resultado)
+
+
 def tipar_tablas_canonicas(ttl_text: str) -> str:
     patron = re.compile(
         r"(?m)^(ex:(?:Tabla|Operador|Funcion|Constante)[A-Za-z0-9_]+)\s+(?!a\b)(.+)$"
@@ -234,6 +308,7 @@ def normalizar_vocabulario_canonico(ttl_text: str) -> str:
     for origen, destino in reemplazos_directos.items():
         ttl_normalizado = ttl_normalizado.replace(origen, destino)
     ttl_normalizado = tipar_tablas_canonicas(ttl_normalizado)
+    ttl_normalizado = escapar_barras_invertidas_en_literales(ttl_normalizado)
     ttl_normalizado = escapar_comillas_internas_en_literales(ttl_normalizado)
     return ttl_normalizado
 

@@ -1,0 +1,25 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:MPG.DIFFCOMP a ex:Parametro ;
+    rdfs:label "MPG.DIFFCOMP" ;
+    ex:identificador "(V.)MPG.DIFFCOMP[nb]" ;
+    ex:textoExtracto "Parámetro incluido en la tabla GANTRY. Este parámetro habilita la corrección de la diferencia de cota entre el eje maestro y el esclavo tras la búsqueda de referencia máquina." ;
+    ex:valor "Sí / No. Valor por defecto: Sí." .
+
+ex:MPG.MAXDIFF a ex:Parametro ;
+    rdfs:label "MPG.MAXDIFF" ;
+    ex:identificador "(V.)MPG.MAXDIFF[nb]" ;
+    ex:textoExtracto "Parámetro incluido en la tabla GANTRY. Para evitar corregir diferencias de cota excesivas entre el eje maestro y el esclavo, este parámetro establece la máxima diferencia de cota permitida entre ambos ejes para poder aplicar la corrección." ;
+    ex:valor "De 0 a 99999.9999 mm. De 0 a 3937.00787 inch. De 0 a 99999.9999 grados. Valor por defecto: 0." .
+
+ex:TablaGANTRY a ex:Tabla ;
+    ex:textoExtracto "Parámetro incluido en la tabla GANTRY." ;
+    ex:tieneComponente ex:MPG.DIFFCOMP, ex:MPG.MAXDIFF .
+
+ex:EjeGantry a ex:Sistema ;
+    ex:textoExtracto "Ejes con captación absoluta, si el parámetro DIFFCOMP está a \"Sí\", el CNC corregirá la diferencia de cota al habilitar el eje (flanco de subida de la marca SERVOxnON del eje maestro o del esclavo). Para compensar la cota, el eje esclavo se moverá hasta alcanzar la cota del eje maestro, al avance especificado en el parámetro REFFEED2." .
+
+ex:REFFEED2 a ex:Parametro ;
+    rdfs:label "REFFEED2" ;
+    ex:textoExtracto "al avance especificado en el parámetro REFFEED2" ;
+    ex:valor "No especificado en el fragmento" .

@@ -1,0 +1,22 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:Sistema_CNC_125 a ex:Maquina ;
+    ex:textoExtracto "La configuración debe cumplir los siguientes requisitos. Si la parametrización no se ajusta a estos requisitos, el CNC la ignora y numera las entradas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus. • Se deben parametrizar todos los nodos de I/Os del bus; no se pueden dejar nodos sin definir. • Se deben parametrizar todos los recursos de un nodo; no se pueden dejar I/Os sin numerar. • El máximo número de bloques lógicos en el sistema será 64, tanto para entradas como para salidas digitales. • El número de I/Os de un bloque lógico no puede ser cero, y debe ser un múltiplo de 8 • Los valores del índice base deben cumplir con la fórmula \"8n + 1" (es decir, 1, 9, 17, 25 ...). • Los bloques se pueden distribuir como se desee dentro del rango de recursos gestionados por PLC (1...1024). El PLC admite huecos, pero nunca solapamiento entre los diferentes bloques; es decir, una entrada o salida digital de PLC sólo puede pertenecer a un único nodo-módulo del bus." .
+
+ex:Bus_CANopen_125 a ex:Sistema ;
+    ex:textoExtracto \"NODE Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os. Valores posibles: De 1 a 126. Variable asociada: (V.)MPG.DIMODNODE[nb] Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os. Se deben parametrizar todos los nodos de I/Os del bus; no se pueden dejar nodos sin definir. BLOCK Número de bloque lógico. Valores posibles: De 1 a 64. Variable asociada: (V.)MPG.DIMODBLOCK[nb] Número de bloque lógico. ADDRESS Dirección base del bloque lógico. Valores posibles: De 1 a 1017." ;
+    ex:tieneComponente ex:Nodo_I_O_125, ex:Bloque_Logico_125, ex:Direccion_Base_125 .
+
+ex:Nodo_I_O_125 a ex:ComponenteElectrico ;
+    ex:identificador "NODE" ;
+    ex:textoExtracto "NODE Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os. Valores posibles: De 1 a 126. Variable asociada: (V.)MPG.DIMODNODE[nb] Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os. Se deben parametrizar todos los nodos de I/Os del bus; no se pueden dejar nodos sin definir." ;
+    ex:valor "1 a 126" .
+
+ex:Bloque_Logico_125 a ex:Parametro ;
+    ex:identificador "BLOCK" ;
+    ex:textoExtracto "BLOCK Número de bloque lógico. Valores posibles: De 1 a 64. Variable asociada: (V.)MPG.DIMODBLOCK[nb] Número de bloque lógico. El máximo número de bloques lógicos en el sistema será 64, tanto para entradas como para salidas digitales." ;
+    ex:valor "1 a 64" .
+
+ex:Direccion_Base_125 a ex:Parametro ;
+    ex:identificador "ADDRESS" ;
+    ex:textoExtracto "ADDRESS Dirección base del bloque lógico. Valores posibles: De 1 a 1017." ;
+    ex:valor "1 a 1017" .

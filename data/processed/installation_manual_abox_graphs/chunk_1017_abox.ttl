@@ -1,0 +1,76 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:Esquema1017 a ex:InterfazUsuario ;
+    ex:textoExtracto """| ; Inicializar los registros. START OR DFU M313 = CYSTART |
+| () = MOV $1D R200 = MOV $9D R201 ; [CTRL]
+() = MOV $41 R202 = MOV $C1 R203 ; [F7]
+() = MOV $42 R204 = MOV $C2 R205 ; [F8]
+() = MOV $22 R206 = MOV $A2 R207 ; [G]
+() = MOV $08 R208 = MOV $88 R209 ; [7]
+() = MOV $05 R210 = MOV $85 R211 ; [4]
+() = MOV $2D R212 = MOV $AD R213 ; [X]
+() = MOV $02 R214 = MOV $82 R215 ; [1]
+() = MOV $01 R216 = MOV $81 R217 ; [ESC] |
+| ; El CNC accede al modo manual. [ CTRL]+[F7]
+DFU B0KEYBD1 = CNCWR(R200,G.KEY,M200) = CNCWR(R202,G.KEY,M201)
+= TG1 200 200
+T200 = M300
+DFD M300 = CNCWR(R201,G.KEY,M202) = CNCWR(R203,G.KEY,M203) = TG1 201 200
+T201 = M301 |
+| ; El CNC accede al modo MDI. [ CTRL]+[F8]
+DFD M301 = CNCWR(R200,G.KEY,M200) = CNCWR(R204,G.KEY,M204) = TG1 202 200
+T202 = M302
+DFD M302 = CNCWR(R201,G.KEY,M202) = CNCWR(R205,G.KEY,M205) = TG1 203 200
+T203 =M303 |
+| ; Búsqueda de referencia máquina.""" .
+
+ex:ComponenteElectrico1017_1 a ex:ComponenteElectrico ;
+    ex:textoExtracto "START OR DFU M313 = CYSTART" .
+
+ex:ComponenteElectrico1017_2 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $1D R200 = MOV $9D R201 ; [CTRL]" .
+
+ex:ComponenteElectrico1017_3 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $41 R202 = MOV $C1 R203 ; [F7]" .
+
+ex:ComponenteElectrico1017_4 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $42 R204 = MOV $C2 R205 ; [F8]" .
+
+ex:ComponenteElectrico1017_5 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $22 R206 = MOV $A2 R207 ; [G]" .
+
+ex:ComponenteElectrico1017_6 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $08 R208 = MOV $88 R209 ; [7]" .
+
+ex:ComponenteElectrico1017_7 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $05 R210 = MOV $85 R211 ; [4]" .
+
+ex:ComponenteElectrico1017_8 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $2D R212 = MOV $AD R213 ; [X]" .
+
+ex:ComponenteElectrico1017_9 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $02 R214 = MOV $82 R215 ; [1]" .
+
+ex:ComponenteElectrico1017_10 a ex:ComponenteElectrico ;
+    ex:textoExtracto "MOV $01 R216 = MOV $81 R217 ; [ESC]" .
+
+ex:InterfazUsuario1017_1 a ex:InterfazUsuario ;
+    ex:textoExtracto "[ CTRL]+[F7]" .
+
+ex:InterfazUsuario1017_2 a ex:InterfazUsuario ;
+    ex:textoExtracto "[ CTRL]+[F8]" .
+
+ex:Sistema1017 a ex:Sistema ;
+    ex:textoExtracto "El CNC accede al modo manual. [ CTRL]+[F7]" ;
+    ex:compuestoPor ex:InterfazUsuario1017_1 .
+
+ex:Sistema1017 ex:compuestoPor ex:ComponenteElectrico1017_2 .
+
+ex:Sistema1017 ex:compuestoPor ex:ComponenteElectrico1017_3 .
+
+ex:Sistema1017 a ex:Sistema ;
+    ex:textoExtracto "El CNC accede al modo MDI. [ CTRL]+[F8]" ;
+    ex:compuestoPor ex:InterfazUsuario1017_2 .
+
+ex:Sistema1017 ex:compuestoPor ex:ComponenteElectrico1017_2 .
+
+ex:Sistema1017 ex:compuestoPor ex:ComponenteElectrico1017_4 .

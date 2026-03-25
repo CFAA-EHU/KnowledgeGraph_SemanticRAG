@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:AlmacenSincrono1Brazos a a ex:Sistema ;
+    rdfs:label "Síncrono + 1 brazos" ;
+    ex:textoExtracto "Los almacenes síncronos con brazo cambiador (1 o 2 pinzas), tienen el almacén próximo al cabezal." ;
+    ex:compuestoPor ex:BrazoCambiador1Pinza .
+
+ex:AlmacenSincrono2Brazos a a ex:Sistema ;
+    rdfs:label "Síncrono + 2 brazos" ;
+    ex:textoExtracto "Los almacenes síncronos con brazo cambiador (1 o 2 pinzas), tienen el almacén próximo al cabezal." ;
+    ex:compuestoPor ex:BrazoCambiador2Pinzas .
+
+ex:BrazoCambiador1Pinza a ex:ComponenteMecanico ;
+    rdfs:label "Brazo cambiador 1 pinza" ;
+    ex:textoExtracto "El brazo cambiador coge en cada pinza una herramienta (almacén y cabezal) y efectúa el cambio." .
+
+ex:BrazoCambiador2Pinzas a ex:ComponenteMecanico ;
+    rdfs:label "Brazo cambiador 2 pinzas" ;
+    ex:textoExtracto "El brazo cambiador coge en cada pinza una herramienta (almacén y cabezal) y efectúa el cambio." .
+
+ex:CNC a ex:Sistema ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC finaliza el movimiento de los ejes." ;
+    ex:controla ex:AlmacenSincrono1Brazos, ex:AlmacenSincrono2Brazos .
+
+ex:ParametroTM_MZCYCLIC a ex:Parametro ;
+    rdfs:label "TM.MZCYCLIC[mz]" ;
+    ex:identificador "(V.)TM.MZCYCLIC[mz]" ;
+    ex:textoExtracto "Parámetro incluido en la tabla MAGAZINE // MANAGEMENT. Un cambiador de herramientas cíclico necesita una orden de cambio de herramienta (función M06) después de buscar una herramienta y antes de buscar la siguiente." ;
+    ex:valor "Sí" .
+
+ex:ParametroTM_MZOPTIMIZED a ex:Parametro ;
+    rdfs:label "TM.MZOPTIMIZED[mz]" ;
+    ex:identificador "(V.)TM.MZOPTIMIZED[mz]" ;
+    ex:textoExtracto "Parámetro incluido en la tabla MAGAZINE // MANAGEMENT. La optimización únicamente funciona durante la ejecución de un programa; en modo MDI se ejecutan todos los bloques, no se tiene en cuenta este parámetro." ;
+    ex:valor "Sí" .
+
+ex:TablaMagazineManagement a ex:Tabla ;
+    rdfs:label "Tabla MAGAZINE // MANAGEMENT" ;
+    ex:textoExtracto "Parámetro incluido en la tabla MAGAZINE // MANAGEMENT." ;
+    ex:compuestoPor ex:ParametroTM_MZCYCLIC, ex:ParametroTM_MZOPTIMIZED .

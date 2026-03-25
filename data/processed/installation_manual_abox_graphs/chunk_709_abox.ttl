@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+ex:SistemaCNC a ex:Maquina ;
+    ex:textoExtracto "El CNC puede disponer de hasta cuatro canales y cada canal puede ejecutar un programa pieza en paralelo con los demás. Esto significa que en cada canal se pueden ejecutar siete funciones auxiliares simultáneamente. Las funciones auxiliares ejecutadas desde cada canal se tratan de forma independiente; para ello cada canal dispone de marcas y registros propios. Como en un canal se pueden disponer de cuatro cabezales, se da el caso de poder programar en un bloque 6 funciones M no de cabezal, el arranque de los cuatro cabezales con M3/M4 y una velocidad para cada uno que implique cambio de gama automático. Esto significa que, debido a que algunas funciones se generan automáticamente, se puede llegar a superar el máximo de siete funciones auxiliares por bloque. En este caso, el CNC enviará al PLC las funciones M en dos fases. Marcas y registros en la opción canales. Cada canal dispone de los registros de 32 bits MFUN1 a MFUN7, para indicar al PLC las funciones auxiliares M programadas en el bloque en ejecución. MFUN1C1 - MFUN7C1 para el primer canal. MFUN1C2 - MFUN7C2 para el segundo canal. MFUN1C3 - MFUN7C3 para el tercer canal. MFUN1C4 - MFUN7C4 para el cuarto canal. Cada uno de los registros indica el número de una de las funciones M programadas en el bloque. Si no se utilizan todos los registros, el CNC asigna el valor hexadecimal $FFFFFFFF a los que queden libres, los de numeración más alta. De esta forma si en el primer canal se encuentran programadas las funciones M100 y M135 y en el segundo canal las funciones M88 y M75, el CNC pasará al PLC la siguiente información."@es .
+
+ex:Canal1 a ex:Componente ;
+    ex:identificador "Canal1" ;
+    ex:textoExtracto "MFUN1C1 - MFUN7C1 para el primer canal."@es ;
+    ex:tieneComponente ex:RegistroMFUN1C1, ex:RegistroMFUN2C1, ex:RegistroMFUN3C1, ex:RegistroMFUN4C1, ex:RegistroMFUN5C1, ex:RegistroMFUN6C1, ex:RegistroMFUN7C1 .
+
+ex:Canal2 a ex:Componente ;
+    ex:identificador "Canal2" ;
+    ex:textoExtracto "MFUN1C2 - MFUN7C2 para el segundo canal."@es ;
+    ex:tieneComponente ex:RegistroMFUN1C2, ex:RegistroMFUN2C2, ex:RegistroMFUN3C2, ex:RegistroMFUN4C2, ex:RegistroMFUN5C2, ex:RegistroMFUN6C2, ex:RegistroMFUN7C2 .
+
+ex:RegistroMFUN1C1 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN1C1" ;
+    ex:valor "100" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN2C1 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN2C1" ;
+    ex:valor "135" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN1C2 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN1C2" ;
+    ex:valor "88" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN2C2 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN2C2" ;
+    ex:valor "75" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN3C1 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN3C1" ;
+    ex:valor "$FFFFFFFF" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN4C1 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN4C1" ;
+    ex:valor "$FFFFFFFF" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN5C1 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN5C1" ;
+    ex:valor "$FFFFFFFF" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN6C1 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN6C1" ;
+    ex:valor "$FFFFFFFF" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .
+
+ex:RegistroMFUN7C1 a ex:ComponenteElectrico ;
+    ex:identificador "MFUN7C1" ;
+    ex:valor "$FFFFFFFF" ;
+    ex:textoExtracto "MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |\n| 100 | 135 | $FFFFFFFF |"@es .

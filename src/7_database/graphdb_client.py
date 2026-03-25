@@ -6,98 +6,138 @@ from typing import Any
 
 import requests
 
-from artifact_contracts import (
-    GRAPHDB_BASE_URL,
-    GRAPHDB_REPOSITORY_ID,
-    GRAPHDB_REPOSITORY_URL,
-    GRAPHDB_SPARQL_ENDPOINT,
-    GRAPHDB_STATEMENTS_ENDPOINT,
-)
-
 
 class GraphDBClientError(RuntimeError):
     pass
 
 
 class GraphDBClient:
-    def __init__(
-        self,
-        *,
-        base_url: str = GRAPHDB_BASE_URL,
-        repository_id: str = GRAPHDB_REPOSITORY_ID,
-        timeout_seconds: int = 15,
-    ) -> None:
+    def __init__(self, base_url: str, repository_id: str, timeout: int = 60):
         self.base_url = base_url.rstrip("/")
         self.repository_id = repository_id
-        self.repository_url = f"{self.base_url}/repositories/{self.repository_id}"
-        self.sparql_endpoint = self.repository_url
-        self.statements_endpoint = f"{self.repository_url}/statements"
-        self.rest_repositories_endpoint = f"{self.base_url}/rest/repositories"
-        self.timeout_seconds = timeout_seconds
+        self.timeout = timeout
+        self.session = requests.Session()
 
-    def _raise_for_status(self, response: requests.Response, message: str) -> None:
+    @property
+    def repositories_api_url(self) -> str:
+        return f"{self.base_url}/rest/repositories"
+
+    @property
+    def repository_api_url(self) -> str:
+        return f"{self.repositories_api_url}/{self.repository_id}"
+
+    @property
+    def repository_query_url(self) -> str:
+        return f"{self.base_url}/repositories/{self.repository_id}"
+
+    @property
+    def repository_statements_url(self) -> str:
+        return f"{self.repository_query_url}/statements"
+
+    @property
+    def repository_size_url(self) -> str:
+        return f"{self.repository_api_url}/size"
+
+    def _raise_for_status(self, response: requests.Response, context: str) -> None:
         if response.ok:
             return
         body = response.text.strip()
-        detail = f"{message}: HTTP {response.status_code}"
-        if body:
-            detail = f"{detail} - {body[:500]}"
-        raise GraphDBClientError(detail)
-
-    def _request(self, method: str, url: str, **kwargs: Any) -> requests.Response:
-        try:
-            response = requests.request(method, url, timeout=self.timeout_seconds, **kwargs)
-        except requests.RequestException as exc:
-            raise GraphDBClientError(str(exc)) from exc
-        return response
+        raise GraphDBClientError(
+            f"{context}: HTTP {response.status_code} - {body or 'empty response body'}"
+        )
 
     def healthcheck(self) -> dict[str, Any]:
-        response = self._request("GET", self.rest_repositories_endpoint, headers={"Accept": "application/json"})
-        self._raise_for_status(response, "GraphDB healthcheck failed")
-        repositories = response.json() if response.text.strip() else []
-        return {
-            "server_available": True,
-            "base_url": self.base_url,
-            "repository_count": len(repositories) if isinstance(repositories, list) else None,
-        }
+        try:
+            response = self.session.get(
+                self.repositories_api_url,
+                headers={"Accept": "application/json"},
+                timeout=self.timeout,
+            )
+            self._raise_for_status(response, "Could not reach GraphDB")
+            payload = response.json()
+            return {
+                "ok": True,
+                "base_url": self.base_url,
+                "repository_id": self.repository_id,
+                "repositories_visible": len(payload) if isinstance(payload, list) else None,
+            }
+        except Exception as exc:
+            return {
+                "ok": False,
+                "base_url": self.base_url,
+                "repository_id": self.repository_id,
+                "error": str(exc),
+            }
 
     def repository_exists(self) -> bool:
-        response = self._request("GET", self.rest_repositories_endpoint, headers={"Accept": "application/json"})
+        response = self.session.get(
+            self.repositories_api_url,
+            headers={"Accept": "application/json"},
+            timeout=self.timeout,
+        )
         self._raise_for_status(response, "Could not list GraphDB repositories")
-        payload = response.json() if response.text.strip() else []
+        payload = response.json()
         if not isinstance(payload, list):
             return False
-        return any(str(item.get("id", "")) == self.repository_id for item in payload if isinstance(item, dict))
+        return any(repo.get("id") == self.repository_id for repo in payload if isinstance(repo, dict))
 
-    def create_repository(self) -> dict[str, Any]:
-        config = self._repository_config()
+    def create_repository(self, config_ttl: str) -> None:
         files = {
-            "config": ("repo-config.ttl", config.encode("utf-8"), "text/turtle"),
+            "config": ("repo-config.ttl", config_ttl.encode("utf-8"), "text/turtle"),
         }
-        response = self._request("POST", self.rest_repositories_endpoint, files=files)
-        self._raise_for_status(response, f"Could not create GraphDB repository {self.repository_id}")
-        return {"repository_id": self.repository_id, "created": True}
+        response = self.session.post(
+            self.repositories_api_url,
+            files=files,
+            timeout=self.timeout,
+        )
+        self._raise_for_status(
+            response,
+            f"Could not create GraphDB repository {self.repository_id}",
+        )
 
-    def clear_repository(self) -> None:
-        response = self._request("DELETE", self.statements_endpoint)
-        self._raise_for_status(response, f"Could not clear GraphDB repository {self.repository_id}")
+    def delete_repository(self) -> bool:
+        response = self.session.delete(
+            self.repository_api_url,
+            timeout=self.timeout,
+        )
+        if response.status_code == 404:
+            return False
+        self._raise_for_status(
+            response,
+            f"Could not delete GraphDB repository {self.repository_id}",
+        )
+        return True
 
-    def upload_turtle_file(self, file_path: str | Path, context: str | None = None) -> dict[str, Any]:
+    def upload_turtle_file(self, file_path: str | Path, context: str | None = None) -> None:
         path = Path(file_path)
         if not path.exists():
-            raise GraphDBClientError(f"Turtle file not found: {path}")
-        params = {}
+            raise GraphDBClientError(f"Turtle file does not exist: {path}")
+
+        params: dict[str, str] = {}
         if context:
             params["context"] = f"<{context}>"
-        response = self._request(
-            "POST",
-            self.statements_endpoint,
+
+        response = self.session.post(
+            self.repository_statements_url,
             params=params,
-            headers={"Content-Type": "text/turtle"},
             data=path.read_bytes(),
+            headers={"Content-Type": "text/turtle"},
+            timeout=max(self.timeout, 120),
         )
-        self._raise_for_status(response, f"Could not upload Turtle file {path}")
-        return {"file_path": str(path), "context": context, "status": "uploaded"}
+        self._raise_for_status(
+            response,
+            f"Could not upload Turtle file {path.name} to {self.repository_id}",
+        )
+
+    def run_select_raw(self, query: str) -> dict[str, Any]:
+        response = self.session.post(
+            self.repository_query_url,
+            data={"query": query},
+            headers={"Accept": "application/sparql-results+json"},
+            timeout=max(self.timeout, 120),
+        )
+        self._raise_for_status(response, "Could not execute SELECT query")
+        return response.json()
 
     def run_select(self, query: str) -> list[dict[str, str]]:
         payload = self.run_select_raw(query)
@@ -112,70 +152,50 @@ class GraphDBClient:
             rows.append(row)
         return rows
 
-    def run_select_raw(self, query: str) -> dict[str, Any]:
-        response = self._request(
-            "POST",
-            self.sparql_endpoint,
-            headers={"Accept": "application/sparql-results+json"},
-            data={"query": query},
-        )
-        self._raise_for_status(response, "GraphDB SELECT query failed")
-        return response.json()
-
     def run_ask(self, query: str) -> bool:
-        response = self._request(
-            "POST",
-            self.sparql_endpoint,
-            headers={"Accept": "application/sparql-results+json"},
+        response = self.session.post(
+            self.repository_query_url,
             data={"query": query},
+            headers={"Accept": "application/sparql-results+json"},
+            timeout=max(self.timeout, 120),
         )
-        self._raise_for_status(response, "GraphDB ASK query failed")
+        self._raise_for_status(response, "Could not execute ASK query")
         payload = response.json()
-        return bool(payload.get("boolean", False))
+        return bool(payload.get("boolean"))
 
-    def _repository_config(self) -> str:
-        return f"""@prefix rep: <http://www.openrdf.org/config/repository#> .
-@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
-@prefix sail: <http://www.openrdf.org/config/sail#> .
-@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    def run_update(self, update: str) -> None:
+        response = self.session.post(
+            self.repository_statements_url,
+            data={"update": update},
+            timeout=max(self.timeout, 120),
+        )
+        self._raise_for_status(response, "Could not execute SPARQL update")
 
-[] a rep:Repository ;
-   rep:repositoryID "{self.repository_id}" ;
-   rdfs:label "{self.repository_id}" ;
-   rep:repositoryImpl [
-     rep:repositoryType "graphdb:SailRepository" ;
-     sr:sailImpl [
-       sail:sailType "graphdb:Sail" ;
-       graphdb:entity-id-size "32" ;
-       graphdb:base-URL "http://semanticrag.local/entity/" ;
-       graphdb:defaultNS "https://vocab.cfaa.eus/broaching/" ;
-       graphdb:enable-context-index "true" ;
-       graphdb:enablePredicateList "true" ;
-       graphdb:in-memory-literal-properties "true" ;
-       graphdb:enable-literal-index "true" ;
-       graphdb:check-for-inconsistencies "false" ;
-       graphdb:disable-sameAs "true" ;
-       graphdb:query-timeout "0"
-     ]
-   ] .
-"""
+    def get_repository_size(self) -> int | None:
+        response = self.session.get(
+            self.repository_size_url,
+            timeout=self.timeout,
+        )
+        self._raise_for_status(
+            response,
+            f"Could not get triple count for repository {self.repository_id}",
+        )
+        text = response.text.strip()
+        try:
+            return int(text)
+        except ValueError:
+            return None
 
 
 def build_graphdb_client() -> GraphDBClient:
+    from artifact_contracts import GRAPHDB_BASE_URL, GRAPHDB_REPOSITORY_ID
+
     return GraphDBClient(
         base_url=GRAPHDB_BASE_URL,
         repository_id=GRAPHDB_REPOSITORY_ID,
     )
 
 
-__all__ = [
-    "GRAPHDB_BASE_URL",
-    "GRAPHDB_REPOSITORY_ID",
-    "GRAPHDB_REPOSITORY_URL",
-    "GRAPHDB_SPARQL_ENDPOINT",
-    "GRAPHDB_STATEMENTS_ENDPOINT",
-    "GraphDBClient",
-    "GraphDBClientError",
-    "build_graphdb_client",
-]
+if __name__ == "__main__":
+    client = build_graphdb_client()
+    print(json.dumps(client.healthcheck(), ensure_ascii=False, indent=2))

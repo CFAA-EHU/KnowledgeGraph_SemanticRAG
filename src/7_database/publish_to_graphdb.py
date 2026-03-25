@@ -6,11 +6,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-CURRENT_DIR = Path(__file__).resolve().parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
-if str(CURRENT_DIR) not in sys.path:
-    sys.path.insert(0, str(CURRENT_DIR))
 
 from artifact_contracts import (
     GRAPHDB_BASE_URL,
@@ -19,25 +16,76 @@ from artifact_contracts import (
     OPERATIONAL_ABOX_PATH,
     OPERATIONAL_TBOX_PATH,
 )
-from graphdb_client import GraphDBClientError, build_graphdb_client
 
+from graphdb_client import GraphDBClient, GraphDBClientError
 
 COUNT_QUERY = "SELECT (COUNT(*) AS ?count) WHERE { ?s ?p ?o }"
 
 
-def _utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+def build_repository_config_ttl(repository_id: str, title: str | None = None) -> str:
+    repo_title = title or repository_id
+    return f"""@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<#repo> a rep:Repository ;
+    rep:repositoryID "{repository_id}" ;
+    rdfs:label "{repo_title}" ;
+    rep:repositoryImpl [
+        rep:repositoryType "graphdb:SailRepository" ;
+        sr:sailImpl [
+            sail:sailType "graphdb:Sail" ;
+            graphdb:base-URL "http://example.org/semanticrag#" ;
+            graphdb:defaultNS "" ;
+            graphdb:entity-id-size "32" ;
+            graphdb:repository-type "file-repository" ;
+            graphdb:ruleset "rdfsplus-optimized" ;
+            graphdb:disable-sameAs "true" ;
+            graphdb:enable-context-index "false" ;
+            graphdb:enablePredicateList "true" ;
+            graphdb:enable-literal-index "true" ;
+            graphdb:enable-fts-index "false" ;
+            graphdb:fts-string-literals-index "default" ;
+            graphdb:fts-iris-index "none" ;
+            graphdb:fts-indexes ("default" "iri") ;
+            graphdb:imports "" ;
+            graphdb:read-only "false" ;
+            graphdb:check-for-inconsistencies "false" ;
+            graphdb:query-timeout "0" ;
+            graphdb:query-limit-results "0" ;
+            graphdb:storage-folder "storage"
+        ]
+    ] .
+"""
 
 
-def publish_operational_graph() -> dict:
-    client = build_graphdb_client()
+def write_report(report: dict) -> None:
+    GRAPHDB_PUBLICATION_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    GRAPHDB_PUBLICATION_REPORT_PATH.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
+def main() -> None:
+    client = GraphDBClient(
+        base_url=GRAPHDB_BASE_URL,
+        repository_id=GRAPHDB_REPOSITORY_ID,
+    )
+
     report = {
-        "timestamp": _utc_now(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "graphdb_base_url": GRAPHDB_BASE_URL,
         "repository_id": GRAPHDB_REPOSITORY_ID,
         "tbox_path": str(OPERATIONAL_TBOX_PATH),
         "abox_path": str(OPERATIONAL_ABOX_PATH),
-        "publication_status": "error",
+        "publication_status": "started",
+        "repository_existed_before": None,
+        "repository_deleted_before_recreate": False,
         "repository_created": False,
         "uploaded_files": [],
         "triple_count": None,
@@ -45,33 +93,60 @@ def publish_operational_graph() -> dict:
     }
 
     try:
-        client.healthcheck()
-        repository_exists = client.repository_exists()
-        if not repository_exists:
-            client.create_repository()
-            report["repository_created"] = True
-        client.clear_repository()
-        report["uploaded_files"].append(client.upload_turtle_file(OPERATIONAL_TBOX_PATH))
-        report["uploaded_files"].append(client.upload_turtle_file(OPERATIONAL_ABOX_PATH))
-        count_rows = client.run_select(COUNT_QUERY)
-        if count_rows:
-            report["triple_count"] = next(iter(count_rows[0].values()), None)
+        health = client.healthcheck()
+        if not health.get("ok"):
+            raise GraphDBClientError(
+                f"GraphDB server_unavailable: {health.get('error', 'unknown error')}"
+            )
+
+        if not Path(OPERATIONAL_TBOX_PATH).exists():
+            raise FileNotFoundError(f"Missing operational T-Box: {OPERATIONAL_TBOX_PATH}")
+        if not Path(OPERATIONAL_ABOX_PATH).exists():
+            raise FileNotFoundError(f"Missing operational A-Box: {OPERATIONAL_ABOX_PATH}")
+
+        repo_exists = client.repository_exists()
+        report["repository_existed_before"] = repo_exists
+
+        # CAMBIO CLAVE:
+        # - si el repo no existe: crear y NO limpiar
+        # - si el repo existe: borrar y recrear
+        if repo_exists:
+            deleted = client.delete_repository()
+            report["repository_deleted_before_recreate"] = deleted
+
+        config_ttl = build_repository_config_ttl(
+            repository_id=GRAPHDB_REPOSITORY_ID,
+            title=f"{GRAPHDB_REPOSITORY_ID} operational mirror",
+        )
+        client.create_repository(config_ttl)
+        report["repository_created"] = True
+
+        client.upload_turtle_file(OPERATIONAL_TBOX_PATH)
+        report["uploaded_files"].append(
+            {"path": str(OPERATIONAL_TBOX_PATH), "status": "uploaded"}
+        )
+
+        client.upload_turtle_file(OPERATIONAL_ABOX_PATH)
+        report["uploaded_files"].append(
+            {"path": str(OPERATIONAL_ABOX_PATH), "status": "uploaded"}
+        )
+
+        report["triple_count"] = client.get_repository_size()
+        if report["triple_count"] is None:
+            count_rows = client.run_select(COUNT_QUERY)
+            if count_rows:
+                raw_count = next(iter(count_rows[0].values()), None)
+                try:
+                    report["triple_count"] = int(raw_count) if raw_count is not None else None
+                except (TypeError, ValueError):
+                    report["triple_count"] = raw_count
         report["publication_status"] = "ok"
-    except GraphDBClientError as exc:
+
+    except Exception as exc:
+        report["publication_status"] = "error"
         report["errors"].append(str(exc))
-    except Exception as exc:  # pragma: no cover - defensive runtime reporting
-        report["errors"].append(f"unexpected_error: {exc}")
 
-    GRAPHDB_PUBLICATION_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    GRAPHDB_PUBLICATION_REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    return report
-
-
-def main() -> None:
-    report = publish_operational_graph()
-    print(json.dumps(report, ensure_ascii=False, indent=2))
-    if report["publication_status"] != "ok":
-        raise SystemExit(1)
+    write_report(report)
 
 
 if __name__ == "__main__":

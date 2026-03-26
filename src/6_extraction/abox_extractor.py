@@ -12,7 +12,9 @@ import argparse
 import asyncio
 import json
 import os
+import random
 import re
+from dataclasses import dataclass
 
 from mistralai.client import Mistral
 from rdflib import Graph
@@ -21,8 +23,14 @@ from artifact_contracts import (
     ABOX_CHUNKS_DIR,
     ABOX_DEBUG_DIR,
     ABOX_MAX_LOCAL_RETRIES,
+    ABOX_RATE_LIMIT_DRAIN_BACKOFF_SECONDS,
+    ABOX_RATE_LIMIT_DRAIN_JITTER_RANGE,
+    ABOX_RATE_LIMIT_DRAIN_MAX_CONCURRENCY,
+    ABOX_RATE_LIMIT_DRAIN_MAX_RETRIES,
+    ABOX_RATE_LIMIT_DRAIN_REQUEST_SPACING_SECONDS,
     ABOX_RETRYABLE_ERROR_CAUSES,
     ABOX_RETRY_BACKOFF_SECONDS,
+    ABOX_STANDARD_MAX_CONCURRENCY,
     OPERATIONAL_ABOX_INPUT_PATH,
     OPERATIONAL_ABOX_MANIFEST_PATH,
     OPERATIONAL_TBOX_PATH,
@@ -42,14 +50,24 @@ MANIFEST_PATH = OPERATIONAL_ABOX_MANIFEST_PATH
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 OUTPUT_DIR = ABOX_CHUNKS_DIR
 DEBUG_DIR = ABOX_DEBUG_DIR
-MAX_CONCURRENCY = int(os.environ.get("ABOX_MAX_CONCURRENCY", "2"))
 MODEL = "mistral-small-latest"
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 ABOX_PROMPT_VERSION = "semantic-guardrails-v3"
 EXTRACTION_MODE = "abox_from_text_chunk"
 DEFAULT_MODE = "resume-compatible"
+DEFAULT_RETRY_PROFILE = "standard"
 
 client: Mistral | None = None
+
+
+@dataclass(frozen=True)
+class RetryProfile:
+    name: str
+    max_concurrency: int
+    max_retries: int
+    backoff_seconds: tuple[int, ...]
+    jitter_range: tuple[float, float]
+    request_spacing_seconds: float
 
 
 def parse_args() -> argparse.Namespace:
@@ -88,6 +106,12 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=DEBUG_DIR,
         help="Directorio de debug para fallos de extraccion A-Box.",
+    )
+    parser.add_argument(
+        "--retry-profile",
+        choices=["standard", "rate-limit-drain"],
+        default=DEFAULT_RETRY_PROFILE,
+        help="Perfil de reintentos. rate-limit-drain reduce concurrencia y amplia el backoff para drenar 429 persistentes.",
     )
     return parser.parse_args()
 
@@ -358,10 +382,33 @@ def classify_exception(exc: Exception) -> tuple[str, str]:
     return "api_error", message
 
 
-def get_backoff_seconds(attempt_index: int) -> int:
-    if attempt_index < len(ABOX_RETRY_BACKOFF_SECONDS):
-        return ABOX_RETRY_BACKOFF_SECONDS[attempt_index]
-    return ABOX_RETRY_BACKOFF_SECONDS[-1]
+def resolve_retry_profile(name: str) -> RetryProfile:
+    if name == "rate-limit-drain":
+        return RetryProfile(
+            name=name,
+            max_concurrency=ABOX_RATE_LIMIT_DRAIN_MAX_CONCURRENCY,
+            max_retries=ABOX_RATE_LIMIT_DRAIN_MAX_RETRIES,
+            backoff_seconds=ABOX_RATE_LIMIT_DRAIN_BACKOFF_SECONDS,
+            jitter_range=ABOX_RATE_LIMIT_DRAIN_JITTER_RANGE,
+            request_spacing_seconds=ABOX_RATE_LIMIT_DRAIN_REQUEST_SPACING_SECONDS,
+        )
+    return RetryProfile(
+        name="standard",
+        max_concurrency=int(os.environ.get("ABOX_MAX_CONCURRENCY", str(ABOX_STANDARD_MAX_CONCURRENCY))),
+        max_retries=ABOX_MAX_LOCAL_RETRIES,
+        backoff_seconds=ABOX_RETRY_BACKOFF_SECONDS,
+        jitter_range=(1.0, 1.0),
+        request_spacing_seconds=0.0,
+    )
+
+
+def get_backoff_seconds(attempt_index: int, retry_profile: RetryProfile) -> float:
+    if attempt_index < len(retry_profile.backoff_seconds):
+        base_seconds = retry_profile.backoff_seconds[attempt_index]
+    else:
+        base_seconds = retry_profile.backoff_seconds[-1]
+    jitter = random.uniform(*retry_profile.jitter_range)
+    return round(base_seconds * jitter, 3)
 
 
 def construir_prompt_sistema(vocabulario: str) -> str:
@@ -402,6 +449,7 @@ async def procesar_chunk_abox(
     chunk_data: dict,
     vocabulario: str,
     *,
+    retry_profile: RetryProfile,
     semantic_vocabulary,
     manifest_entries: dict[str, dict],
     manifest_lock: asyncio.Lock,
@@ -442,9 +490,13 @@ async def procesar_chunk_abox(
         last_raw_response: str | None = None
         last_normalized_ttl: str | None = None
 
-        for attempt in range(ABOX_MAX_LOCAL_RETRIES):
+        for attempt in range(retry_profile.max_retries):
+            api_call_attempted = False
             try:
+                api_call_attempted = True
                 contenido = await llamada_llm_once(mensajes)
+                if retry_profile.request_spacing_seconds > 0:
+                    await asyncio.sleep(retry_profile.request_spacing_seconds)
                 last_raw_response = contenido
                 ttl_puro = aislar_sintaxis_ttl(contenido)
                 if not ttl_puro.strip():
@@ -481,15 +533,17 @@ async def procesar_chunk_abox(
                         last_error_cause = "ttl_invalid"
                         last_error_message = ttl_error or "El TTL generado no parsea correctamente."
             except Exception as exc:
+                if api_call_attempted and retry_profile.request_spacing_seconds > 0:
+                    await asyncio.sleep(retry_profile.request_spacing_seconds)
                 last_error_cause, last_error_message = classify_exception(exc)
 
             if output_path.exists() and last_error_cause in {"ttl_invalid", "empty_response", "semantic_invalid"}:
                 output_path.unlink(missing_ok=True)
 
-            if last_error_cause in ABOX_RETRYABLE_ERROR_CAUSES and attempt < ABOX_MAX_LOCAL_RETRIES - 1:
-                await asyncio.sleep(get_backoff_seconds(attempt))
+            if last_error_cause in ABOX_RETRYABLE_ERROR_CAUSES and attempt < retry_profile.max_retries - 1:
+                await asyncio.sleep(get_backoff_seconds(attempt, retry_profile))
                 continue
-            if last_error_cause in {"ttl_invalid", "empty_response", "semantic_invalid"} and attempt < ABOX_MAX_LOCAL_RETRIES - 1:
+            if last_error_cause in {"ttl_invalid", "empty_response", "semantic_invalid"} and attempt < retry_profile.max_retries - 1:
                 await asyncio.sleep(1)
                 continue
             break
@@ -528,8 +582,9 @@ def load_abox_input() -> list[dict]:
     return payload
 
 
-async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None) -> int:
+async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None, retry_profile_name: str = DEFAULT_RETRY_PROFILE) -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    retry_profile = resolve_retry_profile(retry_profile_name)
     vocabulario = compilar_vocabulario_tbox()
     semantic_vocabulary = load_semantic_vocabulary(TBOX_PATH)
     abox_input = load_abox_input()
@@ -537,7 +592,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
         abox_input = [chunk for chunk in abox_input if int(chunk["chunk_id"]) in chunk_ids]
     manifest_entries = load_manifest(MANIFEST_PATH)
     manifest_lock = asyncio.Lock()
-    semaforo = asyncio.Semaphore(MAX_CONCURRENCY)
+    semaforo = asyncio.Semaphore(retry_profile.max_concurrency)
     tbox_hash = hash_file_content(TBOX_PATH)
 
     chunks_to_run: list[dict] = []
@@ -622,7 +677,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
     alcance = f" ({len(abox_input)} bloques)"
     if chunk_ids:
         alcance = f" ({len(abox_input)} bloques filtrados: {sorted(chunk_ids)})"
-    print(f"Iniciando extraccion A-Box en modo {mode}{alcance}...")
+    print(f"Iniciando extraccion A-Box en modo {mode}{alcance} con perfil {retry_profile.name}...")
 
     if chunks_to_run:
         try:
@@ -637,6 +692,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
             semaforo,
             chunk,
             vocabulario,
+            retry_profile=retry_profile,
             semantic_vocabulary=semantic_vocabulary,
             manifest_entries=manifest_entries,
             manifest_lock=manifest_lock,
@@ -651,6 +707,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
 
     print(
         "Extraccion completada. "
+        f"Perfil: {retry_profile.name} | "
         f"Reutilizados: {reutilizados} | "
         f"Regenerados OK: {exitos} | "
         f"Marcados missing: {marcados_missing} | "
@@ -667,4 +724,4 @@ if __name__ == "__main__":
     MANIFEST_PATH = args.manifest_path
     OUTPUT_DIR = args.output_dir
     DEBUG_DIR = args.debug_dir
-    raise SystemExit(asyncio.run(orquestar_extraccion_abox(args.mode, parse_chunk_ids(args.chunk_ids))))
+    raise SystemExit(asyncio.run(orquestar_extraccion_abox(args.mode, parse_chunk_ids(args.chunk_ids), args.retry_profile)))

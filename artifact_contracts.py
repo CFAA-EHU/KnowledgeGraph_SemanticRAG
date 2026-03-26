@@ -108,6 +108,13 @@ T25_PENDING_MANUALS_INVENTORY_PATH = PROCESSED_DATA_DIR / "t25_pending_manuals_i
 T25_MANUAL_ORDER_PATH = PROCESSED_DATA_DIR / "t25_manual_order.json"
 T25_MULTI_MANUAL_INTEGRATION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_multi_manual_integration_report.json"
 T25_MULTI_MANUAL_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_multi_manual_decision_report.json"
+T25_1_8070_INSTALLATION_FAILURE_ANALYSIS_PATH = PROCESSED_DATA_DIR / "t25_1_8070_installation_failure_analysis.json"
+T25_1_QR_007_RESIDUAL_ANALYSIS_PATH = PROCESSED_DATA_DIR / "t25_1_qr_007_residual_analysis.json"
+T25_1_EXTRACTION_RETRY_POLICY_REPORT_PATH = PROCESSED_DATA_DIR / "t25_1_extraction_retry_policy_report.json"
+T25_1_8070_INSTALLATION_RETRY_RUN_REPORT_PATH = PROCESSED_DATA_DIR / "t25_1_8070_installation_retry_run_report.json"
+T25_1_QR_007_FIX_REPORT_PATH = PROCESSED_DATA_DIR / "t25_1_qr_007_fix_report.json"
+T25_1_RECOVERY_REPORT_PATH = PROCESSED_DATA_DIR / "t25_1_recovery_report.json"
+T25_1_RECOVERY_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_1_recovery_decision_report.json"
 
 GRAPHDB_BASE_URL = os.getenv("GRAPHDB_BASE_URL", "http://localhost:7200").rstrip("/")
 GRAPHDB_REPOSITORY_ID = os.getenv("GRAPHDB_REPOSITORY_ID", "semanticrag_operational_mirror")
@@ -144,6 +151,12 @@ ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
 ABOX_RETRYABLE_ERROR_CAUSES = {"rate_limit", "timeout", "network_error", "api_error"}
 ABOX_CONTENT_ERROR_CAUSES = {"ttl_invalid", "empty_response", "semantic_invalid"}
 ABOX_SEMANTIC_WARNING_CATEGORIES = {"weak_linkage", "missing_traceability"}
+ABOX_STANDARD_MAX_CONCURRENCY = 2
+ABOX_RATE_LIMIT_DRAIN_MAX_CONCURRENCY = 1
+ABOX_RATE_LIMIT_DRAIN_MAX_RETRIES = 6
+ABOX_RATE_LIMIT_DRAIN_BACKOFF_SECONDS = (15, 30, 60, 120, 240, 480)
+ABOX_RATE_LIMIT_DRAIN_JITTER_RANGE = (0.85, 1.15)
+ABOX_RATE_LIMIT_DRAIN_REQUEST_SPACING_SECONDS = 2.0
 
 OPERATIONAL_RUNTIME_CONTRACT = {
     "tbox": OPERATIONAL_TBOX_PATH,
@@ -232,6 +245,13 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "t25_manual_order": T25_MANUAL_ORDER_PATH,
     "t25_multi_manual_integration_report": T25_MULTI_MANUAL_INTEGRATION_REPORT_PATH,
     "t25_multi_manual_decision_report": T25_MULTI_MANUAL_DECISION_REPORT_PATH,
+    "t25_1_8070_installation_failure_analysis": T25_1_8070_INSTALLATION_FAILURE_ANALYSIS_PATH,
+    "t25_1_qr_007_residual_analysis": T25_1_QR_007_RESIDUAL_ANALYSIS_PATH,
+    "t25_1_extraction_retry_policy_report": T25_1_EXTRACTION_RETRY_POLICY_REPORT_PATH,
+    "t25_1_8070_installation_retry_run_report": T25_1_8070_INSTALLATION_RETRY_RUN_REPORT_PATH,
+    "t25_1_qr_007_fix_report": T25_1_QR_007_FIX_REPORT_PATH,
+    "t25_1_recovery_report": T25_1_RECOVERY_REPORT_PATH,
+    "t25_1_recovery_decision_report": T25_1_RECOVERY_DECISION_REPORT_PATH,
     "quick_ref_source": QUICK_REF_SOURCE_PATH,
     "quick_ref_density_report": QUICK_REF_DENSITY_REPORT_PATH,
     "quick_ref_language_detection_report": QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,

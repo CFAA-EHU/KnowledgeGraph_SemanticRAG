@@ -1,22 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Parametro_JOGKEYDEF a ex:Parametro ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_JOGKEYDEF
+    a ex:Parametro ;
+    rdfs:label "JOGKEYDEF" ;
     ex:textoExtracto "El significado de este parámetro es similar al parámetro máquina JOGKEYDEF." .
 
-ex:Parametro_JOGKEYDEF_Valor_1_10 a ex:Parametro ;
-    ex:identificador "1 .. 10" ;
-    ex:textoExtracto "Teclas para definir el eje a desplazar. El parámetro se define con un valor comprendido entre 1 y 10 (sin signo), que corresponde al eje lógico, según el parámetro AXISNAME." .
+ex:Parametro_AXISNAME
+    a ex:Parametro ;
+    rdfs:label "AXISNAME" ;
+    ex:textoExtracto "el número corresponde al eje lógico, según el parámetro AXISNAME." .
 
-ex:Parametro_JOGKEYDEF_Valor_1_10_masmenos a ex:Parametro ;
-    ex:identificador "+ -" ;
-    ex:textoExtracto "Teclas para definir el sentido de desplazamiento. El parámetro se define con uno de los valores \"+\" y \"-\", para indicar el sentido de desplazamiento." .
+ex:Parametro_JOGTYPE
+    a ex:Parametro ;
+    rdfs:label "JOGTYPE" ;
+    ex:textoExtracto "respetando también lo definido en el parámetro máquina JOGTYPE." .
 
-ex:Parametro_JOGKEYDEF_Valor_R a ex:Parametro ;
-    ex:identificador "R" ;
-    ex:textoExtracto "Tecla de rápido. El parámetro se define con el valor \"R\"." .
+ex:InterfazUsuario_TeclasJog
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclas de usuario configurables como teclas de jog" ;
+    ex:textoExtracto "El significado de este parámetro es similar al parámetro máquina JOGKEYDEF. Para definir el comportamiento de cada una de las teclas, se les asignará uno de los siguientes valores: [...] Las teclas de usuario así definidas se comportan de la misma manera que las teclas de jog" ;
+    ex:controla ex:Parametro_JOGKEYDEF .
 
-ex:Parametro_JOGKEYDEF_Valor_1a10_masmenos a ex:Parametro ;
-    ex:identificador "1-, 2-, 3-, .. 10- 1+, 2+, 3+, .. 10+" ;
-    ex:textoExtracto "Teclas para definir el eje y el sentido de desplazamiento. El parámetro se define con un valor comprendido entre 1- y 10+ (con signo). El signo indica el sentido de positivo (+) o negativo (-) de movimiento y el número corresponde al eje lógico, según el parámetro AXISNAME." .
+ex:Tabla_ValoresTeclasJog a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de valores para configuración de teclas de jog" ;
+    ex:textoExtracto "| Valor. | Significado. | --- | --- | 1-, 2-, 3-, .. 10- / 1+, 2+, 3+, .. 10+ | Teclas para definir el eje y el sentido de desplazamiento. [...] R | Tecla de rápido." ;
+    ex:documentadoEn ex:InterfazUsuario_TeclasJog .
 
-ex:ModoOperacion_JOG a ex:ModoOperacion ;
-    ex:textoExtracto "Las teclas de usuario así definidas se comportan de la misma manera que las teclas de jog, bien se hayan definido con signo o sin signo, y respetando también lo definido en el parámetro máquina JOGTYPE." .
+ex:ValorParametro_1
+    a ex:Parametro ;
+    rdfs:label "1-" ;
+    ex:valor "1-" ;
+    ex:textoExtracto "1-, 2-, 3-, .. 10-: Teclas para definir el eje y el sentido de desplazamiento. El signo indica el sentido negativo (-) de movimiento y el número corresponde al eje lógico" ;
+    ex:monitoreaParametro ex:Parametro_AXISNAME .
+
+ex:ValorParametro_R
+    a ex:Parametro ;
+    rdfs:label "R" ;
+    ex:valor "R" ;
+    ex:textoExtracto "R: Tecla de rápido. El parámetro se define con el valor 'R'." ;
+    ex:documentadoEn ex:Tabla_ValoresTeclasJog .

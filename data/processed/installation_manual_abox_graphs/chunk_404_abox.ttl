@@ -1,14 +1,25 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DECJERK a ex:Parametro ;
-    rdfs:label "DECJERK" ;
-    ex:textoExtracto "DECJERK Jerk de deceleración. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0.0010 a 6E+011 mm/s³. Valores posibles (2): De 0.00004 a 2.362E+010 inch/s³. Valores posibles (3): De 0.0010 a 6E+011 mm/s³. Valor por defecto: 45000.000 mm/s³ / 1771.65354 inch/s³ / 45000.000 grados/s³." ;
-    ex:valor "45000.000 mm/s³ / 1771.65354 inch/s³ / 45000.000 grados/s³" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ACCJERK a ex:Parametro ;
+ex:Parametro_DECJERK
+    a ex:Parametro ;
+    rdfs:label "DECJERK" ;
+    ex:textoExtracto "DECJERK Jerk de deceleración. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:valor "45000.000 mm/s³ / 1771.65354 inch/s³ / 45000.000 grados/s³"^^xsd:string ;
+    ex:identificador "V.[ch].MPA.DECJERK[set].xn" .
+
+ex:Parametro_ACCJERK
+    a ex:Parametro ;
     rdfs:label "ACCJERK" ;
     ex:textoExtracto "Los parámetros ACCJERK y DECJERK definen la pendiente de la aceleración y deceleración." .
 
-ex:MPA_DECJERK_set a ex:Parametro ;
-    rdfs:label "MPA.DECJERK[set].xn" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.DECJERK[set].xn" .
+ex:Sistema_ControlEjes
+    a ex:Sistema ;
+    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:tieneComponente ex:Parametro_DECJERK ;
+    ex:tieneComponente ex:Parametro_ACCJERK ;
+    ex:monitoreaParametro ex:Parametro_DECJERK ;
+    ex:monitoreaParametro ex:Parametro_ACCJERK .

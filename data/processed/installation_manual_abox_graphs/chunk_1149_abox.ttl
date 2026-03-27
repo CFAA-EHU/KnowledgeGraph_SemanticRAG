@@ -1,20 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:FiltroFrecuencia1149 a ex:Frecuencia ;
-    ex:textoExtracto "filtro de frecuencia más baja" ;
-    ex:valor "más baja" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroFILTER1149 a ex:Parametro ;
-    ex:identificador "FILTER" ;
-    ex:textoExtracto "parámetro FILTER" .
+ex:Parametro_FILTER
+    a ex:Parametro ;
+    rdfs:label "FILTER" ;
+    ex:textoExtracto "parámetro FILTER" ;
+    ex:monitoreaParametro ex:Sistema_HSC .
 
-ex:ParametroFASTFILTFREQ1149 a ex:Parametro ;
-    ex:identificador "FASTFILTFREQ" ;
-    ex:textoExtracto "parámetro FASTFILTFREQ" .
+ex:Parametro_FASTFILTFREQ
+    a ex:Parametro ;
+    rdfs:label "FASTFILTFREQ" ;
+    ex:textoExtracto "parámetro FASTFILTFREQ para el modo FAST" ;
+    ex:monitoreaParametro ex:ModoOperacion_FAST .
 
-ex:ModoHSC1149 a ex:ModoOperacion ;
-    ex:identificador "HSC" ;
-    ex:textoExtracto "modo HSC" .
+ex:ModoOperacion_HSC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC" ;
+    ex:textoExtracto "modo HSC" ;
+    ex:tieneComponente ex:Parametro_FILTER .
 
-ex:ModoFAST1149 a ex:ModoOperacion ;
-    ex:identificador "FAST" ;
-    ex:textoExtracto "modo FAST" .
+ex:ModoOperacion_FAST
+    a ex:ModoOperacion ;
+    rdfs:label "Modo FAST" ;
+    ex:textoExtracto "modo FAST" ;
+    ex:tieneComponente ex:Parametro_FASTFILTFREQ .
+
+ex:Sistema_HSC
+    a ex:Sistema ;
+    rdfs:label "Sistema de control HSC" ;
+    ex:textoExtracto "efectos de los filtros definidos mediante el parámetro FILTER se suman a los efectos de los filtros activos en HSC" ;
+    ex:tieneComponente ex:Parametro_FILTER .

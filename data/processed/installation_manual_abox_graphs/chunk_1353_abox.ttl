@@ -1,25 +1,21 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ParametroLONGAXIS a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_LONGAXIS
+    a ex:Parametro ;
     rdfs:label "LONGAXIS" ;
-    ex:textoExtracto "los parámetros máquina LONGAXIS" .
+    ex:textoExtracto "Si los parámetros máquina LONGAXIS o FACEAXIS cambian, hay que reiniciar el CNC para que los gráficos asuman la nueva configuración." .
 
-ex:ParametroFACEAXIS a ex:Parametro ;
+ex:Parametro_FACEAXIS
+    a ex:Parametro ;
     rdfs:label "FACEAXIS" ;
-    ex:textoExtracto "los parámetros máquina FACEAXIS" .
+    ex:textoExtracto "Si los parámetros máquina LONGAXIS o FACEAXIS cambian, hay que reiniciar el CNC para que los gráficos asuman la nueva configuración." .
 
-ex:SistemaCNC a ex:Maquina ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "reiniciar el CNC" .
-
-ex:TablaHerramientas a ex:Tabla ;
-    rdfs:label "tabla de herramientas" ;
-    ex:textoExtracto "según la opción elegida en la tabla de herramientas" .
-
-ex:ConfiguracionGraficos a ex:ModoOperacion ;
-    rdfs:label "configurar los gráficos para los ciclos de ejes rotativos" ;
-    ex:textoExtracto "configurar los gráficos para los ciclos de ejes rotativos" .
-
-ex:ParametroEje a ex:Parametro ;
-    rdfs:label "parámetros de eje" ;
-    ex:textoExtracto "Si no están parametrizados los ejes" .
+ex:InterfazUsuario_GraficosCNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Gráficos de configuración de ejes rotativos (CNC)" ;
+    ex:textoExtracto "Configurar los gráficos para los ciclos de ejes rotativos [...] Si no están parametrizados los ejes, la posición por defecto de la herramienta en las diferentes configuraciones de máquina será la siguiente." ;
+    ex:monitoreaParametro ex:Parametro_LONGAXIS ;
+    ex:monitoreaParametro ex:Parametro_FACEAXIS .

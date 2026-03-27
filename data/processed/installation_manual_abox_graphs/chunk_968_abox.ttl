@@ -1,41 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:LL_SUB_SPD_AUTCHG_968 a ex:TareaMantenimiento ;
-    rdfs:label "LL SUB_SPD_AUTCHG" ;
-    ex:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:LL_SUB_SPD_TO_CH2_968 a ex:TareaMantenimiento ;
-    rdfs:label "LL SUB_SPD_TO_CH2" ;
-    ex:textoExtracto "LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2." .
+ex:RutinaM06 a ex:TareaMantenimiento ;
+    rdfs:label "Rutina M06 (Cambio de herramienta)"@es ;
+    ex:textoExtracto """
+LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático.
+LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2.
+LL SUB_CH2_TO_MZ ; Dejar la herramienta de la pinza 2 en el almacén.
+$BREAK $CASE 10 ; Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal.
+LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático.
+LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1.
+LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal.
+LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual.
+LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal.
+$BREAK $ENDSWITCH ; Fin análisis del tipo de operación.
+$WHILE V.TM.MZWAIT == 1 $ENDWHILE ; Espera al gestor del almacén.
+"""@es ;
+    ex:identificador "M06" .
 
-ex:LL_SUB_CH2_TO_MZ_968 a ex:TareaMantenimiento ;
-    rdfs:label "LL SUB_CH2_TO_MZ" ;
-    ex:textoExtracto "LL SUB_CH2_TO_MZ ; Dejar la herramienta de la pinza 2 en el almacén." .
+ex:Pinza1 a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 1"@es ;
+    ex:textoExtracto "LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1."@es .
 
-ex:BREAK_CASE_10_968 a ex:TareaMantenimiento ;
-    rdfs:label "$BREAK $CASE 10" ;
-    ex:textoExtracto "$BREAK $CASE 10 ; Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal." .
+ex:Pinza2 a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 2"@es ;
+    ex:textoExtracto "LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2."@es .
 
-ex:LL_SUB_MZ_TO_CH1_968 a ex:TareaMantenimiento ;
-    rdfs:label "LL SUB_MZ_TO_CH1" ;
-    ex:textoExtracto "LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1." .
+ex:Cabezal a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal"@es ;
+    ex:textoExtracto """
+LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático.
+LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual.
+"""@es .
 
-ex:LL_SUB_CH1_TO_SPD_968 a ex:TareaMantenimiento ;
-    rdfs:label "LL SUB_CH1_TO_SPD" ;
-    ex:textoExtracto "LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal." .
+ex:AlmacenHerramientas a ex:Sistema ;
+    rdfs:label "Almacén de herramientas"@es ;
+    ex:textoExtracto """
+LL SUB_CH2_TO_MZ ; Dejar la herramienta de la pinza 2 en el almacén.
+LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1.
+$WHILE V.TM.MZWAIT == 1 $ENDWHILE ; Espera al gestor del almacén.
+"""@es .
 
-ex:LL_SUB_SPD_GMCHG_968 a ex:TareaMantenimiento ;
-    rdfs:label "LL SUB_SPD_GMCHG" ;
-    ex:textoExtracto "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
-
-ex:LL_SUB_SPD_TO_GR_968 a ex:TareaMantenimiento ;
-    rdfs:label "LL_SUB_SPD_TO_GR" ;
-    ex:textoExtracto "LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal." .
-
-ex:BREAK_ENDSWITCH_968 a ex:TareaMantenimiento ;
-    rdfs:label "$BREAK $ENDSWITCH" ;
-    ex:textoExtracto "$BREAK $ENDSWITCH ; Fin análisis del tipo de operación." .
-
-ex:WHILE_V_TM_MZWAIT_968 a ex:TareaMantenimiento ;
-    rdfs:label "$WHILE V.TM.MZWAIT == 1 $ENDWHILE" ;
-    ex:textoExtracto "$WHILE V.TM.MZWAIT == 1 $ENDWHILE ; Espera al gestor del almacén." .
+ex:RutinaM06 ex:ejecutadoPor ex:Pinza1, ex:Pinza2, ex:Cabezal ;
+           ex:tieneComponente ex:AlmacenHerramientas .

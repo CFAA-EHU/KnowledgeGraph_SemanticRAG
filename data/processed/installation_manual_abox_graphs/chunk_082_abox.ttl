@@ -1,24 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:GROUP_82_1 a ex:Parametro ;
-    rdfs:label "GROUP n" ;
-    ex:textoExtracto "GROUP n" ;
-    ex:valor "n" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MULNAXIS_82_1 a ex:Parametro ;
+ex:Parametro_MULNAXIS
+    a ex:Parametro ;
     rdfs:label "MULNAXIS" ;
-    ex:textoExtracto "MULNAXIS Número de ejes y/o cabezales que forman el grupo multieje. Valores posibles: De 2 a 8. Valor por defecto: 2. Variable asociada: (V.)MPG.MULNAXIS[nb] Parámetro incluido en la tabla MULTIAXIS // GROUP n. Este parámetro establece el número de ejes y/o cabezales que forman el grupo multieje. Como cada eje o cabezal del CNC puede tener varios sets de parámetros, el número de ejes del grupo estará limitado por los 8 sets de parámetros disponibles en regulador. Los sets de parámetros del regulador estarán repartidos entre todos los ejes y/o cabezales que forman el grupo multieje, de manera que un grupo podrá estar formado por 8 ejes con 1 set de parámetros cada uno, con un cabezal con 4 sets más 2 ejes con 2 sets cada uno, etc." ;
-    ex:identificador "(V.)MPG.MULNAXIS[nb]" .
+    ex:textoExtracto "Número de ejes y/o cabezales que forman el grupo multieje. Valores posibles: De 2 a 8. Valor por defecto: 2." ;
+    ex:valor "2-8" ;
+    ex:identificador "MPG.MULNAXIS[nb]" ;
+    ex:documentadoEn ex:Tabla_MULTIAXIS .
 
-ex:KEEPPOS_82_1 a ex:Parametro ;
-    rdfs:label "KEEPPOS n" ;
-    ex:textoExtracto "KEEPPOS n El eje desactivado mantiene su cota independientemente del eje activo." .
+ex:Parametro_MULNAXISNAME
+    a ex:Parametro ;
+    rdfs:label "MULNAXISNAME" ;
+    ex:textoExtracto "Nombre de los ejes y/o cabezales del grupo. Valores posibles: Cualquier eje Sercos del sistema, excepto ejes tándem o gantry." ;
+    ex:identificador "MPG.MULAXISNAMExn[nb]" ;
+    ex:documentadoEn ex:Tabla_MULTIAXIS .
 
-ex:MULNAXISNAME_82_1 a ex:Parametro ;
-    rdfs:label "MULNAXISNAME n" ;
-    ex:textoExtracto "MULAXISNAME n Nombre de los ejes y/o cabezales del grupo. Valores posibles: Cualquier eje Sercos del sistema, excepto ejes tándem o gantry. Variable asociada: (V.)MPG.MULNAXISNAMExn[nb] Parámetro incluido en la tabla MULTIAXIS // GROUP n. Puede formar parte de un grupo cualquier eje Sercos del sistema, excepto los que formen parte de los ejes tándem o gantry. El primer eje del grupo será el eje maestro, el que por defecto utilizará el regulador; el orden del resto de los ejes no es relevante. En el arranque del sistema, el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador." ;
-    ex:identificador "(V.)MPG.MULNAXISNAMExn[nb]" .
+ex:Parametro_KEEPPOS
+    a ex:Parametro ;
+    rdfs:label "KEEPPOS" ;
+    ex:textoExtracto "El eje desactivado mantiene su cota independientemente del eje activo." ;
+    ex:documentadoEn ex:Tabla_MULTIAXIS .
 
-ex:Tabla_MULTIAXIS_82_1 a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla MULTIAXIS // GROUP n" ;
-    ex:tieneComponente ex:MULNAXIS_82_1, ex:MULNAXISNAME_82_1, ex:KEEPPOS_82_1, ex:GROUP_82_1 .
+ex:Tabla_MULTIAXIS a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla MULTIAXIS // GROUP n" ;
+    ex:textoExtracto "Tabla que incluye parámetros de configuración de grupos multieje (MULNAXIS, MULNAXISNAME, KEEPPOS)." .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "Sistema CNC con regulador que gestiona hasta 8 sets de parámetros repartidos entre ejes y/o cabezales del grupo multieje." ;
+    ex:tieneComponente ex:Parametro_MULNAXIS ;
+    ex:tieneComponente ex:Parametro_MULNAXISNAME ;
+    ex:tieneComponente ex:Parametro_KEEPPOS .

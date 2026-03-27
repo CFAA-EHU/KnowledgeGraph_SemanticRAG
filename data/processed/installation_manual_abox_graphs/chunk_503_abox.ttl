@@ -1,25 +1,37 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_TDATA_I a ex:Parametro ;
-    ex:identificador "TDATA_I" ;
-    ex:textoExtracto "Parámetro numérico en formato entero. Valores posibles: Entre ±2147483647 Valor por defecto: 0." ;
-    ex:valor "0" .
+ex:Parametro_TDATA_I
+    a ex:Parametro ;
+    rdfs:label "TDATA_I" ;
+    ex:textoExtracto "TDATA_I n Parámetro numérico en formato entero. Valores posibles: Entre ±2147483647 Valor por defecto: 0." ;
+    ex:valor "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
 
-ex:Variable_MPK_TDATA_Ikin a ex:Parametro ;
-    ex:identificador "MPK.TDATA_Ikin[nb]" ;
-    ex:textoExtracto "Variable asociada: (V.)MPK.TDATA_Ikin[nb]" .
+ex:Parametro_MAXOFFSET_TDATA_I
+    a ex:Parametro ;
+    rdfs:label "MAX OFFSET (TDATA_I)" ;
+    ex:textoExtracto "MAX OFFSET: A definir por el OEM. Máximo offset que puede definir el usuario. [...] Variable asociada: (V.)MPK.MAXOFTDATA_Ikin[nb]" ;
+    ex:valor "A definir por el OEM" .
 
-ex:Variable_MPK_MAXOFTDATA_Ikin a ex:Parametro ;
-    ex:identificador "MPK.MAXOFTDATA_Ikin[nb]" ;
-    ex:textoExtracto "Variable asociada: (V.)MPK.MAXOFTDATA_Ikin[nb]" .
+ex:Parametro_OFFSET_TDATA_I
+    a ex:Parametro ;
+    rdfs:label "OFFSET (TDATA_I)" ;
+    ex:textoExtracto "OFFSET: A definir por el usuario. Offset del parámetro. [...] Los valores de offset definidos por el usuario se sumarán a su parámetro TDATA correspondiente." ;
+    ex:valor "A definir por el usuario" .
 
-ex:Sistema_Cinematica a ex:Sistema ;
-    ex:identificador "#KIN ID" ;
-    ex:textoExtracto "activar la cinemática (#KIN ID) o el RTCP" .
+ex:Parametro_VALUE_TDATA_I
+    a ex:Parametro ;
+    rdfs:label "VALUE (TDATA_I)" ;
+    ex:textoExtracto "VALUE: A definir por el OEM. Valor del parámetro." ;
+    ex:valor "A definir por el OEM" .
 
-ex:Sistema_RTCP a ex:Sistema ;
-    ex:identificador "RTCP" ;
-    ex:textoExtracto "activar la cinemática (#KIN ID) o el RTCP" .
+ex:Tabla_ConfiguracionCinematica a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de parámetros cinemáticos" ;
+    ex:textoExtracto "En la columna 'Value' el fabricante determina el valor del parámetro, que podrá ser modificado por el usuario mediante la columna 'OFFSET' o su variable asociada. [...] Para cada parámetro hay que definir los siguientes campos." ;
+    ex:tieneComponente ex:Parametro_VALUE_TDATA_I ;
+    ex:tieneComponente ex:Parametro_MAXOFFSET_TDATA_I ;
+    ex:tieneComponente ex:Parametro_OFFSET_TDATA_I ;
+    ex:tieneComponente ex:Parametro_TDATA_I .

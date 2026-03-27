@@ -1,21 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:LUBRENA ex:textoExtracto "LUBRENA(axis)" ;
-    rdfs:label "LUBRENA(axis)" ;
-    a ex:Parametro .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:LUBROK ex:textoExtracto "LUBROK(axis)" ;
-    rdfs:label "LUBROK(axis)" ;
-    a ex:Parametro .
+ex:Senal_LUBRENA
+    a               ex:Parametro ;
+    rdfs:label      "LUBRENA(axis)" ;
+    ex:textoExtracto "La marca LUBRENA indica si se desea esta prestación (=1), o no (=0). Con LUBRENA a (=1) el CNC actúa del" ;
+    ex:identificador "LUBRENA" .
 
-ex:LUBR ex:textoExtracto "LUBR(axis)" ;
-    rdfs:label "LUBR(axis)" ;
-    a ex:Sensor .
+ex:Senal_LUBROK
+    a               ex:Parametro ;
+    rdfs:label      "LUBROK(axis)" ;
+    ex:textoExtracto "LUBRENA(axis) LUBROK(axis) Estas marcas junto con la señal de consulta de ejes LUBR(axis) se deben utilizar para el engrase de los ejes." ;
+    ex:identificador "LUBROK" .
 
-ex:PARK_UNPARK_420 ex:textoExtracto "PARK(axis) UNPARK(axis)" ;
-    rdfs:label "PARK(axis) UNPARK(axis)" ;
-    a ex:ModoOperacion .
+ex:Senal_LUBR
+    a               ex:Parametro ;
+    rdfs:label      "LUBR(axis)" ;
+    ex:textoExtracto "Estas marcas junto con la señal de consulta de ejes LUBR(axis) se deben utilizar para el engrase de los ejes." ;
+    ex:identificador "LUBR" .
 
-ex:Pagina_420 ex:textoExtracto "Ver en la página \"PARK(axis) UNPARK(axis)\" 420. LUBRENA(axis) LUBROK(axis) Estas marcas junto con la señal de consulta de ejes LUBR(axis) se deben utilizar para el en la página 420. engrase de los ejes. Ver \"LUBR(axis)\" La marca LUBRENA indica si se desea esta prestación (=1), o no (=0). Con LUBRENA a (=1) el CNC actúa del" ;
-    rdfs:label "Página 420" ;
-    a ex:Pagina .
+ex:Tarea_EngraseEjes
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Engrase de ejes" ;
+    ex:textoExtracto "Estas marcas junto con la señal de consulta de ejes LUBR(axis) se deben utilizar para el engrase de los ejes." ;
+    ex:requiereMantenimiento ex:Senal_LUBR, ex:Senal_LUBRENA, ex:Senal_LUBROK .
+
+ex:Pagina_420
+    a               ex:Pagina ;
+    rdfs:label      "Página 420 (Señales PARK/UNPARK y engrase)" ;
+    ex:textoExtracto "Ver en la página 'PARK(axis) UNPARK(axis)' 420. LUBRENA(axis) LUBROK(axis) Estas marcas junto con la señal de consulta de ejes LUBR(axis) se deben utilizar para el en la página 420." ;
+    ex:identificador "420" ;
+    ex:documentadoEn ex:Manual_TornoCNC .

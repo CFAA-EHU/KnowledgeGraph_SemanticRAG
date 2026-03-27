@@ -1,67 +1,28 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SERBRATE a ex:Parametro ;
-    rdfs:label "SERBRATE" ;
-    ex:identificador "(V.)MPG.SERBRATE" ;
-    ex:textoExtracto "SERBRATE Velocidad de transmisión de Sercos. Valores posibles: 2/4/8/16 Mbps (megabits por segundo). Valor por defecto: 4 Mbps. Variable asociada: (V.)MPG.SERBRATE Este parámetro indica la velocidad de transmisión de Sercos que se utiliza para la comunicación con los reguladores y módulos RCS-S (contadora Sercos). Todos los elementos del anillo Sercos deben tener el mismo valor. Las velocidades a 8 y 16 Mbps requieren de una placa Sercos que pueda trabajar a estas velocidades; en caso contrario la velocidad estará limitada a 2 y 4 Mbps. i La comunicación Sercos a 8 y 16 MHz requiere una versión del regulador V6.05 o superior." ;
-    ex:valor "4 Mbps" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SERPOWSE a ex:Parametro ;
-    rdfs:label "SERPOWSE" ;
-    ex:identificador "(V.)MPG.SERPOWSE" ;
-    ex:textoExtracto "SERPOWSE Potencia óptica de Sercos. Valores posibles: De 1 a 6 (placa Sercos I) / de 1 a 8 (placa Sercos II). Valor por defecto: 4 (placa Sercos I) / 2 (placa Sercos II). Este parámetro define la potencia Sercos o intensidad de luz que va por la fibra óptica. El valor de la potencia óptica depende de la longitud total del cable utilizado. Personalizar este parámetro con el mismo valor que utilizan los reguladores. Utilizar los siguientes valores orientativos. El asignar otros valores, por ejemplo valor 6 para una longitud de 3 m, puede ocasionar errores de comunicación por distorsión de la señal en fibra óptica. Valores recomendados (placa Sercos I). | SERPOWSE | Longitud del cable. | 2 | Menor de 7 metros. | 4 | Entre 7 y 15 metros. | 6 | Mayor de 15 metros. Valores recomendados (placa Sercos II). | SERPOWSE | Longitud del cable. | Tipo de cable recomendado. | 1 a 4 | Menor de 15 metros." ;
-    ex:valor "4 (placa Sercos I) / 2 (placa Sercos II)" .
+ex:Parametro_SERBRATE
+    a ex:Parametro ;
+    rdfs:label "SERBRATE (Velocidad de transmisión de Sercos)" ;
+    ex:textoExtracto "SERBRATE Velocidad de transmisión de Sercos. Valores posibles: 2/4/8/16 Mbps (megabits por segundo). Valor por defecto: 4 Mbps." ;
+    ex:valor "4 Mbps" ;
+    ex:identificador "V.MPG.SERBRATE" .
 
-ex:PlacaSercosI a ex:ComponenteElectrico ;
-    rdfs:label "placa Sercos I" ;
-    ex:textoExtracto "placa Sercos I" .
+ex:Parametro_SERPOWSE
+    a ex:Parametro ;
+    rdfs:label "SERPOWSE (Potencia óptica de Sercos)" ;
+    ex:textoExtracto "SERPOWSE Potencia óptica de Sercos. Valores posibles: De 1 a 6 (placa Sercos I) / de 1 a 8 (placa Sercos II). Valor por defecto: 4 (placa Sercos I) / 2 (placa Sercos II)." ;
+    ex:valor "4 (placa Sercos I) / 2 (placa Sercos II)" ;
+    ex:identificador "V.MPG.SERPOWSE" .
 
-ex:PlacaSercosII a ex:ComponenteElectrico ;
-    rdfs:label "placa Sercos II" ;
-    ex:textoExtracto "placa Sercos II" .
+ex:Tabla_RecomendacionesSERPOWSE_PlacaI a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Valores recomendados para SERPOWSE (placa Sercos I)" ;
+    ex:textoExtracto "| SERPOWSE | Longitud del cable. | --- | --- | 2 | Menor de 7 metros. | 4 | Entre 7 y 15 metros. | 6 | Mayor de 15 metros." .
 
-ex:ReguladorSercos a ex:ComponenteElectrico ;
-    rdfs:label "regulador" ;
-    ex:textoExtracto "regulador" .
-
-ex:ModuloRCSS a ex:ComponenteElectrico ;
-    rdfs:label "módulos RCS-S (contadora Sercos)" ;
-    ex:textoExtracto "módulos RCS-S (contadora Sercos)" .
-
-ex:AnilloSercos a ex:Sistema ;
-    rdfs:label "anillo Sercos" ;
-    ex:textoExtracto "Todos los elementos del anillo Sercos deben tener el mismo valor." .
-
-ex:TablaSERPOWSEI a ex:Tabla ;
-    rdfs:label "Tabla de valores recomendados SERPOWSE (placa Sercos I)" ;
-    ex:textoExtracto "Valores recomendados (placa Sercos I). | SERPOWSE | Longitud del cable. | 2 | Menor de 7 metros. | 4 | Entre 7 y 15 metros. | 6 | Mayor de 15 metros." ;
-    ex:compuestoPor ex:SERPOWSE_2m, ex:SERPOWSE_4m, ex:SERPOWSE_6m .
-
-ex:SERPOWSE_2m a ex:Parametro ;
-    rdfs:label "SERPOWSE 2" ;
-    ex:valor "2" ;
-    ex:textoExtracto "2 | Menor de 7 metros." .
-
-ex:SERPOWSE_4m a ex:Parametro ;
-    rdfs:label "SERPOWSE 4" ;
-    ex:valor "4" ;
-    ex:textoExtracto "4 | Entre 7 y 15 metros." .
-
-ex:SERPOWSE_6m a ex:Parametro ;
-    rdfs:label "SERPOWSE 6" ;
-    ex:valor "6" ;
-    ex:textoExtracto "6 | Mayor de 15 metros." .
-
-ex:TablaSERPOWSEII a ex:Tabla ;
-    rdfs:label "Tabla de valores recomendados SERPOWSE (placa Sercos II)" ;
-    ex:textoExtracto "Valores recomendados (placa Sercos II). | SERPOWSE | Longitud del cable. | Tipo de cable recomendado. | 1 a 4 | Menor de 15 metros." ;
-    ex:compuestoPor ex:SERPOWSE_1a4 .
-
-ex:SERPOWSE_1a4 a ex:Parametro ;
-    rdfs:label "SERPOWSE 1 a 4" ;
-    ex:valor "1 a 4" ;
-    ex:textoExtracto "1 a 4 | Menor de 15 metros." .
-
-ex:ReguladorV6_05 a ex:ComponenteElectrico ;
-    rdfs:label "regulador V6.05" ;
-    ex:textoExtracto "versión del regulador V6.05 o superior" .
+ex:Tabla_RecomendacionesSERPOWSE_PlacaII a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Valores recomendados para SERPOWSE (placa Sercos II)" ;
+    ex:textoExtracto "| SERPOWSE | Longitud del cable. | Tipo de cable recomendado. | --- | --- | --- | 1 a 4 | Menor de 15 metros." .

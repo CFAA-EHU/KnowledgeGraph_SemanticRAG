@@ -1,16 +1,23 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:G500 a ex:Parametro ;
-    rdfs:label "G500" ;
-    ex:identificador "G500" ;
-    ex:textoExtracto "G500 | Anulación de HSC." ;
-    ex:valor "Anulación de HSC." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:G501 a ex:Parametro ;
-    rdfs:label "G501" ;
-    ex:identificador "G501" ;
-    ex:textoExtracto "G501 | Activación de HSC para operaciones de desbaste." ;
-    ex:valor "Activación de HSC para operaciones de desbaste." .
+ex:Subrutina_G500
+    a                   ex:ModoOperacion ;
+    rdfs:label          "Subrutina G500" ;
+    ex:identificador    "G500" ;
+    ex:textoExtracto    "G500 | Anulación de HSC."@es .
 
-ex:SubrutinaUsuario a ex:TareaMantenimiento ;
-    ex:textoExtracto "El CNC permite al usuario definir hasta 100 subrutinas, comunes a todos los canales, y que estarán asociadas a las funciones G500 a G599, de manera que cuando el CNC ejecute una de estas funciones, ejecutará la subrutina que tiene asociada. Estas subrutinas OEM se podrán ejecutar de forma no-modal o de forma modal, y además permite inicializar los parámetros locales de la subrutina. Estas subrutinas se cargan en la memoria RAM la primera vez que se ejecutan. Si no hubiera sitio en RAM, el CNC dará un warning y ejecutará la subrutina desde el disco. Cuando finaliza el programa (M30), si ningún otro canal está ejecutando las subrutinas, el CNC las borra de la memoria RAM. De esta forma, si una subrutina de usuario es editada o modificada, el CNC asume los cambios la próxima vez que la ejecute." .
+ex:Subrutina_G501
+    a                   ex:ModoOperacion ;
+    rdfs:label          "Subrutina G501" ;
+    ex:identificador    "G501" ;
+    ex:textoExtracto    "G501 | Activación de HSC para operaciones de desbaste."@es .
+
+ex:Tabla_SubrutinasOEM a ex:Tabla ;
+     a                   ex:Tabla ;
+    rdfs:label          "Tabla de subrutinas OEM suministradas por Fagor" ;
+    ex:textoExtracto    "Subrutinas suministradas por Fagor. | Subrutina. | Significado. | --- | --- | G500 | Anulación de HSC. | G501 | Activación de HSC para operaciones de desbaste."@es ;
+    ex:documentadoEn    ex:Subrutina_G500 ,
+                        ex:Subrutina_G501 .

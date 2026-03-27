@@ -1,26 +1,30 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Torno ex:textoExtracto "Cuando en un torno se vayan a emplear herramientas de fresadora, se puede cambiar el eje de compensación longitudinal con la sentencia #TOOL AX o la función G20. Configuración de ejes tipo \"plano\". Intercambio de ejes. Se permite el intercambio de ejes, pero se debe tener en cuenta que el comportamiento anterior se mantiene; es decir, todo el tratamiento explicado anteriormente se mantiene para los ejes primero y segundo del canal que resulten del intercambio." ;
-    a ex:Maquina ;
-    rdfs:label "torno" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeCompensacionLongitudinal ex:textoExtracto "eje de compensación longitudinal" ;
-    a ex:ComponenteMecanico ;
-    rdfs:label "eje de compensación longitudinal" .
+ex:ConfiguracionEjesCanal_183
+    a               ex:ModoOperacion ;
+    rdfs:label      "Configuración de ejes tipo 'plano' (intercambio de ejes)"@es ;
+    ex:textoExtracto """
+    Configuración de ejes tipo "plano". Intercambio de ejes.
+    Se permite el intercambio de ejes, pero se debe tener en cuenta que el comportamiento anterior se mantiene;
+    es decir, todo el tratamiento explicado anteriormente se mantiene para los ejes primero y segundo del canal que resulten del intercambio.
+    """@es ;
+    ex:identificador "2.4.2" .
 
-ex:Sentencia_TOOL_AX ex:textoExtracto "sentencia #TOOL AX" ;
-    a ex:InterfazUsuario ;
-    rdfs:label "#TOOL AX" .
+ex:Sentencia_TOOL_AX
+    a               ex:Parametro ;
+    rdfs:label      "#TOOL AX" ;
+    ex:textoExtracto "sentencia #TOOL AX"@es ;
+    ex:valor        "#TOOL AX" .
 
 ex:Funcion_G20 a ex:Tabla ;
-    ex:textoExtracto "función G20" ;
-    a ex:ModoOperacion ;
-    rdfs:label "G20" .
+     a               ex:Parametro ;
+    rdfs:label      "G20" ;
+    ex:textoExtracto "función G20"@es ;
+    ex:valor        "G20" .
 
-ex:EjePrimeroCanal ex:textoExtracto "ejes primero del canal" ;
-    a ex:ComponenteMecanico ;
-    rdfs:label "eje primero del canal" .
-
-ex:EjeSegundoCanal ex:textoExtracto "ejes segundo del canal" ;
-    a ex:ComponenteMecanico ;
-    rdfs:label "eje segundo del canal" .
+ex:ConfiguracionEjesCanal_183
+    ex:habilitadoPor ex:Sentencia_TOOL_AX ;
+    ex:habilitadoPor ex:Funcion_G20 .

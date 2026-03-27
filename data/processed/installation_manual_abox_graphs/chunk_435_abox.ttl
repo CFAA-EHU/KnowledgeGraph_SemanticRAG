@@ -1,29 +1,55 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ErrorSeguimiento a ex:Parametro ;
-    rdfs:label "FLWEMONITOR" ;
-    ex:identificador "(V.)[ch].MPA.FLWEMONITOR[set].xn" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: OFF / Standard / Lineal. Valor por defecto: Standard." ;
-    ex:valor "Standard" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ErrorSeguimiento a ex:Parametro ;
-    rdfs:label "MINFLWE" ;
-    ex:identificador "MINFLWE" ;
-    ex:textoExtracto "Error de seguimiento máximo en parado. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles (1): De 0.001 a 99999.9999 mm. Valores posibles (2): De 0.001 a 3937.00787 inch. Valores posibles (3): De 0.001 a 99999.9999 grados." ;
-    ex:valor "0.001 a 99999.9999 mm / 0.001 a 3937.00787 inch / 0.001 a 99999.9999 grados" .
+ex:ErrorSeguimiento
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Error de seguimiento" ;
+    ex:textoExtracto "Se denomina error de seguimiento a la diferencia entre la posición teórica y real del eje." .
 
-ex:ErrorSeguimiento a ex:Parametro ;
-    rdfs:label "MAXFLWE" ;
+ex:Parametro_FLWEMONITOR
+    a               ex:Parametro ;
+    rdfs:label      "FLWEMONITOR" ;
+    ex:identificador "FLWEMONITOR" ;
+    ex:textoExtracto "FLWEMONITOR Tipo de monitorización del error de seguimiento. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: OFF / Standard / Lineal. Valor por defecto: Standard." ;
+    ex:valor         "Standard" .
+
+ex:Parametro_MAXFLWE
+    a               ex:Parametro ;
+    rdfs:label      "MAXFLWE" ;
     ex:identificador "MAXFLWE" ;
-    ex:textoExtracto "Error de seguimiento máximo en movimiento. Parámetro asociado a la monitorización Standard del error de seguimiento." ;
-    ex:valor "No especificado en el fragmento" .
+    ex:textoExtracto "El tipo de monitorización \"Standard\" efectúa una supervisión constante del error de seguimiento, generándose un error cuando se supera el valor indicado por el parámetro MAXFLWE, si el eje está en movimiento." .
 
-ex:ErrorSeguimiento a ex:Parametro ;
-    rdfs:label "FEDYNFAC" ;
+ex:Parametro_MINFLWE
+    a               ex:Parametro ;
+    rdfs:label      "MINFLWE" ;
+    ex:identificador "MINFLWE" ;
+    ex:textoExtracto "Error de seguimiento máximo en parado. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles (1): De 0.001 a 99999.9999 mm. Valores posibles (2): De 0.001 a 3937.00787 inch. Valores posibles (3): De 0.001 a 99999.9999 grados." .
+
+ex:Parametro_FEDYNFAC
+    a               ex:Parametro ;
+    rdfs:label      "FEDYNFAC" ;
     ex:identificador "FEDYNFAC" ;
-    ex:textoExtracto "Parámetro que fija el porcentaje de error de seguimiento permitido en la monitorización Lineal." ;
-    ex:valor "No especificado en el fragmento" .
+    ex:textoExtracto "El tipo de monitorización \"Lineal\" efectúa una supervisión dinámica que permite un error de seguimiento porcentual. El porcentaje lo fija el parámetro FEDYNFAC." .
 
-ex:ErrorSeguimiento a ex:Parametro ;
-    rdfs:label "Error de seguimiento" ;
-    ex:textoExtracto "Diferencia entre la posición teórica y real del eje. El error de seguimiento disminuye al aumentar la ganancia del eje. Cuanto más parecidos (iguales) sean los errores de seguimiento de los ejes que interpolan entre sí, mejor será el mecanizado de los tramos curvos (interpolaciones circulares)." .
+ex:AvisoSeguridad_DeshabilitacionFLWEMONITOR
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Deshabilitación de monitorización de error de seguimiento" ;
+    ex:textoExtracto "Si se desactiva esta vigilancia, el CNC muestra en el encendido un mensaje indicando que dicha seguridad está deshabilitada. Esta situación únicamente debería permitirse durante la puesta a punto; una vez finalizada la puesta a punto, esta vigilancia debe estar habilitada." .
+
+ex:Parametro_FLWEMONITOR
+    ex:monitoreaParametro ex:ErrorSeguimiento ;
+    ex:solucionaFallo     ex:ErrorSeguimiento .
+
+ex:Parametro_MAXFLWE
+    ex:monitoreaParametro ex:ErrorSeguimiento .
+
+ex:Parametro_MINFLWE
+    ex:monitoreaParametro ex:ErrorSeguimiento .
+
+ex:Parametro_FEDYNFAC
+    ex:monitoreaParametro ex:ErrorSeguimiento .
+
+ex:AvisoSeguridad_DeshabilitacionFLWEMONITOR
+    ex:mitigaRiesgo ex:ErrorSeguimiento .

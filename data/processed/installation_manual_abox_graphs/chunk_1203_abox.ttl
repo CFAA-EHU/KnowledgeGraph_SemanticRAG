@@ -1,40 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:M06 a ex:ModoOperacion ;
-    rdfs:label "M06" ;
-    ex:textoExtracto "Para configurar adecuadamente los almacenes y el cambio de herramienta se debe programar la rutina asociada a la herramienta y a la función M06. La función M06 ejecuta el cambio de herramienta." ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FuncionM06 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función M06 (Cambio de herramienta)" ;
+    ex:textoExtracto "La función M06 ejecuta el cambio de herramienta." ;
     ex:identificador "M06" .
 
-ex:SubrutinaCambioHerramienta a ex:TareaMantenimiento ;
-    ex:textoExtracto "Se recomienda tener personalizada esta función en la tabla de funciones \"M\" de forma que ejecute la subrutina correspondiente al cambiador de herramientas instalado en la máquina. Dentro de la subrutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta." .
+ex:SubrutinaCambioHerramienta
+    a ex:TareaMantenimiento ;
+    rdfs:label "Subrutina asociada al cambio de herramienta" ;
+    ex:textoExtracto "La rutina asociada a la herramienta y a la función M06 [...] Dentro de la subrutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta." ;
+    ex:ejecutadoPor ex:FuncionM06 .
 
 ex:TablaFuncionesM a ex:Tabla ;
-    ex:textoExtracto "Se recomienda tener personalizada esta función en la tabla de funciones \"M\" de forma que ejecute la subrutina correspondiente al cambiador de herramientas instalado en la máquina." ;
-    ex:detalladoEnEsquema ex:SubrutinaCambioHerramienta .
+     a ex:Tabla ;
+    rdfs:label "Tabla de funciones 'M'" ;
+    ex:textoExtracto "Se recomienda tener personalizada esta función en la tabla de funciones 'M' de forma que ejecute la subrutina correspondiente al cambiador de herramientas instalado en la máquina." ;
+    ex:documentadoEn ex:ManualCNC .
 
-ex:CambiadorHerramientas a ex:Sistema ;
-    ex:textoExtracto "la subrutina correspondiente al cambiador de herramientas instalado en la máquina" .
+ex:AlmacenHerramientasTorreta
+    a ex:ComponenteMecanico ;
+    rdfs:label "Almacén de herramientas tipo torreta" ;
+    ex:textoExtracto "En un almacén tipo torreta, se recomienda que la rutina asociada a T incluya la función M06." .
 
-ex:CNC a ex:Sistema ;
-    ex:textoExtracto "el CNC indica al gestor que debe comenzar el cambio de herramienta" .
+ex:SistemaCambioHerramienta
+    a ex:Sistema ;
+    rdfs:label "Sistema de cambio de herramienta" ;
+    ex:textoExtracto "Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc)." ;
+    ex:compuestoPor ex:AlmacenHerramientasTorreta ;
+    ex:controla ex:FuncionM06 .
 
-ex:AlmacenHerramientas a ex:Componente ;
-    ex:textoExtracto "Cuando no hay almacén de herramientas, la función M6 se comporta como una función normal, no ejecuta nada relacionado con el cambio de herramienta" .
-
-ex:AlmacenTipoTorreta a ex:Componente ;
-    ex:textoExtracto "En un almacén tipo torreta, se recomienda que la rutina asociada a T incluya la función M06. Cuando el CNC selecciona una herramienta, la rutina asociada a T ejecuta la función M06 (cambio de herramienta)." .
-
-ex:GestorCambioHerramienta a ex:Sistema ;
-    ex:textoExtracto "el CNC indica al gestor que debe comenzar el cambio de herramienta" .
-
-ex:PLC a ex:Sistema ;
-    ex:textoExtracto "Se aconseja incluir la gestión del cambio de herramienta en la rutina asociada a M06 y dejar como labor del PLC el control de los dispositivos externos." .
-
-ex:BrazoCambiador a ex:Componente ;
-    ex:textoExtracto "Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc)" .
-
-ex:GiroAlmacen a ex:Componente ;
-    ex:textoExtracto "Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc)" .
-
-ex:DesplazamientoAlmacen a ex:Componente ;
-    ex:textoExtracto "Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc)" .
+ex:ManualCNC
+    a ex:Manual ;
+    rdfs:label "Manual de programación CNC" ;
+    ex:textoExtracto "Para configurar adecuadamente los almacenes y el cambio de herramienta se debe programar la rutina asociada a la herramienta y a la función M06." .

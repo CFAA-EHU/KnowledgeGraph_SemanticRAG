@@ -1,44 +1,80 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TecladoJOG_1242 a ex:InterfazUsuario ;
-    ex:textoExtracto "El teclado de JOG puede estar compuesto por los siguientes tipos de teclas." ;
-    ex:tieneComponente ex:TeclaJOG_Xmas_1242, ex:TeclaJOG_X_1242, ex:TeclaJOG_mas_1242, ex:TeclaJOG_rapido_1242 .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TeclaJOG_Xmas_1242 a ex:ComponenteElectrico ;
-    rdfs:label "Tecla para definir el eje y el sentido de desplazamiento (X+)" ;
-    ex:textoExtracto "Teclas para definir el eje y el sentido de desplazamiento. X+ El parámetro se define con un valor comprendido entre -1 y +16 (con signo)." ;
-    ex:valor "valor entre -1 y +16 (con signo)" .
+ex:TecladoJOG_1242
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclado de JOG"@es ;
+    ex:textoExtracto "El teclado de JOG puede estar compuesto por los siguientes tipos de teclas. Ambos tipos de teclas se pueden definir en el mismo teclado de JOG."@es ;
+    ex:tieneComponente ex:Tecla_Xmas_1242, ex:Tecla_X_1242, ex:Tecla_Sentido_1242, ex:Tecla_Rapido_1242 ;
+    ex:compuestoPor ex:Tabla_ParametrosTeclasUsuario_1242 .
 
-ex:TeclaJOG_X_1242 a ex:ComponenteElectrico ;
-    rdfs:label "Tecla para definir el eje a desplazar (X)" ;
-    ex:textoExtracto "Teclas para definir el eje a desplazar. X El parámetro se define con un valor comprendido entre 1 y 16 (sin signo)." ;
-    ex:valor "valor entre 1 y 16 (sin signo)" .
+ex:Tecla_Xmas_1242
+    a ex:Componente ;
+    rdfs:label "Tecla X+"@es ;
+    ex:textoExtracto "Teclas para definir el eje y el sentido de desplazamiento. [...] El parámetro se define con un valor comprendido entre -1 y +16 (con signo)."@es ;
+    ex:monitoreaParametro ex:Parametro_EjeLogicoConSigno_1242 .
 
-ex:TeclaJOG_mas_1242 a ex:ComponenteElectrico ;
-    rdfs:label "Tecla para definir el sentido de desplazamiento (+/-)" ;
-    ex:textoExtracto "Teclas para definir el sentido de desplazamiento. + El parámetro se define con uno de los valores '+' y '-', para indicar el sentido de desplazamiento." ;
-    ex:valor "valor '+' o '-'" .
+ex:Tecla_X_1242
+    a ex:Componente ;
+    rdfs:label "Tecla X"@es ;
+    ex:textoExtracto "Teclas para definir el eje a desplazar. [...] El parámetro se define con un valor comprendido entre 1 y 16 (sin signo)."@es ;
+    ex:monitoreaParametro ex:Parametro_EjeLogico_1242 .
 
-ex:TeclaJOG_rapido_1242 a ex:ComponenteElectrico ;
-    rdfs:label "Tecla de rápido" ;
-    ex:textoExtracto "Tecla de rápido. El parámetro se define con el valor 'R'." ;
-    ex:valor "valor 'R'" .
+ex:Tecla_Sentido_1242
+    a ex:Componente ;
+    rdfs:label "Tecla +"@es ;
+    ex:textoExtracto "Teclas para definir el sentido de desplazamiento. [...] El parámetro se define con uno de los valores '+' y '-', para indicar el sentido de desplazamiento."@es ;
+    ex:monitoreaParametro ex:Parametro_SentidoDesplazamiento_1242 .
 
-ex:TablaConfiguracionTeclasJOG_1242 a ex:Tabla ;
-    ex:textoExtracto "Tablas para configurar las teclas de usuario como teclas de jog. USERKEYDEF USERKEYBD2DEF ... USERKEYBD8DEF Estos parámetros permiten configurar las teclas de usuario de cada panel como teclas de jog." ;
-    ex:compuestoPor ex:Parametro_USERKEYDEF_1242, ex:Parametro_USERKEYBD2DEF_1242, ex:Parametro_USERKEYBD8DEF_1242 .
+ex:Tecla_Rapido_1242
+    a ex:Componente ;
+    rdfs:label "Tecla de rápido"@es ;
+    ex:textoExtracto "Tecla de rápido. El parámetro se define con el valor 'R'."@es ;
+    ex:monitoreaParametro ex:Parametro_ModoRapido_1242 .
 
-ex:Parametro_USERKEYDEF_1242 a ex:Parametro ;
+ex:Parametro_EjeLogicoConSigno_1242
+    a ex:Parametro ;
+    rdfs:label "Parámetro de eje lógico (con signo)"@es ;
+    ex:textoExtracto "El parámetro se define con un valor comprendido entre -1 y +16 (con signo). El signo indica el sentido positivo (+) o negativo (-) y el número corresponde al eje lógico, según el parámetro AXISNAME."@es ;
+    ex:valor "-1 a +16 (entero con signo)"@es .
+
+ex:Parametro_EjeLogico_1242
+    a ex:Parametro ;
+    rdfs:label "Parámetro de eje lógico"@es ;
+    ex:textoExtracto "El parámetro se define con un valor comprendido entre 1 y 16 (sin signo), que corresponde al eje lógico, según el parámetro AXISNAME."@es ;
+    ex:valor "1 a 16 (entero sin signo)"@es .
+
+ex:Parametro_SentidoDesplazamiento_1242
+    a ex:Parametro ;
+    rdfs:label "Parámetro de sentido de desplazamiento"@es ;
+    ex:textoExtracto "El parámetro se define con uno de los valores '+' y '-', para indicar el sentido de desplazamiento."@es ;
+    ex:valor "[+, -]"@es .
+
+ex:Parametro_ModoRapido_1242
+    a ex:Parametro ;
+    rdfs:label "Parámetro de modo rápido"@es ;
+    ex:textoExtracto "El parámetro se define con el valor 'R'."@es ;
+    ex:valor "R"@es .
+
+ex:Tabla_ParametrosTeclasUsuario_1242 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Configuración de teclas de usuario como teclas de JOG"@es ;
+    ex:textoExtracto "USERKEYDEF, USERKEYBD2DEF, ... USERKEYBD8DEF | Tablas para configurar las teclas de usuario como teclas de jog."@es ;
+    ex:documentadoEn ex:TecladoJOG_1242 ;
+    ex:tieneComponente ex:Parametro_USERKEYDEF_1242, ex:Parametro_USERKEYBD2DEF_1242 .
+
+ex:Parametro_USERKEYDEF_1242
+    a ex:Parametro ;
     rdfs:label "USERKEYDEF" ;
+    ex:textoExtracto "El parámetro USERKEYDEF corresponde al primer panel de jog."@es ;
     ex:identificador "USERKEYDEF" ;
-    ex:textoExtracto "El parámetro USERKEYDEF corresponde al primer panel de jog, USERKEYBD2DEF al segundo y así sucesivamente." .
+    ex:valor "Tabla de configuración para teclas de usuario (panel 1)"@es .
 
-ex:Parametro_USERKEYBD2DEF_1242 a ex:Parametro ;
+ex:Parametro_USERKEYBD2DEF_1242
+    a ex:Parametro ;
     rdfs:label "USERKEYBD2DEF" ;
+    ex:textoExtracto "USERKEYBD2DEF al segundo [panel de jog]."@es ;
     ex:identificador "USERKEYBD2DEF" ;
-    ex:textoExtracto "El parámetro USERKEYDEF corresponde al primer panel de jog, USERKEYBD2DEF al segundo y así sucesivamente." .
-
-ex:Parametro_USERKEYBD8DEF_1242 a ex:Parametro ;
-    rdfs:label "USERKEYBD8DEF" ;
-    ex:identificador "USERKEYBD8DEF" ;
-    ex:textoExtracto "El parámetro USERKEYDEF corresponde al primer panel de jog, USERKEYBD2DEF al segundo y así sucesivamente." .
+    ex:valor "Tabla de configuración para teclas de usuario (panel 2)"@es .

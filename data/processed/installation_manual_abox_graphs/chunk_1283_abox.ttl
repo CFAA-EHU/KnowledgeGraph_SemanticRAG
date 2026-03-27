@@ -1,29 +1,37 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ArchivoBat_CNC8070L a ex:ComponenteElectrico ;
-    rdfs:label "CNC8070L.bat" ;
-    ex:textoExtracto "El CNC arranca a través de un archivo bat (por ejemplo CNC8070L.bat). En este archivo bat, añadir la línea \"start c:\\Lantek\\Expert\\Expert.exe\"." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Expert_exe a ex:ComponenteElectrico ;
-    rdfs:label "Expert.exe" ;
-    ex:textoExtracto "añadir la línea \"start c:\\Lantek\\Expert\\Expert.exe\". El software del nesting arranca a continuación del CNC." .
+ex:ConfiguracionArranqueNesting_1283
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Configuración de arranque del nesting (pág. 691)"@es ;
+    ex:textoExtracto      "Hay tres formas diferentes para arrancar el nesting. [...] Para arrancar el nesting, ir al modo Diagnosis, y en el menú horizontal seleccionar Apps > Lantek."@es ;
+    ex:tieneComponente    ex:ArchivoBAT_CNC8070L ,
+                          ex:TeclaUSERKEY ,
+                          ex:ArchivoConfig_AppsINI ;
+    ex:ilustradoEn        ex:Pagina_691 .
 
-ex:ParametroMaquina_HMI a ex:Parametro ;
-    rdfs:label "USERKEY" ;
-    ex:textoExtracto "En los parámetros máquina HMI, configurar la tecla USERKEY como \"Aplicación\" y asignarle el path \"c:\\Lantek\\Expert\\Expert.exe\"." .
+ex:ArchivoBAT_CNC8070L
+    a                     ex:Componente ;
+    rdfs:label            "Archivo BAT (ej. CNC8070L.bat)"@es ;
+    ex:identificador      "CNC8070L.bat" ;
+    ex:textoExtracto      "El CNC arranca a través de un archivo bat (por ejemplo CNC8070L.bat). En este archivo bat, añadir la línea 'start c:\\Lantek\\Expert\\Expert.exe'."@es .
 
-ex:Tecla_CUSTOM a ex:InterfazUsuario ;
-    rdfs:label "[CUSTOM]" ;
-    ex:textoExtracto "El software del nesting arranca cuando el usuario pulsa la tecla [CUSTOM]." .
+ex:TeclaUSERKEY
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Tecla USERKEY (modo 'Aplicación')"@es ;
+    ex:identificador      "USERKEY" ;
+    ex:textoExtracto      "En los parámetros máquina HMI, configurar la tecla USERKEY como 'Aplicación' y asignarle el path 'c:\\Lantek\\Expert\\Expert.exe'."@es .
 
-ex:Archivo_Apps_ini a ex:ComponenteElectrico ;
-    rdfs:label "Apps.ini" ;
-    ex:textoExtracto "En el archivo ..\\MTB\\MMC\\Config\\Apps.ini añadir la línea \"Lantek=c:\\Lantek\\Expert\\Expert.exe\"." .
+ex:ArchivoConfig_AppsINI
+    a                     ex:Componente ;
+    rdfs:label            "Archivo Apps.ini (configuración Lantek)"@es ;
+    ex:identificador      "Apps.ini" ;
+    ex:textoExtracto      "En el archivo ..\\MTB\\MMC\\Config\\Apps.ini añadir la línea 'Lantek=c:\\Lantek\\Expert\\Expert.exe'."@es .
 
-ex:ModoDiagnosis a ex:ModoOperacion ;
-    rdfs:label "Diagnosis" ;
-    ex:textoExtracto "Para arrancar el nesting, ir al modo Diagnosis, y en el menú horizontal seleccionar Apps > Lantek." .
-
-ex:Menu_Apps a ex:InterfazUsuario ;
-    rdfs:label "Apps" ;
-    ex:textoExtracto "en el menú horizontal seleccionar Apps > Lantek." .
+ex:Pagina_693
+    a                     ex:Pagina ;
+    ex:identificador      "691" ;
+    ex:textoExtracto      "Sección 16.1.3 Configuración del arranque de la aplicación."@es ;
+    ex:documentadoEn      ex:Manual .

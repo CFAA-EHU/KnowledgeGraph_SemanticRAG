@@ -1,25 +1,43 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:REPOSFEED a ex:Parametro ;
-    ex:textoExtracto "REPOSFEED | Avance de reposicionamiento tras una inspección de herramienta." ;
-    rdfs:label "REPOSFEED" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:POSFEED a ex:Parametro ;
-    ex:textoExtracto "POSFEED | Avance de posicionamiento del eje independiente." ;
-    rdfs:label "POSFEED" .
+ex:Parametro_REPOSFEED a ex:Parametro ;
+    rdfs:label "REPOSFEED" ;
+    ex:textoExtracto "Avance de reposicionamiento tras una inspección de herramienta." ;
+    ex:identificador "REPOSFEED" .
 
-ex:JOGFEED a ex:Parametro ;
-    ex:textoExtracto "JOGFEED | Modo de trabajo manual. Avance en modo jog continuo." ;
-    rdfs:label "JOGFEED" .
+ex:Parametro_POSFEED a ex:Parametro ;
+    rdfs:label "POSFEED" ;
+    ex:textoExtracto "Avance de posicionamiento del eje independiente." ;
+    ex:identificador "POSFEED" .
 
-ex:JOGRAPFEED a ex:Parametro ;
-    ex:textoExtracto "JOGRAPFEED | Modo de trabajo manual. Avance rápido en modo jog continuo." ;
-    rdfs:label "JOGRAPFEED" .
+ex:Parametro_JOGFEED a ex:Parametro ;
+    rdfs:label "JOGFEED" ;
+    ex:textoExtracto "Modo de trabajo manual. Avance en modo jog continuo." ;
+    ex:identificador "JOGFEED" .
 
-ex:MAXMANFEED a ex:Parametro ;
-    ex:textoExtracto "MAXMANFEED | Modo de trabajo manual. Avance máximo en modo jog continuo." ;
-    rdfs:label "MAXMANFEED" .
+ex:Parametro_JOGRAPFEED a ex:Parametro ;
+    rdfs:label "JOGRAPFEED" ;
+    ex:textoExtracto "Modo de trabajo manual. Avance rápido en modo jog continuo." ;
+    ex:identificador "JOGRAPFEED" .
 
-ex:MAXMANACC a ex:Parametro ;
-    ex:textoExtracto "MAXMANACC | Modo de trabajo manual. Aceleración máxima en manual." ;
-    rdfs:label "MAXMANACC" .
+ex:Parametro_MAXMANFEED a ex:Parametro ;
+    rdfs:label "MAXMANFEED" ;
+    ex:textoExtracto "Modo de trabajo manual. Avance máximo en modo jog continuo." ;
+    ex:identificador "MAXMANFEED" .
+
+ex:Parametro_MAXMANACC a ex:Parametro ;
+    rdfs:label "MAXMANACC" ;
+    ex:textoExtracto "Modo de trabajo manual. Aceleración máxima en manual." ;
+    ex:identificador "MAXMANACC" .
+
+ex:ModoOperacion_Manual a ex:ModoOperacion ;
+    rdfs:label "Modo de trabajo manual" ;
+    ex:textoExtracto "Modo de trabajo manual (referenciado en parámetros JOGFEED, JOGRAPFEED, MAXMANFEED, MAXMANACC)." .
+
+ex:ModoOperacion_Manual ex:monitoreaParametro ex:Parametro_JOGFEED .
+ex:ModoOperacion_Manual ex:monitoreaParametro ex:Parametro_JOGRAPFEED .
+ex:ModoOperacion_Manual ex:monitoreaParametro ex:Parametro_MAXMANFEED .
+ex:ModoOperacion_Manual ex:monitoreaParametro ex:Parametro_MAXMANACC .

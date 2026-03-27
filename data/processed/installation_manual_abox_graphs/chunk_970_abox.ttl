@@ -1,41 +1,71 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Marca_MZROT a ex:Componente ;
-    rdfs:label "MZROT" ;
-    ex:textoExtracto "Activar la marca MZROT para indicar al gestor que se ha finalizado la operación." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Marca_MZTOCH1 a ex:Componente ;
-    rdfs:label "MZTOCH1" ;
-    ex:textoExtracto "DFU M1101 = SET MZTOCH1 DFD MZTOCH1 = RES M1101 La herramienta se ha llevado del almacén a la pinza 1." .
+ex:FuncionT a ex:ModoOperacion ;
+    rdfs:label "Función T (TMOPERATION=11)" ;
+    ex:textoExtracto "Cuando se ejecuta la función –T– [...] el gestor envía al PLC el código TMOPERATION=11. [...] permite orientar el almacén durante el mecanizado. En este caso no se orienta el almacén y se activa la marca MZROT para indicar que ha finalizado la operación." ;
+    ex:identificador "TMOPERATION=11" .
 
-ex:Marca_CH1TOSPDL a ex:Componente ;
-    rdfs:label "CH1TOSPDL" ;
-    ex:textoExtracto "DFU M1102 = SET CH1TOSPDL DFD CH1TOSPDL = RES M1102 La herramienta se ha llevado de la pinza 1 al cabezal." .
+ex:MarcaMZROT a ex:InterfazUsuario ;
+    rdfs:label "Marca MZROT" ;
+    ex:textoExtracto "Activar la marca MZROT para indicar al gestor que se ha finalizado la operación." ;
+    ex:identificador "MZROT" .
 
-ex:Marca_SPDLTOCH2 a ex:Componente ;
-    rdfs:label "SPDLTOCH2" ;
-    ex:textoExtracto "DFU M1104 = SET SPDLTOCH2 DFD SPDLTOCH2 = RES M1104 La herramienta se ha llevado del cabezal a la pinza 2." .
+ex:FuncionM06 a ex:ModoOperacion ;
+    rdfs:label "Función M06 (Cambio de herramienta)" ;
+    ex:textoExtracto "Cada vez que la rutina M06 finaliza una acción se lo indica al PLC para que active la marca correspondiente del gestor." ;
+    ex:identificador "M06" .
 
-ex:Marca_CH2TOMZ a ex:Componente ;
-    rdfs:label "CH2TOMZ" ;
-    ex:textoExtracto "DFU M1106 = SET CH2TOMZ DFD CH2TOMZ = RES M1106 La herramienta se ha llevado de la pinza 2 al almacén." .
+ex:MarcaMZTOCH1 a ex:InterfazUsuario ;
+    rdfs:label "Marca MZTOCH1" ;
+    ex:textoExtracto "DFU M1101 = SET MZTOCH1 [...] La herramienta se ha llevado del almacén a la pinza 1." ;
+    ex:identificador "MZTOCH1" .
 
-ex:Marca_SPDLTOGR a ex:Componente ;
-    rdfs:label "SPDLTOGR" ;
-    ex:textoExtracto "DFU M1107 = SET SPDLTOGR DFD SPDLTOGR = RES M1107 La herramienta se ha llevado del cabezal a tierra." .
+ex:MarcaCH1TOSPDL a ex:InterfazUsuario ;
+    rdfs:label "Marca CH1TOSPDL" ;
+    ex:textoExtracto "DFU M1102 = SET CH1TOSPDL [...] La herramienta se ha llevado de la pinza 1 al cabezal." ;
+    ex:identificador "CH1TOSPDL" .
 
-ex:Marca_GRTOSPDL a ex:Componente ;
-    rdfs:label "GRTOSPDL" ;
-    ex:textoExtracto "DFU M1108 = SET GRTOSPDL DFD GRTOSPDL = RES M1108 La herramienta se ha llevado de tierra al cabezal." .
+ex:MarcaSPDLTOCH2 a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOCH2" ;
+    ex:textoExtracto "DFU M1104 = SET SPDLTOCH2 [...] La herramienta se ha llevado del cabezal a la pinza 2." ;
+    ex:identificador "SPDLTOCH2" .
 
-ex:Funcion_M101 a ex:Componente ;
-    rdfs:label "M101" ;
-    ex:textoExtracto "M101 Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1." .
+ex:MarcaCH2TOMZ a ex:InterfazUsuario ;
+    rdfs:label "Marca CH2TOMZ" ;
+    ex:textoExtracto "DFU M1106 = SET CH2TOMZ [...] La herramienta se ha llevado de la pinza 2 al almacén." ;
+    ex:identificador "CH2TOMZ" .
 
-ex:Funcion_M102 a ex:Componente ;
-    rdfs:label "M102" ;
-    ex:textoExtracto "M102 Llevar la herramienta de la pinza 1 al cabezal." .
+ex:MarcaSPDLTOGR a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOGR" ;
+    ex:textoExtracto "DFU M1107 = SET SPDLTOGR [...] La herramienta se ha llevado del cabezal a tierra." ;
+    ex:identificador "SPDLTOGR" .
 
-ex:Funcion_M104 a ex:Componente ;
-    rdfs:label "M104" ;
-    ex:textoExtracto "M104 Coger la herramienta del cabezal con la pinza 2." .
+ex:MarcaGRTOSPDL a ex:InterfazUsuario ;
+    rdfs:label "Marca GRTOSPDL" ;
+    ex:textoExtracto "DFU M1108 = SET GRTOSPDL [...] La herramienta se ha llevado de tierra al cabezal." ;
+    ex:identificador "GRTOSPDL" .
+
+ex:FuncionAuxiliarM101 a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M101" ;
+    ex:textoExtracto "M101 Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1." ;
+    ex:identificador "M101" .
+
+ex:FuncionAuxiliarM102 a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M102" ;
+    ex:textoExtracto "M102 Llevar la herramienta de la pinza 1 al cabezal." ;
+    ex:identificador "M102" .
+
+ex:FuncionAuxiliarM104 a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M104" ;
+    ex:textoExtracto "M104 Coger la herramienta del cabezal con la pinza 2." ;
+    ex:identificador "M104" .
+
+ex:FuncionM06 a ex:Tabla ;
+    ex:activaAlarma ex:MarcaMZTOCH1, ex:MarcaCH1TOSPDL, ex:MarcaSPDLTOCH2, ex:MarcaCH2TOMZ, ex:MarcaSPDLTOGR, ex:MarcaGRTOSPDL ;
+    ex:habilitadoPor ex:FuncionAuxiliarM101, ex:FuncionAuxiliarM102, ex:FuncionAuxiliarM104 .
+
+ex:FuncionT a ex:Tabla ;
+    ex:activaAlarma ex:MarcaMZROT .

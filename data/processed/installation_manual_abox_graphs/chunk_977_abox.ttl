@@ -1,62 +1,63 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TCHANGEOK a ex:Parametro ;
-    rdfs:label "TCHANGEOK" ;
-    ex:textoExtracto "La marca TCHANGEOK es opcional y sólo se debe utilizar cuando es posible. Una vez efectuado el cambio y la herramienta está en el brazo, activar la marca TCHANGEOK para continuar la ejecución del programa mientras se deja la herramienta en el almacén." ;
-    ex:valor "opcional" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TMOPERATION a ex:ModoOperacion ;
-    rdfs:label "TMOPERATION" ;
-    ex:textoExtracto "TMOPERATION" .
+ex:Tabla_OperacionesPLC_TM a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de operaciones válidas y marcas PLC-TM"@es ;
+    ex:textoExtracto """
+    TM => PLC |  |  | PLC => TM |
+    | --- | --- | --- | --- |
+    | TMOPERATION | TAKEPOS | LEAVEPOS |  |
+    | 1 | -1 | 0 | CH1TOSPDL |
+    | 2 | 0 | # | SPDLTOCH2 + TCHANGEOK + CH2TOMZ |
+    ...
+    | 16 | # | # | CH2TOMZ + MZTOCH1 |
+    """@es ;
+    ex:ilustradoEn ex:Pagina_527_529 .
 
-ex:TAKEPOS a ex:Parametro ;
-    rdfs:label "TAKEPOS" ;
-    ex:textoExtracto "TAKEPOS" .
+ex:Marca_TCHANGEOK
+    a               ex:Parametro ;
+    rdfs:label      "TCHANGEOK" ;
+    ex:identificador "TCHANGEOK" ;
+    ex:textoExtracto "La marca TCHANGEOK es opcional y sólo se debe utilizar cuando es posible. Una vez efectuado el cambio y la herramienta está en el brazo, activar la marca TCHANGEOK para continuar la ejecución del programa mientras se deja la herramienta en el almacén."@es ;
+    ex:documentadoEn ex:Tabla_OperacionesPLC_TM .
 
-ex:LEAVEPOS a ex:Parametro ;
-    rdfs:label "LEAVEPOS" ;
-    ex:textoExtracto "LEAVEPOS" .
+ex:Operacion_TM_1
+    a               ex:ModoOperacion ;
+    rdfs:label      "Operación TM 1" ;
+    ex:identificador "1" ;
+    ex:textoExtracto "TMOPERATION 1 | TAKEPOS -1 | LEAVEPOS 0 | CH1TOSPDL"@es ;
+    ex:documentadoEn ex:Tabla_OperacionesPLC_TM .
 
-ex:CH1TOSPDL a ex:Parametro ;
-    rdfs:label "CH1TOSPDL" ;
-    ex:textoExtracto "CH1TOSPDL" .
+ex:Operacion_TM_2
+    a               ex:ModoOperacion ;
+    rdfs:label      "Operación TM 2" ;
+    ex:identificador "2" ;
+    ex:textoExtracto "TMOPERATION 2 | TAKEPOS 0 | LEAVEPOS # | SPDLTOCH2 + TCHANGEOK + CH2TOMZ"@es ;
+    ex:documentadoEn ex:Tabla_OperacionesPLC_TM ;
+    ex:activaAlarma ex:Marca_TCHANGEOK .
 
-ex:SPDLTOCH2 a ex:Parametro ;
-    rdfs:label "SPDLTOCH2" ;
-    ex:textoExtracto "SPDLTOCH2" .
+ex:Operacion_TM_5a
+    a               ex:ModoOperacion ;
+    rdfs:label      "Operación TM 5 (variante a)" ;
+    ex:identificador "5a" ;
+    ex:textoExtracto "(a) SPDLTOCH2 + CH2TOMZ + CH1TOSPDL"@es ;
+    ex:documentadoEn ex:Tabla_OperacionesPLC_TM .
 
-ex:TCHANGEOK_2 a ex:Parametro ;
-    rdfs:label "TCHANGEOK" ;
-    ex:textoExtracto "TCHANGEOK" .
+ex:Operacion_TM_5b
+    a               ex:ModoOperacion ;
+    rdfs:label      "Operación TM 5 (variante b)" ;
+    ex:identificador "5b" ;
+    ex:textoExtracto "(b) SPDLTOCH2 + CH1TOSPDL + TCHANGEOK + CH2TOMZ"@es ;
+    ex:documentadoEn ex:Tabla_OperacionesPLC_TM ;
+    ex:activaAlarma ex:Marca_TCHANGEOK .
 
-ex:CH2TOMZ a ex:Parametro ;
-    rdfs:label "CH2TOMZ" ;
-    ex:textoExtracto "CH2TOMZ" .
-
-ex:GRTOSPDL a ex:Parametro ;
-    rdfs:label "GRTOSPDL" ;
-    ex:textoExtracto "GRTOSPDL" .
-
-ex:SPDLTOGR a ex:Parametro ;
-    rdfs:label "SPDLTOGR" ;
-    ex:textoExtracto "SPDLTOGR" .
-
-ex:MZTOCH1 a ex:Parametro ;
-    rdfs:label "MZTOCH1" ;
-    ex:textoExtracto "MZTOCH1" .
-
-ex:CH1TOMZ a ex:Parametro ;
-    rdfs:label "CH1TOMZ" ;
-    ex:textoExtracto "CH1TOMZ" .
-
-ex:SPDLTOMZ a ex:Parametro ;
-    rdfs:label "SPDLTOMZ" ;
-    ex:textoExtracto "SPDLTOMZ" .
-
-ex:MZTOSPDL a ex:Parametro ;
-    rdfs:label "MZTOSPDL" ;
-    ex:textoExtracto "MZTOSPDL" .
-
-ex:Tabla7_11_1 a ex:Tabla ;
-    ex:textoExtracto "La marca TCHANGEOK es opcional y sólo se debe utilizar cuando es posible. Una vez efectuado el cambio y la herramienta está en el brazo, activar la marca TCHANGEOK para continuar la ejecución del programa mientras se deja la herramienta en el almacén. | TM => PLC |  |  | PLC => TM | | --- | --- | --- | --- | | TMOPERATION | TAKEPOS | LEAVEPOS |  | | 1 | -1 | 0 | CH1TOSPDL | | 2 | 0 | # | SPDLTOCH2 + TCHANGEOK + CH2TOMZ | | 3 | 0 | 0 | GRTOSPDL | | 4 | 0 | 0 | SPDLTOGR | | 5 | -1 | # | (a) SPDLTOCH2 + CH2TOMZ + CH1TOSPDL (b) SPDLTOCH2 + CH1TOSPDL + TCHANGEOK + CH2TOMZ | | 6 | -4 | # | (a) SPDLTOCH2 + CH2TOMZ + GRTOSPDL (b) SPDLTOCH2 + GRTOSPDL + TCHANGEOK + CH2TOMZ | | 7 | -1 | -4 | SPDLTOGR + CH1TOSPDL | | 8 | 0 | 0 | SPDLTOGR + GRTOSPDL | | 9 | -4 | # | GRTOSPDL + SPDLTOCH2 + TCHANGEOK + CH2TOMZ | | 10 | # | -4 | MZTOCH1 + CH1TOSPDL + SPDLTOGR | | 11 | # # | 0 # | MZTOCH1 CH1TOMZ + MZTOCH1 | | 12 | # | # | SPDLTOMZ + MZTOSPDL | | 14 | -1 | # | SPDLTOCH2 + CH2TOMZ + CH1TOSPDL | | 16 | # | # | CH2TOMZ + MZTOCH1 | Ejemplo de funcionamiento." ;
-    ex:tieneComponente ex:TCHANGEOK, ex:TMOPERATION, ex:TAKEPOS, ex:LEAVEPOS, ex:CH1TOSPDL, ex:SPDLTOCH2, ex:TCHANGEOK_2, ex:CH2TOMZ, ex:GRTOSPDL, ex:SPDLTOGR, ex:MZTOCH1, ex:CH1TOMZ, ex:SPDLTOMZ, ex:MZTOSPDL .
+ex:Operacion_TM_9
+    a               ex:ModoOperacion ;
+    rdfs:label      "Operación TM 9" ;
+    ex:identificador "9" ;
+    ex:textoExtracto "TMOPERATION 9 | TAKEPOS -4 | LEAVEPOS # | GRTOSPDL + SPDLTOCH2 + TCHANGEOK + CH2TOMZ"@es ;
+    ex:documentadoEn ex:Tabla_OperacionesPLC_TM ;
+    ex:activaAlarma ex:Marca_TCHANGEOK .

@@ -1,18 +1,23 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-ex:Parametro_MODERR rdfs:label "MODERR" ;
-    a ex:Parametro ;
-    ex:textoExtracto "El parámetro MODERR indica el error que hay que compensar cuando el eje ha girado las vueltas indicadas en el parámetro MODNROT."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_MODNROT rdfs:label "MODNROT" ;
+ex:Parametro_MODERR
     a ex:Parametro ;
-    ex:textoExtracto "El parámetro MODNROT indica las vueltas que ha girado el eje."@es .
+    rdfs:label "Parámetro MODERR"@es ;
+    ex:textoExtracto "El parámetro MODERR indica el error que hay que compensar cuando el eje ha girado las vueltas indicadas en el parámetro MODNROT."@es ;
+    ex:identificador "MODERR" .
 
-ex:Sistema_CNC rdfs:label "CNC" ;
+ex:Parametro_MODNROT
+    a ex:Parametro ;
+    rdfs:label "Parámetro MODNROT"@es ;
+    ex:textoExtracto "el parámetro MODNROT [...] las vueltas indicadas en el parámetro MODNROT."@es ;
+    ex:identificador "MODNROT" .
+
+ex:Sistema_CompensacionModulo
     a ex:Sistema ;
-    ex:textoExtracto "El CNC aplica la compensación de módulo a lo largo de toda la vuelta."@es .
-
-ex:ComponenteElectrico_Encoder rdfs:label "encoder de 1024 impulsos" ;
-    a ex:ComponenteElectrico ;
-    ex:textoExtracto "cuando se usa un encoder de 1024 impulsos parametrizado a 1000 impulsos."@es .
+    rdfs:label "Sistema de compensación de módulo (ejes rotativos)"@es ;
+    ex:textoExtracto "Estos parámetros indican, cuando la resolución del eje no es exacta, la compensación que se debe aplicar para obtener un contaje exacto. El CNC aplica la compensación de módulo a lo largo de toda la vuelta."@es ;
+    ex:tieneComponente ex:Parametro_MODERR ;
+    ex:tieneComponente ex:Parametro_MODNROT .

@@ -1,39 +1,40 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:NSAI a ex:Parametro ;
-    rdfs:label "Número de entradas analógicas especiales (no en tensión)" ;
-    ex:textoExtracto "NSAI Número de entradas analógicas especiales (no en tensión). Valores posibles: De 0 a 30. Valor por defecto: 0 (todas las entradas analógicas son en tensión). Variable asociada: (V.)MPG.NSAI" ;
-    ex:valor "0 a 30" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ADDRESS a ex:Parametro ;
-    rdfs:label "ADDRESS" ;
-    ex:textoExtracto "ADDRESS Número de entrada analógica. Valores posibles: De 0 a 60. Valor por defecto: 0. Variable asociada: (V.)MPG.ADDRESS[n]" ;
-    ex:valor "0 a 60" .
+ex:Parametro_NSAI
+    a ex:Parametro ;
+    rdfs:label "Número de entradas analógicas especiales (no en tensión)"@es ;
+    ex:textoExtracto "NSAI Número de entradas analógicas especiales (no en tensión). Valores posibles: De 0 a 30. Valor por defecto: 0 (todas las entradas analógicas son en tensión). Variable asociada: (V.)MPG.NSAI Número de entradas analógicas que no trabajan en tensión; por ejemplo, las entradas analógicas del módulo RIOR se pueden configurar en corriente."@es ;
+    ex:identificador "MPG.NSAI" ;
+    ex:valor "0"^^xsd:integer .
 
-ex:FACTOR a ex:Parametro ;
-    rdfs:label "FACTOR" ;
-    ex:textoExtracto "FACTOR Factor de conversión. Valores posibles: Entre ±999999999.999999999. Valor por defecto: 0.0061035. Variable asociada: (V.)MPG.FACTOR[n]" ;
-    ex:valor "±999999999.999999999" .
+ex:Tabla_SAI a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de entradas analógicas especiales (SAI)"@es ;
+    ex:textoExtracto "SAI Tabla de entradas analógicas especiales. Este parámetro muestra la tabla para definir las entradas analógicas especiales del sistema. Para cada entrada analógica hay que definir los siguientes campos."@es ;
+    ex:documentadoEn ex:Manual_Broaching .
 
-ex:TablaEntradasAnalogicasEspeciales a ex:Tabla ;
-    rdfs:label "Tabla de entradas analógicas especiales" ;
-    ex:textoExtracto "SAI Tabla de entradas analógicas especiales. Este parámetro muestra la tabla para definir las entradas analógicas especiales del sistema." .
+ex:Parametro_SAI_ADDRESS
+    a ex:Parametro ;
+    rdfs:label "Dirección de entrada analógica (ADDRESS)"@es ;
+    ex:textoExtracto "ADDRESS Número de entrada analógica. Valores posibles: De 0 a 60. Valor por defecto: 0. Variable asociada: (V.)MPG.ADDRESS[n] Número de entrada analógica."@es ;
+    ex:identificador "MPG.ADDRESS" ;
+    ex:valor "0"^^xsd:integer ;
+    ex:documentadoEn ex:Tabla_SAI .
 
-ex:EntradaAnalogica a ex:Sensor ;
-    rdfs:label "Entrada analógica" ;
-    ex:textoExtracto "Entrada analógica." .
+ex:Parametro_SAI_FACTOR
+    a ex:Parametro ;
+    rdfs:label "Factor de conversión (FACTOR)"@es ;
+    ex:textoExtracto "FACTOR Factor de conversión. Valores posibles: Entre ±999999999.999999999. Valor por defecto: 0.0061035. Variable asociada: (V.)MPG.FACTOR[n] El factor indica la resolución del convertidor A/D de la entrada analógica; es decir, representa el incremento de valor analógico por cada unidad de convertidor."@es ;
+    ex:identificador "MPG.FACTOR" ;
+    ex:valor "0.0061035"^^xsd:float ;
+    ex:documentadoEn ex:Tabla_SAI .
 
-ex:ModuloRIOR a ex:ComponenteElectrico ;
-    rdfs:label "módulo RIOR" ;
-    ex:textoExtracto "las entradas analógicas del módulo RIOR se pueden configurar en corriente" .
-
-ex:ModuloRIOW a ex:ComponenteElectrico ;
-    rdfs:label "módulo RIOW" ;
-    ex:textoExtracto "las entradas analógicas del módulo RIOR se pueden configurar en corriente. • Para las entradas analógicas en corriente del módulo RIOR o RIOW, utilizar el valor por defecto y el CNC leerá los valores en decimiliamperios." .
-
-ex:TablaEntradasAnalogicasEspeciales a ex:Tabla ;
-    ex:compuestoPor ex:EntradaAnalogica ;
-    ex:textoExtracto "Para cada entrada analógica hay que definir los siguientes campos. | SAI | Significado. | | --- | --- | | ADDRESS | Entrada analógica. | | FACTOR | Factor de conversión. |" .
-
-ex:ModuloRIOR ex:tieneComponente ex:EntradaAnalogica ;
-    ex:textoExtracto "Entradas analógicas del módulo RIOR. • Entradas analógicas de 16 bits (15 bits + signo); es decir, unos valores entre ±32767. • Rango de medida ±20 miliamperios." .
+ex:ComponenteElectrico_Modulo_RIOR
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RIOR"@es ;
+    ex:textoExtracto "las entradas analógicas del módulo RIOR se pueden configurar en corriente. [...] Ejemplo. Entradas analógicas del módulo RIOR. • Entradas analógicas de 16 bits (15 bits + signo); es decir, unos valores entre ±32767. • Rango de medida ±20 miliamperios."@es ;
+    ex:monitoreaParametro ex:Parametro_SAI_FACTOR .

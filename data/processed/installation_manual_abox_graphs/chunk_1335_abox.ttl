@@ -1,18 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:DMCON a ex:AccionProhibida ;
-    ex:textoExtracto "Tras ejecutar la sentencia #DMCON, el CNC activará el DMC siempre y cuando el cabezal tenga regulación digital, esté girando en M3 o M4 y haya alcanzado la velocidad de giro programada (marca REVOK)." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DMC a ex:Sistema ;
-    ex:textoExtracto "Calcular la potencia en vacío. La primera vez que se ejecuta esta función, el CNC detiene el avance de los ejes hasta que el cabezal alcanza la velocidad de giro programada y se estabiliza. A continuación, y con lo ejes parados, el CNC mide la potencia consumida por el cabezal en vacío (sin mecanizar). Todo el proceso para medir la potencia en vacío puede llevar algunos segundos, durante los cuales, el CNC detiene el avance de los ejes. Conocer la potencia en vacío permite al CNC detectar las entradas y salidas en la pieza durante el mecanizado. Fase de aprendizaje. Cada vez que se programa #DMCON sin potencia objetivo (comando PWRSP), el DMC la determina mediante una fase de aprendizaje que éste pondrá en marcha automáticamente. Una vez obtenido dicho valor, comenzará el funcionamiento normal del DMC. La fase de aprendizaje se puede repetir en cualquier momento, con el DMC activo, pulsando la softkey \"Aprendizaje DMC\" del modo automático. Tras pulsar la softkey con el DMC activo, en la siguiente entrada a la pieza comenzará una fase de aprendizaje, tanto si al activar DMC se había programado PWRSP como si no. Con los ejes en movimiento, la fase de aprendizaje comienza cuando el DMC detecta la entrada a la pieza. El DMC espera a que el avance alcance el valor programado, y durante el movimiento de los ejes, calcula la potencia objetivo (\"potencia consumida\" – \"potencia en vacío\"). La fase de aprendizaje dura un minuto, a partir de que la herramienta entre en la pieza una distancia igual al radio. Si la herramienta sale de la pieza, deja de contar el tiempo hasta que la herramienta vuelva a entrar en la pieza." .
+ex:DMC_ModoOperacion
+    a ex:ModoOperacion ;
+    rdfs:label "Modo DMC (Dynamic Milling Control)" ;
+    ex:textoExtracto "Tras ejecutar la sentencia #DMCON, el CNC activará el DMC siempre y cuando el cabezal tenga regulación digital, esté girando en M3 o M4 y haya alcanzado la velocidad de giro programada (marca REVOK)." ;
+    ex:identificador "#DMCON" .
 
-ex:Aprendizaje_DMC a ex:ModoOperacion ;
-    ex:textoExtracto "La fase de aprendizaje se puede repetir en cualquier momento, con el DMC activo, pulsando la softkey \"Aprendizaje DMC\" del modo automático. Tras pulsar la softkey con el DMC activo, en la siguiente entrada a la pieza comenzará una fase de aprendizaje, tanto si al activar DMC se había programado PWRSP como si no." .
+ex:FaseAprendizaje_DMC
+    a ex:ModoOperacion ;
+    rdfs:label "Fase de aprendizaje del DMC" ;
+    ex:textoExtracto "Cada vez que se programa #DMCON sin potencia objetivo (comando PWRSP), el DMC la determina mediante una fase de aprendizaje que éste pondrá en marcha automáticamente. [...] La fase de aprendizaje dura un minuto, a partir de que la herramienta entre en la pieza una distancia igual al radio." .
 
-ex:Softkey_Aprendizaje_DMC a ex:InterfazUsuario ;
-    ex:textoExtracto "pulsando la softkey \"Aprendizaje DMC\" del modo automático" .
+ex:Softkey_AprendizajeDMC
+    a ex:InterfazUsuario ;
+    rdfs:label "Softkey 'Aprendizaje DMC'" ;
+    ex:textoExtracto "La fase de aprendizaje se puede repetir en cualquier momento, con el DMC activo, pulsando la softkey 'Aprendizaje DMC' del modo automático." ;
+    ex:habilitadoPor ex:DMC_ModoOperacion .
 
-ex:REVOK a ex:Parametro ;
-    ex:textoExtracto "velocidad de giro programada (marca REVOK)" .
+ex:Parametro_PWRSP
+    a ex:Parametro ;
+    rdfs:label "Potencia objetivo (PWRSP)" ;
+    ex:textoExtracto "comando PWRSP [...] el DMC la determina mediante una fase de aprendizaje si no se programa." ;
+    ex:identificador "PWRSP" .
 
-ex:PWRSP a ex:Parametro ;
-    ex:textoExtracto "comando PWRSP" .
+ex:Parametro_PotenciaVacio
+    a ex:Parametro ;
+    rdfs:label "Potencia en vacío" ;
+    ex:textoExtracto "el CNC mide la potencia consumida por el cabezal en vacío (sin mecanizar). Conocer la potencia en vacío permite al CNC detectar las entradas y salidas en la pieza durante el mecanizado." ;
+    ex:monitoreaParametro ex:DMC_ModoOperacion .
+
+ex:Parametro_PotenciaObjetivo
+    a ex:Parametro ;
+    rdfs:label "Potencia objetivo" ;
+    ex:textoExtracto "calcula la potencia objetivo ('potencia consumida' – 'potencia en vacío')." ;
+    ex:monitoreaParametro ex:DMC_ModoOperacion .

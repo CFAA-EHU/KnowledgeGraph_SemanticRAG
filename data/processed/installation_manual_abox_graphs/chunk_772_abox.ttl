@@ -1,19 +1,30 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-ex:FBACKSEL a ex:Parametro ;
-    ex:textoExtracto "FBACKSEL(axis)" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TANGACT a ex:Parametro ;
-    ex:textoExtracto "TANGACT(axis)" .
+ex:Se_alConsultaEjesCNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Señales de consulta de ejes y cabezales (CNC)" ;
+    ex:textoExtracto "El CNC pone esta marca a (=0) para indicar que se está trabajando con la captación interna (captación motor). [...] TANGACT(axis) El CNC pone esta marca a (=1) para indicar que el control tangencial se encuentra activo en el eje. [...] LOPEN(axis) El CNC activa esta marca para indicar al PLC que" ;
+    ex:identificador "6.2" .
 
-ex:LOPEN a ex:Parametro ;
-    ex:textoExtracto "LOPEN(axis)" .
+ex:Marca_FBACKSEL
+    a ex:Parametro ;
+    rdfs:label "FBACKSEL(axis)" ;
+    ex:textoExtracto "El tipo de captación se podrá conmutar desde el PLC mediante la marca FBACKSEL(axis). Ver en la página 449." ;
+    ex:documentadoEn ex:Se_alConsultaEjesCNC ;
+    ex:valor "0 (captación interna/motor), 1 (otro modo)" .
 
-ex:marcaCNC a ex:Sensor ;
-    ex:textoExtracto "El CNC pone esta marca a (=0) para indicar que se está trabajando con la captación interna (captación motor). El CNC pone esta marca a (=1) para indicar que el control tangencial se encuentra activo en el eje. El CNC pone esta marca a (=0) cuando se suspende (congela) o anula el control tangencial del eje." .
+ex:Marca_TANGACT
+    a ex:Parametro ;
+    rdfs:label "TANGACT(axis)" ;
+    ex:textoExtracto "El CNC pone esta marca a (=1) para indicar que el control tangencial se encuentra activo en el eje. El CNC pone esta marca a (=0) cuando se suspende (congela) o anula el control tangencial del eje." ;
+    ex:documentadoEn ex:Se_alConsultaEjesCNC ;
+    ex:valor "0 (inactivo), 1 (activo)" .
 
-ex:captacionInterna a ex:ModoOperacion ;
-    ex:textoExtracto "captación interna (captación motor)" .
-
-ex:controlTangencial a ex:ModoOperacion ;
-    ex:textoExtracto "control tangencial" .
+ex:Marca_LOPEN
+    a ex:Parametro ;
+    rdfs:label "LOPEN(axis)" ;
+    ex:textoExtracto "El CNC activa esta marca para indicar al PLC que" ;
+    ex:documentadoEn ex:Se_alConsultaEjesCNC .

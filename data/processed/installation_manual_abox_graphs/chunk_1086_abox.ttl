@@ -1,29 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_DRIVESET a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DRIVESET
+    a ex:Parametro ;
     rdfs:label "DRIVESET" ;
-    ex:identificador "DRIVESET" ;
-    ex:textoExtracto "Parámetro. | Significado. | DRIVESET | Set del regulador a utilizar." ;
-    ex:valor "Set del regulador a utilizar" .
+    ex:textoExtracto "Set del regulador a utilizar. En los ejes que pertenecen a un grupo multieje, el parámetro DRIVESET indica la gama a activar en el regulador tras un cambio de set o gama en el CNC (G112 y M41 a M44)." ;
+    ex:identificador "DRIVESET" .
 
-ex:Parametro_FFGAIN a ex:Parametro ;
+ex:Parametro_FFGAIN
+    a ex:Parametro ;
     rdfs:label "FFGAIN" ;
-    ex:identificador "FFGAIN" ;
-    ex:textoExtracto "feed forward (parámetro FFGAIN)" .
+    ex:textoExtracto "feed forward (parámetro FFGAIN)" ;
+    ex:identificador "FFGAIN" .
 
-ex:Parametro_ACFGAIN a ex:Parametro ;
+ex:Parametro_ACFGAIN
+    a ex:Parametro ;
     rdfs:label "ACFGAIN" ;
-    ex:identificador "ACFGAIN" ;
-    ex:textoExtracto "AC forward (parámetro ACFGAIN)" .
+    ex:textoExtracto "AC forward (parámetro ACFGAIN)" ;
+    ex:identificador "ACFGAIN" .
 
-ex:Parametro_Homogeneizacion a ex:Parametro ;
-    rdfs:label "Homogeneización" ;
-    ex:textoExtracto "Con la homogeneización activa, el CNC envía los parámetros del set ꞏ1ꞏ del eje maestro al set ꞏ0ꞏ y a la gama ꞏ1ꞏ (la primera) del regulador." .
+ex:Tabla_ParametrosMultieje a ex:Tabla ;
+     a ex:Tabla ;
+    ex:documentadoEn ex:Pagina_586 ;
+    ex:textoExtracto "Tabla de parámetros para configuración de grupo multieje: DRIVESET, FFGAIN, ACFGAIN." ;
+    ex:tieneComponente ex:Parametro_DRIVESET ;
+    ex:tieneComponente ex:Parametro_FFGAIN ;
+    ex:tieneComponente ex:Parametro_ACFGAIN .
 
-ex:Parametro_CNC a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "el CNC envía los cambios de Kv, feed forward (parámetro FFGAIN) y AC forward (parámetro ACFGAIN) al set indicado en este parámetro." .
-
-ex:Parametro_Regulador a ex:ComponenteElectrico ;
-    rdfs:label "Regulador" ;
-    ex:textoExtracto "el parámetro DRIVESET indica la gama a activar en el regulador tras un cambio de set o gama en el CNC" .
+ex:Pagina_586
+    a ex:Pagina ;
+    ex:identificador "586" ;
+    ex:textoExtracto "Sección 11.4.1 Configuración de un grupo multieje. Los parámetros máquina." .

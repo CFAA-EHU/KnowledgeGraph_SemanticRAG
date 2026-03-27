@@ -1,24 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TMOPERATION_10 a ex:TareaMantenimiento ;
-    ex:identificador "TMOPERATION = 10" ;
-    ex:textoExtracto "TMOPERATION = 10 Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TAKEPOS a ex:Parametro ;
-    ex:identificador "TAKEPOS=#" ;
-    ex:textoExtracto "TAKEPOS=# Posición del almacén para coger la herramienta." .
+ex:OperacionTM10
+    a ex:TareaMantenimiento ;
+    rdfs:label "Coger herramienta del almacén y dejarla en tierra (TMOPERATION=10)"@es ;
+    ex:textoExtracto "TMOPERATION = 10 Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal. TAKEPOS=# Posición del almacén para coger la herramienta. LEAVEPOS=-4 Herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal y activar la marca CH1TOSPDL. 2 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR."@es ;
+    ex:identificador "TMOPERATION=10" .
 
-ex:LEAVEPOS a ex:Parametro ;
-    ex:identificador "LEAVEPOS=-4" ;
-    ex:textoExtracto "LEAVEPOS=-4 Herramienta de tierra." .
+ex:OperacionTM11
+    a ex:TareaMantenimiento ;
+    rdfs:label "Coger herramienta del almacén y ponerla en el brazo (TMOPERATION=11)"@es ;
+    ex:textoExtracto "TMOPERATION = 11 Coger una herramienta del almacén y ponerla en el brazo. Esta operación es una optimización del cambio de herramienta que permite colocar una herramienta en la pinza ꞏ1ꞏ del"@es ;
+    ex:identificador "TMOPERATION=11" .
 
-ex:CH1TOSPDL a ex:Sensor ;
-    ex:identificador "CH1TOSPDL" ;
-    ex:textoExtracto "activar la marca CH1TOSPDL" .
+ex:Pinza1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinza ꞏ1ꞏ"@es ;
+    ex:textoExtracto "pinza ꞏ1ꞏ"@es .
 
-ex:SPDLTOGR a ex:Sensor ;
-    ex:identificador "SPDLTOGR" ;
-    ex:textoExtracto "activar la marca SPDLTOGR" .
+ex:Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal"@es ;
+    ex:textoExtracto "pasando por el cabezal", "Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal"@es .
 
-ex:TMOPERATION_11 a ex:TareaMantenimiento ;
-    ex:identificador "TMOPERATION = 11" ;
-    ex:textoExtracto "TMOPERATION = 11 Coger una herramienta del almacén y ponerla en el brazo." .
+ex:HerramientaAlmacen
+    a ex:Herramienta ;
+    rdfs:label "Herramienta del almacén"@es ;
+    ex:textoExtracto "Coger una herramienta del almacén"@es .
+
+ex:HerramientaTierra
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de tierra (LEAVEPOS=-4)"@es ;
+    ex:textoExtracto "LEAVEPOS=-4 Herramienta de tierra"@es ;
+    ex:identificador "LEAVEPOS=-4" .
+
+ex:OperacionTM10
+    ex:requiereMantenimiento ex:Pinza1 ;
+    ex:requiereMantenimiento ex:Cabezal ;
+    ex:requiereMantenimiento ex:HerramientaAlmacen ;
+    ex:requiereMantenimiento ex:HerramientaTierra .
+
+ex:OperacionTM11
+    ex:requiereMantenimiento ex:Pinza1 ;
+    ex:requiereMantenimiento ex:HerramientaAlmacen .

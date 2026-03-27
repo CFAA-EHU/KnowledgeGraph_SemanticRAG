@@ -1,30 +1,26 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_INITIALSUB_CHN rdfs:label "INITIALSUB CHN" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_INITIALSUB_CHN
     a ex:Parametro ;
-    ex:textoExtracto "Parámetro. |  | Significado. | | --- | --- | --- | | INITIALSUB CHN |  | Subrutina asociada al comando #INITIALSUB." ;
-    ex:valor "INITIALSUB CHN" .
+    rdfs:label "INITIALSUB CHN" ;
+    ex:textoExtracto "INITIALSUB CHN | Subrutina asociada al comando #INITIALSUB. [CHN].......Parámetro máquina; general del canal. Nombre y ubicación de la subrutina." ;
+    ex:identificador "INITIALSUB CHN" ;
+    ex:valor "Subrutina asociada al comando #INITIALSUB" .
 
-ex:Subrutina_Initialsub_fst rdfs:label "Initialsub.fst" ;
+ex:Subrutina_Initialsub_fst
     a ex:Componente ;
-    ex:textoExtracto "Esta subrutina debe estar definida en el parámetro general INITIALSUB (por defecto Initialsub.fst) y estará guardada en la carpeta ..\\Mtb\\Sub." .
+    rdfs:label "Initialsub.fst" ;
+    ex:textoExtracto "Esta subrutina debe estar definida en el parámetro general INITIALSUB (por defecto Initialsub.fst) y estará guardada en la carpeta ..\\Mtb\\Sub." ;
+    ex:identificador "Initialsub.fst" .
 
-ex:Carpeta_Mtb_Sub rdfs:label "..\\Mtb\\Sub" ;
+ex:Parametro_INITIALSUB_CHN
+    ex:monitoreaParametro ex:Subrutina_Initialsub_fst .
+
+ex:SistemaCNC
     a ex:Sistema ;
-    ex:textoExtracto "el CNC copia las subrutinas a la carpeta ..\\Mtb\\Sub si no existen" .
-
-ex:Comando_INISUB rdfs:label "#INITIALSUB" ;
-    a ex:Parametro ;
-    ex:textoExtracto "Subrutina asociada al comando #INITIALSUB." .
-
-ex:Sistema_CNC rdfs:label "CNC" ;
-    a ex:Maquina ;
-    ex:textoExtracto "el CNC actúa de la siguiente manera", "el CNC siempre actualiza las subrutinas", "el CNC carga esta subrutina en la memoria RAM del CNC" .
-
-ex:Parametro_INISUB rdfs:label "INITIALSUB" ;
-    a ex:Parametro ;
-    ex:textoExtracto "definida en el parámetro general INITIALSUB (por defecto Initialsub.fst)" .
-
-ex:Subrutina_OEM_fst rdfs:label "subrutina OEM con extensión fst" ;
-    a ex:Componente ;
-    ex:textoExtracto "Al ser una subrutina OEM con extensión fst, el CNC carga esta subrutina en la memoria RAM del CNC." .
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "el CNC actúa de la siguiente manera. [...] el CNC carga esta subrutina en la memoria RAM del CNC." ;
+    ex:tieneComponente ex:Subrutina_Initialsub_fst .

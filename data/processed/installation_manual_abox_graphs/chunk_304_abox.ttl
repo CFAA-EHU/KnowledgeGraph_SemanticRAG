@@ -1,23 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TENDENCY a ex:Parametro ;
-    rdfs:label "TENDENCY" ;
-    ex:textoExtracto "TENDENCY Activación del test de tendencia. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.TENDENCY.xn Este parámetro habilita dos testeos: • Vigilancia de la tendencia del eje. Este test vigila que el sentido real de movimiento coincida con el teórico, a partir del tiempo parametrizado en el parámetro ESTDELAY. Si el eje no tiene movimiento teórico, el test detecta si el eje se mueve en un sentido durante más tiempo que el indicado en el parámetro ESTDELAY. Si el eje tiene movimiento teórico, el test detecta si se mueve en sentido contrario durante un tiempo superior al ESTDELAY. • Protección frente al embalamiento. Este test vigila el movimiento real del eje desde el arranque, para detectar su embalamiento, teniendo en cuenta el tiempo definido en el parámetro TENDTIME." ;
-    ex:valor "Sí / No" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TENDTIME a ex:Parametro ;
-    rdfs:label "TENDTIME" ;
-    ex:textoExtracto "TENDTIME Tiempo para detectar el embalamiento del eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y simulado. Valores posibles: De 0 a 65535 ms. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.TENDTIME.xn Cuando está activo el test antiembalamiento, este parámetro define el tiempo que debe esperar el CNC antes de dar error. Se recomienda parametrizar un tiempo pequeño (aproximadamente de 4 periodos de muestreo) para evitar que un recorrido excesivo del eje." ;
-    ex:valor "De 0 a 65535 ms" .
+ex:Parametro_TENDENCY
+    a ex:Parametro ;
+    rdfs:label "TENDENCY (Test de tendencia)"@es ;
+    ex:textoExtracto "TENDENCY Activación del test de tendencia. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.TENDENCY.xn"@es ;
+    ex:valor "No" ;
+    ex:identificador "TENDENCY" ;
+    ex:monitoreaParametro ex:Parametro_ESTDELAY, ex:Parametro_TENDTIME .
 
-ex:ESTDELAY a ex:Parametro ;
-    rdfs:label "ESTDELAY" ;
-    ex:textoExtracto "Este test vigila que el sentido real de movimiento coincida con el teórico, a partir del tiempo parametrizado en el parámetro ESTDELAY." .
+ex:Parametro_ESTDELAY
+    a ex:Parametro ;
+    rdfs:label "ESTDELAY (Tiempo de vigilancia de tendencia)"@es ;
+    ex:textoExtracto "vigila que el sentido real de movimiento coincida con el teórico, a partir del tiempo parametrizado en el parámetro ESTDELAY. [...] detecta si el eje se mueve en un sentido durante más tiempo que el indicado en el parámetro ESTDELAY."@es ;
+    ex:identificador "ESTDELAY" .
 
-ex:ProteccionAntiembalamiento a ex:AvisoSeguridad ;
-    rdfs:label "Protección antiembalamiento" ;
-    ex:textoExtracto "Protección frente al embalamiento. Este test vigila el movimiento real del eje desde el arranque, para detectar su embalamiento, teniendo en cuenta el tiempo definido en el parámetro TENDTIME." .
+ex:Parametro_TENDTIME
+    a ex:Parametro ;
+    rdfs:label "TENDTIME (Tiempo de detección de embalamiento)"@es ;
+    ex:textoExtracto "TENDTIME Tiempo para detectar el embalamiento del eje. [...] Valores posibles: De 0 a 65535 ms. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.TENDTIME.xn"@es ;
+    ex:valor "0"^^xsd:integer ;
+    ex:identificador "TENDTIME" .
 
-ex:VigilanciaTendenciaEje a ex:DiagnosticoFallo ;
-    rdfs:label "Vigilancia de la tendencia del eje" ;
-    ex:textoExtracto "Vigilancia de la tendencia del eje. Este test vigila que el sentido real de movimiento coincida con el teórico, a partir del tiempo parametrizado en el parámetro ESTDELAY." .
+ex:Alarma_ProteccionAntiembalamiento
+    a ex:Alarma ;
+    rdfs:label "Alarma de protección antiembalamiento"@es ;
+    ex:textoExtracto "Protección frente al embalamiento. [...] Si se desactiva esta alarma, el CNC muestra en el encendido un mensaje indicando que dicha seguridad está deshabilitada."@es ;
+    ex:habilitadoPor ex:Parametro_TENDENCY .
+
+ex:Sistema_ProteccionTendenciaEmbalamiento
+    a ex:Sistema ;
+    rdfs:label "Sistema de protección de tendencia y antiembalamiento"@es ;
+    ex:textoExtracto "Este parámetro [TENDENCY] habilita dos testeos: • Vigilancia de la tendencia del eje. [...] • Protección frente al embalamiento."@es ;
+    ex:compuestoPor ex:Parametro_TENDENCY, ex:Parametro_ESTDELAY, ex:Parametro_TENDTIME ;
+    ex:activaAlarma ex:Alarma_ProteccionAntiembalamiento .

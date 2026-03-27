@@ -1,18 +1,92 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EjeTandem_60_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Eje tándem compuesto por dos piñones (pinion) y una cremallera (rack)" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MotorPrincipal_60_1 a ex:ComponenteElectrico ;
-    ex:textoExtracto "motor principal" .
+ex:SistemaTandem_60
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema tándem de ejes maestro-esclavo"@es ;
+    ex:textoExtracto      "Ejemplo de un eje tándem compuesto por dos piñones (pinion) y una cremallera (rack). Esta configuración permite resaltar los siguientes aspectos: Un eje tándem permite disponer del par necesario para mover un accionamiento cuando un sólo motor no es capaz de suministrar el par suficiente para hacerlo."@es ;
+    ex:compuestoPor        ex:MotorMaestro_60, ex:MotorEsclavo_60, ex:ComponenteMecanico_Pinion1_60, ex:ComponenteMecanico_Pinion2_60, ex:ComponenteMecanico_Rack_60 ;
+    ex:tieneComponente     ex:Parametro_AXISTYPE_60, ex:Parametro_DRIVETYPE_60, ex:Parametro_AXISEXCH_60, ex:Parametro_LIMIT_60, ex:Parametro_LIMIT_60, ex:Parametro_AXISMODE_60, ex:Parametro_SHORTESTWAY_60, ex:Parametro_REFFEED1_60, ex:Parametro_REFFEED2_60 .
 
-ex:MotorEsclavo_60_1 a ex:ComponenteElectrico ;
-    ex:textoExtracto "motor esclavo" .
+ex:MotorMaestro_60
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Motor maestro (master axis) en configuración tándem"@es ;
+    ex:textoExtracto      "Cada eje (cabezal) tándem maestro admite un único eje (cabezal) tándem esclavo."@es ;
+    ex:identificador       "MASTERAXIS" ;
+    ex:tieneComponente     ex:Parametro_AXISTYPE_60, ex:Parametro_DRIVETYPE_60, ex:Parametro_AXISEXCH_60, ex:Parametro_LIMIT_60, ex:Parametro_LIMIT_60, ex:Parametro_AXISMODE_60, ex:Parametro_SHORTESTWAY_60, ex:Parametro_REFFEED1_60, ex:Parametro_REFFEED2_60 .
 
-ex:SistemaTandem_60_1 a ex:Sistema ;
-    ex:textoExtracto "sistema tándem" ;
-    ex:compuestoPor ex:EjeTandem_60_1 ;
-    ex:tieneComponente ex:MotorPrincipal_60_1, ex:MotorEsclavo_60_1 ;
-    ex:detalladoEnEsquema ex:EsquemaTandem_60_1 .
+ex:MotorEsclavo_60
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Motor esclavo (slave axis) en configuración tándem"@es ;
+    ex:textoExtracto      "Cada eje (cabezal) tándem maestro admite un único eje (cabezal) tándem esclavo."@es .
 
-ex:EsquemaTandem_60_1 a ex:Esquema ;
-    ex:textoExtracto "Ejemplo de un eje tándem compuesto por dos piñones (pinion) y una cremallera (rack)" .
+ex:ComponenteMecanico_Pinion1_60
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Piñón 1 (pinion) en sistema tándem"@es ;
+    ex:textoExtracto      "Ejemplo de un eje tándem compuesto por dos piñones (pinion) y una cremallera (rack)."@es .
+
+ex:ComponenteMecanico_Pinion2_60
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Piñón 2 (pinion) en sistema tándem"@es ;
+    ex:textoExtracto      "Ejemplo de un eje tándem compuesto por dos piñones (pinion) y una cremallera (rack)."@es .
+
+ex:ComponenteMecanico_Rack_60
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Cremallera (rack) en sistema tándem"@es ;
+    ex:textoExtracto      "Ejemplo de un eje tándem compuesto por dos piñones (pinion) y una cremallera (rack)."@es .
+
+ex:Parametro_AXISTYPE_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro AXISTYPE (tipo de eje)"@es ;
+    ex:textoExtracto      "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)."@es ;
+    ex:identificador       "AXISTYPE" .
+
+ex:Parametro_DRIVETYPE_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro DRIVETYPE (tipo de accionamiento)"@es ;
+    ex:textoExtracto      "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)."@es ;
+    ex:identificador       "DRIVETYPE" .
+
+ex:Parametro_AXISEXCH_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro AXISEXCH (permiso de cambio de canal)"@es ;
+    ex:textoExtracto      "El permiso de cambio de canal (parámetro AXISEXCH) deberá ser igual en ambos ejes."@es ;
+    ex:identificador       "AXISEXCH" .
+
+ex:Parametro_LIMIT_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro LIMIT+ (límite de software positivo)"@es ;
+    ex:textoExtracto      "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)."@es ;
+    ex:identificador       "LIMIT+" .
+
+ex:Parametro_LIMIT_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro LIMIT- (límite de software negativo)"@es ;
+    ex:textoExtracto      "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)."@es ;
+    ex:identificador       "LIMIT-" .
+
+ex:Parametro_AXISMODE_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro AXISMODE (modo de eje)"@es ;
+    ex:textoExtracto      "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)."@es ;
+    ex:identificador       "AXISMODE" .
+
+ex:Parametro_SHORTESTWAY_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro SHORTESTWAY (camino más corto)"@es ;
+    ex:textoExtracto      "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)."@es ;
+    ex:identificador       "SHORTESTWAY" .
+
+ex:Parametro_REFFEED1_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro REFFEED1 (velocidad rápida de búsqueda de referencia)"@es ;
+    ex:textoExtracto      "La velocidad rápida y lenta de búsqueda de referencia máquina (parámetros REFFEED1 y REFFEED2) deberá ser igual en ambos ejes."@es ;
+    ex:identificador       "REFFEED1" .
+
+ex:Parametro_REFFEED2_60
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro REFFEED2 (velocidad lenta de búsqueda de referencia)"@es ;
+    ex:textoExtracto      "La velocidad rápida y lenta de búsqueda de referencia máquina (parámetros REFFEED1 y REFFEED2) deberá ser igual en ambos ejes."@es ;
+    ex:identificador       "REFFEED2" .

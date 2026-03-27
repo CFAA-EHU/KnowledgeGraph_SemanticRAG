@@ -1,15 +1,22 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Eje ex:textoExtracto "cada vez que quiere mover el eje. Ver \"ENABLE(axis)\" 418. ( no errores) AND (regulador OK) AND ENABLE = SERVOON Si se mueve el eje cuando está bloqueado, el CNC almacena la desviación como error de seguimiento. Al volver a controlarlo (SERVOON=1) vuelve a posición. ERROR" ;
-    a ex:ComponenteMecanico ;
-    ex:tieneComponente ex:SERVOON .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SERVOON ex:textoExtracto "ENABLE = SERVOON" ;
+ex:CondicionMovimientoEje
     a ex:ModoOperacion ;
-    ex:identificador "SERVOON" .
+    rdfs:label "Condición de movimiento de eje (ENABLE=SERVOON)"@es ;
+    ex:textoExtracto "cada vez que quiere mover el eje. [...] AND (regulador OK) AND ENABLE = SERVOON"@es ;
+    ex:identificador "ENABLE(axis)" .
 
-ex:ErrorSeguimiento ex:textoExtracto "el CNC almacena la desviación como error de seguimiento" ;
-    a ex:DiagnosticoFallo .
+ex:ErrorSeguimientoEje
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error de seguimiento por movimiento de eje bloqueado"@es ;
+    ex:textoExtracto "Si se mueve el eje cuando está bloqueado, el CNC almacena la desviación como error de seguimiento."@es .
 
-ex:ReguladorOK ex:textoExtracto "(regulador OK)" ;
-    a ex:Parametro ;
-    ex:identificador "regulador OK" .
+ex:SistemaControlCNC_828
+    a ex:Sistema ;
+    rdfs:label "Sistema de control CNC (gestión de servos y errores)"@es ;
+    ex:textoExtracto "Al volver a controlarlo (SERVOON=1) vuelve a posición. ERROR"@es ;
+    ex:activaAlarma ex:ErrorSeguimientoEje ;
+    ex:controla ex:CondicionMovimientoEje .

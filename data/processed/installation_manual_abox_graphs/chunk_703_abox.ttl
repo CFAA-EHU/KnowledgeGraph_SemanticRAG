@@ -1,16 +1,50 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaCNC a ex:Maquina ;
-    ex:textoExtracto "El intercambio de información entre el CNC y el PLC permite: • El control de las entradas y salidas lógicas del CNC mediante un intercambio de información entre ambos sistemas, que se realiza de modo periódico y por medio de determinadas Marcas y Registros del PLC. • La transferencia del CNC al PLC de las funciones auxiliares M, H y S. • Generar mensajes y errores en el CNC, mediante determinadas Marcas del PLC. • La lectura y modificación de variables internas del CNC desde el PLC. • El acceso a todos los recursos del PLC desde cualquier programa pieza. • La monitorización en la pantalla del CNC de los recursos del PLC." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SistemaPLC a ex:Componente ;
-    ex:textoExtracto "El intercambio de información entre el CNC y el PLC permite: • El control de las entradas y salidas lógicas del CNC mediante un intercambio de información entre ambos sistemas, que se realiza de modo periódico y por medio de determinadas Marcas y Registros del PLC. • La transferencia del CNC al PLC de las funciones auxiliares M, H y S. • Generar mensajes y errores en el CNC, mediante determinadas Marcas del PLC. • La lectura y modificación de variables internas del CNC desde el PLC. • El acceso a todos los recursos del PLC desde cualquier programa pieza. • La monitorización en la pantalla del CNC de los recursos del PLC." .
+ex:SistemaComunicacion_CNC_PLC_703
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema de comunicación CNC-PLC" ;
+    ex:textoExtracto    "El intercambio de información entre el CNC y el PLC permite: [...] La monitorización en la pantalla del CNC de los recursos del PLC."@es ;
+    ex:controla         ex:InterfazUsuario_CNC_703 ;
+    ex:tieneComponente  ex:MarcasPLC_703, ex:RegistrosPLC_703, ex:FuncionesAuxiliares_MHS_703 .
 
-ex:MarcaPLC a ex:ComponenteElectrico ;
-    ex:textoExtracto "por medio de determinadas Marcas y Registros del PLC" .
+ex:InterfazUsuario_CNC_703
+    a                   ex:InterfazUsuario ;
+    rdfs:label          "Pantalla de monitorización CNC" ;
+    ex:textoExtracto    "La monitorización en la pantalla del CNC de los recursos del PLC."@es .
 
-ex:RegistroPLC a ex:ComponenteElectrico ;
-    ex:textoExtracto "por medio de determinadas Marcas y Registros del PLC" .
+ex:MarcasPLC_703
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Marcas del PLC para control lógico y mensajes" ;
+    ex:textoExtracto    "intercambio de información [...] mediante determinadas Marcas y Registros del PLC. [...] Generar mensajes y errores en el CNC, mediante determinadas Marcas del PLC."@es ;
+    ex:monitoreaParametro ex:Parametro_EstadoLogico_703 .
 
-ex:SistemaCNC ex:tieneComponente ex:SistemaPLC ;
-    ex:tieneComponente ex:MarcaPLC ;
-    ex:tieneComponente ex:RegistroPLC .
+ex:RegistrosPLC_703
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Registros del PLC para funciones auxiliares" ;
+    ex:textoExtracto    "intercambio de información [...] mediante determinadas Marcas y Registros del PLC."@es .
+
+ex:FuncionesAuxiliares_MHS_703 a ex:Tabla ;
+     a                   ex:Parametro ;
+    rdfs:label          "Funciones auxiliares M, H y S" ;
+    ex:textoExtracto    "La transferencia del CNC al PLC de las funciones auxiliares M, H y S."@es ;
+    ex:monitoreaParametro ex:Parametro_Canal_703, ex:Parametro_Cabezal_703 .
+
+ex:Parametro_EstadoLogico_703
+    a                   ex:Parametro ;
+    rdfs:label          "Nivel lógico (0/1)" ;
+    ex:textoExtracto    "Abreviaciones utilizadas en este capítulo. (=0) nivel lógico bajo. (=1) nivel lógico alto."@es ;
+    ex:valor            "0"^^xsd:string, "1"^^xsd:string .
+
+ex:Parametro_Canal_703
+    a                   ex:Parametro ;
+    rdfs:label          "Número de canal" ;
+    ex:textoExtracto    "El intercambio de las funciones M y H se realiza por canal. [...] Si no se indica el número de canal, las marcas y registros harán referencia al primer canal."@es .
+
+ex:Parametro_Cabezal_703
+    a                   ex:Parametro ;
+    rdfs:label          "Número de cabezal" ;
+    ex:textoExtracto    "El intercambio de las funciones S es independiente del canal. [...] El número de cabezal viene determinado por su número lógico."@es .

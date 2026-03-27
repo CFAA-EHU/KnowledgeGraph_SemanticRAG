@@ -1,41 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MPGRESOL1 a ex:Parametro ;
-    rdfs:label "MPGRESOL1" ;
-    ex:textoExtracto "MPGRESOL1 Posición ꞏ1ꞏ del conmutador." ;
-    ex:valor "1" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MPGRESOL2 a ex:Parametro ;
-    rdfs:label "MPGRESOL2" ;
-    ex:textoExtracto "MPGRESOL2 Posición ꞏ10ꞏ del conmutador." ;
-    ex:valor "10" .
+ex:Tabla_ResolucionVolante_Jog a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de resolución del volante por posición del conmutador de jog"@es ;
+    ex:textoExtracto "Este parámetro muestra la tabla para definir la resolución del volante en cada posición del conmutador de jog. La tabla consta de tres parámetros, uno para cada posición del conmutador del panel de mando."@es ;
+    ex:detalladoEnEsquema ex:InterfazUsuario_PanelMando .
 
-ex:MPGRESOL3 a ex:Parametro ;
-    rdfs:label "MPGRESOL3" ;
-    ex:textoExtracto "MPGRESOL3 Posición ꞏ100ꞏ del conmutador." ;
-    ex:valor "100" .
+ex:Parametro_MPGRESOL1
+    a ex:Parametro ;
+    rdfs:label "MPGRESOL1 (Resolución en posición '1' del conmutador)"@es ;
+    ex:identificador "MPGRESOL1" ;
+    ex:textoExtracto "MPGRESOL1 Posición ꞏ1ꞏ del conmutador."@es ;
+    ex:valor "±99999.9999 mm / ±3937.00787 inch / ±99999.9999 grados (no admite '0')"@es ;
+    ex:documentadoEn ex:Tabla_ResolucionVolante_Jog .
 
-ex:MPGRESOLn a ex:Parametro ;
-    rdfs:label "MPGRESOLn" ;
-    ex:textoExtracto "MPGRESOL n Resolución del volante en cada posición del conmutador." .
+ex:Parametro_MPGRESOL2
+    a ex:Parametro ;
+    rdfs:label "MPGRESOL2 (Resolución en posición '10' del conmutador)"@es ;
+    ex:identificador "MPGRESOL2" ;
+    ex:textoExtracto "MPGRESOL2 Posición ꞏ10ꞏ del conmutador."@es ;
+    ex:valor "±99999.9999 mm / ±3937.00787 inch / ±99999.9999 grados (no admite '0')"@es ;
+    ex:documentadoEn ex:Tabla_ResolucionVolante_Jog .
 
-ex:ModoTrabajoManual a ex:ModoOperacion ;
-    rdfs:label "Modo de trabajo manual" ;
-    ex:textoExtracto "Este parámetro muestra la tabla para definir la resolución del volante en cada posición del conmutador de jog." .
+ex:Parametro_MPGRESOL3
+    a ex:Parametro ;
+    rdfs:label "MPGRESOL3 (Resolución en posición '100' del conmutador)"@es ;
+    ex:identificador "MPGRESOL3" ;
+    ex:textoExtracto "MPGRESOL3 Posición ꞏ100ꞏ del conmutador."@es ;
+    ex:valor "±99999.9999 mm / ±3937.00787 inch / ±99999.9999 grados (no admite '0')"@es ;
+    ex:documentadoEn ex:Tabla_ResolucionVolante_Jog .
 
-ex:TablaResolucionVolante a ex:Tabla ;
-    rdfs:label "Tabla de resolución del volante" ;
-    ex:textoExtracto "La tabla consta de tres parámetros, uno para cada posición del conmutador del panel de mando." ;
-    ex:compuestoPor ex:MPGRESOL1, ex:MPGRESOL2, ex:MPGRESOL3, ex:MPGRESOLn .
+ex:InterfazUsuario_PanelMando
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de mando (conmutador de jog)"@es ;
+    ex:textoExtracto "conmutador del panel de mando"@es ;
+    ex:tieneComponente ex:ComponenteElectrico_ConmutadorJog .
 
-ex:ConmutadorJog a ex:ComponenteElectrico ;
-    rdfs:label "Conmutador de jog" ;
-    ex:textoExtracto "posición del conmutador de jog" .
-
-ex:PanelMando a ex:InterfazUsuario ;
-    rdfs:label "Panel de mando" ;
-    ex:textoExtracto "posición del conmutador del panel de mando" .
-
-ex:ParametroResolucion a ex:Parametro ;
-    rdfs:label "Resolución del volante" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." .
+ex:ComponenteElectrico_ConmutadorJog
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conmutador de jog (3 posiciones: 1, 10, 100)"@es ;
+    ex:textoExtracto "conmutador de jog [...] Posición ꞏ1ꞏ [...] Posición ꞏ10ꞏ [...] Posición ꞏ100ꞏ"@es ;
+    ex:ilustradoEn ex:Tabla_ResolucionVolante_Jog .

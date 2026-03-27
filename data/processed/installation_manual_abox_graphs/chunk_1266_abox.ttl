@@ -1,17 +1,33 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PLC_1266 a ex:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "Los bloques se pueden distribuir como se desee dentro del rango de recursos gestionados por PLC (1...1024)." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EntradaDigital_1266 a ex:ComponenteElectrico ;
-    rdfs:label "entrada digital" ;
-    ex:textoExtracto "Configurar las salidas digitales. La entradas y salidas digitales se configuran desde los parámetros máquina." .
+ex:PLC_1266
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "PLC (Controlador Lógico Programable)"@es ;
+    ex:textoExtracto      "El PLC admite huecos, pero nunca solapamiento entre los diferentes bloques; es decir, una entrada o salida digital de PLC sólo puede pertenecer a un único nodo-módulo del bus."@es ;
+    ex:monitoreaParametro ex:Parametro_EntradasSalidas_1266 .
 
-ex:SalidaDigital_1266 a ex:ComponenteElectrico ;
-    rdfs:label "salida digital" ;
-    ex:textoExtracto "Configurar las salidas digitales. La entradas y salidas digitales se configuran desde los parámetros máquina." .
+ex:Parametro_EntradasSalidas_1266
+    a                     ex:Parametro ;
+    rdfs:label            "Configuración de entradas y salidas digitales"@es ;
+    ex:textoExtracto      "Las entradas y salidas digitales se configuran desde los parámetros máquina."@es ;
+    ex:valor              "Rango: 1...1024"@es .
 
-ex:ParametroMaquina_1266 a ex:Parametro ;
-    rdfs:label "parámetros máquina" ;
-    ex:textoExtracto "La entradas y salidas digitales se configuran desde los parámetros máquina." .
+ex:BusCANopen_1266
+    a                     ex:Sistema ;
+    rdfs:label            "Bus CANopen"@es ;
+    ex:textoExtracto      "Numerar las entradas y salidas digitales del bus CANopen."@es ;
+    ex:tieneComponente    ex:PLC_1266 .
+
+ex:NodoModulo_1266
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Nodo-módulo del bus CANopen"@es ;
+    ex:textoExtracto      "una entrada o salida digital de PLC sólo puede pertenecer a un único nodo-módulo del bus."@es ;
+    ex:controla           ex:EntradaSalidaDigital_1266 .
+
+ex:EntradaSalidaDigital_1266
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Entradas y salidas digitales"@es ;
+    ex:textoExtracto      "Configurar las salidas digitales. Las entradas y salidas digitales se configuran desde los parámetros máquina."@es .

@@ -1,42 +1,70 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:INPOSI a ex:Sensor ;
-    rdfs:label "INPOSI" ;
-    ex:textoExtracto "El canal del CNC pone la marca INPOSI a (=1) para indicar que todos sus ejes y cabezales activos han llegado a posición" ;
-    ex:valor "1" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:INPOSW a ex:Parametro ;
+ex:Parametro_INPOSW
+    a ex:Parametro ;
     rdfs:label "INPOSW" ;
-    ex:textoExtracto "Un eje está en posición cuando permanece dentro de la banda de muerte (parámetro INPOSW)" .
+    ex:textoExtracto "Un eje está en posición cuando permanece dentro de la banda de muerte (parámetro INPOSW) el tiempo indicado en el parámetro INPOTIME." ;
+    ex:identificador "INPOSW" .
 
-ex:INPOTIME a ex:Parametro ;
+ex:Parametro_INPOTIME
+    a ex:Parametro ;
     rdfs:label "INPOTIME" ;
-    ex:textoExtracto "Un eje está en posición cuando permanece dentro de la banda de muerte el tiempo indicado en el parámetro INPOTIME" .
+    ex:textoExtracto "Un eje está en posición cuando permanece dentro de la banda de muerte (parámetro INPOSW) el tiempo indicado en el parámetro INPOTIME." ;
+    ex:identificador "INPOTIME" .
 
-ex:SPN1 a ex:Sensor ;
+ex:Se_al_INPOSI
+    a ex:InterfazUsuario ;
+    rdfs:label "INPOSI" ;
+    ex:textoExtracto "El canal del CNC pone la marca INPOSI a (=1) para indicar que todos sus ejes y cabezales activos han llegado a posición, exceptuando los ejes independientes programados desde el PLC. La marca INPOSI permanece a (=1) durante el movimiento de los ejes independientes." ;
+    ex:identificador "INPOSI" .
+
+ex:Registro_SPN1
+    a ex:InterfazUsuario ;
     rdfs:label "SPN1" ;
-    ex:textoExtracto "Hay un registro para cada canal. Los mnemónicos para cada canal son los siguientes. Se muestra como ejemplo los mnemónicos de SPN1; para el resto de registros es equivalente." .
+    ex:textoExtracto "Hay un registro para cada canal. Los mnemónicos para cada canal son los siguientes. Se muestra como ejemplo los mnemónicos de SPN1; para el resto de registros es equivalente." ;
+    ex:identificador "SPN1" .
 
-ex:SPN1C1 a ex:Sensor ;
+ex:Registro_SPN1C1
+    a ex:InterfazUsuario ;
     rdfs:label "SPN1C1" ;
-    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" .
+    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" ;
+    ex:identificador "SPN1C1" .
 
-ex:SPN1C2 a ex:Sensor ;
+ex:Registro_SPN1C2
+    a ex:InterfazUsuario ;
     rdfs:label "SPN1C2" ;
-    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" .
+    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" ;
+    ex:identificador "SPN1C2" .
 
-ex:SPN1C3 a ex:Sensor ;
+ex:Registro_SPN1C3
+    a ex:InterfazUsuario ;
     rdfs:label "SPN1C3" ;
-    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" .
+    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" ;
+    ex:identificador "SPN1C3" .
 
-ex:SPN1C4 a ex:Sensor ;
+ex:Registro_SPN1C4
+    a ex:InterfazUsuario ;
     rdfs:label "SPN1C4" ;
-    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" .
+    ex:textoExtracto "SPN1C1 SPN1C2 SPN1C3 SPN1C4" ;
+    ex:identificador "SPN1C4" .
 
-ex:S1 a ex:ComponenteMecanico ;
-    rdfs:label "S1" ;
-    ex:textoExtracto "Giro a derechas del cabezal S1 a 1000 rpm" .
+ex:FuncionM_M3_S1 a ex:Tabla ;
+     a ex:AccionProhibida ;
+    rdfs:label "M3.S1" ;
+    ex:textoExtracto "M3.S1 S1=1000 M4.S2 S2=500 Giro a derechas del cabezal S1 a 1000 rpm y giro a izquierdas del cabezal S2 a 500 rpm." ;
+    ex:identificador "M3.S1" .
 
-ex:S2 a ex:ComponenteMecanico ;
-    rdfs:label "S2" ;
-    ex:textoExtracto "Giro a izquierdas del cabezal S2 a 500 rpm" .
+ex:FuncionM_M4_S2 a ex:Tabla ;
+     a ex:AccionProhibida ;
+    rdfs:label "M4.S2" ;
+    ex:textoExtracto "M3.S1 S1=1000 M4.S2 S2=500 Giro a derechas del cabezal S1 a 1000 rpm y giro a izquierdas del cabezal S2 a 500 rpm." ;
+    ex:identificador "M4.S2" .
+
+ex:Registro_SPN1
+    ex:tieneComponente ex:Registro_SPN1C1 ;
+    ex:tieneComponente ex:Registro_SPN1C2 ;
+    ex:tieneComponente ex:Registro_SPN1C3 ;
+    ex:tieneComponente ex:Registro_SPN1C4 .

@@ -1,35 +1,70 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:HerramientaTierra a ex:ComponenteElectrico ;
-    rdfs:label "Herramienta de tierra" ;
-    ex:textoExtracto "Colocar la herramienta de tierra en el cabezal." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MSG_InsertarHerramienta a ex:AvisoSeguridad ;
-    ex:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." .
+ex:RutinaM06
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Rutina M06" ;
+    ex:textoExtracto      "WAIT FOR [V.PLC.M[1107]==0] #RET %L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. [...] # RET %L SUB_ARM_TO_MZ ; Llevar el brazo cambiador al almacén. M122 ; Función auxiliar para ejecutar acción." ;
+    ex:identificador      "M06" ;
+    ex:requiereEPI        ex:HerramientaTierra .
 
-ex:MSG_QuitarMensaje a ex:AvisoSeguridad ;
-    ex:textoExtracto "MSG [\"\"] ; Quitar mensaje." .
+ex:HerramientaTierra
+    a                     ex:EPI ;
+    rdfs:label            "Herramienta de tierra" ;
+    ex:textoExtracto      "Colocar la herramienta de tierra en el cabezal." .
 
-ex:Sub_GR_TO_SPD a ex:TareaMantenimiento ;
-    ex:textoExtracto "WAIT FOR [V.PLC.M[1107]==0] #RET %L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal." .
+ex:HerramientaT_D
+    a                     ex:Herramienta ;
+    rdfs:label            "Herramienta T%D" ;
+    ex:textoExtracto      "Insertar herramienta T%D y pulsar MARCHA" .
 
-ex:Sub_SPD_GMCHG a ex:TareaMantenimiento ;
-    ex:textoExtracto "WAIT FOR [V.PLC.M[1108]==0] #RET %L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
+ex:MensajeOperarioM06
+    a                     ex:AvisoSeguridad ;
+    rdfs:label            "Mensaje de inserción de herramienta T%D" ;
+    ex:textoExtracto      "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." .
 
-ex:Sub_SPD_AUTCHG a ex:TareaMantenimiento ;
-    ex:textoExtracto "# RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
+ex:PuntoCambioManual
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Punto de cambio manual" ;
+    ex:textoExtracto      "SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
 
-ex:Sub_ARM_TO_CHG a ex:TareaMantenimiento ;
-    ex:textoExtracto "# RET %L SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio." .
+ex:PuntoCambioAutomatico
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Punto de cambio automático" ;
+    ex:textoExtracto      "SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
 
-ex:Sub_ARM_TO_MZ a ex:TareaMantenimiento ;
-    ex:textoExtracto "# RET %L SUB_ARM_TO_MZ ; Llevar el brazo cambiador al almacén." .
+ex:PuntoCambioBrazo
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Punto de cambio del brazo" ;
+    ex:textoExtracto      "SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio." .
 
-ex:M121 a ex:AccionProhibida ;
-    ex:textoExtracto "M121 ; Función auxiliar para ejecutar acción." .
+ex:AlmacenHerramientas
+    a                     ex:Sistema ;
+    rdfs:label            "Almacén de herramientas" ;
+    ex:textoExtracto      "SUB_ARM_TO_MZ ; Llevar el brazo cambiador al almacén." .
 
-ex:M122 a ex:AccionProhibida ;
-    ex:textoExtracto "M122 ; Función auxiliar" .
+ex:FuncionAuxiliarM121 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función auxiliar M121" ;
+    ex:textoExtracto      "M121 ; Función auxiliar para ejecutar acción." ;
+    ex:identificador      "M121" .
 
-ex:M06 a ex:ModoOperacion ;
-    ex:textoExtracto "WAIT FOR [V.PLC.M[1107]==0] #RET %L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. # MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje. V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor. # WAIT FOR [V.PLC.M[1108]==0] #RET %L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal. # RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. G1 Z_ F_ ; Desplazar el cabezal. # RET %L SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. M121 ; Función auxiliar para ejecutar acción. # RET %L SUB_ARM_TO_MZ ; Llevar el brazo cambiador al almacén. M122 ; Función auxiliar" .
+ex:FuncionAuxiliarM122 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función auxiliar M122" ;
+    ex:textoExtracto      "M122 ; Función auxiliar" ;
+    ex:identificador      "M122" .
+
+ex:VariablePLC_M1107
+    a                     ex:Parametro ;
+    rdfs:label            "Variable PLC M[1107]" ;
+    ex:textoExtracto      "WAIT FOR [V.PLC.M[1107]==0]" ;
+    ex:identificador      "V.PLC.M[1107]" .
+
+ex:VariablePLC_M1108
+    a                     ex:Parametro ;
+    rdfs:label            "Variable PLC M[1108]" ;
+    ex:textoExtracto      "V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor." ;
+    ex:identificador      "V.PLC.M[1108]" .

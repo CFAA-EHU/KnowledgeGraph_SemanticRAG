@@ -1,22 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:RETRACAC a ex:Parametro ;
-    rdfs:label "RETRACAC" ;
-    ex:identificador "(V.)[ch].MPG.RETRACAC" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.RETRACAC Este parámetro indica si se permite utilizar la función retrace en el CNC." ;
-    ex:valor "Sí / No" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_RETRACAC
+    a ex:Parametro ;
+    rdfs:label "Parámetro RETRACAC" ;
+    ex:textoExtracto "RETRACAC Permitir habilitar la función retrace. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPG.RETRACAC Este parámetro indica si se permite utilizar la función retrace en el CNC." ;
+    ex:identificador "RETRACAC" ;
     ex:valor "No" .
 
-ex:NRETBLK a ex:Parametro ;
-    rdfs:label "NRETBLK" ;
-    ex:identificador "(V.)[ch].MPG.NRETBLK" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.NRETBLK Este parámetro establece el máximo número de bloques que se pueden retroceder con la función retrace." ;
-    ex:valor "De 0 a 300" ;
+ex:Parametro_NRETBLK
+    a ex:Parametro ;
+    rdfs:label "Parámetro NRETBLK" ;
+    ex:textoExtracto "NRETBLK Máximo número de bloques permitidos para la función retrace. Valores posibles: De 0 a 300. Valor por defecto: 75. Variable asociada: (V.)[ch].MPG.NRETBLK Este parámetro establece el máximo número de bloques que se pueden retroceder con la función retrace." ;
+    ex:identificador "NRETBLK" ;
     ex:valor "75" .
 
-ex:RETMFUNC a ex:Parametro ;
-    rdfs:label "RETMFUNC" ;
-    ex:identificador "(V.)[ch].MPG.RETMFUNC" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.RETMFUNC Este parámetro establece el comportamiento de la función retrace cuando se ejecutan funciones M." ;
-    ex:valor "Ignorar / Cancelar" ;
+ex:Parametro_RETMFUNC
+    a ex:Parametro ;
+    rdfs:label "Parámetro RETMFUNC" ;
+    ex:textoExtracto "RETMFUNC Tratamiento de las funciones M con la función retrace. Valores posibles: Ignorar / Cancelar. Valor por defecto: Ignorar. Variable asociada: (V.)[ch].MPG.RETMFUNC Este parámetro establece el comportamiento de la función retrace cuando se ejecutan funciones M." ;
+    ex:identificador "RETMFUNC" ;
     ex:valor "Ignorar" .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "Este parámetro indica si se permite utilizar la función retrace en el CNC. Una vez permitida la función retrace, esta se podrá activar desde el PLC mediante la marca RETRACE." ;
+    ex:tieneComponente ex:Parametro_RETRACAC ;
+    ex:tieneComponente ex:Parametro_NRETBLK ;
+    ex:tieneComponente ex:Parametro_RETMFUNC .
+
+ex:InterfazUsuario_PLC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz PLC" ;
+    ex:textoExtracto "Una vez permitida la función retrace, esta se podrá activar desde el PLC mediante la marca RETRACE." .

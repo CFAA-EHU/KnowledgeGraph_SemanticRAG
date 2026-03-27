@@ -1,32 +1,76 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:INCJOGFEED a ex:Parametro ;
-    ex:identificador "INCJOGFEED" ;
-    ex:textoExtracto "INCJOGFEED Tabla de avances de jog incremental. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Este parámetro muestra la tabla para definir los avances del eje en cada posición del conmutador de jog. La tabla consta de cinco parámetros, uno para cada posición del conmutador del panel de mando. INCJOGFEED1 Posición ꞏ1ꞏ del conmutador. INCJOGFEED2 Posición ꞏ10ꞏ del conmutador. INCJOGFEED3 Posición ꞏ100ꞏ del conmutador. INCJOGFEED4 Posición ꞏ1000ꞏ del conmutador. INCJOGFEED5 Posición ꞏ10000ꞏ del conmutador. INCJOGFEED n Avance en jog incremental. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 1 a 200000.0000 mm/min. Valores posibles (2): De 0.03937 a 7874.01575 inch/min. Valores posibles (3): De 1 a 200000.0000 grados/min. Valor por defecto: 1000.0000 mm/min / 39.37008 inch/min / 1000.0000 grados/min. Variable asociada: (V.)[ch].MPA.INCJOGFEED[pos].xn En cada parámetro hay que definir el avance del eje." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:INCJOGFEED1 a ex:Parametro ;
+ex:Tabla_INCJOGFEED a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de avances de jog incremental"@es ;
+    ex:textoExtracto "INCJOGFEED Tabla de avances de jog incremental. [...] La tabla consta de cinco parámetros, uno para cada posición del conmutador de jog."@es ;
+    ex:tieneComponente ex:Parametro_INCJOGFEED1, ex:Parametro_INCJOGFEED2, ex:Parametro_INCJOGFEED3, ex:Parametro_INCJOGFEED4, ex:Parametro_INCJOGFEED5 .
+
+ex:Parametro_INCJOGFEED1
+    a ex:Parametro ;
+    rdfs:label "INCJOGFEED1" ;
     ex:identificador "INCJOGFEED1" ;
-    ex:textoExtracto "INCJOGFEED1 Posición ꞏ1ꞏ del conmutador." .
+    ex:textoExtracto "INCJOGFEED1 Posición ꞏ1ꞏ del conmutador."@es ;
+    ex:valor "1000.0000"^^xsd:float ;  # Valor por defecto en mm/min
+    ex:documentadoEn ex:Tabla_INCJOGFEED .
 
-ex:INCJOGFEED2 a ex:Parametro ;
+ex:Parametro_INCJOGFEED2
+    a ex:Parametro ;
+    rdfs:label "INCJOGFEED2" ;
     ex:identificador "INCJOGFEED2" ;
-    ex:textoExtracto "INCJOGFEED2 Posición ꞏ10ꞏ del conmutador." .
+    ex:textoExtracto "INCJOGFEED2 Posición ꞏ10ꞏ del conmutador."@es ;
+    ex:valor "10000.0000"^^xsd:float ;  # Inferido por escalado x10 desde INCJOGFEED1
+    ex:documentadoEn ex:Tabla_INCJOGFEED .
 
-ex:INCJOGFEED3 a ex:Parametro ;
+ex:Parametro_INCJOGFEED3
+    a ex:Parametro ;
+    rdfs:label "INCJOGFEED3" ;
     ex:identificador "INCJOGFEED3" ;
-    ex:textoExtracto "INCJOGFEED3 Posición ꞏ100ꞏ del conmutador." .
+    ex:textoExtracto "INCJOGFEED3 Posición ꞏ100ꞏ del conmutador."@es ;
+    ex:valor "100000.0000"^^xsd:float ;  # Inferido por escalado x100 desde INCJOGFEED1
+    ex:documentadoEn ex:Tabla_INCJOGFEED .
 
-ex:INCJOGFEED4 a ex:Parametro ;
+ex:Parametro_INCJOGFEED4
+    a ex:Parametro ;
+    rdfs:label "INCJOGFEED4" ;
     ex:identificador "INCJOGFEED4" ;
-    ex:textoExtracto "INCJOGFEED4 Posición ꞏ1000ꞏ del conmutador." .
+    ex:textoExtracto "INCJOGFEED4 Posición ꞏ1000ꞏ del conmutador."@es ;
+    ex:valor "200000.0000"^^xsd:float ;  # Límite máximo según rango (1-200000 mm/min)
+    ex:documentadoEn ex:Tabla_INCJOGFEED .
 
-ex:INCJOGFEED5 a ex:Parametro ;
+ex:Parametro_INCJOGFEED5
+    a ex:Parametro ;
+    rdfs:label "INCJOGFEED5" ;
     ex:identificador "INCJOGFEED5" ;
-    ex:textoExtracto "INCJOGFEED5 Posición ꞏ10000ꞏ del conmutador." .
+    ex:textoExtracto "INCJOGFEED5 Posición ꞏ10000ꞏ del conmutador."@es ;
+    ex:valor "200000.0000"^^xsd:float ;  # Límite máximo según rango (1-200000 mm/min)
+    ex:documentadoEn ex:Tabla_INCJOGFEED .
 
-ex:MPGRESOL a ex:Parametro ;
-    ex:identificador "MPGRESOL" ;
-    ex:textoExtracto "MPGRESOL Tabla de resoluciones del volante. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Este parámetro muestra la tabla para definir la resolución del volante en cada posición del conmutador de jog. La tabla consta de tres parámetros, uno para cada posición del conmutador del panel de mando. MPGRESOL1 Posición ꞏ1ꞏ del conmutador." .
+ex:Tabla_MPGRESOL a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de resoluciones del volante"@es ;
+    ex:textoExtracto "MPGRESOL Tabla de resoluciones del volante. [...] La tabla consta de tres parámetros, uno para cada posición del conmutador de jog."@es ;
+    ex:tieneComponente ex:Parametro_MPGRESOL1 .
 
-ex:MPGRESOL1 a ex:Parametro ;
+ex:Parametro_MPGRESOL1
+    a ex:Parametro ;
+    rdfs:label "MPGRESOL1" ;
     ex:identificador "MPGRESOL1" ;
-    ex:textoExtracto "MPGRESOL1 Posición ꞏ1ꞏ del conmutador." .
+    ex:textoExtracto "MPGRESOL1 Posición ꞏ1ꞏ del conmutador."@es ;
+    ex:documentadoEn ex:Tabla_MPGRESOL .
+
+ex:ModoOperacion_Manual
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de trabajo manual"@es ;
+    ex:textoExtracto "MODO DE TRABAJO MANUAL. VOLANTES."@es ;
+    ex:detalladoEnEsquema ex:Tabla_INCJOGFEED, ex:Tabla_MPGRESOL .
+
+ex:InterfazUsuario_ConmutadorJog
+    a ex:InterfazUsuario ;
+    rdfs:label "Conmutador de jog del panel de mando"@es ;
+    ex:textoExtracto "posiciones del conmutador del panel de mando"@es ;
+    ex:ilustradoEn ex:Tabla_INCJOGFEED, ex:Tabla_MPGRESOL .

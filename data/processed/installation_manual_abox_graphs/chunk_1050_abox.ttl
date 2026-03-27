@@ -1,14 +1,32 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Torno_3Canales_6Ejes_2Cabezales a ex:Maquina ;
-    ex:textoExtracto "Torno con 3 canales, 6 ejes y 2 cabezales. Configuración de ejes tipo" ;
-    ex:tieneComponente ex:Eje_U, ex:Eje_V .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Eje_U a ex:ComponenteMecanico ;
-    ex:identificador "CHAXISNAME 1" ;
-    ex:textoExtracto "Eje con índice ꞏ1ꞏ. Número lógico ꞏ5ꞏ." ;
-    ex:valor "U" .
+ex:ConfiguracionEjes_Torno3Canales6Ejes2Cabezales
+    a ex:Sistema ;
+    rdfs:label "Configuración de ejes para torno con 3 canales, 6 ejes y 2 cabezales" ;
+    ex:textoExtracto "Selección de planos en el canal ꞏ1ꞏ y ꞏ2ꞏ. Con esta configuración, el plano de trabajo siempre es G18 y estará formado por los dos primeros ejes definidos en el canal. Si se han definido los ejes X (primer eje del canal) y Z (segundo eje del canal), el plano de trabajo será ZX (eje Z como abscisas y eje X como ordenadas). Las funciones G17 y G19 no son válidas." ;
+    ex:tieneComponente ex:Eje_U_Indice1_Logico5 ,
+                       ex:Eje_V_Indice2_Logico6 .
 
-ex:Eje_V a ex:ComponenteMecanico ;
-    ex:identificador "CHAXISNAME 2" ;
-    ex:textoExtracto "Eje con índice ꞏ2ꞏ. Número lógico ꞏ6ꞏ." ;
-    ex:valor "V" .
+ex:Eje_U_Indice1_Logico5
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje U (Índice 1, Lógico 5)" ;
+    ex:identificador "U" ;
+    ex:valor "1"^^xsd:string ;  # Índice en el canal
+    ex:textoExtracto "CHAXISNAME 1 | U | Eje con índice ꞏ1ꞏ. | Número lógico ꞏ5ꞏ." .
+
+ex:Eje_V_Indice2_Logico6
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje V (Índice 2, Lógico 6)" ;
+    ex:identificador "V" ;
+    ex:valor "2"^^xsd:string ;  # Índice en el canal
+    ex:textoExtracto "CHAXISNAME 2 | V | Eje con índice ꞏ2ꞏ. | Número lógico ꞏ6ꞏ." .
+
+ex:Tabla_ConfiguracionEjes_Torno a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de ejes CHAXISNAME" ;
+    ex:textoExtracto "| CHAXISNAME | Valor | Índice en el canal. | Orden lógico. | --- | --- | --- | --- | CHAXISNAME 1 | U | Eje con índice ꞏ1ꞏ. | Número lógico ꞏ5ꞏ. | CHAXISNAME 2 | V | Eje con índice ꞏ2ꞏ. | Número lógico ꞏ6ꞏ." ;
+    ex:documentadoEn ex:ConfiguracionEjes_Torno3Canales6Ejes2Cabezales .

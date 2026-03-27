@@ -1,17 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ENABLE_axis_759 a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:se_al_FEEDHOLD
+    a ex:Parametro ;
+    rdfs:label "FEEDHOLD" ;
+    ex:textoExtracto "marca _FEEDHOL=0" ;
+    ex:valor "0" .
+
+ex:se_al_ENABLE_axis
+    a ex:Parametro ;
     rdfs:label "ENABLE(axis)" ;
-    ex:textoExtracto "Si el PLC detiene el avance de los ejes (marca _FEEDHOL=0) la señal ENABLE(axis) se mantiene a (=1)" .
+    ex:textoExtracto "la señal ENABLE(axis) se mantiene a (=1)" ;
+    ex:valor "1" .
 
-ex:REFPOIN_axis_759 a ex:Parametro ;
+ex:se_al_REFPOIN_axis
+    a ex:Parametro ;
     rdfs:label "REFPOIN(axis)" ;
-    ex:textoExtracto "El CNC activa esta marca (=1) cuando el eje o cabezal está referenciado. La marca REFPOIN(axis) siempre está activa (=1)" .
+    ex:textoExtracto "marca REFPOIN(axis) [...] activa (=1)" ;
+    ex:valor "1" .
 
-ex:ABSFEEDBACK_759 a ex:Parametro ;
+ex:parametro_ABSFEEDBACK
+    a ex:Parametro ;
     rdfs:label "ABSFEEDBACK" ;
-    ex:textoExtracto "Captación absoluta total (parámetro ABSFEEDBACK=Sí)" .
+    ex:textoExtracto "parámetro ABSFEEDBACK=Sí" ;
+    ex:valor "Sí" .
 
-ex:_FEEDHOL_759 a ex:Parametro ;
-    rdfs:label "_FEEDHOL" ;
-    ex:textoExtracto "marca _FEEDHOL=0" .
+ex:modo_CaptacionAbsolutaTotal
+    a ex:ModoOperacion ;
+    rdfs:label "Captación absoluta total" ;
+    ex:textoExtracto "Captación absoluta total (parámetro ABSFEEDBACK=Sí). La marca REFPOIN(axis) siempre está activa (=1). No es necesaria la búsqueda de referencia." ;
+    ex:monitoreaParametro ex:parametro_ABSFEEDBACK ;
+    ex:monitoreaParametro ex:se_al_REFPOIN_axis .
+
+ex:modo_CaptacionAbsolutaUnaVuelta
+    a ex:ModoOperacion ;
+    rdfs:label "Captación absoluta en una vuelta" ;
+    ex:textoExtracto "Captación absoluta en una vuelta. El CNC activa (=1) la marca REFPOIN(axis) en el arranque si en la" ;
+    ex:monitoreaParametro ex:se_al_REFPOIN_axis .

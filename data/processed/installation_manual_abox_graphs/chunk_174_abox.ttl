@@ -1,15 +1,16 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:FINEORG a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_FINEORG a ex:Parametro ;
     rdfs:label "FINEORG" ;
-    ex:identificador "MPG.FINEORG" ;
-    ex:textoExtracto "FINEORG Definición fina de los traslados de origen. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)MPG.FINEORG Este parámetro habilita en la tabla de traslados de orígenes la posibilidad de definir cada traslado con un valor grueso (o absoluto) y otro fino (o incremental). Al ejecutar la función G159, el CNC asume como nuevo traslado de origen la suma de ambas partes. • Traslados de origen absolutos (sin ajuste fino del traslado de origen). • Traslados de origen absolutos (con ajuste fino del traslado de origen)." ;
+    ex:identificador "(V.)MPG.FINEORG" ;
+    ex:textoExtracto "FINEORG Definición fina de los traslados de origen. Valores posibles: Sí / No. Valor por defecto: No." ;
     ex:valor "No" .
 
-ex:G159 a ex:TareaMantenimiento ;
-    ex:identificador "G159" ;
-    ex:textoExtracto "Al ejecutar la función G159, el CNC asume como nuevo traslado de origen la suma de ambas partes." .
+ex:Tabla_TrasladosOrigen a ex:Tabla ;
+    rdfs:label "Tabla de traslados de orígenes" ;
+    ex:textoExtracto "Este parámetro habilita en la tabla de traslados de orígenes la posibilidad de definir cada traslado con un valor grueso (o absoluto) y otro fino (o incremental)." .
 
-ex:TablaTrasladosOrigen a ex:Tabla ;
-    ex:textoExtracto "Este parámetro habilita en la tabla de traslados de orígenes la posibilidad de definir cada traslado con un valor grueso (o absoluto) y otro fino (o incremental)." ;
-    ex:compuestoPor ex:FINEORG .
+ex:Parametro_FINEORG ex:habilitadoPor ex:Tabla_TrasladosOrigen .

@@ -1,0 +1,49 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Directiva_PDEF
+    a ex:Directiva ;
+    rdfs:label "Directiva PDEF para definición de símbolos en PLC" ;
+    ex:textoExtracto "PDEF COOL I12 [...] Los símbolos estarán formados por una secuencia de hasta 20 caracteres [...] Una vez asociado un símbolo a un recurso o valor numérico se puede utilizar el nombre del recurso, el número o su símbolo asociado." ;
+    ex:identificador "PDEF" .
+
+ex:Directiva_DEF
+    a ex:Directiva ;
+    rdfs:label "Directiva DEF para asignación de valores constantes en PLC" ;
+    ex:textoExtracto "DEF DATA_D1 372893 [...] El archivo se guarda en la carpeta ..\\MTB\\PLC\\Project." ;
+    ex:identificador "DEF" .
+
+ex:Directiva_NOMONIT
+    a ex:Directiva ;
+    rdfs:label "Directiva NOMONIT para deshabilitar monitorización en PLC" ;
+    ex:textoExtracto "NOMONIT No monitorización. Cuando se programa esta directiva no se genera la información necesaria para la monitorización del programa de PLC." ;
+    ex:identificador "NOMONIT" .
+
+ex:Archivo_plc_pdef_h
+    a ex:InterfazUsuario ;
+    rdfs:label "Archivo de cabecera plc_pdef.h con definiciones de símbolos PLC" ;
+    ex:textoExtracto "genera el archivo plc_pdef.h con los #define de todos los símbolos definidos en el programa PLC. El archivo se guarda en la carpeta ..\\MTB\\PLC\\Project." ;
+    ex:identificador "plc_pdef.h" ;
+    ex:documentadoEn ex:Directiva_PDEF .
+
+ex:SistemaPLC_Compilacion
+    a ex:Sistema ;
+    rdfs:label "Sistema de compilación de programas PLC con integración de subrutinas en C" ;
+    ex:textoExtracto "Cada vez que el PLC compila un programa con subrutinas en lenguaje C, genera el archivo plc_pdef.h con los #define de todos los símbolos definidos en el programa PLC." ;
+    ex:tieneComponente ex:Archivo_plc_pdef_h .
+
+ex:VariablePLC_Symbol
+    a ex:Parametro ;
+    rdfs:label "Variable de acceso a símbolos PDEF desde programa pieza (V.PLC.symbol)" ;
+    ex:textoExtracto "V.PLC.symbol Acceso desde programa pieza o MDI. [...] Las variables serán de lectura o escritura en función del recurso asignado al símbolo definido mediante PDEF." ;
+    ex:identificador "V.PLC.symbol" ;
+    ex:monitoreaParametro ex:Directiva_PDEF .
+
+ex:VariablePLC_ExternalSymbol
+    a ex:Parametro ;
+    rdfs:label "Variable de acceso a símbolos PDEF desde aplicación externa (PLC.symbol)" ;
+    ex:textoExtracto "PLC.symbol Acceso desde una aplicación externa." ;
+    ex:identificador "PLC.symbol" ;
+    ex:monitoreaParametro ex:Directiva_PDEF .

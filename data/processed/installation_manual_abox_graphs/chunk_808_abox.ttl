@@ -1,27 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:PANELOFF a ex:ModoOperacion ;
-    ex:textoExtracto "Esta marca está orientada a los volantes con pulsador. En este tipo de volantes, el pulsador permite seleccionar de forma secuencial el eje que se desea desplazar." ;
-    ex:valor "PANELOFF" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PANELOFF1 a ex:ModoOperacion ;
-    ex:textoExtracto "La marca PANELOFF1 deshabilita el primero del bus, la marca PANELOFF2 el segundo y así sucesivamente. Se admite PANELOFF o PANELOFF1 para el primer panel de jog." ;
-    ex:valor "PANELOFF1" .
+ex:ModoOperacion_SeleccionEjesVolante
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo selección de ejes con volante y pulsador"@es ;
+    ex:textoExtracto "La selección de ejes se anula al salir del modo volante con el selector de movimientos y tras un reset. Esta marca está orientada a los volantes con pulsador. En este tipo de volantes, el pulsador permite seleccionar de forma secuencial el eje que se desea desplazar."@es .
 
-ex:PANELOFF8 a ex:ModoOperacion ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:valor "PANELOFF8" .
+ex:Marca_NEXTMPGAXIS
+    a               ex:Parametro ;
+    rdfs:label      "NEXTMPGAXIS" ;
+    ex:identificador "NEXTMPGAXIS" ;
+    ex:textoExtracto "Lo habitual en estos casos es conectar el pulsador del volante a una entrada digital, que será la encargada de gestionar la marca NEXTMPGAXIS."@es ;
+    ex:monitoreaParametro ex:ModoOperacion_SeleccionEjesVolante .
 
-ex:marcaNEXTMPGAXIS a ex:ModoOperacion ;
-    ex:textoExtracto "Lo habitual en estos casos es conectar el pulsador del volante a una entrada digital, que será la encargada de gestionar la marca NEXTMPGAXIS." ;
-    ex:valor "NEXTMPGAXIS" .
+ex:InterfazUsuario_PanelJog
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Panel de jog integrado en bus CAN"@es ;
+    ex:textoExtracto "Cada marca permite deshabilitar el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados."@es .
 
-ex:busCAN a ex:Sistema ;
-    ex:textoExtracto "Cada marca permite deshabilitar el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados. En los casos en los que el teclado y el panel de mando forman un único elemento, esta marca sólo deshabilita el panel de jog. Hay una marca para cada panel de jog. La marca PANELOFF1 deshabilita el primero del bus, la marca PANELOFF2 el segundo y así sucesivamente. Se admite PANELOFF o PANELOFF1 para el primer panel de jog. El orden de los elementos dentro del bus CAN lo determina el conmutador \"Address\". El primer elemento será el de numeración más baja y así sucesivamente. El elemento con numeración más baja corresponde a PANELOFF1." .
+ex:Parametro_PANELOFF1
+    a               ex:Parametro ;
+    rdfs:label      "PANELOFF1" ;
+    ex:identificador "PANELOFF1" ;
+    ex:textoExtracto "La marca PANELOFF1 deshabilita el primero del bus. Hay una marca para cada panel de jog. Se admite PANELOFF o PANELOFF1 para el primer panel de jog."@es ;
+    ex:controla     ex:InterfazUsuario_PanelJog .
 
-ex:conmutadorAddress a ex:Componente ;
-    ex:textoExtracto "El orden de los elementos dentro del bus CAN lo determina el conmutador \"Address\"." ;
-    ex:valor "Address" .
+ex:Parametro_PANELOFF
+    a               ex:Parametro ;
+    rdfs:label      "PANELOFF" ;
+    ex:identificador "PANELOFF" ;
+    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente. Se admite PANELOFF o PANELOFF1 para el primer panel de jog."@es ;
+    ex:controla     ex:InterfazUsuario_PanelJog .
 
-ex:panelJog a ex:InterfazUsuario ;
-    ex:textoExtracto "Cada marca permite deshabilitar el panel de jog integrado en el bus CAN" ;
-    ex:valor "panel de jog" .
+ex:Sistema_BusCAN
+    a               ex:Sistema ;
+    rdfs:label      "Bus CAN"@es ;
+    ex:textoExtracto "El orden de los elementos dentro del bus CAN lo determina el conmutador 'Address'. El primer elemento será el de numeración más baja y así sucesivamente."@es ;
+    ex:tieneComponente ex:InterfazUsuario_PanelJog .
+
+ex:ComponenteElectrico_ConmutadorAddress
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Conmutador 'Address'"@es ;
+    ex:textoExtracto "El orden de los elementos dentro del bus CAN lo determina el conmutador 'Address'."@es ;
+    ex:compuestoPor ex:Sistema_BusCAN .

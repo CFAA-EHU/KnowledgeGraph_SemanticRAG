@@ -1,18 +1,122 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TablaMonitorizacionHerramientas a ex:Tabla ;
-    ex:textoExtracto "Las marcas de PLC relacionadas con la monitorización de herramientas son las siguientes. Se dispone de un grupo de marcas para cada canal. En la siguiente tabla se muestran los mnemónicos de cada marca (M) en cada uno de los almacenes."@es .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CUTTINGON a ex:Parametro ;
-    ex:identificador "CUTTINGON" ;
-    ex:textoExtracto "Cuando se le asocia a la herramienta un tiempo máximo de vida (monitorización) el CNC consulta esta marca para saber si la herramienta está mecanizando (=1) o no (=0). Normalmente se considera que está mecanizando, cuando se cumplen las siguientes condiciones: • El cabezal está girando (M3 o M4) o se está roscando y no está seleccionado el 0% del avance. • Está seleccionado el modo de operación Automático, hay un bloque en ejecución y no está activa la función G00. • No está detenida la ejecución."@es .
+ex:Tabla_MarcasPLC_MonitorizacionHerramientas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de marcas PLC para monitorización de herramientas"@es ;
+    ex:textoExtracto "Las marcas de PLC relacionadas con la monitorización de herramientas son las siguientes. Se dispone de un grupo de marcas para cada canal. En la siguiente tabla se muestran los mnemónicos de cada marca (M) en cada uno de los almacenes."@es ;
+    ex:ilustradoEn ex:Pagina_477 ;
+    ex:tieneComponente ex:Marca_CUTTINGONC1, ex:Marca_CUTTINGONC2, ex:Marca_CUTTINGONC3, ex:Marca_CUTTINGONC4,
+                       ex:Marca_TREJECTC1, ex:Marca_TREJECTC2, ex:Marca_TREJECTC3, ex:Marca_TREJECTC4,
+                       ex:Marca_TWORNOUTC1, ex:Marca_TWORNOUTC2, ex:Marca_TWORNOUTC3, ex:Marca_TWORNOUTC4 .
 
-ex:TREJECT a ex:Parametro ;
-    ex:identificador "TREJECT" ;
+ex:Pagina_477
+    a ex:Pagina ;
+    ex:identificador "477" ;
+    ex:documentadoEn ex:Manual ;
+    ex:textoExtracto "7.3.4 Monitorización de herramientas."@es .
+
+### Marcas CUTTINGON (Canal 1-4)
+ex:Marca_CUTTINGONC1
+    a ex:Sensor ;
+    ex:identificador "CUTTINGONC1" ;
+    ex:textoExtracto "CUTTINGONC1: Cuando se le asocia a la herramienta un tiempo máximo de vida (monitorización) el CNC consulta esta marca para saber si la herramienta está mecanizando (=1) o no (=0)."@es ;
+    ex:monitoreaParametro ex:Parametro_EstadoMecanizado ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas .
+
+ex:Marca_CUTTINGONC2
+    a ex:Sensor ;
+    ex:identificador "CUTTINGONC2" ;
+    ex:textoExtracto "CUTTINGONC2"@es ;
+    ex:monitoreaParametro ex:Parametro_EstadoMecanizado ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas .
+
+ex:Marca_CUTTINGONC3
+    a ex:Sensor ;
+    ex:identificador "CUTTINGONC3" ;
+    ex:textoExtracto "CUTTINGONC3"@es ;
+    ex:monitoreaParametro ex:Parametro_EstadoMecanizado ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas .
+
+ex:Marca_CUTTINGONC4
+    a ex:Sensor ;
+    ex:identificador "CUTTINGONC4" ;
+    ex:textoExtracto "CUTTINGONC4"@es ;
+    ex:monitoreaParametro ex:Parametro_EstadoMecanizado ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas .
+
+### Marcas TREJECT (Canal 1-4)
+ex:Marca_TREJECTC1
+    a ex:AvisoSeguridad ;
+    ex:identificador "TREJECTC1" ;
+    ex:textoExtracto "TREJECTC1: Si el PLC pone esta marca a (=1) el CNC entiende que la herramienta debe ser rechazada."@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_RechazoHerramienta .
+
+ex:Marca_TREJECTC2
+    a ex:AvisoSeguridad ;
+    ex:identificador "TREJECTC2" ;
+    ex:textoExtracto "TREJECTC2"@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_RechazoHerramienta .
+
+ex:Marca_TREJECTC3
+    a ex:AvisoSeguridad ;
+    ex:identificador "TREJECTC3" ;
+    ex:textoExtracto "TREJECTC3"@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_RechazoHerramienta .
+
+ex:Marca_TREJECTC4
+    a ex:AvisoSeguridad ;
+    ex:identificador "TREJECTC4" ;
+    ex:textoExtracto "TREJECTC4"@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_RechazoHerramienta .
+
+### Marcas TWORNOUT (Canal 1-4)
+ex:Marca_TWORNOUTC1
+    a ex:AvisoSeguridad ;
+    ex:identificador "TWORNOUTC1" ;
+    ex:textoExtracto "TWORNOUTC1: El CNC pone esta marca a (=1) para indicar al PLC que la herramienta ha sido rechazada porque se ha usado más tiempo del previsto (vida real > vida máxima)."@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_DesgasteHerramienta .
+
+ex:Marca_TWORNOUTC2
+    a ex:AvisoSeguridad ;
+    ex:identificador "TWORNOUTC2" ;
+    ex:textoExtracto "TWORNOUTC2"@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_DesgasteHerramienta .
+
+ex:Marca_TWORNOUTC3
+    a ex:AvisoSeguridad ;
+    ex:identificador "TWORNOUTC3" ;
+    ex:textoExtracto "TWORNOUTC3"@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_DesgasteHerramienta .
+
+ex:Marca_TWORNOUTC4
+    a ex:AvisoSeguridad ;
+    ex:identificador "TWORNOUTC4" ;
+    ex:textoExtracto "TWORNOUTC4"@es ;
+    ex:documentadoEn ex:Tabla_MarcasPLC_MonitorizacionHerramientas ;
+    ex:activaAlarma ex:Alarma_DesgasteHerramienta .
+
+### Parámetros y Alarmas asociadas
+ex:Parametro_EstadoMecanizado
+    a ex:Parametro ;
+    rdfs:label "Estado de mecanizado de la herramienta (0: inactivo, 1: activo)"@es ;
+    ex:textoExtracto "el CNC consulta esta marca para saber si la herramienta está mecanizando (=1) o no (=0)."@es .
+
+ex:Alarma_RechazoHerramienta
+    a ex:Alarma ;
+    rdfs:label "Alarma de rechazo de herramienta por señal PLC"@es ;
     ex:textoExtracto "Si el PLC pone esta marca a (=1) el CNC entiende que la herramienta debe ser rechazada."@es .
 
-ex:TWORNOUT a ex:Parametro ;
-    ex:identificador "TWORNOUT" ;
-    ex:textoExtracto "El CNC pone esta marca a (=1) para indicar al PLC que la herramienta ha sido rechazada porque se ha usado más tiempo del previsto (vida real > vida máxima)."@es .
-
-ex:TablaMonitorizacionHerramientas a ex:Tabla ;
-    ex:tieneComponente ex:CUTTINGON, ex:TREJECT, ex:TWORNOUT .
+ex:Alarma_DesgasteHerramienta
+    a ex:Alarma ;
+    rdfs:label "Alarma de desgaste de herramienta por exceso de tiempo de uso"@es ;
+    ex:textoExtracto "la herramienta ha sido rechazada porque se ha usado más tiempo del previsto (vida real > vida máxima)."@es .

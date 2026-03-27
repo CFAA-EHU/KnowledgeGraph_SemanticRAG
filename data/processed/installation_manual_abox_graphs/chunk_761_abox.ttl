@@ -1,22 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Regulador_761_1 a ex:ComponenteElectrico ;
-    rdfs:label "regulador"@es ;
-    ex:textoExtracto "El regulador efectúa una comprobación interna. Si es correcta activa la salida System OK. A partir de este momento suministrar potencia a la fuente."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:System_OK_761_1 a ex:Sensor ;
-    rdfs:label "System OK"@es ;
-    ex:textoExtracto "activa la salida System OK"@es .
+ex:Regulador_Seccion6_2
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Regulador de eje/cabezal" ;
+    ex:textoExtracto "El regulador efectúa una comprobación interna. Si es correcta activa la salida System OK. [...] el regulador está funcionando correctamente."@es ;
+    ex:monitoreaParametro ex:Parametro_DRSTAF, ex:Parametro_DRSTAS ;
+    ex:tieneComponente  ex:Salida_SystemOK, ex:Entrada_DriveEnable, ex:Entrada_SpeedEnable .
 
-ex:Fuente_761_1 a ex:ComponenteElectrico ;
-    rdfs:label "fuente"@es ;
-    ex:textoExtracto "suministrar potencia a la fuente"@es .
+ex:Salida_SystemOK
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Salida System OK" ;
+    ex:textoExtracto "Si es correcta activa la salida System OK."@es .
 
-ex:Drive_enable_761_1 a ex:Parametro ;
-    rdfs:label "Drive enable"@es ;
-    ex:textoExtracto "activar las entradas Drive enable y Speed enable"@es .
+ex:Entrada_DriveEnable
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Entrada Drive enable" ;
+    ex:textoExtracto "activar las entradas Drive enable y Speed enable."@es .
 
-ex:Speed_enable_761_1 a ex:Parametro ;
-    rdfs:label "Speed enable"@es ;
-    rdfs:label "Speed enable"@en ;
-    ex:textoExtracto "activar las entradas Drive enable y Speed enable"@es .
+ex:Entrada_SpeedEnable
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Entrada Speed enable" ;
+    ex:textoExtracto "activar las entradas Drive enable y Speed enable."@es .
+
+ex:Parametro_DRSTAF
+    a               ex:Parametro ;
+    ex:identificador "DRSTAF" ;
+    ex:textoExtracto "Marcas DRSTAF(*)=0 [...] DRSTAF(*)=1"@es ;
+    ex:valor         "0", "1" .
+
+ex:Parametro_DRSTAS
+    a               ex:Parametro ;
+    ex:identificador "DRSTAS" ;
+    ex:textoExtracto "Marcas DRSTAS(*)=1 [...] DRSTAS(*)=0"@es ;
+    ex:valor         "0", "1" .

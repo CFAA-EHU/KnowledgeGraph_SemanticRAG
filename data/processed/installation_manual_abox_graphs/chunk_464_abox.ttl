@@ -1,57 +1,74 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ParametroSSICLKFREQ a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_SSICLKFREQ
+    a ex:Parametro ;
     rdfs:label "SSICLKFREQ" ;
     ex:identificador "SSICLKFREQ" ;
-    ex:textoExtracto "SSICLKFREQ = 1 / T = 400."@es ;
-    ex:valor "400 kHz" .
+    ex:valor "400" ;
+    ex:textoExtracto "SSICLKFREQ = 1 / T = 400. | 400 kHz." ;
+    ex:textoExtracto "SSICLKFREQ Frecuencia para la comunicación SSI. Valores posibles: De 59 a 7500 kHz. Valor por defecto: 150 kHz." .
 
-ex:ParametroSSIDATALENGTH a ex:Parametro ;
+ex:Parametro_SSIDATALENGTH
+    a ex:Parametro ;
     rdfs:label "SSIDATALENGTH" ;
     ex:identificador "SSIDATALENGTH" ;
-    ex:textoExtracto "SSIDATALENGTH = n | Longitud de bits de la cota."@es .
+    ex:textoExtracto "SSIDATALENGTH = n | Longitud de bits de la cota." .
 
-ex:ParametroSSICRCBITS a ex:Parametro ;
+ex:Parametro_SSICRCBITS
+    a ex:Parametro ;
     rdfs:label "SSICRCBITS" ;
     ex:identificador "SSICRCBITS" ;
-    ex:textoExtracto "SSICRCBITS = 0 | No hay bits de CRC."@es .
+    ex:valor "0" ;
+    ex:textoExtracto "SSICRCBITS = 0 | No hay bits de CRC." .
 
-ex:ParametroSSISTARTBITS a ex:Parametro ;
+ex:Parametro_SSISTARTBITS
+    a ex:Parametro ;
     rdfs:label "SSISTARTBITS" ;
     ex:identificador "SSISTARTBITS" ;
-    ex:textoExtracto "SSISTARTBITS = 0 | No hay bits de start."@es .
+    ex:valor "0" ;
+    ex:textoExtracto "SSISTARTBITS = 0 | No hay bits de start." .
 
-ex:ParametroSSIPACKFORMAT a ex:Parametro ;
+ex:Parametro_SSIPACKFORMAT
+    a ex:Parametro ;
     rdfs:label "SSIPACKFORMAT" ;
     ex:identificador "SSIPACKFORMAT" ;
-    ex:textoExtracto "SSIPACKFORMAT = 3 | Data + Alarm."@es .
+    ex:valor "3" ;
+    ex:textoExtracto "SSIPACKFORMAT = 3 | Data + Alarm." .
 
-ex:ParametroSSIALARMBITS a ex:Parametro ;
+ex:Parametro_SSIALARMBITS
+    a ex:Parametro ;
     rdfs:label "SSIALARMBITS" ;
     ex:identificador "SSIALARMBITS" ;
-    ex:textoExtracto "SSIALARMBITS = 1 | 1 bit de alarma/acknowledge."@es .
+    ex:valor "1" ;
+    ex:textoExtracto "SSIALARMBITS = 1 | 1 bit de alarma/acknowledge." .
 
-ex:ParametroSSIDATAMODE a ex:Parametro ;
+ex:Parametro_SSIDATAMODE
+    a ex:Parametro ;
     rdfs:label "SSIDATAMODE" ;
     ex:identificador "SSIDATAMODE" ;
-    ex:textoExtracto "SSIDATAMODE = 1 | MSB Primero."@es .
+    ex:valor "1" ;
+    ex:textoExtracto "SSIDATAMODE = 1 | MSB Primero." .
 
-ex:ParametroSSIALARMLEVEL a ex:Parametro ;
+ex:Parametro_SSIALARMLEVEL
+    a ex:Parametro ;
     rdfs:label "SSIALARMLEVEL" ;
     ex:identificador "SSIALARMLEVEL" ;
-    ex:textoExtracto "SSIALARMLEVEL = 1 | El acknowledge se indica con data a 0; por tanto, se produce una señal de alarma cuando el bit es un 1."@es .
+    ex:valor "1" ;
+    ex:textoExtracto "SSIALARMLEVEL = 1 | El acknowledge se indica con data a 0; por tanto, se produce una señal de alarma cuando el bit es un 1." .
 
-ex:FrecuenciaSSI a ex:Frecuencia ;
-    rdfs:label "Frecuencia SSI" ;
-    ex:identificador "SSICLKFREQ" ;
-    ex:textoExtracto "Frecuencia para la comunicación SSI. Valores posibles: De 59 a 7500 kHz. Valor por defecto: 150 kHz. Variable asociada: (V.)[ch].MPA.SSICLKFREQ[set].xn Frecuencia del reloj para la comunicación SSI. La frecuencia máxima recomendada depende de la longitud del cable."@es ;
-    ex:valor "De 59 a 7500 kHz" .
+ex:Tabla_FrecuenciasMaximasSSI a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Frecuencias máximas recomendadas para comunicación SSI según longitud de cable" ;
+    ex:textoExtracto "Longitud. | Frecuencia máxima. --- | --- Hasta 20 metros. | 600 kHz. Hasta 50 metros. | 400 kHz. Hasta 75 metros. | 300 kHz. Hasta 100 metros. | 250 kHz." .
 
-ex:TablaFrecuenciaMaxima a ex:Tabla ;
-    rdfs:label "Tabla de frecuencia máxima por longitud de cable" ;
-    ex:textoExtracto "Longitud. | Frecuencia máxima. | Hasta 20 metros. | 600 kHz. | Hasta 50 metros. | 400 kHz. | Hasta 75 metros. | 300 kHz. | Hasta 100 metros. | 250 kHz."@es .
-
-ex:ParametroSSIDATAFORMAT a ex:Parametro ;
-    rdfs:label "SSIDATAFORMAT" ;
-    ex:identificador "SSIDATAFORMAT" ;
-    ex:textoExtracto "SSIDATAFORMAT Parámetros para definir el formato de los datos de lectura de la transmisión SSI. La cota que leemos a través de la transmisión SSI nos puede llegar en formatos diferentes. • Los siguientes parámetros definen la cantidad de datos SSI que se van a leer."@es .
+ex:Sistema_ComunicacionSSI_FagorLA
+    a ex:Sistema ;
+    rdfs:label "Sistema de comunicación SSI para regla absoluta Fagor LA" ;
+    ex:textoExtracto "Ejemplo para regla absoluta Fagor (Fagor LA). Ejemplo de parametrización para la conexión de la regla absoluta Fagor LA, configurada con los parámetros por defecto con los que sale de fábrica." ;
+    ex:tieneComponente ex:Parametro_SSICLKFREQ , ex:Parametro_SSIDATALENGTH , ex:Parametro_SSICRCBITS ,
+                      ex:Parametro_SSISTARTBITS , ex:Parametro_SSIPACKFORMAT , ex:Parametro_SSIALARMBITS ,
+                      ex:Parametro_SSIDATAMODE , ex:Parametro_SSIALARMLEVEL ;
+    ex:detalladoEnEsquema ex:Tabla_FrecuenciasMaximasSSI .

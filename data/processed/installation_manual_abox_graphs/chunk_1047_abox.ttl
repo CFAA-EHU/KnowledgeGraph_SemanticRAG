@@ -1,54 +1,92 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Torno_3Canales_6Ejes_2Cabezales a ex:Maquina ;
-    ex:textoExtracto "plano. Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 2 ejes (X Z) 1 cabezal (S). Canal ꞏ2ꞏ. 2 ejes (X1 Z1) 1 cabezal (S1). Canal ꞏ3ꞏ. 2 ejes (U V) Configuración general de los canales, ejes y cabezales. | Sistema | Canal ꞏ1ꞏ | Canal ꞏ2ꞏ | Canal ꞏ3ꞏ | | --- | --- | --- | --- | | NCHANNEL = 3 | GEOCONFIG = Plano | GEOCONFIG = Plano | | NAXIS = 6 | CHNAXIS = 2 | CHNAXIS = 2 | CHNAXIS = 2 | | NSPDL = 2 | CHNSPDL = 1 | CHNSPDL = 1 | CHNSPDL = 0 | |  | IPLANE = G18 | IPLANE = G18 | | Configuración de los ejes y cabezales del sistema. | AXISNAME | Valor | Orden lógico. | Índice en el sistema." ;
-    ex:tieneComponente ex:Canal_1, ex:Canal_2, ex:Canal_3 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Canal_1 a ex:Sistema ;
-    ex:textoExtracto "Canal ꞏ1ꞏ. 2 ejes (X Z) 1 cabezal (S). | Sistema | Canal ꞏ1ꞏ | ... | CHNAXIS = 2 | CHNSPDL = 1 | IPLANE = G18" ;
-    ex:identificador "Canal 1" ;
-    ex:compuestoPor ex:Eje_X, ex:Eje_Z, ex:Cabezal_S ;
-    ex:valor "GEOCONFIG = Plano, CHNAXIS = 2, CHNSPDL = 1, IPLANE = G18" .
+ex:Torno_3Canales_6Ejes_2Cabezales
+    a ex:Maquina ;
+    rdfs:label "Torno con 3 canales, 6 ejes y 2 cabezales"@es ;
+    ex:textoExtracto "plano. Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 2 ejes (X Z) 1 cabezal (S). Canal ꞏ2ꞏ. 2 ejes (X1 Z1) 1 cabezal (S1). Canal ꞏ3ꞏ. 2 ejes (U V)"@es ;
+    ex:compuestoPor ex:Canal_1, ex:Canal_2, ex:Canal_3 ;
+    ex:tieneComponente ex:Eje_X, ex:Eje_Z, ex:Eje_X1, ex:Eje_Z1, ex:Eje_U, ex:Eje_V ;
+    ex:tieneComponente ex:Cabezal_S, ex:Cabezal_S1 ;
+    ex:documentadoEn ex:Tabla_ConfiguracionCanales .
 
-ex:Canal_2 a ex:Sistema ;
-    ex:textoExtracto "Canal ꞏ2ꞏ. 2 ejes (X1 Z1) 1 cabezal (S1). | Sistema | ... | Canal ꞏ2ꞏ | ... | CHNAXIS = 2 | CHNSPDL = 1 | IPLANE = G18" ;
-    ex:identificador "Canal 2" ;
-    ex:compuestoPor ex:Eje_X1, ex:Eje_Z1, ex:Cabezal_S1 ;
-    ex:valor "GEOCONFIG = Plano, CHNAXIS = 2, CHNSPDL = 1, IPLANE = G18" .
+ex:Canal_1
+    a ex:Sistema ;
+    rdfs:label "Canal 1"@es ;
+    ex:identificador "Canal ꞏ1ꞏ" ;
+    ex:textoExtracto "Canal ꞏ1ꞏ. 2 ejes (X Z) 1 cabezal (S)"@es ;
+    ex:tieneComponente ex:Eje_X, ex:Eje_Z ;
+    ex:tieneComponente ex:Cabezal_S ;
+    ex:detalladoEnEsquema ex:Tabla_ConfiguracionCanales .
 
-ex:Canal_3 a ex:Sistema ;
-    ex:textoExtracto "Canal ꞏ3ꞏ. 2 ejes (U V) | Sistema | ... | Canal ꞏ3ꞏ | ... | CHNAXIS = 2 | CHNSPDL = 0" ;
-    ex:identificador "Canal 3" ;
-    ex:compuestoPor ex:Eje_U, ex:Eje_V ;
-    ex:valor "CHNAXIS = 2, CHNSPDL = 0" .
+ex:Canal_2
+    a ex:Sistema ;
+    rdfs:label "Canal 2"@es ;
+    ex:identificador "Canal ꞏ2ꞏ" ;
+    ex:textoExtracto "Canal ꞏ2ꞏ. 2 ejes (X1 Z1) 1 cabezal (S1)"@es ;
+    ex:tieneComponente ex:Eje_X1, ex:Eje_Z1 ;
+    ex:tieneComponente ex:Cabezal_S1 ;
+    ex:detalladoEnEsquema ex:Tabla_ConfiguracionCanales .
 
-ex:Eje_X a ex:ComponenteMecanico ;
-    ex:textoExtracto "2 ejes (X Z)" ;
-    ex:identificador "X" .
+ex:Canal_3
+    a ex:Sistema ;
+    rdfs:label "Canal 3"@es ;
+    ex:identificador "Canal ꞏ3ꞏ" ;
+    ex:textoExtracto "Canal ꞏ3ꞏ. 2 ejes (U V)"@es ;
+    ex:tieneComponente ex:Eje_U, ex:Eje_V ;
+    ex:detalladoEnEsquema ex:Tabla_ConfiguracionCanales .
 
-ex:Eje_Z a ex:ComponenteMecanico ;
-    ex:textoExtracto "2 ejes (X Z)" ;
-    ex:identificador "Z" .
+ex:Eje_X
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje X (Canal 1)"@es ;
+    ex:identificador "X" ;
+    ex:textoExtracto "2 ejes (X Z)"@es .
 
-ex:Eje_X1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "2 ejes (X1 Z1)" ;
-    ex:identificador "X1" .
+ex:Eje_Z
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z (Canal 1)"@es ;
+    ex:identificador "Z" ;
+    ex:textoExtracto "2 ejes (X Z)"@es .
 
-ex:Eje_Z1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "2 ejes (X1 Z1)" ;
-    ex:identificador "Z1" .
+ex:Eje_X1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje X1 (Canal 2)"@es ;
+    ex:identificador "X1" ;
+    ex:textoExtracto "2 ejes (X1 Z1)"@es .
 
-ex:Eje_U a ex:ComponenteMecanico ;
-    ex:textoExtracto "2 ejes (U V)" ;
-    ex:identificador "U" .
+ex:Eje_Z1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z1 (Canal 2)"@es ;
+    ex:identificador "Z1" ;
+    ex:textoExtracto "2 ejes (X1 Z1)"@es .
 
-ex:Eje_V a ex:ComponenteMecanico ;
-    ex:textoExtracto "2 ejes (U V)" ;
-    ex:identificador "V" .
+ex:Eje_U
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje U (Canal 3)"@es ;
+    ex:identificador "U" ;
+    ex:textoExtracto "2 ejes (U V)"@es .
 
-ex:Cabezal_S a ex:ComponenteMecanico ;
-    ex:textoExtracto "1 cabezal (S)" ;
-    ex:identificador "S" .
+ex:Eje_V
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje V (Canal 3)"@es ;
+    ex:identificador "V" ;
+    ex:textoExtracto "2 ejes (U V)"@es .
 
-ex:Cabezal_S1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "1 cabezal (S1)" ;
-    ex:identificador "S1" .
+ex:Cabezal_S
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal S (Canal 1)"@es ;
+    ex:identificador "S" ;
+    ex:textoExtracto "1 cabezal (S)"@es .
+
+ex:Cabezal_S1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal S1 (Canal 2)"@es ;
+    ex:identificador "S1" ;
+    ex:textoExtracto "1 cabezal (S1)"@es .
+
+ex:Tabla_ConfiguracionCanales a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de canales, ejes y cabezales"@es ;
+    ex:textoExtracto "Configuración general de los canales, ejes y cabezales. | Sistema | Canal ꞏ1ꞏ | Canal ꞏ2ꞏ | Canal ꞏ3ꞏ | --- | --- | --- | --- | NCHANNEL = 3 | GEOCONFIG = Plano | GEOCONFIG = Plano |  | NAXIS = 6 | CHNAXIS = 2 | CHNAXIS = 2 | CHNAXIS = 2 | NSPDL = 2 | CHNSPDL = 1 | CHNSPDL = 1 | CHNSPDL = 0 |  | IPLANE = G18 | IPLANE = G18 |  |"@es .

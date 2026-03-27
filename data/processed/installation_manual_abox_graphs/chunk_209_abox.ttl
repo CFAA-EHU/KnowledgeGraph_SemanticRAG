@@ -1,50 +1,62 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla209 a ex:Tabla ;
-    ex:textoExtracto """| Valor. | Significado. |
-| --- | --- |
-| Sí | Se permite la función G95 (avance por vuelta) para los movimientos en jog desde
-el modo manual. El CNC aplica la función G95 a los ejes principales del canal;
-el resto de ejes no están afectados. El avance real (Freal) que se visualiza en
-los modos manual y conversacional siempre está en milímetros o
-pulgadas/vuelta, independientemente de que el eje que sea mueve sea un eje
-principal o no. |
-| No | No se permite la función G95 (avance por vuelta) para los movimientos en jog
-desde el modo manual. Al pasar del modo automático al modo manual con G95
-activa, la historia sigue mostrando G95 pero los movimientos en jog serán en
-G94 (avance por minuto). Lo mismo ocurre si se activa G95 desde en MDI sobre
-el modo manual. La F programado en modo manual, con G95 en la historia, será (V.)G.FMAN
-(avance por minuto) para movimientos en jog y (V.)G.PRGFPR (avance por
-vuelta) para modo automático. Por ejemplo, al programar F10 en modo manual
-con G95 en la historia:
-• El eje se moverá a 10mm/min en jog. • El eje se moverá a 10mm/rev*SReal[rpm] en MDI o al mover un eje a una
-cota [X][START] . |
- IRCOMP Modo de compensación de radio (G136/G137) por defecto. Valores posibles: G136 / G137. Valor por defecto: G136 (fresa/torno) / G137 (láser). Variable asociada: (V.)[ch].MPG.IRCOMP Este parámetro indica el modo de compensación que asume el CNC en el momento de encendido, después de ejecutarse M02, M30 o después de reset. Con la compensación de radio activa, las trayectorias compensadas se pueden enlazar entre sí mediante trayectorias circulares (G136) o trayectorias lineales (G137).""" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModoCompensacionRadio a ex:Parametro ;
+ex:Parametro_G95
+    a ex:Parametro ;
+    rdfs:label "Función G95 (avance por vuelta)"@es ;
+    ex:textoExtracto "Se permite la función G95 (avance por vuelta) para los movimientos en jog desde el modo manual. [...] No se permite la función G95 (avance por vuelta) para los movimientos en jog desde el modo manual."@es ;
+    ex:valor "G95" .
+
+ex:Parametro_G94
+    a ex:Parametro ;
+    rdfs:label "Función G94 (avance por minuto)"@es ;
+    ex:textoExtracto "los movimientos en jog serán en G94 (avance por minuto)."@es ;
+    ex:valor "G94" .
+
+ex:Parametro_IRCOMP
+    a ex:Parametro ;
+    rdfs:label "Modo de compensación de radio (G136/G137)"@es ;
     ex:identificador "IRCOMP" ;
-    ex:textoExtracto "Modo de compensación de radio (G136/G137) por defecto. Valores posibles: G136 / G137. Valor por defecto: G136 (fresa/torno) / G137 (láser)." ;
-    ex:valor "G136 (fresa/torno) / G137 (láser)" .
+    ex:textoExtracto "IRCOMP Modo de compensación de radio (G136/G137) por defecto. Valores posibles: G136 / G137. [...] Este parámetro indica el modo de compensación que asume el CNC en el momento de encendido, después de ejecutarse M02, M30 o después de reset."@es .
 
-ex:FuncionG95 a ex:ModoOperacion ;
-    ex:identificador "G95" ;
-    ex:textoExtracto "Se permite la función G95 (avance por vuelta) para los movimientos en jog desde el modo manual." .
+ex:Parametro_G136
+    a ex:Parametro ;
+    rdfs:label "Compensación de radio con trayectorias circulares (G136)"@es ;
+    ex:textoExtracto "trayectorias compensadas se pueden enlazar entre sí mediante trayectorias circulares (G136)"@es ;
+    ex:valor "G136" .
 
-ex:FuncionG94 a ex:ModoOperacion ;
-    ex:identificador "G94" ;
-    ex:textoExtracto "los movimientos en jog serán en G94 (avance por minuto)" .
+ex:Parametro_G137
+    a ex:Parametro ;
+    rdfs:label "Compensación de radio con trayectorias lineales (G137)"@es ;
+    ex:textoExtracto "trayectorias compensadas se pueden enlazar entre sí mediante [...] trayectorias lineales (G137)"@es ;
+    ex:valor "G137" .
 
-ex:ModoManual a ex:ModoOperacion ;
-    ex:identificador "manual" ;
-    ex:textoExtracto "movimientos en jog desde el modo manual" .
+ex:ModoOperacion_Manual
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual (jog)"@es ;
+    ex:textoExtracto "movimientos en jog desde el modo manual"@es .
 
-ex:ModoAutomatico a ex:ModoOperacion ;
-    ex:identificador "automático" ;
-    ex:textoExtracto "modo automático" .
+ex:ModoOperacion_Automatico
+    a ex:ModoOperacion ;
+    rdfs:label "Modo automático"@es ;
+    ex:textoExtracto "al pasar del modo automático al modo manual con G95 activa"@es .
 
-ex:ModoMDI a ex:ModoOperacion ;
-    ex:identificador "MDI" ;
-    ex:textoExtracto "MDI o al mover un eje a una cota [X][START]" .
+ex:ModoOperacion_MDI
+    a ex:ModoOperacion ;
+    rdfs:label "Modo MDI"@es ;
+    ex:textoExtracto "si se activa G95 desde en MDI sobre el modo manual"@es .
 
-ex:SistemaCNC a ex:Sistema ;
-    ex:textoExtracto "El CNC aplica la función G95 a los ejes principales del canal" ;
-    ex:tieneComponente ex:FuncionG95, ex:ModoManual, ex:ModoAutomatico, ex:ModoMDI, ex:ModoCompensacionRadio .
+ex:InterfazUsuario_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de usuario del CNC"@es ;
+    ex:textoExtracto "El avance real (Freal) que se visualiza en los modos manual y conversacional"@es ;
+    ex:ilustradoEn ex:Parametro_G95 .
+
+ex:Tabla_CondicionesDefectoCanal a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla 2.4.8: Condiciones por defecto (canal)"@es ;
+    ex:documentadoEn ex:Manual ;
+    ex:textoExtracto "Valor. | Significado. [...] IRCOMP Modo de compensación de radio (G136/G137) por defecto."@es ;
+    ex:detalladoEnEsquema ex:Parametro_G95, ex:Parametro_G94, ex:Parametro_IRCOMP, ex:Parametro_G136, ex:Parametro_G137 .

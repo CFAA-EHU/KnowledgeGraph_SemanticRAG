@@ -1,20 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TMOPERATION_3 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 3" ;
-    ex:textoExtracto "Poner en el cabezal una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca GRTOSPDL." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TMOPERATION_4 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 4" ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca SPDLTOGR." .
+ex:OperacionTM3
+    a ex:TareaMantenimiento ;
+    rdfs:label "Poner en el cabezal una herramienta de tierra (TMOPERATION=3)"@es ;
+    ex:textoExtracto "TMOPERATION = 3 Poner en el cabezal una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca GRTOSPDL."@es ;
+    ex:identificador "TMOPERATION=3" ;
+    ex:activaAlarma ex:MarcaGRTOSPDL .
 
-ex:TMOPERATION_8 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 8" ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR. 2 Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL." .
+ex:OperacionTM4
+    a ex:TareaMantenimiento ;
+    rdfs:label "Dejar la herramienta del cabezal en tierra (TMOPERATION=4)"@es ;
+    ex:textoExtracto "TMOPERATION = 4 Dejar la herramienta del cabezal en tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca SPDLTOGR."@es ;
+    ex:identificador "TMOPERATION=4" ;
+    ex:activaAlarma ex:MarcaSPDLTOGR .
 
-ex:GRTOSPDL a ex:Parametro ;
-    ex:identificador "GRTOSPDL" ;
-    ex:textoExtracto "activar la marca GRTOSPDL" .
+ex:OperacionTM8
+    a ex:TareaMantenimiento ;
+    rdfs:label "Intercambio de herramienta (TMOPERATION=8)"@es ;
+    ex:textoExtracto "TMOPERATION = 8 Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR. 2 Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL."@es ;
+    ex:identificador "TMOPERATION=8" ;
+    ex:activaAlarma ex:MarcaSPDLTOGR, ex:MarcaGRTOSPDL .
 
-ex:SPDLTOGR a ex:Parametro ;
-    ex:identificador "SPDLTOGR" ;
-    ex:textoExtracto "activar la marca SPDLTOGR" .
+ex:MarcaGRTOSPDL
+    a ex:AvisoSeguridad ;
+    rdfs:label "GRTOSPDL" ;
+    ex:textoExtracto "activar la marca GRTOSPDL"@es .
+
+ex:MarcaSPDLTOGR
+    a ex:AvisoSeguridad ;
+    rdfs:label "SPDLTOGR" ;
+    ex:textoExtracto "activar la marca SPDLTOGR"@es .

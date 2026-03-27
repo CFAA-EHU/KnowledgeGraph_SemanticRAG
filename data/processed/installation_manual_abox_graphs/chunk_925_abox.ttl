@@ -1,30 +1,37 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EmergenciaGestor a ex:AccionProhibida ;
-    ex:textoExtracto "Señal de emergencia del gestor. Tratamiento de la señal de emergencia del gestor de herramientas." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TeclaUSER12 a ex:Sensor ;
-    ex:textoExtracto "Si se pulsa la tecla USER12 se activa la emergencia." ;
-    ex:identificador "USER12" .
-
-ex:TeclaUSER13 a ex:Sensor ;
-    ex:textoExtracto "Si se pulsa la tecla USER13 se quita la emergencia." ;
-    ex:identificador "USER13" .
-
-ex:LamparaUSER12 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Lámpara de la tecla USER12 iluminada cuando hay emergencia." .
-
-ex:TMINEM a ex:Parametro ;
-    ex:textoExtracto "TMINEM = B11KEYLED1 Lámpara de la tecla USER12 iluminada cuando hay emergencia. TMINEM AND DFU B12KEYBD1 = SET RESTMEM" ;
+ex:Se_alEmergenciaGestor
+    a ex:Sensor ;
+    rdfs:label "Señal de emergencia del gestor"@es ;
+    ex:textoExtracto "Señal de emergencia del gestor. Tratamiento de la señal de emergencia del gestor de herramientas."@es ;
     ex:identificador "TMINEM" .
 
-ex:DFU a ex:Parametro ;
-    ex:textoExtracto "DFU B11KEYBD1 AND NOT TMINEM = SET SETTMEM DFU TMINEM = RES SETTMEM" ;
-    ex:identificador "DFU" .
+ex:AlarmaEmergencia
+    a ex:Alarma ;
+    rdfs:label "Emergencia del sistema"@es ;
+    ex:textoExtracto "Si se pulsa la tecla USER12 se activa la emergencia."@es ;
+    ex:activaAlarma ex:Se_alEmergenciaGestor .
 
-ex:SETTMEM a ex:ModoOperacion ;
-    ex:textoExtracto "DFU B11KEYBD1 AND NOT TMINEM = SET SETTMEM DFU TMINEM = RES SETTMEM" ;
-    ex:identificador "SETTMEM" .
+ex:TeclaUSER12
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla USER12"@es ;
+    ex:textoExtracto "Si se pulsa la tecla USER12 se activa la emergencia."@es ;
+    ex:identificador "USER12" ;
+    ex:controla ex:AlarmaEmergencia .
 
-ex:RESTMEM a ex:ModoOperacion ;
-    ex:textoExtracto "TMINEM AND DFU B12KEYBD1 = SET RESTMEM" ;
-    ex:identificador "RESTMEM" .
+ex:L_mparaTeclaUSER12
+    a ex:InterfazUsuario ;
+    rdfs:label "Lámpara de la tecla USER12"@es ;
+    ex:textoExtracto "Lámpara de la tecla USER12 iluminada cuando hay emergencia."@es ;
+    ex:identificador "B11KEYLED1" ;
+    ex:monitoreaParametro ex:Se_alEmergenciaGestor .
+
+ex:TeclaUSER13
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla USER13"@es ;
+    ex:textoExtracto "Si se pulsa la tecla USER13 se quita la emergencia."@es ;
+    ex:identificador "USER13" ;
+    ex:controla ex:AlarmaEmergencia .

@@ -1,67 +1,43 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SERVOOFF a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_SERVOOFF
+    a ex:Parametro ;
     rdfs:label "SERVOOFF" ;
-    ex:textoExtracto "SERVOOFF Compensación del offset. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico. Valores posibles: Entre ±32767. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.SERVOOFF[set].xn Consigna que se aplica como offset al regulador. La consigna se expresa en unidades del conversor D/A, admitiendo cualquier número entero entre ±32767, correspondiendo para el valor ±32767 la consigna de ±10 V." ;
-    ex:valor "Entre ±32767" ;
-    ex:identificador "(V.)[ch].MPA.SERVOOFF[set].xn" .
+    ex:identificador "SERVOOFF" ;
+    ex:valor "-32767 a 32767" ;
+    ex:textoExtracto "SERVOOFF Compensación del offset. [...] Valores posibles: Entre ±32767. Valor por defecto: 0. [...] correspondiendo para el valor ±32767 la consigna de ±10 V." ;
+    ex:monitoreaParametro ex:Sistema_ReguladorAnalogico .
 
-ex:MINANOUT a ex:Parametro ;
+ex:Parametro_MINANOUT
+    a ex:Parametro ;
     rdfs:label "MINANOUT" ;
-    ex:textoExtracto "MINANOUT Consigna mínima. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico. Valores posibles: De 0 a 32767. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.MINANOUT[set].xn La consigna se expresa en unidades del conversor D/A, admitiendo cualquier número entero entre 0 y 32767, correspondiendo para el valor 32767 la consigna de 10 V." ;
-    ex:valor "De 0 a 32767" ;
-    ex:identificador "(V.)[ch].MPA.MINANOUT[set].xn" .
+    ex:identificador "MINANOUT" ;
+    ex:valor "0 a 32767" ;
+    ex:textoExtracto "MINANOUT Consigna mínima. [...] Valores posibles: De 0 a 32767. Valor por defecto: 0. [...] correspondiendo para el valor 32767 la consigna de 10 V." ;
+    ex:monitoreaParametro ex:Sistema_ReguladorAnalogico .
 
-ex:ReguladorAnalogico a ex:Sistema ;
-    rdfs:label "regulador analógico" ;
-    ex:textoExtracto "Parámetro válido para regulador analógico." .
+ex:Sistema_ReguladorAnalogico
+    a ex:Sistema ;
+    rdfs:label "Regulador analógico" ;
+    ex:textoExtracto "Parámetro válido para regulador analógico. [...] Variable asociada: (V.)[ch].MPA.SERVOOFF[set].xn ; (V.)[ch].MPA.MINANOUT[set].xn" .
 
-ex:TablaSERVOOFF a ex:Tabla ;
-    rdfs:label "Tabla SERVOOFF" ;
-    ex:textoExtracto "| SERVOOFF | Consigna. |" ;
-    ex:compuestoPor ex:SERVOOFF, ex:ValorMenos32767SERVOOFF, ex:ValorMenos3277SERVOOFF, ex:Valor1SERVOOFF, ex:Valor3277SERVOOFF, ex:Valor32767SERVOOFF .
+ex:Tabla_ConsignasSERVOOFF a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de consignas SERVOOFF" ;
+    ex:textoExtracto "| SERVOOFF | Consigna. | --- | --- | -32767 ꞏꞏꞏ 32767 | -10 V. ꞏꞏꞏ 10 V. |" ;
+    ex:documentadoEn ex:Pagina_225 .
 
-ex:ValorMenos32767SERVOOFF a ex:Parametro ;
-    rdfs:label "-32767" ;
-    ex:textoExtracto "-32767" ;
-    ex:valor "-10 V." .
+ex:Tabla_ConsignasMINANOUT a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de consignas MINANOUT" ;
+    ex:textoExtracto "| MINANOUT | Consigna. | --- | --- | 1 ꞏꞏꞏ 32767 | 0,3 mV. ꞏꞏꞏ 10 V. |" ;
+    ex:documentadoEn ex:Pagina_225 .
 
-ex:ValorMenos3277SERVOOFF a ex:Parametro ;
-    rdfs:label "-3277" ;
-    ex:textoExtracto "-3277" ;
-    ex:valor "-1 V." .
-
-ex:Valor1SERVOOFF a ex:Parametro ;
-    rdfs:label "1" ;
-    ex:textoExtracto "1" ;
-    ex:valor "0,3 mV." .
-
-ex:Valor3277SERVOOFF a ex:Parametro ;
-    rdfs:label "3277" ;
-    ex:textoExtracto "3277" ;
-    ex:valor "1 V." .
-
-ex:Valor32767SERVOOFF a ex:Parametro ;
-    rdfs:label "32767" ;
-    ex:textoExtracto "32767" ;
-    ex:valor "10 V." .
-
-ex:TablaMINANOUT a ex:Tabla ;
-    rdfs:label "Tabla MINANOUT" ;
-    ex:textoExtracto "| MINANOUT | Consigna. |" ;
-    ex:compuestoPor ex:MINANOUT, ex:Valor1MINANOUT, ex:Valor3277MINANOUT, ex:Valor32767MINANOUT .
-
-ex:Valor1MINANOUT a ex:Parametro ;
-    rdfs:label "1" ;
-    ex:textoExtracto "1" ;
-    ex:valor "0,3 mV." .
-
-ex:Valor3277MINANOUT a ex:Parametro ;
-    rdfs:label "3277" ;
-    ex:textoExtracto "3277" ;
-    ex:valor "1 V." .
-
-ex:Valor32767MINANOUT a ex:Parametro ;
-    rdfs:label "32767" ;
-    ex:textoExtracto "32767" ;
-    ex:valor "10 V." .
+ex:Pagina_225
+    a ex:Pagina ;
+    rdfs:label "Página 225" ;
+    ex:identificador "225" ;
+    ex:textoExtracto "Sección 2.6.19 Configuración de la consigna analógica." .

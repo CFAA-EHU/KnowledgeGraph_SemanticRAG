@@ -1,0 +1,54 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_SeñalesPLC_VOLCOMP
+    a               ex:Tabla ;
+    rdfs:label      "Tabla de señales PLC para compensación volumétrica"@es ;
+    ex:textoExtracto """
+| Señal de PLC. |  | Significado. |
+| --- | --- | --- |
+| VOLCOMP1 PLC_M |  | Si el PLC activa una de estas marcas (cambio de 0 a 1), el CNC activa la compensación volumétrica correspondiente.
+VOLCOMP2 (R/W)   |  |
+VOLCOMP3         |  |
+VOLCOMP4         |  |""" .
+
+ex:Parametro_VOLCOMP1
+    a               ex:Parametro ;
+    rdfs:label      "VOLCOMP1" ;
+    ex:identificador "VOLCOMP1" ;
+    ex:textoExtracto "La marca VOLCOMP1 corresponde a la primera compensación volumétrica (parámetro VOLCOMP1)"@es ;
+    ex:documentadoEn ex:Tabla_SeñalesPLC_VOLCOMP .
+
+ex:Parametro_VOLCOMP2
+    a               ex:Parametro ;
+    rdfs:label      "VOLCOMP2" ;
+    ex:identificador "VOLCOMP2" ;
+    ex:textoExtracto "VOLCOMP2 (R/W)"@es ;
+    ex:documentadoEn ex:Tabla_SeñalesPLC_VOLCOMP .
+
+ex:Parametro_VOLCOMP3
+    a               ex:Parametro ;
+    rdfs:label      "VOLCOMP3" ;
+    ex:identificador "VOLCOMP3" ;
+    ex:textoExtracto "VOLCOMP3"@es ;
+    ex:documentadoEn ex:Tabla_SeñalesPLC_VOLCOMP .
+
+ex:Parametro_VOLCOMP4
+    a               ex:Parametro ;
+    rdfs:label      "VOLCOMP4" ;
+    ex:identificador "VOLCOMP4" ;
+    ex:textoExtracto "VOLCOMP4"@es ;
+    ex:documentadoEn ex:Tabla_SeñalesPLC_VOLCOMP .
+
+ex:Sistema_PLC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema PLC para compensación volumétrica"@es ;
+    ex:textoExtracto """
+Si el PLC activa una de estas marcas (cambio de 0 a 1), el CNC activa la compensación volumétrica correspondiente.
+Todas las compensaciones volumétricas pueden estar activas simultáneamente, siempre que no haya ejes comunes entre ellas.
+El CNC aplica la compensación volumétrica después de aplicar la compensación de husillo y la compensación cruzada.
+"""@es ;
+    ex:detalladoEnEsquema ex:Tabla_SeñalesPLC_VOLCOMP ;
+    ex:controla          ex:Parametro_VOLCOMP1 , ex:Parametro_VOLCOMP2 , ex:Parametro_VOLCOMP3 , ex:Parametro_VOLCOMP4 .

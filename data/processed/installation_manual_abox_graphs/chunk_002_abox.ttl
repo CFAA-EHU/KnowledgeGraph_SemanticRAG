@@ -1,51 +1,54 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:FagorAutomation_Empresa a ex:Empresa ;
-    ex:textoExtracto "Fagor Automation" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CNCA8070_Sistema a ex:Sistema ;
-    ex:textoExtracto "CNC" .
+ex:CNC8070_Software
+    a               ex:Sistema ;
+    rdfs:label      "Software CNC8070" ;
+    ex:textoExtracto "Fagor entrega el CNC con el software correctamente instalado en un disco de tipo compact flash. Tanto en un CNC como en un PC (simulador), los archivos necesarios para el funcionamiento del CNC se encuentran en la carpeta C:\\CNC8070 y sus correspondientes subcarpetas." ;
+    ex:identificador "CNC8070" .
 
-ex:DiscoCompactFlash_Componente a ex:Componente ;
-    ex:textoExtracto "disco de tipo compact flash" .
+ex:Accion_ModificacionSoftwareCNC
+    a               ex:AccionProhibida ;
+    rdfs:label      "Modificación no autorizada del software CNC" ;
+    ex:textoExtracto "No se debe reinstalar ni modificar el software del CNC sin consentimiento expreso de Fagor Automation." .
 
-ex:CarpetaCNC8070_Componente a ex:Componente ;
-    ex:identificador "C:\\CNC8070" ;
-    ex:textoExtracto "carpeta C:\\CNC8070 y sus correspondientes subcarpetas" .
+ex:Aviso_SeguridadSoftwareCNC
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Aviso de seguridad por manipulación del software CNC" ;
+    ex:textoExtracto "Fagor Automation no se responsabiliza de lesiones a personas, daños físicos o materiales que pudiera sufrir o provocar el CNC y que hayan sido motivados por una manipulación del software." ;
+    ex:mitigaRiesgo  ex:Accion_ModificacionSoftwareCNC .
 
-ex:ModoAcceso_Parametro a ex:Parametro ;
-    ex:textoExtracto "tres modos de acceso, cada uno de los cuales ofrece un nivel de protección diferente" .
+ex:SistemaProteccionEscritura_CNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de protección contra escritura del CNC" ;
+    ex:textoExtracto "Fagor entrega el equipo con el disco protegido frente a escritura, excepto aquellas carpetas o archivos que deben estar desprotegidos para el funcionamiento habitual del CNC." ;
+    ex:controla     ex:CNC8070_Software .
 
-ex:ProgramaFGUIM_ComponenteElectrico a ex:ComponenteElectrico ;
-    ex:identificador "FGUIM" ;
-    ex:textoExtracto "programa de personalización FGUIM" .
+ex:ModoProteccion_Basico
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo de protección básico del software CNC" ;
+    ex:textoExtracto "El disco está preconfigurado con tres modos de acceso, cada uno de los cuales ofrece un nivel de protección diferente." .
 
-ex:CarpetaMTB_Componente a ex:Componente ;
-    ex:identificador "MTB" ;
-    ex:textoExtracto "carpeta ..\\MTB" .
+ex:Herramienta_FGUIM
+    a               ex:Herramienta ;
+    rdfs:label      "FGUIM (Herramienta de personalización del CNC)" ;
+    ex:textoExtracto "El fabricante también puede personalizar el aspecto del CNC mediante el programa de personalización FGUIM." ;
+    ex:requiereMantenimiento [
+        a               ex:TareaMantenimiento ;
+        rdfs:label      "Revisión de documentación de FGUIM" ;
+        ex:textoExtracto "Antes de utilizar esta herramienta, lea atentamente la documentación relacionada."
+    ] .
 
-ex:CarpetaCONFIGURATION_Componente a ex:Componente ;
-    ex:identificador "CONFIGURATION" ;
-    ex:textoExtracto "carpeta ..\\CONFIGURATION" .
+ex:Carpeta_MTB
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Carpeta MTB (Personalización del CNC)" ;
+    ex:textoExtracto "Tanto en un CNC como en un PC (simulador), el fabricante dispone de la carpeta ..\\MTB para que pueda guardar las modificaciones que realiza en el CNC, como por ejemplo, el programa PLC, los parámetros máquina, etc." ;
+    ex:documentadoEn ex:CNC8070_Software .
 
-ex:AccionProhibida_ReinstalarSoftware a ex:AccionProhibida ;
-    ex:textoExtracto "No se debe reinstalar ni modificar el software del CNC sin consentimiento expreso de Fagor Automation" .
-
-ex:AccionProhibida_ManipulacionSoftware a ex:AccionProhibida ;
-    ex:textoExtracto "manipulación del software" .
-
-ex:Documento_ConfiguracionSoftware a ex:Manual ;
-    ex:identificador "1.7 Configuración del software" ;
-    ex:textoExtracto "Ver \"1.7 Configuración del software.\" en la página 45" .
-
-ex:Documento_ModosTrabajoProteccion a ex:Manual ;
-    ex:identificador "1.1.1 Modos de trabajo y protección del software en el CNC" ;
-    ex:textoExtracto "Ver \"1.1.1 Modos de trabajo y protección del software en el CNC.\" en la página 32" .
-
-ex:Documento_PersonalizacionCNC a ex:Manual ;
-    ex:textoExtracto "Antes de utilizar esta herramienta, lea atentamente la documentación relacionada" .
-
-ex:Documento_PersonalizacionAspecto a ex:Manual ;
-    ex:textoExtracto "Personalización del aspecto del CNC mediante el programa de personalización FGUIM" .
-
-ex:Documento_CarpetaMTB a ex:Manual ;
-    ex:textoExtracto "la carpeta MTB" .
+ex:ProcesoValidacion_CodigoMTB
+    a               ex:Sistema ;
+    rdfs:label      "Proceso de validación de código para carpeta MTB" ;
+    ex:textoExtracto "En el arranque del sistema, y en función del código de validación, el sistema moverá la carpeta correspondiente desde ..\\CONFIGURATION a CNC8070 y la renombrará como MTB." ;
+    ex:controla     ex:Carpeta_MTB .

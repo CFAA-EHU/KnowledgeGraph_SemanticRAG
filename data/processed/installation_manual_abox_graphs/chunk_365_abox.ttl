@@ -1,16 +1,61 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EjeConHusillo5mm rdfs:label "Eje con husillo de 5 mm." ;
-    a ex:ComponenteMecanico ;
-    ex:identificador "5 mm." ;
-    ex:textoExtracto "Eje con husillo de 5 mm." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeConReglaFagorPaso20um rdfs:label "Eje con regla Fagor de paso 20 µm." ;
-    a ex:ComponenteMecanico ;
-    ex:identificador "0.020 mm." ;
-    ex:textoExtracto "Eje con regla Fagor de paso 20 µm." .
+ex:Tabla_ResolucionCaptacion_365 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de resolución de captación por tipo de eje"@es ;
+    ex:textoExtracto """
+| Tipo de eje. | PITCH |
+| --- | --- |
+| Eje con husillo de 5 mm. | 5 mm. |
+| Eje con regla Fagor de paso 20 µm. | 0.020 mm. |
+| Eje rotativo con reducción 1/10. | 36º. |
+"""@es ;
+    ex:documentadoEn ex:Pagina_188_191 .
 
-ex:EjeRotativoConReduccion1_10 rdfs:label "Eje rotativo con reducción 1/10." ;
+ex:Parametro_Pitch_Husillo5mm
+    a ex:Parametro ;
+    rdfs:label "PITCH (eje con husillo de 5 mm)"@es ;
+    ex:valor "5 mm" ;
+    ex:textoExtracto "Eje con husillo de 5 mm. | 5 mm."@es ;
+    ex:documentadoEn ex:Tabla_ResolucionCaptacion_365 .
+
+ex:Parametro_Pitch_ReglaFagor20um
+    a ex:Parametro ;
+    rdfs:label "PITCH (eje con regla Fagor de paso 20 µm)"@es ;
+    ex:valor "0.020 mm" ;
+    ex:textoExtracto "Eje con regla Fagor de paso 20 µm. | 0.020 mm."@es ;
+    ex:documentadoEn ex:Tabla_ResolucionCaptacion_365 .
+
+ex:Parametro_Pitch_EjeRotativoRed1_10
+    a ex:Parametro ;
+    rdfs:label "PITCH (eje rotativo con reducción 1/10)"@es ;
+    ex:valor "36°" ;
+    ex:textoExtracto "Eje rotativo con reducción 1/10. | 36º."@es ;
+    ex:documentadoEn ex:Tabla_ResolucionCaptacion_365 .
+
+ex:Componente_Husillo5mm
     a ex:ComponenteMecanico ;
-    ex:identificador "36º." ;
-    ex:textoExtracto "Eje rotativo con reducción 1/10." .
+    rdfs:label "Husillo de 5 mm"@es ;
+    ex:identificador "5 mm" ;
+    ex:textoExtracto "Eje con husillo de 5 mm."@es ;
+    ex:documentadoEn ex:Tabla_ResolucionCaptacion_365 ;
+    ex:monitoreaParametro ex:Parametro_Pitch_Husillo5mm .
+
+ex:Componente_ReglaFagor20um
+    a ex:ComponenteMecanico ;
+    rdfs:label "Regla Fagor de paso 20 µm"@es ;
+    ex:identificador "20 µm" ;
+    ex:textoExtracto "Eje con regla Fagor de paso 20 µm"@es ;
+    ex:documentadoEn ex:Tabla_ResolucionCaptacion_365 ;
+    ex:monitoreaParametro ex:Parametro_Pitch_ReglaFagor20um .
+
+ex:Componente_EjeRotativoRed1_10
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo con reducción 1/10"@es ;
+    ex:identificador "1/10" ;
+    ex:textoExtracto "Eje rotativo con reducción 1/10"@es ;
+    ex:documentadoEn ex:Tabla_ResolucionCaptacion_365 ;
+    ex:monitoreaParametro ex:Parametro_Pitch_EjeRotativoRed1_10 .

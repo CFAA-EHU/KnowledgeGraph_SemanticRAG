@@ -1,27 +1,73 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:DINDISTTYPEC1 a ex:Parametro ;
-    ex:textoExtracto "marca para cada canal. Los mnemónicos para cada canal son los siguientes. DINDISTYPEC1 DINDISTYPEC2 DINDISTYPEC3 DINDISTYPEC4 Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DINDISTYPEC2 a ex:Parametro ;
-    ex:textoExtracto "marca para cada canal. Los mnemónicos para cada canal son los siguientes. DINDISTYPEC1 DINDISTYPEC2 DINDISTYPEC3 DINDISTYPEC4 Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
+ex:Marca_DINDISTYPEC1
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca DINDISTYPEC1" ;
+    ex:textoExtracto "DINDISTYPEC1 [...] Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." ;
+    ex:identificador "DINDISTYPEC1" .
 
-ex:DINDISTYPEC3 a ex:Parametro ;
-    ex:textoExtracto "marca para cada canal. Los mnemónicos para cada canal son los siguientes. DINDISTYPEC1 DINDISTYPEC2 DINDISTYPEC3 DINDISTYPEC4 Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
+ex:Marca_DINDISTYPEC2
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca DINDISTYPEC2" ;
+    ex:textoExtracto "DINDISTYPEC2 [...] Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." ;
+    ex:identificador "DINDISTYPEC2" .
 
-ex:DINDISTYPEC4 a ex:Parametro ;
-    ex:textoExtracto "marca para cada canal. Los mnemónicos para cada canal son los siguientes. DINDISTYPEC1 DINDISTYPEC2 DINDISTYPEC3 DINDISTYPEC4 Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
+ex:Marca_DINDISTYPEC3
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca DINDISTYPEC3" ;
+    ex:textoExtracto "DINDISTYPEC3 [...] Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." ;
+    ex:identificador "DINDISTYPEC3" .
 
-ex:SERPLCAC a ex:Parametro ;
-    ex:textoExtracto "SERPLCAC Esta marca está asociada al cambio de la gama de trabajo o del set de parámetros de un regulador Sercos (variable (V.)[ch].A.SETGE.xn). El CNC activa esta marca para indicar que está realizando el cambio solicitado. Sólo puede haber un proceso de cambio en marcha. Si mientras dura el proceso hay programados otros cambios de gama o de set, aunque sea en reguladores diferentes, el CNC sólo conserva el último programado y el resto de cambios intermedios los ignora." .
+ex:Marca_DINDISTYPEC4
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca DINDISTYPEC4" ;
+    ex:textoExtracto "DINDISTYPEC4 [...] Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." ;
+    ex:identificador "DINDISTYPEC4" .
 
-ex:OVERTEMP a ex:Parametro ;
-    ex:textoExtracto "OVERTEMP Esta marca indica el estado de la temperatura del CNC. La marca está desactivada mientras la temperatura ambiente sea correcta. El CNC realiza cada minuto un chequeo de la temperatura ambiente del equipo; si en tres muestras seguidas la temperatura supera los 60 ºC (140 ºF), el CNC activa esta marca y muestra el warning W169 avisando de esta circunstancia. El CNC desactivará la marca cuando la temperatura del equipo descienda por debajo de la máxima permitida (60 ºC / 140 ºF). Cada vez que se pulsa [START], el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF), y en caso de superar dicho valor, invalida el [START] y muestra el error E173. El CNC permitirá finalizar la ejecución en marcha, pero no permitirá reanudarla tras una interrupción, una inspección de herramienta, etc. Incluir esta marca en la maniobra del PLC para restringir la operativa del CNC en caso de sobretemperatura." .
+ex:Marca_SERPLCAC
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SERPLCAC" ;
+    ex:textoExtracto "SERPLCAC [...] Esta marca está asociada al cambio de la gama de trabajo o del set de parámetros de un regulador Sercos (variable (V.)[ch].A.SETGE.xn)." ;
+    ex:identificador "SERPLCAC" .
 
-ex:W169 a ex:AvisoSeguridad ;
-    ex:textoExtracto "el CNC activa esta marca y muestra el warning W169 avisando de esta circunstancia" .
+ex:Marca_OVERTEMP
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca OVERTEMP" ;
+    ex:textoExtracto "OVERTEMP [...] Esta marca indica el estado de la temperatura del CNC." ;
+    ex:identificador "OVERTEMP" .
 
-ex:E173 a ex:AccionProhibida ;
-    ex:textoExtracto "invalida el [START] y muestra el error E173" .
+ex:Parametro_TemperaturaMaximaAmbiente
+    a ex:Parametro ;
+    rdfs:label "Temperatura máxima ambiente permitida" ;
+    ex:textoExtracto "60 ºC (140 ºF)" ;
+    ex:valor "60" .
 
-ex:CNC a ex:Maquina ;
-    ex:textoExtracto "El CNC activa esta marca cuando está activa la opción de pasadas iguales sincronizadas (#DINDIST[1]). El CNC desactiva esta marca cuando está activa la opción de reparto de pasadas entre canales (#DINDIST[0]). El CNC activa esta marca para indicar que está realizando el cambio solicitado. El CNC realiza cada minuto un chequeo de la temperatura ambiente del equipo; si en tres muestras seguidas la temperatura supera los 60 ºC (140 ºF), el CNC activa esta marca y muestra el warning W169 avisando de esta circunstancia. El CNC desactivará la marca cuando la temperatura del equipo descienda por debajo de la máxima permitida (60 ºC / 140 ºF). Cada vez que se pulsa [START], el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF), y en caso de superar dicho valor, invalida el [START] y muestra el error E173. El CNC permitirá finalizar la ejecución en marcha, pero no permitirá reanudarla tras una interrupción, una inspección de herramienta, etc." .
+ex:Parametro_TemperaturaCriticaAmbiente
+    a ex:Parametro ;
+    rdfs:label "Temperatura crítica ambiente (invalida START)" ;
+    ex:textoExtracto "65ºC (149ºF)" ;
+    ex:valor "65" .
+
+ex:Aviso_W169
+    a ex:AvisoSeguridad ;
+    rdfs:label "Warning W169 (sobretemperatura)" ;
+    ex:textoExtracto "El CNC activa esta marca y muestra el warning W169 avisando de esta circunstancia [temperatura > 60 ºC]." ;
+    ex:identificador "W169" .
+
+ex:AccionProhibida_ReanudarOperacionSobreTemperatura
+    a ex:AccionProhibida ;
+    rdfs:label "Reanudar operación con temperatura ambiente > 65 ºC" ;
+    ex:textoExtracto "El CNC no permitirá reanudar [la ejecución] tras una interrupción, una inspección de herramienta, etc. [si temperatura > 65 ºC]." .
+
+ex:Error_E173
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error E173 (temperatura > 65 ºC)" ;
+    ex:textoExtracto "El CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF), y en caso de superar dicho valor, invalida el [START] y muestra el error E173." ;
+    ex:identificador "E173" .
+
+ex:Marca_OVERTEMP
+    ex:activaAlarma ex:Aviso_W169 ;
+    ex:activaAlarma ex:Error_E173 .

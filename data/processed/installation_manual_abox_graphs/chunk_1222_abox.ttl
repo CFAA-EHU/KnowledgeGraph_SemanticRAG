@@ -1,21 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SubrutinaCuttingON a ex:TareaMantenimiento ;
-    rdfs:label "subrutina asociada a #CUTTING ON" ;
-    ex:textoExtracto "El comando #CUTTINGON ejecuta la subrutina que tiene asociada después de actualizar las variables del cutting ((V.)TTCUT.name)." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SubrutinaCuttingOFF a ex:TareaMantenimiento ;
-    rdfs:label "subrutina asociada a #CUTTING OFF" ;
-    ex:textoExtracto "El comando #CUTTING OFF sólo ejecuta la subrutina que tiene asociada." .
+ex:Comando_CUTTING_ON
+    a ex:ModoOperacion ;
+    rdfs:label "Comando #CUTTING ON" ;
+    ex:textoExtracto "El comando #CUTTINGON ejecuta la subrutina que tiene asociada después de actualizar las variables del cutting ((V.)TTCUT.name)." ;
+    ex:controla ex:Variable_CUTTING .
 
-ex:MarcaCUTTING a ex:Parametro ;
-    rdfs:label "marca CUTTING" ;
-    ex:textoExtracto "El OEM debe activar la marca CUTTING (asignarle valor 1) para indicar al PLC que empieza la operación de cutting. Al final de la subrutina asociada a #CUTTING OFF (o cuando el OEM lo considere necesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing." .
+ex:Comando_CUTTING_OFF
+    a ex:ModoOperacion ;
+    rdfs:label "Comando #CUTTING OFF" ;
+    ex:textoExtracto "El comando #CUTTING OFF sólo ejecuta la subrutina que tiene asociada." ;
+    ex:controla ex:Variable_CUTTING .
 
-ex:VariableTTCUT_name a ex:Parametro ;
-    rdfs:label "variable (V.)TTCUT.name" ;
-    ex:textoExtracto "El comando #CUTTINGON ejecuta la subrutina que tiene asociada después de actualizar las variables del cutting ((V.)TTCUT.name)." .
+ex:Variable_CUTTING
+    a ex:Parametro ;
+    rdfs:label "Marca CUTTING (V.PLC.CUTTING)" ;
+    ex:textoExtracto "El OEM debe gestionar la marca CUTTING desde estas subrutinas. [...] Esta marca refleja el estado de la variable V.PLC.CUTTING." ;
+    ex:valor "0"^^<http://www.w3.org/2001/XMLSchema#integer> , "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
 
-ex:VariableV_PLC_CUTTING a ex:Parametro ;
-    rdfs:label "variable V.PLC.CUTTING" ;
-    ex:textoExtracto "Esta marca refleja el estado de la variable V.PLC.CUTTING." .
+ex:Subrutina_CuttingOn
+    a ex:TareaMantenimiento ;
+    rdfs:label "Subrutina Cuttingon.fst" ;
+    ex:textoExtracto "subrutina asociada a #CUTTING ON (por defecto, Cuttingon.fst)" ;
+    ex:ejecutadoPor ex:MaquinaLaser ;
+    ex:controla ex:Variable_CUTTING .
+
+ex:Subrutina_CuttingOff
+    a ex:TareaMantenimiento ;
+    rdfs:label "Subrutina Cuttingoff.fst" ;
+    ex:textoExtracto "subrutina asociada a #CUTTING OFF (por defecto, Cuttingoff.fst)" ;
+    ex:ejecutadoPor ex:MaquinaLaser ;
+    ex:controla ex:Variable_CUTTING .
+
+ex:MaquinaLaser
+    a ex:Maquina ;
+    rdfs:label "Máquina láser (orientada a subrutinas de cutting)" ;
+    ex:textoExtracto "subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM. [...] Ambos comandos están orientados a máquina láser" .

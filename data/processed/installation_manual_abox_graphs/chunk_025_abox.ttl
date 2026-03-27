@@ -1,21 +1,44 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ArchivoXCA_25_1 a ex:ComponenteElectrico ;
-    rdfs:label "archivos xca" ;
-    ex:textoExtracto "Archivos xca. El CNC dispone de una nueva versión de gráficos HD, que incorporan el nuevo FCAS (control de colisiones) y que utilizan la versión 2 de archivos xca." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ArchivoXCA_25_2 a ex:ComponenteElectrico ;
-    rdfs:label "archivos xca por defecto" ;
-    ex:textoExtracto "Si son los archivos xca por defecto, sólo hay que copiar los nuevos a su ubicación dentro ..\\Fagor\\Grafdata\\Machines." .
+ex:ArchivoXCA_V2
+    a ex:Componente ;
+    rdfs:label "Archivo xca versión 2"@es ;
+    ex:textoExtracto "versión 2 de archivos xca"@es ;
+    ex:identificador "xca_v2" .
 
-ex:ArchivoXCA_25_3 a ex:ComponenteElectrico ;
-    rdfs:label "archivos xca personalizados" ;
-    ex:textoExtracto "Si son archivos xca personalizados y adaptados a la máquina, hay que realizar las siguientes modificaciones." .
+ex:SistemaFCAS
+    a ex:Sistema ;
+    rdfs:label "FCAS (control de colisiones)"@es ;
+    ex:textoExtracto "nuevo FCAS (control de colisiones)"@es ;
+    ex:identificador "FCAS" .
 
-ex:SistemaCNC_25 a ex:Maquina ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "El CNC dispone de una nueva versión de gráficos HD, que incorporan el nuevo FCAS (control de colisiones) y que utilizan la versión 2 de archivos xca." .
+ex:GraficosHD
+    a ex:InterfazUsuario ;
+    rdfs:label "Gráficos HD"@es ;
+    ex:textoExtracto "nueva versión de gráficos HD"@es ;
+    ex:identificador "Gráficos_HD" ;
+    ex:controla ex:SistemaFCAS ;
+    ex:requiereConsumible ex:ArchivoXCA_V2 .
 
-ex:FCAS_25 a ex:Sistema ;
-    rdfs:label "FCAS" ;
-    ex:textoExtracto "El CNC dispone de una nueva versión de gráficos HD, que incorporan el nuevo FCAS (control de colisiones)." .
+ex:DirectivaActualizacionXCA
+    a ex:Directiva ;
+    rdfs:label "Directiva de actualización de archivos xca"@es ;
+    ex:textoExtracto "al actualizar la versión del CNC, es necesario instalar/actualizar los archivos xca que definen la configuración de la máquina"@es ;
+    ex:documentadoEn ex:ManualCNC ;
+    ex:requiereMantenimiento ex:TareaActualizacionXCA .
+
+ex:TareaActualizacionXCA
+    a ex:TareaMantenimiento ;
+    rdfs:label "Actualización manual de archivos xca"@es ;
+    ex:textoExtracto "copiar manualmente los nuevos archivos xca"@es ;
+    ex:requiereConsumible ex:ArchivoXCA_V2 ;
+    ex:detalladoEnEsquema ex:DirectivaActualizacionXCA .
+
+ex:UbicacionGrafdata
+    a ex:Componente ;
+    rdfs:label "Directorio ..\\Fagor\\Grafdata\\Machines"@es ;
+    ex:textoExtracto "ubicación dentro de ..\\Fagor\\Grafdata\\Machines"@es ;
+    ex:identificador "Fagor_Grafdata_Machines" .

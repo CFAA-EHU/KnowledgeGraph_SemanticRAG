@@ -1,35 +1,66 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:PeticionDesaparcarEjeB a ex:AccionProhibida ;
-    ex:textoExtracto "Si hay una petición para desaparcar el eje \"B\" (UNPARKB) y el eje está presente (I15), el eje está desaparcado (RES PARKEDB)." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeB a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje \"B\"" .
+ex:SensorPresenciaEjeB
+    a               ex:Sensor ;
+    rdfs:label      "Sensor de presencia del eje B" ;
+    ex:textoExtracto "el eje está presente (I15), el eje está desaparcado (RES PARKEDB). [...] Esta marca normalmente está afectada por la entrada correspondiente al sensor de presencia del eje." ;
+    ex:monitoreaParametro ex:ParametroPresenciaEjeB .
 
-ex:SensorPresenciaEje a ex:Sensor ;
-    ex:textoExtracto "entrada correspondiente al sensor de presencia del eje" .
+ex:ParametroPresenciaEjeB
+    a               ex:Parametro ;
+    rdfs:label      "Presencia del eje B" ;
+    ex:textoExtracto "el eje está presente (I15)" ;
+    ex:valor         "I15" .
 
-ex:SenalPARKED a ex:Parametro ;
-    ex:identificador "PARKED" ;
-    ex:textoExtracto "La maniobra de aparcar/desaparcar ejes gestionada desde el programa de PLC se controla mediante la señal PARKED." .
+ex:Se_alPARKEDB
+    a               ex:Parametro ;
+    rdfs:label      "Señal PARKEDB (estado de aparcado del eje B)" ;
+    ex:identificador "PARKEDB" ;
+    ex:textoExtracto "el eje está desaparcado (RES PARKEDB). [...] La maniobra de aparcar/desaparcar ejes gestionada desde el programa de PLC se controla mediante la señal PARKED." ;
+    ex:valor         "RES PARKEDB" .
 
-ex:SenalPARK a ex:Parametro ;
-    ex:identificador "PARK" ;
-    ex:textoExtracto "El CNC utiliza las señales lógicas PARK y UNPARK para informar al PLC que los procesos correspondientes de aparcar o desaparcar se encuentran en ejecución." .
+ex:Se_alPARKB
+    a               ex:Parametro ;
+    rdfs:label      "Señal PARKB (petición de aparcar eje B)" ;
+    ex:identificador "PARKB" ;
+    ex:textoExtracto "Si hay una petición para desaparcar el eje 'B' (UNPARKB) y el eje está presente (I15), [...] Las señales lógicas PARK y UNPARK para informar al PLC que los procesos correspondientes de aparcar o desaparcar se encuentran en ejecución." .
 
-ex:SenalUNPARK a ex:Parametro ;
-    ex:identificador "UNPARK" ;
-    ex:textoExtracto "El CNC utiliza las señales lógicas PARK y UNPARK para informar al PLC que los procesos correspondientes de aparcar o desaparcar se encuentran en ejecución." .
+ex:Se_alUNPARKB
+    a               ex:Parametro ;
+    rdfs:label      "Señal UNPARKB (petición de desaparcar eje B)" ;
+    ex:identificador "UNPARKB" ;
+    ex:textoExtracto "Si hay una petición para desaparcar el eje 'B' (UNPARKB) y el eje está presente (I15), el eje está desaparcado (RES PARKEDB)." .
 
-ex:SenalREFPOIN a ex:Parametro ;
+ex:Se_alDRENAB
+    a               ex:Parametro ;
+    rdfs:label      "Señal DRENAB (drenaje del eje B)" ;
+    ex:identificador "DRENAB" ;
+    ex:textoExtracto "NOT (PARKB OR UNPARKB OR PARKEDB) AND··· = DRENAB = SPENAB = SERVOBON" .
+
+ex:Se_alSPENAB
+    a               ex:Parametro ;
+    rdfs:label      "Señal SPENAB (habilitación de servo del eje B)" ;
+    ex:identificador "SPENAB" ;
+    ex:textoExtracto "NOT (PARKB OR UNPARKB OR PARKEDB) AND··· = DRENAB = SPENAB = SERVOBON" .
+
+ex:Se_alSERVOBON
+    a               ex:Parametro ;
+    rdfs:label      "Señal SERVOBON (servo del eje B activado)" ;
+    ex:identificador "SERVOBON" ;
+    ex:textoExtracto "NOT (PARKB OR UNPARKB OR PARKEDB) AND··· = DRENAB = SPENAB = SERVOBON" .
+
+ex:Se_alREFPOIN
+    a               ex:Parametro ;
+    rdfs:label      "Señal REFPOIN (referencia de punto del eje)" ;
     ex:identificador "REFPOIN" ;
     ex:textoExtracto "Por seguridad, tras aparcar y desaparcar un eje, la señal REFPOIN del eje se pone a (=0)." .
 
-ex:SenalHabilitacionEje a ex:Parametro ;
-    ex:textoExtracto "Para poder aparcar un eje, las señales de habilitación del eje tienen que estar (=0). Así mismo, tras desaparcar el eje las señales de habilitación del eje se deben poner a (=1)." .
-
-ex:ResetPLC a ex:AccionProhibida ;
-    ex:identificador "RESETIN" ;
-    ex:textoExtracto "En versiones anteriores a la V2.00, al finalizar la maniobra de aparcar o desaparcar, el PLC debe generar un Reset (RESETIN)." .
-
-ex:ModoOperacionPLC a ex:ModoOperacion ;
-    ex:textoExtracto "Park/Unpark desde el PLC. Este tipo de maniobra está indicado para aplicaciones que realizan el proceso de aparcar ejes de forma manual, ya sea con la máquina apagada o arrancada (con o sin potencia)." .
+ex:ProcesoParkUnparkPLC
+    a               ex:ModoOperacion ;
+    rdfs:label      "Proceso de Park/Unpark gestionado desde PLC" ;
+    ex:textoExtracto "La maniobra de aparcar/desaparcar ejes gestionada desde el programa de PLC se controla mediante la señal PARKED. [...] El CNC utiliza las señales lógicas PARK y UNPARK para informar al PLC que los procesos correspondientes de aparcar o desaparcar se encuentran en ejecución." ;
+    ex:controla    ex:Se_alPARKEDB ;
+    ex:habilitadoPor ex:SensorPresenciaEjeB .

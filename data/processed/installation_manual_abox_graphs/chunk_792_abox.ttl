@@ -1,21 +1,26 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Marca_STOP ex:textoExtracto "Esta marca no detiene el giro del cabezal. • Esta marca no afecta al movimiento independiente de un eje (interpolador independiente), al que tampoco afecta la tecla [STOP]. • Esta marca no apaga el láser. • Esta marca no desactiva el control del gap, excepto en el movimiento de aproximación. En este caso, el eje permanecerá parado y sin control del gap hasta que se reanude el movimiento. El tratamiento que recibe la señal _STOP es similar al que recibe la tecla [STOP] del CNC. Con esta señal a nivel lógico bajo, todas las teclas permanecen habilitadas." ;
-    a ex:ElementoSeguridad ;
-    rdfs:label "Marca STOP" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Senal_STOP ex:textoExtracto "El tratamiento que recibe la señal _STOP es similar al que recibe la tecla [STOP] del CNC. Con esta señal a nivel lógico bajo, todas las teclas permanecen habilitadas." ;
-    a ex:Sensor ;
-    rdfs:label "Señal STOP" .
-
-ex:Tecla_STOP_CNC ex:textoExtracto "la tecla [STOP] del CNC" ;
-    a ex:InterfazUsuario ;
-    rdfs:label "Tecla STOP del CNC" .
-
-ex:Eje_Interpolador ex:textoExtracto "movimiento independiente de un eje (interpolador independiente)" ;
-    a ex:ComponenteMecanico ;
-    rdfs:label "Eje interpolador" .
-
-ex:Control_Gap ex:textoExtracto "control del gap" ;
+ex:Senal_STOP
     a ex:ComponenteElectrico ;
-    rdfs:label "Control del gap" .
+    rdfs:label "Señal _STOP" ;
+    ex:textoExtracto "El tratamiento que recibe la señal _STOP es similar al que recibe la tecla [STOP] del CNC. Con esta señal a nivel lógico bajo, todas las teclas permanecen habilitadas." .
+
+ex:Senal_XFERINH
+    a ex:ComponenteElectrico ;
+    rdfs:label "Señal _XFERINH" ;
+    ex:textoExtracto "Hay una marca para cada canal. Los mnemónicos para _XFERINH..." .
+
+ex:Tecla_STOP_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla [STOP] del CNC" ;
+    ex:textoExtracto "El tratamiento que recibe la señal _STOP es similar al que recibe la tecla [STOP] del CNC." .
+
+ex:SistemaControlCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema de control CNC" ;
+    ex:textoExtracto "Esta marca no detiene el giro del cabezal. [...] Esta marca no desactiva el control del gap, excepto en el movimiento de aproximación." ;
+    ex:tieneComponente ex:Senal_STOP, ex:Senal_XFERINH ;
+    ex:controla ex:Tecla_STOP_CNC .

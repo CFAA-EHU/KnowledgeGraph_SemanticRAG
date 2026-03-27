@@ -1,26 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Motor1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Motor" ;
-    rdfs:label "Motor" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroFeedback1 a ex:Parametro ;
-    ex:textoExtracto "Feedback" ;
-    rdfs:label "Feedback" .
+ex:Parametro_ConfiguracionMultieje_X1209ABCDE1F
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro de configuración multieje X1209ABCDE1F"@es ;
+    ex:identificador "X1209ABCDE1F" ;
+    ex:textoExtracto "X X 1 2 0 9ABCDE1F 8 LIANDED T MERSMB0 765 1 32 21 SREYSATDEYMO C+GGH2 V NN4 E ADDV + R S 5 IIII + NS NN V O 5SOV VYL EST RTAE +C GM5U E P ERR X ORRE 1 WRAEONDEYRRT CAN ADDRESSRESET"@es ;
+    ex:valor         "Direct Feedback"@en .
 
-ex:ParametroDirect1 a ex:Parametro ;
-    ex:textoExtracto "Direct" ;
-    rdfs:label "Direct" .
+ex:Parametro_CountType
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro COUNTERTYPE"@es ;
+    ex:identificador "COUNTERTYPE" ;
+    ex:textoExtracto "COUNTERTYPE = Local"@en ;
+    ex:valor         "Local"@en .
 
-ex:ParametroCounterDigital1 a ex:Parametro ;
-    ex:textoExtracto "COUNTER DIGITAL INPUT" ;
-    rdfs:label "COUNTER DIGITAL INPUT" .
+ex:Sensor_FeedbackMotor
+    a               ex:Sensor ;
+    rdfs:label      "Sensor de feedback del motor"@es ;
+    ex:textoExtracto "Motor Feedback"@en ;
+    ex:monitoreaParametro ex:Parametro_ConfiguracionMultieje_X1209ABCDE1F .
 
-ex:ParametroCountType1 a ex:Parametro ;
-    ex:textoExtracto "COUNTERTYPE = Local" ;
-    rdfs:label "COUNTERTYPE = Local" .
+ex:InterfazUsuario_SercosCounter
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Interfaz Sercos | COUNTER DIGITAL INPUT"@es ;
+    ex:textoExtracto "Sercos | COUNTER DIGITAL INPUT"@en ;
+    ex:ilustradoEn   ex:Parametro_ConfiguracionMultieje_X1209ABCDE1F .
 
-ex:SistemaConfiguracionMultieje1 a ex:Sistema ;
-    ex:textoExtracto "Configuración de un grupo multieje" ;
-    ex:tieneComponente ex:Motor1, ex:ParametroFeedback1, ex:ParametroDirect1, ex:ParametroCounterDigital1, ex:ParametroCountType1 ;
-    rdfs:label "Configuración de un grupo multieje" .
+ex:ComponenteElectrico_CANBus
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Bus CAN (Controller Area Network)"@es ;
+    ex:textoExtracto "CAN"@en ;
+    ex:tieneComponente ex:ComponenteElectrico_UTP .
+
+ex:ComponenteElectrico_UTP
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Conexión UTP (Unshielded Twisted Pair)"@es ;
+    ex:textoExtracto "UTP"@en .

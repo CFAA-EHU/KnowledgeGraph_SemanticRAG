@@ -1,31 +1,74 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:M101 a ex:TareaMantenimiento ;
-    rdfs:label "M101" ;
-    ex:identificador "M101" ;
-    ex:textoExtracto "Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:M102 a ex:TareaMantenimiento ;
-    rdfs:label "M102" ;
-    ex:identificador "M102" ;
-    ex:textoExtracto "Llevar la herramienta de la pinza 1 al cabezal." .
+ex:TareaMantenimiento_M101
+    a                       ex:TareaMantenimiento ;
+    rdfs:label              "Seleccionar posición TAKEPOS y coger herramienta con pinza 1"@es ;
+    ex:identificador        "M101" ;
+    ex:textoExtracto        "M101 Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1."@es ;
+    ex:requiereMantenimiento ex:Herramienta_Generica ,
+                            ex:Pinza1 ;
+    ex:ejecutadoPor         ex:Personal_OperarioPLC .
 
-ex:M103 a ex:TareaMantenimiento ;
-    rdfs:label "M103" ;
-    ex:identificador "M103" ;
-    ex:textoExtracto "Coger la herramienta del cabezal con la pinza 1." .
+ex:TareaMantenimiento_M102
+    a                       ex:TareaMantenimiento ;
+    rdfs:label              "Llevar herramienta de pinza 1 al cabezal"@es ;
+    ex:identificador        "M102" ;
+    ex:textoExtracto        "M102 Llevar la herramienta de la pinza 1 al cabezal."@es ;
+    ex:requiereMantenimiento ex:Herramienta_Generica ,
+                            ex:Pinza1 ,
+                            ex:Cabezal ;
+    ex:ejecutadoPor         ex:Personal_OperarioPLC .
 
-ex:M105 a ex:TareaMantenimiento ;
-    rdfs:label "M105" ;
-    ex:identificador "M105" ;
-    ex:textoExtracto "Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta de la pinza 1." .
+ex:TareaMantenimiento_M103
+    a                       ex:TareaMantenimiento ;
+    rdfs:label              "Coger herramienta del cabezal con pinza 1"@es ;
+    ex:identificador        "M103" ;
+    ex:textoExtracto        "M103 Coger la herramienta del cabezal con la pinza 1."@es ;
+    ex:requiereMantenimiento ex:Herramienta_Generica ,
+                            ex:Pinza1 ,
+                            ex:Cabezal ;
+    ex:ejecutadoPor         ex:Personal_OperarioPLC .
 
-ex:TAKEPOS a ex:Parametro ;
-    rdfs:label "TAKEPOS" ;
-    ex:identificador "TAKEPOS" ;
-    ex:textoExtracto "Este registro indica la posición de almacén en la que hay que coger la herramienta." .
+ex:TareaMantenimiento_M105
+    a                       ex:TareaMantenimiento ;
+    rdfs:label              "Seleccionar posición LEAVEPOS y dejar herramienta con pinza 1"@es ;
+    ex:identificador        "M105" ;
+    ex:textoExtracto        "M105 Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta de la pinza 1."@es ;
+    ex:requiereMantenimiento ex:Herramienta_Generica ,
+                            ex:Pinza1 ;
+    ex:ejecutadoPor         ex:Personal_OperarioPLC .
 
-ex:LEAVEPOS a ex:Parametro ;
-    rdfs:label "LEAVEPOS" ;
-    ex:identificador "LEAVEPOS" ;
-    ex:textoExtracto "Este registro indica la posición de almacén en la que hay que dejar la herramienta." .
+ex:Parametro_TAKEPOS
+    a               ex:Parametro ;
+    rdfs:label      "Registro TAKEPOS (posición de recogida de herramienta)"@es ;
+    ex:textoExtracto "TAKEPOS Este registro indica la posición de almacén en la que hay que coger la herramienta."@es ;
+    ex:identificador "TAKEPOS" .
+
+ex:Parametro_LEAVEPOS
+    a               ex:Parametro ;
+    rdfs:label      "Registro LEAVEPOS (posición de almacenamiento de herramienta)"@es ;
+    ex:textoExtracto "LEAVEPOS Este registro indica la posición de almacén en la que hay que dejar la herramienta."@es ;
+    ex:identificador "LEAVEPOS" .
+
+ex:Herramienta_Generica
+    a               ex:Herramienta ;
+    rdfs:label      "Herramienta genérica para cambio automático"@es ;
+    ex:textoExtracto "coger la herramienta con la pinza 1", "dejar la herramienta de la pinza 1"@es .
+
+ex:Pinza1
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Pinza 1 (sistema de agarre)"@es ;
+    ex:textoExtracto "pinza 1"@es .
+
+ex:Cabezal
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Cabezal de máquina"@es ;
+    ex:textoExtracto "cabezal"@es .
+
+ex:Personal_OperarioPLC
+    a               ex:Personal ;
+    rdfs:label      "Operario de PLC"@es ;
+    ex:textoExtracto "Su programación depende del tipo de máquina. La función auxiliar se dará por finalizada tras ejecutar el movimiento solicitado."@es .

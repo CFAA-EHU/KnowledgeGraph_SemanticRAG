@@ -1,24 +1,29 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MASTERSPDL a ex:Parametro ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MASTERSPDL
+    a ex:Parametro ;
     rdfs:label "MASTERSPDL" ;
     ex:identificador "MASTERSPDL" ;
     ex:textoExtracto "MASTERSPDL Cabezal master mantenido. Valores posibles: Temporal / Mantenido. Valor por defecto: Temporal. Variable asociada: (V.)[ch].MPG.MASTERSPDL Este parámetro indica si el canal mantiene el cabezal master actual o recupera su cabezal master original, tras ejecutar M02, M30, después de una emergencia o reset y tras reiniciar el CNC." ;
-    ex:valor "Temporal / Mantenido" .
+    ex:valor "Temporal"^^xsd:string .
 
-ex:ModoOperacionTemporal a ex:ModoOperacion ;
-    rdfs:label "Temporal" ;
-    ex:textoExtracto "Temporal. El canal recupera su cabezal master original si está libre; sino, selecciona como master el primer cabezal disponible de la configuración original." .
-
-ex:ModoOperacionMantenido a ex:ModoOperacion ;
-    rdfs:label "Mantenido" ;
-    ex:textoExtracto "Mantenido. El canal mantiene el cabezal master activo." .
-
-ex:AXISEXCH a ex:Parametro ;
+ex:Parametro_AXISEXCH
+    a ex:Parametro ;
     rdfs:label "AXISEXCH" ;
-    ex:textoExtracto "En una situación con intercambio de cabezales entre canales, el comportamiento de este parámetro también depende del parámetro AXISEXCH, el cual define si el cambio de canal de un cabezal es temporal o permanente." ;
-    ex:valor "Temporal / Permanente" .
+    ex:identificador "AXISEXCH" ;
+    ex:textoExtracto "el comportamiento de este parámetro también depende del parámetro AXISEXCH, el cual define si el cambio de canal de un cabezal es temporal o permanente." .
 
-ex:ModoOperacionTemporalAXISEXCH a ex:ModoOperacion ;
-    rdfs:label "Temporal" ;
-    ex:textoExtracto "Si el permiso de cambio de canal es temporal (AXISEXCH=Temporal), el cabezal vuelve a su canal original." .
+ex:Tabla_MASTERSPDL_Significado a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de significado de MASTERSPDL" ;
+    ex:textoExtracto "| MASTERSPDL | Significado. | --- | --- | Temporal. | El canal recupera su cabezal master original si está libre; sino, selecciona como master el primer cabezal disponible de la configuración original. | Mantenido. | El canal mantiene el cabezal master activo. |" ;
+    ex:ilustradoEn ex:Manual_CNC .
+
+ex:Manual_CNC
+    a ex:Manual ;
+    rdfs:label "Manual del CNC" ;
+    ex:textoExtracto "Este parámetro indica si el canal mantiene el cabezal master actual o recupera su cabezal master original, tras ejecutar M02, M30, después de una emergencia o reset y tras reiniciar el CNC." .

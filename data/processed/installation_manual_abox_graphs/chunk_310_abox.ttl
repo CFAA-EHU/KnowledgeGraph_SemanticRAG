@@ -1,8 +1,27 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Regulador a ex:Sistema ;
-    a ex:Maquina ;
-    ex:textoExtracto "El regulador realiza la búsqueda de referencia del eje como si éste fuera Sercos posición." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CNC a ex:Sistema ;
-    a ex:Maquina ;
-    ex:textoExtracto "El CNC realiza la búsqueda de referencia del eje como si éste fuera Sercos velocidad. El CNC ejecuta la homogeneización de parámetros como si el eje fuera Sercos velocidad." .
+ex:Tabla_BusquedaReferencia_310 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de búsqueda de referencia (pág. 170-171)"@es ;
+    ex:textoExtracto """
+| Valor. | Significado. |
+| --- | --- |
+| Regulador. | El regulador realiza la búsqueda de referencia del eje como si éste fuera Sercos posición. |
+| CNC. | El CNC realiza la búsqueda de referencia del eje como si éste fuera Sercos velocidad. El CNC ejecuta la homogeneización de parámetros como si el eje fuera Sercos velocidad. """@es ;
+    ex:tieneComponente ex:ModoOperacion_Regulador_BusquedaReferencia ,
+                       ex:ModoOperacion_CNC_BusquedaReferencia .
+
+ex:ModoOperacion_Regulador_BusquedaReferencia
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Regulador (búsqueda de referencia)"@es ;
+    ex:identificador "Regulador" ;
+    ex:textoExtracto "El regulador realiza la búsqueda de referencia del eje como si éste fuera Sercos posición."@es .
+
+ex:ModoOperacion_CNC_BusquedaReferencia
+    a ex:ModoOperacion ;
+    rdfs:label "Modo CNC (búsqueda de referencia)"@es ;
+    ex:identificador "CNC" ;
+    ex:textoExtracto "El CNC realiza la búsqueda de referencia del eje como si éste fuera Sercos velocidad. El CNC ejecuta la homogeneización de parámetros como si el eje fuera Sercos velocidad."@es .

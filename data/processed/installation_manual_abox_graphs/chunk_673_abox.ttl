@@ -1,58 +1,56 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ModoLeva a ex:ModoOperacion ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoLevaElectronica
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de leva electrónica" ;
     ex:textoExtracto "Modo de leva. Se pueden activar dos tipos de leva; levas en función de tiempo o levas en función de la posición de un eje maestro." .
 
-ex:LevaTiempo a ex:Componente ;
-    ex:textoExtracto "levas en función de tiempo" .
+ex:ParametroType
+    a ex:Parametro ;
+    rdfs:label "Parámetro 'type'" ;
+    ex:textoExtracto "La selección se realiza mediante el parámetro type." ;
+    ex:valor "ONCE" , "CONT" .
 
-ex:LevaPosicion a ex:Componente ;
-    ex:textoExtracto "levas en función de la posición de un eje maestro" .
+ex:ParametroMasterOff
+    a ex:Parametro ;
+    rdfs:label "Parámetro 'master_off'" ;
+    ex:textoExtracto "Rango de activación del eje maestro. La leva se activa cuando el eje maestro se encuentra entre las posiciones 'master_off' y 'master_off + range_master'." .
 
-ex:ParametroMaquina a ex:Parametro ;
-    ex:textoExtracto "parámetros máquina" .
+ex:ParametroRangeMaster
+    a ex:Parametro ;
+    rdfs:label "Parámetro 'range_master'" ;
+    ex:textoExtracto "Rango de activación del eje maestro. La leva se activa cuando el eje maestro se encuentra entre las posiciones 'master_off' y 'master_off + range_master'." .
 
-ex:EjeMaestro a ex:Componente ;
-    ex:textoExtracto "eje maestro" .
+ex:ParametroSlaveOff
+    a ex:Parametro ;
+    rdfs:label "Parámetro 'slave_off'" ;
+    ex:textoExtracto "Rango para el eje esclavo. La leva aplica al eje esclavo cuando éste se encuentra entre 'slave_off' y 'slave_off + range_slave'." .
 
-ex:PosicionMasterOff a ex:Parametro ;
-    ex:textoExtracto "master_off" .
+ex:ParametroRangeSlave
+    a ex:Parametro ;
+    rdfs:label "Parámetro 'range_slave'" ;
+    ex:textoExtracto "Rango para el eje esclavo. La leva aplica al eje esclavo cuando éste se encuentra entre 'slave_off' y 'slave_off + range_slave'." .
 
-ex:PosicionMasterOffRange a ex:Parametro ;
-    ex:textoExtracto "master_off + range_master" .
+ex:ComandoCAMOFF
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando CAM OFF" ;
+    ex:textoExtracto "Alcanzado dicho comando, la ejecución de la leva finalizará la próxima vez que sea alcanzado el final del perfil de leva." .
 
-ex:PosicionSlaveOff a ex:Parametro ;
-    ex:textoExtracto "slave_off" .
+ex:LevaPeriodica
+    a ex:ModoOperacion ;
+    rdfs:label "Leva periódica" ;
+    ex:textoExtracto "Periódica. Se define asignando al parámetro type el valor 'CONT'. En este modo, al llegar al final del rango del eje maestro se recalcula el offset para volver a ejecutar la leva, desplazada en dicho rango." ;
+    ex:monitoreaParametro ex:ParametroType .
 
-ex:PosicionSlaveOffRange a ex:Parametro ;
-    ex:textoExtracto "slave_off + range_slave" .
+ex:LevaNoPeriodica
+    a ex:ModoOperacion ;
+    rdfs:label "Leva no periódica" ;
+    ex:textoExtracto "No periódica. Se define asignando al parámetro type el valor 'ONCE'. En este modo se mantiene la sincronización para el rango definido del eje maestro." ;
+    ex:monitoreaParametro ex:ParametroType .
 
-ex:ParametroType a ex:Parametro ;
-    ex:textoExtracto "parámetro type" .
-
-ex:LevaPeriodica a ex:Componente ;
-    ex:textoExtracto "leva periódica" .
-
-ex:LevaNoPeriodica a ex:Componente ;
-    ex:textoExtracto "leva no periódica" .
-
-ex:ValorTypeOnce a ex:Parametro ;
-    ex:identificador "ONCE" ;
-    ex:textoExtracto "al parámetro type el valor \"ONCE\"" .
-
-ex:ValorTypeCont a ex:Parametro ;
-    ex:identificador "CONT" ;
-    ex:textoExtracto "al parámetro type el valor \"CONT\"" .
-
-ex:ComandoCamOff a ex:Componente ;
-    ex:textoExtracto "comando CAM OFF" .
-
-ex:ModoEjecucionNoPeriodica a ex:ModoOperacion ;
-    ex:textoExtracto "Se define asignando al parámetro type el valor \"ONCE\". En este modo se mantiene la sincronización para el rango definido del eje maestro." .
-
-ex:ModoEjecucionPeriodica a ex:ModoOperacion ;
-    ex:textoExtracto "Se define asignando al parámetro type el valor \"CONT\". En este modo, al llegar al final del rango del eje maestro se recalcula el offset para volver a ejecutar la leva, desplazada en dicho rango." .
-
-ex:SistemaLevaElectronica a ex:Sistema ;
-    ex:textoExtracto "Modo de leva. Se pueden activar dos tipos de leva; levas en función de tiempo o levas en función de la posición de un eje maestro." ;
-    ex:compuestoPor ex:LevaTiempo, ex:LevaPosicion, ex:EjeMaestro, ex:ParametroMaquina, ex:ParametroType, ex:ComandoCamOff, ex:ModoEjecucionNoPeriodica, ex:ModoEjecucionPeriodica ;
-    ex:tieneComponente ex:PosicionMasterOff, ex:PosicionMasterOffRange, ex:PosicionSlaveOff, ex:PosicionSlaveOffRange, ex:ValorTypeOnce, ex:ValorTypeCont .
+ex:ModoLevaElectronica
+    ex:tieneComponente ex:LevaPeriodica , ex:LevaNoPeriodica ;
+    ex:monitoreaParametro ex:ParametroMasterOff , ex:ParametroRangeMaster , ex:ParametroSlaveOff , ex:ParametroRangeSlave .

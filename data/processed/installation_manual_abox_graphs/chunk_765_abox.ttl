@@ -1,33 +1,84 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaCNC a ex:Maquina ;
-    ex:textoExtracto "El proceso de aparcar y desaparcar ejes se podrá realizar desde el CNC o desde el PLC." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SistemaPLC a ex:Maquina ;
-    ex:textoExtracto "El proceso de aparcar y desaparcar ejes se podrá realizar desde el CNC o desde el PLC." .
+ex:Maquina_ConfigurableEjes
+    a ex:Maquina ;
+    rdfs:label "Máquina con configuraciones de ejes intercambiables"@es ;
+    ex:textoExtracto "Hay máquinas que dependiendo del tipo de mecanizado pueden disponer de 2 configuraciones de ejes distintas. Por ejemplo, una máquina que intercambia un cabezal normal con otro ortogonal..."@es ;
+    ex:tieneComponente ex:CabezalNormal, ex:CabezalOrtogonal ;
+    ex:tieneComponente ex:SistemaEjes_XYZ, ex:SistemaEjes_XYZAB ;
+    ex:controla ex:InterfazCNC, ex:InterfazPLC .
 
-ex:ConfiguracionEjesNormal a ex:ModoOperacion ;
-    ex:textoExtracto "Con el cabezal normal, configuración de ejes X Y Z." .
+ex:CabezalNormal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal normal"@es ;
+    ex:textoExtracto "Con el cabezal normal, configuración de ejes X Y Z."@es ;
+    ex:habilitadoPor ex:SistemaEjes_XYZ .
 
-ex:ConfiguracionEjesOrtogonal a ex:ModoOperacion ;
-    ex:textoExtracto "Con el cabezal ortogonal, configuración de ejes X Y Z A B." .
+ex:CabezalOrtogonal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal ortogonal"@es ;
+    ex:textoExtracto "Con el cabezal ortogonal, configuración de ejes X Y Z A B."@es ;
+    ex:habilitadoPor ex:SistemaEjes_XYZAB .
 
-ex:EjeX a ex:Componente ;
-    ex:textoExtracto "configuración de ejes X Y Z" .
+ex:SistemaEjes_XYZ
+    a ex:Sistema ;
+    rdfs:label "Configuración de ejes X Y Z"@es ;
+    ex:textoExtracto "Con el cabezal normal, configuración de ejes X Y Z."@es ;
+    ex:compuestoPor ex:Eje_X, ex:Eje_Y, ex:Eje_Z .
 
-ex:EjeY a ex:Componente ;
-    ex:textoExtracto "configuración de ejes X Y Z" .
+ex:SistemaEjes_XYZAB
+    a ex:Sistema ;
+    rdfs:label "Configuración de ejes X Y Z A B"@es ;
+    ex:textoExtracto "Con el cabezal ortogonal, configuración de ejes X Y Z A B."@es ;
+    ex:compuestoPor ex:Eje_X, ex:Eje_Y, ex:Eje_Z, ex:Eje_A, ex:Eje_B .
 
-ex:EjeZ a ex:Componente ;
-    ex:textoExtracto "configuración de ejes X Y Z" .
+ex:Eje_A
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje A"@es ;
+    ex:textoExtracto "configuración de ejes X Y Z A B"@es .
 
-ex:EjeA a ex:Componente ;
-    ex:textoExtracto "configuración de ejes X Y Z A B" .
+ex:Eje_B
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje B"@es ;
+    ex:textoExtracto "configuración de ejes X Y Z A B"@es .
 
-ex:EjeB a ex:Componente ;
-    ex:textoExtracto "configuración de ejes X Y Z A B" .
+ex:Eje_X
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje X"@es ;
+    ex:textoExtracto "configuración de ejes X Y Z"@es .
 
-ex:SistemaCaptacionEjes a ex:Sistema ;
-    ex:textoExtracto "el CNC mostrará error porque los tiene en cuenta (reguladores, sistemas de captación, etc.)" .
+ex:Eje_Y
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Y"@es ;
+    ex:textoExtracto "configuración de ejes X Y Z"@es .
 
-ex:AccionAparcarEjes a ex:AccionProhibida ;
-    ex:textoExtracto "El CNC no permitirá aparcar un eje en los siguientes casos." .
+ex:Eje_Z
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z"@es ;
+    ex:textoExtracto "configuración de ejes X Y Z"@es .
+
+ex:InterfazCNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC"@es ;
+    ex:textoExtracto "El proceso de aparcar y desaparcar ejes se podrá realizar desde el CNC o desde el PLC."@es ;
+    ex:controla ex:SistemaEjes_XYZ, ex:SistemaEjes_XYZAB .
+
+ex:InterfazPLC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz PLC"@es ;
+    ex:textoExtracto "El proceso de aparcar y desaparcar ejes se podrá realizar desde el CNC o desde el PLC."@es ;
+    ex:controla ex:SistemaEjes_XYZ, ex:SistemaEjes_XYZAB .
+
+ex:Accion_AparcarEjes
+    a ex:AccionProhibida ;
+    rdfs:label "Aparcar ejes A B"@es ;
+    ex:textoExtracto "Cuando se trabaja con el cabezal normal los ejes A B no están presentes, y el CNC mostrará error porque los tiene en cuenta (reguladores, sistemas de captación, etc.). Para evitar esto, será necesario aparcar los ejes A B."@es ;
+    ex:solucionaFallo ex:ErrorCNC_EjesAusentes .
+
+ex:ErrorCNC_EjesAusentes
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error CNC por ejes A/B ausentes"@es ;
+    ex:textoExtracto "el CNC mostrará error porque los tiene en cuenta (reguladores, sistemas de captación, etc.)"@es .

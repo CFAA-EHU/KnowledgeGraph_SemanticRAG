@@ -1,24 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Material_Aluminio_1343 a ex:ComponenteMecanico ;
-    rdfs:label "Material: Aluminio" ;
-    ex:textoExtracto "Material: Aluminio. Kc: 350 N/mm²." .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Herramienta_Diametro63_1343 a ex:Herramienta ;
-    rdfs:label "Herramienta Ø 63 mm" ;
-    ex:textoExtracto "Diámetro: Ø 63 mm. Número de dientes: Nz = 4. Avance por diente: Fz = 0.12 mm/diente. Profundidad de pasada radial: Ae = 35 mm. Profundidad de pasada axial: Ap= 1.5 mm." .
+ex:Mecanizado_Aluminio_DMC_1343
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo automático de mecanizado con DMC (Aluminio)"@es ;
+    ex:textoExtracto      "Este apartado muestra una imagen del modo automático y una captura del osciloscopio tomadas durante un mecanizado con DMC."@es ;
+    ex:identificador      "DMC-Auto-Alu-Kc350" ;
+    ex:requiereMantenimiento  ex:Herramienta_Fresa_63mm_4Dientes_1343 ;
+    ex:monitoreaParametro    ex:Parametro_VelocidadCorte_1410_1343, ex:Parametro_Avance_3420_1343 .
 
-ex:Parametro_VelocidadCorte_1410_1343 a ex:Parametro ;
-    rdfs:label "Velocidad de corte: Vc = 1410 m/min" ;
-    ex:valor "1410" ;
-    ex:textoExtracto "Velocidad de corte: Vc = 1410 m/min." .
+ex:Herramienta_Fresa_63mm_4Dientes_1343
+    a                     ex:Herramienta ;
+    rdfs:label            "Fresa Ø63 mm (Nz=4, Fz=0.12 mm/diente)"@es ;
+    ex:textoExtracto      "Herramienta: Diámetro: Ø 63 mm. Número de dientes: Nz = 4. Avance por diente: Fz = 0.12 mm/diente."@es ;
+    ex:identificador      "Fresa-Ø63-Nz4-Fz0.12" .
 
-ex:Parametro_VelocidadGiro_7124_1343 a ex:Parametro ;
-    rdfs:label "Velocidad de giro: S = 7124 RPM" ;
-    ex:valor "7124" ;
-    ex:textoExtracto "Velocidad de giro: S = 7124 RPM." .
+ex:Parametro_VelocidadCorte_1410_1343
+    a                     ex:Parametro ;
+    rdfs:label            "Velocidad de corte (Vc = 1410 m/min)"@es ;
+    ex:textoExtracto      "Velocidad de corte: Vc = 1410 m/min."@es ;
+    ex:valor               "1410"^^xsd:string ;
+    ex:identificador      "Vc-1410" .
 
-ex:Parametro_Avance_3420_1343 a ex:Parametro ;
-    rdfs:label "Avance: F = 3420 mm/min" ;
-    ex:valor "3420" ;
-    ex:textoExtracto "Avance: F = 3420 mm/min." .
+ex:Parametro_Avance_3420_1343
+    a                     ex:Parametro ;
+    rdfs:label            "Avance (F = 3420 mm/min)"@es ;
+    ex:textoExtracto      "Avance: F = 3420 mm/min."@es ;
+    ex:valor               "3420"^^xsd:string ;
+    ex:identificador      "F-3420" .
+
+ex:Material_Aluminio_Kc350_1343
+    a                     ex:Consumible ;
+    rdfs:label            "Aluminio (Kc = 350 N/mm²)"@es ;
+    ex:textoExtracto      "Material: Aluminio. Kc: 350 N/mm²."@es ;
+    ex:identificador      "Alu-Kc350" .

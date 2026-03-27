@@ -1,42 +1,92 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EjeEsclavoSlave a ex:ComponenteMecanico ;
-    ex:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeC a ex:ComponenteMecanico ;
-    ex:textoExtracto "Configuración del eje C" .
+### Esquemas y figuras de configuración
+ex:Esquema_CompensacionDispersionLaserCO2
+    a ex:Esquema ;
+    rdfs:label "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser"@es ;
+    ex:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser. Muestra triedro X-Y y el efecto del seguimiento (#FOLLOW): líneas sólidas y discontinuas marcan el recorrido óptico y el desplazamiento del eje esclavo para mantener constante la longitud del haz, minimizando variaciones en el punto de corte."@es ;
+    ex:ilustradoEn ex:Pagina_105 .
 
-ex:EjeZ a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje Z+" .
+ex:Figura_ConfiguracionEjesPlanoTorno
+    a ex:Figura ;
+    rdfs:label "Configuración de ejes tipo plano (torno)"@es ;
+    ex:textoExtracto "Ilustración 'Configuración de ejes tipo plano (torno)': máquina con dos ejes principales (Z+ y X+) representados; el plano de trabajo habitual es G18 (ZX). La vista ayuda a interpretar qué ejes forman abscisas/ordenadas y cómo afecta al mecanizado y a la definición del eje longitudinal."@es ;
+    ex:ilustradoEn ex:Pagina_114 ;
+    ex:detalladoEnEsquema ex:SistemaEjesTorno .
 
-ex:EjeX a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje X+" .
+ex:Figura_ConfiguracionEjesTriedroFresadora
+    a ex:Figura ;
+    rdfs:label "Configuración de ejes tipo triedro"@es ;
+    ex:textoExtracto "Ilustración 'Configuración de ejes tipo triedro': máquina con tres ejes (X+, Y+, Z+), propia de fresadora. Sirve para visualizar el triedro cartesiano y los planos G17/G18/G19 según el orden de ejes del canal, base para programar trayectorias en 3D."@es ;
+    ex:ilustradoEn ex:Pagina_114 ;
+    ex:detalladoEnEsquema ex:SistemaEjesFresadora .
 
-ex:EjeY a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje Y+" .
+### Sistemas de ejes (componentes mecánicos abstractos)
+ex:SistemaEjesTorno
+    a ex:ComponenteMecanico ;
+    rdfs:label "Sistema de ejes plano (ZX) para torno"@es ;
+    ex:textoExtracto "máquina con dos ejes principales (Z+ y X+) representados; el plano de trabajo habitual es G18 (ZX)."@es ;
+    ex:compuestoPor ex:EjeZ_Torno, ex:EjeX_Torno .
 
-ex:PlanoTrabajoG18 a ex:Parametro ;
-    ex:textoExtracto "el plano de trabajo habitual es G18 (ZX)" .
+ex:SistemaEjesFresadora
+    a ex:ComponenteMecanico ;
+    rdfs:label "Sistema de ejes triedro (XYZ) para fresadora"@es ;
+    ex:textoExtracto "máquina con tres ejes (X+, Y+, Z+), propia de fresadora. [...] base para programar trayectorias en 3D."@es ;
+    ex:compuestoPor ex:EjeX_Fresadora, ex:EjeY_Fresadora, ex:EjeZ_Fresadora .
 
-ex:PlanoTrabajoG17 a ex:Parametro ;
-    ex:textoExtracto "planos G17/G18/G19 según el orden de ejes del canal" .
+ex:EjeEsclavo_SLAVE
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo (SLAVE) para compensación láser"@es ;
+    ex:textoExtracto "eje esclavo (SLAVE) [...] desplazamiento del eje esclavo para mantener constante la longitud del haz, minimizando variaciones en el punto de corte."@es ;
+    ex:ilustradoEn ex:Esquema_CompensacionDispersionLaserCO2 .
 
-ex:PlanoTrabajoG19 a ex:Parametro ;
-    ex:textoExtracto "planos G17/G18/G19 según el orden de ejes del canal" .
+ex:EjeC_MecanizadoDiametral
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje C para alineación diametral"@es ;
+    ex:textoExtracto "Secuencia 'ALIGNC = Sí' [...] giro de 180° del eje C y retroceso para completar el mecanizado, indicando la necesidad de reorientar el eje para cubrir todo el diámetro."@es ;
+    ex:documentadoEn ex:Pagina_117 .
 
-ex:SistemaCompensacionDispersion a ex:Sistema ;
-    ex:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser. Muestra triedro X-Y y el efecto del seguimiento (#FOLLOW): líneas sólidas y discontinuas marcan el recorrido óptico y el desplazamiento del eje esclavo para mantener constante la longitud del haz, minimizando variaciones en el punto de corte." ;
-    ex:tieneComponente ex:EjeEsclavoSlave .
+### Ejes individuales (componentes mecánicos concretos)
+ex:EjeZ_Torno
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z+ (torno)"@es ;
+    ex:textoExtracto "dos ejes principales (Z+ y X+)"@es .
 
-ex:SistemaConfiguracionGeometricaPlano a ex:Sistema ;
-    ex:textoExtracto "Ilustración 'Configuración de ejes tipo plano (torno)': máquina con dos ejes principales (Z+ y X+) representados; el plano de trabajo habitual es G18 (ZX)." ;
-    ex:tieneComponente ex:EjeZ, ex:EjeX ;
-    ex:compuestoPor ex:PlanoTrabajoG18 .
+ex:EjeX_Torno
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje X+ (torno)"@es ;
+    ex:textoExtracto "dos ejes principales (Z+ y X+)"@es .
 
-ex:SistemaConfiguracionGeometricaTriedro a ex:Sistema ;
-    ex:textoExtracto "Ilustración 'Configuración de ejes tipo triedro': máquina con tres ejes (X+, Y+, Z+), propia de fresadora. Sirve para visualizar el triedro cartesiano y los planos G17/G18/G19 según el orden de ejes del canal, base para programar trayectorias en 3D." ;
-    ex:tieneComponente ex:EjeX, ex:EjeY, ex:EjeZ ;
-    ex:compuestoPor ex:PlanoTrabajoG17, ex:PlanoTrabajoG18, ex:PlanoTrabajoG19 .
+ex:EjeX_Fresadora
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje X+ (fresadora)"@es ;
+    ex:textoExtracto "tres ejes (X+, Y+, Z+)"@es .
 
-ex:SecuenciaAlignC a ex:TareaMantenimiento ;
-    ex:textoExtracto "Secuencia 'ALIGNC = Sí' (3 viñetas): mecanizado diametral con herramienta que sólo cubre media superficie; se muestra (1) avance hasta el centro, (2) giro de 180° del eje C y (3) retroceso para completar el mecanizado, indicando la necesidad de reorientar el eje para cubrir todo el diámetro." ;
-    ex:ejecutadoPor ex:EjeC .
+ex:EjeY_Fresadora
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Y+ (fresadora)"@es ;
+    ex:textoExtracto "tres ejes (X+, Y+, Z+)"@es .
+
+ex:EjeZ_Fresadora
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z+ (fresadora)"@es ;
+    ex:textoExtracto "tres ejes (X+, Y+, Z+)"@es .
+
+### Páginas (anclaje documental)
+ex:Pagina_105
+    a ex:Pagina ;
+    ex:identificador "105" ;
+    ex:textoExtracto "Sección 2.3.33: Compensar la dispersión por el recorrido del láser de CO₂"@es .
+
+ex:Pagina_114
+    a ex:Pagina ;
+    ex:identificador "114" ;
+    ex:textoExtracto "Sección 2.4.1–2.4.2: Configuración del canal (geométrica)"@es .
+
+ex:Pagina_117
+    a ex:Pagina ;
+    ex:identificador "117" ;
+    ex:textoExtracto "Sección 2.4.4: Configuración del eje C"@es .

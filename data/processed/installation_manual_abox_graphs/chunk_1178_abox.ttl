@@ -1,14 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SubrutinaCambioHerramienta a ex:TareaMantenimiento ;
-    rdfs:label "subrutina asociada al cambio de herramienta"@es ;
-    ex:textoExtracto "subrutina asociada al cambio de herramienta"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SubrutinaBusquedaReferencia a ex:TareaMantenimiento ;
-    rdfs:label "subrutina asociada a la búsqueda de referencia"@es ;
-    ex:textoExtracto "subrutina asociada a la búsqueda de referencia"@es .
+ex:SubrutinasCNC_1178
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de subrutinas del CNC"@es ;
+    ex:textoExtracto
+        "El CNC dispone de una serie de subrutinas que, en función de la configuración de la máquina, deben estar definidas (subrutina asociada al cambio de herramienta, a la búsqueda de referencia, etc)."@es .
 
-ex:CNC a ex:Maquina ;
-    rdfs:label "CNC"@es ;
-    ex:textoExtracto "El CNC dispone de una serie de subrutinas que, en función de la configuración de la máquina, deben estar definidas"@es ;
-    ex:compuestoPor ex:SubrutinaCambioHerramienta, ex:SubrutinaBusquedaReferencia .
+ex:SubrutinaCambioHerramienta_1178
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Subrutina de cambio de herramienta"@es ;
+    ex:textoExtracto
+        "subrutina asociada al cambio de herramienta"@es ;
+    ex:ejecutadoPor ex:MaquinaCNC_1178 .
+
+ex:SubrutinaBusquedaReferencia_1178
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Subrutina de búsqueda de referencia"@es ;
+    ex:textoExtracto
+        "subrutina asociada a la búsqueda de referencia"@es ;
+    ex:ejecutadoPor ex:MaquinaCNC_1178 .
+
+ex:MaquinaCNC_1178
+    a               ex:Maquina ;
+    rdfs:label      "Máquina CNC"@es ;
+    ex:textoExtracto
+        "configuración de la máquina"@es ;
+    ex:tieneComponente ex:SistemaDeSubrutinasCNC_1178 .
+
+ex:SistemaDeSubrutinasCNC_1178
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de subrutinas del CNC"@es ;
+    ex:textoExtracto
+        "serie de subrutinas que, en función de la configuración de la máquina, deben estar definidas"@es ;
+    ex:compuestoPor ex:SubrutinaCambioHerramienta_1178 ;
+    ex:compuestoPor ex:SubrutinaBusquedaReferencia_1178 .

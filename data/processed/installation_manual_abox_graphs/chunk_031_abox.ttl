@@ -1,36 +1,76 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:PCIndustrial_31_44 a ex:Maquina ;
-    ex:textoExtracto "El CNC que usted ha adquirido se trata de un PC industrial equipado con sistema operativo Windows XP Embedded o Windows 7" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SistemaOperativoWindowsXPEmbedded_31_44 a ex:Componente ;
-    ex:textoExtracto "sistema operativo Windows XP Embedded" .
+ex:CNC_Industrial_PC
+    a                     ex:Maquina ;
+    rdfs:label            "CNC (PC industrial)"@es ;
+    ex:textoExtracto       "El CNC que usted ha adquirido se trata de un PC industrial equipado con sistema operativo Windows XP Embedded o Windows 7, que admite la instalación en él de aplicaciones de terceros."@es ;
+    ex:tieneComponente     ex:SistemaOperativo_WindowsXP_Embedded , ex:SistemaOperativo_Windows7 , ex:Almacenamiento_CompactFlash , ex:Almacenamiento_DiscoDuro ;
+    ex:requiereMantenimiento ex:Tarea_InstalacionSoftwareTerceros .
 
-ex:SistemaOperativoWindows7_31_44 a ex:Componente ;
-    ex:textoExtracto "sistema operativo Windows 7" .
+ex:SistemaOperativo_WindowsXP_Embedded
+    a                     ex:Componente ;
+    rdfs:label            "Windows XP Embedded"@es ;
+    ex:textoExtracto       "PC industrial equipado con sistema operativo Windows XP Embedded"@es ;
+    ex:identificador       "Windows XP Embedded" .
 
-ex:ModoAdministrador_31_44 a ex:ModoOperacion ;
-    ex:textoExtracto "acceso al modo administrador" .
+ex:SistemaOperativo_Windows7
+    a                     ex:Componente ;
+    rdfs:label            "Windows 7"@es ;
+    ex:textoExtracto       "PC industrial equipado con sistema operativo Windows 7"@es ;
+    ex:identificador       "Windows 7" .
 
-ex:CodigoValidacion_31_44 a ex:Parametro ;
-    ex:textoExtracto "el acceso al modo administrador se habilita con el código de validación" .
+ex:Almacenamiento_CompactFlash
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Compact Flash"@es ;
+    ex:textoExtracto       "El CNC que usted ha adquirido puede disponer de compact flash únicamente o de compact flash más disco duro. Para instalar cualquier software, el CNC debe disponer de espacio suficiente en la compact flash."@es ;
+    ex:identificador       "Compact Flash" .
 
-ex:ContraseñaParametrosMaquina_31_44 a ex:Parametro ;
-    ex:textoExtracto "la contraseña 'parámetros máquina', definida en el modo utilidades" .
+ex:Almacenamiento_DiscoDuro
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Disco duro"@es ;
+    ex:textoExtracto       "El CNC que usted ha adquirido puede disponer de compact flash únicamente o de compact flash más disco duro."@es ;
+    ex:identificador       "Disco duro" .
 
-ex:ContraseñaAdministratorMode_31_44 a ex:Parametro ;
-    ex:textoExtracto "la contraseña 'Administrator mode', definida en el modo utilidades" .
+ex:Tarea_InstalacionSoftwareTerceros
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Instalación de software de terceros"@es ;
+    ex:textoExtracto       "La instalación de este software debe cumplir los siguientes requisitos. Cualquier malfuncionamiento de equipo, derivado de la instalación de software de terceros, exime a Fagor Automation de cualquier responsabilidad."@es ;
+    ex:requiereEPI         ex:CodigoValidacion_Administrador ;
+    ex:ejecutadoPor        ex:Personal_UsuarioAdministrador .
 
-ex:DirectorioCNC8070USERS_31_44 a ex:Componente ;
-    ex:textoExtracto "guardarse en un directorio desprotegido, por ejemplo CNC8070\\USERS" .
+ex:CodigoValidacion_Administrador
+    a                     ex:Parametro ;
+    rdfs:label            "Código de validación para acceso administrador"@es ;
+    ex:textoExtracto       "El acceso al modo administrador se habilita con el código de validación."@es ;
+    ex:identificador       "código de validación" .
 
-ex:CompactFlash_31_44 a ex:Componente ;
-    ex:textoExtracto "puede disponer de compact flash únicamente o de compact flash más disco duro" .
+ex:Personal_UsuarioAdministrador
+    a                     ex:Personal ;
+    rdfs:label            "Usuario con acceso administrador"@es ;
+    ex:textoExtracto       "para instalar software de terceros, usted debe disponer de un sistema abierto, es decir, con acceso al modo administrador."@es .
 
-ex:DiscoDuro_31_44 a ex:Componente ;
-    ex:textoExtracto "puede disponer de compact flash más disco duro" .
+ex:Directorio_CNC8070_USERS
+    a                     ex:Componente ;
+    rdfs:label            "Directorio CNC8070\\USERS"@es ;
+    ex:textoExtracto       "los resultados del software, programas generados, etc deberán guardarse en un directorio desprotegido, por ejemplo CNC8070\\USERS."@es ;
+    ex:identificador       "CNC8070\\USERS" .
 
-ex:SistemaSinDiscoProtegido_31_44 a ex:Sistema ;
-    ex:textoExtracto "En un sistema sin disco protegido, el acceso al modo administrador está protegido mediante la contraseña 'parámetros máquina'" .
+ex:Contrasena_ParametrosMaquina
+    a                     ex:Parametro ;
+    rdfs:label            "Contraseña 'parámetros máquina'"@es ;
+    ex:textoExtracto       "En un sistema sin disco protegido, el acceso al modo administrador está protegido mediante la contraseña 'parámetros máquina', definida en el modo utilidades."@es ;
+    ex:identificador       "parámetros máquina" .
 
-ex:SistemaConDiscoProtegido_31_44 a ex:Sistema ;
-    ex:textoExtracto "En un sistema con disco protegido, el acceso al modo administrador está protegido mediante la contraseña 'Administrator mode'" .
+ex:Contrasena_AdministratorMode
+    a                     ex:Parametro ;
+    rdfs:label            "Contraseña 'Administrator mode'"@es ;
+    ex:textoExtracto       "En un sistema con disco protegido, el acceso al modo administrador está protegido mediante la contraseña 'Administrator mode', definida en el modo utilidades."@es ;
+    ex:identificador       "Administrator mode" .
+
+ex:Empresa_FagorAutomation
+    a                     ex:Empresa ;
+    rdfs:label            "Fagor Automation"@es ;
+    ex:textoExtracto       "Cualquier malfuncionamiento de equipo, derivado de la instalación de software de terceros, exime a Fagor Automation de cualquier responsabilidad."@es .

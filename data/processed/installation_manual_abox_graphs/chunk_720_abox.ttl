@@ -1,36 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:FuncionM a ex:Tabla ;
-    ex:textoExtracto "El CNC indica en los registros MFUN1 a MFUN7 del canal las funciones M programadas en el bloque y activa la marca MSTROBE para que el PLC las ejecute." ;
-    a ex:Parametro ;
-    ex:identificador "MFUN1 a MFUN7" ;
-    ex:valor "funciones M programadas en el bloque" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:FuncionH a ex:Tabla ;
-    ex:textoExtracto "El CNC indica en los registros HFUN1 a HFUN7 del canal las funciones H programadas en el bloque y activa la marca HSTROBE para que el PLC las ejecute." ;
+ex:Parametro_MINAENDW
     a ex:Parametro ;
-    ex:identificador "HFUN1 a HFUN7" ;
-    ex:valor "funciones H programadas en el bloque" .
+    rdfs:label "MINAENDW" ;
+    ex:textoExtracto "tiempo indicado en el parámetro MINAENDW" ;
+    ex:valor "Tiempo de activación de marcas HSTROBE/MSTROBE" .
 
-ex:MarcaMSTROBE ex:textoExtracto "activa la marca MSTROBE para que el PLC las ejecute." ;
+ex:Parametro_PRGFREQ
     a ex:Parametro ;
-    ex:identificador "MSTROBE" .
+    rdfs:label "PRGFREQ" ;
+    ex:textoExtracto "periodicidad con que se ejecuta el programa de PLC, parámetro PRGFREQ" ;
+    ex:valor "Frecuencia de ejecución del programa PLC" .
 
-ex:MarcaHSTROBE ex:textoExtracto "activa la marca HSTROBE para que el PLC las ejecute." ;
-    a ex:Parametro ;
-    ex:identificador "HSTROBE" .
-
-ex:ParametroMINAENDW ex:textoExtracto "El CNC mantiene activa la marca MSTROBE durante el tiempo indicado en el parámetro MINAENDW." ;
-    a ex:Parametro ;
-    ex:identificador "MINAENDW" .
-
-ex:ParametroPRGFREQ ex:textoExtracto "Es aconsejable que el valor del parámetro MINAENDW sea igual o superior a la periodicidad con que se ejecuta el programa de PLC, parámetro PRGFREQ" ;
-    a ex:Parametro ;
-    ex:identificador "PRGFREQ" .
-
-ex:SistemaCNC ex:textoExtracto "Este tipo de transferencia se efectúa con la función H y las funciones M personalizadas sin sincronización." ;
+ex:Sistema_TransferenciaFuncionesH
     a ex:Sistema ;
-    ex:identificador "CNC" .
+    rdfs:label "Sistema de transferencia de funciones H (no sincronizada)" ;
+    ex:textoExtracto "Transferencia de las funciones –H–: El CNC indica en los registros HFUN1 a HFUN7 del canal las funciones H programadas en el bloque y activa la marca HSTROBE para que el PLC las ejecute." ;
+    ex:monitoreaParametro ex:Parametro_MINAENDW .
 
-ex:SistemaPLC ex:textoExtracto "para que el PLC las ejecute" ;
+ex:Sistema_TransferenciaFuncionesM
     a ex:Sistema ;
-    ex:identificador "PLC" .
+    rdfs:label "Sistema de transferencia de funciones M (no sincronizada)" ;
+    ex:textoExtracto "Transferencia de las funciones –M–: El CNC indica en los registros MFUN1 a MFUN7 del canal las funciones M programadas en el bloque y activa la marca MSTROBE para que el PLC las ejecute." ;
+    ex:monitoreaParametro ex:Parametro_MINAENDW .
+
+ex:InterfazUsuario_MarcasStrobe
+    a ex:InterfazUsuario ;
+    rdfs:label "Marcas de interfaz HSTROBE/MSTROBE" ;
+    ex:textoExtracto "activa la marca HSTROBE/MSTROBE para que el PLC las ejecute" ;
+    ex:ilustradoEn ex:Sistema_TransferenciaFuncionesH , ex:Sistema_TransferenciaFuncionesM .
+
+ex:ComponenteElectrico_RegistrosHFUN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registros HFUN1 a HFUN7" ;
+    ex:textoExtracto "El CNC indica en los registros HFUN1 a HFUN7 del canal las funciones H programadas en el bloque" ;
+    ex:compuestoPor ex:InterfazUsuario_MarcasStrobe .
+
+ex:ComponenteElectrico_RegistrosMFUN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registros MFUN1 a MFUN7" ;
+    ex:textoExtracto "El CNC indica en los registros MFUN1 a MFUN7 del canal las funciones M programadas en el bloque" ;
+    ex:compuestoPor ex:InterfazUsuario_MarcasStrobe .

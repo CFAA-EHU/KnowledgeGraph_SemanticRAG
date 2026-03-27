@@ -1,25 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MPG.DIFFCOMP a ex:Parametro ;
-    rdfs:label "MPG.DIFFCOMP" ;
-    ex:identificador "(V.)MPG.DIFFCOMP[nb]" ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DIFFCOMP
+    a ex:Parametro ;
+    rdfs:label "DIFFCOMP" ;
     ex:textoExtracto "Parámetro incluido en la tabla GANTRY. Este parámetro habilita la corrección de la diferencia de cota entre el eje maestro y el esclavo tras la búsqueda de referencia máquina." ;
-    ex:valor "Sí / No. Valor por defecto: Sí." .
+    ex:identificador "MPG.DIFFCOMP[nb]" ;
+    ex:valor "Sí"^^xsd:boolean ;
+    ex:monitoreaParametro ex:Sistema_Gantry .
 
-ex:MPG.MAXDIFF a ex:Parametro ;
-    rdfs:label "MPG.MAXDIFF" ;
-    ex:identificador "(V.)MPG.MAXDIFF[nb]" ;
-    ex:textoExtracto "Parámetro incluido en la tabla GANTRY. Para evitar corregir diferencias de cota excesivas entre el eje maestro y el esclavo, este parámetro establece la máxima diferencia de cota permitida entre ambos ejes para poder aplicar la corrección." ;
-    ex:valor "De 0 a 99999.9999 mm. De 0 a 3937.00787 inch. De 0 a 99999.9999 grados. Valor por defecto: 0." .
+ex:Parametro_MAXDIFF
+    a ex:Parametro ;
+    rdfs:label "MAXDIFF" ;
+    ex:textoExtracto "Máxima diferencia de cota permitida entre ambos ejes para poder compensarla. Valores posibles (1): De 0 a 99999.9999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0 a 99999.9999 grados." ;
+    ex:identificador "MPG.MAXDIFF[nb]" ;
+    ex:valor "0"^^xsd:float ;
+    ex:monitoreaParametro ex:Sistema_Gantry .
 
-ex:TablaGANTRY a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla GANTRY." ;
-    ex:tieneComponente ex:MPG.DIFFCOMP, ex:MPG.MAXDIFF .
-
-ex:EjeGantry a ex:Sistema ;
-    ex:textoExtracto "Ejes con captación absoluta, si el parámetro DIFFCOMP está a \"Sí\", el CNC corregirá la diferencia de cota al habilitar el eje (flanco de subida de la marca SERVOxnON del eje maestro o del esclavo). Para compensar la cota, el eje esclavo se moverá hasta alcanzar la cota del eje maestro, al avance especificado en el parámetro REFFEED2." .
-
-ex:REFFEED2 a ex:Parametro ;
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
     rdfs:label "REFFEED2" ;
-    ex:textoExtracto "al avance especificado en el parámetro REFFEED2" ;
-    ex:valor "No especificado en el fragmento" .
+    ex:textoExtracto "El eje esclavo se moverá hasta alcanzar la cota del eje maestro, al avance especificado en el parámetro REFFEED2." ;
+    ex:monitoreaParametro ex:Sistema_Gantry .
+
+ex:Sistema_Gantry
+    a ex:Sistema ;
+    rdfs:label "Configuración de eje gantry" ;
+    ex:textoExtracto "Configuración de un eje gantry. Parámetros incluidos en la tabla GANTRY." ;
+    ex:tieneComponente ex:Parametro_DIFFCOMP, ex:Parametro_MAXDIFF, ex:Parametro_REFFEED2 .
+
+ex:Tabla_GANTRY a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla GANTRY" ;
+    ex:textoExtracto "Parámetro incluido en la tabla GANTRY." ;
+    ex:documentadoEn ex:Manual_Configuracion .

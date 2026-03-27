@@ -1,48 +1,33 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:M121 a ex:TareaMantenimiento ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:M121 a ex:ModoOperacion ;
     rdfs:label "M121" ;
-    ex:textoExtracto "Llevar el brazo cambiador al punto de cambio." ;
+    ex:textoExtracto "M121 | Llevar el brazo cambiador al punto de cambio." ;
     ex:identificador "M121" .
 
-ex:M122 a ex:TareaMantenimiento ;
+ex:M122 a ex:ModoOperacion ;
     rdfs:label "M122" ;
-    ex:textoExtracto "Llevar el brazo cambiador al almacén." ;
+    ex:textoExtracto "M122 | Llevar el brazo cambiador al almacén." ;
     ex:identificador "M122" .
 
-ex:M123 a ex:TareaMantenimiento ;
+ex:M123 a ex:ModoOperacion ;
     rdfs:label "M123" ;
-    ex:textoExtracto "Retirar el brazo cambiador." ;
+    ex:textoExtracto "M123 | Retirar el brazo cambiador." ;
     ex:identificador "M123" .
 
-ex:M106 a ex:TareaMantenimiento ;
+ex:M106 a ex:ModoOperacion ;
     rdfs:label "M106" ;
     ex:textoExtracto "El PLC debe dar por finalizada la M106 cuando el brazo abandona la zona de posible colisión y se puede mecanizar." ;
     ex:identificador "M106" .
 
-ex:ModoOperacionSincronizacionAntesAntes a ex:ModoOperacion ;
-    rdfs:label "sincronización 'antes - antes'" ;
-    ex:textoExtracto "Personalizar todas funciones M con sincronización 'antes - antes' para que continúe el programa tras su finalización." .
-
-ex:SistemaPLC a ex:Sistema ;
+ex:PLC a ex:Actuador ;
     rdfs:label "PLC" ;
-    ex:textoExtracto "El PLC debe dar por finalizada la M106 cuando el brazo abandona la zona de posible colisión y se puede mecanizar." .
+    ex:textoExtracto "El PLC debe dar por finalizada la M106 cuando el brazo abandona la zona de posible colisión y se puede mecanizar." ;
+    ex:controla ex:M106 .
 
 ex:BrazoCambiador a ex:ComponenteMecanico ;
     rdfs:label "brazo cambiador" ;
-    ex:textoExtracto "Llevar el brazo cambiador al punto de cambio. Llevar el brazo cambiador al almacén. Retirar el brazo cambiador. El PLC debe dar por finalizada la M106 cuando el brazo abandona la zona de posible colisión y se puede mecanizar." .
-
-ex:ZonaColision a ex:Parametro ;
-    rdfs:label "zona de posible colisión" ;
-    ex:textoExtracto "El PLC debe dar por finalizada la M106 cuando el brazo abandona la zona de posible colisión y se puede mecanizar." .
-
-ex:Mecanizado a ex:ModoOperacion ;
-    rdfs:label "mecanizar" ;
-    ex:textoExtracto "El PLC debe dar por finalizada la M106 cuando el brazo abandona la zona de posible colisión y se puede mecanizar." .
-
-ex:M121 ex:ejecutadoPor ex:ModoOperacionSincronizacionAntesAntes .
-ex:M122 ex:ejecutadoPor ex:ModoOperacionSincronizacionAntesAntes .
-ex:M123 ex:ejecutadoPor ex:ModoOperacionSincronizacionAntesAntes .
-ex:M106 ex:ejecutadoPor ex:ModoOperacionSincronizacionAntesAntes .
-ex:SistemaPLC ex:controla ex:M106 .
-ex:BrazoCambiador ex:tieneComponente ex:SistemaPLC .
+    ex:textoExtracto "Llevar el brazo cambiador al punto de cambio... Retirar el brazo cambiador... cuando el brazo abandona la zona de posible colisión" .

@@ -1,48 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PRBPULSE1 a ex:Parametro ;
-    rdfs:label "PRBPULSE1" ;
-    ex:identificador "PRBPULSE1" ;
-    ex:textoExtracto "PRBPULSE1 Nivel lógico de activación del palpador 1. Valores posibles: Positivo / Negativo. Valor por defecto: Positivo. Variable asociada: (V.)MPG.PRBPULSE1 Parámetro incluido en la tabla PROBEDATA." ;
-    ex:valor "Positivo / Negativo" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PRBPULSE2 a ex:Parametro ;
-    rdfs:label "PRBPULSE2" ;
-    ex:identificador "PRBPULSE2" ;
-    ex:textoExtracto "PRBPULSE2 Nivel lógico de activación del palpador 2. Valores posibles: Positivo / Negativo. Valor por defecto: Positivo. Variable asociada: (V.)MPG.PRBPULSE2 Parámetro incluido en la tabla PROBEDATA." ;
-    ex:valor "Positivo / Negativo" .
+ex:Palpador_1
+    a                     ex:Sensor ;
+    rdfs:label            "Palpador 1" ;
+    ex:textoExtracto      "PRBPULSE1 Nivel lógico de activación del palpador 1. Valores posibles: Positivo / Negativo. Valor por defecto: Positivo."@es ;
+    ex:monitoreaParametro ex:Parametro_PRBPULSE1 .
 
-ex:PROBEDATA a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla PROBEDATA." .
+ex:Palpador_2
+    a                     ex:Sensor ;
+    rdfs:label            "Palpador 2" ;
+    ex:textoExtracto      "PRBPULSE2 Nivel lógico de activación del palpador 2. Valores posibles: Positivo / Negativo. Valor por defecto: Positivo."@es ;
+    ex:monitoreaParametro ex:Parametro_PRBPULSE2 .
 
-ex:Palpador1 a ex:Sensor ;
-    rdfs:label "palpador 1" ;
-    ex:textoExtracto "un palpador en cada canal y realizando ambos un movimiento de palpado" .
+ex:Parametro_PRBPULSE1
+    a                     ex:Parametro ;
+    rdfs:label            "PRBPULSE1" ;
+    ex:identificador       "PRBPULSE1" ;
+    ex:valor              "Positivo" ;
+    ex:textoExtracto      "PRBPULSE1 Nivel lógico de activación del palpador 1. Valores posibles: Positivo / Negativo. Valor por defecto: Positivo. Variable asociada: (V.)MPG.PRBPULSE1"@es .
 
-ex:Palpador2 a ex:Sensor ;
-    rdfs:label "palpador 2" ;
-    ex:textoExtracto "un palpador en cada canal y realizando ambos un movimiento de palpado" .
+ex:Parametro_PRBPULSE2
+    a                     ex:Parametro ;
+    rdfs:label            "PRBPULSE2" ;
+    ex:identificador       "PRBPULSE2" ;
+    ex:valor              "Positivo" ;
+    ex:textoExtracto      "PRBPULSE2 Nivel lógico de activación del palpador 2. Valores posibles: Positivo / Negativo. Valor por defecto: Positivo. Variable asociada: (V.)MPG.PRBPULSE2"@es .
 
-ex:MPG_PRBPULSE1 a ex:Parametro ;
-    rdfs:label "(V.)MPG.PRBPULSE1" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.PRBPULSE1" .
+ex:Tabla_PROBEDATA a ex:Tabla ;
+     a                     ex:Tabla ;
+    rdfs:label            "PROBEDATA" ;
+    ex:identificador       "PROBEDATA" ;
+    ex:textoExtracto      "Parámetro incluido en la tabla PROBEDATA."@es ;
+    ex:documentadoEn      ex:Manual_ConfiguracionPalpador .
 
-ex:MPG_PRBPULSE2 a ex:Parametro ;
-    rdfs:label "(V.)MPG.PRBPULSE2" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.PRBPULSE2" .
-
-ex:INTOL a ex:Parametro ;
-    rdfs:label "INTOL" ;
-    ex:textoExtracto "la señal INTOL del PLC" .
-
-ex:PRBPULSE1 ex:documentadoEn ex:PROBEDATA ;
-    ex:textoExtracto "Parámetro incluido en la tabla PROBEDATA." .
-
-ex:PRBPULSE2 ex:documentadoEn ex:PROBEDATA ;
-    ex:textoExtracto "Parámetro incluido en la tabla PROBEDATA." .
-
-ex:MPG_PRBPULSE1 ex:identificador "(V.)MPG.PRBPULSE1" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.PRBPULSE1" .
-
-ex:MPG_PRBPULSE2 ex:identificador "(V.)MPG.PRBPULSE2" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.PRBPULSE2" .
+ex:Manual_ConfiguracionPalpador
+    a                     ex:Manual ;
+    ex:textoExtracto      "El PLC considera entradas lógicas a aquellas entradas que no existen como físicas; por ejemplo, si en los módulos remotos están numeradas las entradas 1 a 256, el PLC considera entradas lógicas de la 257 a la 1024. Dos palpadores remotos no podrán estar conectados al mismo módulo si van estar implicados en procesos de palpado simultáneos."@es .

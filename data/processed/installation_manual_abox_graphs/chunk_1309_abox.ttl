@@ -1,20 +1,44 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Reloj_1309_1 a ex:Sensor ;
-    rdfs:label "Reloj" ;
-    ex:textoExtracto "Preseleccionar Y=R, para que Y=0 coincida con el eje del cilindro colocado en el cabezal." ;
-    ex:identificador "1" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeRotativo_1309_1 a ex:ComponenteMecanico ;
-    rdfs:label "Eje rotativo" ;
-    ex:textoExtracto "posicionar el eje rotativo C en 180º" ;
-    ex:identificador "C" .
+ex:ProcesoCalibracionCabezalAngular_1309
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Calibración del cabezal angular con reloj comparador"@es ;
+    ex:textoExtracto      "Preseleccionar Y=R, para que Y=0 coincida con el eje del cilindro colocado en el cabezal. [...] Apuntar la cota que aparece en el CNC (Y)."@es ;
+    ex:requiereMantenimiento  ex:SistemaCNC_1309 ;
+    ex:ejecutadoPor       ex:PersonalTecnico_1309 .
 
-ex:PuntoMedicion_1309_2 a ex:ComponenteMecanico ;
-    rdfs:label "Punto de medición 2" ;
-    ex:textoExtracto "Tocar con el reloj en el punto 2." ;
-    ex:identificador "2" .
+ex:SistemaCNC_1309
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CNC del cabezal angular"@es ;
+    ex:textoExtracto      "cota que aparece en el CNC (Y)"@es ;
+    ex:tieneComponente    ex:EjeRotativoC_1309 ;
+    ex:tieneComponente    ex:ParametroY_1309 ;
+    ex:tieneComponente    ex:ParametroZ_1309 .
 
-ex:SistemaCNC_1309_1 a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "Apuntar la cota que aparece en el CNC (Y)" .
+ex:EjeRotativoC_1309
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Eje rotativo C del cabezal angular"@es ;
+    ex:textoExtracto      "eje rotativo C en 180º. C=180º"@es ;
+    ex:identificador      "C" .
+
+ex:ParametroY_1309
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro Y (coordenada)"@es ;
+    ex:textoExtracto      "Preseleccionar Y=R [...] Apuntar la cota que aparece en el CNC (Y)"@es ;
+    ex:identificador      "Y" ;
+    ex:valor              "R"^^xsd:string .
+
+ex:ParametroZ_1309
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro Z (coordenada)"@es ;
+    ex:textoExtracto      "Z"@es ;
+    ex:identificador      "Z" .
+
+ex:PersonalTecnico_1309
+    a                     ex:Personal ;
+    rdfs:label            "Técnico de calibración"@es ;
+    ex:textoExtracto      "Retirar el reloj, sin soltarlo, y posicionar el B=0º eje rotativo C en 180º. [...] Tocar con el reloj en el punto 2."@es .

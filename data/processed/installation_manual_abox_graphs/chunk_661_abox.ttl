@@ -1,44 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:R100 a ex:Parametro ;
-    ex:identificador "R100" ;
-    ex:textoExtracto "R100=1234" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:R101 a ex:Parametro ;
-    ex:identificador "R101" ;
-    ex:textoExtracto "R101=100" .
+ex:InstruccionADS a ex:Parametro ;
+    rdfs:label "Instrucción ADS (suma)"@es ;
+    ex:textoExtracto "=ADS R100 R101 R102 ; R102 = 1234 + 100 = 1334"@es ;
+    ex:identificador "ADS" .
 
-ex:R102 a ex:Parametro ;
-    ex:identificador "R102" ;
-    ex:textoExtracto "R102 = 1234 + 100 = 1334" .
+ex:InstruccionSBS a ex:Parametro ;
+    rdfs:label "Instrucción SBS (resta)"@es ;
+    ex:textoExtracto "=SBS R100 R101 R103 ; R103 = 1234 - 100 = 1134"@es ;
+    ex:identificador "SBS" .
 
-ex:R103 a ex:Parametro ;
-    ex:identificador "R103" ;
-    ex:textoExtracto "R103 = 1234 - 100 = 1134" .
+ex:InstruccionMLS a ex:Parametro ;
+    rdfs:label "Instrucción MLS (multiplicación)"@es ;
+    ex:textoExtracto "=MLS R100 R101 R104 ; R104 = 1234 x 100 = 123400"@es ;
+    ex:identificador "MLS" .
 
-ex:R104 a ex:Parametro ;
-    ex:identificador "R104" ;
-    ex:textoExtracto "R104 = 1234 x 100 = 123400" .
+ex:InstruccionDVS a ex:Parametro ;
+    rdfs:label "Instrucción DVS (división)"@es ;
+    ex:textoExtracto "=DVS R100 R101 R105 ; R105 = 1234 : 100 = 12"@es ;
+    ex:identificador "DVS" .
 
-ex:R105 a ex:Parametro ;
-    ex:identificador "R105" ;
-    ex:textoExtracto "R105 = 1234 : 100 = 12" .
+ex:InstruccionMDS a ex:Parametro ;
+    rdfs:label "Instrucción MDS (módulo)"@es ;
+    ex:textoExtracto "=MDS R100 R101 R106 ; R106 = 1234 MOD 100 = 34"@es ;
+    ex:identificador "MDS" .
 
-ex:R106 a ex:Parametro ;
-    ex:identificador "R106" ;
-    ex:textoExtracto "R106 = 1234 MOD 100 = 34" .
+ex:ParametroSANALOG a ex:Parametro ;
+    rdfs:label "Parámetro SANALOG"@es ;
+    ex:textoExtracto "MLS SANALOG 10000 R115 = DVS R115 32767 R115 ; Consigna cabezal en mV"@es ;
+    ex:identificador "SANALOG" ;
+    ex:valor "10000" .
 
-ex:R112 a ex:Parametro ;
-    ex:identificador "R112" ;
-    ex:textoExtracto "R112 = 1563 + 100 = 1663" .
+ex:SeccionInstruccionesAritmeticas a ex:Pagina ;
+    rdfs:label "Sección 4.4.4: Instrucciones de acción aritméticas"@es ;
+    ex:textoExtracto "Ejemplos con R100=1234 y R101=100."@es ;
+    ex:identificador "4.4.4" .
 
-ex:R113 a ex:Parametro ;
-    ex:identificador "R113" ;
-    ex:textoExtracto "R113 = 1234 - 1010 = 224" .
-
-ex:R114 a ex:Parametro ;
-    ex:identificador "R114" ;
-    ex:textoExtracto "R114 = 1563 x 100 = 156300" .
-
-ex:R115 a ex:Parametro ;
-    ex:identificador "R115" ;
-    ex:textoExtracto "MLS SANALOG 10000 R115 = DVS R115 32767 R115 ; Consigna cabezal en mV" .
+ex:InstruccionADS ex:documentadoEn ex:SeccionInstruccionesAritmeticas .
+ex:InstruccionSBS ex:documentadoEn ex:SeccionInstruccionesAritmeticas .
+ex:InstruccionMLS ex:documentadoEn ex:SeccionInstruccionesAritmeticas .
+ex:InstruccionDVS ex:documentadoEn ex:SeccionInstruccionesAritmeticas .
+ex:InstruccionMDS ex:documentadoEn ex:SeccionInstruccionesAritmeticas .
+ex:ParametroSANALOG ex:documentadoEn ex:SeccionInstruccionesAritmeticas .

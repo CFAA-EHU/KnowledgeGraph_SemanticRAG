@@ -1,56 +1,71 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ComandoMFUN ex:textoExtracto """Comando MFUN*. Analizar si una función ha sido programada en el bloque.""" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Comando_MFUN
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando MFUN*" ;
+    ex:textoExtracto "Comando MFUN*. Analizar si una función ha sido programada en el bloque. Para poder conocer si una determinada función M se encuentra programada en el bloque en ejecución, se puede utilizar uno de los siguientes métodos: • Analizar todos los registros MFUN uno a uno, hasta encontrar dicha función M o hasta que uno de ellos tenga el valor $FFFFFFFF. • Utilizar el comando MFUN* que permite analizar todos los registros a la vez. Ejemplo para detectar M30. Si se ha programado devolverá un \"1\"; un \"0\" en caso contrario. CPS MFUN* EQ 30 = ..." ;
+    ex:monitoreaParametro ex:Parametro_M30 .
+
+ex:Parametro_M30
     a ex:Parametro ;
-    rdfs:label "MFUN*" .
+    rdfs:label "Función M30" ;
+    ex:identificador "M30" ;
+    ex:textoExtracto "Ejemplo para detectar M30. Si se ha programado devolverá un \"1\"; un \"0\" en caso contrario." .
 
-ex:TablaFuncionesAuxiliaresM a ex:Tabla ;
-    ex:textoExtracto """Dentro de los parámetros máquina del CNC, en la tabla de funciones auxiliares –M– se indica cuándo se envía la función y cuándo se sincroniza la ejecución del PLC.""" ;
-    a ex:Tabla ;
-    rdfs:label "tabla de funciones auxiliares –M–" .
+ex:Tabla_FuncionesAuxiliares_M a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de funciones auxiliares –M–" ;
+    ex:identificador "5.1" ;
+    ex:textoExtracto "Dentro de los parámetros máquina del CNC, en la tabla de funciones auxiliares –M– se indica cuándo se envía la función y cuándo se sincroniza la ejecución del PLC. En ambos casos podrá ser antes o después del movimiento." ;
+    ex:documentadoEn ex:Capitulo_5 .
 
-ex:FuncionM30 a ex:Tabla ;
-    ex:textoExtracto """Ejemplo para detectar M30. Si se ha programado devolverá un "1"; un "0" en caso contrario.""" ;
+ex:Capitulo_5
+    a ex:Capitulo ;
+    rdfs:label "Funciones auxiliares –M–" ;
+    ex:identificador "5" ;
+    ex:textoExtracto "5.1 Funciones auxiliares –M–." ;
+    ex:detalladoEnEsquema ex:Esquema_Transferencia_M .
+
+ex:Esquema_Transferencia_M
+    a ex:Esquema ;
+    rdfs:label "Transferencia de funciones auxiliares –M–" ;
+    ex:identificador "5.4" ;
+    ex:textoExtracto "La transferencia de las funciones auxiliares M está detallada más adelante en este mismo capítulo. Ver en la página 400. \"5.4 Transferencia de las funciones auxiliares –M–, –H–, –S–.\"" .
+
+ex:Funcion_M11 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M11 (sin sincronización)" ;
+    ex:identificador "M11" ;
+    ex:textoExtracto "M11 sin sincronización." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Funcion_M12 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M12 (envío antes, sincronización antes)" ;
+    ex:identificador "M12" ;
+    ex:textoExtracto "M12 se envía antes y se sincroniza antes el movimiento." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Funcion_M13 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M13 (envío antes, sincronización tras movimiento)" ;
+    ex:identificador "M13" ;
+    ex:textoExtracto "M13 se envía antes y se sincroniza tras el movimiento." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Funcion_M14 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M14 (envío después, sincronización tras movimiento)" ;
+    ex:identificador "M14" ;
+    ex:textoExtracto "M14 se envía después y se sincroniza tras el movimiento." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Bloque_Ejemplo_X100_M11_M14
     a ex:Parametro ;
-    rdfs:label "M30" .
-
-ex:SincronizacionSinSincronizacion ex:textoExtracto """M sin sincronización.""" ;
-    a ex:ModoOperacion ;
-    rdfs:label "sin sincronización" .
-
-ex:SincronizacionAntesAntes ex:textoExtracto """M antes del movimiento y sincronización antes del movimiento.""" ;
-    a ex:ModoOperacion ;
-    rdfs:label "antes del movimiento y sincronización antes del movimiento" .
-
-ex:SincronizacionAntesTras ex:textoExtracto """M antes del movimiento y sincronización tras el movimiento.""" ;
-    a ex:ModoOperacion ;
-    rdfs:label "antes del movimiento y sincronización tras el movimiento" .
-
-ex:SincronizacionTrasTras ex:textoExtracto """M tras el movimiento y sincronización tras el movimiento.""" ;
-    a ex:ModoOperacion ;
-    rdfs:label "tras el movimiento y sincronización tras el movimiento" .
-
-ex:FuncionM11 a ex:Tabla ;
-    ex:textoExtracto """M11 sin sincronización.""" ;
-    a ex:Parametro ;
-    rdfs:label "M11" .
-
-ex:FuncionM12 a ex:Tabla ;
-    ex:textoExtracto """M12 se envía antes y se sincroniza antes el movimiento.""" ;
-    a ex:Parametro ;
-    rdfs:label "M12" .
-
-ex:FuncionM13 a ex:Tabla ;
-    ex:textoExtracto """M13 se envía antes y se sincroniza tras el movimiento.""" ;
-    a ex:Parametro ;
-    rdfs:label "M13" .
-
-ex:FuncionM14 a ex:Tabla ;
-    ex:textoExtracto """M14 se envía después y se sincroniza tras el movimiento.""" ;
-    a ex:Parametro ;
-    rdfs:label "M14" .
-
-ex:BloqueProgramaX100F1000M11M12M13M14 ex:textoExtracto """Se ejecuta un bloque del siguiente tipo. X100 F1000 M11 M12 M13 M14 La transferencia de funciones se realiza de la siguiente manera. 1 Se envían las funciones M11, M12 y M13 al PLC. 2 Se espera a que el PLC ejecute la función M12. 3 El CNC desplaza el eje a la cota X100. 4 Se envía la función M14 al PLC.""" ;
-    a ex:Sistema ;
-    rdfs:label "bloque X100 F1000 M11 M12 M13 M14" ;
-    ex:compuestoPor ex:FuncionM11, ex:FuncionM12, ex:FuncionM13, ex:FuncionM14 .
+    rdfs:label "Bloque de ejemplo: X100 F1000 M11 M12 M13 M14" ;
+    ex:textoExtracto "Si se ejecuta un bloque del siguiente tipo. X100 F1000 M11 M12 M13 M14" ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M ;
+    ex:tieneComponente ex:Funcion_M11 , ex:Funcion_M12 , ex:Funcion_M13 , ex:Funcion_M14 .

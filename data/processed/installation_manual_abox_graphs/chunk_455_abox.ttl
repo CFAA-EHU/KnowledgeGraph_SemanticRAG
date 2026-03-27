@@ -1,58 +1,37 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DRIVESET a ex:Parametro ;
-    ex:textoExtracto "DRIVESET Set del regulador a utilizar. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: De 0 a 8. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.DRIVESET[set].xn En los ejes que pertenecen a un grupo multieje, el parámetro DRIVESET indica la gama a activar en el regulador tras un cambio de set o gama en el CNC (G112 y M41 a M44). El CNC envía los cambios de Kv, feed forward (parámetro FFGAIN) y AC forward (parámetro ACFGAIN) al set indicado en este parámetro. Con la homogeneización activa, el CNC envía los parámetros del set ꞏ1ꞏ del eje maestro al set ꞏ0ꞏ y a la gama ꞏ1ꞏ (la primera) del regulador. Para el resto de sets del eje maestro, el CNC sólo envía al regulador la información de la gama; el set ꞏ2ꞏ del CNC a la gama 2 del regulador, y así sucesivamente. En el eje maestro de un grupo multieje, para que la homogeneización de parámetros funcione correctamente, este parámetro deberá coincidir con el número de set en el que está; es decir, DRIVESET=1 en el set ꞏ1ꞏ, DRIVESET=2 en el set ꞏ2ꞏ y así sucesivamente. En el eje esclavo de un grupo multieje, este parámetro indica la gama a utilizar en el regulador. Si el eje pertenece a un grupo multieje, el parámetro no admite valor ꞏ0ꞏ (cero)." ;
-    ex:identificador "DRIVESET" ;
-    ex:valor "De 0 a 8" ;
-    rdfs:label "Set del regulador a utilizar" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:FFGAIN a ex:Parametro ;
+ex:Parametro_DRIVESET
+    a ex:Parametro ;
+    rdfs:label "DRIVESET" ;
+    ex:textoExtracto "DRIVESET Set del regulador a utilizar. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: De 0 a 8. Valor por defecto: 0." ;
+    ex:valor "0-8" ;
+    ex:identificador "DRIVESET" .
+
+ex:Parametro_FFGAIN
+    a ex:Parametro ;
+    rdfs:label "FFGAIN" ;
     ex:textoExtracto "feed forward (parámetro FFGAIN)" ;
-    ex:identificador "FFGAIN" ;
-    rdfs:label "feed forward" .
+    ex:identificador "FFGAIN" .
 
-ex:ACFGAIN a ex:Parametro ;
+ex:Parametro_ACFGAIN
+    a ex:Parametro ;
+    rdfs:label "ACFGAIN" ;
     ex:textoExtracto "AC forward (parámetro ACFGAIN)" ;
-    ex:identificador "ACFGAIN" ;
-    rdfs:label "AC forward" .
+    ex:identificador "ACFGAIN" .
 
-ex:G112 a ex:ModoOperacion ;
-    ex:textoExtracto "CNC (G112 y M41 a M44)" ;
-    ex:identificador "G112" ;
-    rdfs:label "G112" .
+ex:Sistema_ReguladorSercos
+    a ex:Sistema ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "Parámetro válido para regulador Sercos." ;
+    ex:monitoreaParametro ex:Parametro_DRIVESET ;
+    ex:monitoreaParametro ex:Parametro_FFGAIN ;
+    ex:monitoreaParametro ex:Parametro_ACFGAIN .
 
-ex:M41 a ex:ModoOperacion ;
-    ex:textoExtracto "CNC (G112 y M41 a M44)" ;
-    ex:identificador "M41" ;
-    rdfs:label "M41" .
-
-ex:M42 a ex:ModoOperacion ;
-    ex:textoExtracto "CNC (G112 y M41 a M44)" ;
-    ex:identificador "M42" ;
-    rdfs:label "M42" .
-
-ex:M43 a ex:ModoOperacion ;
-    ex:textoExtracto "CNC (G112 y M41 a M44)" ;
-    ex:identificador "M43" ;
-    rdfs:label "M43" .
-
-ex:M44 a ex:ModoOperacion ;
-    ex:textoExtracto "CNC (G112 y M41 a M44)" ;
-    ex:identificador "M44" ;
-    rdfs:label "M44" .
-
-ex:EjeMaestro a ex:Maquina ;
-    ex:textoExtracto "En el eje maestro de un grupo multieje" ;
-    rdfs:label "Eje maestro" .
-
-ex:EjeEsclavo a ex:Maquina ;
-    ex:textoExtracto "En el eje esclavo de un grupo multieje" ;
-    rdfs:label "Eje esclavo" .
-
-ex:GrupoMultieje a ex:Sistema ;
-    ex:textoExtracto "En los ejes que pertenecen a un grupo multieje" ;
-    rdfs:label "Grupo multieje" .
-
-ex:ReguladorSercos a ex:Componente ;
-    ex:textoExtracto "Parámetro válido para regulador Sercos" ;
-    rdfs:label "Regulador Sercos" .
+ex:Componente_CNC
+    a ex:ComponenteElectrico ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC envía los cambios de Kv, feed forward (parámetro FFGAIN) y AC forward (parámetro ACFGAIN) al set indicado en este parámetro." ;
+    ex:controla ex:Sistema_ReguladorSercos .

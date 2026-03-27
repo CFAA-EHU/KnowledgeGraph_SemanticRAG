@@ -1,59 +1,69 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SistemaFresadora3Canales9Ejes2Cabezales a ex:Sistema ;
-    rdfs:label "Fresadora con 3 canales, 9 ejes y 2 cabezales"@es ;
-    ex:textoExtracto """| Canal ꞏ1ꞏ.
-Plano seleccionado. | Canal ꞏ2ꞏ.
-Plano seleccionado. |
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_ConfiguracionEjesFresadora10_2_3 a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de configuración de ejes para fresadora con 3 canales, 9 ejes y 2 cabezales"@es ;
+    ex:textoExtracto """
+| Canal ꞏ1ꞏ. Plano seleccionado. | Canal ꞏ2ꞏ. Plano seleccionado. |
 | --- | --- | --- |
-| G17 | Plano X-Y.
-Eje perpendicular Z. | Plano X1-Y1. Eje perpendicular Z1. |
-| G18 | Plano Z-X.
-Eje perpendicular Y. | Plano Z1-X1. Eje perpendicular Y1. |
-| G19 | Plano Y-Z.
-Eje perpendicular X. | Plano Y1-Z1. Eje perpendicular X1. |
-| G20 | Cualquier plano y/o eje longitudinal. | Cualquier plano y/o eje longitudinal. |
- TORNO CON 1 CANAL, 2 EJES Y 1 CABEZAL. CONFIGURACIÓN DE EJES TIPO PLANO. Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 2 ejes (X Z) 1 cabezal (S). Configuración general de los canales, ejes y cabezales. | Sistema | Canal ꞏ1ꞏ |
+| G17 | Plano X-Y. Eje perpendicular Z. | Plano X1-Y1. Eje perpendicular Z1. |
+| G18 | Plano Z-X. Eje perpendicular Y. | Plano Z1-X1. Eje perpendicular Y1. |
+| G19 | Plano Y-Z. Eje perpendicular X. | Plano Y1-Z1. Eje perpendicular X1. |
+| G20 | Cualquier plano y/o eje longitudinal. | Cualquier plano y/o eje longitudinal.
+""" .
+
+ex:Tabla_ConfiguracionSistemaTorno10_2_3 a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Configuración de sistema para torno con 1 canal, 2 ejes y 1 cabezal"@es ;
+    ex:textoExtracto """
+| Sistema | Canal ꞏ1ꞏ |
 | --- | --- |
 | NCHANNEL = 1 | GEOCONFIG = Plano |
 | NAXIS = 2 | CHNAXIS = 2 |
 | NSPDL = 1 | CHNSPDL = 1 |
-|  | IPLANE = G18 |
- Configuración de los ejes y cabezales del sistema. | AXISNAME | Valor | Orden lógico. | Índice en el sistema. |
-| --- | --- | --- | --- |
-| AXISNAME 1 | X | Número lógico ꞏ1ꞏ. |  |
-| AXISNAME 2 | Z | Número lógico ꞏ2ꞏ. |  |
-| SPDLNAME 1 | S | Número lógico ꞏ3ꞏ. | Cabezal con índice ꞏ1ꞏ.
-Configuración de los ejes y cabezales del canal ꞏ1ꞏ."""@es .
+|  | IPLANE = G18
+""" ;
+    ex:detalladoEnEsquema  ex:Tabla_ConfiguracionEjesFresadora10_2_3 .
 
-ex:ModoOperacionG17 a ex:ModoOperacion ;
-    ex:identificador "G17" ;
-    ex:textoExtracto "Plano X-Y. Eje perpendicular Z."@es .
+ex:Sistema_Torno1Canal2Ejes1Cabezal
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de torno con 1 canal, 2 ejes (X, Z) y 1 cabezal (S)"@es ;
+    ex:identificador "NCHANNEL=1; NAXIS=2; NSPDL=1; GEOCONFIG=Plano; IPLANE=G18" ;
+    ex:textoExtracto """
+TORNO CON 1 CANAL, 2 EJES Y 1 CABEZAL. CONFIGURACIÓN DE EJES TIPO PLANO.
+Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 2 ejes (X Z) 1 cabezal (S).
+""" ;
+    ex:documentadoEn    ex:Tabla_ConfiguracionSistemaTorno10_2_3 ;
+    ex:compuestoPor     ex:Eje_X_Torno1Canal ,
+                        ex:Eje_Z_Torno1Canal ,
+                        ex:Cabezal_S_Torno1Canal .
 
-ex:ModoOperacionG18 a ex:ModoOperacion ;
-    ex:identificador "G18" ;
-    ex:textoExtracto "Plano Z-X. Eje perpendicular Y."@es .
+ex:Eje_X_Torno1Canal
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje X (lógico 1) del torno monocanal"@es ;
+    ex:identificador "AXISNAME1=X" ;
+    ex:textoExtracto """
+AXISNAME 1 | X | Número lógico ꞏ1ꞏ.
+""" ;
+    ex:tieneComponente  ex:Sistema_Torno1Canal2Ejes1Cabezal .
 
-ex:ModoOperacionG19 a ex:ModoOperacion ;
-    ex:identificador "G19" ;
-    ex:textoExtracto "Plano Y-Z. Eje perpendicular X."@es .
+ex:Eje_Z_Torno1Canal
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje Z (lógico 2) del torno monocanal"@es ;
+    ex:identificador "AXISNAME2=Z" ;
+    ex:textoExtracto """
+AXISNAME 2 | Z | Número lógico ꞏ2ꞏ.
+""" ;
+    ex:tieneComponente  ex:Sistema_Torno1Canal2Ejes1Cabezal .
 
-ex:ModoOperacionG20 a ex:ModoOperacion ;
-    ex:identificador "G20" ;
-    ex:textoExtracto "Cualquier plano y/o eje longitudinal."@es .
-
-ex:EjeX a ex:ComponenteMecanico ;
-    ex:identificador "X" ;
-    ex:textoExtracto "AXISNAME 1 | X | Número lógico ꞏ1ꞏ."@es .
-
-ex:EjeZ a ex:ComponenteMecanico ;
-    ex:identificador "Z" ;
-    ex:textoExtracto "AXISNAME 2 | Z | Número lógico ꞏ2ꞏ."@es .
-
-ex:CabezalS a ex:ComponenteMecanico ;
-    ex:identificador "S" ;
-    ex:textoExtracto "SPDLNAME 1 | S | Número lógico ꞏ3ꞏ. | Cabezal con índice ꞏ1ꞏ."@es .
-
-ex:ModoOperacionPlano a ex:ModoOperacion ;
-    ex:identificador "Plano" ;
-    ex:textoExtracto "GEOCONFIG = Plano"@es .
+ex:Cabezal_S_Torno1Canal
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Cabezal S (lógico 3, índice 1) del torno monocanal"@es ;
+    ex:identificador "SPDNAME1=S" ;
+    ex:textoExtracto """
+SPDNAME 1 | S | Número lógico ꞏ3ꞏ. Cabezal con índice ꞏ1ꞏ.
+""" ;
+    ex:tieneComponente  ex:Sistema_Torno1Canal2Ejes1Cabezal .

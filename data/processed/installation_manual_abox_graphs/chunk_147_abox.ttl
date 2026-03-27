@@ -1,13 +1,29 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PWRCTRLACT a ex:Parametro ;
-    rdfs:label "PWRCTRLACT" ;
-    ex:identificador "PWRCTRLACT" ;
-    ex:textoExtracto "PWRCTRLACT Gestionar la potencia en función del avance real. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)MPG.PWRCTRLACT El CNC permite controlar la potencia, del láser o del duty del PWM, en función del avance. Este parámetro define qué avance debe usar el CNC para gestionar la potencia." ;
-    ex:valor "No" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PWRCTRLCANCEL a ex:Parametro ;
+ex:Parametro_PWRCTRLACT
+    a ex:Parametro ;
+    rdfs:label "PWRCTRLACT" ;
+    ex:identificador "(V.)MPG.PWRCTRLACT" ;
+    ex:textoExtracto "PWRCTRLACT Gestionar la potencia en función del avance real. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)MPG.PWRCTRLACT El CNC permite controlar la potencia, del láser o del duty del PWM, en función del avance. Este parámetro define qué avance debe usar el CNC para gestionar la potencia." ;
+    ex:valor "No"^^xsd:string .
+
+ex:Parametro_PWRCTRLCANCEL
+    a ex:Parametro ;
     rdfs:label "PWRCTRLCANCEL" ;
-    ex:identificador "PWRCTRLCANCEL" ;
+    ex:identificador "(V.)MPG.PWRCTRLCANCEL" ;
     ex:textoExtracto "PWRCTRLCANCEL Cancelar el control de potencia con reset/M2/M30. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)MPG.PWRCTRLCANCEL Este parámetro indica si el CNC cancela el control de potencia tras ejecutar M02, M30 o después de un reset." ;
-    ex:valor "No" .
+    ex:valor "No"^^xsd:string .
+
+ex:Tabla_ValoresPWRCTRLACT a ex:Tabla ;
+     a ex:Tabla ;
+    ex:textoExtracto "| Valor. | Significado. | --- | --- | Sí. | El CNC gestiona la potencia en función del avance real (variable (V.)A.FEED.xn). | No | El CNC gestiona la potencia en función del avance teórico (variable (V.)A.TFEED.xn)." ;
+    ex:documentadoEn ex:Parametro_PWRCTRLACT .
+
+ex:Tabla_ValoresPWRCTRLCANCEL a ex:Tabla ;
+     a ex:Tabla ;
+    ex:textoExtracto "| Valor. | Significado. | --- | --- | Sí. | El CNC cancela el control de potencia. Un error en el canal cancela el control de potencia. Si un error desactiva el control de potencia, éste no se reactiva cuando el error desaparece. Es necesario volver a programarlo por programa o por PLC. | No | El CNC no cancela el control de potencia. Un error en el canal no cancela el control de potencia; éste mantiene su estado previo. En el inicio de la ejecución, tras un reset y al entrar en inspección de herramienta, el CNC sincroniza la preparación de bloques con la ejecución." ;
+    ex:documentadoEn ex:Parametro_PWRCTRLCANCEL .

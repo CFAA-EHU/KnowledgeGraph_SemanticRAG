@@ -1,22 +1,16 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_AjusteGanancias_394 a ex:Parametro ;
-    rdfs:label "Parámetro de ajuste de ganancias" ;
-    ex:textoExtracto "Sin función en Sercos posición. Se aconseja asignar a este parámetro un valor del orden del tiempo de respuesta del sistema. Como el tiempo de respuesta del sistema es un valor (normalmente desconocido) que depende de las inercias de la máquina y del ajuste del regulador, se aconseja probar con varios valores. El ajuste óptimo se consigue cuando se minimiza el error de seguimiento al máximo pero sin invertir los picos." ;
-    ex:valor "tiempo de respuesta del sistema" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Sistema_Respuesta_394 a ex:Sistema ;
-    rdfs:label "Sistema de respuesta" ;
-    ex:textoExtracto "el tiempo de respuesta del sistema es un valor (normalmente desconocido) que depende de las inercias de la máquina y del ajuste del regulador" .
+ex:Parametro_AjusteGanancias_SercosPosicion
+    a ex:Parametro ;
+    rdfs:label "Parámetro de ajuste de ganancias en Sercos posición"@es ;
+    ex:textoExtracto "Sin función en Sercos posición. Se aconseja asignar a este parámetro un valor del orden del tiempo de respuesta del sistema."@es ;
+    ex:valor "dependiente de inercias y ajuste del regulador"@es .
 
-ex:Maquina_Inercia_394 a ex:Maquina ;
-    rdfs:label "Máquina" ;
-    ex:textoExtracto "las inercias de la máquina" .
-
-ex:Regulador_Ajuste_394 a ex:Componente ;
-    rdfs:label "Regulador" ;
-    ex:textoExtracto "el ajuste del regulador" .
-
-ex:Error_Seguimiento_394 a ex:Parametro ;
-    rdfs:label "Error de seguimiento" ;
-    ex:textoExtracto "minimiza el error de seguimiento al máximo pero sin invertir los picos" .
+ex:Sistema_ControlMaquina
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de la máquina"@es ;
+    ex:textoExtracto "el tiempo de respuesta del sistema es un valor (normalmente desconocido) que depende de las inercias de la máquina y del ajuste del regulador"@es ;
+    ex:monitoreaParametro ex:Parametro_AjusteGanancias_SercosPosicion .

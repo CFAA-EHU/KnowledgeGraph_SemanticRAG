@@ -1,13 +1,36 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ChecksumFagor a ex:Parametro ;
-    ex:textoExtracto "Algoritmo de comprobación de datos empleado en las captaciones de Fagor Automation." ;
-    rdfs:label "Checksum Fagor" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ChecksumINDUCTOSYN a ex:Parametro ;
-    ex:textoExtracto "Algoritmo de comprobación de datos empleado en el conexionado con un módulo INDUCTOSYN." ;
-    rdfs:label "Checksum INDUCTOSYN" .
+ex:Tabla_469_ParametrosCRC a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros de CRC en captación SSI"@es ;
+    ex:textoExtracto """
+| Valor. | Significado. |
+| --- | --- |
+| No calcular CRC. | Aunque el CNC recibe los bits de CRC, no se hace ningún procesamiento de los mismos y por lo tanto no se reportan errores si la transmisión es errónea. No es una opción recomendable y sólo debe usarse en casos de puesta a punto. |
+| Checksum Fagor. | Algoritmo de comprobación de datos empleado en las captaciones de Fagor Automation. |
+| Checksum INDUCTOSYN. | Algoritmo de comprobación de datos empleado en el conexionado con un módulo INDUCTOSYN.
+"""@es .
 
-ex:NoCalcularCRC a ex:AccionProhibida ;
-    ex:textoExtracto "Aunque el CNC recibe los bits de CRC, no se hace ningún procesamiento de los mismos y por lo tanto no se reportan errores si la transmisión es errónea. No es una opción recomendable y sólo debe usarse en casos de puesta a punto." ;
-    rdfs:label "No calcular CRC" .
+ex:Parametro_NoCalcularCRC
+    a ex:Parametro ;
+    rdfs:label "No calcular CRC"@es ;
+    ex:textoExtracto "Aunque el CNC recibe los bits de CRC, no se hace ningún procesamiento de los mismos y por lo tanto no se reportan errores si la transmisión es errónea. No es una opción recomendable y sólo debe usarse en casos de puesta a punto."@es ;
+    ex:valor "No calcular CRC"@es ;
+    ex:documentadoEn ex:Tabla_469_ParametrosCRC .
+
+ex:Parametro_ChecksumFagor
+    a ex:Parametro ;
+    rdfs:label "Checksum Fagor"@es ;
+    ex:textoExtracto "Algoritmo de comprobación de datos empleado en las captaciones de Fagor Automation."@es ;
+    ex:valor "Checksum Fagor"@es ;
+    ex:documentadoEn ex:Tabla_469_ParametrosCRC .
+
+ex:Parametro_ChecksumINDUCTOSYN
+    a ex:Parametro ;
+    rdfs:label "Checksum INDUCTOSYN"@es ;
+    ex:textoExtracto "Algoritmo de comprobación de datos empleado en el conexionado con un módulo INDUCTOSYN."@es ;
+    ex:valor "Checksum INDUCTOSYN"@es ;
+    ex:documentadoEn ex:Tabla_469_ParametrosCRC .

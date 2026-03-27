@@ -1,48 +1,50 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SWITCHX1 a ex:Sensor ;
-    rdfs:label "SWITCHX1" ;
-    ex:textoExtracto "SWITCH(axis)" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SERPLCAC a ex:Sensor ;
-    rdfs:label "SERPLCAC" ;
-    ex:textoExtracto "marca SERPLCAC" .
+ex:PLC_GrupoMultieje
+    a                     ex:Sistema ;
+    rdfs:label            "PLC para gestión de grupos multieje" ;
+    ex:textoExtracto      "Los grupos multieje se gestionan desde el PLC, para lo cual dispone de la siguiente marca." ;
+    ex:tieneComponente    ex:Se_al_SWITCH_axis ;
+    ex:controla           ex:Regulador_Ejes ;
+    ex:monitoreaParametro ex:Parametro_GV21 ;
+    ex:monitoreaParametro ex:Parametro_GV25 .
 
-ex:GV21 a ex:Parametro ;
-    rdfs:label "GV21" ;
-    ex:textoExtracto "parámetros GV21" .
+ex:Se_al_SWITCH_axis
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "SWITCH(axis)" ;
+    ex:identificador       "SWITCH(axis)" ;
+    ex:textoExtracto      "El PLC activa esta marca para indicar al CNC cuál es el eje o cabezal que debe gobernar." .
 
-ex:GV25 a ex:Parametro ;
-    rdfs:label "GV25" ;
-    ex:textoExtracto "parámetros GV25" .
+ex:Regulador_Ejes
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Regulador de ejes/cabezales" ;
+    ex:textoExtracto      "El proceso de cambio de un eje o cabezal debe contemplar [...] escribir los parámetros en el regulador [...] cambiar el set y/o la gama en el regulador." ;
+    ex:monitoreaParametro ex:Parametro_GV21 ;
+    ex:monitoreaParametro ex:Parametro_GV25 .
 
-ex:PLC a ex:Sistema ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "Los grupos multieje se gestionan desde el PLC" .
+ex:Parametro_GV21
+    a               ex:Parametro ;
+    rdfs:label      "GV21" ;
+    ex:identificador "GV21" ;
+    ex:textoExtracto "parámetros GV21 [...] del regulador" .
 
-ex:Regulador a ex:Componente ;
-    rdfs:label "regulador" ;
-    ex:textoExtracto "el regulador tras el encendido", "el regulador para cada cambio de eje o cabezal", "el regulador" .
+ex:Parametro_GV25
+    a               ex:Parametro ;
+    rdfs:label      "GV25" ;
+    ex:identificador "GV25" ;
+    ex:textoExtracto "parámetros GV25 [...] del regulador" .
 
-ex:EjeX a ex:Componente ;
-    rdfs:label "eje X" ;
-    ex:textoExtracto "el eje X está activo", "Aparcar el eje X", "el eje X está aparcado", "Habilitar el eje X1" .
+ex:Se_al_SERPLCAC
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "SERPLCAC" ;
+    ex:identificador "SERPLCAC" ;
+    ex:textoExtracto "Verificar que el cambio de set y/o gama ha terminado (marca SERPLCAC)" .
 
-ex:EjeX1 a ex:Componente ;
-    rdfs:label "eje X1" ;
-    ex:textoExtracto "eje X1 aparcado", "Conmutar al eje X1 (SWITCHX1=1)", "Habilitar el eje X1" .
-
-ex:PLC ex:controla ex:Regulador ;
-    ex:textoExtracto "La maniobra de PLC debe definir el set y la gama que asume el regulador tras el encendido, conmutar entre los diferentes ejes o cabezales del grupo y definir el set y la gama que asume el regulador para cada cambio de eje o cabezal" .
-
-ex:PLC ex:monitoreaParametro ex:SWITCHX1 ;
-    ex:textoExtracto "El PLC activa esta marca para indicar al CNC cuál es el eje o cabezal que debe gobernar" .
-
-ex:Regulador ex:monitoreaParametro ex:SERPLCAC ;
-    ex:textoExtracto "Verificar que la escritura de parámetros en el regulador ha finalizado y en caso necesario, validar los parámetros del regulador. Verificar que el cambio de set y/o gama ha terminado (marca SERPLCAC) y que el set y/o gama del regulador es correcta (parámetros GV21 y GV25 del regulador)" .
-
-ex:Regulador ex:monitoreaParametro ex:GV21 ;
-    ex:textoExtracto "que el set y/o gama del regulador es correcta (parámetros GV21 y GV25 del regulador)" .
-
-ex:Regulador ex:monitoreaParametro ex:GV25 ;
-    ex:textoExtracto "que el set y/o gama del regulador es correcta (parámetros GV21 y GV25 del regulador)" .
+ex:Proceso_CambioEje
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Proceso de cambio de eje/cabezal" ;
+    ex:textoExtracto      "El proceso de cambio de un eje o cabezal debe contemplar las siguientes aspectos (suponiendo que el eje X está activo y eje X1 aparcado): 1 Aparcar el eje X. 2 Verificar que el eje X está aparcado. 3 Conmutar al eje X1 (SWITCHX1=1). 4 En caso necesario, escribir los parámetros en el regulador. 5 Cambiar el set y/o la gama en el regulador. 6 Verificar que el cambio de set y/o gama ha terminado. 7 Habilitar el eje X1." ;
+    ex:requiereMantenimiento ex:Regulador_Ejes .

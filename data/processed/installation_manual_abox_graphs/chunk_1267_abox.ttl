@@ -1,6 +1,13 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla1267_15_5 a ex:Tabla ;
-    ex:textoExtracto """| Parámetro. | Significado. |
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_ParametrosCANopen_1267 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros para configuración de entradas/salidas digitales en bus CANopen"@es ;
+    ex:textoExtracto """
+| Parámetro. | Significado. |
 | --- | --- |
 | NDOMOD | Número de bloques lógicos de salidas digitales. Valores posibles: De 0 a 42 (por defecto; 0). |
 | DOMODADDR | Direcciones base de los bloques lógicos de salidas digitales. |
@@ -8,41 +15,65 @@ ex:Tabla1267_15_5 a ex:Tabla ;
 | NODE | Número de nodo de la cabecera al que pertenece el bloque lógico. Valores posibles: De 1 a 125 (por defecto; 0). |
 | BLOCK | Número de bloque lógico. Valores posibles: De 1 a 64 (por defecto; 0). |
 | ADDRESS | Dirección base del bloque lógico. Valores posibles: De 1 a 1017 (por defecto; el primer valor válido). |
-| NDO | Número de salidas digitales del módulo. Valores posibles: De 8 a 1024 (por defecto; 0). |
- La configuración debe cumplir los siguientes requisitos. Si la parametrización no se ajusta a estos requisitos, el CNC la ignora y numera las salidas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus. • Se deben parametrizar todos los nodos de I/Os del bus; no se pueden dejar nodos sin definir. • Se deben parametrizar todos los recursos de un nodo; no se pueden dejar I/Os sin numerar. • El máximo número de bloques lógicos en el nodo será 64, tanto para entradas como para salidas digitales. • El número de I/Os de un bloque lógico no puede ser cero, y debe ser un múltiplo de 8 • Los valores del índice base deben cumplir con la fórmula "8n + 1" (es decir, 1, 9, 17, 25 ...). • Los bloques se pueden distribuir como se desee dentro del rango de recursos gestionados por PLC (1...1024).""" .
+| NDO | Número de salidas digitales del módulo. Valores posibles: De 8 a 1024 (por defecto; 0).
+"""@es .
 
-ex:ParametroNDOMOD a ex:Parametro ;
+ex:Parametro_NDOMOD
+    a ex:Parametro ;
+    rdfs:label "NDOMOD" ;
     ex:identificador "NDOMOD" ;
-    ex:textoExtracto "Número de bloques lógicos de salidas digitales. Valores posibles: De 0 a 42 (por defecto; 0)." .
+    ex:valor "0..42" ;
+    ex:textoExtracto "Número de bloques lógicos de salidas digitales. Valores posibles: De 0 a 42 (por defecto; 0)."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosCANopen_1267 .
 
-ex:ParametroDOMODADDR a ex:Parametro ;
+ex:Parametro_DOMODADDR
+    a ex:Parametro ;
+    rdfs:label "DOMODADDR" ;
     ex:identificador "DOMODADDR" ;
-    ex:textoExtracto "Direcciones base de los bloques lógicos de salidas digitales." .
+    ex:textoExtracto "Direcciones base de los bloques lógicos de salidas digitales."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosCANopen_1267 .
 
-ex:ParametroMNEMONIC a ex:Parametro ;
+ex:Parametro_MNEMONIC
+    a ex:Parametro ;
+    rdfs:label "MNEMONIC" ;
     ex:identificador "MNEMONIC" ;
-    ex:textoExtracto "Mnemónico del bloque lógico." .
+    ex:textoExtracto "Mnemónico del bloque lógico."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosCANopen_1267 .
 
-ex:ParametroNODE a ex:Parametro ;
+ex:Parametro_NODE
+    a ex:Parametro ;
+    rdfs:label "NODE" ;
     ex:identificador "NODE" ;
-    ex:textoExtracto "Número de nodo de la cabecera al que pertenece el bloque lógico. Valores posibles: De 1 a 125 (por defecto; 0)." .
+    ex:valor "1..125" ;
+    ex:textoExtracto "Número de nodo de la cabecera al que pertenece el bloque lógico. Valores posibles: De 1 a 125 (por defecto; 0)."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosCANopen_1267 .
 
-ex:ParametroBLOCK a ex:Parametro ;
+ex:Parametro_BLOCK
+    a ex:Parametro ;
+    rdfs:label "BLOCK" ;
     ex:identificador "BLOCK" ;
-    ex:textoExtracto "Número de bloque lógico. Valores posibles: De 1 a 64 (por defecto; 0)." .
+    ex:valor "1..64" ;
+    ex:textoExtracto "Número de bloque lógico. Valores posibles: De 1 a 64 (por defecto; 0)."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosCANopen_1267 .
 
-ex:ParametroADDRESS a ex:Parametro ;
+ex:Parametro_ADDRESS
+    a ex:Parametro ;
+    rdfs:label "ADDRESS" ;
     ex:identificador "ADDRESS" ;
-    ex:textoExtracto "Dirección base del bloque lógico. Valores posibles: De 1 a 1017 (por defecto; el primer valor válido)." .
+    ex:valor "1..1017" ;
+    ex:textoExtracto "Dirección base del bloque lógico. Valores posibles: De 1 a 1017 (por defecto; el primer valor válido)."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosCANopen_1267 .
 
-ex:ParametroNDO a ex:Parametro ;
+ex:Parametro_NDO
+    a ex:Parametro ;
+    rdfs:label "NDO" ;
     ex:identificador "NDO" ;
-    ex:textoExtracto "Número de salidas digitales del módulo. Valores posibles: De 8 a 1024 (por defecto; 0)." .
+    ex:valor "8..1024" ;
+    ex:textoExtracto "Número de salidas digitales del módulo. Valores posibles: De 8 a 1024 (por defecto; 0)."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosCANopen_1267 .
 
-ex:ParametroNDOMOD ex:documentadoEn ex:Tabla1267_15_5 .
-ex:ParametroDOMODADDR ex:documentadoEn ex:Tabla1267_15_5 .
-ex:ParametroMNEMONIC ex:documentadoEn ex:Tabla1267_15_5 .
-ex:ParametroNODE ex:documentadoEn ex:Tabla1267_15_5 .
-ex:ParametroBLOCK ex:documentadoEn ex:Tabla1267_15_5 .
-ex:ParametroADDRESS ex:documentadoEn ex:Tabla1267_15_5 .
-ex:ParametroNDO ex:documentadoEn ex:Tabla1267_15_5 .
+ex:Sistema_BusCANopen
+    a ex:Sistema ;
+    rdfs:label "Bus CANopen"@es ;
+    ex:textoExtracto "La configuración debe cumplir los siguientes requisitos. Si la parametrización no se ajusta a estos requisitos, el CNC la ignora y numera las salidas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus."@es ;
+    ex:tieneComponente ex:Parametro_NDOMOD , ex:Parametro_DOMODADDR , ex:Parametro_MNEMONIC , ex:Parametro_NODE , ex:Parametro_BLOCK , ex:Parametro_ADDRESS , ex:Parametro_NDO .

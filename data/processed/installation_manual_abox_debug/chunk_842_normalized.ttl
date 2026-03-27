@@ -1,0 +1,105 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Senal_GEAR1 a ex:Parametro ;
+    rdfs:label "Señal GEAR1" ;
+    ex:textoExtracto "En el ejemplo de las señales GEAR1 a GEAR4 se detalla cómo detectar y efectuar el cambio de gama." ;
+    ex:monitoreaParametro ex:SistemaControlCabezales .
+
+ex:Senal_GEAR2 a ex:Parametro ;
+    rdfs:label "Señal GEAR2" ;
+    ex:monitoreaParametro ex:SistemaControlCabezales .
+
+ex:Senal_GEAR3 a ex:Parametro ;
+    rdfs:label "Señal GEAR3" ;
+    ex:monitoreaParametro ex:SistemaControlCabezales .
+
+ex:Senal_GEAR4 a ex:Parametro ;
+    rdfs:label "Señal GEAR4" ;
+    ex:monitoreaParametro ex:SistemaControlCabezales .
+
+ex:Parametro_SANALOG a ex:Parametro ;
+    rdfs:label "SANALOG (consigna residual)" ;
+    ex:textoExtracto "El PLC pone en SANALOG el valor correspondiente a la consigna residual y activa la marca PLCCNTL para indicar que el cabezal está controlado por el PLC." ;
+    ex:valor "0"^^xsd:string ;  # Valor por defecto según texto
+    ex:monitoreaParametro ex:SistemaControlCabezales .
+
+ex:Marca_PLCCNTL a ex:Parametro ;
+    rdfs:label "PLCCNTL (control PLC)" ;
+    ex:textoExtracto "activa la marca PLCCNTL para indicar que el cabezal está controlado por el PLC. Una vez finalizado hay que poner PLCCNTL a (=0)" ;
+    ex:valor "0"^^xsd:string .  # Estado inactivo por defecto
+
+ex:Marca_SPDLEREV1 a ex:Parametro ;
+    rdfs:label "SPDLEREV1" ;
+    ex:textoExtracto "SPDLEREV1 (también se puede programar como SPDLEREV). Cuando el PLC pone esta marca a (=1), el CNC invierte el sentido de giro del cabezal." ;
+    ex:controla ex:Cabezal_1 .
+
+ex:Marca_SPDLEREV2 a ex:Parametro ;
+    rdfs:label "SPDLEREV2" ;
+    ex:controla ex:Cabezal_2 .
+
+ex:Marca_SPDLEREV3 a ex:Parametro ;
+    rdfs:label "SPDLEREV3" ;
+    ex:controla ex:Cabezal_3 .
+
+ex:Marca_SPDLEREV4 a ex:Parametro ;
+    rdfs:label "SPDLEREV4" ;
+    ex:controla ex:Cabezal_4 .
+
+ex:Marca_SPDLEREV5 a ex:Parametro ;
+    rdfs:label "SPDLEREV5" ;
+    ex:controla ex:Cabezal_5 .
+
+ex:Marca_SPDLEREV6 a ex:Parametro ;
+    rdfs:label "SPDLEREV6" ;
+    ex:controla ex:Cabezal_6 .
+
+ex:Marca_PLCM3 a ex:Parametro ;
+    rdfs:label "PLCM3" ;
+    ex:textoExtracto "El PLC dispone de una marca para cada cabezal. Los mnemónicos para cada cabezal son los siguientes. Se muestra como ejemplo los mnemónicos para PLCM3" ;
+    ex:controla ex:Cabezal_1 .
+
+ex:Marca_PLCM4 a ex:Parametro ;
+    rdfs:label "PLCM4" ;
+    ex:controla ex:Cabezal_2 .
+
+ex:Marca_PLCM5 a ex:Parametro ;
+    rdfs:label "PLCM5" ;
+    ex:controla ex:Cabezal_3 .
+
+ex:Parametro_M19SPDLEREV a ex:Parametro ;
+    rdfs:label "M19SPDLEREV" ;
+    ex:textoExtracto "en los cabezales en lazo cerrado (M19), depende del parámertro M19SPDLEREV." .
+
+ex:Cabezal_1 a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal 1" ;
+    ex:controla ex:Marca_SPDLEREV1 .
+
+ex:Cabezal_2 a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal 2" ;
+    ex:controla ex:Marca_SPDLEREV2 .
+
+ex:Cabezal_3 a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal 3" ;
+    ex:controla ex:Marca_SPDLEREV3 .
+
+ex:Cabezal_4 a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal 4" ;
+    ex:controla ex:Marca_SPDLEREV4 .
+
+ex:Cabezal_5 a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal 5" ;
+    ex:controla ex:Marca_SPDLEREV5 .
+
+ex:Cabezal_6 a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal 6" ;
+    ex:controla ex:Marca_SPDLEREV6 .
+
+ex:SistemaControlCabezales a ex:Sistema ;
+    rdfs:label "Sistema de control de cabezales" ;
+    ex:textoExtracto "Aquí se muestra la forma de controlar la oscilación del cabezal durante el cambio de gama." ;
+    ex:tieneComponente ex:Cabezal_1, ex:Cabezal_2, ex:Cabezal_3, ex:Cabezal_4, ex:Cabezal_5, ex:Cabezal_6 ;
+    ex:compuestoPor ex:Parametro_SANALOG, ex:Marca_PLCCNTL .

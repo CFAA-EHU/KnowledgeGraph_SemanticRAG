@@ -1,36 +1,78 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaConDiscoProtegidoContraEscritura a ex:Sistema ;
-    ex:textoExtracto "Sistema con disco protegido contra la escritura." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SistemaSinDiscoProtegidoContraEscritura a ex:Sistema ;
-    ex:textoExtracto "Sistema sin disco protegido contra escritura." .
+ex:ModoSetup
+    a ex:ModoOperacion ;
+    rdfs:label "Modo setup" ;
+    ex:textoExtracto "La puesta a punto del CNC se realiza desde el modo setup. Fagor entrega el equipo preparado para arrancar en este modo." .
 
-ex:ModoSetup a ex:ModoOperacion ;
-    ex:textoExtracto "La puesta a punto del CNC se realiza desde el modo setup." .
+ex:ModoUsuario
+    a ex:ModoOperacion ;
+    rdfs:label "Modo usuario" ;
+    ex:textoExtracto "El equipo debe ser entregado al usuario preparado para arrancar en modo usuario." .
 
-ex:ModoUsuario a ex:ModoOperacion ;
-    ex:textoExtracto "el CNC arrancará en modo usuario" .
+ex:AvisoModoNoSeguro
+    a ex:AvisoSeguridad ;
+    rdfs:label "Aviso de modo no seguro" ;
+    ex:textoExtracto "En el arranque de la aplicación aparecerá un aviso indicando que se está trabajando en un modo no seguro." .
 
-ex:AvisoModoNoSeguro a ex:AvisoSeguridad ;
-    ex:textoExtracto "aparecerá un aviso indicando que se está trabajando en un modo no seguro" .
+ex:DialogoFinalizacionPuestaPunto
+    a ex:InterfazUsuario ;
+    rdfs:label "Diálogo de finalización de puesta a punto" ;
+    ex:textoExtracto "el CNC muestra un segundo diálogo preguntando si se ha finalizado con la puesta a punto. Con la opción 'NO', la próxima vez que se encienda el equipo volverá a arrancar en el modo setup. Con la opción 'SÍ', el CNC hace una copia de seguridad de la carpeta MTB y la próxima vez que se encienda el equipo arrancará en modo usuario." .
 
-ex:AvisoPuestaAPuntoPendiente a ex:AvisoSeguridad ;
-    ex:textoExtracto "el CNC muestra un segundo diálogo preguntando si se ha finalizado con la puesta a punto" .
+ex:DialogoCopiaSeguridad
+    a ex:InterfazUsuario ;
+    rdfs:label "Diálogo de copia de seguridad" ;
+    ex:textoExtracto "el CNC muestra la opción de guardar una copia de seguridad de la configuración de la máquina, el directorio MTB, a un archivo comprimido." .
 
-ex:AvisoCopiaSeguridad a ex:AvisoSeguridad ;
-    ex:textoExtracto "el CNC muestra la opción de guardar una copia de seguridad de la configuración de la máquina, el directorio MTB, a un archivo comprimido" .
+ex:SistemaProtegidoEscritura
+    a ex:Sistema ;
+    rdfs:label "Sistema con disco protegido contra la escritura" ;
+    ex:textoExtracto "Sistema con disco protegido contra la escritura." ;
+    ex:tieneComponente ex:ModoSetup, ex:ModoUsuario ;
+    ex:documentadoEn ex:Pagina43 .
 
-ex:DialogoPuestaAPunto a ex:InterfazUsuario ;
-    ex:textoExtracto "el CNC muestra un segundo diálogo preguntando si se ha finalizado con la puesta a punto" .
+ex:SistemaNoProtegidoEscritura
+    a ex:Sistema ;
+    rdfs:label "Sistema sin disco protegido contra escritura" ;
+    ex:textoExtracto "Sistema sin disco protegido contra escritura. Las modificaciones de la configuración en un CNC sin disco protegido contra escritura son permanentes." ;
+    ex:documentadoEn ex:Pagina43 .
 
-ex:DialogoCopiaSeguridad a ex:InterfazUsuario ;
-    ex:textoExtracto "el CNC muestra la opción de guardar una copia de seguridad de la configuración de la máquina, el directorio MTB, a un archivo comprimido" .
+ex:Pagina43
+    a ex:Pagina ;
+    ex:identificador "43" ;
+    ex:textoExtracto "Sección 1.5 Requisitos para antes y después de la puesta a punto del CNC." ;
+    ex:ilustradoEn ex:ManualCNC .
 
-ex:SecuenciaTeclasAltF4 a ex:Parametro ;
-    ex:textoExtracto "con la secuencia de teclas [ALT]+[F4]" .
+ex:Pagina32
+    a ex:Pagina ;
+    ex:identificador "32" ;
+    ex:textoExtracto "Ver '1.1.1 Modos de trabajo y protección del software en el CNC.' en la página 32." ;
+    ex:ilustradoEn ex:ManualCNC .
 
-ex:DirectorioMTB a ex:Componente ;
-    ex:textoExtracto "la carpeta MTB" .
+ex:ManualCNC
+    a ex:Manual ;
+    ex:textoExtracto "Manual del sistema CNC de Fagor." .
 
-ex:Pagina1_1_1ModosDeTrabajoYProteccionDelSoftwareEnElCNC a ex:Pagina ;
-    ex:textoExtracto "Ver \"1.1.1 Modos de trabajo y protección del software en el CNC.\" en la página 32" .
+ex:AvisosPantalla
+    a ex:AvisoSeguridad ;
+    rdfs:label "Avisos en pantalla" ;
+    ex:textoExtracto "En el arranque de la aplicación, ya sea en modo setup o en modo usuario, el CNC puede mostrar avisos en pantalla cuya causa debe ser solucionada por el fabricante durante la puesta a punto." .
+
+ex:ModoSetup
+    ex:habilitadoPor ex:DialogoFinalizacionPuestaPunto .
+
+ex:AvisoModoNoSeguro
+    ex:mitigaRiesgo ex:ModoSetup .
+
+ex:DialogoFinalizacionPuestaPunto
+    ex:controla ex:ModoUsuario .
+
+ex:SistemaProtegidoEscritura
+    ex:tieneComponente ex:DialogoFinalizacionPuestaPunto .
+
+ex:SistemaNoProtegidoEscritura
+    ex:tieneComponente ex:DialogoCopiaSeguridad .

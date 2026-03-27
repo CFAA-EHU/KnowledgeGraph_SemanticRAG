@@ -1,41 +1,42 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:INT1 a ex:Sensor ;
-    rdfs:label "INT1" ;
-    ex:textoExtracto "Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. Se muestra como ejemplo los mnemónicos de INT1; para el resto de marcas es equivalente." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:INT4 a ex:Sensor ;
-    rdfs:label "INT4" ;
-    ex:textoExtracto "Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. Se muestra como ejemplo los mnemónicos de INT1; para el resto de marcas es equivalente." .
+ex:SistemaInterrupcionesPLC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de interrupciones del PLC" ;
+    ex:textoExtracto "Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. [...] Si el PLC activa una de estas marcas, el canal interrumpe la ejecución del programa y ejecuta la subrutina de interrupción correspondiente" ;
+    ex:tieneComponente
+        ex:CanalINT1 ,
+        ex:CanalINT4 ,
+        ex:SubrutinaINT1SUB ,
+        ex:SubrutinaINT4SUB .
 
-ex:INT1C1 a ex:ComponenteElectrico ;
-    rdfs:label "INT1C1" ;
-    ex:textoExtracto "INT1C1 (también se puede programar como INT1)" .
+ex:CanalINT1
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Canal INT1" ;
+    ex:identificador "INT1" ;
+    ex:textoExtracto "INT1C1 (también se puede programar como INT1) INT1C2 INT1C3 INT1C4" ;
+    ex:controla     ex:SubrutinaINT1SUB .
 
-ex:INT1C2 a ex:ComponenteElectrico ;
-    rdfs:label "INT1C2" ;
-    ex:textoExtracto "INT1C2" .
+ex:CanalINT4
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Canal INT4" ;
+    ex:identificador "INT4" ;
+    ex:textoExtracto "Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. Se muestra como ejemplo los mnemónicos de INT1; para el resto de marcas es equivalente" ;
+    ex:controla     ex:SubrutinaINT4SUB .
 
-ex:INT1C3 a ex:ComponenteElectrico ;
-    rdfs:label "INT1C3" ;
-    ex:textoExtracto "INT1C3" .
+ex:SubrutinaINT1SUB
+    a               ex:Parametro ;
+    rdfs:label      "Subrutina de interrupción INT1SUB" ;
+    ex:identificador "INT1SUB" ;
+    ex:textoExtracto "subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" ;
+    ex:valor         "INT1SUB" .
 
-ex:INT1C4 a ex:ComponenteElectrico ;
-    rdfs:label "INT1C4" ;
-    ex:textoExtracto "INT1C4" .
-
-ex:INT1SUB a ex:Parametro ;
-    rdfs:label "INT1SUB" ;
-    ex:textoExtracto "el canal interrumpe la ejecución del programa y ejecuta la subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" .
-
-ex:INT4SUB a ex:Parametro ;
-    rdfs:label "INT4SUB" ;
-    ex:textoExtracto "el canal interrumpe la ejecución del programa y ejecuta la subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" .
-
-ex:PLC a ex:Sistema ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas" .
-
-ex:CNC a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "El CNC ejecuta la subrutina con la historia actual del programa interrumpido" .
+ex:SubrutinaINT4SUB
+    a               ex:Parametro ;
+    rdfs:label      "Subrutina de interrupción INT4SUB" ;
+    ex:identificador "INT4SUB" ;
+    ex:textoExtracto "subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" ;
+    ex:valor         "INT4SUB" .

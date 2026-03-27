@@ -1,18 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DMC a ex:Sistema ;
-    rdfs:label "DMC" ;
-    ex:textoExtracto "El DMC escribirá en la variable (V.)G.LEARNEDPWRSP el valor de la potencia objetivo obtenida en la fase de aprendizaje" ;
-    ex:tieneComponente ex:Variable_G_LEARNEDPWRSP .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Variable_G_LEARNEDPWRSP a ex:Parametro ;
-    rdfs:label "G.LEARNEDPWRSP" ;
-    ex:textoExtracto "(V.)G.LEARNEDPWRSP el valor de la potencia objetivo obtenida en la fase de aprendizaje" .
+ex:DMC_ModoOperacion
+    a ex:ModoOperacion ;
+    rdfs:label "Funcionamiento del DMC" ;
+    ex:textoExtracto "Funcionamiento del DMC. Una vez conocida la potencia objetivo, y tras detectar la entrada a la pieza, comenzará el funcionamiento normal del DMC. Durante el mecanizado, el DMC adapta el avance para que la potencia de corte (\"potencia consumida\" – \"potencia en vacío\") sea lo más cercana posible a la potencia objetivo. El DMC adapta el avance modificando el override." .
 
-ex:Aviso_3103 a ex:AvisoSeguridad ;
-    rdfs:label "aviso 3103" ;
-    ex:textoExtracto "Si el DMC detecta una situación de este tipo, muestra el aviso 3103" .
+ex:Variable_GLEARNEDPWRSP
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)G.LEARNEDPWRSP" ;
+    ex:identificador "G.LEARNEDPWRSP" ;
+    ex:textoExtracto "El DMC escribirá en la variable (V.)G.LEARNEDPWRSP el valor de la potencia objetivo obtenida en la fase de aprendizaje, para que se pueda utilizar en las siguientes piezas que se mecanicen con el mismo programa pieza, evitando la fase de aprendizaje." ;
+    ex:monitoreaParametro ex:DMC_ModoOperacion .
 
-ex:Override_de_avance a ex:Parametro ;
-    rdfs:label "override de avance" ;
-    ex:textoExtracto "el DMC adapta el avance modificando el override" .
+ex:Parametro_PotenciaObjetivo
+    a ex:Parametro ;
+    rdfs:label "Potencia objetivo" ;
+    ex:textoExtracto "potencia objetivo obtenida en la fase de aprendizaje" ;
+    ex:monitoreaParametro ex:DMC_ModoOperacion ;
+    ex:valor ">=20% de la potencia en vacío"@es .
+
+ex:Aviso_DMC_3103
+    a ex:AvisoSeguridad ;
+    rdfs:label "Aviso 3103" ;
+    ex:identificador "3103" ;
+    ex:textoExtracto "Si el DMC detecta una situación de este tipo, muestra el aviso 3103." ;
+    ex:activaAlarma ex:DMC_ModoOperacion .
+
+ex:Parametro_OverrideAvance
+    a ex:Parametro ;
+    rdfs:label "Porcentaje de avance (feed override)" ;
+    ex:textoExtracto "El DMC adapta el avance modificando el override. Ver en la página 732. \"18.4.3 Porcentaje de avance (feed override).\"" ;
+    ex:monitoreaParametro ex:DMC_ModoOperacion .
+
+ex:Parametro_ProfundidadPasada
+    a ex:Parametro ;
+    rdfs:label "Profundidad de pasada" ;
+    ex:textoExtracto "Se recomienda realizar la fase de aprendizaje con una profundidad de pasada lo más aproximada posible a la que se va utilizar durante el mecanizado; en caso contrario, si la profundidad de pasada es más pequeña, la potencia objetivo calculada puede no ser la apropiada." .

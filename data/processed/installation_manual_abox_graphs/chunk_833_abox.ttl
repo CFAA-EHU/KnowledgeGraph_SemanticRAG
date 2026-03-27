@@ -1,39 +1,82 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:LUBR_axis a ex:Parametro ;
-    ex:textoExtracto "LUBR(axis)" ;
-    ex:valor "DISTLUBRI" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:LUBRENA a ex:Parametro ;
-    ex:textoExtracto "LUBRENA" ;
-    ex:valor "1" .
+ex:Parametro_DISTLUBRI
+    a ex:Parametro ;
+    rdfs:label "DISTLUBRI" ;
+    ex:textoExtracto "distancia fijada en el parámetro máquina DISTLUBRI" ;
+    ex:monitoreaParametro ex:SistemaLubricacionEjes .
 
-ex:LUBROK_axis a ex:Parametro ;
-    ex:textoExtracto "LUBROK(axis)" ;
-    ex:valor "1" .
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
+    rdfs:label "REFFEED2" ;
+    ex:textoExtracto "avance especificado en el parámetro REFFEED2" ;
+    ex:monitoreaParametro ex:SistemaCorreccionGantry .
 
-ex:DIFFCOMP_axis a ex:Parametro ;
-    ex:textoExtracto "DIFFCOMP(axis)" .
+ex:Parametro_FBACKSRC
+    a ex:Parametro ;
+    rdfs:label "FBACKSRC" ;
+    ex:textoExtracto "Consultar el parámetro FBACKSRC" ;
+    ex:monitoreaParametro ex:SistemaCaptacionMixta .
 
-ex:SERVO_axisON a ex:Parametro ;
-    ex:textoExtracto "SERVO(axis)ON" .
+ex:Parametro_FBMIXTIME
+    a ex:Parametro ;
+    rdfs:label "FBMIXTIME" ;
+    ex:textoExtracto "mezcla de captaciones (parámetro FBMIXTIME)" ;
+    ex:monitoreaParametro ex:SistemaCaptacionMixta .
 
-ex:REFFEED2 a ex:Parametro ;
-    ex:textoExtracto "REFFEED2" .
+ex:SistemaLubricacionEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de lubricación de ejes" ;
+    ex:textoExtracto "LUBR(axis) se deben utilizar para el engrase de los ejes. [...] Con LUBRENA a (=1) el CNC actúa del siguiente modo: [...] El PLC tras engrasar el eje pone la marca LUBROK(axis) a (=1)" ;
+    ex:tieneComponente ex:ComponenteLubricacionEje ;
+    ex:requiereMantenimiento ex:TareaEngraseEjes .
 
-ex:REFPOIN_axis a ex:Parametro ;
-    ex:textoExtracto "REFPOIN(axis)" .
+ex:TareaEngraseEjes
+    a ex:TareaMantenimiento ;
+    rdfs:label "Engrase de ejes" ;
+    ex:textoExtracto "engrase de los ejes. [...] se debe engrasar el eje" ;
+    ex:requiereConsumible ex:LubricanteEjes .
 
-ex:FBACKSEL_axis a ex:Parametro ;
-    ex:textoExtracto "FBACKSEL(axis)" .
+ex:LubricanteEjes
+    a ex:Consumible ;
+    rdfs:label "Lubricante para ejes" ;
+    ex:textoExtracto "LUBR(axis) se deben utilizar para el engrase de los ejes" .
 
-ex:FBMIXTIME a ex:Parametro ;
-    ex:textoExtracto "FBMIXTIME" .
+ex:ComponenteLubricacionEje
+    a ex:ComponenteMecanico ;
+    rdfs:label "Componente de lubricación de eje" ;
+    ex:textoExtracto "el PLC tras engrasar el eje pone la marca LUBROK(axis) a (=1)" .
 
-ex:FBACKSRC a ex:Parametro ;
-    ex:textoExtracto "FBACKSRC" .
+ex:SistemaCorreccionGantry
+    a ex:Sistema ;
+    rdfs:label "Sistema de corrección gantry" ;
+    ex:textoExtracto "DIFFCOMP(axis) [...] corrige la diferencia de cota entre el eje maestro y esclavo. [...] El proceso sólo se puede interrumpir con reset. La marca REFPOIN(axis) de ambos ejes se activa cuando termina la corrección" ;
+    ex:controla ex:ComponenteEjeEsclavo ;
+    ex:monitoreaParametro ex:Parametro_REFFEED2 .
 
-ex:PLC a ex:ComponenteElectrico ;
-    ex:textoExtracto "PLC" .
+ex:ComponenteEjeEsclavo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo (sistema gantry)" ;
+    ex:textoExtracto "el eje esclavo se moverá hasta alcanzar la cota del eje maestro" .
 
-ex:CNC a ex:ComponenteElectrico ;
-    ex:textoExtracto "CNC" .
+ex:SistemaCaptacionMixta
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación mixta (externa+interna)" ;
+    ex:textoExtracto "FBACKSEL(axis) [...] cuando el sistema dispone de captación externa+interna. [...] con el flanco de subida de esta marca se conmuta a la captación externa (captación directa) y con el flanco de bajada se conmuta a captación interna (captación motor)" ;
+    ex:tieneComponente ex:SensorCaptacionExterna ,
+                        ex:SensorCaptacionInterna ;
+    ex:monitoreaParametro ex:Parametro_FBACKSRC ,
+                          ex:Parametro_FBMIXTIME .
+
+ex:SensorCaptacionExterna
+    a ex:Sensor ;
+    rdfs:label "Sensor de captación externa" ;
+    ex:textoExtracto "captación externa (captación directa)" .
+
+ex:SensorCaptacionInterna
+    a ex:Sensor ;
+    rdfs:label "Sensor de captación interna (captación motor)" ;
+    ex:textoExtracto "captación interna (captación motor)" .

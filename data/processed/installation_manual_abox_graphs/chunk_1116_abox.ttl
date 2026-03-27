@@ -1,18 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Variable_V_ch_A_RTNEGLIMIT_xn a ex:Parametro ;
-    rdfs:label "(V.)[ch].A.RTNEGLIMIT.xn" ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_LimitesSoftware_1161 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de variables de límites de software (11.6.1)"@es ;
+    ex:textoExtracto """
+| Variable. | Significado. |
+| --- | --- |
+| (V.)[ch].A.RTNEGLIMIT.xn | Límites inferiores de software (segundos límites). |
+| (V.)[ch].A.RTPOSLIMIT.xn | Límites superiores de software (segundos límites)."""@es ;
+    ex:documentadoEn ex:Pagina_602_603 .
+
+ex:Parametro_RTNEGLIMIT
+    a ex:Parametro ;
+    rdfs:label "RTNEGLIMIT"@es ;
     ex:identificador "(V.)[ch].A.RTNEGLIMIT.xn" ;
-    ex:textoExtracto "Variable: (V.)[ch].A.RTNEGLIMIT.xn. Significado: Límites inferiores de software (segundos límites)." ;
-    ex:valor "Límites inferiores de software (segundos límites)" .
+    ex:textoExtracto "Límites inferiores de software (segundos límites)."@es ;
+    ex:documentadoEn ex:Tabla_LimitesSoftware_1161 ;
+    ex:valor "0"^^xsd:string .  # Valor especial según contexto (ꞏ0ꞏ)
 
-ex:Variable_V_ch_A_RTPOSLIMIT_xn a ex:Parametro ;
-    rdfs:label "(V.)[ch].A.RTPOSLIMIT.xn" ;
+ex:Parametro_RTPOSLIMIT
+    a ex:Parametro ;
+    rdfs:label "RTPOSLIMIT"@es ;
     ex:identificador "(V.)[ch].A.RTPOSLIMIT.xn" ;
-    ex:textoExtracto "Variable: (V.)[ch].A.RTPOSLIMIT.xn. Significado: Límites superiores de software (segundos límites)." ;
-    ex:valor "Límites superiores de software (segundos límites)" .
+    ex:textoExtracto "Límites superiores de software (segundos límites)."@es ;
+    ex:documentadoEn ex:Tabla_LimitesSoftware_1161 ;
+    ex:valor "0"^^xsd:string .  # Valor especial según contexto (ꞏ0ꞏ)
 
-ex:Variable_LimitesSoftware a ex:Parametro ;
-    rdfs:label "Límites de software" ;
-    ex:textoExtracto "Si ambos límites de un eje (inferior y superior) se definen con valor ꞏ0ꞏ, se anulan dichos límites y el CNC aplicará al eje los primeros límites de software." ;
-    ex:valor "Límites de software" .
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "el CNC aplicará al eje los primeros límites de software"@es ;
+    ex:monitoreaParametro ex:Parametro_RTNEGLIMIT ;
+    ex:monitoreaParametro ex:Parametro_RTPOSLIMIT .

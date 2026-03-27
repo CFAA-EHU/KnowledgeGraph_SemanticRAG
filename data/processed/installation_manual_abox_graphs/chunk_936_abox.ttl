@@ -1,41 +1,105 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Pinza1 a ex:Herramienta ;
-    rdfs:label "pinza 1" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OperacionOrientarAlmacen_11
+    a ex:ModoOperacion ;
+    rdfs:label "Orientar el almacén (TMOPERATION=11)" ;
+    ex:textoExtracto "TMOPERATION = 11 Orientar el almacén. Esta operación es una optimización del cambio de herramienta que permite orientar el almacén durante el mecanizado. Activar la marca MZROT para indicar que ha finalizado la operación, se haya orientado el almacén o no." ;
+    ex:identificador "TMOPERATION=11" .
+
+ex:OperacionOrientarDosAlmacenes_13
+    a ex:ModoOperacion ;
+    rdfs:label "Orientar dos almacenes (TMOPERATION=13)" ;
+    ex:textoExtracto "TMOPERATION = 13 Orientar dos almacenes. Esta operación es una optimización del cambio de herramienta que permite orientar dos almacenes durante el mecanizado. Activar la marca MZROT en ambos almacenes para indicar que ha finalizado la operación, se hayan orientado los almacenes o no." ;
+    ex:identificador "TMOPERATION=13" .
+
+ex:OperacionIntercambiarHerramienta_14
+    a ex:ModoOperacion ;
+    rdfs:label "Dejar herramienta en almacén y coger otra (TMOPERATION=14)" ;
+    ex:textoExtracto "TMOPERATION = 14 Dejar la herramienta del cabezal en el almacén y coger una herramienta de otro almacén." ;
+    ex:identificador "TMOPERATION=14" .
+
+ex:ParametroNEXTPOS
+    a ex:Parametro ;
+    rdfs:label "NEXTPOS" ;
+    ex:textoExtracto "NEXTPOS=# Posición del almacén para dejar la herramienta." ;
+    ex:identificador "NEXTPOS" .
+
+ex:ParametroTAKEPOS
+    a ex:Parametro ;
+    rdfs:label "TAKEPOS" ;
+    ex:textoExtracto "TAKEPOS=# Posición del almacén para coger la herramienta." ;
+    ex:identificador "TAKEPOS" .
+
+ex:ParametroLEAVEPOS
+    a ex:Parametro ;
+    rdfs:label "LEAVEPOS" ;
+    ex:textoExtracto "LEAVEPOS=# Posición del almacén para dejar la herramienta." ;
+    ex:identificador "LEAVEPOS" .
+
+ex:ParametroMZID
+    a ex:Parametro ;
+    rdfs:label "MZID" ;
+    ex:textoExtracto "MZID En la parte baja de este registro se indica el almacén en el que hay que dejar la herramienta y en la parte alta el almacén del que hay que coger la herramienta." ;
+    ex:identificador "MZID" .
+
+ex:MarcaMZTOCH1
+    a ex:InterfazUsuario ;
+    rdfs:label "MZTOCH1" ;
+    ex:textoExtracto "activar la marca MZTOCH1" ;
+    ex:identificador "MZTOCH1" .
+
+ex:MarcaCH1TOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "CH1TOSPDL" ;
+    ex:textoExtracto "activar la marca CH1TOSPDL" ;
+    ex:identificador "CH1TOSPDL" .
+
+ex:MarcaSPDLTOGR
+    a ex:InterfazUsuario ;
+    rdfs:label "SPDLTOGR" ;
+    ex:textoExtracto "activar la marca SPDLTOGR" ;
+    ex:identificador "SPDLTOGR" .
+
+ex:MarcaMZROT
+    a ex:InterfazUsuario ;
+    rdfs:label "MZROT" ;
+    ex:textoExtracto "Activar la marca MZROT para indicar que ha finalizado la operación" ;
+    ex:identificador "MZROT" .
+
+ex:MarcaSPDLTOCH1
+    a ex:InterfazUsuario ;
+    rdfs:label "SPDLTOCH1" ;
+    ex:textoExtracto "activar la marca SPDLTOCH1" ;
+    ex:identificador "SPDLTOCH1" .
+
+ex:MarcaCH1TOMZ
+    a ex:InterfazUsuario ;
+    rdfs:label "CH1TOMZ" ;
+    ex:textoExtracto "activar la marca CH1TOMZ" ;
+    ex:identificador "CH1TOMZ" .
+
+ex:Pinza1
+    a ex:Actuador ;
+    rdfs:label "Pinza 1" ;
+    ex:textoExtracto "pinza ꞏ1ꞏ" ;
+    ex:identificador "pinza-1" .
+
+ex:HerramientaAlmacen
+    a ex:Herramienta ;
+    rdfs:label "Herramienta del almacén" ;
     ex:textoExtracto "Coger la herramienta del almacén con la pinza ꞏ1ꞏ" .
 
-ex:MarcaMZTOCH1 a ex:ModoOperacion ;
-    ex:identificador "MZTOCH1" ;
-    ex:textoExtracto "activar la marca MZTOCH1" .
+ex:HerramientaCabezal
+    a ex:Herramienta ;
+    rdfs:label "Herramienta del cabezal" ;
+    ex:textoExtracto "Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal" .
 
-ex:MarcaCH1TOSPDL a ex:ModoOperacion ;
-    ex:identificador "CH1TOSPDL" ;
-    ex:textoExtracto "activar la marca CH1TOSPDL" .
+ex:OperacionIntercambiarHerramienta_14
+    ex:requiereMantenimiento ex:Pinza1 ;
+    ex:documentadoEn ex:ParametroNEXTPOS , ex:ParametroTAKEPOS , ex:ParametroLEAVEPOS , ex:ParametroMZID .
 
-ex:MarcaSPDLTOGR a ex:ModoOperacion ;
-    ex:identificador "SPDLTOGR" ;
-    ex:textoExtracto "activar la marca SPDLTOGR" .
-
-ex:MarcaMZROT a ex:ModoOperacion ;
-    ex:identificador "MZROT" ;
-    ex:textoExtracto "Activar la marca MZROT para indicar que ha finalizado la operación" .
-
-ex:TMOPERATION11 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 11" ;
-    ex:textoExtracto "TMOPERATION = 11 Orientar el almacén. Esta operación es una optimización del cambio de herramienta que permite orientar el almacén durante el mecanizado." .
-
-ex:TMOPERATION13 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 13" ;
-    ex:textoExtracto "TMOPERATION = 13 Orientar dos almacenes. Esta operación es una optimización del cambio de herramienta que permite orientar dos almacenes durante el mecanizado." .
-
-ex:TMOPERATION14 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 14" ;
-    ex:textoExtracto "TMOPERATION = 14 Dejar la herramienta del cabezal en el almacén y coger una herramienta de otro almacén." .
-
-ex:MarcaSPDLTOCH1 a ex:ModoOperacion ;
-    ex:identificador "SPDLTOCH1" ;
-    ex:textoExtracto "activar la marca SPDLTOCH1" .
-
-ex:MarcaCH1TOMZ a ex:ModoOperacion ;
-    ex:identificador "CH1TOMZ" ;
-    ex:textoExtracto "activar la marca CH1TOMZ" .
+ex:Pinza1
+    ex:controla ex:MarcaMZTOCH1 , ex:MarcaCH1TOSPDL , ex:MarcaSPDLTOGR , ex:MarcaSPDLTOCH1 , ex:MarcaCH1TOMZ .

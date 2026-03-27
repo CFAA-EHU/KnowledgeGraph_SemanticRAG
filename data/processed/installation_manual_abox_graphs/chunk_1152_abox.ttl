@@ -1,25 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:FASTFACTOR_MPG a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoHSCFAST
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC FAST" ;
+    ex:textoExtracto "modo HSC FAST mejora la calidad del mecanizado", "modo HSC FAST activo" .
+
+ex:Parametro_FASTFACTOR_MPG
+    a ex:Parametro ;
     rdfs:label "FASTFACTOR MPG" ;
     ex:identificador "FASTFACTOR MPG" ;
-    ex:textoExtracto "Este parámetro afecta al avance en las esquinas e indica el porcentaje de avance que se desea alcanzar, sobre el máximo que es capaz de conseguir el CNC, en el modo FAST. Este parámetro indica el valor por defecto; desde el programa pieza se podrá modificar este valor." ;
-    ex:valor "valor por defecto" .
+    ex:textoExtracto "Este parámetro afecta al avance en las esquinas e indica el porcentaje de avance que se desea alcanzar, sobre el máximo que es capaz de conseguir el CNC, en el modo FAST." ;
+    ex:monitoreaParametro ex:ModoHSCFAST ;
+    ex:valor "valor por defecto (modificable desde programa pieza)" .
 
-ex:FTIMELIM_MPG a ex:Parametro ;
+ex:Parametro_FTIMELIM_MPG
+    a ex:Parametro ;
     rdfs:label "FTIMELIM MPG" ;
     ex:identificador "FTIMELIM MPG" ;
-    ex:textoExtracto "La interpolación del avance en el modo HSC FAST mejora la calidad del mecanizado. El parámetro FTIMELIM permite limitar el tiempo que emplea el CNC para la interpolación del avance en cada tramo. Si se programa con valor 0, el CNC no realiza la interpolación del avance y por tanto la ejecución es más rápida. Al aumentar el valor de este parámetro, aumenta el tiempo máximo permitido de ejecución total; por ejemplo, un valor de 200% o 300% permitirá hasta el doble o triple de tiempo de ejecución en el tramo interpolado. En aquellos bloques relativamente grandes, en los que la adaptación del avance suponga un tiempo adicional mayor del especificado en FTIMELIM, el CNC adaptará el avance usando la máxima dinámica, para evitar pérdidas de tiempo innecesarias." ;
-    ex:valor "0 (sin interpolación), 200%, 300%" .
+    ex:textoExtracto "El parámetro FTIMELIM permite limitar el tiempo que emplea el CNC para la interpolación del avance en cada tramo. Si se programa con valor 0, el CNC no realiza la interpolación del avance y por tanto la ejecución es más rápida." ;
+    ex:monitoreaParametro ex:ModoHSCFAST ;
+    ex:valor "0 (sin interpolación) o porcentaje (ej. 200%, 300%)" .
 
-ex:MINCORFEED_MPG a ex:Parametro ;
+ex:Parametro_MINCORFEED_MPG
+    a ex:Parametro ;
     rdfs:label "MINCORFEED MPG" ;
     ex:identificador "MINCORFEED MPG" ;
     ex:textoExtracto "Velocidad mínima en las esquinas. No se recomienda modificar este valor, porque se puede sobrepasar la dinámica de los ejes." ;
-    ex:valor "valor por defecto" .
+    ex:monitoreaParametro ex:ModoHSCFAST .
 
-ex:FSMOOTHFREQ_MPG a ex:Parametro ;
+ex:Parametro_FSMOOTHFREQ_MPG
+    a ex:Parametro ;
     rdfs:label "FSMOOTHFREQ MPG" ;
     ex:identificador "FSMOOTHFREQ MPG" ;
-    ex:textoExtracto "Este parámetro fija la frecuencia de suavizado en la interpolación de trayectorias para el modo HSC FAST. Este parámetro evita acelerar y decelerar a lo largo de una trayectoria, por encima de una determinada frecuencia al generar una velocidad promediada. Sólo se aplica con el modo HSC FAST activo." ;
-    ex:valor "valor por defecto" .
+    ex:textoExtracto "Este parámetro fija la frecuencia de suavizado en la interpolación de trayectorias para el modo HSC FAST. Evita acelerar y decelerar por encima de una determinada frecuencia." ;
+    ex:monitoreaParametro ex:ModoHSCFAST .

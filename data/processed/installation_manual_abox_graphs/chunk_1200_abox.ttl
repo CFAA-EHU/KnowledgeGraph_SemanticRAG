@@ -1,21 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Sub_Probe_Piece_Begin ex:textoExtracto """Ejemplo de subrutina Sub_Probe_Piece_Begin.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ; Activate PROBE 2 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware. # MSG["WAIT FOR ENABLING PROBE2"] #WAIT FOR[V.PLC.PROBE2ENA==1] ; Select PROBE 2 input for using in Probing. # SELECT PROBE[2] #FLUSH $IF [V.G.PRBST2==1] #WARNING["PROBE2 SIGNAL TOUCHING"] M0 $ENDIF ; Check probe in safe mode feature is actived. $IF [V.PLC.PROBE2MONIT==0] #MSG["PROBE NOT IN SAFE MODE"] $ENDIF #RETDSBLK #COMMENT BEGIN PLC signals to add in the logic: PROBE2ENA; PROBE 2 is enabled confirmation signal to CNC. If not used in PLC, it is actived by default. PROBE2MONIT; It activates PROBE2 in SAFE mode. If probe is actived in no G100/3 motion, CNC will stop motion and shows an error. If not used in PLC, it is actived by default. # COMMENT END""" ;
-    a ex:TareaMantenimiento ;
-    rdfs:label "Sub_Probe_Piece_Begin.fst" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Sub_Probe_Piece_End ex:textoExtracto """Ejemplo de subrutina Sub_Probe_Piece_End.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ;Deactivate PROBE2 Hardware by PLC output #RETDSBLK""" ;
-    a ex:TareaMantenimiento ;
-    rdfs:label "Sub_Probe_Piece_End.fst" .
+ex:Subrutina_Sub_Probe_Piece_Begin
+    a                     ex:Sistema ;
+    rdfs:label            "Sub_Probe_Piece_Begin.fst" ;
+    ex:identificador      "Sub_Probe_Piece_Begin.fst" ;
+    ex:textoExtracto      "Ejemplo de subrutina Sub_Probe_Piece_Begin.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ; Activate PROBE 2 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware. # MSG[\"WAIT FOR ENABLING PROBE2\"] #WAIT FOR[V.PLC.PROBE2ENA==1] ; Select PROBE 2 input for using in Probing. # SELECT PROBE[2] #FLUSH $IF [V.G.PRBST2==1] #WARNING[\"PROBE2 SIGNAL TOUCHING\"] M0 $ENDIF ; Check probe in safe mode feature is actived. $IF [V.PLC.PROBE2MONIT==0] #MSG[\"PROBE NOT IN SAFE MODE\"] $ENDIF #RETDSBLK"@en ;
+    ex:tieneComponente    ex:Sonda_Probe2 .
 
-ex:PROBE2ENA ex:textoExtracto """PROBE2ENA; PROBE 2 is enabled confirmation signal to CNC. If not used in PLC, it is actived by default.""" ;
-    a ex:Parametro ;
-    rdfs:label "PROBE2ENA" .
+ex:Sonda_Probe2
+    a                     ex:Sensor ;
+    rdfs:label            "PROBE2" ;
+    ex:identificador      "PROBE2" ;
+    ex:textoExtracto      "Activate PROBE 2 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware. ; Select PROBE 2 input for using in Probing."@en ;
+    ex:monitoreaParametro ex:Parametro_PROBE2ENA ,
+                         ex:Parametro_PROBE2MONIT ,
+                         ex:Parametro_PRBST2 .
 
-ex:PROBE2MONIT ex:textoExtracto """PROBE2MONIT; It activates PROBE2 in SAFE mode. If probe is actived in no G100/3 motion, CNC will stop motion and shows an error. If not used in PLC, it is actived by default.""" ;
-    a ex:Parametro ;
-    rdfs:label "PROBE2MONIT" .
+ex:Parametro_PROBE2ENA
+    a                     ex:Parametro ;
+    rdfs:label            "PROBE2ENA" ;
+    ex:identificador      "V.PLC.PROBE2ENA" ;
+    ex:textoExtracto      "PROBE2ENA; PROBE 2 is enabled confirmation signal to CNC. If not used in PLC, it is actived by default."@en ;
+    ex:valor              "1" .
 
-ex:PROBE2 ex:textoExtracto """PROBE 2 Hardware"" ; ""Check PROBE is READY with PLC Input from Probe Hardware"" ; ""Select PROBE 2 input for using in Probing"" ; ""PROBE2 SIGNAL TOUCHING"" ; ""PROBE NOT IN SAFE MODE"" ; ""Deactivate PROBE2 Hardware by PLC output""" ;
-    a ex:Sensor ;
-    rdfs:label "PROBE2" .
+ex:Parametro_PROBE2MONIT
+    a                     ex:Parametro ;
+    rdfs:label            "PROBE2MONIT" ;
+    ex:identificador      "V.PLC.PROBE2MONIT" ;
+    ex:textoExtracto      "PROBE2MONIT; It activates PROBE2 in SAFE mode. If probe is actived in no G100/3 motion, CNC will stop motion and shows an error. If not used in PLC, it is actived by default."@en ;
+    ex:valor              "0" .
+
+ex:Parametro_PRBST2
+    a                     ex:Parametro ;
+    rdfs:label            "PRBST2" ;
+    ex:identificador      "V.G.PRBST2" ;
+    ex:textoExtracto      "$IF [V.G.PRBST2==1] #WARNING[\"PROBE2 SIGNAL TOUCHING\"]"@en .
+
+ex:Subrutina_Sub_Probe_Piece_End
+    a                     ex:Sistema ;
+    rdfs:label            "Sub_Probe_Piece_End.fst" ;
+    ex:identificador      "Sub_Probe_Piece_End.fst" ;
+    ex:textoExtracto      "Ejemplo de subrutina Sub_Probe_Piece_End.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ;Deactivate PROBE2 Hardware by PLC output #RETDSBLK"@en ;
+    ex:tieneComponente    ex:Sonda_Probe2 .

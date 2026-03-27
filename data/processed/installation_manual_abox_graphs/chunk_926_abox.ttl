@@ -1,45 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:AlmacenSincronoConBrazoCambiador_926_502 a ex:Maquina ;
-    rdfs:label "Almacén síncrono con brazo cambiador" ;
-    ex:textoExtracto "Los almacenes síncronos con brazo cambiador (1 o 2 pinzas) tienen el almacén próximo al cabezal y el cambio se realiza con ayuda del brazo cambiador." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:BrazoCambiador_926_502 a ex:ComponenteMecanico ;
-    rdfs:label "Brazo cambiador" ;
-    ex:textoExtracto "el cambio se realiza con ayuda del brazo cambiador" .
+ex:AlmacenSincrono_Brazo1Pinza
+    a                     ex:Sistema ;
+    rdfs:label            "Almacén síncrono con brazo cambiador de 1 pinza"@es ;
+    ex:textoExtracto      "Los almacenes síncronos con brazo cambiador (1 o 2 pinzas) tienen el almacén próximo al cabezal y el cambio se realiza con ayuda del brazo cambiador. No es posible efectuar el cambio de herramienta durante el mecanizado de la pieza."@es ;
+    ex:compuestoPor       ex:BrazoCambiador_1Pinza ;
+    ex:compuestoPor       ex:AlmacenHerramientas_ProximoCabezal ;
+    ex:controla          ex:CambioHerramienta_Proceso .
 
-ex:GestorHerramientas_926_502 a ex:Sistema ;
-    rdfs:label "Gestor de herramientas" ;
-    ex:textoExtracto "el gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede)" .
+ex:BrazoCambiador_1Pinza
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Brazo cambiador de 1 pinza"@es ;
+    ex:textoExtracto      "el cambio se realiza con ayuda del brazo cambiador"@es .
 
-ex:PLC_926_502 a ex:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "el gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén" .
+ex:AlmacenHerramientas_ProximoCabezal
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Almacén de herramientas próximo al cabezal"@es ;
+    ex:textoExtracto      "tienen el almacén próximo al cabezal"@es .
 
-ex:FuncionT_926_502 a ex:ModoOperacion ;
-    rdfs:label "Función T" ;
-    ex:textoExtracto "la ejecución de la función T" .
+ex:CambioHerramienta_Proceso
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Proceso de cambio de herramienta (T + M06)"@es ;
+    ex:textoExtracto      "La comunicación entre el gestor y el PLC se realiza en 2 fases; la primera con la ejecución de la función T y la segunda con la ejecución de la función M06."@es ;
+    ex:requiereMantenimiento ex:FuncionT_Ejecucion ;
+    ex:requiereMantenimiento ex:FuncionM06_Ejecucion .
 
-ex:FuncionM06_926_502 a ex:ModoOperacion ;
-    rdfs:label "Función M06" ;
-    ex:textoExtracto "la ejecución de la función M06" .
+ex:FuncionT_Ejecucion a ex:Tabla ;
+     a                     ex:ModoOperacion ;
+    rdfs:label            "Ejecución de función T (selección de herramienta)"@es ;
+    ex:textoExtracto      "1 Cuando el CNC ejecuta la función T, se lo indica al gestor. 2 El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede). 3 El CNC continúa con la ejecución del programa, no espera a que el gestor de por finalizada la operación."@es .
 
-ex:RutinaAsociadaM06_926_502 a ex:TareaMantenimiento ;
-    rdfs:label "Rutina asociada a M06" ;
-    ex:textoExtracto "Dentro de dicha rutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta." .
+ex:FuncionM06_Ejecucion a ex:Tabla ;
+     a                     ex:ModoOperacion ;
+    rdfs:label            "Ejecución de función M06 (cambio de herramienta)"@es ;
+    ex:textoExtracto      "1 Cuando el CNC ejecuta la función M06, realiza una llamada a la rutina asociada. Dentro de dicha rutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta. 2 El gestor envía una orden al PLC para efectuar el cambio. 3 El CNC espera a que el gestor de por finalizada la operación para continuar con la ejecución del programa."@es .
 
-ex:CNC_926_502 a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "Cuando el CNC ejecuta la función T, se lo indica al gestor" .
+ex:PLC_SistemaControl
+    a                     ex:Actuador ;
+    rdfs:label            "PLC (control de dispositivos externos)"@es ;
+    ex:textoExtracto      "Se aconseja [...] dejar como labor del PLC el control de los dispositivos externos. Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc.)."@es ;
+    ex:controla          ex:BrazoCambiador_1Pinza ;
+    ex:controla          ex:AlmacenHerramientas_ProximoCabezal .
 
-ex:AlmacenHerramientas_926_502 a ex:ComponenteMecanico ;
-    rdfs:label "Almacén de herramientas" ;
-    ex:textoExtracto "el gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén" .
-
-ex:GiroAlmacen_926_502 a ex:ComponenteMecanico ;
-    rdfs:label "Giro almacén" ;
-    ex:textoExtracto "gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc.)" .
-
-ex:DesplazamientoAlmacen_926_502 a ex:ComponenteMecanico ;
-    rdfs:label "Desplazamiento almacén" ;
-    ex:textoExtracto "gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc.)" .
+ex:GestorHerramientas
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Gestor de herramientas (comunicación CNC-PLC)"@es ;
+    ex:textoExtracto      "La comunicación entre el gestor y el PLC se realiza en 2 fases; [...] El gestor envía una orden al PLC para que seleccione la próxima herramienta [...] El gestor envía una orden al PLC para efectuar el cambio."@es .

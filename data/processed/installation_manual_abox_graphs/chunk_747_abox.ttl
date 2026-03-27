@@ -1,21 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:senalSincronizacionCNC a ex:Sensor ;
-    rdfs:label "señal de sincronización"@es ;
-    ex:textoExtracto "El canal del CNC pone esta señal a (=1) para indicar al PLC que está esperando una señal de sincronización."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:senalEsperaSincronizacion a ex:Sensor ;
-    rdfs:label "señal de espera de sincronización"@es ;
-    ex:textoExtracto "El canal del CNC pone esta señal a (=1) para indicar al PLC que está esperando una señal de sincronización."@es .
+ex:SenalSincronizacionCNC
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Señal de sincronización CNC-PLC"@es ;
+    ex:textoExtracto "El canal del CNC pone esta señal a (=1) para indicar al PLC que está esperando una señal de sincronización. Las señales de sincronización se pueden ejecutar desde el programa pieza mediante las sentencias #WAIT o #MEET."@es ;
+    ex:identificador "#WAIT, #MEET" .
 
-ex:marcaEstadoSistemaOperativo a ex:Sensor ;
-    rdfs:label "marca de estado del sistema operativo"@es ;
-    ex:textoExtracto "MMCWDG Esta marca indica el estado del sistema operativo. Tiene el valor (=0) cuando el sistema operativo CNC funciona correctamente y valor (=1) en caso de bloqueo del"@es .
+ex:MarcaMMCWDG
+    a               ex:Sensor ;
+    rdfs:label      "MMCWDG" ;
+    ex:textoExtracto "Esta marca indica el estado del sistema operativo. Tiene el valor (=0) cuando el sistema operativo CNC funciona correctamente y valor (=1) en caso de bloqueo del sistema."@es ;
+    ex:valor         "0,1" ;
+    ex:monitoreaParametro ex:EstadoSistemaOperativoCNC .
 
-ex:sentenciaWAIT a ex:ModoOperacion ;
-    rdfs:label "#WAIT"@en ;
-    ex:textoExtracto "Las señales de sincronización se pueden ejecutar desde el programa pieza mediante las sentencias #WAIT o #MEET."@es .
+ex:EstadoSistemaOperativoCNC
+    a               ex:Parametro ;
+    rdfs:label      "Estado del sistema operativo CNC"@es ;
+    ex:textoExtracto "valor (=0) cuando el sistema operativo CNC funciona correctamente y valor (=1) en caso de bloqueo"@es ;
+    ex:valor         "0,1" .
 
-ex:sentenciaMEET a ex:ModoOperacion ;
-    rdfs:label "#MEET"@en ;
-    ex:textoExtracto "Las señales de sincronización se pueden ejecutar desde el programa pieza mediante las sentencias #WAIT o #MEET."@es .
+ex:SistemaCNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC"@es ;
+    ex:textoExtracto "sistema operativo CNC"@es ;
+    ex:tieneComponente ex:MarcaMMCWDG .
+
+ex:SistemaPLC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema PLC"@es ;
+    ex:textoExtracto "PLC"@es .

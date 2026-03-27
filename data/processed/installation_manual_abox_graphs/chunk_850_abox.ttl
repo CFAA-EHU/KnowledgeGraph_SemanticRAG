@@ -1,20 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:MarcaDutyControl ex:textoExtracto """Esta marca está asociada al control duty del PWM (#PWRCTRL ON [DUTY]). El PLC desactiva esta marca para deshabilitar el control de duty activo. El PLC activa esta marca para habilitar el control de duty activo en el CNC; si no hay un control de duty activo, esta marca no hace nada. Si el PLC desactiva esta marca, el CNC deshabilita el control de duty, y éste queda fijado al máximo definido en la sentencia #PWMOUT.""" ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ControlDutyPWM
     a ex:Parametro ;
+    rdfs:label "Control de duty del PWM (#PWRCTRL ON [DUTY])" ;
+    ex:textoExtracto "Esta marca está asociada al control duty del PWM (#PWRCTRL ON [DUTY]). El PLC desactiva esta marca para deshabilitar el control de duty activo. El PLC activa esta marca para habilitar el control de duty activo en el CNC; si no hay un control de duty activo, esta marca no hace nada." ;
     ex:identificador "#PWRCTRL ON [DUTY]" .
 
-ex:MarcaFrecuenciaControl ex:textoExtracto """ENABLEPWRFREQ Marca activa por defecto. Esta marca está asociada al control de la potencia del PWM (#PWRCTRL ON [FREQ]). El PLC desactiva esta""" ;
+ex:ControlFrecuenciaPWM
     a ex:Parametro ;
+    rdfs:label "Control de frecuencia del PWM (#PWRCTRL ON [FREQ])" ;
+    ex:textoExtracto "Esta marca está asociada al control de la potencia del PWM (#PWRCTRL ON [FREQ])." ;
     ex:identificador "#PWRCTRL ON [FREQ]" .
 
-ex:PLC ex:textoExtracto """El PLC desactiva esta marca para deshabilitar el control de duty activo. El PLC activa esta marca para habilitar el control de duty activo en el CNC; si no hay un control de duty activo, esta marca no hace nada. El PLC desactiva esta""" ;
-    a ex:ComponenteElectrico .
+ex:MarcaENABLEPWRFREQ
+    a ex:Parametro ;
+    rdfs:label "ENABLEPWRFREQ" ;
+    ex:textoExtracto "ENABLEPWRFREQ Marca activa por defecto." ;
+    ex:identificador "ENABLEPWRFREQ" .
 
-ex:CNC ex:textoExtracto """El PLC activa esta marca para habilitar el control de duty activo en el CNC; si no hay un control de duty activo, esta marca no hace nada. Si el PLC desactiva esta marca, el CNC deshabilita el control de duty, y éste queda fijado al máximo definido en la sentencia #PWMOUT.""" ;
-    a ex:Maquina .
+ex:ParametroPWMOUT
+    a ex:Parametro ;
+    rdfs:label "Potencia máxima definida en #PWMOUT" ;
+    ex:textoExtracto "el control de duty [...] queda fijado al máximo definido en la sentencia #PWMOUT." ;
+    ex:identificador "#PWMOUT" .
 
-ex:ControlDuty ex:textoExtracto """Esta marca está asociada al control duty del PWM (#PWRCTRL ON [DUTY]). El PLC desactiva esta marca para deshabilitar el control de duty activo. El PLC activa esta marca para habilitar el control de duty activo en el CNC; si no hay un control de duty activo, esta marca no hace nada. Si el PLC desactiva esta marca, el CNC deshabilita el control de duty, y éste queda fijado al máximo definido en la sentencia #PWMOUT.""" ;
-    a ex:ModoOperacion .
-
-ex:ControlFrecuencia ex:textoExtracto """ENABLEPWRFREQ Marca activa por defecto. Esta marca está asociada al control de la potencia del PWM (#PWRCTRL ON [FREQ]). El PLC desactiva esta""" ;
-    a ex:ModoOperacion .
+ex:SistemaControlPWM
+    a ex:Sistema ;
+    rdfs:label "Sistema de control PWM (CNC-PLC)" ;
+    ex:textoExtracto "El PLC desactiva esta marca para deshabilitar el control de duty activo. El PLC activa esta marca para habilitar el control de duty activo en el CNC." ;
+    ex:tieneComponente ex:ControlDutyPWM, ex:ControlFrecuenciaPWM, ex:MarcaENABLEPWRFREQ, ex:ParametroPWMOUT .

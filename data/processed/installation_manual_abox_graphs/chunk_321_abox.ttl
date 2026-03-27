@@ -1,33 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SLIMITAC a ex:ComponenteElectrico ;
-    rdfs:label "SLIMITAC" ;
-    ex:textoExtracto "desde el PLC (marcas SLIMITAC o SLIMITACSPDL)" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SLIMITACSPDL a ex:ComponenteElectrico ;
-    rdfs:label "SLIMITACSPDL" ;
-    ex:textoExtracto "desde el PLC (marcas SLIMITAC o SLIMITACSPDL)" .
+ex:Parametro_SLIMITAC
+    a ex:Parametro ;
+    rdfs:label "Límite de seguridad para avance/velocidad (marca SLIMITAC)"@es ;
+    ex:textoExtracto "desde el PLC (marcas SLIMITAC o SLIMITACSPDL) y el CNC lo aplica en el bloque en ejecución."@es ;
+    ex:monitoreaParametro ex:Sistema_CNC .
 
-ex:PLCCNTL a ex:ComponenteElectrico ;
-    rdfs:label "PLCCNTL" ;
-    ex:textoExtracto "cabezales controlados por PLC (marca PLCCNTL)" .
+ex:Parametro_SLIMITACSPDL
+    a ex:Parametro ;
+    rdfs:label "Límite de seguridad para velocidad de avance (marca SLIMITACSPDL)"@es ;
+    ex:textoExtracto "desde el PLC (marcas SLIMITAC o SLIMITACSPDL) y el CNC lo aplica en el bloque en ejecución."@es ;
+    ex:monitoreaParametro ex:Sistema_CNC .
 
-ex:Parametro_velocidad_maxima_mecanizado a ex:Parametro ;
-    ex:valor "0" ;
-    ex:textoExtracto "Si el parámetro se define con valor ꞏ0ꞏ, no se limita la velocidad." .
+ex:Parametro_PLCCNTL
+    a ex:Parametro ;
+    rdfs:label "Control de cabezales por PLC (marca PLCCNTL)"@es ;
+    ex:textoExtracto "El límite de seguridad también se aplica a los cabezales controlados por PLC (marca PLCCNTL), excepto cuando el cabezal es digital controlado en posición."@es ;
+    ex:controla ex:ComponenteMecanico_Cabezal .
 
-ex:Funcion_G192 a ex:ModoOperacion ;
-    rdfs:label "G192" ;
-    ex:textoExtracto "fijar una velocidad máxima de giro para el mecanizado, por programa (función G192)" .
+ex:Parametro_VelocidadMaximaG192
+    a ex:Parametro ;
+    rdfs:label "Velocidad máxima de giro (función G192)"@es ;
+    ex:textoExtracto "También es posible fijar una velocidad máxima de giro para el mecanizado, por programa (función G192)."@es ;
+    ex:identificador "G192" ;
+    ex:monitoreaParametro ex:Sistema_CNC .
 
-ex:Variable_PLC_SL_sn a ex:Parametro ;
-    rdfs:label "V.PLC.SL.sn" ;
-    ex:textoExtracto "por PLC (variable (V.)PLC.SL.sn)" .
+ex:Parametro_VelocidadMaximaPLC
+    a ex:Parametro ;
+    rdfs:label "Velocidad máxima de giro (variable PLC: (V.)PLC.SL.sn)"@es ;
+    ex:textoExtracto "por PLC (variable (V.)PLC.SL.sn)."@es ;
+    ex:identificador "PLC.SL.sn" ;
+    ex:monitoreaParametro ex:Sistema_CNC .
 
-ex:PLC a ex:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "desde el PLC (marcas SLIMITAC o SLIMITACSPDL) y el CNC lo aplica en el bloque en ejecución." .
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "el CNC lo aplica en el bloque en ejecución. [...] el CNC aplica el límite de velocidad más restrictivo."@es ;
+    ex:controla ex:ComponenteMecanico_Cabezal .
 
-ex:CNC a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "el CNC lo aplica en el bloque en ejecución. Al desactivar los límites, el CNC recupera la velocidad programada." .
+ex:ComponenteMecanico_Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal controlado por PLC"@es ;
+    ex:textoExtracto "El límite de seguridad también se aplica a los cabezales controlados por PLC (marca PLCCNTL)."@es .

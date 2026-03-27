@@ -1,106 +1,97 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Tabla1167_629 a ex:Tabla ;
-    ex:textoExtracto """| Variables. | PRG | PLC | INT |
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_VariablesConsignaFeedback a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de variables asociadas a consigna y feedback de posición/velocidad (Sercos)"@es ;
+    ex:textoExtracto """
+| Variables. | PRG | PLC | INT |
 | --- | --- | --- | --- |
 | (V.)[ch].A.POSCMD.xn
 (V.)[ch].A.POSCMD.sn
 (V.)[ch].SP.POSCMD.sn
-Consigna de posición para Sercos. Unidades: -. | R(*) | R | R |
+Consigna de posición para Sercos. Unidades: -.
 | (V.)[ch].A.POSNC.xn
 (V.)[ch].A.POSNC.sn
 (V.)[ch].SP.POSNC.sn
-Feedback de posición. Unidades: -. | R(*) | R | R |
+Feedback de posición. Unidades: -.
 | (V.)[ch].A.FTEO.xn
 (V.)[ch].A.FTEO.sn
 (V.)[ch].SP.FTEO.sn
-Consigna de velocidad para Sercos (en rpm). Unidades: rpm. | R(*) | R | R |
- (*) El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques). Sintaxis de la variable. ꞏchꞏ Número de canal. ꞏxnꞏ Nombre, número lógico o índice del eje. ꞏsnꞏ Nombre, número lógico o índice del cabezal. | V.A.POSCMD.Z | Eje Z. |
-| --- | --- |
-| V.A.POSCMD.S | Cabezal S. |
-| V.SP.POSCMD.S | Cabezal S. |
-| V.SP.POSCMD | Cabezal master. |
-| V.A.POSCMD.4 | Eje o cabezal con número lógico ꞏ4ꞏ. |
-| V.[2].A.POSCMD.1 | Eje con índice ꞏ1ꞏ en el canal ꞏ2ꞏ. |
-| V.SP.POSCMD.2 | Cabezal con índice ꞏ2ꞏ en el sistema. |
-| V.[2].SP.POSCMD.1 | Cabezal con índice ꞏ1ꞏ en el canal ꞏ2ꞏ. |""" .
+Consigna de velocidad para Sercos (en rpm). Unidades: rpm.
+(*) El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques).
+""" .
 
-ex:VariableConsignaPosicionSercos a ex:Parametro ;
-    rdfs:label "Consigna de posición para Sercos" ;
-    ex:identificador "(V.)[ch].A.POSCMD.xn" ;
-    ex:identificador "(V.)[ch].A.POSCMD.sn" ;
-    ex:identificador "(V.)[ch].SP.POSCMD.sn" ;
-    ex:valor "Unidades: -." ;
-    ex:textoExtracto """(V.)[ch].A.POSCMD.xn
-(V.)[ch].A.POSCMD.sn
-(V.)[ch].SP.POSCMD.sn
-Consigna de posición para Sercos. Unidades: -.""" ;
-    ex:tieneFrecuencia ex:FrecuenciaRPR .
-
-ex:VariableFeedbackPosicion a ex:Parametro ;
-    rdfs:label "Feedback de posición" ;
-    ex:identificador "(V.)[ch].A.POSNC.xn" ;
-    ex:identificador "(V.)[ch].A.POSNC.sn" ;
-    ex:identificador "(V.)[ch].SP.POSNC.sn" ;
-    ex:valor "Unidades: -." ;
-    ex:textoExtracto """(V.)[ch].A.POSNC.xn
-(V.)[ch].A.POSNC.sn
-(V.)[ch].SP.POSNC.sn
-Feedback de posición. Unidades: -.""" ;
-    ex:tieneFrecuencia ex:FrecuenciaRPR .
-
-ex:VariableConsignaVelocidadSercos a ex:Parametro ;
-    rdfs:label "Consigna de velocidad para Sercos" ;
-    ex:identificador "(V.)[ch].A.FTEO.xn" ;
-    ex:identificador "(V.)[ch].A.FTEO.sn" ;
-    ex:identificador "(V.)[ch].SP.FTEO.sn" ;
-    ex:valor "Unidades: rpm." ;
-    ex:textoExtracto """(V.)[ch].A.FTEO.xn
-(V.)[ch].A.FTEO.sn
-(V.)[ch].SP.FTEO.sn
-Consigna de velocidad para Sercos (en rpm). Unidades: rpm.""" ;
-    ex:tieneFrecuencia ex:FrecuenciaRPR .
-
-ex:FrecuenciaRPR a ex:Frecuencia ;
-    ex:textoExtracto "R(*) | R | R" .
-
-ex:SintaxisVariableCNC a ex:Parametro ;
-    rdfs:label "Sintaxis de la variable" ;
-    ex:textoExtracto """(*) El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques). ꞏchꞏ Número de canal. ꞏxnꞏ Nombre, número lógico o índice del eje. ꞏsnꞏ Nombre, número lógico o índice del cabezal.""" .
-
-ex:EjeZ a ex:Parametro ;
-    rdfs:label "Eje Z" ;
+ex:Parametro_V_A_POSCMD_Z
+    a ex:Parametro ;
+    rdfs:label "V.A.POSCMD.Z" ;
     ex:identificador "V.A.POSCMD.Z" ;
-    ex:textoExtracto "V.A.POSCMD.Z | Eje Z." .
+    ex:textoExtracto "V.A.POSCMD.Z | Eje Z."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
 
-ex:CabezalS a ex:Parametro ;
-    rdfs:label "Cabezal S" ;
+ex:Parametro_V_A_POSCMD_S
+    a ex:Parametro ;
+    rdfs:label "V.A.POSCMD.S" ;
     ex:identificador "V.A.POSCMD.S" ;
+    ex:textoExtracto "V.A.POSCMD.S | Cabezal S."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
+
+ex:Parametro_V_SP_POSCMD_S
+    a ex:Parametro ;
+    rdfs:label "V.SP.POSCMD.S" ;
     ex:identificador "V.SP.POSCMD.S" ;
-    ex:textoExtracto """V.A.POSCMD.S | Cabezal S.
-V.SP.POSCMD.S | Cabezal S.""" .
+    ex:textoExtracto "V.SP.POSCMD.S | Cabezal S."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
 
-ex:CabezalMaster a ex:Parametro ;
-    rdfs:label "Cabezal master" ;
+ex:Parametro_V_SP_POSCMD
+    a ex:Parametro ;
+    rdfs:label "V.SP.POSCMD" ;
     ex:identificador "V.SP.POSCMD" ;
-    ex:textoExtracto "V.SP.POSCMD | Cabezal master." .
+    ex:textoExtracto "V.SP.POSCMD | Cabezal master."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
 
-ex:EjeCabezal4 a ex:Parametro ;
-    rdfs:label "Eje o cabezal con número lógico 4" ;
+ex:Parametro_V_A_POSCMD_4
+    a ex:Parametro ;
+    rdfs:label "V.A.POSCMD.4" ;
     ex:identificador "V.A.POSCMD.4" ;
-    ex:textoExtracto "V.A.POSCMD.4 | Eje o cabezal con número lógico ꞏ4ꞏ." .
+    ex:textoExtracto "V.A.POSCMD.4 | Eje o cabezal con número lógico '4'."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
 
-ex:EjeCanal2Indice1 a ex:Parametro ;
-    rdfs:label "Eje con índice 1 en el canal 2" ;
+ex:Parametro_V_2_A_POSCMD_1
+    a ex:Parametro ;
+    rdfs:label "V.[2].A.POSCMD.1" ;
     ex:identificador "V.[2].A.POSCMD.1" ;
-    ex:textoExtracto "V.[2].A.POSCMD.1 | Eje con índice ꞏ1ꞏ en el canal ꞏ2ꞏ." .
+    ex:textoExtracto "V.[2].A.POSCMD.1 | Eje con índice '1' en el canal '2'."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
 
-ex:CabezalIndice2Sistema a ex:Parametro ;
-    rdfs:label "Cabezal con índice 2 en el sistema" ;
+ex:Parametro_V_SP_POSCMD_2
+    a ex:Parametro ;
+    rdfs:label "V.SP.POSCMD.2" ;
     ex:identificador "V.SP.POSCMD.2" ;
-    ex:textoExtracto "V.SP.POSCMD.2 | Cabezal con índice ꞏ2ꞏ en el sistema." .
+    ex:textoExtracto "V.SP.POSCMD.2 | Cabezal con índice '2' en el sistema."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
 
-ex:CabezalCanal2Indice1 a ex:Parametro ;
-    rdfs:label "Cabezal con índice 1 en el canal 2" ;
+ex:Parametro_V_2_SP_POSCMD_1
+    a ex:Parametro ;
+    rdfs:label "V.[2].SP.POSCMD.1" ;
     ex:identificador "V.[2].SP.POSCMD.1" ;
-    ex:textoExtracto "V.[2].SP.POSCMD.1 | Cabezal con índice ꞏ1ꞏ en el canal ꞏ2ꞏ." .
+    ex:textoExtracto "V.[2].SP.POSCMD.1 | Cabezal con índice '1' en el canal '2'."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback .
+
+ex:Parametro_V_A_POSNC_xn
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].A.POSNC.xn" ;
+    ex:identificador "(V.)[ch].A.POSNC.xn" ;
+    ex:textoExtracto "(V.)[ch].A.POSNC.xn | Feedback de posición para eje xn (Sercos)."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback ;
+    ex:valor "Unidades: - (feedback de posición)."@es .
+
+ex:Parametro_V_A_FTEO_xn
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].A.FTEO.xn" ;
+    ex:identificador "(V.)[ch].A.FTEO.xn" ;
+    ex:textoExtracto "(V.)[ch].A.FTEO.xn | Consigna de velocidad para eje xn (Sercos, rpm)."@es ;
+    ex:documentadoEn ex:Tabla_VariablesConsignaFeedback ;
+    ex:valor "rpm" .

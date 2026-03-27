@@ -1,18 +1,44 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:VolanteIndividual a ex:ComponenteMecanico ;
-    ex:textoExtracto "volante individual" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:VolanteGeneral a ex:ComponenteMecanico ;
-    ex:textoExtracto "volante general" .
+ex:ModoOperacion_ManualVolantes
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual con volantes"@es ;
+    ex:textoExtracto "2.7 Parámetros máquina del modo manual. - 2.7.1 Configuración de los volantes."@es ;
+    ex:textoExtracto "Para mover un eje con un volante general, hay que seleccionar desde el teclado de jog el eje a desplazar. Para mover un eje con un volante individual, no hay que hacer ninguna selección previa."@es ;
+    ex:textoExtracto "Si hay varios ejes seleccionados en modo volante, con el volante general se desplazarán todos ellos."@es ;
+    ex:textoExtracto "Si hay seleccionado un eje que tiene un volante individual asociado, este eje se podrá mover con el volante general, con el individual o con ambos a la vez."@es ;
+    ex:textoExtracto "Si el CNC tiene varios volantes generales, cualquiera de ellos podrá desplazar los ejes seleccionados en modo volante."@es .
 
-ex:TecladoJog a ex:InterfazUsuario ;
-    ex:textoExtracto "teclado de jog" .
+ex:InterfazUsuario_TecladoJog
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclado de jog"@es ;
+    ex:textoExtracto "seleccionar desde el teclado de jog el eje a desplazar"@es .
 
-ex:ModoVolante a ex:ModoOperacion ;
-    ex:textoExtracto "modo volante" .
+ex:Componente_VolanteGeneral
+    a ex:ComponenteMecanico ;
+    rdfs:label "Volante general"@es ;
+    ex:textoExtracto "Para mover un eje con un volante general, hay que seleccionar desde el teclado de jog el eje a desplazar"@es ;
+    ex:textoExtracto "con el volante general se desplazarán todos ellos"@es ;
+    ex:textoExtracto "Si el CNC tiene varios volantes generales, cualquiera de ellos podrá desplazar los ejes seleccionados"@es .
 
-ex:Eje a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje" .
+ex:Componente_VolanteIndividual
+    a ex:ComponenteMecanico ;
+    rdfs:label "Volante individual"@es ;
+    ex:textoExtracto "Para mover un eje con un volante individual, no hay que hacer ninguna selección previa"@es ;
+    ex:textoExtracto "eje que tiene un volante individual asociado, este eje se podrá mover con el volante [...] individual"@es ;
+    ex:textoExtracto "con el individual o con ambos a la vez"@es .
 
-ex:CNC a ex:Maquina ;
-    ex:textoExtracto "CNC" .
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "CNC"@es ;
+    ex:textoExtracto "el CNC sumará o restará los impulsos de ambos volantes"@es ;
+    ex:textoExtracto "Si el CNC tiene varios volantes generales"@es ;
+    ex:tieneComponente ex:Componente_VolanteGeneral ;
+    ex:tieneComponente ex:Componente_VolanteIndividual ;
+    ex:controla ex:ModoOperacion_ManualVolantes .
+
+ex:ModoOperacion_ManualVolantes
+    ex:habilitadoPor ex:InterfazUsuario_TecladoJog .

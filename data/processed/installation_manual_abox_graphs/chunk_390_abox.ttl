@@ -1,19 +1,31 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PROGAIN a ex:Parametro ;
-    rdfs:label "PROGAIN" ;
-    ex:identificador "(V.)[ch].MPA.PROGAIN[set].xn" ;
-    ex:textoExtracto "PROGAIN Ganancia proporcional. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0.0 a 100.0 (1000/min). Valor por defecto: 1. Variable asociada: (V.)[ch].MPA.PROGAIN[set].xn Este parámetro fija el error de seguimiento (diferencia entre la cota teórica instantánea y la posición real del eje) que se desea obtener para un determinado avance. La escala correspondiente al error de seguimiento es de 800 µm por cuadro. Ejemplo: Se desea obtener 1 mm de error de seguimiento (E) para un avance (F) de 1000 mm/min. F = E x PROGAIN" ;
-    ex:valor "0.0 a 100.0 (1000/min)" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:FFWTYPE a ex:Parametro ;
-    rdfs:label "FFWTYPE" ;
-    ex:identificador "(V.)[ch].MPA.FFWTYPE[set].xn" ;
-    ex:textoExtracto "FFWTYPE Tipo de pre-control. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: OFF / Feed Forward / AC-Forward / Feed Forward + AC-Forward. Valor por defecto: OFF Variable asociada: (V.)[ch].MPA.FFWTYPE[set].xn Este parámetro indica el tipo de pre-control para el ajuste de ganancias. Para poder modificar el override durante el roscado (parámetro THREADOVR), el feed forward debe estar activo y tener un valor superior al 90%. El feed forward se puede definir con un valor inferior al 90% en el parámetro FFGAIN y modificarlo posteriormente desde el PLC mediante variables." ;
-    ex:valor "OFF / Feed Forward / AC-Forward / Feed Forward + AC-Forward" .
+ex:Parametro_PROGAIN
+    a ex:Parametro ;
+    rdfs:label "PROGAIN (Ganancia proporcional)" ;
+    ex:textoExtracto "PROGAIN Ganancia proporcional. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0.0 a 100.0 (1000/min). Valor por defecto: 1. Variable asociada: (V.)[ch].MPA.PROGAIN[set].xn Este parámetro fija el error de seguimiento (diferencia entre la cota teórica instantánea y la posición real del eje) que se desea obtener para un determinado avance." ;
+    ex:valor "1" ;
+    ex:identificador "PROGAIN" .
 
-ex:FFGAIN a ex:Parametro ;
-    rdfs:label "FFGAIN" ;
-    ex:identificador "(V.)[ch].MPA.FFGAIN[set].xn" ;
-    ex:textoExtracto "FFGAIN Porcentaje de feed forward en automático. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 120 %. Valor por defecto: 0. El CNC sólo tiene en cuenta este parámetro cuando trabaja con feed forward; parámetro FFWTYPE si regulador analógico o simulado y parámetro OPMODEP si regulador Sercos." ;
-    ex:valor "0 a 120 %" .
+ex:Parametro_FFWTYPE
+    a ex:Parametro ;
+    rdfs:label "FFWTYPE (Tipo de pre-control)" ;
+    ex:textoExtracto "FFWTYPE Tipo de pre-control. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: OFF / Feed Forward / AC-Forward / Feed Forward + AC-Forward. Valor por defecto: OFF Variable asociada: (V.)[ch].MPA.FFWTYPE[set].xn" ;
+    ex:valor "OFF" ;
+    ex:identificador "FFWTYPE" .
+
+ex:Parametro_FFGAIN
+    a ex:Parametro ;
+    rdfs:label "FFGAIN (Porcentaje de feed forward en automático)" ;
+    ex:textoExtracto "FFGAIN Porcentaje de feed forward en automático. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 120 %. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.FFGAIN[set].xn" ;
+    ex:valor "0" ;
+    ex:identificador "FFGAIN" .
+
+ex:Parametro_THREADOVR
+    a ex:Parametro ;
+    rdfs:label "THREADOVR (Override durante el roscado)" ;
+    ex:textoExtracto "Para poder modificar el override durante el roscado (parámetro THREADOVR), el feed forward debe estar activo y tener un valor superior al 90%." ;
+    ex:identificador "THREADOVR" .

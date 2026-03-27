@@ -1,41 +1,26 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:FEEDBACKTYPE a ex:Parametro ;
-    ex:textoExtracto "FEEDBACKTYPE Tipo de captación del módulo RCS-S. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos velocidad. Valores posibles (1): Entradas locales; TTL / TTL diferencial / Vpp / SSI. Valores posibles (2): Contadora Sercos; TTL / TTL diferencial / Vpp / SSI / FeeDat / EnDat. Valor por defecto: TTL diferencial . Variable asociada: (V.)[ch].MPA.FEEDBACKTYPE[set].xn Cuando la entrada de captación del eje se encuentra en la entrada local o en un módulo RCS-S (contadora Sercos), este parámetro define el tipo de señal. El parámetro muestra las opciones posibles para cada caso; entrada local o módulo RCS." ;
-    rdfs:label "FEEDBACKTYPE" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:RCS-S a ex:ComponenteElectrico ;
-    ex:textoExtracto "módulo RCS-S" ;
-    rdfs:label "RCS-S" .
+ex:Parametro_FEEDBACKTYPE
+    a               ex:Parametro ;
+    rdfs:label      "FEEDBACKTYPE" ;
+    ex:textoExtracto "FEEDBACKTYPE Tipo de captación del módulo RCS-S. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos velocidad."@es ;
+    ex:valor        "TTL diferencial" ;
+    ex:identificador "V.[ch].MPA.FEEDBACKTYPE[set].xn" ;
+    ex:monitoreaParametro ex:Sistema_RCS_S .
 
-ex:EntradaLocal a ex:ComponenteElectrico ;
-    ex:textoExtracto "Entradas locales" ;
-    rdfs:label "Entrada local" .
+ex:Sistema_RCS_S
+    a               ex:Sistema ;
+    ex:textoExtracto "módulo RCS-S"@es ;
+    ex:tieneComponente ex:ComponenteElectrico_EntradaLocal ,
+                      ex:ComponenteElectrico_ContadoraSercos .
 
-ex:ContadoraSercos a ex:ComponenteElectrico ;
-    ex:textoExtracto "Contadora Sercos" ;
-    rdfs:label "Contadora Sercos" .
+ex:ComponenteElectrico_EntradaLocal
+    a               ex:ComponenteElectrico ;
+    ex:textoExtracto "entrada local"@es .
 
-ex:TTL a ex:ComponenteElectrico ;
-    ex:textoExtracto "TTL" ;
-    rdfs:label "TTL" .
-
-ex:TTLDiferencial a ex:ComponenteElectrico ;
-    ex:textoExtracto "TTL diferencial" ;
-    rdfs:label "TTL diferencial" .
-
-ex:Vpp a ex:ComponenteElectrico ;
-    ex:textoExtracto "Vpp" ;
-    rdfs:label "Vpp" .
-
-ex:SSI a ex:ComponenteElectrico ;
-    ex:textoExtracto "SSI" ;
-    rdfs:label "SSI" .
-
-ex:FeeDat a ex:ComponenteElectrico ;
-    ex:textoExtracto "FeeDat" ;
-    rdfs:label "FeeDat" .
-
-ex:EnDat a ex:ComponenteElectrico ;
-    ex:textoExtracto "EnDat" ;
-    rdfs:label "EnDat" .
+ex:ComponenteElectrico_ContadoraSercos
+    a               ex:ComponenteElectrico ;
+    ex:textoExtracto "contadora Sercos"@es .

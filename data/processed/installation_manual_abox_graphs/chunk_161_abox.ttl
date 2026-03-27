@@ -1,17 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ParametroLACC1 a ex:Parametro ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_LACC1
+    a ex:Parametro ;
     rdfs:label "LACC1" ;
-    ex:textoExtracto "El CNC ejecuta la aproximación a la chapa con aceleración lineal LACC1 y LACC2"@es .
+    ex:textoExtracto "aceleración lineal LACC1 [...] no debería ser muy alta (del orden de un tercio de ACEL y DECEL)" ;
+    ex:valor "1/3 de ACEL"^^xsd:string .
 
-ex:ParametroLACC2 a ex:Parametro ;
+ex:Parametro_LACC2
+    a ex:Parametro ;
     rdfs:label "LACC2" ;
-    ex:textoExtracto "El CNC ejecuta la aproximación a la chapa con aceleración lineal LACC1 y LACC2"@es .
+    ex:textoExtracto "aceleración lineal LACC2 [...] no debería ser muy alta (del orden de un tercio de ACEL y DECEL)" ;
+    ex:valor "1/3 de DECEL"^^xsd:string .
 
-ex:ParametroACEL a ex:Parametro ;
+ex:Parametro_ACEL
+    a ex:Parametro ;
     rdfs:label "ACEL" ;
-    ex:textoExtracto "no debería ser muy alta (del orden de un tercio de ACEL y DECEL)"@es .
+    ex:textoExtracto "del orden de un tercio de ACEL" .
 
-ex:ParametroDECEL a ex:Parametro ;
+ex:Parametro_DECEL
+    a ex:Parametro ;
     rdfs:label "DECEL" ;
-    ex:textoExtracto "no debería ser muy alta (del orden de un tercio de ACEL y DECEL)"@es .
+    ex:textoExtracto "del orden de un tercio de [...] DECEL" .
+
+ex:ModoOperacion_AproximacionChapa
+    a ex:ModoOperacion ;
+    rdfs:label "Aproximación a la chapa" ;
+    ex:textoExtracto "El CNC ejecuta la aproximación a la chapa con aceleración lineal LACC1 y LACC2" ;
+    ex:monitoreaParametro ex:Parametro_LACC1 ;
+    ex:monitoreaParametro ex:Parametro_LACC2 .

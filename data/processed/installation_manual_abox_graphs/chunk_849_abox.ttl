@@ -1,28 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:PWM ex:textoExtracto "Las modificaciones del PWM tanto desde programa como desde PLC se actualizan sin esperar a que termine el ciclo del PWM en proceso, y de la forma más continua posible respecto a las condiciones previas; es decir, no se espera a que la señal por defecto se ponga a cero o a uno en cada cambio." ;
-    a ex:ComponenteElectrico ;
-    ex:tieneFrecuencia ex:PWMFREQ ;
-    ex:monitoreaParametro ex:PWMDUTY ;
-    ex:monitoreaParametro ex:ENABLEPWM ;
-    ex:monitoreaParametro ex:ENABLEPWROUT ;
-    ex:monitoreaParametro ex:ENABLEPWRDUTY .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PWMFREQ ex:textoExtracto "PWMFREQ Frecuencia del PWM, cuando el PWM ha sido activado desde el PLC (entre 2 y 5000 Hz; por defecto, 0)." ;
-    a ex:Frecuencia ;
-    ex:valor "entre 2 y 5000 Hz; por defecto, 0" .
+ex:PWM_Control
+    a ex:Sistema ;
+    rdfs:label "Sistema de control PWM" ;
+    ex:textoExtracto "Las modificaciones del PWM tanto desde programa como desde PLC se actualizan sin esperar a que termine el ciclo del PWM en proceso, y de la forma más continua posible respecto a las condiciones previas; es decir, no se espera a que la señal por defecto se ponga a cero o a uno en cada cambio. Durante la inspección de herramienta el CNC no desactiva el PWM." .
 
-ex:PWMDUTY ex:textoExtracto "PWMDUTY Ciclo de trabajo del PWM, cuando el PWM ha sido activado desde el PLC (entre 1 y 1000 décimas de %; por defecto, 500)." ;
+ex:PWMFREQ_Parametro
     a ex:Parametro ;
-    ex:valor "entre 1 y 1000 décimas de %; por defecto, 500" .
+    rdfs:label "Frecuencia del PWM (PWMFREQ)" ;
+    ex:textoExtracto "PWMFREQ Frecuencia del PWM, cuando el PWM ha sido activado desde el PLC (entre 2 y 5000 Hz; por defecto, 0)." ;
+    ex:valor "2-5000 Hz" ;
+    ex:monitoreaParametro ex:PWM_Control .
 
-ex:ENABLEPWM ex:textoExtracto "ENABLEPWM El PLC activa esta marca (cambio de 1 a 0) para habilitar el PWM activo en el CNC; si no hay un PWM activo, esta marca no hace nada." ;
+ex:PWMDUTY_Parametro
     a ex:Parametro ;
-    ex:valor "marca (cambio de 1 a 0)" .
+    rdfs:label "Ciclo de trabajo del PWM (PWMDUTY)" ;
+    ex:textoExtracto "PWMDUTY Ciclo de trabajo del PWM, cuando el PWM ha sido activado desde el PLC (entre 1 y 1000 décimas de %; por defecto, 500)." ;
+    ex:valor "1-1000 décimas de %" ;
+    ex:monitoreaParametro ex:PWM_Control .
 
-ex:ENABLEPWROUT ex:textoExtracto "ENABLEPWROUT Marca activa por defecto. Esta marca está asociada al control de potencia a través de la salida analógica asociada al cabezal (#PWRCTRL ON [OUT])." ;
+ex:ENABLEPWM_Marca
     a ex:Parametro ;
-    ex:valor "Marca activa por defecto" .
+    rdfs:label "Marca ENABLEPWM" ;
+    ex:textoExtracto "ENABLEPWM El PLC activa esta marca (cambio de 1 a 0) para habilitar el PWM activo en el CNC; si no hay un PWM activo, esta marca no hace nada." ;
+    ex:habilitadoPor ex:PWM_Control .
 
-ex:ENABLEPWRDUTY ex:textoExtracto "ENABLEPWRDUTY Marca activa por defecto. Esta marca está asociada al control duty del PWM (#PWRCTRL ON [DUTY])." ;
+ex:ENABLEPWROUT_Marca
     a ex:Parametro ;
-    ex:valor "Marca activa por defecto" .
+    rdfs:label "Marca ENABLEPWROUT" ;
+    ex:textoExtracto "ENABLEPWROUT Marca activa por defecto. Esta marca está asociada al control de potencia a través de la salida analógica asociada al cabezal (#PWRCTRL ON [OUT]). El PLC desactiva esta marca para deshabilitar el control de potencia activo." ;
+    ex:habilitadoPor ex:PWM_Control .
+
+ex:ENABLEPWRDUTY_Marca
+    a ex:Parametro ;
+    rdfs:label "Marca ENABLEPWRDUTY" ;
+    ex:textoExtracto "ENABLEPWRDUTY Marca activa por defecto. Esta marca está asociada al control duty del PWM (#PWRCTRL ON [DUTY]). El PLC desactiva esta marca para deshabilitar el control de duty activo." ;
+    ex:habilitadoPor ex:PWM_Control .

@@ -1,34 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_FBMIXTIME a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_FBMIXTIME
+    a ex:Parametro ;
     rdfs:label "FBMIXTIME" ;
     ex:textoExtracto "parámetro FBMIXTIME" ;
-    ex:valor "mezcla de captaciones" .
+    ex:identificador "FBMIXTIME" .
 
-ex:Accion_ActivacionFlancoSubida a ex:AccionProhibida ;
-    ex:textoExtracto "Si está activa la mezcla de captaciones (parámetro FBMIXTIME), con el flanco de subida de esta marca se utiliza la mezcla de captaciones" .
+ex:Sensor_CaptacionMotor
+    a ex:Sensor ;
+    rdfs:label "Captación motor (sensor interno)" ;
+    ex:textoExtracto "captación interna (captación motor)" .
 
-ex:Sistema_CNC a ex:Sistema ;
-    ex:textoExtracto "el CNC" .
+ex:Sistema_Regulador
+    a ex:Sistema ;
+    rdfs:label "Regulador del CNC" ;
+    ex:textoExtracto "cuando se resetea el regulador" ;
+    ex:monitoreaParametro ex:Parametro_FBMIXTIME ;
+    ex:controla ex:Sensor_CaptacionMotor .
 
-ex:TipoCaptacion_InternaExterna a ex:Parametro ;
-    rdfs:label "tipo de captación interna+externa" ;
-    ex:textoExtracto "Cuando el tipo de captación es interna+externa" ;
-    ex:valor "interna+externa" .
+ex:InterfazUsuario_ACTFBACK
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal ACTFBACK(axis)" ;
+    ex:textoExtracto "marca ACTFBACK(axis)" ;
+    ex:identificador "ACTFBACK(axis)" ;
+    ex:ilustradoEn ex:Pagina_ACTFBACK .
 
-ex:Componente_CaptacionMotor a ex:Componente ;
-    rdfs:label "captación motor" ;
-    ex:textoExtracto "la captación interna (captación motor)" .
+ex:Pagina_ACTFBACK
+    a ex:Pagina ;
+    rdfs:label "Documentación de ACTFBACK(axis)" ;
+    ex:textoExtracto "Ver en \"ACTFBACK(axis)\" la página" ;
+    ex:identificador "Página ACTFBACK(axis)" .
 
-ex:Accion_Encendido a ex:AccionProhibida ;
-    ex:textoExtracto "en el encendido" .
-
-ex:Accion_ResetRegulador a ex:AccionProhibida ;
-    ex:textoExtracto "cuando se resetea el regulador" .
-
-ex:Accion_InicializacionAnilloSercos a ex:AccionProhibida ;
-    ex:textoExtracto "cuando se inicializa el anillo Sercos" .
-
-ex:Parametro_ACTFBACK a ex:Parametro ;
-    rdfs:label "ACTFBACK(axis)" ;
-    ex:textoExtracto "La marca ACTFBACK(axis) indica cuál es la captación activa" .
+ex:Sistema_AnilloSercos
+    a ex:Sistema ;
+    rdfs:label "Anillo Sercos" ;
+    ex:textoExtracto "cuando se inicializa el anillo Sercos" ;
+    ex:tieneComponente ex:Sensor_CaptacionMotor .

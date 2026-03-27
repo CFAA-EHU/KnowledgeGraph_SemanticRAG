@@ -1,43 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EjeTandemMaestro1056 a ex:Maquina ;
-    rdfs:label "eje tándem maestro" ;
-    ex:textoExtracto "Un eje tándem consiste en dos motores acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal). En el CNC sólo se visualiza y se programa un eje (eje tándem maestro)." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeTandemEsclavo1056 a ex:Maquina ;
-    rdfs:label "eje tándem esclavo" ;
-    ex:textoExtracto "El otro eje (eje tándem esclavo) no se visualiza y no es programable; es controlado por el CNC." .
+ex:EjeTandem_1056
+    a                     ex:Sistema ;
+    rdfs:label            "Eje tándem (maestro-esclavo)"@es ;
+    ex:textoExtracto       "Un eje tándem consiste en dos motores acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)."@es ;
+    ex:compuestoPor        ex:MotorTandemMaestro_1056, ex:MotorTandemEsclavo_1056 ;
+    ex:compuestoPor        ex:PinonCremallera_1056 .
 
-ex:MotorPrincipal1056 a ex:ComponenteMecanico ;
-    rdfs:label "motor principal" ;
-    ex:textoExtracto "Un eje tándem consiste en dos motores acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:MotorTandemMaestro_1056
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Motor tándem maestro"@es ;
+    ex:textoExtracto       "El otro eje (eje tándem esclavo) no se visualiza y no es programable; es controlado por el CNC. [...] Cada eje (cabezal) tándem maestro admite un único eje (cabezal) tándem esclavo."@es ;
+    ex:controla           ex:MotorTandemEsclavo_1056 .
 
-ex:MotorEsclavo1056 a ex:ComponenteMecanico ;
-    rdfs:label "motor esclavo" ;
-    ex:textoExtracto "Un eje tándem consiste en dos motores acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:MotorTandemEsclavo_1056
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Motor tándem esclavo"@es ;
+    ex:textoExtracto       "El otro eje (eje tándem esclavo) no se visualiza y no es programable; es controlado por el CNC."@es .
 
-ex:SistemaTransmisionTandem1056 a ex:Sistema ;
-    rdfs:label "sistema de transmisión tándem" ;
-    ex:compuestoPor ex:EjeTandemMaestro1056, ex:EjeTandemEsclavo1056 ;
-    ex:textoExtracto "Un eje tándem consiste en dos motores acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:PinonCremallera_1056
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Sistema piñón-cremallera"@es ;
+    ex:textoExtracto       "Ejemplo de un eje tándem compuesto por dos piñones y una cremallera. [...] La rigidez del sistema piñón - cremallera es mayor que la de los husillos largos."@es .
 
-ex:Piñon1056 a ex:ComponenteMecanico ;
-    rdfs:label "piñón" ;
-    ex:textoExtracto "Ejemplo de un eje tándem compuesto por dos piñones y una cremallera." .
+ex:Parametro_AXISTYPE_1056
+    a                     ex:Parametro ;
+    rdfs:label            "AXISTYPE (tipo de eje)"@es ;
+    ex:textoExtracto       "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)."@es ;
+    ex:monitoreaParametro  ex:MotorTandemMaestro_1056, ex:MotorTandemEsclavo_1056 .
 
-ex:Cremallera1056 a ex:ComponenteMecanico ;
-    rdfs:label "cremallera" ;
-    ex:textoExtracto "Ejemplo de un eje tándem compuesto por dos piñones y una cremallera." .
+ex:Parametro_DRIVETYPE_1056
+    a                     ex:Parametro ;
+    rdfs:label            "DRIVETYPE (tipo de accionamiento)"@es ;
+    ex:textoExtracto       "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)."@es ;
+    ex:monitoreaParametro  ex:MotorTandemMaestro_1056, ex:MotorTandemEsclavo_1056 .
 
-ex:SistemaPiñonCremallera1056 a ex:Sistema ;
-    rdfs:label "sistema piñón-cremallera" ;
-    ex:compuestoPor ex:Piñon1056, ex:Cremallera1056 ;
-    ex:textoExtracto "Ejemplo de un eje tándem compuesto por dos piñones y una cremallera." .
+ex:Parametro_AXISEXCH_1056
+    a                     ex:Parametro ;
+    rdfs:label            "AXISEXCH (permiso de cambio de canal)"@es ;
+    ex:textoExtracto       "El permiso de cambio de canal (parámetro AXISEXCH) deberá ser igual en ambos ejes."@es ;
+    ex:monitoreaParametro  ex:MotorTandemMaestro_1056, ex:MotorTandemEsclavo_1056 .
 
-ex:EjeGantry1056 a ex:Maquina ;
-    rdfs:label "eje gantry" ;
-    ex:textoExtracto "Una de las muchas aplicaciones de las que dispone el control de eje tándem se asocia a máquinas gantry. En el siguiente ejemplo se puede ver un eje gantry con dos ejes tándem." .
-
-ex:ParPrecarga1056 a ex:Parametro ;
-    rdfs:label "par de precarga" ;
-    ex:textoExtracto "La aplicación de un par de precarga entre el motor principal y el motor esclavo reduce la holgura (backlash) piñón - cremallera." .
+ex:Parametro_LIMIT_1056
+    a                     ex:Parametro ;
+    rdfs:label            "LIMIT+ y LIMIT- (límites de software)"@es ;
+    ex:textoExtracto       "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)."@es ;
+    ex:monitoreaParametro  ex:MotorTandemMaestro_1056, ex:MotorTandemEsclavo_1056 .

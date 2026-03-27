@@ -1,15 +1,23 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ParametroVelocidadCabezalCNC a ex:Parametro ;
-    rdfs:label "Parámetro de velocidad del cabezal (CNC)" ;
-    ex:textoExtracto "los parámetros relacionados con la velocidad del cabezal (definida en rpm)" ;
-    ex:valor "velocidad del cabezal" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroPotenciaCabezalLaser a ex:Parametro ;
-    rdfs:label "Parámetro de potencia del cabezal (modelo láser)" ;
-    ex:textoExtracto "los parámetros relacionados con la velocidad del cabezal (definida en rpm), definen la potencia (definida en watios)" ;
-    ex:valor "potencia del cabezal" .
+ex:InterfazUsuario_CNC_ParametrosEjes
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC para parámetros de ejes y cabezales" ;
+    ex:textoExtracto "El CNC muestra únicamente los parámetros correspondientes al tipo de eje y regulador seleccionados." ;
+    ex:monitoreaParametro ex:Parametro_VelocidadCabezal ,
+                        ex:Parametro_PotenciaCabezal .
 
-ex:InterfazUsuarioCNC a ex:InterfazUsuario ;
-    rdfs:label "Interfaz de usuario del CNC" ;
-    ex:textoExtracto "El CNC muestra únicamente los parámetros correspondientes al tipo de eje y regulador seleccionados. Por ello, a continuación, junto a cada parámetro se muestra el tipo de eje y regulador al que corresponde." .
+ex:Parametro_VelocidadCabezal
+    a ex:Parametro ;
+    rdfs:label "Velocidad del cabezal (rpm)" ;
+    ex:textoExtracto "parámetros relacionados con la velocidad del cabezal (definida en rpm)" ;
+    ex:valor "rpm" .
+
+ex:Parametro_PotenciaCabezal
+    a ex:Parametro ;
+    rdfs:label "Potencia del cabezal (watios)" ;
+    ex:textoExtracto "definen la potencia (definida en watios)" ;
+    ex:valor "watios" .

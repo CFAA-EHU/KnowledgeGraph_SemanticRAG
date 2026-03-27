@@ -1,20 +1,56 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:KINCOMP1 a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_COMPID
+    a ex:Parametro ;
+    rdfs:label "COMPID" ;
+    ex:textoExtracto "parámetro COMPID" ;
+    ex:identificador "COMPID" .
+
+ex:Parametro_KINID
+    a ex:Parametro ;
+    rdfs:label "#KINID[1]" ;
+    ex:textoExtracto "primera cinemática (#KINID[1])" ;
+    ex:identificador "#KINID[1]" .
+
+ex:Parametro_FOLLOW_WAITINLIMIT
+    a ex:Parametro ;
+    rdfs:label "#FOLLOW[WAITINLIMIT]" ;
+    ex:textoExtracto "#FOLLOW[WAITINLIMIT]" ;
+    ex:identificador "#FOLLOW[WAITINLIMIT]" .
+
+ex:Sistema_CompensacionCinematica
+    a ex:Sistema ;
+    rdfs:label "Sistema de compensación cinemática" ;
+    ex:textoExtracto "Cada cinemática tiene una compensación asociada (parámetro COMPID). KINCOMP1 está asociado a COMPID 1, KINCOMP2 a COMPID2 y así sucesivamente." ;
+    ex:tieneComponente ex:Parametro_COMPID .
+
+ex:Componente_KINCOMP1
+    a ex:Componente ;
     rdfs:label "KINCOMP1" ;
-    ex:identificador "COMPID 1" ;
-    ex:textoExtracto "KINCOMP1 está asociado a COMPID 1" .
+    ex:textoExtracto "KINCOMP1 está asociado a COMPID 1" ;
+    ex:identificador "KINCOMP1" ;
+    ex:monitoreaParametro ex:Parametro_COMPID .
 
-ex:KINCOMP2 a ex:Parametro ;
+ex:Componente_KINCOMP2
+    a ex:Componente ;
     rdfs:label "KINCOMP2" ;
-    ex:identificador "COMPID 2" ;
-    ex:textoExtracto "KINCOMP2 a COMPID2" .
+    ex:textoExtracto "KINCOMP2 a COMPID2" ;
+    ex:identificador "KINCOMP2" ;
+    ex:monitoreaParametro ex:Parametro_COMPID .
 
-ex:KINCOMP3 a ex:Parametro ;
+ex:Componente_KINCOMP3
+    a ex:Componente ;
     rdfs:label "KINCOMP3" ;
-    ex:identificador "COMPID 3" ;
-    ex:textoExtracto "al activar esta cinemática, el PLC activa la marca KINCOMP3" .
+    ex:textoExtracto "marca KINCOMP3" ;
+    ex:identificador "KINCOMP3" ;
+    ex:monitoreaParametro ex:Parametro_COMPID .
 
-ex:FWAITLIM a ex:Parametro ;
+ex:AvisoSeguridad_FWAITLIM
+    a ex:AvisoSeguridad ;
     rdfs:label "FWAITLIM" ;
-    ex:textoExtracto "FWAITLIM El PLC activa esta marca cuando detiene la ejecución del programa por un #FOLLOW[WAITINLIMIT], para que la cota programada entre dentro de los límites (modelo láser)." .
+    ex:textoExtracto "El PLC activa esta marca cuando detiene la ejecución del programa por un #FOLLOW[WAITINLIMIT], para que la cota programada entre dentro de los límites (modelo láser)." ;
+    ex:identificador "FWAITLIM" ;
+    ex:mitigaRiesgo ex:Parametro_FOLLOW_WAITINLIMIT .

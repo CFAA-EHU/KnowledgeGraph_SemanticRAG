@@ -1,44 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ModoTrabajoManual a ex:ModoOperacion ;
-    ex:textoExtracto "Modo de trabajo manual." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeY a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje Y" .
+ex:Parametro_G00FEED a ex:Parametro ;
+    rdfs:label "G00FEED" ;
+    ex:textoExtracto "G00FEED: 1000 mm/min." ;
+    ex:valor "1000 mm/min" .
 
-ex:G00FEED a ex:Parametro ;
-    ex:identificador "G00FEED" ;
-    ex:valor "1000 mm/min" ;
-    ex:textoExtracto "G00FEED: 1000 mm/min." .
+ex:Parametro_JOGFEED a ex:Parametro ;
+    rdfs:label "JOGFEED" ;
+    ex:textoExtracto "JOGFEED: 100 mm/min." ;
+    ex:valor "100 mm/min" .
 
-ex:JOGFEED a ex:Parametro ;
-    ex:identificador "JOGFEED" ;
-    ex:valor "100 mm/min" ;
-    ex:textoExtracto "JOGFEED: 100 mm/min." .
+ex:Parametro_MAXMANFEED a ex:Parametro ;
+    rdfs:label "MAXMANFEED" ;
+    ex:textoExtracto "MAXMANFEED: 120 mm/min." ;
+    ex:valor "120 mm/min" .
 
-ex:MAXMANFEED a ex:Parametro ;
-    ex:identificador "MAXMANFEED" ;
-    ex:valor "120 mm/min" ;
-    ex:textoExtracto "MAXMANFEED: 120 mm/min." .
+ex:Parametro_IPOFEEDP a ex:Parametro ;
+    rdfs:label "IPOFEEDP" ;
+    ex:textoExtracto "IPOFEEDP: 50%" ;
+    ex:valor "50%" .
 
-ex:IPOFEEDP a ex:Parametro ;
-    ex:identificador "IPOFEEDP" ;
-    ex:valor "50%" ;
-    ex:textoExtracto "IPOFEEDP: 50%" .
+ex:Parametro_MANFEEDP a ex:Parametro ;
+    rdfs:label "MANFEEDP" ;
+    ex:textoExtracto "MANFEEDP: 50%" ;
+    ex:valor "50%" .
 
-ex:MANFEEDP a ex:Parametro ;
-    ex:identificador "MANFEEDP" ;
-    ex:valor "50%" ;
-    ex:textoExtracto "MANFEEDP: 50%" .
+ex:ModoOperacion_Manual a ex:ModoOperacion ;
+    rdfs:label "Modo de trabajo manual" ;
+    ex:textoExtracto "Modo de trabajo manual" ;
+    ex:tieneComponente ex:Parametro_G00FEED, ex:Parametro_JOGFEED, ex:Parametro_MAXMANFEED, ex:Parametro_IPOFEEDP, ex:Parametro_MANFEEDP .
 
-ex:BloqueN10 a ex:TareaMantenimiento ;
-    ex:textoExtracto "N10 G201 #AXIS [Y]" .
-
-ex:BloqueN20 a ex:TareaMantenimiento ;
-    ex:textoExtracto "N20 G1 Y100 F1000" .
-
-ex:PanelJOG a ex:InterfazUsuario ;
-    ex:textoExtracto "panel de JOG" .
-
-ex:SistemaAvanceY a ex:Sistema ;
-    ex:compuestoPor ex:EjeY ;
-    ex:textoExtracto "el avance máximo de ejecución del eje Y no es 1000 mm/min (G00FEED), sino 500 mm/min debido a la limitación del 50% de IPOFEED sobre G00FEED. Por lo tanto, a pesar del avance programado 'F1000', el eje avanzará a un avance de 500 mm/min debido a la limitación en G201. Si durante la ejecución se desplaza el eje Y desde el panel de JOG, se debería añadir un avance de 100 mm/min (JOGFEED). Sin embargo, el avance máximo manual será 60 mm/min debido a la limitación del 50% de MANFEEDP sobre MAXMANFEED. Por lo tanto, el eje Y se moverá a 560 mm/min cuando se combinen los modos automático y manual." .
+ex:Sistema_EjeY a ex:Sistema ;
+    rdfs:label "Eje Y" ;
+    ex:textoExtracto "eje Y" ;
+    ex:monitoreaParametro ex:Parametro_G00FEED, ex:Parametro_JOGFEED, ex:Parametro_MAXMANFEED, ex:Parametro_IPOFEEDP, ex:Parametro_MANFEEDP .

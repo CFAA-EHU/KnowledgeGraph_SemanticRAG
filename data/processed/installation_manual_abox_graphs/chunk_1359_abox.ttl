@@ -1,25 +1,32 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PendriveLicencia a ex:ComponenteElectrico ;
-    rdfs:label "pendrive con la licencia"@es ;
-    ex:textoExtracto "El pendrive con la licencia debe estar conectado al PC."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PuertoUSB a ex:ComponenteElectrico ;
-    rdfs:label "puerto USB"@es ;
-    ex:textoExtracto "Insertar el pendrive en el puerto USB"@es .
+ex:ErrorLicenciaArranque
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error de licencia al arrancar el programa"@es ;
+    ex:textoExtracto "Error de licencia al arrancar el programa. El pendrive con la licencia debe estar conectado al PC. Si al arrancar el programa se produce el siguiente error, significa que el programa no encuentra la licencia."@es ;
+    ex:solucionaFallo ex:FalloLicenciaNoEncontrada .
 
-ex:BotonOk a ex:InterfazUsuario ;
-    rdfs:label "botón \"Ok\""@es ;
-    ex:textoExtracto "pulse el botón \"Ok\""@es, "volver a pulsar el botón \"Ok\""@es .
+ex:FalloLicenciaNoEncontrada
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Licencia no encontrada"@es ;
+    ex:textoExtracto "El pendrive con la licencia debe estar conectado al PC. [...] significa que el programa no encuentra la licencia."@es .
 
-ex:BotonBrowse a ex:InterfazUsuario ;
-    rdfs:label "botón \"Browse\""@es ;
-    ex:textoExtracto "Pulsar el botón \"Browse\""@es .
+ex:LicenciaBasicaFagor
+    a ex:Sistema ;
+    rdfs:label "Licencia Básica (Fagor)"@es ;
+    ex:identificador "Básica" ;
+    ex:textoExtracto "Fagor suministra la licencia 'Básica', que permite configurar el bus. Algunas opciones del configurador no estarán disponibles con esta licencia."@es .
 
-ex:LicenciaBasica a ex:Consumible ;
-    rdfs:label "licencia \"Básica\""@es ;
-    ex:textoExtracto "Fagor suministra la licencia \"Básica\", que permite configurar el bus."@es .
+ex:ProcedimientoSeleccionLicencia
+    a ex:TareaMantenimiento ;
+    rdfs:label "Selección manual de unidad de licencia"@es ;
+    ex:textoExtracto "Pulsar el botón 'Browse' para seleccionar la unidad donde está conectado el pendrive y volver a pulsar el botón 'Ok'."@es ;
+    ex:solucionaFallo ex:FalloLicenciaNoEncontrada .
 
-ex:ConfiguradorBus a ex:Sistema ;
-    rdfs:label "configurador del bus"@es ;
-    ex:textoExtracto "permite configurar el bus"@es .
+ex:AvisoLicenciaModulos
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error de licencia durante la detección de módulos"@es ;
+    ex:textoExtracto "Error de licencia durante la detección de modulos. Ignorar este aviso."@es .

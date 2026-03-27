@@ -1,20 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:NSERCOUNT a ex:Parametro ;
-    ex:textoExtracto "NSERCOUNT Número de nodos contadoras Sercos en el bus. Valores posibles: De 0 a 8. Valor por defecto: 0." ;
-    ex:valor "De 0 a 8" ;
-    ex:identificador "NSERCOUNT" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SERCOUNTID a ex:Parametro ;
-    ex:textoExtracto "SERCOUNTID n Tabla de identificadores de la ruleta asociadas a las contadoras Sercos. Valores posibles: De 1 a 15." ;
-    ex:valor "De 1 a 15" ;
-    ex:identificador "SERCOUNTID" .
+ex:Parametro_NSERCOUNT
+    a ex:Parametro ;
+    rdfs:label "NSERCOUNT" ;
+    ex:identificador "NSERCOUNT" ;
+    ex:textoExtracto "Número de nodos contadoras Sercos en el bus. Valores posibles: De 0 a 8. Valor por defecto: 0." ;
+    ex:valor "0-8"^^xsd:string ;
+    ex:monitoreaParametro ex:Sistema_BusSercos .
 
-ex:RCS_S a ex:ComponenteElectrico ;
-    ex:textoExtracto "módulos RCS-S en el bus" ;
-    ex:identificador "RCS-S" .
+ex:Parametro_SERCOUNTID
+    a ex:Parametro ;
+    rdfs:label "SERCOUNTID" ;
+    ex:identificador "SERCOUNTID" ;
+    ex:textoExtracto "Tabla de identificadores de la ruleta asociadas a las contadoras Sercos. Valores posibles: De 1 a 15." ;
+    ex:valor "1-15"^^xsd:string ;
+    ex:monitoreaParametro ex:Sistema_BusSercos .
 
-ex:ConmutadorRotativo a ex:ComponenteElectrico ;
-    ex:textoExtracto "conmutador rotativo (número de nodo)" .
+ex:Sistema_BusSercos
+    a ex:Sistema ;
+    rdfs:label "Bus Sercos" ;
+    ex:textoExtracto "anillo Sercos [...] módulos RCS-S del bus [...] dirección física, fijada por su conmutador rotativo (número de nodo)." ;
+    ex:tieneComponente ex:Modulo_RCS_S .
 
-ex:AnilloSercos a ex:Sistema ;
-    ex:textoExtracto "Aunque en el anillo Sercos puede haber hasta 32 nodos, los módulos RCS-S siempre ocupan posiciones entre la 1 y la 15." .
+ex:Modulo_RCS_S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo remoto RCS-S" ;
+    ex:identificador "RCS-S" ;
+    ex:textoExtracto "módulo RCS-S [...] módulos RCS-S siempre ocupan posiciones entre la 1 y la 15." ;
+    ex:compuestoPor ex:ConmutadorRotativo_RCS_S .
+
+ex:ConmutadorRotativo_RCS_S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conmutador rotativo (RCS-S)" ;
+    ex:textoExtracto "dirección física, fijada por su conmutador rotativo (número de nodo)." .

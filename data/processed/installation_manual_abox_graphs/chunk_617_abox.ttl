@@ -1,57 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PLC a ex:Sistema ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "Módulo principal (PRG) El procesamiento del módulo principal se desarrolla de la siguiente forma: 1 El PLC asigna a los recursos I los valores que disponen en este momento las entradas físicas (módulos remotos). 2 El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...). 3 El PLC ejecuta el módulo principal (PRG). 4 El PLC actualiza las variables internas del CNC (EMERGEN, STOP, FEEDHOL, ...) con los valores que disponen en este momento los recursos asociados del PLC. 5 EL PLC asigna a las salidas físicas (módulos remotos) los valores que disponen en este momento los recursos O del PLC. 6 El PLC da por finalizado el ciclo, encontrándose preparado para comenzar uno nuevo. Módulo periódico (PE) El procesamiento del módulo periódico se desarrolla de la siguiente forma: 1 EL PLC tiene en cuenta los valores que disponen, al comienzo de la ejecución del módulo, las entradas físicas (módulos remotos). 2 El PLC ejecuta el módulo periódico. 3 EL PLC asigna a las salidas físicas (módulos remotos) los valores que disponen en este momento los recursos O del PLC. 4 El PLC da por finalizada la ejecución del módulo periódico." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModuloPrincipal a ex:Componente ;
-    rdfs:label "módulo principal (PRG)" ;
-    ex:textoExtracto "Módulo principal (PRG) El procesamiento del módulo principal se desarrolla de la siguiente forma: 1 El PLC asigna a los recursos I los valores que disponen en este momento las entradas físicas (módulos remotos). 2 El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...). 3 El PLC ejecuta el módulo principal (PRG)." .
+ex:ModuloPrincipal_PRG
+    a ex:Sistema ;
+    rdfs:label "Módulo principal (PRG)" ;
+    ex:textoExtracto "El procesamiento del módulo principal se desarrolla de la siguiente forma: [...] El PLC ejecuta el módulo principal (PRG)." ;
+    ex:identificador "PRG" .
 
-ex:ModuloPeriodico a ex:Componente ;
-    rdfs:label "módulo periódico (PE)" ;
-    ex:textoExtracto "Módulo periódico (PE) El procesamiento del módulo periódico se desarrolla de la siguiente forma: 1 EL PLC tiene en cuenta los valores que disponen, al comienzo de la ejecución del módulo, las entradas físicas (módulos remotos). 2 El PLC ejecuta el módulo periódico." .
+ex:ModuloPeriodico_PE
+    a ex:Sistema ;
+    rdfs:label "Módulo periódico (PE)" ;
+    ex:textoExtracto "El procesamiento del módulo periódico se desarrolla de la siguiente forma: [...] El PLC ejecuta el módulo periódico." ;
+    ex:identificador "PE" .
 
-ex:RecursoI a ex:Componente ;
-    rdfs:label "recursos I" ;
+ex:EntradasFisicas_ModulosRemotos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas físicas (módulos remotos)" ;
     ex:textoExtracto "El PLC asigna a los recursos I los valores que disponen en este momento las entradas físicas (módulos remotos)." .
 
-ex:RecursoO a ex:Componente ;
-    rdfs:label "recursos O" ;
-    ex:textoExtracto "EL PLC asigna a las salidas físicas (módulos remotos) los valores que disponen en este momento los recursos O del PLC." .
+ex:SalidasFisicas_ModulosRemotos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salidas físicas (módulos remotos)" ;
+    ex:textoExtracto "El PLC asigna a las salidas físicas (módulos remotos) los valores que disponen en este momento los recursos O del PLC." .
 
-ex:EntradasFisicas a ex:ComponenteElectrico ;
-    rdfs:label "entradas físicas (módulos remotos)" ;
-    ex:textoExtracto "El PLC asigna a los recursos I los valores que disponen en este momento las entradas físicas (módulos remotos)." .
+ex:VariablesInternas_CNC
+    a ex:Parametro ;
+    rdfs:label "Variables internas del CNC" ;
+    ex:textoExtracto "El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...)." ;
+    ex:identificador "CNCREADY, START, FHOUT, EMERGEN, STOP, FEEDHOL" .
 
-ex:SalidasFisicas a ex:ComponenteElectrico ;
-    rdfs:label "salidas físicas (módulos remotos)" ;
-    ex:textoExtracto "EL PLC asigna a las salidas físicas (módulos remotos) los valores que disponen en este momento los recursos O del PLC." .
+ex:ModuloPrincipal_PRG
+    ex:monitoreaParametro ex:VariablesInternas_CNC ;
+    ex:tieneComponente ex:EntradasFisicas_ModulosRemotos ;
+    ex:tieneComponente ex:SalidasFisicas_ModulosRemotos .
 
-ex:CNC a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...). El PLC actualiza las variables internas del CNC (EMERGEN, STOP, FEEDHOL, ...) con los valores que disponen en este momento los recursos asociados del PLC." .
-
-ex:VariableInterna_CNCREADY a ex:Parametro ;
-    rdfs:label "CNCREADY" ;
-    ex:textoExtracto "El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...)." .
-
-ex:VariableInterna_START a ex:Parametro ;
-    rdfs:label "START" ;
-    ex:textoExtracto "El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...)." .
-
-ex:VariableInterna_FHOUT a ex:Parametro ;
-    rdfs:label "FHOUT" ;
-    ex:textoExtracto "El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...)." .
-
-ex:VariableInterna_EMERGEN a ex:Parametro ;
-    rdfs:label "EMERGEN" ;
-    ex:textoExtracto "El PLC actualiza las variables internas del CNC (EMERGEN, STOP, FEEDHOL, ...) con los valores que disponen en este momento los recursos asociados del PLC." .
-
-ex:VariableInterna_STOP a ex:Parametro ;
-    rdfs:label "STOP" ;
-    ex:textoExtracto "El PLC actualiza las variables internas del CNC (EMERGEN, STOP, FEEDHOL, ...) con los valores que disponen en este momento los recursos asociados del PLC." .
-
-ex:VariableInterna_FEEDHOL a ex:Parametro ;
-    rdfs:label "FEEDHOL" ;
-    ex:textoExtracto "El PLC actualiza las variables internas del CNC (EMERGEN, STOP, FEEDHOL, ...) con los valores que disponen en este momento los recursos asociados del PLC." .
+ex:ModuloPeriodico_PE
+    ex:tieneComponente ex:EntradasFisicas_ModulosRemotos ;
+    ex:tieneComponente ex:SalidasFisicas_ModulosRemotos .

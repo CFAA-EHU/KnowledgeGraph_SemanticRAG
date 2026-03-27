@@ -1,20 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_MAXFLWE rdfs:label "MAXFLWE" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MAXFLWE
     a ex:Parametro ;
+    rdfs:label "MAXFLWE" ;
     ex:textoExtracto "El parámetro MAXFLWE indica a partir de qué valor del error de seguimiento comienza la supervisión dinámica." ;
-    ex:valor "De 0 a 1000000 ms" .
+    ex:valor "valor_umbral_error_seguimiento" .
 
-ex:Parametro_ESTDELAY rdfs:label "ESTDELAY" ;
+ex:Parametro_ESTDELAY
     a ex:Parametro ;
-    ex:textoExtracto "ESTDELAY Retardo del error de seguimiento. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: De 0 a 1000000 ms. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.ESTDELAY[set].xn El CNC sólo tiene en cuenta este parámetro con FLWEMONITOR=Lineal. Este parámetro permite definir un retardo en la estimación del error de seguimiento de forma que el teórico (1) se aproxime al real (2) y evitar mensajes de error no deseados. Este parámetro también se usa como tiempo para dar error de tendencia (protección antiembalamiento). Para ajustar el parámetro ESTDELAY, es necesario activar la estimación de error de seguimiento lineal y consultar con ayuda del osciloscopio las variables (V.)A.FLWE.xn y (V.)A.FLWEST.xn. El valor del parámetro ESTDELAY deberá ser ligeramente mayor al máximo retardo en tiempo entre las dos señales. A la hora de calcular este parámetro, hay que tener en cuenta que la situación más conflictiva son las inversiones de movimiento en G00." ;
-    ex:valor "De 0 a 1000000 ms" .
+    rdfs:label "ESTDELAY" ;
+    ex:identificador "(V.)[ch].MPA.ESTDELAY[set].xn" ;
+    ex:textoExtracto "ESTDELAY Retardo del error de seguimiento. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: De 0 a 1000000 ms. Valor por defecto: 0." ;
+    ex:valor "0-1000000_ms" .
 
-ex:Parametro_INPOMAX rdfs:label "INPOMAX" ;
+ex:Parametro_INPOMAX
     a ex:Parametro ;
-    ex:textoExtracto "INPOMAX Tiempo para entrar en banda de muerte. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 1000000 ms. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.INPOMAX[set].xn El parámetro INPOMAX limita (tiempo máximo) el tiempo que necesita el eje en situarse dentro de la banda de muerte. Este parámetro proporciona una vigilancia en el posicionamiento del eje que garantiza que éste entra en posición en un tiempo determinado, dando un error en caso contrario." ;
-    ex:valor "De 0 a 1000000 ms" .
+    rdfs:label "INPOMAX" ;
+    ex:identificador "(V.)[ch].MPA.INPOMAX[set].xn" ;
+    ex:textoExtracto "INPOMAX Tiempo para entrar en banda de muerte. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 1000000 ms. Valor por defecto: 0." ;
+    ex:valor "0-1000000_ms" .
 
-ex:Figura_error_seguimiento rdfs:label "figura" ;
-    a ex:Figura ;
-    ex:textoExtracto "zona sombreada en la figura" .
+ex:Variable_FLWE
+    a ex:Parametro ;
+    rdfs:label "FLWE" ;
+    ex:identificador "(V.)A.FLWE.xn" ;
+    ex:textoExtracto "variable (V.)A.FLWE.xn usada para ajustar ESTDELAY con osciloscopio" .
+
+ex:Variable_FLWEST
+    a ex:Parametro ;
+    rdfs:label "FLWEST" ;
+    ex:identificador "(V.)A.FLWEST.xn" ;
+    ex:textoExtracto "variable (V.)A.FLWEST.xn usada para ajustar ESTDELAY con osciloscopio" .
+
+ex:Parametro_FLWEMONITOR
+    a ex:Parametro ;
+    rdfs:label "FLWEMONITOR" ;
+    ex:textoExtracto "El CNC sólo tiene en cuenta el parámetro ESTDELAY con FLWEMONITOR=Lineal." ;
+    ex:valor "Lineal" .
+
+ex:Sistema_ControlEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de error de seguimiento de ejes" ;
+    ex:textoExtracto "El CNC sólo tiene en cuenta este parámetro con FLWEMONITOR=Lineal. Este parámetro permite definir un retardo en la estimación del error de seguimiento de forma que el teórico (1) se aproxime al real (2) y evitar mensajes de error no deseados." ;
+    ex:monitoreaParametro ex:Parametro_MAXFLWE ;
+    ex:monitoreaParametro ex:Parametro_ESTDELAY ;
+    ex:monitoreaParametro ex:Parametro_INPOMAX ;
+    ex:monitoreaParametro ex:Parametro_FLWEMONITOR .

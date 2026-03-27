@@ -1,19 +1,134 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:MarcaCYSTART a ex:Parametro ;
-    ex:textoExtracto "PLC debe activar la marca CYSTART para que comience la ejecución del programa. START AND (resto de condiciones) = CYSTART SBLOCK" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MarcaSBLOCKC1 a ex:Parametro ;
-    ex:identificador "SBLOCKC1" ;
-    ex:textoExtracto "Los mnemónicos para cada canal son los siguientes. SBLOCKC1 (también se puede programar como SBLOCK) SBLOCKC2 SBLOCKC3 SBLOCKC4 Si el PLC pone esta marca a (=1), el canal del CNC pasa a operar en el modo de ejecución –bloque a bloque–." .
+ex:Marca_CYSTART a ex:Parametro ;
+    rdfs:label "CYSTART" ;
+    ex:textoExtracto "PLC debe activar la marca CYSTART para que comience la ejecución del programa. START AND (resto de condiciones) = CYSTART" ;
+    ex:monitoreaParametro ex:ModoEjecucion_BloqueABloque .
 
-ex:MarcaMANRAPIDC1 a ex:Parametro ;
-    ex:identificador "MANRAPIDC1" ;
-    ex:textoExtracto "MANRAPID Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. MANRAPIDC1 (también se puede programar como MANRAPID) MANRAPIDC2 MANRAPIDC3 MANRAPIDC4 El tratamiento que recibe esta marca es similar al que recibe la tecla de avance rápido. Si el PLC activa esta marca, el CNC selecciona el avance rápido para los movimientos en jog continuo que se realicen desde el modo manual." .
+ex:ModoEjecucion_BloqueABloque a ex:ModoOperacion ;
+    rdfs:label "Modo ejecución bloque a bloque" ;
+    ex:textoExtracto "Si el PLC pone esta marca a (=1), el canal del CNC pasa a operar en el modo de ejecución –bloque a bloque–." .
 
-ex:MarcaOVRCANC1 a ex:Parametro ;
-    ex:identificador "OVRCANC1" ;
-    ex:textoExtracto "OVRCAN Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. OVRCANC1 (también se puede programar como OVRCAN) OVRCANC2 OVRCANC3 OVRCANC4 Si el PLC pone esta marca a (=1), el CNC aplica un override del 100% al avance de los ejes, independientemente del que se encuentre seleccionado." .
+ex:Marca_SBLOCKC1 a ex:Parametro ;
+    rdfs:label "SBLOCKC1" ;
+    ex:textoExtracto "SBLOCKC1 (también se puede programar como SBLOCK)" ;
+    ex:monitoreaParametro ex:ModoEjecucion_BloqueABloque ;
+    ex:identificador "SBLOCKC1" .
 
-ex:MarcaRESETINC1 a ex:Parametro ;
+ex:Marca_SBLOCKC2 a ex:Parametro ;
+    rdfs:label "SBLOCKC2" ;
+    ex:textoExtracto "SBLOCKC2" ;
+    ex:monitoreaParametro ex:ModoEjecucion_BloqueABloque ;
+    ex:identificador "SBLOCKC2" .
+
+ex:Marca_SBLOCKC3 a ex:Parametro ;
+    rdfs:label "SBLOCKC3" ;
+    ex:textoExtracto "SBLOCKC3" ;
+    ex:monitoreaParametro ex:ModoEjecucion_BloqueABloque ;
+    ex:identificador "SBLOCKC3" .
+
+ex:Marca_SBLOCKC4 a ex:Parametro ;
+    rdfs:label "SBLOCKC4" ;
+    ex:textoExtracto "SBLOCKC4" ;
+    ex:monitoreaParametro ex:ModoEjecucion_BloqueABloque ;
+    ex:identificador "SBLOCKC4" .
+
+ex:Marca_MANRAPIDC1 a ex:Parametro ;
+    rdfs:label "MANRAPIDC1" ;
+    ex:textoExtracto "MANRAPIDC1 (también se puede programar como MANRAPID)" ;
+    ex:monitoreaParametro ex:ModoAvance_Rapido ;
+    ex:identificador "MANRAPIDC1" .
+
+ex:Marca_MANRAPIDC2 a ex:Parametro ;
+    rdfs:label "MANRAPIDC2" ;
+    ex:textoExtracto "MANRAPIDC2" ;
+    ex:monitoreaParametro ex:ModoAvance_Rapido ;
+    ex:identificador "MANRAPIDC2" .
+
+ex:Marca_MANRAPIDC3 a ex:Parametro ;
+    rdfs:label "MANRAPIDC3" ;
+    ex:textoExtracto "MANRAPIDC3" ;
+    ex:monitoreaParametro ex:ModoAvance_Rapido ;
+    ex:identificador "MANRAPIDC3" .
+
+ex:Marca_MANRAPIDC4 a ex:Parametro ;
+    rdfs:label "MANRAPIDC4" ;
+    ex:textoExtracto "MANRAPIDC4" ;
+    ex:monitoreaParametro ex:ModoAvance_Rapido ;
+    ex:identificador "MANRAPIDC4" .
+
+ex:ModoAvance_Rapido a ex:ModoOperacion ;
+    rdfs:label "Avance rápido" ;
+    ex:textoExtracto "Si el PLC activa esta marca, el CNC selecciona el avance rápido para los movimientos en jog continuo que se realicen desde el modo manual." .
+
+ex:Marca_OVRCANC1 a ex:Parametro ;
+    rdfs:label "OVRCANC1" ;
+    ex:textoExtracto "OVRCANC1 (también se puede programar como OVRCAN)" ;
+    ex:monitoreaParametro ex:Override_Avance_100 ;
+    ex:identificador "OVRCANC1" .
+
+ex:Marca_OVRCANC2 a ex:Parametro ;
+    rdfs:label "OVRCANC2" ;
+    ex:textoExtracto "OVRCANC2" ;
+    ex:monitoreaParametro ex:Override_Avance_100 ;
+    ex:identificador "OVRCANC2" .
+
+ex:Marca_OVRCANC3 a ex:Parametro ;
+    rdfs:label "OVRCANC3" ;
+    ex:textoExtracto "OVRCANC3" ;
+    ex:monitoreaParametro ex:Override_Avance_100 ;
+    ex:identificador "OVRCANC3" .
+
+ex:Marca_OVRCANC4 a ex:Parametro ;
+    rdfs:label "OVRCANC4" ;
+    ex:textoExtracto "OVRCANC4" ;
+    ex:monitoreaParametro ex:Override_Avance_100 ;
+    ex:identificador "OVRCANC4" .
+
+ex:Override_Avance_100 a ex:Parametro ;
+    rdfs:label "Override 100% avance" ;
+    ex:textoExtracto "Si el PLC pone esta marca a (=1), el CNC aplica un override del 100% al avance de los ejes, independientemente del que se encuentre seleccionado." ;
+    ex:valor "100%" .
+
+ex:Marca_RESETINC1 a ex:Parametro ;
+    rdfs:label "RESETINC1" ;
+    ex:textoExtracto "RESETINC1 (también se puede programar como RESETIN)" ;
     ex:identificador "RESETINC1" ;
-    ex:textoExtracto "RESETIN Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. RESETINC1 (también se puede programar como RESETIN) RESETINC2 RESETINC3 RESETINC4 Ejecutar un reset en el CNC. El tratamiento que recibe esta marca es similar al que recibe la tecla de [RESET]." .
+    ex:controla ex:Accion_Reset_Canal1 .
+
+ex:Marca_RESETINC2 a ex:Parametro ;
+    rdfs:label "RESETINC2" ;
+    ex:textoExtracto "RESETINC2" ;
+    ex:identificador "RESETINC2" ;
+    ex:controla ex:Accion_Reset_Canal2 .
+
+ex:Marca_RESETINC3 a ex:Parametro ;
+    rdfs:label "RESETINC3" ;
+    ex:textoExtracto "RESETINC3" ;
+    ex:identificador "RESETINC3" ;
+    ex:controla ex:Accion_Reset_Canal3 .
+
+ex:Marca_RESETINC4 a ex:Parametro ;
+    rdfs:label "RESETINC4" ;
+    ex:textoExtracto "RESETINC4" ;
+    ex:identificador "RESETINC4" ;
+    ex:controla ex:Accion_Reset_Canal4 .
+
+ex:Accion_Reset_Canal1 a ex:AccionProhibida ;
+    rdfs:label "Reset canal 1" ;
+    ex:textoExtracto "Con un flanco de subida (cambio de 0 a 1) de esta marca, el canal del CNC se resetea." .
+
+ex:Accion_Reset_Canal2 a ex:AccionProhibida ;
+    rdfs:label "Reset canal 2" ;
+    ex:textoExtracto "Con un flanco de subida (cambio de 0 a 1) de esta marca, el canal del CNC se resetea." .
+
+ex:Accion_Reset_Canal3 a ex:AccionProhibida ;
+    rdfs:label "Reset canal 3" ;
+    ex:textoExtracto "Con un flanco de subida (cambio de 0 a 1) de esta marca, el canal del CNC se resetea." .
+
+ex:Accion_Reset_Canal4 a ex:AccionProhibida ;
+    rdfs:label "Reset canal 4" ;
+    ex:textoExtracto "Con un flanco de subida (cambio de 0 a 1) de esta marca, el canal del CNC se resetea." .

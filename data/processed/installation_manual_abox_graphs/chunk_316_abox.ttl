@@ -1,31 +1,40 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PROBEDELAY a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_PROBEDELAY
+    a ex:Parametro ;
     rdfs:label "PROBEDELAY" ;
-    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Entre ±100000.0000 ms. Valor por defecto: 0 (no hay retardo). Variable asociada: (V.)[ch].MPA.PROBEDELAY.xn Consultar el parámetro máquina de ejes PROBEDELAY2." ;
-    ex:valor "Entre ±100000.0000 ms" .
+    ex:textoExtracto "Retardo de la señal de palpador. Parámetro válido para ejes lineales, rotativos y cabezales. Valores posibles: Entre ±100000.0000 ms. Valor por defecto: 0 (no hay retardo). Variable asociada: (V.)[ch].MPA.PROBEDELAY.xn" ;
+    ex:valor "0" ;
+    ex:monitoreaParametro ex:Sensor_Palpador1 .
 
-ex:PROBEDELAY2 a ex:Parametro ;
+ex:Parametro_PROBEDELAY2
+    a ex:Parametro ;
     rdfs:label "PROBEDELAY2" ;
-    ex:textoExtracto "PROBEDELAY2 Retardo de la señal de palpador 2. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Entre ±100000.0000 ms. Valor por defecto: 0 (no hay retardo). Variable asociada: (V.)[ch].MPA.PROBEDELAY2.xn El parámetro PROBEDELAY corresponde al palpador definido en PRBDI1 y PROBEDELAY2 al palpador definido en PRBDI2." ;
-    ex:valor "Entre ±100000.0000 ms" .
+    ex:textoExtracto "Retardo de la señal de palpador 2. Parámetro válido para ejes lineales, rotativos y cabezales. Valores posibles: Entre ±100000.0000 ms. Valor por defecto: 0 (no hay retardo). Variable asociada: (V.)[ch].MPA.PROBEDELAY2.xn" ;
+    ex:valor "0" ;
+    ex:monitoreaParametro ex:Sensor_Palpador2 .
 
-ex:PRBDI1 a ex:Parametro ;
-    rdfs:label "PRBDI1" ;
-    ex:textoExtracto "El parámetro PROBEDELAY corresponde al palpador definido en PRBDI1 y PROBEDELAY2 al palpador definido en PRBDI2." .
+ex:Sensor_Palpador1
+    a ex:Sensor ;
+    rdfs:label "Palpador 1 (PRBDI1)" ;
+    ex:textoExtracto "El parámetro PROBEDELAY corresponde al palpador definido en PRBDI1. En algunos tipos de palpador existe un retardo de milisegundos desde el momento de palpación hasta que el CNC recibe la señal (comunicación por infrarrojos, etc)." .
 
-ex:PRBDI2 a ex:Parametro ;
-    rdfs:label "PRBDI2" ;
-    ex:textoExtracto "El parámetro PROBEDELAY corresponde al palpador definido en PRBDI1 y PROBEDELAY2 al palpador definido en PRBDI2." .
+ex:Sensor_Palpador2
+    a ex:Sensor ;
+    rdfs:label "Palpador 2 (PRBDI2)" ;
+    ex:textoExtracto "PROBEDELAY2 al palpador definido en PRBDI2. En algunos tipos de palpador existe un retardo de milisegundos desde el momento de palpación hasta que el CNC recibe la señal." .
 
-ex:P299 a ex:Parametro ;
-    rdfs:label "P299" ;
+ex:Parametro_P299
+    a ex:Parametro ;
+    rdfs:label "P299 (Valor óptimo de calibración)" ;
     ex:textoExtracto "Tras su ejecución, el ciclo devuelve en el parámetro aritmético P299 el valor óptimo que se debe asignar al parámetro PROBEDELAY de los ejes y el cabezal." .
 
-ex:Palpador a ex:Sensor ;
-    rdfs:label "palpador" ;
-    ex:textoExtracto "En algunos tipos de palpador existe un retardo de milisegundos desde el momento de palpación hasta que el CNC recibe la señal (comunicación por infrarrojos, etc). En estos casos se debe indicar el tiempo que transcurre desde que se produce la palpación hasta que el CNC recibe la señal. Para la personalización de este parámetro se puede utilizar el ciclo de calibración de palpador #PROBE 2." .
-
-ex:CicloCalibracionPalpador a ex:TareaMantenimiento ;
-    rdfs:label "#PROBE 2" ;
-    ex:textoExtracto "Para la personalización de este parámetro se puede utilizar el ciclo de calibración de palpador #PROBE 2." .
+ex:TareaMantenimiento_CalibracionPalpador
+    a ex:TareaMantenimiento ;
+    rdfs:label "Ciclo de calibración de palpador #PROBE 2" ;
+    ex:textoExtracto "Para la personalización de este parámetro se puede utilizar el ciclo de calibración de palpador #PROBE 2." ;
+    ex:requiereMantenimiento ex:Sensor_Palpador1, ex:Sensor_Palpador2 ;
+    ex:monitoreaParametro ex:Parametro_P299 .

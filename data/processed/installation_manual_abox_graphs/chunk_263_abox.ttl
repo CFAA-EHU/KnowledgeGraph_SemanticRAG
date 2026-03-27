@@ -1,29 +1,42 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DRIVEID a ex:Parametro ;
-    rdfs:label "DRIVEID" ;
-    ex:textoExtracto "DRIVEID Dirección del regulador Sercos. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: De 1 a 32. Valor por defecto: 1. Variable asociada: (V.)[ch].MPA.DRIVEID.xn Parámetro incluido en la tabla SERCOSDATA. Este parámetro indica la posición (nodo) que ocupa el regulador en la conexión Sercos." ;
-    ex:valor "De 1 a 32" ;
-    ex:identificador "1" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:OPMODEP a ex:Parametro ;
-    rdfs:label "OPMODEP" ;
-    ex:textoExtracto "OPMODEP Modo de operación principal del regulador Sercos. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: Posición / Velocidad. Valor por defecto: Posición. Variable asociada: (V.)[ch].MPA.OPMODEP.xn Parámetro incluido en la tabla SERCOSDATA. Este parámetro indica el modo de operación del regulador Sercos; consigna de velocidad o de posición. Consultar el manual del regulador para obtener más información. Se recomienda que los ejes (excepto ejes tándem) operen en modo Sercos posición y que los cabezales lo hagan en modo Sercos velocidad. Sin embargo, los ejes tándem deberán operar obligatoriamente en modo Sercos velocidad. Todos los ejes que se vayan a interpolar con el eje tándem también deberán operar en modo Sercos velocidad." ;
-    ex:valor "Posición / Velocidad" ;
-    ex:identificador "Posición" .
+ex:Parametro_DRIVEID
+    a ex:Parametro ;
+    rdfs:label "DRIVEID (Dirección del regulador Sercos)" ;
+    ex:textoExtracto "DRIVEID Dirección del regulador Sercos. Parámetro válido para ejes lineales, rotativos y cabezales. [...] Este parámetro indica la posición (nodo) que ocupa el regulador en la conexión Sercos." ;
+    ex:valor "1"^^xsd:integer ;
+    ex:identificador "V.[ch].MPA.DRIVEID.xn" ;
+    ex:documentadoEn ex:Tabla_SERCOSDATA .
 
-ex:SERCOSDATA a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla SERCOSDATA." ;
-    ex:identificador "SERCOSDATA" .
+ex:Parametro_OPMODEP
+    a ex:Parametro ;
+    rdfs:label "OPMODEP (Modo de operación principal del regulador Sercos)" ;
+    ex:textoExtracto "OPMODEP Modo de operación principal del regulador Sercos. [...] Valores posibles: Posición / Velocidad. [...] Este parámetro indica el modo de operación del regulador Sercos; consigna de velocidad o de posición." ;
+    ex:valor "Posición" ;
+    ex:identificador "V.[ch].MPA.OPMODEP.xn" ;
+    ex:documentadoEn ex:Tabla_SERCOSDATA .
 
-ex:ModoSercosVelocidad a ex:ModoOperacion ;
-    rdfs:label "Modo Sercos velocidad" ;
-    ex:textoExtracto "Modo de operación del regulador en Sercos velocidad. • La consigna se envía al regulador en diezmilésimas de rpm del motor. Cuando sea necesario utilizar la señal SANALOG desde PLC, su valor también vendrá expresado en diezmilésimas de rpm del motor. • El feedback del regulador al CNC llega como cota absoluta, en diezmilésimas de milímetro o milésimas de grado (igual que en el modo Sercos posición). • La búsqueda de cero la controla el CNC. La búsqueda de cero se realiza sin parar el cabezal, si previamente se encontraba girando." .
+ex:Tabla_SERCOSDATA a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla SERCOSDATA" ;
+    ex:textoExtracto "Parámetro incluido en la tabla SERCOSDATA." .
 
-ex:ModoSercosPosicion a ex:ModoOperacion ;
+ex:ModoOperacion_SercosPosicion
+    a ex:ModoOperacion ;
     rdfs:label "Modo Sercos posición" ;
-    ex:textoExtracto "Este parámetro indica el modo de operación del regulador Sercos; consigna de velocidad o de posición." .
+    ex:textoExtracto "Se recomienda que los ejes (excepto ejes tándem) operen en modo Sercos posición [...] La búsqueda de cero la controla el CNC." .
 
-ex:Motor a ex:ComponenteElectrico ;
-    rdfs:label "motor" ;
-    ex:textoExtracto "rpm del motor" .
+ex:ModoOperacion_SercosVelocidad
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Sercos velocidad" ;
+    ex:textoExtracto "los cabezales lo hagan en modo Sercos velocidad. [...] Los ejes tándem deberán operar obligatoriamente en modo Sercos velocidad. [...] La consigna se envía al regulador en diezmilésimas de rpm del motor." .
+
+ex:ComponenteElectrico_Motor
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor (asociado a regulador Sercos)" ;
+    ex:textoExtracto "La consigna se envía al regulador en diezmilésimas de rpm del motor. [...] feedback del regulador al CNC llega como cota absoluta, en diezmilésimas de milímetro o milésimas de grado." ;
+    ex:monitoreaParametro ex:Parametro_OPMODEP .

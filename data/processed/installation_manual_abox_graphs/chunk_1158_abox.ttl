@@ -1,25 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Variable_PATHFEED a ex:Parametro ;
-    rdfs:label "(V.)[ch].G.PATHFEED" ;
-    ex:textoExtracto "Variables. (V.)[ch].G.PATHFEED Avance teórico sobre la trayectoria. Unidades: Milímetros/minuto o pulgadas/minuto." ;
-    ex:valor "Milímetros/minuto o pulgadas/minuto" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Variable_FREAL a ex:Parametro ;
-    rdfs:label "(V.)[ch].G.FREAL" ;
-    ex:textoExtracto "(V.)[ch].G.FREAL Avance real filtrado sobre la trayectoria. Esta variable tiene en cuenta el override y las aceleraciones y deceleraciones de la máquina. Unidades: Milímetros/minuto o pulgadas/minuto." ;
-    ex:valor "Milímetros/minuto o pulgadas/minuto" .
+ex:Tabla_13_3_3_VariablesAvanceTrayectoria a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla 13.3.3: Variables asociadas al avance sobre la trayectoria"@es ;
+    ex:textoExtracto """
+| Variables. | PRG | PLC | INT |
+| --- | --- | --- | --- |
+| (V.)[ch].G.PATHFEED
+Avance teórico sobre la trayectoria. Unidades: Milímetros/minuto o pulgadas/minuto. | R(*) | R | R |
+| (V.)[ch].G.FREAL
+Avance real filtrado sobre la trayectoria. Esta variable tiene en cuenta
+el override y las aceleraciones y deceleraciones de la máquina. Unidades: Milímetros/minuto o pulgadas/minuto. | R(*) | R | R |
+ (*) El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques). Comparando en el osciloscopio el avance real con el teórico a largo de la trayectoria se pueden detectar problemas de ajuste si ambos divergen en puntos concretos. Además, con ayuda de las variables V.G.LINEN y V.G.BLKN se pueden asociar estos cambios de avance con los bloques o líneas de programa en los que se producen."""@es .
 
-ex:Variable_LINEN a ex:Parametro ;
+ex:Parametro_PATHFEED
+    a ex:Parametro ;
+    rdfs:label "V.[ch].G.PATHFEED" ;
+    ex:identificador "V.[ch].G.PATHFEED" ;
+    ex:valor "Avance teórico sobre la trayectoria"@es ;
+    ex:textoExtracto "Avance teórico sobre la trayectoria. Unidades: Milímetros/minuto o pulgadas/minuto."@es ;
+    ex:documentadoEn ex:Tabla_13_3_3_VariablesAvanceTrayectoria .
+
+ex:Parametro_FREAL
+    a ex:Parametro ;
+    rdfs:label "V.[ch].G.FREAL" ;
+    ex:identificador "V.[ch].G.FREAL" ;
+    ex:valor "Avance real filtrado sobre la trayectoria"@es ;
+    ex:textoExtracto "Avance real filtrado sobre la trayectoria. Esta variable tiene en cuenta el override y las aceleraciones y deceleraciones de la máquina. Unidades: Milímetros/minuto o pulgadas/minuto."@es ;
+    ex:documentadoEn ex:Tabla_13_3_3_VariablesAvanceTrayectoria .
+
+ex:Parametro_LINEN
+    a ex:Parametro ;
     rdfs:label "V.G.LINEN" ;
-    ex:textoExtracto "Además, con ayuda de las variables V.G.LINEN y V.G.BLKN se pueden asociar estos cambios de avance con los bloques o líneas de programa en los que se producen." .
+    ex:identificador "V.G.LINEN" ;
+    ex:textoExtracto "Variable para asociar cambios de avance con líneas de programa."@es ;
+    ex:documentadoEn ex:Tabla_13_3_3_VariablesAvanceTrayectoria .
 
-ex:Variable_BLKN a ex:Parametro ;
+ex:Parametro_BLKN
+    a ex:Parametro ;
     rdfs:label "V.G.BLKN" ;
-    ex:textoExtracto "Además, con ayuda de las variables V.G.LINEN y V.G.BLKN se pueden asociar estos cambios de avance con los bloques o líneas de programa en los que se producen." .
-
-ex:Sistema_CNC a ex:Sistema ;
-    ex:textoExtracto "El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques). Comparando en el osciloscopio el avance real con el teórico a largo de la trayectoria se pueden detectar problemas de ajuste si ambos divergen en puntos concretos." .
-
-ex:Sistema_Osciloscopio a ex:Sistema ;
-    ex:textoExtracto "Comparando en el osciloscopio el avance real con el teórico a largo de la trayectoria se pueden detectar problemas de ajuste si ambos divergen en puntos concretos." .
+    ex:identificador "V.G.BLKN" ;
+    ex:textoExtracto "Variable para asociar cambios de avance con bloques de programa."@es ;
+    ex:documentadoEn ex:Tabla_13_3_3_VariablesAvanceTrayectoria .

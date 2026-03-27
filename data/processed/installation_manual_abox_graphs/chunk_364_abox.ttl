@@ -1,11 +1,19 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Parametro_MPA_PITCH2_set ex:textoExtracto """Valor por defecto: 5 mm / 0.19685 inch / 360º. Variable asociada: (V.)[ch].MPA.PITCH2[set].xn El significado de este parámetro depende del tipo captación. • En un eje lineal con encoder y husillo, el parámetro define el paso de husillo. • En un eje rotativo, el parámetro define el número de grados por vuelta de encoder.""" ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_PITCH2
     a ex:Parametro ;
-    ex:identificador "(V.)[ch].MPA.PITCH2[set].xn" ;
-    ex:valor "5 mm / 0.19685 inch / 360º" .
+    rdfs:label "Parámetro PITCH2 para regulador Sercos"@es ;
+    ex:textoExtracto "para regulador Sercos. [...] Variable asociada: (V.)[ch].MPA.PITCH2[set].xn"@es ;
+    ex:identificador "MPA.PITCH2[set].xn" ;
+    ex:valor "5 mm / 0.19685 inch / 360º" ;
+    ex:textoExtracto "Valor por defecto: 5 mm / 0.19685 inch / 360º."@es .
 
-ex:Esquema_Regulador_Sercos ex:textoExtracto """para regulador Sercos.""" ;
-    a ex:Esquema ;
-    ex:identificador "Sercos" .
-
-ex:Parametro_MPA_PITCH2_set ex:detalladoEnEsquema ex:Esquema_Regulador_Sercos .
+ex:Sistema_ReguladorSercos
+    a ex:Sistema ;
+    rdfs:label "Sistema de regulación Sercos"@es ;
+    ex:textoExtracto "para regulador Sercos"@es ;
+    ex:tieneComponente ex:Parametro_PITCH2 ;
+    ex:monitoreaParametro ex:Parametro_PITCH2 .

@@ -1,30 +1,43 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Parametro_ANAOUTTYPE a ex:Parametro ;
-    ex:identificador "ANAOUTTYPE" ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ANAOUTTYPE
+    a ex:Parametro ;
+    rdfs:label "ANAOUTTYPE" ;
     ex:textoExtracto "Tipo de salida analógica asociada al eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico. Valores posibles: Remoto CAN / Regulador / Contadora Sercos / Local. Valor por defecto: Remoto CAN." ;
-    ex:valor "Remoto CAN / Regulador / Contadora Sercos / Local" .
+    ex:valor "Remoto CAN" .
 
-ex:Parametro_ANAOUTID a ex:Parametro ;
-    ex:identificador "ANAOUTID" ;
+ex:ANAOUTID
+    a ex:Parametro ;
+    rdfs:label "ANAOUTID" ;
     ex:textoExtracto "Número de la salida analógica asociada al eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico. Valores posibles: Módulos remotos, de 1 a 16 / Regulador Sercos, de 101 a 132 ó de 201 a 232 / Contadora Sercos, de 1 a 32. Valor por defecto: 0." ;
-    ex:valor "Módulos remotos, de 1 a 16 / Regulador Sercos, de 101 a 132 ó de 201 a 232 / Contadora Sercos, de 1 a 32" .
+    ex:valor "0" .
 
-ex:Parametro_ANAOUTTYPE a ex:Parametro ;
-    ex:identificador "ANAOUTTYPE" ;
-    ex:textoExtracto "Este parámetro sólo es válido para ejes analógicos e indica dónde está ubicada la salida analógica; en los módulos remotos CAN, en un regulador Sercos, en un módulo RCS-S (contadora Sercos) o local." ;
-    ex:valor "módulos remotos CAN / regulador Sercos / módulo RCS-S (contadora Sercos) / local" .
+ex:ModuloRemotoCAN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo remoto CAN" ;
+    ex:textoExtracto "Gestión de la consigna analógica desde los módulos remotos CAN. Los módulos de salidas analógicas se numeran según el orden lógico de los grupos remotos (conmutador rotativo de la fuente de alimentación)." .
 
-ex:Parametro_ANAOUTID a ex:Parametro ;
-    ex:textoExtracto "La consigna para un eje analógico se puede tomar desde una salida analógica de los módulos remotos CAN, de un regulador Sercos o de módulo RCS-S (contadora Sercos). En ambos casos, este parámetro identifica la salida analógica que se utiliza para enviar la consigna." .
+ex:ReguladorSercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "Regulador Sercos, de 101 a 132 ó de 201 a 232." .
 
-ex:ComponenteElectrico_MPA a ex:ComponenteElectrico ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.ANAOUTTYPE[set].xn" .
+ex:ContadoraSercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Contadora Sercos (RCS-S)" ;
+    ex:textoExtracto "Contadora Sercos, de 1 a 32." .
 
-ex:ComponenteElectrico_MPA a ex:ComponenteElectrico ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.ANAOUTID[set].xn" .
+ex:ANAOUTTYPE
+    ex:monitoreaParametro ex:ANAOUTID .
 
-ex:ComponenteElectrico_CNC a ex:ComponenteElectrico ;
-    ex:textoExtracto "Cuando dos ejes no vayan a estar de forma simultánea en la configuración, el CNC permite que ambos ejes utilicen la misma salida analógica." .
+ex:ModuloRemotoCAN
+    ex:tieneComponente ex:ANAOUTID .
 
-ex:ComponenteElectrico_ModuloSalidaAnalogica a ex:ComponenteElectrico ;
-    ex:textoExtracto "Los módulos de salidas analógicas se numeran según el orden lógico de los grupos remotos (conmutador rotativo de la fuente de alimentación). Si hay más de un módulo de salidas analógicas dentro de cada grupo, el orden es de arriba abajo y de izquierda a derecha." .
+ex:ReguladorSercos
+    ex:tieneComponente ex:ANAOUTID .
+
+ex:ContadoraSercos
+    ex:tieneComponente ex:ANAOUTID .

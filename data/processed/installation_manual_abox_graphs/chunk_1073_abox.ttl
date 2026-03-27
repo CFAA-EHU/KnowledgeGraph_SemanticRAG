@@ -1,38 +1,48 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Motor1 a ex:ComponenteMecanico ;
-    rdfs:label "motor"@es ;
-    ex:textoExtracto "motores"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Motor2 a ex:ComponenteMecanico ;
-    rdfs:label "motor"@es ;
-    ex:textoExtracto "motores"@es .
+ex:ProcesoAjusteTandem_1073
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Proceso de ajuste del tándem"@es ;
+    ex:textoExtracto    "En caso de que los motores sean diferentes, deben ajustarse los ejes de tal manera que la respuesta dinámica sea la misma o similar. [...] Para finalizar, reajustar el lazo de velocidad en ambos motores con el método utilizado normalmente."@es ;
+    ex:requiereMantenimiento ex:SistemaTandem_1073 ;
+    ex:monitoreaParametro  ex:Parametro_TORQDIST_1073, ex:Parametro_PRELOAD_1073, ex:Parametro_ACFGAIN_1073 .
 
-ex:SistemaTandem a ex:Sistema ;
-    rdfs:label "tándem"@es ;
-    ex:textoExtracto "tándem"@es ;
-    ex:compuestoPor ex:Motor1, ex:Motor2 ;
-    ex:tieneComponente ex:Motor1, ex:Motor2 .
+ex:SistemaTandem_1073
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema de tándem con dos motores"@es ;
+    ex:textoExtracto    "Habilitar el tándem con ambos motores. [...] Asegurarse de que no hay golpes y que cada motor realiza el par que le corresponde, según los parámetros 'TORQDIST' y 'PRELOAD'."@es ;
+    ex:tieneComponente   ex:MotorTandem_1_1073, ex:MotorTandem_2_1073 ;
+    ex:controla         ex:Parametro_TORQDIST_1073, ex:Parametro_PRELOAD_1073 .
 
-ex:MaquinaPrincipal a ex:Maquina ;
-    rdfs:label "máquina"@es ;
-    ex:textoExtracto "la máquina"@es ;
-    ex:compuestoPor ex:SistemaTandem .
+ex:MotorTandem_1_1073
+    a                   ex:ComponenteMecanico ;
+    rdfs:label          "Motor 1 del sistema tándem"@es ;
+    ex:textoExtracto    "cada motor hace el par que les corresponde, según el parámetro 'TORQDIST' (p.e para una distribución del 50%, la mitad del par)."@es .
 
-ex:ParametroTORQDIST a ex:Parametro ;
-    rdfs:label "TORQDIST"@es ;
-    ex:textoExtracto "parámetro \"TORQDIST\""@es .
+ex:MotorTandem_2_1073
+    a                   ex:ComponenteMecanico ;
+    rdfs:label          "Motor 2 del sistema tándem"@es ;
+    ex:textoExtracto    "cada motor hace el par que les corresponde, según el parámetro 'TORQDIST' (p.e para una distribución del 50%, la mitad del par)."@es .
 
-ex:ParametroPRELOAD a ex:Parametro ;
-    rdfs:label "PRELOAD"@es ;
-    ex:textoExtracto "parámetros \"TORQDIST\" y \"PRELOAD\""@es .
+ex:Parametro_TORQDIST_1073
+    a                   ex:Parametro ;
+    rdfs:label          "TORQDIST" ;
+    ex:identificador     "TORQDIST" ;
+    ex:textoExtracto    "según el parámetro 'TORQDIST' (p.e para una distribución del 50%, la mitad del par)."@es ;
+    ex:valor            "50%"^^<http://www.w3.org/2001/XMLSchema#string> .
 
-ex:VariableSercosTV2 a ex:Parametro ;
-    rdfs:label "Sercos TV2"@es ;
-    ex:textoExtracto "variable Sercos TV2"@es ;
-    ex:monitoreaParametro ex:Motor1, ex:Motor2 .
+ex:Parametro_PRELOAD_1073
+    a                   ex:Parametro ;
+    rdfs:label          "PRELOAD" ;
+    ex:identificador     "PRELOAD" ;
+    ex:textoExtracto    "ir aumentando la precarga hasta que los motores hagan par en sentido opuesto. [...] según los parámetros 'TORQDIST' y 'PRELOAD'."@es .
 
-ex:MetodoAjusteLazoVelocidad a ex:TareaMantenimiento ;
-    rdfs:label "método utilizado normalmente"@es ;
-    ex:textoExtracto "método utilizado normalmente"@es ;
-    ex:ejecutadoPor ex:MaquinaPrincipal .
+ex:Parametro_ACFGAIN_1073
+    a                   ex:Parametro ;
+    rdfs:label          "ACFGAIN" ;
+    ex:identificador     "ACFGAIN" ;
+    ex:textoExtracto    "Si se hace uso del ACForward ('ACFGAIN' = YES), recuérdese que cada motor contempla la mitad de la inercia para una distribución de par del 50%."@es ;
+    ex:valor            "YES"^^<http://www.w3.org/2001/XMLSchema#string> .

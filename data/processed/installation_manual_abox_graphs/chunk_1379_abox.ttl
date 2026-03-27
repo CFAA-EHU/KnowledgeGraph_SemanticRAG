@@ -1,10 +1,26 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ModoDiagnosis a ex:ModoOperacion ;
-    ex:textoExtracto "El modo diagnosis ofrece toda la información necesaria de los módulos conectados al bus EtherCAT. Información general del bus. Información de los esclavos. Información de los módulos." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:BusEtherCAT a ex:ComponenteElectrico ;
-    ex:textoExtracto "los módulos conectados al bus EtherCAT" .
+ex:ModoDiagnosisCNC
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo diagnosis del CNC"@es ;
+    ex:textoExtracto "El modo diagnosis ofrece toda la información necesaria de los módulos conectados al bus EtherCAT."@es ;
+    ex:monitoreaParametro ex:ParametrosBusEtherCAT .
 
-ex:ModuloEtherCAT a ex:ComponenteElectrico ;
-    ex:textoExtracto "los módulos conectados al bus EtherCAT" ;
-    ex:textoExtracto "Información de los módulos" .
+ex:ParametrosBusEtherCAT
+    a               ex:Parametro ;
+    rdfs:label      "Información general del bus EtherCAT"@es ;
+    ex:textoExtracto "Información general del bus."@es .
+
+ex:ModulosEtherCAT
+    a               ex:Sistema ;
+    rdfs:label      "Módulos conectados al bus EtherCAT"@es ;
+    ex:textoExtracto "Información de los módulos."@es ;
+    ex:compuestoPor  ex:EsclavosEtherCAT .
+
+ex:EsclavosEtherCAT
+    a               ex:Componente ;
+    rdfs:label      "Esclavos del bus EtherCAT"@es ;
+    ex:textoExtracto "Información de los esclavos."@es .

@@ -1,30 +1,64 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EjeMaestro a ex:Maquina ;
-    ex:textoExtracto "el eje maestro busca la señal de I0. Una vez encontrado el I0, el eje maestro inicializa su cota con el valor definido en el parámetro REFVALUE y teniendo en cuenta también el parámetro REFSHIFT." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeEsclavo a ex:Maquina ;
-    ex:textoExtracto "el eje esclavo inicializa su cota con el valor definido en el parámetro REFVALUE y teniendo en cuenta también el parámetro REFSHIFT." .
+ex:Parametro_REFVALUE
+    a ex:Parametro ;
+    rdfs:label "REFVALUE" ;
+    ex:textoExtracto "el valor definido en el parámetro REFVALUE" ;
+    ex:valor "valor_de_referencia" .
 
-ex:SistemaCaptacionI0 a ex:Sensor ;
-    ex:textoExtracto "un sistema de captación que dispone de I0s codificados" .
+ex:Parametro_REFSHIFT
+    a ex:Parametro ;
+    rdfs:label "REFSHIFT" ;
+    ex:textoExtracto "teniendo en cuenta también el parámetro REFSHIFT" ;
+    ex:valor "desplazamiento_de_referencia" .
 
-ex:CNC a ex:Sistema ;
-    ex:textoExtracto "El CNC comenzará el desplazamiento de ambos ejes en el sentido indicado por el parámetro REFDIREC del eje maestro." .
+ex:Parametro_REFDIREC
+    a ex:Parametro ;
+    rdfs:label "REFDIREC" ;
+    ex:textoExtracto "sentido indicado por el parámetro REFDIREC del eje maestro" ;
+    ex:valor "dirección_de_búsqueda" .
 
-ex:ParametroREFVALUE a ex:Parametro ;
-    ex:textoExtracto "el valor definido en el parámetro REFVALUE" .
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
+    rdfs:label "REFFEED2" ;
+    ex:textoExtracto "avance indicado en el parámetro REFFEED2 del eje maestro" ;
+    ex:valor "avance_de_búsqueda" .
 
-ex:ParametroREFSHIFT a ex:Parametro ;
-    ex:textoExtracto "teniendo en cuenta también el parámetro REFSHIFT" .
+ex:EjeEsclavo_Gantry
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo (sistema gantry)" ;
+    ex:textoExtracto "el eje esclavo inicializa su cota con el valor definido en el parámetro REFVALUE" ;
+    ex:monitoreaParametro ex:Parametro_REFVALUE, ex:Parametro_REFSHIFT .
 
-ex:ParametroREFDIREC a ex:Parametro ;
-    ex:textoExtracto "el sentido indicado por el parámetro REFDIREC del eje maestro" .
+ex:EjeMaestro_Gantry
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro (sistema gantry)" ;
+    ex:textoExtracto "el eje maestro busca la señal de I0" ;
+    ex:monitoreaParametro ex:Parametro_REFVALUE, ex:Parametro_REFSHIFT, ex:Parametro_REFDIREC, ex:Parametro_REFFEED2 ;
+    ex:controla ex:EjeEsclavo_Gantry .
 
-ex:ParametroREFFEED2 a ex:Parametro ;
-    ex:textoExtracto "al avance indicado en el parámetro REFFEED2 del eje maestro" .
+ex:SistemaCaptacion_I0_Codificados
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación con I0s codificados" ;
+    ex:textoExtracto "Búsqueda de referencia con un sistema de captación que dispone de I0s codificados" ;
+    ex:compuestoPor ex:EjeEsclavo_Gantry, ex:EjeMaestro_Gantry .
 
-ex:MicroEjeMaestro a ex:Sensor ;
-    ex:textoExtracto "ambos ejes tengan micro" .
+ex:SistemaCaptacion_SinMicro
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación sin micros en ejes" ;
+    ex:textoExtracto "donde ningún eje dispone de micro" ;
+    ex:compuestoPor ex:EjeEsclavo_Gantry, ex:EjeMaestro_Gantry .
 
-ex:MicroEjeEsclavo a ex:Sensor ;
-    ex:textoExtracto "el eje esclavo (primer eje en buscar su I0), el eje maestro no pulse su micro" .
+ex:SistemaSercos_Posicion
+    a ex:Sistema ;
+    rdfs:label "Sistema Sercos para posicionamiento de ejes" ;
+    ex:textoExtracto "Ejes Sercos posición" ;
+    ex:compuestoPor ex:EjeEsclavo_Gantry, ex:EjeMaestro_Gantry ;
+    ex:requiereMantenimiento [
+        a ex:TareaMantenimiento ;
+        rdfs:label "Configuración de micros para búsqueda de referencia" ;
+        ex:textoExtracto "los micros deben estar dispuestos de manera que al realizar la búsqueda de referencia del eje esclavo, el eje maestro no pulse su micro"
+    ] .

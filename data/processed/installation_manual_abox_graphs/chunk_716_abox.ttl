@@ -1,17 +1,78 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SP1FUN a ex:Parametro ;
-    ex:textoExtracto "SP1FUN*" ;
-    rdfs:label "SP1FUN*".
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SP2FUN a ex:Parametro ;
-    ex:textoExtracto "SP2FUN*" ;
-    rdfs:label "SP2FUN*".
+ex:FuncionAuxiliar_M3 a ex:Tabla ;
+     a               ex:ModoOperacion ;
+    rdfs:label      "Función auxiliar M3" ;
+    ex:textoExtracto "función auxiliar M del tipo M3"@es .
 
-ex:SP3FUN a ex:Parametro ;
-    ex:textoExtracto "SP3FUN*" ;
-    rdfs:label "SP3FUN*".
+ex:FuncionAuxiliar_M4 a ex:Tabla ;
+     a               ex:ModoOperacion ;
+    rdfs:label      "Función auxiliar M4" ;
+    ex:textoExtracto "función auxiliar M del tipo M4"@es .
 
-ex:CPS a ex:Sistema ;
-    ex:textoExtracto "CPS SP1FUN* EQ 5 = ..." ;
-    rdfs:label "CPS".
+ex:FuncionAuxiliar_M5 a ex:Tabla ;
+     a               ex:ModoOperacion ;
+    rdfs:label      "Función auxiliar M5" ;
+    ex:textoExtracto "función M5"@es .
+
+ex:Parametro_SP1FUN
+    a               ex:Parametro ;
+    rdfs:label      "SP1FUN*" ;
+    ex:identificador "SP1FUN*" ;
+    ex:textoExtracto "SP1FUN* Para el cabezal 1"@es ;
+    ex:monitoreaParametro ex:FuncionAuxiliar_M3, ex:FuncionAuxiliar_M4 .
+
+ex:Parametro_SP2FUN
+    a               ex:Parametro ;
+    rdfs:label      "SP2FUN*" ;
+    ex:identificador "SP2FUN*" ;
+    ex:textoExtracto "SP2FUN* Para el cabezal 2"@es ;
+    ex:monitoreaParametro ex:FuncionAuxiliar_M3, ex:FuncionAuxiliar_M4 .
+
+ex:Parametro_SP3FUN
+    a               ex:Parametro ;
+    rdfs:label      "SP3FUN*" ;
+    ex:identificador "SP3FUN*" ;
+    ex:textoExtracto "SP3FUN* Para el cabezal 3"@es ;
+    ex:monitoreaParametro ex:FuncionAuxiliar_M3, ex:FuncionAuxiliar_M4 .
+
+ex:Parametro_SP4FUN
+    a               ex:Parametro ;
+    rdfs:label      "SP4FUN*" ;
+    ex:identificador "SP4FUN*" ;
+    ex:textoExtracto "SP4FUN* Para el cabezal 4"@es ;
+    ex:monitoreaParametro ex:FuncionAuxiliar_M3, ex:FuncionAuxiliar_M4 .
+
+ex:Cabezal_1
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Cabezal 1" ;
+    ex:textoExtracto "Para el cabezal 1"@es ;
+    ex:tieneComponente ex:Parametro_SP1FUN .
+
+ex:Cabezal_2
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Cabezal 2" ;
+    ex:textoExtracto "Para el cabezal 2"@es ;
+    ex:tieneComponente ex:Parametro_SP2FUN .
+
+ex:Cabezal_3
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Cabezal 3" ;
+    ex:textoExtracto "Para el cabezal 3"@es ;
+    ex:tieneComponente ex:Parametro_SP3FUN .
+
+ex:Cabezal_4
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Cabezal 4" ;
+    ex:textoExtracto "Para el cabezal 4"@es ;
+    ex:tieneComponente ex:Parametro_SP4FUN .
+
+ex:Sistema_Multicabezal
+    a               ex:Sistema ;
+    rdfs:label      "Sistema multicabezal" ;
+    ex:textoExtracto "opción multicabezal"@es ;
+    ex:compuestoPor ex:Cabezal_1, ex:Cabezal_2, ex:Cabezal_3, ex:Cabezal_4 ;
+    ex:tieneComponente ex:Parametro_SP1FUN, ex:Parametro_SP2FUN, ex:Parametro_SP3FUN, ex:Parametro_SP4FUN .

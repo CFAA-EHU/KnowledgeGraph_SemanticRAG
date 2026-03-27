@@ -1,31 +1,21 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MotorEjeC1 a ex:ComponenteMecanico ;
-    rdfs:label "motor"@es ;
-    ex:textoExtracto "motor"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MotorEjeC2 a ex:ComponenteMecanico ;
-    rdfs:label "motor"@es ;
-    ex:textoExtracto "motor"@es .
+ex:SistemaTandemEjeC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de tándem de eje C"@es ;
+    ex:textoExtracto "en un tándem de eje C donde es necesario engranar cada motor, para lo que hace falta generar un movimiento de oscilación en cada motor pero sin afectar al otro"@es ;
+    ex:tieneComponente ex:MotorEsclavoEjeC ;
+    ex:tieneComponente ex:MotorMaestroEjeC .
 
-ex:EjeEsclavo a ex:ComponenteMecanico ;
-    rdfs:label "eje esclavo"@es ;
-    ex:textoExtracto "eje esclavo"@es .
+ex:MotorEsclavoEjeC
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Motor esclavo del eje C"@es ;
+    ex:textoExtracto "el eje o cabezal esclavo del tándem. Si el PLC activa esta marca, el eje esclavo se desacopla del maestro, y ambos ejes se pueden mover de forma independiente"@es .
 
-ex:EjeMaestro a ex:ComponenteMecanico ;
-    rdfs:label "eje maestro"@es ;
-    ex:textoExtracto "eje maestro"@es .
-
-ex:PLC a ex:ComponenteElectrico ;
-    rdfs:label "PLC"@es ;
-    ex:textoExtracto "PLC"@es .
-
-ex:MarcaActivacion a ex:Parametro ;
-    rdfs:label "marca de activación"@es ;
-    ex:textoExtracto "Esta marca"@es .
-
-ex:SistemaTandemEjeC a ex:Sistema ;
-    rdfs:label "tándem de eje C"@es ;
-    ex:textoExtracto "tándem de eje C"@es ;
-    ex:compuestoPor ex:MotorEjeC1, ex:MotorEjeC2, ex:EjeEsclavo, ex:EjeMaestro, ex:PLC ;
-    ex:tieneComponente ex:MarcaActivacion .
+ex:MotorMaestroEjeC
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Motor maestro del eje C"@es ;
+    ex:textoExtracto "el eje esclavo se desacopla del maestro, y ambos ejes se pueden mover de forma independiente"@es .

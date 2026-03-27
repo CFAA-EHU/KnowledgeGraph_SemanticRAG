@@ -1,7 +1,24 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_PEAKDISP a ex:Parametro ;
-    rdfs:label "PEAKDISP" ;
-    ex:identificador "[ch].MPA.PEAKDISP[set].xn" ;
-    ex:textoExtracto "Parámetro válido para regulador analógico y Sercos. Valores posibles (1): De 0 a 99999.9999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0 a 99999.9999 grados. Valor por defecto: 0.0050 mm / 0.00020 inch / 0.0050 grados. Variable asociada: (V.)[ch].MPA.PEAKDISP[set].xn El CNC sólo tiene en cuenta este parámetro cuando trabaja con impulso adicional de consigna; parámetro BAKANOUT distinto de cero. El parámetro PEAKDISP define la distancia real recorrida por el eje, después de la inversión de movimiento teórica, a la" ;
-    ex:valor "0.0050 mm / 0.00020 inch / 0.0050 grados" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Parametro_PEAKDISP
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro PEAKDISP"@es ;
+    ex:identificador      "MPA.PEAKDISP[set].xn" ;
+    ex:textoExtracto      "Parámetro válido para regulador analógico y Sercos. [...] El parámetro PEAKDISP define la distancia real recorrida por el eje, después de la inversión de movimiento teórica"@es ;
+    ex:valor              "0.0050"^^xsd:string .  # Valor por defecto en contexto
+
+ex:Sistema_ReguladorAnalogicoSercos
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de regulador analógico y Sercos"@es ;
+    ex:textoExtracto      "Parámetro válido para regulador analógico y Sercos"@es ;
+    ex:tieneComponente     ex:Parametro_PEAKDISP .
+
+ex:ModoOperacion_ImpulsoAdicional
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo de impulso adicional de consigna"@es ;
+    ex:textoExtracto      "El CNC sólo tiene en cuenta este parámetro cuando trabaja con impulso adicional de consigna; parámetro BAKANOUT distinto de cero"@es ;
+    ex:controla           ex:Parametro_PEAKDISP .

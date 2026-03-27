@@ -1,29 +1,58 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:InterfazUsuario_593_1 a ex:InterfazUsuario ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_ModoInterfaceEstandar
+    a ex:Parametro ;
+    rdfs:label "Modo de interfaz estándar" ;
     ex:textoExtracto "Árbol de softkeys basado en menús y submenús; es decir, hay distintos niveles de softkeys dentro de un mismo modo de trabajo." ;
-    rdfs:label "Estándar" .
+    ex:valor "Estándar" .
 
-ex:InterfazUsuario_593_2 a ex:InterfazUsuario ;
+ex:Parametro_ModoInterfaceDesplegables
+    a ex:Parametro ;
+    rdfs:label "Modo de interfaz desplegables" ;
     ex:textoExtracto "Árbol de softkeys basado en menús desplegables, de manera que únicamente hay un nivel de softkeys. No hay submenús de softkeys, simplificando así la operativa." ;
-    rdfs:label "Desplegables" .
+    ex:valor "Desplegables" .
 
-ex:InterfazUsuario_593_3 a ex:InterfazUsuario ;
-    ex:textoExtracto "VMENU Posición del menú vertical de softkeys. Valores posibles: Izquierda / Derecha. Valor por defecto: Derecha. Dependiendo del hardware, las softkeys verticales F8 a F12 estarán situadas a la izquierda o a la derecha del monitor. Este parámetro permite colocar el menú vertical de softkeys en el lado adecuado." ;
-    rdfs:label "VMENU" .
+ex:Parametro_VMENU
+    a ex:Parametro ;
+    rdfs:label "Posición del menú vertical de softkeys (VMENU)" ;
+    ex:textoExtracto "Posición del menú vertical de softkeys. Valores posibles: Izquierda / Derecha. Valor por defecto: Derecha." ;
+    ex:valor "Derecha" .
 
-ex:InterfazUsuario_593_4 a ex:InterfazUsuario ;
-    ex:textoExtracto "LANGUAGE Idioma de trabajo. Valor por defecto: English. Seleccionar un idioma entre los disponibles. INGLES ESPAÑOL ITALIANO ALEMAN FRANCES EUSKERA PORTUGUES CHINO RUSO CHECO COREANO HOLANDES POLACO TURCO SUECO" ;
-    rdfs:label "LANGUAGE" .
+ex:Parametro_LANGUAGE
+    a ex:Parametro ;
+    rdfs:label "Idioma de trabajo (LANGUAGE)" ;
+    ex:textoExtracto "Idioma de trabajo. Valor por defecto: English. Seleccionar un idioma entre los disponibles." ;
+    ex:valor "English" .
 
-ex:InterfazUsuario_593_5 a ex:InterfazUsuario ;
-    ex:textoExtracto "FFORMAT Formato de visualización de la F programada. Valor por defecto: 5.2. Este parámetro establece el formato numérico (enteros y decimales) para visualizar el avance. Si el formato es 0.0, el interface asume el formato definido mediante la aplicación FGUIM." ;
-    rdfs:label "FFORMAT" .
+ex:Parametro_FFORMAT
+    a ex:Parametro ;
+    rdfs:label "Formato de visualización de F programada (FFORMAT)" ;
+    ex:textoExtracto "Formato de visualización de la F programada. Valor por defecto: 5.2. Este parámetro establece el formato numérico (enteros y decimales) para visualizar el avance." ;
+    ex:valor "5.2" .
 
-ex:InterfazUsuario_593_6 a ex:InterfazUsuario ;
-    ex:textoExtracto "SFORMAT Formato de visualización de la S programada. Valor por defecto: 5.1. Este parámetro establece el formato numérico (enteros y decimales) para visualizar la velocidad. Si el formato es 0.0, el interface asume el formato definido mediante la aplicación FGUIM." ;
-    rdfs:label "SFORMAT" .
+ex:Parametro_SFORMAT
+    a ex:Parametro ;
+    rdfs:label "Formato de visualización de S programada (SFORMAT)" ;
+    ex:textoExtracto "Formato de visualización de la S programada. Valor por defecto: 5.1. Este parámetro establece el formato numérico (enteros y decimales) para visualizar la velocidad." ;
+    ex:valor "5.1" .
 
-ex:InterfazUsuario_593_7 a ex:InterfazUsuario ;
-    ex:textoExtracto "MMINCHSOFTKEY Mostrar la softkey para cambiar el formato de visualización entre milímetros y pulgadas. Valores posibles: Sí / No. Valor por defecto: No. Este parámetro indica si el CNC muestra la softkey para cambiar el formato de visualización entre milímetros y pulgadas. Este parámetro está vinculado a la entrada MMInchSoftkey del archivo mmc8070.ini." ;
-    rdfs:label "MMINCHSOFTKEY" .
+ex:Parametro_MMINCHSOFTKEY
+    a ex:Parametro ;
+    rdfs:label "Mostrar softkey para cambio mm/pulgadas (MMINCHSOFTKEY)" ;
+    ex:textoExtracto "Mostrar la softkey para cambiar el formato de visualización entre milímetros y pulgadas. Valores posibles: Sí / No. Valor por defecto: No." ;
+    ex:valor "No" .
+
+ex:InterfazUsuario_Personalizacion
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de usuario personalizable" ;
+    ex:textoExtracto "Personalización del interface. VMENU, LANGUAGE, FFORMAT, SFORMAT, MMINCHSOFTKEY." ;
+    ex:tieneComponente ex:Parametro_VMENU ;
+    ex:tieneComponente ex:Parametro_LANGUAGE ;
+    ex:tieneComponente ex:Parametro_FFORMAT ;
+    ex:tieneComponente ex:Parametro_SFORMAT ;
+    ex:tieneComponente ex:Parametro_MMINCHSOFTKEY ;
+    ex:tieneComponente ex:Parametro_ModoInterfaceEstandar ;
+    ex:tieneComponente ex:Parametro_ModoInterfaceDesplegables .

@@ -1,34 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_NPOINTS a ex:Parametro ;
-    rdfs:label "NPOINTS" ;
-    ex:textoExtracto "El número de puntos viene definido por el parámetro NPOINTS." ;
-    ex:valor "NPOINTS" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Tabla_DATA a ex:Tabla ;
-    ex:textoExtracto "En la tabla DATA se debe definir el error que se desea compensar en determinadas posiciones del eje." .
+ex:Parametro_CompensacionHusillo
+    a ex:Parametro ;
+    rdfs:label "Parámetro de compensación de husillo" ;
+    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado. Este parámetro muestra la lista de puntos y valores de compensación." ;
+    ex:identificador "NPOINTS" .
 
-ex:Parametro_POSITION a ex:Parametro ;
+ex:Parametro_Posicion
+    a ex:Parametro ;
     rdfs:label "POSITION" ;
-    ex:textoExtracto "Para cada uno de los puntos se deben definir los parámetros POSITION, POSERROR y NEGERROR." ;
-    ex:valor "POSITION" .
+    ex:textoExtracto "Para cada uno de los puntos se deben definir los parámetros POSITION, POSERROR y NEGERROR." .
 
-ex:Parametro_POSERROR a ex:Parametro ;
+ex:Parametro_ErrorPositivo
+    a ex:Parametro ;
     rdfs:label "POSERROR" ;
-    ex:textoExtracto "Para cada uno de los puntos se deben definir los parámetros POSITION, POSERROR y NEGERROR." ;
-    ex:valor "POSERROR" .
+    ex:textoExtracto "Para cada uno de los puntos se deben definir los parámetros POSITION, POSERROR y NEGERROR." .
 
-ex:Parametro_NEGERROR a ex:Parametro ;
+ex:Parametro_ErrorNegativo
+    a ex:Parametro ;
     rdfs:label "NEGERROR" ;
-    ex:textoExtracto "Para cada uno de los puntos se deben definir los parámetros POSITION, POSERROR y NEGERROR. El parámetro NEGERROR sólo se muestra si se ha definido la tabla con compensación bidireccional (BIDIR = Sí)." ;
-    ex:valor "NEGERROR" .
+    ex:textoExtracto "El parámetro NEGERROR sólo se muestra si se ha definido la tabla con compensación bidireccional (BIDIR = Sí)." .
 
-ex:Parametro_BIDIR a ex:Parametro ;
+ex:Parametro_CompensacionBidireccional
+    a ex:Parametro ;
     rdfs:label "BIDIR" ;
-    ex:textoExtracto "El parámetro NEGERROR sólo se muestra si se ha definido la tabla con compensación bidireccional (BIDIR = Sí)." ;
-    ex:valor "BIDIR" .
+    ex:identificador "BIDIR" ;
+    ex:textoExtracto "El parámetro NEGERROR sólo se muestra si se ha definido la tabla con compensación bidireccional (BIDIR = Sí)." .
 
-ex:Parametro_CompensacionHusillo a ex:Parametro ;
-    rdfs:label "Compensación de husillo" ;
-    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado. Este parámetro muestra la lista de puntos y valores de compensación. El CNC sólo permite acceder a esta tabla cuando está definido el parámetro NPOINTS." ;
-    ex:valor "Compensación de husillo" .
+ex:Tabla_CompensacionHusillo a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla DATA de compensación de husillo" ;
+    ex:textoExtracto "En la tabla DATA se debe definir el error que se desea compensar en determinadas posiciones del eje." ;
+    ex:tieneComponente ex:Parametro_CompensacionHusillo ;
+    ex:tieneComponente ex:Parametro_Posicion ;
+    ex:tieneComponente ex:Parametro_ErrorPositivo ;
+    ex:tieneComponente ex:Parametro_ErrorNegativo ;
+    ex:tieneComponente ex:Parametro_CompensacionBidireccional .

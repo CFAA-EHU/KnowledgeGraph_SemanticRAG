@@ -1,42 +1,70 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EjeB a ex:ModoOperacion ;
-    ex:textoExtracto "Eje B. CAXIS=Sí" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeY a ex:ModoOperacion ;
-    ex:textoExtracto "Eje Y (eje lineal asociado al rotativo). FACEAXIS = No LONGAXIS = Sí CAXIS=No" .
+ex:TablaConfiguracionEjesTornoB a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de ejes en torno (eje rotativo B)"@es ;
+    ex:textoExtracto """
+| Personalización habitual en torno (si el eje rotativo es el B): |
+| --- | --- | --- | --- |
+| Eje B. | - - - | - - - | CAXIS=Sí |
+| Eje Y (eje lineal asociado al rotativo). | FACEAXIS = No | LONGAXIS = Sí | CAXIS=No |
+| Eje Z. | FACEAXIS = Sí | LONGAXIS = No | CAXIS=No |
+"""@es ;
+    ex:documentadoEn ex:ManualMaquina .
 
-ex:EjeZ_rotativoB a ex:ModoOperacion ;
-    ex:textoExtracto "Eje Z. FACEAXIS = Sí LONGAXIS = No CAXIS=No" .
+ex:TablaConfiguracionEjesTornoC a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de ejes en torno (eje rotativo C)"@es ;
+    ex:textoExtracto """
+| Personalización habitual en torno (si el eje rotativo es el C): |
+| --- | --- | --- | --- |
+| Eje C. | - - - | - - - | CAXIS=Sí |
+| Eje Z (eje lineal asociado al rotativo). | FACEAXIS = No | LONGAXIS = Sí | CAXIS=No |
+| Eje X o Y (sólo uno de los dos) | FACEAXIS = Sí | LONGAXIS = No | CAXIS=No |
+"""@es ;
+    ex:documentadoEn ex:ManualMaquina .
 
-ex:EjeC a ex:ModoOperacion ;
-    ex:textoExtracto "Eje C. CAXIS=Sí" .
+ex:ParametroCAXIS
+    a ex:Parametro ;
+    rdfs:label "CAXIS"@es ;
+    ex:textoExtracto "CAXIS=Sí/No"@es ;
+    ex:documentadoEn ex:TablaConfiguracionEjesTornoB, ex:TablaConfiguracionEjesTornoC .
 
-ex:EjeZ_rotativoC a ex:ModoOperacion ;
-    ex:textoExtracto "Eje Z (eje lineal asociado al rotativo). FACEAXIS = No LONGAXIS = Sí CAXIS=No" .
+ex:ParametroFACEAXIS
+    a ex:Parametro ;
+    rdfs:label "FACEAXIS"@es ;
+    ex:textoExtracto "FACEAXIS = Sí/No"@es ;
+    ex:documentadoEn ex:TablaConfiguracionEjesTornoB, ex:TablaConfiguracionEjesTornoC .
 
-ex:EjeXoY a ex:ModoOperacion ;
-    ex:textoExtracto "Eje X o Y (sólo uno de los dos) FACEAXIS = Sí LONGAXIS = No CAXIS=No" .
+ex:ParametroLONGAXIS
+    a ex:Parametro ;
+    rdfs:label "LONGAXIS"@es ;
+    ex:textoExtracto "LONGAXIS = Sí/No"@es ;
+    ex:documentadoEn ex:TablaConfiguracionEjesTornoB, ex:TablaConfiguracionEjesTornoC .
 
-ex:ParametroFACEAXIS a ex:Parametro ;
-    ex:textoExtracto "FACEAXIS" .
+ex:ParametroFIXORI
+    a ex:Parametro ;
+    rdfs:label "FIXORI"@es ;
+    ex:textoExtracto "el parámetro FIXORI define si la herramienta está orientada según los ejes definidos en FACEAXIS y LONGAXIS"@es ;
+    ex:documentadoEn ex:ManualMaquina .
 
-ex:ParametroLONGAXIS a ex:Parametro ;
-    ex:textoExtracto "LONGAXIS" .
+ex:ArchivoXCA
+    a ex:Sistema ;
+    rdfs:label "Archivo *.xca"@es ;
+    ex:textoExtracto "archivo xca [...] define si los gráficos trabajan con cotas de la base o de la punta de la herramienta"@es ;
+    ex:documentadoEn ex:ManualMaquina .
 
-ex:ParametroCAXIS a ex:Parametro ;
-    ex:textoExtracto "CAXIS" .
+ex:ArchivoDEF
+    a ex:Sistema ;
+    rdfs:label "Archivo *.def"@es ;
+    ex:textoExtracto "archivo *.def que acompaña al esquema modelizado de la máquina (archivo xca)"@es ;
+    ex:documentadoEn ex:ManualMaquina .
 
-ex:ParametroFIXORI a ex:Parametro ;
-    ex:textoExtracto "FIXORI" .
-
-ex:EsquemaModelizado a ex:Esquema ;
-    ex:textoExtracto "archivo *.def que acompaña al esquema modelizado de la máquina (archivo xca) define si los gráficos trabajan con cotas de la base o de la punta de la herramienta" .
-
-ex:ParametroFACEAXIS ex:detalladoEnEsquema ex:EsquemaModelizado ;
-    ex:textoExtracto "FACEAXIS define si los gráficos trabajan con cotas de la base o de la punta de la herramienta" .
-
-ex:ParametroLONGAXIS ex:detalladoEnEsquema ex:EsquemaModelizado ;
-    ex:textoExtracto "LONGAXIS define si los gráficos trabajan con cotas de la base o de la punta de la herramienta" .
-
-ex:ParametroFIXORI ex:detalladoEnEsquema ex:EsquemaModelizado ;
-    ex:textoExtracto "FIXORI define si la herramienta está orientada según los ejes definidos en FACEAXIS y LONGAXIS" .
+ex:ModoOperacionTorno
+    a ex:ModoOperacion ;
+    rdfs:label "Modo torno"@es ;
+    ex:textoExtracto "Personalización para máquina combinada [...] parámetros sólo afectan a los ejes que pueden trabajar en modo torno"@es ;
+    ex:documentadoEn ex:ManualMaquina .

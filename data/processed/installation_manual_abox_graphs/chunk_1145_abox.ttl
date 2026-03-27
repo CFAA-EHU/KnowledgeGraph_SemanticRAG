@@ -1,28 +1,44 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ModoOperacion_HSC a ex:ModoOperacion ;
-    rdfs:label "HSC" ;
-    ex:textoExtracto "Mecanizado HSC optimizando el error cordal (modo CONTERROR)" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_SLOPETYPE a ex:Parametro ;
-    ex:identificador "SLOPETYPE" ;
-    ex:textoExtracto "Este modo utiliza el tipo de aceleración definido en el parámetro SLOPETYPE." .
+ex:ModoOperacion_HSC_CONTERROR
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC CONTERROR (optimización de error cordal)"@es ;
+    ex:textoExtracto "Mecanizado HSC optimizando el error cordal (modo CONTERROR). En este modo el CNC modifica la geometría mediante algoritmos inteligentes de eliminación de puntos innecesarios y generación de splines o transiciones polinómicas entre los bloques, respetando siempre los límites de error impuestos para este modo."@es ;
+    ex:monitoreaParametro ex:Parametro_SLOPETYPE ;
+    ex:monitoreaParametro ex:Parametro_CORNERJERK ;
+    ex:monitoreaParametro ex:Parametro_SMOOTHFREQ ;
+    ex:monitoreaParametro ex:Parametro_FILTER ;
+    ex:monitoreaParametro ex:Parametro_HSCFILTFREQ .
 
-ex:Parametro_CORNERJERK a ex:Parametro ;
-    ex:identificador "CORNERJERK" ;
-    ex:textoExtracto "se puede ampliar el jerk en las aristas (parámetro CORNERJERK)" .
+ex:Parametro_SLOPETYPE
+    a ex:Parametro ;
+    rdfs:label "SLOPETYPE (tipo de aceleración)"@es ;
+    ex:textoExtracto "Este modo utiliza el tipo de aceleración definido en el parámetro SLOPETYPE."@es ;
+    ex:identificador "SLOPETYPE" .
 
-ex:Parametro_SMOOTHFREQ a ex:Parametro ;
-    ex:identificador "SMOOTHFREQ" ;
-    ex:textoExtracto "aplicar la frecuencia de suavizado en la interpolación de la trayectoria (parámetro SMOOTHFREQ)" .
+ex:Parametro_CORNERJERK
+    a ex:Parametro ;
+    rdfs:label "CORNERJERK (jerk en aristas)"@es ;
+    ex:textoExtracto "se puede ampliar el jerk en las aristas (parámetro CORNERJERK)"@es ;
+    ex:identificador "CORNERJERK" .
 
-ex:Parametro_FILTER a ex:Parametro ;
-    ex:identificador "FILTER" ;
-    ex:textoExtracto "Los efectos de los filtros definidos mediante el parámetro FILTER se suman a los efectos de los filtros activos en HSC" .
+ex:Parametro_SMOOTHFREQ
+    a ex:Parametro ;
+    rdfs:label "SMOOTHFREQ (frecuencia de suavizado)"@es ;
+    ex:textoExtracto "aplicar la frecuencia de suavizado en la interpolación de la trayectoria (parámetro SMOOTHFREQ)"@es ;
+    ex:identificador "SMOOTHFREQ" .
 
-ex:Parametro_HSCFILTFREQ a ex:Parametro ;
-    ex:identificador "HSCFILTFREQ" ;
-    ex:textoExtracto "parámetro HSCFILTFREQ para el modo CONTERROR" .
+ex:Parametro_FILTER
+    a ex:Parametro ;
+    rdfs:label "FILTER (filtro de trayectoria)"@es ;
+    ex:textoExtracto "Los efectos de los filtros definidos mediante el parámetro FILTER"@es ;
+    ex:identificador "FILTER" .
 
-ex:Sistema_CNC a ex:Sistema ;
-    ex:textoExtracto "el CNC modifica la geometría mediante algoritmos inteligentes de eliminación de puntos innecesarios y generación de splines o transiciones polinómicas entre los bloques" .
+ex:Parametro_HSCFILTFREQ
+    a ex:Parametro ;
+    rdfs:label "HSCFILTFREQ (frecuencia de filtro en modo HSC)"@es ;
+    ex:textoExtracto "parámetro HSCFILTFREQ para el modo CONTERROR"@es ;
+    ex:identificador "HSCFILTFREQ" .

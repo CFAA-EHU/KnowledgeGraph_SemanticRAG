@@ -1,34 +1,87 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:HerramientaTierra a ex:ComponenteElectrico ;
-    ex:textoExtracto "Colocar la herramienta de tierra en el cabezal." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Cabezal a ex:ComponenteMecanico ;
-    ex:textoExtracto "Llevar el cabezal al punto de cambio manual." .
+ex:RutinaM06_Caso3
+    a ex:TareaMantenimiento ;
+    rdfs:label "Colocar herramienta de tierra en cabezal (Caso 3)" ;
+    ex:textoExtracto "$CASE 3 ; Colocar la herramienta de tierra en el cabezal. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal." ;
+    ex:identificador "M06-CASE3" .
 
-ex:PuntoCambioManual a ex:ModoOperacion ;
-    ex:textoExtracto "punto de cambio manual" .
+ex:RutinaM06_Caso4
+    a ex:TareaMantenimiento ;
+    rdfs:label "Dejar herramienta del cabezal en tierra (Caso 4)" ;
+    ex:textoExtracto "$CASE 4 ; Dejar la herramienta del cabezal en tierra. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal." ;
+    ex:identificador "M06-CASE4" .
 
-ex:HerramientaCabezal a ex:ComponenteElectrico ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en tierra." .
+ex:RutinaM06_Caso5
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio automático de herramienta (almacén → cabezal, pinzas 1/2) (Caso 5)" ;
+    ex:textoExtracto "$CASE 5 ; Dejar la herramienta del cabezal en el almacén, y coger otra del almacén. [...] LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2. LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal." ;
+    ex:identificador "M06-CASE5" .
 
-ex:Almacen a ex:Componente ;
-    ex:textoExtracto "almacén" .
+ex:RutinaM06_Caso6
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio automático de herramienta (cabezal → almacén + tierra → cabezal) (Caso 6)" ;
+    ex:textoExtracto "$CASE 6 ; Dejar la herramienta del cabezal en el almacén y coger otra de tierra. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2. LL SUB_ARM_BACK ; Retirar el brazo cambiador. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." ;
+    ex:identificador "M06-CASE6" .
 
-ex:Pinza1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "pinza 1" .
+ex:PLC_MarcaTCHANGEOK
+    a ex:Parametro ;
+    rdfs:label "Marca PLC TCHANGEOK (continuación de ejecución)" ;
+    ex:textoExtracto "V.PLC.M[1100]=1 ; Orden al PLC para que active la marca TCHANGEOK, indicando al gestor que puede continuar la ejecución." ;
+    ex:identificador "M[1100]" ;
+    ex:valor "1" .
 
-ex:Pinza2 a ex:ComponenteMecanico ;
-    ex:textoExtracto "pinza 2" .
+ex:HerramientaTierra
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de tierra (manual)" ;
+    ex:textoExtracto "Colocar la herramienta de tierra en el cabezal" .
 
-ex:BrazoCambiador a ex:Actuador ;
-    ex:textoExtracto "Llevar el brazo cambiador al punto de cambio." .
+ex:HerramientaAlmacen
+    a ex:Herramienta ;
+    rdfs:label "Herramienta del almacén (automática)" ;
+    ex:textoExtracto "Dejar la herramienta del cabezal en el almacén, y coger otra del almacén" .
 
-ex:PuntoCambioAutomatico a ex:ModoOperacion ;
-    ex:textoExtracto "punto de cambio automático" .
+ex:CabezalM06
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal de la máquina (punto de cambio manual/automático)" ;
+    ex:textoExtracto "Llevar el cabezal al punto de cambio manual. [...] Llevar el cabezal al punto de cambio automático" .
 
-ex:MarcaTCHANGEOK a ex:Parametro ;
-    ex:identificador "TCHANGEOK" ;
-    ex:textoExtracto "V.PLC.M[1100]=1 ; Orden al PLC para que active la marca TCHANGEOK, indicando al gestor que puede continuar la ejecución." .
+ex:Pinza1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 1 (transporte de herramienta desde almacén)" ;
+    ex:textoExtracto "se pone la herramienta del almacén en la pinza 1. [...] Llevar la herramienta de la pinza 1 al cabezal" .
 
-ex:ProgramaM06 a ex:TareaMantenimiento ;
-    ex:textoExtracto "Programa de la rutina M06" .
+ex:Pinza2
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 2 (recepción de herramienta del cabezal)" ;
+    ex:textoExtracto "Coger la herramienta del cabezal con la pinza 2" .
+
+ex:BrazoCambiador
+    a ex:Actuador ;
+    rdfs:label "Brazo cambiador de herramientas" ;
+    ex:textoExtracto "Llevar el brazo cambiador al punto de cambio. [...] Retirar el brazo cambiador. [...] Comenzar el envío del brazo cambiador al almacén" .
+
+ex:PuntoCambioManual
+    a ex:InterfazUsuario ;
+    rdfs:label "Punto de cambio manual de herramientas" ;
+    ex:textoExtracto "Llevar el cabezal al punto de cambio manual" .
+
+ex:PuntoCambioAutomatico
+    a ex:InterfazUsuario ;
+    rdfs:label "Punto de cambio automático de herramientas" ;
+    ex:textoExtracto "Llevar el cabezal al punto de cambio automático" .
+
+# Relaciones funcionales (solo las explícitas y seguras en el texto)
+ex:RutinaM06_Caso5
+    ex:ejecutadoPor ex:BrazoCambiador ;
+    ex:requiereMantenimiento ex:CabezalM06, ex:Pinza1, ex:Pinza2 .
+
+ex:RutinaM06_Caso6
+    ex:ejecutadoPor ex:BrazoCambiador ;
+    ex:requiereMantenimiento ex:CabezalM06, ex:Pinza2 .
+
+ex:PLC_MarcaTCHANGEOK
+    ex:controla ex:RutinaM06_Caso5 .

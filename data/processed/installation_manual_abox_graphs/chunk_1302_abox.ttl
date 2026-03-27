@@ -1,41 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Palpador1 a ex:Sensor ;
-    rdfs:label "palpador" ;
-    ex:textoExtracto "palpador" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CabezalAngularYZ_45_TYPE6 a ex:ComponenteMecanico ;
-    rdfs:label "cabezal angular YZ de 45º, parámetro TYPE con valor ꞏ6ꞏ" ;
-    ex:textoExtracto "cabezal angular YZ de 45º, parámetro TYPE con valor ꞏ6ꞏ" .
+ex:Palpador_CNC_01
+    a                     ex:Sensor ;
+    rdfs:label            "Palpador para cabezal angular YZ"@es ;
+    ex:textoExtracto      "El CNC puede tener configurados dos palpadores. Antes de efectuar cualquier movimiento con el palpador, el CNC debe conocer cuál es el palpador activo [...] Esta circunstancia puede ocasionar la ruptura del palpador, ya que no se detendrá el movimiento de palpación."@es ;
+    ex:monitoreaParametro ex:Parametro_Dimension_Cabezal_YZ_01 .
 
-ex:PiezaPatron a ex:PiezaRecambio ;
-    rdfs:label "pieza patrón" ;
-    ex:textoExtracto "pieza patrón" .
+ex:Parametro_Dimension_Cabezal_YZ_01
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro TYPE para cabezal angular YZ (valor 6)"@es ;
+    ex:identificador "TYPE=6" ;
+    ex:textoExtracto "En este ejemplo se calculan las dimensiones de un cabezal angular YZ de 45º, parámetro TYPE con valor ꞏ6ꞏ."@es ;
+    ex:valor         "6" .
 
-ex:MesaDeMecanizado a ex:ComponenteMecanico ;
-    rdfs:label "mesa" ;
-    ex:textoExtracto "mesa" .
+ex:Sistema_CNC_01
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CNC con configuración de palpadores"@es ;
+    ex:textoExtracto      "El CNC puede tener configurados dos palpadores. La selección se realiza desde el programa pieza o desde MDI mediante la sentencia #SELECT PROBE."@es ;
+    ex:tieneComponente    ex:Palpador_CNC_01 .
 
-ex:CNC a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "CNC" .
+ex:AccionProhibida_MovimientoSinSeleccionPalpador_01
+    a                     ex:AccionProhibida ;
+    rdfs:label            "Movimiento de palpación sin activar palpador"@es ;
+    ex:textoExtracto      "Si se realiza un movimiento de palpación sin activar el palpador, éste no enviará ninguna señal al CNC cuando haga contacto. Esta circunstancia puede ocasionar la ruptura del palpador."@es ;
+    ex:mitigaRiesgo       ex:AvisoSeguridad_RupturaPalpador_01 .
 
-ex:Palpador2 a ex:Sensor ;
-    rdfs:label "palpador" ;
-    ex:textoExtracto "dos palpadores" .
-
-ex:ProgramaPieza a ex:InterfazUsuario ;
-    rdfs:label "programa pieza" ;
-    ex:textoExtracto "programa pieza" .
-
-ex:MDI a ex:InterfazUsuario ;
-    rdfs:label "MDI" ;
-    ex:textoExtracto "MDI" .
-
-ex:SentenciaSELECTPROBE a ex:Parametro ;
-    rdfs:label "#SELECT PROBE" ;
-    ex:textoExtracto "#SELECT PROBE" .
-
-ex:DimensionesCabezalAngularYZ_TYPE6 a ex:Tabla ;
-    rdfs:label "Dimensiones a calcular en un cabezal angular YZ (TYPE=6)" ;
-    ex:textoExtracto "Dimensiones a calcular en un cabezal angular YZ (TYPE=6)" .
+ex:AvisoSeguridad_RupturaPalpador_01
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Riesgo de ruptura del palpador por falta de activación"@es ;
+    ex:textoExtracto "Esta circunstancia puede ocasionar la ruptura del palpador, ya que no se detendrá el movimiento de palpación."@es .

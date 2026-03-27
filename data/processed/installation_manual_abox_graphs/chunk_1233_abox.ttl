@@ -1,35 +1,58 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:FicheroAyudaSubrutinaG180 a ex:Esquema ;
-    ex:textoExtracto "Ejemplo de un fichero de ayuda de una subrutina. G180 P0= P1= P2= P3= P4= P5= #COMMENT BEGIN ---------------- G180 ---------------- P1 = Movimiento en X P2 = Movimiento en Y P3 = Movimiento en Z P4 = Avance F P5 = Velocidad S --------------------------------------" ;
-    ex:identificador "G180.txt" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:FicheroAyudaSubrutinaG180BMP a ex:Esquema ;
-    ex:textoExtracto "Ejemplo de un fichero de ayuda de una subrutina. ... El nombre de los ficheros será la función a la que está asociada. Por ejemplo G180.txt y G180.bmp." ;
-    ex:identificador "G180.bmp" .
+ex:G180_Subrutina
+    a ex:InterfazUsuario ;
+    rdfs:label "Subrutina G180" ;
+    ex:textoExtracto "G180 P0= P1= P2= P3= P4= P5= [...] P1 = Movimiento en X, P2 = Movimiento en Y, P3 = Movimiento en Z, P4 = Avance F, P5 = Velocidad S" ;
+    ex:identificador "G180" ;
+    ex:tieneComponente ex:G180_ParametroX, ex:G180_ParametroY, ex:G180_ParametroZ, ex:G180_ParametroAvance, ex:G180_ParametroVelocidad .
 
-ex:FicheroAyudaSubrutinaMCALL a ex:Esquema ;
-    ex:textoExtracto "El nombre de los ficheros será el nombre de la subrutina. Por ejemplo subroutine.txt y subroutine.bmp." ;
-    ex:identificador "subroutine.txt" .
+ex:G180_ParametroX
+    a ex:Parametro ;
+    rdfs:label "Parámetro P1 (Movimiento en X)" ;
+    ex:textoExtracto "P1 = Movimiento en X" ;
+    ex:identificador "P1" ;
+    ex:valor "X" .
 
-ex:FicheroAyudaSubrutinaMCALLBMP a ex:Esquema ;
-    ex:textoExtracto "El nombre de los ficheros será el nombre de la subrutina. Por ejemplo subroutine.txt y subroutine.bmp." ;
-    ex:identificador "subroutine.bmp" .
+ex:G180_ParametroY
+    a ex:Parametro ;
+    rdfs:label "Parámetro P2 (Movimiento en Y)" ;
+    ex:textoExtracto "P2 = Movimiento en Y" ;
+    ex:identificador "P2" ;
+    ex:valor "Y" .
 
-ex:CarpetaHelpMtbSub a ex:Esquema ;
-    ex:textoExtracto "El fabricante de la máquina podrá guardar los ficheros de ayuda en las carpetas ..\\Mtb\\Sub\\Help y ..\\Mtb\\Sub\\Help\\{idioma}." ;
-    ex:identificador "..\\Mtb\\Sub\\Help" .
+ex:G180_ParametroZ
+    a ex:Parametro ;
+    rdfs:label "Parámetro P3 (Movimiento en Z)" ;
+    ex:textoExtracto "P3 = Movimiento en Z" ;
+    ex:identificador "P3" ;
+    ex:valor "Z" .
 
-ex:CarpetaHelpMtbSubIdioma a ex:Esquema ;
-    ex:textoExtracto "El fabricante de la máquina podrá guardar los ficheros de ayuda en las carpetas ..\\Mtb\\Sub\\Help y ..\\Mtb\\Sub\\Help\\{idioma}." ;
-    ex:identificador "..\\Mtb\\Sub\\Help\\{idioma}" .
+ex:G180_ParametroAvance
+    a ex:Parametro ;
+    rdfs:label "Parámetro P4 (Avance F)" ;
+    ex:textoExtracto "P4 = Avance F" ;
+    ex:identificador "P4" ;
+    ex:valor "F" .
 
-ex:CarpetaHelpUsersSub a ex:Esquema ;
-    ex:textoExtracto "Como las modificaciones del directorio MTB en el modo de trabajo \"Usuario\" desaparecen al apagar el equipo, el usuario deberá guardar sus ficheros de ayuda en las carpetas ..\\Users\\Sub\\Help y ..\\Users\\Sub\\Help\\{idioma}." ;
-    ex:identificador "..\\Users\\Sub\\Help" .
+ex:G180_ParametroVelocidad
+    a ex:Parametro ;
+    rdfs:label "Parámetro P5 (Velocidad S)" ;
+    ex:textoExtracto "P5 = Velocidad S" ;
+    ex:identificador "P5" ;
+    ex:valor "S" .
 
-ex:CarpetaHelpUsersSubIdioma a ex:Esquema ;
-    ex:textoExtracto "Como las modificaciones del directorio MTB en el modo de trabajo \"Usuario\" desaparecen al apagar el equipo, el usuario deberá guardar sus ficheros de ayuda en las carpetas ..\\Users\\Sub\\Help y ..\\Users\\Sub\\Help\\{idioma}." ;
-    ex:identificador "..\\Users\\Sub\\Help\\{idioma}" .
+ex:Manual_Subrutinas
+    a ex:Manual ;
+    rdfs:label "Manual de ficheros de ayuda para subrutinas" ;
+    ex:textoExtracto "Ejemplo de un fichero de ayuda de una subrutina. [...] Nombre y ubicación de los ficheros. Nombre de los archivos de ayuda. El nombre de los ficheros debe seguir la siguiente norma: [...]" ;
+    ex:documentadoEn ex:G180_Subrutina .
 
-ex:OrdenBusquedaFicherosAyuda a ex:Esquema ;
-    ex:textoExtracto "El CNC busca los ficheros en el siguiente orden y muestra el primero que encuentra, por ello se recomienda que el usuario no defina subrutinas y/o ficheros de ayuda con el mismo nombre que las del fabricante. Si los archivos de ayuda no existen, el CNC no mostrará ninguna ayuda y no dará error. .. \\Users\\Sub\\Help\\{idioma} ..\\Users\\Sub\\Help ..\\Mtb\\Sub\\Help\\{idioma} ..\\Mtb\\Sub\\Help\\" .
+ex:Tabla_NombresArchivosAyuda a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Normativa de nombres para archivos de ayuda" ;
+    ex:textoExtracto "| Subrutina. | Nombre de los archivos de ayuda. | [...] | G180-G189 [...] | El nombre de los ficheros será la función a la que está asociada. Por ejemplo G180.txt y G180.bmp." ;
+    ex:documentadoEn ex:Manual_Subrutinas .

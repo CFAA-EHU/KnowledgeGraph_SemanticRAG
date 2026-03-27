@@ -1,32 +1,30 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:DFU a ex:Parametro ;
-    ex:textoExtracto "DFU {conditions} AND NOT M666 AND NOT INCYCLE = RES ENABLEGAP = RES ENABLELEAP = SET IRESETZ = TG1 333 12 ; Tiempo de espera, 12 milisegundos." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:M666 a ex:Parametro ;
-    ex:textoExtracto "NOT M666" .
+ex:PLC_ManiobraGapRetiro
+    a                   ex:Sistema ;
+    rdfs:label          "PLC Gap Retraction Maneuver" ;
+    ex:textoExtracto    "DFU {conditions} AND NOT M666 AND NOT INCYCLE = RES ENABLEGAP = RES ENABLELEAP = SET IRESETZ = TG1 333 12 ; Tiempo de espera, 12 milisegundos. T333 = M666 DFD M666 = RES IRESETZ = MOVE ABS (Z, 513000,50000000,NULL) DFDB B10KEYLED1 = SET ENABLEGAP = SET ENABLELEAP" ;
+    ex:identificador    "TG1 333" ;
+    ex:tieneComponente  ex:Temporizador_T333 ;
+    ex:tieneComponente  ex:Senal_M666 ;
+    ex:tieneComponente  ex:Interfaz_B10KEYLED1 .
 
-ex:INCYCLE a ex:Parametro ;
-    ex:textoExtracto "NOT INCYCLE" .
+ex:Temporizador_T333
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Timer T333" ;
+    ex:textoExtracto    "T333 = M666 ; Tiempo de espera, 12 milisegundos" ;
+    ex:valor            "12"^^xsd:integer .
 
-ex:ENABLEGAP a ex:Parametro ;
-    ex:textoExtracto "ENABLEGAP = RES" .
+ex:Senal_M666
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Signal M666" ;
+    ex:textoExtracto    "NOT M666 ; T333 = M666 ; DFD M666" .
 
-ex:ENABLELEAP a ex:Parametro ;
-    ex:textoExtracto "ENABLELEAP = SET" .
-
-ex:IRESETZ a ex:Parametro ;
-    ex:textoExtracto "IRESETZ = TG1" .
-
-ex:T333 a ex:Parametro ;
-    ex:textoExtracto "T333 = M666" .
-
-ex:B10KEYLED1 a ex:Sensor ;
-    ex:textoExtracto "B10KEYLED1 = SET" .
-
-ex:TiempoEspera_12ms a ex:Parametro ;
-    ex:identificador "12" ;
-    ex:valor "12" ;
-    ex:textoExtracto "Tiempo de espera, 12 milisegundos." .
-
-ex:MOVE_ABS_Z a ex:AccionProhibida ;
-    ex:textoExtracto "MOVE ABS (Z, 513000,50000000,NULL)" .
+ex:Interfaz_B10KEYLED1
+    a                   ex:InterfazUsuario ;
+    rdfs:label          "B10KEYLED1 Interface" ;
+    ex:textoExtracto    "DFDB B10KEYLED1 = SET ENABLEGAP = SET ENABLELEAP" .

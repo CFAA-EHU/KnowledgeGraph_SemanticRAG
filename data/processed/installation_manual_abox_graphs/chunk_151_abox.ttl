@@ -1,13 +1,28 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Regulador_v9_10 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Esta prestación requiere una versión de regulador v9.10 o posterior." ;
-    ex:identificador "v9.10" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SensorGap a ex:Sensor ;
-    ex:textoExtracto "consultar en el manual de i regulador el conexionado del sensor del gap" .
+ex:Regulador_v9.10
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador (versión 9.10 o posterior)"@es ;
+    ex:identificador "v9.10" ;
+    ex:textoExtracto "Esta prestación requiere una versión de regulador v9.10 o posterior. Consultar en el manual de i regulador el conexionado del sensor del gap."@es .
 
-ex:ModuloRemotoEtherCAT a ex:ComponenteElectrico ;
-    ex:textoExtracto "Entrada analógica de los módulos remotos EtherCAT" .
+ex:SensorGap
+    a ex:Sensor ;
+    rdfs:label "Sensor del gap"@es ;
+    ex:textoExtracto "conexionado del sensor del gap"@es ;
+    ex:monitoreaParametro ex:ParametroGap .
 
-ex:RegistroPLC a ex:ComponenteElectrico ;
-    ex:textoExtracto "este parámetro indica el registro del PLC que mapea la entrada" .
+ex:ParametroGap
+    a ex:Parametro ;
+    rdfs:label "Parámetro de control del gap"@es ;
+    ex:textoExtracto "Este parámetro indica el número de nodo del regulador. Entrada analógica de los módulos remotos EtherCAT. En este caso, este parámetro indica el registro del PLC que mapea la entrada"@es ;
+    ex:valor "Nodo del regulador / Registro PLC (EtherCAT)"@es .
+
+ex:ModuloRemotoEtherCAT
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo remoto EtherCAT"@es ;
+    ex:textoExtracto "Entrada analógica de los módulos remotos EtherCAT"@es ;
+    ex:tieneComponente ex:SensorGap .

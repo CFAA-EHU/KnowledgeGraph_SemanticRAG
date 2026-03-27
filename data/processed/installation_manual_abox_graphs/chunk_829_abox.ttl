@@ -1,34 +1,86 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SERVOn_ENABLE a ex:Parametro ;
-    ex:textoExtracto "SERVOON ENABLE" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DWELL a ex:Parametro ;
-    ex:textoExtracto "DWELL" .
+ex:Parametro_DWELL
+    a ex:Parametro ;
+    rdfs:label "DWELL" ;
+    ex:textoExtracto "el parámetro DWELL solamente si SERVOON está a (=0). [...] asignar al parámetro máquina DWELL un valor superior al tiempo entre 2 scan de PLC" ;
+    ex:monitoreaParametro ex:Sensor_SERVOON .
 
-ex:SERVOnON a ex:Parametro ;
-    ex:textoExtracto "SERVOnON" .
+ex:Parametro_DEAD_axis
+    a ex:Parametro ;
+    rdfs:label "DEAD(axis)" ;
+    ex:textoExtracto "el PLC debe activar la marca DEAD(axis) para que el CNC no aplique el empalme de bloques en estos ejes muertos" ;
+    ex:mitigaRiesgo ex:AvisoSeguridad_ErrorEjeBloqueado .
 
-ex:DEAD_axis a ex:Parametro ;
-    ex:textoExtracto "DEAD(axis)" .
+ex:Parametro_DRO_axis
+    a ex:Parametro ;
+    rdfs:label "DRO(axis)" ;
+    ex:textoExtracto "la marca DRO, junto con la marca SERVOON correspondiente, permite que el eje o cabezal trabaje como visualizador. [...] Si la marca DRO vuelve a (=0) el eje deja de ser eje visualizador" ;
+    ex:controla ex:ModoOperacion_Visualizador .
 
-ex:DRO_axis a ex:Parametro ;
-    ex:textoExtracto "DRO(axis)" .
+ex:Parametro_LIM_axis_OFF
+    a ex:Parametro ;
+    rdfs:label "LIM(axis)OFF" ;
+    ex:textoExtracto "Si el PLC activa esta marca, el CNC no tiene en cuenta los límites de software ni las zonas de trabajo fijadas para el eje correspondiente" ;
+    ex:habilitadoPor ex:Actuador_PLC ;
+    ex:mitigaRiesgo ex:AvisoSeguridad_LimiteSoftwareExcedido .
 
-ex:LIM_axis_OFF a ex:Parametro ;
-    ex:textoExtracto "LIM(axis)OFF" .
+ex:Parametro_SERVOON
+    a ex:Parametro ;
+    rdfs:label "SERVOON" ;
+    ex:textoExtracto "tras activar la marca ENABLE, el CNC espera el tiempo indicado en el parámetro DWELL solamente si SERVOON está a (=0). [...] Cuando se desea controlar el eje sólo en los desplazamientos, se debe asignar al parámetro máquina DWELL un valor superior al tiempo entre 2 scan de PLC para que el eje no dé el error de 'eje bloqueado'" ;
+    ex:monitoreaParametro ex:Sensor_SERVOON .
 
-ex:ModoOperacion_arista_matada a ex:ModoOperacion ;
-    ex:identificador "G05, G50 o HSC" ;
-    ex:textoExtracto "cualquier modo de arista matada (G05, G50 o HSC)" .
+ex:Sensor_SERVOON
+    a ex:Sensor ;
+    rdfs:label "SERVOON" ;
+    ex:textoExtracto "la marca SERVOON. [...] Si transcurrido este tiempo la señal SERVOON siga sin estar activa, el CNC muestra el error 'eje bloqueado'" ;
+    ex:controla ex:ModoOperacion_DesplazamientoEje .
 
-ex:Error_eje_bloqueado a ex:DiagnosticoFallo ;
-    ex:textoExtracto "eje bloqueado" .
+ex:ModoOperacion_DesplazamientoEje
+    a ex:ModoOperacion ;
+    rdfs:label "Control de eje en desplazamientos" ;
+    ex:textoExtracto "Cuando se desea controlar el eje sólo en los desplazamientos, se debe asignar al parámetro máquina DWELL un valor superior al tiempo entre 2 scan de PLC" ;
+    ex:requiereMantenimiento ex:TareaMantenimiento_AjusteDWELL .
 
-ex:Error_seguimiento a ex:DiagnosticoFallo ;
-    ex:textoExtracto "error de seguimiento" .
+ex:ModoOperacion_Visualizador
+    a ex:ModoOperacion ;
+    rdfs:label "Modo visualizador de eje/cabezal" ;
+    ex:textoExtracto "permite que el eje o cabezal trabaje como visualizador. [...] el CNC no cierra el lazo de posición ni genera error de seguimiento, ya que se igualan la cota real y teórica" .
 
-ex:Sistema_CNC a ex:Sistema ;
-    ex:textoExtracto "el CNC" .
+ex:ModoOperacion_AristaMatada
+    a ex:ModoOperacion ;
+    rdfs:label "Modo arista matada (G05, G50, HSC)" ;
+    ex:textoExtracto "Cuando el CNC trabaja en cualquier modo de arista matada (G05, G50 o HSC), puede dar error de eje bloqueado en el empalme de bloques" ;
+    ex:requiereMantenimiento ex:TareaMantenimiento_ActivacionDEADaxis .
 
-ex:Sistema_PLC a ex:Sistema ;
-    ex:textoExtracto "el PLC" .
+ex:AvisoSeguridad_ErrorEjeBloqueado
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error: eje bloqueado" ;
+    ex:textoExtracto "el CNC muestra el error 'eje bloqueado'. [...] puede dar error de eje bloqueado en el empalme de bloques si alguno de los ejes implicados no tiene activa la marca SERVOON de antemano" .
+
+ex:AvisoSeguridad_LimiteSoftwareExcedido
+    a ex:AvisoSeguridad ;
+    rdfs:label "Límite de software excedido" ;
+    ex:textoExtracto "facilita llevar la herramienta de nuevo a una zona permitida, en caso de que ésta haya superado los límites de software o haya invadido una zona prohibida" .
+
+ex:TareaMantenimiento_AjusteDWELL
+    a ex:TareaMantenimiento ;
+    rdfs:label "Ajuste del parámetro DWELL" ;
+    ex:textoExtracto "se debe asignar al parámetro máquina DWELL un valor superior al tiempo entre 2 scan de PLC para que el eje no dé el error de 'eje bloqueado'" ;
+    ex:solucionaFallo ex:AvisoSeguridad_ErrorEjeBloqueado .
+
+ex:TareaMantenimiento_ActivacionDEADaxis
+    a ex:TareaMantenimiento ;
+    rdfs:label "Activación de DEAD(axis) para ejes muertos" ;
+    ex:textoExtracto "el PLC debe activar la marca DEAD(axis) para que el CNC no aplique el empalme de bloques en estos ejes muertos" ;
+    ex:solucionaFallo ex:AvisoSeguridad_ErrorEjeBloqueado .
+
+ex:Actuador_PLC
+    a ex:Actuador ;
+    rdfs:label "PLC" ;
+    ex:textoExtracto "el PLC debe activar la marca DEAD(axis). [...] Si el PLC activa esta marca (LIM(axis)OFF), el CNC no tiene en cuenta los límites de software" ;
+    ex:controla ex:Parametro_DEAD_axis , ex:Parametro_LIM_axis_OFF .

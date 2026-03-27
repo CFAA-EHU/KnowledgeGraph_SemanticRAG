@@ -1,0 +1,72 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_REFINI
+    a ex:Parametro ;
+    rdfs:label "Parámetro REFINI" ;
+    ex:textoExtracto "El parámetro REFINI establece si el CNC hace una búsqueda de referencia del cabezal con su primer movimiento." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Parametro_NPULSES
+    a ex:Parametro ;
+    rdfs:label "Parámetro NPULSES" ;
+    ex:textoExtracto "Este parámetro sólo se tiene en cuenta cuando los parámetros NPULSES y NPULSES2 se han definido con valor distinto de 0." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Parametro_NPULSES2
+    a ex:Parametro ;
+    rdfs:label "Parámetro NPULSES2" ;
+    ex:textoExtracto "Este parámetro sólo se tiene en cuenta cuando los parámetros NPULSES y NPULSES2 se han definido con valor distinto de 0." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Funcion_G74 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G74" ;
+    ex:textoExtracto "Cuando se programa una nueva búsqueda de referencia con la función G74, desde el programa o modo MDI/MDA." ;
+    ex:habilitadoPor ex:SistemaCNC .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "El CNC realizará una nueva búsqueda de referencia del cabezal en las siguientes circunstancias: [...] Después de caer el anillo de Sercos. [...] Con cambio de encoder." .
+
+ex:SistemaTandem
+    a ex:Sistema ;
+    rdfs:label "Sistema tándem" ;
+    ex:textoExtracto "En un sistema tándem, sólo se referencia el eje maestro; la búsqueda de cero es transparente para el esclavo que simplemente acompaña al maestro." ;
+    ex:compuestoPor ex:EjeMaestroTandem, ex:EjeEsclavoTandem .
+
+ex:EjeMaestroTandem
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro (sistema tándem)" ;
+    ex:textoExtracto "En un sistema tándem, sólo se referencia el eje maestro; la búsqueda de cero es transparente para el esclavo que simplemente acompaña al maestro." .
+
+ex:EjeEsclavoTandem
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo (sistema tándem)" ;
+    ex:textoExtracto "la búsqueda de cero es transparente para el esclavo que simplemente acompaña al maestro." .
+
+ex:Parametro_REFFEED1
+    a ex:Parametro ;
+    rdfs:label "Parámetro REFFEED1" ;
+    ex:textoExtracto "Todos los ejes avanzan a la vez, cada uno a su avance REFFEED1, hasta encontrar cada uno su micro." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
+    rdfs:label "Parámetro REFFEED2" ;
+    ex:textoExtracto "comienza secuencialmente la búsqueda de cero de cada eje, al avance REFFEED2, empezando por el último eje que ha llegado a su micro y continuando en orden según el número lógico de los ejes." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:MicroInterrupter
+    a ex:Sensor ;
+    rdfs:label "Micro (interruptor de referencia)" ;
+    ex:textoExtracto "hasta encontrar cada uno su micro. [...] Los ejes esperan sobre el micro hasta que todos los ejes implicados en la búsqueda encuentren el micro." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Sensor_I0
+    a ex:Sensor ;
+    rdfs:label "Sensor I0" ;
+    ex:textoExtracto "Si alguno de los ejes del grupo programado no dispone de micro, el eje espera a que los demás lleguen a sus micros, y una vez ocurrido esto, buscará su I0 al avance REFFEED2 dentro del orden que le toque." .

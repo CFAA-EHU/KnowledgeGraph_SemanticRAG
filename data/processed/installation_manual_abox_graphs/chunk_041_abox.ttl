@@ -1,45 +1,29 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Capitulo41 a ex:Capitulo ;
-    rdfs:label "Capítulo"@es ;
-    ex:textoExtracto "Este capítulo recoge el significado de todos los parámetros máquina del CNC."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroMaquinaCNC a ex:Parametro ;
-    rdfs:label "Parámetro máquina del CNC"@es ;
-    ex:textoExtracto "parámetros máquina del CNC"@es .
+ex:Capitulo_ParametrosMaquina
+    a ex:Capitulo ;
+    rdfs:label "Capítulo de Parámetros Máquina"@es ;
+    ex:textoExtracto "Este capítulo recoge el significado de todos los parámetros máquina del CNC."@es ;
+    ex:identificador "2.2" ;
+    ex:documentadoEn ex:Manual_CNC .
 
-ex:ModeloCNC a ex:Maquina ;
-    rdfs:label "CNC"@es ;
-    ex:textoExtracto "modelo de CNC"@es .
+ex:ParametrosMaquina_CNC
+    a ex:Parametro ;
+    rdfs:label "Parámetros máquina del CNC"@es ;
+    ex:textoExtracto "Los parámetros máquina del CNC están agrupados [...] datos específicos de la máquina. Algunos de estos datos pueden ser el número de ejes, avances, aceleraciones, captaciones, tipo de almacén, cambiador de herramientas, etc."@es ;
+    ex:documentadoEn ex:Capitulo_ParametrosMaquina .
 
-ex:ParametroEje a ex:Parametro ;
-    rdfs:label "Parámetro de eje"@es ;
-    ex:textoExtracto "número de ejes"@es .
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "El CNC muestra los parámetros apropiados en función del modelo y las opciones de software activas."@es ;
+    ex:monitoreaParametro ex:ParametrosMaquina_CNC ;
+    ex:controla ex:MaquinaHerramienta .
 
-ex:ParametroAvance a ex:Parametro ;
-    rdfs:label "Parámetro de avance"@es ;
-    ex:textoExtracto "avances"@es .
-
-ex:ParametroAceleracion a ex:Parametro ;
-    rdfs:label "Parámetro de aceleración"@es ;
-    ex:textoExtracto "aceleraciones"@es .
-
-ex:ParametroCaptacion a ex:Parametro ;
-    rdfs:label "Parámetro de captación"@es ;
-    ex:textoExtracto "captaciones"@es .
-
-ex:ParametroAlmacen a ex:Parametro ;
-    rdfs:label "Parámetro de almacén"@es ;
-    ex:textoExtracto "tipo de almacén"@es .
-
-ex:ParametroCambiadorHerramienta a ex:Parametro ;
-    rdfs:label "Parámetro de cambiador de herramientas"@es ;
-    ex:textoExtracto "cambiador de herramientas"@es .
-
-ex:FabricanteMaquina a ex:Empresa ;
-    rdfs:label "Fabricante de la máquina"@es ;
-    ex:textoExtracto "fabricante de la máquina"@es .
-
-ex:ParametroMaquinaGrupo a ex:Parametro ;
-    rdfs:label "Grupo de parámetros máquina"@es ;
-    ex:textoExtracto "Los parámetros máquina del CNC están agrupados de la siguiente manera."@es .
+ex:MaquinaHerramienta
+    a ex:Maquina ;
+    rdfs:label "Máquina-herramienta"@es ;
+    ex:textoExtracto "Para que la máquina-herramienta pueda ejecutar correctamente las instrucciones programadas, así como interpretar los elementos que tiene interconectados, el CNC debe conocer los datos específicos de la máquina."@es .

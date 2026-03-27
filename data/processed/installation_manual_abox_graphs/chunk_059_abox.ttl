@@ -1,23 +1,36 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TANDEM a ex:Tabla ;
-    ex:textoExtracto "TANDEM Tabla de ejes o cabezales tándem. Este parámetro muestra la tabla para definir las parejas tándem del sistema." ;
-    ex:tieneComponente ex:EjeTandem1, ex:EjeTandem2, ex:AccionamientoElectrico1, ex:AccionamientoElectrico2, ex:SistemaTransmision1, ex:ReguladorV6_14 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeTandem1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Un eje tándem consiste en dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:TablaEjesTandem a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de ejes o cabezales tándem"@es ;
+    ex:textoExtracto "TANDEM Tabla de ejes o cabezales tándem. Este parámetro muestra la tabla para definir las parejas tándem del sistema."@es ;
+    ex:identificador "TANDEM" .
 
-ex:EjeTandem2 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Un eje tándem consiste en dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:SistemaTandem
+    a ex:Sistema ;
+    rdfs:label "Sistema tándem"@es ;
+    ex:textoExtracto "Un eje tándem consiste en dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)."@es ;
+    ex:documentadoEn ex:TablaEjesTandem .
 
-ex:AccionamientoElectrico1 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Un eje tándem consiste en dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:AccionamientoElectrico1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Accionamiento eléctrico (motor) en sistema tándem"@es ;
+    ex:textoExtracto "dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí"@es .
 
-ex:AccionamientoElectrico2 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Un eje tándem consiste en dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:AccionamientoElectrico2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Accionamiento eléctrico (motor) en sistema tándem"@es ;
+    ex:textoExtracto "dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí"@es .
 
-ex:SistemaTransmision1 a ex:Sistema ;
-    ex:textoExtracto "Un eje tándem consiste en dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)." .
+ex:SistemaTandem
+    ex:tieneComponente ex:AccionamientoElectrico1 , ex:AccionamientoElectrico2 ;
+    ex:compuestoPor ex:AccionamientoElectrico1 , ex:AccionamientoElectrico2 .
 
-ex:ReguladorV6_14 a ex:ComponenteElectrico ;
-    ex:textoExtracto "La gestión de cabezales y ejes tándem requiere una versión del regulador V6.14 o superior." ;
+ex:ReguladorV6_14
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador V6.14"@es ;
+    ex:textoExtracto "La gestión de cabezales y ejes tándem requiere una versión del regulador V6.14 o superior."@es ;
     ex:identificador "V6.14" .

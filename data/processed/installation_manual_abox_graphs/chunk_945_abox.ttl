@@ -1,29 +1,29 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:LL_SUB_SPD_TO_GR a ex:ComponenteElectrico ;
-    rdfs:label "LL SUB_SPD TO GR" ;
-    ex:textoExtracto "cambio manual. LL SUB_SPD_TO_GR" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:BREAK a ex:ComponenteElectrico ;
-    rdfs:label "BREAK" ;
-    ex:textoExtracto "$BREAK" .
+ex:RutinaM06 a ex:ModoOperacion ;
+    rdfs:label "Rutina M06" ;
+    ex:textoExtracto "cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal. [...] # RET" ;
+    ex:identificador "M06" .
 
-ex:ENDSWITCH a ex:ComponenteElectrico ;
-    rdfs:label "ENDSWITCH" ;
-    ex:textoExtracto "$ENDSWITCH" .
+ex:Subrutina_SUB_SPD_TO_GR a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_TO_GR" ;
+    ex:textoExtracto "LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal." ;
+    ex:ejecutadoPor ex:RutinaM06 .
 
-ex:WHILE_V_TM_MZWAIT a ex:ComponenteElectrico ;
-    rdfs:label "WHILE V.TM.MZWAIT" ;
-    ex:textoExtracto "$WHILE V.TM.MZWAIT == 1 $ENDWHILE" .
+ex:TeclaSTOP a ex:ElementoSeguridad ;
+    rdfs:label "Tecla STOP" ;
+    ex:textoExtracto "# ESTOP ; Habilitar la tecla STOP." ;
+    ex:habilitadoPor ex:RutinaM06 .
 
-ex:ESTOP a ex:ComponenteElectrico ;
-    rdfs:label "ESTOP" ;
-    ex:textoExtracto "# ESTOP" .
+ex:GestorAlmacen a ex:Sistema ;
+    rdfs:label "Gestor del almacén" ;
+    ex:textoExtracto "$WHILE V.TM.MZWAIT == 1 $ENDWHILE ; Espera al gestor del almacén." ;
+    ex:monitoreaParametro ex:ParametroMZWAIT .
 
-ex:RET a ex:ComponenteElectrico ;
-    rdfs:label "RET" ;
-    ex:textoExtracto "# RET" .
-
-ex:DSBLK a ex:ComponenteElectrico ;
-    rdfs:label "DSBLK" ;
-    ex:textoExtracto "#DSBLK" .
+ex:ParametroMZWAIT a ex:Parametro ;
+    rdfs:label "V.TM.MZWAIT" ;
+    ex:textoExtracto "V.TM.MZWAIT" ;
+    ex:valor "1" .

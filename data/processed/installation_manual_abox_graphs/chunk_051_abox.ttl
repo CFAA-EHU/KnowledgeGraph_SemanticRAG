@@ -1,21 +1,55 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_WARNCOUPE a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_WARNCOUPE
+    a ex:Parametro ;
     rdfs:label "WARNCOUPE" ;
+    ex:identificador "WARNCOUPE" ;
     ex:textoExtracto "Eje gantry. Máxima diferencia permitida entre los errores de seguimiento de ambos ejes antes de mostrar un warning." ;
-    ex:valor "Máxima diferencia permitida entre los errores de seguimiento de ambos ejes antes de mostrar un warning" .
+    ex:monitoreaParametro ex:Sistema_EjesGantry .
 
-ex:Parametro_MAXCOUPE a ex:Parametro ;
+ex:Parametro_MAXCOUPE
+    a ex:Parametro ;
     rdfs:label "MAXCOUPE" ;
+    ex:identificador "MAXCOUPE" ;
     ex:textoExtracto "Eje gantry. Máxima diferencia permitida entre los errores de seguimiento de ambos ejes." ;
-    ex:valor "Máxima diferencia permitida entre los errores de seguimiento de ambos ejes" .
+    ex:monitoreaParametro ex:Sistema_EjesGantry .
 
-ex:Parametro_MINCORFEED a ex:Parametro ;
+ex:Parametro_MINCORFEED
+    a ex:Parametro ;
     rdfs:label "MINCORFEED" ;
+    ex:identificador "MINCORFEED" ;
     ex:textoExtracto "Velocidad mínima en las esquinas para el modo HSC." ;
-    ex:valor "Velocidad mínima en las esquinas para el modo HSC" .
+    ex:monitoreaParametro ex:ModoOperacion_HSC .
 
-ex:Parametro_MAXFEED a ex:Parametro ;
+ex:Parametro_MAXFEED
+    a ex:Parametro ;
     rdfs:label "MAXFEED" ;
-    ex:textoExtracto "Máximo avance para el mecanizado. Se recomienda definir este parámetro con un valor distinto de ꞏ0ꞏ." ;
-    ex:valor "Máximo avance para el mecanizado" .
+    ex:identificador "MAXFEED" ;
+    ex:textoExtracto "Máximo avance para el mecanizado. Se recomienda definir este parámetro con un valor distinto de ꞏ0ꞏ." .
+
+ex:Sistema_EjesGantry
+    a ex:Sistema ;
+    rdfs:label "Sistema de ejes gantry" ;
+    ex:textoExtracto "Eje gantry. Máxima diferencia permitida entre los errores de seguimiento de ambos ejes antes de mostrar un warning / Máxima diferencia permitida entre los errores de seguimiento de ambos ejes." .
+
+ex:ModoOperacion_HSC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC" ;
+    ex:textoExtracto "Velocidad mínima en las esquinas para el modo HSC." .
+
+ex:Tabla_ParametrosMaquina a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros máquina" ;
+    ex:textoExtracto "Parámetros máquina generales. | Parámetro. | Significado. | [...] Parámetros máquina de los ejes y cabezales." ;
+    ex:documentadoEn ex:Pagina_53_54 ;
+    ex:tieneComponente ex:Parametro_WARNCOUPE , ex:Parametro_MAXCOUPE , ex:Parametro_MINCORFEED , ex:Parametro_MAXFEED .
+
+ex:Pagina_53_54
+    a ex:Pagina ;
+    rdfs:label "Páginas 53-54" ;
+    ex:identificador "53-54" ;
+    ex:textoExtracto "Para garantizar el correcto funcionamiento del CNC y prevenir daños a la máquina, los parámetros máquina deben estar correctamente definidos, en especial aquellos relacionados con las alarmas, los límites de recorrido, el error de seguimiento, los avances y las velocidades." ;
+    ex:ilustradoEn ex:Manual_CNC .

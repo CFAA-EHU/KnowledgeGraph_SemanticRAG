@@ -1,54 +1,62 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:CNCEX a ex:ModoOperacion ;
-    ex:textoExtracto "CNCEX" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:marcaFREE a ex:Parametro ;
-    ex:identificador "FREE" ;
-    ex:textoExtracto "marca FREE del canal a (=1)" .
+ex:Marca_CNCEX a ex:Parametro ;
+    rdfs:label "Marca CNCEX"@es ;
+    ex:textoExtracto "Esta marca sólo es válida cuando el canal está ejecutando un CNCEX; no en otras ejecuciones de programa o MDI. Una vez anulada la ejecución, el CNC desactiva esta marca y además pone la marca FREE del canal a (=1)."@es ;
+    ex:identificador "CNCEX" .
 
-ex:marcaPLCABORT a ex:Parametro ;
-    ex:identificador "PLCABORT" ;
-    ex:textoExtracto "marca PLCABORT" .
+ex:Marca_FREE a ex:Parametro ;
+    rdfs:label "Marca FREE"@es ;
+    ex:textoExtracto "el CNC desactiva esta marca [CNCEX] y además pone la marca FREE del canal a (=1)."@es ;
+    ex:identificador "FREE" .
 
-ex:marcaPRGABORT a ex:Parametro ;
-    ex:textoExtracto "marca PRGABORT" .
+ex:Marca_PLCABORT a ex:Parametro ;
+    rdfs:label "Marca PLCABORT"@es ;
+    ex:textoExtracto "Si se activa la marca PLCABORT sin estar lanzado un CNCEX, la marca permanece a (=1) hasta que se ejecute un CNCEX (el cual quedará abortado automáticamente) o hasta que se desactive (RES PLCABORT)."@es ;
+    ex:identificador "PLCABORT" .
 
-ex:PRGABORTC1 a ex:Parametro ;
-    ex:identificador "PRGABORTC1" ;
-    ex:textoExtracto "PRGABORTC1 (también se puede programar como PRGABORT)" .
+ex:Marca_PRGABORT a ex:Parametro ;
+    rdfs:label "Marca PRGABORT"@es ;
+    ex:textoExtracto "Si el PLC pone esta marca a (=1), el canal del CNC aborta la ejecución del programa en curso pero sin afectar al cabezal; el resto de la historia se inicializa."@es ;
+    ex:identificador "PRGABORT" .
 
-ex:PRGABORTC2 a ex:Parametro ;
-    ex:identificador "PRGABORTC2" ;
-    ex:textoExtracto "PRGABORTC2" .
+ex:Marca_PRGABORTC1 a ex:Parametro ;
+    rdfs:label "Marca PRGABORTC1"@es ;
+    ex:textoExtracto "PRGABORTC1 (también se puede programar como PRGABORT)"@es ;
+    ex:identificador "PRGABORTC1" .
 
-ex:PRGABORTC3 a ex:Parametro ;
-    ex:identificador "PRGABORTC3" ;
-    ex:textoExtracto "PRGABORTC3" .
+ex:Marca_PRGABORTC2 a ex:Parametro ;
+    rdfs:label "Marca PRGABORTC2"@es ;
+    ex:textoExtracto "PRGABORTC2"@es ;
+    ex:identificador "PRGABORTC2" .
 
-ex:PRGABORTC4 a ex:Parametro ;
-    ex:identificador "PRGABORTC4" ;
-    ex:textoExtracto "PRGABORTC4" .
+ex:Marca_PRGABORTC3 a ex:Parametro ;
+    rdfs:label "Marca PRGABORTC3"@es ;
+    ex:textoExtracto "PRGABORTC3"@es ;
+    ex:identificador "PRGABORTC3" .
 
-ex:marcaNEXTMPGAXIS a ex:Parametro ;
-    ex:identificador "NEXTMPGAXIS" ;
-    ex:textoExtracto "marca NEXTMPGAXIS" .
+ex:Marca_PRGABORTC4 a ex:Parametro ;
+    rdfs:label "Marca PRGABORTC4"@es ;
+    ex:textoExtracto "PRGABORTC4"@es ;
+    ex:identificador "PRGABORTC4" .
 
-ex:marcaCanal a ex:Parametro ;
-    ex:identificador "marca para cada canal" ;
-    ex:textoExtracto "Hay una marca para cada canal" .
+ex:Marca_NEXTMPGAXIS a ex:Parametro ;
+    rdfs:label "Marca NEXTMPGAXIS"@es ;
+    ex:textoExtracto "Esta marca permite seleccionar secuencialmente un eje para desplazarlo con el volante. [...] Con un flanco de subida de esta marca, cambio de (=0) a (=1), el CNC actúa de la siguiente manera."@es ;
+    ex:identificador "NEXTMPGAXIS" .
 
-ex:etiquetaABORT a ex:Parametro ;
-    ex:identificador "#ABORT" ;
-    ex:textoExtracto "etiqueta indicada en la sentencia #ABORT activa en el programa pieza" .
+ex:Modo_Manual a ex:ModoOperacion ;
+    rdfs:label "Modo manual (CNC)"@es ;
+    ex:textoExtracto "Esta marca [NEXTMPGAXIS] sólo se tiene en cuenta cuando el CNC se encuentra en modo manual y el selector en modo volante."@es .
 
-ex:selectorVolante a ex:InterfazUsuario ;
-    ex:textoExtracto "selector en modo volante" .
+ex:Selector_ModoVolante a ex:InterfazUsuario ;
+    rdfs:label "Selector en modo volante"@es ;
+    ex:textoExtracto "el CNC se encuentra en modo manual y el selector en modo volante."@es .
 
-ex:modoManual a ex:ModoOperacion ;
-    ex:textoExtracto "modo manual" .
-
-ex:canalCNC a ex:Sistema ;
-    ex:textoExtracto "canal del CNC" .
-
-ex:programaPieza a ex:TareaMantenimiento ;
-    ex:textoExtracto "programa pieza" .
+ex:Sentencia_ABORT a ex:Parametro ;
+    rdfs:label "Sentencia #ABORT"@es ;
+    ex:textoExtracto "el CNC reanuda la ejecución del programa a partir de la etiqueta indicada en la sentencia #ABORT activa en el programa pieza."@es ;
+    ex:identificador "#ABORT" .

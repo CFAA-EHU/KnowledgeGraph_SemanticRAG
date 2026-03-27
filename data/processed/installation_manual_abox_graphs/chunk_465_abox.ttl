@@ -1,33 +1,58 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SSIDATALENGTH a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Param_SSIDATALENGTH
+    a ex:Parametro ;
+    rdfs:label "SSIDATALENGTH" ;
     ex:textoExtracto "Número de bits de la transmisión SSI que constituyen la cota." ;
-    rdfs:label "SSIDATALENGTH" .
+    ex:identificador "SSIDATALENGTH" .
 
-ex:SSICRCBITS a ex:Parametro ;
+ex:Param_SSICRCBITS
+    a ex:Parametro ;
+    rdfs:label "SSICRCBITS" ;
     ex:textoExtracto "Número de bits, si los hubiese, que constituyen algún tipo de chequeo de transmisión válida (CRC, checksum, paridad)." ;
-    rdfs:label "SSICRCBITS" .
+    ex:identificador "SSICRCBITS" .
 
-ex:SSIALARMBITS a ex:Parametro ;
+ex:Param_SSIALARMBITS
+    a ex:Parametro ;
+    rdfs:label "SSIALARMBITS" ;
     ex:textoExtracto "Número de bits, si los hubiese, para el chequeo de una transmisión correcta. El captador puede mandar uno o varios bits indicando una condición de alarma si algo ha ido mal, o bien uno o varios bits de reconocimiento (acknowledge) si la transmisión ha sido efectuada correctamente." ;
-    rdfs:label "SSIALARMBITS" .
+    ex:identificador "SSIALARMBITS" .
 
-ex:SSISTARTBITS a ex:Parametro ;
+ex:Param_SSISTARTBITS
+    a ex:Parametro ;
+    rdfs:label "SSISTARTBITS" ;
     ex:textoExtracto "Número de bits, si los hubiese, que es necesario esperar para empezar a recibir la información de cota." ;
-    rdfs:label "SSISTARTBITS" .
+    ex:identificador "SSISTARTBITS" .
 
-ex:SSIPACKFORMAT a ex:Parametro ;
+ex:Param_SSIPACKFORMAT
+    a ex:Parametro ;
+    rdfs:label "SSIPACKFORMAT" ;
     ex:textoExtracto "Orden en el que los datos son enviados por el encoder. Si primero nos va llegar la cota, el CRC o la alarma y que orden hay entre ellos. Si hay bits de start programados, se considera que siempre van a recibirse los primeros." ;
-    rdfs:label "SSIPACKFORMAT" .
+    ex:identificador "SSIPACKFORMAT" .
 
-ex:SSIDATAMODE a ex:Parametro ;
+ex:Param_SSIDATAMODE
+    a ex:Parametro ;
+    rdfs:label "SSIDATAMODE" ;
     ex:textoExtracto "Orden en el que se transmite el bit más significativo. • SSIDATAMODE = 0; el primer bit es el LSB (Least Significant Bit). • SSIDATAMODE = 1; el primer bit es el MSB (Most Significant Bit)." ;
-    rdfs:label "SSIDATAMODE" .
+    ex:identificador "SSIDATAMODE" .
 
-ex:SSIOPERATION a ex:Parametro ;
+ex:Param_SSIOPERATION
+    a ex:Parametro ;
+    rdfs:label "SSIOPERATION" ;
     ex:textoExtracto "Tipo de operación sobre los datos antes de leerlos." ;
-    rdfs:label "SSIOPERATION" .
+    ex:identificador "SSIOPERATION" .
 
-ex:Tabla_Parametros_SSI a ex:Tabla ;
-    ex:textoExtracto "Parámetro. | Significado. | --- | --- | SSIDATALENGTH | Número de bits de la transmisión SSI que constituyen la cota. | SSICRCBITS | Número de bits, si los hubiese, que constituyen algún tipo de chequeo de transmisión válida (CRC, checksum, paridad). | SSIALARMBITS | Número de bits, si los hubiese, para el chequeo de una transmisión correcta. El captador puede mandar uno o varios bits indicando una condición de alarma si algo ha ido mal, o bien uno o varios bits de reconocimiento (acknowledge) si la transmisión ha sido efectuada correctamente. | SSISTARTBITS | Número de bits, si los hubiese, que es necesario esperar para empezar a recibir la información de cota. | Parámetro. | Significado. | --- | --- | SSIPACKFORMAT | Orden en el que los datos son enviados por el encoder. Si primero nos va llegar la cota, el CRC o la alarma y que orden hay entre ellos. Si hay bits de start programados, se considera que siempre van a recibirse los primeros. | SSIDATAMODE | Orden en el que se transmite el bit más significativo. • SSIDATAMODE = 0; el primer bit es el LSB (Least Significant Bit). • SSIDATAMODE = 1; el primer bit es el MSB (Most Significant Bit). | SSIOPERATION | Tipo de operación sobre los datos antes de leerlos." ;
-    ex:tieneComponente ex:SSIDATALENGTH, ex:SSICRCBITS, ex:SSIALARMBITS, ex:SSISTARTBITS, ex:SSIPACKFORMAT, ex:SSIDATAMODE, ex:SSIOPERATION .
+ex:Tabla_ParametrosSSI a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros de transmisión SSI" ;
+    ex:textoExtracto "Parámetros que definen el formato, orden e interpretación de la transmisión SSI." ;
+    ex:tieneComponente ex:Param_SSIDATALENGTH ;
+    ex:tieneComponente ex:Param_SSICRCBITS ;
+    ex:tieneComponente ex:Param_SSIALARMBITS ;
+    ex:tieneComponente ex:Param_SSISTARTBITS ;
+    ex:tieneComponente ex:Param_SSIPACKFORMAT ;
+    ex:tieneComponente ex:Param_SSIDATAMODE ;
+    ex:tieneComponente ex:Param_SSIOPERATION .

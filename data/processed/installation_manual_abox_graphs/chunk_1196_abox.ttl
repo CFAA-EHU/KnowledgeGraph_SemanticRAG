@@ -1,15 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Sub_Probe_Tool_Begin ex:textoExtracto """Ejemplo de subrutina Sub_Probe_Tool_Begin.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ; Activate PROBE1 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware. # MSG["WAIT FOR ENABLING PROBE1"] #WAIT FOR[V.PLC.PROBE1ENA==1] ; Select PROBE1 input for using in Probing. # SELECT PROBE[1] #FLUSH $IF [V.G.PRBST1==1] #WARNING["PROBE1 SIGNAL TOUCHING"] M0 $ENDIF ; Check probe in safe mode feature is actived. $IF [V.PLC.PROBE1MONIT==0] #MSG["PROBE NOT IN SAFE MODE"] $ENDIF #RETDSBLK #COMMENT BEGIN PLC signals to add in the logic: PROBE1ENA; PROBE1 is enabled confirmation signal to CNC. If not used in PLC, it is actived by default. PROBE1MONIT; It activates PROBE1 in SAFE mode. If probe is actived in no G100/3 motion, CNC will stop motion and shows an error. If not used in PLC, it is actived by default. # COMMENT END""" ;
-    a ex:Esquema ;
-    ex:compuestoPor ex:PROBE1ENA, ex:PROBE1MONIT .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Sub_Probe_Tool_End ex:textoExtracto """Ejemplo de subrutina Sub_Probe_Tool_End.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ;Deactivate PROBE1 Hardware by PLC output #RETDSBLK""" ;
-    a ex:Esquema .
+ex:Subrutina_Probe_Tool_Begin
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Sub_Probe_Tool_Begin.fst" ;
+    ex:identificador      "Sub_Probe_Tool_Begin.fst" ;
+    ex:textoExtracto      "Ejemplo de subrutina Sub_Probe_Tool_Begin.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ; Activate PROBE1 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware. # MSG[\"WAIT FOR ENABLING PROBE1\"] #WAIT FOR[V.PLC.PROBE1ENA==1] ; Select PROBE1 input for using in Probing. # SELECT PROBE[1] #FLUSH $IF [V.G.PRBST1==1] #WARNING[\"PROBE1 SIGNAL TOUCHING\"] M0 $ENDIF ; Check probe in safe mode feature is actived. $IF [V.PLC.PROBE1MONIT==0] #MSG[\"PROBE NOT IN SAFE MODE\"] $ENDIF #RETDSBLK"@en ;
+    ex:controla           ex:Sonda_Probe1 .
 
-ex:PROBE1ENA ex:textoExtracto """PROBE1ENA; PROBE1 is enabled confirmation signal to CNC. If not used in PLC, it is actived by default.""" ;
-    a ex:Parametro ;
-    ex:valor "PROBE1ENA" .
+ex:Subrutina_Probe_Tool_End
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Sub_Probe_Tool_End.fst" ;
+    ex:identificador      "Sub_Probe_Tool_End.fst" ;
+    ex:textoExtracto      "Ejemplo de subrutina Sub_Probe_Tool_End.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ;Deactivate PROBE1 Hardware by PLC output #RETDSBLK"@en ;
+    ex:controla           ex:Sonda_Probe1 .
 
-ex:PROBE1MONIT ex:textoExtracto """PROBE1MONIT; It activates PROBE1 in SAFE mode. If probe is actived in no G100/3 motion, CNC will stop motion and shows an error. If not used in PLC, it is actived by default.""" ;
-    a ex:Parametro ;
-    ex:valor "PROBE1MONIT" .
+ex:Sonda_Probe1
+    a                     ex:Sensor ;
+    rdfs:label            "PROBE1" ;
+    ex:identificador      "PROBE1" ;
+    ex:textoExtracto      "Activate PROBE1 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware. ; Select PROBE1 input for using in Probing. ; PROBE1ENA; PROBE1 is enabled confirmation signal to CNC. ; PROBE1MONIT; It activates PROBE1 in SAFE mode."@en ;
+    ex:monitoreaParametro ex:Parametro_PROBE1ENA ,
+                          ex:Parametro_PROBE1MONIT .
+
+ex:Parametro_PROBE1ENA
+    a               ex:Parametro ;
+    rdfs:label      "PROBE1ENA" ;
+    ex:identificador "PROBE1ENA" ;
+    ex:textoExtracto "PROBE1ENA; PROBE1 is enabled confirmation signal to CNC. If not used in PLC, it is actived by default."@en ;
+    ex:valor         "1" .
+
+ex:Parametro_PROBE1MONIT
+    a               ex:Parametro ;
+    rdfs:label      "PROBE1MONIT" ;
+    ex:identificador "PROBE1MONIT" ;
+    ex:textoExtracto "PROBE1MONIT; It activates PROBE1 in SAFE mode. If probe is actived in no G100/3 motion, CNC will stop motion and shows an error. If not used in PLC, it is actived by default."@en ;
+    ex:valor         "0" .
+
+ex:Empresa_Fagor
+    a               ex:Empresa ;
+    rdfs:label      "Fagor" ;
+    ex:textoExtracto "subrutina [...] suministrada por Fagor"@en .

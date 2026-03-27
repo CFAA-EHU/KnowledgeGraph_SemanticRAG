@@ -1,39 +1,67 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TDATA1 a ex:Parametro ;
-    ex:identificador "TDATA1" ;
-    ex:textoExtracto "TDATA1 = Z +R–L" ;
-    ex:valor "Z +R–L" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TDATA5 a ex:Parametro ;
-    ex:identificador "TDATA5" ;
-    ex:textoExtracto "TDATA5 = 05 Z" ;
-    ex:valor "05 Z" .
+ex:Parametro_TDATA1
+    a ex:Parametro ;
+    rdfs:label "TDATA1" ;
+    ex:textoExtracto "TDATA1 = ΔZ + R – L [...] TDATA1: Dimensión a calcular." ;
+    ex:valor "ΔZ + R – L"^^xsd:string .
 
-ex:TDATA6 a ex:Parametro ;
-    ex:identificador "TDATA6" ;
-    ex:textoExtracto "Cálculo del parámetro TDATA6" ;
-    ex:valor "Dimensión a calcular menos el diámetro de la bola del palpador" .
+ex:Parametro_TDATA5
+    a ex:Parametro ;
+    rdfs:label "TDATA5" ;
+    ex:textoExtracto "TDATA5 = 0,5 × ΔZ [...] TDATA5: Dimensión a calcular." ;
+    ex:valor "0,5 × ΔX"^^xsd:string .
 
-ex:DeltaZ a ex:Parametro ;
-    ex:identificador "Z" ;
-    ex:textoExtracto "Cota que indica el CNC" .
+ex:Parametro_TDATA6
+    a ex:Parametro ;
+    rdfs:label "TDATA6" ;
+    ex:textoExtracto "Cálculo del parámetro TDATA6 [...] medir la pieza, cuya dimensión será la cota indicada en el CNC menos el diámetro de la bola del palpador." ;
+    ex:valor "X = D + 2R"^^xsd:string .
 
-ex:DeltaX a ex:Parametro ;
-    ex:identificador "X" ;
-    ex:textoExtracto "Cota que indica el CNC" .
+ex:Parametro_DeltaZ
+    a ex:Parametro ;
+    rdfs:label "ΔZ" ;
+    ex:textoExtracto "ΔZ: Cota que indica el CNC." .
 
-ex:LongitudPalpador a ex:Parametro ;
-    ex:identificador "L" ;
-    ex:textoExtracto "Longitud del palpador" .
+ex:Parametro_DeltaX
+    a ex:Parametro ;
+    rdfs:label "ΔX" ;
+    ex:textoExtracto "ΔX: Cota que indica el CNC." .
 
-ex:RadioBolaPalpador a ex:Parametro ;
-    ex:identificador "R" ;
-    ex:textoExtracto "Radio de la bola del palpador" .
+ex:Componente_Palpador
+    a ex:ComponenteMecanico ;
+    rdfs:label "Palpador" ;
+    ex:textoExtracto "L: Longitud del palpador. R: Radio de la bola del palpador." .
 
-ex:PuntoReferenciaHerramientas a ex:Parametro ;
-    ex:identificador "OT" ;
-    ex:textoExtracto "Punto de referencia de las herramientas" .
+ex:Parametro_LongitudPalpador
+    a ex:Parametro ;
+    rdfs:label "L" ;
+    ex:textoExtracto "L: Longitud del palpador." ;
+    ex:valor "L"^^xsd:string .
 
-ex:EsquemaCálculoDimensiones a ex:Esquema ;
-    ex:textoExtracto "Cálculo de las dimensiones con ayuda de un cabezal angular" ;
-    ex:compuestoPor ex:TDATA1, ex:TDATA5, ex:TDATA6, ex:DeltaZ, ex:DeltaX, ex:LongitudPalpador, ex:RadioBolaPalpador, ex:PuntoReferenciaHerramientas .
+ex:Parametro_RadioBolaPalpador
+    a ex:Parametro ;
+    rdfs:label "R" ;
+    ex:textoExtracto "R: Radio de la bola del palpador." ;
+    ex:valor "R"^^xsd:string .
+
+ex:PuntoReferencia_OT
+    a ex:Parametro ;
+    rdfs:label "OT" ;
+    ex:textoExtracto "OT: Punto de referencia de las herramientas." .
+
+ex:Tabla_CalculoTDATA1 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de cálculo de TDATA1" ;
+    ex:textoExtracto "| Solución. | | --- | --- | | TDATA1 = ΔZ + R – L |" ;
+    ex:detalladoEnEsquema ex:Parametro_TDATA1 .
+
+ex:Tabla_CalculoTDATA5 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de cálculo de TDATA5" ;
+    ex:textoExtracto "| Solución. | | --- | --- | | TDATA5 = 0,5 × ΔZ |" ;
+    ex:detalladoEnEsquema ex:Parametro_TDATA5 .

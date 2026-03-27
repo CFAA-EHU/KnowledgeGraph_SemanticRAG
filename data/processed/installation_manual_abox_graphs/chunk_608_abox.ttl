@@ -1,25 +1,26 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MTBPAR a ex:Tabla ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:TablaParametrosFabricante_MTBPAR a ex:Tabla ;
+     a ex:Tabla ;
     rdfs:label "MTBPAR" ;
-    ex:textoExtracto "MTBPAR Tabla de parámetros del fabricante." ;
     ex:identificador "MTBPAR" ;
-    ex:valor "Tabla de parámetros del fabricante" ;
-    ex:compuestoPor ex:MTB_SIZE, ex:MTB_DATA ;
-    ex:tieneFrecuencia ex:FrecuenciaModificacionParametros .
+    ex:textoExtracto "MTBPAR Tabla de parámetros del fabricante. Esta tabla ofrece 1000 parámetros genéricos para que el fabricante los pueda utilizar a modo de parámetros máquina." ;
+    ex:tieneComponente ex:Parametro_SIZE_MTBPAR, ex:Parametro_DATA_MTBPAR .
 
-ex:MTB_SIZE a ex:Parametro ;
-    rdfs:label "SIZE" ;
+ex:Parametro_SIZE_MTBPAR
+    a ex:Parametro ;
+    rdfs:label "SIZE (Número de parámetros del fabricante)" ;
+    ex:identificador "MTB.SIZE" ;
+    ex:valor "0" ;
     ex:textoExtracto "SIZE Número de parámetros del fabricante. Valores posibles: De 0 a 1000. Valor por defecto: 0. Variable asociada: (V.)MTB.SIZE Este parámetro establece el número de parámetros de fabricante que se van a utilizar." ;
-    ex:identificador "SIZE" ;
-    ex:valor "Número de parámetros del fabricante" .
+    ex:documentadoEn ex:TablaParametrosFabricante_MTBPAR .
 
-ex:MTB_DATA a ex:Parametro ;
-    rdfs:label "DATA" ;
+ex:Parametro_DATA_MTBPAR
+    a ex:Parametro ;
+    rdfs:label "DATA (Lista de parámetros del fabricante)" ;
+    ex:identificador "MTB.DATA" ;
     ex:textoExtracto "DATA Lista de parámetros del fabricante. Este parámetro muestra la tabla de parámetros del fabricante. Para cada parámetro hay que definir los siguientes campos." ;
-    ex:identificador "DATA" ;
-    ex:valor "Lista de parámetros del fabricante" .
-
-ex:FrecuenciaModificacionParametros a ex:Frecuencia ;
-    ex:textoExtracto "Los valores de la tabla pueden ser modificados en cualquier momento. Los nuevos valores se asumen inmediatamente, sin necesidad de realizar la validación de parámetros. Esto significa que los valores y permisos de la tabla se pueden modificar durante la ejecución de un programa." ;
-    ex:valor "Modificación inmediata sin validación durante ejecución de programa" .
+    ex:documentadoEn ex:TablaParametrosFabricante_MTBPAR .

@@ -1,10 +1,17 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:FiltroFrecuenciaResonancia_355_1 a ex:ComponenteElectrico ;
-    rdfs:label "Filtro para eliminar frecuencias de resonancia" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.SHARE[nb].xn Parámetro incluido en la tabla FILTER. Este parámetro indica el porcentaje de señal que pasa a través del filtro. Este valor debe ser equivalente al sobrepasamiento porcentual de la resonancia, ya que debe contrarrestar a la misma. Ejemplo de cálculo ante una determinada respuesta de la máquina. A Ar Ao f fr SHARE=100(Ar-Ao)/Ar" ;
-    ex:identificador "FILTER" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TablaFiltro_355_1 a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla FILTER" ;
-    ex:tieneComponente ex:FiltroFrecuenciaResonancia_355_1 .
+ex:Parametro_FiltroMPA_SHARE
+    a ex:Parametro ;
+    rdfs:label "Parámetro MPA.SHARE[nb].xn"@es ;
+    ex:identificador "MPA.SHARE[nb].xn" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.SHARE[nb].xn Parámetro incluido en la tabla FILTER. Este parámetro indica el porcentaje de señal que pasa a través del filtro."@es ;
+    ex:valor "SHARE=100(Ar-Ao)/Ar" .
+
+ex:Tabla_FILTER a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla FILTER"@es ;
+    ex:textoExtracto "Parámetro incluido en la tabla FILTER."@es ;
+    ex:tieneComponente ex:Parametro_FiltroMPA_SHARE .

@@ -1,37 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:FRAPIDEN a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_FRAPIDEN
+    a ex:Parametro ;
     rdfs:label "FRAPIDEN" ;
-    ex:identificador "FRAPIDEN" ;
     ex:textoExtracto "FRAPIDEN Avance rápido en el canal, para los desplazamientos en el modo automático. Valores posibles: De 0 a 500000.0000 mm/min / de 0 a 19685.03937 inch/min. Valor por defecto: 0." ;
-    ex:valor "0 a 500000.0000 mm/min / 0 a 19685.03937 inch/min" .
+    ex:valor "0-500000.0000 mm/min" ;
+    ex:monitoreaParametro ex:ModoOperacion_Autom_tico .
 
-ex:G00FEED a ex:Parametro ;
+ex:Parametro_G00FEED
+    a ex:Parametro ;
     rdfs:label "G00FEED" ;
-    ex:identificador "G00FEED" ;
-    ex:textoExtracto "Los desplazamientos en G00 se ejecutan al avance definido en el parámetro G00FEED." .
+    ex:textoExtracto "Los desplazamientos en G00 se ejecutan al avance definido en el parámetro G00FEED." ;
+    ex:valor "no especificado en el texto" .
 
-ex:ModoAutomatico a ex:ModoOperacion ;
-    rdfs:label "modo automático" ;
+ex:Parametro_RAPIDEN
+    a ex:Parametro ;
+    rdfs:label "RAPIDEN" ;
+    ex:textoExtracto "Avance máximo en el canal para el programa en ejecución, cuando está activo el avance rápido para el modo automático (parámetro RAPIDEN)." ;
+    ex:valor "EXRAPID o tecla de rápido" .
+
+ex:ModoOperacion_Autom_tico
+    a ex:ModoOperacion ;
+    rdfs:label "Modo automático" ;
     ex:textoExtracto "Al activar el avance rápido durante la ejecución de un programa, cada eje tomará como avance el definido en su parámetro FRAPIDEN, siempre que no esté activa G0 o un roscado." .
 
-ex:ModoManual a ex:ModoOperacion ;
-    rdfs:label "modo manual" ;
+ex:ModoOperacion_Manual
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual" ;
     ex:textoExtracto "Si el canal activo está en modo manual y otro canal está ejecutando un programa, al pulsar la tecla de rápido en el canal activo (modo manual), el avance rápido también se aplicará en el canal que está en ejecución." .
 
-ex:CNC a ex:Maquina ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "Si la opción elegida para RAPIDEN es 'EXRAPID o tecla de rápido' y el CNC dispone de varios canales, la marca EXRAPID únicamente afecta al canal correspondiente." .
+ex:InterfazUsuario_TeclaR_pido
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla de rápido" ;
+    ex:textoExtracto "La tecla de rápido, por el contrario, afecta simultáneamente a todos los canales que en ese momento se encuentren en situación de ser afectados." ;
+    ex:controla ex:Parametro_FRAPIDEN .
 
-ex:TeclaRapido a ex:InterfazUsuario ;
-    rdfs:label "tecla de rápido" ;
-    ex:textoExtracto "Si la opción elegida para RAPIDEN es 'EXRAPID o tecla de rápido' y el CNC dispone de varios canales, la marca EXRAPID únicamente afecta al canal correspondiente. La tecla de rápido, por el contrario, afecta simultáneamente a todos los canales que en ese momento se encuentren en situación de ser afectados." .
-
-ex:PLC a ex:Sistema ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "En un sistema donde la tecla rápido puede afectar a varios canales simultáneamente, se recomienda seleccionar la opción 'EXRAPID y tecla de rápido' o gestionar desde el PLC el comportamiento de la tecla de rápido en función del canal activo y el modo de trabajo seleccionado (manual o automático)." .
-
-ex:ParametroRAPIDEN a ex:Parametro ;
-    rdfs:label "RAPIDEN" ;
-    ex:identificador "RAPIDEN" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.FRAPIDEN Avance máximo en el canal para el programa en ejecución, cuando está activo el avance rápido para el modo automático (parámetro RAPIDEN)." .
+ex:Sistema_Multicanal
+    a ex:Sistema ;
+    rdfs:label "Sistema multicanal" ;
+    ex:textoExtracto "En un sistema donde la tecla rápido puede afectar a varios canales simultáneamente, se recomienda seleccionar la opción 'EXRAPID y tecla de rápido' o gestionar desde el PLC el comportamiento de la tecla de rápido en función del canal activo y el modo de trabajo seleccionado (manual o automático)." ;
+    ex:tieneComponente ex:InterfazUsuario_TeclaR_pido ;
+    ex:tieneComponente ex:ModoOperacion_Autom_tico ;
+    ex:tieneComponente ex:ModoOperacion_Manual .

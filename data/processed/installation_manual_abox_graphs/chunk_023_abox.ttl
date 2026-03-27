@@ -1,65 +1,92 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_G00COMP a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_G00COMP
+    a ex:Parametro ;
     rdfs:label "G00COMP" ;
-    ex:textoExtracto "mediante el parámetro G00COMP" .
+    ex:textoExtracto "posteriores mediante el parámetro G00COMP. Versión V5.40." .
 
-ex:Version_V5_40 a ex:ModoOperacion ;
-    rdfs:label "V5.40" ;
-    ex:textoExtracto "Versión V5.40" .
-
-ex:OpcionSoftware_CANopenTerceros a ex:ModoOperacion ;
-    rdfs:label "CANopen de terceros" ;
-    ex:textoExtracto "Nueva opción de software \"CANopen de terceros\"" .
-
-ex:ErrorInicializacionBusCAN a ex:DiagnosticoFallo ;
-    rdfs:label "Error de inicialización del bus CAN" ;
-    ex:textoExtracto "durante la inicialización del bus CAN dara el error correspondiente" .
-
-ex:OpcionSoftware_CiclosFijosPalpador a ex:ModoOperacion ;
-    rdfs:label "Ciclos fijos de palpador" ;
-    ex:textoExtracto "Ampliación del alcance de la opción de la software \"Ciclos fijos de palpador\"" .
-
-ex:OpcionSoftware_Palpador a ex:ModoOperacion ;
-    rdfs:label "Palpador" ;
-    ex:textoExtracto "La opción de software \"Ciclos fijos de palpador\" pasa a llamarse \"Palpador\"" .
-
-ex:Funcion_G100 a ex:ModoOperacion ;
-    rdfs:label "G100" ;
-    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" .
-
-ex:Funcion_G101 a ex:ModoOperacion ;
-    rdfs:label "G101" ;
-    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" .
-
-ex:Funcion_G102 a ex:ModoOperacion ;
-    rdfs:label "G102" ;
-    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" .
-
-ex:Funcion_G103 a ex:ModoOperacion ;
-    rdfs:label "G103" ;
-    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" .
-
-ex:Funcion_G104 a ex:ModoOperacion ;
-    rdfs:label "G104" ;
-    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" .
-
-ex:Version_V5_70 a ex:ModoOperacion ;
-    rdfs:label "V5.70" ;
-    ex:textoExtracto "Versión V5.70" .
-
-ex:GraficosHD a ex:ModoOperacion ;
-    rdfs:label "Gráficos HD" ;
-    ex:textoExtracto "Gráficos HD y orientación del portaherramientas" .
-
-ex:Parametro_LONGAXIS a ex:Parametro ;
+ex:Parametro_LONGAXIS
+    a ex:Parametro ;
     rdfs:label "LONGAXIS" ;
     ex:textoExtracto "el eje longitudinal (parámetro LONGAXIS)" .
 
-ex:Parametro_FACEAXIS a ex:Parametro ;
+ex:Parametro_FACEAXIS
+    a ex:Parametro ;
     rdfs:label "FACEAXIS" ;
     ex:textoExtracto "el eje transversal (parámetro FACEAXIS)" .
 
+ex:OpcionSoftware_CANopenTerceros
+    a ex:ModoOperacion ;
+    rdfs:label "CANopen de terceros" ;
+    ex:textoExtracto "Nueva opción de software \"CANopen de terceros\"." .
+
+ex:OpcionSoftware_Palpador
+    a ex:ModoOperacion ;
+    rdfs:label "Palpador" ;
+    ex:textoExtracto "La opción de software \"Ciclos fijos de palpador\" pasa a llamarse \"Palpador\"." ;
+    ex:requiereMantenimiento ex:TareaMantenimiento_ActualizacionSoftware .
+
+ex:Funcion_G100 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "G100" ;
+    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" ;
+    ex:habilitadoPor ex:OpcionSoftware_Palpador .
+
+ex:Funcion_G101 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "G101" ;
+    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" ;
+    ex:habilitadoPor ex:OpcionSoftware_Palpador .
+
+ex:Funcion_G102 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "G102" ;
+    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" ;
+    ex:habilitadoPor ex:OpcionSoftware_Palpador .
+
+ex:Funcion_G103 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "G103" ;
+    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" ;
+    ex:habilitadoPor ex:OpcionSoftware_Palpador .
+
+ex:Funcion_G104 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "G104" ;
+    ex:textoExtracto "las funciones G100, G101, G102, G103 y G104 necesitan esta opción de software" ;
+    ex:habilitadoPor ex:OpcionSoftware_Palpador .
+
+ex:TareaMantenimiento_ActualizacionSoftware
+    a ex:TareaMantenimiento ;
+    rdfs:label "Actualización del software desde versiones anteriores" ;
+    ex:textoExtracto "Actualización del software desde versiones anteriores." ;
+    ex:documentadoEn ex:Manual_Seccion1_4_1 .
+
+ex:Manual_Seccion1_4_1
+    a ex:Manual ;
+    rdfs:label "Sección 1.4.1 - Actualización del software desde versiones anteriores" ;
+    ex:textoExtracto "Actualización del software desde versiones anteriores." ;
+    ex:identificador "1.4.1" .
+
+ex:VersionSoftware_V5_40
+    a ex:ModoOperacion ;
+    rdfs:label "Versión V5.40" ;
+    ex:identificador "V5.40" ;
+    ex:textoExtracto "Versión V5.40. Nueva opción de software \"CANopen de terceros\"." ;
+    ex:documentadoEn ex:Manual_Seccion1_4_1 .
+
+ex:VersionSoftware_V5_70
+    a ex:ModoOperacion ;
+    rdfs:label "Versión V5.70" ;
+    ex:identificador "V5.70" ;
+    ex:textoExtracto "Versión V5.70. Gráficos HD y orientación del portaherramientas." ;
+    ex:documentadoEn ex:Manual_Seccion1_4_1 .
+
 ex:TablaHerramientas a ex:Tabla ;
+     a ex:Tabla ;
     rdfs:label "Tabla de herramientas" ;
-    ex:textoExtracto "definida en la tabla de herramientas" .
+    ex:textoExtracto "la orientación de la herramienta, definida en la tabla de herramientas" ;
+    ex:documentadoEn ex:Manual_Seccion1_4_1 .

@@ -1,23 +1,61 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_HEADREF a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_HEADREF
+    a ex:Parametro ;
     rdfs:label "HEADREF" ;
-    ex:textoExtracto "HEADREF Posición de referencia máquina HEAD/TOOL. Valores posibles: Tool base / Head base / Auto tool base. Valor por defecto: Tool base. Variable asociada: (V.)MPK.HEADREF Este parámetro permite colocar el punto de referencia de la cinemática en la nariz del portaherramientas, tras la calibración (Tool Base) o la activación (Auto Tool Base)." ;
-    ex:valor "Tool base / Head base / Auto tool base" .
+    ex:identificador "MPK.HEADREF" ;
+    ex:textoExtracto "HEADREF Posición de referencia máquina HEAD/TOOL. Valores posibles: Tool base / Head base / Auto tool base. Valor por defecto: Tool base." ;
+    ex:valor "Tool base" .
 
-ex:ModoOperacion_ToolBase a ex:ModoOperacion ;
-    rdfs:label "Tool base" ;
-    ex:textoExtracto "Tool base. La calibración de cinemática coloca el punto de referencia de la cinemática en la nariz del portaherramientas. A partir de los parámetros TDATA13 a TDATA15 (cinemáticas no vectoriales) o TDATA1 a TDATA3 (cinemáticas vectoriales), la calibración calcula el nuevo punto de referencia de la cinemática. Esta opción modifica el valor de estos parámetros en la tabla. Esta es la opción recomendada cuando la máquina dispone de un único cabezal que se va a calibrar regularmente." .
-
-ex:ModoOperacion_HeadBase a ex:ModoOperacion ;
-    rdfs:label "Head base" ;
-    ex:textoExtracto "Head base. La calibración de cinemática no modifica el punto de referencia de la cinemática, aquel utilizado para definir la cinemática en los parámetros máquina. Esta es la opción recomendada cuando la máquina dispone de cambio de cabezal." .
-
-ex:ModoOperacion_AutoToolBase a ex:ModoOperacion ;
-    rdfs:label "Auto tool base" ;
-    ex:textoExtracto "Auto tool base. Al activar la cinemática, el CNC coloca el punto de referencia de la cinemática en la nariz del portaherramientas. A partir de los parámetros TDATA13 a TDATA15 (cinemáticas no vectoriales) o TDATA1 a TDATA3 (cinemáticas vectoriales), el CNC calcula el nuevo punto de referencia de la cinemática. No se modifica el valor de estos parámetros en la tabla de parámetros." .
-
-ex:Parametro_TDATA a ex:Parametro ;
-    rdfs:label "TDATA n" ;
+ex:Parametro_TDATA1
+    a ex:Parametro ;
+    rdfs:label "TDATA1" ;
+    ex:identificador "TDATA1" ;
     ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0." ;
-    ex:valor "Entre ±999999999.0000" .
+    ex:valor "0" .
+
+ex:Parametro_TDATA2
+    a ex:Parametro ;
+    rdfs:label "TDATA2" ;
+    ex:identificador "TDATA2" ;
+    ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA3
+    a ex:Parametro ;
+    rdfs:label "TDATA3" ;
+    ex:identificador "TDATA3" ;
+    ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA13
+    a ex:Parametro ;
+    rdfs:label "TDATA13" ;
+    ex:identificador "TDATA13" ;
+    ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA14
+    a ex:Parametro ;
+    rdfs:label "TDATA14" ;
+    ex:identificador "TDATA14" ;
+    ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA15
+    a ex:Parametro ;
+    rdfs:label "TDATA15" ;
+    ex:identificador "TDATA15" ;
+    ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0." ;
+    ex:valor "0" .
+
+ex:Tabla_ConfiguracionCinematica a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Configuración de parámetros de cinemática (TYPE=41/42/43)" ;
+    ex:textoExtracto "HEADREF Posición de referencia máquina HEAD/TOOL. Valores posibles: Tool base / Head base / Auto tool base. Valor por defecto: Tool base." ;
+    ex:documentadoEn ex:Parametro_HEADREF ;
+    ex:documentadoEn ex:Parametro_TDATA1 , ex:Parametro_TDATA2 , ex:Parametro_TDATA3 ,
+                     ex:Parametro_TDATA13 , ex:Parametro_TDATA14 , ex:Parametro_TDATA15 .

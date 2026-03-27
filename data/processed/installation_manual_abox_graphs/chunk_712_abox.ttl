@@ -1,36 +1,81 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaCNC a ex:Maquina ;
-    ex:textoExtracto "El CNC puede disponer de hasta cuatro canales y cada canal puede ejecutar un programa pieza en paralelo con los demás. Esto significa que en cada canal se pueden ejecutar siete funciones auxiliares simultáneamente." ;
-    ex:tieneComponente ex:Canal1, ex:Canal2, ex:Canal3, ex:Canal4 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Canal1 a ex:Componente ;
-    ex:identificador "Canal1" ;
-    ex:textoExtracto "HFUN1C1 - HFUN7C1 para el primer canal." ;
-    ex:compuestoPor ex:RegistroHFUN1C1, ex:RegistroHFUN2C1, ex:RegistroHFUN3C1, ex:RegistroHFUN4C1, ex:RegistroHFUN5C1, ex:RegistroHFUN6C1, ex:RegistroHFUN7C1 ;
-    ex:valor "10, 13, $FFFFFFFF" .
+ex:SistemaMulticabezalCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema multicabezal con canales paralelos"@es ;
+    ex:textoExtracto "El CNC puede disponer de hasta cuatro canales y cada canal puede ejecutar un programa pieza en paralelo con los demás. Esto significa que en cada canal se pueden ejecutar siete funciones auxiliares simultáneamente."@es ;
+    ex:tieneComponente ex:CanalCNC_1, ex:CanalCNC_2, ex:CanalCNC_3, ex:CanalCNC_4 ;
+    ex:identificador "Opción multicabezal y canales" .
 
-ex:Canal2 a ex:Componente ;
-    ex:identificador "Canal2" ;
-    ex:textoExtracto "HFUN1C2 - HFUN7C2 para el segundo canal." ;
-    ex:compuestoPor ex:RegistroHFUN1C2, ex:RegistroHFUN2C2, ex:RegistroHFUN3C2, ex:RegistroHFUN4C2, ex:RegistroHFUN5C2, ex:RegistroHFUN6C2, ex:RegistroHFUN7C2 ;
-    ex:valor "8, 10, $FFFFFFFF" .
+ex:CanalCNC_1
+    a ex:Componente ;
+    rdfs:label "Canal 1 (C1) del sistema multicabezal"@es ;
+    ex:textoExtracto "HFUN1C1 - HFUN7C1 para el primer canal."@es ;
+    ex:tieneComponente ex:RegistroHFUN1C1, ex:RegistroHFUN2C1, ex:RegistroHFUN3C1, ex:RegistroHFUN4C1, ex:RegistroHFUN5C1, ex:RegistroHFUN6C1, ex:RegistroHFUN7C1 .
 
-ex:RegistroHFUN1C1 a ex:ComponenteElectrico ;
-    ex:identificador "HFUN1C1" ;
-    ex:textoExtracto "HFUN1C1 - HFUN7C1 para el primer canal." ;
-    ex:valor "10" .
+ex:CanalCNC_2
+    a ex:Componente ;
+    rdfs:label "Canal 2 (C2) del sistema multicabezal"@es ;
+    ex:textoExtracto "HFUN1C2 - HFUN7C2 para el segundo canal."@es ;
+    ex:tieneComponente ex:RegistroHFUN1C2, ex:RegistroHFUN2C2, ex:RegistroHFUN3C2, ex:RegistroHFUN4C2, ex:RegistroHFUN5C2, ex:RegistroHFUN6C2, ex:RegistroHFUN7C2 .
 
-ex:RegistroHFUN2C1 a ex:ComponenteElectrico ;
-    ex:identificador "HFUN2C1" ;
-    ex:textoExtracto "HFUN1C1 - HFUN7C1 para el primer canal." ;
-    ex:valor "13" .
+ex:CanalCNC_3
+    a ex:Componente ;
+    rdfs:label "Canal 3 (C3) del sistema multicabezal"@es ;
+    ex:textoExtracto "HFUN1C3 - HFUN7C3 para el tercer canal."@es .
 
-ex:RegistroHFUN1C2 a ex:ComponenteElectrico ;
-    ex:identificador "HFUN1C2" ;
-    ex:textoExtracto "HFUN1C2 - HFUN7C2 para el segundo canal." ;
-    ex:valor "8" .
+ex:CanalCNC_4
+    a ex:Componente ;
+    rdfs:label "Canal 4 (C4) del sistema multicabezal"@es ;
+    ex:textoExtracto "HFUN1C4 - HFUN7C4 para el cuarto canal."@es .
 
-ex:RegistroHFUN2C2 a ex:ComponenteElectrico ;
-    ex:identificador "HFUN2C2" ;
-    ex:textoExtracto "HFUN1C2 - HFUN7C2 para el segundo canal." ;
-    ex:valor "10" .
+ex:RegistroHFUN1C1
+    a ex:Parametro ;
+    rdfs:label "Registro HFUN1 del Canal 1 (C1)"@es ;
+    ex:textoExtracto "HFUN1C1 [...] | 10 |"@es ;
+    ex:valor "10" ;
+    ex:monitoreaParametro ex:FuncionH10 .
+
+ex:RegistroHFUN2C1
+    a ex:Parametro ;
+    rdfs:label "Registro HFUN2 del Canal 1 (C1)"@es ;
+    ex:textoExtracto "HFUN2C1 [...] | 13 |"@es ;
+    ex:valor "13" ;
+    ex:monitoreaParametro ex:FuncionH13 .
+
+ex:RegistroHFUN1C2
+    a ex:Parametro ;
+    rdfs:label "Registro HFUN1 del Canal 2 (C2)"@es ;
+    ex:textoExtracto "HFUN1C2 [...] | 8 |"@es ;
+    ex:valor "8" ;
+    ex:monitoreaParametro ex:FuncionH8 .
+
+ex:RegistroHFUN2C2
+    a ex:Parametro ;
+    rdfs:label "Registro HFUN2 del Canal 2 (C2)"@es ;
+    ex:textoExtracto "HFUN2C2 [...] | 10 |"@es ;
+    ex:valor "10" ;
+    ex:monitoreaParametro ex:FuncionH10 .
+
+ex:FuncionH8 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar H8"@es ;
+    ex:textoExtracto "funciones H programadas en el bloque en ejecución [...] H8"@es .
+
+ex:FuncionH10 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar H10"@es ;
+    ex:textoExtracto "funciones H programadas en el bloque en ejecución [...] H10"@es .
+
+ex:FuncionH13 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar H13"@es ;
+    ex:textoExtracto "funciones H programadas en el bloque en ejecución [...] H13"@es .
+
+ex:ComandoHFUNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Comandos HFUNC1*-HFUNC4* para análisis de funciones H"@es ;
+    ex:textoExtracto "Comandos HFUNC1* - HFUNC4*. Analizar si una función ha sido programada en el canal. [...] Utilizar uno de los siguientes comandos que permiten analizar todos los registros HFUN del canal a la vez."@es .

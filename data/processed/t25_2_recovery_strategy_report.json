@@ -1,0 +1,30 @@
+{
+  "policy_name": "micro-batch-recovery",
+  "max_concurrency": 1,
+  "batch_size": 1,
+  "retryable_errors": [
+    "rate_limit",
+    "429"
+  ],
+  "max_retries": 6,
+  "backoff_schedule": [
+    30,
+    60,
+    120,
+    240,
+    480,
+    900
+  ],
+  "flush_strategy": "save_manifest_after_each_chunk",
+  "resume_strategy": "manifest_driven_per_chunk_resume",
+  "state_model": [
+    "ok",
+    "error_retry_exhausted",
+    "error_non_retryable"
+  ],
+  "files_touched": [
+    "artifact_contracts.py",
+    "src/6_extraction/abox_extractor.py",
+    "run_t25_2_installation_recovery.py"
+  ]
+}

@@ -1,35 +1,76 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EjeMaestro a ex:Maquina ;
-    ex:textoExtracto "el parámetro REFDIREC del eje maestro" , "el avance indicado en el parámetro REFFEED1 del eje maestro" , "el avance REFFEED2 del eje maestro" , "el parámetro REFSHIFT del eje maestro" , "el eje maestro pulse su micro" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeEsclavo a ex:Maquina ;
-    ex:textoExtracto "el segundo eje pulse su micro" , "el eje esclavo termine el movimiento correspondiente al parámetro REFSHIFT" , "el parámetro REFSHIFT del eje esclavo" , "el eje esclavo inicializa la cota tras haber encontrado el I0" .
+ex:Parametro_REFDIREC
+    a ex:Parametro ;
+    rdfs:label "REFDIREC" ;
+    ex:textoExtracto "sentido indicado por el parámetro REFDIREC del eje maestro" ;
+    ex:monitoreaParametro ex:SistemaBusquedaReferenciaEjesGantry .
 
-ex:Parametro_REFDIREC a ex:Parametro ;
-    ex:identificador "REFDIREC" ;
-    ex:textoExtracto "el parámetro REFDIREC del eje maestro" .
+ex:Parametro_REFFEED1
+    a ex:Parametro ;
+    rdfs:label "REFFEED1" ;
+    ex:textoExtracto "avance indicado en el parámetro REFFEED1 del eje maestro" ;
+    ex:monitoreaParametro ex:SistemaBusquedaReferenciaEjesGantry .
 
-ex:Parametro_REFFEED1 a ex:Parametro ;
-    ex:identificador "REFFEED1" ;
-    ex:textoExtracto "el avance indicado en el parámetro REFFEED1 del eje maestro" .
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
+    rdfs:label "REFFEED2" ;
+    ex:textoExtracto "avance REFFEED2 del eje maestro" ;
+    ex:monitoreaParametro ex:SistemaBusquedaReferenciaEjesGantry .
 
-ex:Parametro_REFFEED2 a ex:Parametro ;
-    ex:identificador "REFFEED2" ;
-    ex:textoExtracto "el avance REFFEED2 del eje maestro" .
+ex:Parametro_REFVALUE
+    a ex:Parametro ;
+    rdfs:label "REFVALUE" ;
+    ex:textoExtracto "valor definido en el parámetro REFVALUE" ;
+    ex:monitoreaParametro ex:SistemaBusquedaReferenciaEjesGantry .
 
-ex:Parametro_REFVALUE a ex:Parametro ;
-    ex:identificador "REFVALUE" ;
-    ex:textoExtracto "el valor definido en el parámetro REFVALUE" .
+ex:Parametro_REFSHIFT
+    a ex:Parametro ;
+    rdfs:label "REFSHIFT" ;
+    ex:textoExtracto "parámetro REFSHIFT del eje maestro" ;
+    ex:textoExtracto "parámetro REFSHIFT del eje esclavo" ;
+    ex:monitoreaParametro ex:SistemaBusquedaReferenciaEjesGantry .
 
-ex:Parametro_REFSHIFT a ex:Parametro ;
-    ex:identificador "REFSHIFT" ;
-    ex:textoExtracto "el parámetro REFSHIFT del eje maestro" , "el parámetro REFSHIFT del eje esclavo" .
+ex:MicroEjeMaestro
+    a ex:Sensor ;
+    rdfs:label "Micro (eje maestro)" ;
+    ex:textoExtracto "hasta que alguno de los ejes pulse su micro" ;
+    ex:textoExtracto "hasta que el eje que pulsó el micro encuentra el I0" ;
+    ex:controla ex:SistemaBusquedaReferenciaEjesGantry .
 
-ex:Micro a ex:Sensor ;
-    ex:textoExtracto "pulse su micro" .
+ex:MicroEjeEsclavo
+    a ex:Sensor ;
+    rdfs:label "Micro (eje esclavo)" ;
+    ex:textoExtracto "hasta que el segundo eje pulse su micro" ;
+    ex:controla ex:SistemaBusquedaReferenciaEjesGantry .
 
-ex:I0 a ex:Sensor ;
-    ex:textoExtracto "encuentra el I0" .
+ex:SistemaBusquedaReferenciaEjesGantry
+    a ex:Sistema ;
+    rdfs:label "Sistema de búsqueda de referencia (ejes gantry)" ;
+    ex:textoExtracto "Búsqueda de referencia máquina (ejes gantry)" ;
+    ex:tieneComponente ex:MicroEjeMaestro, ex:MicroEjeEsclavo ;
+    ex:compuestoPor ex:EjeMaestro, ex:EjeEsclavo .
 
-ex:SistemaCaptacion a ex:Sistema ;
+ex:EjeMaestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro" ;
+    ex:textoExtracto "eje maestro" ;
+    ex:textoExtracto "parámetro REFDIREC del eje maestro" ;
+    ex:textoExtracto "avance indicado en el parámetro REFFEED1 del eje maestro" ;
+    ex:textoExtracto "parámetro REFSHIFT del eje maestro" .
+
+ex:EjeEsclavo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo" ;
+    ex:textoExtracto "segundo eje" ;
+    ex:textoExtracto "eje esclavo" ;
+    ex:textoExtracto "parámetro REFSHIFT del eje esclavo" .
+
+ex:PuntoReferencia_I0
+    a ex:Componente ;
+    rdfs:label "I0 (punto de referencia codificado)" ;
+    ex:textoExtracto "encuentra el I0" ;
     ex:textoExtracto "Búsqueda de referencia con un sistema de captación que no dispone de I0s codificados" .

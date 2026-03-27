@@ -1,11 +1,22 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:CNCRD a ex:AccionProhibida ;
-    rdfs:label "CNCRD" ;
-    ex:textoExtracto "= CNCRD = CNCWR Lectura (CNCRD) y escritura (CNCWR) de las variables del CNC. Permiten la lectura (CNCRD) y escritura (CNCWR) de las variables internas del CNC, siendo su formato de programación: CNCRD (Variable, Registro, Marca) CNCWR (Registro, Variable, Marca) La acción CNCRD carga el contenido de la variable en el registro y la acción CNCWR carga el contenido del registro en la variable. La marca se pone a \"1\" cuando comienza la operación y se mantiene a dicho valor hasta que finaliza la misma. En la lectura mediante CNCRD de" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Accion_CNCRD
+    a               ex:AccionProhibida ;
+    rdfs:label      "CNCRD (Lectura de variables CNC)" ;
+    ex:textoExtracto "CNCRD [...] Permiten la lectura (CNCRD) de las variables internas del CNC, siendo su formato de programación: CNCRD (Variable, Registro, Marca)" ;
     ex:identificador "CNCRD" .
 
-ex:CNCWR a ex:AccionProhibida ;
-    rdfs:label "CNCWR" ;
-    ex:textoExtracto "= CNCRD = CNCWR Lectura (CNCRD) y escritura (CNCWR) de las variables del CNC. Permiten la lectura (CNCRD) y escritura (CNCWR) de las variables internas del CNC, siendo su formato de programación: CNCRD (Variable, Registro, Marca) CNCWR (Registro, Variable, Marca) La acción CNCRD carga el contenido de la variable en el registro y la acción CNCWR carga el contenido del registro en la variable. La marca se pone a \"1\" cuando comienza la operación y se mantiene a dicho valor hasta que finaliza la misma. En la lectura mediante CNCRD de" ;
+ex:Accion_CNCWR
+    a               ex:AccionProhibida ;
+    rdfs:label      "CNCWR (Escritura de variables CNC)" ;
+    ex:textoExtracto "CNCWR [...] Permiten la escritura (CNCWR) de las variables internas del CNC, siendo su formato de programación: CNCWR (Registro, Variable, Marca)" ;
     ex:identificador "CNCWR" .
+
+ex:Interfaz_CNC_Variables
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Interfaz de variables del CNC" ;
+    ex:textoExtracto "Lectura (CNCRD) y escritura (CNCWR) de las variables del CNC" ;
+    ex:tieneComponente ex:Accion_CNCRD , ex:Accion_CNCWR .

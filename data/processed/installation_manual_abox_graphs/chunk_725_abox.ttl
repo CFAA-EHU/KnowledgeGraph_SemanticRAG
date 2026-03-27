@@ -1,98 +1,163 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EntradaSalidaFisicaCNC a ex:Sistema ;
-    rdfs:label "Entradas y salidas físicas del CNC" ;
-    ex:textoExtracto "Se denominan entradas y salidas físicas del CNC al conjunto de entradas y salidas del sistema que, siendo gobernadas por el PLC, se comunican con el exterior a través de los conectores del CNC." ;
-    ex:compuestoPor ex:ConectorCNC .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ConectorCNC a ex:ComponenteElectrico ;
+ex:SistemaEntradasSalidasCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema de entradas y salidas físicas/lógicas del CNC" ;
+    ex:textoExtracto "Se denominan entradas y salidas físicas del CNC al conjunto de entradas y salidas del sistema que, siendo gobernadas por el PLC, se comunican con el exterior a través de los conectores del CNC. El CNC dispone además de una serie de entradas y salidas lógicas para el intercambio de información interna con las marcas y registros del PLC." ;
+    ex:tieneComponente ex:ConectoresCNC ;
+    ex:tieneComponente ex:SenalesLogicasCNC .
+
+ex:ConectoresCNC
+    a ex:ComponenteElectrico ;
     rdfs:label "Conectores del CNC" ;
     ex:textoExtracto "se comunican con el exterior a través de los conectores del CNC" .
 
-ex:EntradaSalidaLogicaCNC a ex:Sistema ;
-    rdfs:label "Entradas y salidas lógicas del CNC" ;
-    ex:textoExtracto "El CNC dispone además de una serie de entradas y salidas lógicas para el intercambio de información interna con las marcas y registros del PLC." ;
-    ex:compuestoPor ex:SenalLogicaCNC .
+ex:SenalesLogicasCNC
+    a ex:Sistema ;
+    rdfs:label "Señales lógicas del CNC" ;
+    ex:textoExtracto "El CNC dispone además de una serie de entradas y salidas lógicas para el intercambio de información interna con las marcas y registros del PLC. Cada una de estas entradas y salidas lógicas puede referenciarse mediante su mnemónico asociado." ;
+    ex:compuestoPor ex:SenalCNCREADY ;
+    ex:compuestoPor ex:Senal_ALARM ;
+    ex:compuestoPor ex:SenalAUXEND ;
+    ex:compuestoPor ex:Senal_EMERGEN ;
+    ex:compuestoPor ex:SenalMANUAL ;
+    ex:compuestoPor ex:Senal_STOP .
 
-ex:SenalLogicaCNC a ex:Sensor ;
-    rdfs:label "Señal lógica del CNC" ;
-    ex:textoExtracto "Cada una de estas entradas y salidas lógicas puede referenciarse mediante su mnemónico asociado." .
+ex:SenalCNCREADY
+    a ex:ComponenteElectrico ;
+    rdfs:label "CNCREADY" ;
+    ex:identificador "CNCREADY" ;
+    ex:textoExtracto "CNCREADY" ;
+    ex:valor "1" .  # Nivel lógico alto por defecto (no lleva "_")
 
-ex:PLC a ex:Sistema ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "siendo gobernadas por el PLC" ;
-    ex:controla ex:EntradaSalidaFisicaCNC, ex:EntradaSalidaLogicaCNC .
+ex:Senal_ALARM
+    a ex:ComponenteElectrico ;
+    rdfs:label "_ALARM" ;
+    ex:identificador "_ALARM" ;
+    ex:textoExtracto "_ALARM" ;
+    ex:valor "0" .  # Nivel lógico bajo (lleva "_")
 
-ex:Mnemonico_AUXEND a ex:Parametro ;
-    rdfs:label "_AUXEND" ;
-    ex:identificador "_AUXEND" ;
-    ex:textoExtracto "CNCREADY _ALARM AUXEND _EMERGEN MANUAL _STOP" ;
-    ex:valor "=0" .
+ex:SenalAUXEND
+    a ex:ComponenteElectrico ;
+    rdfs:label "AUXEND" ;
+    ex:identificador "AUXEND" ;
+    ex:textoExtracto "AUXEND" ;
+    ex:valor "1" .
 
-ex:Mnemonico_EMERGEN a ex:Parametro ;
+ex:Senal_EMERGEN
+    a ex:ComponenteElectrico ;
     rdfs:label "_EMERGEN" ;
     ex:identificador "_EMERGEN" ;
-    ex:textoExtracto "CNCREADY _ALARM AUXEND _EMERGEN MANUAL _STOP" ;
-    ex:valor "=0" .
+    ex:textoExtracto "_EMERGEN" ;
+    ex:valor "0" .
 
-ex:Mnemonico_STOP a ex:Parametro ;
+ex:SenalMANUAL
+    a ex:ComponenteElectrico ;
+    rdfs:label "MANUAL" ;
+    ex:identificador "MANUAL" ;
+    ex:textoExtracto "MANUAL" ;
+    ex:valor "1" .
+
+ex:Senal_STOP
+    a ex:ComponenteElectrico ;
     rdfs:label "_STOP" ;
     ex:identificador "_STOP" ;
-    ex:textoExtracto "CNCREADY _ALARM AUXEND _EMERGEN MANUAL _STOP" ;
-    ex:valor "=0" .
+    ex:textoExtracto "_STOP" ;
+    ex:valor "0" .
 
-ex:SenalConsultaGeneral a ex:Sensor ;
-    rdfs:label "Señal de consulta general" ;
-    ex:textoExtracto "Las salidas lógicas del CNC o señales de consulta del PLC se agrupan en: • Señales de consulta generales." .
+ex:CategoriaSenalesConsulta
+    a ex:Sistema ;
+    rdfs:label "Categorías de señales de consulta del CNC" ;
+    ex:textoExtracto "Las salidas lógicas del CNC o señales de consulta del PLC se agrupan en: • Señales de consulta generales. • Señales de consulta de los ejes. • Señales de consulta de los cabezales. • Señales de consulta del interpolador independiente. • Señales de consulta del gestor de herramientas. • Señales de consulta del laser. • Señales de consulta de las teclas." ;
+    ex:compuestoPor ex:CategoriaSenalesGenerales ;
+    ex:compuestoPor ex:CategoriaSenalesEjes ;
+    ex:compuestoPor ex:CategoriaSenalesCabezales ;
+    ex:compuestoPor ex:CategoriaSenalesInterpolador ;
+    ex:compuestoPor ex:CategoriaSenalesGestorHerramientas ;
+    ex:compuestoPor ex:CategoriaSenalesLaser ;
+    ex:compuestoPor ex:CategoriaSenalesTeclas .
 
-ex:SenalConsultaEje a ex:Sensor ;
-    rdfs:label "Señal de consulta de los ejes" ;
-    ex:textoExtracto "• Señales de consulta de los ejes." .
+ex:CategoriaSenalesGenerales
+    a ex:Sistema ;
+    rdfs:label "Señales de consulta generales" ;
+    ex:textoExtracto "Señales de consulta generales" .
 
-ex:SenalConsultaCabezales a ex:Sensor ;
-    rdfs:label "Señal de consulta de los cabezales" ;
-    ex:textoExtracto "• Señales de consulta de los cabezales." .
+ex:CategoriaSenalesEjes
+    a ex:Sistema ;
+    rdfs:label "Señales de consulta de los ejes" ;
+    ex:textoExtracto "Señales de consulta de los ejes" .
 
-ex:SenalConsultaInterpolador a ex:Sensor ;
-    rdfs:label "Señal de consulta del interpolador independiente" ;
-    ex:textoExtracto "• Señales de consulta del interpolador independiente." .
+ex:CategoriaSenalesCabezales
+    a ex:Sistema ;
+    rdfs:label "Señales de consulta de los cabezales" ;
+    ex:textoExtracto "Señales de consulta de los cabezales" .
 
-ex:SenalConsultaGestorHerramientas a ex:Sensor ;
-    rdfs:label "Señal de consulta del gestor de herramientas" ;
-    ex:textoExtracto "• Señales de consulta del gestor de herramientas." .
+ex:CategoriaSenalesInterpolador
+    a ex:Sistema ;
+    rdfs:label "Señales de consulta del interpolador independiente" ;
+    ex:textoExtracto "Señales de consulta del interpolador independiente" .
 
-ex:SenalConsultaLaser a ex:Sensor ;
-    rdfs:label "Señal de consulta del laser" ;
-    ex:textoExtracto "• Señales de consulta del laser." .
+ex:CategoriaSenalesGestorHerramientas
+    a ex:Sistema ;
+    rdfs:label "Señales de consulta del gestor de herramientas" ;
+    ex:textoExtracto "Señales de consulta del gestor de herramientas" .
 
-ex:SenalConsultaTeclas a ex:Sensor ;
-    rdfs:label "Señal de consulta de las teclas" ;
-    ex:textoExtracto "• Señales de consulta de las teclas." .
+ex:CategoriaSenalesLaser
+    a ex:Sistema ;
+    rdfs:label "Señales de consulta del láser" ;
+    ex:textoExtracto "Señales de consulta del laser" .
 
-ex:SenalModificableGeneral a ex:Actuador ;
-    rdfs:label "Señal modificable general" ;
-    ex:textoExtracto "Las entradas lógicas del CNC o señales modificables por PLC se agrupan en: • Señales modificables generales." .
+ex:CategoriaSenalesTeclas
+    a ex:Sistema ;
+    rdfs:label "Señales de consulta de las teclas" ;
+    ex:textoExtracto "Señales de consulta de las teclas" .
 
-ex:SenalModificableEje a ex:Actuador ;
-    rdfs:label "Señal modificable de los ejes" ;
-    ex:textoExtracto "• Señales modificables de los ejes." .
+ex:CategoriaSenalesModificables
+    a ex:Sistema ;
+    rdfs:label "Categorías de señales modificables del CNC" ;
+    ex:textoExtracto "Las entradas lógicas del CNC o señales modificables por PLC se agrupan en: • Señales modificables generales. • Señales modificables de los ejes. • Señales modificables de los cabezales. • Señales modificables del interpolador independiente. • Señales modificables del gestor de herramientas. • Señales modificables del laser. • Señales modificables de las teclas." ;
+    ex:compuestoPor ex:CategoriaSenalesModificablesGenerales ;
+    ex:compuestoPor ex:CategoriaSenalesModificablesEjes ;
+    ex:compuestoPor ex:CategoriaSenalesModificablesCabezales ;
+    ex:compuestoPor ex:CategoriaSenalesModificablesInterpolador ;
+    ex:compuestoPor ex:CategoriaSenalesModificablesGestorHerramientas ;
+    ex:compuestoPor ex:CategoriaSenalesModificablesLaser ;
+    ex:compuestoPor ex:CategoriaSenalesModificablesTeclas .
 
-ex:SenalModificableCabezales a ex:Actuador ;
-    rdfs:label "Señal modificable de los cabezales" ;
-    ex:textoExtracto "• Señales modificables de los cabezales." .
+ex:CategoriaSenalesModificablesGenerales
+    a ex:Sistema ;
+    rdfs:label "Señales modificables generales" ;
+    ex:textoExtracto "Señales modificables generales" .
 
-ex:SenalModificableInterpolador a ex:Actuador ;
-    rdfs:label "Señal modificable del interpolador independiente" ;
-    ex:textoExtracto "• Señales modificables del interpolador independiente." .
+ex:CategoriaSenalesModificablesEjes
+    a ex:Sistema ;
+    rdfs:label "Señales modificables de los ejes" ;
+    ex:textoExtracto "Señales modificables de los ejes" .
 
-ex:SenalModificableGestorHerramientas a ex:Actuador ;
-    rdfs:label "Señal modificable del gestor de herramientas" ;
-    ex:textoExtracto "• Señales modificables del gestor de herramientas." .
+ex:CategoriaSenalesModificablesCabezales
+    a ex:Sistema ;
+    rdfs:label "Señales modificables de los cabezales" ;
+    ex:textoExtracto "Señales modificables de los cabezales" .
 
-ex:SenalModificableLaser a ex:Actuador ;
-    rdfs:label "Señal modificable del laser" ;
-    ex:textoExtracto "• Señales modificables del laser." .
+ex:CategoriaSenalesModificablesInterpolador
+    a ex:Sistema ;
+    rdfs:label "Señales modificables del interpolador independiente" ;
+    ex:textoExtracto "Señales modificables del interpolador independiente" .
 
-ex:SenalModificableTeclas a ex:Actuador ;
-    rdfs:label "Señal modificable de las teclas" ;
-    ex:textoExtracto "• Señales modificables de las teclas." .
+ex:CategoriaSenalesModificablesGestorHerramientas
+    a ex:Sistema ;
+    rdfs:label "Señales modificables del gestor de herramientas" ;
+    ex:textoExtracto "Señales modificables del gestor de herramientas" .
+
+ex:CategoriaSenalesModificablesLaser
+    a ex:Sistema ;
+    rdfs:label "Señales modificables del láser" ;
+    ex:textoExtracto "Señales modificables del laser" .
+
+ex:CategoriaSenalesModificablesTeclas
+    a ex:Sistema ;
+    rdfs:label "Señales modificables de las teclas" ;
+    ex:textoExtracto "Señales modificables de las teclas" .

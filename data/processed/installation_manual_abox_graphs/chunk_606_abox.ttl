@@ -1,17 +1,32 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_0000_FFFF a ex:Parametro ;
-    ex:textoExtracto "ID | Identificador del parámetro (0000-FFFF) o de la variable (0-F) a consultar en el dispositivo." ;
-    ex:identificador "0000-FFFF" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Variable_0_F a ex:Parametro ;
-    ex:textoExtracto "ID | Identificador del parámetro (0000-FFFF) o de la variable (0-F) a consultar en el dispositivo." ;
-    ex:identificador "0-F" .
+ex:Tabla_ParametrosRegulador_606 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros y variables del regulador (Sercos/Mechatrolink)"@es ;
+    ex:textoExtracto """
+    | ID | Identificador del parámetro (0000-FFFF) o de la variable (0-F) a consultar en el dispositivo. |
+    | TYPE | Tipo de consulta; variable o parámetro. |
+    | MODE | Modo de acceso. El acceso a las variables del regulador será siempre de solo lectura, mientras que el acceso a los parámetros podrá ser de lectura o escritura.
+    """@es .
 
-ex:ModoAcceso_SoloLectura a ex:ModoOperacion ;
-    ex:textoExtracto "MODE | Modo de acceso. El acceso a las variables del regulador será siempre de solo lectura, mientras que el acceso a los parámetros podrá ser de lectura o escritura." ;
-    rdfs:label "solo lectura" .
+ex:Parametro_Identificador_606
+    a ex:Parametro ;
+    rdfs:label "Identificador del parámetro/variable"@es ;
+    ex:textoExtracto "Identificador del parámetro (0000-FFFF) o de la variable (0-F) a consultar en el dispositivo."@es ;
+    ex:valor "0000-FFFF (parámetro), 0-F (variable)"@es ;
+    ex:documentadoEn ex:Tabla_ParametrosRegulador_606 .
 
-ex:ModoAcceso_LecturaEscritura a ex:ModoOperacion ;
-    ex:textoExtracto "MODE | Modo de acceso. El acceso a las variables del regulador será siempre de solo lectura, mientras que el acceso a los parámetros podrá ser de lectura o escritura." ;
-    rdfs:label "lectura o escritura" .
+ex:Parametro_TipoConsulta_606
+    a ex:Parametro ;
+    rdfs:label "Tipo de consulta (variable/parámetro)"@es ;
+    ex:textoExtracto "Tipo de consulta; variable o parámetro."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosRegulador_606 .
+
+ex:Parametro_ModoAcceso_606
+    a ex:Parametro ;
+    rdfs:label "Modo de acceso (lectura/escritura)"@es ;
+    ex:textoExtracto "Modo de acceso. El acceso a las variables del regulador será siempre de solo lectura, mientras que el acceso a los parámetros podrá ser de lectura o escritura."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosRegulador_606 .

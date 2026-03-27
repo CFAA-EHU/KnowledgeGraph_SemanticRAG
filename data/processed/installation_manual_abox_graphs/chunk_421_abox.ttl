@@ -1,8 +1,25 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:MPA_MAXERROR ex:textoExtracto "Valor por defecto: 0.1000 mm / 0.00394 inch / 0.1000 grados. Variable asociada: (V.)[ch].MPA.MAXERROR[set].xn Máximo error de posición del eje en HSC cuando trabaja fuera del plano/triedo." ;
-    a ex:Parametro ;
-    ex:valor "0.1000 mm / 0.00394 inch / 0.1000 grados" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MPA_CONTERROR ex:textoExtracto "CONTERROR Tolerancia por eje para el suavizado de la trayectoria n-dimensional generada. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valor por defecto: 0.1000 mm/º. Variable asociada: (V.)[ch].MPA.CONTERROR[set].xn Para el mecanizado en 5 ejes, este parámetro permite fijar la tolerancia por eje para el suavizado de la trayectoria n-dimensional generada. Este parámetro no afecta al error 3D trabajando con RTCP. Se recomienda definir este parámetro en los ejes rotativos." ;
+ex:Parametro_MAXERROR_HSC
     a ex:Parametro ;
-    ex:valor "0.1000 mm/º" .
+    rdfs:label "Máximo error de posición del eje en HSC"@es ;
+    ex:textoExtracto "Máximo error de posición del eje en HSC cuando trabaja fuera del plano/triedo. Valor por defecto: 0.1000 mm / 0.00394 inch / 0.1000 grados. Variable asociada: (V.)[ch].MPA.MAXERROR[set].xn"@es ;
+    ex:identificador "MPA.MAXERROR[set].xn" ;
+    ex:valor "0.1000" .
+
+ex:Parametro_CONTERROR_HSC
+    a ex:Parametro ;
+    rdfs:label "Tolerancia por eje para suavizado de trayectoria n-dimensional (HSC)"@es ;
+    ex:textoExtracto "Tolerancia por eje para el suavizado de la trayectoria n-dimensional generada. Parámetro válido para ejes lineales, rotativos y cabezales. Valor por defecto: 0.1000 mm/º. Variable asociada: (V.)[ch].MPA.CONTERROR[set].xn. Para el mecanizado en 5 ejes, este parámetro permite fijar la tolerancia por eje para el suavizado de la trayectoria n-dimensional generada."@es ;
+    ex:identificador "MPA.CONTERROR[set].xn" ;
+    ex:valor "0.1000" .
+
+ex:ModoOperacion_HSC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC (High Speed Cutting)"@es ;
+    ex:textoExtracto "Configuración del modo HSC"@es ;
+    ex:tieneComponente ex:Parametro_MAXERROR_HSC ;
+    ex:tieneComponente ex:Parametro_CONTERROR_HSC .

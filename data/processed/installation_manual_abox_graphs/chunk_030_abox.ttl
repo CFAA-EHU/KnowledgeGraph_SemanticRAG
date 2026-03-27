@@ -1,18 +1,21 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:AccionGuardarCopiaSeguridad a ex:TareaMantenimiento ;
-    rdfs:label "guardar una copia de seguridad de la configuración de la máquina" ;
-    ex:textoExtracto "guardar una copia de seguridad de la configuración de la máquina, el directorio MTB, a un archivo comprimido." ;
-    ex:requiereConsumible ex:ArchivoComprimido .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ArchivoComprimido a ex:Consumible ;
-    rdfs:label "archivo comprimido" ;
-    ex:textoExtracto "a un archivo comprimido" .
+ex:TareaMantenimiento_CopiaSeguridadConfiguracionCNC
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Copia de seguridad de configuración CNC" ;
+    ex:textoExtracto "guardar una copia de seguridad de la configuración de la máquina, el directorio MTB, a un archivo comprimido" ;
+    ex:requiereMantenimiento ex:Maquina_CNC .
 
-ex:SistemaCNC a ex:Maquina ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "el CNC detecta que se ha modificado la configuración de la máquina" .
+ex:Maquina_CNC
+    a               ex:Maquina ;
+    rdfs:label      "Máquina CNC" ;
+    ex:textoExtracto "configuración de la máquina" .
 
-ex:AccionAvisoConfiguracionModificada a ex:AvisoSeguridad ;
-    rdfs:label "avisar de que se ha modificado la configuración de la máquina" ;
-    ex:textoExtracto "Si se selecciona el apagado normal y el CNC detecta que se ha modificado la configuración de la máquina, avisará de esta circunstancia" .
+ex:AvisoSeguridad_ModificacionConfiguracion
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Aviso de modificación de configuración CNC" ;
+    ex:textoExtracto "Si se selecciona el apagado normal y el CNC detecta que se ha modificado la configuración de la máquina, avisará de esta circunstancia y preguntará si se desea guardar una copia de seguridad de la configuración de la máquina." ;
+    ex:mitigaRiesgo ex:TareaMantenimiento_CopiaSeguridadConfiguracionCNC .

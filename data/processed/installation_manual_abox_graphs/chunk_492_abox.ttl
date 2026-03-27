@@ -1,18 +1,72 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:FuncionM03 a ex:ModoOperacion ;
-    ex:textoExtracto "Las funciones M03 y M04 para el arranque del cabezal, es conveniente ejecutarla y sincronizarla antes del movimiento." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:FuncionM04 a ex:ModoOperacion ;
-    ex:textoExtracto "Las funciones M03 y M04 para el arranque del cabezal, es conveniente ejecutarla y sincronizarla antes del movimiento." .
+ex:FuncionM03 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función M03 (arranque del cabezal)" ;
+    ex:textoExtracto       "Las funciones M03 y M04 para el arranque del cabezal, es conveniente ejecutarla y sincronizarla antes del movimiento." ;
+    ex:identificador       "M03" .
 
-ex:FuncionM05 a ex:ModoOperacion ;
-    ex:textoExtracto "La función M05 para parar el cabezal, es conveniente ejecutarla y sincronizarla tras el movimiento." .
+ex:FuncionM04 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función M04 (arranque del cabezal)" ;
+    ex:textoExtracto       "Las funciones M03 y M04 para el arranque del cabezal, es conveniente ejecutarla y sincronizarla antes del movimiento." ;
+    ex:identificador       "M04" .
 
-ex:MPROGNAME a ex:Parametro ;
-    ex:textoExtracto "MPROGNAME Nombre de subrutina asociada a la función M. Valores posibles: Cualquier texto de hasta 64 caracteres. Valor por defecto: Sin subrutina. Variable asociada: (V.)MPM.MPROGNAME[pos] Parámetro incluido en la tabla DATA. Las subrutinas asociadas a las funciones M deben estar en la carpeta ..\\MTB\\Sub. Al asociar una subrutina a una función M, la ejecución de la función M ejecuta la subrutina asociada sin ejecutar la propia función M. Si se quiere enviar la función M al PLC debe estar programada dentro de la subrutina. El tipo de sincronización de las funciones M que tienen asociada una subrutina debe ser \"Sin sincronización\" o \"Después-Después\". El CNC tras ejecutar el movimiento programado (si hay), ejecuta la subrutina asociada. i Si se desea disponer de procedimientos diferentes en las subrutinas asociadas a ciertas funciones M, dentro de la subrutina se puede diferenciar el código de cada canal mediante la variable (V.)G.CNCHANNEL." .
+ex:FuncionM05 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función M05 (parada del cabezal)" ;
+    ex:textoExtracto       "La función M05 para parar el cabezal, es conveniente ejecutarla y sincronizarla tras el movimiento." ;
+    ex:identificador       "M05" .
 
-ex:MTIME a ex:Parametro ;
-    ex:textoExtracto "MTIME Tiempo estimado para la función M. Valores posibles: De 0 a 1000000 ms. Valor por defecto: 0 ms. Variable asociada: (V.)MPM.MTIME[pos] Parámetro incluido en la tabla DATA. En el modo de trabajo EDISIMU hay una opción que permite calcular el tiempo que se necesitará para ejecutar la pieza con las condiciones de mecanizado establecidas en el programa. Para afinar dicho cálculo se puede definir este parámetro." .
+ex:Parametro_MPROGNAME
+    a                     ex:Parametro ;
+    rdfs:label            "MPROGNAME (Nombre de subrutina asociada a función M)" ;
+    ex:textoExtracto       "MPROGNAME Nombre de subrutina asociada a la función M. Valores posibles: Cualquier texto de hasta 64 caracteres. Valor por defecto: Sin subrutina." ;
+    ex:identificador       "MPROGNAME" ;
+    ex:valor               "Sin subrutina" .
 
-ex:MPLC a ex:Parametro ;
-    ex:textoExtracto "MPLC Enviar la función M al PLC en la búsqueda de bloque. Valores posibles: Sí / No." .
+ex:Parametro_MTIME
+    a                     ex:Parametro ;
+    rdfs:label            "MTIME (Tiempo estimado para función M)" ;
+    ex:textoExtracto       "MTIME Tiempo estimado para la función M. Valores posibles: De 0 a 1000000 ms. Valor por defecto: 0 ms." ;
+    ex:identificador       "MTIME" ;
+    ex:valor               "0" .
+
+ex:Parametro_MPLC
+    a                     ex:Parametro ;
+    rdfs:label            "MPLC (Enviar función M al PLC en búsqueda de bloque)" ;
+    ex:textoExtracto       "MPLC Enviar la función M al PLC en la búsqueda de bloque. Valores posibles: Sí / No." ;
+    ex:identificador       "MPLC" .
+
+ex:TablaFuncionesM a ex:Tabla ;
+     a                     ex:Tabla ;
+    rdfs:label            "Tabla de funciones M (parámetros máquina)" ;
+    ex:textoExtracto       "2.8.1 Tabla de funciones M. Las funciones M se pueden enviar y/o sincronizar antes o después del movimiento." ;
+    ex:documentadoEn       ex:ManualMaquina .
+
+ex:SubrutinaFuncionM
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina asociada a función M" ;
+    ex:textoExtracto       "Las subrutinas asociadas a las funciones M deben estar en la carpeta ..\\MTB\\Sub. Al asociar una subrutina a una función M, la ejecución de la función M ejecuta la subrutina asociada sin ejecutar la propia función M." ;
+    ex:documentadoEn       ex:TablaFuncionesM .
+
+ex:Variable_CNCHANNEL
+    a                     ex:Parametro ;
+    rdfs:label            "Variable G.CNCHANNEL (identificador de canal)" ;
+    ex:textoExtracto       "dentro de la subrutina se puede diferenciar el código de cada canal mediante la variable (V.)G.CNCHANNEL." ;
+    ex:identificador       "G.CNCHANNEL" .
+
+ex:Variable_MPM_MPROGNAME
+    a                     ex:Parametro ;
+    rdfs:label            "Variable MPM.MPROGNAME[pos] (asociación de subrutina)" ;
+    ex:textoExtracto       "Variable asociada: (V.)MPM.MPROGNAME[pos]." ;
+    ex:identificador       "MPM.MPROGNAME[pos]" .
+
+ex:Variable_MPM_MTIME
+    a                     ex:Parametro ;
+    rdfs:label            "Variable MPM.MTIME[pos] (tiempo estimado)" ;
+    ex:textoExtracto       "Variable asociada: (V.)MPM.MTIME[pos]." ;
+    ex:identificador       "MPM.MTIME[pos]" .

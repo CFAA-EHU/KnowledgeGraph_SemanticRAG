@@ -1,29 +1,53 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_ANAOUTTYPE a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_ANAOUTTYPE
+    a ex:Parametro ;
     rdfs:label "ANAOUTTYPE" ;
-    ex:textoExtracto "Parámetro. | ANAOUTTYPE | Tipo de salida analógica asociada al eje." ;
-    ex:valor "Tipo de salida analógica asociada al eje." .
+    ex:textoExtracto "Tipo de salida analógica asociada al eje." ;
+    ex:monitoreaParametro ex:SalidaAnalogica_Eje .
 
-ex:Parametro_ANAOUTID a ex:Parametro ;
+ex:Parametro_ANAOUTID
+    a ex:Parametro ;
     rdfs:label "ANAOUTID" ;
-    ex:textoExtracto "Parámetro. | ANAOUTID | Número de la salida analógica asociada al eje." ;
-    ex:valor "Número de la salida analógica asociada al eje." .
-
-ex:Parametro_ANAOUTTYPE_valor_modulo_RCS_S a ex:Parametro ;
-    rdfs:label "ANAOUTTYPE" ;
-    ex:textoExtracto "Parámetro. | ANAOUTTYPE | Módulo RCS-S (contadora Sercos)" ;
-    ex:valor "Módulo RCS-S (contadora Sercos)" .
-
-ex:Parametro_ANAOUTID_valor_1_4 a ex:Parametro ;
-    rdfs:label "ANAOUTID" ;
-    ex:textoExtracto "Parámetro. | ANAOUTID | 1 - 4." ;
+    ex:textoExtracto "Número de la salida analógica asociada al eje." ;
+    ex:monitoreaParametro ex:SalidaAnalogica_Eje ;
     ex:valor "1 - 4" .
 
-ex:Sistema_configuracion_salidas_analogicas a ex:Sistema ;
-    rdfs:label "Configuración de salidas analógicas" ;
-    ex:textoExtracto "La salida analógica se configura desde los parámetros máquina. Cada eje dispone de los siguientes parámetros máquina para su configuración." .
+ex:SalidaAnalogica_Eje
+    a ex:ComponenteElectrico ;
+    ex:textoExtracto "La salida analógica se configura desde los parámetros máquina. Cada eje dispone de los siguientes parámetros máquina para su configuración." ;
+    ex:controla ex:EjeAnalogico .
 
-ex:Parametro_ANAOUTTYPE ex:tieneComponente ex:Parametro_ANAOUTTYPE_valor_modulo_RCS_S .
-ex:Parametro_ANAOUTID ex:tieneComponente ex:Parametro_ANAOUTID_valor_1_4 .
-ex:Sistema_configuracion_salidas_analogicas ex:compuestoPor ex:Parametro_ANAOUTTYPE, ex:Parametro_ANAOUTID .
+ex:EjeAnalogico
+    a ex:ComponenteMecanico ;
+    ex:textoExtracto "Cada eje dispone de los siguientes parámetros máquina para su configuración." ;
+    ex:controla ex:ConsignaAnalogica .
+
+ex:ConsignaAnalogica
+    a ex:Parametro ;
+    ex:textoExtracto "La consigna para un eje analógico se puede tomar desde una salida analógica de los módulos remotos, de un regulador Sercos o de una contadora Sercos." .
+
+ex:ModuloRCS_S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RCS-S (contadora Sercos)" ;
+    ex:textoExtracto "ANAOUTTYPE | Módulo RCS-S (contadora Sercos)" ;
+    ex:tieneComponente ex:SalidaAnalogica_ContadoraSercos .
+
+ex:SalidaAnalogica_ContadoraSercos
+    a ex:ComponenteElectrico ;
+    ex:textoExtracto "Las salidas analógicas del primer módulo serán 1 a 4, las del segundo 5 a 8 y así sucesivamente." ;
+    ex:controla ex:ConsignaAnalogica .
+
+ex:Tabla_ConfiguracionSalidasAnalogicas a ex:Tabla ;
+     a ex:Tabla ;
+    ex:textoExtracto "Configurar las salidas analógicas. [...] La selección se realiza mediante los parámetros ANAOUTTYPE y ANAOUTID." ;
+    ex:documentadoEn ex:Manual_Configuracion ;
+    ex:detalladoEnEsquema ex:Esquema_ParametrosEje .
+
+ex:Esquema_ParametrosEje
+    a ex:Esquema ;
+    ex:textoExtracto "Parámetros máquina para configuración de salidas analógicas por eje." ;
+    ex:ilustradoEn ex:Tabla_ConfiguracionSalidasAnalogicas .

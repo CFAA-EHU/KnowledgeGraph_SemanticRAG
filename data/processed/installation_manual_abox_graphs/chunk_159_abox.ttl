@@ -1,6 +1,13 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla159 a ex:Tabla ;
-    ex:textoExtracto """| Z+
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_2.3.31_ControlGap
+    a ex:Tabla ;
+    rdfs:label "Tabla de estados del parámetro GAPTONEG"@es ;
+    ex:textoExtracto """
+| Z+
 Z-
 LASER
 GAP
@@ -10,4 +17,51 @@ Z+
 LASER
 GAP
 WORKPIECE
-GAPTONEG = No |""" .
+GAPTONEG = No
+""" ;
+    ex:ilustradoEn ex:Pagina_98_103 .
+
+ex:Parametro_GAPTONEG
+    a ex:Parametro ;
+    rdfs:label "GAPTONEG" ;
+    ex:identificador "GAPTONEG" ;
+    ex:valor "Sí" , "No" ;
+    ex:textoExtracto "GAPTONEG = Sí | [...] | GAPTONEG = No" ;
+    ex:documentadoEn ex:Tabla_2.3.31_ControlGap .
+
+ex:Sistema_ControlGap
+    a ex:Sistema ;
+    rdfs:label "Sistema de control del gap"@es ;
+    ex:textoExtracto "Z+, Z-, LASER, GAP, WORKPIECE"@es ;
+    ex:detalladoEnEsquema ex:Tabla_2.3.31_ControlGap ;
+    ex:monitoreaParametro ex:Parametro_GAPTONEG .
+
+ex:ComponenteElectrico_LASER
+    a ex:ComponenteElectrico ;
+    rdfs:label "Láser"@es ;
+    ex:textoExtracto "LASER" ;
+    ex:compuestoPor ex:Sistema_ControlGap .
+
+ex:ComponenteMecanico_Z
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z+"@es ;
+    ex:textoExtracto "Z+" ;
+    ex:compuestoPor ex:Sistema_ControlGap .
+
+ex:ComponenteMecanico_Z
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z-"@es ;
+    ex:textoExtracto "Z-" ;
+    ex:compuestoPor ex:Sistema_ControlGap .
+
+ex:ComponenteMecanico_GAP
+    a ex:ComponenteMecanico ;
+    rdfs:label "Gap"@es ;
+    ex:textoExtracto "GAP" ;
+    ex:compuestoPor ex:Sistema_ControlGap .
+
+ex:ComponenteMecanico_WORKPIECE
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pieza de trabajo"@es ;
+    ex:textoExtracto "WORKPIECE" ;
+    ex:compuestoPor ex:Sistema_ControlGap .

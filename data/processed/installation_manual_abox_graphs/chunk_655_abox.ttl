@@ -1,24 +1,40 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SET ex:textoExtracto """Hay 3 instrucciones SET, RES y CPL que permiten modificar el estado del recurso especificado.""" .
-ex:RES ex:textoExtracto """Hay 3 instrucciones SET, RES y CPL que permiten modificar el estado del recurso especificado.""" .
-ex:CPL ex:textoExtracto """Hay 3 instrucciones SET, RES y CPL que permiten modificar el estado del recurso especificado.""" .
-ex:SET a ex:Parametro ;
-    ex:textoExtracto """= SET I 1/1024 = RES O 1/1024 = CPL M 1/8192 MSG 1/1024 ERR 1/1024 B 0/31 R 1/1024 Marca CNC-PLC""" .
-ex:RES a ex:Parametro ;
-    ex:textoExtracto """= SET I 1/1024 = RES O 1/1024 = CPL M 1/8192 MSG 1/1024 ERR 1/1024 B 0/31 R 1/1024 Marca CNC-PLC""" .
-ex:CPL a ex:Parametro ;
-    ex:textoExtracto """= SET I 1/1024 = RES O 1/1024 = CPL M 1/8192 MSG 1/1024 ERR 1/1024 B 0/31 R 1/1024 Marca CNC-PLC""" .
-ex:T2 a ex:Sensor ;
-    ex:textoExtracto """CPS T2 EQ 100 = SET B0R100 Cuando la cuenta (tiempo) del temporizador T2 sea igual a 100, se activará (se pondrá a "1") el bit 0 del registro R100.""" .
-ex:B0R100 a ex:ComponenteElectrico ;
-    ex:textoExtracto """CPS T2 EQ 100 = SET B0R100 Cuando la cuenta (tiempo) del temporizador T2 sea igual a 100, se activará (se pondrá a "1") el bit 0 del registro R100.""" .
-ex:M55 a ex:ComponenteElectrico ;
-    ex:textoExtracto """I12 OR NOT I22 = RES M55 = NOT RES M65 Cuando la expresión lógica tenga como resultado un "1", el PLC asigna M55=0 y no modifica M65.""" .
-ex:M65 a ex:ComponenteElectrico ;
-    ex:textoExtracto """I12 OR NOT I22 = RES M55 = NOT RES M65 Cuando la expresión lógica tenga como resultado un "1", el PLC asigna M55=0 y no modifica M65.""" .
-ex:I8 a ex:Sensor ;
-    ex:textoExtracto """DFU I8 OR DFD M22 = CPL B12R35 Cada vez que se detecte un flanco de subida en la entrada I8 o un flanco de bajada en la marca M22, el PLC complementará el estado del bit 12 del registro R35.""" .
-ex:M22 a ex:ComponenteElectrico ;
-    ex:textoExtracto """DFU I8 OR DFD M22 = CPL B12R35 Cada vez que se detecte un flanco de subida en la entrada I8 o un flanco de bajada en la marca M22, el PLC complementará el estado del bit 12 del registro R35.""" .
-ex:B12R35 a ex:ComponenteElectrico ;
-    ex:textoExtracto """DFU I8 OR DFD M22 = CPL B12R35 Cada vez que se detecte un flanco de subida en la entrada I8 o un flanco de bajada en la marca M22, el PLC complementará el estado del bit 12 del registro R35.""" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Instruccion_SET
+    a               ex:AccionProhibida ;
+    rdfs:label      "Instrucción SET" ;
+    ex:textoExtracto "Si expresión \"1\" asigna \"1\" al recurso. Si el resultado obtenido en la evaluación de la expresión lógica es un \"1\", asigna un \"1\" al recurso especificado. Si el resultado es un \"0\", no modifica el recurso." ;
+    ex:identificador "SET" .
+
+ex:Instruccion_RES
+    a               ex:AccionProhibida ;
+    rdfs:label      "Instrucción RES" ;
+    ex:textoExtracto "Si expresión \"1\" asigna \"0\" al recurso. Si el resultado obtenido en la evaluación de la expresión lógica es un \"1\", asigna un \"0\" al recurso especificado. Si el resultado es un \"0\", no modifica el recurso." ;
+    ex:identificador "RES" .
+
+ex:Instruccion_CPL
+    a               ex:AccionProhibida ;
+    rdfs:label      "Instrucción CPL" ;
+    ex:textoExtracto "Si expresión \"1\" complementa el recurso. Si el resultado obtenido en la evaluación de la expresión lógica es un \"1\" complementa el estado del recurso especificado. Si el resultado es un \"0\", no modificará el recurso." ;
+    ex:identificador "CPL" .
+
+ex:Ejemplo_SET_Temporizador
+    a               ex:AccionProhibida ;
+    rdfs:label      "Ejemplo SET con temporizador T2" ;
+    ex:textoExtracto "CPS T2 EQ 100 = SET B0R100. Cuando la cuenta (tiempo) del temporizador T2 sea igual a 100, se activará (se pondrá a \"1\") el bit 0 del registro R100." ;
+    ex:identificador "SET B0R100" .
+
+ex:Ejemplo_RES_Logica
+    a               ex:AccionProhibida ;
+    rdfs:label      "Ejemplo RES con lógica condicional" ;
+    ex:textoExtracto "I12 OR NOT I22 = RES M55 = NOT RES M65. Cuando la expresión lógica tenga como resultado un \"1\", el PLC asigna M55=0 y no modifica M65. Si la expresión lógica tiene como resultado un \"0\", el PLC no modifica M55 y asigna M65=0." ;
+    ex:identificador "RES M55/M65" .
+
+ex:Ejemplo_CPL_Flancos
+    a               ex:AccionProhibida ;
+    rdfs:label      "Ejemplo CPL con flancos de señal" ;
+    ex:textoExtracto "DFU I8 OR DFD M22 = CPL B12R35. Cada vez que se detecte un flanco de subida en la entrada I8 o un flanco de bajada en la marca M22, el PLC complementará el estado del bit 12 del registro R35." ;
+    ex:identificador "CPL B12R35" .

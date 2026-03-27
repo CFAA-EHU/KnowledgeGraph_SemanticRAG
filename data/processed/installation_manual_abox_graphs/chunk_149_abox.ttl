@@ -1,28 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SensorGap_149 a ex:Sensor ;
-    ex:textoExtracto "El sensor del gap está conectado a la entrada X3 del regulador. El CNC controla el eje del sensor hasta que alcanza el gap programado (teniendo en cuenta GAPINPOSW). Una vez alcanzada esta posición, el regulador controla el gap." ;
-    ex:identificador "sensor del gap" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Regulador_149 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Entrada analógica en un regulador. El sensor del gap está conectado a la entrada X3 del regulador. Una vez alcanzada esta posición, el regulador controla el gap." ;
-    ex:identificador "regulador" .
+ex:Tabla_2.3.31_ModosConexionSensorGap
+    a ex:Tabla ;
+    rdfs:label "Tabla de modos de conexión del sensor de gap (pág. 98-103)"@es ;
+    ex:textoExtracto """
+| Valor. | Significado. |
+| --- | --- |
+| Remoto CAN. | Entrada analógica en los módulos remotos CAN. |
+| Regulador. | Entrada analógica en un regulador. |
+| Captación. | Entrada de captación en un regulador. El sensor del gap está conectado a la entrada X3 del regulador. [...] |
+| EtherCAT | El sensor del gap está conectado a una entrada analógica del bus EtherCAT. [...]"""@es .
 
-ex:EntradaX3_149 a ex:ComponenteElectrico ;
-    ex:textoExtracto "El sensor del gap está conectado a la entrada X3 del regulador." ;
-    ex:identificador "X3" .
+ex:SensorGap
+    a ex:Sensor ;
+    rdfs:label "Sensor de gap"@es ;
+    ex:textoExtracto "El sensor del gap está conectado a la entrada X3 del regulador. [...] El sensor del gap está conectado a una entrada analógica del bus EtherCAT."@es ;
+    ex:documentadoEn ex:Tabla_2.3.31_ModosConexionSensorGap .
 
-ex:ModuloRIOW_E_149 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Las entradas analógicas están disponibles en los módulos RIOW-E." ;
-    ex:identificador "RIOW-E" .
+ex:Regulador_Gap
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador (entrada X3 para sensor de gap)"@es ;
+    ex:textoExtracto "El sensor del gap está conectado a la entrada X3 del regulador. El CNC controla el eje del sensor hasta que alcanza el gap programado (teniendo en cuenta GAPINPOSW). Una vez alcanzada esta posición, el regulador controla el gap."@es ;
+    ex:monitoreaParametro ex:SensorGap ;
+    ex:documentadoEn ex:Tabla_2.3.31_ModosConexionSensorGap .
 
-ex:SensorGapEtherCAT_149 a ex:Sensor ;
-    ex:textoExtracto "El sensor del gap está conectado a una entrada analógica del bus EtherCAT." ;
-    ex:identificador "sensor del gap" .
+ex:Modulo_RIOW_E_EtherCAT
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RIOW-E (entrada analógica EtherCAT)"@es ;
+    ex:textoExtracto "Las entradas analógicas están disponibles en los módulos RIOW-E."@es ;
+    ex:documentadoEn ex:Tabla_2.3.31_ModosConexionSensorGap .
 
-ex:EntradaAnalogicaEtherCAT_149 a ex:ComponenteElectrico ;
-    ex:textoExtracto "El sensor del gap está conectado a una entrada analógica del bus EtherCAT." .
+ex:ModuloRemoto_CAN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo remoto CAN (entrada analógica)"@es ;
+    ex:textoExtracto "Entrada analógica en los módulos remotos CAN."@es ;
+    ex:documentadoEn ex:Tabla_2.3.31_ModosConexionSensorGap .
 
-ex:ModuloRIOW_E_149 ex:tieneComponente ex:EntradaAnalogicaEtherCAT_149 .
-
-ex:Regulador_149 ex:controla ex:SensorGap_149 .
-ex:Regulador_149 ex:tieneComponente ex:EntradaX3_149 .
+ex:Parametro_GAPINPOSW
+    a ex:Parametro ;
+    rdfs:label "GAPINPOSW" ;
+    ex:textoExtracto "El CNC controla el eje del sensor hasta que alcanza el gap programado (teniendo en cuenta GAPINPOSW)."@es .

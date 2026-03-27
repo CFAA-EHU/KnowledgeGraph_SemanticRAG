@@ -1,3 +1,88 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:RutinaM06 a ex:TareaMantenimiento ;
-    ex:textoExtracto "del cabezal en tierra y coger otra de tierra. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal. LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. $BREAK $CASE 9 ; Coger una herramienta de tierra y llevarla al almacén pasando por el cabezal. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_SPD_TO_MZ ; Dejar la herramienta del cabezal en el almacén. $BREAK $CASE 10 ; Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_MZ_TO_SPD ; Poner la herramienta del almacén en el cabezal. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal. $BREAK $ENDSWITCH ; Fin análisis del tipo de operación. $WHILE V.TM.MZWAIT == 1 $ENDWHILE ; Espera al gestor del almacén. $ENDIF #DSBLK ; Fin de tratamiento de bloque único. # ESTOP ; Habilitar la tecla STOP. # RET" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:RutinaM06_CambioHerramienta
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Rutina M06: Programa de cambio de herramienta"@es ;
+    ex:textoExtracto      "del cabezal en tierra y coger otra de tierra. [...] $ENDSWITCH ; Fin análisis del tipo de operación."@es ;
+    ex:identificador      "M06" .
+
+ex:Subrutina_SPD_GMCHG
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina SPD_GMCHG: Llevar cabezal al punto de cambio manual"@es ;
+    ex:textoExtracto      "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual."@es .
+
+ex:Subrutina_SPD_TO_GR
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina SPD_TO_GR: Quitar herramienta del cabezal"@es ;
+    ex:textoExtracto      "LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal."@es .
+
+ex:Subrutina_GR_TO_SPD
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina GR_TO_SPD: Colocar herramienta en el cabezal"@es ;
+    ex:textoExtracto      "LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal."@es .
+
+ex:Subrutina_SPD_AUTCHG
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina SPD_AUTCHG: Llevar cabezal al punto de cambio automático"@es ;
+    ex:textoExtracto      "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático."@es .
+
+ex:Subrutina_SPD_TO_MZ
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina SPD_TO_MZ: Dejar herramienta en el almacén"@es ;
+    ex:textoExtracto      "LL SUB_SPD_TO_MZ ; Dejar la herramienta del cabezal en el almacén."@es .
+
+ex:Subrutina_MZ_TO_SPD
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina MZ_TO_SPD: Poner herramienta del almacén en el cabezal"@es ;
+    ex:textoExtracto      "LL SUB_MZ_TO_SPD ; Poner la herramienta del almacén en el cabezal."@es .
+
+ex:PuntoCambioManual
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Punto de cambio manual de herramienta"@es ;
+    ex:textoExtracto      "punto de cambio manual"@es .
+
+ex:PuntoCambioAutomatico
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Punto de cambio automático de herramienta"@es ;
+    ex:textoExtracto      "punto de cambio automático"@es .
+
+ex:AlmacenHerramientas
+    a                     ex:Sistema ;
+    rdfs:label            "Almacén de herramientas (MZ)"@es ;
+    ex:textoExtracto      "almacén"@es ;
+    ex:identificador       "MZ" .
+
+ex:HerramientaTierra
+    a                     ex:Herramienta ;
+    rdfs:label            "Herramienta de tierra"@es ;
+    ex:textoExtracto      "herramienta de tierra"@es .
+
+ex:HerramientaGenerica
+    a                     ex:Herramienta ;
+    rdfs:label            "Herramienta genérica del almacén"@es ;
+    ex:textoExtracto      "herramienta del almacén"@es .
+
+ex:Cabezal
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Cabezal de máquina"@es ;
+    ex:textoExtracto      "cabezal"@es .
+
+ex:RutinaM06_CambioHerramienta
+    ex:ejecutadoPor       ex:Cabezal ;
+    ex:requiereMantenimiento ex:HerramientaTierra , ex:HerramientaGenerica ;
+    ex:ilustradoEn        ex:PuntoCambioManual , ex:PuntoCambioAutomatico , ex:AlmacenHerramientas .
+
+ex:Subrutina_SPD_GMCHG
+    ex:habilitadoPor      ex:PuntoCambioManual .
+
+ex:Subrutina_SPD_AUTCHG
+    ex:habilitadoPor      ex:PuntoCambioAutomatico .
+
+ex:Subrutina_SPD_TO_MZ
+    ex:requiereMantenimiento ex:AlmacenHerramientas .
+
+ex:Subrutina_MZ_TO_SPD
+    ex:requiereMantenimiento ex:AlmacenHerramientas .

@@ -1,10 +1,21 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SSTROBE a ex:ComponenteElectrico ;
-    rdfs:label "SSTROBE" ;
-    ex:textoExtracto "El CNC activa la salida lógica general SSTROBE para indicar al PLC que debe ejecutarla."@es ;
-    ex:textoExtracto "El CNC desactiva la salida lógica general SSTROBE para dar por finalizada su ejecución."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:AUXEND a ex:ComponenteElectrico ;
-    rdfs:label "AUXEND" ;
-    ex:textoExtracto "El CNC espera la activación de la entrada general AUXEND, indicativo de fin de ejecución del PLC."@es .
+ex:SalidaLogica_SSTROBE
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salida lógica general SSTROBE" ;
+    ex:textoExtracto "El CNC activa la salida lógica general SSTROBE para indicar al PLC que debe ejecutarla. [...] desactiva la salida lógica general SSTROBE para dar por finalizada su ejecución." .
+
+ex:EntradaLogica_AUXEND
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada general AUXEND" ;
+    ex:textoExtracto "El CNC espera la activación de la entrada general AUXEND, indicativo de fin de ejecución del PLC." .
+
+ex:Sistema_ComunicacionCNC_PLC
+    a ex:Sistema ;
+    rdfs:label "Sistema de comunicación CNC-PLC para transferencia de funciones auxiliares" ;
+    ex:textoExtracto "El CNC activa la salida lógica general SSTROBE para indicar al PLC que debe ejecutarla. El CNC espera la activación de la entrada general AUXEND, indicativo de fin de ejecución del PLC." ;
+    ex:tieneComponente ex:SalidaLogica_SSTROBE ;
+    ex:tieneComponente ex:EntradaLogica_AUXEND .

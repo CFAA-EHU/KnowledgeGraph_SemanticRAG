@@ -1,22 +1,57 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaMultieje_1092_1 a ex:Sistema ;
-    ex:textoExtracto "Ejemplo 1. Sistema con dos ejes, cada uno con su motor. El sistema tiene las siguientes características. • Un único regulador controla dos ejes, cada uno con su motor. • Cada eje utiliza un tipo de captación diferente." ;
-    ex:tieneComponente ex:Eje_A1_1092, ex:Eje_A2_1092, ex:Regulador_1092 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Eje_A1_1092 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Eje A1 La captación externa (directa) está conectada al propio regulador." ;
-    ex:tieneComponente ex:Motor_A1_1092 .
+ex:SistemaMultieje_1092
+    a ex:Sistema ;
+    rdfs:label "Sistema con dos ejes (A1 y A2)"@es ;
+    ex:textoExtracto "Ejemplo 1. Sistema con dos ejes, cada uno con su motor. El sistema tiene las siguientes características. • Un único regulador controla dos ejes, cada uno con su motor."@es ;
+    ex:compuestoPor ex:EjeA1_1092, ex:EjeA2_1092, ex:ReguladorMultieje_1092 ;
+    ex:detalladoEnEsquema ex:EsquemaConfiguracion_1092 .
 
-ex:Motor_A1_1092 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Eje A1 ... cada uno con su motor." .
+ex:EjeA1_1092
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje A1"@es ;
+    ex:textoExtracto "Eje A1. La captación externa (directa) está conectada al propio regulador."@es ;
+    ex:tieneComponente ex:MotorA1_1092 ;
+    ex:ilustradoEn ex:EsquemaConfiguracion_1092 .
 
-ex:Eje_A2_1092 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Eje A2 La captación externa (directa) está conectada a los módulos remotos." ;
-    ex:tieneComponente ex:Motor_A2_1092 .
+ex:MotorA1_1092
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del Eje A1"@es ;
+    ex:textoExtracto "motor [...] Eje A1"@es ;
+    ex:controla ex:EjeA1_1092 .
 
-ex:Motor_A2_1092 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Eje A2 ... cada uno con su motor." .
+ex:EjeA2_1092
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje A2"@es ;
+    ex:textoExtracto "Eje A2. La captación externa (directa) está conectada a los módulos remotos."@es ;
+    ex:tieneComponente ex:MotorA2_1092 ;
+    ex:ilustradoEn ex:EsquemaConfiguracion_1092 .
 
-ex:Regulador_1092 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Un único regulador controla dos ejes, cada uno con su motor." ;
-    ex:controla ex:Eje_A1_1092, ex:Eje_A2_1092 .
+ex:MotorA2_1092
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del Eje A2"@es ;
+    ex:textoExtracto "motor [...] Eje A2"@es ;
+    ex:controla ex:EjeA2_1092 .
+
+ex:ReguladorMultieje_1092
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador multieje"@es ;
+    ex:textoExtracto "Un único regulador controla dos ejes, cada uno con su motor."@es ;
+    ex:controla ex:EjeA1_1092, ex:EjeA2_1092 ;
+    ex:ilustradoEn ex:EsquemaConfiguracion_1092 .
+
+ex:EsquemaConfiguracion_1092
+    a ex:Esquema ;
+    rdfs:label "Esquema de configuración del sistema multieje (pág. 591-592)"@es ;
+    ex:textoExtracto "Direct Feedback E L UD O M EV Axis A1 I RD Motor Feedback [...] Sercos CAN Configuración del grupo multieje."@es ;
+    ex:identificador "Figura 11.4.4 (Ejemplo 1)" .
+
+ex:TablaConfiguracionMultieje_1092 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Configuración del grupo multieje (MULTIAXIS GROUP_1)"@es ;
+    ex:textoExtracto "| MULTIAXIS | GROUP_1 | --- | --- | MULNGROUP = 1 | MULNAXIS = 2 MULAXISNAME_1 = A1 MULAXISNAME_2 = A2 | Configuración de los ejes."@es ;
+    ex:documentadoEn ex:ManualBrochado ;
+    ex:detalladoEnEsquema ex:EsquemaConfiguracion_1092 .

@@ -1,48 +1,56 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaTandemControl a ex:Sistema ;
-    ex:textoExtracto "Diagrama de bloques del sistema con CNC, regulador y dos ejes (MASTER DRIVE y SLAVE DRIVE). Se detallan lazos de posición y velocidad, señales de consigna y realimentación, y el bloque 'Tandem control' que aplica precarga y distribución de par." ;
-    ex:compuestoPor ex:EjeMaestro, ex:EjeEsclavo, ex:ControladorTandem ;
-    ex:tieneComponente ex:MotorMaestro, ex:MotorEsclavo .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ControladorTandem a ex:Componente ;
-    ex:textoExtracto "bloque 'Tandem control' que aplica precarga y distribución de par" ;
-    ex:compuestoPor ex:BloquePrecarga, ex:BloqueDistribucionPar .
+ex:Esquema_Tandem_Control_Precarga
+    a                       ex:Esquema ;
+    rdfs:label              "Esquema de control tándem con precarga"@es ;
+    ex:textoExtracto         "Diagrama de bloques del sistema con CNC, regulador y dos ejes (MASTER DRIVE y SLAVE DRIVE). Se detallan lazos de posición y velocidad, señales de consigna y realimentación, y el bloque 'Tandem control' que aplica precarga y distribución de par."@es ;
+    ex:identificador         "Tandem_Control_Precarga" .
 
-ex:EjeMaestro a ex:Componente ;
-    ex:textoExtracto "dos ejes (MASTER DRIVE y SLAVE DRIVE)" ;
-    ex:compuestoPor ex:MotorMaestro .
+ex:Sistema_Tandem_Multieje
+    a                       ex:Sistema ;
+    rdfs:label              "Sistema tándem multieje con control de precarga"@es ;
+    ex:textoExtracto         "Grupo multieje compuesto por dos ejes, cada uno controlado por un motor. [...] configuración de un solo regulador."@es ;
+    ex:detalladoEnEsquema    ex:Esquema_Tandem_Control_Precarga ;
+    ex:tieneComponente       ex:Motor_Maestro_Tandem ;
+    ex:tieneComponente       ex:Motor_Esclavo_Tandem ;
+    ex:tieneComponente       ex:Regulador_Tandem ;
+    ex:tieneComponente       ex:Modulo_Control_Tandem .
 
-ex:EjeEsclavo a ex:Componente ;
-    ex:textoExtracto "dos ejes (MASTER DRIVE y SLAVE DRIVE)" ;
-    ex:compuestoPor ex:MotorEsclavo .
+ex:Motor_Maestro_Tandem
+    a                       ex:ComponenteMecanico ;
+    rdfs:label              "MASTER DRIVE (Motor maestro en configuración tándem)"@es ;
+    ex:textoExtracto         "eje (MASTER DRIVE) [...] control mantiene tensión mecánica en frenadas."@es ;
+    ex:identificador         "MASTER_DRIVE" .
 
-ex:MotorMaestro a ex:ComponenteElectrico ;
-    ex:textoExtracto "MASTER DRIVE" ;
-    ex:identificador "MASTER DRIVE" .
+ex:Motor_Esclavo_Tandem
+    a                       ex:ComponenteMecanico ;
+    rdfs:label              "SLAVE DRIVE (Motor esclavo en configuración tándem)"@es ;
+    ex:textoExtracto         "eje (SLAVE DRIVE) [...] seguimiento del esclavo."@es ;
+    ex:identificador         "SLAVE_DRIVE" .
 
-ex:MotorEsclavo a ex:ComponenteElectrico ;
-    ex:textoExtracto "SLAVE DRIVE" ;
-    ex:identificador "SLAVE DRIVE" .
+ex:Regulador_Tandem
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Regulador de sistema tándem"@es ;
+    ex:textoExtracto         "módulo de regulador; flechas indican el sentido de movimiento y se resaltan captaciones internas y directas por eje en configuración de un solo regulador."@es ;
+    ex:controla              ex:Motor_Maestro_Tandem ;
+    ex:controla              ex:Motor_Esclavo_Tandem .
 
-ex:BloquePrecarga a ex:Componente ;
-    ex:textoExtracto "bloque de 'Preload'" .
+ex:Modulo_Control_Tandem
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Tandem control (módulo de distribución de par y precarga)"@es ;
+    ex:textoExtracto         "bloque 'Tandem control' que aplica precarga y distribución de par. [...] incluye filtro de precarga y rutas de consigna de velocidad a ambos motores."@es ;
+    ex:monitoreaParametro    ex:Parametro_Precarga ;
+    ex:monitoreaParametro    ex:Parametro_Par_Distribuido .
 
-ex:BloqueDistribucionPar a ex:Componente ;
-    ex:textoExtracto "distribución de par" .
+ex:Parametro_Precarga
+    a                       ex:Parametro ;
+    rdfs:label              "Precarga (preload) en sistema tándem"@es ;
+    ex:textoExtracto         "bloque de 'Preload' [...] enfatizando normalización y reparto de par."@es .
 
-ex:GrupoMultieje a ex:Sistema ;
-    ex:textoExtracto "Grupo multieje compuesto por dos ejes, cada uno controlado por un motor." ;
-    ex:compuestoPor ex:Eje1Multieje, ex:Eje2Multieje ;
-    ex:tieneComponente ex:MotorGrupo1, ex:MotorGrupo2 .
-
-ex:Eje1Multieje a ex:Componente ;
-    ex:textoExtracto "dos ejes" .
-
-ex:Eje2Multieje a ex:Componente ;
-    ex:textoExtracto "dos ejes" .
-
-ex:MotorGrupo1 a ex:ComponenteElectrico ;
-    ex:textoExtracto "motor" .
-
-ex:MotorGrupo2 a ex:ComponenteElectrico ;
-    ex:textoExtracto "motor" .
+ex:Parametro_Par_Distribuido
+    a                       ex:Parametro ;
+    rdfs:label              "Par distribuido (torque) en eje maestro/esclavo"@es ;
+    ex:textoExtracto         "el reparto de par se invierte respecto a la aceleración [...] distribución de par."@es .

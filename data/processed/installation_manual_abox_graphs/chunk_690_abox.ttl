@@ -1,37 +1,58 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla690 a ex:Tabla ;
-    ex:textoExtracto """| CNC | PLC |  |
-| --- | --- | --- |
-| #SELECT PROBE [1]
-G100 X100 | ꞏꞏ = TOUCHPROBE (X,1) | Incorrecto. |
-| #SELECT PROBE [1]
-G100 X100 | ꞏꞏ = TOUCHPROBE (Z,1) | Incorrecto. |
-| #SELECT PROBE [1]
-G100 X100 | ꞏꞏ = TOUCHPROBE (X,2) | Correcto. |
-| #SELECT PROBE [2]
-G100 X100 | ꞏꞏ = TOUCHPROBE (X,1) | Correcto. |""" ;
-    ex:tieneComponente ex:SelectProbe1, ex:SelectProbe2, ex:TouchProbeX1, ex:TouchProbeZ1, ex:TouchProbeX2, ex:TouchProbeX1_2 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SelectProbe1 a ex:Parametro ;
-    ex:identificador "#SELECT PROBE [1]" ;
-    ex:textoExtracto "#SELECT PROBE [1]" .
+ex:Tabla_InstruccionesLatcheoCotas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de instrucciones de latcheo de cotas con palpador o entrada digital"@es ;
+    ex:textoExtracto """
+| CNC               | PLC                     |  |
+|-------------------|-------------------------|------|
+| #SELECT PROBE [1] | ꞏꞏ = TOUCHPROBE (X,1)   | Incorrecto. |
+| #SELECT PROBE [1] | ꞏꞏ = TOUCHPROBE (Z,1)   | Incorrecto. |
+| #SELECT PROBE [1] | ꞏꞏ = TOUCHPROBE (X,2)   | Correcto. |
+| #SELECT PROBE [2] | ꞏꞏ = TOUCHPROBE (X,1)   | Correcto. |
+"""@es .
 
-ex:SelectProbe2 a ex:Parametro ;
-    ex:identificador "#SELECT PROBE [2]" ;
-    ex:textoExtracto "#SELECT PROBE [2]" .
+ex:Comando_SelectProbe_1
+    a ex:Parametro ;
+    rdfs:label "SELECT PROBE [1]"@en ;
+    ex:identificador "SELECT PROBE [1]" ;
+    ex:textoExtracto "#SELECT PROBE [1]"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
 
-ex:TouchProbeX1 a ex:Sensor ;
+ex:Comando_TouchProbe_X1
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (X,1)"@en ;
     ex:identificador "TOUCHPROBE (X,1)" ;
-    ex:textoExtracto "TOUCHPROBE (X,1)" .
+    ex:textoExtracto "ꞏꞏ = TOUCHPROBE (X,1)"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
 
-ex:TouchProbeZ1 a ex:Sensor ;
+ex:Comando_TouchProbe_Z1
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (Z,1)"@en ;
     ex:identificador "TOUCHPROBE (Z,1)" ;
-    ex:textoExtracto "TOUCHPROBE (Z,1)" .
+    ex:textoExtracto "ꞏꞏ = TOUCHPROBE (Z,1)"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
 
-ex:TouchProbeX2 a ex:Sensor ;
+ex:Comando_TouchProbe_X2
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (X,2)"@en ;
     ex:identificador "TOUCHPROBE (X,2)" ;
-    ex:textoExtracto "TOUCHPROBE (X,2)" .
+    ex:textoExtracto "ꞏꞏ = TOUCHPROBE (X,2)"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
 
-ex:TouchProbeX1_2 a ex:Sensor ;
-    ex:identificador "TOUCHPROBE (X,1)" ;
-    ex:textoExtracto "TOUCHPROBE (X,1)" .
+ex:Comando_SelectProbe_2
+    a ex:Parametro ;
+    rdfs:label "SELECT PROBE [2]"@en ;
+    ex:identificador "SELECT PROBE [2]" ;
+    ex:textoExtracto "#SELECT PROBE [2]"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
+
+ex:Sistema_CNC_PLC_Latcheo
+    a ex:Sistema ;
+    rdfs:label "Sistema de latcheo CNC-PLC para palpador/entrada digital"@es ;
+    ex:textoExtracto "Instrucciones de latcheo de cotas con un palpador o entrada digital"@es ;
+    ex:compuestoPor ex:Comando_SelectProbe_1, ex:Comando_SelectProbe_2 ;
+    ex:detalladoEnEsquema ex:Tabla_InstruccionesLatcheoCotas .

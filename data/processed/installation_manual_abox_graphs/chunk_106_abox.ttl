@@ -1,17 +1,44 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla_CROSSCOMP a ex:Tabla ;
-    ex:textoExtracto "Este parámetro muestra la lista de puntos y valores de compensación. El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS." ;
-    ex:valor "Tabla para definir los valores de compensación" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_MOVAXIS a ex:Parametro ;
-    ex:textoExtracto "parámetros MOVAXIS, COMPAXIS y NPCROSS" .
+ex:Parametro_RefNeed
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro MPG.REFNEED"@es ;
+    ex:identificador "MPG.REFNEED[tbl]" ;
+    ex:textoExtracto "Variable asociada: (V.)MPG.REFNEED[tbl]. Este parámetro indica si es necesario referenciar ambos ejes para empezar a aplicar la compensación."@es ;
+    ex:valor        "No"^^xsd:string ;
+    ex:documentadoEn ex:Tabla_CrossComp .
 
-ex:Parametro_COMPAXIS a ex:Parametro ;
-    ex:textoExtracto "parámetros MOVAXIS, COMPAXIS y NPCROSS" .
+ex:Tabla_CrossComp a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla CROSSCOMP"@es ;
+    ex:identificador "CROSSCOMP" ;
+    ex:textoExtracto "Parámetro incluido en la tabla CROSSCOMP. DATA Tabla para definir los valores de compensación. Este parámetro muestra la lista de puntos y valores de compensación."@es .
 
-ex:Parametro_NPCROSS a ex:Parametro ;
-    ex:textoExtracto "parámetros MOVAXIS, COMPAXIS y NPCROSS" .
+ex:Tabla_Data_CrossComp a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla DATA de compensación cruzada"@es ;
+    ex:identificador "DATA" ;
+    ex:textoExtracto "DATA Tabla para definir los valores de compensación. Este parámetro muestra la lista de puntos y valores de compensación. El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS."@es ;
+    ex:documentadoEn ex:Tabla_CrossComp .
 
-ex:Parametro_MPG_REFNEED a ex:Parametro ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.REFNEED[tbl] Parámetro incluido en la tabla CROSSCOMP. Este parámetro indica si es necesario referenciar ambos ejes para empezar a aplicar la compensación." ;
-    ex:identificador "MPG.REFNEED[tbl]" .
+ex:Parametro_MovAxis
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro MOVAXIS"@es ;
+    ex:identificador "MOVAXIS" ;
+    ex:textoExtracto "El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS."@es .
+
+ex:Parametro_CompAxis
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro COMPAXIS"@es ;
+    ex:identificador "COMPAXIS" ;
+    ex:textoExtracto "El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS."@es .
+
+ex:Parametro_NpCross
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro NPCROSS"@es ;
+    ex:identificador "NPCROSS" ;
+    ex:textoExtracto "El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS."@es .

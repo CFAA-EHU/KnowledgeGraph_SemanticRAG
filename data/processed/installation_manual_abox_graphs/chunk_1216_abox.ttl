@@ -1,8 +1,22 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Subrutina_INITIALSUB a ex:AccionProhibida ;
-    ex:textoExtracto "Este comando esta orientado a máquina láser, donde esta subrutina debe realizar las operaciones iniciales del láser." ;
-    ex:identificador "#INITIALSUB" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SubrutinaLaser a ex:AccionProhibida ;
-    ex:textoExtracto "Subrutina orientada al modelo láser. Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM. Es su responsabilidad del OEM garantizar que la subrutina cumple todos los aspectos de seguridad relativos al manejo del láser." ;
-    ex:identificador "Fagor" .
+ex:Comando_INITIALSUB
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando #INITIALSUB" ;
+    ex:identificador "#INITIALSUB" ;
+    ex:textoExtracto "El comando #INITIALSUB tiene una subrutina asociada, que el CNC ejecuta junto al comando." .
+
+ex:SubrutinaInicializacionLaser
+    a ex:ModoOperacion ;
+    rdfs:label "Subrutina asociada al comando #INITIALSUB" ;
+    ex:textoExtracto "Subrutina orientada al modelo láser. [...] debe realizar las operaciones iniciales del láser." ;
+    ex:ejecutadoPor ex:Comando_INITIALSUB .
+
+ex:MaquinaLaser
+    a ex:Maquina ;
+    rdfs:label "Máquina láser" ;
+    ex:textoExtracto "Este comando está orientado a máquina láser, donde esta subrutina debe realizar las operaciones iniciales del láser." ;
+    ex:tieneComponente ex:SubrutinaInicializacionLaser .

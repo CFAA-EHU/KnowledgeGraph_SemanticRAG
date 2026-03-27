@@ -1,21 +1,44 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaTorno1Canal3Ejes1Cabezal a ex:Sistema ;
-    ex:textoExtracto "plano. Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 3 ejes (X Z U) 1 cabezal (S). Configuración general de los canales, ejes y cabezales. | Sistema | Canal ꞏ1ꞏ | NCHANNEL = 1 | GEOCONFIG = Plano | NAXIS = 3 | CHNAXIS = 2 | NSPDL = 1 | CHNSPDL = 1 | IPLANE = G18 Configuración de los ejes y cabezales del sistema. | AXISNAME | Valor | Orden lógico. | Índice en el sistema. | AXISNAME 1 | X | Número lógico ꞏ1ꞏ. | | AXISNAME 2 | Z | Número lógico ꞏ2ꞏ. | | AXISNAME 3 | U | Número lógico ꞏ3ꞏ. | SPDLNAME 1 | S | Número lógico ꞏ4ꞏ. | Cabezal con índice ꞏ1ꞏ. Configuración de los ejes y cabezales del canal ꞏ1ꞏ. | CHAXISNAME | Valor | Índice en el canal. | Orden lógico. | CHAXISNAME 1 | X | Eje con índice ꞏ1ꞏ. | Número lógico ꞏ1ꞏ. | CHAXISNAME 2 | Z | Eje con índice ꞏ2ꞏ. | Número lógico ꞏ2ꞏ. | CHSPDLNAME | Valor | Índice en el canal. | Orden lógico." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeX a ex:ComponenteMecanico ;
-    ex:textoExtracto "AXISNAME 1 | X | Número lógico ꞏ1ꞏ." ;
-    ex:identificador "X" .
+ex:Sistema_Torno_1Canal_3Ejes_1Cabezal
+    a ex:Sistema ;
+    rdfs:label "Sistema de torno con 1 canal, 3 ejes y 1 cabezal"@es ;
+    ex:textoExtracto "plano. Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 3 ejes (X Z U) 1 cabezal (S). Configuración general de los canales, ejes y cabezales."@es ;
+    ex:identificador "NCHANNEL=1; NAXIS=3; NSPDL=1; GEOCONFIG=Plano; IPLANE=G18" ;
+    ex:compuestoPor ex:Eje_X_Torno1Canal ,
+                    ex:Eje_Z_Torno1Canal ,
+                    ex:Eje_U_Torno1Canal ,
+                    ex:Cabezal_S_Torno1Canal .
 
-ex:EjeZ a ex:ComponenteMecanico ;
-    ex:textoExtracto "AXISNAME 2 | Z | Número lógico ꞏ2ꞏ." ;
-    ex:identificador "Z" .
+ex:Eje_X_Torno1Canal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje X (Canal 1)"@es ;
+    ex:textoExtracto "AXISNAME 1: X. Número lógico ꞏ1ꞏ. CHAXISNAME 1: X. Eje con índice ꞏ1ꞏ."@es ;
+    ex:identificador "AXISNAME=X; CHAXISNAME=X; OrdenLógico=1; ÍndiceSistema=1; ÍndiceCanal=1" .
 
-ex:EjeU a ex:ComponenteMecanico ;
-    ex:textoExtracto "AXISNAME 3 | U | Número lógico ꞏ3ꞏ." ;
-    ex:identificador "U" .
+ex:Eje_Z_Torno1Canal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Z (Canal 1)"@es ;
+    ex:textoExtracto "AXISNAME 2: Z. Número lógico ꞏ2ꞏ. CHAXISNAME 2: Z. Eje con índice ꞏ2ꞏ."@es ;
+    ex:identificador "AXISNAME=Z; CHAXISNAME=Z; OrdenLógico=2; ÍndiceSistema=2; ÍndiceCanal=2" .
 
-ex:CabezalS a ex:ComponenteMecanico ;
-    ex:textoExtracto "SPDLNAME 1 | S | Número lógico ꞏ4ꞏ. | Cabezal con índice ꞏ1ꞏ." ;
-    ex:identificador "S" .
+ex:Eje_U_Torno1Canal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje U (Canal 1)"@es ;
+    ex:textoExtracto "AXISNAME 3: U. Número lógico ꞏ3ꞏ."@es ;
+    ex:identificador "AXISNAME=U; OrdenLógico=3; ÍndiceSistema=3" .
 
-ex:SistemaTorno1Canal3Ejes1Cabezal ex:tieneComponente ex:EjeX, ex:EjeZ, ex:EjeU, ex:CabezalS .
+ex:Cabezal_S_Torno1Canal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal S (Canal 1)"@es ;
+    ex:textoExtracto "SPDLNAME 1: S. Número lógico ꞏ4ꞏ. Cabezal con índice ꞏ1ꞏ."@es ;
+    ex:identificador "SPDLNAME=S; CHNSPDL=1; OrdenLógico=4; ÍndiceSistema=1" .
+
+ex:Tabla_ConfiguracionEjesCanal1 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de ejes y cabezales (Canal 1)"@es ;
+    ex:textoExtracto "Configuración de los ejes y cabezales del canal ꞏ1ꞏ. | CHAXISNAME | Valor | Índice en el canal. | Orden lógico."@es ;
+    ex:documentadoEn ex:Sistema_Torno_1Canal_3Ejes_1Cabezal .

@@ -1,77 +1,55 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:LatcheoCota a ex:AccionProhibida ;
-    rdfs:label "Latcheo de cota"@es ;
-    ex:textoExtracto "Se entiende por latcheo de cota a que el CNC capture la cota de un eje cuando se produce un evento dado."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TOUCHPROBE a ex:AccionProhibida ;
-    rdfs:label "TOUCHPROBE"@es ;
-    ex:textoExtracto "TOUCHPROBE Latcheo de la cota."@es .
+ex:Instruccion_LatcheoCota_TOUCHPROBE
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Instrucción TOUCHPROBE para latcheo de cota"@es ;
+    ex:textoExtracto       "La instrucción TOUCHPROBE latchea la cota de un eje por evento de un palpador, de una entrada digital física o de una entrada lógica."@es ;
+    ex:identificador       "TOUCHPROBE" ;
+    ex:requiereMantenimiento ex:Sistema_LatcheoCota .
 
-ex:Palpador a ex:Sensor ;
-    rdfs:label "palpador"@es ;
-    ex:textoExtracto "el palpador actúa por nivel, no por flanco"@es .
+ex:Sistema_LatcheoCota
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de latcheo de cota por evento"@es ;
+    ex:textoExtracto       "Se entiende por latcheo de cota a que el CNC capture la cota de un eje cuando se produce un evento dado."@es ;
+    ex:compuestoPor        ex:Parametro_PRBDI1 , ex:Parametro_PRBDI2 , ex:Palpador_Evento , ex:EntradaDigital_Fisica , ex:EntradaLogica_PLC ;
+    ex:tieneComponente     ex:ComponenteElectrico_EntradaDigital .
 
-ex:EntradaDigitalFisica a ex:ComponenteElectrico ;
-    rdfs:label "entrada digital física"@es ;
-    ex:textoExtracto "de una entrada digital física o de una entrada lógica"@es .
+ex:Parametro_PRBDI1
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro PRBDI1 (entrada digital para latcheo)"@es ;
+    ex:textoExtracto       "Los eventos a utilizar serán las entradas digitales definidas en los parámetros PRBDI1 y PRBDI2."@es ;
+    ex:identificador       "PRBDI1" ;
+    ex:monitoreaParametro  ex:Sistema_LatcheoCota .
 
-ex:EntradaLogica a ex:ComponenteElectrico ;
-    rdfs:label "entrada lógica"@es ;
-    ex:textoExtracto "Si el evento seleccionado es una entrada lógica, la activación de la misma puede realizarse desde programa PLC"@es .
+ex:Parametro_PRBDI2
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro PRBDI2 (entrada digital para latcheo)"@es ;
+    ex:textoExtracto       "Los eventos a utilizar serán las entradas digitales definidas en los parámetros PRBDI1 y PRBDI2."@es ;
+    ex:identificador       "PRBDI2" ;
+    ex:monitoreaParametro  ex:Sistema_LatcheoCota .
 
-ex:ParametroPRBDI1 a ex:Parametro ;
-    rdfs:label "PRBDI1"@es ;
-    ex:textoExtracto "Los eventos a utilizar serán las entradas digitales definidas en los parámetros PRBDI1 y PRBDI2."@es .
+ex:Palpador_Evento
+    a                     ex:Sensor ;
+    rdfs:label            "Palpador para latcheo de cota"@es ;
+    ex:textoExtracto       "La instrucción TOUCHPROBE latchea la cota de un eje por evento de un palpador [...] Si el evento seleccionado es un palpador y al activar el comando TOUCHPROBE el palpador ya ha alcanzado su nivel lógico, la cota latcheada será la del momento de activación del comando."@es ;
+    ex:controla           ex:Sistema_LatcheoCota .
 
-ex:ParametroPRBDI2 a ex:Parametro ;
-    rdfs:label "PRBDI2"@es ;
-    ex:textoExtracto "Los eventos a utilizar serán las entradas digitales definidas en los parámetros PRBDI1 y PRBDI2."@es .
+ex:EntradaDigital_Fisica
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Entrada digital física para latcheo"@es ;
+    ex:textoExtracto       "La instrucción TOUCHPROBE latchea la cota de un eje por evento [...] de una entrada digital física."@es ;
+    ex:tieneComponente     ex:Sistema_LatcheoCota .
 
-ex:ParametroPROBEAXIS a ex:Parametro ;
-    rdfs:label "PROBEAXIS"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
+ex:EntradaLogica_PLC
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Entrada lógica PLC para latcheo condicional"@es ;
+    ex:textoExtracto       "Si el evento seleccionado es una entrada lógica, la activación de la misma puede realizarse desde programa PLC y por lo tanto estar condicionada indirectamente a cualquier otro evento gestionado por el PLC."@es ;
+    ex:controla           ex:Sistema_LatcheoCota .
 
-ex:ParametroPROBERANGE a ex:Parametro ;
-    rdfs:label "PROBERANGE"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:ParametroPROBEFEED a ex:Parametro ;
-    rdfs:label "PROBEFEED"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:ParametroPRB1MIN a ex:Parametro ;
-    rdfs:label "PRB1MIN"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:ParametroPRB2MIN a ex:Parametro ;
-    rdfs:label "PRB2MIN"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:ParametroPRB3MIN a ex:Parametro ;
-    rdfs:label "PRB3MIN"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:ParametroPRB1MAX a ex:Parametro ;
-    rdfs:label "PRB1MAX"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:ParametroPRB2MAX a ex:Parametro ;
-    rdfs:label "PRB2MAX"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:ParametroPRB3MAX a ex:Parametro ;
-    rdfs:label "PRB3MAX"@es ;
-    ex:textoExtracto "Los siguientes parámetros máquina asociados al palpador no tienen efecto; PROBEAXIS, PROBERANGE, PROBEFEED, PRB1MIN, PRB2MIN, PRB3MIN, PRB1MAX, PRB2MAX y PRB3MAX."@es .
-
-ex:Eje a ex:ComponenteMecanico ;
-    rdfs:label "eje"@es ;
-    ex:textoExtracto "el CNC capture la cota de un eje cuando se produce un evento dado"@es .
-
-ex:VentanaLatcheo a ex:Parametro ;
-    rdfs:label "ventana de latcheo"@es ;
-    ex:textoExtracto "se puede definir una ventana de latcheo. Si hay una ventana de latch, se podrá condicionar el latcheo de la cota a que el eje se encuentre dentro o fuera de la ventana."@es .
-
-ex:ProgramaPLC a ex:Sistema ;
-    rdfs:label "programa PLC"@es ;
-    ex:textoExtracto "la activación de la misma puede realizarse desde programa PLC"@es .
+ex:ComponenteElectrico_EntradaDigital
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Componente de entrada digital para latcheo"@es ;
+    ex:textoExtracto       "Los eventos a utilizar serán las entradas digitales definidas en los parámetros PRBDI1 y PRBDI2."@es .

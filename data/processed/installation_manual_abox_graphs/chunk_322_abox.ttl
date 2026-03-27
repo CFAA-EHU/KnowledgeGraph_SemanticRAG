@@ -1,16 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla322_2_5_24 a ex:Tabla ;
-    ex:textoExtracto "Límite de seguridad para la velocidad. | Límite para la velocidad de mecanizado. | Límite de velocidad activo." ;
-    ex:tieneComponente ex:LimiteSeguridadVelocidad, ex:LimiteVelocidadMecanizado, ex:LimiteVelocidadActivo .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:LimiteSeguridadVelocidad a ex:Parametro ;
-    ex:textoExtracto "Límite de seguridad para la velocidad." ;
-    ex:valor "0, 50, 50, 150" .
+ex:Tabla_322_LimitesVelocidad a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de límites de seguridad para velocidad de mecanizado"@es ;
+    ex:textoExtracto """
+| Límite de seguridad para la velocidad. | Límite para la velocidad de mecanizado. | Límite de velocidad activo. |
+| --- | --- | --- |
+| 0 | 100 | 100 |
+| 50 | 0 | 50 |
+| 50 | 100 | 50 |
+| 150 | 100 | 100 """
+    .
 
-ex:LimiteVelocidadMecanizado a ex:Parametro ;
-    ex:textoExtracto "Límite para la velocidad de mecanizado." ;
-    ex:valor "100, 0, 100, 100" .
+ex:Parametro_LimiteSeguridadVelocidad
+    a ex:Parametro ;
+    rdfs:label "Límite de seguridad para la velocidad"@es ;
+    ex:textoExtracto "Límite de seguridad para la velocidad."@es ;
+    ex:documentadoEn ex:Tabla_322_LimitesVelocidad ;
+    ex:valor "0"^^xsd:integer, "50"^^xsd:integer, "150"^^xsd:integer .
 
-ex:LimiteVelocidadActivo a ex:Parametro ;
-    ex:textoExtracto "Límite de velocidad activo." ;
-    ex:valor "100, 50, 50, 100" .
+ex:Parametro_LimiteVelocidadMecanizado
+    a ex:Parametro ;
+    rdfs:label "Límite para la velocidad de mecanizado"@es ;
+    ex:textoExtracto "Límite para la velocidad de mecanizado."@es ;
+    ex:documentadoEn ex:Tabla_322_LimitesVelocidad ;
+    ex:valor "100"^^xsd:integer, "0"^^xsd:integer .
+
+ex:Parametro_LimiteVelocidadActivo
+    a ex:Parametro ;
+    rdfs:label "Límite de velocidad activo"@es ;
+    ex:textoExtracto "Límite de velocidad activo."@es ;
+    ex:documentadoEn ex:Tabla_322_LimitesVelocidad ;
+    ex:valor "100"^^xsd:integer, "50"^^xsd:integer .

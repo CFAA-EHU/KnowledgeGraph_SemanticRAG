@@ -1,10 +1,22 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:G399 a ex:Parametro ;
-    rdfs:label "G399" ;
-    ex:textoExtracto "G399. El CNC permite al fabricante de la máquina definir hasta 30 subrutinas por canal y asociarlas a las funciones G180 a G189 y G380 a G399, de manera que cuando un canal ejecute una de estas funciones, ejecutará la subrutina que tiene asociada." ;
-    ex:valor "G399" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SubrutinaOEM a ex:TareaMantenimiento ;
-    rdfs:label "Subrutina OEM" ;
-    ex:textoExtracto "El CNC permite al fabricante de la máquina definir hasta 30 subrutinas por canal y asociarlas a las funciones G180 a G189 y G380 a G399, de manera que cuando un canal ejecute una de estas funciones, ejecutará la subrutina que tiene asociada. Estas subrutinas OEM se podrán ejecutar de forma no-modal o de forma modal, y además permite inicializar los parámetros locales de la subrutina." .
+ex:FuncionG399 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G399" ;
+    ex:identificador "G399" ;
+    ex:textoExtracto "El CNC permite al fabricante de la máquina definir hasta 30 subrutinas por canal y asociarlas a las funciones G180 a G189 y G380 a G399, de manera que cuando un canal ejecute una de estas funciones, ejecutará la subrutina que tiene asociada." .
+
+ex:SubrutinasOEM_G180_G189_G380_G399
+    a ex:Sistema ;
+    rdfs:label "Subrutinas OEM asociadas a funciones G180-G189 / G380-G399" ;
+    ex:textoExtracto "hasta 30 subrutinas por canal y asociarlas a las funciones G180 a G189 y G380 a G399, de manera que cuando un canal ejecute una de estas funciones, ejecutará la subrutina que tiene asociada." ;
+    ex:tieneComponente ex:FuncionG399 .
+
+ex:ParametrosLocales_SubrutinasOEM
+    a ex:Parametro ;
+    rdfs:label "Parámetros locales de subrutinas OEM" ;
+    ex:textoExtracto "permite inicializar los parámetros locales de la subrutina." ;
+    ex:monitoreaParametro ex:SubrutinasOEM_G180_G189_G380_G399 .

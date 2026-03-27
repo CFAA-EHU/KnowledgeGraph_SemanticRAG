@@ -1,54 +1,68 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:V_G_PERFRATE a ex:Parametro ;
-    rdfs:label "(V.)[ch].G.PERFRATE" ;
-    ex:identificador "(V.)[ch].G.PERFRATE" ;
-    ex:textoExtracto """(V.)[ch].G.PERFRATE
-Porcentaje de bloques que gestiona el CNC en la preparación de bloques, respecto el óptimo alcanzable, para alcanzar el avance máximo en cada tramo. Esta variable debe devolver un valor próximo a 100; si el porcentaje de bloques es inferior al 100 %, puede que el HSC esté perdiendo espacio para aumentar el avance, respetando el espacio disponible para frenar. Para saber si es así, será necesario analizar la variable V.G.DROPRATE, porque es posible que la causa de no aumentar el avance sea de tipo geométrico y no del número de bloques disponibles. Unidades: %.""" ;
-    ex:valor "Porcentaje de bloques gestionados por el CNC respecto al óptimo alcanzable para el avance máximo en cada tramo" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:V_G_DROPRATE a ex:Parametro ;
-    rdfs:label "(V.)[ch].G.DROPRATE" ;
-    ex:identificador "(V.)[ch].G.DROPRATE" ;
-    ex:textoExtracto """(V.)[ch].G.DROPRATE
-Porcentaje de reducción del avance máximo alcanzable. La reducción del avance puede ser debida a un suministro inadecuado de bloques o a un avance programado inferior al posible. Esta variable debe devolver un valor próximo a 100; si el valor es inferior al 100 %, es posible que el CNC pueda aumentar el avance si tuviera más bloques. Para saber si el CNC puede suministrar más bloques, será necesario analizar la variable V.G.PERFRATE. Si ambas variables tienen un valor inferior a 100, se puede aumentar el parámetro PREPFREQ para que aumente el suministro de bloques, siempre que el sistema vaya holgado de tiempo; es decir, que el porcentaje de tiempo de ciclo que utiliza el CNC no esté demasiado cerca del tiempo de ciclo total (aproximadamente el 50%). Esta información se puede consultar en la variable V.G.NCTIMERATE. Unidades: %.""" ;
-    ex:valor "Porcentaje de reducción del avance máximo alcanzable debido a suministro inadecuado de bloques o avance programado inferior" .
-
-ex:V_G_LIMERROR a ex:Parametro ;
-    rdfs:label "(V.)[ch].G.LIMERROR" ;
-    ex:identificador "(V.)[ch].G.LIMERROR" ;
-    ex:textoExtracto """(V.)[ch].G.LIMERROR
-Valor del error que desactiva las splines (modo CONTERROR). Esta variable permite valorar si el programa está generado con más error del que pedimos al modo HSC. La variable devuelve uno de los siguientes valores.""" ;
-    ex:valor "Valor del error que desactiva las splines en modo CONTERROR" .
-
-ex:Tabla_13_3_4 a ex:Tabla ;
-    ex:textoExtracto """| Variables. | PRG | PLC | INT |
+ex:Tabla_13_3_4_VariablesLimitacionAvance a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla 13.3.4: Variables asociadas a la limitación en el avance"@es ;
+    ex:textoExtracto """
+| Variables. | PRG | PLC | INT |
 | --- | --- | --- | --- |
 | (V.)[ch].G.PERFRATE
 Porcentaje de bloques que gestiona el CNC en la preparación de
 bloques, respecto el óptimo alcanzable, para alcanzar el avance
-máximo en cada tramo. Esta variable debe devolver un valor próximo a 100; si el porcentaje de
-bloques es inferior al 100 %, puede que el HSC esté perdiendo espacio
-para aumentar el avance, respetando el espacio disponible para frenar. Para saber si es así, será necesario analizar la variable
-V.G.DROPRATE, porque es posible que la causa de no aumentar el
-avance sea de tipo geométrico y no del número de bloques disponibles. Unidades: %.
+máximo en cada tramo. [...]"""@es ;
+    ex:documentadoEn ex:Pagina_625_626 .
 
-(V.)[ch].G.DROPRATE
-Porcentaje de reducción del avance máximo alcanzable. La reducción
-del avance puede ser debida a un suministro inadecuado de bloques
-o a un avance programado inferior al posible. Esta variable debe devolver un valor próximo a 100; si el valor es inferior
-al 100 %, es posible que el CNC pueda aumentar el avance si tuviera
-más bloques. Para saber si el CNC puede suministrar más bloques, será necesario
-analizar la variable V.G.PERFRATE. Si ambas variables tienen un valor
-inferior a 100, se puede aumentar el parámetro PREPFREQ para que
-aumente el suministro de bloques, siempre que el sistema vaya
-holgado de tiempo; es decir, que el porcentaje de tiempo de ciclo que
-utiliza el CNC no esté demasiado cerca del tiempo de ciclo total
-(aproximadamente el 50%). Esta información se puede consultar en la
-variable V.G.NCTIMERATE. Unidades: %.
+ex:Parametro_PERFRATE
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].G.PERFRATE" ;
+    ex:identificador "PERFRATE" ;
+    ex:valor "100"^^xsd:float ; # Valor óptimo esperado
+    ex:textoExtracto "Porcentaje de bloques que gestiona el CNC en la preparación de bloques, respecto el óptimo alcanzable, para alcanzar el avance máximo en cada tramo. Esta variable debe devolver un valor próximo a 100; si el porcentaje de bloques es inferior al 100 %, puede que el HSC esté perdiendo espacio para aumentar el avance, respetando el espacio disponible para frenar."@es ;
+    ex:documentadoEn ex:Tabla_13_3_4_VariablesLimitacionAvance .
 
-(V.)[ch].G.LIMERROR
-Valor del error que desactiva las splines (modo CONTERROR). Esta
-variable permite valorar si el programa está generado con más error del
-que pedimos al modo HSC. La variable devuelve uno de los siguientes valores.""" ;
-    ex:tieneComponente ex:V_G_PERFRATE, ex:V_G_DROPRATE, ex:V_G_LIMERROR .
+ex:Parametro_DROPRATE
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].G.DROPRATE" ;
+    ex:identificador "DROPRATE" ;
+    ex:valor "100"^^xsd:float ; # Valor óptimo esperado
+    ex:textoExtracto "Porcentaje de reducción del avance máximo alcanzable. [...] Esta variable debe devolver un valor próximo a 100; si el valor es inferior al 100 %, es posible que el CNC pueda aumentar el avance si tuviera más bloques."@es ;
+    ex:documentadoEn ex:Tabla_13_3_4_VariablesLimitacionAvance .
+
+ex:Parametro_LIMERROR
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].G.LIMERROR" ;
+    ex:identificador "LIMERROR" ;
+    ex:textoExtracto "Valor del error que desactiva las splines (modo CONTERROR). Esta variable permite valorar si el programa está generado con más error del que pedimos al modo HSC."@es ;
+    ex:documentadoEn ex:Tabla_13_3_4_VariablesLimitacionAvance .
+
+ex:Parametro_PREPFREQ
+    a ex:Parametro ;
+    rdfs:label "PREPFREQ" ;
+    ex:identificador "PREPFREQ" ;
+    ex:textoExtracto "Parámetro que puede aumentarse para mejorar el suministro de bloques, siempre que el sistema vaya holgado de tiempo (aproximadamente el 50% del tiempo de ciclo)."@es ;
+    ex:documentadoEn ex:Tabla_13_3_4_VariablesLimitacionAvance .
+
+ex:Parametro_NCTIMERATE
+    a ex:Parametro ;
+    rdfs:label "V.G.NCTIMERATE" ;
+    ex:identificador "NCTIMERATE" ;
+    ex:textoExtracto "Porcentaje de tiempo de ciclo que utiliza el CNC. Esta información permite evaluar si el sistema está holgado para aumentar PREPFREQ."@es ;
+    ex:documentadoEn ex:Tabla_13_3_4_VariablesLimitacionAvance .
+
+# Relaciones funcionales entre parámetros (según lógica descrita en el texto)
+ex:Parametro_PERFRATE
+    ex:monitoreaParametro ex:Parametro_DROPRATE .
+
+ex:Parametro_DROPRATE
+    ex:monitoreaParametro ex:Parametro_PERFRATE .
+
+ex:Parametro_PREPFREQ
+    ex:solucionaFallo ex:Parametro_PERFRATE ,
+                      ex:Parametro_DROPRATE .
+
+ex:Parametro_NCTIMERATE
+    ex:monitoreaParametro ex:Parametro_PREPFREQ .

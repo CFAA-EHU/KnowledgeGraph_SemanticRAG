@@ -1,28 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla_1085_1 a ex:Tabla ;
-    ex:textoExtracto "La tabla muestra un parámetro MUMLAXISNAME_n por cada eje o cabezal que forma parte del grupo multieje."@es .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_MUMLAXISNAME_n a ex:Parametro ;
-    ex:textoExtracto "un parámetro MUMLAXISNAME_n por cada eje o cabezal que forma parte del grupo multieje"@es .
+ex:Tabla_11_4_1_ParametrosGrupoMultieje a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros MUMLAXISNAME_n para configuración de grupo multieje"@es ;
+    ex:textoExtracto "La tabla muestra un parámetro MUMLAXISNAME_n por cada eje o cabezal que forma parte del grupo multieje."@es ;
+    ex:documentadoEn ex:Pagina_586 .
 
-ex:EjeMaestro_1085 a ex:ComponenteMecanico ;
-    ex:textoExtracto "el primer eje del grupo será el eje maestro, el que por defecto utilizará el regulador"@es .
+ex:Parametro_MUMLAXISNAME_n
+    a ex:Parametro ;
+    rdfs:label "MUMLAXISNAME_n" ;
+    ex:textoExtracto "parámetro MUMLAXISNAME_n por cada eje o cabezal que forma parte del grupo multieje"@es ;
+    ex:documentadoEn ex:Tabla_11_4_1_ParametrosGrupoMultieje .
 
-ex:EjeSercos_1085 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Puede formar parte de un grupo cualquier eje Sercos del sistema"@es .
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "En el arranque del sistema, el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador."@es ;
+    ex:monitoreaParametro ex:Parametro_MUMLAXISNAME_n .
 
-ex:Regulador_1085 a ex:ComponenteElectrico ;
-    ex:textoExtracto "el regulador"@es ;
-    ex:textoExtracto "Configurar el set del regulador a utilizar."@es .
+ex:EjeMaestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro"@es ;
+    ex:textoExtracto "el primer eje del grupo será el eje maestro, el que por defecto utilizará el regulador"@es ;
+    ex:monitoreaParametro ex:Parametro_MUMLAXISNAME_n .
 
-ex:SistemaCNC_1085 a ex:Maquina ;
-    ex:textoExtracto "el CNC"@es ;
-    ex:textoExtracto "En el arranque del sistema, el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador."@es .
+ex:Regulador
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador"@es ;
+    ex:textoExtracto "el regulador; el orden del resto de los ejes no es relevante. En el arranque del sistema, el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador. Configurar el set del regulador a utilizar."@es ;
+    ex:controla ex:EjeMaestro .
 
-ex:Tabla_1085_1 a ex:Tabla ;
-    ex:tieneComponente ex:Parametro_MUMLAXISNAME_n .
-ex:EjeSercos_1085 ex:compuestoPor ex:Parametro_MUMLAXISNAME_n .
-ex:SistemaCNC_1085 ex:tieneComponente ex:EjeMaestro_1085 .
-ex:SistemaCNC_1085 ex:tieneComponente ex:EjeSercos_1085 .
-ex:EjeMaestro_1085 ex:controla ex:Regulador_1085 .
-ex:SistemaCNC_1085 ex:controla ex:Regulador_1085 .
+ex:Pagina_586
+    a ex:Pagina ;
+    ex:identificador "586" ;
+    ex:textoExtracto "11.4.1 Configuración de un grupo multieje. Los parámetros máquina."@es .

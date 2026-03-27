@@ -1,21 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ModoTrabajoManual a ex:ModoOperacion ;
-    ex:textoExtracto "MODO DE TRABAJO MANUAL. JOG CONTINUO. JOGFEED Avance en jog continuo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 200000.0000 mm/min. Valores posibles (2): De 0 a 7874.01575 inch/min. Valores posibles (3): De 0 a 36000000.0000 grados/min. Valor por defecto: 1000.0000 mm/min / 39.37008 inch/min / 1000.0000 grados/min. Variable asociada: (V.)[ch].MPA.JOGFEED.xn Parámetro incluido en la tabla MANUAL. Este parámetro define el avance para los desplazamientos en jog continuo en modo manual." ;
-    ex:tieneComponente ex:ParametroJOGFEED .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroJOGFEED a ex:Parametro ;
-    ex:identificador "(V.)[ch].MPA.JOGFEED.xn" ;
-    ex:textoExtracto "JOGFEED Avance en jog continuo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 200000.0000 mm/min. Valores posibles (2): De 0 a 7874.01575 inch/min. Valores posibles (3): De 0 a 36000000.0000 grados/min. Valor por defecto: 1000.0000 mm/min / 39.37008 inch/min / 1000.0000 grados/min." ;
-    ex:valor "1000.0000 mm/min / 39.37008 inch/min / 1000.0000 grados/min" .
+ex:ModoOperacion_ManualJogContinuo
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de trabajo manual. Jog continuo"@es ;
+    ex:textoExtracto "MODO DE TRABAJO MANUAL. JOG CONTINUO."@es ;
+    ex:tieneComponente ex:Parametro_JOGFEED, ex:Parametro_JOGRAPFEED, ex:Parametro_MAXMANFEED .
 
-ex:ParametroJOGRAPFEED a ex:Parametro ;
-    ex:identificador "(V.)[ch].MPA.JOGRAPFEED.xn" ;
-    ex:textoExtracto "JOGRAPFEED Avance rápido en jog continuo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 200000.0000 mm/min. Valores posibles (2): De 0 a 7874.01575 inch/min. Valores posibles (3): De 0 a 36000000.0000 grados/min. Valor por defecto: 10000.0000 mm/min / 393.70079 inch/min / 10000.0000 grados/min." ;
-    ex:valor "10000.0000 mm/min / 393.70079 inch/min / 10000.0000 grados/min" .
+ex:Parametro_JOGFEED
+    a ex:Parametro ;
+    rdfs:label "JOGFEED" ;
+    ex:identificador "JOGFEED" ;
+    ex:textoExtracto "JOGFEED Avance en jog continuo. Parámetro válido para ejes lineales, rotativos y cabezales. [...] Este parámetro define el avance para los desplazamientos en jog continuo en modo manual."@es ;
+    ex:valor "1000.0000" ;
+    ex:documentadoEn ex:Tabla_Manual .
 
-ex:ParametroMAXMANFEED a ex:Parametro ;
-    ex:textoExtracto "MAXMANFEED Avance máximo en jog continuo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 200000.0000 mm/min. Valores posibles (2): De 0 a 7874.01575 inch/min. Valores posibles (3): De 0 a 36000000.0000 grados/min." .
+ex:Parametro_JOGRAPFEED
+    a ex:Parametro ;
+    rdfs:label "JOGRAPFEED" ;
+    ex:identificador "JOGRAPFEED" ;
+    ex:textoExtracto "JOGRAPFEED Avance rápido en jog continuo. [...] Este parámetro define el avance rápido para los desplazamientos en jog continuo en modo manual."@es ;
+    ex:valor "10000.0000" ;
+    ex:documentadoEn ex:Tabla_Manual .
 
-ex:TablaManual a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla MANUAL." ;
-    ex:tieneComponente ex:ParametroJOGFEED, ex:ParametroJOGRAPFEED, ex:ParametroMAXMANFEED .
+ex:Parametro_MAXMANFEED
+    a ex:Parametro ;
+    rdfs:label "MAXMANFEED" ;
+    ex:identificador "MAXMANFEED" ;
+    ex:textoExtracto "MAXMANFEED Avance máximo en jog continuo. Parámetro válido para ejes lineales, rotativos y cabezales. [...]"@es ;
+    ex:documentadoEn ex:Tabla_Manual .
+
+ex:Tabla_Manual a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla MANUAL"@es ;
+    ex:textoExtracto "Parámetro incluido en la tabla MANUAL."@es .

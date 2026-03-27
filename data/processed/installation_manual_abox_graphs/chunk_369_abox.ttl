@@ -1,16 +1,37 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SistemaCaptacionAbsoluto a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_ABSFEEDBACK
+    a ex:Parametro ;
     rdfs:label "ABSFEEDBACK" ;
-    ex:identificador "(V.)[ch].MPA.ABSFEEDBACK[set].xn" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.ABSFEEDBACK[set].xn Este parámetro indica si el eje dispone de sistema de captación absoluto. Con este sistema, el eje se considera referenciado desde el encendido y no se genera movimiento si se programa su búsqueda de 0. La marca REFPOIN del PLC estará siempre activa." .
+    ex:textoExtracto "ABSFEEDBACK Sistema de captación absoluto. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.ABSFEEDBACK[set].xn Este parámetro indica si el eje dispone de sistema de captación absoluto." ;
+    ex:valor "Sí / No" ;
+    ex:identificador "(V.)[ch].MPA.ABSFEEDBACK[set].xn" .
 
-ex:AlarmaCaptacion a ex:AvisoSeguridad ;
+ex:Parametro_FBACKAL
+    a ex:Parametro ;
     rdfs:label "FBACKAL" ;
+    ex:textoExtracto "FBACKAL Activar la alarma de captación. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)[ch].MPA.FBACKAL[set].xn Este parámetro permite activar la alarma de captación. Esta alarma pretende discernir la desconexión o ruptura de alguno de los cables de la captación para señales tanto TTL diferenciales como senoidales." ;
+    ex:valor "Sí / No" ;
     ex:identificador "(V.)[ch].MPA.FBACKAL[set].xn" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)[ch].MPA.FBACKAL[set].xn Este parámetro permite activar la alarma de captación. Esta alarma pretende discernir la desconexión o ruptura de alguno de los cables de la captación para señales tanto TTL diferenciales como senoidales. Cuando se produce una alarma de captación, el PLC desactiva la marca REFPOIN. Si se desactiva esta alarma, el CNC muestra en el encendido un mensaje indicando que dicha seguridad está deshabilitada. Esta situación únicamente debería permitirse durante la puesta a punto; una vez finalizada la puesta a punto, esta alarma debe estar habilitada." .
+    ex:activaAlarma ex:Alarma_Captacion .
 
-ex:AlarmaHardwareCaptacion a ex:Alarma ;
+ex:Alarma_Captacion
+    a ex:Alarma ;
+    rdfs:label "Alarma de captación" ;
+    ex:textoExtracto "Esta alarma pretende discernir la desconexión o ruptura de alguno de los cables de la captación para señales tanto TTL diferenciales como senoidales. Cuando se produce una alarma de captación, el PLC desactiva la marca REFPOIN." .
+
+ex:Parametro_HWFBACKAL
+    a ex:Parametro ;
     rdfs:label "HWFBACKAL" ;
+    ex:textoExtracto "HWFBACKAL Habilitar la alarma hardware (pin de alarma) de la captación local. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos velocidad. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)[ch].MPA.HWFBACKAL[set].xn" ;
+    ex:valor "Sí / No" ;
     ex:identificador "(V.)[ch].MPA.HWFBACKAL[set].xn" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos velocidad. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)[ch].MPA.HWFBACKAL[set].xn Parámetro válido en los siguientes casos. • Ejes y cabezales analógicos con contajes locales. • Ejes y cabezales Sercos velocidad con captación externa con contajes locales." .
+    ex:activaAlarma ex:Alarma_Hardware_Captacion .
+
+ex:Alarma_Hardware_Captacion
+    a ex:Alarma ;
+    rdfs:label "Alarma hardware de captación local" ;
+    ex:textoExtracto "Alarma hardware (pin de alarma) de la captación local. Parámetro válido en los siguientes casos: Ejes y cabezales analógicos con contajes locales. Ejes y cabezales Sercos velocidad con captación externa con contajes locales." .

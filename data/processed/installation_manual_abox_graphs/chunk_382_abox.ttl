@@ -1,10 +1,17 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_REVEHYST a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_REVEHYST
+    a ex:Parametro ;
     rdfs:label "REVEHYST" ;
     ex:identificador "REVEHYST" ;
     ex:valor "0.0005 mm" ;
-    ex:textoExtracto "REVEHYST= 0.0005 mm" .
+    ex:textoExtracto "Si REVEHYST= 0.0005 mm, el CNC no activará la compensación en las inversiones posteriores a la primera mientras la posición del eje no varíe al menos el valor definido en este parámetro" .
 
-ex:Sistema_CNC a ex:Sistema ;
-    ex:textoExtracto "el CNC no activará la compensación en las inversiones posteriores a la primera mientras la posición del eje no varíe al menos el valor definido en este parámetro, tomando como referencia la posición que ocupaba en la primera orden de invertir la consigna de posición. Es decir, si el CNC recibe una orden inversión cuando la consigna de posición ha variado sólo 0.0002 mm desde la posición donde se produjo la primera orden de inversión, el CNC no lanza la compensación (no ha superado el valor definido en REVEHYST) y simplemente efectúa la inversión de movimiento. Sólo cuando la variación de la consigna de posición alcance los 0.0005 mm, el CNC lanzará la compensación. Tras aplicar una compensación, el CNC tomará la siguiente orden de invertir como nueva referencia para evaluar la variación de la posición y establecer cuándo se alcanza nuevamente el valor dado en el parámetro REVEHYST y volver a compensar." .
+ex:Sistema_CompensacionHolgura
+    a ex:Sistema ;
+    rdfs:label "Sistema de compensación de holgura" ;
+    ex:textoExtracto "compensación de holgura. [...] el CNC lanzará la compensación. Tras aplicar una compensación, el CNC tomará la siguiente orden de invertir como nueva referencia para evaluar la variación de la posición y establecer cuándo se alcanza nuevamente el valor dado en el parámetro REVEHYST y volver a compensar." ;
+    ex:monitoreaParametro ex:Parametro_REVEHYST .

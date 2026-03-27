@@ -1,29 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SubrutinaUsuario1230_1 a ex:Componente ;
-    rdfs:label "Subrutina de usuario asociada a función G" ;
-    ex:textoExtracto "El CNC permite al usuario definir hasta 1000 subrutinas, comunes a todos los canales, y que estarán asociadas a las funciones G8000 a G8999" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SubrutinaUsuario1230_2 a ex:Componente ;
-    rdfs:label "Subrutina de usuario en RAM" ;
-    ex:textoExtracto "Estas subrutinas se cargan en la memoria RAM la primera vez que se ejecutan. Si no hubiera sitio en RAM, el CNC dará un warning y ejecutará la subrutina desde el disco" .
+ex:FuncionesG8000_G8999
+    a ex:ModoOperacion ;
+    rdfs:label "Funciones G8000 a G8999" ;
+    ex:textoExtracto "El CNC permite al usuario definir hasta 1000 subrutinas [...] asociadas a las funciones G8000 a G8999, de manera que cuando el CNC ejecute una de estas funciones, ejecutará la subrutina que tiene asociada." ;
+    ex:requiereMantenimiento ex:SubrutinasUsuario .
 
-ex:SubrutinaUsuario1230_3 a ex:Componente ;
-    rdfs:label "Subrutina de usuario modal/no-modal" ;
-    ex:textoExtracto "Estas subrutinas se podrán ejecutar de forma no-modal o de forma modal" .
+ex:SubrutinasUsuario
+    a ex:Sistema ;
+    rdfs:label "Subrutinas de usuario (G8000-G8999)" ;
+    ex:textoExtracto "El CNC permite al usuario definir hasta 1000 subrutinas, comunes a todos los canales, y que estarán asociadas a las funciones G8000 a G8999." ;
+    ex:tieneFrecuencia ex:FrecuenciaEjecucionVariable ;
+    ex:documentadoEn ex:ManualCNC_Seccion14_19 .
 
-ex:SubrutinaUsuario1230_4 a ex:Componente ;
-    rdfs:label "Subrutina de usuario con parámetros locales" ;
-    ex:textoExtracto "y además permite inicializar los parámetros locales de la subrutina" .
+ex:FrecuenciaEjecucionVariable
+    a ex:Frecuencia ;
+    rdfs:label "Frecuencia de ejecución variable (RAM/disco)" ;
+    ex:textoExtracto "Estas subrutinas se cargan en la memoria RAM la primera vez que se ejecutan. Si no hubiera sitio en RAM, el CNC dará un warning y ejecutará la subrutina desde el disco." ;
+    ex:valor "condicional (RAM > disco)" .
 
-ex:SubrutinaUsuario1230_5 a ex:Componente ;
-    rdfs:label "Subrutina de usuario persistente" ;
-    ex:textoExtracto "Cuando finaliza el programa (M30), si ningún otro canal está ejecutando las subrutinas, el CNC las borra de la memoria RAM. De esta forma, si una subrutina de usuario es editada o modificada, el CNC asume los cambios la próxima vez que la ejecute" .
+ex:ManualCNC_Seccion14_19
+    a ex:Pagina ;
+    rdfs:label "Sección 14.19: Subrutinas de usuario (G8000-G8999)" ;
+    ex:identificador "14.19" ;
+    ex:textoExtracto "El CNC permite al usuario definir hasta 1000 subrutinas, comunes a todos los canales, y que estarán asociadas a las funciones G8000 a G8999." .
 
-ex:SubrutinaUsuario1230_6 a ex:Componente ;
-    rdfs:label "Macro preasignada por Fagor" ;
-    ex:textoExtracto "Algunas de estas subrutinas tienen un funcionamiento preasignado por Fagor como macros del lenguaje ProGTL3" .
+ex:MacrosProGTL3_Preasignadas
+    a ex:Sistema ;
+    rdfs:label "Macros preasignadas ProGTL3" ;
+    ex:textoExtracto "Algunas de estas subrutinas tienen un funcionamiento preasignado por Fagor como macros del lenguaje ProGTL3. Si se programa una de estas funciones G, el CNC ejecuta la macro correspondiente y no la subrutina." ;
+    ex:cumpleNormativa ex:DirectivaFagor_ProGTL3 .
 
-ex:SubrutinaUsuario1230_7 a ex:Componente ;
-    rdfs:label "Función G asociada a macro" ;
-    ex:textoExtracto "Si se programa una de estas funciones G, el CNC ejecuta la macro correspondiente y no la subrutina" .
+ex:DirectivaFagor_ProGTL3
+    a ex:Directiva ;
+    rdfs:label "Especificación ProGTL3 (Fagor)" ;
+    ex:textoExtracto "macros del lenguaje ProGTL3" ;
+    ex:identificador "ProGTL3" .

@@ -1,16 +1,50 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Motor_266_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "el valor de la posición se toma de la captación motor" ;
-    rdfs:label "captación motor" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_FBACKSEL_266_2 a ex:Parametro ;
-    ex:identificador "FBACKSEL(axis)" ;
-    ex:textoExtracto "con la marca FBACKSEL(axis)" .
+ex:Parametro_FBACKSEL
+    a ex:Parametro ;
+    rdfs:label "FBACKSEL(axis)" ;
+    ex:textoExtracto "desde el PLC se puede conmutar entre ambas captaciones con la marca FBACKSEL(axis)" .
 
-ex:Parametro_FBACKDIFF_266_3 a ex:Parametro ;
-    ex:identificador "FBACKDIFF" ;
+ex:Parametro_FBACKDIFF
+    a ex:Parametro ;
+    rdfs:label "FBACKDIFF" ;
     ex:textoExtracto "se recomienda definir el parámetro FBACKDIFF" .
 
-ex:Sistema_CNC_266_4 a ex:Sistema ;
-    ex:textoExtracto "el CNC permite habilitar la mezcla" .
+ex:Sistema_CaptacionInterna
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación interna" ;
+    ex:textoExtracto "Si se utiliza captación interna, el valor de la posición se toma de la captación motor" ;
+    ex:monitoreaParametro ex:Parametro_FBACKSEL .
+
+ex:Sistema_CaptacionExterna
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación externa" ;
+    ex:textoExtracto "si utiliza captación externa se toma de la captación directa" ;
+    ex:monitoreaParametro ex:Parametro_FBACKSEL, ex:Parametro_FBACKDIFF .
+
+ex:Sistema_CaptacionMixta
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación interna+externa" ;
+    ex:textoExtracto "Cuando el tipo de captación es interna+externa, desde el PLC se puede conmutar entre ambas captaciones con la marca FBACKSEL(axis)" ;
+    ex:monitoreaParametro ex:Parametro_FBACKSEL, ex:Parametro_FBACKDIFF ;
+    ex:compuestoPor ex:Sistema_CaptacionInterna, ex:Sistema_CaptacionExterna .
+
+ex:ComponenteElectrico_CaptacionMotor
+    a ex:ComponenteElectrico ;
+    rdfs:label "Captación del motor" ;
+    ex:textoExtracto "el valor de la posición se toma de la captación motor" ;
+    ex:tieneComponente ex:Sensor_PosicionMotor .
+
+ex:Sensor_PosicionMotor
+    a ex:Sensor ;
+    rdfs:label "Sensor de posición del motor" ;
+    ex:textoExtracto "captación motor" .
+
+ex:InterfazUsuario_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC" ;
+    ex:textoExtracto "el CNC permite habilitar la mezcla" ;
+    ex:controla ex:Sistema_CaptacionMixta .

@@ -1,31 +1,63 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SeñalCNCREADY a ex:Sensor ;
-    rdfs:label "CNCREADY" ;
-    ex:textoExtracto "Señales de consulta: CNCREADY, START, FHOUT, ..." ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:PLC_ControlCNC
+    a                     ex:Sistema ;
+    rdfs:label            "PLC de control CNC" ;
+    ex:textoExtracto      "El PLC tiene acceso a determinada información interna del CNC. Hay señales del CNC (marcas y registros) que pueden ser consultadas y otras que pueden ser modificadas por el PLC."@es ;
+    ex:monitoreaParametro ex:Senal_CNCREADY ,
+                         ex:Senal_START ,
+                         ex:Senal_FHOUT ;
+    ex:controla          ex:Senal_EMERGEN ,
+                         ex:Senal_STOP ,
+                         ex:Senal_FEEDHOL .
+
+ex:Senal_CNCREADY
+    a               ex:Parametro ;
+    rdfs:label      "Señal CNCREADY" ;
+    ex:textoExtracto "Señales de consulta: CNCREADY"@es ;
     ex:identificador "CNCREADY" .
 
-ex:SeñalSTART a ex:Sensor ;
-    rdfs:label "START" ;
-    ex:textoExtracto "Señales de consulta: CNCREADY, START, FHOUT, ..." ;
+ex:Senal_START
+    a               ex:Parametro ;
+    rdfs:label      "Señal START" ;
+    ex:textoExtracto "Señales de consulta: START"@es ;
     ex:identificador "START" .
 
-ex:SeñalFHOUT a ex:Sensor ;
-    rdfs:label "FHOUT" ;
-    ex:textoExtracto "Señales de consulta: CNCREADY, START, FHOUT, ..." ;
+ex:Senal_FHOUT
+    a               ex:Parametro ;
+    rdfs:label      "Señal FHOUT" ;
+    ex:textoExtracto "Señales de consulta: FHOUT"@es ;
     ex:identificador "FHOUT" .
 
-ex:SeñalEMERGEN a ex:Actuador ;
-    rdfs:label "_EMERGEN" ;
-    ex:textoExtracto "Señales modificables: _EMERGEN, _STOP, _FEEDHOL, ..." ;
+ex:Senal_EMERGEN
+    a               ex:Parametro ;
+    rdfs:label      "Señal _EMERGEN" ;
+    ex:textoExtracto "Señales modificables: _EMERGEN"@es ;
     ex:identificador "_EMERGEN" .
 
-ex:SeñalSTOP a ex:Actuador ;
-    rdfs:label "_STOP" ;
-    ex:textoExtracto "Señales modificables: _EMERGEN, _STOP, _FEEDHOL, ..." ;
+ex:Senal_STOP
+    a               ex:Parametro ;
+    rdfs:label      "Señal _STOP" ;
+    ex:textoExtracto "Señales modificables: _STOP"@es ;
     ex:identificador "_STOP" .
 
-ex:SeñalFEEDHOL a ex:Actuador ;
-    rdfs:label "_FEEDHOL" ;
-    ex:textoExtracto "Señales modificables: _EMERGEN, _STOP, _FEEDHOL, ..." ;
+ex:Senal_FEEDHOL
+    a               ex:Parametro ;
+    rdfs:label      "Señal _FEEDHOL" ;
+    ex:textoExtracto "Señales modificables: _FEEDHOL"@es ;
     ex:identificador "_FEEDHOL" .
+
+ex:Capitulo_EntradasSalidasCNC
+    a               ex:Capitulo ;
+    rdfs:label      "Capítulo 6: Entradas y salidas lógicas del CNC" ;
+    ex:textoExtracto "Ver el capítulo 6: 'Entradas y salidas lógicas del CNC'."@es ;
+    ex:identificador "6" .
+
+ex:Pagina_FuncionamientoContador
+    a               ex:Pagina ;
+    rdfs:label      "Página 354: Funcionamiento de un contador" ;
+    ex:textoExtracto "Ver en la página 354. '3.6 Funcionamiento de un contador'."@es ;
+    ex:identificador "354" .

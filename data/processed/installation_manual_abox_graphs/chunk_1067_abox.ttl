@@ -1,50 +1,84 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DiagramaBloquesControlTandem a ex:Esquema ;
-    rdfs:label "Diagrama de bloques del sistema de control del tándem"@es ;
-    ex:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo."@es ;
-    ex:compuestoPor ex:EjeTandemMaestro, ex:EjeTandemEsclavo, ex:Regulador, ex:ControlNumerico .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeTandemMaestro a ex:ComponenteMecanico ;
-    rdfs:label "Eje tándem maestro"@es ;
-    ex:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo."@es .
+ex:DiagramaBloquesTandem_11_2_3
+    a ex:Esquema ;
+    rdfs:label "Diagrama de bloques del sistema de control del eje tándem"@es ;
+    ex:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo. [...] El diagrama de bloques representativo de la aplicación del control del eje tándem es el siguiente."@es ;
+    ex:ilustradoEn ex:Pagina_577_578 .
 
-ex:EjeTandemEsclavo a ex:ComponenteMecanico ;
-    rdfs:label "Eje tándem esclavo"@es ;
-    ex:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo."@es .
+ex:SistemaControlTandem
+    a ex:Sistema ;
+    rdfs:label "Sistema de control del eje tándem"@es ;
+    ex:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo. [...] Control del eje tándem."@es ;
+    ex:detalladoEnEsquema ex:DiagramaBloquesTandem_11_2_3 ;
+    ex:compuestoPor ex:ReguladorTandem ;
+    ex:compuestoPor ex:ControlNumericoTandem ;
+    ex:compuestoPor ex:LazoPosicionTandem ;
+    ex:compuestoPor ex:LazoVelocidadTandem ;
+    ex:tieneComponente ex:MotorMaestroTandem ;
+    ex:tieneComponente ex:MotorEsclavoTandem .
 
-ex:Regulador a ex:ComponenteElectrico ;
-    rdfs:label "Regulador"@es ;
-    ex:textoExtracto "En el diagrama de bloques aparece una zona correspondiente al regulador y otra al control numérico, que engloba el lazo de posición y el control del tándem."@es .
+ex:ReguladorTandem
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador del eje tándem"@es ;
+    ex:textoExtracto "En el diagrama de bloques aparece una zona correspondiente al regulador y otra al control numérico, que engloba el lazo de posición y el control del tándem."@es ;
+    ex:monitoreaParametro ex:ParametroTV2_Maestro ;
+    ex:monitoreaParametro ex:ParametroTV2_Esclavo .
 
-ex:ControlNumerico a ex:ComponenteElectrico ;
-    rdfs:label "Control numérico"@es ;
-    ex:textoExtracto "En el diagrama de bloques aparece una zona correspondiente al regulador y otra al control numérico, que engloba el lazo de posición y el control del tándem."@es .
+ex:ControlNumericoTandem
+    a ex:ComponenteElectrico ;
+    rdfs:label "Control numérico del eje tándem"@es ;
+    ex:textoExtracto "En el diagrama de bloques aparece una zona correspondiente al regulador y otra al control numérico, que engloba el lazo de posición y el control del tándem."@es ;
+    ex:controla ex:LazoPosicionTandem ;
+    ex:controla ex:LazoVelocidadTandem .
 
-ex:MotorMaestroTandem a ex:ComponenteElectrico ;
-    rdfs:label "Motor maestro del tándem"@es ;
-    ex:textoExtracto "Par del motor maestro del tándem. Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje maestro del tándem."@es .
-
-ex:MotorEsclavoTandem a ex:ComponenteElectrico ;
-    rdfs:label "Motor esclavo del tándem"@es ;
-    ex:textoExtracto "Par del motor esclavo del tándem. Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje esclavo del tándem."@es .
-
-ex:LazoPosicion a ex:Sistema ;
-    rdfs:label "Lazo de posición"@es ;
+ex:LazoPosicionTandem
+    a ex:ComponenteElectrico ;
+    rdfs:label "Lazo de posición del eje tándem"@es ;
     ex:textoExtracto "El lazo de posición se cierra únicamente con la posición del eje maestro del tándem."@es .
 
-ex:LazoVelocidad a ex:Sistema ;
-    rdfs:label "Lazo de velocidad"@es ;
+ex:LazoVelocidadTandem
+    a ex:ComponenteElectrico ;
+    rdfs:label "Lazo de velocidad del eje tándem"@es ;
     ex:textoExtracto "La consigna de velocidad del eje tándem maestro se envía también al eje esclavo del tándem cerrando el lazo de velocidad."@es .
 
-ex:ControlTandem a ex:Sistema ;
-    rdfs:label "Control del eje tándem"@es ;
-    ex:textoExtracto "El control de tándem modifica la consigna de velocidad del eje maestro y del eje esclavo en función de la distribución de par y la precarga seleccionada."@es .
+ex:MotorMaestroTandem
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor maestro del eje tándem"@es ;
+    ex:textoExtracto "Par del motor maestro del tándem. Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje maestro del tándem."@es ;
+    ex:monitoreaParametro ex:ParametroTV2_Maestro .
 
-ex:DistribucionPar a ex:Parametro ;
-    rdfs:label "Distribución de par"@es ;
-    ex:textoExtracto "Distribución de par. Ganancia de normalización de los pares generados por los motores cuyo fin es establecer un reparto de pares que no siga una relación 1:1."@es .
+ex:MotorEsclavoTandem
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor esclavo del eje tándem"@es ;
+    ex:textoExtracto "Par del motor esclavo del tándem. Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje esclavo del tándem."@es ;
+    ex:monitoreaParametro ex:ParametroTV2_Esclavo .
 
-ex:Precarga a ex:Parametro ;
-    rdfs:label "Precarga"@es ;
-    ex:textoExtracto "Precarga. Par previo aplicado a ambos ejes del tándem en sentidos opuestos."@es .
+ex:ParametroTV2_Maestro
+    a ex:Parametro ;
+    rdfs:label "Variable sercos TV2 (par nominal %) - Motor maestro"@es ;
+    ex:identificador "TV2" ;
+    ex:textoExtracto "Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje maestro del tándem."@es ;
+    ex:valor "Porcentaje de par nominal"@es .
+
+ex:ParametroTV2_Esclavo
+    a ex:Parametro ;
+    rdfs:label "Variable sercos TV2 (par nominal %) - Motor esclavo"@es ;
+    ex:identificador "TV2" ;
+    ex:textoExtracto "Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje esclavo del tándem."@es ;
+    ex:valor "Porcentaje de par nominal"@es .
+
+ex:DistribucionParTandem
+    a ex:Parametro ;
+    rdfs:label "Distribución de par del eje tándem"@es ;
+    ex:textoExtracto "Ganancia de normalización de los pares generados por los motores cuyo fin es establecer un reparto de pares que no siga una relación 1:1."@es ;
+    ex:valor "Ganancia de normalización"@es .
+
+ex:PrecargaTandem
+    a ex:Parametro ;
+    rdfs:label "Precarga del eje tándem"@es ;
+    ex:textoExtracto "Par previo aplicado a ambos ejes del tándem en sentidos opuestos."@es ;
+    ex:valor "Par previo (sentidos opuestos)"@es .

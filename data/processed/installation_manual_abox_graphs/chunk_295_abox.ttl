@@ -1,13 +1,25 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_STEPOVR a ex:Parametro ;
-    rdfs:label "STEPOVR" ;
-    ex:identificador "(V.)[ch].MPA.STEPOVR.xn" ;
-    ex:textoExtracto "STEPOVR Paso del override del cabezal. Parámetro válido para cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 255. Valor por defecto: 5." ;
-    ex:valor "De 0 a 255" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_MPA_M19SPDLEREV a ex:Parametro ;
-    rdfs:label "MPA.M19SPDLEREV" ;
+ex:Parametro_SPDLEREV_M19
+    a ex:Parametro ;
+    rdfs:label "Parámetro SPDLEREV para cabezales en M19"@es ;
+    ex:textoExtracto "Este parámetro define si la marca SPDLEREV del PLC (invertir el sentido de giro) también afecta a los cabezales en M19."@es ;
     ex:identificador "(V.)[ch].MPA.M19SPDLEREV.xn" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.M19SPDLEREV.xn Este parámetro define si la marca SPDLEREV del PLC (invertir el sentido de giro) también afecta a los cabezales en M19." ;
-    ex:valor "Sí / No" .
+    ex:valor "No" .
+
+ex:Parametro_STEPOVR
+    a ex:Parametro ;
+    rdfs:label "Parámetro STEPOVR (Paso del override del cabezal)"@es ;
+    ex:textoExtracto "Este parámetro define el paso incremental para"@es ;
+    ex:identificador "(V.)[ch].MPA.STEPOVR.xn" ;
+    ex:valor "5" .
+
+ex:Sistema_ControlCabezal
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de cabezales (M3/M4, M19)"@es ;
+    ex:textoExtracto "La marca SPDLEREV siempre afecta a los cabezales en lazo abierto (M3/M4), independientemente de lo definido en este parámetro."@es ;
+    ex:monitoreaParametro ex:Parametro_SPDLEREV_M19 ;
+    ex:monitoreaParametro ex:Parametro_STEPOVR .

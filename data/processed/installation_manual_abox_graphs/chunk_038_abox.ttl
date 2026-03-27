@@ -1,16 +1,31 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ManualMTB a ex:Manual ;
-    ex:textoExtracto "Cuando cambia el lenguaje del CNC, éste reemplaza este archivo por el del lenguaje correspondiente. | PLC | Esta carpeta contiene la información referente al PLC. • En cada idioma de la subcarpeta ..\\LANG están los mensajes y errores del PLC en los distintos idiomas. • La subcarpeta ..\\PROJECT contiene los archivos que forman el proyecto PLC y el fichero objeto. • La subcarpeta ..\\WATCH contiene los datos guardados desde los"@es .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CarpetaMTB a ex:Esquema ;
-    ex:textoExtracto "Esta carpeta contiene la información referente al PLC."@es ;
-    ex:compuestoPor ex:CarpetaLANG, ex:CarpetaPROJECT, ex:CarpetaWATCH .
+ex:carpeta_MTB
+    a ex:InterfazUsuario ;
+    rdfs:label "Carpeta MTB (Machine Tool Builder)" ;
+    ex:textoExtracto "Cuando cambia el lenguaje del CNC, éste reemplaza este archivo por el del lenguaje correspondiente." ;
+    ex:tieneComponente ex:subcarpeta_PLC .
 
-ex:CarpetaLANG a ex:Esquema ;
-    ex:textoExtracto "En cada idioma de la subcarpeta ..\\LANG están los mensajes y errores del PLC en los distintos idiomas."@es .
+ex:subcarpeta_PLC
+    a ex:InterfazUsuario ;
+    rdfs:label "Subcarpeta PLC" ;
+    ex:textoExtracto "Esta carpeta contiene la información referente al PLC." ;
+    ex:tieneComponente ex:subcarpeta_LANG, ex:subcarpeta_PROJECT, ex:subcarpeta_WATCH .
 
-ex:CarpetaPROJECT a ex:Esquema ;
-    ex:textoExtracto "La subcarpeta ..\\PROJECT contiene los archivos que forman el proyecto PLC y el fichero objeto."@es .
+ex:subcarpeta_LANG
+    a ex:InterfazUsuario ;
+    rdfs:label "Subcarpeta LANG (PLC)" ;
+    ex:textoExtracto "En cada idioma de la subcarpeta ..\\LANG están los mensajes y errores del PLC en los distintos idiomas." .
 
-ex:CarpetaWATCH a ex:Esquema ;
-    ex:textoExtracto "La subcarpeta ..\\WATCH contiene los datos guardados desde los"@es .
+ex:subcarpeta_PROJECT
+    a ex:InterfazUsuario ;
+    rdfs:label "Subcarpeta PROJECT (PLC)" ;
+    ex:textoExtracto "La subcarpeta ..\\PROJECT contiene los archivos que forman el proyecto PLC y el fichero objeto." .
+
+ex:subcarpeta_WATCH
+    a ex:InterfazUsuario ;
+    rdfs:label "Subcarpeta WATCH (PLC)" ;
+    ex:textoExtracto "La subcarpeta ..\\WATCH contiene los datos guardados desde los" .

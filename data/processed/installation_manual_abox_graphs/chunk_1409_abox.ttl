@@ -1,52 +1,94 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Herramienta_1409_1 a ex:Herramienta ;
-    ex:textoExtracto "la nueva herramienta en el husillo" ;
-    ex:tieneComponente ex:Husillo_1409_1 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Husillo_1409_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "husillo" .
+### Interfaz de Usuario y Configuración Gráfica
+ex:HMI_ConfiguracionGraficos_2.11.9
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz HMI - Configuración de gráficos (2.11.9)" ;
+    ex:textoExtracto "Parámetros máquina del HMI (interface) – Configuración de los gráficos (2.11.9)" ;
+    ex:ilustradoEn ex:Diagrama_TornoHorizontal, ex:Diagrama_TornoVertical .
 
-ex:Torreta_1409_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "torreta indexable" .
+ex:Diagrama_TornoHorizontal
+    a ex:Esquema ;
+    rdfs:label "Diagrama 'Torno horizontal'" ;
+    ex:textoExtracto "Representación esquemática del eje pieza con variantes de signo para X y Z (X±/Z±). Se muestran piezas y portaherramientas con las flechas de los ejes y sus sentidos, para seleccionar la proyección gráfica correcta por canal." ;
+    ex:documentadoEn ex:HMI_ConfiguracionGraficos_2.11.9 .
 
-ex:TornoHorizontal_1409_1 a ex:Maquina ;
-    ex:textoExtracto "Torno horizontal: representación esquemática del eje pieza con variantes de signo para X y Z (X±/Z±)" ;
-    ex:compuestoPor ex:EjeX_1409_1, ex:EjeZ_1409_1, ex:Portaherramientas_1409_1 .
+ex:Diagrama_TornoVertical
+    a ex:Esquema ;
+    rdfs:label "Diagrama 'Torno vertical'" ;
+    ex:textoExtracto "Disposición vertical del husillo/plato con flechas de ejes X y Z en distintas combinaciones de signo; ayuda a elegir la vista del gráfico en máquinas verticales o doble torreta." ;
+    ex:documentadoEn ex:HMI_ConfiguracionGraficos_2.11.9 .
 
-ex:EjeX_1409_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje X" .
+### Componentes Mecánicos (Torreta y Husillo)
+ex:TorretaIndexable
+    a ex:ComponenteMecanico ;
+    rdfs:label "Torreta indexable" ;
+    ex:textoExtracto "Escena 'Torreta': vista típica de torno con torreta indexable; flechas indican alejamiento, giro de la torreta y posicionamiento de la nueva herramienta en la posición de trabajo. Se resalta el cambio por indexado, no por carrusel." ;
+    ex:ilustradoEn ex:HMI_ConfiguracionGraficos_2.11.9 .
 
-ex:EjeZ_1409_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje Z" .
+ex:Husillo_Torno
+    a ex:ComponenteMecanico ;
+    rdfs:label "Husillo de torno" ;
+    ex:textoExtracto "Se aprecia la colocación directa de la nueva herramienta en el husillo." ;
+    ex:tieneComponente ex:Herramienta_Torreta .
 
-ex:Portaherramientas_1409_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "portaherramientas" .
+ex:Herramienta_Torreta
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de torreta" ;
+    ex:textoExtracto "Posicionamiento de la nueva herramienta en la posición de trabajo [en la torreta indexable]." .
 
-ex:TornoVertical_1409_2 a ex:Maquina ;
-    ex:textoExtracto "Torno vertical: disposición vertical del husillo/plato con flechas de ejes X y Z en distintas combinaciones de signo" ;
-    ex:compuestoPor ex:EjeX_1409_2, ex:EjeZ_1409_2, ex:Husillo_1409_2 .
+### Sistema de Control (PLC)
+ex:Esquema_NumeracionEntradasSalidas_3.4.1
+    a ex:Esquema ;
+    rdfs:label "Esquema de numeración de entradas/salidas (3.4.1)" ;
+    ex:identificador "Numeración según el orden de los grupos remotos" ;
+    ex:textoExtracto "Esquema de 'Numeración según el orden de los grupos remotos': tres bloques 'Remote Group (1–3)' con módulos encestados bajo un 'POWER SUPPLY'; flechas negras indican el orden de numeración (arriba-abajo, izquierda-derecha). Bajo cada grupo se anotan rangos resultantes de O e I (p. ej., O1…O32, I1…I48)." ;
+    ex:detalladoEnEsquema ex:RemoteGroup_1, ex:RemoteGroup_2, ex:RemoteGroup_3, ex:FuenteAlimentacion_PLC .
 
-ex:EjeX_1409_2 a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje X" .
+ex:RemoteGroup_1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Remote Group 1" ;
+    ex:identificador "1" ;
+    ex:textoExtracto "Bloque 'Remote Group (1)' en esquema de numeración de entradas/salidas." ;
+    ex:compuestoPor ex:ModuloIO_Group1 .
 
-ex:EjeZ_1409_2 a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje Z" .
+ex:RemoteGroup_2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Remote Group 2" ;
+    ex:identificador "2" ;
+    ex:textoExtracto "Bloque 'Remote Group (2)' en esquema de numeración de entradas/salidas." ;
+    ex:compuestoPor ex:ModuloIO_Group2 .
 
-ex:Husillo_1409_2 a ex:ComponenteMecanico ;
-    ex:textoExtracto "husillo/plato" .
+ex:RemoteGroup_3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Remote Group 3" ;
+    ex:identificador "3" ;
+    ex:textoExtracto "Bloque 'Remote Group (3)' en esquema de numeración de entradas/salidas." ;
+    ex:compuestoPor ex:ModuloIO_Group3 .
 
-ex:EsquemaNumeracion_1409_1 a ex:Esquema ;
-    ex:textoExtracto "Esquema de 'Numeración según el orden de los grupos remotos': tres bloques 'Remote Group (1–3)' con módulos encestados bajo un 'POWER SUPPLY'; flechas negras indican el orden de numeración (arriba-abajo, izquierda-derecha). Bajo cada grupo se anotan rangos resultantes de O e I (p. ej., O1…O32, I1…I48)" ;
-    ex:tieneComponente ex:RemoteGroup_1409_1, ex:RemoteGroup_1409_2, ex:RemoteGroup_1409_3, ex:PowerSupply_1409_1 .
+ex:FuenteAlimentacion_PLC
+    a ex:ComponenteElectrico ;
+    rdfs:label "Fuente de alimentación (POWER SUPPLY)" ;
+    ex:textoExtracto "Módulos encestados bajo un 'POWER SUPPLY' en esquema de grupos remotos." ;
+    ex:alimenta ex:RemoteGroup_1, ex:RemoteGroup_2, ex:RemoteGroup_3 .
 
-ex:RemoteGroup_1409_1 a ex:Sistema ;
-    ex:textoExtracto "Remote Group (1)" .
+ex:ModuloIO_Group1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de E/S - Grupo 1" ;
+    ex:textoExtracto "Rangos resultantes de O e I (p. ej., O1…O32, I1…I48) en Remote Group 1." ;
+    ex:tieneComponente ex:Salida_O1_O32, ex:Entrada_I1_I48 .
 
-ex:RemoteGroup_1409_2 a ex:Sistema ;
-    ex:textoExtracto "Remote Group (2)" .
+ex:Salida_O1_O32
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salidas O1–O32" ;
+    ex:identificador "O1…O32" ;
+    ex:textoExtracto "Rango de salidas en Remote Group 1." .
 
-ex:RemoteGroup_1409_3 a ex:Sistema ;
-    ex:textoExtracto "Remote Group (3)" .
-
-ex:PowerSupply_1409_1 a ex:ComponenteElectrico ;
-    ex:textoExtracto "POWER SUPPLY" .
+ex:Entrada_I1_I48
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas I1–I48" ;
+    ex:identificador "I1…I48" ;
+    ex:textoExtracto "Rango de entradas en Remote Group 1." .

@@ -1,30 +1,42 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EjeHirth_277_1 a ex:ComponenteMecanico ;
-    rdfs:label "Eje Hirth" ;
-    ex:textoExtracto "HIRTH Eje con dentado Hirth." ;
-    ex:identificador "HIRTH" ;
-    ex:valor "Sí / No" ;
-    ex:valor "No" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroHirth_277_1 a ex:Parametro ;
-    rdfs:label "Parámetro Hirth" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales y rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Sí / No. Valor por defecto: No." ;
-    ex:identificador "(V.)[ch].MPA.HIRTH.xn" .
+ex:Param_HIRTH
+    a               ex:Parametro ;
+    rdfs:label      "Eje Hirth (HIRTH)" ;
+    ex:textoExtracto "Se denomina eje Hirth al que debe posicionarse siempre en posiciones múltiplos de un valor dado. [...] Variable asociada: (V.)[ch].MPA.HIRTH.xn" ;
+    ex:valor         "No"^^xsd:string ;
+    ex:monitoreaParametro ex:SistemaCNC .
 
-ex:ParametroHPITCH_277_1 a ex:Parametro ;
-    rdfs:label "Parámetro HPITCH" ;
-    ex:textoExtracto "HPITCH Paso del eje Hirth. Parámetro válido para ejes lineales y rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 99999.9999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0 a 99999.9999 grados. Valor por defecto: 1 mm / 0.03937 inch / 1 grado. Variable asociada: (V.)[ch].MPA.HPITCH.xn" ;
-    ex:identificador "(V.)[ch].MPA.HPITCH.xn" .
+ex:Param_HPITCH
+    a               ex:Parametro ;
+    rdfs:label      "Paso del eje Hirth (HPITCH)" ;
+    ex:textoExtracto "HPITCH Paso del eje Hirth. [...] Valor por defecto: 1 mm / 0.03937 inch / 1 grado. Variable asociada: (V.)[ch].MPA.HPITCH.xn" ;
+    ex:valor         "1 mm"^^xsd:string ;
+    ex:monitoreaParametro ex:SistemaCNC .
 
-ex:ParametroREFVALUE_277_1 a ex:Parametro ;
-    rdfs:label "Parámetro REFVALUE" ;
-    ex:textoExtracto "Cuando el eje está definido como eje hirth, este parámetro indica el paso del mismo. El parámetro REFVALUE será tomado como cota inicial para los sucesivos incrementos." .
+ex:Param_REFVALUE
+    a               ex:Parametro ;
+    rdfs:label      "Cota inicial del eje Hirth (REFVALUE)" ;
+    ex:textoExtracto "El parámetro REFVALUE será tomado como cota inicial para los sucesivos incrementos." ;
+    ex:monitoreaParametro ex:SistemaCNC .
 
-ex:SistemaCNC_277_1 a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "el CNC dará error" .
+ex:TablaParametrosEje a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de parámetros del eje Hirth" ;
+    ex:textoExtracto "Las posiciones del conmutador para los movimientos en jog se pueden personalizar en la tabla de parámetros del eje, para que se correspondan con los pasos deseados." ;
+    ex:documentadoEn ex:ManualCNC .
 
-ex:InterfazFGUIM_277_1 a ex:InterfazUsuario ;
-    rdfs:label "FGUIM" ;
+ex:SistemaCNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC" ;
+    ex:textoExtracto "el CNC dará error. [...] Los movimientos en jog incremental solo serán válidos si son superiores al HPITCH y se limitarán a múltiplos de este valor." ;
+    ex:tieneComponente ex:InterfazFGUIM .
+
+ex:InterfazFGUIM
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Interfaz FGUIM" ;
     ex:textoExtracto "La visualización en pantalla de los decimales de un eje Hirth se configurará desde el FGUIM." .

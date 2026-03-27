@@ -1,41 +1,57 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ModoAdministrador a ex:ModoOperacion ;
-    rdfs:label "Restart Windows in Administrator Mode"@en ;
-    ex:textoExtracto "Ventana de sistema 'RESTART WINDOWS' con tres botones que representan los modos de trabajo: 'Restart Windows in Administrator Mode', 'Restart Windows in Setup Mode' y 'Restart Windows in User Mode'."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModoConfiguracion a ex:ModoOperacion ;
-    rdfs:label "Restart Windows in Setup Mode"@en ;
-    ex:textoExtracto "Ventana de sistema 'RESTART WINDOWS' con tres botones que representan los modos de trabajo: 'Restart Windows in Administrator Mode', 'Restart Windows in Setup Mode' y 'Restart Windows in User Mode'."@es .
+### Interfaces de usuario y modos de operación
+ex:InterfazConfiguracionDisco
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de configuración 'Configuration > Disk' (S.M.A.R.T.)" ;
+    ex:textoExtracto "Captura de interfaz del panel 'Configuration > Disk' con lectura S.M.A.R.T. del disco M2-SATA. Se muestra una lista de atributos (modelo, firmware, recuento de errores, temperatura, horas de encendido, etc.) en un cuadro con iconos y valores por columna." ;
+    ex:monitoreaParametro ex:ParametroEstadoDisco .
 
-ex:ModoUsuario a ex:ModoOperacion ;
-    rdfs:label "Restart Windows in User Mode"@en ;
-    ex:textoExtracto "Ventana de sistema 'RESTART WINDOWS' con tres botones que representan los modos de trabajo: 'Restart Windows in Administrator Mode', 'Restart Windows in Setup Mode' y 'Restart Windows in User Mode'."@es .
+ex:ParametroEstadoDisco
+    a ex:Parametro ;
+    rdfs:label "Parámetros S.M.A.R.T. del disco M2-SATA" ;
+    ex:textoExtracto "atributos (modelo, firmware, recuento de errores, temperatura, horas de encendido, etc.)" ;
+    ex:valor "Umbral de aviso (>75%), umbral de error (>90%)" .
 
-ex:SeñalAdministrador a ex:AvisoSeguridad ;
-    rdfs:label "ADMINISTRATOR MODE"@en ;
-    ex:textoExtracto "Dos imágenes de escritorio a modo de cartelas de estado: una con fondo rojo y texto 'ADMINISTRATOR MODE', y otra con fondo amarillo y texto 'SETUP MODE'. Funcionan como señalización visual del modo activo, advirtiendo que se trata de entornos no protegidos."@es .
+ex:VentanaReinicioModos
+    a ex:InterfazUsuario ;
+    rdfs:label "Ventana 'RESTART WINDOWS' (selección de modos)" ;
+    ex:textoExtracto "Ventana de sistema 'RESTART WINDOWS' con tres botones que representan los modos de trabajo: 'Restart Windows in Administrator Mode', 'Restart Windows in Setup Mode' y 'Restart Windows in User Mode'." ;
+    ex:ilustradoEn ex:ModoAdministrador, ex:ModoSetup, ex:ModoUsuario .
 
-ex:SeñalConfiguracion a ex:AvisoSeguridad ;
-    rdfs:label "SETUP MODE"@en ;
-    ex:textoExtracto "Dos imágenes de escritorio a modo de cartelas de estado: una con fondo rojo y texto 'ADMINISTRATOR MODE', y otra con fondo amarillo y texto 'SETUP MODE'. Funcionan como señalización visual del modo activo, advirtiendo que se trata de entornos no protegidos."@es .
+ex:ModoAdministrador
+    a ex:ModoOperacion ;
+    rdfs:label "Administrator Mode" ;
+    ex:textoExtracto "botón 'Restart Windows in Administrator Mode' [...] cartela de estado con fondo rojo y texto 'ADMINISTRATOR MODE'." .
 
-ex:DiskMonitor a ex:Sistema ;
-    ex:textoExtracto "Captura de interfaz del panel 'Configuration > Disk' con lectura S.M.A.R.T. del disco M2-SATA. Se muestra una lista de atributos (modelo, firmware, recuento de errores, temperatura, horas de encendido, etc.) en un cuadro con iconos y valores por columna. El elemento ilustra la monitorización de estado/vida útil del disco y el comportamiento de aviso (>75 %) y error (>90 %) descritos en el texto."@es .
+ex:ModoSetup
+    a ex:ModoOperacion ;
+    rdfs:label "Setup Mode" ;
+    ex:textoExtracto "botón 'Restart Windows in Setup Mode' [...] cartela de estado con fondo amarillo y texto 'SETUP MODE'." .
 
-ex:DiscoM2SATA a ex:ComponenteElectrico ;
-    rdfs:label "M2-SATA"@en ;
-    ex:textoExtracto "Captura de interfaz del panel 'Configuration > Disk' con lectura S.M.A.R.T. del disco M2-SATA."@es .
+ex:ModoUsuario
+    a ex:ModoOperacion ;
+    rdfs:label "User Mode" ;
+    ex:textoExtracto "botón 'Restart Windows in User Mode'." .
 
-ex:InterfazDiskConfiguration a ex:InterfazUsuario ;
-    ex:textoExtracto "Captura de interfaz del panel 'Configuration > Disk' con lectura S.M.A.R.T. del disco M2-SATA."@es .
+ex:SenalizacionModoAdministrador
+    a ex:InterfazUsuario ;
+    rdfs:label "Cartela visual 'ADMINISTRATOR MODE' (fondo rojo)" ;
+    ex:textoExtracto "imagen de escritorio [...] fondo rojo y texto 'ADMINISTRATOR MODE'. Funcionan como señalización visual del modo activo, advirtiendo que se trata de entornos no protegidos." ;
+    ex:ilustradoEn ex:ModoAdministrador .
 
-ex:InterfazRestartWindows a ex:InterfazUsuario ;
-    ex:textoExtracto "Ventana de sistema 'RESTART WINDOWS' con tres botones que representan los modos de trabajo: 'Restart Windows in Administrator Mode', 'Restart Windows in Setup Mode' y 'Restart Windows in User Mode'."@es .
+ex:SenalizacionModoSetup
+    a ex:InterfazUsuario ;
+    rdfs:label "Cartela visual 'SETUP MODE' (fondo amarillo)" ;
+    ex:textoExtracto "imagen de escritorio [...] fondo amarillo y texto 'SETUP MODE'." ;
+    ex:ilustradoEn ex:ModoSetup .
 
-ex:InterfazDescargasFagor a ex:InterfazUsuario ;
-    ex:textoExtracto "Captura de un navegador en la página de descargas de Fagor Automation. Se aprecian campos de búsqueda/filtrado y el listado donde figura 'CNC Help Language Changer'."@es .
-
-ex:SetupHelpInstaller a ex:Herramienta ;
-    rdfs:label "SetupHelp_Vxx.xx.exe"@en ;
-    ex:textoExtracto "La imagen contextualiza el procedimiento de obtención del instalador SetupHelp_Vxx.xx.exe y los tipos/idiomas de ayuda soportados."@es .
+### Herramienta de soporte
+ex:CambiadorIdiomaAyudaCNC
+    a ex:Herramienta ;
+    rdfs:label "CNC Help Language Changer" ;
+    ex:identificador "SetupHelp_Vxx.xx.exe" ;
+    ex:textoExtracto "listado donde figura 'CNC Help Language Changer'. La imagen contextualiza el procedimiento de obtención del instalador SetupHelp_Vxx.xx.exe y los tipos/idiomas de ayuda soportados." .

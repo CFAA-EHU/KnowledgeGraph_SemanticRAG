@@ -1,18 +1,26 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla_MAGAZINE a ex:Tabla ;
-    ex:textoExtracto """Este parámetro muestra los datos del almacén. Cada tabla dispone de los siguientes parámetros máquina para su configuración. | MAGAZINE n |  |
-| --- | --- |
-| SIZE | Tamaño del almacén (número de posiciones). |
-| RANDOM | Almacén random |""" ;
-    a ex:Tabla ;
-    ex:tieneComponente ex:Parametro_SIZE, ex:Parametro_RANDOM .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_SIZE ex:textoExtracto """SIZE Tamaño del almacén (número de posiciones). Valores posibles: De 0 a 1000. Valor por defecto: 20. Variable asociada: (V.)TM.MZSIZE[mz] Parámetro incluido en la tabla MAGAZINE // STORAGE. Este parámetro indica la capacidad del almacén, sin contar la herramientas de tierra.""" ;
-    a ex:Parametro ;
-    ex:valor "De 0 a 1000" ;
-    ex:identificador "(V.)TM.MZSIZE[mz]" .
+ex:Parametro_MAGAZINE_SIZE
+    a               ex:Parametro ;
+    rdfs:label      "SIZE (Tamaño del almacén)"@es ;
+    ex:identificador "TM.MZSIZE[mz]" ;
+    ex:valor        "20"^^xsd:integer ;
+    ex:textoExtracto "SIZE Tamaño del almacén (número de posiciones). Valores posibles: De 0 a 1000. Valor por defecto: 20. Variable asociada: (V.)TM.MZSIZE[mz]"@es .
 
-ex:Parametro_RANDOM ex:textoExtracto """RANDOM Almacén random. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)TM.MZRANDOM[mz] Parámetro incluido en la tabla MAGAZINE // STORAGE. Este parámetro indica si las herramientas debe ocupar siempre la misma posición (no- random) o si pueden ocupar cualquier posición (random).""" ;
-    a ex:Parametro ;
-    ex:valor "Sí / No" ;
-    ex:identificador "(V.)TM.MZRANDOM[mz]" .
+ex:Parametro_MAGAZINE_RANDOM
+    a               ex:Parametro ;
+    rdfs:label      "RANDOM (Almacén random)"@es ;
+    ex:identificador "TM.MZRANDOM[mz]" ;
+    ex:valor        "No"^^xsd:string ;
+    ex:textoExtracto "RANDOM Almacén random. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)TM.MZRANDOM[mz]"@es .
+
+ex:Tabla_MAGAZINE_STORAGE a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla MAGAZINE // STORAGE"@es ;
+    ex:textoExtracto "Cada tabla dispone de los siguientes parámetros máquina para su configuración: MAGAZINE n | SIZE | RANDOM"@es ;
+    ex:tieneComponente ex:Parametro_MAGAZINE_SIZE ,
+                      ex:Parametro_MAGAZINE_RANDOM .

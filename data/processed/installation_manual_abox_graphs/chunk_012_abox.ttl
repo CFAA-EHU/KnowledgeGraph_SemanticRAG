@@ -1,22 +1,27 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SetupHelp_Vxx_xx ex:textoExtracto "Se puede cambiar el idioma de la ayuda con el programa SetupHelp_Vxx.xx.exe (donde Vxx_xx es el nombre de la versión), disponible en la zona de descargas del sitio web corporativo de Fagor Automation." ;
-    a ex:Herramienta ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SetupHelp_Vxx_xx_exe
+    a ex:InterfazUsuario ;
+    rdfs:label "SetupHelp_Vxx.xx.exe" ;
+    ex:textoExtracto "Se puede cambiar el idioma de la ayuda con el programa SetupHelp_Vxx.xx.exe (donde Vxx_xx es el nombre de la versión), disponible en la zona de descargas del sitio web corporativo de Fagor Automation." ;
     ex:identificador "SetupHelp_Vxx.xx.exe" .
 
-ex:FagorAutomation ex:textoExtracto "Fagor Automation" ;
-    a ex:Empresa .
+ex:ArchivosAyudaCNC
+    a ex:Componente ;
+    rdfs:label "Archivos de ayuda del CNC" ;
+    ex:textoExtracto "Fagor entrega el CNC con los archivos de ayuda instalados en inglés." ;
+    ex:documentadoEn ex:SetupHelp_Vxx_xx_exe .
 
-ex:CNC_Help_Language_Changer ex:textoExtracto "Archivo: CNC Help Language Changer" ;
-    a ex:Herramienta ;
-    ex:identificador "CNC Help Language Changer" .
+ex:CarpetaFagorMmcHelp
+    a ex:Componente ;
+    rdfs:label "Carpeta ..\\Fagor\\Mmc\\Help" ;
+    ex:textoExtracto "Los archivos de ayuda instalados por Fagor se encuentran en la carpeta ..\\Fagor\\Mmc\\Help." .
 
-ex:CNC ex:textoExtracto "Fagor entrega el CNC con los archivos de ayuda instalados en inglés. ... Cuando el CNC debe mostrar la ayuda, primero la busca en ..\\Users\\Help, y si no la encuentra, en ..\\Fagor\\Mmc\\Help." ;
-    a ex:Maquina .
-
-ex:Carpeta_Fagor_Mmc_Help ex:textoExtracto "Los archivos de ayuda instalados por Fagor se encuentran en la carpeta ..\\Fagor\\Mmc\\Help." ;
-    a ex:Sistema ;
-    ex:identificador "..\\Fagor\\Mmc\\Help" .
-
-ex:Carpeta_Users_Help ex:textoExtracto "El programa SetupHelp_Vxx.xx.exe instala la ayuda en la carpeta ..\\Users\\Help." ;
-    a ex:Sistema ;
-    ex:identificador "..\\Users\\Help" .
+ex:CarpetaUsersHelp
+    a ex:Componente ;
+    rdfs:label "Carpeta ..\\Users\\Help" ;
+    ex:textoExtracto "El programa SetupHelp_Vxx.xx.exe instala la ayuda en la carpeta ..\\Users\\Help." ;
+    ex:controla ex:ArchivosAyudaCNC .

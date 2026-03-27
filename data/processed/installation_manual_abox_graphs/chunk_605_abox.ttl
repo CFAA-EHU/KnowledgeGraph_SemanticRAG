@@ -1,23 +1,90 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MNEMONIC a ex:Parametro ;
-    rdfs:label "MNEMONIC" ;
-    ex:textoExtracto "Mnemónico asignado a la variable DRV. El acceso a la variable desde el CNC será de la forma: (V.)DRV.{mnemónico}.{eje} (V.)DRV.{mnemónico}.{cabezal}" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:AXIS a ex:Parametro ;
-    rdfs:label "AXIS" ;
-    ex:textoExtracto "Nombre del eje o cabezal al que accede la variable; si se define como \"*\", todos los ejes y cabezales." .
+ex:Tabla_ParametrosDRV_Sercos a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros DRV para regulador Sercos"@es ;
+    ex:textoExtracto """
+    | Campo. | Significado. |
+    | --- | --- |
+    | MNEMONIC | Mnemónico asignado a la variable DRV. [...] Consultar el manual del regulador.
+    | AXIS | Nombre del eje o cabezal al que accede la variable; si se define como \"*\", todos los ejes y cabezales.
+    | ID | Identificador ID Sercos de la variable a consultar en el regulador.
+    | TYPE | Tipo de acceso, síncrono o asíncrono. [...] No todas las variables se pueden definir con acceso síncrono.
+    | MODE | Modo de acceso. El acceso a las variables podrá ser solo lectura o de lectura y escritura.
+    """@es .
 
-ex:ID a ex:Parametro ;
-    rdfs:label "ID" ;
-    ex:textoExtracto "Identificador ID Sercos de la variable a consultar en el regulador." ;
-    ex:textoExtracto "Identificador del parámetro (0000-FFFF) o de la variable (0-F) a consultar en el dispositivo." .
+ex:Tabla_ParametrosDRV_Mechatrolink a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros DRV para dispositivos Mechatrolink"@es ;
+    ex:textoExtracto """
+    | Campo. | Significado. |
+    | --- | --- |
+    | MNEMONIC | Mnemónico asignado a la variable DRV. [...] (V.)DRV.{mnemónico}.{cabezal}
+    | AXIS | Nombre del eje o cabezal al que accede la variable; si se define como \"*\", todos los ejes y cabezales.
+    | ID | Identificador del parámetro (0000-FFFF) o de la variable (0-F) a consultar en el dispositivo.
+    | TYPE | Tipo de consulta; variable o parámetro.
+    | MODE | Modo de acceso.
+    """@es .
 
-ex:TYPE a ex:Parametro ;
-    rdfs:label "TYPE" ;
-    ex:textoExtracto "Tipo de acceso, síncrono o asíncrono. Las variables de acceso síncrono se gestionan a través del canal cíclico. Las variables de acceso asíncrono se gestionan a través del canal de servicio, aunque la opción por defecto en el regulador sea la contraria. No todas las variables se pueden definir con acceso síncrono; sólo aquellas que pueden utilizar el canal cíclico de Sercos. Consultar el manual del regulador. En la medida de lo posible, se recomienda definir las variables con acceso síncrono, ya que las peticiones de lectura y escritura de estas variables a través del bus son más rápidas, lo que disminuye el tráfico en el bus." ;
-    ex:textoExtracto "Tipo de consulta; variable o parámetro." .
+ex:Parametro_MNEMONIC_Sercos
+    a ex:Parametro ;
+    rdfs:label "MNEMONIC (Sercos)"@es ;
+    ex:textoExtracto "Mnemónico asignado a la variable DRV. El acceso a la variable desde el CNC será de la forma: (V.)DRV.{mnemónico}.{eje} (V.)DRV.{mnemónico}.{cabezal}"@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Sercos .
 
-ex:MODE a ex:Parametro ;
-    rdfs:label "MODE" ;
-    ex:textoExtracto "Modo de acceso. El acceso a las variables podrá ser solo lectura o de lectura y escritura." .
+ex:Parametro_AXIS_Sercos
+    a ex:Parametro ;
+    rdfs:label "AXIS (Sercos)"@es ;
+    ex:textoExtracto "Nombre del eje o cabezal al que accede la variable; si se define como \"*\", todos los ejes y cabezales."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Sercos .
+
+ex:Parametro_ID_Sercos
+    a ex:Parametro ;
+    rdfs:label "ID (Sercos)"@es ;
+    ex:textoExtracto "Identificador ID Sercos de la variable a consultar en el regulador."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Sercos .
+
+ex:Parametro_TYPE_Sercos
+    a ex:Parametro ;
+    rdfs:label "TYPE (Sercos)"@es ;
+    ex:textoExtracto "Tipo de acceso, síncrono o asíncrono. Las variables de acceso síncrono se gestionan a través del canal cíclico. [...] No todas las variables se pueden definir con acceso síncrono."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Sercos .
+
+ex:Parametro_MODE_Sercos
+    a ex:Parametro ;
+    rdfs:label "MODE (Sercos)"@es ;
+    ex:textoExtracto "Modo de acceso. El acceso a las variables podrá ser solo lectura o de lectura y escritura."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Sercos .
+
+ex:Parametro_MNEMONIC_Mechatrolink
+    a ex:Parametro ;
+    rdfs:label "MNEMONIC (Mechatrolink)"@es ;
+    ex:textoExtracto "Mnemónico asignado a la variable DRV. El acceso a la variable desde el CNC será de la forma: (V.)DRV.{mnemónico}.{eje} (V.)DRV.{mnemónico}.{cabezal}"@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Mechatrolink .
+
+ex:Parametro_AXIS_Mechatrolink
+    a ex:Parametro ;
+    rdfs:label "AXIS (Mechatrolink)"@es ;
+    ex:textoExtracto "Nombre del eje o cabezal al que accede la variable; si se define como \"*\", todos los ejes y cabezales."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Mechatrolink .
+
+ex:Parametro_ID_Mechatrolink
+    a ex:Parametro ;
+    rdfs:label "ID (Mechatrolink)"@es ;
+    ex:textoExtracto "Identificador del parámetro (0000-FFFF) o de la variable (0-F) a consultar en el dispositivo."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Mechatrolink .
+
+ex:Parametro_TYPE_Mechatrolink
+    a ex:Parametro ;
+    rdfs:label "TYPE (Mechatrolink)"@es ;
+    ex:textoExtracto "Tipo de consulta; variable o parámetro."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Mechatrolink .
+
+ex:Parametro_MODE_Mechatrolink
+    a ex:Parametro ;
+    rdfs:label "MODE (Mechatrolink)"@es ;
+    ex:textoExtracto "Modo de acceso."@es ;
+    ex:documentadoEn ex:Tabla_ParametrosDRV_Mechatrolink .

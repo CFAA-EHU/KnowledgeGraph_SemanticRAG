@@ -1,60 +1,60 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:PLC_SistemaControl ex:textoExtracto "El PLC podrá modificar la velocidad del cabezal mediante la variable (V.)PLC.S.sn, pero sin generar un cambio de gama aunque éste sea automático (parámetro AUTOGEAR)." ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:PLC_ControlCabezales
     a ex:Sistema ;
-    ex:tieneComponente ex:Variable_PLC_S_sn .
+    rdfs:label "PLC de control de cabezales" ;
+    ex:textoExtracto "El PLC podrá modificar la velocidad del cabezal mediante la variable (V.)PLC.S.sn [...] Cuando el PLC activa una de estas marcas, el CNC activa la marca MSTROBE y escribe en el registro MFUN la función M correspondiente." ;
+    ex:controla ex:CNC_SistemaControl ;
+    ex:monitoreaParametro ex:Parametro_VelocidadCabezal .
 
-ex:Variable_PLC_S_sn ex:textoExtracto "(V.)PLC.S.sn" ;
-    a ex:Parametro .
-
-ex:Parametro_AUTOGEAR ex:textoExtracto "parámetro AUTOGEAR" ;
-    a ex:Parametro .
-
-ex:CNC_SistemaControl ex:textoExtracto "El tratamiento de estas funciones M es igual que las ejecutadas desde el CNC. Cuando el PLC activa una de estas marcas, el CNC activa la marca MSTROBE y escribe en el registro MFUN la función M correspondiente." ;
+ex:CNC_SistemaControl
     a ex:Sistema ;
-    ex:tieneComponente ex:Marca_MSTROBE, ex:Registro_MFUN .
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "el CNC activa la marca MSTROBE y escribe en el registro MFUN la función M correspondiente. Tras finalizar la sincronización de la función M en el PLC (señal AUXEND), el CNC comienza a enviar consigna a dicho cabezal" ;
+    ex:controla ex:Cabezal_Generico ;
+    ex:monitoreaParametro ex:Parametro_AUTOGEAR .
 
-ex:Marca_MSTROBE ex:textoExtracto "marca MSTROBE" ;
-    a ex:Parametro .
+ex:Cabezal_Generico
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal (genérico)" ;
+    ex:textoExtracto "El PLC podrá modificar la velocidad del cabezal mediante la variable (V.)PLC.S.sn [...] el CNC comienza a enviar consigna a dicho cabezal" ;
+    ex:tieneComponente ex:ComponenteElectrico_SLIMITACSPDL .
 
-ex:Registro_MFUN ex:textoExtracto "registro MFUN" ;
-    a ex:Parametro .
+ex:Parametro_VelocidadCabezal
+    a ex:Parametro ;
+    rdfs:label "Velocidad del cabezal (V.)PLC.S.sn" ;
+    ex:textoExtracto "la velocidad del cabezal mediante la variable (V.)PLC.S.sn" ;
+    ex:identificador "V.PLC.S.sn" .
 
-ex:Senal_AUXEND ex:textoExtracto "señal AUXEND" ;
-    a ex:Sensor .
+ex:Parametro_AUTOGEAR
+    a ex:Parametro ;
+    rdfs:label "Parámetro AUTOGEAR (cambio de gama automático)" ;
+    ex:textoExtracto "sin generar un cambio de gama aunque éste sea automático (parámetro AUTOGEAR)" ;
+    ex:identificador "AUTOGEAR" .
 
-ex:Funcion_M a ex:Tabla ;
-    ex:textoExtracto "funciones M" ;
-    a ex:Parametro .
+ex:Parametro_MSTROBE
+    a ex:Parametro ;
+    rdfs:label "Marca MSTROBE" ;
+    ex:textoExtracto "el CNC activa la marca MSTROBE y escribe en el registro MFUN la función M correspondiente" ;
+    ex:identificador "MSTROBE" .
 
-ex:Estado_Canal_EnError ex:textoExtracto "status del canal sea distinto de 'En error'" ;
-    a ex:ModoOperacion .
+ex:Parametro_MFUN
+    a ex:Parametro ;
+    rdfs:label "Registro MFUN (función M)" ;
+    ex:textoExtracto "escribe en el registro MFUN la función M correspondiente" ;
+    ex:identificador "MFUN" .
 
-ex:Estado_Canal_NoReady ex:textoExtracto "status del canal sea distinto de 'No ready'" ;
-    a ex:ModoOperacion .
+ex:Parametro_AUXEND
+    a ex:Parametro ;
+    rdfs:label "Señal AUXEND (fin de sincronización)" ;
+    ex:textoExtracto "Tras finalizar la sincronización de la función M en el PLC (señal AUXEND)" ;
+    ex:identificador "AUXEND" .
 
-ex:Estado_CNC_EnError ex:textoExtracto "estado del CNC es 'En error'" ;
-    a ex:ModoOperacion .
-
-ex:Estado_CNC_NoReady ex:textoExtracto "estado del CNC es 'No ready'" ;
-    a ex:ModoOperacion .
-
-ex:Estado_CNC_Reset ex:textoExtracto "CNC está haciendo un reset" ;
-    a ex:ModoOperacion .
-
-ex:Estado_CNC_ValidandoParametros ex:textoExtracto "CNC validando parámetros máquina" ;
-    a ex:ModoOperacion .
-
-ex:Eje_C ex:textoExtracto "cabezal está trabajando como eje C" ;
-    a ex:ComponenteMecanico .
-
-ex:Roscado_Rigido ex:textoExtracto "cabezal está roscando (ya sea roscado rígido" ;
-    a ex:TareaMantenimiento .
-
-ex:Roscado_NoRigido ex:textoExtracto "roscado con macho no rígido" ;
-    a ex:TareaMantenimiento .
-
-ex:Roscado_Electronico ex:textoExtracto "roscado electrónico" ;
-    a ex:TareaMantenimiento .
-
-ex:Marca_PorCabezal ex:textoExtracto "Hay una marca para cada cabezal." ;
-    a ex:Parametro .
+ex:ComponenteElectrico_SLIMITACSPDL
+    a ex:ComponenteElectrico ;
+    rdfs:label "Marca SLIMITACSPDL (límite de velocidad por cabezal)" ;
+    ex:textoExtracto "SLIMITACSPDL [...] Hay una marca para cada cabezal." ;
+    ex:identificador "SLIMITACSPDL" .

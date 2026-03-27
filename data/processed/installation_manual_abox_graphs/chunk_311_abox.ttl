@@ -1,29 +1,48 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:DECINPUT a ex:Parametro ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DECINPUT
+    a ex:Parametro ;
+    rdfs:label "DECINPUT" ;
     ex:textoExtracto "El eje/cabezal dispone de micro para la búsqueda de referencia. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: Sí / No. Valor por defecto: Sí." ;
-    ex:valor "Sí" .
+    ex:valor "Sí" ;
+    ex:identificador "V.[ch].MPA.DECINPUT.xn" .
 
-ex:MPA.DECINPUT.xn a ex:Parametro ;
-    ex:identificador "(V.)[ch].MPA.DECINPUT.xn" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.DECINPUT.xn El eje/cabezal dispone de micro para la búsqueda de referencia." .
+ex:Variable_V_MPA_DECINPUT_xn
+    a ex:Parametro ;
+    rdfs:label "Variable asociada a DECINPUT" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.DECINPUT.xn" ;
+    ex:identificador "V.[ch].MPA.DECINPUT.xn" ;
+    ex:monitoreaParametro ex:Parametro_DECINPUT .
 
-ex:REFDIREC a ex:Parametro ;
-    ex:textoExtracto "la búsqueda la realiza siempre en el sentido definido por el parámetro REFDIREC." .
+ex:Parametro_REFDIREC
+    a ex:Parametro ;
+    rdfs:label "REFDIREC" ;
+    ex:textoExtracto "la búsqueda la realiza siempre en el sentido definido por el parámetro REFDIREC" .
 
-ex:MicroSeguridad a ex:Sensor ;
-    ex:textoExtracto "el eje no se salga de los límites de recorrido al hacer la búsqueda. El eje realiza la búsqueda de referencia mediante las marcas codificadas, pero si pulsa el micro antes de terminar, invierte el sentido de búsqueda." .
+ex:ComponenteElectrico_MicroSeguridadEje
+    a ex:ComponenteElectrico ;
+    rdfs:label "Micro de seguridad para búsqueda de referencia" ;
+    ex:textoExtracto "el eje dispone de un micro de seguridad para que el eje no se salga de los límites de recorrido al hacer la búsqueda" ;
+    ex:textoExtracto "Cuando hay micro de I0, el CNC no realiza la búsqueda de I0 sobre la marcha, según esté girando en M3 ó M4; la búsqueda la realiza siempre en el sentido definido por el parámetro REFDIREC" ;
+    ex:textoExtracto "El eje realiza la búsqueda de referencia mediante las marcas codificadas, pero si pulsa el micro antes de terminar, invierte el sentido de búsqueda" ;
+    ex:textoExtracto "el eje busca el micro, invierte el sentido de búsqueda, y cuando deja de pulsar el micro empieza a buscar el I0" ;
+    ex:textoExtracto "En los cabezales con micro de I0, el cabezal pasa dos veces sobre el micro" .
 
-ex:I0Codificados a ex:Sensor ;
-    ex:textoExtracto "Si el eje lineal dispone de I0 codificados, el parámetro DECINPUT debe tener valor \"Sí\" si el eje dispone de un micro de seguridad para que el eje no se salga de los límites de recorrido al hacer la búsqueda." .
+ex:ComponenteElectrico_MicroI0
+    a ex:ComponenteElectrico ;
+    rdfs:label "Micro I0" ;
+    ex:textoExtracto "Cuando hay micro de I0, el CNC no realiza la búsqueda de I0 sobre la marcha" ;
+    ex:textoExtracto "el eje busca el micro, invierte el sentido de búsqueda, y cuando deja de pulsar el micro empieza a buscar el I0" ;
+    ex:textoExtracto "En los cabezales con micro de I0, el cabezal pasa dos veces sobre el micro" .
 
-ex:EjeLineal a ex:ComponenteMecanico ;
-    ex:textoExtracto "Si el eje lineal dispone de I0 codificados, el parámetro DECINPUT debe tener valor \"Sí\" si el eje dispone de un micro de seguridad para que el eje no se salga de los límites de recorrido al hacer la búsqueda." .
-
-ex:EjeRotativo a ex:ComponenteMecanico ;
-    ex:textoExtracto "Si el eje rotativo dispone de I0 codificados, y es de tipo \"módulo\", el parámetro DECINPUT debe tener valor \"No\". El eje realiza la búsqueda de referencia mediante las marcas codificadas (el eje rotativo puede girar sin fin)." .
-
-ex:EjeRotativoTipoLinearLike a ex:ComponenteMecanico ;
-    ex:textoExtracto "Si el eje rotativo dispone de I0 codificados, y es de tipo \"linear-like\", el parámetro DECINPUT debe tener valor \"Sí\". El eje realiza la búsqueda de referencia mediante las marcas codificadas, pero si pulsa el micro antes de terminar, invierte el sentido de búsqueda." .
-
-ex:Cabezal a ex:ComponenteMecanico ;
-    ex:textoExtracto "En los cabezales con micro de I0, el cabezal pasa dos veces sobre el micro." .
+ex:Sistema_BusquedaReferenciaEje
+    a ex:Sistema ;
+    rdfs:label "Sistema de búsqueda de referencia para ejes/cabezales" ;
+    ex:textoExtracto "El eje/cabezal dispone de micro para la búsqueda de referencia" ;
+    ex:tieneComponente ex:ComponenteElectrico_MicroSeguridadEje ;
+    ex:tieneComponente ex:ComponenteElectrico_MicroI0 ;
+    ex:monitoreaParametro ex:Parametro_DECINPUT ;
+    ex:monitoreaParametro ex:Parametro_REFDIREC .

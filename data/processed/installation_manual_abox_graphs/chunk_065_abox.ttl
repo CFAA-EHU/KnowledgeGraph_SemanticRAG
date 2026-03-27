@@ -1,35 +1,52 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MPG.PRELOAD a ex:Parametro ;
-    rdfs:label "MPG.PRELOAD" ;
-    ex:identificador "(V.)MPG.PRELOAD[nb]" ;
-    ex:textoExtracto "Parámetro incluido en la tabla TANDEM. La precarga es el par previo que se aplica , en sentidos opuestos, a ambos motores del tándem para establecer una tracción entre ellos con el fin de eliminar la holgura cuando el tándem se encuentra en reposo. El parámetro indica qué porcentaje del par nominal del motor maestro se aplicará como precarga." ;
-    ex:valor "Entre ±100%. Valor por defecto: 0 (se deshabilita la precarga)" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MPG.PRELFITI a ex:Parametro ;
-    rdfs:label "MPG.PRELFITI" ;
-    ex:identificador "(V.)MPG.PRELFITI[nb]" ;
-    ex:textoExtracto "Parámetro incluido en la tabla TANDEM. Filtro de primer orden que establece el tiempo que tarda el CNC en aplicar la precarga de forma progresiva. El filtro elimina los escalones de par en la entrada del compensador tándem cuando se parametriza un valor de precarga, evitando así un escalón en la consigna de velocidad del motor maestro y del motor esclavo del tándem." ;
-    ex:valor "De 0 a 65535 milisegundos (con valor 0, se deshabilita el filtro). Valor por defecto: 0 ms" .
+ex:Parametro_PRELOAD
+    a ex:Parametro ;
+    rdfs:label "PRELOAD (Precarga entre motores tándem)" ;
+    ex:textoExtracto "Precarga entre ambos motores. Valores posibles: Entre ±100%. Valor por defecto: 0 (se deshabilita la precarga). Variable asociada: (V.)MPG.PRELOAD[nb] [...] El parámetro indica qué porcentaje del par nominal del motor maestro se aplicará como precarga." ;
+    ex:identificador "MPG.PRELOAD[nb]" ;
+    ex:valor "0"^^xsd:string .  # Valor por defecto
 
-ex:MPG.TPROGAIN a ex:Parametro ;
-    rdfs:label "MPG.TPROGAIN" ;
-    ex:identificador "(V.)MPG.TPROGAIN[nb]" ;
+ex:Parametro_PRELFITI
+    a ex:Parametro ;
+    rdfs:label "PRELFITI (Tiempo de filtro de precarga)" ;
+    ex:textoExtracto "Tiempo del filtro para aplicar la precarga. Valores posibles: De 0 a 65535 milisegundos (con valor 0, se deshabilita el filtro). Valor por defecto: 0 ms. Variable asociada: (V.)MPG.PRELFITI[nb] [...] Filtro de primer orden que establece el tiempo que tarda el CNC en aplicar la precarga de forma progresiva." ;
+    ex:identificador "MPG.PRELFITI[nb]" ;
+    ex:valor "0 ms"^^xsd:string .  # Valor por defecto
+
+ex:Parametro_TPROGAIN
+    a ex:Parametro ;
+    rdfs:label "TPROGAIN (Ganancia proporcional para tándem)" ;
+    ex:textoExtracto "Ganancia proporcional (Kp) para el tándem. Valores posibles: De 0 a 100%. Valor por defecto: 0 (no se aplica ganancia proporcional). Variable asociada: (V.)MPG.TPROGAIN[nb]." ;
+    ex:identificador "MPG.TPROGAIN[nb]" ;
+    ex:valor "0"^^xsd:string .  # Valor por defecto
+
+ex:Tabla_TANDEM a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla TANDEM (Configuración de sistema tándem)" ;
     ex:textoExtracto "Parámetro incluido en la tabla TANDEM." ;
-    ex:valor "De 0 a 100%. Valor por defecto: 0 (no se aplica ganancia proporcional)" .
+    ex:tieneComponente ex:Parametro_PRELOAD ;
+    ex:tieneComponente ex:Parametro_PRELFITI ;
+    ex:tieneComponente ex:Parametro_TPROGAIN .
 
-ex:TablaTANDEM a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla TANDEM." ;
-    ex:tieneComponente ex:MPG.PRELOAD, ex:MPG.PRELFITI, ex:MPG.TPROGAIN .
+ex:SistemaTandem
+    a ex:Sistema ;
+    rdfs:label "Sistema tándem (motores maestro-esclavo)" ;
+    ex:textoExtracto "La precarga es el par previo que se aplica, en sentidos opuestos, a ambos motores del tándem para establecer una tracción entre ellos con el fin de eliminar la holgura cuando el tándem se encuentra en reposo. [...] La aplicación del valor de precarga implica necesariamente la unión mecánica entre los motores maestro y esclavo que forman el tándem." ;
+    ex:tieneComponente ex:ComponenteMecanico_MotorMaestro ;
+    ex:tieneComponente ex:ComponenteMecanico_MotorEsclavo ;
+    ex:documentadoEn ex:Tabla_TANDEM .
 
-ex:MotorMaestro a ex:ComponenteMecanico ;
-    rdfs:label "motor maestro" ;
-    ex:textoExtracto "ambos motores del tándem ... par nominal del motor maestro" .
+ex:ComponenteMecanico_MotorMaestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor maestro (tándem)" ;
+    ex:textoExtracto "motor maestro [...] El parámetro indica qué porcentaje del par nominal del motor maestro se aplicará como precarga." .
 
-ex:MotorEsclavo a ex:ComponenteMecanico ;
-    rdfs:label "motor esclavo" ;
-    ex:textoExtracto "motor esclavo del tándem" .
-
-ex:SistemaTandem a ex:Sistema ;
-    ex:textoExtracto "Pareja tándem. Precarga entre ambos motores ... forman el tándem" ;
-    ex:tieneComponente ex:MotorMaestro, ex:MotorEsclavo, ex:MPG.PRELOAD, ex:MPG.PRELFITI, ex:MPG.TPROGAIN .
+ex:ComponenteMecanico_MotorEsclavo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor esclavo (tándem)" ;
+    ex:textoExtracto "motor esclavo del tándem." .

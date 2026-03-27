@@ -1,26 +1,43 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TDATA7 a ex:Parametro ;
-    rdfs:label "TDATA7" ;
-    ex:textoExtracto "TDATA7 Indica el ángulo entre los ejes rotativos principal y secundario, en los cabezales rotativos (en este caso TDATA7 = 45)" ;
-    ex:valor "45" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TDATA1 a ex:Parametro ;
-    rdfs:label "TDATA1" ;
-    ex:textoExtracto "Cálculo del parámetro TDATA1. Primera palpación. Con los ejes rotativos B y C posicionados en 0º realizar un movimiento de palpación sobre la cara Z y preseleccionar la cota Z=0. Segunda palpación. Con el eje rotativo B posicionado en 0º y el eje C en 180º realizar un movimiento de palpación sobre la misma cara. Anotar la cota que aparece en el CNC, denominada en el dibujo Z. Cálculos matemáticos. Con el cambio de posición respecto al centro de giro ꞏ2ꞏ, el único dato desconocido tras ambas palpaciones es TDATA1." .
+ex:Parametro_TDATA7
+    a ex:Parametro ;
+    rdfs:label "TDATA7 (Ángulo entre ejes rotativos principal y secundario)"@es ;
+    ex:identificador "TDATA7" ;
+    ex:valor "45" ;
+    ex:textoExtracto "TDATA7 Indica el ángulo entre los ejes rotativos principal y secundario, en los cabezales rotativos (en este caso TDATA7 = 45)."@es .
 
-ex:EjeRotativoB a ex:Componente ;
-    rdfs:label "eje rotativo B" ;
-    ex:textoExtracto "eje rotativo B" .
+ex:Parametro_TDATA1
+    a ex:Parametro ;
+    rdfs:label "TDATA1 (Parámetro de corrección de centro de giro)"@es ;
+    ex:identificador "TDATA1" ;
+    ex:textoExtracto "Cálculo del parámetro TDATA1. [...] Con el cambio de posición respecto al centro de giro ꞏ2ꞏ, el único dato desconocido tras ambos palpaciones es TDATA1."@es .
 
-ex:EjeRotativoC a ex:Componente ;
-    rdfs:label "eje rotativo C" ;
-    ex:textoExtracto "eje rotativo C" .
+ex:Sistema_CabezalAngular
+    a ex:Sistema ;
+    rdfs:label "Sistema de cabezal angular con ejes rotativos B y C"@es ;
+    ex:textoExtracto "el eje Y. [...] cabezales rotativos [...] B=0º C=0º [...] B=0º C=180º"@es ;
+    ex:tieneComponente ex:EjeRotativo_B, ex:EjeRotativo_C ;
+    ex:monitoreaParametro ex:Parametro_TDATA1, ex:Parametro_TDATA7 .
 
-ex:CabezalAngular a ex:Componente ;
-    rdfs:label "cabezal angular" ;
-    ex:textoExtracto "cabezal angular" .
+ex:EjeRotativo_B
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo B"@es ;
+    ex:identificador "B" ;
+    ex:textoExtracto "Con los ejes rotativos B y C posicionados en 0º [...] B=0º C=0º [...] B=0º C=180º"@es .
 
-ex:CNC a ex:Sistema ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "cota que aparece en el CNC" .
+ex:EjeRotativo_C
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo C"@es ;
+    ex:identificador "C" ;
+    ex:textoExtracto "Con los ejes rotativos B y C posicionados en 0º [...] C=180º"@es .
+
+ex:Proceso_CalculoTDATA1
+    a ex:TareaMantenimiento ;
+    rdfs:label "Procedimiento de cálculo de TDATA1 mediante palpación"@es ;
+    ex:textoExtracto "Primera palpación. Con los ejes rotativos B y C posicionados en 0º realizar un movimiento de palpación sobre la cara Z y preseleccionar la cota Z=0. Segunda palpación. Con el eje rotativo B posicionado en 0º y el eje C en 180º realizar un movimiento de palpación sobre la misma cara. Anotar la cota que aparece en el CNC, denominada en el dibujo Z."@es ;
+    ex:requiereMantenimiento ex:Sistema_CabezalAngular ;
+    ex:monitoreaParametro ex:Parametro_TDATA1 .

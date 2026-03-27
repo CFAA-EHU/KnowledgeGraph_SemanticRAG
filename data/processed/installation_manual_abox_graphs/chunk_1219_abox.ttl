@@ -1,26 +1,31 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SubrutinaPiercing a ex:TareaMantenimiento ;
-    rdfs:label "Subrutina asociada al comando #PIERCING" ;
-    ex:textoExtracto "Subrutina orientada al modelo láser. Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM. Es su responsabilidad del OEM garantizar que la subrutina cumple todos los aspectos de seguridad relativos al manejo del láser. El comando #PIERCING ejecuta la subrutina que tiene asociada después de actualizar las variables del piercing ((V.)TTPIR.name). Este comando esta orientado a máquina láser, donde esta subrutina debe realizar las operaciones iniciales del piercing. Gestión de la marca PIERCING en la subrutina. El OEM debe gestionar la marca PIERCING desde esta subrutina. Al comienzo de la subrutina (o cuando el OEM lo considerenecesario), el OEM debe activar la marca PIERCING (asignarle valor 1) para indicar al PLC que empieza la operación de piercing. Al final de la subrutina (o cuando el OEM lo considerenecesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing. • La sentencia #PLC permite gestionar una marca de PLC desde el programa pieza o subrutina, sin detener la preparación de bloques. • Esta marca refleja el estado de la variable V.PLC.PIERCING. El OEM también puede utilizar esta variable en la subrutina asociada al piercing (por defecto, Piercing.fst), para modificar el estado de esta marca. Escribir esta variable detiene la preparación de bloques." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ComandoPIERCING a ex:ModoOperacion ;
-    rdfs:label "#PIERCING" ;
-    ex:textoExtracto "El comando #PIERCING ejecuta la subrutina que tiene asociada después de actualizar las variables del piercing ((V.)TTPIR.name). Este comando esta orientado a máquina láser, donde esta subrutina debe realizar las operaciones iniciales del piercing." .
+ex:Comando_PIERCING
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Comando #PIERCING" ;
+    ex:textoExtracto       "El comando #PIERCING ejecuta la subrutina que tiene asociada después de actualizar las variables del piercing ((V.)TTPIR.name). Este comando esta orientado a máquina láser, donde esta subrutina debe realizar las operaciones iniciales del piercing." ;
+    ex:identificador       "#PIERCING" ;
+    ex:controla           ex:Subrutina_Piercing .
 
-ex:MarcaPIERCING a ex:Parametro ;
-    rdfs:label "marca PIERCING" ;
-    ex:identificador "V.PLC.PIERCING" ;
-    ex:textoExtracto "Al comienzo de la subrutina (o cuando el OEM lo considere necesario), el OEM debe activar la marca PIERCING (asignarle valor 1) para indicar al PLC que empieza la operación de piercing. Al final de la subrutina (o cuando el OEM lo considere necesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing. • Esta marca refleja el estado de la variable V.PLC.PIERCING." .
+ex:Subrutina_Piercing
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina asociada al comando #PIERCING" ;
+    ex:textoExtracto       "Subrutina orientada al modelo láser. Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM. [...] El OEM debe gestionar la marca PIERCING desde esta subrutina." ;
+    ex:identificador       "Piercing.fst" ;
+    ex:documentadoEn       ex:Manual_Fagor .
 
-ex:VariableTTPIR a ex:Parametro ;
-    rdfs:label "variable del piercing (V.)TTPIR.name" ;
-    ex:textoExtracto "El comando #PIERCING ejecuta la subrutina que tiene asociada después de actualizar las variables del piercing ((V.)TTPIR.name)." .
+ex:Variable_PIERCING
+    a                     ex:Parametro ;
+    rdfs:label            "Marca PIERCING" ;
+    ex:textoExtracto       "El OEM debe activar la marca PIERCING (asignarle valor 1) para indicar al PLC que empieza la operación de piercing. Al final de la subrutina (o cuando el OEM lo considere necesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing." ;
+    ex:identificador       "V.PLC.PIERCING" ;
+    ex:valor               "0" , "1" ;
+    ex:monitoreaParametro  ex:Subrutina_Piercing .
 
-ex:SentenciaPLC a ex:ModoOperacion ;
-    rdfs:label "#PLC" ;
-    ex:textoExtracto "La sentencia #PLC permite gestionar una marca de PLC desde el programa pieza o subrutina, sin detener la preparación de bloques." .
-
-ex:SubrutinaPiercingPorDefecto a ex:TareaMantenimiento ;
-    rdfs:label "Piercing.fst" ;
-    ex:textoExtracto "El OEM también puede utilizar esta variable en la subrutina asociada al piercing (por defecto, Piercing.fst), para modificar el estado de esta marca." .
+ex:Manual_Fagor
+    a                     ex:Manual ;
+    rdfs:label            "Manual de subrutinas Fagor" ;
+    ex:textoExtracto       "Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM." .

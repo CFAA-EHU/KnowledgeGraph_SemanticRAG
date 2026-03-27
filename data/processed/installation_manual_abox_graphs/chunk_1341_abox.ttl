@@ -1,13 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Softkey_DMC_RepetirAprendizaje rdfs:label "Softkey para repetir fase de aprendizaje del DMC" ;
-    a ex:InterfazUsuario ;
-    ex:textoExtracto "Esta softkey permite repetir la fase de aprendizaje del DMC en cualquier momento, siempre que el DMC esté activo." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Softkey_DMC_Desactivar rdfs:label "Softkey para desactivar el DMC" ;
+ex:Softkey_RepetirFaseAprendizajeDMC
     a ex:InterfazUsuario ;
-    ex:textoExtracto "Esta softkey permite desactivar el DMC." .
+    rdfs:label "Softkey 'Repetir fase de aprendizaje del DMC'"@es ;
+    ex:textoExtracto "Esta softkey permite repetir la fase de aprendizaje del DMC en cualquier momento, siempre que el DMC esté activo."@es ;
+    ex:controla ex:DMC .
 
-ex:Softkey_DMC_Reactivar rdfs:label "Softkey para re-activar el DMC" ;
+ex:Softkey_DesactivarDMC
     a ex:InterfazUsuario ;
-    ex:textoExtracto "Esta softkey permite re-activar el DMC." .
+    rdfs:label "Softkey 'Desactivar el DMC'"@es ;
+    ex:textoExtracto "Esta softkey permite desactivar el DMC."@es ;
+    ex:controla ex:DMC .
+
+ex:Softkey_ReactivarDMC
+    a ex:InterfazUsuario ;
+    rdfs:label "Softkey 'Re-activar el DMC'"@es ;
+    ex:textoExtracto "Esta softkey permite re-activar el DMC."@es ;
+    ex:controla ex:DMC .
+
+ex:DMC
+    a ex:Sistema ;
+    rdfs:label "DMC (Dynamic Machining Control)"@es ;
+    ex:textoExtracto "Opciones del DMC (menú desplegable). • Repetir la fase de aprendizaje del DMC. • Desactivar el DMC."@es .
+
+ex:MenuOpcionesDMC
+    a ex:InterfazUsuario ;
+    rdfs:label "Menú desplegable de opciones del DMC"@es ;
+    ex:textoExtracto "Opciones del DMC (menú desplegable)."@es ;
+    ex:tieneComponente ex:Softkey_RepetirFaseAprendizajeDMC ,
+                       ex:Softkey_DesactivarDMC ,
+                       ex:Softkey_ReactivarDMC .

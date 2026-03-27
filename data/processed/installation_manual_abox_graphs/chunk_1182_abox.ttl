@@ -1,49 +1,40 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MemoriaRAM_CNC a ex:Sistema ;
-    rdfs:label "Memoria RAM del CNC"@es ;
-    ex:textoExtracto "Si durante la ejecución se utilizan repetidamente las mismas subrutinas, es más eficiente cargar estas subrutinas en la memoria RAM del CNC, ya que así el acceso a las mismas es más rápido, y por lo tanto se optimiza el tiempo de ejecución."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Subrutina_FST a ex:Componente ;
-    rdfs:label "Subrutina con extensión .fst"@es ;
-    ex:textoExtracto "Para cargar una subrutina en la memoria RAM, está debe tener extensión fst."@es .
+ex:MemoriaRAM_CNC
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Memoria RAM del CNC"@es ;
+    ex:textoExtracto "el espacio reservado en la memoria RAM para las subrutinas es 5 Mb"@es ;
+    ex:valor         "5 Mb" .
 
-ex:EspacioRAM_5Mb a ex:Parametro ;
-    rdfs:label "Espacio reservado en memoria RAM para subrutinas"@es ;
-    ex:valor "5 Mb"@es ;
-    ex:textoExtracto "El espacio reservado en la memoria RAM para las subrutinas es 5 Mb."@es .
+ex:SubrutinasFST_Usuario
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Subrutinas fst de usuario"@es ;
+    ex:textoExtracto "Subrutinas con extensión fst que no están guardadas en la carpeta ..mtb/sub. Las rutinas de usuario cuya extensión sea fst, se cargan en la memoria RAM durante la preparación de bloques."@es ;
+    ex:identificador "*.fst (usuario)" .
 
-ex:CNC a ex:Maquina ;
-    rdfs:label "CNC"@es ;
-    ex:textoExtracto "El CNC comprueba si está cargada en memoria RAM, y si no lo está y hay espacio, la carga."@es .
+ex:SubrutinasFST_Fabricante
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Subrutinas fst de fabricante (OEM)"@es ;
+    ex:textoExtracto "Subrutinas con extensión fst guardadas en la carpeta ..mtb/sub. Con el CNC en modo USER, las rutinas OEM cuya extensión sea fst, se cargan en la memoria RAM en el arranque de la aplicación CNC."@es ;
+    ex:identificador "*.fst (OEM)" .
 
-ex:Modo_USER a ex:ModoOperacion ;
-    rdfs:label "Modo USER"@es ;
+ex:CNC_ModoUSER
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo USER (CNC)"@es ;
     ex:textoExtracto "Con el CNC en modo USER, las rutinas OEM cuya extensión sea fst, se cargan en la memoria RAM en el arranque de la aplicación CNC."@es .
 
-ex:Modo_SETUP a ex:ModoOperacion ;
-    rdfs:label "Modo SETUP"@es ;
+ex:CNC_ModoSETUP
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo SETUP (puesta a punto, CNC)"@es ;
     ex:textoExtracto "Con el CNC en modo SETUP (puesta a punto), las rutinas OEM cuya extensión sea fst se cargan en la memoria RAM durante la preparación de bloques."@es .
 
-ex:Rutina_OEM a ex:Componente ;
-    rdfs:label "Rutina OEM"@es ;
-    ex:textoExtracto "Subrutinas fst de fabricante. Subrutinas con extensión fst guardadas en la carpeta ..mtb/sub."@es .
+ex:MemoriaRAM_CNC
+    ex:tieneComponente ex:SubrutinasFST_Usuario ;
+    ex:tieneComponente ex:SubrutinasFST_Fabricante .
 
-ex:Rutina_Usuario a ex:Componente ;
-    rdfs:label "Rutina de usuario"@es ;
-    ex:textoExtracto "Subrutinas fst de usuario. Subrutinas con extensión fst que no están guardadas en la carpeta ..mtb/sub."@es .
-
-ex:Preparacion_Bloques a ex:TareaMantenimiento ;
-    rdfs:label "Preparación de bloques"@es ;
-    ex:textoExtracto "las rutinas OEM cuya extensión sea fst, se cargan en la memoria RAM en el arranque de la aplicación CNC"@es, "las rutinas OEM cuya extensión sea fst se cargan en la memoria RAM durante la preparación de bloques."@es .
-
-ex:Programa_M02_M30 a ex:AccionProhibida ;
-    rdfs:label "Programa M02/M30"@es ;
-    ex:textoExtracto "Cuando finaliza el programa (M02/M30) o tras un reset, si ningún otro canal está ejecutando las subrutinas, el CNC las borra de la memoria RAM."@es .
-
-ex:Reset_CNC a ex:AccionProhibida ;
-    rdfs:label "Reset del CNC"@es ;
-    ex:textoExtracto "Cuando finaliza el programa (M02/M30) o tras un reset, si ningún otro canal está ejecutando las subrutinas, el CNC las borra de la memoria RAM."@es .
-
-ex:MemoriaRAM_CNC ex:tieneComponente ex:Subrutina_FST ;
-    ex:compuestoPor ex:EspacioRAM_5Mb .
+ex:SubrutinasFST_Fabricante
+    ex:habilitadoPor ex:CNC_ModoUSER ;
+    ex:habilitadoPor ex:CNC_ModoSETUP .

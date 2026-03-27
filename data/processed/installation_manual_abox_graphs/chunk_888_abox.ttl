@@ -1,23 +1,57 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ModoOperacion_0 rdfs:label "No hay que hacer nada."@es ;
-    a ex:ModoOperacion ;
-    ex:textoExtracto "No hay que hacer nada."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModoOperacion_3 rdfs:label "Poner en el cabezal una herramienta de tierra."@es ;
-    a ex:ModoOperacion ;
-    ex:textoExtracto "Poner en el cabezal una herramienta de tierra."@es .
+ex:Tabla_OperacionesGestorHerramientas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de operaciones válidas del gestor de herramientas"@es ;
+    ex:textoExtracto "Operaciones válidas del gestor de herramientas para este almacén. Las operaciones posibles en este tipo de almacén son las siguientes. | TMOPERATION | Significado. | --- | --- | 0 | No hay que hacer nada. | 3 | Poner en el cabezal una herramienta de tierra. | 4 | Dejar la herramienta del cabezal en tierra. | 8 | Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra."@es ;
+    ex:ilustradoEn ex:Pagina_481 .
 
-ex:ModoOperacion_4 rdfs:label "Dejar la herramienta del cabezal en tierra."@es ;
+ex:Operacion_TMOPERATION_0
     a ex:ModoOperacion ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en tierra."@es .
+    rdfs:label "TMOPERATION 0"@es ;
+    ex:identificador "0" ;
+    ex:textoExtracto "No hay que hacer nada."@es ;
+    ex:documentadoEn ex:Tabla_OperacionesGestorHerramientas .
 
-ex:ModoOperacion_8 rdfs:label "Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra."@es ;
+ex:Operacion_TMOPERATION_3
     a ex:ModoOperacion ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra."@es .
+    rdfs:label "TMOPERATION 3"@es ;
+    ex:identificador "3" ;
+    ex:textoExtracto "Poner en el cabezal una herramienta de tierra."@es ;
+    ex:documentadoEn ex:Tabla_OperacionesGestorHerramientas .
 
-ex:Tabla_888 a ex:Tabla ;
-    rdfs:label "Tabla resumen de marcas que activa el PLC"@es ;
-    a ex:Tabla ;
-    ex:textoExtracto "Operaciones válidas del gestor de herramientas para este almacén. Las operaciones posibles en este tipo de almacén son las siguientes. | TMOPERATION | Significado. | 0 | No hay que hacer nada. | 3 | Poner en el cabezal una herramienta de tierra. | 4 | Dejar la herramienta del cabezal en tierra. | 8 | Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra. Valores de los registros TAKEPOS y LEAVEPOS utilizados por el gestor. Las señales TAKEPOS y LEAVEPOS no toman ningún valor. A continuación se muestra una tabla resumen de las marcas que debe activar el PLC al finalizar cada operación. Ejemplo de funcionamiento. El siguiente ejemplo muestra, suponiendo que no hay herramienta en el cabezal, las funciones que ejecuta el CNC, los valores que envía el gestor al PLC en cada una de las operaciones y las marcas que debe activar el PLC en cada caso. El almacén es no-random, cada herramienta ocupa la posición de su mismo número y las herramientas T7 y T8 son de tierra."@es ;
-    ex:compuestoPor ex:ModoOperacion_0, ex:ModoOperacion_3, ex:ModoOperacion_4, ex:ModoOperacion_8 .
+ex:Operacion_TMOPERATION_4
+    a ex:ModoOperacion ;
+    rdfs:label "TMOPERATION 4"@es ;
+    ex:identificador "4" ;
+    ex:textoExtracto "Dejar la herramienta del cabezal en tierra."@es ;
+    ex:documentadoEn ex:Tabla_OperacionesGestorHerramientas .
+
+ex:Operacion_TMOPERATION_8
+    a ex:ModoOperacion ;
+    rdfs:label "TMOPERATION 8"@es ;
+    ex:identificador "8" ;
+    ex:textoExtracto "Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra."@es ;
+    ex:documentadoEn ex:Tabla_OperacionesGestorHerramientas .
+
+ex:Herramienta_T7
+    a ex:Herramienta ;
+    rdfs:label "Herramienta T7"@es ;
+    ex:identificador "T7" ;
+    ex:textoExtracto "las herramientas T7 y T8 son de tierra."@es .
+
+ex:Herramienta_T8
+    a ex:Herramienta ;
+    rdfs:label "Herramienta T8"@es ;
+    ex:identificador "T8" ;
+    ex:textoExtracto "las herramientas T7 y T8 son de tierra."@es .
+
+ex:Sistema_GestorHerramientas
+    a ex:Sistema ;
+    rdfs:label "Gestor de herramientas"@es ;
+    ex:textoExtracto "Operaciones válidas del gestor de herramientas para este almacén."@es ;
+    ex:tieneComponente ex:Herramienta_T7, ex:Herramienta_T8 ;
+    ex:documentadoEn ex:Tabla_OperacionesGestorHerramientas .

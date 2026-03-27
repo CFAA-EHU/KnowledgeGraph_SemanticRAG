@@ -1,19 +1,22 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ModoOperacion1 a ex:ModoOperacion ;
-    rdfs:label "Respuesta del sistema sin ganancia AC-forward" ;
-    ex:textoExtracto "Respuesta del sistema sin ganancia AC-forward (10 µm por cuadro)." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModoOperacion2 a ex:ModoOperacion ;
-    rdfs:label "Respuesta del sistema con ganancia AC-forward" ;
-    ex:textoExtracto "Respuesta del sistema con ganancia AC-forward (1 µm por cuadro)." .
+ex:Parametro_GananciaACForward
+    a               ex:Parametro ;
+    rdfs:label      "Ganancia AC-forward" ;
+    ex:textoExtracto "Ajuste apropiado. Respuesta del sistema sin ganancia AC-forward (10 µm por cuadro). Picos invertidos; ajuste inapropiado. Respuesta del sistema con ganancia AC-forward (1 µm por cuadro)." ;
+    ex:valor         "10 µm/cuadro (sin ganancia), 1 µm/cuadro (con ganancia)" .
 
-ex:Parametro1 a ex:Parametro ;
-    rdfs:label "ganancia AC-forward" ;
-    ex:valor "10 µm por cuadro" ;
-    ex:textoExtracto "ganancia AC-forward (10 µm por cuadro)" .
+ex:ModoOperacion_AjusteApropiado
+    a               ex:ModoOperacion ;
+    rdfs:label      "Ajuste apropiado (sin ganancia)" ;
+    ex:textoExtracto "Ajuste apropiado. Respuesta del sistema sin ganancia AC-forward (10 µm por cuadro)." ;
+    ex:monitoreaParametro ex:Parametro_GananciaACForward .
 
-ex:Parametro2 a ex:Parametro ;
-    rdfs:label "ganancia AC-forward" ;
-    ex:valor "1 µm por cuadro" ;
-    ex:textoExtracto "ganancia AC-forward (1 µm por cuadro)" .
+ex:ModoOperacion_AjusteInapropiado
+    a               ex:ModoOperacion ;
+    rdfs:label      "Ajuste inapropiado (con ganancia)" ;
+    ex:textoExtracto "Picos invertidos; ajuste inapropiado. Respuesta del sistema con ganancia AC-forward (1 µm por cuadro)." ;
+    ex:monitoreaParametro ex:Parametro_GananciaACForward .

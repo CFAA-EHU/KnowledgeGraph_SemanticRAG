@@ -1,44 +1,55 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TMOPERATION_1 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 1" ;
-    ex:textoExtracto "Coger una herramienta del brazo y ponerla en el cabezal." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TMOPERATION_2 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 2" ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en el almacén." .
+ex:OperacionTM1
+    a ex:TareaMantenimiento ;
+    rdfs:label "Coger herramienta del brazo y ponerla en el cabezal (TMOPERATION=1)" ;
+    ex:textoExtracto "TMOPERATION = 1 Coger una herramienta del brazo y ponerla en el cabezal. TAKEPOS=-1 Herramienta en el brazo cambiador. La secuencia de esta operación es la siguiente. Previamente, durante el mecanizado (al ejecutar la T), el gestor envía el código TMOPERATION=11 para coger la herramienta del almacén con la pinza 1. 1 Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal y activar la marca CH1TOSPDL." ;
+    ex:identificador "TMOPERATION=1" ;
+    ex:ejecutadoPor ex:Pinza1 .
 
-ex:TMOPERATION_3 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 3" ;
-    ex:textoExtracto "Poner en el cabezal una herramienta de tierra." .
+ex:OperacionTM2
+    a ex:TareaMantenimiento ;
+    rdfs:label "Dejar herramienta del cabezal en el almacén (TMOPERATION=2)" ;
+    ex:textoExtracto "TMOPERATION = 2 Dejar la herramienta del cabezal en el almacén. LEAVEPOS=# Posición del almacén para dejar la herramienta. La secuencia de esta operación es la siguiente. 1 Coger la herramienta del cabezal con la pinza ꞏ2ꞏ y activar la marca SPDLTOCH2. 2 Comenzar el envío del brazo cambiador al almacén para dejar la herramienta de la pinza ꞏ2ꞏ. 3 Al abandonar el brazo la zona de posible colisión activar TCHANGEOK, si se desea, para que continúe la ejecución del programa. 4 Dejar la herramienta de la pinza ꞏ2ꞏ en el almacén y activar la marca CH2TOMZ." ;
+    ex:identificador "TMOPERATION=2" ;
+    ex:ejecutadoPor ex:Pinza2 .
 
-ex:TMOPERATION_4 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 4" ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en tierra." .
+ex:OperacionTM3
+    a ex:TareaMantenimiento ;
+    rdfs:label "Poner herramienta de tierra en el cabezal (TMOPERATION=3)" ;
+    ex:textoExtracto "TMOPERATION = 3 Poner en el cabezal una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca GRTOSPDL." ;
+    ex:identificador "TMOPERATION=3" .
 
-ex:TMOPERATION_5 a ex:ModoOperacion ;
-    ex:identificador "TMOPERATION = 5" ;
-    ex:textoExtracto "Dejar la herramienta del cabezal en el almacén y coger una herramienta del brazo." .
+ex:OperacionTM4
+    a ex:TareaMantenimiento ;
+    rdfs:label "Dejar herramienta del cabezal en tierra (TMOPERATION=4)" ;
+    ex:textoExtracto "TMOPERATION = 4 Dejar la herramienta del cabezal en tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca SPDLTOGR." ;
+    ex:identificador "TMOPERATION=4" .
 
-ex:CH1TOSPDL a ex:Parametro ;
-    ex:identificador "CH1TOSPDL" ;
-    ex:textoExtracto "activar la marca CH1TOSPDL" .
+ex:OperacionTM5
+    a ex:TareaMantenimiento ;
+    rdfs:label "Intercambio herramienta cabezal-almacén-brazo (TMOPERATION=5)" ;
+    ex:textoExtracto "TMOPERATION = 5 Dejar la herramienta del cabezal en el almacén y coger una herramienta del brazo. Las herramientas del cabezal y del brazo son del mismo almacén. TAKEPOS=-1 Herramienta en el brazo cambiador. LEAVEPOS=# Posición del almacén para dejar la herramienta. En esta operación, el gestor admite dos secuencias." ;
+    ex:identificador "TMOPERATION=5" .
 
-ex:SPDLTOCH2 a ex:Parametro ;
-    ex:identificador "SPDLTOCH2" ;
-    ex:textoExtracto "activar la marca SPDLTOCH2" .
+ex:Pinza1
+    a ex:Actuador ;
+    rdfs:label "Pinza 1 del brazo cambiador" ;
+    ex:textoExtracto "coger la herramienta del almacén con la pinza 1. 1 Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal y activar la marca CH1TOSPDL." ;
+    ex:identificador "Pinza-1" .
 
-ex:TCHANGEOK a ex:Parametro ;
-    ex:identificador "TCHANGEOK" ;
-    ex:textoExtracto "activar TCHANGEOK" .
+ex:Pinza2
+    a ex:Actuador ;
+    rdfs:label "Pinza 2 del brazo cambiador" ;
+    ex:textoExtracto "1 Coger la herramienta del cabezal con la pinza ꞏ2ꞏ y activar la marca SPDLTOCH2. [...] 4 Dejar la herramienta de la pinza ꞏ2ꞏ en el almacén y activar la marca CH2TOMZ." ;
+    ex:identificador "Pinza-2" .
 
-ex:CH2TOMZ a ex:Parametro ;
-    ex:identificador "CH2TOMZ" ;
-    ex:textoExtracto "activar la marca CH2TOMZ" .
-
-ex:GRTOSPDL a ex:Parametro ;
-    ex:identificador "GRTOSPDL" ;
-    ex:textoExtracto "activar la marca GRTOSPDL" .
-
-ex:SPDLTOGR a ex:Parametro ;
-    ex:identificador "SPDLTOGR" ;
-    ex:textoExtracto "activar la marca SPDLTOGR" .
+ex:SistemaCambioHerramientas
+    a ex:Sistema ;
+    rdfs:label "Sistema de cambio de herramientas" ;
+    ex:textoExtracto "TMOPERATION = 1 Coger una herramienta del brazo y ponerla en el cabezal. [...] TMOPERATION = 5 Dejar la herramienta del cabezal en el almacén y coger una herramienta del brazo." ;
+    ex:tieneComponente ex:Pinza1, ex:Pinza2 ;
+    ex:requiereMantenimiento ex:OperacionTM1, ex:OperacionTM2, ex:OperacionTM3, ex:OperacionTM4, ex:OperacionTM5 .

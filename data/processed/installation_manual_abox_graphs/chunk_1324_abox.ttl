@@ -1,16 +1,60 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DMC_on_default ex:textoExtracto """#DMC ON
-(El CNC activa el DMC con los valores por defecto). (El DMC inicia la fase de aprendizaje para calcular la potencia objetivo).""" ;
-    a ex:ModoOperacion ;
-    rdfs:label "#DMC ON" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DMC_on_programado_1 ex:textoExtracto """#DMC ON [PWRSP 80, OVRMIN 90, OVRMAX 110, FZMIN 0.8, FZMAX 1.3]
-(El CNC activa el DMC con los valores programados).""" ;
-    a ex:ModoOperacion ;
-    rdfs:label "#DMC ON [PWRSP 80, OVRMIN 90, OVRMAX 110, FZMIN 0.8, FZMAX 1.3]" .
+ex:Comando_DMC_ON_Default
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando DMC ON (valores por defecto)" ;
+    ex:textoExtracto "#DMC ON (El CNC activa el DMC con los valores por defecto). (El DMC inicia la fase de aprendizaje para calcular la potencia objetivo)." .
 
-ex:DMC_on_programado_2 ex:textoExtracto """#DMC ON [OVRMIN 90, OVRMAX 110, FZMIN 0.8, FZMAX 1.3]
-(El CNC activa el DMC con los valores programados). (El DMC inicia la fase de aprendizaje para calcular la potencia objetivo).""" ;
+ex:Comando_DMC_ON_Programado_Completo
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando DMC ON [PWRSP 80, OVRMIN 90, OVRMAX 110, FZMIN 0.8, FZMAX 1.3]" ;
+    ex:textoExtracto "#DMC ON [PWRSP 80, OVRMIN 90, OVRMAX 110, FZMIN 0.8, FZMAX 1.3] (El CNC activa el DMC con los valores programados)." .
+
+ex:Comando_DMC_ON_Programado_Parcial
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando DMC ON [OVRMIN 90, OVRMAX 110, FZMIN 0.8, FZMAX 1.3]" ;
+    ex:textoExtracto "#DMC ON [OVRMIN 90, OVRMAX 110, FZMIN 0.8, FZMAX 1.3] (El CNC activa el DMC con los valores programados). (El DMC inicia la fase de aprendizaje para calcular la potencia objetivo)." .
+
+ex:Parametro_PWRSP_80
+    a ex:Parametro ;
+    rdfs:label "PWRSP 80" ;
+    ex:valor "80" ;
+    ex:textoExtracto "PWRSP 80" ;
+    ex:monitoreaParametro ex:Comando_DMC_ON_Programado_Completo .
+
+ex:Parametro_OVRMIN_90
+    a ex:Parametro ;
+    rdfs:label "OVRMIN 90" ;
+    ex:valor "90" ;
+    ex:textoExtracto "OVRMIN 90" ;
+    ex:monitoreaParametro ex:Comando_DMC_ON_Programado_Completo, ex:Comando_DMC_ON_Programado_Parcial .
+
+ex:Parametro_OVRMAX_110
+    a ex:Parametro ;
+    rdfs:label "OVRMAX 110" ;
+    ex:valor "110" ;
+    ex:textoExtracto "OVRMAX 110" ;
+    ex:monitoreaParametro ex:Comando_DMC_ON_Programado_Completo, ex:Comando_DMC_ON_Programado_Parcial .
+
+ex:Parametro_FZMIN_0.8
+    a ex:Parametro ;
+    rdfs:label "FZMIN 0.8" ;
+    ex:valor "0.8" ;
+    ex:textoExtracto "FZMIN 0.8" ;
+    ex:monitoreaParametro ex:Comando_DMC_ON_Programado_Completo, ex:Comando_DMC_ON_Programado_Parcial .
+
+ex:Parametro_FZMAX_1.3
+    a ex:Parametro ;
+    rdfs:label "FZMAX 1.3" ;
+    ex:valor "1.3" ;
+    ex:textoExtracto "FZMAX 1.3" ;
+    ex:monitoreaParametro ex:Comando_DMC_ON_Programado_Completo, ex:Comando_DMC_ON_Programado_Parcial .
+
+ex:FaseAprendizaje_DMC
     a ex:ModoOperacion ;
-    rdfs:label "#DMC ON [OVRMIN 90, OVRMAX 110, FZMAX 1.3]" .
+    rdfs:label "Fase de aprendizaje del DMC" ;
+    ex:textoExtracto "(El DMC inicia la fase de aprendizaje para calcular la potencia objetivo)." ;
+    ex:habilitadoPor ex:Comando_DMC_ON_Default, ex:Comando_DMC_ON_Programado_Parcial .

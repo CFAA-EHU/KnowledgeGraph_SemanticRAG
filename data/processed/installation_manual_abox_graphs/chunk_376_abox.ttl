@@ -1,21 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:BAKANOUT a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_BAKANOUT
+    a ex:Parametro ;
     rdfs:label "BAKANOUT" ;
-    ex:textoExtracto "Cuando LOOPCH=Sí hay que definir BAKANOUT con valor negativo para que el CNC aplique el pico de inversión en sentido correcto." ;
-    ex:valor "negativo" .
+    ex:textoExtracto "cuando LOOPCH=Sí hay que definir BAKANOUT con valor negativo para que el CNC aplique el pico de inversión en sentido correcto. Cuando se define un impulso adicional de consigna también hay que definir los parámetros BAKTIME, ACTBAKAN y PEAKDISP." ;
+    ex:valor "negativo (distinto de cero)" .
 
-ex:BAKTIME a ex:Parametro ;
+ex:Parametro_BAKTIME
+    a ex:Parametro ;
     rdfs:label "BAKTIME" ;
-    ex:textoExtracto "BAKTIME Duración del impulso adicional de consigna. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: De 0 a 100 ms. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.BAKTIME[set].xn El CNC sólo tiene en cuenta este parámetro cuando trabaja con impulso adicional de consigna; parámetro BAKANOUT distinto de cero. El parámetro BAKTIME indica la duración del impulso adicional de consigna para recuperar la holgura en las inversiones de movimiento." ;
-    ex:valor "De 0 a 100 ms" .
+    ex:textoExtracto "BAKTIME: Duración del impulso adicional de consigna. Parámetro válido para ejes lineales, rotativos y cabezales. [...] Valores posibles: De 0 a 100 ms. Valor por defecto: 0." ;
+    ex:valor "0-100 ms" .
 
-ex:ACTBAKAN a ex:Parametro ;
+ex:Parametro_ACTBAKAN
+    a ex:Parametro ;
     rdfs:label "ACTBAKAN" ;
-    ex:textoExtracto "ACTBAKAN Aplicación del impulso adicional de consigna. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: Siempre / G2-G3. Valor por defecto: Siempre. Variable asociada: (V.)[ch].MPA.ACTBAKAN[set].xn El CNC sólo tiene en cuenta este parámetro cuando trabaja con impulso adicional de consigna; parámetro BAKANOUT distinto de cero. El parámetro ACTBAKAN establece cuando se aplica el impulso adicional de consigna para la compensación de los picos de holgura." ;
-    ex:valor "Siempre / G2-G3" .
+    ex:textoExtracto "ACTBAKAN: Aplicación del impulso adicional de consigna. [...] Valores posibles: Siempre / G2-G3. Valor por defecto: Siempre." ;
+    ex:valor "Siempre, G2-G3" .
 
-ex:PEAKDISP a ex:Parametro ;
+ex:Parametro_PEAKDISP
+    a ex:Parametro ;
     rdfs:label "PEAKDISP" ;
-    ex:textoExtracto "PEAKDISP Distancia de corte del pico de holgura. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles (1): De 0 a 99999.9999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0 a 99999.9999 grados." ;
-    ex:valor "De 0 a 99999.9999 mm / De 0 a 3937.00787 inch / De 0 a 99999.9999 grados" .
+    ex:textoExtracto "PEAKDISP: Distancia de corte del pico de holgura. [...] Valores posibles (1): De 0 a 99999.9999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0 a 99999.9999 grados." ;
+    ex:valor "0-99999.9999 mm / 0-3937.00787 inch / 0-99999.9999 grados" .
+
+ex:Sistema_CompensacionHolgura
+    a ex:Sistema ;
+    rdfs:label "Sistema de compensación de holgura con impulso adicional de consigna" ;
+    ex:textoExtracto "En los ejes analógicos, cuando LOOPCH=Sí hay que definir BAKANOUT con valor negativo para que el CNC aplique el pico de inversión en sentido correcto." ;
+    ex:tieneComponente ex:Parametro_BAKANOUT, ex:Parametro_BAKTIME, ex:Parametro_ACTBAKAN, ex:Parametro_PEAKDISP .

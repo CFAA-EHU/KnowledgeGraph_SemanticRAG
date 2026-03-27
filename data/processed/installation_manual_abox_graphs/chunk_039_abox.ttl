@@ -1,51 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Esquema_39 a ex:Esquema ;
-    ex:textoExtracto "del PLC en los distintos idiomas. • La subcarpeta ..\\PROJECT contiene los archivos que forman el proyecto PLC y el fichero objeto. • La subcarpeta ..\\WATCH contiene los datos guardados desde los servicios monitorización y analizador lógico." ;
-    ex:tieneComponente ex:Carpeta_PROJECT_39, ex:Carpeta_WATCH_39 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Carpeta_PROJECT_39 a ex:Esquema ;
-    ex:textoExtracto "La subcarpeta ..\\PROJECT contiene los archivos que forman el proyecto PLC y el fichero objeto." ;
-    ex:compuestoPor ex:ArchivoProyectoPLC_39, ex:FicheroObjeto_39 .
+ex:CarpetaMTB
+    a ex:Sistema ;
+    rdfs:label "Carpeta MTB (Machine Tool Builder)" ;
+    ex:textoExtracto "1.7.1 Carpeta MTB (Machine Tool Builder)." ;
+    ex:compuestoPor ex:SubcarpetaPROJECT, ex:SubcarpetaWATCH, ex:SubcarpetaRELEASE, ex:SubcarpetaSUB, ex:SubcarpetaTUNING .
 
-ex:ArchivoProyectoPLC_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "los archivos que forman el proyecto PLC" .
+ex:SubcarpetaPROJECT
+    a ex:Sistema ;
+    rdfs:label "Subcarpeta PROJECT" ;
+    ex:textoExtracto "La subcarpeta ..\\PROJECT contiene los archivos que forman el proyecto PLC y el fichero objeto." .
 
-ex:FicheroObjeto_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "el fichero objeto" .
+ex:SubcarpetaWATCH
+    a ex:Sistema ;
+    rdfs:label "Subcarpeta WATCH" ;
+    ex:textoExtracto "La subcarpeta ..\\WATCH contiene los datos guardados desde los servicios monitorización y analizador lógico." .
 
-ex:Carpeta_WATCH_39 a ex:Esquema ;
-    ex:textoExtracto "La subcarpeta ..\\WATCH contiene los datos guardados desde los servicios monitorización y analizador lógico." ;
-    ex:compuestoPor ex:DatosMonitorizacion_39, ex:DatosAnalizadorLogico_39 .
+ex:SubcarpetaRELEASE
+    a ex:Sistema ;
+    rdfs:label "Subcarpeta RELEASE" ;
+    ex:textoExtracto "Esta carpeta contiene los componentes (archivos ocx) utilizados por el fabricante para crear su propia aplicación." .
 
-ex:DatosMonitorizacion_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "los datos guardados desde los servicios monitorización" .
+ex:SubcarpetaSUB
+    a ex:Sistema ;
+    rdfs:label "Subcarpeta SUB" ;
+    ex:textoExtracto "Esta carpeta contiene los siguientes archivos o subcarpetas: Las subrutinas del fabricante (cambio de herramienta, búsqueda de cero, etc)." ;
+    ex:compuestoPor ex:SubrutinasFabricante, ex:SubcarpetaHELP .
 
-ex:DatosAnalizadorLogico_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "analizador lógico" .
+ex:SubrutinasFabricante
+    a ex:InterfazUsuario ;
+    rdfs:label "Subrutinas del fabricante" ;
+    ex:textoExtracto "Las subrutinas del fabricante (cambio de herramienta, búsqueda de cero, etc)." .
 
-ex:Carpeta_RELEASE_39 a ex:Esquema ;
-    ex:textoExtracto "Esta carpeta contiene los componentes (archivos ocx) utilizados por el fabricante para crear su propia aplicación." ;
-    ex:compuestoPor ex:ComponentesOCX_39 .
+ex:SubcarpetaHELP
+    a ex:Sistema ;
+    rdfs:label "Subcarpeta HELP" ;
+    ex:textoExtracto "En cada idioma de la subcarpeta ..\\HELP están los archivos de ayuda asociados a las subrutinas del fabricante y el archivo pcall.txt que contiene la lista de subrutinas del fabricante." .
 
-ex:ComponentesOCX_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "los componentes (archivos ocx) utilizados por el fabricante para crear su propia aplicación" .
-
-ex:Carpeta_SUB_39 a ex:Esquema ;
-    ex:textoExtracto "Esta carpeta contiene los siguientes archivos o subcarpetas. • Las subrutinas del fabricante (cambio de herramienta, búsqueda de cero, etc). • En cada idioma de la subcarpeta ..\\HELP están los archivos de ayuda asociados a las subrutinas del fabricante y el archivo pcall.txt que contiene la lista de subrutinas del fabricante. Si estos archivos no están en la carpeta del idioma activo en el CNC, el editor no los ofrecerá como ayuda." ;
-    ex:compuestoPor ex:SubrutinasFabricante_39, ex:Carpeta_HELP_39, ex:ArchivoPcall_39 .
-
-ex:SubrutinasFabricante_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Las subrutinas del fabricante (cambio de herramienta, búsqueda de cero, etc)" .
-
-ex:Carpeta_HELP_39 a ex:Esquema ;
-    ex:textoExtracto "En cada idioma de la subcarpeta ..\\HELP están los archivos de ayuda asociados a las subrutinas del fabricante" ;
-    ex:compuestoPor ex:ArchivosAyuda_39 .
-
-ex:ArchivosAyuda_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "los archivos de ayuda asociados a las subrutinas del fabricante" .
-
-ex:ArchivoPcall_39 a ex:ComponenteElectrico ;
-    ex:textoExtracto "el archivo pcall.txt que contiene la lista de subrutinas del fabricante" .
-
-ex:Carpeta_TUNING_39 a ex:Esquema ;
+ex:SubcarpetaTUNING
+    a ex:Sistema ;
+    rdfs:label "Subcarpeta TUNING" ;
     ex:textoExtracto "Esta carpeta contiene la información referente a las ayudas a la puesta a punto." .

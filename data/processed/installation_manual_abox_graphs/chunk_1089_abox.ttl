@@ -1,39 +1,43 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DirectFeedbackMotorFeedbackSercos a ex:Parametro ;
-    rdfs:label "Direct Feedback Motor Feedback Sercos" ;
-    ex:textoExtracto "Direct Feedback Motor Feedback Sercos Número de la entrada de captación del eje." ;
-    ex:valor "Número de la entrada de captación del eje" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EntradaCaptacionEje a ex:Parametro ;
-    rdfs:label "Entrada de captación del eje" ;
-    ex:textoExtracto "Número de la entrada de captación del eje. Dependiendo del tipo de captación, este parámetro indicará cuál es la entrada de captación a utilizar (si la captación es local o remota) o el número de regulador." .
+ex:Parametro_EntradaCaptacionEje
+    a ex:Parametro ;
+    rdfs:label "Número de la entrada de captación del eje"@es ;
+    ex:textoExtracto "Direct Feedback Motor Feedback Sercos Número de la entrada de captación del eje. Dependiendo del tipo de captación, este parámetro indicará cuál es la entrada de captación a utilizar (si la captación es local o remota) o el número de regulador."@es ;
+    ex:monitoreaParametro ex:Sensor_EntradaCaptacionLocal, ex:Sensor_EntradaCaptacionRemota, ex:Sensor_EntradaCaptacionSercos .
 
-ex:ModuloContadorasCANfagor a ex:ComponenteElectrico ;
-    rdfs:label "Módulo de contadoras en los módulos remotos CANfagor" ;
-    ex:textoExtracto "Para la entrada de captación se utiliza un módulo de contadoras en los módulos remotos. Este parámetro indica el número de la entrada de captación que se utiliza. Los módulos de las contadoras se numeran según el orden lógico de los grupos remotos (conmutador rotativo de la fuente de alimentación). Si hay más de un módulo de contadoras dentro de cada grupo, el orden es de arriba abajo y de izquierda a derecha. Las contadoras del primer módulo serán 1 a 4, las del segundo 5 a 8 y así sucesivamente." .
+ex:Sensor_EntradaCaptacionLocal
+    a ex:Sensor ;
+    rdfs:label "Entrada de captación local"@es ;
+    ex:textoExtracto "La unidad central dispone de dos entradas de captación. Este parámetro indica la entrada de captación que se utiliza."@es .
 
-ex:EntradaCaptacionModuloContadoras a ex:Parametro ;
-    rdfs:label "Número de entrada de captación en módulo de contadoras" ;
-    ex:textoExtracto "Este parámetro indica el número de la entrada de captación que se utiliza." .
+ex:Sensor_EntradaCaptacionRemota
+    a ex:Sensor ;
+    rdfs:label "Entrada de captación en módulos remotos CANfagor"@es ;
+    ex:textoExtracto "Para la entrada de captación se utiliza un módulo de contadoras en los módulos remotos. [...] Las contadoras del primer módulo serán 1 a 4, las del segundo 5 a 8 y así sucesivamente."@es ;
+    ex:tieneComponente ex:ComponenteElectrico_ModuloContadoras .
 
-ex:ReguladorSercos a ex:ComponenteElectrico ;
-    rdfs:label "Regulador Sercos" ;
-    ex:textoExtracto "En este caso siempre se utilizará la segunda entrada de captación del regulador. El parámetro indica la dirección lógica del regulador (de 1 a 32). La dirección lógica la establece el conmutador rotativo 'address'." .
+ex:ComponenteElectrico_ModuloContadoras
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de contadoras (CANfagor)"@es ;
+    ex:textoExtracto "módulo de contadoras en los módulos remotos CANfagor. [...] Los módulos de las contadoras se numeran según el orden lógico de los grupos remotos."@es .
 
-ex:DireccionLogicaReguladorSercos a ex:Parametro ;
-    rdfs:label "Dirección lógica del regulador Sercos" ;
-    ex:textoExtracto "El parámetro indica la dirección lógica del regulador (de 1 a 32)." .
+ex:Sensor_EntradaCaptacionSercos
+    a ex:Sensor ;
+    rdfs:label "Entrada de captación en reguladores Sercos"@es ;
+    ex:textoExtracto "En este caso siempre se utilizará la segunda entrada de captación del regulador. [...] La dirección lógica la establece el conmutador rotativo 'address' (de 1 a 32)."@es .
 
-ex:EntradaCaptacionLocal a ex:Parametro ;
-    rdfs:label "Entrada de captación local" ;
-    ex:textoExtracto "La unidad central dispone de dos entradas de captación. Este parámetro indica la entrada de captación que se utiliza." .
+ex:Parametro_DireccionLogicaRegulador
+    a ex:Parametro ;
+    rdfs:label "Dirección lógica del regulador Sercos"@es ;
+    ex:textoExtracto "El parámetro indica la dirección lógica del regulador (de 1 a 32)."@es ;
+    ex:valor "1-32" .
 
-ex:UnidadCentral a ex:ComponenteElectrico ;
-    rdfs:label "Unidad central" ;
-    ex:textoExtracto "La unidad central dispone de dos entradas de captación." .
-
-ex:EsquemaConfiguracionGrupoMultieje a ex:Esquema ;
-    rdfs:label "Esquema de configuración de grupo multieje" ;
-    ex:textoExtracto "Configuración de un grupo multieje. Los parámetros máquina." ;
-    ex:tieneComponente ex:DirectFeedbackMotorFeedbackSercos, ex:EntradaCaptacionEje, ex:ModuloContadorasCANfagor, ex:EntradaCaptacionModuloContadoras, ex:ReguladorSercos, ex:DireccionLogicaReguladorSercos, ex:EntradaCaptacionLocal, ex:UnidadCentral .
+ex:Tabla_TiposCaptacion a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tipos de captación y entradas asociadas"@es ;
+    ex:textoExtracto "| Tipo de captación. | Número de la entrada de captación del eje. | [...] Entrada de captación en los módulos remotos CANfagor. | [...] Entrada de captación en los reguladores Sercos. | [...] Entrada de captación local. |"@es ;
+    ex:documentadoEn ex:Pagina_586_588 .

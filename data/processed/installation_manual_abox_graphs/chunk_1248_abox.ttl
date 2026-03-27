@@ -1,91 +1,54 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:KEYBD1CH a ex:Parametro ;
-    rdfs:label "KEYBD1CH" ;
-    ex:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." ;
-    ex:valor "0" ;
-    ex:textoExtracto "Configuración definida en los parámetros máquina." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:KEYBD2CH a ex:Parametro ;
-    rdfs:label "KEYBD2CH" ;
-    ex:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." ;
-    ex:valor "1" ;
-    ex:textoExtracto "Panel de jog asignado al canal 1." .
+ex:Tabla_ConfiguracionPanelesJog a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de paneles de jog mediante registros PLC"@es ;
+    ex:textoExtracto """
+| Marca y registros de PLC. | Significado. |
+| --- | --- |
+| KEYBD1CH a KEYBD8CH | Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina.
+...
+| 0 | Configuración definida en los parámetros máquina. |
+| 1 | Panel de jog asignado al canal 1. |
+...
+| FF | Panel de jog asignado al canal activo. |
+...
+| PANELOFF PANELOFF1 a PANELOFF8 | Si el PLC pone una de estas marcas a (=1) se deshabilita el panel de jog correspondiente."""@es .
 
-ex:KEYBD3CH a ex:Parametro ;
-    rdfs:label "KEYBD3CH" ;
-    ex:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." ;
-    ex:valor "2" ;
-    ex:textoExtracto "Panel de jog asignado al canal 2." .
+ex:Parametro_KEYBD1CH
+    a ex:Parametro ;
+    rdfs:label "Registro KEYBD1CH"@es ;
+    ex:identificador "KEYBD1CH" ;
+    ex:valor "0" , "1" , "2" , "3" , "4" , "FF" ;
+    ex:textoExtracto "KEYBD1CH a KEYBD8CH: Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina."@es ;
+    ex:documentadoEn ex:Tabla_ConfiguracionPanelesJog .
 
-ex:KEYBD4CH a ex:Parametro ;
-    rdfs:label "KEYBD4CH" ;
-    ex:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." ;
-    ex:valor "3" ;
-    ex:textoExtracto "Panel de jog asignado al canal 3." .
+ex:Parametro_PANELOFF1
+    a ex:Parametro ;
+    rdfs:label "Registro PANELOFF1"@es ;
+    ex:identificador "PANELOFF1" ;
+    ex:valor "0" , "1" ;
+    ex:textoExtracto "PANELOFF1: Si el PLC pone esta marca a (=1) se deshabilita el panel de jog correspondiente (primer panel del bus CAN)."@es ;
+    ex:documentadoEn ex:Tabla_ConfiguracionPanelesJog .
 
-ex:KEYBD5CH a ex:Parametro ;
-    rdfs:label "KEYBD5CH" ;
-    ex:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." ;
-    ex:valor "4" ;
-    ex:textoExtracto "Panel de jog asignado al canal 4." .
+ex:InterfazUsuario_PanelJog_1
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de jog 1 (bus CAN)"@es ;
+    ex:textoExtracto "Panel de jog integrado en el bus CAN, controlable mediante registros KEYBD1CH y PANELOFF1."@es ;
+    ex:documentadoEn ex:Tabla_ConfiguracionPanelesJog .
 
-ex:KEYBD6CH a ex:Parametro ;
-    rdfs:label "KEYBD6CH" ;
-    ex:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." ;
-    ex:valor "FF" ;
-    ex:textoExtracto "Panel de jog asignado al canal activo." .
+ex:Sistema_BusCAN
+    a ex:Sistema ;
+    rdfs:label "Bus CAN de interfaz de usuario"@es ;
+    ex:textoExtracto "Bus CAN que integra paneles de jog y teclados. Cada marca PANELOFF afecta solo al panel de jog correspondiente sin alterar otros elementos del bus."@es ;
+    ex:tieneComponente ex:InterfazUsuario_PanelJog_1 ;
+    ex:documentadoEn ex:Tabla_ConfiguracionPanelesJog .
 
-ex:PANELOFF a ex:Parametro ;
-    rdfs:label "PANELOFF" ;
-    ex:textoExtracto "Si el PLC pone una de estas marcas a (=1) se deshabilita el panel de jog correspondiente." ;
-    ex:valor "1" ;
-    ex:textoExtracto "Se deshabilita el panel de jog." .
+ex:Parametro_KEYBD1CH
+    ex:controla ex:InterfazUsuario_PanelJog_1 .
 
-ex:PANELOFF1 a ex:Parametro ;
-    rdfs:label "PANELOFF1" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:valor "1" ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:PANELOFF2 a ex:Parametro ;
-    rdfs:label "PANELOFF2" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:valor "1" ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:PANELOFF3 a ex:Parametro ;
-    rdfs:label "PANELOFF3" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:valor "1" ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:PANELOFF4 a ex:Parametro ;
-    rdfs:label "PANELOFF4" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:PANELOFF5 a ex:Parametro ;
-    rdfs:label "PANELOFF5" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:PANELOFF6 a ex:Parametro ;
-    rdfs:label "PANELOFF6" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:PANELOFF7 a ex:Parametro ;
-    rdfs:label "PANELOFF7" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:PANELOFF8 a ex:Parametro ;
-    rdfs:label "PANELOFF8" ;
-    ex:textoExtracto "Si el PLC activa una de estas marcas, se deshabilita el panel de jog correspondiente." ;
-    ex:textoExtracto "Se deshabilita el panel de jog integrado en el bus CAN; el resto de elementos del bus no se ven afectados." .
-
-ex:TablaConfiguracionPLC a ex:Tabla ;
-    ex:textoExtracto "Marca y registros de PLC. | KEYBD1CH a KEYBD8CH | Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." ;
-    ex:textoExtracto "Marca y registros de PLC. | PANELOFF PANELOFF1 a PANELOFF8 | Si el PLC pone una de estas marcas a (=1) se deshabilita el panel de jog correspondiente." ;
-    ex:tieneComponente ex:KEYBD1CH, ex:KEYBD2CH, ex:KEYBD3CH, ex:KEYBD4CH, ex:KEYBD5CH, ex:KEYBD6CH, ex:PANELOFF, ex:PANELOFF1, ex:PANELOFF2, ex:PANELOFF3, ex:PANELOFF4, ex:PANELOFF5, ex:PANELOFF6, ex:PANELOFF7, ex:PANELOFF8 .
+ex:Parametro_PANELOFF1
+    ex:controla ex:InterfazUsuario_PanelJog_1 .

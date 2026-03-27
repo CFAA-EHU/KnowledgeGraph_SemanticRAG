@@ -1,53 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:GAPDISTLIMIT a ex:Parametro ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_GAPDISTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPDISTLIMIT" ;
     ex:identificador "GAPDISTLIMIT" ;
     ex:valor "10.0000 mm / 0.39370 inch" ;
-    ex:textoExtracto "GAPDISTLIMIT Distancia que corresponde a la señal analógica límite del sensor. Valores posibles: De 0 a 99999.9999 mm / De 0 a 3937.00787 inch. Valor por defecto: 10.0000 mm / 0.39370 inch." .
+    ex:textoExtracto "Distancia que corresponde a la señal analógica límite del sensor. Valores posibles: De 0 a 99999.9999 mm / De 0 a 3937.00787 inch. Valor por defecto: 10.0000 mm / 0.39370 inch." .
 
-ex:GAPVOLTLIMIT a ex:Parametro ;
+ex:Parametro_GAPVOLTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPVOLTLIMIT" ;
     ex:identificador "GAPVOLTLIMIT" ;
     ex:valor "10000 mV" ;
-    ex:textoExtracto "GAPVOLTLIMIT Voltaje que corresponde al recorrido límite del sensor. Valores posibles: De 0 a 10000 mV. Valor por defecto: 10000 mV." .
+    ex:textoExtracto "Voltaje que corresponde al recorrido límite del sensor. Valores posibles: De 0 a 10000 mV. Valor por defecto: 10000 mV." .
 
-ex:GAPSENSOROFFSET a ex:Parametro ;
+ex:Parametro_GAPSENSOROFFSET
+    a ex:Parametro ;
+    rdfs:label "GAPSENSOROFFSET" ;
     ex:identificador "GAPSENSOROFFSET" ;
     ex:valor "0 mV" ;
-    ex:textoExtracto "GAPSENSOROFFSET Offset a aplicar al sensor. Valores posibles: Entre ±10000 mV. Valor por defecto: 0 mV." .
+    ex:textoExtracto "Offset a aplicar al sensor. Valores posibles: Entre ±10000 mV. Valor por defecto: 0 mV. Offset (en milivoltios) a aplicar al sensor desde el CNC." .
 
-ex:GAPSENSORCH a ex:Parametro ;
+ex:Parametro_GAPSENSORCH
+    a ex:Parametro ;
+    rdfs:label "GAPSENSORCH" ;
     ex:identificador "GAPSENSORCH" ;
     ex:valor "No" ;
-    ex:textoExtracto "GAPSENSORCH Cambiar el signo de la señal del sensor. Valores posibles: Sí / No. Valor por defecto: No." .
+    ex:textoExtracto "Cambiar el signo de la señal del sensor. Valores posibles: Sí / No. Valor por defecto: No." .
 
-ex:GAPGAIN a ex:Parametro ;
+ex:Parametro_GAPGAIN
+    a ex:Parametro ;
+    rdfs:label "GAPGAIN" ;
     ex:identificador "GAPGAIN" ;
     ex:valor "0.2" ;
-    ex:textoExtracto "GAPGAIN Ganancia proporcional a aplicar en GAPCTRL. Valores posibles: De 0.0000 a 100.0000. Valor por defecto: 0.2." .
+    ex:textoExtracto "Ganancia proporcional a aplicar en GAPCTRL. Valores posibles: De 0.0000 a 100.0000. Valor por defecto: 0.2." .
 
-ex:MPG.GAPDISTLIMIT a ex:Parametro ;
-    ex:identificador "(V.)MPG.GAPDISTLIMIT" ;
-    ex:valor "Distancia que corresponde a señal analógica límite del sensor (parámetro GAPVOLTLIMIT)" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.GAPDISTLIMIT Distancia que corresponde a señal analógica límite del sensor (parámetro GAPVOLTLIMIT)." .
-
-ex:MPG.GAPVOLTLIMIT a ex:Parametro ;
-    ex:identificador "(V.)MPG.GAPVOLTLIMIT" ;
-    ex:valor "Voltaje (en milivoltios) que corresponde al recorrido límite del sensor (parámetro GAPDISTLIMIT)" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.GAPVOLTLIMIT Voltaje (en milivoltios) que corresponde al recorrido límite del sensor (parámetro GAPDISTLIMIT)." .
-
-ex:MPG.GAPSENSOROFFSET a ex:Parametro ;
-    ex:identificador "(V.)MPG.GAPSENSOROFFSET" ;
-    ex:valor "Offset (en milivoltios) a aplicar al sensor desde el CNC" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.GAPSENSOROFFSET Offset (en milivoltios) a aplicar al sensor desde el CNC." .
-
-ex:MPG.GAPSENSORCH a ex:Parametro ;
-    ex:identificador "(V.)MPG.GAPSENSORCH" ;
-    ex:valor "Cambiar el signo de la señal del sensor" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.GAPSENSORCH Cambiar el signo de la señal del sensor." .
-
-ex:MPG.GAPGAIN a ex:Parametro ;
-    ex:identificador "(V.)MPG.GAPGAIN" ;
-    ex:valor "Ganancia proporcional aplicada a la señal del sensor, en posición" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.GAPGAIN Ganancia proporcional aplicada a la señal del sensor, en posición." .
-
-ex:Sensor_Analogico a ex:Sensor ;
-    ex:textoExtracto "Entrada analógica de los módulos remotos EtherCAT. ... conectada al sensor" .
+ex:Sensor_ControlGap
+    a ex:Sensor ;
+    rdfs:label "Sensor de control de gap" ;
+    ex:textoExtracto "Entrada analógica de los módulos remotos EtherCAT. En este caso, este parámetro indica el registro del PLC que mapea la entrada analógica conectada al sensor." ;
+    ex:monitoreaParametro ex:Parametro_GAPDISTLIMIT ;
+    ex:monitoreaParametro ex:Parametro_GAPVOLTLIMIT .

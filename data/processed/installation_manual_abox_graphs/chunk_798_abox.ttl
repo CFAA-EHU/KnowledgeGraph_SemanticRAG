@@ -1,29 +1,30 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Tecla_RESET a ex:ComponenteElectrico ;
-    rdfs:label "tecla [RESET]" ;
-    ex:textoExtracto "tecla de [RESET]" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Marca_RESET a ex:Parametro ;
-    rdfs:label "marca RESET" ;
-    ex:textoExtracto "marca" .
+ex:Se_al_RESETIN
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Señal RESETIN" ;
+    ex:textoExtracto
+                    "El tratamiento que recibe esta marca es similar al que recibe la tecla de [RESET]. Con un flanco de subida (cambio de 0 a 1) de esta marca, el canal del CNC se resetea. Una vez iniciado el reset, el PLC puede desactivar esta marca (RESETIN=0)." ;
+    ex:identificador
+                    "RESETIN" .
 
-ex:Canal_CNC a ex:ComponenteElectrico ;
-    rdfs:label "canal del CNC" ;
-    ex:textoExtracto "canal del CNC" .
+ex:Tecla_RESET
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Tecla RESET" ;
+    ex:textoExtracto
+                    "El usuario pulsa la tecla [RESET] del panel" ;
+    ex:identificador
+                    "RESET" .
 
-ex:Flanco_Subida a ex:Parametro ;
-    rdfs:label "flanco de subida" ;
-    ex:textoExtracto "flanco de subida (cambio de 0 a 1)" .
-
-ex:PLC a ex:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "el PLC" .
-
-ex:Proceso_Reset a ex:AccionProhibida ;
-    rdfs:label "proceso de reset" ;
-    ex:textoExtracto "El proceso de reset es como sigue" .
-
-ex:Panel_Usuario a ex:InterfazUsuario ;
-    rdfs:label "panel de usuario" ;
-    ex:textoExtracto "panel" .
+ex:Proceso_ResetCNC
+    a               ex:ModoOperacion ;
+    rdfs:label      "Proceso de reset del canal CNC" ;
+    ex:textoExtracto
+                    "El proceso de reset es como sigue. 1 El usuario pulsa la tecla [RESET] del panel" ;
+    ex:habilitadoPor
+                    ex:Se_al_RESETIN ;
+    ex:ejecutadoPor
+                    ex:Tecla_RESET .

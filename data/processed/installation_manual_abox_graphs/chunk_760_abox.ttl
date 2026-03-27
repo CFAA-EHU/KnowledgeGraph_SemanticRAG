@@ -1,24 +1,75 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:REFPOIN_axis a ex:Sensor ;
-    ex:textoExtracto "La marca REFPOIN(axis) siempre está activa (=1). No es necesaria la búsqueda de referencia. Captación absoluta en una vuelta. El CNC activa (=1) la marca REFPOIN(axis) en el arranque si en la sesión anterior el eje ha sido referenciado correctamente, el CNC ha recuperado la posición del eje guardada en el apagado y la posición del encóder es la misma que la del apagado (diferencia de posiciones menor que el parámetro MAXDIFREF). En este caso, el CNC considera el eje referenciado y no es necesaria una nueva búsqueda de referencia. Sin captación absoluta (parámetro ABSFEEDBACK=No). El CNC desactiva (=0) esta marca en el encendido y la activa (=1) tras realizar la búsqueda de referencia máquina o tras fijar la cota máquina (G174). La marca se mantiene activa hasta que se apague el CNC. En ejes y cabezales sin captación absoluta, el CNC desactiva (=0) esta marca en los siguientes casos. • Al producirse una búsqueda de cero fallida. • Al aparcar el eje o cabezal. • En ejes y cabezales Sercos, si cae el anillo. • En cabezales o ejes rotativos controlados como un cabezal, al pasar a lazo abierto. • En ejes analógicos, si se produce una alarma de captación." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DRSTAF_axis a ex:Sensor ;
-    ex:textoExtracto "DRSTAF(axis) El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador. En caso de error, ambas marcas se mantienen a (=1) si el eje se encuentra en movimiento. Funcionamiento normal." .
+ex:Marca_REFPOIN_axis
+    a                     ex:Parametro ;
+    rdfs:label            "REFPOIN(axis)" ;
+    ex:textoExtracto      "La marca REFPOIN(axis) siempre está activa (=1). No es necesaria la búsqueda de referencia. Captación absoluta en una vuelta."@es ;
+    ex:valor              "1" .
 
-ex:DRSTAS_axis a ex:Sensor ;
-    ex:textoExtracto "DRSTAS(axis) El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador. En caso de error, ambas marcas se mantienen a (=1) si el eje se encuentra en movimiento. Funcionamiento normal." .
+ex:Parametro_MAXDIFREF
+    a                     ex:Parametro ;
+    rdfs:label            "MAXDIFREF" ;
+    ex:textoExtracto      "diferencia de posiciones menor que el parámetro MAXDIFREF"@es .
 
-ex:Sistema_CNC a ex:Sistema ;
-    ex:textoExtracto "El CNC activa (=1) la marca REFPOIN(axis) en el arranque si en la sesión anterior el eje ha sido referenciado correctamente, el CNC ha recuperado la posición del eje guardada en el apagado y la posición del encóder es la misma que la del apagado (diferencia de posiciones menor que el parámetro MAXDIFREF). En este caso, el CNC considera el eje referenciado y no es necesaria una nueva búsqueda de referencia. Sin captación absoluta (parámetro ABSFEEDBACK=No). El CNC desactiva (=0) esta marca en el encendido y la activa (=1) tras realizar la búsqueda de referencia máquina o tras fijar la cota máquina (G174). La marca se mantiene activa hasta que se apague el CNC. En ejes y cabezales sin captación absoluta, el CNC desactiva (=0) esta marca en los siguientes casos. • Al producirse una búsqueda de cero fallida. • Al aparcar el eje o cabezal. • En ejes y cabezales Sercos, si cae el anillo. • En cabezales o ejes rotativos controlados como un cabezal, al pasar a lazo abierto. • En ejes analógicos, si se produce una alarma de captación. El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador." ;
-    ex:controla ex:REFPOIN_axis, ex:DRSTAF_axis, ex:DRSTAS_axis ;
-    ex:monitoreaParametro ex:MAXDIFREF, ex:ABSFEEDBACK .
+ex:Parametro_ABSFEEDBACK
+    a                     ex:Parametro ;
+    rdfs:label            "ABSFEEDBACK" ;
+    ex:textoExtracto      "Sin captación absoluta (parámetro ABSFEEDBACK=No)."@es ;
+    ex:valor              "No" .
 
-ex:Regulador_Sercos a ex:ComponenteElectrico ;
-    ex:textoExtracto "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador. Tras accionar el interruptor general del armario eléctrico se le proporcionan 24 V DC al regulador. El regulador efectúa una comprobación interna. Si es correcta activa la salida System OK. A partir de este momento suministrar potencia a la fuente. Marcas DRSTAF(*)=0 DRSTAS(*)=1 Cuando se dispone de potencia en el bus, el regulador está preparado para tener par." ;
-    ex:alimenta ex:Sistema_CNC .
+ex:Marca_DRSTAF
+    a                     ex:Parametro ;
+    rdfs:label            "DRSTAF(axis)" ;
+    ex:textoExtracto      "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador. Marcas DRSTAF(*)=0"@es ;
+    ex:valor              "0" .
 
-ex:MAXDIFREF a ex:Parametro ;
-    ex:textoExtracto "diferencia de posiciones menor que el parámetro MAXDIFREF" .
+ex:Marca_DRSTAS
+    a                     ex:Parametro ;
+    rdfs:label            "DRSTAS(axis)" ;
+    ex:textoExtracto      "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador. Marcas DRSTAS(*)=1"@es ;
+    ex:valor              "1" .
 
-ex:ABSFEEDBACK a ex:Parametro ;
-    ex:textoExtracto "Sin captación absoluta (parámetro ABSFEEDBACK=No)" .
+ex:Sistema_Sercos
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de comunicación Sercos" ;
+    ex:textoExtracto      "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador."@es .
+
+ex:Regulador_Eje
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Regulador de eje" ;
+    ex:textoExtracto      "Tras accionar el interruptor general del armario eléctrico se le proporcionan 24 V DC al regulador. El regulador efectúa una comprobación interna. Si es correcta activa la salida System OK."@es .
+
+ex:Se_al_SystemOK
+    a                     ex:Parametro ;
+    rdfs:label            "System OK" ;
+    ex:textoExtracto      "El regulador efectúa una comprobación interna. Si es correcta activa la salida System OK."@es ;
+    ex:valor              "1" .
+
+ex:FuenteAlimentacion
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Fuente de alimentación del regulador" ;
+    ex:textoExtracto      "A partir de este momento suministrar potencia a la fuente."@es .
+
+ex:Sistema_CNC
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CNC" ;
+    ex:textoExtracto      "El CNC activa (=1) la marca REFPOIN(axis) en el arranque si en la sesión anterior el eje ha sido referenciado correctamente."@es .
+
+ex:Sistema_CNC
+    ex:monitoreaParametro ex:Marca_REFPOIN_axis ;
+    ex:monitoreaParametro ex:Parametro_MAXDIFREF ;
+    ex:monitoreaParametro ex:Parametro_ABSFEEDBACK ;
+    ex:monitoreaParametro ex:Marca_DRSTAF ;
+    ex:monitoreaParametro ex:Marca_DRSTAS .
+
+ex:Sistema_Sercos
+    ex:tieneComponente    ex:Regulador_Eje ;
+    ex:controla           ex:Marca_DRSTAF ;
+    ex:controla           ex:Marca_DRSTAS .
+
+ex:Regulador_Eje
+    ex:controla           ex:Se_al_SystemOK ;
+    ex:alimenta           ex:FuenteAlimentacion .

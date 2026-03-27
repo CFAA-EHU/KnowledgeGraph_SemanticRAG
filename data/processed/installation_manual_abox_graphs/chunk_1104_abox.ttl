@@ -1,21 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EjeGantryMaestro a ex:Maquina ;
-    rdfs:label "eje maestro"@es ;
-    ex:textoExtracto "eje maestro"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeGantryEsclavo a ex:Maquina ;
-    rdfs:label "eje esclavo"@es ;
-    ex:textoExtracto "eje esclavo"@es .
+ex:BusquedaReferenciaEjesGantry_1104
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Búsqueda de referencia de ejes gantry"@es ;
+    ex:textoExtracto "La búsqueda de referencia de los ejes gantry se puede realizar de las tres formas explicadas para el resto de ejes y cabezales."@es ;
+    ex:identificador "11.5.2" .
 
-ex:ParametroI0TYPE a ex:Parametro ;
-    rdfs:label "I0TYPE"@es ;
-    ex:textoExtracto "parámetro I0TYPE"@es .
+ex:Parametro_I0TYPE_1104
+    a               ex:Parametro ;
+    rdfs:label      "I0TYPE (tipo de I0)"@es ;
+    ex:textoExtracto "El tipo de I0 (parámetro I0TYPE) deberá ser en ambos ejes el mismo."@es ;
+    ex:valor         "mismo_en_ambos_ejes"@es ;
+    ex:monitoreaParametro ex:SistemaEjesGantry_1104 .
 
-ex:ParametroDECINPUT a ex:Parametro ;
-    rdfs:label "DECINPUT"@es ;
-    ex:textoExtracto "parámetro DECINPUT"@es .
+ex:Parametro_DECINPUT_1104
+    a               ex:Parametro ;
+    rdfs:label      "DECINPUT (micro de referencia)"@es ;
+    ex:textoExtracto "Cuando no se disponga de I0 codificado, podrán tener micro de referencia (parámetro DECINPUT) ambos ejes o sólo el eje maestro."@es ;
+    ex:valor         "micro_referencia_maestro_ambos"@es ;
+    ex:monitoreaParametro ex:SistemaEjesGantry_1104 .
 
-ex:SistemaCaptacionReferencia a ex:Sistema ;
-    rdfs:label "sistema de captación que no dispone de I0s codificados"@es ;
-    ex:textoExtracto "sistema de captación que no dispone de I0s codificados"@es .
+ex:SistemaEjesGantry_1104
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de ejes gantry"@es ;
+    ex:textoExtracto "Al parametrizar los ejes Gantry se deben cumplir los siguientes requisitos... Ejes analógicos y ejes Sercos velocidad."@es ;
+    ex:compuestoPor  ex:EjeMaestroGantry_1104 , ex:EjeEsclavoGantry_1104 .
+
+ex:EjeMaestroGantry_1104
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje maestro gantry"@es ;
+    ex:textoExtracto "Los ejes maestro y esclavo tienen micro."@es .
+
+ex:EjeEsclavoGantry_1104
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje esclavo gantry"@es ;
+    ex:textoExtracto "Los ejes maestro y esclavo tienen micro."@es .
+
+ex:SistemaCaptacionSinI0_1104
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de captación sin I0s codificados"@es ;
+    ex:textoExtracto "Búsqueda de referencia con un sistema de captación que no dispone de I0s codificados."@es .

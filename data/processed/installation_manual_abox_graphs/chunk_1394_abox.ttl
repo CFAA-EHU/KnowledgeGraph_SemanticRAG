@@ -1,27 +1,80 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-ex:ERROR a ex:AvisoSeguridad ;
-    ex:textoExtracto "Fuera de la banda se indica 'ERROR', visualizando el criterio de aceptación." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ESTDELAY a ex:Parametro ;
-    ex:textoExtracto "oscilograma de ESTDELAY que compara 'Theoretical Following Error (1)' y 'Real Following Error (2)' durante una aceleración/parada (también se muestra 'Actual Feed'). La curva real aparece retrasada respecto a la teórica; una marca horizontal 'ESTDELAY' señala el retardo recomendado para alinear ambas y evitar falsas alarmas (incluida protección antiembalamiento)." .
-
-ex:OP_PANEL_1 a ex:InterfazUsuario ;
+### Interfaz de Usuario y Parámetros
+ex:OP_PANEL_1
+    a ex:InterfazUsuario ;
+    rdfs:label "OP-PANEL (variante 1)" ;
     ex:textoExtracto "Conjunto de tres diagramas de paneles (dos 'OP-PANEL' y un 'LCD-10K') que muestran la disposición de 15 teclas numeradas y el bloque 'USERKEYS'." ;
-    ex:identificador "OP-PANEL" .
+    ex:ilustradoEn ex:EsquemaTeclasJog .
 
-ex:OP_PANEL_2 a ex:InterfazUsuario ;
-    ex:textoExtracto "Conjunto de tres diagramas de paneles (dos 'OP-PANEL' y un 'LCD-10K') que muestran la disposición de 15 teclas numeradas y el bloque 'USERKEYS'." ;
-    ex:identificador "OP-PANEL" .
+ex:OP_PANEL_2
+    a ex:InterfazUsuario ;
+    rdfs:label "OP-PANEL (variante 2)" ;
+    ex:textoExtracto "Tres diagramas paralelos de teclados (dos 'OP-PANEL' y un 'LCD-10K')." ;
+    ex:ilustradoEn ex:EsquemaTeclasJog .
 
-ex:LCD_10K a ex:InterfazUsuario ;
-    ex:textoExtracto "Conjunto de tres diagramas de paneles (dos 'OP-PANEL' y un 'LCD-10K') que muestran la disposición de 15 teclas numeradas y el bloque 'USERKEYS'." ;
-    ex:identificador "LCD-10K" .
+ex:LCD_10K
+    a ex:InterfazUsuario ;
+    rdfs:label "LCD-10K" ;
+    ex:textoExtracto "Conjunto de tres diagramas de paneles (dos 'OP-PANEL' y un 'LCD-10K')." ;
+    ex:ilustradoEn ex:EsquemaTeclasJog .
 
-ex:USERKEYS a ex:InterfazUsuario ;
-    ex:textoExtracto "Conjunto de tres diagramas de paneles (dos 'OP-PANEL' y un 'LCD-10K') que muestran la disposición de 15 teclas numeradas y el bloque 'USERKEYS'." ;
-    ex:identificador "USERKEYS" .
+ex:EsquemaTeclasJog
+    a ex:Esquema ;
+    rdfs:label "Esquema de configuración de teclas JOG y USERKEYS" ;
+    ex:textoExtracto "Diagramas que muestran la disposición de 15 teclas numeradas y el bloque 'USERKEYS' en cuadrículas 3×5 o 4×4, con numeración 1–15 y recuadro para teclas de usuario. Incluye leyenda de valores aceptados para mapear teclas de usuario a funciones de jog (ejes 1…10 con signos ± y tecla R)." .
 
-ex:JOGKEYS a ex:InterfazUsuario ;
-    ex:textoExtracto "Tres diagramas paralelos de teclados (dos 'OP-PANEL' y un 'LCD-10K') que indican, mediante casillas numeradas y bloques 'JOGKEYS/USERKEYS', cómo mapear teclas de usuario a funciones de jog (ejes 1…10 con signos ± y tecla R)." ;
-    ex:identificador "JOGKEYS" .
+ex:Parametro_ESTDELAY
+    a ex:Parametro ;
+    rdfs:label "ESTDELAY" ;
+    ex:identificador "ESTDELAY" ;
+    ex:textoExtracto "Una marca horizontal 'ESTDELAY' señala el retardo recomendado para alinear 'Theoretical Following Error' y 'Real Following Error' y evitar falsas alarmas (incluida protección antiembalamiento)." ;
+    ex:monitoreaParametro ex:Sensor_FollowingError .
+
+ex:Sensor_FollowingError
+    a ex:Sensor ;
+    rdfs:label "Sensor de Following Error" ;
+    ex:textoExtracto "oscilograma de ESTDELAY que compara 'Theoretical Following Error (1)' y 'Real Following Error (2)' durante una aceleración/parada." ;
+    ex:activaAlarma ex:AlarmaAntiembalamiento .
+
+ex:AlarmaAntiembalamiento
+    a ex:Alarma ;
+    rdfs:label "Alarma de protección antiembalamiento" ;
+    ex:textoExtracto "protección antiembalamiento" ;
+    ex:mitigaRiesgo ex:ModoOperacion_Manual .
+
+ex:ModoOperacion_Manual
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual (configuración de jog)" ;
+    ex:textoExtracto "Parámetros máquina del modo manual – 2.7.2 Configurar las teclas de jog." ;
+    ex:requiereMantenimiento ex:TareaConfiguracionTeclasJog .
+
+ex:TareaConfiguracionTeclasJog
+    a ex:TareaMantenimiento ;
+    rdfs:label "Configuración de teclas JOG y USERKEYS" ;
+    ex:textoExtracto "Configurar las teclas de usuario como teclas de jog (ejes 1…10 con signos ± y tecla R)." ;
+    ex:ejecutadoPor ex:Personal_Operador ;
+    ex:documentadoEn ex:ManualOpenPCS .
+
+ex:ManualOpenPCS
+    a ex:Manual ;
+    rdfs:label "Manual OPENPCS (sección 21.21 y 2.7.2-2.7.3)" ;
+    ex:textoExtracto "Sección: Parámetros máquina del modo manual – 2.7.2 Configurar las teclas de jog | 2.7.3 Configurar las teclas de usuario como teclas de jog." .
+
+ex:Personal_Operador
+    a ex:Personal ;
+    rdfs:label "Operador de máquina" ;
+    ex:textoExtracto "Configuración realizada por personal durante el modo manual." .
+
+### Relaciones entre componentes
+ex:OP_PANEL_1 ex:tieneComponente ex:BloqueUSERKEYS .
+ex:OP_PANEL_2 ex:tieneComponente ex:BloqueUSERKEYS .
+ex:LCD_10K ex:tieneComponente ex:BloqueUSERKEYS .
+
+ex:BloqueUSERKEYS
+    a ex:ComponenteElectrico ;
+    rdfs:label "Bloque USERKEYS" ;
+    ex:textoExtracto "bloque 'USERKEYS' en los paneles OP-PANEL y LCD-10K, con hasta 16 teclas de usuario mapeables a funciones de jog." .

@@ -1,20 +1,59 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Fresadora_1028_559 a ex:Maquina ;
-    ex:textoExtracto "Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 3 ejes (X Y Z) 1 cabezal (S). Configuración general de los canales, ejes y cabezales. Configuración de los ejes y cabezales del sistema." ;
-    ex:tieneComponente ex:Eje_X_1028_559, ex:Eje_Y_1028_559, ex:Eje_Z_1028_559, ex:Cabezal_S_1028_559 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Eje_X_1028_559 a ex:ComponenteMecanico ;
-    ex:identificador "AXISNAME 1" ;
-    ex:textoExtracto "AXISNAME 1 | X | Número lógico ꞏ1ꞏ. |" .
+ex:Fresadora_1Canal_3Ejes_1Cabezal
+    a ex:Maquina ;
+    rdfs:label "Fresadora con 1 canal, 3 ejes y 1 cabezal"@es ;
+    ex:textoExtracto "Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 3 ejes (X Y Z) 1 cabezal (S). Configuración general de los canales, ejes y cabezales."@es ;
+    ex:tieneComponente ex:Canal_1 .
 
-ex:Eje_Y_1028_559 a ex:ComponenteMecanico ;
-    ex:identificador "AXISNAME 2" ;
-    ex:textoExtracto "AXISNAME 2 | Y | Número lógico ꞏ2ꞏ. |" .
+ex:Canal_1
+    a ex:Sistema ;
+    ex:identificador "1" ;
+    rdfs:label "Canal 1"@es ;
+    ex:textoExtracto "Configuración de los ejes y cabezales del canal ꞏ1ꞏ."@es ;
+    ex:tieneComponente ex:Eje_X_Canal1, ex:Eje_Y_Canal1, ex:Eje_Z_Canal1, ex:Cabezal_S_Canal1 ;
+    ex:compuestoPor ex:Tabla_ConfiguracionEjes_Canal1, ex:Tabla_ConfiguracionCabezal_Canal1 .
 
-ex:Eje_Z_1028_559 a ex:ComponenteMecanico ;
-    ex:identificador "AXISNAME 3" ;
-    ex:textoExtracto "AXISNAME 3 | Z | Número lógico ꞏ3ꞏ. |" .
+ex:Eje_X_Canal1
+    a ex:ComponenteMecanico ;
+    ex:identificador "X" ;
+    rdfs:label "Eje X (Canal 1)"@es ;
+    ex:textoExtracto "AXISNAME 1 | X | Número lógico ꞏ1ꞏ. [...] CHAXISNAME 1 | X | Eje con índice ꞏ1ꞏ. | Número lógico ꞏ1ꞏ."@es ;
+    ex:valor "1"^^xsd:integer .
 
-ex:Cabezal_S_1028_559 a ex:ComponenteMecanico ;
-    ex:identificador "SPDLNAME 1" ;
-    ex:textoExtracto "SPDLNAME 1 | S | Número lógico ꞏ4ꞏ. | Cabezal con índice ꞏ1ꞏ." .
+ex:Eje_Y_Canal1
+    a ex:ComponenteMecanico ;
+    ex:identificador "Y" ;
+    rdfs:label "Eje Y (Canal 1)"@es ;
+    ex:textoExtracto "AXISNAME 2 | Y | Número lógico ꞏ2ꞏ. [...] CHAXISNAME 2 | Y | Eje con índice ꞏ2ꞏ. | Número lógico ꞏ2ꞏ."@es ;
+    ex:valor "2"^^xsd:integer .
+
+ex:Eje_Z_Canal1
+    a ex:ComponenteMecanico ;
+    ex:identificador "Z" ;
+    rdfs:label "Eje Z (Canal 1)"@es ;
+    ex:textoExtracto "AXISNAME 3 | Z | Número lógico ꞏ3ꞏ. [...] CHAXISNAME 3 | Z | Eje con índice ꞏ3ꞏ. | Número lógico ꞏ3ꞏ."@es ;
+    ex:valor "3"^^xsd:integer .
+
+ex:Cabezal_S_Canal1
+    a ex:ComponenteMecanico ;
+    ex:identificador "S" ;
+    rdfs:label "Cabezal S (Canal 1)"@es ;
+    ex:textoExtracto "SPDNAME 1 | S | Número lógico ꞏ4ꞏ. | Cabezal con índice ꞏ1ꞏ. [...] CHSPDLNAME 1 | S | Cabezal con índice ꞏ1ꞏ. | Número lógico ꞏ4ꞏ."@es ;
+    ex:valor "4"^^xsd:integer .
+
+ex:Tabla_ConfiguracionEjes_Canal1 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de ejes (Canal 1)"@es ;
+    ex:textoExtracto "| CHAXISNAME | Valor. | Índice en el canal. | Orden lógico. | --- | --- | --- | --- | CHAXISNAME 1 | X | Eje con índice ꞏ1ꞏ. | Número lógico ꞏ1ꞏ. | CHAXISNAME 2 | Y | Eje con índice ꞏ2ꞏ. | Número lógico ꞏ2ꞏ. | CHAXISNAME 3 | Z | Eje con índice ꞏ3ꞏ. | Número lógico ꞏ3ꞏ."@es ;
+    ex:documentadoEn ex:Canal_1 .
+
+ex:Tabla_ConfiguracionCabezal_Canal1 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración del cabezal (Canal 1)"@es ;
+    ex:textoExtracto "| CHSPDLNAME | Valor. | Índice en el canal. | Orden lógico. | --- | --- | --- | --- | CHSPDLNAME 1 | S | Cabezal con índice ꞏ1ꞏ. | Número lógico ꞏ4ꞏ."@es ;
+    ex:documentadoEn ex:Canal_1 .

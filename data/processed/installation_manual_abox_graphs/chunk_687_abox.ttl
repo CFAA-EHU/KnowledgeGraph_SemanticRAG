@@ -1,26 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-ex:PLC_estandar a ex:ComponenteElectrico ;
-    ex:textoExtracto "Las unidades de programación serán las estándar del PLC." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TOUCHPROBE_X_1_DISABLE a ex:Parametro ;
-    ex:textoExtracto "TOUCHPROBE (X, 1, DISABLE)" .
+ex:Parametro_TOUCHPROBE_X1
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (X, 1)" ;
+    ex:textoExtracto "TOUCHPROBE (X, 1, DISABLE)" ;
+    ex:identificador "X,1" .
 
-ex:TOUCHPROBE_X_1 a ex:Parametro ;
-    ex:textoExtracto "TOUCHPROBE (X, 1)" .
+ex:Parametro_TOUCHPROBE_Y2_EXCLUSIVE
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (Y, 2, EXCLUSIVE)" ;
+    ex:textoExtracto "TOUCHPROBE (Y, 2, EXCLUSIVE, 1000000, 2300000)" ;
+    ex:identificador "Y,2" ;
+    ex:valor "1000000,2300000" .
 
-ex:TOUCHPROBE_Y_2_EXCLUSIVE a ex:Parametro ;
-    ex:textoExtracto "TOUCHPROBE (Y, 2, EXCLUSIVE, 1000000, 2300000)" .
+ex:Parametro_TOUCHPROBE_X3_INCLUSIVE
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (X3, 1, INCLUSIVE)" ;
+    ex:textoExtracto "TOUCHPROBE (X3, 1, INCLUSIVE, 500000, 1105000)" ;
+    ex:identificador "X3,1" ;
+    ex:valor "500000,1105000" .
 
-ex:TOUCHPROBE_X3_1_INCLUSIVE a ex:Parametro ;
-    ex:textoExtracto "TOUCHPROBE (X3, 1, INCLUSIVE, 500000, 1105000)" .
+ex:Parametro_PRBDI1
+    a ex:Parametro ;
+    rdfs:label "Parámetro de palpador/entrada digital 1 (PRBDI1)" ;
+    ex:textoExtracto "El palpador 1 será el asignado al parámetro PRBDI1 y el palpador 2 será el asignado al parámetro PRBDI2. En vez de un palpador, también se puede utilizar como evento una entrada digital física o de una entrada lógica. En este caso, la entrada a utilizar también deberá estar definida en los parámetros PRBDI1 o PRBDI2." ;
+    ex:identificador "PRBDI1" .
 
-ex:PRBDI1 a ex:Parametro ;
-    ex:textoExtracto "El palpador 1 será el asignado al parámetro PRBDI1" .
+ex:Parametro_PRBDI2
+    a ex:Parametro ;
+    rdfs:label "Parámetro de palpador/entrada digital 2 (PRBDI2)" ;
+    ex:textoExtracto "el palpador 2 será el asignado al parámetro PRBDI2" ;
+    ex:identificador "PRBDI2" .
 
-ex:PRBDI2 a ex:Parametro ;
-    ex:textoExtracto "el palpador 2 será el asignado al parámetro PRBDI2" .
-
-ex:Parametro_latcheo_cotas a ex:Esquema ;
-    ex:textoExtracto "Las unidades de programación serán las estándar del PLC. Las cotas y los avances vendrán expresadas en diezmilésimas si son milímetros o grados y en cienmilésimas si son pulgadas. TOUCHPROBE (X, 1, DISABLE) TOUCHPROBE (X, 1) TOUCHPROBE (Y, 2, EXCLUSIVE, 1000000, 2300000) TOUCHPROBE (X3, 1, INCLUSIVE, 500000, 1105000) ꞏaxisꞏ Nombre del eje objeto del latcheo. Nombre del eje sobre el que se realiza el latcheo; no se admiten cabezales, excepto si están activos como eje C. ꞏprobeꞏ Número de palpador a utilizar como evento para el latcheo. La designación de los palpadores la establece el orden en el que se han definido en los parámetros máquina. El palpador 1 será el asignado al parámetro PRBDI1 y el palpador 2 será el asignado al parámetro PRBDI2. En vez de un palpador, también se puede utilizar como evento una entrada digital física o de una entrada lógica. En este caso, la entrada a utilizar también deberá estar definida en los parámetros PRBDI1 o PRBDI2. ꞏwintypeꞏ Tipo de ventana para el latcheo. Esta opción se programa mediante los siguientes comandos. DISABLE No hay ventana de latcheo (opción por defeco). El latcheo de la cota se puede realizar en cualquier posición del recorrido del eje. EXCLUSIVE El latcheo de la cota se realiza si el eje está fuera de la ventana. INCLUSIVE El latcheo de la cota se realiza si el eje está dentro de la ventana. ꞏwinminposꞏ ꞏwinmaxposꞏ Tamaño de la ventana de latcheo. Cuando la ventana para el latcheo es del tipo exclusive o inclusive, hay que definir el tamaño de la ventana. Los parámetros de llamada ꞏwinminposꞏ y ꞏwinmaxposꞏ establecen los límites inferior y superior de la ventana del latch. Funcionamiento del latcheo de cotas." ;
-    ex:tieneComponente ex:PLC_estandar, ex:TOUCHPROBE_X_1_DISABLE, ex:TOUCHPROBE_X_1, ex:TOUCHPROBE_Y_2_EXCLUSIVE, ex:TOUCHPROBE_X3_1_INCLUSIVE, ex:PRBDI1, ex:PRBDI2 .
+ex:Sistema_LatcheoCotas
+    a ex:Sistema ;
+    rdfs:label "Sistema de latcheo de cotas con palpador o entrada digital" ;
+    ex:textoExtracto "Instrucciones de latcheo de cotas con un palpador o entrada digital. [...] Funcionamiento del latcheo de cotas." ;
+    ex:tieneComponente ex:Parametro_TOUCHPROBE_X1 ;
+    ex:tieneComponente ex:Parametro_TOUCHPROBE_Y2_EXCLUSIVE ;
+    ex:tieneComponente ex:Parametro_TOUCHPROBE_X3_INCLUSIVE ;
+    ex:tieneComponente ex:Parametro_PRBDI1 ;
+    ex:tieneComponente ex:Parametro_PRBDI2 .

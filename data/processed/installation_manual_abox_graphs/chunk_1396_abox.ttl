@@ -1,23 +1,70 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TecladoLCD10K a ex:InterfazUsuario ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Interfaz de usuario (teclados)
+ex:Teclado_LCD_10K_Ejemplo5
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclado LCD-10K (Ejemplo 5: Jog con teclas eje/sentido separadas)" ;
     ex:textoExtracto "Disposición con teclas de eje (X, Y, 4, 5) separadas de sentido (+, −) y tecla R. El gráfico muestra cómo la lógica 'eje mantenido/pulsado' (JOGTYPE) condiciona el uso combinado de selección de eje y de sentido." ;
-    ex:textoExtracto "Diagrama mixto con bloque 'JOGKEYS' (X+, Y+, R, X−, Y−) y bloque 'USERKEYS' (4, 5, +, −). Muestra una estrategia híbrida donde las teclas de usuario asumen funciones de jog para ejes adicionales y sentidos, integrándose con las teclas de jog nativas." .
+    ex:ilustradoEn ex:Esquema_JogKeys_Ejemplo5 .
 
-ex:JOGKEYS a ex:Componente ;
-    ex:textoExtracto "bloque 'JOGKEYS' (X+, Y+, R, X−, Y−)" .
+ex:Teclado_LCD_10K_Ejemplo6
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclado LCD-10K (Ejemplo 6: Jog + USERKEYS)" ;
+    ex:textoExtracto "Diagrama mixto con bloque 'JOGKEYS' (X+, Y+, R, X−, Y−) y bloque 'USERKEYS' (4, 5, +, −). Muestra una estrategia híbrida donde las teclas de usuario asumen funciones de jog para ejes adicionales y sentidos, integrándose con las teclas de jog nativas." ;
+    ex:ilustradoEn ex:Esquema_JogKeys_USERKEYS .
 
-ex:USERKEYS a ex:Componente ;
-    ex:textoExtracto "bloque 'USERKEYS' (4, 5, +, −)" .
+### Parámetros de máquina (Jog)
+ex:Parametro_JOGTYPE
+    a ex:Parametro ;
+    rdfs:label "JOGTYPE (Lógica eje mantenido/pulsado)" ;
+    ex:textoExtracto "la lógica 'eje mantenido/pulsado' (JOGTYPE) condiciona el uso combinado de selección de eje y de sentido" ;
+    ex:monitoreaParametro ex:Teclado_LCD_10K_Ejemplo5 .
 
-ex:ParametroMaquinaModoManual a ex:Parametro ;
-    ex:textoExtracto "Parámetros máquina del modo manual – 2.7.6 Ejemplo 5 (Teclado LCD-10K)" ;
-    ex:textoExtracto "Parámetros máquina del modo manual – 2.7.6 Ejemplo 6 (Teclado LCD-10K y USERKEYS)" .
+### Esquemas de interfaz
+ex:Esquema_JogKeys_Ejemplo5
+    a ex:Esquema ;
+    rdfs:label "Esquema de teclas Jog (Ejemplo 5)" ;
+    ex:textoExtracto "Gráfico de disposición de teclas de eje (X, Y, 4, 5) y sentido (+, −) con tecla R" .
 
-ex:ParametroMaquinaCinematicas a ex:Parametro ;
-    ex:textoExtracto "Parámetros máquina de las cinemáticas – 2.9 (Tipos predefinidos)" ;
-    ex:textoExtracto "Lámina con 12 mini-ilustraciones etiquetadas TYPE=1…12 que representan configuraciones de cinemática de cabezal y mesa" ;
-    ex:textoExtracto "Lámina con viñetas TYPE=13…24 (combinaciones cabeza-mesa de tres ejes rotativos como ABA, ACA, etc.) y los modos de eje C (TYPE=41–43) y definiciones vectoriales (TYPE=50–52)" .
+ex:Esquema_JogKeys_USERKEYS
+    a ex:Esquema ;
+    rdfs:label "Esquema híbrido JogKeys + USERKEYS (Ejemplo 6)" ;
+    ex:textoExtracto "Diagrama mixto con bloque 'JOGKEYS' (X+, Y+, R, X−, Y−) y bloque 'USERKEYS' (4, 5, +, −)" .
 
-ex:EsquemaCinematicas a ex:Esquema ;
-    ex:textoExtracto "Lámina con 12 mini-ilustraciones etiquetadas TYPE=1…12 que representan configuraciones de cinemática de cabezal y mesa" ;
-    ex:textoExtracto "Lámina con viñetas TYPE=13…24 (combinaciones cabeza-mesa de tres ejes rotativos como ABA, ACA, etc.) y los modos de eje C (TYPE=41–43) y definiciones vectoriales (TYPE=50–52). Las imágenes esquematizan la cadena cinemática y el reparto de grados de libertad." .
+### Cinemáticas predefinidas (TYPE=1–52)
+ex:Tabla_CinematicasPredefinidas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tipos predefinidos de cinemática (TYPE=1–52)" ;
+    ex:textoExtracto "Láminas con mini-ilustraciones TYPE=1…24 (configuraciones cabezal-mesa) y TYPE=41–52 (modos eje C y definiciones vectoriales). Cada viñeta muestra ejes lineales X-Y-Z y rotativos A-B-C con orientación relativa y grados de libertad." ;
+    ex:detalladoEnEsquema ex:Esquema_Cinematica_TYPE1_12, ex:Esquema_Cinematica_TYPE13_24, ex:Esquema_Cinematica_TYPE41_52 .
+
+ex:Esquema_Cinematica_TYPE1_12
+    a ex:Esquema ;
+    rdfs:label "Cinemáticas TYPE=1–12 (cabezal ortogonal y mesas rotativas)" ;
+    ex:textoExtracto "12 mini-ilustraciones etiquetadas TYPE=1…12 que representan configuraciones de cinemática de cabezal y mesa (p. ej., cabezal ortogonal XY/ZX, mesa rotativa AB/AC/BA/BC)." .
+
+ex:Esquema_Cinematica_TYPE13_24
+    a ex:Esquema ;
+    rdfs:label "Cinemáticas TYPE=13–24 (combinaciones 3 ejes rotativos)" ;
+    ex:textoExtracto "Viñetas TYPE=13…24 con combinaciones cabeza-mesa de tres ejes rotativos (ABA, ACA, etc.)." .
+
+ex:Esquema_Cinematica_TYPE41_52
+    a ex:Esquema ;
+    rdfs:label "Cinemáticas TYPE=41–52 (modos eje C y vectoriales)" ;
+    ex:textoExtracto "Modos de eje C (TYPE=41–43) y definiciones vectoriales (TYPE=50–52)." .
+
+### Parámetros de cinemática (ejes)
+ex:Parametro_EjesLineales
+    a ex:Parametro ;
+    rdfs:label "Ejes lineales (X-Y-Z)" ;
+    ex:textoExtracto "Cada viñeta indica ejes lineales X-Y-Z" ;
+    ex:documentadoEn ex:Tabla_CinematicasPredefinidas .
+
+ex:Parametro_EjesRotativos
+    a ex:Parametro ;
+    rdfs:label "Ejes rotativos (A-B-C)" ;
+    ex:textoExtracto "ejes rotativos A-B-C, mostrando orientación relativa y ejes activos" ;
+    ex:documentadoEn ex:Tabla_CinematicasPredefinidas .

@@ -1,87 +1,62 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MPG ex:textoExtracto """PT100. NPT100 Número total de entradas PT100 activas. Valores posibles: De 0 a 10. Valor por defecto: 0 (no hay entradas PT100 activas). Variable asociada: (V.)MPG.NPT100 Este parámetro indica la cantidad de entradas PT100 activas en el bus CAN. Una entrada PT100 debe estar activa si tiene una de estas sondas de temperatura conectada. Si la entrada está activa en el parámetro máquina y no hay una sonda conectada, el CNC da el error correspondiente.""" ;
-    rdfs:label "MPG.NPT100" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_NPT100
     a ex:Parametro ;
-    ex:valor "De 0 a 10" ;
-    ex:textoExtracto """PT100. NPT100 Número total de entradas PT100 activas. Valores posibles: De 0 a 10. Valor por defecto: 0 (no hay entradas PT100 activas). Variable asociada: (V.)MPG.NPT100 Este parámetro indica la cantidad de entradas PT100 activas en el bus CAN.""" .
+    rdfs:label "NPT100" ;
+    ex:identificador "MPG.NPT100" ;
+    ex:textoExtracto "NPT100 Número total de entradas PT100 activas. Valores posibles: De 0 a 10. Valor por defecto: 0 (no hay entradas PT100 activas)." ;
+    ex:valor "0" .
 
-ex:MPG ex:textoExtracto """PT100 Tabla de entradas PT100 activas. Este parámetro muestra la lista de entradas PT100 activas en el bus CAN.""" ;
-    a ex:Tabla ;
-    ex:textoExtracto """PT100 Tabla de entradas PT100 activas. Este parámetro muestra la lista de entradas PT100 activas en el bus CAN.""" .
-
-ex:MPG ex:textoExtracto """PT100 n Entrada analógica asociada a la entrada PT100. Valores posibles: De 0 a 32. Valor por defecto: 0 (no se desea activar la entrada PT100). Variable asociada: (V.)MPG.PT100[nb] Este parámetro indica el número de la entrada analógica asociada a cada una de las entradas PT100 activas.""" ;
-    rdfs:label "MPG.PT100[nb]" ;
+ex:Parametro_PT100_EntradasActivas
     a ex:Parametro ;
-    ex:valor "De 0 a 32" ;
-    ex:textoExtracto """PT100 n Entrada analógica asociada a la entrada PT100. Valores posibles: De 0 a 32. Valor por defecto: 0 (no se desea activar la entrada PT100). Variable asociada: (V.)MPG.PT100[nb] Este parámetro indica el número de la entrada analógica asociada a cada una de las entradas PT100 activas.""" .
+    rdfs:label "Tabla de entradas PT100 activas" ;
+    ex:identificador "MPG.PT100[nb]" ;
+    ex:textoExtracto "PT100 Tabla de entradas PT100 activas. Este parámetro muestra la lista de entradas PT100 activas en el bus CAN. PT100 n Entrada analógica asociada a la entrada PT100. Valores posibles: De 0 a 32. Valor por defecto: 0 (no se desea activar la entrada PT100)." ;
+    ex:valor "0" .
 
-ex:RIO5 ex:textoExtracto """Los módulos RIO5 tienen 6 entradas analógicas; las cuatro entradas analógicas (AI1..AI4) más las dos entradas PT100 (AI5..AI6).""" ;
-    rdfs:label "RIO5" ;
+ex:Sensor_PT100_Generico
+    a ex:Sensor ;
+    rdfs:label "Sonda PT100" ;
+    ex:textoExtracto "Una entrada PT100 debe estar activa si tiene una de estas sondas de temperatura conectada." .
+
+ex:Tabla_AsignacionEntradasAnalogicas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Asignación de entradas analógicas para módulos RIO5 y RIOR" ;
+    ex:textoExtracto "Ejemplo. En un sistema con un módulo RIO5 (nodo 1) y un RIOR (nodo 2), el CNC identifica las entradas analógicas de la siguiente manera. • (address = 1) RIO5 - Entradas analógicas: 1..4; Entradas PT100: 5..6 • (address = 2) RIOR - Entradas analógicas: 1..2; Entradas PT100: 3..4" ;
+    ex:ilustradoEn ex:Manual_Principal .
+
+ex:Sistema_ModulosRIO
+    a ex:Sistema ;
+    rdfs:label "Sistema de módulos RIO5 y RIOR" ;
+    ex:textoExtracto "Los módulos RIO5 tienen 6 entradas analógicas; las cuatro entradas analógicas (AI1..AI4) más las dos entradas PT100 (AI5..AI6). Los módulos RIOR tienen 4 entradas analógicas; las dos entradas analógicas (AI1..AI2) más las dos entradas PT100 (AI3..AI4)." ;
+    ex:tieneComponente ex:Modulo_RIO5 ;
+    ex:tieneComponente ex:Modulo_RIOR ;
+    ex:detalladoEnEsquema ex:Tabla_AsignacionEntradasAnalogicas .
+
+ex:Modulo_RIO5
     a ex:ComponenteElectrico ;
-    ex:textoExtracto """Los módulos RIO5 tienen 6 entradas analógicas; las cuatro entradas analógicas (AI1..AI4) más las dos entradas PT100 (AI5..AI6).""" .
+    rdfs:label "Módulo RIO5" ;
+    ex:identificador "nodo 1" ;
+    ex:textoExtracto "Los módulos RIO5 tienen 6 entradas analógicas; las cuatro entradas analógicas (AI1..AI4) más las dos entradas PT100 (AI5..AI6)." .
 
-ex:RIOR ex:textoExtracto """Los módulos RIOR tienen tiene 4 entradas analógicas; las dos entradas analógicas (AI1..AI2) más las dos entradas PT100 (AI3..AI4).""" ;
-    rdfs:label "RIOR" ;
+ex:Modulo_RIOR
     a ex:ComponenteElectrico ;
-    ex:textoExtracto """Los módulos RIOR tienen tiene 4 entradas analógicas; las dos entradas analógicas (AI1..AI2) más las dos entradas PT100 (AI3..AI4).""" .
+    rdfs:label "Módulo RIOR" ;
+    ex:identificador "nodo 2" ;
+    ex:textoExtracto "Los módulos RIOR tienen 4 entradas analógicas; las dos entradas analógicas (AI1..AI2) más las dos entradas PT100 (AI3..AI4)." .
 
-ex:EntradaAnalogica_1 ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" ;
-    rdfs:label "Entrada analógica 1" ;
-    a ex:Parametro ;
+ex:EntradaAnalogica_AI1_RIO5
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada analógica AI1 (RIO5)" ;
     ex:identificador "AI1" ;
-    ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" .
+    ex:textoExtracto "Entradas analógicas (AI1..AI4) del módulo RIO5." .
 
-ex:EntradaAnalogica_2 ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" ;
-    rdfs:label "Entrada analógica 2" ;
-    a ex:Parametro ;
-    ex:identificador "AI2" ;
-    ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" .
-
-ex:EntradaAnalogica_3 ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" ;
-    rdfs:label "Entrada analógica 3" ;
-    a ex:Parametro ;
-    ex:identificador "AI3" ;
-    ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" .
-
-ex:EntradaAnalogica_4 ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" ;
-    rdfs:label "Entrada analógica 4" ;
-    a ex:Parametro ;
-    ex:identificador "AI4" ;
-    ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" .
-
-ex:EntradaPT100_5 ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" ;
-    rdfs:label "Entrada PT100 5" ;
-    a ex:Parametro ;
+ex:EntradaAnalogica_AI5_PT100_RIO5
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada PT100 AI5 (RIO5)" ;
     ex:identificador "AI5" ;
-    ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" .
-
-ex:EntradaPT100_6 ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" ;
-    rdfs:label "Entrada PT100 6" ;
-    a ex:Parametro ;
-    ex:identificador "AI6" ;
-    ex:textoExtracto """(address = 1) RIO5 - Entradas analógicas. - 1..4 - Entradas PT100. - 5..6""" .
-
-ex:EntradaAnalogica_RIOR_1 ex:textoExtracto """(address = 2) RIOR - Entradas analógicas.""" ;
-    rdfs:label "Entrada analógica RIOR 1" ;
-    a ex:Parametro ;
-    ex:identificador "AI1" ;
-    ex:textoExtracto """(address = 2) RIOR - Entradas analógicas.""" .
-
-ex:EntradaAnalogica_RIOR_2 ex:textoExtracto """(address = 2) RIOR - Entradas analógicas.""" ;
-    rdfs:label "Entrada analógica RIOR 2" ;
-    a ex:Parametro ;
-    ex:identificador "AI2" ;
-    ex:textoExtracto """(address = 2) RIOR - Entradas analógicas.""" .
-
-ex:EntradaPT100_RIOR_3 ex:textoExtracto """(address = 2) RIOR - Entradas PT100. - 3..4""" ;
-    rdfs:label "Entrada PT100 RIOR 3" ;
-    a ex:Parametro ;
-    ex:identificador "AI3" ;
-    ex:textoExtracto """(address = 2) RIOR - Entradas PT100. - 3..4""" .
-
-ex:EntradaPT100_RIOR_4 ex:textoExtracto """(address = 2) RIOR - Entradas PT100. - 3..4""" ;
-    rdfs:label "Entrada PT100 RIOR 4" ;
-    a ex:Parametro ;
-    ex:identificador "AI4" ;
-    ex:textoExtracto """(address = 2) RIOR - Entradas PT100. - 3..4""" .
+    ex:textoExtracto "Entradas PT100 (AI5..AI6) del módulo RIO5." ;
+    ex:monitoreaParametro ex:Parametro_PT100_EntradasActivas .

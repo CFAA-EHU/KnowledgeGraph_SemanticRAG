@@ -1,17 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TablaHerramientas a ex:Tabla ;
-    rdfs:label "tabla de herramientas"@es ;
-    ex:textoExtracto "La lista de herramientas disponibles se guarda en la tabla de herramientas, única para todo el sistema."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:GestorHerramientas a ex:Sistema ;
-    rdfs:label "gestor de herramientas"@es ;
-    ex:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas."@es .
+ex:TablaHerramientasSistema a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de herramientas (única para todo el sistema)"@es ;
+    ex:textoExtracto "La lista de herramientas disponibles se guarda en la tabla de herramientas, única para todo el sistema. En esta tabla se indica la posición y el almacén en el que se encuentra cada herramienta, si se trata de una herramienta de tierra o si la herramienta se encuentra activa en algún canal."@es .
 
-ex:HerramientaTierra a ex:Herramienta ;
-    rdfs:label "herramienta de tierra"@es ;
-    ex:textoExtracto "Se denomina herramienta de tierra a aquella que no se guarda en ningún almacén y que se carga manualmente cuando es solicitada."@es .
+ex:GestorHerramientasCNC
+    a ex:Sistema ;
+    rdfs:label "Gestor de herramientas del CNC"@es ;
+    ex:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas. Cuando se solicita un cambio o una búsqueda de herramienta el gestor de herramientas le comunica al PLC las operaciones que debe realizar."@es ;
+    ex:documentadoEn ex:TablaHerramientasSistema .
 
-ex:AlmacenHerramientas a ex:Sistema ;
-    rdfs:label "almacén de herramientas"@es ;
-    ex:textoExtracto "El almacén en el que se deja la herramienta y el almacén del que se coge la herramienta nueva pueden ser diferentes."@es .
+ex:HerramientaTierra
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de tierra"@es ;
+    ex:textoExtracto "Se denomina herramienta de tierra a aquella que no se guarda en ningún almacén y que se carga manualmente cuando es solicitada. Las herramientas de tierra también se definen en la tabla de herramientas pero no están asociadas a ninguna posición de almacén."@es ;
+    ex:documentadoEn ex:TablaHerramientasSistema .
+
+ex:OperacionCambioHerramienta
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta (coger/dejar)"@es ;
+    ex:textoExtracto "En el cambio de herramienta pueden estar implicados dos almacenes. [...] Cuando se realiza un cambio de herramienta, ésta siempre se guarda en el almacén del que se cogió."@es ;
+    ex:detalladoEnEsquema ex:GestorHerramientasCNC .
+
+ex:AlmacenHerramientas
+    a ex:Sistema ;
+    rdfs:label "Almacén de herramientas"@es ;
+    ex:textoExtracto "Las herramientas siempre se guardan en el mismo almacén. [...] Cada herramienta se identifica mediante su número, que es único para todo el sistema; no podrá estar repetido ni en almacenes distintos ni en herramientas de tierra."@es ;
+    ex:compuestoPor ex:HerramientaTierra ;
+    ex:documentadoEn ex:TablaHerramientasSistema .

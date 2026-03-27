@@ -1,24 +1,26 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SincronizacionEjesYCabezales a ex:Sistema ;
-    rdfs:label "Sincronización de ejes y cabezales" ;
-    ex:textoExtracto "Cuando los cabezales se sincronizan en velocidad, el cabezal esclavo gira a la misma velocidad que el cabezal maestro (teniendo en cuenta el ratio). Si se supera el valor definido en este parámetro, la señal SYNSPEED se pone a nivel lógico bajo; no se detiene el movimiento ni se muestra ningún error. En la sincronización de ejes, el eje esclavo se mueve al mismo avance que el eje maestro (teniendo en cuenta el ratio). Si la diferencia entre la velocidad de sincronización calculada para el eje esclavo y su velocidad real supera el"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_SyncSpeed a ex:Parametro ;
-    rdfs:label "SYNSPEED" ;
-    ex:identificador "SYNSPEED" ;
-    ex:textoExtracto "la señal SYNSPEED se pone a nivel lógico bajo"@es .
+ex:Parametro_SYNSPEED
+    a ex:Parametro ;
+    rdfs:label "Parámetro SYNSPEED" ;
+    ex:textoExtracto "Si se supera el valor definido en este parámetro, la señal SYNSPEED se pone a nivel lógico bajo" ;
+    ex:identificador "SYNSPEED" .
 
-ex:Cabezales a ex:ComponenteMecanico ;
-    rdfs:label "cabezales" ;
-    ex:textoExtracto "los cabezales se sincronizan en velocidad, el cabezal esclavo gira a la misma velocidad que el cabezal maestro"@es .
+ex:Sensor_SYNSPEED
+    a ex:Sensor ;
+    rdfs:label "Señal SYNSPEED" ;
+    ex:textoExtracto "la señal SYNSPEED se pone a nivel lógico bajo" ;
+    ex:monitoreaParametro ex:Parametro_SYNSPEED .
 
-ex:EjeMaestro a ex:ComponenteMecanico ;
-    rdfs:label "eje maestro" ;
-    ex:textoExtracto "el cabezal maestro"@es .
+ex:ModoOperacion_SincronizacionEjes
+    a ex:ModoOperacion ;
+    rdfs:label "Sincronización de ejes" ;
+    ex:textoExtracto "el eje esclavo se mueve al mismo avance que el eje maestro (teniendo en cuenta el ratio)" .
 
-ex:EjeEsclavo a ex:ComponenteMecanico ;
-    rdfs:label "eje esclavo" ;
-    ex:textoExtracto "el cabezal esclavo"@es .
-
-ex:SincronizacionEjesYCabezales ex:tieneComponente ex:Parametro_SyncSpeed, ex:Cabezales, ex:EjeMaestro, ex:EjeEsclavo .
+ex:ModoOperacion_SincronizacionCabezales
+    a ex:ModoOperacion ;
+    rdfs:label "Sincronización de cabezales" ;
+    ex:textoExtracto "el cabezal esclavo gira a la misma velocidad que el cabezal maestro (teniendo en cuenta el ratio)" .

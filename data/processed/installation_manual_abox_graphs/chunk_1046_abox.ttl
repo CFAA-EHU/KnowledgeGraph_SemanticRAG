@@ -1,32 +1,24 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Torno_2Canales_4Ejes_2Cabezales a ex:Maquina ;
-    ex:textoExtracto "Torno con 2 canales, 4 ejes y 2 cabezales. Configuración de ejes tipo"@es ;
-    ex:tieneComponente ex:Eje_X, ex:Eje_Z, ex:PlanoTrabajo_G18, ex:Canal_1, ex:Canal_2, ex:Cabezal_1 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Eje_X a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje X (primer eje del canal)"@es ;
-    ex:identificador "X" ;
-    ex:valor "primer eje del canal"@es .
+ex:ConfiguracionEjes_Torno2Canales4Ejes2Cabezales
+    a ex:ModoOperacion ;
+    rdfs:label "Configuración de ejes para torno con 2 canales, 4 ejes y 2 cabezales" ;
+    ex:textoExtracto "Selección de planos en el canal ꞏ1ꞏ y ꞏ2ꞏ. Con esta configuración, el plano de trabajo siempre es G18 y estará formado por los dos primeros ejes definidos en el canal. Si se han definido los ejes X (primer eje del canal) y Z (segundo eje del canal), el plano de trabajo será ZX (eje Z como abscisas y eje X como ordenadas). Las funciones G17 y G19 no son válidas. Cómo sólo hay dos ejes, la función G20 no tiene sentido." ;
+    ex:identificador "G18" .
 
-ex:Eje_Z a ex:ComponenteMecanico ;
-    ex:textoExtracto "eje Z (segundo eje del canal)"@es ;
-    ex:identificador "Z" ;
-    ex:valor "segundo eje del canal"@es .
+ex:Parametro_CHSPDLNAME1
+    a ex:Parametro ;
+    rdfs:label "CHSPDLNAME 1" ;
+    ex:identificador "CHSPDLNAME 1" ;
+    ex:valor "S1" ;
+    ex:textoExtracto "CHSPDLNAME 1 | S1 | Cabezal con índice ꞏ1ꞏ. | Número lógico ꞏ6ꞏ." ;
+    ex:documentadoEn ex:ConfiguracionEjes_Torno2Canales4Ejes2Cabezales .
 
-ex:PlanoTrabajo_G18 a ex:Parametro ;
-    ex:textoExtracto "el plano de trabajo siempre es G18 y estará formado por los dos primeros ejes definidos en el canal"@es ;
-    ex:identificador "G18" ;
-    ex:valor "plano de trabajo ZX (eje Z como abscisas y eje X como ordenadas)"@es .
-
-ex:Canal_1 a ex:Sistema ;
-    ex:textoExtracto "Selección de planos en el canal ꞏ1ꞏ"@es ;
-    ex:identificador "1" .
-
-ex:Canal_2 a ex:Sistema ;
-    ex:textoExtracto "Selección de planos en el canal ꞏ2ꞏ"@es ;
-    ex:identificador "2" .
-
-ex:Cabezal_1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "Cabezal con índice ꞏ1ꞏ"@es ;
-    ex:identificador "1" ;
-    ex:valor "Número lógico ꞏ6ꞏ"@es .
+ex:Tabla_ParametrosCabezales a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros de cabezales (CHSPDLNAME)" ;
+    ex:textoExtracto "CHSPDLNAME | Valor | Índice en el canal. | Orden lógico." ;
+    ex:documentadoEn ex:ConfiguracionEjes_Torno2Canales4Ejes2Cabezales .

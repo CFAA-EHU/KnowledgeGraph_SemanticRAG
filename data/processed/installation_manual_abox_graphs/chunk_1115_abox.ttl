@@ -1,28 +1,57 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:G198 a ex:Parametro ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_LimitesSoftware_1161 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de límites de software (G198/G199)"@es ;
+    ex:textoExtracto """
+| Función. | Variable. | Significado. |
+| --- | --- | --- |
+| G198 | (V.)[ch].A.NEGLIMIT.xn | Límites inferiores de software. |
+| G199 | (V.)[ch].A.POSLIMIT.xn | Límites superiores de software.
+"""@es ;
+    ex:documentadoEn ex:Pagina_602_603 .
+
+ex:Parametro_G198
+    a ex:Parametro ;
+    rdfs:label "G198 (Límite inferior de software)"@es ;
     ex:identificador "G198" ;
-    ex:textoExtracto "G198 | (V.)[ch].A.NEGLIMIT.xn | Límites inferiores de software." .
+    ex:valor "(V.)[ch].A.NEGLIMIT.xn" ;
+    ex:textoExtracto "G198 | (V.)[ch].A.NEGLIMIT.xn | Límites inferiores de software."@es ;
+    ex:documentadoEn ex:Tabla_LimitesSoftware_1161 .
 
-ex:G199 a ex:Parametro ;
+ex:Parametro_G199
+    a ex:Parametro ;
+    rdfs:label "G199 (Límite superior de software)"@es ;
     ex:identificador "G199" ;
-    ex:textoExtracto "G199 | (V.)[ch].A.POSLIMIT.xn | Límites superiores de software." .
+    ex:valor "(V.)[ch].A.POSLIMIT.xn" ;
+    ex:textoExtracto "G199 | (V.)[ch].A.POSLIMIT.xn | Límites superiores de software."@es ;
+    ex:documentadoEn ex:Tabla_LimitesSoftware_1161 .
 
-ex:LimiteSoftwareInferior a ex:Parametro ;
-    ex:identificador "(V.)[ch].A.NEGLIMIT.xn" ;
-    ex:textoExtracto "(V.)[ch].A.NEGLIMIT.xn | Límites inferiores de software." .
-
-ex:LimiteSoftwareSuperior a ex:Parametro ;
-    ex:identificador "(V.)[ch].A.POSLIMIT.xn" ;
-    ex:textoExtracto "(V.)[ch].A.POSLIMIT.xn | Límites superiores de software." .
-
-ex:ModoTrabajoAbsoluto a ex:ModoOperacion ;
+ex:Parametro_G90
+    a ex:Parametro ;
+    rdfs:label "G90 (Modo coordenadas absolutas)"@es ;
     ex:identificador "G90" ;
-    ex:textoExtracto "G90" .
+    ex:textoExtracto "Dependiendo del modo de trabajo activo G90 [...] la posición de los nuevos límites estará definida en coordenadas absolutas (G90) en el sistema de referencia de la máquina."@es .
 
-ex:ModoTrabajoIncremental a ex:ModoOperacion ;
+ex:Parametro_G91
+    a ex:Parametro ;
+    rdfs:label "G91 (Modo coordenadas incrementales)"@es ;
     ex:identificador "G91" ;
-    ex:textoExtracto "G91" .
+    ex:textoExtracto "Dependiendo del modo de trabajo activo [...] G91 [...] la posición de los nuevos límites estará definida en [...] coordenadas incrementales (G91) respecto de los límites activos."@es .
 
-ex:SegundoLimiteSoftware a ex:Parametro ;
-    ex:identificador "segundos límites de software" ;
-    ex:textoExtracto "Segundos límites de software. Estos límites de software se definen mediante las siguientes variables, con permiso de escritura desde el programa pieza, MDI, PLC o interfaz. Estas variables se inicializan en el encendido, asumiendo el máximo valor posible." .
+ex:InterfazUsuario_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de usuario del CNC"@es ;
+    ex:textoExtracto "Estas variables se inicializan en el encendido, asumiendo el máximo valor posible. Sí se modifican los límites mediante estas variables, el CNC asume en adelante dichos valores como nuevos límites en este grupo."@es ;
+    ex:controla ex:Parametro_G198 ;
+    ex:controla ex:Parametro_G199 .
+
+ex:Sistema_CoordenadasMaquina
+    a ex:Sistema ;
+    rdfs:label "Sistema de referencia de la máquina (CNC)"@es ;
+    ex:textoExtracto "En el momento del encendido o tras validar los parámetros máquina de ejes, el CNC asume los límites de software definidos en los parámetros máquina."@es ;
+    ex:monitoreaParametro ex:Parametro_G198 ;
+    ex:monitoreaParametro ex:Parametro_G199 .

@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:InterfazUsuario_LantekExpertInside_SelectorIdioma
+    a ex:InterfazUsuario ;
+    rdfs:label "Selector de idioma en Lantek Expert Inside" ;
+    ex:textoExtracto "Ventana de 'General/Idioma' de Lantek con menú desplegable para selección de idioma (en, es, fr, etc.) y botones superiores grandes; la captura ilustra la localización de la opción de idioma dentro del menú de ajustes." ;
+    ex:textoExtracto "Captura resumida del selector de idioma dentro del botón 'General', evidenciando la disponibilidad de dos idiomas instalados y la elección directa desde la interfaz." .
+
+ex:Esquema_ControlGapLaser
+    a ex:Esquema ;
+    rdfs:label "Esquema de control de gap láser" ;
+    ex:textoExtracto "Esquema del control de gap con boquilla láser, superficie de pieza y eje asociado (X/Z según máquina). Muestra el sensor manteniendo una distancia fija (gap) y la compensación en el eje longitudinal para seguir irregularidades; incluye rótulos 'LASER', 'GAP' y 'Workpiece surface'." .
+
+ex:Sensor_GapLaser
+    a ex:Sensor ;
+    rdfs:label "Sensor de gap láser" ;
+    ex:textoExtracto "Muestra el sensor manteniendo una distancia fija (gap) y la compensación en el eje longitudinal para seguir irregularidades" ;
+    ex:ilustradoEn ex:Esquema_ControlGapLaser ;
+    ex:monitoreaParametro ex:Parametro_Gap .
+
+ex:Parametro_Gap
+    a ex:Parametro ;
+    rdfs:label "Parámetro de distancia gap" ;
+    ex:valor "distancia fija" ;
+    ex:textoExtracto "distancia fija (gap)" .
+
+ex:Esquema_ConexionSensorGap_Sercos
+    a ex:Esquema ;
+    rdfs:label "Diagrama eléctrico de conexión del sensor de gap (Sercos)" ;
+    ex:textoExtracto "Diagrama eléctrico de conexión del sensor de gap a una entrada analógica del regulador Sercos. Representa bornes X7 (AI1+/AI1−), señal analógica ± y bloques 'CNC', 'DRIVE' y 'SERCOS', con flechas de señal entre módulos." ;
+    ex:detalladoEnEsquema ex:Sensor_GapLaser .
+
+ex:ComponenteElectrico_BornesX7_AI1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Bornes X7 (AI1+/AI1−) del regulador Sercos" ;
+    ex:textoExtracto "bornes X7 (AI1+/AI1−)" ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGap_Sercos .
+
+ex:Sistema_ControlCNC_Sercos
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC con regulador Sercos" ;
+    ex:textoExtracto "bloques 'CNC', 'DRIVE' y 'SERCOS'" ;
+    ex:tieneComponente ex:ComponenteElectrico_BornesX7_AI1 ;
+    ex:tieneComponente ex:Sensor_GapLaser .
+
+ex:Esquema_ConexionSensorGap_CAN
+    a ex:Esquema ;
+    rdfs:label "Diagrama de conexión del sensor de gap (módulos CAN RIOR)" ;
+    ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena 'CNC – RIOR – CAN – GAP SENSOR', mostrando alternativa de cableado cuando no se usa el regulador." ;
+    ex:detalladoEnEsquema ex:Sensor_GapLaser .
+
+ex:ComponenteElectrico_PinesAI1_CAN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Pines AI1+/AI1− en módulos CAN (RIOR)" ;
+    ex:textoExtracto "pines AI1+/AI1−" ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGap_CAN .
+
+ex:Sistema_ControlCNC_CAN
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC con módulos remotos CAN (RIOR)" ;
+    ex:textoExtracto "cadena 'CNC – RIOR – CAN – GAP SENSOR'" ;
+    ex:tieneComponente ex:ComponenteElectrico_PinesAI1_CAN ;
+    ex:tieneComponente ex:Sensor_GapLaser .

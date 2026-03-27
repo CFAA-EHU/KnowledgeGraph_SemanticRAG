@@ -1,33 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:G1_Z_F ex:textoExtracto "G1 Z_ F_ ; Desplazar el cabezal." .
-ex:G1_Z_F a ex:AccionProhibida .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SUB_M6_nc ex:textoExtracto "# SUB_M6.nc" .
-ex:SUB_M6_nc a ex:Esquema .
+ex:RutinaM06 a ex:ModoOperacion ;
+    rdfs:label "Rutina M06 (Cambio de herramienta)"@es ;
+    ex:textoExtracto "M6 ; Orden al gestor para comenzar el cambio de herramienta."@es ;
+    ex:identificador "M06" .
 
-ex:ESBLK ex:textoExtracto "#ESBLK ; Activar tratamiento de bloque único" .
-ex:ESBLK a ex:Parametro .
+ex:SubrutinaSUB_M6 a ex:TareaMantenimiento ;
+    rdfs:label "SUB_M6.nc"@es ;
+    ex:textoExtracto "# RET %SUB_M6.nc ; Activar tratamiento de bloque único"@es ;
+    ex:identificador "SUB_M6.nc" .
 
-ex:DSTOP ex:textoExtracto "#DSTOP ; Deshabilitar tecla STOP" .
-ex:DSTOP a ex:Parametro .
+ex:SubrutinaSPD_AUTCHG a ex:TareaMantenimiento ;
+    rdfs:label "Cambio automático de herramienta (SPD_AUTCHG)"@es ;
+    ex:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático."@es ;
+    ex:identificador "SUB_SPD_AUTCHG" .
 
-ex:M6 ex:textoExtracto "M6 ; Orden al gestor para comenzar el cambio de herramienta." .
-ex:M6 a ex:AccionProhibida .
+ex:SubrutinaMZ_TO_SPD a ex:TareaMantenimiento ;
+    rdfs:label "Transferencia de herramienta (MZ_TO_SPD)"@es ;
+    ex:textoExtracto "LL SUB_MZ_TO_SPD ; Poner la herramienta del almacén en el cabezal."@es ;
+    ex:identificador "SUB_MZ_TO_SPD" .
 
-ex:V_G_FULLSTATUS ex:textoExtracto "V.G.FULLSTATUS" .
-ex:V_G_FULLSTATUS a ex:Parametro .
+ex:ParametroV_S_EXECUTION a ex:Parametro ;
+    rdfs:label "Estado de ejecución (V.S.EXECUTION)"@es ;
+    ex:textoExtracto "V.S.EXECUTION = 1 ; Ejecución"@es ;
+    ex:valor "0"^^xsd:integer, "1"^^xsd:integer .
 
-ex:V_G_CNCAUTSTATUS ex:textoExtracto "V.G.CNCAUTSTATUS" .
-ex:V_G_CNCAUTSTATUS a ex:Parametro .
+ex:ParametroV_PLC_TMOPERATION a ex:Parametro ;
+    rdfs:label "Tipo de operación (V.PLC.TMOPERATION)"@es ;
+    ex:textoExtracto "$SWITCH V.PLC.TMOPERATION ; Analiza el tipo de operación."@es ;
+    ex:valor "1"^^xsd:integer .
 
-ex:V_S_EXECUTION ex:textoExtracto "V.S.EXECUTION" .
-ex:V_S_EXECUTION a ex:Parametro .
-
-ex:V_PLC_TMOPERATION ex:textoExtracto "V.PLC.TMOPERATION" .
-ex:V_PLC_TMOPERATION a ex:Parametro .
-
-ex:SUB_SPD_AUTCHG ex:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
-ex:SUB_SPD_AUTCHG a ex:TareaMantenimiento .
-
-ex:SUB_MZ_TO_SPD ex:textoExtracto "LL SUB_MZ_TO_SPD ; Poner la herramienta del almacén en el cabezal." .
-ex:SUB_MZ_TO_SPD a ex:TareaMantenimiento .
+ex:RutinaM06 ex:requiereMantenimiento ex:SubrutinaSUB_M6 ;
+           ex:requiereMantenimiento ex:SubrutinaSPD_AUTCHG ;
+           ex:requiereMantenimiento ex:SubrutinaMZ_TO_SPD ;
+           ex:monitoreaParametro ex:ParametroV_S_EXECUTION ;
+           ex:monitoreaParametro ex:ParametroV_PLC_TMOPERATION .

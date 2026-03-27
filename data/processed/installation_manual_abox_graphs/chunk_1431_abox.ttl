@@ -1,42 +1,82 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TablaCompensacionVolumetrica a ex:Tabla ;
-    rdfs:label "Tabla de compensación volumétrica"@es ;
-    ex:textoExtracto "La imagen ejemplifica el formato de archivo exigido para cargar la tabla de compensación en el CNC."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ArchivoCompensacionVolumetrica a ex:Esquema ;
-    rdfs:label "Archivo con los datos para la compensación volumétrica básica"@es ;
-    ex:textoExtracto "La imagen ejemplifica el formato de archivo exigido para cargar la tabla de compensación en el CNC."@es ;
-    ex:compuestoPor ex:TablaCompensacionVolumetrica .
+ex:Tabla_CompensacionVolumetrica_Basica a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de compensación volumétrica básica"@es ;
+    ex:textoExtracto "filas de valores decimales separadas por comas, que corresponden a los errores medidos en cada punto de la malla volumétrica. La imagen ejemplifica el formato de archivo exigido para cargar la tabla de compensación en el CNC."@es ;
+    ex:identificador "Archivo_CompensacionVolumetrica_Basica" .
 
-ex:MallaVolumetrica a ex:Sistema ;
-    rdfs:label "Malla volumétrica"@es ;
-    ex:textoExtracto "Se ven filas de valores decimales separadas por comas, que corresponden a los errores medidos en cada punto de la malla volumétrica."@es .
+ex:Esquema_MallaVolumetrica_3D
+    a ex:Esquema ;
+    rdfs:label "Esquema de malla volumétrica 3D"@es ;
+    ex:textoExtracto "Diagrama 3D de una malla de puntos dentro de un triedro X-Y-Z con números (1…12) que indican el orden de recorrido de las mediciones. Se muestra la posición inicial sobre cada eje (INIPOSAX1/2/3), incrementos entre puntos (INCREAX1/2/3) y la distribución NPOINTSAX1×NPOINTSAX2×NPOINTSAX3, con flechas que marcan la secuencia de avance primero en X, luego en Y y finalmente en Z."@es ;
+    ex:ilustradoEn ex:Tabla_CompensacionVolumetrica_Basica .
 
-ex:SecuenciaMuestreoX a ex:Esquema ;
-    rdfs:label "Secuencia de muestreo en eje X"@es ;
-    ex:textoExtracto "Esquema 3D (Paso 1) de un volumen con un plano basal y puntos en X a partir del origen X(P1), Y(P1), Z(P1). Flechas indican la progresión de muestreo a lo largo del eje X conforme a NPOINTSAX1 y el incremento INCREAX1, con la cota inicial marcada en cada eje."@es .
+ex:Parametro_INIPOSAX1
+    a ex:Parametro ;
+    rdfs:label "INIPOSAX1" ;
+    ex:textoExtracto "posición inicial sobre cada eje (INIPOSAX1/2/3)"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
 
-ex:SecuenciaMuestreoXY a ex:Esquema ;
-    rdfs:label "Secuencia de muestreo en ejes X e Y"@es ;
-    ex:textoExtracto "Esquema 3D (Paso 2) que prolonga la secuencia anterior: para cada posición fija en Y(P1), se completan todos los puntos de X; después se pasa a Y(P2)… hasta NPOINTSAX2. Las flechas negras muestran la dirección de barrido y la rejilla del plano XY ayuda a visualizar la densidad de puntos."@es .
+ex:Parametro_INIPOSAX2
+    a ex:Parametro ;
+    rdfs:label "INIPOSAX2" ;
+    ex:textoExtracto "posición inicial sobre cada eje (INIPOSAX1/2/3)"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
 
-ex:EjeX a ex:Parametro ;
-    rdfs:label "Eje X"@es ;
-    ex:identificador "X" ;
-    ex:textoExtracto "progresión de muestreo a lo largo del eje X conforme a NPOINTSAX1 y el incremento INCREAX1"@es .
+ex:Parametro_INIPOSAX3
+    a ex:Parametro ;
+    rdfs:label "INIPOSAX3" ;
+    ex:textoExtracto "posición inicial sobre cada eje (INIPOSAX1/2/3)"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
 
-ex:EjeY a ex:Parametro ;
-    rdfs:label "Eje Y"@es ;
-    ex:identificador "Y" ;
-    ex:textoExtracto "para cada posición fija en Y(P1), se completan todos los puntos de X; después se pasa a Y(P2)… hasta NPOINTSAX2"@es .
+ex:Parametro_INCREAX1
+    a ex:Parametro ;
+    rdfs:label "INCREAX1" ;
+    ex:textoExtracto "incrementos entre puntos (INCREAX1/2/3)"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
 
-ex:EjeZ a ex:Parametro ;
-    rdfs:label "Eje Z"@es ;
-    ex:identificador "Z" ;
-    ex:textoExtracto "con la cota inicial marcada en cada eje"@es .
+ex:Parametro_INCREAX2
+    a ex:Parametro ;
+    rdfs:label "INCREAX2" ;
+    ex:textoExtracto "incrementos entre puntos (INCREAX1/2/3)"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
 
-ex:SecuenciaMuestreoXYZ a ex:Esquema ;
-    rdfs:label "Secuencia de muestreo en ejes X, Y y Z"@es ;
-    ex:textoExtracto "Diagrama 3D de una malla de puntos dentro de un triedro X-Y-Z con números (1…12) que indican el orden de recorrido de las mediciones."@es ;
-    ex:compuestoPor ex:SecuenciaMuestreoX, ex:SecuenciaMuestreoXY, ex:EjeX, ex:EjeY, ex:EjeZ .
+ex:Parametro_INCREAX3
+    a ex:Parametro ;
+    rdfs:label "INCREAX3" ;
+    ex:textoExtracto "incrementos entre puntos (INCREAX1/2/3)"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
+
+ex:Parametro_NPOINTSAX1
+    a ex:Parametro ;
+    rdfs:label "NPOINTSAX1" ;
+    ex:textoExtracto "distribución NPOINTSAX1×NPOINTSAX2×NPOINTSAX3"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
+
+ex:Parametro_NPOINTSAX2
+    a ex:Parametro ;
+    rdfs:label "NPOINTSAX2" ;
+    ex:textoExtracto "distribución NPOINTSAX1×NPOINTSAX2×NPOINTSAX3"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
+
+ex:Parametro_NPOINTSAX3
+    a ex:Parametro ;
+    rdfs:label "NPOINTSAX3" ;
+    ex:textoExtracto "distribución NPOINTSAX1×NPOINTSAX2×NPOINTSAX3"@es ;
+    ex:documentadoEn ex:Esquema_MallaVolumetrica_3D .
+
+ex:Esquema_SecuenciaPaso1
+    a ex:Esquema ;
+    rdfs:label "Esquema 3D (Paso 1) - Secuencia de muestreo en eje X"@es ;
+    ex:textoExtracto "Esquema 3D (Paso 1) de un volumen con un plano basal y puntos en X a partir del origen X(P1), Y(P1), Z(P1). Flechas indican la progresión de muestreo a lo largo del eje X conforme a NPOINTSAX1 y el incremento INCREAX1, con la cota inicial marcada en cada eje."@es ;
+    ex:detalladoEnEsquema ex:Esquema_MallaVolumetrica_3D .
+
+ex:Esquema_SecuenciaPaso2
+    a ex:Esquema ;
+    rdfs:label "Esquema 3D (Paso 2) - Secuencia de muestreo en plano XY"@es ;
+    ex:textoExtracto "Esquema 3D (Paso 2) que prolonga la secuencia anterior: para cada posición fija en Y(P1), se completan todos los puntos de X; después se pasa a Y(P2)… hasta NPOINTSAX2. Las flechas negras muestran la dirección de barrido y la rejilla del plano XY ayuda a visualizar la densidad de puntos."@es ;
+    ex:detalladoEnEsquema ex:Esquema_MallaVolumetrica_3D .

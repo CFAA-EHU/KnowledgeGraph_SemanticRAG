@@ -1,19 +1,42 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DISTLUBRI a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:parametro_DISTLUBRI
+    a ex:Parametro ;
     rdfs:label "DISTLUBRI" ;
-    ex:textoExtracto "DISTLUBRI Distancia a recorrer para lubricar el eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 2000000000 mm. Valores posibles (2): De 0 a 78739920 inch. Valores posibles (3): De 0 a 2000000000 grados. Valor por defecto: 0 (no hay lubricación). Variable asociada: (V.)[ch].MPA.DISTLUBRI[set].xn La lectura desde el PLC de este parámetro se realiza en milímetros en lugar de diezmilésimas de milímetro." ;
-    ex:valor "De 0 a 2000000000 mm, De 0 a 78739920 inch, De 0 a 2000000000 grados" ;
-    ex:identificador "(V.)[ch].MPA.DISTLUBRI[set].xn" .
+    ex:textoExtracto "DISTLUBRI Distancia a recorrer para lubricar el eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:valor "0 a 2000000000 mm / 0 a 78739920 inch / 0 a 2000000000 grados" ;
+    ex:valor "0 (valor por defecto)" .
 
-ex:LUBR a ex:Parametro ;
+ex:variable_MPA_DISTLUBRI
+    a ex:Parametro ;
+    rdfs:label "MPA.DISTLUBRI[set].xn" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.DISTLUBRI[set].xn" ;
+    ex:identificador "MPA.DISTLUBRI[set].xn" .
+
+ex:se_al_LUBR
+    a ex:Parametro ;
     rdfs:label "LUBR(axis)" ;
-    ex:textoExtracto "Para que el PLC efectúe la lubricación de ejes y engranajes se deben utilizar las entradas y salidas lógicas del CNC LUBR(axis), LUBRENA(axis) y LUBROK(axis). La marca LUBRENA(axis) indica si se desea esta prestación." .
+    ex:textoExtracto "La marca LUBR(axis) indica al PLC que debe engrasar el eje." ;
+    ex:identificador "LUBR(axis)" .
 
-ex:LUBRENA a ex:Parametro ;
+ex:se_al_LUBRENA
+    a ex:Parametro ;
     rdfs:label "LUBRENA(axis)" ;
-    ex:textoExtracto "Para que el PLC efectúe la lubricación de ejes y engranajes se deben utilizar las entradas y salidas lógicas del CNC LUBR(axis), LUBRENA(axis) y LUBROK(axis). La marca LUBRENA(axis) indica si se desea esta prestación." .
+    ex:textoExtracto "La marca LUBRENA(axis) indica si se desea esta prestación." ;
+    ex:identificador "LUBRENA(axis)" .
 
-ex:LUBROK a ex:Parametro ;
+ex:se_al_LUBROK
+    a ex:Parametro ;
     rdfs:label "LUBROK(axis)" ;
-    ex:textoExtracto "Para que el PLC efectúe la lubricación de ejes y engranajes se deben utilizar las entradas y salidas lógicas del CNC LUBR(axis), LUBRENA(axis) y LUBROK(axis)." .
+    ex:textoExtracto "El PLC tras engrasar el eje pone la marca LUBROK(axis)=1 para indicar al CNC que ya se ha engrasado el eje." ;
+    ex:identificador "LUBROK(axis)" .
+
+ex:tarea_lubricacion_ejes
+    a ex:TareaMantenimiento ;
+    rdfs:label "Lubricación de ejes" ;
+    ex:textoExtracto "Para que el PLC efectúe la lubricación de ejes y engranajes se deben utilizar las entradas y salidas lógicas del CNC LUBR(axis), LUBRENA(axis) y LUBROK(axis)." ;
+    ex:requiereMantenimiento ex:parametro_DISTLUBRI ;
+    ex:controla ex:se_al_LUBR, ex:se_al_LUBRENA, ex:se_al_LUBROK .

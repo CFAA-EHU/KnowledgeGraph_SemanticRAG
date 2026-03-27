@@ -1,11 +1,36 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MAXACCEL a ex:Parametro ;
-    rdfs:label "MAXACCEL" ;
-    ex:textoExtracto "MAXACCEL Máxima aceleración sobre la trayectoria de mecanizado. Valores posibles: De 0.0010 a 600000000.0000 mm/min / de 0.00004 a 23622047.24409 inch/min. Valor por defecto: No hay avance máximo. Variable asociada: (V.)[ch].MPG.MAXACCEL Este parámetro permite suavizar el avance sobre la trayectoria, limitando la aceleración máxima sobre ella. Independientemente de cuál sea el valor de este parámetro, el CNC siempre respeta la dinámica de los ejes implicados en la trayectoria, es decir, respeta la aceleración definida en cada eje. Cómo modificar temporalmente la aceleración máxima definida. La variable (V.)[ch].G.MAXACCEL permite modificar temporalmente, en un momento dado y en tiempo real, el valor definido por el parámetro máquina. El CNC asume el cambio inmediatamente y permanece activo hasta ejecutar M30 o reset, en cuyo caso el CNC recupera el valor fijado por el parámetro máquina. Si la variable toma valor ꞏ0ꞏ, el CNC no aplica ningún límite a la aceleración sobre la trayectoria, ni siquiera el fijado por parámetro máquina." ;
-    ex:valor "De 0.0010 a 600000000.0000 mm/min / de 0.00004 a 23622047.24409 inch/min" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MAXJERK a ex:Parametro ;
+ex:Parametro_MAXACCEL
+    a ex:Parametro ;
+    rdfs:label "MAXACCEL" ;
+    ex:identificador "(V.)[ch].MPG.MAXACCEL" ;
+    ex:textoExtracto "Máxima aceleración sobre la trayectoria de mecanizado. Valores posibles: De 0.0010 a 600000000.0000 mm/min / de 0.00004 a 23622047.24409 inch/min. Valor por defecto: No hay avance máximo. Este parámetro permite suavizar el avance sobre la trayectoria, limitando la aceleración máxima sobre ella." ;
+    ex:valor "600000000.0000 mm/min (límite superior)" .
+
+ex:Parametro_MAXJERK
+    a ex:Parametro ;
     rdfs:label "MAXJERK" ;
-    ex:textoExtracto "MAXJERK Máximo jerk sobre la trayectoria de mecanizado. Valores posibles: De 0.0010 a 6E11 mm/min / de 0.00004 a 2.362E10 inch/min. Valor por defecto: No hay avance máximo. Variable asociada: (V.)[ch].MPG.MAXJERK Este parámetro permite suavizar el avance sobre la trayectoria, limitando el jerk máximo sobre ella. Independientemente de cuál sea el valor de este parámetro, el CNC siempre respeta la dinámica de los ejes implicados en la trayectoria, es decir, respeta el jerk definido en cada eje. Cómo modificar temporalmente el jerk máximo definido. La variable (V.)[ch].G.MAXJERK permite modificar temporalmente, en un momento dado y en tiempo real, el valor definido por el parámetro máquina." ;
-    ex:valor "De 0.0010 a 6E11 mm/min / de 0.00004 a 2.362E10 inch/min" .
+    ex:identificador "(V.)[ch].MPG.MAXJERK" ;
+    ex:textoExtracto "Máximo jerk sobre la trayectoria de mecanizado. Valores posibles: De 0.0010 a 6E11 mm/min / de 0.00004 a 2.362E10 inch/min. Valor por defecto: No hay avance máximo. Este parámetro permite suavizar el avance sobre la trayectoria, limitando el jerk máximo sobre ella." ;
+    ex:valor "6E11 mm/min (límite superior)" .
+
+ex:Variable_Temporal_MAXACCEL
+    a ex:Parametro ;
+    rdfs:label "Variable temporal MAXACCEL" ;
+    ex:identificador "(V.)[ch].G.MAXACCEL" ;
+    ex:textoExtracto "La variable (V.)[ch].G.MAXACCEL permite modificar temporalmente, en un momento dado y en tiempo real, el valor definido por el parámetro máquina. El CNC asume el cambio inmediatamente y permanece activo hasta ejecutar M30 o reset." .
+
+ex:Variable_Temporal_MAXJERK
+    a ex:Parametro ;
+    rdfs:label "Variable temporal MAXJERK" ;
+    ex:identificador "(V.)[ch].G.MAXJERK" ;
+    ex:textoExtracto "La variable (V.)[ch].G.MAXJERK permite modificar temporalmente, en un momento dado y en tiempo real, el valor definido por el parámetro máquina." .
+
+ex:Parametro_MAXACCEL
+    ex:monitoreaParametro ex:Variable_Temporal_MAXACCEL .
+
+ex:Parametro_MAXJERK
+    ex:monitoreaParametro ex:Variable_Temporal_MAXJERK .

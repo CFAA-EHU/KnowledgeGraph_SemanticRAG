@@ -1,29 +1,49 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaCinematicoTipo51 a ex:Sistema ;
-    ex:textoExtracto """Esta cinemática permite controlar cualquier tipo de mesa que tenga como máximo dos ejes rotativos. Definición vectorial de la cinemáticas. Este tipo de cinemáticas permite definir los ejes rotativos que la componen mediante vectores. Cada uno de los ejes rotativos de la cinemática se define mediante un vector traslación (posición del eje) y un vector dirección (dirección del eje). El vector traslación podrá tener su origen en cualquier punto del eje de giro del eje rotativo. Este punto de referencia será el mismo para todos los vectores de traslación asociados a ese eje. En adelante, todas las explicaciones se realizan suponiendo que los ejes principales son X Y Z. V1 T1: Vector traslación del primer eje rotativo. T2 T2: Vector traslación del segundo eje rotativo. V2 T1 Z V1: Vector dirección del primer eje rotativo. V2: Vector dirección del segundo eje rotativo. X Y T1 (TDATA1, TDATA2, TDATA3) Z Y X T2 (TDATA11, TDATA12, TDATA13) V1 (TDATA4, TDATA5, TDATA6) V2 (TDATA14, TDATA15, TDATA16) TDATA 11(+) TDATA 1(+) TDATA 2(+) TDATA 12(+) V1 V2 TDATA 3(+) V2 V1 Z Z Y X V2 T1 (TDATA1, TDATA2, TDATA3) T2 (TDATA11, TDATA12, TDATA13) V1 (TDATA4, TDATA5, TDATA6) V2 (TDATA14, TDATA15, TDATA16) V1 TDATA 1(+) TDATA 2(+)""" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeRotativo1 a ex:ComponenteMecanico ;
-    ex:textoExtracto """V1 T1: Vector traslación del primer eje rotativo. V2 T1 Z V1: Vector dirección del primer eje rotativo.""" .
+ex:MesaTipo51
+    a ex:Sistema ;
+    rdfs:label "Mesa con cinemática tipo 51 (máx. 2 ejes rotativos)"@es ;
+    ex:textoExtracto "Esta cinemática permite controlar cualquier tipo de mesa que tenga como máximo dos ejes rotativos. Definición vectorial de la cinemáticas."@es ;
+    ex:tieneComponente ex:EjeRotativo1 ;
+    ex:tieneComponente ex:EjeRotativo2 .
 
-ex:EjeRotativo2 a ex:ComponenteMecanico ;
-    ex:textoExtracto """T2 T2: Vector traslación del segundo eje rotativo. V2: Vector dirección del segundo eje rotativo.""" .
+ex:EjeRotativo1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Primer eje rotativo (T1, V1)"@es ;
+    ex:textoExtracto "Cada uno de los ejes rotativos de la cinemática se define mediante un vector traslación (posición del eje) y un vector dirección (dirección del eje). V1 T1: Vector traslación del primer eje rotativo. V1: Vector dirección del primer eje rotativo."@es ;
+    ex:tieneComponente ex:VectorTraslacion1 ;
+    ex:tieneComponente ex:VectorDireccion1 .
 
-ex:VectorTraslacionEje1 a ex:Parametro ;
-    ex:identificador "T1" ;
-    ex:textoExtracto """V1 T1: Vector traslación del primer eje rotativo. X Y T1 (TDATA1, TDATA2, TDATA3)""" .
+ex:EjeRotativo2
+    a ex:ComponenteMecanico ;
+    rdfs:label "Segundo eje rotativo (T2, V2)"@es ;
+    ex:textoExtracto "T2: Vector traslación del segundo eje rotativo. V2: Vector dirección del segundo eje rotativo."@es ;
+    ex:tieneComponente ex:VectorTraslacion2 ;
+    ex:tieneComponente ex:VectorDireccion2 .
 
-ex:VectorDireccionEje1 a ex:Parametro ;
-    ex:identificador "V1" ;
-    ex:textoExtracto """V2 T1 Z V1: Vector dirección del primer eje rotativo. V1 (TDATA4, TDATA5, TDATA6)""" .
+ex:VectorTraslacion1
+    a ex:Parametro ;
+    rdfs:label "Vector traslación T1 (TDATA1, TDATA2, TDATA3)"@es ;
+    ex:textoExtracto "T1 (TDATA1, TDATA2, TDATA3)"@es ;
+    ex:valor "TDATA1,TDATA2,TDATA3" .
 
-ex:VectorTraslacionEje2 a ex:Parametro ;
-    ex:identificador "T2" ;
-    ex:textoExtracto """T2 T2: Vector traslación del segundo eje rotativo. Z Y X T2 (TDATA11, TDATA12, TDATA13)""" .
+ex:VectorDireccion1
+    a ex:Parametro ;
+    rdfs:label "Vector dirección V1 (TDATA4, TDATA5, TDATA6)"@es ;
+    ex:textoExtracto "V1 (TDATA4, TDATA5, TDATA6)"@es ;
+    ex:valor "TDATA4,TDATA5,TDATA6" .
 
-ex:VectorDireccionEje2 a ex:Parametro ;
-    ex:identificador "V2" ;
-    ex:textoExtracto """V2: Vector dirección del segundo eje rotativo. V2 (TDATA14, TDATA15, TDATA16)""" .
+ex:VectorTraslacion2
+    a ex:Parametro ;
+    rdfs:label "Vector traslación T2 (TDATA11, TDATA12, TDATA13)"@es ;
+    ex:textoExtracto "T2 (TDATA11, TDATA12, TDATA13)"@es ;
+    ex:valor "TDATA11,TDATA12,TDATA13" .
 
-ex:SistemaCinematicoTipo51 ex:compuestoPor ex:EjeRotativo1, ex:EjeRotativo2 .
-ex:EjeRotativo1 ex:tieneComponente ex:VectorTraslacionEje1, ex:VectorDireccionEje1 .
-ex:EjeRotativo2 ex:tieneComponente ex:VectorTraslacionEje2, ex:VectorDireccionEje2 .
+ex:VectorDireccion2
+    a ex:Parametro ;
+    rdfs:label "Vector dirección V2 (TDATA14, TDATA15, TDATA16)"@es ;
+    ex:textoExtracto "V2 (TDATA14, TDATA15, TDATA16)"@es ;
+    ex:valor "TDATA14,TDATA15,TDATA16" .

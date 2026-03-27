@@ -1,18 +1,25 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Parametro_MANUAL ex:textoExtracto """Parámetro incluido en la tabla MANUAL.""" ;
-    a ex:Parametro ;
-    ex:identificador "MANUAL" ;
-    ex:valor "De 0 a 100" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_IPOACCP ex:textoExtracto """IPOACCP Máximo porcentaje aceleración de ejecución en G201.""" ;
+ex:Parametro_MPA_MANACCP
     a ex:Parametro ;
+    rdfs:label "Parámetro MPA.MANACCP (aceleración manual)"@es ;
+    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 100. Valor por defecto: 20. Variable asociada: (V.)[ch].MPA.MANACCP.xn"@es ;
+    ex:identificador "MPA.MANACCP" ;
+    ex:valor "20" ;
+    ex:documentadoEn ex:Tabla_MANUAL .
+
+ex:Parametro_IPOACCP
+    a ex:Parametro ;
+    rdfs:label "Parámetro IPOACCP (máximo % aceleración en G201)"@es ;
+    ex:textoExtracto "IPOACCP Máximo porcentaje aceleración de ejecución en G201. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 100. Valor por defecto: 80. Variable asociada: (V.)[ch].MPA.IPOACCP.xn"@es ;
     ex:identificador "IPOACCP" ;
-    ex:valor "De 0 a 100" .
+    ex:valor "80" ;
+    ex:documentadoEn ex:Tabla_MANUAL .
 
 ex:Tabla_MANUAL a ex:Tabla ;
-    ex:textoExtracto """Parámetro incluido en la tabla MANUAL.""" ;
-    a ex:Tabla ;
-    ex:identificador "MANUAL" .
-
-ex:Tabla_MANUAL a ex:Tabla ;
-    ex:tieneComponente ex:Parametro_MANUAL, ex:Parametro_IPOACCP .
+     a ex:Tabla ;
+    rdfs:label "Tabla MANUAL (parámetros de máquina)"@es ;
+    ex:textoExtracto "Parámetro incluido en la tabla MANUAL"@es .

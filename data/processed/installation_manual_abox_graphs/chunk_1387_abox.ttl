@@ -1,59 +1,101 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ALIGNC ex:textoExtracto "Secuencia 'ALIGNC = No' (2 viñetas): la herramienta puede mecanizar diametralmente toda la superficie sin girar el eje C." ;
-    a ex:Parametro ;
-    ex:identificador "ALIGNC" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeC ex:textoExtracto "eje C" ;
-    a ex:ComponenteMecanico ;
-    rdfs:label "eje C" .
+### Página 117: Configuración del eje C
+ex:ModoOperacion_AlignC_No
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo ALIGNC = No"@es ;
+    ex:textoExtracto
+        "la herramienta puede mecanizar diametralmente toda la superficie sin girar el eje C. Las viñetas muestran la trayectoria continua sobre el cilindro, resaltando la ausencia de realineamiento intermedio."@es .
 
-ex:LINEAR ex:textoExtracto "LINEAR" ;
-    a ex:ModoOperacion .
+### Página 125: Perfiles de movimiento (SLOPETYPE)
+ex:Tabla_PerfilesMovimiento_SLOPETYPE a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Comparativa de perfiles de movimiento (LINEAR, TRAPEZOIDAL, SQUARE SINE)"@es ;
+    ex:textoExtracto
+        "Conjunto de tres gráficos comparativos de perfiles de movimiento: LINEAR, TRAPEZOIDAL y SQUARE SINE. Para cada uno se representan velocidad v(t), aceleración a(t) y jerk j(t). La aceleración trapezoidal y seno-cuadrado suavizan cambios (jerk limitado), mientras que la lineal muestra transiciones bruscas; sirve para elegir el tipo de aceleración por defecto según dinámica y suavidad mecánica."@es .
 
-ex:TRAPEZOIDAL ex:textoExtracto "TRAPEZOIDAL" ;
-    a ex:ModoOperacion .
+ex:Parametro_SLOPETYPE_LINEAR
+    a               ex:Parametro ;
+    rdfs:label      "Perfil LINEAR (SLOPETYPE)"@es ;
+    ex:textoExtracto
+        "velocidad v(t), aceleración a(t) y jerk j(t) [...] la lineal muestra transiciones bruscas"@es ;
+    ex:documentadoEn ex:Tabla_PerfilesMovimiento_SLOPETYPE .
 
-ex:SQUARE_SINE ex:textoExtracto "SQUARE SINE" ;
-    a ex:ModoOperacion .
+ex:Parametro_SLOPETYPE_TRAPEZOIDAL
+    a               ex:Parametro ;
+    rdfs:label      "Perfil TRAPEZOIDAL (SLOPETYPE)"@es ;
+    ex:textoExtracto
+        "aceleración trapezoidal [...] suavizan cambios (jerk limitado)"@es ;
+    ex:documentadoEn ex:Tabla_PerfilesMovimiento_SLOPETYPE .
 
-ex:SLOPETYPE ex:textoExtracto "SLOPETYPE" ;
-    a ex:Parametro .
+ex:Parametro_SLOPETYPE_SQUARE_SINE
+    a               ex:Parametro ;
+    rdfs:label      "Perfil SQUARE SINE (SLOPETYPE)"@es ;
+    ex:textoExtracto
+        "seno-cuadrado suavizan cambios (jerk limitado)"@es ;
+    ex:documentadoEn ex:Tabla_PerfilesMovimiento_SLOPETYPE .
 
-ex:PRB1 ex:textoExtracto "PRB1" ;
-    a ex:Sensor .
+### Página 140: Límites del palpador de sobremesa (PRB1/PRB2/PRB3)
+ex:Esquema_LimitesPalpador_PRB
+    a               ex:Esquema ;
+    rdfs:label      "Esquema de límites PRB1/PRB2/PRB3 del palpador"@es ;
+    ex:textoExtracto
+        "Esquema de límites PRB1/PRB2/PRB3 (máximos y mínimos) del palpador sobre los tres primeros ejes del canal. Incluye un triedro X-Y-Z y vistas en planta con un bloque de referencia; flechas bidireccionales marcan cotas máximas y mínimas de cada eje, indicando que las posiciones se definen en coordenadas máquina (en torno, en radios)."@es .
 
-ex:PRB2 ex:textoExtracto "PRB2" ;
-    a ex:Sensor .
+ex:Parametro_Limite_PRB1
+    a               ex:Parametro ;
+    rdfs:label      "Límite PRB1 (eje)"@es ;
+    ex:identificador "PRB1" ;
+    ex:detalladoEnEsquema ex:Esquema_LimitesPalpador_PRB ;
+    ex:textoExtracto
+        "límites PRB1/PRB2/PRB3 (máximos y mínimos) del palpador sobre los tres primeros ejes"@es .
 
-ex:PRB3 ex:textoExtracto "PRB3" ;
-    a ex:Sensor .
+ex:Parametro_Limite_PRB2
+    a               ex:Parametro ;
+    rdfs:label      "Límite PRB2 (eje)"@es ;
+    ex:identificador "PRB2" ;
+    ex:detalladoEnEsquema ex:Esquema_LimitesPalpador_PRB ;
+    ex:textoExtracto
+        "límites PRB1/PRB2/PRB3 (máximos y mínimos) del palpador sobre los tres primeros ejes"@es .
 
-ex:PalpadorSobremesa ex:textoExtracto "palpador de sobremesa" ;
-    a ex:ComponenteMecanico ;
-    ex:tieneComponente ex:PRB1, ex:PRB2, ex:PRB3 .
+ex:Parametro_Limite_PRB3
+    a               ex:Parametro ;
+    rdfs:label      "Límite PRB3 (eje)"@es ;
+    ex:identificador "PRB3" ;
+    ex:detalladoEnEsquema ex:Esquema_LimitesPalpador_PRB ;
+    ex:textoExtracto
+        "límites PRB1/PRB2/PRB3 (máximos y mínimos) del palpador sobre los tres primeros ejes"@es .
 
-ex:LONGAXIS ex:textoExtracto "LONGAXIS" ;
-    a ex:Parametro .
+### Página 154: Configuración de ejes en torno (LONGAXIS, FACEAXIS, CAXIS)
+ex:Esquema_EjesTorno_LONGAXIS_FACEAXIS_CAXIS
+    a               ex:Esquema ;
+    rdfs:label      "Diagrama isométrico de ejes en máquina tipo torno (LONGAXIS, FACEAXIS, CAXIS)"@es ;
+    ex:textoExtracto
+        "Diagrama isométrico del husillo y su entorno inmediato que identifica la relación entre los parámetros LONGAXIS (eje longitudinal), FACEAXIS (eje transversal) y CAXIS (eje rotativo)."@es .
 
-ex:FACEAXIS ex:textoExtracto "FACEAXIS" ;
-    a ex:Parametro .
+ex:Parametro_LONGAXIS
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro LONGAXIS (eje longitudinal)"@es ;
+    ex:identificador "LONGAXIS" ;
+    ex:detalladoEnEsquema ex:Esquema_EjesTorno_LONGAXIS_FACEAXIS_CAXIS ;
+    ex:textoExtracto
+        "LONGAXIS (eje longitudinal)"@es .
 
-ex:CAXIS ex:textoExtracto "CAXIS" ;
-    a ex:Parametro .
+ex:Parametro_FACEAXIS
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro FACEAXIS (eje transversal)"@es ;
+    ex:identificador "FACEAXIS" ;
+    ex:detalladoEnEsquema ex:Esquema_EjesTorno_LONGAXIS_FACEAXIS_CAXIS ;
+    ex:textoExtracto
+        "FACEAXIS (eje transversal)"@es .
 
-ex:Husillo ex:textoExtracto "husillo" ;
-    a ex:ComponenteMecanico ;
-    ex:tieneComponente ex:LONGAXIS, ex:FACEAXIS, ex:CAXIS .
-
-ex:EsquemaLimitesPRB ex:textoExtracto "Esquema de límites PRB1/PRB2/PRB3 (máximos y mínimos) del palpador sobre los tres primeros ejes del canal. Incluye un triedro X-Y-Z y vistas en planta con un bloque de referencia; flechas bidireccionales marcan cotas máximas y mínimas de cada eje, indicando que las posiciones se definen en coordenadas máquina (en torno, en radios)." ;
-    a ex:Esquema ;
-    ex:compuestoPor ex:PRB1, ex:PRB2, ex:PRB3 .
-
-ex:DiagramaPerfilesMovimiento ex:textoExtracto "Conjunto de tres gráficos comparativos de perfiles de movimiento: LINEAR, TRAPEZOIDAL y SQUARE SINE. Para cada uno se representan velocidad v(t), aceleración a(t) y jerk j(t)." ;
-    a ex:Esquema ;
-    ex:compuestoPor ex:LINEAR, ex:TRAPEZOIDAL, ex:SQUARE_SINE .
-
-ex:DiagramaHusilloEntorno ex:textoExtracto "Diagrama isométrico del husillo y su entorno inmediato que identifica la relación entre los parámetros LONGAXIS (eje longitudinal), FACEAXIS (eje transversal) y CAXIS (eje rotativo)." ;
-    a ex:Esquema ;
-    ex:compuestoPor ex:Husillo, ex:LONGAXIS, ex:FACEAXIS, ex:CAXIS .
+ex:Parametro_CAXIS
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro CAXIS (eje rotativo)"@es ;
+    ex:identificador "CAXIS" ;
+    ex:detalladoEnEsquema ex:Esquema_EjesTorno_LONGAXIS_FACEAXIS_CAXIS ;
+    ex:textoExtracto
+        "CAXIS (eje rotativo)"@es .

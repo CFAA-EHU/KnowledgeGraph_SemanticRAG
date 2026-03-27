@@ -1,37 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TransformacionAngularEjeInclinado_576_309 a ex:ModoOperacion ;
-    rdfs:label "Transformación angular de eje inclinado" ;
-    ex:textoExtracto "La transformación angular de eje inclinado permite programar desplazamientos en coordenadas cartesianas y ejecutarlos en un plano no cartesiano; es decir, en un plano donde los ejes no están a 90º entre ellos." ;
-    ex:textoExtracto "Para poder programar en el sistema cartesiano (Z-X), hay que activar una transformación angular de eje inclinado que convierta los movimientos a los ejes reales no perpendiculares (Z-X')." ;
-    ex:textoExtracto "Los ejes que configuran la transformación angular deben cumplir los siguientes requisitos: • La transformación angular se puede definir con cualquier pareja de ejes del sistema, pero para activar la transformación ambos ejes deben pertenecer al mismo canal. • Ambos ejes deben ser lineales. • Ambos ejes pueden ser ejes maestros en una pareja de ejes acoplados o ejes gantry." ;
-    ex:textoExtracto "Con la transformación angular activa no se permite la búsqueda de referencia máquina." ;
-    ex:textoExtracto "En caso contrario, se visualizan las cotas de los ejes reales." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SentenciaANGAXON_576_309 a ex:Parametro ;
+ex:TransformacionAngularEjeInclinado
+    a ex:ModoOperacion ;
+    rdfs:label "Transformación angular de eje inclinado"@es ;
+    ex:textoExtracto "La transformación angular de eje inclinado permite programar desplazamientos en coordenadas cartesianas y ejecutarlos en un plano no cartesiano; es decir, en un plano donde los ejes no están a 90º entre ellos."@es ;
+    ex:textoExtracto "Un caso típico es el eje X de torno que por motivos de robustez no forma 90º con el eje Z, sino que tiene otro valor."@es ;
+    ex:textoExtracto "Para poder programar en el sistema cartesiano (Z-X), hay que activar una transformación angular de eje inclinado que convierta los movimientos a los ejes reales no perpendiculares (Z-X')."@es .
+
+ex:SistemaCartesiano_ZX
+    a ex:Sistema ;
+    rdfs:label "Sistema cartesiano (Z-X)"@es ;
+    ex:textoExtracto "programar en el sistema cartesiano (Z-X)"@es .
+
+ex:SistemaEjesNoPerpendiculares_ZX
+    a ex:Sistema ;
+    rdfs:label "Sistema de ejes no perpendiculares (Z-X')"@es ;
+    ex:textoExtracto "ejes reales no perpendiculares (Z-X')"@es ;
+    ex:textoExtracto "Un caso típico es el eje X de torno que [...] no forma 90º con el eje Z, sino que tiene otro valor. X [...] Eje angular. Z [...] Eje ortogonal."@es .
+
+ex:EjeX
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje angular X'"@es ;
+    ex:textoExtracto "X' [...] Eje angular"@es .
+
+ex:EjeZ
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje ortogonal Z"@es ;
+    ex:textoExtracto "Z [...] Eje ortogonal"@es .
+
+ex:Sentencia_ANGAX_ON
+    a ex:Parametro ;
     rdfs:label "#ANGAX ON" ;
-    ex:textoExtracto "la activación de las transformaciones angulares se realiza desde el programa pieza mediante la sentencia #ANGAX ON." .
+    ex:identificador "#ANGAX ON" ;
+    ex:textoExtracto "la activación de las transformaciones angulares se realiza desde el programa pieza mediante la sentencia #ANGAX ON"@es .
 
-ex:EjeCartesiano_576_309 a ex:Componente ;
-    rdfs:label "Eje cartesiano" ;
-    ex:textoExtracto "X Eje cartesiano." .
+ex:TransformacionAngularEjeInclinado
+    ex:controla ex:SistemaEjesNoPerpendiculares_ZX ;
+    ex:habilitadoPor ex:Sentencia_ANGAX_ON .
 
-ex:EjeAngular_576_309 a ex:Componente ;
-    rdfs:label "Eje angular" ;
-    ex:textoExtracto "X' Eje angular." .
-
-ex:EjeOrtogonal_576_309 a ex:Componente ;
-    rdfs:label "Eje ortogonal" ;
-    ex:textoExtracto "Z Eje ortogonal." .
-
-ex:EjeX_576_309 a ex:Componente ;
-    rdfs:label "Eje X" ;
-    ex:textoExtracto "Un caso típico es el eje X de torno que por motivos de robustez no forma 90º con el eje Z, sino que tiene otro valor." .
-
-ex:EjeZ_576_309 a ex:Componente ;
-    rdfs:label "Eje Z" ;
-    ex:textoExtracto "Un caso típico es el eje X de torno que por motivos de robustez no forma 90º con el eje Z, sino que tiene otro valor." .
-
-ex:CNC_576_309 a ex:Maquina ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "El CNC no asume ninguna transformación tras el encendido." .
+ex:SistemaEjesNoPerpendiculares_ZX
+    ex:compuestoPor ex:EjeX ;
+    ex:compuestoPor ex:EjeZ .

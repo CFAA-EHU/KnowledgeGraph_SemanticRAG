@@ -1,18 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:NDOMOD a ex:Parametro ;
-    ex:identificador "NDOMOD" ;
-    ex:textoExtracto "NDOMOD Número de bloques lógicos de salidas digitales. Valores posibles: De 0 a 42. Valor por defecto: 0 (no se desea personalizar la numeración). Variable asociada: (V.)MPG.NDOMOD Este parámetro indica la cantidad de bloques lógicos en los que se dividen los módulos de salidas digitales conectados en el bus CANopen. Tras definir este parámetro, el CNC permite personalizar la numeración de las salidas digitales de cada bloque lógico, asignando un índice base a la primera de ellas. • En los nodos RIO5 y RIOR, cada módulo es un bloque lógico, no se permite agrupar varios módulos en un bloque ni dividir un módulo en bloques. Los bloques lógicos deben coincidir en número y dimensión con los módulos detectados físicamente en el bus. • En los nodos RIO5, cada módulo doble (módulo con dos placas) cuenta como dos; es decir, dos bloques lógicos. • En los nodos RIOW y de terceros, se permite virtualizar los bloques lógicos que se desee, tanto en número como en dimensión. Si no se define este parámetro, el CNC numera las salidas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DOMODADDR a ex:Parametro ;
-    ex:identificador "DOMODADDR" ;
-    ex:textoExtracto "DOMODADDR Direcciones base de los bloques lógicos de salidas digitales. Este parámetro muestra la tabla para personalizar los bloques lógicos de salidas digitales. Para cada bloque hay que definir los siguientes campos." .
-
-ex:ParametroNDOMOD a ex:Parametro ;
+ex:Parametro_NDOMOD
+    a ex:Parametro ;
+    rdfs:label "NDOMOD" ;
     ex:identificador "MPG.NDOMOD" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.NDOMOD" .
+    ex:textoExtracto "NDOMOD Número de bloques lógicos de salidas digitales. Valores posibles: De 0 a 42. Valor por defecto: 0 (no se desea personalizar la numeración). Variable asociada: (V.)MPG.NDOMOD Este parámetro indica la cantidad de bloques lógicos en los que se dividen los módulos de salidas digitales conectados en el bus CANopen." ;
+    ex:valor "0"^^xsd:integer .
 
-ex:SistemaCANopen a ex:Sistema ;
-    ex:textoExtracto "módulos de salidas digitales conectados en el bus CANopen" .
+ex:Parametro_DOMODADDR
+    a ex:Parametro ;
+    rdfs:label "DOMODADDR" ;
+    ex:textoExtracto "DOMODADDR Direcciones base de los bloques lógicos de salidas digitales. Este parámetro muestra la tabla para personalizar los bloques lógicos de salidas digitales." .
 
-ex:ParametroNDOMOD ex:valor "0 a 42" ;
-    ex:valor "0" .
+ex:Sistema_CANopen
+    a ex:Sistema ;
+    rdfs:label "Bus CANopen" ;
+    ex:textoExtracto "módulos de salidas digitales conectados en el bus CANopen" ;
+    ex:tieneComponente ex:ComponenteElectrico_ModulosSalidasDigitales .
+
+ex:ComponenteElectrico_ModulosSalidasDigitales
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulos de salidas digitales" ;
+    ex:textoExtracto "módulos de salidas digitales conectados en el bus CANopen" ;
+    ex:monitoreaParametro ex:Parametro_NDOMOD ;
+    ex:monitoreaParametro ex:Parametro_DOMODADDR .
+
+ex:Nodo_RIO5
+    a ex:ComponenteElectrico ;
+    rdfs:label "Nodo RIO5" ;
+    ex:textoExtracto "En los nodos RIO5 y RIOR, cada módulo es un bloque lógico, no se permite agrupar varios módulos en un bloque ni dividir un módulo en bloques." .
+
+ex:Nodo_RIOR
+    a ex:ComponenteElectrico ;
+    rdfs:label "Nodo RIOR" ;
+    ex:textoExtracto "En los nodos RIO5 y RIOR, cada módulo es un bloque lógico, no se permite agrupar varios módulos en un bloque ni dividir un módulo en bloques." .
+
+ex:Nodo_RIOW
+    a ex:ComponenteElectrico ;
+    rdfs:label "Nodo RIOW" ;
+    ex:textoExtracto "En los nodos RIOW y de terceros, se permite virtualizar los bloques lógicos que se desee, tanto en número como en dimensión." .

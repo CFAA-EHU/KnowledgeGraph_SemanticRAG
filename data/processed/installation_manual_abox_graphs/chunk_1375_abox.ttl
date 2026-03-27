@@ -1,25 +1,36 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-ex:ModoOperacionConfiguracion a ex:ModoOperacion ;
-    ex:textoExtracto "configuración del modo de trabajo (rango de medición)" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:VistaBloques a ex:InterfazUsuario ;
-    ex:textoExtracto "En la vista de bloques, hacer clic sobre un módulo para acceder a sus propiedades" .
-
-ex:ModuloEntradasAnalogicasFagorIBILAI4UPAC a ex:ComponenteElectrico ;
+ex:ModuloEntradaAnalogica_Fagor_IB_IL_AI_4_U_PAC
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Módulo Fagor IB IL AI 4 - U-PAC" ;
     ex:identificador "Fagor IB IL AI 4 - U-PAC" ;
-    ex:textoExtracto "Entradas analógicas Fagor (por ejemplo, el módulo Fagor IB IL AI 4 - U-PAC)" .
+    ex:textoExtracto "Entradas analógicas Fagor (por ejemplo, el módulo Fagor IB IL AI 4 - U-PAC). Estos módulos, además del número de la primera entrada, permiten configurar el rango de medición de cada entrada, así como la frecuencia del muestreo." .
 
-ex:ModuloSalidasAnalogicasFagorIBILOA2UPAC a ex:ComponenteElectrico ;
+ex:ModuloSalidaAnalogica_Fagor_IB_IL_AO_2_U_PAC
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Módulo Fagor IB IL AO 2 - U-PAC" ;
     ex:identificador "Fagor IB IL AO 2 - U-PAC" ;
-    ex:textoExtracto "Salidas analógicas Fagor (por ejemplo, el módulo Fagor IB IL AO 2 - U-PAC)" .
+    ex:textoExtracto "Salidas analógicas Fagor (por ejemplo, el módulo Fagor IB IL AO 2 - U-PAC). Estos módulos, además del número de la primera salida, permiten configurar el rango de medición de cada salida." .
 
-ex:MaquinaConfigurable a ex:Maquina ;
-    ex:textoExtracto "La configuración del modo de trabajo (rango de medición) de estos módulos se realiza desde el mapeador" ;
-    ex:compuestoPor ex:ModuloEntradasAnalogicasFagorIBILAI4UPAC, ex:ModuloSalidasAnalogicasFagorIBILOA2UPAC .
+ex:InterfazConfiguracionModulosAnalogicos
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Interfaz de configuración de módulos analógicos (mapeador)" ;
+    ex:textoExtracto "La configuración del modo de trabajo (rango de medición) de estos módulos se realiza desde el mapeador. En la vista de bloques, hacer clic sobre un módulo para acceder a sus propiedades." ;
+    ex:controla    ex:ModuloEntradaAnalogica_Fagor_IB_IL_AI_4_U_PAC ;
+    ex:controla    ex:ModuloSalidaAnalogica_Fagor_IB_IL_AO_2_U_PAC .
 
-ex:FrecuenciaMuestreo a ex:Frecuencia ;
-    ex:textoExtracto "permiten configurar ... la frecuencia del muestreo" .
+ex:ParametroRangoMedicion
+    a               ex:Parametro ;
+    rdfs:label      "Rango de medición" ;
+    ex:textoExtracto "permiten configurar el rango de medición de cada entrada... el rango de medición de cada salida" ;
+    ex:monitoreaParametro ex:ModuloEntradaAnalogica_Fagor_IB_IL_AI_4_U_PAC ;
+    ex:monitoreaParametro ex:ModuloSalidaAnalogica_Fagor_IB_IL_AO_2_U_PAC .
 
-ex:ParametroRangoMedicion a ex:Parametro ;
-    ex:textoExtracto "permiten configurar el rango de medición de cada entrada, así como la frecuencia del muestreo" .
+ex:ParametroFrecuenciaMuestreo
+    a               ex:Parametro ;
+    rdfs:label      "Frecuencia de muestreo" ;
+    ex:textoExtracto "permiten configurar... la frecuencia del muestreo" ;
+    ex:monitoreaParametro ex:ModuloEntradaAnalogica_Fagor_IB_IL_AI_4_U_PAC .

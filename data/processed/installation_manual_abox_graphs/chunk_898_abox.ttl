@@ -1,15 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:MZROT a ex:ModoOperacion ;
-    ex:textoExtracto "activar la marca MZROT" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TMOPERATION a ex:Parametro ;
-    ex:textoExtracto "TMOPERATION = 15" .
+ex:Marca_MZROT
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Marca MZROT" ;
+    ex:textoExtracto "activar la marca MZROT"@es ;
+    ex:identificador "MZROT" .
 
-ex:TAKEPOS a ex:Parametro ;
-    ex:textoExtracto "TAKEPOS Este registro tomará valor ꞏ0ꞏ si es un posicionamiento absoluto y valor ꞏ1ꞏ si es un posicionamiento relativo." .
+ex:Parametro_TMOPERATION
+    a               ex:Parametro ;
+    rdfs:label      "Tiempo de operación (TMOPERATION)" ;
+    ex:textoExtracto "TMOPERATION = 15"@es ;
+    ex:valor         "15" ;
+    ex:identificador "TMOPERATION" .
 
-ex:LEAVEPOS a ex:Parametro ;
-    ex:textoExtracto "LEAVEPOS Este registro tomará valor ꞏ0ꞏ si es un posicionamiento relativo positivo y valor ꞏ1ꞏ si es un posicionamiento relativo negativo." .
+ex:Parametro_TAKEPOS
+    a               ex:Parametro ;
+    rdfs:label      "Tipo de posicionamiento (TAKEPOS)" ;
+    ex:textoExtracto "TAKEPOS [...] tomará valor ꞏ0ꞏ si es un posicionamiento absoluto y valor ꞏ1ꞏ si es un posicionamiento relativo"@es ;
+    ex:identificador "TAKEPOS" .
 
-ex:NEXTPOS a ex:Parametro ;
-    ex:textoExtracto "NEXTPOS En un posicionamiento absoluto este registro indica la posición a alcanzar y en un posicionamiento relativo indica el número de posiciones a girar." .
+ex:Parametro_LEAVEPOS
+    a               ex:Parametro ;
+    rdfs:label      "Dirección de posicionamiento (LEAVEPOS)" ;
+    ex:textoExtracto "LEAVEPOS [...] tomará valor ꞏ0ꞏ si es un posicionamiento relativo positivo y valor ꞏ1ꞏ si es un posicionamiento relativo negativo"@es ;
+    ex:identificador "LEAVEPOS" .
+
+ex:Parametro_NEXTPOS
+    a               ex:Parametro ;
+    rdfs:label      "Posición objetivo (NEXTPOS)" ;
+    ex:textoExtracto "NEXTPOS [...] indica la posición a alcanzar [...] o el número de posiciones a girar"@es ;
+    ex:identificador "NEXTPOS" .
+
+ex:ModoOperacion_PosicionamientoAlmacen
+    a               ex:ModoOperacion ;
+    rdfs:label      "Posicionamiento del almacén" ;
+    ex:textoExtracto "Seleccionar una posición del almacén [...] secuencia de esta operación"@es ;
+    ex:tieneComponente ex:Parametro_TMOPERATION ;
+    ex:tieneComponente ex:Parametro_TAKEPOS ;
+    ex:tieneComponente ex:Parametro_LEAVEPOS ;
+    ex:tieneComponente ex:Parametro_NEXTPOS ;
+    ex:habilitadoPor  ex:Marca_MZROT .

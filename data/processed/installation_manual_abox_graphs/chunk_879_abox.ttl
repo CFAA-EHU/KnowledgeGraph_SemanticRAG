@@ -1,18 +1,28 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:RegistroMZPOS a ex:Parametro ;
-    rdfs:label "MZPOS" ;
-    ex:textoExtracto "MZPOS" ;
-    ex:valor "posición actual del almacén"@es ;
-    ex:textoExtracto "El PLC debe indicar en este registro la posición actual del almacén"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:RegistroGestor a ex:Parametro ;
-    rdfs:label "marca para gestor"@es ;
-    ex:textoExtracto "esta marca a (=1)"@es ;
-    ex:valor "indicar al gestor que debe continuar la ejecución del programa mientras se deja la herramienta en el almacén"@es ;
-    ex:textoExtracto "El PLC debe poner esta marca a (=1) para indicar al gestor que debe continuar la ejecución del programa mientras se deja la herramienta en el almacén."@es .
-
-ex:SistemaPLC a ex:Sistema ;
+ex:MarcaMZPOS
+    a ex:Parametro ;
+    rdfs:label "Marca MZPOS"@es ;
     ex:textoExtracto "El PLC debe poner esta marca a (=1) para indicar al gestor que debe continuar la ejecución del programa mientras se deja la herramienta en el almacén."@es ;
-    ex:textoExtracto "El PLC debe indicar en este registro la posición actual del almacén"@es ;
-    ex:compuestoPor ex:RegistroMZPOS, ex:RegistroGestor .
+    ex:identificador "MZPOS" ;
+    ex:monitoreaParametro ex:SistemaComunicacionPLC_Gestor .
+
+ex:RegistroPosicionAlmacen
+    a ex:Parametro ;
+    rdfs:label "Registro de posición del almacén"@es ;
+    ex:textoExtracto "El PLC debe indicar en este registro la posición actual del almacén; si no se desea utilizar este registro, el PLC debe ponerlo a '0'."@es ;
+    ex:monitoreaParametro ex:SistemaComunicacionPLC_Gestor .
+
+ex:SistemaComunicacionPLC_Gestor
+    a ex:Sistema ;
+    rdfs:label "Sistema de comunicación PLC-Gestor"@es ;
+    ex:textoExtracto "Comunicación PLC --> Gestor. [...] El PLC debe poner esta marca a (=1) para indicar al gestor que debe continuar la ejecución del programa [...] El PLC debe indicar en este registro la posición actual del almacén."@es .
+
+ex:Sentencia_ROTATEMZ
+    a ex:ModoOperacion ;
+    rdfs:label "Sentencia #ROTATEMZ"@es ;
+    ex:textoExtracto "En almacenes torreta se puede seleccionar una posición (sentencia #ROTATEMZ)."@es ;
+    ex:requiereMantenimiento ex:SistemaComunicacionPLC_Gestor .

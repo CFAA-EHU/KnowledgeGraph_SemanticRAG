@@ -1,24 +1,77 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:IconoAyuda ex:textoExtracto "un icono que indica la existencia de archivo de ayuda asociado" ;
-    a ex:InterfazUsuario ;
-    ex:identificador "icono de ayuda" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:IconoMensajeSinAyuda ex:textoExtracto "un triángulo de advertencia que indica que el mensaje no tiene archivo de información adicional" ;
+### Interfaz de visualización de errores y ayudas contextuales
+ex:InterfazVisualizacionErroresPLC
     a ex:InterfazUsuario ;
-    ex:identificador "triángulo de advertencia" .
+    rdfs:label "Interfaz de visualización de errores y mensajes del PLC"@es ;
+    ex:textoExtracto "A la izquierda de algunas filas aparece un icono que indica la existencia de archivo de ayuda asociado. La imagen ejemplifica cómo el CNC presenta, prioriza y permite abrir ayudas asociadas a mensajes/errores del PLC."@es ;
+    ex:ilustradoEn ex:IconosEstadoMensajesPLC .
 
-ex:IconoMensajeConAyuda ex:textoExtracto "un icono verde que señala que sí existe archivo de ayuda asociado" ;
+ex:IconosEstadoMensajesPLC
     a ex:InterfazUsuario ;
-    ex:identificador "icono verde de ayuda" .
+    rdfs:label "Conjunto de iconos de estado de mensajes del PLC"@es ;
+    ex:textoExtracto "Conjunto de iconos de estado de mensajes: un triángulo de advertencia que indica que el mensaje no tiene archivo de información adicional, y un icono verde que señala que sí existe archivo de ayuda asociado. Estos pictogramas actúan como leyenda visual para interpretar rápidamente la disponibilidad de ayuda contextual."@es .
 
-ex:IconoSobretemperatura ex:textoExtracto "Recuadro de advertencia con icono triangular y texto sobre sobretemperatura (OVERTEMP)" ;
-    a ex:InterfazUsuario ;
-    ex:identificador "icono sobretemperatura" .
+### Señales de advertencia crítica (sobretemperatura)
+ex:AvisoSobretemperatura
+    a ex:AvisoSeguridad ;
+    rdfs:label "Advertencia de sobretemperatura (OVERTEMP)"@es ;
+    ex:textoExtracto "Recuadro de advertencia con icono triangular y texto sobre sobretemperatura (OVERTEMP). El bloque enfatiza que, si la marca se activa, existe riesgo para el equipo; el formato enmarcado y el símbolo de peligro aportan jerarquía visual y urgen a limitar la operativa del CNC hasta restablecer la temperatura."@es ;
+    ex:activaAlarma ex:AlarmaSobretemperatura .
 
-ex:DiagramaSecuenciaAparcadoDesaparcado ex:textoExtracto "Diagrama temporal multiseñal que muestra la secuencia de aparcado/desaparcado gestionada desde el CNC. Incluye trazas PARK(axis), UNPARK(axis), PARKED(axis), DRENA(axis) y REFPOIN(axis), numeradas (1–6) para los hitos del proceso. Se señalan ventanas temporales MINAENDW. El esquema clarifica la lógica: solicitud del CNC, actuación del PLC sobre habilitaciones/regulador y confirmación mediante PARKED/REFPOIN." ;
+ex:AlarmaSobretemperatura
+    a ex:Alarma ;
+    rdfs:label "Alarma por sobretemperatura (OVERTEMP)"@es ;
+    ex:textoExtracto "sobretemperatura (OVERTEMP). [...] existe riesgo para el equipo"@es .
+
+### Esquemas de secuencia temporal (aparcado/desaparcado)
+ex:EsquemaSecuenciaAparcadoCNC
     a ex:Esquema ;
-    ex:identificador "secuencia aparcado/desaparcado" .
+    rdfs:label "Diagrama temporal de secuencia de aparcado/desaparcado (iniciada desde CNC)"@es ;
+    ex:textoExtracto "Diagrama temporal multiseñal que muestra la secuencia de aparcado/desaparcado gestionada desde el CNC. Incluye trazas PARK(axis), UNPARK(axis), PARKED(axis), DRENA(axis) y REFPOIN(axis), numeradas (1–6) para los hitos del proceso. Se señalan ventanas temporales MINAENDW."@es ;
+    ex:detalladoEnEsquema ex:SenalPARK, ex:SenalUNPARK, ex:SenalPARKED, ex:SenalDRENA, ex:SenalREFPOIN, ex:VentanaTemporalMINAENDW .
 
-ex:DiagramaSecuenciaManiobraPLC ex:textoExtracto "Diagrama temporal análogo al anterior, pero para la maniobra iniciada desde el PLC." ;
+ex:EsquemaSecuenciaAparcadoPLC
     a ex:Esquema ;
-    ex:identificador "secuencia maniobra PLC" .
+    rdfs:label "Diagrama temporal de secuencia de aparcado/desaparcado (iniciada desde PLC)"@es ;
+    ex:textoExtracto "Diagrama temporal análogo al anterior, pero para la maniobra iniciada desde el PLC."@es .
+
+### Señales temporales (componentes del esquema)
+ex:SenalPARK
+    a ex:Parametro ;
+    rdfs:label "Señal PARK(axis)"@es ;
+    ex:identificador "PARK" ;
+    ex:textoExtracto "trazas PARK(axis)"@es .
+
+ex:SenalUNPARK
+    a ex:Parametro ;
+    rdfs:label "Señal UNPARK(axis)"@es ;
+    ex:identificador "UNPARK" ;
+    ex:textoExtracto "trazas UNPARK(axis)"@es .
+
+ex:SenalPARKED
+    a ex:Parametro ;
+    rdfs:label "Señal PARKED(axis)"@es ;
+    ex:identificador "PARKED" ;
+    ex:textoExtracto "trazas PARKED(axis)"@es .
+
+ex:SenalDRENA
+    a ex:Parametro ;
+    rdfs:label "Señal DRENA(axis)"@es ;
+    ex:identificador "DRENA" ;
+    ex:textoExtracto "trazas DRENA(axis)"@es .
+
+ex:SenalREFPOIN
+    a ex:Parametro ;
+    rdfs:label "Señal REFPOIN(axis)"@es ;
+    ex:identificador "REFPOIN" ;
+    ex:textoExtracto "trazas REFPOIN(axis)"@es .
+
+ex:VentanaTemporalMINAENDW
+    a ex:Parametro ;
+    rdfs:label "Ventana temporal MINAENDW"@es ;
+    ex:identificador "MINAENDW" ;
+    ex:textoExtracto "Se señalan ventanas temporales MINAENDW"@es .

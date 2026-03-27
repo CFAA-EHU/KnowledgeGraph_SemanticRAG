@@ -1,67 +1,65 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Esquema_1452_761 a ex:Esquema ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:InterfazUsuario_OpenPCSRemoto_EtherCAT
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de configuración EtherCAT en OpenPCS Remoto" ;
+    ex:textoExtracto "barra de configuración por defecto para mapeo (fichas Digital Input/Output, Register Input/Output y Overlapped con campos 'Starts/Offset/Visible') y vista de árbol que despliega esclavos y módulos mostrando sus recursos; indicadores 'Starts/Offset' para numeración y opción 'Ver esclavos'." ;
+    ex:ilustradoEn ex:Figura_EsquemaBloquesEtherCAT .
+
+ex:Figura_EsquemaBloquesEtherCAT
+    a ex:Figura ;
+    rdfs:label "Esquema de bloques cromáticos del bus EtherCAT" ;
+    ex:textoExtracto "Vista en bloques del bus con leyenda cromática: azul (entradas digitales), morado (salidas digitales), rojo/gris (mapeos a/desde registros PLC), verde/amarillo (AI/AO Fagor)." .
+
+ex:Sistema_EtherCAT_MapeoRecursos
+    a ex:Sistema ;
+    rdfs:label "Sistema de mapeo de recursos EtherCAT a PLC" ;
     ex:textoExtracto "Los bloques codifican tipo de recurso por color (DI/DO, registros, analógicas)." ;
-    ex:tieneComponente ex:BloqueRecursosEtherCAT .
+    ex:compuestoPor ex:ComponenteElectrico_EntradasDigitales_EtherCAT ;
+    ex:compuestoPor ex:ComponenteElectrico_SalidasDigitales_EtherCAT ;
+    ex:compuestoPor ex:ComponenteElectrico_RegistrosPLC_EtherCAT ;
+    ex:compuestoPor ex:ComponenteElectrico_AI_AO_Fagor ;
+    ex:detalladoEnEsquema ex:Figura_EsquemaBloquesEtherCAT ;
+    ex:documentadoEn ex:InterfazUsuario_OpenPCSRemoto_EtherCAT .
 
-ex:Esquema_1452_761 a ex:Esquema ;
-    ex:textoExtracto "Mapear los recursos EtherCAT a recursos del PLC" ;
-    ex:tieneComponente ex:BarraConfiguracionEtherCAT, ex:VistaArbolEtherCAT .
+ex:ComponenteElectrico_EntradasDigitales_EtherCAT
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas digitales (DI) EtherCAT" ;
+    ex:textoExtracto "azul (entradas digitales)" ;
+    ex:identificador "DI" .
 
-ex:BarraConfiguracionEtherCAT a ex:InterfazUsuario ;
-    ex:textoExtracto "barra de configuración por defecto para mapeo (fichas Digital Input/Output, Register Input/Output y Overlapped con campos 'Starts/Offset/Visible')" ;
-    ex:tieneComponente ex:FichaDigitalInput, ex:FichaDigitalOutput, ex:FichaRegisterInput, ex:FichaRegisterOutput, ex:FichaOverlapped .
+ex:ComponenteElectrico_SalidasDigitales_EtherCAT
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salidas digitales (DO) EtherCAT" ;
+    ex:textoExtracto "morado (salidas digitales)" ;
+    ex:identificador "DO" .
 
-ex:FichaDigitalInput a ex:InterfazUsuario ;
-    ex:textoExtracto "fichas Digital Input/Output" .
+ex:ComponenteElectrico_RegistrosPLC_EtherCAT
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registros PLC mapeados desde/ hacia EtherCAT" ;
+    ex:textoExtracto "rojo/gris (mapeos a/desde registros PLC)" ;
+    ex:identificador "Registros_PLC" .
 
-ex:FichaDigitalOutput a ex:InterfazUsuario ;
-    ex:textoExtracto "fichas Digital Input/Output" .
+ex:ComponenteElectrico_AI_AO_Fagor
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas/Salidas analógicas (AI/AO) Fagor" ;
+    ex:textoExtracto "verde/amarillo (AI/AO Fagor)" ;
+    ex:identificador "AI_AO_Fagor" .
 
-ex:FichaRegisterInput a ex:InterfazUsuario ;
-    ex:textoExtracto "fichas Register Input/Output" .
+ex:Parametro_Starts_EtherCAT
+    a ex:Parametro ;
+    rdfs:label "Parámetro 'Starts' para numeración de recursos EtherCAT" ;
+    ex:textoExtracto "campos 'Starts/Offset/Visible' [...] indicadores 'Starts/Offset' para numeración" ;
+    ex:valor "10"^^xsd:integer ; # Ejemplo del texto: "DI primera=10"
+    ex:monitoreaParametro ex:InterfazUsuario_OpenPCSRemoto_EtherCAT .
 
-ex:FichaRegisterOutput a ex:InterfazUsuario ;
-    ex:textoExtracto "fichas Register Input/Output" .
-
-ex:FichaOverlapped a ex:InterfazUsuario ;
-    ex:textoExtracto "fichas ... Overlapped con campos 'Starts/Offset/Visible'" .
-
-ex:VistaArbolEtherCAT a ex:InterfazUsuario ;
-    ex:textoExtracto "vista de árbol que despliega esclavos y módulos mostrando sus recursos; indicadores 'Starts/Offset' para numeración y opción 'Ver esclavos'" ;
-    ex:tieneComponente ex:IndicadorStartsOffset, ex:OpcionVerEsclavos .
-
-ex:IndicadorStartsOffset a ex:InterfazUsuario ;
-    ex:textoExtracto "indicadores 'Starts/Offset' para numeración" .
-
-ex:OpcionVerEsclavos a ex:InterfazUsuario ;
-    ex:textoExtracto "opción 'Ver esclavos'" .
-
-ex:BloqueRecursosEtherCAT a ex:InterfazUsuario ;
-    ex:textoExtracto "Vista en bloques del bus con leyenda cromática: azul (entradas digitales), morado (salidas digitales), rojo/gris (mapeos a/desde registros PLC), verde/amarillo (AI/AO Fagor). La captura muestra tarjetas alineadas por cabecera, con numeración visible y separación por módulos." ;
-    ex:tieneComponente ex:TarjetaEntradaDigital, ex:TarjetaSalidaDigital, ex:TarjetaRegistroPLC, ex:TarjetaAI_AO_Fagor .
-
-ex:TarjetaEntradaDigital a ex:ComponenteElectrico ;
-    ex:textoExtracto "azul (entradas digitales)" .
-
-ex:TarjetaSalidaDigital a ex:ComponenteElectrico ;
-    ex:textoExtracto "morado (salidas digitales)" .
-
-ex:TarjetaRegistroPLC a ex:ComponenteElectrico ;
-    ex:textoExtracto "rojo/gris (mapeos a/desde registros PLC)" .
-
-ex:TarjetaAI_AO_Fagor a ex:ComponenteElectrico ;
-    ex:textoExtracto "verde/amarillo (AI/AO Fagor)" .
-
-ex:Esquema_1452_762 a ex:Esquema ;
-    ex:textoExtracto "Dos ejemplos gráficos: (arriba) cambio global de numeración (DI primera=10, offset=100; DO primera=21, offset=50) aplicados desde la barra superior; (abajo) ajuste por nodo haciendo clic en el nombre de la cabecera para definir el inicio de sus recursos. Flechas indican dónde editar." ;
-    ex:tieneComponente ex:EjemploNumeracionGlobal, ex:EjemploAjustePorNodo .
-
-ex:EjemploNumeracionGlobal a ex:InterfazUsuario ;
-    ex:textoExtracto "cambio global de numeración (DI primera=10, offset=100; DO primera=21, offset=50) aplicados desde la barra superior" .
-
-ex:EjemploAjustePorNodo a ex:InterfazUsuario ;
-    ex:textoExtracto "ajuste por nodo haciendo clic en el nombre de la cabecera para definir el inicio de sus recursos. Flechas indican dónde editar." .
-
-ex:Esquema_1452_754 a ex:Esquema ;
-    ex:textoExtracto "Cuadro de propiedades de un módulo en vista de bloques para redefinir el número inicial de sus recursos, numerándose el resto de forma correlativa. Se observan campos editables y previsualización del bloque afectado." ;
-    ex:tieneComponente ex:CuadroPropiedadesModulo .
+ex:Parametro_Offset_EtherCAT
+    a ex:Parametro ;
+    rdfs:label "Parámetro 'Offset' para desplazamiento de recursos EtherCAT" ;
+    ex:textoExtracto "campos 'Starts/Offset/Visible' [...] offset=100" ;
+    ex:valor "100"^^xsd:integer ; # Ejemplo del texto: "offset=100"
+    ex:monitoreaParametro ex:InterfazUsuario_OpenPCSRemoto_EtherCAT .

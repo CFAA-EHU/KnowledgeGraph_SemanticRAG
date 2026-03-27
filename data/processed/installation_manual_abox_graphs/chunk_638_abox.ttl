@@ -1,16 +1,60 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:PRG a ex:Esquema ;
-    ex:textoExtracto "PRG ; Proposición directiva" ;
-    ex:tieneComponente ex:I100_M102, ex:I28_AND_I30_O25, ex:I32_AND_I36_M300, ex:END_ProposicionDirectiva .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:I100_M102 a ex:Parametro ;
-    ex:textoExtracto "I100 = M102 ; Proposición ejecutable" .
+ex:EjemploProgramacionPLC_638
+    a ex:Sistema ;
+    rdfs:label "Ejemplo de programación PLC"@es ;
+    ex:textoExtracto """
+| Ejemplo de programación: |  |
+| --- | --- |
+| PRG | ; Proposición directiva |
+| ; Ejemplo | ; Comentario |
+| I100 = M102 | ; Proposición ejecutable |
+| I28 AND I30 | ; Expresión lógica |
+| = O25 | ; Instrucción de acción |
+| I32 \\ | ; Instrucción de consulta (1ª parte de expresión) |
+| AND I36 | ; Instrucción de consulta (2ª parte de expresión) |
+| = M300 | ; Instrucción de acción |
+| END | ; Proposición directiva """@es ;
+    ex:identificador "PRG_638" .
 
-ex:I28_AND_I30_O25 a ex:Parametro ;
-    ex:textoExtracto "I28 AND I30 = O25 ; Expresión lógica" .
+ex:DirectivaPRG_638
+    a ex:Directiva ;
+    rdfs:label "Proposición directiva PRG"@es ;
+    ex:textoExtracto "PRG ; Proposición directiva"@es ;
+    ex:identificador "PRG" .
 
-ex:I32_AND_I36_M300 a ex:Parametro ;
-    ex:textoExtracto "I32 AND I36 = M300 ; Instrucción de acción" .
+ex:DirectivaEND_638
+    a ex:Directiva ;
+    rdfs:label "Proposición directiva END"@es ;
+    ex:textoExtracto "END ; Proposición directiva"@es ;
+    ex:identificador "END" .
 
-ex:END_ProposicionDirectiva a ex:Parametro ;
-    ex:textoExtracto "END ; Proposición directiva" .
+ex:InstruccionI100_M102_638
+    a ex:AccionProhibida ;
+    rdfs:label "Asignación I100 = M102"@es ;
+    ex:textoExtracto "I100 = M102 ; Proposición ejecutable"@es .
+
+ex:InstruccionO25_638
+    a ex:AccionProhibida ;
+    rdfs:label "Asignación lógica a O25"@es ;
+    ex:textoExtracto """
+I28 AND I30
+= O25 ; Instrucción de acción"""@es .
+
+ex:InstruccionM300_638
+    a ex:AccionProhibida ;
+    rdfs:label "Asignación lógica a M300"@es ;
+    ex:textoExtracto """
+I32 \\
+AND I36
+= M300 ; Instrucción de acción"""@es .
+
+ex:EjemploProgramacionPLC_638
+    ex:compuestoPor ex:DirectivaPRG_638 ;
+    ex:compuestoPor ex:InstruccionI100_M102_638 ;
+    ex:compuestoPor ex:InstruccionO25_638 ;
+    ex:compuestoPor ex:InstruccionM300_638 ;
+    ex:compuestoPor ex:DirectivaEND_638 .

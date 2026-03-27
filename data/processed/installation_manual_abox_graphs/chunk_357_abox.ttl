@@ -1,33 +1,50 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:GamaTrabajo_357_1 a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_SYNCSET
+    a ex:Parametro ;
     rdfs:label "SYNCSET" ;
-    ex:textoExtracto "el parámetro SYNCSET" .
+    ex:textoExtracto "parámetro SYNCSET"@es .
 
-ex:GamaTrabajo_357_2 a ex:Parametro ;
+ex:Parametro_DEFAULTSET
+    a ex:Parametro ;
     rdfs:label "DEFAULTSET" ;
-    ex:textoExtracto "el parámetro DEFAULTSET" .
+    ex:textoExtracto "parámetro DEFAULTSET"@es .
 
-ex:GamaTrabajo_357_3 a ex:ModoOperacion ;
-    rdfs:label "gama por defecto" ;
-    ex:textoExtracto "el regulador pone la gama por defecto" .
+ex:Parametro_S
+    a ex:Parametro ;
+    rdfs:label "S" ;
+    ex:textoExtracto "la S"@es ;
+    ex:textoExtracto "la que corresponde a la S"@es .
 
-ex:GamaTrabajo_357_4 a ex:ModoOperacion ;
-    rdfs:label "gama adecuada" ;
-    ex:textoExtracto "el CNC pone la gama adecuada" .
+ex:GamaPorDefecto
+    a ex:ModoOperacion ;
+    rdfs:label "Gama por defecto" ;
+    ex:textoExtracto "la gama por defecto"@es .
 
-ex:GamaTrabajo_357_5 a ex:Sistema ;
+ex:GamaAdecuada
+    a ex:ModoOperacion ;
+    rdfs:label "Gama adecuada" ;
+    ex:textoExtracto "la gama adecuada, la que corresponde a la S"@es .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
     rdfs:label "CNC" ;
-    ex:textoExtracto "El CNC arranca sin gama"@es, "el CNC pone la gama"@es, "el CNC arranca sin gama"@es, "el CNC pone la gama"@es .
+    ex:textoExtracto "El CNC arranca sin gama"@es ;
+    ex:monitoreaParametro ex:Parametro_SYNCSET ;
+    ex:monitoreaParametro ex:Parametro_DEFAULTSET ;
+    ex:monitoreaParametro ex:Parametro_S .
 
-ex:GamaTrabajo_357_6 a ex:Sistema ;
+ex:Sistema_PLC
+    a ex:Sistema ;
     rdfs:label "PLC" ;
-    ex:textoExtracto "la maniobra del PLC"@es, "el PLC"@es .
+    ex:textoExtracto "la maniobra del PLC"@es ;
+    ex:textoExtracto "el CNC pone la gama que indica el PLC"@es ;
+    ex:controla ex:Sistema_CNC .
 
-ex:GamaTrabajo_357_7 a ex:ComponenteElectrico ;
-    rdfs:label "anillo Sercos" ;
-    ex:textoExtracto "Si cae el anillo Sercos" .
-
-ex:GamaTrabajo_357_8 a ex:ComponenteElectrico ;
-    rdfs:label "regulador" ;
-    ex:textoExtracto "el regulador" .
+ex:AnilloSercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Anillo Sercos" ;
+    ex:textoExtracto "anillo Sercos"@es .

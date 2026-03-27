@@ -1,17 +1,52 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TG1 a ex:ModoOperacion ;
-    rdfs:label "modo monoestable" ;
-    ex:textoExtracto "tras un flanco de subida en TG1, T pasa a 1 y t asciende linealmente hasta la constante de tiempo; al alcanzarla, T retorna a 0 y t se mantiene. Se indican flancos adicionales en TG1 sin efecto durante la temporización." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TRS a ex:Parametro ;
-    rdfs:label "TRS" ;
-    ex:textoExtracto "un flanco de subida en TRS, tanto durante como después de la temporización, provoca la inicialización inmediata (T=0 y t=0), quedando el temporizador a la espera de nueva activación por TG1." .
+ex:ModoMonoestable_TG1
+    a ex:ModoOperacion ;
+    rdfs:label "Modo monoestable (TG1)" ;
+    ex:textoExtracto "tras un flanco de subida en TG1, T pasa a 1 y t asciende linealmente hasta la constante de tiempo; al alcanzarla, T retorna a 0 y t se mantiene. Se indican flancos adicionales en TG1 sin efecto durante la temporización." ;
+    ex:identificador "TG1" .
 
-ex:TEN a ex:Parametro ;
-    rdfs:label "TEN" ;
-    ex:textoExtracto "con el temporizador ya activo, forzar TEN=0 detiene la rampa de t (línea horizontal) y congela T; al restablecer TEN=1, la temporización continúa hasta completar el tiempo programado." .
+ex:ModoRetardoConexion_TG2
+    a ex:ModoOperacion ;
+    rdfs:label "Modo retardo a la conexión (TG2)" ;
+    ex:textoExtracto "un flanco de subida en TG2 inicia t desde 0 mientras T permanece a 0; al cumplirse la constante de tiempo, T pasa a 1 y se mantiene hasta un flanco de bajada en TG2. Si TG2 baja antes de completar el tiempo, la temporización se cancela y t mantiene el valor alcanzado." ;
+    ex:identificador "TG2" .
 
-ex:TG2 a ex:ModoOperacion ;
-    rdfs:label "retardo a la conexión" ;
-    ex:textoExtracto "un flanco de subida en TG2 inicia t desde 0 mientras T permanece a 0; al cumplirse la constante de tiempo, T pasa a 1 y se mantiene hasta un flanco de bajada en TG2. Si TG2 baja antes de completar el tiempo, la temporización se cancela y t mantiene el valor alcanzado." .
+ex:Parametro_T
+    a ex:Parametro ;
+    rdfs:label "Estado T (salida del temporizador)" ;
+    ex:textoExtracto "T pasa a 1 y t asciende linealmente hasta la constante de tiempo; al alcanzarla, T retorna a 0 y t se mantiene." ;
+    ex:valor "0/1" .
+
+ex:Parametro_t
+    a ex:Parametro ;
+    rdfs:label "Tiempo transcurrido (t)" ;
+    ex:textoExtracto "t asciende linealmente hasta la constante de tiempo; al alcanzarla, T retorna a 0 y t se mantiene." .
+
+ex:Parametro_TRS
+    a ex:Parametro ;
+    rdfs:label "Reset (TRS)" ;
+    ex:textoExtracto "un flanco de subida en TRS, tanto durante como después de la temporización, provoca la inicialización inmediata (T=0 y t=0), quedando el temporizador a la espera de nueva activación por TG1." ;
+    ex:identificador "TRS" .
+
+ex:Parametro_TEN
+    a ex:Parametro ;
+    rdfs:label "Enable (TEN)" ;
+    ex:textoExtracto "con el temporizador ya activo, forzar TEN=0 detiene la rampa de t (línea horizontal) y congela T; al restablecer TEN=1, la temporización continúa hasta completar el tiempo programado." ;
+    ex:identificador "TEN" .
+
+ex:Parametro_TGx
+    a ex:Parametro ;
+    rdfs:label "Trigger genérico (TGx)" ;
+    ex:textoExtracto "Las trazas incluyen TGx, TRS, la evolución de t (respuesta a 0) y el estado T que se fuerza a nivel bajo tras el reset." ;
+    ex:identificador "TGx" .
+
+ex:ModoMonoestable_TG1 ex:monitoreaParametro ex:Parametro_T .
+ex:ModoMonoestable_TG1 ex:monitoreaParametro ex:Parametro_t .
+ex:ModoMonoestable_TG1 ex:monitoreaParametro ex:Parametro_TRS .
+ex:ModoMonoestable_TG1 ex:monitoreaParametro ex:Parametro_TEN .
+ex:ModoRetardoConexion_TG2 ex:monitoreaParametro ex:Parametro_T .
+ex:ModoRetardoConexion_TG2 ex:monitoreaParametro ex:Parametro_t .

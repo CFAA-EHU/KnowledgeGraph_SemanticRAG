@@ -1,27 +1,59 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:AXISMODE a ex:Parametro ;
-    ex:textoExtracto "AXISMODE Modo de trabajo del eje rotativo. Parámetro válido para ejes rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Linearlike / Módulo. Valor por defecto: Módulo. Variable asociada: (V.)[ch].MPA.AXISMODE.xn Este parámetro indica cuál es el comportamiento del eje rotativo en relación al número de vueltas y visualización de cotas." ;
-    rdfs:label "AXISMODE" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModoModulo a ex:ModoOperacion ;
-    ex:textoExtracto "Comportamiento cuando AXISMODE = Módulo. El eje actúa como un eje rotativo. Se pueden programar desplazamientos en G0/G1 y G90/G91. • Para los desplazamientos en G90 se puede programar más de una vuelta o valores fuera de módulo, pero el recorrido siempre será inferior a una vuelta completa. Si el eje no es SHORTESTWAY ni UNIDIR el signo programado indicará el sentido de giro mientras que el valor absoluto de la cota indicará la posición a alcanzar. SHORTESTWAY = No UNIDIR = No • Para los desplazamientos en G91, el signo programado indicará el sentido de giro mientras que el valor absoluto de la cota indicará el recorrido. Los límites de módulo (límites de recorrido del eje rotativo) vienen fijados por los parámetros de gama MODUPLIM y MODLOWLIM. Para ejes analógicos y simulados, el límite inferior MODLOWLIM debe ser menor que el límite superior MODUPLIM, como por ejemplo 0º a 360º, 0º a 400º ó -230 a 95; no se permite, por ejemplo -100º a -230º ó 360º a 0º. Para los ejes Sercos los límites de módulo deben ser 0º y 360º. Las cotas se visualizan siempre entre los límites de módulo, por defecto 0 y 360º. Hay que definir los parámetros SHORTESTWAY y UNIDIR. Los parámetros LIMIT+ y LIMIT- no tienen significado." .
+ex:Parametro_AXISMODE
+    a ex:Parametro ;
+    rdfs:label "AXISMODE" ;
+    ex:textoExtracto "AXISMODE Modo de trabajo del eje rotativo. Parámetro válido para ejes rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Linearlike / Módulo. Valor por defecto: Módulo." ;
+    ex:identificador "V.[ch].MPA.AXISMODE.xn" ;
+    ex:valor "Módulo"@es .
 
-ex:ModoLinearlike a ex:ModoOperacion ;
+ex:Parametro_MODUPLIM
+    a ex:Parametro ;
+    rdfs:label "Límite superior de módulo (MODUPLIM)" ;
+    ex:textoExtracto "Los límites de módulo (límites de recorrido del eje rotativo) vienen fijados por los parámetros de gama MODUPLIM y MODLOWLIM." .
+
+ex:Parametro_MODLOWLIM
+    a ex:Parametro ;
+    rdfs:label "Límite inferior de módulo (MODLOWLIM)" ;
+    ex:textoExtracto "Los límites de módulo (límites de recorrido del eje rotativo) vienen fijados por los parámetros de gama MODUPLIM y MODLOWLIM." .
+
+ex:Parametro_SHORTESTWAY
+    a ex:Parametro ;
+    rdfs:label "SHORTESTWAY" ;
+    ex:textoExtracto "Hay que definir los parámetros SHORTESTWAY y UNIDIR." ;
+    ex:valor "No"@es .
+
+ex:Parametro_UNIDIR
+    a ex:Parametro ;
+    rdfs:label "UNIDIR" ;
+    ex:textoExtracto "Hay que definir los parámetros SHORTESTWAY y UNIDIR." ;
+    ex:valor "No"@es .
+
+ex:ModoOperacion_Modulo
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Módulo (eje rotativo)" ;
+    ex:textoExtracto "Comportamiento cuando AXISMODE = Módulo. El eje actúa como un eje rotativo. Se pueden programar desplazamientos en G0/G1 y G90/G91." .
+
+ex:ModoOperacion_Linearlike
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Linearlike" ;
     ex:textoExtracto "Comportamiento cuando AXISMODE = Linearlike." .
 
-ex:MODUPLIM a ex:Parametro ;
-    ex:textoExtracto "Los límites de módulo (límites de recorrido del eje rotativo) vienen fijados por los parámetros de gama MODUPLIM y MODLOWLIM." ;
-    rdfs:label "MODUPLIM" .
+ex:Sistema_EjeRotativo
+    a ex:Sistema ;
+    rdfs:label "Sistema de eje rotativo" ;
+    ex:textoExtracto "AXISMODE Modo de trabajo del eje rotativo. Parámetro válido para ejes rotativos." ;
+    ex:tieneComponente ex:Parametro_AXISMODE ;
+    ex:tieneComponente ex:Parametro_MODUPLIM ;
+    ex:tieneComponente ex:Parametro_MODLOWLIM ;
+    ex:tieneComponente ex:Parametro_SHORTESTWAY ;
+    ex:tieneComponente ex:Parametro_UNIDIR .
 
-ex:MODLOWLIM a ex:Parametro ;
-    ex:textoExtracto "Los límites de módulo (límites de recorrido del eje rotativo) vienen fijados por los parámetros de gama MODUPLIM y MODLOWLIM." ;
-    rdfs:label "MODLOWLIM" .
+ex:ModoOperacion_Modulo
+    ex:documentadoEn ex:Sistema_EjeRotativo .
 
-ex:SHORTESTWAY a ex:Parametro ;
-    ex:textoExtracto "Hay que definir los parámetros SHORTESTWAY y UNIDIR." ;
-    rdfs:label "SHORTESTWAY" .
-
-ex:UNIDIR a ex:Parametro ;
-    ex:textoExtracto "Hay que definir los parámetros SHORTESTWAY y UNIDIR." ;
-    rdfs:label "UNIDIR" .
+ex:ModoOperacion_Linearlike
+    ex:documentadoEn ex:Sistema_EjeRotativo .

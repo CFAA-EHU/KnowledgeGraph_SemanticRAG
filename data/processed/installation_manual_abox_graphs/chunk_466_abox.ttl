@@ -1,24 +1,52 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SSIALARMLEVEL a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_SSIALARMLEVEL
+    a ex:Parametro ;
+    rdfs:label "SSIALARMLEVEL" ;
     ex:textoExtracto "Valores que pueden provocar que el encoder transmita uno o más bits indicando algún tipo de error." ;
-    rdfs:label "SSIALARMLEVEL" .
+    ex:identificador "SSIALARMLEVEL" .
 
-ex:SSICRCTYPE a ex:Parametro ;
-    ex:textoExtracto "Tipo de cálculo a realizar cuando el encoder transmite información adicional a la cota para realizar algún tipo de comprobación de coherencia en los datos." ;
-    rdfs:label "SSICRCTYPE" .
+ex:Parametro_SSICRCTYPE
+    a ex:Parametro ;
+    rdfs:label "SSICRCTYPE" ;
+    ex:textoExtracto "Tipo de cálculo a realizar cuando el encoder transmita información adicional a la cota para realizar algún tipo de comprobación de coherencia en los datos." ;
+    ex:identificador "SSICRCTYPE" .
 
-ex:SSIDATALENGTH a ex:Parametro ;
-    ex:textoExtracto "Número de bits de la transmisión SSI que constituyen la cota. Valores posibles: De 0 a 255. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.SSIDATALENGTH[set].xn Número de bits de la transmisión SSI que constituyen la cota. Por ejemplo, 32 para reglas absolutas Fagor con los parámetros por defecto." ;
-    ex:valor "0 a 255" ;
-    rdfs:label "SSIDATALENGTH" .
+ex:Parametro_SSIDATALENGTH
+    a ex:Parametro ;
+    rdfs:label "SSIDATALENGTH" ;
+    ex:textoExtracto "Número de bits de la transmisión SSI que constituyen la cota. Valores posibles: De 0 a 255. Valor por defecto: 0." ;
+    ex:identificador "SSIDATALENGTH" ;
+    ex:valor "0" .
 
-ex:SSIPACKFORMAT a ex:Parametro ;
-    ex:textoExtracto "Formato de paquete SSI. Valores posibles: Data / Data-CRC / CRC-Data / Data-Alarm / Alarm-Data / Data-CRC-Alarm / Alarm-Data-CRC / Data-Alarm-CRC / Alarm-CRC-Data / CRC-Data-Alarm / CRC-Alarm-Data. Valor por defecto: Data. Este parámetro indica en que orden van a a llegar los diferentes tipos de datos que constituyen la transmisión SSI. En función de los parámetros SSICRCBITS y SSIALARMBITS, sólo aparecerán las opciones que son posibles. El orden que indica el parámetro es el que corresponde a la secuencia de la transmisión SSI. Si hay bits de start programados, el CNC considera que siempre se van a recibir los primeros. Ejemplo: SSICRCBITS = 5 SSIALARMBITS = 1 SSIDATABITS = 23 SSIPACKFORMAT = Alarm - Data - CRC El CNC espera que la transmisión SSI sea una secuencia de bits en el que el primero será el bit de alarma, luego vendrán 23 bits de cota o datos y por último llegarán los 5 bits de CRC." ;
-    ex:valor "Data / Data-CRC / CRC-Data / Data-Alarm / Alarm-Data / Data-CRC-Alarm / Alarm-Data-CRC / Data-Alarm-CRC / Alarm-CRC-Data / CRC-Data-Alarm / CRC-Alarm-Data" ;
-    rdfs:label "SSIPACKFORMAT" .
+ex:Parametro_SSIPACKFORMAT
+    a ex:Parametro ;
+    rdfs:label "SSIPACKFORMAT" ;
+    ex:textoExtracto "Formato de paquete SSI. [...] Este parámetro indica en que orden van a llegar los diferentes tipos de datos que constituyen la transmisión SSI." ;
+    ex:identificador "SSIPACKFORMAT" ;
+    ex:valor "Data" .
 
-ex:SSIOPERATION a ex:Parametro ;
+ex:Parametro_SSIOPERATION
+    a ex:Parametro ;
+    rdfs:label "SSIOPERATION" ;
     ex:textoExtracto "Tipo de operación sobre los datos antes de leerlos. Valores posibles: De 0 a 1." ;
-    ex:valor "0 a 1" ;
-    rdfs:label "SSIOPERATION" .
+    ex:identificador "SSIOPERATION" .
+
+ex:Tabla_ParametrosSSI a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros SSI (Tipo de captación SSI)" ;
+    ex:textoExtracto "| Parámetro. | Significado. | [...] SSIPACKFORMAT [...] SSIOPERATION [...]" ;
+    ex:documentadoEn ex:Pagina_232_236 ;
+    ex:tieneComponente ex:Parametro_SSIALARMLEVEL ;
+    ex:tieneComponente ex:Parametro_SSICRCTYPE ;
+    ex:tieneComponente ex:Parametro_SSIDATALENGTH ;
+    ex:tieneComponente ex:Parametro_SSIPACKFORMAT ;
+    ex:tieneComponente ex:Parametro_SSIOPERATION .
+
+ex:Pagina_232_236
+    a ex:Pagina ;
+    rdfs:label "Páginas 232-236 (Sección 2.6.25 Tipo de captación SSI)" ;
+    ex:textoExtracto "Sección 2.6.25 Tipo de captación SSI." .

@@ -1,3 +1,62 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ProgramaRutinaM06 a ex:TareaMantenimiento ;
-    ex:textoExtracto """& 255]<9] | [[V.G.FULLSTATUS & 255]>13]] $IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]] V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G. $ELSE V.S.EXECUTION = 1 ; Ejecución $ENDIF $ELSE V.S.EXECUTION = 0 ; Simulación $ENDIF $IF [V.S.EXECUTION == 1] ; CNC en ejecución $SWITCH V.PLC.TMOPERATION; Analiza el tipo de operación. $CASE 1 ; Coger una herramienta del almacén y ponerla en el cabezal. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1. LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. $BREAK $CASE 2 ; Dejar la herramienta del cabezal en el almacén. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_SPD_TO_CH1 ; Coger la herramienta del cabezal con la pinza 1. LL SUB_CH1_TO_MZ ; Dejar la herramienta de la pinza 1 en el almacén. $BREAK $CASE 3 ; Colocar la herramienta de tierra en el cabezal. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. $BREAK $CASE 4 ; Dejar la herramienta del cabezal en tierra. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal. $BREAK $CASE 5 ; Dejar la herramienta del cabezal en el almacén, y coger otra del almacén. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático.""" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:RutinaM06 a ex:ModoOperacion ;
+    rdfs:label "Rutina M06 (Cambio de herramienta)"@es ;
+    ex:textoExtracto """
+$SWITCH V.PLC.TMOPERATION; Analiza el tipo de operación.
+$CASE 1 ; Coger una herramienta del almacén y ponerla en el cabezal.
+$CASE 2 ; Dejar la herramienta del cabezal en el almacén.
+$CASE 3 ; Colocar la herramienta de tierra en el cabezal.
+$CASE 4 ; Dejar la herramienta del cabezal en tierra.
+$CASE 5 ; Dejar la herramienta del cabezal en el almacén, y coger otra del almacén."""@es ;
+    ex:identificador "M06" .
+
+ex:Subrutina_SPD_AUTCHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_AUTCHG (Cambio automático de cabezal)"@es ;
+    ex:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Subrutina_MZ_TO_CH1 a ex:TareaMantenimiento ;
+    rdfs:label "SUB_MZ_TO_CH1 (Transferencia de herramienta desde almacén a pinza 1)"@es ;
+    ex:textoExtracto "LL SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Subrutina_CH1_TO_SPD a ex:TareaMantenimiento ;
+    rdfs:label "SUB_CH1_TO_SPD (Transferencia de herramienta desde pinza 1 a cabezal)"@es ;
+    ex:textoExtracto "LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Subrutina_SPD_TO_CH1 a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_TO_CH1 (Transferencia de herramienta desde cabezal a pinza 1)"@es ;
+    ex:textoExtracto "LL SUB_SPD_TO_CH1 ; Coger la herramienta del cabezal con la pinza 1."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Subrutina_CH1_TO_MZ a ex:TareaMantenimiento ;
+    rdfs:label "SUB_CH1_TO_MZ (Devolución de herramienta desde pinza 1 a almacén)"@es ;
+    ex:textoExtracto "LL SUB_CH1_TO_MZ ; Dejar la herramienta de la pinza 1 en el almacén."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Subrutina_SPD_GMCHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_GMCHG (Cambio manual de cabezal)"@es ;
+    ex:textoExtracto "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Subrutina_GR_TO_SPD a ex:TareaMantenimiento ;
+    rdfs:label "SUB_GR_TO_SPD (Colocación de herramienta de tierra en cabezal)"@es ;
+    ex:textoExtracto "LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Subrutina_SPD_TO_GR a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_TO_GR (Retirada de herramienta del cabezal a tierra)"@es ;
+    ex:textoExtracto "LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal."@es ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:Pinza1 a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 1 (Transferencia de herramientas)"@es ;
+    ex:textoExtracto """
+$CASE 1 ; Coger la herramienta del almacén con la pinza 1.
+$CASE 2 ; Coger la herramienta del cabezal con la pinza 1.
+$CASE 5 ; Dejar la herramienta del cabezal en el almacén, y coger otra del almacén (usando pinza 1)."""@es .

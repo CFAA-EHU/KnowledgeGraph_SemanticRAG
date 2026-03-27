@@ -23,6 +23,11 @@ from artifact_contracts import (
     ABOX_CHUNKS_DIR,
     ABOX_DEBUG_DIR,
     ABOX_MAX_LOCAL_RETRIES,
+    ABOX_MICRO_BATCH_RECOVERY_BACKOFF_SECONDS,
+    ABOX_MICRO_BATCH_RECOVERY_JITTER_RANGE,
+    ABOX_MICRO_BATCH_RECOVERY_MAX_CONCURRENCY,
+    ABOX_MICRO_BATCH_RECOVERY_MAX_RETRIES,
+    ABOX_MICRO_BATCH_RECOVERY_REQUEST_SPACING_SECONDS,
     ABOX_RATE_LIMIT_DRAIN_BACKOFF_SECONDS,
     ABOX_RATE_LIMIT_DRAIN_JITTER_RANGE,
     ABOX_RATE_LIMIT_DRAIN_MAX_CONCURRENCY,
@@ -50,7 +55,7 @@ MANIFEST_PATH = OPERATIONAL_ABOX_MANIFEST_PATH
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 OUTPUT_DIR = ABOX_CHUNKS_DIR
 DEBUG_DIR = ABOX_DEBUG_DIR
-MODEL = "mistral-small-latest"
+MODEL = os.environ.get("MISTRAL_MODEL", "mistral-small-latest").strip() or "mistral-small-latest"
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 ABOX_PROMPT_VERSION = "semantic-guardrails-v3"
 EXTRACTION_MODE = "abox_from_text_chunk"
@@ -109,9 +114,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--retry-profile",
-        choices=["standard", "rate-limit-drain"],
+        choices=["standard", "rate-limit-drain", "micro-batch-recovery"],
         default=DEFAULT_RETRY_PROFILE,
-        help="Perfil de reintentos. rate-limit-drain reduce concurrencia y amplia el backoff para drenar 429 persistentes.",
+        help="Perfil de reintentos. micro-batch-recovery endurece el backoff para drenar pendientes residuales chunk a chunk.",
     )
     return parser.parse_args()
 
@@ -162,6 +167,25 @@ def aislar_sintaxis_ttl(respuesta_llm: str) -> str:
     return match.group(1).strip() if match else respuesta_llm.strip()
 
 
+def es_chunk_pagina_en_blanco(chunk_data: dict) -> bool:
+    texto = (chunk_data.get("texto_fuente") or "").strip().lower()
+    return texto in {"pagina en blanco", "página en blanco", "blank page"}
+
+
+def construir_ttl_pagina_en_blanco(chunk_data: dict) -> str:
+    paginas = (chunk_data.get("paginas") or "sin_pagina").strip("[]")
+    paginas_slug = re.sub(r"[^A-Za-z0-9_]+", "_", paginas).strip("_") or "sin_pagina"
+    label = f"Página en blanco {chunk_data.get('paginas', '')}".strip()
+    texto_extracto = chunk_data.get("texto_fuente", "PÁGINA EN BLANCO")
+    return (
+        f'@prefix ex: <{BASE_URI}> .\n'
+        '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n'
+        f'ex:PaginaEnBlanco_{paginas_slug} a ex:Pagina ;\n'
+        f'    rdfs:label "{label}" ;\n'
+        f'    ex:textoExtracto "{texto_extracto}" .\n'
+    )
+
+
 def garantizar_prefijos_obligatorios(ttl_text: str) -> str:
     ttl_limpio = ttl_text.strip()
     prefijos = []
@@ -171,6 +195,8 @@ def garantizar_prefijos_obligatorios(ttl_text: str) -> str:
         prefijos.append("@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .")
     if "rdf:" in ttl_limpio and not re.search(r"(?im)^(?:@prefix|PREFIX)\s+rdf:\b", ttl_limpio):
         prefijos.append("@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .")
+    if "xsd:" in ttl_limpio and not re.search(r"(?im)^(?:@prefix|PREFIX)\s+xsd:\b", ttl_limpio):
+        prefijos.append("@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .")
     if not prefijos:
         return ttl_limpio
     return "\n".join(prefijos + [ttl_limpio])
@@ -316,12 +342,76 @@ def tipar_tablas_canonicas(ttl_text: str) -> str:
     return patron.sub(r"\1 a ex:Tabla ;\n    \2", ttl_text)
 
 
+def normalizar_curies_ex_invalidos(ttl_text: str) -> str:
+    resultado: list[str] = []
+    i = 0
+    n = len(ttl_text)
+    estado = "outside"
+    delimitadores = set(" \t\r\n;,.()[]{}<>\"'")
+
+    def sanitizar_local_name(local_name: str) -> str:
+        local_name = re.sub(r"[^A-Za-z0-9_]", "_", local_name)
+        local_name = re.sub(r"_+", "_", local_name).strip("_")
+        if not local_name:
+            return local_name
+        if local_name[0].isdigit():
+            local_name = f"_{local_name}"
+        return local_name
+
+    while i < n:
+        if estado == "outside":
+            if ttl_text.startswith('"""', i):
+                resultado.append('"""')
+                estado = "long"
+                i += 3
+                continue
+            if ttl_text[i] == '"' and (i == 0 or ttl_text[i - 1] != "\\"):
+                resultado.append('"')
+                estado = "short"
+                i += 1
+                continue
+            if ttl_text.startswith("ex:", i):
+                j = i + 3
+                while j < n and ttl_text[j] not in delimitadores:
+                    j += 1
+                local_name = ttl_text[i + 3 : j]
+                resultado.append("ex:")
+                resultado.append(sanitizar_local_name(local_name) or local_name)
+                i = j
+                continue
+            resultado.append(ttl_text[i])
+            i += 1
+            continue
+
+        if estado == "long" and ttl_text.startswith('"""', i):
+            resultado.append('"""')
+            estado = "outside"
+            i += 3
+            continue
+
+        if estado == "short" and ttl_text[i] == '"' and (i == 0 or ttl_text[i - 1] != "\\"):
+            resultado.append('"')
+            estado = "outside"
+            i += 1
+            continue
+
+        resultado.append(ttl_text[i])
+        i += 1
+
+    return "".join(resultado)
+
+
 def normalizar_vocabulario_canonico(ttl_text: str) -> str:
     ttl_normalizado = normalizar_puntuacion_problematica(ttl_text)
     reemplazos_directos = {
         "ex:textoExtractor": "ex:textoExtracto",
         "ex:textExtracto": "ex:textoExtracto",
         " rdf:type ": " a ",
+        "@xsd:string": "^^xsd:string",
+        "@xsd:integer": "^^xsd:integer",
+        "@xsd:decimal": "^^xsd:decimal",
+        "@xsd:float": "^^xsd:float",
+        "@xsd:double": "^^xsd:double",
         " a rdfs:label": " rdfs:label",
         " a ex:Conector": " a ex:ComponenteElectrico",
         " a ex:Relay": " a ex:ComponenteElectrico",
@@ -332,6 +422,7 @@ def normalizar_vocabulario_canonico(ttl_text: str) -> str:
     for origen, destino in reemplazos_directos.items():
         ttl_normalizado = ttl_normalizado.replace(origen, destino)
     ttl_normalizado = tipar_tablas_canonicas(ttl_normalizado)
+    ttl_normalizado = normalizar_curies_ex_invalidos(ttl_normalizado)
     ttl_normalizado = escapar_barras_invertidas_en_literales(ttl_normalizado)
     ttl_normalizado = escapar_comillas_internas_en_literales(ttl_normalizado)
     return ttl_normalizado
@@ -391,6 +482,15 @@ def resolve_retry_profile(name: str) -> RetryProfile:
             backoff_seconds=ABOX_RATE_LIMIT_DRAIN_BACKOFF_SECONDS,
             jitter_range=ABOX_RATE_LIMIT_DRAIN_JITTER_RANGE,
             request_spacing_seconds=ABOX_RATE_LIMIT_DRAIN_REQUEST_SPACING_SECONDS,
+        )
+    if name == "micro-batch-recovery":
+        return RetryProfile(
+            name=name,
+            max_concurrency=ABOX_MICRO_BATCH_RECOVERY_MAX_CONCURRENCY,
+            max_retries=ABOX_MICRO_BATCH_RECOVERY_MAX_RETRIES,
+            backoff_seconds=ABOX_MICRO_BATCH_RECOVERY_BACKOFF_SECONDS,
+            jitter_range=ABOX_MICRO_BATCH_RECOVERY_JITTER_RANGE,
+            request_spacing_seconds=ABOX_MICRO_BATCH_RECOVERY_REQUEST_SPACING_SECONDS,
         )
     return RetryProfile(
         name="standard",
@@ -489,6 +589,51 @@ async def procesar_chunk_abox(
         last_semantic_report = None
         last_raw_response: str | None = None
         last_normalized_ttl: str | None = None
+
+        if es_chunk_pagina_en_blanco(chunk_data):
+            ttl_puro = construir_ttl_pagina_en_blanco(chunk_data)
+            semantic_result = validate_ttl_text_semantics(ttl_puro, vocabulary=semantic_vocabulary)
+            last_semantic_report = semantic_result.to_manifest_summary()
+            if not semantic_result.ok:
+                persistir_debug_chunk_fallido(
+                    chunk_id,
+                    error_cause="semantic_invalid",
+                    error_message=summarize_semantic_result(semantic_result),
+                    raw_response=ttl_puro,
+                    normalized_ttl=ttl_puro,
+                )
+                entry = build_manifest_entry(
+                    chunk_data,
+                    output_path=output_path,
+                    status="error",
+                    prompt_version=ABOX_PROMPT_VERSION,
+                    model_name=MODEL,
+                    extraction_mode=EXTRACTION_MODE,
+                    tbox_hash=tbox_hash,
+                    error_cause="semantic_invalid",
+                    error_message=summarize_semantic_result(semantic_result),
+                    semantic_report=last_semantic_report,
+                )
+                async with manifest_lock:
+                    manifest_entries[str(chunk_id)] = entry
+                    save_manifest(MANIFEST_PATH, manifest_entries)
+                return chunk_id, "Error[semantic_invalid]: pagina_en_blanco_placeholder_invalid"
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(ttl_puro)
+            entry = build_manifest_entry(
+                chunk_data,
+                output_path=output_path,
+                status="ok",
+                prompt_version=ABOX_PROMPT_VERSION,
+                model_name=MODEL,
+                extraction_mode=EXTRACTION_MODE,
+                tbox_hash=tbox_hash,
+                semantic_report=last_semantic_report,
+            )
+            async with manifest_lock:
+                manifest_entries[str(chunk_id)] = entry
+                save_manifest(MANIFEST_PATH, manifest_entries)
+            return chunk_id, "OK"
 
         for attempt in range(retry_profile.max_retries):
             api_call_attempted = False

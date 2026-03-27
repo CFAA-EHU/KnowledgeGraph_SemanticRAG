@@ -1,38 +1,53 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:CabezalSercosVelocidad rdfs:label "Cabezal Sercos en velocidad" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Cabezal Sercos en velocidad. La consigna en SANALOG vendrá expresada en diezmilésima de rpm." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CabezalSercosPosicion rdfs:label "Cabezal Sercos en posición" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Cabezal Sercos en posición. La consigna en SANALOG vendrá expresada en diezmilésima de grado." .
-
-ex:CabezalMechatrolink rdfs:label "Cabezal Mechatrolink" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Cabezal Mechatrolink. La consigna en SANALOG vendrá expresada en centésimas de hercio." .
-
-ex:SistemaSANALOG rdfs:label "SANALOG" ;
+ex:CabezalesSistema
     a ex:Sistema ;
-    ex:textoExtracto "La consigna en SANALOG vendrá expresada en diezmilésima de rpm." ,
-        "La consigna en SANALOG vendrá expresada en diezmilésima de grado." ,
-        "La consigna en SANALOG vendrá expresada en centésimas de hercio." .
+    rdfs:label "Sistema de cabezales controlados" ;
+    ex:textoExtracto "Cabezal Sercos en velocidad... Cabezal Mechatrolink... sincronización de cabezales..." ;
+    ex:tieneComponente ex:CabezalSercosVelocidad, ex:CabezalSercosPosicion, ex:CabezalMechatrolink ;
+    ex:controla ex:ParametroSANALOG_Velocidad, ex:ParametroSANALOG_Posicion, ex:ParametroSANALOG_Frecuencia .
 
-ex:AvisoSincronizacionCabezal rdfs:label "aviso indicando que no es posible controlar cabezal sincronizado desde PLCCNTL" ;
+ex:CabezalSercosVelocidad
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal Sercos (modo velocidad)" ;
+    ex:textoExtracto "Cabezal Sercos en velocidad. La consigna en SANALOG vendrá expresada en diezmilésima de rpm." ;
+    ex:monitoreaParametro ex:ParametroSANALOG_Velocidad .
+
+ex:CabezalSercosPosicion
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal Sercos (modo posición)" ;
+    ex:textoExtracto "Cabezal Sercos en posición. La consigna en SANALOG vendrá expresada en diezmilésima de grado." ;
+    ex:monitoreaParametro ex:ParametroSANALOG_Posicion .
+
+ex:CabezalMechatrolink
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal Mechatrolink" ;
+    ex:textoExtracto "Cabezal Mechatrolink. La consigna en SANALOG vendrá expresada en centésimas de hercio." ;
+    ex:monitoreaParametro ex:ParametroSANALOG_Frecuencia .
+
+ex:ParametroSANALOG_Velocidad
+    a ex:Parametro ;
+    rdfs:label "Consigna SANALOG (velocidad)" ;
+    ex:textoExtracto "La consigna en SANALOG vendrá expresada en diezmilésima de rpm" ;
+    ex:valor "unidad: diezmilésima de rpm" .
+
+ex:ParametroSANALOG_Posicion
+    a ex:Parametro ;
+    rdfs:label "Consigna SANALOG (posición)" ;
+    ex:textoExtracto "La consigna en SANALOG vendrá expresada en diezmilésima de grado" ;
+    ex:valor "unidad: diezmilésima de grado" .
+
+ex:ParametroSANALOG_Frecuencia
+    a ex:Parametro ;
+    rdfs:label "Consigna SANALOG (frecuencia)" ;
+    ex:textoExtracto "La consigna en SANALOG vendrá expresada en centésimas de hercio" ;
+    ex:valor "unidad: centésima de Hz" .
+
+ex:AvisoControlSincronizado
     a ex:AvisoSeguridad ;
-    ex:textoExtracto "Si se intenta controlar un cabezal sincronizado (tanto maestro como esclavo) mediante PLCCNTL, se mostrará un aviso indicando que no es posible." .
-
-ex:PLC rdfs:label "PLC" ;
-    a ex:ComponenteElectrico ;
-    ex:textoExtracto "La consigna indicada en SANALOG no se aplica con rampa, por lo que será responsabilidad del programa de PLC aplicar de forma gradual la consigna cuando sea necesario." ,
-        "Cuando el cabezal se controla desde el PLC no se pierde el punto de referencia del cabezal." ,
-        "El PLC no es prioritario a una sincronización de cabezales." ,
-        "Estando activa la gama 1 se solicita la gama 4." .
-
-ex:Gama1 rdfs:label "gama 1" ;
-    a ex:ModoOperacion ;
-    ex:textoExtracto "Estando activa la gama 1 se solicita la gama 4." .
-
-ex:Gama4 rdfs:label "gama 4" ;
-    a ex:ModoOperacion ;
-    ex:textoExtracto "Estando activa la gama 1 se solicita la gama 4." .
+    rdfs:label "Aviso de control PLC en cabezales sincronizados" ;
+    ex:textoExtracto "Si se intenta controlar un cabezal sincronizado (tanto maestro como esclavo) mediante PLCCNTL, se mostrará un aviso indicando que no es posible." ;
+    ex:mitigaRiesgo ex:CabezalesSistema .

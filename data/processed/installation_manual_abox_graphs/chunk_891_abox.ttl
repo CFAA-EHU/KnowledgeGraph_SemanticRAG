@@ -1,29 +1,34 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:AlmacenTorreta891 a ex:Maquina ;
-    rdfs:label "almacén tipo torreta"@es ;
-    ex:textoExtracto "Es el almacén típico de torno."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:GestorAlmacenTorreta891 a ex:Componente ;
-    rdfs:label "gestor"@es ;
-    ex:textoExtracto "Habitualmente, en este tipo de almacén la comunicación entre el gestor y el PLC se configura para que se realice en una única fase"@es .
+ex:AlmacenTipoTorreta_7_7
+    a ex:ComponenteMecanico ;
+    rdfs:label "Almacén tipo torreta"@es ;
+    ex:textoExtracto "Es el almacén típico de torno. Para efectuar el cambio, el almacén gira hasta colocar la nueva herramienta en la posición de trabajo."@es .
 
-ex:PLCAlmacenTorreta891 a ex:Componente ;
-    rdfs:label "PLC"@es ;
-    ex:textoExtracto "la comunicación entre el gestor y el PLC se configura para que se realice en una única fase"@es .
+ex:FuncionT_7_7 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función T"@es ;
+    ex:textoExtracto "la ejecución de la función T. [...] la rutina asociada a T incluya la función M06. [...] la rutina asociada a T ejecuta la función M06 (cambio de herramienta)."@es ;
+    ex:monitoreaParametro ex:AlmacenTipoTorreta_7_7 .
 
-ex:FuncionTAlmacenTorreta891 a ex:Parametro ;
-    rdfs:label "función T"@es ;
-    ex:textoExtracto "la comunicación entre el gestor y el PLC se configura para que se realice en una única fase, con la ejecución de la función T"@es .
+ex:FuncionM06_7_7 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M06 (cambio de herramienta)"@es ;
+    ex:textoExtracto "la rutina asociada a T incluya la función M06. [...] ejecuta la función M06 (cambio de herramienta)."@es ;
+    ex:controla ex:AlmacenTipoTorreta_7_7 .
 
-ex:FuncionM06AlmacenTorreta891 a ex:Parametro ;
-    rdfs:label "función M06"@es ;
-    ex:textoExtracto "Se recomienda que la rutina asociada a T incluya la función M06."@es .
+ex:SistemaComunicacionGestorPLC_7_7
+    a ex:Sistema ;
+    rdfs:label "Sistema de comunicación gestor-PLC (fase única)"@es ;
+    ex:textoExtracto "la comunicación entre el gestor y el PLC se configura para que se realice en una única fase, con la ejecución de la función T."@es ;
+    ex:controla ex:AlmacenTipoTorreta_7_7 .
 
-ex:CNCAlmacenTorreta891 a ex:Componente ;
-    rdfs:label "CNC"@es ;
-    ex:textoExtracto "Cuando el CNC selecciona una herramienta"@es .
-
-ex:SubrutinaTAlmacenTorreta891 a ex:TareaMantenimiento ;
-    rdfs:label "subrutina asociada a T"@es ;
-    ex:textoExtracto "Si la subrutina asociada a T no incluye la función M06, cuando el CNC selecciona una herramienta, internamente ejecuta un bloque T# M6 para ejecutar el cambio."@es .
+ex:RutinaCambioHerramienta_7_7
+    a ex:ModoOperacion ;
+    rdfs:label "Rutina de cambio de herramienta (T+M06)"@es ;
+    ex:textoExtracto "Se recomienda que la rutina asociada a T incluya la función M06. [...] la rutina asociada a T ejecuta la función M06 (cambio de herramienta), detiene el mecanizado y el gestor envía al PLC el código correspondiente."@es ;
+    ex:habilitadoPor ex:FuncionT_7_7 ;
+    ex:ejecutadoPor ex:SistemaComunicacionGestorPLC_7_7 .

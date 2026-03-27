@@ -1,19 +1,25 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MINDYNOVR a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MINDYNOVR
+    a ex:Parametro ;
     rdfs:label "MINDYNOVR" ;
-    ex:identificador "(V.)[ch].MPG.MINDYNOVR" ;
-    ex:valor "30 %" ;
-    ex:textoExtracto "MINDYNOVR Mínimo override dinámico para todos los ejes del canal. Valores posibles: De 10 a 100 %. Valor por defecto: 30 %. Variable asociada: (V.)[ch].MPG.MINDYNOVR" .
+    ex:textoExtracto "MINDYNOVR Mínimo override dinámico para todos los ejes del canal. Valores posibles: De 10 a 100 %. Valor por defecto: 30 %. Variable asociada: (V.)[ch].MPG.MINDYNOVR" ;
+    ex:valor "30" ;
+    ex:identificador "(V.)[ch].MPG.MINDYNOVR" .
 
-ex:MAXDYNOVR a ex:Parametro ;
+ex:Parametro_MAXDYNOVR
+    a ex:Parametro ;
     rdfs:label "MAXDYNOVR" ;
-    ex:identificador "(V.)[ch].MPG.MAXDYNOVR" ;
-    ex:valor "200 %" ;
-    ex:textoExtracto "MAXDYNOVR Máximo override dinámico para todos los ejes del canal. Valores posibles: De 100 a 500 %. Valor por defecto: 200 %. Variable asociada: (V.)[ch].MPG.MAXDYNOVR" .
+    ex:textoExtracto "MAXDYNOVR Máximo override dinámico para todos los ejes del canal. Valores posibles: De 100 a 500 %. Valor por defecto: 200 %. Variable asociada: (V.)[ch].MPG.MAXDYNOVR" ;
+    ex:valor "200" ;
+    ex:identificador "(V.)[ch].MPG.MAXDYNOVR" .
 
-ex:ModoAutomatico a ex:ModoOperacion ;
-    ex:textoExtracto "La pantalla del modo automático ofrece una barra deslizante que permite variar la dinámica definida por programa para un mecanizado." .
-
-ex:CNC a ex:Maquina ;
-    ex:textoExtracto "Si ambos parámetros MINDYNOVR y MAXDYNOVR se definen con valor 100 %, el CNC no muestra la barra y no será posible cambiar en tiempo real la dinámica del mecanizado." .
+ex:InterfazUsuario_BarraOverrideDinamico
+    a ex:InterfazUsuario ;
+    rdfs:label "Barra deslizante de override dinámico (modo automático)" ;
+    ex:textoExtracto "La pantalla del modo automático ofrece una barra deslizante que permite variar la dinámica definida por programa para un mecanizado." ;
+    ex:monitoreaParametro ex:Parametro_MINDYNOVR ;
+    ex:monitoreaParametro ex:Parametro_MAXDYNOVR .

@@ -1,23 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PROBE1MONIT a ex:Sensor ;
-    rdfs:label "PROBE1MONIT" ;
-    ex:textoExtracto "PROBE1MONIT Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PROBE2MONIT a ex:Sensor ;
-    rdfs:label "PROBE2MONIT" ;
-    ex:textoExtracto "PROBE2MONIT Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones." .
+ex:ModoOperacion_ModoSeguroPalpador
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo seguro del palpador"@es ;
+    ex:textoExtracto
+        "PROBE1MONIT PROBE2MONIT Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones."@es ;
+    ex:identificador "PROBE1MONIT", "PROBE2MONIT" .
 
-ex:ModoSeguroPalpador a ex:ModoOperacion ;
-    rdfs:label "modo seguro del palpador" ;
-    ex:textoExtracto "modo seguro del palpador" .
+ex:Sensor_Palpador1
+    a               ex:Sensor ;
+    rdfs:label      "Palpador 1"@es ;
+    ex:textoExtracto
+        "palpador [...] monitorizando colisiones"@es ;
+    ex:monitoreaParametro ex:Parametro_ColisionPalpador1 .
 
-ex:Palpador a ex:ComponenteMecanico ;
-    rdfs:label "palpador" ;
-    ex:textoExtracto "el palpador está en modo seguro monitorizando colisiones" .
+ex:Sensor_Palpador2
+    a               ex:Sensor ;
+    rdfs:label      "Palpador 2"@es ;
+    ex:textoExtracto
+        "palpador [...] monitorizando colisiones"@es ;
+    ex:monitoreaParametro ex:Parametro_ColisionPalpador2 .
 
-ex:SistemaMonitorizacionColisiones a ex:Sistema ;
-    rdfs:label "sistema de monitorización de colisiones" ;
-    ex:textoExtracto "Monitorización a nivel de lazo, controlando todas las situaciones de colisión en cualquiera de los dos palpadores." ;
-    ex:compuestoPor ex:PROBE1MONIT, ex:PROBE2MONIT ;
-    ex:controla ex:Palpador .
+ex:Parametro_ColisionPalpador1
+    a               ex:Parametro ;
+    rdfs:label      "Estado de colisión del Palpador 1"@es ;
+    ex:textoExtracto
+        "controlando todas las situaciones de colisión en [...] el palpador"@es .
+
+ex:Parametro_ColisionPalpador2
+    a               ex:Parametro ;
+    rdfs:label      "Estado de colisión del Palpador 2"@es ;
+    ex:textoExtracto
+        "controlando todas las situaciones de colisión en [...] el palpador"@es .
+
+ex:Sistema_MonitorizacionColisiones
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de monitorización de colisiones a nivel de lazo"@es ;
+    ex:textoExtracto
+        "Monitorización a nivel de lazo, controlando todas las situaciones de colisión en cualquiera de los dos palpadores."@es ;
+    ex:controla    ex:Sensor_Palpador1, ex:Sensor_Palpador2 ;
+    ex:habilitadoPor ex:ModoOperacion_ModoSeguroPalpador .

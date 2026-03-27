@@ -1,19 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Motor1 a ex:ComponenteMecanico ;
-    ex:textoExtracto "el CNC utiliza la captación interna (captación motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroFBACKDIFF a ex:Parametro ;
-    ex:identificador "FBACKDIFF" ;
-    ex:textoExtracto "FBACKDIFF Máxima diferencia entre captaciones. Parámetro válido para ejes lineales y rotativos. Parámetro válido para regulador Sercos posición. Valores posibles: Entre ±99999.9999 mm o grados / entre ±3937.00787 inch. Valor por defecto: 0 (no hay vigilancia). Variable asociada: (V.)[ch].MPA.FBACKDIFF.xn Parámetro incluido en la tabla SERCOSDATA. El CNC sólo tiene en cuenta este parámetro en ejes con captación externa o externa+interna. Cuando el sistema dispone de doble captación, este parámetro permite vigilar la diferencia entre ambas captaciones. Si la diferencia supera el valor definido, se muestra el error correspondiente. Si se define con valor ꞏ0ꞏ, no habrá vigilancia." .
+ex:Parametro_FBACKDIFF
+    a               ex:Parametro ;
+    rdfs:label      "FBACKDIFF (Máxima diferencia entre captaciones)"@es ;
+    ex:textoExtracto "FBACKDIFF Máxima diferencia entre captaciones. Parámetro válido para ejes lineales y rotativos. Parámetro válido para regulador Sercos posición. Valores posibles: Entre ±99999.9999 mm o grados / entre ±3937.00787 inch. Valor por defecto: 0 (no hay vigilancia). Variable asociada: (V.)[ch].MPA.FBACKDIFF.xn Parámetro incluido en la tabla SERCOSDATA."@es ;
+    ex:valor         "0" ;
+    ex:documentadoEn ex:Tabla_SERCOSDATA .
 
-ex:ParametroULTRAIPO a ex:Parametro ;
-    ex:identificador "ULTRAIPO" ;
-    ex:textoExtracto "ULTRAIPO (Sin función) Parámetro actualmente sin función." .
+ex:Parametro_FBMIXTIME
+    a               ex:Parametro ;
+    rdfs:label      "FBMIXTIME (Constante de tiempo para captación mixta)"@es ;
+    ex:textoExtracto "FBMIXTIME Constante de tiempo para la captación mixta. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: De 0 a 3200.0 ms. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.FBMIXTIME.xn Parámetro incluido en la tabla SERCOSDATA."@es ;
+    ex:valor         "0" ;
+    ex:documentadoEn ex:Tabla_SERCOSDATA .
 
-ex:ParametroFBMIXTIME a ex:Parametro ;
-    ex:identificador "FBMIXTIME" ;
-    ex:textoExtracto "FBMIXTIME Constante de tiempo para la captación mixta. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: De 0 a 3200.0 ms. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.FBMIXTIME.xn Parámetro incluido en la tabla SERCOSDATA. Este parámetro permite definir la constante de tiempo a utilizar en la mezcla de captaciones; es decir, determina el retraso entre las cotas que se introducen al lazo de posición del encóder y de la regla." .
+ex:Tabla_SERCOSDATA a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla SERCOSDATA"@es ;
+    ex:textoExtracto "Parámetros FBACKDIFF y FBMIXTIME incluidos en la tabla SERCOSDATA."@es .
 
-ex:TablaSERCOSDATA a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla SERCOSDATA" ;
-    ex:tieneComponente ex:ParametroFBACKDIFF, ex:ParametroFBMIXTIME .
+ex:SistemaCaptacionMotor
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de captación interna (motor)"@es ;
+    ex:textoExtracto "el CNC utiliza la captación interna (captación motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos."@es ;
+    ex:tieneComponente ex:ComponenteCaptacionMotor .
+
+ex:ComponenteCaptacionMotor
+    a               ex:Sensor ;
+    rdfs:label      "Sensor de captación interna (motor)"@es ;
+    ex:textoExtracto "captación interna (captación motor)"@es .
+
+ex:SistemaCaptacionExterna
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de captación externa"@es ;
+    ex:textoExtracto "ejes tándem [...] lo habitual es que el eje maestro vaya con captación externa y el eje esclavo con captación interna."@es .
+
+ex:SistemaCaptacionMixta
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de captación interna+externa"@es ;
+    ex:textoExtracto "Cuando el tipo de captación es interna+externa, el CNC utiliza la captación interna (captación motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos."@es ;
+    ex:tieneComponente ex:ComponenteCaptacionMotor .

@@ -1,37 +1,59 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EditorCNC8070 a ex:InterfazUsuario ;
-    ex:textoExtracto "El editor permite tener en un archivo de texto (txt) una lista subrutinas que se mostrará durante la edición del programa pieza, cada vez que se edite una sentencia #PCALL ó #MCALL. El editor muestra la lista de subrutinas durante la edición, tras el espacio en blanco o tabulador posterior las sentencias #PCALL o #MCALL. El funcionamiento de esta lista es análogo a las listas de variables, es posible moverse mediante las flechas por los distintos elementos. Con [ENTER] el editor inserta la línea seleccionada en la posición actual del cursor. La lista de subrutinas desaparece con [ESC], borrando la palabra clave o pasando a otra línea del programa Esta ayuda está siempre activa, independientemente del estado de la softkey de ayudas al editor \"Ayuda prog\". Editar la lista de subrutinas. La lista de subrutinas deberá estar en un fichero de texto (txt). El fichero se deberá editar de tal manera que cada línea sea el nombre de una posible subrutina a llamar." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ListaSubrutinas a ex:InterfazUsuario ;
-    ex:textoExtracto "El editor permite tener en un archivo de texto (txt) una lista subrutinas que se mostrará durante la edición del programa pieza, cada vez que se edite una sentencia #PCALL ó #MCALL. El editor muestra la lista de subrutinas durante la edición, tras el espacio en blanco o tabulador posterior las sentencias #PCALL o #MCALL. La lista de subrutinas desaparece con [ESC], borrando la palabra clave o pasando a otra línea del programa Esta ayuda está siempre activa, independientemente del estado de la softkey de ayudas al editor \"Ayuda prog\". Editar la lista de subrutinas. La lista de subrutinas deberá estar en un fichero de texto (txt). El fichero se deberá editar de tal manera que cada línea sea el nombre de una posible subrutina a llamar." .
+ex:InterfazUsuario_EditorCNC8070
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de editor CNC8070"@es ;
+    ex:textoExtracto "El editor permite tener en un archivo de texto (txt) una lista subrutinas que se mostrará durante la edición del programa pieza, cada vez que se edite una sentencia #PCALL ó #MCALL. El editor muestra la lista de subrutinas durante la edición, tras el espacio en blanco o tabulador posterior las sentencias #PCALL o #MCALL."@es ;
+    ex:identificador "CNC8070_Editor" .
 
-ex:ArchivoPcallTxt a ex:Esquema ;
-    ex:textoExtracto "El nombre del fichero deberá ser . pcall.txt Dónde guardar la lista de subrutinas. El fabricante de la máquina guardará el archivo en la carpeta ..\\Mtb\\Sub\\Help. Como pcall.txt las modificaciones del directorio MTB en el modo de trabajo \"Usuario\" desaparecen al apagar el equipo, el usuario deberá guardar su archivo pcall.txt ..\\Users\\Sub\\Help. El CNC busca los ficheros de ayuda en ambas carpetas; si los archivos no están ahí, el CNC no mostrará ninguna ayuda. Si existe el fichero en ambos directorios, la lista pcall.txt mostrará los nombres de subrutinas contenidos en ambos." ;
-    ex:identificador "pcall.txt" .
+ex:ArchivoListaSubrutinas_pcall.txt
+    a ex:InterfazUsuario ;
+    rdfs:label "Archivo pcall.txt (lista de subrutinas)"@es ;
+    ex:textoExtracto "El nombre del fichero deberá ser .pcall.txt [...] El fichero se deberá editar de tal manera que cada línea sea el nombre de una posible subrutina a llamar."@es ;
+    ex:identificador "pcall.txt" ;
+    ex:documentadoEn ex:InterfazUsuario_EditorCNC8070 .
 
-ex:DirectorioMtbSubHelp a ex:Sistema ;
-    ex:textoExtracto "El fabricante de la máquina guardará el archivo en la carpeta ..\\Mtb\\Sub\\Help." ;
-    ex:identificador "..\\Mtb\\Sub\\Help" .
+ex:RutaAlmacenamiento_UsersSubHelp
+    a ex:InterfazUsuario ;
+    rdfs:label "Ruta de almacenamiento de subrutinas (..\\Users\\Sub\\Help)"@es ;
+    ex:textoExtracto "el usuario deberá guardar su archivo pcall.txt ..\\Users\\Sub\\Help."@es ;
+    ex:identificador "..\\Users\\Sub\\Help" ;
+    ex:documentadoEn ex:InterfazUsuario_EditorCNC8070 .
 
-ex:DirectorioUsersSubHelp a ex:Sistema ;
-    ex:textoExtracto "el usuario deberá guardar su archivo pcall.txt ..\\Users\\Sub\\Help." ;
-    ex:identificador "..\\Users\\Sub\\Help" .
+ex:RutaAlmacenamiento_MtbSubHelp
+    a ex:InterfazUsuario ;
+    rdfs:label "Ruta de almacenamiento de subrutinas (..\\Mtb\\Sub\\Help)"@es ;
+    ex:textoExtracto "El fabricante de la máquina guardará el archivo en la carpeta ..\\Mtb\\Sub\\Help."@es ;
+    ex:identificador "..\\Mtb\\Sub\\Help" ;
+    ex:documentadoEn ex:InterfazUsuario_EditorCNC8070 .
 
-ex:FicheroFAGOR_NC a ex:Esquema ;
-    ex:textoExtracto "C:\\CNC8070\\USERS\\SUB\\FAGOR.NC" ;
-    ex:identificador "C:\\CNC8070\\USERS\\SUB\\FAGOR.NC" .
+ex:EjemploSubrutina_FAGOR.NC
+    a ex:Componente ;
+    rdfs:label "Subrutina FAGOR.NC"@es ;
+    ex:textoExtracto "Ejemplo de un fichero con una lista de subrutinas: C:\\CNC8070\\USERS\\SUB\\FAGOR.NC"@es ;
+    ex:identificador "FAGOR.NC" ;
+    ex:ilustradoEn ex:ArchivoListaSubrutinas_pcall.txt .
 
-ex:FicheroSUBROUTINE_NC a ex:Esquema ;
-    ex:textoExtracto "SUBROUTINE.NC" ;
-    ex:identificador "SUBROUTINE.NC" .
+ex:EjemploSubrutina_SUBROUTINE.NC
+    a ex:Componente ;
+    rdfs:label "Subrutina SUBROUTINE.NC"@es ;
+    ex:textoExtracto "Ejemplo de un fichero con una lista de subrutinas: SUBROUTINE.NC"@es ;
+    ex:identificador "SUBROUTINE.NC" ;
+    ex:ilustradoEn ex:ArchivoListaSubrutinas_pcall.txt .
 
-ex:FicheroEXAMPLE_NC a ex:Esquema ;
-    ex:textoExtracto "EXAMPLE.NC" ;
-    ex:identificador "EXAMPLE.NC" .
+ex:EjemploSubrutina_EXAMPLE.NC
+    a ex:Componente ;
+    rdfs:label "Subrutina EXAMPLE.NC"@es ;
+    ex:textoExtracto "Ejemplo de un fichero con una lista de subrutinas: EXAMPLE.NC"@es ;
+    ex:identificador "EXAMPLE.NC" ;
+    ex:ilustradoEn ex:ArchivoListaSubrutinas_pcall.txt .
 
-ex:FicheroPOSITIONING_NC a ex:Esquema ;
-    ex:textoExtracto "POSITIONING.NC" ;
-    ex:identificador "POSITIONING.NC" .
-
-ex:SistemaCNC8070 a ex:Maquina ;
-    ex:textoExtracto "El CNC busca los ficheros de ayuda en ambas carpetas; si los archivos no están ahí, el CNC no mostrará ninguna ayuda." .
+ex:EjemploSubrutina_POSITIONING.NC
+    a ex:Componente ;
+    rdfs:label "Subrutina POSITIONING.NC"@es ;
+    ex:textoExtracto "Ejemplo de un fichero con una lista de subrutinas: POSITIONING.NC"@es ;
+    ex:identificador "POSITIONING.NC" ;
+    ex:ilustradoEn ex:ArchivoListaSubrutinas_pcall.txt .

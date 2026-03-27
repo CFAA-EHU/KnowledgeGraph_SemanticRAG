@@ -1,39 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ModoLimitadorSenal_TG4 a ex:ModoOperacion ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoLimitadorTG4
+    a ex:ModoOperacion ;
+    rdfs:label "Modo limitador de la señal (TG4)" ;
     ex:textoExtracto "un flanco de subida en TG4 activa T=1 y arranca t; T vuelve a 0 al cumplirse la constante de tiempo o por un flanco de bajada en TG4 anterior al vencimiento, conservándose el valor alcanzado de t en ese instante." ;
+    ex:identificador "TG4" .
+
+ex:SenalTRS_TG4
+    a ex:Parametro ;
+    rdfs:label "Señal TRS en modo TG4" ;
     ex:textoExtracto "la señal TRS, por flanco de subida, reinicia el temporizador (T=0, t=0) en cualquier momento del ciclo y requiere nueva activación mediante TG4." ;
-    ex:textoExtracto "con la temporización activa, forzar TEN=0 congela t y mantiene el estado hasta recuperar TEN=1, cuando la temporización prosigue hasta su fin o hasta la caída de TG4." .
+    ex:monitoreaParametro ex:ModoLimitadorTG4 .
 
-ex:Temporizador_T a ex:ComponenteElectrico ;
-    ex:textoExtracto "arranca t" ;
-    ex:textoExtracto "T vuelve a 0 al cumplirse la constante de tiempo" ;
-    ex:textoExtracto "conservándose el valor alcanzado de t en ese instante" ;
-    ex:textoExtracto "reinicia el temporizador (T=0, t=0)" ;
-    ex:textoExtracto "forzar TEN=0 congela t" .
+ex:SenalTEN_TG4
+    a ex:Parametro ;
+    rdfs:label "Señal TEN en modo TG4" ;
+    ex:textoExtracto "con la temporización activa, forzar TEN=0 congela t y mantiene el estado hasta recuperar TEN=1, cuando la temporización prosigue hasta su fin o hasta la caída de TG4." ;
+    ex:monitoreaParametro ex:ModoLimitadorTG4 .
 
-ex:Senal_TRS a ex:Parametro ;
-    ex:textoExtracto "la señal TRS, por flanco de subida, reinicia el temporizador" .
+ex:ContadorPLC
+    a ex:ComponenteElectrico ;
+    rdfs:label "Contador del PLC" ;
+    ex:textoExtracto "Diagrama temporal del contador con entradas CUP (conteo), CDW (desconteo) y CEN (enable), mostrando incrementos/decrementos por flancos de subida, efecto de CEN=0 (inhibe CUP/CDW), y la marca de estado C que vale 1 cuando la cuenta es cero." .
 
-ex:Senal_TEN a ex:Parametro ;
-    ex:textoExtracto "forzar TEN=0 congela t" ;
-    ex:textoExtracto "recuperar TEN=1, cuando la temporización prosigue" .
+ex:SenalCUP
+    a ex:Parametro ;
+    rdfs:label "Entrada CUP (conteo)" ;
+    ex:textoExtracto "incrementos por flancos de subida" ;
+    ex:monitoreaParametro ex:ContadorPLC .
 
-ex:Contador_PLC a ex:ComponenteElectrico ;
-    ex:textoExtracto "Funcionamiento de un contador" ;
-    ex:textoExtracto "entradas CUP (conteo), CDW (desconteo) y CEN (enable)" ;
-    ex:textoExtracto "incrementos/decrementos por flancos de subida" ;
+ex:SenalCDW
+    a ex:Parametro ;
+    rdfs:label "Entrada CDW (desconteo)" ;
+    ex:textoExtracto "decrementos por flancos de subida" ;
+    ex:monitoreaParametro ex:ContadorPLC .
+
+ex:SenalCEN
+    a ex:Parametro ;
+    rdfs:label "Entrada CEN (enable)" ;
     ex:textoExtracto "efecto de CEN=0 (inhibe CUP/CDW)" ;
-    ex:textoExtracto "la marca de estado C que vale 1 cuando la cuenta es cero" .
+    ex:monitoreaParametro ex:ContadorPLC .
 
-ex:Entrada_CUP a ex:Parametro ;
-    ex:textoExtracto "entradas CUP (conteo)" .
-
-ex:Entrada_CDW a ex:Parametro ;
-    ex:textoExtracto "entradas CDW (desconteo)" .
-
-ex:Entrada_CEN a ex:Parametro ;
-    ex:textoExtracto "entradas CEN (enable)" ;
-    ex:textoExtracto "efecto de CEN=0 (inhibe CUP/CDW)" .
-
-ex:Estado_C a ex:Parametro ;
-    ex:textoExtracto "la marca de estado C que vale 1 cuando la cuenta es cero" .
+ex:EstadoC_Contador
+    a ex:Parametro ;
+    rdfs:label "Marca de estado C (cuenta cero)" ;
+    ex:textoExtracto "la marca de estado C que vale 1 cuando la cuenta es cero" ;
+    ex:monitoreaParametro ex:ContadorPLC .

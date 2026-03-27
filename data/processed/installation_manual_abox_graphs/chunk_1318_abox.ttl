@@ -1,28 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:DMC_ControlDinamicoMecanizado a ex:Sistema ;
-    rdfs:label "DMC (Control Dinámico del Mecanizado)" ;
-    ex:textoExtracto "El DMC (control dinámico del mecanizado) adapta el avance durante el mecanizado para mantener la potencia de corte lo más cercana posible a las condiciones idóneas de mecanizado." ;
-    ex:identificador "DMC" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_DMCSPDL a ex:Parametro ;
-    rdfs:label "Parámetro máquina DMCSPDL" ;
-    ex:textoExtracto "El cabezal debe estar habilitado para al DMC en el parámetro máquina DMCSPDL." ;
-    ex:identificador "DMCSPDL" .
+ex:DMC_ControlDinamicoMecanizado
+    a ex:ModoOperacion ;
+    rdfs:label "DMC (Control Dinámico del Mecanizado)"@es ;
+    ex:textoExtracto "El DMC (control dinámico del mecanizado) adapta el avance durante el mecanizado para mantener la potencia de corte lo más cercana posible a las condiciones idóneas de mecanizado. [...] Esta función se puede aplicar a operaciones de desbaste y acabado, pero será en operaciones de desbaste donde esta función aporte mayores beneficios en tiempo de mecanizado y vida de herramienta."@es ;
+    ex:identificador "DMC" ;
+    ex:monitoreaParametro ex:PotenciaCorte_Parametro .
 
-ex:RegulacionDigital_Fagor_V9_01 a ex:ComponenteElectrico ;
-    rdfs:label "Regulación digital Fagor (versión V9.01 o superior)" ;
-    ex:textoExtracto "con regulación digital Fagor (versión V9.01 o superior)" ;
-    ex:identificador "V9.01" .
+ex:PotenciaCorte_Parametro
+    a ex:Parametro ;
+    rdfs:label "Potencia de corte (potencia objetivo)"@es ;
+    ex:textoExtracto "La base para la optimización es la potencia de corte a alcanzar, también llamada potencia objetivo. Esta potencia no solo depende de la herramienta, sino también del material y de las condiciones de corte (avance, velocidad de giro del cabezal, profundidad de pasada y paso lateral)."@es .
 
-ex:Herramienta_Fresado a ex:Herramienta ;
-    rdfs:label "Herramienta de tipo Fresado" ;
-    ex:textoExtracto "Esta función se puede aplicar a operaciones de fresado con herramientas de tipo 'Fresado' y 'Planeado'." .
+ex:Parametro_DMCSPDL
+    a ex:Parametro ;
+    rdfs:label "Parámetro máquina DMCSPDL"@es ;
+    ex:textoExtracto "El cabezal debe estar habilitado para el DMC en el parámetro máquina DMCSPDL."@es ;
+    ex:identificador "DMCSPDL" ;
+    ex:habilitadoPor ex:DMC_ControlDinamicoMecanizado .
 
-ex:Herramienta_Planeado a ex:Herramienta ;
-    rdfs:label "Herramienta de tipo Planeado" ;
-    ex:textoExtracto "Esta función se puede aplicar a operaciones de fresado con herramientas de tipo 'Fresado' y 'Planeado'." .
+ex:CabezalMaster_ComponenteMecanico
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal máster (con regulación digital Fagor v9.01+)"@es ;
+    ex:textoExtracto "El DMC sólo está disponible para el cabezal máster, con regulación digital Fagor (versión V9.01 o superior)."@es ;
+    ex:identificador "Cabezal_Master_Fagor_v9.01" ;
+    ex:tieneComponente ex:Parametro_DMCSPDL .
 
-ex:PotenciaObjetivo a ex:Parametro ;
-    rdfs:label "Potencia objetivo" ;
-    ex:textoExtracto "La base para la optimización es la potencia de corte a alcanzar, también llamada potencia objetivo." .
+ex:OperacionFresado_Desbaste
+    a ex:TareaMantenimiento ;
+    rdfs:label "Operación de fresado (desbaste)"@es ;
+    ex:textoExtracto "El DMC sólo está disponible para operaciones de fresado con herramientas de tipo 'Fresado' y 'Planeado'. [...] será en operaciones de desbaste donde esta función aporte mayores beneficios en tiempo de mecanizado y vida de herramienta."@es ;
+    ex:requiereMantenimiento ex:DMC_ControlDinamicoMecanizado .
+
+ex:HerramientaFresado
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de fresado"@es ;
+    ex:textoExtracto "El avance para un mecanizado se fija al comienzo del mismo [...] Si las condiciones del mecanizado cambian (por ejemplo, por el desgaste de la herramienta), el avance programado puede no ser ya el adecuado."@es .

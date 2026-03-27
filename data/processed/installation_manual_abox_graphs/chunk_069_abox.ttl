@@ -1,40 +1,108 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TablaGantryEjes a ex:Tabla ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:TablaEjesGantry_69 a ex:Tabla ;
+     a ex:Tabla ;
     rdfs:label "Tabla de ejes gantry"@es ;
-    ex:textoExtracto "Tabla de ejes gantry. Este parámetro muestra la tabla para definir los ejes gantry del sistema."@es ;
-    ex:tieneComponente ex:EjeGantryMaestro, ex:EjeGantryEsclavo .
+    ex:textoExtracto "GANTRY Tabla de ejes gantry. Este parámetro muestra la tabla para definir los ejes gantry del sistema."@es ;
+    ex:documentadoEn ex:Manual_ConfiguracionCNC .
 
-ex:EjeGantryMaestro a ex:ComponenteMecanico ;
-    rdfs:label "eje gantry maestro"@es ;
-    ex:textoExtracto "eje gantry maestro"@es .
+ex:SistemaEjesGantry_69
+    a ex:Sistema ;
+    rdfs:label "Sistema de ejes gantry"@es ;
+    ex:textoExtracto "Se denomina eje gantry a una pareja de ejes que por construcción de la máquina deben desplazarse a la vez y de forma sincronizada."@es ;
+    ex:detalladoEnEsquema ex:TablaEjesGantry_69 ;
+    ex:compuestoPor ex:EjeGantryMaestro_X_69, ex:EjeGantryEsclavo_U_69, ex:EjeGantryMaestro_Z_69, ex:EjeGantryEsclavo_W_69 .
 
-ex:EjeGantryEsclavo a ex:ComponenteMecanico ;
-    rdfs:label "eje gantry esclavo"@es ;
-    ex:textoExtracto "eje gantry esclavo"@es .
+ex:EjeGantryMaestro_X_69
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje gantry maestro X"@es ;
+    ex:textoExtracto "El eje maestro tiene que estar definido en la tabla de AXISNAME antes que el eje esclavo. Ejemplo de una fresadora puente con dos ejes gantry, X-U."@es ;
+    ex:identificador "X" ;
+    ex:monitoreaParametro ex:Parametro_AXISNAME_69, ex:Parametro_AXISTYPE_69, ex:Parametro_DRIVETYPE_69, ex:Parametro_AXISEXCH_69, ex:Parametro_LIMIT_69, ex:Parametro_LIMIT_69 .
 
-ex:SistemaCNC a ex:Sistema ;
-    rdfs:label "CNC"@es ;
-    ex:textoExtracto "En el CNC"@es ;
-    ex:controla ex:EjeGantryMaestro .
+ex:EjeGantryEsclavo_U_69
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje gantry esclavo U"@es ;
+    ex:textoExtracto "El otro eje (eje gantry esclavo) no es programable; es controlado por el CNC. Ejemplo de una fresadora puente con dos ejes gantry, X-U."@es ;
+    ex:identificador "U" ;
+    ex:controla ex:EjeGantryMaestro_X_69 .
 
-ex:FresadoraPuente a ex:Maquina ;
-    rdfs:label "fresadora puente"@es ;
-    ex:textoExtracto "Ejemplo de una fresadora puente con dos ejes gantry, X-U Z-W."@es ;
-    ex:tieneComponente ex:EjeGantryMaestro_2, ex:EjeGantryEsclavo_2 .
+ex:EjeGantryMaestro_Z_69
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje gantry maestro Z"@es ;
+    ex:textoExtracto "Ejemplo de una fresadora puente con dos ejes gantry, Z-W."@es ;
+    ex:identificador "Z" ;
+    ex:monitoreaParametro ex:Parametro_AXISNAME_69, ex:Parametro_AXISTYPE_69, ex:Parametro_DRIVETYPE_69, ex:Parametro_AXISEXCH_69, ex:Parametro_LIMIT_69, ex:Parametro_LIMIT_69 .
 
-ex:EjeGantryMaestro_2 a ex:ComponenteMecanico ;
-    rdfs:label "eje gantry maestro X"@es ;
-    ex:textoExtracto "X"@es .
+ex:EjeGantryEsclavo_W_69
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje gantry esclavo W"@es ;
+    ex:textoExtracto "Ejemplo de una fresadora puente con dos ejes gantry, Z-W."@es ;
+    ex:identificador "W" ;
+    ex:controla ex:EjeGantryMaestro_Z_69 .
 
-ex:EjeGantryEsclavo_2 a ex:ComponenteMecanico ;
-    rdfs:label "eje gantry esclavo U"@es ;
-    ex:textoExtracto "U"@es .
+ex:Parametro_AXISNAME_69
+    a ex:Parametro ;
+    rdfs:label "AXISNAME" ;
+    ex:textoExtracto "El eje maestro tiene que estar definido en la tabla de AXISNAME antes que el eje esclavo."@es ;
+    ex:valor "Tabla de definición de nombres de ejes"@es .
 
-ex:EjeGantryMaestro_3 a ex:ComponenteMecanico ;
-    rdfs:label "eje gantry maestro Z"@es ;
-    ex:textoExtracto "Z"@es .
+ex:Parametro_AXISTYPE_69
+    a ex:Parametro ;
+    rdfs:label "AXISTYPE" ;
+    ex:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)."@es .
 
-ex:EjeGantryEsclavo_3 a ex:ComponenteMecanico ;
-    rdfs:label "eje gantry esclavo W"@es ;
-    ex:textoExtracto "W"@es .
+ex:Parametro_DRIVETYPE_69
+    a ex:Parametro ;
+    rdfs:label "DRIVETYPE" ;
+    ex:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)."@es .
+
+ex:Parametro_AXISEXCH_69
+    a ex:Parametro ;
+    rdfs:label "AXISEXCH" ;
+    ex:textoExtracto "El permiso de cambio de canal (parámetro AXISEXCH) deberá ser igual en ambos ejes."@es .
+
+ex:Parametro_LIMIT_69
+    a ex:Parametro ;
+    rdfs:label "LIMIT+" ;
+    ex:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)."@es .
+
+ex:Parametro_LIMIT_69
+    a ex:Parametro ;
+    rdfs:label "LIMIT-" ;
+    ex:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)."@es .
+
+ex:Parametro_AXISMODE_69
+    a ex:Parametro ;
+    rdfs:label "AXISMODE" ;
+    ex:textoExtracto "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)."@es .
+
+ex:Parametro_SHORTESTWAY_69
+    a ex:Parametro ;
+    rdfs:label "SHORTESTWAY" ;
+    ex:textoExtracto "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)."@es .
+
+ex:Parametro_UNIDIR_69
+    a ex:Parametro ;
+    rdfs:label "UNIDIR" ;
+    ex:textoExtracto "Los ejes rotativos con sentido de giro único (parámetro UNIDIR = YES) no podrán ser ejes gantry."@es ;
+    ex:valor "YES" .
+
+ex:Parametro_HIRTH_69
+    a ex:Parametro ;
+    rdfs:label "HIRTH" ;
+    ex:textoExtracto "Los ejes hirth (parámetro HIRTH = YES) no podrán ser ejes gantry."@es ;
+    ex:valor "YES" .
+
+ex:Parametro_I0TYPE_69
+    a ex:Parametro ;
+    rdfs:label "I0TYPE" ;
+    ex:textoExtracto "El tipo de I0 (parámetro I0TYPE) deberá ser en ambos ejes no codificado o en ambos ejes codificado (creciente o decreciente)."@es .
+
+ex:Parametro_DECINPUT_69
+    a ex:Parametro ;
+    rdfs:label "DECINPUT" ;
+    ex:textoExtracto "Cuando el eje gantry no disponga de I0 codificado, podrán tener micro de referencia (parámetro DECINPUT) ambos ejes o sólo el eje maestro."@es .

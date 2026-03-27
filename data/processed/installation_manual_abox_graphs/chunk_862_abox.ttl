@@ -1,48 +1,86 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:KEYLEDHBLS1 a ex:Parametro ;
-    ex:textoExtracto "KEYLEDHBLS1 KEYLEDHBLS2 Estos registros encienden los led (bit=1) de las teclas del volante HBLS. El registro KEYLEDHBLS1 corresponde al primer volante y KEYLEDHBLS2 al segundo." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:KEYLEDHBLS2 a ex:Parametro ;
-    ex:textoExtracto "KEYLEDHBLS1 KEYLEDHBLS2 Estos registros encienden los led (bit=1) de las teclas del volante HBLS. El registro KEYLEDHBLS1 corresponde al primer volante y KEYLEDHBLS2 al segundo." .
+ex:Registro_KEYLEDHBLS1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registro KEYLEDHBLS1" ;
+    ex:textoExtracto "KEYLEDHBLS1 [...] El registro KEYLEDHBLS1 corresponde al primer volante" ;
+    ex:controla ex:TeclasVolanteHBLS_PrimerVolante ;
+    ex:monitoreaParametro ex:Parametro_EstadoLED_PrimerVolante .
 
-ex:KEYDIS1 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente." .
+ex:Registro_KEYLEDHBLS2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registro KEYLEDHBLS2" ;
+    ex:textoExtracto "KEYLEDHBLS2 [...] El registro KEYLEDHBLS2 corresponde al segundo volante" ;
+    ex:controla ex:TeclasVolanteHBLS_SegundoVolante ;
+    ex:monitoreaParametro ex:Parametro_EstadoLED_SegundoVolante .
 
-ex:KEYDIS2 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente." .
+ex:TeclasVolanteHBLS_PrimerVolante
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclas del primer volante HBLS" ;
+    ex:textoExtracto "El registro KEYLEDHBLS1 corresponde al primer volante" .
 
-ex:KEYDIS3 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente." .
+ex:TeclasVolanteHBLS_SegundoVolante
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclas del segundo volante HBLS" ;
+    ex:textoExtracto "El registro KEYLEDHBLS2 corresponde al segundo volante" .
 
-ex:KEYDIS4 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente." .
+ex:Parametro_EstadoLED_PrimerVolante
+    a ex:Parametro ;
+    rdfs:label "Estado LED del primer volante HBLS" ;
+    ex:textoExtracto "Estos registros encienden los led (bit=1) de las teclas del volante HBLS" ;
+    ex:valor "bit=1 (encendido)" .
 
-ex:KEYDIS1_1 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:Parametro_EstadoLED_SegundoVolante
+    a ex:Parametro ;
+    rdfs:label "Estado LED del segundo volante HBLS" ;
+    ex:textoExtracto "Estos registros encienden los led (bit=1) de las teclas del volante HBLS" ;
+    ex:valor "bit=1 (encendido)" .
 
-ex:KEYDIS2_1 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:Registro_KEYDIS1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registro KEYDIS1" ;
+    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" ;
+    ex:controla ex:TeclasPanelesMando_Global ;
+    ex:mitigaRiesgo ex:AvisoSeguridad_InhibicionTeclas .
 
-ex:KEYDIS3_1 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:Registro_KEYDIS2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registro KEYDIS2" ;
+    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" ;
+    ex:controla ex:TeclasPanelesMando_Global .
 
-ex:KEYDIS4_1 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:Registro_KEYDIS3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registro KEYDIS3" ;
+    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" ;
+    ex:controla ex:TeclasPanelesMando_Global .
 
-ex:KEYDIS1_8 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:Registro_KEYDIS4
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registro KEYDIS4" ;
+    ex:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" ;
+    ex:controla ex:TeclasPanelesMando_Global .
 
-ex:KEYDIS2_8 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:TeclasPanelesMando_Global
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclas y conmutadores de todos los paneles de mando" ;
+    ex:textoExtracto "inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" .
 
-ex:KEYDIS3_8 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:AvisoSeguridad_InhibicionTeclas
+    a ex:AvisoSeguridad ;
+    rdfs:label "Comportamiento del CNC al inhibir teclas de feed override/speed override" ;
+    ex:textoExtracto "En caso de seleccionar una de las posiciones inhibidas del feed override, el CNC tomará el valor de la posición inferior permitida. Si se inhiben todas, se tomará 0 %. [...] Si se inhiben todas las posiciones, el CNC mantiene el valor activo." .
 
-ex:KEYDIS4_8 a ex:Parametro ;
-    ex:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando, KEYDIS1_2 a KEYDIS4_2 al segundo y así sucesivamente." .
+ex:Registro_KEYDIS1_2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Registro KEYDIS1_2" ;
+    ex:textoExtracto "La siguiente instrucción inhibe la primera tecla de jog (bit 16) del segundo teclado: ( ) = B16KEYDIS1_2" ;
+    ex:controla ex:TeclaJog_PrimerTecla_SegundoTeclado .
 
-ex:KEYDIS1_2 a ex:Parametro ;
-    ex:textoExtracto "La siguiente instrucción inhibe la primera tecla de jog (bit 16) del segundo teclado. ( ) = B16KEYDIS1_2 Registros KEYDIS1 / KEYDIS1_1 a KEYDIS1_8. Teclas de usuario. Registros KEYDIS1 / KEYDIS1_1 a KEYDIS1_8. Teclas de jog. Registros KEYDIS2 / KEYDIS2_1 a KEYDIS2_8. | Bit. | Tecla." .
-
-ex:B16KEYDIS1_2 a ex:Parametro ;
-    ex:textoExtracto "La siguiente instrucción inhibe la primera tecla de jog (bit 16) del segundo teclado. ( ) = B16KEYDIS1_2 Registros KEYDIS1 / KEYDIS1_1 a KEYDIS1_8. Teclas de usuario. Registros KEYDIS1 / KEYDIS1_1 a KEYDIS1_8. Teclas de jog. Registros KEYDIS2 / KEYDIS2_1 a KEYDIS2_8. | Bit. | Tecla." .
+ex:TeclaJog_PrimerTecla_SegundoTeclado
+    a ex:InterfazUsuario ;
+    rdfs:label "Primera tecla de jog del segundo teclado" ;
+    ex:textoExtracto "inhibe la primera tecla de jog (bit 16) del segundo teclado" .

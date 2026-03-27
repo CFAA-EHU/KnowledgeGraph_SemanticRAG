@@ -1,21 +1,83 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:HerramientaTierra_897_1 a ex:Herramienta ;
-    rdfs:label "Herramienta de tierra"@es ;
-    ex:textoExtracto "Herramienta de tierra"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MarcaMZTOSPDL_897_1 a ex:Parametro ;
-    rdfs:label "MZTOSPDL"@es ;
+ex:OperacionAlmacen_TM1
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION = 1" ;
+    rdfs:label "Asumir herramienta activa"@es ;
+    ex:textoExtracto "TMOPERATION = 1 Asumir la herramienta actual como herramienta activa."@es ;
+    ex:activaAlarma ex:Marca_MZTOSPDL .
+
+ex:OperacionAlmacen_TM3
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION = 3" ;
+    rdfs:label "Poner herramienta de tierra en cabezal"@es ;
+    ex:textoExtracto "TMOPERATION = 3 Poner en el cabezal una herramienta de tierra."@es ;
+    ex:activaAlarma ex:Marca_GRTOSPDL ;
+    ex:requiereEPI ex:HerramientaTierra .
+
+ex:OperacionAlmacen_TM4
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION = 4" ;
+    rdfs:label "Dejar herramienta del cabezal en tierra"@es ;
+    ex:textoExtracto "TMOPERATION = 4 Dejar la herramienta del cabezal en tierra."@es ;
+    ex:activaAlarma ex:Marca_SPDLTOGR .
+
+ex:OperacionAlmacen_TM9
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION = 9" ;
+    rdfs:label "Transportar herramienta de tierra al almacén vía cabezal"@es ;
+    ex:textoExtracto "TMOPERATION = 9 Coger una herramienta de tierra y llevarla al almacén pasando por el cabezal."@es ;
+    ex:activaAlarma ex:Marca_GRTOSPDL ;
+    ex:requiereEPI ex:HerramientaTierra .
+
+ex:OperacionAlmacen_TM10
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION = 10" ;
+    rdfs:label "Transportar herramienta del almacén a tierra vía cabezal"@es ;
+    ex:textoExtracto "TMOPERATION = 10 Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal."@es ;
+    ex:activaAlarma ex:Marca_SPDLTOGR .
+
+ex:OperacionAlmacen_TM11
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION = 11" ;
+    rdfs:label "Orientar almacén"@es ;
+    ex:textoExtracto "TMOPERATION = 11 Orientar el almacén."@es ;
+    ex:activaAlarma ex:Marca_MZROT .
+
+ex:OperacionAlmacen_TM15
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION = 15" ;
+    rdfs:label "Seleccionar posición del almacén"@es ;
+    ex:textoExtracto "TMOPERATION = 15 Seleccionar una posición del almacén. TAKEPOS Este registro tomará valor ꞏ0ꞏ si es un posicionamiento absoluto y valor ꞏ1ꞏ si es un posicionamiento relativo."@es .
+
+ex:HerramientaTierra
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de tierra"@es ;
+    ex:textoExtracto "| -4 | Herramienta de tierra."@es .
+
+ex:Marca_MZTOSPDL
+    a ex:Alarma ;
+    ex:identificador "MZTOSPDL" ;
+    rdfs:label "Marca de finalización: herramienta activa asumida"@es ;
     ex:textoExtracto "activar la marca MZTOSPDL"@es .
 
-ex:MarcaGRTOSPDL_897_2 a ex:Parametro ;
-    rdfs:label "GRTOSPDL"@es ;
+ex:Marca_GRTOSPDL
+    a ex:Alarma ;
+    ex:identificador "GRTOSPDL" ;
+    rdfs:label "Marca de finalización: herramienta en cabezal"@es ;
     ex:textoExtracto "activar la marca GRTOSPDL"@es .
 
-ex:MarcaSPDLTOGR_897_3 a ex:Parametro ;
-    rdfs:label "SPDLTOGR"@es ;
+ex:Marca_SPDLTOGR
+    a ex:Alarma ;
+    ex:identificador "SPDLTOGR" ;
+    rdfs:label "Marca de finalización: herramienta en tierra"@es ;
     ex:textoExtracto "activar la marca SPDLTOGR"@es .
 
-ex:MarcaMZROT_897_4 a ex:Parametro ;
-    rdfs:label "MZROT"@es ;
+ex:Marca_MZROT
+    a ex:Alarma ;
+    ex:identificador "MZROT" ;
+    rdfs:label "Marca de finalización: almacén orientado"@es ;
     ex:textoExtracto "activar la marca MZROT"@es .

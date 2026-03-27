@@ -1,21 +1,53 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ModoOperacionNo ex:textoExtracto """No.""" ;
-    rdfs:label "No" ;
-    a ex:ModoOperacion .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModoOperacionTemporal ex:textoExtracto """Temporal.""" ;
-    rdfs:label "Temporal" ;
-    a ex:ModoOperacion .
+ex:Parametro_AXISEXCH_No
+    a ex:Parametro ;
+    rdfs:label "AXISEXCH=No" ;
+    ex:textoExtracto """
+    • El CNC puede modificar la posición del eje o cabezal dentro de su canal o incluso eliminarlo del canal.
+    • El CNC no puede cambiar el eje o cabezal de canal.
+    • El CNC no mantiene los cambios al reiniciar el programa pieza, tras un reset o tras reiniciar el CNC. El eje o cabezal vuelve a su posición original, definida en los parámetros máquina.""" ;
+    ex:identificador "AXISEXCH=No" .
 
-ex:ModoOperacionMantenido ex:textoExtracto """Mantenido.""" ;
-    rdfs:label "Mantenido" ;
-    a ex:ModoOperacion .
+ex:Parametro_AXISEXCH_Temporal
+    a ex:Parametro ;
+    rdfs:label "AXISEXCH=Temporal" ;
+    ex:textoExtracto """
+    • El CNC puede modificar la posición del eje o cabezal dentro de su canal o incluso eliminarlo del canal.
+    • El CNC puede cambiar el eje o cabezal de canal.
+    • El CNC no mantiene los cambios al reiniciar el programa pieza, tras un reset o tras reiniciar el CNC. El eje o cabezal vuelve a su canal y posición original, definida en los parámetros máquina.""" ;
+    ex:identificador "AXISEXCH=Temporal" .
 
-ex:ParametroMaquina ex:textoExtracto """parámetros máquina""" ;
-    rdfs:label "parámetros máquina" ;
-    a ex:Parametro .
+ex:Parametro_AXISEXCH_Mantenido
+    a ex:Parametro ;
+    rdfs:label "AXISEXCH=Mantenido" ;
+    ex:textoExtracto """
+    • El CNC puede modificar la posición del eje o cabezal dentro de su canal o incluso eliminarlo del canal.
+    • El CNC puede cambiar el eje o cabezal de canal.
+    • El CNC mantiene los cambios al reiniciar el programa pieza, tras un reset o tras reiniciar el CNC. El eje o cabezal permanece en su nuevo canal, pero puede cambiar de posición para permitir regresar a los ejes originales del canal.""" ;
+    ex:identificador "AXISEXCH=Mantenido" .
 
-ex:ParametroMaquinaOriginal ex:textoExtracto """configuración original (la definida en los parámetros máquina) de un canal con ejes y cabezales del tipo AXISEXCH=Mantenido""" ;
-    rdfs:label "configuración original de canal AXISEXCH=Mantenido" ;
-    a ex:Parametro .
+ex:Tabla_ConfiguracionAXISEXCH a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración AXISEXCH" ;
+    ex:textoExtracto """
+    | AXISEXCH. | Significado. |
+    | --- | --- |
+    | No. | • El CNC puede modificar la posición del eje o cabezal dentro de su canal o incluso eliminarlo del canal. • El CNC no puede cambiar el eje o cabezal de canal. • El CNC no mantiene los cambios al reiniciar el programa pieza, tras un reset o tras reiniciar el CNC. El eje o cabezal vuelve a su posición original, definida en los parámetros máquina.
+    | Temporal. | • El CNC puede modificar la posición del eje o cabezal dentro de su canal o incluso eliminarlo del canal. • El CNC puede cambiar el eje o cabezal de canal. • El CNC no mantiene los cambios al reiniciar el programa pieza, tras un reset o tras reiniciar el CNC. El eje o cabezal vuelve a su canal y posición original, definida en los parámetros máquina.
+    | Mantenido. | • El CNC puede modificar la posición del eje o cabezal dentro de su canal o incluso eliminarlo del canal. • El CNC puede cambiar el eje o cabezal de canal. • El CNC mantiene los cambios al reiniciar el programa pieza, tras un reset o tras reiniciar el CNC. El eje o cabezal permanece en su nuevo canal, pero puede cambiar de posición para permitir regresar a los ejes originales del canal.""" ;
+    ex:documentadoEn ex:Pagina_147 .
+
+ex:Pagina_147
+    a ex:Pagina ;
+    rdfs:label "Página 147 (Sección 2.5.1 Pertenencia al canal)" ;
+    ex:textoExtracto "Sección 2.5.1 Pertenencia al canal. Tabla de configuración AXISEXCH con descripciones de parámetros No, Temporal y Mantenido." ;
+    ex:ilustradoEn ex:Tabla_ConfiguracionAXISEXCH .
+
+ex:Tabla_ConfiguracionAXISEXCH a ex:Tabla ;
+    ex:detalladoEnEsquema ex:Parametro_AXISEXCH_No ,
+                          ex:Parametro_AXISEXCH_Temporal ,
+                          ex:Parametro_AXISEXCH_Mantenido .

@@ -1,29 +1,22 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PanelJog1 a ex:Componente ;
-    rdfs:label "panel de jog"@es ;
-    ex:textoExtracto "Un panel de jog podrá estar asociado a un canal en concreto (por ejemplo, en un torno TT)"@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PanelJog2 a ex:Componente ;
-    rdfs:label "panel de jog"@es ;
+ex:PanelJog_1237_1
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Panel de jog configurable por canal"@es ;
+    ex:textoExtracto "Un panel de jog podrá estar asociado a un canal en concreto (por ejemplo, en un torno TT) o siempre al canal activo"@es .
+
+ex:PanelJog_1237_2
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Panel de jog para puesto de trabajo dual"@es ;
     ex:textoExtracto "una máquina con dos puestos de trabajo donde ambos paneles de jog funcionan de igual forma"@es .
 
-ex:CNC a ex:Maquina ;
-    rdfs:label "CNC"@es ;
-    ex:textoExtracto "Como el CNC puede tener conectados varios paneles de jog, desde el CNC se permite configurar el comportamiento de cada uno de ellos respecto a los canales."@es .
-
-ex:CanalConcreto a ex:ModoOperacion ;
-    rdfs:label "canal en concreto"@es ;
-    ex:textoExtracto "Un panel de jog podrá estar asociado a un canal en concreto"@es .
-
-ex:CanalActivo a ex:ModoOperacion ;
-    rdfs:label "canal activo"@es ;
-    ex:textoExtracto "siempre al canal activo"@es .
-
-ex:TornoTT a ex:Maquina ;
-    rdfs:label "torno TT"@es ;
-    ex:textoExtracto "por ejemplo, en un torno TT"@es .
-
-ex:MaquinaDosPuestos a ex:Maquina ;
-    rdfs:label "máquina con dos puestos de trabajo"@es ;
-    ex:textoExtracto "una máquina con dos puestos de trabajo donde ambos paneles de jog funcionan de igual forma"@es .
+ex:CNC_1237
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC con gestión multi-panel"@es ;
+    ex:textoExtracto "Como el CNC puede tener conectados varios paneles de jog, desde el CNC se permite configurar el comportamiento de cada uno de ellos respecto a los canales"@es ;
+    ex:tieneComponente ex:PanelJog_1237_1 ;
+    ex:tieneComponente ex:PanelJog_1237_2 ;
+    ex:controla      ex:PanelJog_1237_1 , ex:PanelJog_1237_2 .

@@ -1,53 +1,36 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ROTATEMZ a ex:Parametro ;
-    rdfs:label "ROTATEMZ" ;
-    ex:textoExtracto "(sentencia #ROTATEMZ), en un posicionamiento absoluto este registro indica la posición a alcanzar y en un posicionamiento relativo indica el número de posiciones a girar." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TWORNOUTC1 a ex:Parametro ;
-    rdfs:label "TWORNOUTC1" ;
-    ex:textoExtracto "TWORNOUTC1 (también se puede programar como TWORNOUT)" .
+ex:Se_al_ROTATEMZ
+    a               ex:Parametro ;
+    rdfs:label      "Señal ROTATEMZ" ;
+    ex:textoExtracto "en un posicionamiento absoluto este registro indica la posición a alcanzar y en un posicionamiento relativo indica el número de posiciones a girar." ;
+    ex:monitoreaParametro ex:SistemaGestorHerramientas .
 
-ex:TWORNOUTC2 a ex:Parametro ;
-    rdfs:label "TWORNOUTC2" ;
-    ex:textoExtracto "TWORNOUTC2" .
+ex:Se_al_TWORNOUT
+    a               ex:Parametro ;
+    rdfs:label      "Señal TWORNOUT (rechazo herramienta por tiempo)" ;
+    ex:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que la herramienta ha sido rechazada porque se ha usado más tiempo del previsto (vida real > vida máxima)." ;
+    ex:identificador "TWORNOUTC1, TWORNOUTC2, TWORNOUTC3, TWORNOUTC4" ;
+    ex:monitoreaParametro ex:SistemaGestorHerramientas .
 
-ex:TWORNOUTC3 a ex:Parametro ;
-    rdfs:label "TWORNOUTC3" ;
-    ex:textoExtracto "TWORNOUTC3" .
+ex:Se_al_TMINEM
+    a               ex:Parametro ;
+    rdfs:label      "Señal TMINEM (emergencia en gestor)" ;
+    ex:textoExtracto "El CNC pone esta marca a (=1) para indicar al PLC que se ha producido una emergencia en el gestor de herramientas." ;
+    ex:identificador "TMINEMZ1, TMINEMZ2, TMINEMZ3, TMINEMZ4" ;
+    ex:monitoreaParametro ex:SistemaGestorHerramientas .
 
-ex:TWORNOUTC4 a ex:Parametro ;
-    rdfs:label "TWORNOUTC4" ;
-    ex:textoExtracto "TWORNOUTC4" .
+ex:Se_al_MZID
+    a               ex:Parametro ;
+    rdfs:label      "Señal MZID (identificación almacén)" ;
+    ex:textoExtracto "Este registro indica el almacén en el que se encuentra la herramienta que ha solicitado el canal. Cuando en el cambio de herramienta intervengan dos almacenes, en la parte baja de este registro se indica el almacén en el que hay que dejar la herramienta y en la parte alta el almacén del que hay que coger la herramienta." ;
+    ex:identificador "MZIDC1, MZIDC2, MZIDC3, MZIDC4" ;
+    ex:monitoreaParametro ex:SistemaGestorHerramientas .
 
-ex:TMINEMZ1 a ex:Parametro ;
-    rdfs:label "TMINEMZ1" ;
-    ex:textoExtracto "TMINEMZ1 (también se puede programar como TMINEM)" .
-
-ex:TMINEMZ2 a ex:Parametro ;
-    rdfs:label "TMINEMZ2" ;
-    ex:textoExtracto "TMINEMZ2" .
-
-ex:TMINEMZ3 a ex:Parametro ;
-    rdfs:label "TMINEMZ3" ;
-    ex:textoExtracto "TMINEMZ3" .
-
-ex:TMINEMZ4 a ex:Parametro ;
-    rdfs:label "TMINEMZ4" ;
-    ex:textoExtracto "TMINEMZ4" .
-
-ex:MZIDC1 a ex:Parametro ;
-    rdfs:label "MZIDC1" ;
-    ex:textoExtracto "MZIDC1" .
-
-ex:MZIDC2 a ex:Parametro ;
-    rdfs:label "MZIDC2" ;
-    ex:textoExtracto "MZIDC2" .
-
-ex:MZIDC3 a ex:Parametro ;
-    rdfs:label "MZIDC3" ;
-    ex:textoExtracto "MZIDC3" .
-
-ex:MZIDC4 a ex:Parametro ;
-    rdfs:label "MZIDC4" ;
-    ex:textoExtracto "MZIDC4" .
+ex:SistemaGestorHerramientas
+    a               ex:Sistema ;
+    rdfs:label      "Sistema gestor de herramientas (CNC/PLC)" ;
+    ex:textoExtracto "Señales de consulta del gestor de herramientas: ROTATEMZ, TWORNOUT, TMINEM, MZID." .

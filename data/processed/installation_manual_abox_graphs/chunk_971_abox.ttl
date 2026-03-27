@@ -1,36 +1,76 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:M101 a ex:TareaMantenimiento ;
-    rdfs:label "M101" ;
-    ex:textoExtracto "Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1." ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:TareaMantenimiento_M101
+    a ex:TareaMantenimiento ;
+    rdfs:label "Seleccionar posición TAKEPOS y coger herramienta con pinza 1"@es ;
+    ex:textoExtracto "M101 Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1."@es ;
     ex:identificador "M101" .
 
-ex:M102 a ex:TareaMantenimiento ;
-    rdfs:label "M102" ;
-    ex:textoExtracto "Llevar la herramienta de la pinza 1 al cabezal." ;
+ex:TareaMantenimiento_M102
+    a ex:TareaMantenimiento ;
+    rdfs:label "Llevar herramienta de pinza 1 al cabezal"@es ;
+    ex:textoExtracto "M102 Llevar la herramienta de la pinza 1 al cabezal."@es ;
     ex:identificador "M102" .
 
-ex:M104 a ex:TareaMantenimiento ;
-    rdfs:label "M104" ;
-    ex:textoExtracto "Coger la herramienta del cabezal con la pinza 2." ;
+ex:TareaMantenimiento_M104
+    a ex:TareaMantenimiento ;
+    rdfs:label "Coger herramienta del cabezal con pinza 2"@es ;
+    ex:textoExtracto "M104 Coger la herramienta del cabezal con la pinza 2."@es ;
     ex:identificador "M104" .
 
-ex:M106 a ex:TareaMantenimiento ;
-    rdfs:label "M106" ;
-    ex:textoExtracto "Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta de la pinza 2." ;
+ex:TareaMantenimiento_M106
+    a ex:TareaMantenimiento ;
+    rdfs:label "Seleccionar posición LEAVEPOS y dejar herramienta con pinza 2"@es ;
+    ex:textoExtracto "M106 Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta de la pinza 2."@es ;
     ex:identificador "M106" .
 
-ex:TAKEPOS a ex:Parametro ;
-    rdfs:label "TAKEPOS" ;
-    ex:textoExtracto "Este registro indica la posición de almacén en la que hay que coger la herramienta." .
+ex:Parametro_TAKEPOS
+    a ex:Parametro ;
+    rdfs:label "Registro TAKEPOS (posición de recogida de herramienta)"@es ;
+    ex:textoExtracto "TAKEPOS Este registro indica la posición de almacén en la que hay que coger la herramienta."@es ;
+    ex:identificador "TAKEPOS" .
 
-ex:LEAVEPOS a ex:Parametro ;
-    rdfs:label "LEAVEPOS" ;
-    ex:textoExtracto "Este registro indica la posición de almacén en la que hay que dejar la herramienta." .
+ex:Parametro_LEAVEPOS
+    a ex:Parametro ;
+    rdfs:label "Registro LEAVEPOS (posición de depósito de herramienta)"@es ;
+    ex:textoExtracto "LEAVEPOS Este registro indica la posición de almacén en la que hay que dejar la herramienta."@es ;
+    ex:identificador "LEAVEPOS" .
 
-ex:M101 ex:ejecutadoPor ex:PLC ;
-    ex:textoExtracto "Su programación depende del tipo de máquina." .
+ex:ComponenteMecanico_Pinza1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 1 (recogida de herramienta)"@es ;
+    ex:textoExtracto "pinza 1"@es .
 
-ex:PLC a ex:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "Su programación depende del tipo de máquina." .
+ex:ComponenteMecanico_Pinza2
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 2 (transporte/depósito de herramienta)"@es ;
+    ex:textoExtracto "pinza 2"@es .
+
+ex:ComponenteMecanico_Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal (punto de transferencia de herramienta)"@es ;
+    ex:textoExtracto "cabezal"@es .
+
+ex:Sistema_GestionHerramientas
+    a ex:Sistema ;
+    rdfs:label "Sistema de gestión de herramientas (PLC)"@es ;
+    ex:textoExtracto "Su programación depende del tipo de máquina. La función auxiliar se dará por finalizada tras ejecutar el movimiento solicitado."@es ;
+    ex:tieneComponente ex:ComponenteMecanico_Pinza1, ex:ComponenteMecanico_Pinza2, ex:ComponenteMecanico_Cabezal ;
+    ex:monitoreaParametro ex:Parametro_TAKEPOS, ex:Parametro_LEAVEPOS .
+
+ex:TareaMantenimiento_M101
+    ex:requiereMantenimiento ex:ComponenteMecanico_Pinza1 ;
+    ex:monitoreaParametro ex:Parametro_TAKEPOS .
+
+ex:TareaMantenimiento_M102
+    ex:requiereMantenimiento ex:ComponenteMecanico_Pinza1, ex:ComponenteMecanico_Cabezal .
+
+ex:TareaMantenimiento_M104
+    ex:requiereMantenimiento ex:ComponenteMecanico_Pinza2, ex:ComponenteMecanico_Cabezal .
+
+ex:TareaMantenimiento_M106
+    ex:requiereMantenimiento ex:ComponenteMecanico_Pinza2 ;
+    ex:monitoreaParametro ex:Parametro_LEAVEPOS .

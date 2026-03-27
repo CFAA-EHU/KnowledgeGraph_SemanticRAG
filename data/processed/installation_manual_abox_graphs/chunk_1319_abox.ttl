@@ -1,39 +1,49 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:MINDMCOVR a ex:Parametro ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MINDMCOVR
+    a ex:Parametro ;
+    rdfs:label "MINDMCOVR" ;
     ex:identificador "MINDMCOVR" ;
-    ex:textoExtracto "MINDMCOVR | Mínimo override DMC de todos los ejes del canal." ;
-    ex:valor "Mínimo override DMC de todos los ejes del canal" .
+    ex:textoExtracto "Mínimo override DMC de todos los ejes del canal." ;
+    ex:monitoreaParametro ex:Sistema_DMC .
 
-ex:MAXDMCOVR a ex:Parametro ;
+ex:Parametro_MAXDMCOVR
+    a ex:Parametro ;
+    rdfs:label "MAXDMCOVR" ;
     ex:identificador "MAXDMCOVR" ;
-    ex:textoExtracto "MAXDMCOVR | Máximo override DMC de todos los ejes del canal." ;
-    ex:valor "Máximo override DMC de todos los ejes del canal" .
+    ex:textoExtracto "Máximo override DMC de todos los ejes del canal." ;
+    ex:monitoreaParametro ex:Sistema_DMC .
 
-ex:DMC a ex:Sistema ;
-    ex:textoExtracto "control dinámico del mecanizado (DMC)" .
-
-ex:MAXOVR a ex:Parametro ;
+ex:Parametro_MAXOVR
+    a ex:Parametro ;
+    rdfs:label "MAXOVR" ;
     ex:identificador "MAXOVR" ;
-    ex:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR." ;
-    ex:valor "límite máximo definido en el parámetro máquina" .
-
-ex:OverrideJOG a ex:Parametro ;
-    ex:identificador "OverrideJOG" ;
-    ex:textoExtracto "OverrideJOG(%)" ;
-    ex:valor "OverrideJOG (%)" .
-
-ex:V_G_PRGFRO a ex:Parametro ;
-    ex:identificador "V.G.PRGFRO" ;
-    ex:textoExtracto "El porcentaje de avance fijado por programa (variable V.G.PRGFRO)" ;
-    ex:valor "porcentaje de avance fijado por programa" .
-
-ex:V_PLC_FRO a ex:Parametro ;
-    ex:identificador "V.PLC.FRO" ;
-    ex:textoExtracto "o por PLC (variable V.PLC.FRO)" ;
-    ex:valor "porcentaje de avance fijado por PLC" .
-
-ex:PanelMando a ex:InterfazUsuario ;
-    ex:textoExtracto "conmutador del panel de mando" .
-
-ex:CNC a ex:Sistema ;
     ex:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR." .
+
+ex:Sistema_DMC
+    a ex:Sistema ;
+    rdfs:label "DMC (Control Dinámico del Mecanizado)" ;
+    ex:textoExtracto "control dinámico del mecanizado (DMC)" ;
+    ex:controla ex:Parametro_MINDMCOVR, ex:Parametro_MAXDMCOVR .
+
+ex:InterfazUsuario_ConmutadorOverride
+    a ex:InterfazUsuario ;
+    rdfs:label "Conmutador del panel de mando (override JOG)" ;
+    ex:textoExtracto "el conmutador del panel de mando" ;
+    ex:controla ex:Parametro_MINDMCOVR, ex:Parametro_MAXDMCOVR .
+
+ex:Tabla_ParametrosOverrideDMC a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Parámetros de override para DMC" ;
+    ex:textoExtracto "| Parámetro. | Significado. | --- | --- | MINDMCOVR | Mínimo override DMC de todos los ejes del canal. | MAXDMCOVR | Máximo override DMC de todos los ejes del canal." ;
+    ex:documentadoEn ex:Pagina_722 ;
+    ex:detalladoEnEsquema ex:Sistema_DMC .
+
+ex:Pagina_722
+    a ex:Pagina ;
+    ex:identificador "722" ;
+    ex:textoExtracto "18.1 Puesta a punto. - 18.1.1 Configurar los límites del override para el DMC." ;
+    ex:ilustradoEn ex:Manual .

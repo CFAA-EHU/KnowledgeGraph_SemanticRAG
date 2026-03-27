@@ -1,44 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_NCHANNEL a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_NCHANNEL
+    a ex:Parametro ;
     rdfs:label "NCHANNEL" ;
-    ex:identificador "NCHANNEL" ;
-    ex:textoExtracto "NCHANNEL Número de canales del CNC. Valores posibles: De 1 a 4. Valor por defecto: 1. Variable asociada: (V.)MPG.NCHANNEL" ;
-    ex:valor "1 a 4" .
+    ex:textoExtracto "NCHANNEL Número de canales del CNC. Valores posibles: De 1 a 4. Valor por defecto: 1." ;
+    ex:valor "1-4" ;
+    ex:identificador "MPG.NCHANNEL" ;
+    ex:monitoreaParametro ex:SistemaCNC_Multicanal .
 
-ex:Sistema_CNC a ex:Maquina ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "El CNC puede disponer de un único canal de ejecución (sistema monocanal) o de varios (sistema multicanal). Cada canal constituye un entorno de trabajo diferente que puede actuar sobre una parte o sobre la totalidad del sistema CNC." .
+ex:SistemaCNC_Multicanal
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC multicanal" ;
+    ex:textoExtracto "El CNC puede disponer de un único canal de ejecución (sistema monocanal) o de varios (sistema multicanal). Cada canal constituye un entorno de trabajo diferente que puede actuar sobre una parte o sobre la totalidad del sistema CNC." ;
+    ex:tieneComponente ex:CanalCNC_Generico .
 
-ex:Sistema_monocanal a ex:ModoOperacion ;
-    rdfs:label "sistema monocanal" ;
-    ex:textoExtracto "El CNC puede disponer de un único canal de ejecución (sistema monocanal)" .
+ex:CanalCNC_Generico
+    a ex:Componente ;
+    rdfs:label "Canal CNC" ;
+    ex:textoExtracto "Un canal puede disponer de un grupo de ejes y cabezales que actúen de forma independiente o en paralelo al resto de canales. También es posible configurar un canal sin asignarle ejes ni cabezales inicialmente." ;
+    ex:controla ex:EjeCNC_Generico ;
+    ex:controla ex:CabezalCNC_Generico .
 
-ex:Sistema_multicanal a ex:ModoOperacion ;
-    rdfs:label "sistema multicanal" ;
-    ex:textoExtracto "o de varios (sistema multicanal)" .
+ex:EjeCNC_Generico
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje CNC" ;
+    ex:textoExtracto "Los ejes y cabezales de un canal. Un canal puede disponer de un grupo de ejes y cabezales que actúen de forma independiente o en paralelo al resto de canales." .
 
-ex:Canal a ex:Sistema ;
-    rdfs:label "canal" ;
-    ex:textoExtracto "Cada canal constituye un entorno de trabajo diferente que puede actuar sobre una parte o sobre la totalidad del sistema CNC." .
-
-ex:Eje a ex:ComponenteMecanico ;
-    rdfs:label "eje" ;
-    ex:textoExtracto "Los ejes y cabezales de un canal." .
-
-ex:Cabezal a ex:ComponenteMecanico ;
-    rdfs:label "cabezal" ;
-    ex:textoExtracto "Los ejes y cabezales de un canal." .
-
-ex:Programa_pieza a ex:InterfazUsuario ;
-    rdfs:label "programa pieza" ;
-    ex:textoExtracto "posteriormente se le podrán añadir y quitar tanto ejes como cabezales desde el programa pieza o desde el modo MDI/MDA." .
-
-ex:Modo_MDI_MDA a ex:ModoOperacion ;
-    rdfs:label "modo MDI/MDA" ;
-    ex:textoExtracto "desde el programa pieza o desde el modo MDI/MDA." .
-
-ex:Variable_MPG_NCHANNEL a ex:Parametro ;
-    rdfs:label "(V.)MPG.NCHANNEL" ;
-    ex:identificador "(V.)MPG.NCHANNEL" ;
-    ex:textoExtracto "Variable asociada: (V.)MPG.NCHANNEL" .
+ex:CabezalCNC_Generico
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal CNC" ;
+    ex:textoExtracto "Un canal puede disponer de un grupo de ejes y cabezales que actúen de forma independiente o en paralelo al resto de canales." .

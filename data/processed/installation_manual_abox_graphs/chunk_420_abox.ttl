@@ -1,16 +1,31 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_CURVJERK a ex:Parametro ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_CURVJERK
+    a ex:Parametro ;
     rdfs:label "CURVJERK" ;
-    ex:identificador "(V.)[ch].MPA.CURVJERK[set].xn" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 1E+009 mm/s³. Valores posibles (2): De 0 a 39370078.74016 inch/s³. Valores posibles (3): De 0 a 1E+009 grados/s³. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.CURVJERK[set].xn Si este parámetro se define con valor ꞏ0ꞏ, se respeta el jerk máximo del eje." .
+    ex:textoExtracto "permitido en curvatura. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 1E+009 mm/s³. Valores posibles (2): De 0 a 39370078.74016 inch/s³. Valores posibles (3): De 0 a 1E+009 grados/s³. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.CURVJERK[set].xn Si este parámetro se define con valor ꞏ0ꞏ, se respeta el jerk máximo del eje." ;
+    ex:valor "0"^^xsd:string .
 
-ex:Parametro_FASTACC a ex:Parametro ;
+ex:Parametro_FASTACC
+    a ex:Parametro ;
     rdfs:label "FASTACC" ;
-    ex:identificador "(V.)[ch].MPA.FASTACC[set].xn" ;
-    ex:textoExtracto "FASTACC Aceleración máxima permitida (modo FAST). Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 100000.0000 mm/s². Valores posibles (2): De 0 a 3937.00787 inch/s². Valores posibles (3): De 0 a 100000.0000 grados/s². Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.FASTACC[set].xn Si este parámetro se define con valor ꞏ0ꞏ, se respeta la aceleración máxima del eje." .
+    ex:textoExtracto "FASTACC Aceleración máxima permitida (modo FAST). Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 100000.0000 mm/s². Valores posibles (2): De 0 a 3937.00787 inch/s². Valores posibles (3): De 0 a 100000.0000 grados/s². Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.FASTACC[set].xn Si este parámetro se define con valor ꞏ0ꞏ, se respeta la aceleración máxima del eje." ;
+    ex:valor "0"^^xsd:string .
 
-ex:Parametro_MAXERROR a ex:Parametro ;
+ex:Parametro_MAXERROR
+    a ex:Parametro ;
     rdfs:label "MAXERROR" ;
-    ex:identificador "(V.)[ch].MPA.MAXERROR[set].xn" ;
-    ex:textoExtracto "MAXERROR Error de posición. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 9999.99999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0 a 9999.99999 grados. Valor por defecto: 0.1000 mm / 0.00394 inch / 0.1000 grados. Variable asociada: (V.)[ch].MPA.MAXERROR[set].xn Máximo error de posición del eje en HSC cuando trabaja fuera del plano/triedo." .
+    ex:textoExtracto "MAXERROR Error de posición. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 9999.99999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0 a 9999.99999 grados. Valor por defecto: 0.1000 mm / 0.00394 inch / 0.1000 grados. Variable asociada: (V.)[ch].MPA.MAXERROR[set].xn Máximo error de posición del eje en HSC cuando trabaja fuera del plano/triedo." ;
+    ex:valor "0.1000"^^xsd:string .
+
+ex:ModoOperacion_HSC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC" ;
+    ex:textoExtracto "Configuración del modo HSC" ;
+    ex:tieneComponente ex:Parametro_CURVJERK ;
+    ex:tieneComponente ex:Parametro_FASTACC ;
+    ex:tieneComponente ex:Parametro_MAXERROR .

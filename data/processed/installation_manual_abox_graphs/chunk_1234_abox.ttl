@@ -1,13 +1,18 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SistemaAyudaSubrutinasCNC a ex:Sistema ;
-    ex:textoExtracto """En versiones anteriores a la V1.60 (8060) y V5.60 (8065), el CNC primero buscaba los archivos de ayuda a las carpetas de fabricante y a continuación en las carpetas de usuario. A partir de estas versiones, el criterio es el contrario.""" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:VersionCNC_8060 a ex:ModoOperacion ;
-    ex:identificador "V1.60 (8060)" ;
-    ex:textoExtracto """En versiones anteriores a la V1.60 (8060) y V5.60 (8065), el CNC primero buscaba los archivos de ayuda a las carpetas de fabricante y a continuación en las carpetas de usuario.""" .
+ex:SistemaAyudaSubrutinas_1234
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de ayuda para subrutinas CNC"@es ;
+    ex:textoExtracto
+        "Users\\Session\\Help\\{idioma} ..\\Mtb\\Sub\\Help\\{idioma}..          \\Users\\Help\\{idioma}.          En versiones anteriores a la V1.60 (8060) y V5.60 (8065), el CNC primero buscaba los archivos de ayuda a las carpetas de fabricante y a continuación en las carpetas de usuario.          A partir de estas versiones, el criterio es el contrario."@es ;
+    ex:identificador "V1.60 (8060)", "V5.60 (8065)" .
 
-ex:VersionCNC_8065 a ex:ModoOperacion ;
-    ex:identificador "V5.60 (8065)" ;
-    ex:textoExtracto """En versiones anteriores a la V1.60 (8060) y V5.60 (8065), el CNC primero buscaba los archivos de ayuda a las carpetas de fabricante y a continuación en las carpetas de usuario.""" .
-
-ex:SistemaAyudaSubrutinasCNC ex:tieneComponente ex:VersionCNC_8060, ex:VersionCNC_8065 .
+ex:InterfazUsuario_ArchivosAyuda_1234
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Estructura de archivos de ayuda para subrutinas CNC"@es ;
+    ex:textoExtracto
+        "Users\\Session\\Help\\{idioma}, Mtb\\Sub\\Help\\{idioma}, Users\\Help\\{idioma}"@es ;
+    ex:documentadoEn ex:SistemaAyudaSubrutinas_1234 .

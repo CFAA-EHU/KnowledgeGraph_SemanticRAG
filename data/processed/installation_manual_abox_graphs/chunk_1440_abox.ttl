@@ -1,67 +1,94 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:GAP_SENSOR a ex:Sensor ;
-    ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena 'CNC – RIOR – CAN – GAP SENSOR', mostrando alternativa de cableado cuando no se usa el regulador." ;
-    ex:identificador "GAP SENSOR" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:GAP_SENSOR_FEEDBACK a ex:Sensor ;
-    ex:textoExtracto "Diagrama de bloques del lazo de control del gap: 'GAP SENSOR FEEDBACK' → filtro paso bajo (ORDER/FREQUENCY) → 'POSITION LOOP' con 'GAP P-GAIN'." ;
-    ex:identificador "GAP SENSOR FEEDBACK" .
+### Esquemas y Diagramas
+ex:Esquema_ConexionSensorGapRIOR
+    a ex:Esquema ;
+    rdfs:label "Diagrama de conexión del sensor de gap a módulos remotos CAN (RIOR)"@es ;
+    ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena 'CNC – RIOR – CAN – GAP SENSOR', mostrando alternativa de cableado cuando no se usa el regulador."@es ;
+    ex:identificador "CNC – RIOR – CAN – GAP SENSOR" .
 
-ex:FiltroPasoBajo a ex:ComponenteElectrico ;
-    ex:textoExtracto "filtro paso bajo (ORDER/FREQUENCY)" .
+ex:Esquema_LazoControlGap
+    a ex:Esquema ;
+    rdfs:label "Diagrama de bloques del lazo de control del gap"@es ;
+    ex:textoExtracto "Diagrama de bloques del lazo de control del gap: 'GAP SENSOR FEEDBACK' → filtro paso bajo (ORDER/FREQUENCY) → 'POSITION LOOP' con 'GAP P-GAIN'. Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER."@es .
 
-ex:POSITION_LOOP a ex:Sistema ;
-    ex:textoExtracto "'POSITION LOOP' con 'GAP P-GAIN'." ;
-    ex:identificador "POSITION LOOP" .
+ex:Grafico_PerfilVelocidadGap
+    a ex:Figura ;
+    rdfs:label "Perfil de velocidad y aceleración sin sobrepasamiento en el gap"@es ;
+    ex:textoExtracto "Gráfico tipo osciloscopio 'Perfil de velocidad y aceleración sin sobrepasamiento en el gap' con cuatro trazas etiquetadas: (A) G.GAP, (B) error de seguimiento A.FLWE.Z, (C) velocidad DIFF(A.TPOS.Z), (D) aceleración DIFF(DIFF(A.TPOS.Z))."@es .
 
-ex:GAP_P_GAIN a ex:Parametro ;
-    ex:textoExtracto "'GAP P-GAIN'" ;
-    ex:identificador "GAP P-GAIN" .
+ex:Grafico_CalibracionSensorGap
+    a ex:Figura ;
+    rdfs:label "Gráfico lineal distancia–voltaje del sensor de gap"@es ;
+    ex:textoExtracto "Gráfico lineal distancia–voltaje del sensor con origen desplazado (GAPSENSOROFFSET), límites GAPDISTLIMIT (mm/in) y GAPVOLTLIMIT (mV). Incluye ejes con unidades, recta de calibración y flechas que marcan la correspondencia física y eléctrica."@es .
 
-ex:GAPSENSOROFFSET a ex:Parametro ;
-    ex:textoExtracto "Gráfico lineal distancia–voltaje del sensor con origen desplazado (GAPSENSOROFFSET), límites GAPDISTLIMIT (mm/in) y GAPVOLTLIMIT (mV)." ;
-    ex:identificador "GAPSENSOROFFSET" .
+### Sensores y Parámetros
+ex:SensorGap
+    a ex:Sensor ;
+    rdfs:label "Sensor de gap"@es ;
+    ex:textoExtracto "sensor de gap"@es ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGapRIOR ;
+    ex:ilustradoEn ex:Grafico_CalibracionSensorGap ;
+    ex:monitoreaParametro ex:Parametro_GGAP .
 
-ex:GAPDISTLIMIT a ex:Parametro ;
-    ex:textoExtracto "límites GAPDISTLIMIT (mm/in) y GAPVOLTLIMIT (mV)" ;
-    ex:identificador "GAPDISTLIMIT" .
+ex:Parametro_GGAP
+    a ex:Parametro ;
+    rdfs:label "G.GAP"@es ;
+    ex:textoExtracto "G.GAP"@es ;
+    ex:valor "Distancia del gap (unidad implícita: mm)"@es .
 
-ex:GAPVOLTLIMIT a ex:Parametro ;
-    ex:textoExtracto "límites GAPDISTLIMIT (mm/in) y GAPVOLTLIMIT (mV)" ;
-    ex:identificador "GAPVOLTLIMIT" .
+ex:Parametro_GAPSENSOROFFSET
+    a ex:Parametro ;
+    rdfs:label "GAPSENSOROFFSET" ;
+    ex:textoExtracto "origen desplazado (GAPSENSOROFFSET)"@es .
 
-ex:GAPGAIN a ex:Parametro ;
-    ex:textoExtracto "Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER." ;
-    ex:identificador "GAPGAIN" .
+ex:Parametro_GAPDISTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPDISTLIMIT" ;
+    ex:textoExtracto "límite GAPDISTLIMIT (mm/in)"@es ;
+    ex:valor "mm o pulgadas"@es .
 
-ex:GAPSENSORFILTER a ex:Parametro ;
-    ex:textoExtracto "Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER." ;
-    ex:identificador "GAPSENSORFILTER" .
+ex:Parametro_GAPVOLTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPVOLTLIMIT" ;
+    ex:textoExtracto "GAPVOLTLIMIT (mV)"@es ;
+    ex:valor "milivoltios (mV)"@es .
 
-ex:G_GAP a ex:Parametro ;
-    ex:textoExtracto "se muestran G.GAP, A.POS.Z, A.POS.X y A.GAPCOMP.Z" ;
-    ex:identificador "G.GAP" .
+ex:Parametro_GAPGAIN
+    a ex:Parametro ;
+    rdfs:label "GAP P-GAIN"@es ;
+    ex:textoExtracto "GAP P-GAIN"@es .
 
-ex:A_FLWE_Z a ex:Parametro ;
-    ex:textoExtracto "error de seguimiento A.FLWE.Z" ;
-    ex:identificador "A.FLWE.Z" .
+ex:Parametro_GAPSENSORFILTER
+    a ex:Parametro ;
+    rdfs:label "GAPSENSORFILTER"@es ;
+    ex:textoExtracto "filtro paso bajo (ORDER/FREQUENCY)"@es .
 
-ex:DIFF_ATPOS_Z a ex:Parametro ;
-    ex:textoExtracto "velocidad DIFF(A.TPOS.Z)" ;
-    ex:identificador "DIFF(A.TPOS.Z)" .
+### Relaciones Funcionales
+ex:Esquema_ConexionSensorGapRIOR
+    ex:detalladoEnEsquema ex:SensorGap .
 
-ex:DIFF_DIFF_ATPOS_Z a ex:Parametro ;
-    ex:textoExtracto "aceleración DIFF(DIFF(A.TPOS.Z))" ;
-    ex:identificador "DIFF(DIFF(A.TPOS.Z))" .
+ex:Esquema_LazoControlGap
+    ex:tieneComponente ex:SensorGap ;
+    ex:ilustradoEn ex:Grafico_PerfilVelocidadGap .
 
-ex:A_POS_Z a ex:Parametro ;
-    ex:textoExtracto "se muestran G.GAP, A.POS.Z, A.POS.X y A.GAPCOMP.Z" ;
-    ex:identificador "A.POS.Z" .
+ex:SensorGap
+    ex:monitoreaParametro ex:Parametro_GAPSENSOROFFSET ,
+                        ex:Parametro_GAPDISTLIMIT ,
+                        ex:Parametro_GAPVOLTLIMIT .
 
-ex:A_POS_X a ex:Parametro ;
-    ex:textoExtracto "se muestran G.GAP, A.POS.Z, A.POS.X y A.GAPCOMP.Z" ;
-    ex:identificador "A.POS.X" .
+### Componentes Eléctricos (pines)
+ex:Pin_AI1
+    a ex:ComponenteElectrico ;
+    rdfs:label "AI1+" ;
+    ex:textoExtracto "pines AI1+"@es ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGapRIOR .
 
-ex:A_GAPCOMP_Z a ex:Parametro ;
-    ex:textoExtracto "se muestran G.GAP, A.POS.Z, A.POS.X y A.GAPCOMP.Z" ;
-    ex:identificador "A.GAPCOMP.Z" .
+ex:Pin_AI1
+    a ex:ComponenteElectrico ;
+    rdfs:label "AI1−" ;
+    ex:textoExtracto "AI1−"@es ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGapRIOR .

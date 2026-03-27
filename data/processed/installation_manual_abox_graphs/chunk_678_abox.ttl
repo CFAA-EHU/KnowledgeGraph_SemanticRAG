@@ -1,30 +1,104 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_axis a ex:Parametro ;
-    ex:identificador "axis" ;
-    ex:textoExtracto "Parámetro. | axis | Eje a posicionar." ;
-    rdfs:label "axis" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_pos a ex:Parametro ;
-    ex:identificador "pos" ;
-    ex:textoExtracto "Parámetro. | pos | Posición a alcanzar." ;
-    rdfs:label "pos" .
+ex:Tabla_ParametrosMovimiento_4_4_8 a ex:Tabla ;
+     a                       ex:Tabla ;
+    rdfs:label              "Tabla de parámetros de movimiento independiente (4.4.8)"@es ;
+    ex:textoExtracto        "| Parámetro. | Significado. | --- | --- | axis | Eje a posicionar. | pos | Posición a alcanzar. | direction | Sentido de desplazamiento. Se programa mediante los parámetros \"DIRPOS\" (sentido positivo) o \"DIRNEG\" (sentido negativo). | feed | Avance de posicionamiento. | blend | Enlace dinámico con el siguiente bloque. Se programa mediante los parámetros \"PRESENT\", \"NULL\", \"NEXT\" o \"WAITINPOS\"."@es ;
+    ex:documentadoEn        ex:Pagina_380_381 .
 
-ex:Parametro_direction a ex:Parametro ;
-    ex:identificador "direction" ;
-    ex:textoExtracto "Parámetro. | direction | Sentido de desplazamiento. Se programa mediante los parámetros \"DIRPOS\" (sentido positivo) o \"DIRNEG\" (sentido negativo)." ;
-    rdfs:label "direction" .
+ex:Parametro_axis
+    a                       ex:Parametro ;
+    rdfs:label             "axis" ;
+    ex:textoExtracto        "axis | Eje a posicionar."@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 .
 
-ex:Parametro_feed a ex:Parametro ;
-    ex:identificador "feed" ;
-    ex:textoExtracto "Parámetro. | feed | Avance de posicionamiento." ;
-    rdfs:label "feed" .
+ex:Parametro_pos
+    a                       ex:Parametro ;
+    rdfs:label             "pos" ;
+    ex:textoExtracto        "pos | Posición a alcanzar."@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 ;
+    ex:valor                "Coordenadas absolutas (MOVE ABS) o incrementales (MOVE ADD)"@es .
 
-ex:Parametro_blend a ex:Parametro ;
-    ex:identificador "blend" ;
-    ex:textoExtracto "Parámetro. | blend | Enlace dinámico con el siguiente bloque. Se programa mediante los parámetros \"PRESENT\", \"NULL\", \"NEXT\" o \"WAITINPOS\"." ;
-    rdfs:label "blend" .
+ex:Parametro_direction
+    a                       ex:Parametro ;
+    rdfs:label             "direction" ;
+    ex:textoExtracto        "direction | Sentido de desplazamiento. Se programa mediante los parámetros \"DIRPOS\" (sentido positivo) o \"DIRNEG\" (sentido negativo)."@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 .
 
-ex:Tabla_4_4_8 a ex:Tabla ;
-    ex:textoExtracto "| Parámetro. | Significado. |\n| --- | --- |\n| axis | Eje a posicionar. |\n| pos | Posición a alcanzar. |\n| direction | Sentido de desplazamiento. Se programa mediante los parámetros \"DIRPOS\" (sentido positivo) o \"DIRNEG\" (sentido negativo). |\n| feed | Avance de posicionamiento. |\n| blend | Enlace dinámico con el siguiente bloque. Se programa mediante los parámetros \"PRESENT\", \"NULL\", \"NEXT\" o \"WAITINPOS\"." ;
-    ex:tieneComponente ex:Parametro_axis, ex:Parametro_pos, ex:Parametro_direction, ex:Parametro_feed, ex:Parametro_blend .
+ex:Parametro_DIRPOS
+    a                       ex:Parametro ;
+    rdfs:label             "DIRPOS" ;
+    ex:identificador        "DIRPOS" ;
+    ex:textoExtracto        "\"DIRPOS\" (sentido positivo)"@es ;
+    ex:documentadoEn        ex:Parametro_direction .
+
+ex:Parametro_DIRNEG
+    a                       ex:Parametro ;
+    rdfs:label             "DIRNEG" ;
+    ex:identificador        "DIRNEG" ;
+    ex:textoExtracto        "\"DIRNEG\" (sentido negativo)"@es ;
+    ex:documentadoEn        ex:Parametro_direction .
+
+ex:Parametro_feed
+    a                       ex:Parametro ;
+    rdfs:label             "feed" ;
+    ex:textoExtracto        "feed | Avance de posicionamiento."@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 .
+
+ex:Parametro_blend
+    a                       ex:Parametro ;
+    rdfs:label             "blend" ;
+    ex:textoExtracto        "blend | Enlace dinámico con el siguiente bloque. Se programa mediante los parámetros \"PRESENT\", \"NULL\", \"NEXT\" o \"WAITINPOS\"."@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 .
+
+ex:Parametro_PRESENT
+    a                       ex:Parametro ;
+    rdfs:label             "PRESENT" ;
+    ex:identificador        "PRESENT" ;
+    ex:textoExtracto        "\"PRESENT\" | El eje alcanza la posición indicada al avance especificado para el propio bloque."@es ;
+    ex:documentadoEn        ex:Parametro_blend .
+
+ex:Parametro_NULL
+    a                       ex:Parametro ;
+    rdfs:label             "NULL" ;
+    ex:identificador        "NULL" ;
+    ex:textoExtracto        "\"NULL\" | El eje alcanza la posición indicada a avance nulo."@es ;
+    ex:documentadoEn        ex:Parametro_blend .
+
+ex:Parametro_NEXT
+    a                       ex:Parametro ;
+    rdfs:label             "NEXT" ;
+    ex:identificador        "NEXT" ;
+    ex:textoExtracto        "\"NEXT\" | El eje alcanza la posición indicada al avance especificado en el siguiente bloque."@es ;
+    ex:documentadoEn        ex:Parametro_blend .
+
+ex:Parametro_WAITINPOS
+    a                       ex:Parametro ;
+    rdfs:label             "WAITINPOS" ;
+    ex:identificador        "WAITINPOS" ;
+    ex:textoExtracto        "\"WAITINPOS\" | El eje alcanza la posición indicada a avance nulo y espera a estar en posición para ejecutar el siguiente bloque."@es ;
+    ex:documentadoEn        ex:Parametro_blend .
+
+ex:ModoOperacion_MOVE_ABS
+    a                       ex:ModoOperacion ;
+    rdfs:label             "MOVE ABS" ;
+    ex:identificador        "MOVE ABS" ;
+    ex:textoExtracto        "Con MOVE ABS se definirá en coordenadas absolutas"@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 .
+
+ex:ModoOperacion_MOVE_ADD
+    a                       ex:ModoOperacion ;
+    rdfs:label             "MOVE ADD" ;
+    ex:identificador        "MOVE ADD" ;
+    ex:textoExtracto        "Con MOVE ADD se definirá en coordenadas incrementales"@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 .
+
+ex:ModoOperacion_MOVE_INF
+    a                       ex:ModoOperacion ;
+    rdfs:label             "MOVE INF" ;
+    ex:identificador        "MOVE INF" ;
+    ex:textoExtracto        "Se utiliza con MOVE INF, para ejecutar un movimiento sin fin hasta alcanzar el límite del eje o hasta que el movimiento sea interrumpido."@es ;
+    ex:documentadoEn        ex:Tabla_ParametrosMovimiento_4_4_8 .

@@ -1,88 +1,82 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-ex:PLC_Recursos a ex:Sistema ;
-    ex:textoExtracto "El PLC dispone de los siguientes recursos. • Entradas (I1-I1024) y salidas (O1-O1024). • Entradas locales (LI1-LI16) y salidas locales (LO1-LO8). • Marcas (M1-M8192). • Mensajes (MSG1-MSG1024). • Errores (ERR1-ERR1024). • Relojes (CLK). • Registros (R1-R1024). • Temporizadores (T1-T512). • Contadores (C1-C256). • Registros y marcas de comunicación CNC-PLC."@es .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Entrada_I1 a ex:Sensor ;
-    ex:identificador "I1" ;
-    ex:textoExtracto "Entradas (I1-I1024) ... Se representan mediante la letra I seguida del número de entrada que se desea referenciar, desde I1 hasta I1024."@es .
+ex:PLC_Recursos_EntradasSalidas
+    a ex:Sistema ;
+    rdfs:label "Recursos de E/S del PLC"@es ;
+    ex:textoExtracto "El PLC dispone de los siguientes recursos. • Entradas (I1-I1024) y salidas (O1-O1024). [...] Las salidas son elementos que permiten al PLC activar o desactivar los distintos dispositivos o accionamientos del armario eléctrico."@es ;
+    ex:tieneComponente ex:PLC_Entradas_Globales, ex:PLC_Salidas_Globales, ex:PLC_EntradasLocales, ex:PLC_SalidasLocales .
 
-ex:Entrada_I1024 a ex:Sensor ;
-    ex:identificador "I1024" ;
-    ex:textoExtracto "Entradas (I1-I1024) ... Se representan mediante la letra I seguida del número de entrada que se desea referenciar, desde I1 hasta I1024."@es .
+ex:PLC_Entradas_Globales
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas globales del PLC (I1-I1024)"@es ;
+    ex:identificador "I1-I1024" ;
+    ex:textoExtracto "Entradas (I1-I1024). [...] Las entradas son elementos que proporcionan información al PLC de las señales que se reciben del exterior."@es .
 
-ex:Salida_O1 a ex:Actuador ;
-    ex:identificador "O1" ;
-    ex:textoExtracto "Las salidas son elementos que permiten al PLC activar o desactivar los distintos dispositivos o accionamientos del armario eléctrico. Se representan mediante la letra O seguida del número de salida que se desea referenciar, desde O1 hasta O1024."@es .
+ex:PLC_Salidas_Globales
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salidas globales del PLC (O1-O1024)"@es ;
+    ex:identificador "O1-O1024" ;
+    ex:textoExtracto "Salidas (O1-O1024). [...] Las salidas son elementos que permiten al PLC activar o desactivar los distintos dispositivos o accionamientos del armario eléctrico."@es .
 
-ex:Salida_O1024 a ex:Actuador ;
-    ex:identificador "O1024" ;
-    ex:textoExtracto "Las salidas son elementos que permiten al PLC activar o desactivar los distintos dispositivos o accionamientos del armario eléctrico. Se representan mediante la letra O seguida del número de salida que se desea referenciar, desde O1 hasta O1024."@es .
+ex:PLC_EntradasLocales
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas locales del PLC (LI1-LI16)"@es ;
+    ex:identificador "LI1-LI16" ;
+    ex:textoExtracto "Entradas locales (LI1-LI16). [...] Las unidades centrales ICU y MCU disponen de 8 entradas digitales [...] Se denominan entradas locales porque se encuentran en la unidad central."@es .
 
-ex:EntradaLocal_LI1 a ex:Sensor ;
-    ex:identificador "LI1" ;
-    ex:textoExtracto "Entradas locales (LI1-LI16) ... Las entradas locales se representan mediante la letra LI seguida del número de entrada, desde LI1 hasta LI16."@es .
+ex:PLC_SalidasLocales
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salidas locales del PLC (LO1-LO8)"@es ;
+    ex:identificador "LO1-LO8" ;
+    ex:textoExtracto "Salidas locales (LO1-LO8). [...] un conjunto de 8 señales digitales locales que pueden configurarse tanto de entrada como de salida."@es .
 
-ex:EntradaLocal_LI16 a ex:Sensor ;
-    ex:identificador "LI16" ;
-    ex:textoExtracto "Entradas locales (LI1-LI16) ... Las entradas locales se representan mediante la letra LI seguida del número de entrada, desde LI1 hasta LI16."@es .
+ex:PLC_Recursos_Memoria
+    a ex:Sistema ;
+    rdfs:label "Recursos de memoria y temporización del PLC"@es ;
+    ex:textoExtracto "Marcas (M1-M8192). [...] Mensajes (MSG1-MSG1024). [...] Errores (ERR1-ERR1024). [...] Relojes (CLK). [...] Registros (R1-R1024). [...] Temporizadores (T1-T512). [...] Contadores (C1-C256)."@es ;
+    ex:tieneComponente ex:PLC_Marcas, ex:PLC_Mensajes, ex:PLC_Errores, ex:PLC_Relojes, ex:PLC_Registros, ex:PLC_Temporizadores, ex:PLC_Contadores .
 
-ex:SalidaLocal_LO1 a ex:Actuador ;
-    ex:identificador "LO1" ;
-    ex:textoExtracto "salidas locales (LO1-LO8)."@es .
+ex:PLC_Marcas
+    a ex:Parametro ;
+    rdfs:label "Marcas del PLC (M1-M8192)"@es ;
+    ex:identificador "M1-M8192" ;
+    ex:textoExtracto "Marcas (M1-M8192). [...] Los recursos M [...] mantiene su valor entre arranque y arranque del CNC."@es .
 
-ex:SalidaLocal_LO8 a ex:Actuador ;
-    ex:identificador "LO8" ;
-    ex:textoExtracto "salidas locales (LO1-LO8)."@es .
+ex:PLC_Mensajes
+    a ex:Parametro ;
+    rdfs:label "Mensajes del PLC (MSG1-MSG1024)"@es ;
+    ex:identificador "MSG1-MSG1024" ;
+    ex:textoExtracto "Mensajes (MSG1-MSG1024). [...] Los recursos MSG [...] se inicializan a (=0) en el arranque del PLC."@es .
 
-ex:Marca_M1 a ex:Componente ;
-    ex:identificador "M1" ;
-    ex:textoExtracto "Marcas (M1-M8192)."@es .
+ex:PLC_Errores
+    a ex:Parametro ;
+    rdfs:label "Errores del PLC (ERR1-ERR1024)"@es ;
+    ex:identificador "ERR1-ERR1024" ;
+    ex:textoExtracto "Errores (ERR1-ERR1024). [...] Los recursos ERR [...] se inicializan a (=0) en el arranque del PLC."@es .
 
-ex:Marca_M8192 a ex:Componente ;
-    ex:identificador "M8192" ;
-    ex:textoExtracto "Marcas (M1-M8192)."@es .
-
-ex:Mensaje_MSG1 a ex:Componente ;
-    ex:identificador "MSG1" ;
-    ex:textoExtracto "Mensajes (MSG1-MSG1024)."@es .
-
-ex:Mensaje_MSG1024 a ex:Componente ;
-    ex:identificador "MSG1024" ;
-    ex:textoExtracto "Mensajes (MSG1-MSG1024)."@es .
-
-ex:Error_ERR1 a ex:DiagnosticoFallo ;
-    ex:identificador "ERR1" ;
-    ex:textoExtracto "Errores (ERR1-ERR1024)."@es .
-
-ex:Error_ERR1024 a ex:DiagnosticoFallo ;
-    ex:identificador "ERR1024" ;
-    ex:textoExtracto "Errores (ERR1-ERR1024)."@es .
-
-ex:Reloj_CLK a ex:Componente ;
+ex:PLC_Relojes
+    a ex:Parametro ;
+    rdfs:label "Relojes del PLC (CLK)"@es ;
     ex:identificador "CLK" ;
-    ex:textoExtracto "Relojes (CLK)."@es .
+    ex:textoExtracto "Relojes (CLK). [...] Los recursos CLK [...] se inicializan a (=0) en el arranque del PLC."@es .
 
-ex:Registro_R1 a ex:Componente ;
-    ex:identificador "R1" ;
-    ex:textoExtracto "Registros (R1-R1024)."@es .
+ex:PLC_Registros
+    a ex:Parametro ;
+    rdfs:label "Registros del PLC (R1-R1024)"@es ;
+    ex:identificador "R1-R1024" ;
+    ex:textoExtracto "Registros (R1-R1024). [...] Los recursos R mantiene su valor entre arranque y arranque del CNC."@es .
 
-ex:Registro_R1024 a ex:Componente ;
-    ex:identificador "R1024" ;
-    ex:textoExtracto "Registros (R1-R1024)."@es .
+ex:PLC_Temporizadores
+    a ex:Parametro ;
+    rdfs:label "Temporizadores del PLC (T1-T512)"@es ;
+    ex:identificador "T1-T512" ;
+    ex:textoExtracto "Temporizadores (T1-T512). [...] Los recursos T se inicializan a (=0) en el arranque del PLC."@es .
 
-ex:Temporizador_T1 a ex:Componente ;
-    ex:identificador "T1" ;
-    ex:textoExtracto "Temporizadores (T1-T512)."@es .
-
-ex:Temporizador_T512 a ex:Componente ;
-    ex:identificador "T512" ;
-    ex:textoExtracto "Temporizadores (T1-T512)."@es .
-
-ex:Contador_C1 a ex:Componente ;
-    ex:identificador "C1" ;
-    ex:textoExtracto "Contadores (C1-C256)."@es .
-
-ex:Contador_C256 a ex:Componente ;
-    ex:identificador "C256" ;
-    ex:textoExtracto "Contadores (C1-C256)."@es .
+ex:PLC_Contadores
+    a ex:Parametro ;
+    rdfs:label "Contadores del PLC (C1-C256)"@es ;
+    ex:identificador "C1-C256" ;
+    ex:textoExtracto "Contadores (C1-C256). [...] Los recursos C mantiene su valor entre arranque y arranque del CNC."@es .

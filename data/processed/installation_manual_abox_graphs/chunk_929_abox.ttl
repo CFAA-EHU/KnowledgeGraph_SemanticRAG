@@ -1,34 +1,75 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Tabla7_9_1 a ex:Tabla ;
-    ex:textoExtracto "Seccion: 7.9.1 Operaciones válidas y marcas que activa el PLC con cada una de ellas." ;
-    ex:tieneComponente ex:TMOPERATION, ex:TAKEPOS, ex:LEAVEPOS, ex:MZTOCH1, ex:CH1TOSPDL, ex:SPDLTOCH1, ex:CH1TOMZ, ex:GRTOSPDL, ex:SPDLTOGR, ex:MZROT .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TMOPERATION a ex:Parametro ;
-    ex:textoExtracto "TMOPERATION" .
+ex:TablaOperacionesPLC_TM a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de operaciones válidas entre TM y PLC (pág. 503-504)"@es ;
+    ex:textoExtracto """
+| TM => PLC |  |  | PLC => TM |
+| --- | --- | --- | --- |
+| TMOPERATION | TAKEPOS | LEAVEPOS |  |
+| 1 | # | 0 | MZTOCH1 + CH1TOSPDL |
+| 2 | 0 | # | SPDLTOCH1 + CH1TOMZ |
+| 3 | 0 | 0 | GRTOSPDL |
+| 4 | 0 | 0 | SPDLTOGR |
+| 5 | # | # | SPDLTOCH1 + CH1TOMZ + MZTOCH1 + CH1TOSPDL |
+| 6 | -4 | # | SPDLTOCH1 + (CH1TOMZ & GRTOSPDL) |
+| 7 | # | -4 | (SPDLTOGR & MZTOCH1) + CH1TOSPDL |
+| 8 | 0 | 0 | SPDLTOGR + GRTOSPDL |
+| 9 | -4 | # | GRTOSPDL + SPDLTOCH1 + CH1TOMZ |
+| 10 | # | -4 | MZTOCH1 + CH1TOSPDL + SPDLTOGR |
+| 11 | 0 | 0 | MZROT |
+| 13 | # | 0 | MZROT + MZROT |
+| 14 | # | # | SPDLTOCH1 + CH1TOMZ + MZTOCH1 + CH1TOSPDL |
+"""@es ;
+    ex:identificador "7.9.1" .
 
-ex:TAKEPOS a ex:Parametro ;
-    ex:textoExtracto "TAKEPOS" .
+ex:SistemaControlTM_PLC
+    a ex:Sistema ;
+    rdfs:label "Sistema de control entre Transfer Machine (TM) y PLC"@es ;
+    ex:textoExtracto "Ejemplo de funcionamiento. El siguiente ejemplo muestra, suponiendo que no hay herramienta en el cabezal, las funciones que ejecuta el CNC, los valores que envía el gestor al PLC en cada una de las operaciones y las marcas que debe activar el PLC en cada caso."@es ;
+    ex:documentadoEn ex:TablaOperacionesPLC_TM .
 
-ex:LEAVEPOS a ex:Parametro ;
-    ex:textoExtracto "LEAVEPOS" .
+ex:ComponenteElectrico_MZTOCH1
+    a ex:ComponenteElectrico ;
+    rdfs:label "MZTOCH1" ;
+    ex:textoExtracto "MZTOCH1" ;
+    ex:compuestoPor ex:SistemaControlTM_PLC .
 
-ex:MZTOCH1 a ex:Parametro ;
-    ex:textoExtracto "MZTOCH1" .
+ex:ComponenteElectrico_CH1TOSPDL
+    a ex:ComponenteElectrico ;
+    rdfs:label "CH1TOSPDL" ;
+    ex:textoExtracto "CH1TOSPDL" ;
+    ex:compuestoPor ex:SistemaControlTM_PLC .
 
-ex:CH1TOSPDL a ex:Parametro ;
-    ex:textoExtracto "CH1TOSPDL" .
+ex:ComponenteElectrico_SPDLTOCH1
+    a ex:ComponenteElectrico ;
+    rdfs:label "SPDLTOCH1" ;
+    ex:textoExtracto "SPDLTOCH1" ;
+    ex:compuestoPor ex:SistemaControlTM_PLC .
 
-ex:SPDLTOCH1 a ex:Parametro ;
-    ex:textoExtracto "SPDLTOCH1" .
+ex:ComponenteElectrico_CH1TOMZ
+    a ex:ComponenteElectrico ;
+    rdfs:label "CH1TOMZ" ;
+    ex:textoExtracto "CH1TOMZ" ;
+    ex:compuestoPor ex:SistemaControlTM_PLC .
 
-ex:CH1TOMZ a ex:Parametro ;
-    ex:textoExtracto "CH1TOMZ" .
+ex:ComponenteElectrico_GRTOSPDL
+    a ex:ComponenteElectrico ;
+    rdfs:label "GRTOSPDL" ;
+    ex:textoExtracto "GRTOSPDL" ;
+    ex:compuestoPor ex:SistemaControlTM_PLC .
 
-ex:GRTOSPDL a ex:Parametro ;
-    ex:textoExtracto "GRTOSPDL" .
+ex:ComponenteElectrico_SPDLTOGR
+    a ex:ComponenteElectrico ;
+    rdfs:label "SPDLTOGR" ;
+    ex:textoExtracto "SPDLTOGR" ;
+    ex:compuestoPor ex:SistemaControlTM_PLC .
 
-ex:SPDLTOGR a ex:Parametro ;
-    ex:textoExtracto "SPDLTOGR" .
-
-ex:MZROT a ex:Parametro ;
-    ex:textoExtracto "MZROT" .
+ex:ComponenteElectrico_MZROT
+    a ex:ComponenteElectrico ;
+    rdfs:label "MZROT" ;
+    ex:textoExtracto "MZROT" ;
+    ex:compuestoPor ex:SistemaControlTM_PLC .

@@ -1,44 +1,111 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SobreTemperatura ex:textoExtracto "restringir la operativa del CNC en caso de sobretemperatura. Si el PLC activa esta marca, existe riesgo de sobretemperatura y está en peligro la integridad del equipo." ;
-    a ex:Sensor ;
-    ex:identificador "SobreTemperatura" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MLINKRDY ex:textoExtracto "En las configuraciones Mechatrolink, esta marca indica el estado del bus. El CNC activa esta marca para indicar que el bus Mechatrolink se encuentra inicializado correctamente. Todas las consultas del estado de los servos e inverters y las operaciones de lectura y escritura (CNCRD/CNCWR) de sus variables deben estar condicionadas por esta marca." ;
-    a ex:Sensor ;
-    ex:identificador "MLINKRDY" .
+ex:Sistema_Se_alesConsultaCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema de señales de consulta generales del CNC" ;
+    ex:textoExtracto "Señales de consulta generales: MLINKRDY, RETRACT, COLLISIONACTIV, etc." .
 
-ex:RETRACT ex:textoExtracto "Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. RETRACTC1 (también se puede programar como RETRACT) RETRACTC2 RETRACTC3 RETRACTC4 El CNC utiliza esta marca cuando retira los ejes de la pieza tras interrumpir un roscado (tecla [STOP] o marca _FEEDHOL del PLC). El canal del CNC pone esta señal a nivel lógico alto cuando empieza a retirar los ejes de la pieza, y la mantiene así hasta que finaliza el movimiento. La retirada de ejes se habilita en el parámetro RETRACTTHREAD, y se aplica al roscado electrónico (G33/G34) y los ciclos fijos de roscado del modelo -T-, tanto ISO como conversacional." ;
-    a ex:Sensor ;
-    ex:identificador "RETRACT" .
+ex:Marca_MLINKRDY
+    a ex:ComponenteElectrico ;
+    rdfs:label "MLINKRDY" ;
+    ex:textoExtracto "En las configuraciones Mechatrolink, esta marca indica el estado del bus. El CNC activa esta marca para indicar que el bus Mechatrolink se encuentra inicializado correctamente." ;
+    ex:monitoreaParametro ex:Parametro_EstadoBusMechatrolink ;
+    ex:tieneComponente ex:Sistema_Se_alesConsultaCNC .
 
-ex:RETRACTC1 ex:textoExtracto "RETRACTC1 (también se puede programar como RETRACT)" ;
-    a ex:Sensor ;
-    ex:identificador "RETRACTC1" .
-
-ex:RETRACTC2 ex:textoExtracto "RETRACTC2" ;
-    a ex:Sensor ;
-    ex:identificador "RETRACTC2" .
-
-ex:RETRACTC3 ex:textoExtracto "RETRACTC3" ;
-    a ex:Sensor ;
-    ex:identificador "RETRACTC3" .
-
-ex:RETRACTC4 ex:textoExtracto "RETRACTC4" ;
-    a ex:Sensor ;
-    ex:identificador "RETRACTC4" .
-
-ex:COLLISIONACTIV ex:textoExtracto "COLLISIONACTIV COLLISIONACTIVC1 El CNC activa esta marca (cambio de 0 a 1) cuando la opción FCAS está activa." ;
-    a ex:Sensor ;
-    ex:identificador "COLLISIONACTIV" .
-
-ex:COLLISIONACTIVC1 ex:textoExtracto "COLLISIONACTIVC1" ;
-    a ex:Sensor ;
-    ex:identificador "COLLISIONACTIVC1" .
-
-ex:FCAS ex:textoExtracto "El CNC activa esta marca (cambio de 0 a 1) cuando la opción FCAS está activa. El CNC desactiva esta marca (cambio de 1 a 0) cuando la opción FCAS no está activa." ;
+ex:Parametro_EstadoBusMechatrolink
     a ex:Parametro ;
-    ex:identificador "FCAS" .
+    rdfs:label "Estado del bus Mechatrolink" ;
+    ex:textoExtracto "El estado del bus Mechatrolink se consulta mediante la marca MLINKRDY." .
 
-ex:RETRACTTHREAD ex:textoExtracto "La retirada de ejes se habilita en el parámetro RETRACTTHREAD" ;
+ex:Marca_RETRACTC1
+    a ex:ComponenteElectrico ;
+    rdfs:label "RETRACTC1" ;
+    ex:identificador "RETRACTC1" ;
+    ex:textoExtracto "El CNC utiliza esta marca cuando retira los ejes de la pieza tras interrumpir un roscado (tecla [STOP] o marca _FEEDHOL del PLC)." ;
+    ex:tieneComponente ex:Sistema_Se_alesConsultaCNC .
+
+ex:Marca_RETRACTC2
+    a ex:ComponenteElectrico ;
+    rdfs:label "RETRACTC2" ;
+    ex:identificador "RETRACTC2" ;
+    ex:textoExtracto "Marca para canal 2 de retirada de ejes tras roscado." ;
+    ex:tieneComponente ex:Sistema_Se_alesConsultaCNC .
+
+ex:Marca_RETRACTC3
+    a ex:ComponenteElectrico ;
+    rdfs:label "RETRACTC3" ;
+    ex:identificador "RETRACTC3" ;
+    ex:textoExtracto "Marca para canal 3 de retirada de ejes tras roscado." ;
+    ex:tieneComponente ex:Sistema_Se_alesConsultaCNC .
+
+ex:Marca_RETRACTC4
+    a ex:ComponenteElectrico ;
+    rdfs:label "RETRACTC4" ;
+    ex:identificador "RETRACTC4" ;
+    ex:textoExtracto "Marca para canal 4 de retirada de ejes tras roscado." ;
+    ex:tieneComponente ex:Sistema_Se_alesConsultaCNC .
+
+ex:Parametro_RETRACTTHREAD
     a ex:Parametro ;
-    ex:identificador "RETRACTTHREAD" .
+    rdfs:label "RETRACTTHREAD" ;
+    ex:identificador "RETRACTTHREAD" ;
+    ex:textoExtracto "La retirada de ejes se habilita en el parámetro RETRACTTHREAD, y se aplica al roscado electrónico (G33/G34) y los ciclos fijos de roscado del modelo -T-." ;
+    ex:documentadoEn ex:Sistema_Se_alesConsultaCNC .
+
+ex:Marca_COLLISIONACTIV
+    a ex:ComponenteElectrico ;
+    rdfs:label "COLLISIONACTIV" ;
+    ex:identificador "COLLISIONACTIV" ;
+    ex:textoExtracto "El CNC activa esta marca (cambio de 0 a 1) cuando la opción FCAS está activa. El CNC desactiva esta marca (cambio de 1 a 0) cuando la opción FCAS no está activa." ;
+    ex:tieneComponente ex:Sistema_Se_alesConsultaCNC .
+
+ex:Marca_COLLISIONACTIVC1
+    a ex:ComponenteElectrico ;
+    rdfs:label "COLLISIONACTIVC1" ;
+    ex:identificador "COLLISIONACTIVC1" ;
+    ex:textoExtracto "Marca de control de colisiones para el canal 1." ;
+    ex:tieneComponente ex:Sistema_Se_alesConsultaCNC .
+
+ex:Parametro_FCAS
+    a ex:Parametro ;
+    rdfs:label "FCAS" ;
+    ex:identificador "FCAS" ;
+    ex:textoExtracto "Opción de control de colisiones (FCAS) que activa/desactiva la marca COLLISIONACTIV." ;
+    ex:documentadoEn ex:Sistema_Se_alesConsultaCNC .
+
+ex:Parametro_VAMSTATUS
+    a ex:Parametro ;
+    rdfs:label "V.A.MSTATUS.xn" ;
+    ex:identificador "V.A.MSTATUS.xn" ;
+    ex:textoExtracto "Variable para consultar el estado de servos e inverters." ;
+    ex:documentadoEn ex:Sistema_Se_alesConsultaCNC .
+
+ex:Parametro_VAMSUBSTAT
+    a ex:Parametro ;
+    rdfs:label "V.A.MSUBSTAT.xn" ;
+    ex:identificador "V.A.MSUBSTAT.xn" ;
+    ex:textoExtracto "Variable para consultar el subestado de servos e inverters." ;
+    ex:documentadoEn ex:Sistema_Se_alesConsultaCNC .
+
+ex:Parametro_VAMALARM
+    a ex:Parametro ;
+    rdfs:label "V.A.MALARM.xn" ;
+    ex:identificador "V.A.MALARM.xn" ;
+    ex:textoExtracto "Variable para consultar alarmas de servos e inverters." ;
+    ex:documentadoEn ex:Sistema_Se_alesConsultaCNC .
+
+ex:Parametro_VAMIOMON
+    a ex:Parametro ;
+    rdfs:label "V.A.MIOMON.xn" ;
+    ex:identificador "V.A.MIOMON.xn" ;
+    ex:textoExtracto "Variable para monitorizar E/S de servos e inverters." ;
+    ex:documentadoEn ex:Sistema_Se_alesConsultaCNC .
+
+ex:AvisoSeguridad_Sobretemperatura
+    a ex:AvisoSeguridad ;
+    rdfs:label "Advertencia de sobretemperatura" ;
+    ex:textoExtracto "restringir la operativa del CNC en caso de sobretemperatura. Si el PLC activa esta marca, existe riesgo de sobretemperatura y está en peligro la integridad del equipo. Apagar el equipo para evitar daños." ;
+    ex:mitigaRiesgo ex:Sistema_Se_alesConsultaCNC .

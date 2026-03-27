@@ -1,40 +1,55 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Motor1 a ex:ComponenteMecanico ;
-    rdfs:label "motor" ;
-    ex:textoExtracto "motor" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:GrupoMultieje1 a ex:Sistema ;
-    rdfs:label "Grupo multieje compuesto por dos ejes controlados por un único motor" ;
-    ex:textoExtracto "Grupo multieje compuesto por dos ejes controlados por un único motor" ;
-    ex:compuestoPor ex:Motor1 .
+ex:GrupoMultieje_A1_A2
+    a                     ex:Sistema ;
+    rdfs:label            "Grupo multieje A1-A2"@es ;
+    ex:textoExtracto      "Grupo multieje compuesto por dos ejes controlados por un único motor. La captación interna (motor) de ambos ejes estará ubicada en el regulador mientras que la captación externa (directa) de cada eje podrá estar situada en los módulos remotos, en un regulador Sercos o de forma local en la propia unidad central."@es ;
+    ex:tieneComponente    ex:Motor_GrupoMultieje_A1_A2 ;
+    ex:controla           ex:Eje_A1, ex:Eje_A2 ;
+    ex:detalladoEnEsquema ex:RequisitosMultieje_11_4 .
 
-ex:Regulador1 a ex:Actuador ;
-    rdfs:label "regulador" ;
-    ex:textoExtracto "regulador" .
+ex:Motor_GrupoMultieje_A1_A2
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Motor del grupo multieje A1-A2"@es ;
+    ex:textoExtracto "Grupo multieje compuesto por dos ejes controlados por un único motor."@es .
 
-ex:Eje1 a ex:ComponenteMecanico ;
-    rdfs:label "eje" ;
-    ex:textoExtracto "eje" .
+ex:Eje_A1
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje A1"@es ;
+    ex:textoExtracto "Axis A1 [...] Los ejes asociados a un mismo regulador deben cumplir los siguientes requisitos."@es ;
+    ex:monitoreaParametro ex:Parametro_DRIVEID_A1, ex:Parametro_OPMODEP_A1 .
 
-ex:Eje2 a ex:ComponenteMecanico ;
-    rdfs:label "eje" ;
-    ex:textoExtracto "eje" .
+ex:Eje_A2
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje A2"@es ;
+    ex:textoExtracto "Axis A2 [...] Los ejes asociados a un mismo regulador deben cumplir los siguientes requisitos."@es ;
+    ex:monitoreaParametro ex:Parametro_DRIVEID_A2, ex:Parametro_OPMODEP_A2 .
 
-ex:GrupoMultieje1 ex:compuestoPor ex:Eje1, ex:Eje2 .
+ex:Parametro_DRIVEID_A1
+    a               ex:Parametro ;
+    rdfs:label      "DRIVEID (Eje A1)"@es ;
+    ex:textoExtracto "todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID)."@es .
 
-ex:ModoOperacionSercosPosicion a ex:ModoOperacion ;
-    rdfs:label "modo Sercos posición" ;
-    ex:textoExtracto "modo Sercos posición" .
+ex:Parametro_DRIVEID_A2
+    a               ex:Parametro ;
+    rdfs:label      "DRIVEID (Eje A2)"@es ;
+    ex:textoExtracto "todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID)."@es .
 
-ex:ModoOperacionSercosVelocidad a ex:ModoOperacion ;
-    rdfs:label "modo Sercos velocidad" ;
-    ex:textoExtracto "modo Sercos velocidad" .
+ex:Parametro_OPMODEP_A1
+    a               ex:Parametro ;
+    rdfs:label      "OPMODEP (Eje A1)"@es ;
+    ex:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)."@es .
 
-ex:ParametroDRIVEID a ex:Parametro ;
-    rdfs:label "parámetro DRIVEID" ;
-    ex:textoExtracto "parámetro DRIVEID" .
+ex:Parametro_OPMODEP_A2
+    a               ex:Parametro ;
+    rdfs:label      "OPMODEP (Eje A2)"@es ;
+    ex:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)."@es .
 
-ex:ParametroOPMODEP a ex:Parametro ;
-    rdfs:label "parámetro OPMODEP" ;
-    ex:textoExtracto "parámetro OPMODEP" .
+ex:RequisitosMultieje_11_4
+    a               ex:Tabla ;
+    rdfs:label      "Requisitos y limitaciones de grupo multieje (Sección 11.4)"@es ;
+    ex:textoExtracto "Los ejes asociados a un mismo regulador deben cumplir los siguientes requisitos. • Pueden formar parte de un grupo multieje cualquier eje o cabezal Sercos del sistema, excepto los que formen parte de los ejes tándem o gantry. • Como cada eje y cabezal definido en el CNC puede tener varios sets de parámetros, la suma total de sets de todos los ejes y/o cabezales incluidos en un grupo no podrá superar los 8 sets disponibles en el regulador. • Como los ejes están controlados con el mismo regulador, todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID). • Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)."@es ;
+    ex:documentadoEn ex:Pagina_584_585 .

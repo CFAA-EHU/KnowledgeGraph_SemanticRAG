@@ -1,42 +1,57 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TYPE_15 a ex:ModoOperacion ;
-    ex:textoExtracto "TYPE=15 B TDATA 13(+) TDATA 14(+) TDATA 15(+) TDATA11 = 0 TDATA 1(+) A Z TDATA 2(+) Z Z X Y Y X TDATA11 = 1 TDATA 6(+) TDATA 4(+) TDATA 5(+) A Z Y X" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TYPE_16 a ex:ModoOperacion ;
-    ex:textoExtracto "TYPE=16 TDATA 13(+) TDATA 14(+) B TDATA 15(+) TDATA 1(+) TDATA11 = 0 C Z Z X TDATA 2(+) Y Z Y X TDATA11 = 1 C TDATA 4(+) TDATA 5(+) Z Y X" .
+ex:Parametro_TDATA12
+    a ex:Parametro ;
+    rdfs:label "TDATA12" ;
+    ex:textoExtracto "TDATA12 Ejes rotativos manuales o servocontrolados. Valores posibles: 0 a 3. Valor por defecto: 0. Este parámetro indica si los ejes rotativos son manuales o servocontrolados." ;
+    ex:valor "0" .
 
-ex:TDATA12 a ex:Parametro ;
-    ex:identificador "TDATA12" ;
-    ex:textoExtracto "TDATA12 Ejes rotativos manuales o servocontrolados. Valores posibles: 0 a 3. Valor por defecto: 0. Este parámetro indica si los ejes rotativos son manuales o servocontrolados." .
+ex:Parametro_TDATA13
+    a ex:Parametro ;
+    rdfs:label "TDATA13" ;
+    ex:textoExtracto "TDATA13 Distancia que define la colocación del cabezal, desde el eje rotativo, según el eje X." .
 
-ex:TDATA12_0 a ex:Parametro ;
-    ex:identificador "0" ;
-    ex:textoExtracto "0 Los dos ejes son servocontrolados." ;
-    ex:valor "Los dos ejes son servocontrolados." .
+ex:Parametro_TDATA14
+    a ex:Parametro ;
+    rdfs:label "TDATA14" ;
+    ex:textoExtracto "TDATA14 Distancia que define la colocación del cabezal, desde el eje rotativo, según el eje Y." .
 
-ex:TDATA12_1 a ex:Parametro ;
-    ex:identificador "1" ;
-    ex:textoExtracto "1 Eje principal manual y eje secundario servocontrolado." ;
-    ex:valor "Eje principal manual y eje secundario servocontrolado." .
+ex:Parametro_TDATA15
+    a ex:Parametro ;
+    rdfs:label "TDATA15" ;
+    ex:textoExtracto "TDATA15 Distancia que define la colocación del cabezal, desde el eje rotativo, según el eje Z." .
 
-ex:TDATA12_2 a ex:Parametro ;
-    ex:identificador "2" ;
-    ex:textoExtracto "2 Eje principal servocontrolado y eje secundario manual." ;
-    ex:valor "Eje principal servocontrolado y eje secundario manual." .
+ex:Tabla_TDATA12_Significado a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Significado de valores TDATA12" ;
+    ex:textoExtracto "0: Los dos ejes son servocontrolados. 1: Eje principal manual y eje secundario servocontrolado. 2: Eje principal servocontrolado y eje secundario manual. 3: Los dos ejes son manuales." ;
+    ex:documentadoEn ex:Parametro_TDATA12 .
 
-ex:TDATA12_3 a ex:Parametro ;
-    ex:identificador "3" ;
-    ex:textoExtracto "3 Los dos ejes son manuales." ;
-    ex:valor "Los dos ejes son manuales." .
+ex:Cinematica_Tipo15
+    a ex:ModoOperacion ;
+    rdfs:label "Cinemática TYPE=15" ;
+    ex:textoExtracto "TYPE=15. TDATA 13(+) TDATA 14(+). TDATA 15(+). TDATA11 = 0/1. Configuraciones A/B con ejes Z, X, Y." ;
+    ex:tieneComponente ex:Parametro_TDATA11 ,
+        ex:Parametro_TDATA12 ,
+        ex:Parametro_TDATA13 ,
+        ex:Parametro_TDATA14 ,
+        ex:Parametro_TDATA15 .
 
-ex:TDATA13 a ex:Parametro ;
-    ex:identificador "TDATA13" ;
-    ex:textoExtracto "TDATA13··TDATA15 Colocación del cabezal. TDATA13 Distancia que define la colocación del cabezal, desde el eje rotativo, según el eje X." .
+ex:Cinematica_Tipo16
+    a ex:ModoOperacion ;
+    rdfs:label "Cinemática TYPE=16" ;
+    ex:textoExtracto "TYPE=16. TDATA 13(+) TDATA 14(+). TDATA 15(+). TDATA11 = 0/1. Configuraciones B/C con ejes Z, X, Y." ;
+    ex:tieneComponente ex:Parametro_TDATA11 ,
+        ex:Parametro_TDATA12 ,
+        ex:Parametro_TDATA13 ,
+        ex:Parametro_TDATA14 ,
+        ex:Parametro_TDATA15 .
 
-ex:TDATA14 a ex:Parametro ;
-    ex:identificador "TDATA14" ;
-    ex:textoExtracto "TDATA13··TDATA15 Colocación del cabezal. TDATA14 Distancia que define la colocación del cabezal, desde el eje rotativo, según el eje Y." .
-
-ex:TDATA15 a ex:Parametro ;
-    ex:identificador "TDATA15" ;
-    ex:textoExtracto "TDATA13··TDATA15 Colocación del cabezal. TDATA15 Distancia que define la colocación del cabezal, desde el eje rotativo, según el eje Z." .
+ex:Parametro_TDATA11
+    a ex:Parametro ;
+    rdfs:label "TDATA11" ;
+    ex:textoExtracto "TDATA11 = 0/1" ;
+    ex:valor "0" , "1" .

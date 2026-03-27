@@ -1,67 +1,69 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:VentanaAyudaSubrutina rdfs:label "Ventana de ayuda" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:VentanaAyudaSubrutinas
     a ex:InterfazUsuario ;
-    ex:textoExtracto "La ventana de ayuda se hace visible durante la edición, tras el espacio en blanco o tabulador posterior a la función G o al nombre de la subrutina." ;
-    ex:textoExtracto "La ventana de ayuda es solamente informativa, no se puede acceder a ella con el cursor ni navegar por ella." ;
-    ex:textoExtracto "La ventana de ayuda desaparece con [ESC], borrando la palabra clave o pasando a otra línea del programa." ;
-    ex:textoExtracto "Cuando el fichero de ayuda esté visible, el texto del mismo se puede insertar en el programa pieza mediante la tecla [INS]." ;
-    ex:textoExtracto "Como la ventana de ayuda es solamente informativa, no se puede acceder a ella con el cursor ni navegar por ella con las teclas de avance página." .
+    rdfs:label "Ventana de ayuda de subrutinas"@es ;
+    ex:textoExtracto "La ventana de ayuda se hace visible durante la edición, tras el espacio en blanco o tabulador posterior a la función G o al nombre de la subrutina. La ventana de ayuda es solamente informativa, no se puede acceder a ella con el cursor ni navegar por ella."@es ;
+    ex:textoExtracto "La ventana de ayuda de las subrutinas sólo está disponible cuando el editor utilice el lenguaje del CNC; cuando el editor esté habilitado para el lenguaje del 8055, estas ayudas no estarán disponibles."@es .
 
-ex:FicheroAyudaTexto rdfs:label "Fichero de ayuda de texto" ;
-    a ex:Manual ;
-    ex:textoExtracto "Cada subrutina puede disponer de dos ficheros de ayuda; uno de texto (txt) y otro de dibujo (bmp)." ;
-    ex:textoExtracto "Que el fichero de ayuda contenga la línea de llamada a la subrutina." ;
-    ex:textoExtracto "Que todas las líneas del fichero de ayuda sigan el formato de un comentario del CNC, excepto la línea que contenga la llamada a la subrutina." .
+ex:FicheroAyudaTextoSubrutina
+    a ex:Componente ;
+    rdfs:label "Fichero de ayuda de texto (.txt) para subrutinas"@es ;
+    ex:textoExtracto "Cada subrutina puede disponer de dos ficheros de ayuda; uno de texto (txt) y otro de dibujo (bmp)."@es ;
+    ex:textoExtracto "Que el fichero de ayuda contenga la línea de llamada a la subrutina. Como el usuario debe haber escrito parte de la llamada para visualizar la ventana de ayuda, el editor borra la llamada antes de insertar el texto de ayuda."@es .
 
-ex:FicheroAyudaDibujo rdfs:label "Fichero de ayuda de dibujo" ;
-    a ex:Manual ;
-    ex:textoExtracto "Cada subrutina puede disponer de dos ficheros de ayuda; uno de texto (txt) y otro de dibujo (bmp)." .
+ex:FicheroAyudaDibujoSubrutina
+    a ex:Componente ;
+    rdfs:label "Fichero de ayuda de dibujo (.bmp) para subrutinas"@es ;
+    ex:textoExtracto "Cada subrutina puede disponer de dos ficheros de ayuda; uno de texto (txt) y otro de dibujo (bmp)."@es .
 
-ex:SubrutinaOEM_G180 rdfs:label "Subrutina OEM G180" ;
-    a ex:Manual ;
+ex:SubrutinaOEM_G180
+    a ex:ModoOperacion ;
+    rdfs:label "Subrutina OEM G180"@es ;
     ex:identificador "G180" ;
-    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc), subrutina de usuario (G500, G800, etc) y subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición." .
+    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc) [...] se les puede asociar ficheros de ayuda que se mostrarán durante la edición."@es ;
+    ex:documentadoEn ex:FicheroAyudaTextoSubrutina ;
+    ex:ilustradoEn ex:FicheroAyudaDibujoSubrutina .
 
-ex:SubrutinaOEM_G380 rdfs:label "Subrutina OEM G380" ;
-    a ex:Manual ;
+ex:SubrutinaOEM_G380
+    a ex:ModoOperacion ;
+    rdfs:label "Subrutina OEM G380"@es ;
     ex:identificador "G380" ;
-    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc), subrutina de usuario (G500, G800, etc) y subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición." .
+    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc) [...] se les puede asociar ficheros de ayuda que se mostrarán durante la edición."@es ;
+    ex:documentadoEn ex:FicheroAyudaTextoSubrutina ;
+    ex:ilustradoEn ex:FicheroAyudaDibujoSubrutina .
 
-ex:SubrutinaUsuario_G500 rdfs:label "Subrutina de usuario G500" ;
-    a ex:Manual ;
+ex:SubrutinaUsuario_G500
+    a ex:ModoOperacion ;
+    rdfs:label "Subrutina de usuario G500"@es ;
     ex:identificador "G500" ;
-    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc), subrutina de usuario (G500, G800, etc) y subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición." .
+    ex:textoExtracto "subrutina de usuario (G500, G800, etc) [...] se les puede asociar ficheros de ayuda que se mostrarán durante la edición."@es ;
+    ex:documentadoEn ex:FicheroAyudaTextoSubrutina ;
+    ex:ilustradoEn ex:FicheroAyudaDibujoSubrutina .
 
-ex:SubrutinaUsuario_G800 rdfs:label "Subrutina de usuario G800" ;
-    a ex:Manual ;
+ex:SubrutinaUsuario_G800
+    a ex:ModoOperacion ;
+    rdfs:label "Subrutina de usuario G800"@es ;
     ex:identificador "G800" ;
-    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc), subrutina de usuario (G500, G800, etc) y subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición." .
+    ex:textoExtracto "subrutina de usuario (G500, G800, etc) [...] se les puede asociar ficheros de ayuda que se mostrarán durante la edición."@es ;
+    ex:documentadoEn ex:FicheroAyudaTextoSubrutina ;
+    ex:ilustradoEn ex:FicheroAyudaDibujoSubrutina .
 
-ex:SubrutinaGlobal_MCALL rdfs:label "Subrutina global #MCALL" ;
-    a ex:Manual ;
+ex:SubrutinaGlobal_MCALL
+    a ex:ModoOperacion ;
+    rdfs:label "Subrutina global llamada mediante #MCALL"@es ;
     ex:identificador "#MCALL" ;
-    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc), subrutina de usuario (G500, G800, etc) and subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición." .
+    ex:textoExtracto "subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición."@es ;
+    ex:documentadoEn ex:FicheroAyudaTextoSubrutina ;
+    ex:ilustradoEn ex:FicheroAyudaDibujoSubrutina .
 
-ex:SubrutinaGlobal_PCALL rdfs:label "Subrutina global #PCALL" ;
-    a ex:Manual ;
+ex:SubrutinaGlobal_PCALL
+    a ex:ModoOperacion ;
+    rdfs:label "Subrutina global llamada mediante #PCALL"@es ;
     ex:identificador "#PCALL" ;
-    ex:textoExtracto "A cada subrutina OEM (G180, G380, etc), subrutina de usuario (G500, G800, etc) and subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición." .
-
-ex:EditorCNC rdfs:label "Editor CNC" ;
-    a ex:InterfazUsuario ;
-    ex:textoExtracto "La ventana de ayuda de las subrutinas está disponible aunque estén desactivadas las ayudas contextuales del editor." ;
-    ex:textoExtracto "La ventana de ayuda de las subrutinas sólo está disponible cuando el editor utilice el lenguaje del CNC; cuando el editor esté habilitado para el lenguaje del 8055, estas ayudas no estarán disponibles." .
-
-ex:Editor8055 rdfs:label "Editor 8055" ;
-    a ex:InterfazUsuario ;
-    ex:textoExtracto "La ventana de ayuda de las subrutinas está disponible aunque estén desactivadas las ayudas contextuales del editor." ;
-    ex:textoExtracto "La ventana de ayuda de las subrutinas sólo está disponible cuando el editor utilice el lenguaje del CNC; cuando el editor esté habilitado para el lenguaje del 8055, estas ayudas no estarán disponibles." .
-
-ex:TeclaINS rdfs:label "Tecla INS" ;
-    a ex:InterfazUsuario ;
-    ex:textoExtracto "Cuando el fichero de ayuda esté visible, el texto del mismo se puede insertar en el programa pieza mediante la tecla [INS]." .
-
-ex:TeclaESC rdfs:label "Tecla ESC" ;
-    a ex:InterfazUsuario ;
-    ex:textoExtracto "La ventana de ayuda desaparece con [ESC], borrando la palabra clave o pasando a otra línea del programa." .
+    ex:textoExtracto "subrutina global llamada mediante #MCALL ó #PCALL se les puede asociar ficheros de ayuda que se mostrarán durante la edición."@es ;
+    ex:documentadoEn ex:FicheroAyudaTextoSubrutina ;
+    ex:ilustradoEn ex:FicheroAyudaDibujoSubrutina .

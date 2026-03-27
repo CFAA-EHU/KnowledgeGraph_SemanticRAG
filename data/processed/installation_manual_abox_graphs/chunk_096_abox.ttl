@@ -1,33 +1,29 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:RS232 a ex:Parametro ;
-    rdfs:label "RS232" ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_RSTYPE a ex:Parametro ;
+    rdfs:label "RSTYPE" ;
     ex:textoExtracto "RSTYPE Tipo de línea serie. Valores posibles: RS232 / RS485 / RS422. Valor por defecto: RS232." ;
-    ex:valor "RS232" .
+    ex:valor "RS232"^^xsd:string ;
+    ex:identificador "MPG.RSTYPE" .
 
-ex:RS485 a ex:Parametro ;
-    rdfs:label "RS485" ;
-    ex:textoExtracto "RSTYPE Tipo de línea serie. Valores posibles: RS232 / RS485 / RS422." ;
-    ex:valor "RS485" .
-
-ex:RS422 a ex:Parametro ;
-    rdfs:label "RS422" ;
-    ex:textoExtracto "RSTYPE Tipo de línea serie. Valores posibles: RS232 / RS485 / RS422. Para el panel portátil HBLS seleccionar RS422." ;
-    ex:valor "RS422" .
-
-ex:ParametroRetardoComunicacion a ex:Parametro ;
-    rdfs:label "Retardo de comunicación" ;
-    ex:textoExtracto "Para asegurar una comunicación correcta, es necesario un retardo de 8 ms desde que el CNC deja de transmitir y está preparado para recibir datos." ;
-    ex:valor "8 ms" .
-
-ex:AdaptadorRS232_RS485 a ex:ComponenteElectrico ;
-    rdfs:label "Adaptador RS232/RS485" ;
-    ex:textoExtracto "Si no es posible parametrizar este retardo en el esclavo, se recomienda utilizar un adaptador externo RS232/RS485." .
-
-ex:CNC a ex:ComponenteElectrico ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "En la RS485, el CNC controla la recepción y transmisión de datos con la misma señal, de manera que durante la transmisión está deshabilitada la recepción." .
-
-ex:PanelPortatilHBLS a ex:ComponenteElectrico ;
+ex:InterfazUsuario_PanelPortatil_HBLS a ex:InterfazUsuario ;
     rdfs:label "Panel portátil HBLS" ;
     ex:textoExtracto "Para el panel portátil HBLS seleccionar RS422." .
+
+ex:Sistema_ComunicacionRS485 a ex:Sistema ;
+    rdfs:label "Sistema de comunicación RS485" ;
+    ex:textoExtracto "En la RS485, el CNC controla la recepción y transmisión de datos con la misma señal, de manera que durante la transmisión está deshabilitada la recepción. Para asegurar una comunicación correcta, es necesario un retardo de 8 ms desde que el CNC deja de transmitir y está preparado para recibir datos." ;
+    ex:tieneComponente ex:Parametro_RetardoRS485 .
+
+ex:Parametro_RetardoRS485 a ex:Parametro ;
+    rdfs:label "Retardo de comunicación RS485" ;
+    ex:textoExtracto "retardo de 8 ms desde que el CNC deja de transmitir y está preparado para recibir datos" ;
+    ex:valor "8 ms"^^xsd:string .
+
+ex:ComponenteElectrico_AdaptadorRS232_RS485 a ex:ComponenteElectrico ;
+    rdfs:label "Adaptador externo RS232/RS485" ;
+    ex:textoExtracto "Si no es posible parametrizar este retardo en el esclavo, se recomienda utilizar un adaptador externo RS232/RS485." .

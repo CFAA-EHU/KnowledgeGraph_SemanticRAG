@@ -1,25 +1,48 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_TRANSDELAY a ex:Parametro ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_TRANSDELAY
+    a ex:Parametro ;
     rdfs:label "TRANSDELAY" ;
-    ex:textoExtracto "el parámetro TRANSDELAY del eje asociado al sensor debe valor 0 (cero)" ;
-    ex:valor "0" .
+    ex:textoExtracto "el parámetro TRANSDELAY del eje asociado al sensor debe valor 0 (cero), para que la respuesta de la máquina sea igual con y sin control de gap." ;
+    ex:valor "0" ;
+    ex:monitoreaParametro ex:Sensor_EjeAsociado .
 
-ex:Parametro_ACFWFACTOR a ex:Parametro ;
+ex:Parametro_ACFWFACTOR
+    a ex:Parametro ;
     rdfs:label "ACFWFACTOR" ;
-    ex:textoExtracto "el parámetro ACFWFACTOR, que tendrá un valor más alto que si se aplicará el parámetro TRANSDELAY (aproximadamente la suma de TRANSDELAY y ACFWFACTOR en un ajuste analógico o Sercos velocidad)" ;
-    ex:valor "suma de TRANSDELAY y ACFWFACTOR" .
+    ex:textoExtracto "La compensación de los retardos se realiza con el parámetro ACFWFACTOR, que tendrá un valor más alto que si se aplicaría el parámetro TRANSDELAY (aproximadamente la suma de TRANSDELAY y ACFWFACTOR en un ajuste analógico o Sercos velocidad)." ;
+    ex:monitoreaParametro ex:Sensor_EjeAsociado .
 
-ex:Parametro_ACFGAIN a ex:Parametro ;
+ex:Parametro_ACFGAIN
+    a ex:Parametro ;
     rdfs:label "ACFGAIN" ;
-    ex:textoExtracto "ACFGAIN Porcentaje de AC-Forward en automático. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 120 %. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.ACFGAIN[set].xn Consultar el parámetro máquina MANACFGAIN." ;
-    ex:valor "0 a 120 %" .
+    ex:textoExtracto "ACFGAIN Porcentaje de AC-Forward en automático. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 120 %. Valor por defecto: 0." ;
+    ex:valor "0"^^xsd:integer ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.ACFGAIN[set].xn" .
 
-ex:Parametro_MANACFGAIN a ex:Parametro ;
+ex:Parametro_MANACFGAIN
+    a ex:Parametro ;
     rdfs:label "MANACFGAIN" ;
-    ex:textoExtracto "MANACFGAIN Porcentaje de AC-Forward en manual. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y simulado. Valores posibles: De 0 a 120 %. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.MANACFGAIN[set].xn El CNC sólo tiene en cuenta este parámetro cuando trabaja con AC-forward; parámetro ACFWFACTOR." ;
-    ex:valor "0 a 120 %" .
+    ex:textoExtracto "MANACFGAIN Porcentaje de AC-Forward en manual. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y simulado. Valores posibles: De 0 a 120 %. Valor por defecto: 0." ;
+    ex:valor "0"^^xsd:integer ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.MANACFGAIN[set].xn" .
 
-ex:Sensor_asociado_TRANSDELAY a ex:Sensor ;
-    rdfs:label "sensor asociado a TRANSDELAY" ;
-    ex:textoExtracto "el parámetro TRANSDELAY del eje asociado al sensor" .
+ex:Parametro_MANACFGAIN
+    ex:textoExtracto "El CNC sólo tiene en cuenta este parámetro cuando trabaja con AC-forward; parámetro ACFWFACTOR." ;
+    ex:monitoreaParametro ex:Parametro_ACFWFACTOR .
+
+ex:Sensor_EjeAsociado
+    a ex:Sensor ;
+    rdfs:label "Sensor de eje asociado (control de gap)" ;
+    ex:textoExtracto "el parámetro TRANSDELAY del eje asociado al sensor debe valor 0 (cero), para que la respuesta de la máquina sea igual con y sin control de gap." .
+
+ex:Sistema_ControlGap
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de gap (modelo láser)" ;
+    ex:textoExtracto "Particularidades en el modelo láser. En máquinas láser con control de gap, el parámetro TRANSDELAY del eje asociado al sensor debe valor 0 (cero), para que la respuesta de la máquina sea igual con y sin control de gap." ;
+    ex:tieneComponente ex:Sensor_EjeAsociado ;
+    ex:monitoreaParametro ex:Parametro_TRANSDELAY, ex:Parametro_ACFWFACTOR, ex:Parametro_ACFGAIN, ex:Parametro_MANACFGAIN .

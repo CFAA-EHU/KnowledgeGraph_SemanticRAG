@@ -1,38 +1,57 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SistemaHomogeneizacionParametrosCNCRegulador a ex:Sistema ;
-    rdfs:label "Sistema de homogeneización de parámetros entre CNC y regulador"@es ;
-    ex:textoExtracto "Sercos. Algunos parámetros del CNC y de los reguladores deben estar definidos de forma equivalente para asegurar el correcto funcionamiento del sistema."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroNP121 a ex:Parametro ;
-    rdfs:label "NP121"@es ;
-    ex:identificador "NP121" ;
-    ex:textoExtracto "NP121"@es .
+ex:SistemaSercos
+    a ex:Sistema ;
+    rdfs:label "Sistema de anillo Sercos" ;
+    ex:textoExtracto "Durante la inicialización del anillo Sercos, en el arranque del CNC y en la validación de los parámetros máquina de los ejes y cabezales, el CNC actualiza en los reguladores el valor de los parámetros necesarios para asegurar su equivalencia." .
 
-ex:ParametroNP122 a ex:Parametro ;
-    rdfs:label "NP122"@es ;
-    ex:identificador "NP122" ;
-    ex:textoExtracto "NP122"@es .
+ex:Parametro_NP121
+    a ex:Parametro ;
+    rdfs:label "NP121 (Gama de velocidad)" ;
+    ex:textoExtracto "la homogeneización actualiza los parámetros NP121, NP122, NP131 y NP133 de cada set del regulador con los valores definidos en el CNC." ;
+    ex:monitoreaParametro ex:ReguladorDrive .
 
-ex:ParametroNP131 a ex:Parametro ;
-    rdfs:label "NP131"@es ;
-    ex:identificador "NP131" ;
-    ex:textoExtracto "NP131"@es .
+ex:Parametro_NP122
+    a ex:Parametro ;
+    rdfs:label "NP122 (Gama de velocidad)" ;
+    ex:textoExtracto "la homogeneización actualiza los parámetros NP121, NP122, NP131 y NP133 de cada set del regulador con los valores definidos en el CNC." ;
+    ex:monitoreaParametro ex:ReguladorDrive .
 
-ex:ParametroNP133 a ex:Parametro ;
-    rdfs:label "NP133"@es ;
-    ex:identificador "NP133" ;
-    ex:textoExtracto "NP133"@es .
+ex:Parametro_NP131
+    a ex:Parametro ;
+    rdfs:label "NP131 (Gama de velocidad)" ;
+    ex:textoExtracto "la homogeneización actualiza los parámetros NP121, NP122, NP131 y NP133 de cada set del regulador con los valores definidos en el CNC." ;
+    ex:monitoreaParametro ex:ReguladorDrive .
+
+ex:Parametro_NP133
+    a ex:Parametro ;
+    rdfs:label "NP133 (Gama de velocidad)" ;
+    ex:textoExtracto "la homogeneización actualiza los parámetros NP121, NP122, NP131 y NP133 de cada set del regulador con los valores definidos en el CNC." ;
+    ex:monitoreaParametro ex:ReguladorDrive .
+
+ex:ReguladorDrive
+    a ex:Actuador ;
+    rdfs:label "Regulador (Drive)" ;
+    ex:textoExtracto "el CNC actualiza en los reguladores el valor de los parámetros necesarios para asegurar su equivalencia." ;
+    ex:controla ex:SistemaSercos .
 
 ex:TablaHomogeneizacionParametros a ex:Tabla ;
-    rdfs:label "Tabla de homogeneización de parámetros"@es ;
-    ex:textoExtracto "Entendiendo la tabla de homogeneización. La tabla indica qué parámetros del CNC intervienen en la homogeneización, así como los parámetros del regulador que se ven afectados."@es ;
-    ex:compuestoPor ex:ParametroNP121, ex:ParametroNP122, ex:ParametroNP131, ex:ParametroNP133 .
+     a ex:Tabla ;
+    rdfs:label "Tabla de homogeneización CNC-Drive" ;
+    ex:textoExtracto "La tabla indica qué parámetros del CNC intervienen en la homogeneización, así como los parámetros del regulador que se ven afectados." ;
+    ex:documentadoEn ex:ManualCNC .
 
-ex:ReguladorACSD a ex:ComponenteElectrico ;
-    rdfs:label "Regulador ACSD"@es ;
-    ex:textoExtracto "El CNC no homogeneiza los parámetros cuando el regulador es un ACSD."@es .
+ex:ParametroConfiguracionSercos
+    a ex:Parametro ;
+    rdfs:label "Parámetro condicionado por configuración Sercos" ;
+    ex:textoExtracto "Sercos: Indica si la escritura del parámetro en el drive está condicionada por el tipo de configuración Sercos, posición o velocidad." ;
+    ex:monitoreaParametro ex:ReguladorDrive .
 
-ex:DriveSercos a ex:ComponenteElectrico ;
-    rdfs:label "Drive Sercos"@es ;
-    ex:textoExtracto "Sercos. Algunos parámetros del CNC y de los reguladores deben estar definidos de forma equivalente para asegurar el correcto funcionamiento del sistema."@es .
+ex:ParametroFeedback
+    a ex:Parametro ;
+    rdfs:label "Parámetro condicionado por tipo de feedback" ;
+    ex:textoExtracto "Feedback: Indica si la escritura del parámetro en el drive está condicionada por el tipo de captación del eje, interna o externa." ;
+    ex:monitoreaParametro ex:ReguladorDrive .

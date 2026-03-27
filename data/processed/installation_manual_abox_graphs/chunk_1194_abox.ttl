@@ -1,13 +1,32 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PROBE1MONIT a ex:Sensor ;
-    rdfs:label "PROBE1MONIT" ;
-    ex:textoExtracto "Gestión de las marcas PROBE1MONIT/PROBE2MONIT en la subrutina. Estas marcas están asociadas al modo seguro del palpador." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PROBE2MONIT a ex:Sensor ;
-    rdfs:label "PROBE2MONIT" ;
-    ex:textoExtracto "Gestión de las marcas PROBE1MONIT/PROBE2MONIT en la subrutina. Estas marcas están asociadas al modo seguro del palpador." .
+ex:MarcasPROBE1MONIT_PROBE2MONIT
+    a               ex:Parametro ;
+    rdfs:label      "Marcas PROBE1MONIT/PROBE2MONIT"@es ;
+    ex:textoExtracto
+                    "Gestión de las marcas PROBE1MONIT/PROBE2MONIT en la subrutina. Estas marcas están asociadas al modo seguro del palpador."@es ;
+    ex:monitoreaParametro ex:ModoSeguroPalpador .
 
-ex:Sub_Probe_Tool_Begin_fst a ex:TareaMantenimiento ;
-    rdfs:label "Sub_Probe_Tool_Begin.fst" ;
-    ex:textoExtracto "Se recomienda que OEM gestione ambas marcas desde la subrutina Sub_Probe_Tool_Begin.fst para avisar, si están desactivadas, que el palpador está en modo no seguro." .
+ex:ModoSeguroPalpador
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo seguro del palpador"@es ;
+    ex:textoExtracto
+                    "modo seguro del palpador"@es .
+
+ex:Subrutina_Sub_Probe_Tool_Begin
+    a               ex:Sistema ;
+    rdfs:label      "Subrutina Sub_Probe_Tool_Begin.fst"@es ;
+    ex:identificador "Sub_Probe_Tool_Begin.fst" ;
+    ex:textoExtracto
+                    "Se recomienda que OEM gestione ambas marcas desde la subrutina Sub_Probe_Tool_Begin.fst para avisar, si están desactivadas, que el palpador está en modo no seguro."@es ;
+    ex:controla    ex:MarcasPROBE1MONIT_PROBE2MONIT .
+
+ex:AvisoModoNoSeguro
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Aviso de palpador en modo no seguro"@es ;
+    ex:textoExtracto
+                    "para avisar, si están desactivadas, que el palpador está en modo no seguro"@es ;
+    ex:mitigaRiesgo ex:ModoSeguroPalpador .

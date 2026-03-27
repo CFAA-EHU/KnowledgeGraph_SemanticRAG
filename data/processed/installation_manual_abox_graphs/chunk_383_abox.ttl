@@ -1,32 +1,57 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:G00FEED a ex:Parametro ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:G00FEED
+    a ex:Parametro ;
     rdfs:label "G00FEED" ;
-    ex:textoExtracto "G00FEED Avance en G00. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 500000.0000 mm/min. Valores posibles (2): De 0 a 19685.03937 inch/min. Valores posibles (3): De 0 a 72000000.0000 grados/min. Valores posibles (4): De 0 a 200000.0000 rpm. Valor por defecto: 20000.0000 mm/min / 787.40157 inch/min / 1080000 grados/min / 3000.0000 rpm." ;
-    ex:valor "0 a 500000.0000 mm/min, 0 a 19685.03937 inch/min, 0 a 72000000.0000 grados/min, 0 a 200000.0000 rpm" ;
-    ex:identificador "G00FEED" .
+    ex:identificador "G00FEED" ;
+    ex:textoExtracto "G00FEED Avance en G00. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:valor "20000.0000 mm/min / 787.40157 inch/min / 1080000 grados/min / 3000.0000 rpm"^^xsd:string ;
+    ex:monitoreaParametro ex:AvanceRapidoG00 .
 
-ex:MAXFEED a ex:Parametro ;
+ex:AvanceRapidoG00
+    a ex:ModoOperacion ;
+    rdfs:label "Avance rápido G00" ;
+    ex:textoExtracto "Los posicionamientos rápidos (G00) se realizan siempre al máximo avance posible, el indicado por G00FEED." .
+
+ex:MAXFEED
+    a ex:Parametro ;
     rdfs:label "MAXFEED" ;
+    ex:identificador "MAXFEED" ;
     ex:textoExtracto "MAXFEED Máximo avance de mecanizado del eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
-    ex:identificador "MAXFEED" .
+    ex:monitoreaParametro ex:AvanceMecanizado .
 
-ex:MPA_G00FEED a ex:Parametro ;
-    rdfs:label "MPA.G00FEED[set].xn" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.G00FEED[set].xn Modelos torno y fresadora." ;
-    ex:identificador "MPA.G00FEED[set].xn" .
+ex:AvanceMecanizado
+    a ex:ModoOperacion ;
+    rdfs:label "Avance de mecanizado" ;
+    ex:textoExtracto "Máximo avance de mecanizado del eje." .
 
-ex:PLC_G00FEED a ex:Parametro ;
+ex:VariablePLC_G00FEED
+    a ex:Parametro ;
     rdfs:label "PLC.G00FEED" ;
+    ex:identificador "(V.)[ch].PLC.G00FEED" ;
     ex:textoExtracto "El PLC dispone de la variable (V.)[ch].PLC.G00FEED que permite limitar el avance en el canal para cualquier tipo de movimiento (G00, G01, etc)." ;
-    ex:identificador "PLC.G00FEED" .
+    ex:monitoreaParametro ex:AvanceRapidoG00 .
 
-ex:MAXVOLT a ex:Parametro ;
+ex:VariableMPA_G00FEED
+    a ex:Parametro ;
+    rdfs:label "MPA.G00FEED" ;
+    ex:identificador "(V.)[ch].MPA.G00FEED[set].xn" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.G00FEED[set].xn" ;
+    ex:monitoreaParametro ex:AvanceRapidoG00 .
+
+ex:MAXVOLT
+    a ex:Parametro ;
     rdfs:label "MAXVOLT" ;
+    ex:identificador "MAXVOLT" ;
     ex:textoExtracto "los watios definidos en el parámetro G00FEED como potencia del generador deben corresponder al nivel de voltios definidos en el parámetro MAXVOLT." ;
-    ex:identificador "MAXVOLT" .
+    ex:valor "Potencia máxima del generador (modelo láser)"^^xsd:string .
 
-ex:PWRCTRLON_OUT a ex:Parametro ;
-    rdfs:label "#PWRCTRLON[OUT]" ;
-    ex:textoExtracto "Para que la gestión del control de la potencia a través de una salida analógica sea correcta (#PWRCTRLON[OUT], los watios definidos en el parámetro G00FEED como potencia del generador deben corresponder al nivel de voltios definidos en el parámetro MAXVOLT." ;
-    ex:identificador "#PWRCTRLON[OUT]" .
+ex:PWRCTRLON
+    a ex:Parametro ;
+    rdfs:label "PWRCTRLON" ;
+    ex:identificador "#PWRCTRLON[OUT]" ;
+    ex:textoExtracto "Para que la gestión del control de la potencia a través de una salida analógica sea correcta (#PWRCTRLON[OUT]..." .

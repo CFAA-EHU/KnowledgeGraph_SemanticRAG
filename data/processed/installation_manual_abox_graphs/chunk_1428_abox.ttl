@@ -1,52 +1,106 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Motor_A1 a ex:Maquina ;
-    rdfs:label "motor" ;
-    ex:textoExtracto "motor" ;
-    ex:identificador "A1" ;
-    ex:textoExtracto "A1 con captación directa al regulador" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Motor_A2 a ex:Maquina ;
-    rdfs:label "motor" ;
-    ex:textoExtracto "motor" ;
-    ex:identificador "A2" ;
-    ex:textoExtracto "A2 con captación a módulos remotos" .
+### Esquemas y configuraciones
+ex:Esquema_GestionMultieje_UnMotorDosEjes
+    a ex:Esquema ;
+    rdfs:label "Esquema: Grupo multieje con un motor y dos ejes (A1, A2)"@es ;
+    ex:textoExtracto "Diagrama donde un solo motor, mediante acoplamientos, gobierna alternativamente dos ejes (A1 y A2) seleccionados por el regulador; se muestra la captura directa y la arquitectura CAN entre módulos."@es ;
+    ex:ilustradoEn ex:Pagina_584 .
 
-ex:Regulador_Sercos a ex:ComponenteElectrico ;
-    rdfs:label "regulador Sercos" ;
-    ex:textoExtracto "regulador Sercos" ;
-    ex:identificador "Sercos" .
+ex:Esquema_CaptacionDirecta_CounterTypeRegulador
+    a ex:Esquema ;
+    rdfs:label "Esquema: COUNTERTYPE = Regulador (captación directa)"@es ;
+    ex:textoExtracto "Esquema de conexión donde la captación directa (encoder) entra en la segunda entrada del regulador Sercos; se distinguen captación de motor y directa, y el lazo Sercos hacia el módulo de accionamiento."@es ;
+    ex:ilustradoEn ex:Pagina_587 .
 
-ex:Modulo_Remoto_CANfagor a ex:ComponenteElectrico ;
-    rdfs:label "módulo remoto CANfagor" ;
-    ex:textoExtracto "módulo remoto CANfagor" ;
-    ex:identificador "X1…X5" .
+ex:Esquema_CaptacionDirecta_CounterTypeRemoto
+    a ex:Esquema ;
+    rdfs:label "Esquema: COUNTERTYPE = Remoto (módulo CANfagor)"@es ;
+    ex:textoExtracto "Diagrama de cableado con módulo remoto CANfagor de contadoras (X1…X5, CAN L/H, alimentación y terminaciones). La captación directa se enruta al módulo remoto y el CNC recibe posición vía bus CAN."@es ;
+    ex:ilustradoEn ex:Pagina_587 .
 
-ex:Eje_A1 a ex:ComponenteMecanico ;
-    rdfs:label "eje A1" ;
-    ex:identificador "A1" ;
-    ex:textoExtracto "dos ejes (A1, A2)" ;
-    ex:textoExtracto "A1 con captación directa al regulador" .
+ex:Esquema_CaptacionDirecta_CounterTypeLocal
+    a ex:Esquema ;
+    rdfs:label "Esquema: COUNTERTYPE = Local (captación en unidad central)"@es ;
+    ex:textoExtracto "Esquema donde la captación directa entra en las entradas locales de contaje de la unidad central; se muestran puntos de conexión y el flujo de datos hacia el CNC sin regulador intermedio."@es ;
+    ex:ilustradoEn ex:Pagina_587 .
 
-ex:Eje_A2 a ex:ComponenteMecanico ;
-    rdfs:label "eje A2" ;
-    ex:identificador "A2" ;
-    ex:textoExtracto "dos ejes (A1, A2)" ;
-    ex:textoExtracto "A2 con captación a módulos remotos" .
+ex:Esquema_Ejemplo1_MultiejeDosMotores
+    a ex:Esquema ;
+    rdfs:label "Esquema: Ejemplo 1 - Dos ejes (A1, A2) con motores independientes"@es ;
+    ex:textoExtracto "Vista de instalación con un regulador y dos ejes (A1, A2) con sus motores y captaciones diferenciadas: A1 con captación directa al regulador y A2 con captación a módulos remotos; se anotan direcciones lógicas y Sercos."@es ;
+    ex:ilustradoEn ex:Pagina_591 .
 
-ex:Esquema_Multieje a ex:Esquema ;
-    rdfs:label "Esquema de conexión multieje" ;
-    ex:textoExtracto "Diagrama donde un solo motor, mediante acoplamientos, gobierna alternativamente dos ejes (A1 y A2) seleccionados por el regulador" ;
-    ex:tieneComponente ex:Motor_A1, ex:Motor_A2, ex:Eje_A1, ex:Eje_A2, ex:Regulador_Sercos, ex:Modulo_Remoto_CANfagor .
+### Componentes críticos
+ex:Motor_Multieje_Acoplamiento
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor de grupo multieje (acoplado a A1/A2)"@es ;
+    ex:textoExtracto "un solo motor, mediante acoplamientos, gobierna alternativamente dos ejes (A1 y A2)"@es ;
+    ex:detalladoEnEsquema ex:Esquema_GestionMultieje_UnMotorDosEjes .
 
-ex:Esquema_Captacion_Directa a ex:Esquema ;
-    rdfs:label "Esquema de captación directa" ;
-    ex:textoExtracto "Esquema de conexión donde la captación directa (encoder) entra en la segunda entrada del regulador Sercos" .
+ex:Regulador_Sercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador Sercos (con entradas para captación directa/encoder)"@es ;
+    ex:textoExtracto "la captación directa (encoder) entra en la segunda entrada del regulador Sercos"@es ;
+    ex:detalladoEnEsquema ex:Esquema_CaptacionDirecta_CounterTypeRegulador ;
+    ex:detalladoEnEsquema ex:Esquema_Ejemplo1_MultiejeDosMotores .
 
-ex:Esquema_Captacion_Local a ex:Esquema ;
-    rdfs:label "Esquema de captación local" ;
-    ex:textoExtracto "Esquema donde la captación directa entra en las entradas locales de contaje de la unidad central" .
+ex:Modulo_CANfagor_Contadoras
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo remoto CANfagor (X1…X5, CAN L/H)"@es ;
+    ex:textoExtracto "módulo remoto CANfagor de contadoras (X1…X5, CAN L/H, alimentación y terminaciones)"@es ;
+    ex:detalladoEnEsquema ex:Esquema_CaptacionDirecta_CounterTypeRemoto ;
+    ex:detalladoEnEsquema ex:Esquema_Ejemplo1_MultiejeDosMotores .
 
-ex:Esquema_Captacion_Remota a ex:Esquema ;
-    rdfs:label "Esquema de captación remota" ;
-    ex:textoExtracto "Diagrama de cableado con módulo remoto CANfagor de contadoras (X1…X5, CAN L/H, alimentación y terminaciones)" .
+ex:Encoder_CaptacionDirecta
+    a ex:Sensor ;
+    rdfs:label "Encoder (captación directa)"@es ;
+    ex:textoExtracto "captación directa (encoder) entra en la segunda entrada del regulador"@es ;
+    ex:monitoreaParametro ex:Parametro_PosicionEje ;
+    ex:detalladoEnEsquema ex:Esquema_CaptacionDirecta_CounterTypeRegulador ;
+    ex:detalladoEnEsquema ex:Esquema_CaptacionDirecta_CounterTypeLocal .
+
+### Parámetros y sistemas
+ex:Parametro_PosicionEje
+    a ex:Parametro ;
+    rdfs:label "Posición del eje (vía encoder o bus CAN)"@es ;
+    ex:textoExtracto "el CNC recibe posición vía bus CAN"@es ;
+    ex:detalladoEnEsquema ex:Esquema_CaptacionDirecta_CounterTypeRemoto .
+
+ex:Sistema_Multieje_Ejemplo1
+    a ex:Sistema ;
+    rdfs:label "Sistema multieje: Ejemplo 1 (dos motores, regulador, captaciones mixtas)"@es ;
+    ex:textoExtracto "Sistema con dos ejes, cada uno con su motor [...] A1 con captación directa al regulador y A2 con captación a módulos remotos"@es ;
+    ex:compuestoPor ex:Motor_EjeA1, ex:Motor_EjeA2, ex:Regulador_Sercos, ex:Modulo_CANfagor_Contadoras ;
+    ex:detalladoEnEsquema ex:Esquema_Ejemplo1_MultiejeDosMotores .
+
+ex:Motor_EjeA1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor del eje A1 (captación directa)"@es ;
+    ex:textoExtracto "A1 con captación directa al regulador"@es ;
+    ex:detalladoEnEsquema ex:Esquema_Ejemplo1_MultiejeDosMotores .
+
+ex:Motor_EjeA2
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor del eje A2 (captación remota)"@es ;
+    ex:textoExtracto "A2 con captación a módulos remotos"@es ;
+    ex:detalladoEnEsquema ex:Esquema_Ejemplo1_MultiejeDosMotores .
+
+### Páginas (anclaje documental)
+ex:Pagina_584
+    a ex:Pagina ;
+    ex:identificador "584" ;
+    ex:textoExtracto "Gestión multieje | Grupo multieje compuesto por dos ejes controlados por un único motor."@es .
+
+ex:Pagina_587
+    a ex:Pagina ;
+    ex:identificador "587" ;
+    ex:textoExtracto "Configuración de la captación externa (captación directa) | COUNTERTYPE = Regulador/Remoto/Local."@es .
+
+ex:Pagina_591
+    a ex:Pagina ;
+    ex:identificador "591" ;
+    ex:textoExtracto "Ejemplos de configuración (multieje) | Ejemplo 1. Sistema con dos ejes, cada uno con su motor."@es .

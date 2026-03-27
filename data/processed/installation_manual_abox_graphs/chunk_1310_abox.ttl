@@ -1,19 +1,81 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:TDATA1 a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Param_TDATA1
+    a ex:Parametro ;
     rdfs:label "TDATA1" ;
-    ex:identificador "TDATA1" ;
-    ex:textoExtracto "TDATA1 = Y" ;
-    ex:valor "Y" .
+    ex:textoExtracto "TDATA1 = ΔY ; TDATA1: Dimensión a calcular." ;
+    ex:identificador "TDATA1" .
 
-ex:TDATA5 a ex:Parametro ;
+ex:Param_TDATA5
+    a ex:Parametro ;
     rdfs:label "TDATA5" ;
-    ex:identificador "TDATA5" ;
-    ex:textoExtracto "TDATA5 = 0,5 X" ;
-    ex:valor "0,5 X" .
+    ex:textoExtracto "TDATA5 = 0,5·ΔX ; TDATA5: Dimensión a calcular." ;
+    ex:identificador "TDATA5" .
 
-ex:TDATA2 a ex:Parametro ;
+ex:Param_TDATA2
+    a ex:Parametro ;
     rdfs:label "TDATA2" ;
-    ex:identificador "TDATA2" ;
-    ex:textoExtracto "TDATA2" ;
-    ex:valor "X" .
+    ex:textoExtracto "TDATA2: Dimensión calculada a partir de ΔX (segundo contacto con B=180°)." ;
+    ex:identificador "TDATA2" .
+
+ex:Param_DeltaY
+    a ex:Parametro ;
+    rdfs:label "ΔY" ;
+    ex:textoExtracto "ΔY: Cota que indica el CNC para TDATA1." ;
+    ex:identificador "ΔY" .
+
+ex:Param_DeltaX
+    a ex:Parametro ;
+    rdfs:label "ΔX" ;
+    ex:textoExtracto "ΔX: Cota que indica el CNC para TDATA5 y TDATA2." ;
+    ex:identificador "ΔX" .
+
+ex:Procedimiento_CalculoTDATA5
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cálculo de TDATA5 con reloj comparador" ;
+    ex:textoExtracto """
+    1. Posicionar ejes rotativos B y C en 0°.
+    2. Colocar reloj en dirección X y tocar cilindro (punto 1).
+    3. Preseleccionar X=0.
+    4. Retirar reloj, girar C a 180°, y tocar en punto 2.
+    5. Apuntar cota CNC (ΔX).
+    """ ;
+    ex:monitoreaParametro ex:Param_DeltaX ;
+    ex:requiereMantenimiento ex:Param_TDATA5 .
+
+ex:Procedimiento_CalculoTDATA2
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cálculo de TDATA2 con reloj comparador" ;
+    ex:textoExtracto """
+    1. Mantener preselección anterior (B=0°, C=0°).
+    2. Retirar reloj, girar B a 180° y C a 0°.
+    3. Tocar en punto 2 y apuntar cota CNC (ΔX).
+    """ ;
+    ex:monitoreaParametro ex:Param_DeltaX ;
+    ex:requiereMantenimiento ex:Param_TDATA2 .
+
+ex:Sistema_CabezalAngular
+    a ex:Sistema ;
+    rdfs:label "Cabezal angular con ejes rotativos B y C" ;
+    ex:textoExtracto "Cálculo de dimensiones con reloj comparador en cabezal angular (ejes B y C)." ;
+    ex:tieneComponente ex:Componente_EjeB, ex:Componente_EjeC .
+
+ex:Componente_EjeB
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo B" ;
+    ex:textoExtracto "Eje B posicionable en 0° o 180° para cálculos con reloj comparador." ;
+    ex:identificador "B" .
+
+ex:Componente_EjeC
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo C" ;
+    ex:textoExtracto "Eje C posicionable en 0° o 180° para cálculos con reloj comparador." ;
+    ex:identificador "C" .
+
+ex:Herramienta_RelojComparador
+    a ex:Herramienta ;
+    rdfs:label "Reloj comparador" ;
+    ex:textoExtracto "Reloj colocado sobre la mesa en dirección X para medir contacto con el cilindro." .

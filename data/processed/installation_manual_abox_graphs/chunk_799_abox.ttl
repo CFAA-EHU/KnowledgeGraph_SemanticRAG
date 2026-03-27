@@ -1,31 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:RESETIN a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ProcesoResetCNC
+    a ex:ModoOperacion ;
+    rdfs:label "Proceso de reset del canal CNC" ;
+    ex:textoExtracto "el canal del CNC se resetea. Una vez iniciado el reset, el PLC puede desactivar esta marca (RESETIN=0). El proceso de reset es como sigue. 1 El usuario pulsa la tecla [RESET] del panel de mando o el PLC activa la marca RESETIN. 2 El canal asume las condiciones iniciales (las definidas en los parámetros máquina). 3 El canal activa la marca RESETOUT (RESETOUT=1) para indicar que ha finalizado el reset. Esta marca permanece activa el tiempo fijado en el parámetro general en la página 406. MINAENDW. 4 El canal ejecuta la subrutina asociada al reset (PROGRAM_RESET), si existe." .
+
+ex:TeclaReset
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla [RESET]" ;
+    ex:textoExtracto "El usuario pulsa la tecla [RESET] del panel de mando" ;
+    ex:habilitadoPor ex:ProcesoResetCNC .
+
+ex:MarcaRESETIN
+    a ex:Parametro ;
     rdfs:label "RESETIN" ;
-    ex:textoExtracto "el PLC puede desactivar esta marca (RESETIN=0)" .
+    ex:identificador "RESETIN" ;
+    ex:valor "0" ;
+    ex:textoExtracto "el PLC activa la marca RESETIN. Una vez iniciado el reset, el PLC puede desactivar esta marca (RESETIN=0)" ;
+    ex:monitoreaParametro ex:ProcesoResetCNC .
 
-ex:RESETOUT a ex:Parametro ;
+ex:MarcaRESETOUT
+    a ex:Parametro ;
     rdfs:label "RESETOUT" ;
-    ex:textoExtracto "el canal activa la marca RESETOUT (RESETOUT=1)" .
+    ex:identificador "RESETOUT" ;
+    ex:valor "1" ;
+    ex:textoExtracto "El canal activa la marca RESETOUT (RESETOUT=1) para indicar que ha finalizado el reset. Esta marca permanece activa el tiempo fijado en el parámetro general en la página 406. MINAENDW." ;
+    ex:monitoreaParametro ex:ProcesoResetCNC .
 
-ex:PROGRAM_RESET a ex:AccionProhibida ;
-    rdfs:label "PROGRAM_RESET" ;
-    ex:textoExtracto "el canal ejecuta la subrutina asociada al reset (PROGRAM_RESET), si existe" .
-
-ex:MINAENDW a ex:Parametro ;
+ex:ParametroMINAENDW
+    a ex:Parametro ;
     rdfs:label "MINAENDW" ;
-    ex:textoExtracto "el tiempo fijado en el parámetro general en la página 406. MINAENDW" .
+    ex:identificador "MINAENDW" ;
+    ex:textoExtracto "Esta marca [RESETOUT] permanece activa el tiempo fijado en el parámetro general en la página 406. MINAENDW." ;
+    ex:documentadoEn ex:Pagina406 .
 
-ex:tecla_RESET a ex:ComponenteElectrico ;
-    rdfs:label "[RESET]" ;
-    ex:textoExtracto "el usuario pulsa la tecla [RESET] del panel de mando" .
+ex:Pagina406
+    a ex:Pagina ;
+    rdfs:label "Página 406" ;
+    ex:identificador "406" ;
+    ex:textoExtracto "el parámetro general en la página 406. MINAENDW." .
 
-ex:canal_CNC a ex:Componente ;
-    rdfs:label "canal del CNC" ;
-    ex:textoExtracto "el canal del CNC se resetea" ;
-    ex:tieneComponente ex:RESETIN, ex:RESETOUT, ex:PROGRAM_RESET, ex:MINAENDW, ex:tecla_RESET .
-
-ex:panel_de_mando a ex:InterfazUsuario ;
-    rdfs:label "panel de mando" ;
-    ex:textoExtracto "la tecla [RESET] del panel de mando" ;
-    ex:tieneComponente ex:tecla_RESET .
+ex:SubrutinaPROGRAM_RESET
+    a ex:ModoOperacion ;
+    rdfs:label "PROGRAM_RESET" ;
+    ex:identificador "PROGRAM_RESET" ;
+    ex:textoExtracto "El canal ejecuta la subrutina asociada al reset (PROGRAM_RESET), si existe." ;
+    ex:ejecutadoPor ex:ProcesoResetCNC .

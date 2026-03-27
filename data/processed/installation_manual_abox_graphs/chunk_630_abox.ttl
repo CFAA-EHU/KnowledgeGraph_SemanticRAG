@@ -1,22 +1,42 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ModoMonoestable a ex:ModoOperacion ;
-    rdfs:label "Modo monoestable" ;
-    ex:textoExtracto "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG1 hasta que transcurre el tiempo indicado en la constante de tiempo." ;
-    ex:tieneComponente ex:EntradaTG1, ex:SalidaEstadoTemporizador, ex:EntradaTRS, ex:EntradaTEN .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EntradaTG1 a ex:Sensor ;
-    rdfs:label "Entrada TG1" ;
-    ex:textoExtracto "Con TEN=1 y TRS=0 el temporizador se activa al producirse un flanco de subida en la entrada TG1." .
+ex:ModoOperacion_TemporizadorMonoestable_TG1
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo monoestable (entrada TG1)"@es ;
+    ex:textoExtracto      "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG1 hasta que transcurre el tiempo indicado en la constante de tiempo. Con TEN=1 y TRS=0 el temporizador se activa al producirse un flanco de subida en la entrada TG1."@es .
 
-ex:SalidaEstadoTemporizador a ex:Sensor ;
-    rdfs:label "Salida de estado del temporizador (T)" ;
-    ex:textoExtracto "En este momento la salida de estado del temporizador (T) cambia de estado (T=1) y comienza la temporización t a partir del valor ꞏ0ꞏ." .
+ex:Parametro_T
+    a                     ex:Parametro ;
+    rdfs:label            "Estado del temporizador (T)"@es ;
+    ex:valor               "0" , "1" ;
+    ex:textoExtracto      "La salida de estado del temporizador (T) cambia de estado (T=1) [...] La salida de estado (T) cambia (T=0)"@es ;
+    ex:monitoreaParametro ex:ModoOperacion_TemporizadorMonoestable_TG1 .
 
-ex:EntradaTRS a ex:Sensor ;
-    rdfs:label "Entrada TRS" ;
-    ex:textoExtracto "Si se produce un flanco de subida en la entrada TRS, durante la temporización o después de ella, el PLC inicializa el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta (la inicializa a 0)." .
+ex:Parametro_TEN
+    a                     ex:Parametro ;
+    rdfs:label            "Habilitación del temporizador (TEN)"@es ;
+    ex:valor               "0" , "1" ;
+    ex:textoExtracto      "Con TEN=1 y TRS=0 el temporizador se activa [...] Si una vez activado el temporizador se selecciona TEN=0, el PLC detiene la temporización, siendo necesario asignar TEN=1 para que dicha temporización continúe."@es ;
+    ex:habilitadoPor       ex:ModoOperacion_TemporizadorMonoestable_TG1 .
 
-ex:EntradaTEN a ex:Sensor ;
-    rdfs:label "Entrada TEN" ;
-    ex:textoExtracto "Si una vez activado el temporizador se selecciona TEN=0, el PLC detiene la temporización, siendo necesario asignar TEN=1 para que dicha temporización continúe." .
+ex:Parametro_TRS
+    a                     ex:Parametro ;
+    rdfs:label            "Reset del temporizador (TRS)"@es ;
+    ex:valor               "0" , "1" ;
+    ex:textoExtracto      "Funcionamiento de la entrada TRS en este modo. Si se produce un flanco de subida en la entrada TRS, durante la temporización o después de ella, el PLC inicializa el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta."@es ;
+    ex:mitigaRiesgo        ex:ModoOperacion_TemporizadorMonoestable_TG1 .
+
+ex:Parametro_ConstanteTiempo
+    a                     ex:Parametro ;
+    rdfs:label            "Constante de tiempo"@es ;
+    ex:textoExtracto      "el estado del temporizador se mantiene [...] hasta que transcurre el tiempo indicado en la constante de tiempo."@es ;
+    ex:monitoreaParametro ex:ModoOperacion_TemporizadorMonoestable_TG1 .
+
+ex:Parametro_TiempoTranscurrido_t
+    a                     ex:Parametro ;
+    rdfs:label            "Tiempo transcurrido (t)"@es ;
+    ex:textoExtracto      "comienza la temporización t a partir del valor ꞏ0ꞏ [...] el tiempo transcurrido t se mantiene."@es ;
+    ex:monitoreaParametro ex:ModoOperacion_TemporizadorMonoestable_TG1 .

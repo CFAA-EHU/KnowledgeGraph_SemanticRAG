@@ -1,17 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MPG.TCOMPLIM a ex:Parametro ;
-    rdfs:label "MPG.TCOMPLIM" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_TCOMPLIM
+    a ex:Parametro ;
+    rdfs:label "Parámetro TCOMPLIM"@es ;
     ex:identificador "(V.)MPG.TCOMPLIM[nb]" ;
-    ex:textoExtracto "Parámetro incluido en la tabla TANDEM. Este parámetro limita la compensación máxima que introduce el tándem. Este límite también se aplica a la integral. Este parámetro hace referencia al motor maestro. Se define como porcentaje de la velocidad máxima del motor maestro. Si se programa con valor \"0\", la salida del control del tándem será cero, lo que implica deshabilitar el tándem." ;
+    ex:textoExtracto "Parámetro incluido en la tabla TANDEM. Este parámetro limita la compensación máxima que introduce el tándem. Este límite también se aplica a la integral. Este parámetro hace referencia al motor maestro. Se define como porcentaje de la velocidad máxima del motor maestro. Si se programa con valor \"0\", la salida del control del tándem será cero, lo que implica deshabilitar el tándem."@es ;
+    ex:monitoreaParametro ex:SistemaTandem ;
     ex:valor "0" .
 
-ex:MPG.TORQMODE a ex:Parametro ;
-    rdfs:label "MPG.TORQMODE" ;
+ex:Parametro_TORQMODE
+    a ex:Parametro ;
+    rdfs:label "Parámetro TORQMODE"@es ;
     ex:identificador "(V.)MPG.TORQMODE[nb]" ;
-    ex:textoExtracto "Parámetro incluido en la tabla TANDEM. Este parámetro indica si el CNC tiene en cuenta el par para la gestión del tándem. Se recomienda configurar este parámetro con su valor por defecto." ;
+    ex:textoExtracto "Pareja tándem. Modo de control de par. Valores posibles: Con control de par / Sin control de par. Valor por defecto: Con control de par. Parámetro incluido en la tabla TANDEM. Este parámetro indica si el CNC tiene en cuenta el par para la gestión del tándem. Se recomienda configurar este parámetro con su valor por defecto."@es ;
+    ex:monitoreaParametro ex:SistemaTandem ;
     ex:valor "Con control de par" .
 
-ex:Tabla_TANDEM a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla TANDEM" ;
-    ex:tieneComponente ex:MPG.TCOMPLIM, ex:MPG.TORQMODE .
+ex:SistemaTandem
+    a ex:Sistema ;
+    rdfs:label "Sistema tándem"@es ;
+    ex:textoExtracto "Configuración de un sistema tándem."@es ;
+    ex:tieneComponente ex:MotorMaestro .
+
+ex:MotorMaestro
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor maestro"@es ;
+    ex:textoExtracto "Este parámetro hace referencia al motor maestro. Se define como porcentaje de la velocidad máxima del motor maestro."@es .
+
+ex:TablaTandem a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla TANDEM"@es ;
+    ex:textoExtracto "Parámetro incluido en la tabla TANDEM."@es ;
+    ex:documentadoEn ex:Manual ;
+    ex:detalladoEnEsquema ex:SistemaTandem .

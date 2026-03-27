@@ -1,33 +1,49 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:AlmacenSincronoSinBrazoCambiador_906 a ex:Sistema ;
-    ex:textoExtracto "En un almacén síncrono sin brazo cambiador el almacén debe desplazarse hasta el cabezal para efectuar el cambio." ;
-    ex:compuestoPor ex:CNC_906, ex:Gestor_906, ex:PLC_906, ex:FuncionT_906, ex:FuncionM06_906 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CNC_906 a ex:ComponenteElectrico ;
-    ex:textoExtracto "El CNC ejecuta la función T, se lo indica al gestor." ;
-    ex:textoExtracto "El CNC ejecuta la función M06, realiza una llamada a la rutina asociada." ;
-    ex:textoExtracto "El CNC continúa con la ejecución del programa, no espera a que el gestor de por finalizada la operación." ;
-    ex:textoExtracto "El CNC espera a que el gestor de por finalizada la operación para continuar con la ejecución del programa." .
+ex:AlmacenSinBrazoCambiador_7_8
+    a               ex:Sistema ;
+    rdfs:label      "Almacén síncrono sin brazo cambiador"@es ;
+    ex:textoExtracto "En un almacén síncrono sin brazo cambiador el almacén debe desplazarse hasta el cabezal para efectuar el cambio. [...] Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, etc.)."@es ;
+    ex:tieneComponente ex:PLC_AlmacenSinBrazoCambiador ;
+    ex:tieneComponente ex:CNC_AlmacenSinBrazoCambiador ;
+    ex:tieneComponente ex:Gestor_AlmacenSinBrazoCambiador ;
+    ex:tieneComponente ex:AlmacenHerramientas_7_8 .
 
-ex:Gestor_906 a ex:ComponenteElectrico ;
-    ex:textoExtracto "El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede)." ;
-    ex:textoExtracto "El gestor envía una orden al PLC para efectuar el cambio." ;
-    ex:textoExtracto "Se aconseja incluir la gestión del cambio de herramienta en la rutina asociada a M06 y dejar como labor del PLC el control de los dispositivos externos." .
+ex:PLC_AlmacenSinBrazoCambiador
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "PLC del sistema de cambio de herramienta"@es ;
+    ex:textoExtracto "La comunicación entre el gestor y el PLC se realiza en 2 fases; [...] El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede)."@es ;
+    ex:controla     ex:AlmacenHerramientas_7_8 .
 
-ex:PLC_906 a ex:ComponenteElectrico ;
-    ex:textoExtracto "El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede)." ;
-    ex:textoExtracto "El gestor envía una orden al PLC para efectuar el cambio." ;
-    ex:textoExtracto "Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, etc.)." .
+ex:CNC_AlmacenSinBrazoCambiador
+    a               ex:InterfazUsuario ;
+    rdfs:label      "CNC (Control Numérico Computarizado)"@es ;
+    ex:textoExtracto "Cuando el CNC ejecuta la función T, se lo indica al gestor. [...] Cuando el CNC ejecuta la función M06, realiza una llamada a la rutina asociada."@es ;
+    ex:controla     ex:Gestor_AlmacenSinBrazoCambiador .
 
-ex:FuncionT_906 a ex:ModoOperacion ;
-    ex:textoExtracto "la ejecución de la función T" ;
-    ex:textoExtracto "Cuando el CNC ejecuta la función T, se lo indica al gestor." ;
-    ex:textoExtracto "El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede)." ;
-    ex:textoExtracto "El CNC continúa con la ejecución del programa, no espera a que el gestor de por finalizada la operación." .
+ex:Gestor_AlmacenSinBrazoCambiador
+    a               ex:Sistema ;
+    rdfs:label      "Gestor de cambio de herramienta"@es ;
+    ex:textoExtracto "El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede). [...] El gestor envía una orden al PLC para efectuar el cambio."@es ;
+    ex:controla     ex:PLC_AlmacenSinBrazoCambiador .
 
-ex:FuncionM06_906 a ex:ModoOperacion ;
-    ex:textoExtracto "la ejecución de la función M06" ;
-    ex:textoExtracto "Cuando el CNC ejecuta la función M06, realiza una llamada a la rutina asociada." ;
-    ex:textoExtracto "Dentro de dicha rutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta." ;
-    ex:textoExtracto "El gestor envía una orden al PLC para efectuar el cambio." ;
-    ex:textoExtracto "El CNC espera a que el gestor de por finalizada la operación para continuar con la ejecución del programa." .
+ex:AlmacenHerramientas_7_8
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Almacén de herramientas (móvil)"@es ;
+    ex:textoExtracto "el almacén debe desplazarse hasta el cabezal para efectuar el cambio. [...] Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, etc.)."@es .
+
+ex:FuncionT_7_8 a ex:Tabla ;
+     a               ex:ModoOperacion ;
+    rdfs:label      "Función T (selección de herramienta)"@es ;
+    ex:textoExtracto "Ejecución de la función T. 1 Cuando el CNC ejecuta la función T, se lo indica al gestor. 2 El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede). 3 El CNC continúa con la ejecución del programa, no espera a que el gestor de por finalizada la operación."@es ;
+    ex:ejecutadoPor  ex:CNC_AlmacenSinBrazoCambiador .
+
+ex:FuncionM06_7_8 a ex:Tabla ;
+     a               ex:ModoOperacion ;
+    rdfs:label      "Función M06 (cambio de herramienta)"@es ;
+    ex:textoExtracto "Ejecución de la función M06. 1 Cuando el CNC ejecuta la función M06, realiza una llamada a la rutina asociada. [...] 3 El CNC espera a que el gestor de por finalizada la operación para continuar con la ejecución del programa."@es ;
+    ex:ejecutadoPor  ex:CNC_AlmacenSinBrazoCambiador ;
+    ex:habilitadoPor ex:Gestor_AlmacenSinBrazoCambiador .

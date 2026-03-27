@@ -1,45 +1,63 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MSG_InsertarHerramienta_TD ex:textoExtracto """MSG ["Insertar herramienta T%D y pulsar MARCHA", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta.""" ;
-    a ex:InterfazUsuario ;
-    rdfs:label "MSG Insertar herramienta T%D y pulsar MARCHA" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Marca_GRTOSPDL ex:textoExtracto """V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor.""" ;
-    a ex:Parametro ;
+ex:RutinaM06 a ex:ModoOperacion ;
+    rdfs:label "Rutina M06 (Cambio de herramienta)" ;
+    ex:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta. [...] M6 ; Orden al gestor para comenzar el cambio de herramienta." .
+
+ex:MensajeInsercionHerramienta a ex:InterfazUsuario ;
+    rdfs:label "Mensaje \"Insertar herramienta T%D y pulsar MARCHA\"" ;
+    ex:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." ;
+    ex:documentadoEn ex:RutinaM06 .
+
+ex:ParametroNXTOOL a ex:Parametro ;
+    rdfs:label "V.TM.NXTOOL" ;
+    ex:identificador "V.TM.NXTOOL" ;
+    ex:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL]" ;
+    ex:monitoreaParametro ex:RutinaM06 .
+
+ex:MarcaGRTOSPDL a ex:Parametro ;
+    rdfs:label "V.PLC.M[1108]" ;
     ex:identificador "V.PLC.M[1108]" ;
-    ex:valor "1" .
+    ex:valor "1" ;
+    ex:textoExtracto "V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor." ;
+    ex:monitoreaParametro ex:RutinaM06 .
 
-ex:SUB_SPD_GMCHG ex:textoExtracto """%L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual.""" ;
-    a ex:TareaMantenimiento ;
-    rdfs:label "SUB_SPD_GMCHG" .
+ex:SubrutinaCambioManual a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_GMCHG" ;
+    ex:identificador "SUB_SPD_GMCHG" ;
+    ex:textoExtracto "RET %L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal." ;
+    ex:ejecutadoPor ex:RutinaM06 .
 
-ex:SUB_SPD_AUTCHG ex:textoExtracto """%L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático.""" ;
-    a ex:TareaMantenimiento ;
-    rdfs:label "SUB_SPD_AUTCHG" .
+ex:SubrutinaCambioAutomatico a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_AUTCHG" ;
+    ex:identificador "SUB_SPD_AUTCHG" ;
+    ex:textoExtracto "RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. G1 Z_ F_ ; Desplazar el cabezal." ;
+    ex:ejecutadoPor ex:RutinaM06 .
 
-ex:SUB_M6_nc ex:textoExtracto """%SUB_M6.nc #ESBLK ; Activar tratamiento de bloque único""" ;
-    a ex:TareaMantenimiento ;
-    rdfs:label "SUB_M6.nc" .
+ex:TratamientoBloqueUnico a ex:ModoOperacion ;
+    rdfs:label "#ESBLK" ;
+    ex:identificador "#ESBLK" ;
+    ex:textoExtracto "#ESBLK ; Activar tratamiento de bloque único" ;
+    ex:habilitadoPor ex:RutinaM06 .
 
-ex:DSTOP ex:textoExtracto """#DSTOP ; Deshabilitar tecla STOP""" ;
-    a ex:InterfazUsuario ;
-    rdfs:label "DSTOP" .
-
-ex:M6 ex:textoExtracto """M6 ; Orden al gestor para comenzar el cambio de herramienta.""" ;
-    a ex:ModoOperacion ;
-    rdfs:label "M6" .
-
-ex:Parametro_FULLSTATUS ex:textoExtracto """V.G.FULLSTATUS & 255""" ;
-    a ex:Parametro ;
+ex:ParametroFULLSTATUS a ex:Parametro ;
+    rdfs:label "V.G.FULLSTATUS" ;
     ex:identificador "V.G.FULLSTATUS" ;
-    ex:valor "255" .
+    ex:textoExtracto "$IF [[[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]]" ;
+    ex:monitoreaParametro ex:RutinaM06 .
 
-ex:Parametro_CNCAUTSTATUS ex:textoExtracto """V.G.CNCAUTSTATUS & 4096 | V.G.CNCAUTSTATUS & 8192""" ;
-    a ex:Parametro ;
+ex:ParametroCNCAUTSTATUS a ex:Parametro ;
+    rdfs:label "V.G.CNCAUTSTATUS" ;
     ex:identificador "V.G.CNCAUTSTATUS" ;
-    ex:valor "4096 | 8192" .
+    ex:textoExtracto "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]]" ;
+    ex:monitoreaParametro ex:RutinaM06 .
 
-ex:Parametro_EXECUTION ex:textoExtracto """V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G.""" ;
-    a ex:Parametro ;
+ex:ParametroEXECUTION a ex:Parametro ;
+    rdfs:label "V.S.EXECUTION" ;
     ex:identificador "V.S.EXECUTION" ;
-    ex:valor "0" .
+    ex:valor "0" ;
+    ex:textoExtracto "V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G." ;
+    ex:monitoreaParametro ex:RutinaM06 .

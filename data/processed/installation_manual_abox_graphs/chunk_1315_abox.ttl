@@ -1,47 +1,70 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EjeA a ex:ComponenteMecanico ;
-    rdfs:label "eje A"@es ;
-    ex:textoExtracto "En el dibujo se muestran dos posiciones distintas que tienen en común el centro del eje A."@es .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeB a ex:ComponenteMecanico ;
-    rdfs:label "eje B"@es ;
-    ex:textoExtracto "En el dibujo se muestran dos posiciones distintas que tienen en común el centro del eje A."@es .
+ex:Parametro_TDATA3
+    a ex:Parametro ;
+    rdfs:label "Parámetro TDATA3 (coordenada Y del eje A)"@es ;
+    ex:textoExtracto "La coordenada en el eje Y es el parámetro TDATA3"@es ;
+    ex:valor "TDATA3" .
 
-ex:ParametroTDATA3 a ex:Parametro ;
-    rdfs:label "TDATA3"@es ;
-    ex:textoExtracto "la coordenada en el eje Y es el parámetro TDATA3"@es .
+ex:Parametro_Pz
+    a ex:Parametro ;
+    rdfs:label "Parámetro Pz (coordenada Z del eje A)"@es ;
+    ex:textoExtracto "la coordenada en el eje Z es Pz"@es ;
+    ex:valor "Pz" .
 
-ex:ParametroPz a ex:Parametro ;
-    rdfs:label "Pz"@es ;
-    ex:textoExtracto "la coordenada en el eje Z es Pz"@es .
+ex:Parametro_DeltaY1
+    a ex:Parametro ;
+    rdfs:label "ΔY1 (cota Y en primera posición)"@es ;
+    ex:textoExtracto "Anotar Y1. la cota que aparece en el CNC, denominada en el dibujo ΔY1"@es ;
+    ex:valor "ΔY1" .
 
-ex:Punto1 a ex:ComponenteMecanico ;
-    rdfs:label "punto 1"@es ;
-    ex:textoExtracto "Realizar un movimiento de palpación en la dirección del eje Y, sobre el punto 1."@es .
+ex:Parametro_DeltaZ1
+    a ex:Parametro ;
+    rdfs:label "ΔZ1 (cota Z en primera posición)"@es ;
+    ex:textoExtracto "Anotar Z1. la cota que aparece en el CNC, denominada en el dibujo ΔZ1"@es ;
+    ex:valor "ΔZ1" .
 
-ex:Punto2 a ex:ComponenteMecanico ;
-    rdfs:label "punto 2"@es ;
-    ex:textoExtracto "Realizar un movimiento de palpación en la dirección del eje Z, sobre el punto 1."@es .
+ex:Parametro_DeltaY2
+    a ex:Parametro ;
+    rdfs:label "ΔY2 (cota Y en segunda posición)"@es ;
+    ex:textoExtracto "Anotar Y2. la cota que aparece en el CNC, denominada en el dibujo ΔY2"@es ;
+    ex:valor "ΔY2" .
 
-ex:Punto3 a ex:ComponenteMecanico ;
-    rdfs:label "punto 3"@es ;
-    ex:textoExtracto "Realizar un movimiento de palpación en la dirección del eje Y, sobre el punto 3."@es .
+ex:Parametro_DeltaZ2
+    a ex:Parametro ;
+    rdfs:label "ΔZ2 (cota Z en segunda posición)"@es ;
+    ex:textoExtracto "Anotar la cota que aparece en el CNC, denominada en el dibujo Z2. ΔZ2"@es ;
+    ex:valor "ΔZ2" .
 
-ex:Punto4 a ex:ComponenteMecanico ;
-    rdfs:label "punto 4"@es ;
-    ex:textoExtracto "Realizar un movimiento de palpación en la dirección del eje Z, sobre el punto 4."@es .
+ex:Sistema_MesaRotativa
+    a ex:Sistema ;
+    rdfs:label "Sistema de mesa rotativa (eje A y B)"@es ;
+    ex:textoExtracto "Cálculo de las coordenadas del eje A. [...] Posicionar los ejes rotativos A y B en -90º"@es ;
+    ex:tieneComponente ex:Componente_EjeA, ex:Componente_EjeB .
 
-ex:PosicionPrimera a ex:ModoOperacion ;
-    rdfs:label "Primera posición"@es ;
-    ex:textoExtracto "Primera posición. 1 Posicionar los ejes rotativos A y B en -90º."@es .
+ex:Componente_EjeA
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo A"@es ;
+    ex:textoExtracto "eje rotativo A"@es ;
+    ex:monitoreaParametro ex:Parametro_TDATA3, ex:Parametro_Pz .
 
-ex:PosicionSegunda a ex:ModoOperacion ;
-    rdfs:label "Segunda posición"@es ;
-    ex:textoExtracto "Segunda posición. 1 Posicionar el eje rotativo A en 90º y el eje B en -90º."@es .
+ex:Componente_EjeB
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo B"@es ;
+    ex:textoExtracto "eje rotativo B"@es .
 
-ex:SistemaMesaRotativa a ex:Sistema ;
-    rdfs:label "mesa rotativa"@es ;
-    ex:textoExtracto "Cálculo de las coordenadas del eje A. En el dibujo se muestran dos posiciones distintas que tienen en común el centro del eje A."@es ;
-    ex:compuestoPor ex:EjeA, ex:EjeB, ex:Punto1, ex:Punto2, ex:Punto3, ex:Punto4 ;
-    ex:tieneComponente ex:ParametroTDATA3, ex:ParametroPz .
+ex:Figura_EsquemaPosiciones
+    a ex:Figura ;
+    rdfs:label "Esquema de posiciones para cálculo de coordenadas (eje A)"@es ;
+    ex:textoExtracto "En el dibujo se muestran dos posiciones distintas que tienen en común el centro del eje A"@es ;
+    ex:ilustradoEn ex:Sistema_MesaRotativa .
+
+ex:TareaMantenimiento_CalibracionEjeA
+    a ex:TareaMantenimiento ;
+    rdfs:label "Procedimiento de calibración del eje A (método de palpación)"@es ;
+    ex:textoExtracto "1 Posicionar los ejes rotativos A y B en -90º. 2 Realizar un movimiento de palpación en la dirección del eje Y, sobre el punto 1. Anotar Y1. [...] Segunda posición. 1 Posicionar el eje rotativo A en 90º y el eje B en -90º. 2 Realizar un movimiento de palpación en la dirección del eje Y, sobre el punto 3. Anotar Y2."@es ;
+    ex:requiereMantenimiento ex:Sistema_MesaRotativa ;
+    ex:documentadoEn ex:Figura_EsquemaPosiciones .

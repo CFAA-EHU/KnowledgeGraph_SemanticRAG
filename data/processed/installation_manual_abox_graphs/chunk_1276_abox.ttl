@@ -1,19 +1,37 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:NDIMOD a ex:Parametro ;
-    rdfs:label "NDIMOD" ;
-    ex:textoExtracto "NDIMOD" ;
-    ex:valor "5" ;
-    ex:textoExtracto "2 bloques para el RIOW y 3 bloques para el RIO5. En la serie RIO5, cada módulo se debe configurar como un bloque lógico. Cada módulo doble (módulo con dos placas) cuenta como dos bloques." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DIMODADDR a ex:Parametro ;
-    rdfs:label "DIMODADDR" ;
-    ex:textoExtracto "DIMODADDR" ;
-    ex:valor "---" ;
-    ex:textoExtracto "Ver tabla inferior." .
-
-ex:Nodo_2_RIOW a ex:ComponenteElectrico ;
+ex:Nodo_RIOW_2
+    a ex:ComponenteElectrico ;
     rdfs:label "Nodo 2 (RIOW)" ;
-    ex:textoExtracto "Nodo 2 (RIOW)" ;
-    ex:textoExtracto "64 entradas digitales" ;
-    ex:compuestoPor ex:NDIMOD, ex:DIMODADDR .
+    ex:textoExtracto "Nodo 2 (RIOW) | 64 entradas digitales" ;
+    ex:identificador "RIOW" .
+
+ex:Parametro_NDIMOD
+    a ex:Parametro ;
+    rdfs:label "NDIMOD" ;
+    ex:identificador "NDIMOD" ;
+    ex:valor "5" ;
+    ex:textoExtracto "NDIMOD | 5 | 2 bloques para el RIOW y 3 bloques para el RIO5." ;
+    ex:monitoreaParametro ex:Nodo_RIOW_2 .
+
+ex:Parametro_DIMODADDR
+    a ex:Parametro ;
+    rdfs:label "DIMODADDR" ;
+    ex:identificador "DIMODADDR" ;
+    ex:textoExtracto "DIMODADDR | - - - | Ver tabla inferior." ;
+    ex:monitoreaParametro ex:Nodo_RIOW_2 .
+
+ex:Tabla_ConfiguracionRIOW a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Configuración de bloques lógicos para RIOW" ;
+    ex:textoExtracto "2 bloques para el RIOW y 3 bloques para el RIO5. En la serie RIO5, cada módulo se debe configurar como un bloque lógico. Cada módulo doble (módulo con dos placas) cuenta como dos bloques." ;
+    ex:documentadoEn ex:Pagina_682_685 .
+
+ex:Pagina_682_685
+    a ex:Pagina ;
+    rdfs:label "Páginas 682-685 (Sección 15.5.1)" ;
+    ex:textoExtracto "Ejemplo. Numeración de I/Os mediante los parámetros máquina." ;
+    ex:ilustradoEn ex:Manual_Tecnico .

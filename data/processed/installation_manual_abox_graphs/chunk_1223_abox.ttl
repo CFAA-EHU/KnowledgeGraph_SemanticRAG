@@ -1,35 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Subrutina_CUTTINGON_CHN a ex:Parametro ;
-    rdfs:label "CUTTINGON CHN" ;
-    ex:textoExtracto "Subrutina asociada al comando #CUTTING ON." ;
-    ex:valor "Cuttingon.fst" ;
-    ex:identificador "CUTTINGON CHN" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Subrutina_CUTTINGOFF_CHN a ex:Parametro ;
-    rdfs:label "CUTTINGOFF CHN" ;
-    ex:textoExtracto "Subrutina asociada al comando #CUTTING OFF." ;
-    ex:valor "Cuttingoff.fst" ;
-    ex:identificador "CUTTINGOFF CHN" .
+ex:Parametro_CUTTINGON_CHN
+    a               ex:Parametro ;
+    rdfs:label      "CUTTINGON CHN" ;
+    ex:textoExtracto "Subrutina asociada al comando #CUTTING ON. [...] [CHN].......Parámetro máquina; general del canal. Nombre y ubicación de la subrutina." ;
+    ex:identificador "CUTTINGON" .
 
-ex:CNC a ex:Maquina ;
-    ex:textoExtracto "el CNC actúa de la siguiente manera" .
+ex:Parametro_CUTTINGOFF_CHN
+    a               ex:Parametro ;
+    rdfs:label      "CUTTINGOFF CHN" ;
+    ex:textoExtracto "Subrutina asociada al comando #CUTTING OFF. [...] [CHN].......Parámetro máquina; general del canal. Nombre y ubicación de la subrutina." ;
+    ex:identificador "CUTTINGOFF" .
 
-ex:Carpeta_Mtb_Sub a ex:Componente ;
-    ex:textoExtracto "el CNC sólo copia las subrutinas a la carpeta ..\\Mtb\\Sub si no existen" .
+ex:Subrutina_Cuttingon_fst
+    a               ex:Componente ;
+    rdfs:label      "Cuttingon.fst" ;
+    ex:textoExtracto "subrutina OEM con extensión fst [...] por defecto Cuttingon.fst. Ambas subrutinas deben estar guardadas en la carpeta ..\\Mtb\\Sub." ;
+    ex:identificador "Cuttingon.fst" .
 
-ex:Parametro_Canal a ex:Parametro ;
-    ex:textoExtracto "[CHN].......Parámetro máquina; general del canal. Nombre y ubicación de la subrutina." ;
-    ex:identificador "CHN" .
+ex:Subrutina_Cuttingoff_fst
+    a               ex:Componente ;
+    rdfs:label      "Cuttingoff.fst" ;
+    ex:textoExtracto "subrutina OEM con extensión fst [...] por defecto Cuttingoff.fst. Ambas subrutinas deben estar guardadas en la carpeta ..\\Mtb\\Sub." ;
+    ex:identificador "Cuttingoff.fst" .
 
-ex:Subrutina_OEM_fst a ex:Parametro ;
-    ex:textoExtracto "Al ser una subrutina OEM con extensión fst, el CNC carga esta subrutina en la memoria RAM del CNC." .
+ex:InterfazUsuario_CNC
+    a               ex:InterfazUsuario ;
+    ex:textoExtracto "el CNC actúa de la siguiente manera [...] el CNC carga esta subrutina en la memoria RAM del CNC." ;
+    ex:controla    ex:Subrutina_Cuttingon_fst ;
+    ex:controla    ex:Subrutina_Cuttingoff_fst .
 
-ex:Esquema_Configurar_Subrutinas a ex:Esquema ;
-    ex:textoExtracto "Si se actualiza la versión, el CNC actúa de la siguiente manera. • En las dos primeras opciones de instalación, el CNC sólo copia las subrutinas a la carpeta ..\\Mtb\\Sub si no existen. • En la tercera opción instalación \"rename previous version and install it completely\", el CNC siempre actualiza las subrutinas. Asignar la subrutina al comando." ;
-    ex:compuestoPor ex:Subrutina_CUTTINGON_CHN, ex:Subrutina_CUTTINGOFF_CHN, ex:Carpeta_Mtb_Sub, ex:Parametro_Canal, ex:Subrutina_OEM_fst ;
-    ex:documentadoEn ex:Manual_Pagina_656 .
+ex:Parametro_CUTTINGON_CHN
+    ex:monitoreaParametro ex:Subrutina_Cuttingon_fst .
 
-ex:Manual_Pagina_656 a ex:Manual ;
-    ex:identificador "1223" ;
-    ex:textoExtracto "Paginas: [656] Seccion: 14.16.1 Configurar las subrutinas." .
+ex:Parametro_CUTTINGOFF_CHN
+    ex:monitoreaParametro ex:Subrutina_Cuttingoff_fst .
+
+ex:Pagina_637
+    a               ex:Pagina ;
+    ex:identificador "637" ;
+    ex:textoExtracto "Ver en la '14.1 Ejecutar subrutinas desde la memoria RAM (extensión *.fst).' página 637." .
+
+ex:Subrutina_Cuttingon_fst
+    ex:documentadoEn ex:Pagina_637 .
+
+ex:Subrutina_Cuttingoff_fst
+    ex:documentadoEn ex:Pagina_637 .

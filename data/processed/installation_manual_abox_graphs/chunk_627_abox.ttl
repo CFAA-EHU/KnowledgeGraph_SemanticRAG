@@ -1,26 +1,71 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Temporizador1 a ex:ComponenteElectrico ;
-    rdfs:label "temporizador" ;
-    ex:textoExtracto "Todos los temporizadores disponen de la salida de estado T y de las entradas TEN, TRS, TG1, TG2, TG3 y TG4." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EntradaEstadoT1 a ex:ComponenteElectrico ;
-    rdfs:label "salida de estado T" ;
-    ex:textoExtracto "Todos los temporizadores disponen de la salida de estado T" .
+ex:Temporizador_Generico
+    a ex:ComponenteElectrico ;
+    rdfs:label "Temporizador (genérico)"@es ;
+    ex:textoExtracto "Todos los temporizadores disponen de la salida de estado T y de las entradas TEN, TRS, TG1, TG2, TG3 y TG4. También es posible consultar en cualquier momento el tiempo t que lleva transcurrido desde que se activó el temporizador."@es ;
+    ex:tieneComponente ex:SalidaEstado_T ;
+    ex:tieneComponente ex:Entrada_TEN ;
+    ex:tieneComponente ex:Entrada_TRS ;
+    ex:tieneComponente ex:Entrada_TG1 ;
+    ex:tieneComponente ex:Entrada_TG2 ;
+    ex:tieneComponente ex:Entrada_TG3 ;
+    ex:tieneComponente ex:Entrada_TG4 .
 
-ex:EntradaEnable1 a ex:ComponenteElectrico ;
-    rdfs:label "entrada TEN" ;
-    ex:textoExtracto "Entrada de enable. Permite detener y reanudar la temporización. Se referencia mediante las letras TEN seguidas del número de temporizador, por ejemplo TEN 1, TEN 25, TEN 102, etc." ;
+ex:SalidaEstado_T
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salida de estado T"@es ;
+    ex:textoExtracto "Todos los temporizadores disponen de la salida de estado T [...]."@es ;
+    ex:identificador "T" .
+
+ex:Entrada_TEN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de enable (TEN)"@es ;
+    ex:textoExtracto "(TEN) Entrada de enable. Permite detener y reanudar la temporización. Se referencia mediante las letras TEN seguidas del número de temporizador, por ejemplo TEN 1, TEN 25, TEN 102, etc."@es ;
+    ex:identificador "TEN" .
+
+ex:Entrada_TEN_10
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TEN 10"@es ;
+    ex:textoExtracto "I2 = TEN 10. La entrada I2 controla la entrada de enable del temporizador T10."@es ;
     ex:identificador "TEN 10" .
 
-ex:EntradaReset1 a ex:ComponenteElectrico ;
-    rdfs:label "entrada TRS" ;
-    ex:textoExtracto "Entrada de reset. Permite inicializar el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta (la inicializa a 0). Se referencia mediante las letras TRS seguidas del número de temporizador, por ejemplo TRS 1, TRS 25, TRS 102, etc." .
+ex:Entrada_TRS
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de reset (TRS)"@es ;
+    ex:textoExtracto "(TRS) Entrada de reset. Permite inicializar el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta. Se referencia mediante las letras TRS seguidas del número de temporizador, por ejemplo TRS 1, TRS 25, TRS 102, etc."@es ;
+    ex:identificador "TRS" .
 
-ex:EntradaTiempoTranscurrido1 a ex:ComponenteElectrico ;
-    rdfs:label "tiempo t transcurrido" ;
-    ex:textoExtracto "También es posible consultar en cualquier momento el tiempo t que lleva transcurrido desde que se activó el temporizador." .
+ex:Entrada_TG1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG1"@es ;
+    ex:textoExtracto "entradas [...] TG1"@es ;
+    ex:identificador "TG1" .
 
-ex:PLC1 a ex:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "En el arranque del PLC se inicializan todos los temporizadores, asignando el valor 0 a su estado T y cancelando su cuenta (la inicializa a 0)." .
+ex:Entrada_TG2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG2"@es ;
+    ex:textoExtracto "entradas [...] TG2"@es ;
+    ex:identificador "TG2" .
+
+ex:Entrada_TG3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG3"@es ;
+    ex:textoExtracto "entradas [...] TG3"@es ;
+    ex:identificador "TG3" .
+
+ex:Entrada_TG4
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG4"@es ;
+    ex:textoExtracto "entradas [...] TG4"@es ;
+    ex:identificador "TG4" .
+
+ex:Temporizador_T10
+    a ex:ComponenteElectrico ;
+    rdfs:label "Temporizador T10"@es ;
+    ex:textoExtracto "I2 = TEN 10. La entrada I2 controla la entrada de enable del temporizador T10."@es ;
+    ex:identificador "T10" ;
+    ex:tieneComponente ex:Entrada_TEN_10 .

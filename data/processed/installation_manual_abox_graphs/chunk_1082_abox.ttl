@@ -1,32 +1,25 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
 ex:Parametro_DEFAULTSET a ex:Parametro ;
+    rdfs:label "DEFAULTSET" ;
     ex:textoExtracto "parámetro DEFAULTSET" ;
-    rdfs:label "DEFAULTSET" .
+    ex:identificador "DEFAULTSET" .
 
-ex:CNC a ex:Maquina ;
-    ex:textoExtracto "El CNC asume el set por defecto del eje (parámetro DEFAULTSET)" .
+ex:Sistema_ReguladorSercos a ex:Sistema ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "regulador Sercos" ;
+    ex:monitoreaParametro ex:Parametro_DEFAULTSET .
 
-ex:PLC a ex:Componente ;
-    ex:textoExtracto "la maniobra del PLC debe definir el set y la gama que asume el regulador" .
+ex:InterfazUsuario_CNC a ex:InterfazUsuario ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC asume el set por defecto del eje (parámetro DEFAULTSET)" ;
+    ex:controla ex:Sistema_ReguladorSercos .
 
-ex:Regulador_Sercos a ex:Componente ;
-    ex:textoExtracto "el regulador Sercos" .
-
-ex:Parametro_SET a ex:Parametro ;
-    ex:textoExtracto "el set y la gama que asume el regulador" .
-
-ex:Parametro_GAMA a ex:Parametro ;
-    ex:textoExtracto "el set y la gama que asume el regulador" .
-
-ex:CNC ex:controla ex:PLC ;
-    ex:textoExtracto "El CNC asume el set por defecto del eje (parámetro DEFAULTSET). La maniobra del PLC debe definir el set y la gama que asume el regulador" .
-
-ex:PLC ex:controla ex:Regulador_Sercos ;
-    ex:textoExtracto "la maniobra del PLC debe definir el set y la gama que asume el regulador" .
-
-ex:Regulador_Sercos ex:monitoreaParametro ex:Parametro_SET ;
-    ex:textoExtracto "el set y la gama que asume el regulador" .
-
-ex:Regulador_Sercos ex:monitoreaParametro ex:Parametro_GAMA ;
-    ex:textoExtracto "el set y la gama que asume el regulador" .
+ex:ComponenteElectrico_PLC a ex:ComponenteElectrico ;
+    rdfs:label "PLC" ;
+    ex:textoExtracto "maniobra del PLC" ;
+    ex:controla ex:Sistema_ReguladorSercos ;
+    ex:monitoreaParametro ex:Parametro_DEFAULTSET .

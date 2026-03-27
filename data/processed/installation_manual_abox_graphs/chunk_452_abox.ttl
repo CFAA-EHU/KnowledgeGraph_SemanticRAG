@@ -1,62 +1,47 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EjeSercosVelocidad a ex:Maquina ;
-    rdfs:label "eje Sercos velocidad" ;
-    ex:textoExtracto "eje Sercos velocidad" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroPP5 a ex:Parametro ;
-    ex:identificador "PP5" ;
+ex:Parametro_PP5
+    a ex:Parametro ;
+    rdfs:label "PP5" ;
+    ex:identificador "PP5=-0,0001" ;
     ex:valor "-0,0001" ;
-    ex:textoExtracto "parametrizar el parámetro PP5=-0,0001" .
+    ex:textoExtracto "parametrizar el parámetro PP5=-0,0001. Significado para un eje Sercos velocidad. Este parámetro indica dónde está ubicada la entrada para la captación externa (directa) del eje" ;
+    ex:monitoreaParametro ex:EntradaCaptacionExterna .
 
-ex:ReguladorSercos a ex:ComponenteElectrico ;
-    rdfs:label "regulador Sercos" ;
-    ex:textoExtracto "regulador Sercos" .
-
-ex:ModuloRCSS a ex:ComponenteElectrico ;
-    rdfs:label "módulo RCS-S (contadora Sercos)" ;
-    ex:textoExtracto "módulo RCS-S (contadora Sercos)" .
-
-ex:EntradaCaptacionExterna a ex:Sensor ;
-    rdfs:label "entrada para la captación externa (directa) del eje" ;
-    ex:textoExtracto "entrada para la captación externa (directa) del eje" .
-
-ex:EntradaCaptacionLocal a ex:Sensor ;
-    rdfs:label "entradas de captación locales de la unidad central" ;
-    ex:textoExtracto "entradas de captación locales de la unidad central" .
-
-ex:EntradaCaptacionLibre a ex:Sensor ;
-    rdfs:label "captación libre de un regulador Sercos" ;
-    ex:textoExtracto "captación libre de un regulador Sercos" .
-
-ex:ParametroCOUNTERID a ex:Parametro ;
+ex:Parametro_COUNTERID
+    a ex:Parametro ;
+    rdfs:label "COUNTERID" ;
     ex:identificador "COUNTERID" ;
-    ex:textoExtracto "COUNTERID Número de la entrada de captación del eje" .
+    ex:textoExtracto "COUNTERID Número de la entrada de captación del eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos velocidad. Valores posibles: Módulos remotos, de 1 a 40 / Regulador Sercos, de 1 a 32 / Contadora Sercos, de 1 a 32 / Entradas locales, de 1 a 2. Valor por defecto: 0." ;
+    ex:monitoreaParametro ex:EntradaCaptacionExterna .
 
-ex:UnidadCentral a ex:Maquina ;
-    rdfs:label "unidad central" ;
-    ex:textoExtracto "unidad central" .
+ex:EntradaCaptacionExterna
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de captación externa (directa)" ;
+    ex:textoExtracto "entrada para la captación externa (directa) del eje; en los módulos remotos, en la captación libre de un regulador Sercos, en un módulo RCS-S (contadora Sercos) o en las entradas de captación locales de la unidad central" .
 
-ex:ModuloRemoto a ex:ComponenteElectrico ;
-    rdfs:label "módulos remotos" ;
-    ex:textoExtracto "Módulos remotos" .
+ex:EntradaCaptacionInterna
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de captación interna (motor)" ;
+    ex:textoExtracto "captación interna (motor)" .
 
-ex:EjeAnalogico a ex:Maquina ;
-    rdfs:label "eje analógico" ;
-    ex:textoExtracto "eje analógico" .
+ex:ReguladorSercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "regulador Sercos" ;
+    ex:tieneComponente ex:EntradaCaptacionExterna .
 
-ex:EjeLineal a ex:Maquina ;
-    rdfs:label "ejes lineales" ;
-    ex:textoExtracto "ejes lineales" .
+ex:ModuloRCS_S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RCS-S (contadora Sercos)" ;
+    ex:textoExtracto "módulo RCS-S (contadora Sercos)" ;
+    ex:tieneComponente ex:EntradaCaptacionExterna .
 
-ex:EjeRotativo a ex:Maquina ;
-    rdfs:label "ejes rotativos" ;
-    ex:textoExtracto "ejes rotativos" .
-
-ex:EjeCabezales a ex:Maquina ;
-    rdfs:label "cabezales" ;
-    ex:textoExtracto "cabezales" .
-
-ex:VariableMPACOUNTERID a ex:Parametro ;
-    ex:identificador "(V.)[ch].MPA.COUNTERID[set].xn" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.COUNTERID[set].xn" .
+ex:UnidadCentral
+    a ex:ComponenteElectrico ;
+    rdfs:label "Unidad central" ;
+    ex:textoExtracto "entradas de captación locales de la unidad central" ;
+    ex:tieneComponente ex:EntradaCaptacionExterna .

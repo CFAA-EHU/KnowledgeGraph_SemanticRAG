@@ -1,21 +1,50 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MotorEje1 a ex:ComponenteMecanico ;
-    rdfs:label "motor" ;
-    ex:textoExtracto "motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MarcaACTFBACK a ex:Parametro ;
+ex:Se_al_ACTFBACK_axis
+    a ex:Parametro ;
     rdfs:label "ACTFBACK(axis)" ;
-    ex:textoExtracto "La marca ACTFBACK(axis) indica cuál es la captación activa." .
+    ex:textoExtracto "La marca ACTFBACK(axis) indica cuál es la captación activa. Ver en \"ACTFBACK(axis)\" la página 423." ;
+    ex:identificador "ACTFBACK(axis)" .
 
-ex:MarcaDEAD a ex:Parametro ;
+ex:Se_al_DEAD_axis
+    a ex:Parametro ;
     rdfs:label "DEAD(axis)" ;
-    ex:textoExtracto "DEAD(axis) Cuando el sistema dispone de un eje muerto, en los empalmes de bloques donde está implicado el eje muerto se produce el error \"eje bloqueado\". Esto es debido al retardo entre la habilitación de la señal ENABLE y la señal SERVOON. Para evitar este error, el PLC dispone de esta marca que indica como debe gestionar el CNC los empalmes entre bloques cuando está implicado el eje muerto." .
+    ex:textoExtracto "DEAD(axis) [...] indica como debe gestionar el CNC los empalmes entre bloques cuando está implicado el eje muerto." ;
+    ex:identificador "DEAD(axis)" .
 
-ex:MarcaSWITCH a ex:Parametro ;
+ex:Parametro_DWELL
+    a ex:Parametro ;
+    rdfs:label "DWELL" ;
+    ex:textoExtracto "los movimientos en los que está implicado el eje muerto esperan el tiempo definido en el parámetro DWELL." ;
+    ex:identificador "DWELL" .
+
+ex:Se_al_SWITCH_axis
+    a ex:Parametro ;
     rdfs:label "SWITCH(axis)" ;
-    ex:textoExtracto "SWITCH(axis) Cuando el sistema dispone de grupos multieje, esta marca permite conmutar entre los diferentes ejes o cabezales del grupo. El PLC activa esta marca para indicar al CNC cuál es el eje o cabezal activo en el grupo." .
+    ex:textoExtracto "SWITCH(axis) [...] permite conmutar entre los diferentes ejes o cabezales del grupo." ;
+    ex:identificador "SWITCH(axis)" .
 
-ex:MarcaTANDEMOFF a ex:Parametro ;
+ex:Se_al_TANDEMOFF_axis
+    a ex:Parametro ;
     rdfs:label "TANDEMOFF(axis)" ;
-    ex:textoExtracto "TANDEMOFF(axis) Esta marca permite desacoplar temporalmente en el lazo los ejes o cabezales implicados en el tándem, para poder moverlos de forma independiente." .
+    ex:textoExtracto "TANDEMOFF(axis) [...] permite desacoplar temporalmente en el lazo los ejes o cabezales implicados en el tándem." ;
+    ex:identificador "TANDEMOFF(axis)" .
+
+ex:SistemaControlEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de ejes y cabezales" ;
+    ex:textoExtracto "motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos." ;
+    ex:monitoreaParametro ex:Se_al_ACTFBACK_axis ;
+    ex:monitoreaParametro ex:Se_al_DEAD_axis ;
+    ex:monitoreaParametro ex:Parametro_DWELL ;
+    ex:monitoreaParametro ex:Se_al_SWITCH_axis ;
+    ex:monitoreaParametro ex:Se_al_TANDEMOFF_axis .
+
+ex:ComponenteElectrico_MotorEje
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor de eje" ;
+    ex:textoExtracto "motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos." ;
+    ex:controla ex:Se_al_TANDEMOFF_axis .

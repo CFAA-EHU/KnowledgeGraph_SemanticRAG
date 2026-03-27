@@ -1,50 +1,61 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:FRAPIDEN a ex:Parametro ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_FRAPIDEN
+    a ex:Parametro ;
     rdfs:label "FRAPIDEN" ;
-    ex:textoExtracto "FRAPIDEN Avance rápido del eje, para los desplazamientos en el modo automático. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 500000.0000 mm/min. Valores posibles (2): De 0 a 19685.03937 inch/min. Valores posibles (3): De 0 a 500000.0000 grados/min. Valores posibles (4): De 0 a 1388.8889 rpm. Valor por defecto: 0. Variable asociada: (V.)[ch].MPA.FRAPIDEN[set].xn Avance máximo del eje para el programa en ejecución, cuando está activo el avance rápido para el modo automático (parámetro RAPIDEN). Si el parámetro se define con valor ꞏ0ꞏ, no se limita el avance. Este parámetro deberá ser siempre menor que el parámetro de eje G00FEED. Este parámetro no afecta a los desplazamientos programados en G00 ni a los roscados. Los desplazamientos en G00 se ejecutan al avance definido en el parámetro G00FEED. Los roscados se ejecutan al avance programado. El avance rápido no podrá superar al definido en los parámetros G00FEED del eje ni FRAPIDEN del canal, ni tampoco al avance máximo fijado por PLC (variable (V.)PLC.G00FEED). El avance rápido podrá superar al definido en el parámetro MAXFEED del canal y al avance activo definido por PLC (variable (V.)PLC.F)." ;
-    ex:valor "De 0 a 500000.0000 mm/min, De 0 a 19685.03937 inch/min, De 0 a 500000.0000 grados/min, De 0 a 1388.8889 rpm" .
+    ex:identificador "FRAPIDEN" ;
+    ex:textoExtracto "FRAPIDEN Avance rápido del eje, para los desplazamientos en el modo automático. Parámetro válido para ejes lineales, rotativos y cabezales." ;
+    ex:valor "0"^^xsd:decimal ;  # Valor por defecto
+    ex:monitoreaParametro ex:Maquina_Actual .  # Relación implícita con la máquina configurada
 
-ex:G00FEED a ex:Parametro ;
+ex:Parametro_G00FEED
+    a ex:Parametro ;
     rdfs:label "G00FEED" ;
-    ex:textoExtracto "Este parámetro deberá ser siempre menor que el parámetro de eje G00FEED." .
+    ex:identificador "G00FEED" ;
+    ex:textoExtracto "Los desplazamientos en G00 se ejecutan al avance definido en el parámetro G00FEED. El avance rápido no podrá superar al definido en los parámetros G00FEED del eje." ;
+    ex:monitoreaParametro ex:Maquina_Actual .
 
-ex:MAXFEED a ex:Parametro ;
+ex:Parametro_MAXFEED
+    a ex:Parametro ;
     rdfs:label "MAXFEED" ;
-    ex:textoExtracto "El avance rápido podrá superar al definido en el parámetro MAXFEED del canal" .
+    ex:identificador "MAXFEED" ;
+    ex:textoExtracto "El avance rápido podrá superar al definido en el parámetro MAXFEED del canal." ;
+    ex:monitoreaParametro ex:Maquina_Actual .
 
-ex:PLC_G00FEED a ex:Parametro ;
-    rdfs:label "G00FEED (PLC)" ;
-    ex:textoExtracto "ni tampoco al avance máximo fijado por PLC (variable (V.)PLC.G00FEED)" .
+ex:Parametro_RAPIDEN
+    a ex:Parametro ;
+    rdfs:label "RAPIDEN" ;
+    ex:identificador "RAPIDEN" ;
+    ex:textoExtracto "Avance máximo del eje para el programa en ejecución, cuando está activo el avance rápido para el modo automático (parámetro RAPIDEN)." ;
+    ex:monitoreaParametro ex:Maquina_Actual .
 
-ex:PLC_F a ex:Parametro ;
-    rdfs:label "F (PLC)" ;
-    ex:textoExtracto "ni tampoco al avance máximo fijado por PLC (variable (V.)PLC.G00FEED). El avance rápido podrá superar al definido en el parámetro MAXFEED del canal y al avance activo definido por PLC (variable (V.)PLC.F)." .
+ex:Variable_PLC_G00FEED
+    a ex:Parametro ;
+    rdfs:label "PLC.G00FEED" ;
+    ex:identificador "PLC.G00FEED" ;
+    ex:textoExtracto "El avance rápido no podrá superar [...] al avance máximo fijado por PLC (variable (V.)PLC.G00FEED)." ;
+    ex:monitoreaParametro ex:Maquina_Actual .
 
-ex:ModoAutomatico a ex:ModoOperacion ;
-    rdfs:label "Modo automático" ;
-    ex:textoExtracto "Avance rápido del eje, para los desplazamientos en el modo automático." .
+ex:Variable_PLC_F
+    a ex:Parametro ;
+    rdfs:label "PLC.F" ;
+    ex:identificador "PLC.F" ;
+    ex:textoExtracto "El avance rápido podrá superar [...] al avance activo definido por PLC (variable (V.)PLC.F)." ;
+    ex:monitoreaParametro ex:Maquina_Actual .
 
-ex:EjeLineal a ex:ComponenteMecanico ;
-    rdfs:label "Eje lineal" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales." .
+ex:ModoOperacion_AvanceRapidoAutomatico
+    a ex:ModoOperacion ;
+    rdfs:label "Avance rápido para modo automático" ;
+    ex:textoExtracto "FRAPIDEN Avance rápido del eje, para los desplazamientos en el modo automático." ;
+    ex:controla ex:Parametro_FRAPIDEN ;
+    ex:habilitadoPor ex:Parametro_RAPIDEN .
 
-ex:EjeRotativo a ex:ComponenteMecanico ;
-    rdfs:label "Eje rotativo" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales." .
-
-ex:Cabezal a ex:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales." .
-
-ex:ReguladorAnalogico a ex:ComponenteElectrico ;
-    rdfs:label "Regulador analógico" ;
-    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado." .
-
-ex:Sercos a ex:ComponenteElectrico ;
-    rdfs:label "Sercos" ;
-    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado." .
-
-ex:Simulado a ex:ModoOperacion ;
-    rdfs:label "Simulado" ;
-    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado." .
+ex:Maquina_Actual
+    a ex:Maquina ;
+    rdfs:label "Máquina configurada" ;
+    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:tieneComponente ex:Parametro_FRAPIDEN , ex:Parametro_G00FEED , ex:Parametro_MAXFEED , ex:Parametro_RAPIDEN .

@@ -1,19 +1,49 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:CHTIMERATE a ex:Parametro ;
-    ex:identificador "[ch].G.CHTIMERATE" ;
-    ex:valor "Porcentaje del tiempo de ciclo que utiliza el canal. Esta variable ayuda a determinar si es la ejecución concreta de un canal la que está consumiendo demasiado tiempo. Unidades: %." ;
-    ex:textoExtracto "| (V.)[ch].G.CHTIMERATE\nPorcentaje del tiempo de ciclo que utiliza el canal. Esta variable ayuda a determinar si es la ejecución concreta de un canal la que está consumiendo demasiado tiempo. Unidades: %. | R(*) | R | R |" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PREPTIMERATE a ex:Parametro ;
-    ex:identificador "[ch].G.PREPTIMERATE" ;
-    ex:valor "Porcentaje del tiempo de ciclo que utiliza el canal para la preparación de bloques. Esta variable sirve para evaluar la carga en la preparación de la trayectoria y saber si es posible aumentar el parámetro PREPFREQ. Unidades: %." ;
-    ex:textoExtracto "| (V.)[ch].G.PREPTIMERATE\nPorcentaje del tiempo de ciclo que utiliza el canal para la preparación de bloques. Esta variable sirve para evaluar la carga en la preparación de la trayectoria y saber si es posible aumentar el parámetro PREPFREQ. Unidades: %. | R(*) | R | R |" .
+ex:Tabla_1157_TiempoCicloCanal a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de variables de tiempo de ciclo por canal (PRG/PLC/INT)"@es ;
+    ex:textoExtracto """
+| Variables. | PRG | PLC | INT |
+| --- | --- | --- | --- |
+| (V.)[ch].G.CHTIMERATE [...] Unidades: %. | R(*) | R | R |
+| (V.)[ch].G.PREPTIMERATE [...] Unidades: %. | R(*) | R | R |
+| (V.)[ch].G.IPOTIMERATE [...] Unidades: %. | R(*) | R | R |
+(*) El CNC evalúa la variable durante la ejecución [...]"""@es ;
+    ex:documentadoEn ex:Pagina_624 ;
+    ex:ilustradoEn ex:Manual_Tecnico .
 
-ex:IPOTIMERATE a ex:Parametro ;
-    ex:identificador "[ch].G.IPOTIMERATE" ;
-    ex:valor "Porcentaje del tiempo de ciclo que utiliza el interpolador del canal. Esta variable sirve para evaluar la sobrecarga en el algoritmo de generación de trayectoria y en el algoritmo de suavizado. Unidades: %." ;
-    ex:textoExtracto "| (V.)[ch].G.IPOTIMERATE\nPorcentaje del tiempo de ciclo que utiliza el interpolador del canal. Esta variable sirve para evaluar la sobrecarga en el algoritmo de generación de trayectoria y en el algoritmo de suavizado. Unidades: %. | R(*) | R | R |" .
+ex:Parametro_CHTIMERATE
+    a               ex:Parametro ;
+    rdfs:label      "CHTIMERATE (Porcentaje de tiempo de ciclo utilizado por el canal)"@es ;
+    ex:identificador "V.[ch].G.CHTIMERATE" ;
+    ex:valor         "%"@es ;
+    ex:textoExtracto "Porcentaje del tiempo de ciclo que utiliza el canal. Esta variable ayuda a determinar si es la ejecución concreta de un canal la que está consumiendo demasiado tiempo. Unidades: %."@es ;
+    ex:documentadoEn ex:Tabla_1157_TiempoCicloCanal ;
+    ex:monitoreaParametro ex:Sistema_CNC .
 
-ex:Tabla1157 a ex:Tabla ;
-    ex:textoExtracto "| Variables. | PRG | PLC | INT |\n| --- | --- | --- | --- |\n| (V.)[ch].G.CHTIMERATE\nPorcentaje del tiempo de ciclo que utiliza el canal. Esta variable ayuda a determinar si es la ejecución concreta de un canal la que está consumiendo demasiado tiempo. Unidades: %.\n| R(*) | R | R |\n| (V.)[ch].G.PREPTIMERATE\nPorcentaje del tiempo de ciclo que utiliza el canal para la preparación de bloques. Esta variable sirve para evaluar la carga en la preparación de la trayectoria y saber si es posible aumentar el parámetro PREPFREQ. Unidades: %.\n| R(*) | R | R |\n| (V.)[ch].G.IPOTIMERATE\nPorcentaje del tiempo de ciclo que utiliza el interpolador del canal. Esta variable sirve para evaluar la sobrecarga en el algoritmo de generación de trayectoria y en el algoritmo de suavizado. Unidades: %.\n| R(*) | R | R |\n (*) El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques). Sintaxis de la variable. ꞏchꞏ Número de canal. | V.[2].G.CHTIMERATE | Canal ꞏ2ꞏ. |" ;
-    ex:tieneComponente ex:CHTIMERATE, ex:PREPTIMERATE, ex:IPOTIMERATE .
+ex:Parametro_PREPTIMERATE
+    a               ex:Parametro ;
+    rdfs:label      "PREPTIMERATE (Porcentaje de tiempo de ciclo en preparación de bloques)"@es ;
+    ex:identificador "V.[ch].G.PREPTIMERATE" ;
+    ex:valor         "%"@es ;
+    ex:textoExtracto "Porcentaje del tiempo de ciclo que utiliza el canal para la preparación de bloques. Esta variable sirve para evaluar la carga en la preparación de la trayectoria y saber si es posible aumentar el parámetro PREPFREQ. Unidades: %."@es ;
+    ex:documentadoEn ex:Tabla_1157_TiempoCicloCanal ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Parametro_IPOTIMERATE
+    a               ex:Parametro ;
+    rdfs:label      "IPOTIMERATE (Porcentaje de tiempo de ciclo del interpolador)"@es ;
+    ex:identificador "V.[ch].G.IPOTIMERATE" ;
+    ex:valor         "%"@es ;
+    ex:textoExtracto "Porcentaje del tiempo de ciclo que utiliza el interpolador del canal. Esta variable sirve para evaluar la sobrecarga en el algoritmo de generación de trayectoria y en el algoritmo de suavizado. Unidades: %."@es ;
+    ex:documentadoEn ex:Tabla_1157_TiempoCicloCanal ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Sistema_CNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC (Control Numérico Computarizado)"@es ;
+    ex:textoExtracto "El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques)."@es .

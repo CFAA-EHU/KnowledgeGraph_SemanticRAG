@@ -1,12 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:PLC_358 a ex:ComponenteElectrico ;
-    ex:textoExtracto "ambas situaciones se gestionan desde la maniobra del PLC" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CNC_358 a ex:ComponenteElectrico ;
-    ex:textoExtracto "el CNC pone la gama que indica el PLC" .
+ex:PLC_ControlGamas
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "PLC (control de gamas)" ;
+    ex:textoExtracto "ambas situaciones se gestionan desde la maniobra del PLC. En el encendido, el CNC pone la gama que indica el PLC; si no indica ninguna, el CNC arranca sin gama. Tras un reset, el CNC pone la gama que indica el PLC" .
 
-ex:ParametroGamaTrabajo_358 a ex:Parametro ;
-    ex:textoExtracto "SET n Gamas de trabajo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Muestra la tabla de parámetros máquina del set" .
+ex:CNC_GamasTrabajo
+    a               ex:Sistema ;
+    rdfs:label      "CNC (gestión de gamas de trabajo)" ;
+    ex:textoExtracto "el CNC pone la gama que indica el PLC; si no indica ninguna, el CNC arranca sin gama. Tras un reset, el CNC pone la gama que indica el PLC; si no indica ninguna, el CNC se queda como está" ;
+    ex:controla     ex:Parametro_SetGamas .
 
-ex:TablaParametrosMaquina_358 a ex:Tabla ;
-    ex:textoExtracto "Muestra la tabla de parámetros máquina del set" .
+ex:Parametro_SetGamas
+    a               ex:Parametro ;
+    rdfs:label      "SET n (Gamas de trabajo)" ;
+    ex:identificador "SET n" ;
+    ex:textoExtracto "SET n Gamas de trabajo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado" ;
+    ex:monitoreaParametro ex:CNC_GamasTrabajo .
+
+ex:Tabla_ParametrosMaquina a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de parámetros máquina (sets de gamas)" ;
+    ex:textoExtracto "Muestra la tabla de parámetros máquina del set" ;
+    ex:documentadoEn ex:Manual_Principal .
+
+ex:Funciones_CambioEngranajes a ex:Tabla ;
+     a               ex:InterfazUsuario ;
+    rdfs:label      "Funciones M41 a M44 (cambio de engranajes)" ;
+    ex:identificador "M41-M44" ;
+    ex:textoExtracto "usar las funciones M41 a M44. SET n Gamas de trabajo" ;
+    ex:habilitadoPor ex:PLC_ControlGamas .

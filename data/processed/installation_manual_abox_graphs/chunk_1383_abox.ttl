@@ -1,62 +1,85 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SistemaTandem rdfs:label "sistema tándem" ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Interfaz OPENPCS REMOTO (Pág. 57)
+ex:Interfaz_OPENPCS_Remoto_InstaladorHelp
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz OPENPCS Remoto - Instalador de ayuda" ;
     ex:textoExtracto "Se aprecian campos de búsqueda/filtrado y el listado donde figura 'CNC Help Language Changer'. La imagen contextualiza el procedimiento de obtención del instalador SetupHelp_Vxx.xx.exe y los tipos/idiomas de ayuda soportados." ;
-    a ex:Sistema .
+    ex:identificador "SetupHelp_Vxx.xx.exe" .
 
-ex:EjeTandem rdfs:label "eje tándem" ;
-    ex:textoExtracto "Esquema mecánico de un eje tándem con dos motores (Master axis y Slave axis) que accionan sendos piñones sobre una misma cremallera ('Rack'). Las flechas/etiquetas indican maestro y esclavo; la disposición resalta la suma de par y la posibilidad de precarga para reducir holgura." ;
-    a ex:ComponenteMecanico .
-
-ex:MotorMaster rdfs:label "Master axis" ;
-    ex:textoExtracto "Esquema mecánico de un eje tándem con dos motores (Master axis y Slave axis) que accionan sendos piñones sobre una misma cremallera ('Rack')." ;
-    a ex:ComponenteElectrico .
-
-ex:MotorSlave rdfs:label "Slave axis" ;
-    ex:textoExtracto "Esquema mecánico de un eje tándem con dos motores (Master axis y Slave axis) que accionan sendos piñones sobre una misma cremallera ('Rack')." ;
-    a ex:ComponenteElectrico .
-
-ex:Piñon rdfs:label "piñones" ;
-    ex:textoExtracto "Esquema mecánico de un eje tándem con dos motores (Master axis y Slave axis) que accionan sendos piñones sobre una misma cremallera ('Rack')." ;
-    a ex:ComponenteMecanico .
-
-ex:Cremallera rdfs:label "cremallera" ;
-    ex:textoExtracto "Esquema mecánico de un eje tándem con dos motores (Master axis y Slave axis) que accionan sendos piñones sobre una misma cremallera ('Rack')." ;
-    a ex:ComponenteMecanico .
-
-ex:SistemaGantry rdfs:label "sistema gantry" ;
-    ex:textoExtracto "Ilustración esquemática de una fresadora tipo puente en la que se muestran dos parejas de ejes gantry (X–U en la bancada y Z–W en el montante). Se aprecian los carros y el travesaño, con flechas implícitas de desplazamiento lineal y los rótulos de cada eje junto a su guía correspondiente." ;
-    a ex:Sistema .
-
-ex:EjeGantryXU rdfs:label "eje gantry X–U" ;
-    ex:textoExtracto "Ilustración esquemática de una fresadora tipo puente en la que se muestran dos parejas de ejes gantry (X–U en la bancada y Z–W en el montante)." ;
-    a ex:ComponenteMecanico .
-
-ex:EjeGantryZW rdfs:label "eje gantry Z–W" ;
-    ex:textoExtracto "Ilustración esquemática de una fresadora tipo puente en la que se muestran dos parejas de ejes gantry (X–U en la bancada y Z–W en el montante)." ;
-    a ex:ComponenteMecanico .
-
-ex:Bancada rdfs:label "bancada" ;
-    ex:textoExtracto "Ilustración esquemática de una fresadora tipo puente en la que se muestran dos parejas de ejes gantry (X–U en la bancada y Z–W en el montante)." ;
-    a ex:ComponenteMecanico .
-
-ex:Pórtico rdfs:label "pórtico" ;
-    ex:textoExtracto "Ilustración esquemática de una fresadora tipo puente en la que se muestran dos parejas de ejes gantry (X–U en la bancada y Z–W en el montante). La jerarquía visual distingue la estructura (bancada y pórtico) del conjunto móvil (cabezal)." ;
-    a ex:ComponenteMecanico .
-
-ex:Cabezal rdfs:label "cabezal" ;
-    ex:textoExtracto "Ilustración esquemática de una fresadora tipo puente en la que se muestran dos parejas de ejes gantry (X–U en la bancada y Z–W en el montante). La jerarquía visual distingue la estructura (bancada y pórtico) del conjunto móvil (cabezal)." ;
-    a ex:ComponenteMecanico .
-
-ex:EjeMaestro rdfs:label "MOVAXIS" ;
-    ex:textoExtracto "Diagrama conceptual de 'compensación cruzada' donde un eje maestro (MOVAXIS) provoca variaciones en un eje compensado (COMPAXIS)." ;
-    a ex:ComponenteMecanico .
-
-ex:EjeCompensado rdfs:label "COMPAXIS" ;
-    ex:textoExtracto "Diagrama conceptual de 'compensación cruzada' donde un eje maestro (MOVAXIS) provoca variaciones en un eje compensado (COMPAXIS)." ;
-    a ex:ComponenteMecanico .
-
-ex:EsquemaCompensacionCruzada rdfs:label "compensación cruzada" ;
-    ex:textoExtracto "Diagrama conceptual de 'compensación cruzada' donde un eje maestro (MOVAXIS) provoca variaciones en un eje compensado (COMPAXIS)." ;
+### Esquema mecánico eje tándem (Pág. 61)
+ex:Esquema_EjeTandem_MasterSlave
     a ex:Esquema ;
-    ex:compuestoPor ex:EjeMaestro, ex:EjeCompensado .
+    rdfs:label "Esquema mecánico de eje tándem con motores Master/Slave" ;
+    ex:textoExtracto "Esquema mecánico de un eje tándem con dos motores (Master axis y Slave axis) que accionan sendos piñones sobre una misma cremallera ('Rack'). Las flechas/etiquetas indican maestro y esclavo; la disposición resalta la suma de par y la posibilidad de precarga para reducir holgura." ;
+    ex:ilustradoEn ex:SistemaEjeTandem .
+
+ex:SistemaEjeTandem
+    a ex:Sistema ;
+    rdfs:label "Sistema de eje tándem con configuración Master-Slave" ;
+    ex:textoExtracto "Dibujo lineal, con jerarquía simple (motores arriba, transmisión abajo) para explicar la arquitectura y requisitos de configuración." ;
+    ex:compuestoPor ex:MotorMasterTandem, ex:MotorSlaveTandem, ex:ComponenteMecanico_Cremallera .
+
+ex:MotorMasterTandem
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor Master (eje tándem)" ;
+    ex:textoExtracto "Master axis" .
+
+ex:MotorSlaveTandem
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor Slave (eje tándem)" ;
+    ex:textoExtracto "Slave axis" .
+
+ex:ComponenteMecanico_Cremallera
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cremallera ('Rack') para eje tándem" ;
+    ex:textoExtracto "piñones sobre una misma cremallera ('Rack')" .
+
+### Ilustración fresadora puente (Pág. 77)
+ex:Esquema_FresadoraPuente_Gantry
+    a ex:Esquema ;
+    rdfs:label "Esquema de fresadora puente con ejes gantry X-U y Z-W" ;
+    ex:textoExtracto "Ilustración esquemática de una fresadora tipo puente en la que se muestran dos parejas de ejes gantry (X–U en la bancada y Z–W en el montante). Se aprecian los carros y el travesaño, con flechas implícitas de desplazamiento lineal y los rótulos de cada eje junto a su guía correspondiente." ;
+    ex:ilustradoEn ex:SistemaFresadoraPuente .
+
+ex:SistemaFresadoraPuente
+    a ex:Sistema ;
+    rdfs:label "Sistema de fresadora puente con configuración gantry" ;
+    ex:textoExtracto "La jerarquía visual distingue la estructura (bancada y pórtico) del conjunto móvil (cabezal), destacando la necesidad de sincronía maestro–esclavo en cada pareja de ejes." ;
+    ex:compuestoPor ex:EjeGantry_XU, ex:EjeGantry_ZW .
+
+ex:EjeGantry_XU
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje gantry X-U (bancada)" ;
+    ex:textoExtracto "X–U en la bancada" .
+
+ex:EjeGantry_ZW
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje gantry Z-W (montante)" ;
+    ex:textoExtracto "Z–W en el montante" .
+
+### Diagrama compensación cruzada (Pág. 77)
+ex:Esquema_CompensacionCruzada
+    a ex:Esquema ;
+    rdfs:label "Diagrama de compensación cruzada entre ejes" ;
+    ex:textoExtracto "Diagrama conceptual de 'compensación cruzada' donde un eje maestro (MOVAXIS) provoca variaciones en un eje compensado (COMPAXIS)." ;
+    ex:detalladoEnEsquema ex:SistemaCompensacionCruzada .
+
+ex:SistemaCompensacionCruzada
+    a ex:Sistema ;
+    rdfs:label "Sistema de compensación cruzada MOVAXIS-COMPAXIS" ;
+    ex:textoExtracto "un eje maestro (MOVAXIS) provoca variaciones en un eje compensado (COMPAXIS)" ;
+    ex:compuestoPor ex:EjeMovAxis, ex:EjeCompAxis .
+
+ex:EjeMovAxis
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro (MOVAXIS)" ;
+    ex:textoExtracto "eje maestro (MOVAXIS)" .
+
+ex:EjeCompAxis
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje compensado (COMPAXIS)" ;
+    ex:textoExtracto "eje compensado (COMPAXIS)" .

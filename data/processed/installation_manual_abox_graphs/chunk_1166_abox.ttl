@@ -1,37 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:VariableCNC_1 a ex:Parametro ;
-    rdfs:label "V.[ch].A.TFEED.xn" ;
-    ex:textoExtracto "Variables. | PRG | PLC | INT | (V.)[ch].A.TFEED.xn Valor instantáneo teórico de la velocidad a la entrada del lazo de posición. Unidades: -." ;
-    ex:valor "Valor instantáneo teórico de la velocidad a la entrada del lazo de posición. Unidades: -." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:VariableCNC_2 a ex:Parametro ;
-    rdfs:label "V.[ch].A.TFEED.sn" ;
-    ex:textoExtracto "Variables. | PRG | PLC | INT | (V.)[ch].A.TFEED.sn Valor instantáneo teórico de la velocidad a la entrada del lazo de posición. Unidades: -." ;
-    ex:valor "Valor instantáneo teórico de la velocidad a la entrada del lazo de posición. Unidades: -." .
+ex:Tabla_VariablesVelocidadLazo a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de variables asociadas a velocidad en el lazo de posición"@es ;
+    ex:textoExtracto """
+| Variables. | PRG | PLC | INT |
+| --- | --- | --- | --- |
+| (V.)[ch].A.TFEED.xn
+(V.)[ch].A.TFEED.sn
+(V.)[ch].SP.TFEED.sn
+Valor instantáneo teórico de la velocidad a la entrada del lazo de
+posición. Unidades: -.
+| (V.)[ch].A.FEED.xn
+(V.)[ch].A.FEED.sn
+(V.)[ch].SP.FEED.sn
+Valor instantáneo real de la velocidad a la entrada del lazo de posición. Unidades: -.
+(*) El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques).
+Sintaxis: ꞏchꞏ Número de canal. ꞏxnꞏ Nombre, número lógico o índice del eje. ꞏsnꞏ Nombre, número lógico o índice del cabezal.
+"""@es .
 
-ex:VariableCNC_3 a ex:Parametro ;
-    rdfs:label "V.[ch].SP.TFEED.sn" ;
-    ex:textoExtracto "Variables. | PRG | PLC | INT | (V.)[ch].SP.TFEED.sn Valor instantáneo teórico de la velocidad a la entrada del lazo de posición. Unidades: -." ;
-    ex:valor "Valor instantáneo teórico de la velocidad a la entrada del lazo de posición. Unidades: -." .
+ex:Param_VelocidadTeoricaEntradaLazo
+    a ex:Parametro ;
+    rdfs:label "Valor instantáneo teórico de velocidad (TFEED)"@es ;
+    ex:identificador "(V.)[ch].A.TFEED.xn / (V.)[ch].A.TFEED.sn / (V.)[ch].SP.TFEED.sn" ;
+    ex:textoExtracto "Valor instantáneo teórico de la velocidad a la entrada del lazo de posición."@es ;
+    ex:documentadoEn ex:Tabla_VariablesVelocidadLazo .
 
-ex:VariableCNC_4 a ex:Parametro ;
-    rdfs:label "V.[ch].A.FEED.xn" ;
-    ex:textoExtracto "Variables. | PRG | PLC | INT | (V.)[ch].A.FEED.xn Valor instantáneo real de la velocidad a la entrada del lazo de posición. Unidades: -." ;
-    ex:valor "Valor instantáneo real de la velocidad a la entrada del lazo de posición. Unidades: -." .
+ex:Param_VelocidadRealEntradaLazo
+    a ex:Parametro ;
+    rdfs:label "Valor instantáneo real de velocidad (FEED)"@es ;
+    ex:identificador "(V.)[ch].A.FEED.xn / (V.)[ch].A.FEED.sn / (V.)[ch].SP.FEED.sn" ;
+    ex:textoExtracto "Valor instantáneo real de la velocidad a la entrada del lazo de posición."@es ;
+    ex:documentadoEn ex:Tabla_VariablesVelocidadLazo .
 
-ex:VariableCNC_5 a ex:Parametro ;
-    rdfs:label "V.[ch].A.FEED.sn" ;
-    ex:textoExtracto "Variables. | PRG | PLC | INT | (V.)[ch].A.FEED.sn Valor instantáneo real de la velocidad a la entrada del lazo de posición. Unidades: -." ;
-    ex:valor "Valor instantáneo real de la velocidad a la entrada del lazo de posición. Unidades: -." .
-
-ex:VariableCNC_6 a ex:Parametro ;
-    rdfs:label "V.[ch].SP.FEED.sn" ;
-    ex:textoExtracto "Variables. | PRG | PLC | INT | (V.)[ch].SP.FEED.sn Valor instantáneo real de la velocidad a la entrada del lazo de posición. Unidades: -." ;
-    ex:valor "Valor instantáneo real de la velocidad a la entrada del lazo de posición. Unidades: -." .
-
-ex:SistemaVariablesCNC a ex:Esquema ;
-    rdfs:label "Variables asociadas a la velocidad en el lazo" ;
-    ex:textoExtracto "Variables. | PRG | PLC | INT | (V.)[ch].A.TFEED.xn Valor instantáneo teórico de la velocidad a la entrada del lazo de posición. Unidades: -." ;
-    ex:compuestoPor ex:VariableCNC_1, ex:VariableCNC_2, ex:VariableCNC_3, ex:VariableCNC_4, ex:VariableCNC_5, ex:VariableCNC_6 ;
-    ex:detalladoEnEsquema "Tabla de variables asociadas a la velocidad en el lazo de posición." .
+ex:SintaxisVariablesCNC_Velocidad
+    a ex:InterfazUsuario ;
+    rdfs:label "Sintaxis de variables CNC para velocidad en lazo de posición"@es ;
+    ex:textoExtracto """
+ꞏchꞏ Número de canal.
+ꞏxnꞏ Nombre, número lógico o índice del eje (ej. 'Z', '4').
+ꞏsnꞏ Nombre, número lógico o índice del cabezal (ej. 'S', '2').
+Ejemplos:
+- V.A.TFEED.Z → Eje Z.
+- V.SP.TFEED.S → Cabezal S.
+- V.[2].A.TFEED.1 → Eje índice '1' en canal '2'.
+"""@es ;
+    ex:documentadoEn ex:Tabla_VariablesVelocidadLazo .

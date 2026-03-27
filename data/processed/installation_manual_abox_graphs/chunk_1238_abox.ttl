@@ -1,17 +1,84 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PanelMandoJog_0 a ex:ComponenteElectrico ;
-    rdfs:label "CNC Remote I/Os Jog-Panel (Address = 0)" ;
-    ex:textoExtracto "CNC Remote I/Os Jog-Panel (Address = 0)" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PanelMandoJog_1 a ex:ComponenteElectrico ;
-    rdfs:label "CNC Remote I/Os Jog-Panel (Address = 1)" ;
-    ex:textoExtracto "CNC Remote I/Os Jog-Panel (Address = 1)" .
+ex:SistemaBusCAN_1238
+    a                       ex:Sistema ;
+    rdfs:label              "Sistema de bus CAN para paneles de mando"@es ;
+    ex:textoExtracto         "El CNC numera los paneles de mando según el orden que ocupan dentro del bus CAN (conmutador Address). El primer panel de jog será el de numeración más baja y así sucesivamente."@es ;
+    ex:identificador         "Address" ;
+    ex:tieneComponente       ex:PanelJog_Address0_1238, ex:PanelJog_Address1_1238, ex:PanelJog_Address2_1238 ;
+    ex:compuestoPor          ex:Conector_X1_1238, ex:Conector_X2_1238, ex:Conector_X3_1238 .
 
-ex:PanelMandoJog_2 a ex:ComponenteElectrico ;
-    rdfs:label "CNC Remote I/Os Jog-Panel (Address = 2)" ;
-    ex:textoExtracto "CNC Remote I/Os Jog-Panel (Address = 2)" .
+ex:PanelJog_Address0_1238
+    a                       ex:InterfazUsuario ;
+    rdfs:label              "Panel de Jog (Address = 0)"@es ;
+    ex:textoExtracto         "CNC Remote I/Os Jog-Panel (Address = 0)"@es ;
+    ex:identificador         "0" ;
+    ex:tieneComponente       ex:FuenteAlimentacion_1238_0, ex:EntradaDigital_1238_0_1, ex:EntradaDigital_1238_0_2 ;
+    ex:ilustradoEn           ex:EsquemaConexion_1238 .
 
-ex:BusCAN a ex:ComponenteElectrico ;
-    rdfs:label "bus CAN (conmutador Address)" ;
-    ex:textoExtracto "El CNC numera los paneles de mando según el orden que ocupan dentro del bus CAN (conmutador Address)." .
+ex:PanelJog_Address1_1238
+    a                       ex:InterfazUsuario ;
+    rdfs:label              "Panel de Jog (Address = 1)"@es ;
+    ex:textoExtracto         "Jog-Panel (Address = 1)"@es ;
+    ex:identificador         "1" ;
+    ex:tieneComponente       ex:FuenteAlimentacion_1238_1, ex:EntradaDigital_1238_1_1, ex:EntradaDigital_1238_1_2 ;
+    ex:ilustradoEn           ex:EsquemaConexion_1238 .
+
+ex:PanelJog_Address2_1238
+    a                       ex:InterfazUsuario ;
+    rdfs:label              "Panel de Jog (Address = 2)"@es ;
+    ex:textoExtracto         "Jog-Panel (Address = 2)"@es ;
+    ex:identificador         "2" ;
+    ex:tieneComponente       ex:FuenteAlimentacion_1238_2, ex:EntradaDigital_1238_2_1, ex:EntradaDigital_1238_2_2 ;
+    ex:ilustradoEn           ex:EsquemaConexion_1238 .
+
+ex:Conector_X1_1238
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Conector X1 (Entradas/Salidas Digitales)"@es ;
+    ex:textoExtracto         "DIGITAL INPUT [...] X1 [...] DIGITAL OUTPUT [...] X1"@es ;
+    ex:identificador         "X1" ;
+    ex:detalladoEnEsquema    ex:EsquemaConexion_1238 .
+
+ex:Conector_X2_1238
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Conector X2 (Dirección/Reset CAN)"@es ;
+    ex:textoExtracto         "ADDRESS RESET [...] X2 [...] G N D [...] X2"@es ;
+    ex:identificador         "X2" ;
+    ex:detalladoEnEsquema    ex:EsquemaConexion_1238 .
+
+ex:Conector_X3_1238
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Conector X3 (Salidas Digitales HDDL)"@es ;
+    ex:textoExtracto         "SSCCHHAAGIIEENNNLL HDDDL [...] X3 [...] OOOOOO 1111111"@es ;
+    ex:identificador         "X3" ;
+    ex:detalladoEnEsquema    ex:EsquemaConexion_1238 .
+
+ex:FuenteAlimentacion_1238_0
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Fuente de alimentación (Panel Address 0)"@es ;
+    ex:textoExtracto         "POWER SUPPLY [...] +24V"@es ;
+    ex:valor                 "24V" ;
+    ex:detalladoEnEsquema    ex:EsquemaConexion_1238 .
+
+ex:EntradaDigital_1238_0_1
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Entrada digital 1 (Panel Address 0)"@es ;
+    ex:textoExtracto         "DIGITAL INPUT [...] IIIINNNS N.C."@es ;
+    ex:identificador         "1 (Panel 0)" ;
+    ex:detalladoEnEsquema    ex:EsquemaConexion_1238 .
+
+ex:EntradaDigital_1238_0_2
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Entrada digital 2 (Panel Address 0)"@es ;
+    ex:textoExtracto         "DIGITAL INPUT [...] IIIINNNS N.C."@es ;
+    ex:identificador         "2 (Panel 0)" ;
+    ex:detalladoEnEsquema    ex:EsquemaConexion_1238 .
+
+ex:EsquemaConexion_1238
+    a                       ex:Esquema ;
+    rdfs:label              "Esquema de conexión de paneles Jog en bus CAN (Págs. 665-669)"@es ;
+    ex:textoExtracto         "POWER SUPPLY DIGITAL INPUT DIGITAL INPUT SRYESATDEYMC+GGH2NN4ADDVS [...] DIGITAL OUTPUT [...] SSCCHHAAGIIEENNNLL HDDDL [...] CNC Remote I/Os Jog-Panel (Address = 0) (Address = 1) (Address = 2)"@es ;
+    ex:identificador         "15.1.1" .

@@ -1,14 +1,44 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:ParametroOffset a ex:Parametro ;
-    ex:textoExtracto "En la columna 'Value' el fabricante determina el valor del parámetro, que podrá ser modificado por el usuario mediante la columna 'OFFSET' o su variable asociada. En la columna 'MAX OFFSET', el fabricante determina el offset máximo que puede definir el usuario. Esta columna siempre será un valor positivo, y el offset definido por el usuario será un valor comprendido entre '- MAX OFFSET' y '+ MAX OFFSET'. Si define un offset máximo de cero, el usuario no podrá definir ningún offset. Los valores de offset definidos por el usuario se sumarán a su parámetro TDATA correspondiente. El nuevo valor se hará efectivo al activar la cinemática (#KIN ID) o el RTCP." ;
-    rdfs:label "Parámetro Offset" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ParametroTDATA a ex:Parametro ;
-    ex:textoExtracto "Los valores de offset definidos por el usuario se sumarán a su parámetro TDATA correspondiente." ;
-    rdfs:label "Parámetro TDATA" .
+ex:Tabla_ParametrosCinematicos_504 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros de configuración cinemática (pág. 251-255)"@es ;
+    ex:textoExtracto """
+| DATA |  |
+| --- | --- |
+| VALUE | A definir por el OEM. Valor del parámetro. |
+| MAX OFFSET | A definir por el OEM. Máximo offset que puede definir el usuario. |
+| OFFSET | A definir por el usuario. Offset del parámetro.
+"""@es ;
+    ex:detalladoEnEsquema ex:InterfazUsuario_ConfiguracionCinematica_504 .
 
-ex:EsquemaCinematicas a ex:Esquema ;
-    ex:textoExtracto "En la columna 'Value' el fabricante determina el valor del parámetro, que podrá ser modificado por el usuario mediante la columna 'OFFSET' o su variable asociada. En la columna 'MAX OFFSET', el fabricante determina el offset máximo que puede definir el usuario. Esta columna siempre será un valor positivo, y el offset definido por el usuario será un valor comprendido entre '- MAX OFFSET' y '+ MAX OFFSET'. Si define un offset máximo de cero, el usuario no podrá definir ningún offset. Los valores de offset definidos por el usuario se sumarán a su parámetro TDATA correspondiente. El nuevo valor se hará efectivo al activar la cinemática (#KIN ID) o el RTCP." ;
-    ex:tieneComponente ex:ParametroOffset, ex:ParametroTDATA ;
-    rdfs:label "Esquema de Configuración de Cinemáticas" .
+ex:InterfazUsuario_ConfiguracionCinematica_504
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de configuración de cinemáticas (#KIN ID)"@es ;
+    ex:textoExtracto "Los valores de offset definidos por el usuario se sumarán a su parámetro TDATA correspondiente. El nuevo valor se hará efectivo al activar la cinemática (#KIN ID) o el RTCP."@es ;
+    ex:monitoreaParametro ex:Parametro_VALUE_504 ,
+                          ex:Parametro_MAX_OFFSET_504 ,
+                          ex:Parametro_OFFSET_504 .
+
+ex:Parametro_VALUE_504
+    a ex:Parametro ;
+    rdfs:label "VALUE (parámetro base)"@es ;
+    ex:textoExtracto "Valor del parámetro. [...] el fabricante determina el valor del parámetro"@es ;
+    ex:identificador "VALUE" .
+
+ex:Parametro_MAX_OFFSET_504
+    a ex:Parametro ;
+    rdfs:label "MAX OFFSET (límite de ajuste)"@es ;
+    ex:textoExtracto "Máximo offset que puede definir el usuario. [...] el fabricante determina el offset máximo que puede definir el usuario. Esta columna siempre será un valor positivo"@es ;
+    ex:identificador "MAX OFFSET" ;
+    ex:valor ">=0" .  # Restricción implícita en el texto
+
+ex:Parametro_OFFSET_504
+    a ex:Parametro ;
+    rdfs:label "OFFSET (ajuste de usuario)"@es ;
+    ex:textoExtracto "Offset del parámetro. [...] el usuario [...] Offset definido por el usuario será un valor comprendido entre '-MAX OFFSET' y '+MAX OFFSET'"@es ;
+    ex:identificador "OFFSET" ;
+    ex:controla ex:Parametro_VALUE_504 .  # Relación funcional: OFFSET modifica VALUE

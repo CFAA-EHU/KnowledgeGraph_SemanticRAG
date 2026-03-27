@@ -1,64 +1,121 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SubrutinaInterrupcion1 a ex:ModoOperacion ;
-    ex:textoExtracto "Si la subrutina finaliza con M30, también finaliza la ejecución del programa." ;
-    ex:valor "M30" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SubrutinaInterrupcion2 a ex:ModoOperacion ;
-    ex:textoExtracto "Si el programa está interrumpido (STOP) o no hay programa en ejecución (canal en estado READY) la ejecución de la subrutina depende del parámetro SUBINTSTOP." ;
-    ex:valor "SUBINTSTOP" .
+ex:Subrutina_Interrupcion_INT1SUB
+    a ex:Sistema ;
+    rdfs:label "Subrutina de interrupción INT1SUB" ;
+    ex:textoExtracto "ejecuta la subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" ;
+    ex:identificador "INT1SUB" .
 
-ex:SubrutinaInterrupcion3 a ex:ModoOperacion ;
-    ex:textoExtracto "para poder ejecutar la subrutina cuando no hay programa en ejecución, el canal debe estar en modo automático; no se permite ejecutar la subrutina desde el modo manual." .
+ex:Subrutina_Interrupcion_INT2SUB
+    a ex:Sistema ;
+    rdfs:label "Subrutina de interrupción INT2SUB" ;
+    ex:textoExtracto "ejecuta la subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" ;
+    ex:identificador "INT2SUB" .
 
-ex:SubrutinaInterrupcion4 a ex:ModoOperacion ;
-    ex:textoExtracto "La ejecución de una subrutina de interrupción se podrá interrumpir a su vez mediante un STOP, pero no por otra subrutina de interrupción." .
+ex:Subrutina_Interrupcion_INT3SUB
+    a ex:Sistema ;
+    rdfs:label "Subrutina de interrupción INT3SUB" ;
+    ex:textoExtracto "ejecuta la subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" ;
+    ex:identificador "INT3SUB" .
 
-ex:SubrutinaInterrupcion5 a ex:ModoOperacion ;
-    ex:textoExtracto "Cuando una subrutina esté interrumpida, no se podrá entrar en el modo inspección." .
+ex:Subrutina_Interrupcion_INT4SUB
+    a ex:Sistema ;
+    rdfs:label "Subrutina de interrupción INT4SUB" ;
+    ex:textoExtracto "ejecuta la subrutina de interrupción correspondiente, asociada a los parámetros INT1SUB a INT4SUB" ;
+    ex:identificador "INT4SUB" .
 
-ex:SubrutinaInterrupcion6 a ex:ModoOperacion ;
-    ex:textoExtracto "El CNC desactiva la marca al comenzar a ejecutar la subrutina o cuando rechaza la ejecución de la subrutina." .
+ex:Parametro_SUBINTSTOP
+    a ex:Parametro ;
+    rdfs:label "Parámetro SUBINTSTOP" ;
+    ex:textoExtracto "Si el programa está interrumpido (STOP) o no hay programa en ejecución (canal en estado READY) la ejecución de la subrutina depende del parámetro SUBINTSTOP" ;
+    ex:identificador "SUBINTSTOP" .
 
-ex:ParametroINT1SUB a ex:Parametro ;
-    ex:textoExtracto "asociada a los parámetros INT1SUB a INT4SUB" ;
-    ex:valor "INT1SUB" .
-
-ex:ParametroINT2SUB a ex:Parametro ;
-    ex:textoExtracto "asociada a los parámetros INT1SUB a INT4SUB" ;
-    ex:valor "INT2SUB" .
-
-ex:ParametroINT3SUB a ex:Parametro ;
-    ex:textoExtracto "asociada a los parámetros INT1SUB a INT4SUB" ;
-    ex:valor "INT3SUB" .
-
-ex:ParametroINT4SUB a ex:Parametro ;
-    ex:textoExtracto "asociada a los parámetros INT1SUB a INT4SUB" ;
-    ex:valor "INT4SUB" .
-
-ex:ParametroSUBINTSTOP a ex:Parametro ;
-    ex:textoExtracto "la ejecución de la subrutina depende del parámetro SUBINTSTOP" ;
-    ex:valor "SUBINTSTOP" .
-
-ex:MarcaPROBE1ENA a ex:Parametro ;
-    ex:textoExtracto "PROBE1ENA Marcas activas por defecto. Estas marcas indican que el palpador está habilitado." ;
-    ex:valor "PROBE1ENA" .
-
-ex:MarcaPROBE2ENA a ex:Parametro ;
-    ex:textoExtracto "PROBE1ENA Marcas activas por defecto. Estas marcas indican que el palpador está habilitado." ;
-    ex:valor "PROBE2ENA" .
-
-ex:MarcaPROBE1MONIT a ex:Parametro ;
-    ex:textoExtracto "PROBE1MONIT Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones." ;
-    ex:valor "PROBE1MONIT" .
-
-ex:MarcaPROBE2MONIT a ex:Parametro ;
-    ex:textoExtracto "PROBE1MONIT Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones." ;
-    ex:valor "PROBE2MONIT" .
-
-ex:SubrutinaProbeToolBegin a ex:TareaMantenimiento ;
-    ex:textoExtracto "Estas marcas se deberían testear en las subrutinas Sub_Probe_Tool_Begin.fst y Sub_Probe_Piece_Begin.fst, de modo que la subrutina espere hasta que la marca esté activa." ;
+ex:Subrutina_Sub_Probe_Tool_Begin
+    a ex:Sistema ;
+    rdfs:label "Subrutina Sub_Probe_Tool_Begin.fst" ;
+    ex:textoExtracto "Estas marcas se deberían testear en las subrutinas Sub_Probe_Tool_Begin.fst y Sub_Probe_Piece_Begin.fst" ;
     ex:identificador "Sub_Probe_Tool_Begin.fst" .
 
-ex:SubrutinaProbePieceBegin a ex:TareaMantenimiento ;
-    ex:textoExtracto "Estas marcas se deberían testear en las subrutinas Sub_Probe_Tool_Begin.fst y Sub_Probe_Piece_Begin.fst, de modo que la subrutina espere hasta que la marca esté activa." ;
+ex:Subrutina_Sub_Probe_Piece_Begin
+    a ex:Sistema ;
+    rdfs:label "Subrutina Sub_Probe_Piece_Begin.fst" ;
+    ex:textoExtracto "Estas marcas se deberían testear en las subrutinas Sub_Probe_Tool_Begin.fst y Sub_Probe_Piece_Begin.fst" ;
     ex:identificador "Sub_Probe_Piece_Begin.fst" .
+
+ex:Marca_PROBE1ENA
+    a ex:Parametro ;
+    rdfs:label "Marca PROBE1ENA" ;
+    ex:textoExtracto "PROBE1ENA [...] Marcas activas por defecto. Estas marcas indican que el palpador está habilitado" ;
+    ex:identificador "PROBE1ENA" ;
+    ex:valor "activa" .
+
+ex:Marca_PROBE2ENA
+    a ex:Parametro ;
+    rdfs:label "Marca PROBE2ENA" ;
+    ex:textoExtracto "PROBE2ENA [...] Marcas activas por defecto. Estas marcas indican que el palpador está habilitado" ;
+    ex:identificador "PROBE2ENA" ;
+    ex:valor "activa" .
+
+ex:Marca_PROBE1MONIT
+    a ex:Parametro ;
+    rdfs:label "Marca PROBE1MONIT" ;
+    ex:textoExtracto "PROBE1MONIT [...] Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones" ;
+    ex:identificador "PROBE1MONIT" ;
+    ex:valor "modo_seguro" .
+
+ex:Marca_PROBE2MONIT
+    a ex:Parametro ;
+    rdfs:label "Marca PROBE2MONIT" ;
+    ex:textoExtracto "PROBE2MONIT [...] Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones" ;
+    ex:identificador "PROBE2MONIT" ;
+    ex:valor "modo_seguro" .
+
+ex:Comando_G100
+    a ex:Parametro ;
+    rdfs:label "Comando G100" ;
+    ex:textoExtracto "Al ejecutar un comando G100 o G103, el CNC dará error si el palpador activo no tiene su marca habilitada" ;
+    ex:identificador "G100" .
+
+ex:Comando_G103
+    a ex:Parametro ;
+    rdfs:label "Comando G103" ;
+    ex:textoExtracto "Al ejecutar un comando G100 o G103, el CNC dará error si el palpador activo no tiene su marca habilitada" ;
+    ex:identificador "G103" .
+
+ex:Comando_SELECT_PROBE
+    a ex:Parametro ;
+    rdfs:label "Comando #SELECT PROBE" ;
+    ex:textoExtracto "el palpador activo (el seleccionado con #SELECT PROBE)" ;
+    ex:identificador "#SELECT PROBE" .
+
+ex:Comando_RET
+    a ex:Parametro ;
+    rdfs:label "Comando #RET" ;
+    ex:textoExtracto "Si la ejecución de una subrutina finaliza con #RET, el CNC continúa la ejecución del programa a partir del punto interrumpido" ;
+    ex:identificador "#RET" .
+
+ex:Comando_M30
+    a ex:Parametro ;
+    rdfs:label "Comando M30" ;
+    ex:textoExtracto "Si la subrutina finaliza con M30, también finaliza la ejecución del programa" ;
+    ex:identificador "M30" .
+
+ex:Sistema_Palpador
+    a ex:Sensor ;
+    rdfs:label "Palpador" ;
+    ex:textoExtracto "el palpador está habilitado [...] el palpador activo [...] el palpador está en modo seguro monitorizando colisiones" .
+
+ex:Sistema_Palpador
+    ex:monitoreaParametro ex:Marca_PROBE1ENA ;
+    ex:monitoreaParametro ex:Marca_PROBE2ENA ;
+    ex:monitoreaParametro ex:Marca_PROBE1MONIT ;
+    ex:monitoreaParametro ex:Marca_PROBE2MONIT .
+
+ex:Subrutina_Sub_Probe_Tool_Begin
+    ex:requiereMantenimiento ex:Sistema_Palpador .
+
+ex:Subrutina_Sub_Probe_Piece_Begin
+    ex:requiereMantenimiento ex:Sistema_Palpador .

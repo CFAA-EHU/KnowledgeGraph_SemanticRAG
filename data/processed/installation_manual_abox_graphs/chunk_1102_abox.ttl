@@ -1,15 +1,28 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:EjeProgramado1 a ex:Maquina ;
-    ex:textoExtracto "Si alguno de los ejes del grupo programado no dispone de micro"@es .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeProgramado2 a ex:Maquina ;
-    ex:textoExtracto "Si ninguno de los ejes del grupo programado dispone de micro"@es .
+ex:BusquedaReferenciaEjes
+    a ex:ModoOperacion ;
+    rdfs:label "Búsqueda de referencia máquina (ejes y cabezales)"@es ;
+    ex:textoExtracto "Si alguno de los ejes del grupo programado no dispone de micro, el eje espera a que los demás lleguen a sus micros, y una vez ocurrido esto, buscará su I0 al avance REFFEED2 dentro del orden que le toque. Si ninguno de los ejes del grupo programado dispone de micro, se empieza directamente a buscar cero a REFFEED2 con el eje de menor número lógico y una vez acabado éste se sigue con los demás."@es ;
+    ex:identificador "REFFEED2" .
 
-ex:MicroEje a ex:Sensor ;
-    ex:textoExtracto "micro"@es .
+ex:MicrointerruptorReferencia
+    a ex:ComponenteElectrico ;
+    rdfs:label "micro (interruptor de referencia)"@es ;
+    ex:textoExtracto "Si alguno de los ejes del grupo programado no dispone de micro, el eje espera a que los demás lleguen a sus micros"@es .
 
-ex:OrdenAvanceREFFEED2 a ex:ModoOperacion ;
-    ex:textoExtracto "orden que le toque"@es, "buscar cero a REFFEED2"@es .
+ex:EjeMaquina
+    a ex:ComponenteMecanico ;
+    rdfs:label "eje (componente mecánico)"@es ;
+    ex:textoExtracto "Si alguno de los ejes del grupo programado no dispone de micro, el eje espera a que los demás lleguen a sus micros"@es ;
+    ex:tieneComponente ex:MicrointerruptorReferencia .
 
-ex:NumeroLogicoEje a ex:Parametro ;
-    ex:textoExtracto "eje de menor número lógico"@es .
+ex:GrupoEjesProgramado
+    a ex:Sistema ;
+    rdfs:label "grupo de ejes programado"@es ;
+    ex:textoExtracto "ejes del grupo programado"@es ;
+    ex:tieneComponente ex:EjeMaquina ;
+    ex:controla ex:BusquedaReferenciaEjes .

@@ -1,21 +1,51 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:LL_SUB_CH1_TO_SPD a ex:AccionProhibida ;
-    ex:textoExtracto "punto de cambio. LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:LL_SUB_ARM_BACK a ex:AccionProhibida ;
-    ex:textoExtracto "LL SUB_ARM_BACK ; Retirar el brazo cambiador." .
+ex:RutinaM06 a ex:ModoOperacion ;
+    rdfs:label "Rutina M06 (Cambio de herramienta)"@es ;
+    ex:textoExtracto "punto de cambio. LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. LL SUB_ARM_BACK ; Retirar el brazo cambiador. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal."@es ;
+    ex:identificador "M06" .
 
-ex:LL_SUB_SPD_GMCHG a ex:AccionProhibida ;
-    ex:textoExtracto "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
+ex:Subrutina_SUB_CH1_TO_SPD a ex:TareaMantenimiento ;
+    rdfs:label "SUB_CH1_TO_SPD"@es ;
+    ex:textoExtracto "LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal."@es ;
+    ex:identificador "SUB_CH1_TO_SPD" .
 
-ex:LL_SUB_SPD_TO_GR a ex:AccionProhibida ;
-    ex:textoExtracto "LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal." .
+ex:Subrutina_SUB_ARM_BACK a ex:TareaMantenimiento ;
+    rdfs:label "SUB_ARM_BACK"@es ;
+    ex:textoExtracto "LL SUB_ARM_BACK ; Retirar el brazo cambiador."@es ;
+    ex:identificador "SUB_ARM_BACK" .
 
-ex:V_PLC_TMOPERATION a ex:Parametro ;
-    ex:textoExtracto "V.PLC.TMOPERATION = 0" .
+ex:Subrutina_SUB_SPD_GMCHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_GMCHG"@es ;
+    ex:textoExtracto "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual."@es ;
+    ex:identificador "SUB_SPD_GMCHG" .
 
-ex:V_TM_MZWAIT a ex:Parametro ;
-    ex:textoExtracto "V.TM.MZWAIT == 1" .
+ex:Subrutina_SUB_SPD_TO_GR a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_TO_GR"@es ;
+    ex:textoExtracto "LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal."@es ;
+    ex:identificador "SUB_SPD_TO_GR" .
 
-ex:ESTOP a ex:AccionProhibida ;
-    ex:textoExtracto "# ESTOP ; Habilitar la tecla STOP." .
+ex:RutinaM06 ex:compuestoPor ex:Subrutina_SUB_CH1_TO_SPD .
+ex:RutinaM06 ex:compuestoPor ex:Subrutina_SUB_ARM_BACK .
+ex:RutinaM06 ex:compuestoPor ex:Subrutina_SUB_SPD_GMCHG .
+ex:RutinaM06 ex:compuestoPor ex:Subrutina_SUB_SPD_TO_GR .
+
+ex:Parametro_TMOPERATION a ex:Parametro ;
+    rdfs:label "V.PLC.TMOPERATION"@es ;
+    ex:textoExtracto "$BREAK $ENDSWITCH ; Fin análisis del tipo de operación. V.PLC.TMOPERATION = 0"@es ;
+    ex:identificador "TMOPERATION" ;
+    ex:valor "0" .
+
+ex:Parametro_MZWAIT a ex:Parametro ;
+    rdfs:label "V.TM.MZWAIT"@es ;
+    ex:textoExtracto "$WHILE V.TM.MZWAIT == 1 $ENDWHILE ; Espera al gestor del almacén."@es ;
+    ex:identificador "MZWAIT" ;
+    ex:valor "1" .
+
+ex:Interfaz_STOP a ex:InterfazUsuario ;
+    rdfs:label "Tecla STOP"@es ;
+    ex:textoExtracto "# ESTOP ; Habilitar la tecla STOP."@es ;
+    ex:identificador "ESTOP" .

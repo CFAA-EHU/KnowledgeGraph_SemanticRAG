@@ -1,42 +1,82 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TMOPERATION_7 a ex:TareaMantenimiento ;
-    ex:identificador "7" ;
-    ex:textoExtracto "TMOPERATION = 7 Dejar la herramienta del cabezal en tierra y coger una herramienta del almacén. TAKEPOS=# Posición del almacén para coger la herramienta. LEAVEPOS=-4 Herramienta de tierra." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TMOPERATION_8 a ex:TareaMantenimiento ;
-    ex:identificador "8" ;
-    ex:textoExtracto "TMOPERATION = 8 Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra." .
+ex:OperacionTM7
+    a ex:TareaMantenimiento ;
+    rdfs:label "Operación TM7: Dejar herramienta del cabezal en tierra y coger herramienta del almacén" ;
+    ex:textoExtracto "TMOPERATION = 7 Dejar la herramienta del cabezal en tierra y coger una herramienta del almacén. TAKEPOS=# Posición del almacén para coger la herramienta. LEAVEPOS=-4 Herramienta de tierra." ;
+    ex:identificador "TM7" .
 
-ex:TMOPERATION_9 a ex:TareaMantenimiento ;
-    ex:identificador "9" ;
-    ex:textoExtracto "TMOPERATION = 9 Coger una herramienta de tierra y llevarla al almacén pasando por el cabezal. TAKEPOS=-4 Herramienta de tierra. LEAVEPOS=# Posición del almacén para dejar la herramienta." .
+ex:OperacionTM8
+    a ex:TareaMantenimiento ;
+    rdfs:label "Operación TM8: Dejar herramienta del cabezal en tierra y coger herramienta de tierra" ;
+    ex:textoExtracto "TMOPERATION = 8 Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR. 2 Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL." ;
+    ex:identificador "TM8" .
 
-ex:Pinza_1 a ex:ComponenteMecanico ;
+ex:OperacionTM9
+    a ex:TareaMantenimiento ;
+    rdfs:label "Operación TM9: Coger herramienta de tierra y llevarla al almacén pasando por el cabezal" ;
+    ex:textoExtracto "TMOPERATION = 9 Coger una herramienta de tierra y llevarla al almacén pasando por el cabezal. TAKEPOS=-4 Herramienta de tierra. LEAVEPOS=# Posición del almacén para dejar la herramienta." ;
+    ex:identificador "TM9" .
+
+ex:Pinza1
+    a ex:Herramienta ;
+    rdfs:label "Pinza 1" ;
     ex:textoExtracto "pinza ꞏ1ꞏ" .
 
-ex:HerramientaTierra a ex:PiezaRecambio ;
-    ex:textoExtracto "Herramienta de tierra" .
+ex:HerramientaTierra
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de tierra" ;
+    ex:textoExtracto "Herramienta de tierra. LEAVEPOS=-4" ;
+    ex:identificador "-4" .
 
-ex:Marca_SPDLTOCH1 a ex:Parametro ;
-    ex:identificador "SPDLTOCH1" ;
-    ex:textoExtracto "activar la marca SPDLTOCH1" .
+ex:MarcaSPDLTOCH1
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOCH1" ;
+    ex:textoExtracto "activar la marca SPDLTOCH1" ;
+    ex:identificador "SPDLTOCH1" .
 
-ex:Marca_CH1TOMZ a ex:Parametro ;
-    ex:identificador "CH1TOMZ" ;
-    ex:textoExtracto "activar la marca CH1TOMZ" .
+ex:MarcaCH1TOMZ
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca CH1TOMZ" ;
+    ex:textoExtracto "activar la marca CH1TOMZ" ;
+    ex:identificador "CH1TOMZ" .
 
-ex:Marca_GRTOSPDL a ex:Parametro ;
-    ex:identificador "GRTOSPDL" ;
-    ex:textoExtracto "activar la marca GRTOSPDL" .
+ex:MarcaGRTOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca GRTOSPDL" ;
+    ex:textoExtracto "activar la marca GRTOSPDL" ;
+    ex:identificador "GRTOSPDL" .
 
-ex:Marca_SPDLTOGR a ex:Parametro ;
-    ex:identificador "SPDLTOGR" ;
-    ex:textoExtracto "activar la marca SPDLTOGR" .
+ex:MarcaSPDLTOGR
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOGR" ;
+    ex:textoExtracto "activar la marca SPDLTOGR" ;
+    ex:identificador "SPDLTOGR" .
 
-ex:Marca_MZTOCH1 a ex:Parametro ;
-    ex:identificador "MZTOCH1" ;
-    ex:textoExtracto "activar la marca MZTOCH1" .
+ex:MarcaMZTOCH1
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca MZTOCH1" ;
+    ex:textoExtracto "activar la marca MZTOCH1" ;
+    ex:identificador "MZTOCH1" .
 
-ex:Marca_CH1TOSPDL a ex:Parametro ;
-    ex:identificador "CH1TOSPDL" ;
-    ex:textoExtracto "activar la marca CH1TOSPDL" .
+ex:MarcaCH1TOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca CH1TOSPDL" ;
+    ex:textoExtracto "activar la marca CH1TOSPDL" ;
+    ex:identificador "CH1TOSPDL" .
+
+# Relaciones entre tareas y herramientas/interfaces
+ex:OperacionTM7
+    ex:ejecutadoPor ex:Pinza1 ;
+    ex:habilitadoPor ex:MarcaSPDLTOCH1, ex:MarcaCH1TOMZ, ex:MarcaGRTOSPDL .
+
+ex:OperacionTM8
+    ex:ejecutadoPor ex:Pinza1 ;
+    ex:habilitadoPor ex:MarcaSPDLTOGR, ex:MarcaGRTOSPDL .
+
+ex:OperacionTM9
+    ex:ejecutadoPor ex:Pinza1 ;
+    ex:habilitadoPor ex:MarcaGRTOSPDL, ex:MarcaSPDLTOCH1 .

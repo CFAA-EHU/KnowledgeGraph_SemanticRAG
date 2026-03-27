@@ -1,46 +1,39 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PLC_830 a ex:ComponenteElectrico ;
-    ex:textoExtracto "Si el PLC desactiva esta marca, el CNC vuelve a tener en cuenta los límites de software y las zonas de trabajo en el eje indicado." ;
-    rdfs:label "PLC" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:CNC_830 a ex:ComponenteElectrico ;
-    ex:textoExtracto "el CNC vuelve a tener en cuenta los límites de software y las zonas de trabajo en el eje indicado" ;
-    rdfs:label "CNC" .
+ex:PLC_ControlEjes
+    a                     ex:Actuador ;
+    rdfs:label            "PLC de control de ejes" ;
+    ex:textoExtracto      "Si el PLC desactiva esta marca, el CNC vuelve a tener en cuenta los límites de software y las zonas de trabajo en el eje indicado." .
 
-ex:LimiteSoftware_830 a ex:Parametro ;
-    ex:textoExtracto "los límites de software" ;
-    rdfs:label "límite de software" .
+ex:ZonaProhibidaEje
+    a                     ex:AccionProhibida ;
+    rdfs:label            "Zona prohibida del eje" ;
+    ex:textoExtracto      "en caso de que ésta haya superado los límites de software o haya invadido una zona prohibida." .
 
-ex:ZonaTrabajo_830 a ex:Parametro ;
-    ex:textoExtracto "las zonas de trabajo" ;
-    rdfs:label "zona de trabajo" .
+ex:LimiteSoftwareEje
+    a                     ex:Parametro ;
+    rdfs:label            "Límite de software del eje" ;
+    ex:textoExtracto      "los límites de software y las zonas de trabajo en el eje indicado" ;
+    ex:monitoreaParametro ex:PLC_ControlEjes .
 
-ex:EjeIndicado_830 a ex:ComponenteMecanico ;
-    ex:textoExtracto "en el eje indicado" ;
-    rdfs:label "eje indicado" .
+ex:ParametroG198
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro G198" ;
+    ex:identificador       "G198" ;
+    ex:textoExtracto      "Los límites de software se pueden fijar mediante [...] las funciones G198/G199" .
 
-ex:Herramienta_830 a ex:PiezaRecambio ;
-    ex:textoExtracto "la herramienta de nuevo a una zona permitida" ;
-    rdfs:label "herramienta" .
+ex:ParametroG199
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro G199" ;
+    ex:identificador       "G199" ;
+    ex:textoExtracto      "Los límites de software se pueden fijar mediante [...] las funciones G198/G199" .
 
-ex:ZonaProhibida_830 a ex:AccionProhibida ;
-    ex:textoExtracto "haya superado los límites de software o haya invadido una zona prohibida" ;
-    rdfs:label "zona prohibida" .
-
-ex:ParametroMaquina_830 a ex:Parametro ;
-    ex:textoExtracto "Los límites de software se pueden fijar mediante los parámetros máquina" ;
-    rdfs:label "parámetro máquina" .
-
-ex:FuncionG198_830 a ex:Parametro ;
-    ex:textoExtracto "mediante las funciones G198/G199" ;
-    ex:identificador "G198/G199" ;
-    rdfs:label "función G198/G199" .
-
-ex:Variable_830 a ex:Parametro ;
-    ex:textoExtracto "o mediante variables" ;
-    rdfs:label "variable" .
-
-ex:LimiteRecorrido_830 a ex:Parametro ;
-    ex:textoExtracto "El CNC aplica siempre los límites de recorrido" ;
-    rdfs:label "límite de recorrido" .
+ex:CNC_SistemaControl
+    a                     ex:Sistema ;
+    rdfs:label            "CNC (Sistema de control numérico)" ;
+    ex:textoExtracto      "el CNC vuelve a tener en cuenta los límites de software y las zonas de trabajo en el eje indicado. El CNC aplica siempre los límites de recorrido" ;
+    ex:controla           ex:LimiteSoftwareEje ;
+    ex:mitigaRiesgo       ex:ZonaProhibidaEje .

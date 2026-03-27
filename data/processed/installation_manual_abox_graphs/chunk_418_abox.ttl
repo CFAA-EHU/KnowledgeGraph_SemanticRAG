@@ -1,17 +1,32 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_CORNERACC a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_CORNERACC
+    a ex:Parametro ;
     rdfs:label "CORNERACC" ;
-    ex:identificador "(V.)[ch].MPA.CORNERACC[set].xn" ;
+    ex:identificador "CORNERACC" ;
     ex:textoExtracto "CORNERACC Aceleración máxima permitida en las esquinas. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 100000.0000 mm/s². Valores posibles (2): De 0 a 3937.00787 inch/s². Valores posibles (3): De 0 a 100000.0000 grados/s². Valor por defecto: 0." ;
-    ex:valor "De 0 a 100000.0000 mm/s², De 0 a 3937.00787 inch/s², De 0 a 100000.0000 grados/s²" .
+    ex:valor "0" .
 
-ex:Parametro_CURVACC a ex:Parametro ;
+ex:Parametro_CURVACC
+    a ex:Parametro ;
     rdfs:label "CURVACC" ;
-    ex:identificador "(V.)[ch].MPA.CURVAACC[set].xn" ;
+    ex:identificador "CURVACC" ;
     ex:textoExtracto "CURVACC Aceleración máxima permitida en curvatura. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 100000.0000 mm/s². Valores posibles (2): De 0 a 3937.00787 inch/s². Valores posibles (3): De 0 a 100000.0000 grados/s². Valor por defecto: 0." ;
-    ex:valor "De 0 a 100000.0000 mm/s², De 0 a 3937.00787 inch/s², De 0 a 100000.0000 grados/s²" .
+    ex:valor "0" .
 
-ex:Parametro_CORNERJERK a ex:Parametro ;
+ex:Parametro_CORNERJERK
+    a ex:Parametro ;
     rdfs:label "CORNERJERK" ;
+    ex:identificador "CORNERJERK" ;
     ex:textoExtracto "CORNERJERK Jerk máximo permitido en las esquinas. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." .
+
+ex:ModoOperacion_HSC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC" ;
+    ex:textoExtracto "Estos parámetros permiten aumentar o disminuir los límites de aceleración y jerk en las trayectorias curvas, debido a la aceleración centrípeta y en los empalmes entre trayectorias, sin influir en la manera en la que el eje acelera o decelera." ;
+    ex:tieneComponente ex:Parametro_CORNERACC ;
+    ex:tieneComponente ex:Parametro_CURVACC ;
+    ex:tieneComponente ex:Parametro_CORNERJERK .

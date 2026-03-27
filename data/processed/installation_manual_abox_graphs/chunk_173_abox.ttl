@@ -1,31 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:RENAMECANCEL a ex:Parametro ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_RENAMECANCEL
+    a ex:Parametro ;
     rdfs:label "RENAMECANCEL" ;
-    ex:identificador "(V.)MPG.RENAMECANCEL" ;
-    ex:textoExtracto "RENAMECANCEL Cancelar el cambio de nombre de los ejes y los cabezales. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)MPG.RENAMECANCEL La sentencia #RENAME permite renombrar los ejes y cabezales desde el programa pieza o el modo MDI/MDA. Este parámetro indica si el CNC mantiene o cancela el nombre de los ejes y cabezales tras un reset o al comienzo de un nuevo programa pieza en el mismo canal. Tras el apagado y encendido del CNC, los ejes y cabezales siempre mantienen el nuevo nombre, excepto tras un error de checksum o la validación de los parámetros máquina que impliquen recuperar la configuración original de los canales, ejes o cabezales. En ambos casos, los ejes y cabezales recuperarán sus nombres originales." ;
-    ex:valor "Sí / No" .
+    ex:identificador "MPG.RENAMECANCEL" ;
+    ex:textoExtracto "RENAMECANCEL Cancelar el cambio de nombre de los ejes y los cabezales. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)MPG.RENAMECANCEL" ;
+    ex:valor "Sí"^^xsd:string .
 
-ex:Eje a ex:ComponenteMecanico ;
-    rdfs:label "eje" ;
-    ex:textoExtracto "los ejes y los cabezales" .
+ex:InterfazUsuario_ModoMDI_MDA
+    a ex:ModoOperacion ;
+    rdfs:label "Modo MDI/MDA" ;
+    ex:textoExtracto "La sentencia #RENAME permite renombrar los ejes y cabezales desde el programa pieza o el modo MDI/MDA." .
 
-ex:Cabezal a ex:ComponenteMecanico ;
-    rdfs:label "cabezal" ;
-    ex:textoExtracto "los ejes y los cabezales" .
-
-ex:CNC a ex:Maquina ;
+ex:Sistema_CNC
+    a ex:Sistema ;
     rdfs:label "CNC" ;
-    ex:textoExtracto "el CNC" .
+    ex:textoExtracto "Tras el apagado y encendido del CNC, los ejes y cabezales siempre mantienen el nuevo nombre, excepto tras un error de checksum o la validación de los parámetros máquina que impliquen recuperar la configuración original de los canales, ejes o cabezales." ;
+    ex:tieneComponente ex:Parametro_RENAMECANCEL .
 
-ex:ProgramaPieza a ex:ModoOperacion ;
-    rdfs:label "programa pieza" ;
-    ex:textoExtracto "desde el programa pieza o el modo MDI/MDA" .
+ex:Componente_Ejes
+    a ex:ComponenteMecanico ;
+    rdfs:label "Ejes" ;
+    ex:textoExtracto "renombrar los ejes y cabezales" ;
+    ex:controla ex:Parametro_RENAMECANCEL .
 
-ex:ModoMDI_MDA a ex:ModoOperacion ;
-    rdfs:label "modo MDI/MDA" ;
-    ex:textoExtracto "el modo MDI/MDA" .
-
-ex:SentenciaRENAME a ex:AccionProhibida ;
-    rdfs:label "#RENAME" ;
-    ex:textoExtracto "La sentencia #RENAME permite renombrar los ejes y cabezales" .
+ex:Componente_Cabezales
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezales" ;
+    ex:textoExtracto "renombrar los ejes y cabezales" ;
+    ex:controla ex:Parametro_RENAMECANCEL .

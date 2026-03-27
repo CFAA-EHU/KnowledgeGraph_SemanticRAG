@@ -1,68 +1,73 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:LimiteSoftwareSL ex:textoExtracto "SL Límites de software, aplicados por el CNC." ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:LimitesSoftwareEjes
     a ex:Parametro ;
-    ex:identificador "SL" .
+    rdfs:label "Límites de software de los ejes"@es ;
+    ex:textoExtracto "Los límites de software definen los límites de recorrido de los ejes, para evitar que los carros alcancen los topes mecánicos. El CNC permite definir límites de software en los ejes lineales y ejes rotativos linearlike."@es ;
+    ex:monitoreaParametro ex:PosicionEjes .
 
-ex:LimiteFisicoFL ex:textoExtracto "FL Límites físicos." ;
+ex:PosicionEjes
     a ex:Parametro ;
-    ex:identificador "FL" .
+    rdfs:label "Posiciones programables de los ejes"@es ;
+    ex:textoExtracto "Posiciones programables de los ejes (dependen de la herramienta activa). Las posiciones programables de los ejes dependerán de las dimensiones de cada herramienta."@es ;
+    ex:valor "Dependiente de herramienta activa"@es .
 
-ex:CeroMaquina ex:textoExtracto "Cero máquina." ;
-    a ex:Parametro .
+ex:PuntoReferenciaPortaherramientas
+    a ex:ComponenteMecanico ;
+    rdfs:label "Punto de referencia del portaherramientas"@es ;
+    ex:textoExtracto "X [...] T Punto de referencia del portaherramientas. [...] Si se programa una posición en la que el punto de referencia del portaherramientas sale de los límites de software, el CNC detiene la ejecución y muestra el error correspondiente."@es .
 
-ex:PuntoReferenciaPortaherramientas ex:textoExtracto "Punto de referencia del portaherramientas." ;
-    a ex:Parametro .
+ex:TopesMecanicosEjes
+    a ex:ComponenteMecanico ;
+    rdfs:label "Topes mecánicos de los ejes"@es ;
+    ex:textoExtracto "Los carros alcanzan los topes cuando el punto de referencia del portaherramientas se sitúa en los límites físicos. FL Límites físicos."@es .
 
-ex:CNC ex:textoExtracto "El CNC permite definir límites de software en los ejes lineales y ejes rotativos linearlike." ;
-    a ex:Maquina .
+ex:LimitesFisicosEjes
+    a ex:Parametro ;
+    rdfs:label "Límites físicos de los ejes (FL)"@es ;
+    ex:identificador "FL" ;
+    ex:textoExtracto "FL Límites físicos."@es .
 
-ex:EjeX ex:textoExtracto "X" ;
-    a ex:ComponenteMecanico .
+ex:LimitesSoftwareCNC
+    a ex:Parametro ;
+    rdfs:label "Límites de software aplicados por el CNC (SL)"@es ;
+    ex:identificador "SL" ;
+    ex:textoExtracto "SL Límites de software, aplicados por el CNC."@es ;
+    ex:monitoreaParametro ex:PosicionEjes .
 
-ex:EjeZ ex:textoExtracto "Z" ;
-    a ex:ComponenteMecanico .
+ex:GrupoLimitesSoftware_1
+    a ex:Parametro ;
+    rdfs:label "Grupo 1 de límites de software"@es ;
+    ex:identificador "SL1" ;
+    ex:textoExtracto "El CNC puede tener dos grupos de límites de software activos, donde cada grupo puede estar compuesto por un límite superior y otro inferior en cada eje."@es .
 
-ex:EjeSL ex:textoExtracto "SL" ;
-    a ex:ComponenteMecanico .
+ex:GrupoLimitesSoftware_2
+    a ex:Parametro ;
+    rdfs:label "Grupo 2 de límites de software"@es ;
+    ex:identificador "SL2" ;
+    ex:textoExtracto "El CNC puede tener dos grupos de límites de software activos, donde cada grupo puede estar compuesto por un límite superior y otro inferior en cada eje."@es .
 
-ex:EjeT ex:textoExtracto "T" ;
-    a ex:ComponenteMecanico .
+ex:CeroMaquina
+    a ex:Parametro ;
+    rdfs:label "Cero máquina"@es ;
+    ex:identificador "O" ;
+    ex:textoExtracto "X O Z M OM Cero máquina."@es .
 
-ex:EjeO ex:textoExtracto "O" ;
-    a ex:ComponenteMecanico .
+ex:AlarmaLimiteSoftware
+    a ex:Alarma ;
+    rdfs:label "Alarma por límite de software alcanzado"@es ;
+    ex:textoExtracto "Cuando un eje alcanza los límites de software, el CNC detiene la ejecución y muestra el error correspondiente."@es ;
+    ex:activaAlarma ex:LimitesSoftwareCNC .
 
-ex:EjeM ex:textoExtracto "M" ;
-    a ex:ComponenteMecanico .
+ex:ModoManualCNC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual del CNC"@es ;
+    ex:textoExtracto "Para llevar el eje a la zona permitida, acceder al modo manual y mover el eje o cabezal que ha sobrepasado el límite."@es .
 
-ex:EjeY ex:textoExtracto "Y" ;
-    a ex:ComponenteMecanico .
-
-ex:EjeFL ex:textoExtracto "FL" ;
-    a ex:ComponenteMecanico .
-
-ex:EjeLinealLike ex:textoExtracto "linearlike" ;
-    a ex:ModoOperacion .
-
-ex:LimiteSoftwareSuperior1 ex:textoExtracto "el límite superior e inferior más restrictivo" ;
-    a ex:Parametro .
-
-ex:LimiteSoftwareInferior1 ex:textoExtracto "el límite superior e inferior más restrictivo" ;
-    a ex:Parametro .
-
-ex:LimiteSoftwareSuperior2 ex:textoExtracto "el límite superior e inferior más restrictivo" ;
-    a ex:Parametro .
-
-ex:LimiteSoftwareInferior2 ex:textoExtracto "el límite superior e inferior más restrictivo" ;
-    a ex:Parametro .
-
-ex:VariableLimiteSoftware ex:textoExtracto "El CNC dispone de la siguiente variable para indicar que alguno de los ejes alcanzado los límites de software." ;
-    a ex:Parametro .
-
-ex:ModoManual ex:textoExtracto "acceder al modo manual y mover el eje o cabezal que ha sobrepasado el límite." ;
-    a ex:ModoOperacion .
-
-ex:AccionDetenerEjecucion ex:textoExtracto "el CNC detiene la ejecución y muestra el error correspondiente." ;
-    a ex:AccionProhibida .
-
-ex:AccionMostrarError ex:textoExtracto "el CNC detiene la ejecución y muestra el error correspondiente." ;
-    a ex:AccionProhibida .
+ex:VariableIndicadoraLimiteSoftware
+    a ex:Parametro ;
+    rdfs:label "Variable de CNC: límite de software alcanzado"@es ;
+    ex:textoExtracto "El CNC dispone de la siguiente variable para indicar que alguno de los ejes alcanzado los límites de software."@es .

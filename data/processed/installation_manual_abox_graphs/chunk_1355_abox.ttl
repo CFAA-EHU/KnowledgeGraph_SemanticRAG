@@ -1,55 +1,105 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Q7A a ex:Maquina ;
-    ex:textoExtracto "La plataforma Q7-A dispone de bus EtherCAT para la comunicación con módulos remotos de I/Os (propios o de terceros)." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:BusEtherCAT a ex:Sistema ;
-    ex:textoExtracto "La plataforma Q7-A dispone de bus EtherCAT para la comunicación con módulos remotos de I/Os (propios o de terceros). El CNC es el elemento máster del bus, y el resto de recursos estará repartido por nodos (hasta 32). El máster del bus interpreta los ficheros ENI (EtherCAT Network Information) generados por un configurador, e inicializa los esclavos conectados al bus. Este bus es compatible con el bus CAN, encargado de la gestión de teclados y paneles de mando. El CNC puede tener I/Os remotas en ambos buses de forma simultánea (CAN/EtherCAT), siempre que ambos buses no usen los mismos recursos." ;
-    ex:tieneComponente ex:CNC_Q7A ;
-    ex:tieneComponente ex:BusCAN .
+ex:BusEtherCAT_Q7_A
+    a ex:Sistema ;
+    rdfs:label "Bus EtherCAT de la plataforma Q7-A"@es ;
+    ex:textoExtracto "La plataforma Q7-A dispone de bus EtherCAT para la comunicación con módulos remotos de I/Os (propios o de terceros)."@es ;
+    ex:identificador "EtherCAT" ;
+    ex:tieneComponente ex:CNC_Q7_A_Master ;
+    ex:tieneComponente ex:NodosEtherCAT_Q7_A ;
+    ex:tieneComponente ex:EntradasDigitales_EtherCAT_Q7_A ;
+    ex:tieneComponente ex:SalidasDigitales_EtherCAT_Q7_A ;
+    ex:tieneComponente ex:EntradasAnalogicasGP_EtherCAT_Q7_A ;
+    ex:tieneComponente ex:SalidasAnalogicasGP_EtherCAT_Q7_A ;
+    ex:tieneComponente ex:EntradasAnalogicasPt100_EtherCAT_Q7_A ;
+    ex:documentadoEn ex:TablaRecursosBusEtherCAT_Q7_A ;
+    ex:monitoreaParametro ex:Parametro_LOOPTIME .
 
-ex:CNC_Q7A a ex:ComponenteElectrico ;
-    ex:textoExtracto "El CNC es el elemento máster del bus" ;
-    ex:identificador "CNC" .
+ex:CNC_Q7_A_Master
+    a ex:ComponenteElectrico ;
+    rdfs:label "CNC (master del bus EtherCAT)"@es ;
+    ex:textoExtracto "El CNC es el elemento máster del bus, y el resto de recursos estará repartido por nodos (hasta 32)."@es ;
+    ex:controla ex:NodosEtherCAT_Q7_A ;
+    ex:controla ex:BusEtherCAT_Q7_A .
 
-ex:BusCAN a ex:Sistema ;
-    ex:textoExtracto "Este bus es compatible con el bus CAN, encargado de la gestión de teclados y paneles de mando." .
+ex:NodosEtherCAT_Q7_A
+    a ex:ComponenteElectrico ;
+    rdfs:label "Nodos del bus EtherCAT (hasta 32)"@es ;
+    ex:textoExtracto "El CNC es el elemento máster del bus, y el resto de recursos estará repartido por nodos (hasta 32)."@es ;
+    ex:compuestoPor ex:ModulosIO_Remotos .
 
-ex:ConfiguradorEtherCAT a ex:Herramienta ;
-    ex:textoExtracto "Utilizar el configurador \"KPA EtherCAT Studio\" para definir la topología del bus y generar el fichero ENI con la información de los dispositivos EtherCAT conectados al CNC." ;
+ex:ModulosIO_Remotos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulos remotos de I/O (propios o de terceros)"@es ;
+    ex:textoExtracto "bus EtherCAT para la comunicación con módulos remotos de I/Os (propios o de terceros)."@es .
+
+ex:EntradasDigitales_EtherCAT_Q7_A
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas digitales del bus EtherCAT"@es ;
+    ex:textoExtracto "Entradas digitales. | 1024"@es ;
+    ex:valor "1024"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:SalidasDigitales_EtherCAT_Q7_A
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salidas digitales del bus EtherCAT"@es ;
+    ex:textoExtracto "Salidas digitales. | 1024"@es ;
+    ex:valor "1024"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:EntradasAnalogicasGP_EtherCAT_Q7_A
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entradas analógicas de propósito general (bus EtherCAT)"@es ;
+    ex:textoExtracto "Entradas analógicas de propósito general. | 40"@es ;
+    ex:valor "40"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:SalidasAnalogicasGP_EtherCAT_Q7_A
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salidas analógicas de propósito general (bus EtherCAT)"@es ;
+    ex:textoExtracto "Salidas analógicas de propósito general. | 40"@es ;
+    ex:valor "40"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:EntradasAnalogicasPt100_EtherCAT_Q7_A
+    a ex:ComponenteElectrico , ex:Sensor ;
+    rdfs:label "Entradas analógicas para sondas Pt100 (bus EtherCAT)"@es ;
+    ex:textoExtracto "Entradas analógicas para sondas de temperatura Pt100. | 10"@es ;
+    ex:valor "10"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:TablaRecursosBusEtherCAT_Q7_A
+    a ex:Tabla ;
+    rdfs:label "Tabla de recursos disponibles en el bus EtherCAT (Q7-A)"@es ;
+    ex:textoExtracto "Recursos disponibles en el bus. | Recursos del bus. | Total en el bus. | --- | --- | Entradas digitales. | 1024 | Salidas digitales. | 1024 | Entradas analógicas de propósito general. | 40 | Salidas analógicas de propósito general. | 40 | Entradas analógicas para sondas de temperatura Pt100. | 10"@es ;
+    ex:detalladoEnEsquema ex:BusEtherCAT_Q7_A .
+
+ex:Parametro_LOOPTIME
+    a ex:Parametro ;
+    rdfs:label "LOOPTIME" ;
+    ex:textoExtracto "El tiempo de ciclo del bus está definido por el parámetro LOOPTIME."@es ;
+    ex:valor "LOOPTIME" .
+
+ex:Software_KPA_EtherCAT_Studio
+    a ex:Herramienta ;
+    rdfs:label "KPA EtherCAT Studio" ;
+    ex:textoExtracto "Utilizar el configurador \"KPA EtherCAT Studio\" para definir la topología del bus y generar el fichero ENI con la información de los dispositivos EtherCAT conectados al CNC."@es ;
     ex:identificador "KPA EtherCAT Studio" .
 
-ex:FicheroENI a ex:Tabla ;
-    ex:textoExtracto "generar el fichero ENI (EtherCAT Network Information) generados por un configurador" ;
-    ex:identificador "ENI" .
-
-ex:MapperEtherCAT a ex:Herramienta ;
-    ex:textoExtracto "Utilizar el programa \"Fagor EtherCAT Mapper\" para mapear los recursos EtherCAT a recursos PLC (entradas, salidas y registros) y generar el archivo con la información del mapeo." ;
+ex:Software_Fagor_EtherCAT_Mapper
+    a ex:Herramienta ;
+    rdfs:label "Fagor EtherCAT Mapper" ;
+    ex:textoExtracto "Utilizar el programa \"Fagor EtherCAT Mapper\" para mapear los recursos EtherCAT a recursos PLC (entradas, salidas y registros) y generar el archivo con la información del mapeo."@es ;
     ex:identificador "Fagor EtherCAT Mapper" .
 
-ex:ParametroLOOPTIME a ex:Parametro ;
-    ex:textoExtracto "El tiempo de ciclo del bus está definido por el parámetro LOOPTIME." ;
-    ex:identificador "LOOPTIME" .
+ex:Archivo_fagor_ethercatConfFile_xml
+    a ex:Consumible ;
+    rdfs:label "fagor_ethercatConfFile.xml" ;
+    ex:textoExtracto "Copiar el archivo creado por \"KPA EtherCAT Studio\" como fagor_ethercatConfFile.xml."@es ;
+    ex:identificador "fagor_ethercatConfFile.xml" ;
+    ex:requiereConsumible ex:Software_KPA_EtherCAT_Studio .
 
-ex:TablaRecursosBus a ex:Tabla ;
-    ex:textoExtracto "Recursos disponibles en el bus. | Recursos del bus. | Total en el bus. | Entradas digitales. | 1024 | Salidas digitales. | 1024 | Entradas analógicas de propósito general. | 40 | Salidas analógicas de propósito general. | 40 | Entradas analógicas para sondas de temperatura Pt100. | 10 |" ;
-    ex:tieneComponente ex:EntradasDigitales_1024, ex:SalidasDigitales_1024, ex:EntradasAnalogicasGenerales_40, ex:SalidasAnalogicasGenerales_40, ex:EntradasAnalogicasPt100_10 .
-
-ex:EntradasDigitales_1024 a ex:Sensor ;
-    ex:textoExtracto "Entradas digitales. | 1024" ;
-    ex:valor "1024" .
-
-ex:SalidasDigitales_1024 a ex:Actuador ;
-    ex:textoExtracto "Salidas digitales. | 1024" ;
-    ex:valor "1024" .
-
-ex:EntradasAnalogicasGenerales_40 a ex:Sensor ;
-    ex:textoExtracto "Entradas analógicas de propósito general. | 40" ;
-    ex:valor "40" .
-
-ex:SalidasAnalogicasGenerales_40 a ex:Actuador ;
-    ex:textoExtracto "Salidas analógicas de propósito general. | 40" ;
-    ex:valor "40" .
-
-ex:EntradasAnalogicasPt100_10 a ex:Sensor ;
-    ex:textoExtracto "Entradas analógicas para sondas de temperatura Pt100. | 10" ;
-    ex:valor "10" .
+ex:Archivo_resourceRouterConf_xml
+    a ex:Consumible ;
+    rdfs:label "resourceRouterConf.xml" ;
+    ex:textoExtracto "Copiar el archivo creado por \"Fagor EtherCAT Mapper\" como resourceRouterConf.xml."@es ;
+    ex:identificador "resourceRouterConf.xml" ;
+    ex:requiereConsumible ex:Software_Fagor_EtherCAT_Mapper .

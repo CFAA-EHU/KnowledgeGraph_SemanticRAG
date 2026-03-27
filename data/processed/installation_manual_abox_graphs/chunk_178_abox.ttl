@@ -1,19 +1,48 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Parametro_CHNAXIS a ex:Parametro ;
-    rdfs:label "CHNAXIS" ;
-    ex:identificador "CHNAXIS" ;
-    ex:textoExtracto "CHNAXIS Número de ejes del canal. Valores posibles: De 0 a 28. Valor por defecto: 3. Variable asociada: (V.)[ch].MPG.CHNAXIS Este parámetro establece el número de ejes del canal, estén servocontrolados o no. Un canal podrá tener asociado inicialmente uno, varios o ninguno de los ejes definidos en el sistema. En cualquier caso, el número de ejes asignados al canal no puede ser mayor que el número de ejes del sistema, definido en el parámetro NAXIS. La suma de los ejes asignados a los canales tampoco podrá superar el número de ejes del sistema. Desde el programa pieza se podrá modificar la configuración de ejes de un canal (definiendo una nueva configuración, añadiendo o quitando ejes) mediante las sentencias #SET AX, #FREE AX y #CALL AX." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_CHAXISNAME a ex:Parametro ;
-    rdfs:label "CHAXISNAME" ;
-    ex:identificador "CHAXISNAME" ;
-    ex:textoExtracto "CHAXISNAME Lista de ejes del canal. Este parámetro muestra la tabla para definir los nombres de los ejes. El número de ejes del canal lo establece el parámetro CHNAXIS. | CHAXISNAME |  | CHAXISNAME n | Nombre de los ejes. | CHAXISNAME n Nombre de los ejes. Valores posibles: Cualquier eje definido en AXISNAME. Valor por defecto: Comenzando por CHAXISNAME1; X, Y, Z... Variable asociada: (V.)[ch].MPG.CHAXISNAMEn Parámetro incluido en la tabla CHAXISNAME. Puede pertenecer al canal cualquier eje definido en el parámetro AXISNAME. A la hora de definir los ejes, hay que tener en cuenta que el orden en el que se definen establece su índice en el canal. El primer eje de la tabla tendrá índice ꞏ1ꞏ y así sucesivamente. Al igual que el nombre del eje, el índice en el canal permite identificar el eje en variables, marcas de PLC, etc." .
+ex:Parametro_CHNAXIS
+    a ex:Parametro ;
+    rdfs:label "CHNAXIS" ;
+    ex:textoExtracto "CHNAXIS Número de ejes del canal. Valores posibles: De 0 a 28. Valor por defecto: 3. Este parámetro establece el número de ejes del canal, estén servocontrolados o no." ;
+    ex:valor "3" ;
+    ex:identificador "(V.)[ch].MPG.CHNAXIS" .
+
+ex:Parametro_NAXIS
+    a ex:Parametro ;
+    rdfs:label "NAXIS" ;
+    ex:textoExtracto "el número de ejes asignados al canal no puede ser mayor que el número de ejes del sistema, definido en el parámetro NAXIS." ;
+    ex:identificador "NAXIS" .
 
 ex:Tabla_CHAXISNAME a ex:Tabla ;
-    ex:textoExtracto "CHAXISNAME Lista de ejes del canal. Este parámetro muestra la tabla para definir los nombres de los ejes. El número de ejes del canal lo establece el parámetro CHNAXIS. | CHAXISNAME |  | CHAXISNAME n | Nombre de los ejes." ;
-    ex:detalladoEnEsquema ex:Parametro_CHAXISNAME .
+     a ex:Tabla ;
+    rdfs:label "CHAXISNAME" ;
+    ex:textoExtracto "CHAXISNAME Lista de ejes del canal. Este parámetro muestra la tabla para definir los nombres de los ejes. El número de ejes del canal lo establece el parámetro CHNAXIS." ;
+    ex:identificador "(V.)[ch].MPG.CHAXISNAMEn" .
 
-ex:SistemaEjes a ex:Sistema ;
-    ex:textoExtracto "Un canal podrá tener asociado inicialmente uno, varios o ninguno de los ejes definidos en el sistema. En cualquier caso, el número de ejes asignados al canal no puede ser mayor que el número de ejes del sistema, definido en el parámetro NAXIS. La suma de los ejes asignados a los canales tampoco podrá superar el número de ejes del sistema." ;
-    ex:tieneComponente ex:Parametro_CHNAXIS, ex:Parametro_CHAXISNAME .
+ex:Parametro_CHAXISNAME_n
+    a ex:Parametro ;
+    rdfs:label "CHAXISNAME n" ;
+    ex:textoExtracto "CHAXISNAME n Nombre de los ejes. Valores posibles: Cualquier eje definido en AXISNAME. Valor por defecto: Comenzando por CHAXISNAME1; X, Y, Z..." ;
+    ex:identificador "CHAXISNAME1" ;
+    ex:documentadoEn ex:Tabla_CHAXISNAME .
+
+ex:Parametro_AXISNAME
+    a ex:Parametro ;
+    rdfs:label "AXISNAME" ;
+    ex:textoExtracto "Puede pertenecer al canal cualquier eje definido en el parámetro AXISNAME." ;
+    ex:identificador "AXISNAME" .
+
+ex:Sistema_Ejes
+    a ex:Sistema ;
+    rdfs:label "Sistema de ejes" ;
+    ex:textoExtracto "Un canal podrá tener asociado inicialmente uno, varios o ninguno de los ejes definidos en el sistema." ;
+    ex:tieneComponente ex:Parametro_NAXIS .
+
+ex:Parametro_CHNAXIS
+    ex:monitoreaParametro ex:Parametro_NAXIS .
+
+ex:Tabla_CHAXISNAME a ex:Tabla ;
+    ex:detalladoEnEsquema ex:Sistema_Ejes .

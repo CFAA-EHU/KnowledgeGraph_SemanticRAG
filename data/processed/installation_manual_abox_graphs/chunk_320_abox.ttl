@@ -1,23 +1,35 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:SLIMIT a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SLIMIT
+    a ex:Parametro ;
     rdfs:label "SLIMIT" ;
     ex:identificador "SLIMIT" ;
-    ex:textoExtracto "SLIMIT Límite máximo de seguridad para la velocidad del cabezal. Parámetro válido para cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 200000.0000 rpm. Valor por defecto: 0 (no hay limitación). Variable asociada: (V.)[ch].MPA.SLIMIT.sn Este parámetro establece el límite máximo de seguridad para la velocidad del cabezal, a aplicar por ejemplo, cuando se realizan labores de mantenimiento en la máquina, operaciones con las seguridades deshabilitadas (puertas abiertas), etc. El valor definido se activa desde el PLC (marcas SLIMITAC o SLIMITACSPDL) y el CNC lo aplica en el bloque en ejecución. Al desactivar los límites, el CNC recupera la velocidad programada." ;
-    ex:valor "0 a 200000.0000 rpm" ;
-    ex:valor "0 (no hay limitación)" .
+    ex:textoExtracto "SLIMIT Límite máximo de seguridad para la velocidad del cabezal. Parámetro válido para cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 200000.0000 rpm. Valor por defecto: 0 (no hay limitación)." ;
+    ex:valor "0-200000.0000 rpm" ;
+    ex:monitoreaParametro ex:VelocidadCabezal .
 
-ex:Parametro_SLIMITAC a ex:Parametro ;
-    rdfs:label "SLIMITAC" ;
-    ex:identificador "SLIMITAC" ;
-    ex:textoExtracto "El valor definido se activa desde el PLC (marcas SLIMITAC o SLIMITACSPDL)" .
+ex:VelocidadCabezal
+    a ex:Parametro ;
+    rdfs:label "velocidad del cabezal" ;
+    ex:textoExtracto "límite máximo de seguridad para la velocidad del cabezal" .
 
-ex:Parametro_SLIMITACSPDL a ex:Parametro ;
-    rdfs:label "SLIMITACSPDL" ;
-    ex:identificador "SLIMITACSPDL" ;
-    ex:textoExtracto "El valor definido se activa desde el PLC (marcas SLIMITAC o SLIMITACSPDL)" .
+ex:PLC_SLIMITAC
+    a ex:ComponenteElectrico ;
+    rdfs:label "marca SLIMITAC (PLC)" ;
+    ex:textoExtracto "El valor definido se activa desde el PLC (marcas SLIMITAC o SLIMITACSPDL)" ;
+    ex:controla ex:SLIMIT .
 
-ex:Variable_MPA_SLIMIT_sn a ex:Parametro ;
-    rdfs:label "(V.)[ch].MPA.SLIMIT.sn" ;
-    ex:identificador "(V.)[ch].MPA.SLIMIT.sn" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.SLIMIT.sn" .
+ex:PLC_SLIMITACSPDL
+    a ex:ComponenteElectrico ;
+    rdfs:label "marca SLIMITACSPDL (PLC)" ;
+    ex:textoExtracto "El valor definido se activa desde el PLC (marcas SLIMITAC o SLIMITACSPDL)" ;
+    ex:controla ex:SLIMIT .
+
+ex:CNC_SeguridadVelocidad
+    a ex:Sistema ;
+    rdfs:label "Sistema de limitación de velocidad (CNC)" ;
+    ex:textoExtracto "el CNC lo aplica en el bloque en ejecución. Al desactivar los límites, el CNC recupera la velocidad programada." ;
+    ex:controla ex:SLIMIT .

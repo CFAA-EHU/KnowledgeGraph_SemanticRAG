@@ -1,19 +1,38 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:G136 a ex:Parametro ;
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_COMPCANCEL
+    a ex:Parametro ;
     rdfs:label "COMPCANCEL" ;
-    ex:identificador "G136" ;
+    ex:identificador "G136 COMPCANCEL" ;
+    ex:valor "Sin movimiento" ;
     ex:textoExtracto "G136 COMPCANCEL Cómo cancelar la compensación de radio. Valores posibles: Con movimiento / Sin movimiento. Valor por defecto: Sin movimiento. Variable asociada: (V.)[ch].MPG.COMPCANCEL Este parámetro indica si la compensación de radio se desactiva en el primer bloque de desplazamiento, aunque no intervengan los ejes del plano, o si por el contrario es necesario que haya un desplazamiento de los ejes del plano." .
 
-ex:G00COMP a ex:Parametro ;
-    rdfs:label "COMP" ;
+ex:Parametro_G00COMP
+    a ex:Parametro ;
+    rdfs:label "G00COMP" ;
     ex:identificador "G00COMP" ;
+    ex:valor "Sí (fresadora y torno) / No (láser)" ;
     ex:textoExtracto "G00COMP Aplicar compensación de radio en G00. Valores posibles: Sí / No. Valor por defecto: Sí (fresadora y torno) / No (láser). Variable asociada: (V.)[ch].MPG.G00COMP Este parámetro indica si el CNC aplica o no compensación de radio en los movimientos en G00." .
 
-ex:LCOMPTYP a ex:Parametro ;
+ex:Parametro_LCOMPTYP
+    a ex:Parametro ;
     rdfs:label "LCOMPTYP" ;
-    ex:textoExtracto "LCOMPTYP Mantener el eje longitudinal al cambiar plano (G17/G18/G19). Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPG.LCOMPTYPE Este parámetro indica cuál es el eje longitudinal de la herramienta al cambiar de plano (G17/G18/G19). En ambos casos, el eje longitudinal se puede modificar desde el programa pieza mediante las funciones G20 o #TOOL AX. | LCOMPTYP | Significado. | Sí. | Al cambiar de plano de trabajo (G17/G18/G19), el CNC mantiene el eje longitudinal que se encontraba activo antes del cambio de plano. | No. | Al cambiar de plano de trabajo (G17/G18/G19), el CNC asume como nuevo eje longitudinal el eje perpendicular al plano." .
+    ex:identificador "LCOMPTYP" ;
+    ex:valor "No" ;
+    ex:textoExtracto "LCOMPTYP Mantener el eje longitudinal al cambiar plano (G17/G18/G19). Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPG.LCOMPTYPE Este parámetro indica cuál es el eje longitudinal de la herramienta al cambiar de plano (G17/G18/G19)." .
 
-ex:PLANECANCEL a ex:Parametro ;
+ex:Tabla_LCOMPTYP_Significado a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Significado de LCOMPTYP" ;
+    ex:textoExtracto "| LCOMPTYP | Significado. | --- | --- | Sí. | Al cambiar de plano de trabajo (G17/G18/G19), el CNC mantiene el eje longitudinal que se encontraba activo antes del cambio de plano. | No. | Al cambiar de plano de trabajo (G17/G18/G19), el CNC asume como nuevo eje longitudinal el eje perpendicular al plano. |" ;
+    ex:documentadoEn ex:Parametro_LCOMPTYP .
+
+ex:Parametro_PLANECANCEL
+    a ex:Parametro ;
     rdfs:label "PLANECANCEL" ;
+    ex:identificador "PLANECANCEL" ;
+    ex:valor "Sí" ;
     ex:textoExtracto "PLANECANCEL Asumir IPLANE como plano activo tras M30/RESET o mantener el activo. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)[ch].MPG.PLANECANCEL Este parámetro define cuál es el plano activo tras ejecutar M02, M30 o reset." .

@@ -1,16 +1,22 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Parametro_SercosVelocidadCaptacion ex:textoExtracto "Sercos velocidad con captación interna+externa con contajes locales. Este parámetro habilita la alarma de captación por hardware, a través del pin de alarma del conector. Esta alarma pretende discernir la desconexión o ruptura de alguno de los cables de la captación para señales tanto TTL diferenciales como senoidales." ;
-    a ex:Parametro ;
-    ex:identificador "Sercos velocidad con captación interna+externa con contajes locales" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Alarma_Captacion ex:textoExtracto "Este parámetro habilita la alarma de captación por hardware, a través del pin de alarma del conector." ;
-    a ex:Alarma ;
-    ex:identificador "alarma de captación" .
+ex:Parametro_SercosVelocidadCaptacion
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro Sercos velocidad con captación interna+externa con contajes locales"@es ;
+    ex:textoExtracto "Sercos velocidad con captación interna+externa con contajes locales. Este parámetro habilita la alarma de captación por hardware"@es ;
+    ex:identificador "Sercos velocidad con captación interna+externa" ;
+    ex:activaAlarma  ex:Alarma_CaptacionHardware .
 
-ex:Conector_AlarmaCaptacion ex:textoExtracto "a través del pin de alarma del conector" ;
-    a ex:ComponenteElectrico ;
-    ex:identificador "conector" .
+ex:Alarma_CaptacionHardware
+    a               ex:Alarma ;
+    rdfs:label      "Alarma de captación por hardware"@es ;
+    ex:textoExtracto "Esta alarma pretende discernir la desconexión o ruptura de alguno de los cables de la captación para señales tanto TTL diferenciales como senoidales"@es ;
+    ex:monitoreaParametro ex:Parametro_SercosVelocidadCaptacion .
 
-ex:ComponenteElectrico_CablesCaptacion ex:textoExtracto "la desconexión o ruptura de alguno de los cables de la captación" ;
-    a ex:ComponenteElectrico ;
-    ex:identificador "cables de la captación" .
+ex:ComponenteElectrico_ConectorAlarma
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Conector de alarma de captación"@es ;
+    ex:textoExtracto "pin de alarma del conector"@es .

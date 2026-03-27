@@ -1,51 +1,89 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MotorMaestro a ex:ComponenteMecanico ;
-    ex:textoExtracto "T.mst Par del motor maestro." ;
-    rdfs:label "Motor maestro" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MotorEsclavo a ex:ComponenteMecanico ;
-    ex:textoExtracto "T.slv Par del motor esclavo." ;
-    rdfs:label "Motor esclavo" .
+ex:SistemaTandem_67
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de configuración tándem para motores" ;
+    ex:textoExtracto "los dos motores... Este parámetro hace referencia al motor maestro." ;
+    ex:tieneComponente
+                    ex:MotorMaestro_67 ,
+                    ex:MotorEsclavo_67 ,
+                    ex:Parametro_Kp_67 ,
+                    ex:Parametro_Ki_67 ,
+                    ex:Parametro_TCOMPLIM_67 ,
+                    ex:Parametro_TINTTIME_67 ,
+                    ex:Parametro_Smax_67 ,
+                    ex:Parametro_Tnom_67 ,
+                    ex:Parametro_Terr_67 .
 
-ex:TablaTandem a ex:Tabla ;
-    ex:textoExtracto "Parámetro incluido en la tabla TANDEM" ;
-    rdfs:label "Tabla TANDEM" .
+ex:MotorMaestro_67
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Motor maestro (T.mst)" ;
+    ex:textoExtracto "T.mst Par del motor maestro... Este parámetro hace referencia al motor maestro." .
 
-ex:ParametroTINTTIME a ex:Parametro ;
-    ex:identificador "TINTTIME" ;
-    ex:textoExtracto "TINTTIME Pareja tándem. Ganancia integral (Ki) para el tándem. Valores posibles: De 0 a 65535 milisegundos. Valor por defecto: 0 (no se aplica ganancia integral). Variable asociada: (V.)MPG.TINTTIME[nb] Parámetro incluido en la tabla TANDEM." ;
-    rdfs:label "Parámetro TINTTIME" .
+ex:MotorEsclavo_67
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Motor esclavo (T.slv)" ;
+    ex:textoExtracto "T.slv Par del motor esclavo... T.err = (–T.mst + T.slv + PRELOAD)" .
 
-ex:ParametroTCOMPLIM a ex:Parametro ;
-    ex:identificador "TCOMPLIM" ;
-    ex:textoExtracto "TCOMPLIM Pareja tándem. Límite de la compensación. Valores posibles: De 0 a 100%. Valor por defecto: 0 (se deshabilita el eje tándem). Variable asociada: (V.)MPG.TCOMPLIM[nb] Parámetro incluido en la tabla TANDEM." ;
-    rdfs:label "Parámetro TCOMPLIM" .
-
-ex:ParametroKp a ex:Parametro ;
+ex:Parametro_Kp_67
+    a               ex:Parametro ;
+    rdfs:label      "Ganancia proporcional (Kp)" ;
     ex:identificador "Kp" ;
-    ex:textoExtracto "Kp Ganancia proporcional." ;
-    rdfs:label "Parámetro Kp" .
+    ex:valor         "10 rpm/Nm"@es ;
+    ex:textoExtracto "Kp Ganancia proporcional... Kp = (2000 rpm / 20 Nm) ꞏ 0.1 = 10 rpm/Nm." ;
+    ex:monitoreaParametro
+                    ex:Parametro_Terr_67 .
 
-ex:ParametroKi a ex:Parametro ;
-    ex:identificador "Ki" ;
-    ex:textoExtracto "Ki Ganancia integral." ;
-    rdfs:label "Parámetro Ki" .
+ex:Parametro_Ki_67
+    a               ex:Parametro ;
+    rdfs:label      "Ganancia integral (Ki)" ;
+    ex:identificador "TINTTIME" ;
+    ex:valor         "0"@es ;
+    ex:textoExtracto "Ganancia integral (Ki) para el tándem... Valor por defecto: 0 (no se aplica ganancia integral)." .
 
-ex:ParametroTnom a ex:Parametro ;
+ex:Parametro_TCOMPLIM_67
+    a               ex:Parametro ;
+    rdfs:label      "Límite de compensación tándem (TCOMPLIM)" ;
+    ex:identificador "TCOMPLIM" ;
+    ex:valor         "0"@es ;
+    ex:textoExtracto "TCOMPLIM Pareja tándem. Límite de la compensación... Valor por defecto: 0 (se deshabilita el eje tándem)." .
+
+ex:Parametro_TINTTIME_67
+    a               ex:Parametro ;
+    rdfs:label      "Tiempo integral (TINTTIME)" ;
+    ex:identificador "TINTTIME" ;
+    ex:valor         "0"@es ;
+    ex:textoExtracto "TINTTIME Pareja tándem. Ganancia integral (Ki)... Valores posibles: De 0 a 65535 milisegundos." .
+
+ex:Parametro_Smax_67
+    a               ex:Parametro ;
+    rdfs:label      "Velocidad máxima (S.max)" ;
+    ex:identificador "S.max" ;
+    ex:valor         "2000 rpm"@es ;
+    ex:textoExtracto "S.max Velocidad máxima... Se dispone de un eje tándem con una velocidad máxima de 2000 rpm." .
+
+ex:Parametro_Tnom_67
+    a               ex:Parametro ;
+    rdfs:label      "Par nominal (T.nom)" ;
     ex:identificador "T.nom" ;
-    ex:textoExtracto "T.nom Par nominal." ;
-    rdfs:label "Parámetro T.nom" .
+    ex:valor         "20 Nm"@es ;
+    ex:textoExtracto "T.nom Par nominal... un par nominal de 20 Nm." .
 
-ex:ParametroTerr a ex:Parametro ;
+ex:Parametro_Terr_67
+    a               ex:Parametro ;
+    rdfs:label      "Error de par entre motores (T.err)" ;
     ex:identificador "T.err" ;
-    ex:textoExtracto "T.err Error de par entre motores. T.err = (–T.mst+T.slv+PRELOAD)" ;
-    rdfs:label "Parámetro T.err" .
+    ex:textoExtracto "T.err Error de par entre motores... T.err = (–T.mst + T.slv + PRELOAD)" ;
+    ex:monitoreaParametro
+                    ex:MotorMaestro_67 ,
+                    ex:MotorEsclavo_67 .
 
-ex:ParametroPRELOAD a ex:Parametro ;
-    ex:identificador "PRELOAD" ;
-    ex:textoExtracto "T.err = (–T.mst+T.slv+PRELOAD)" ;
-    rdfs:label "Parámetro PRELOAD" .
-
-ex:TablaTandem a ex:Tabla ;
-    ex:tieneComponente ex:ParametroTINTTIME, ex:ParametroTCOMPLIM .
+ex:TablaTandem_67 a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de parámetros TANDEM" ;
+    ex:textoExtracto "Parámetro incluido en la tabla TANDEM... Variable asociada: (V.)MPG.TINTTIME[nb]" ;
+    ex:documentadoEn
+                    ex:SistemaTandem_67 .

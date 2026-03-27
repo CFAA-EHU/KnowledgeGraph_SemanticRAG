@@ -1,46 +1,45 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:EjeMaestroA a ex:Maquina ;
-    rdfs:label "eje maestro" ;
-    ex:textoExtracto "El eje maestro se puede mover de la forma habitual desde el panel de jog, modo MDI/MDA, etc." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EjeEsclavoA a ex:Maquina ;
-    rdfs:label "eje esclavo" ;
-    ex:textoExtracto "el eje esclavo se desacopla del maestro, y ambos ejes se pueden mover de forma independiente", "El eje esclavo únicamente se puede mover desde el PLC a través del PLCOFFSET" .
+ex:SistemaTandemEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de ejes en tándem" ;
+    ex:textoExtracto "Si el PLC activa esta marca, el eje esclavo se desacopla del maestro, y ambos ejes se pueden mover de forma independiente. [...] Aunque el tándem esté desacoplado, desde el punto de vista de programación, visualización, etc el tándem está activo." .
 
-ex:TandemA a ex:Sistema ;
-    rdfs:label "tándem" ;
-    ex:textoExtracto "esclavo del tándem", "Aunque el tándem esté desacoplado, desde el punto de vista de programación, visualización, etc el tándem está activo" ;
-    ex:compuestoPor ex:EjeMaestroA, ex:EjeEsclavoA .
+ex:SistemaGantryEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de ejes gantry" ;
+    ex:textoExtracto "GANTRYOFF(axis) Esta marca hace referencia al eje esclavo del gantry. Si el PLC activa esta marca (cambio de 0 a 1), el CNC desacopla el eje gantry y permite mover sólo el eje maestro." .
 
-ex:PLCA a ex:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "Si el PLC activa esta marca" .
-
-ex:PLCOFFSETA a ex:Parametro ;
-    rdfs:label "PLCOFFSET" ;
-    ex:textoExtracto "El eje esclavo únicamente se puede mover desde el PLC a través del PLCOFFSET" .
-
-ex:CNCA a ex:ComponenteElectrico ;
-    rdfs:label "CNC" ;
-    ex:textoExtracto "El CNC no generará consigna para el eje esclavo ni aplicará ninguna compensación", "El CNC visualiza las cotas del eje maestro", "El CNC podrá ejecutar una búsqueda de referencia del eje maestro, y al finalizar la búsqueda, el CNC también inicializará la cota del esclavo (con la cota del maestro)" .
-
-ex:GANTRYOFF a ex:Parametro ;
+ex:ParametroGANTRYOFF
+    a ex:Parametro ;
     rdfs:label "GANTRYOFF(axis)" ;
-    ex:textoExtracto "Esta marca hace referencia al eje esclavo del gantry. Si el PLC activa esta marca (cambio de 0 a 1), el CNC desacopla el eje gantry y permite mover sólo el eje maestro" .
+    ex:identificador "GANTRYOFF(axis)" ;
+    ex:textoExtracto "GANTRYOFF(axis) Esta marca hace referencia al eje esclavo del gantry. Si el PLC activa esta marca (cambio de 0 a 1), el CNC desacopla el eje gantry y permite mover sólo el eje maestro." ;
+    ex:monitoreaParametro ex:SistemaGantryEjes .
 
-ex:EjeGantryA a ex:Maquina ;
-    rdfs:label "eje gantry" ;
-    ex:textoExtracto "Esta marca hace referencia al eje esclavo del gantry" .
+ex:ParametroDesacopleTandem
+    a ex:Parametro ;
+    rdfs:label "Marca de desacople del eje esclavo (tándem)" ;
+    ex:textoExtracto "Si el PLC activa esta marca, el eje esclavo se desacopla del maestro, y ambos ejes se pueden mover de forma independiente." ;
+    ex:monitoreaParametro ex:SistemaTandemEjes .
 
-ex:ModoJogA a ex:ModoOperacion ;
-    rdfs:label "modo jog" ;
-    ex:textoExtracto "El eje maestro se puede mover de la forma habitual desde el panel de jog" .
+ex:InterfazPanelJog
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de jog" ;
+    ex:textoExtracto "El eje maestro se puede mover de la forma habitual desde el panel de jog, modo MDI/MDA, etc." ;
+    ex:controla ex:SistemaTandemEjes .
 
-ex:ModoMDIA a ex:ModoOperacion ;
-    rdfs:label "modo MDI/MDA" ;
-    ex:textoExtracto "modo MDI/MDA" .
+ex:ModoMDI_MDA
+    a ex:ModoOperacion ;
+    rdfs:label "Modo MDI/MDA" ;
+    ex:textoExtracto "El eje maestro se puede mover de la forma habitual desde el panel de jog, modo MDI/MDA, etc." ;
+    ex:habilitadoPor ex:InterfazPanelJog .
 
-ex:PanelJogA a ex:InterfazUsuario ;
-    rdfs:label "panel de jog" ;
-    ex:textoExtracto "desde el panel de jog" .
+ex:TareaBusquedaReferencia
+    a ex:TareaMantenimiento ;
+    rdfs:label "Búsqueda de referencia del eje maestro" ;
+    ex:textoExtracto "El CNC podrá ejecutar una búsqueda de referencia del eje maestro, y al finalizar la búsqueda, el CNC también inicializará la cota del esclavo (con la cota del maestro)." ;
+    ex:ejecutadoPor ex:SistemaTandemEjes .

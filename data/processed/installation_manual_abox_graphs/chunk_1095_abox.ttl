@@ -1,44 +1,72 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:BusquedaReferenciaMaquina a ex:ModoOperacion ;
-    ex:textoExtracto "La búsqueda de referencia es la operación mediante la cual se realiza la sincronización del sistema. Esta operación es necesaria cuando el CNC pierde la posición del origen (por ejemplo, apagando la máquina)." ;
-    ex:tieneComponente ex:CNC, ex:Sistema .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:BusquedaReferenciaManual a ex:ModoOperacion ;
-    ex:textoExtracto "Búsqueda de referencia manual, desde el modo manual. Los ejes se referencian de uno en uno. El CNC no conserva el cero pieza y las cotas se visualizan respecto al cero máquina." ;
-    ex:ejecutadoPor ex:ModoManual ;
-    ex:tieneComponente ex:CNC, ex:Eje .
+ex:BusquedaReferenciaM_quina
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Búsqueda de referencia máquina"@es ;
+    ex:textoExtracto      "La búsqueda de referencia es la operación mediante la cual se realiza la sincronización del sistema. Esta operación es necesaria cuando el CNC pierde la posición del origen (por ejemplo, apagando la máquina)."@es ;
+    ex:tieneFrecuencia     ex:Frecuencia_BusquedaReferencia ;
+    ex:ejecutadoPor       ex:Personal_OperadorCNC ;
+    ex:requiereMantenimiento ex:SistemaCNC .
 
-ex:BusquedaReferenciaAutomatica a ex:ModoOperacion ;
-    ex:textoExtracto "Búsqueda de referencia automática, desde el modo manual. Este tipo sólo disponible cuando esta definida la subrutina de búsqueda de referencia asociada a la función G74 (parámetro REFPSUB). Todos los ejes se referencian a la vez. No se anulan los decalajes. Las cotas se visualizan en el sistema de referencia activo." ;
-    ex:ejecutadoPor ex:ModoManual ;
-    ex:tieneComponente ex:CNC, ex:Eje ;
-    ex:identificador "G74" ;
-    ex:identificador "REFPSUB" .
+ex:Frecuencia_BusquedaReferencia
+    a                     ex:Frecuencia ;
+    rdfs:label            "Frecuencia de búsqueda de referencia"@es ;
+    ex:textoExtracto      "Esta operación es necesaria cuando el CNC pierde la posición del origen (por ejemplo, apagando la máquina)."@es .
 
-ex:BusquedaReferenciaPorPrograma a ex:ModoOperacion ;
-    ex:textoExtracto "Búsqueda de referencia por programa o MDI, mediante la función G74. No se anulan los decalajes. Las cotas se visualizan en el sistema de referencia activo." ;
-    ex:ejecutadoPor ex:MDI ;
-    ex:identificador "G74" .
+ex:SistemaCNC
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CNC"@es ;
+    ex:textoExtracto      "La búsqueda de referencia es la operación mediante la cual se realiza la sincronización del sistema."@es ;
+    ex:tieneComponente     ex:Parametro_REFPSUB ;
+    ex:tieneComponente     ex:Parametro_REFVALUE ;
+    ex:tieneComponente     ex:PuntoReferenciaM_quina ;
+    ex:tieneComponente     ex:CeroM_quina .
 
-ex:CeroMaquina a ex:Parametro ;
-    ex:textoExtracto "El cero máquina es el origen del sistema de referencia de la máquina, fijado por el fabricante de la máquina." .
+ex:Parametro_REFPSUB
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro REFPSUB (subrutina G74)"@es ;
+    ex:identificador       "REFPSUB" ;
+    ex:textoExtracto      "Búsqueda de referencia automática, desde el modo manual. Este tipo sólo disponible cuando está definida la subrutina de búsqueda de referencia asociada a la función G74 (parámetro REFPSUB)."@es .
 
-ex:PuntoReferenciaMaquina a ex:Parametro ;
-    ex:textoExtracto "El punto de referencia máquina es un punto de la máquina fijado por el fabricante y referenciado respecto al cero máquina. Este punto puede estar situado en cualquier parte de la máquina." ;
-    ex:tieneComponente ex:CeroMaquina .
+ex:Parametro_REFVALUE
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro REFVALUE (posición punto de referencia)"@es ;
+    ex:identificador       "REFVALUE" ;
+    ex:textoExtracto      "La posición del punto de referencia, para cada eje, se parametriza en el parámetro REFVALUE."@es .
 
-ex:SistemaReferencia a ex:Sistema ;
-    ex:textoExtracto "Sistema de referencia y el punto de referencia máquina." ;
-    ex:compuestoPor ex:CeroMaquina, ex:PuntoReferenciaMaquina .
+ex:PuntoReferenciaM_quina
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Punto de referencia máquina"@es ;
+    ex:textoExtracto      "El punto de referencia máquina es un punto de la máquina fijado por el fabricante y referenciado respecto al cero máquina. Este punto puede estar situado en cualquier parte de la máquina."@es .
 
-ex:ModoManual a ex:ModoOperacion ;
-    ex:textoExtracto "desde el modo manual" .
+ex:CeroM_quina
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Cero máquina"@es ;
+    ex:textoExtracto      "El cero máquina es el origen del sistema de referencia de la máquina, fijado por el fabricante de la máquina."@es .
 
-ex:MDI a ex:InterfazUsuario ;
-    ex:textoExtracto "por programa o MDI" .
+ex:Personal_OperadorCNC
+    a                     ex:Personal ;
+    rdfs:label            "Operador CNC"@es ;
+    ex:textoExtracto      "Búsqueda de referencia manual, desde el modo manual. Los ejes se referencian de uno en uno."@es .
 
-ex:CNC a ex:ComponenteElectrico ;
-    ex:textoExtracto "el CNC" .
+ex:ModoOperacion_Manual
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo manual"@es ;
+    ex:textoExtracto      "Búsqueda de referencia manual, desde el modo manual. [...] Búsqueda de referencia automática, desde el modo manual."@es ;
+    ex:habilitadoPor      ex:Personal_OperadorCNC .
 
-ex:Eje a ex:ComponenteMecanico ;
-    ex:textoExtracto "Los ejes" .
+ex:Funcion_G74 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función G74 (búsqueda de referencia)"@es ;
+    ex:identificador       "G74" ;
+    ex:textoExtracto      "Búsqueda de referencia por programa o MDI, mediante la función G74."@es ;
+    ex:solucionaFallo      ex:PerdidaPosicionCNC .
+
+ex:PerdidaPosicionCNC
+    a                     ex:AvisoSeguridad ;
+    rdfs:label            "Pérdida de posición CNC"@es ;
+    ex:textoExtracto      "Esta operación es necesaria cuando el CNC pierde la posición del origen (por ejemplo, apagando la máquina)."@es ;
+    ex:mitigaRiesgo        ex:BusquedaReferenciaM_quina .

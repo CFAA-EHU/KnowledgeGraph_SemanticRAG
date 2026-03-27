@@ -1,29 +1,41 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:LEAVEPOS a ex:Parametro ;
-    ex:textoExtracto "Este registro indica la posición de almacén en la que hay que dejar la herramienta." ;
-    rdfs:label "LEAVEPOS" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:TAKEPOS a ex:Parametro ;
-    ex:textoExtracto "Este registro indica la posición de almacén que ocupa la herramienta que hay que coger." ;
-    rdfs:label "TAKEPOS" .
+ex:Registro_LEAVEPOS
+    a ex:Parametro ;
+    rdfs:label "Registro LEAVEPOS" ;
+    ex:textoExtracto "LEAVEPOS Este registro indica la posición de almacén en la que hay que dejar la herramienta." ;
+    ex:identificador "LEAVEPOS" .
 
-ex:TMINEM a ex:Parametro ;
-    ex:textoExtracto "Señal de emergencia del gestor. Tratamiento de la señal de emergencia del gestor de herramientas. Si se pulsa la tecla USER12 se activa la emergencia. TMINEM = B11KEYLED1 Lámpara de la tecla USER12 iluminada cuando hay emergencia. TMINEM AND DFU B12KEYBD1 = SET RESTMEM Si se pulsa la tecla USER13 se quita la emergencia." ;
-    rdfs:label "TMINEM" .
+ex:Registro_TAKEPOS
+    a ex:Parametro ;
+    rdfs:label "Registro TAKEPOS" ;
+    ex:textoExtracto "TAKEPOS Este registro indica la posición de almacén que ocupa la herramienta que hay que coger." ;
+    ex:identificador "TAKEPOS" .
 
-ex:USER12 a ex:Sensor ;
+ex:SenalEmergenciaGestor
+    a ex:AvisoSeguridad ;
+    rdfs:label "Señal de emergencia del gestor de herramientas" ;
+    ex:textoExtracto "Señal de emergencia del gestor. Tratamiento de la señal de emergencia del gestor de herramientas." .
+
+ex:Tecla_USER12
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla USER12" ;
     ex:textoExtracto "Si se pulsa la tecla USER12 se activa la emergencia." ;
-    rdfs:label "USER12" .
+    ex:identificador "USER12" ;
+    ex:activaAlarma ex:SenalEmergenciaGestor .
 
-ex:USER13 a ex:Sensor ;
+ex:Lampara_USER12
+    a ex:ElementoSeguridad ;
+    rdfs:label "Lámpara de la tecla USER12" ;
+    ex:textoExtracto "Lámpara de la tecla USER12 iluminada cuando hay emergencia." ;
+    ex:identificador "B11KEYLED1" ;
+    ex:mitigaRiesgo ex:SenalEmergenciaGestor .
+
+ex:Tecla_USER13
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla USER13" ;
     ex:textoExtracto "Si se pulsa la tecla USER13 se quita la emergencia." ;
-    rdfs:label "USER13" .
-
-ex:B11KEYLED1 a ex:ComponenteElectrico ;
-    ex:textoExtracto "TMINEM = B11KEYLED1 Lámpara de la tecla USER12 iluminada cuando hay emergencia." ;
-    rdfs:label "B11KEYLED1" .
-
-ex:B12KEYBD1 a ex:ComponenteElectrico ;
-    ex:textoExtracto "TMINEM AND DFU B12KEYBD1 = SET RESTMEM" ;
-    rdfs:label "B12KEYBD1" .
+    ex:identificador "USER13" .

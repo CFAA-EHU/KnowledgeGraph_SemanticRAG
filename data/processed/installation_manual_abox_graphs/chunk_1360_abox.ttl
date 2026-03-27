@@ -1,52 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:AdaptadorRedEthernet_1360_1 a ex:ComponenteElectrico ;
-    rdfs:label "adaptador de red Ethernet" ;
-    ex:textoExtracto "el primer paso es seleccionar el adaptador de red Ethernet" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:InterfazUsuario_Configurador_1360 a ex:InterfazUsuario ;
-    ex:textoExtracto "el configurador muestra las cabeceras detectadas", "el configurador muestra los módulos detectadas" .
+ex:ModoOperacion_OnlineBusScan
+    a ex:ModoOperacion ;
+    rdfs:label "Modo online: Escanear el bus para detectar módulos"@es ;
+    ex:textoExtracto "20.1.4 Modo online. Escanear el bus para detectar los módulos."@es ;
+    ex:requiereMantenimiento ex:TareaMantenimiento_DetectarModulos .
 
-ex:Maquina_MasterTopologia_1360 a ex:Maquina ;
-    rdfs:label "máster de la topología" ;
-    ex:textoExtracto "colocar el ratón sobre el máster de la topología (ventana izquierda)", "colocar el ratón sobre el máster de la topología (ventana izquierda)" .
+ex:TareaMantenimiento_DetectarModulos
+    a ex:TareaMantenimiento ;
+    rdfs:label "Detección de módulos en bus MDP"@es ;
+    ex:textoExtracto "Para detectar las cabeceras, colocar el ratón sobre el máster de la topología (ventana izquierda), pulsar el botón derecho del ratón y seleccionar la opción 'Scan configuration'. [...] Para detectar los recursos de cada nodo, [...] seleccionar la opción 'Attach master'. [...] Un paso previo para exportar la configuración es desaclopar el máster del bus."@es ;
+    ex:ejecutadoPor ex:InterfazUsuario_ConfiguradorMDP .
 
-ex:AccionProhibida_DesacoplarMaster_1360 a ex:AccionProhibida ;
-    rdfs:label "Desacoplar máster del bus" ;
-    ex:textoExtracto "Un paso previo para exportar la configuración es desaclopar el máster del bus" .
+ex:InterfazUsuario_ConfiguradorMDP
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz del configurador MDP"@es ;
+    ex:textoExtracto "ventana izquierda [...] pestaña 'MDP modules' [...] opciones 'Scan configuration', 'Upload detected Module Ident list', 'Attach master', 'Detach master'."@es ;
+    ex:ilustradoEn ex:Pagina_743_744 .
 
-ex:TareaMantenimiento_ExportarConfiguracion_1360 a ex:TareaMantenimiento ;
-    rdfs:label "Exportar configuración" ;
-    ex:textoExtracto "Un paso previo para exportar la configuración es desaclopar el máster del bus" .
+ex:Pagina_743_744
+    a ex:Pagina ;
+    ex:identificador "743-744" ;
+    ex:documentadoEn ex:Manual_Broaching ;
+    ex:textoExtracto "Sección 20.1.4 Modo online. Escanear el bus para detectar los módulos."@es .
 
-ex:InterfazUsuario_OpcionScanConfiguration_1360 a ex:InterfazUsuario ;
-    rdfs:label "Scan configuration" ;
-    ex:textoExtracto "seleccionar la opción \"Scan configuration\"" .
+ex:Sistema_BusMDP
+    a ex:Sistema ;
+    rdfs:label "Bus MDP con topología máster-nodo"@es ;
+    ex:textoExtracto "máster de la topología [...] cabeceras detectadas [...] módulos detectados en cada nodo."@es ;
+    ex:compuestoPor ex:Componente_MasterMDP ;
+    ex:monitoreaParametro ex:Parametro_ModulosConectados .
 
-ex:InterfazUsuario_OpcionUploadDetectedModuleIdentList_1360 a ex:InterfazUsuario ;
-    rdfs:label "Upload detected Module Ident list" ;
-    ex:textoExtracto "seleccionar la opción \"Upload detected Module Ident list\"" .
+ex:Componente_MasterMDP
+    a ex:ComponenteElectrico ;
+    rdfs:label "Máster de topología MDP"@es ;
+    ex:textoExtracto "colocar el ratón sobre el máster de la topología (ventana izquierda) [...] seleccionar 'Attach master'/'Detach master'."@es ;
+    ex:controla ex:Sistema_BusMDP .
 
-ex:InterfazUsuario_OpcionAttachMaster_1360 a ex:InterfazUsuario ;
-    rdfs:label "Attach master" ;
-    ex:textoExtracto "seleccionar la opción \"Attach master\"" .
-
-ex:InterfazUsuario_OpcionDetachMaster_1360 a ex:InterfazUsuario ;
-    rdfs:label "Detach master" ;
-    ex:textoExtracto "seleccionar la opción \"Detach master\"" .
-
-ex:InterfazUsuario_PestanaMDPModules_1360 a ex:InterfazUsuario ;
-    rdfs:label "pestaña MDP modules" ;
-    ex:textoExtracto "En la pestaña \"MDP modules\"" .
-
-ex:InterfazUsuario_InformacionCabeceras_1360 a ex:InterfazUsuario ;
-    rdfs:label "desplegar información de las cabeceras" ;
-    ex:textoExtracto "Se recomienda desplegar la información de las cabeceras para facilitar la detección de los módulos" .
-
-ex:InterfazUsuario_BotonDerecho_1360 a ex:InterfazUsuario ;
-    rdfs:label "pulsar el botón derecho del ratón" ;
-    ex:textoExtracto "pulsar el botón derecho del ratón" .
-
-ex:InterfazUsuario_VentanaIzquierda_1360 a ex:InterfazUsuario ;
-    rdfs:label "ventana izquierda" ;
-    ex:textoExtracto "ventana izquierda" .
+ex:Parametro_ModulosConectados
+    a ex:Parametro ;
+    rdfs:label "Lista de módulos detectados (Module Ident list)"@es ;
+    ex:textoExtracto "opción 'Upload detected Module Ident list' [...] el configurador muestra los módulos detectados."@es .

@@ -1,17 +1,40 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:MarcaPWM ex:textoExtracto "marca está asociada al control de la potencia del PWM (#PWRCTRL ON [FREQ])" ;
-    a ex:Parametro ;
-    ex:identificador "#PWMOUT. ENABLEPWRFREQ" .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MarcaGap ex:textoExtracto "marca para deshabilitar el control del gap activo" ;
-    a ex:Parametro .
-
-ex:MarcaColisionGap ex:textoExtracto "sensor para el control del gap puede disponer de una señal de colisión que se conecta al CNC" ;
+ex:SensorGapControl
     a ex:Sensor ;
-    ex:textoExtracto "sensor para el control del gap puede disponer de una señal de colisión que se conecta al CNC" .
+    rdfs:label "Sensor para el control del gap"@es ;
+    ex:textoExtracto "El sensor para el control del gap puede disponer de una señal de colisión que se conecta al CNC, y que el PLC la debe gestionar a través de esta marca."@es ;
+    ex:monitoreaParametro ex:ParametroGapCollision .
 
-ex:MarcaLeapfrog ex:textoExtracto "marca para deshabilitar el leapfrog activo" ;
-    a ex:Parametro .
+ex:ParametroGapCollision
+    a ex:Parametro ;
+    rdfs:label "GAPCOLLISION"@es ;
+    ex:identificador "GAPCOLLISION" ;
+    ex:textoExtracto "El sensor para el control del gap puede disponer de una señal de colisión que se conecta al CNC, y que el PLC la debe gestionar a través de esta marca. [...] Con esta marca activa, el CNC mostrará o no un error según lo definido en el parámetro GAPCOLLISION."@es .
 
-ex:MarcaCutViewRefresh ex:textoExtracto "marca para refrescar el Cut_View" ;
-    a ex:Parametro .
+ex:ParametroEnablePwrFreq
+    a ex:Parametro ;
+    rdfs:label "ENABLEPWRFREQ"@es ;
+    ex:identificador "ENABLEPWRFREQ" ;
+    ex:textoExtracto "ENABLEPWRFREQ Marca activa por defecto. Esta marca está asociada al control de la potencia del PWM (#PWRCTRL ON [FREQ])."@es .
+
+ex:ParametroEnableGap
+    a ex:Parametro ;
+    rdfs:label "ENABLEGAP"@es ;
+    ex:identificador "ENABLEGAP" ;
+    ex:textoExtracto "ENABLEGAP Marca activa por defecto. El PLC desactiva esta marca para deshabilitar el control del gap activo."@es .
+
+ex:ParametroEnableLeap
+    a ex:Parametro ;
+    rdfs:label "ENABLELEAP"@es ;
+    ex:identificador "ENABLELEAP" ;
+    ex:textoExtracto "ENABLELEAP El PLC desactiva esta marca para deshabilitar el leapfrog activo."@es .
+
+ex:ParametroCViewRefresh
+    a ex:Parametro ;
+    rdfs:label "CVIEWREFRESH"@es ;
+    ex:identificador "CVIEWREFRESH" ;
+    ex:textoExtracto "CVIEWREFRESH El PLC activa esta marca para refrescar el Cut_View."@es .

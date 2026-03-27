@@ -1,23 +1,40 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:Volante_1259_676 a ex:ComponenteMecanico ;
-    ex:textoExtracto "El volante se configura desde los parámetros máquina del modo manual." ;
-    ex:tieneComponente ex:COUNTERTYPE_1259_676, ex:COUNTERID_1259_676 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:COUNTERTYPE_1259_676 a ex:Parametro ;
-    ex:identificador "COUNTERTYPE" ;
-    ex:textoExtracto "Parámetro. | Significado. | COUNTERTYPE | Tipo de entrada de captación del volante." ;
-    ex:valor "Tipo de entrada de captación del volante" .
+ex:Parametro_COUNTERTYPE
+    a ex:Parametro ;
+    rdfs:label "COUNTERTYPE" ;
+    ex:textoExtracto "Tipo de entrada de captación del volante." ;
+    ex:monitoreaParametro ex:Sistema_EntradaCaptacionVolante .
 
-ex:COUNTERID_1259_676 a ex:Parametro ;
-    ex:identificador "COUNTERID" ;
-    ex:textoExtracto "Parámetro. | Significado. | COUNTERID | Entrada de captación asociada al volante." ;
-    ex:valor "Entrada de captación asociada al volante" .
-
-ex:ModuloRCSS_1259_676 a ex:ComponenteElectrico ;
-    ex:identificador "RCS-S (contadora Sercos)" ;
-    ex:textoExtracto "COUNTERTYPE | Módulo RCS-S (contadora Sercos)" .
-
-ex:EntradaCaptacionSercos_1259_676 a ex:Sensor ;
-    ex:identificador "1 - 32" ;
-    ex:textoExtracto "COUNTERID | 1 - 32." ;
+ex:Parametro_COUNTERID
+    a ex:Parametro ;
+    rdfs:label "COUNTERID" ;
+    ex:textoExtracto "Entrada de captación asociada al volante." ;
+    ex:monitoreaParametro ex:Sistema_EntradaCaptacionVolante ;
     ex:valor "1 - 32" .
+
+ex:Sistema_EntradaCaptacionVolante
+    a ex:Sistema ;
+    rdfs:label "Sistema de entrada de captación del volante" ;
+    ex:textoExtracto "Este parámetro indica dónde está ubicada la entrada de captación del volante; en los módulos remotos, en el teclado, en las entradas de captación locales de la unidad central o en una contadora Sercos." ;
+    ex:compuestoPor ex:Modulo_RCS_S .
+
+ex:Modulo_RCS_S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RCS-S (contadora Sercos)" ;
+    ex:textoExtracto "Módulo RCS-S (contadora Sercos)" ;
+    ex:identificador "RCS-S" .
+
+ex:Tabla_ConfiguracionEntradaCaptacion a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Configuración de entrada de captación en contadora Sercos" ;
+    ex:textoExtracto "| Parámetro | Valor | --- | --- | COUNTERTYPE | Módulo RCS-S (contadora Sercos) | COUNTERID | 1 - 32 |" ;
+    ex:documentadoEn ex:Pagina_676 .
+
+ex:Pagina_676
+    a ex:Pagina ;
+    ex:identificador "676" ;
+    ex:textoExtracto "15.4.4 Configurar la entrada de captación de un volante." .

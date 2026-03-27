@@ -1,64 +1,68 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:SeñalesConsultaEjesCabezalesPLC a ex:ModoOperacion ;
-    ex:textoExtracto "Diagrama temporal análogo al anterior, pero para la maniobra iniciada desde el PLC. Representa PARK(axis), UNPARK(axis), PARKED(axis), DRENA(axis) y REFPOIN(axis) con numeración (1–4) de eventos. La gráfica distingue claramente la iniciación por PARKED, el comienzo de PARK/UNPARK por parte del CNC y la finalización con restablecimiento de habilitaciones." ;
-    ex:compuestoPor ex:PARK, ex:UNPARK, ex:PARKED, ex:DRENA, ex:REFPOIN .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PARK a ex:ModoOperacion ;
-    ex:identificador "PARK(axis)" ;
-    ex:textoExtracto "Representa PARK(axis)" .
+### Esquemas y diagramas
+ex:DiagramaTemporal_PLC_Se_alesEjes
+    a ex:Esquema ;
+    rdfs:label "Diagrama temporal de señales PARK/UNPARK/DRENA/REFPOIN desde PLC"@es ;
+    ex:textoExtracto "Diagrama temporal análogo al anterior, pero para la maniobra iniciada desde el PLC. Representa PARK(axis), UNPARK(axis), PARKED(axis), DRENA(axis) y REFPOIN(axis) con numeración (1–4) de eventos. La gráfica distingue claramente la iniciación por PARKED, el comienzo de PARK/UNPARK por parte del CNC y la finalización con restablecimiento de habilitaciones."@es ;
+    ex:identificador "Señales de consulta de los ejes y cabezales (PLC)" .
 
-ex:UNPARK a ex:ModoOperacion ;
-    ex:identificador "UNPARK(axis)" ;
-    ex:textoExtracto "Representa UNPARK(axis)" .
+### Interfaces de usuario
+ex:OP_PANEL_TecladoUsuario
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel OP-PANEL con teclado de usuario y bloque de teclas de jog"@es ;
+    ex:textoExtracto "Fotografía del panel OP-PANEL con teclado de usuario y bloque de teclas de jog. Se distinguen pulsadores iluminables, con agrupación jerárquica por funciones (usuario, jog, husillo, start/stop) y distribución matricial que el texto asocia a bits KEYBD1/2/3."@es ;
+    ex:ilustradoEn ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:PARKED a ex:ModoOperacion ;
-    ex:identificador "PARKED(axis)" ;
-    ex:textoExtracto "Representa PARKED(axis)" .
+ex:OP_PANEL_329
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel OP-PANEL-329 (selector circular, pulsadores de jog en columna)"@es ;
+    ex:textoExtracto "Fotografía del panel OP-PANEL-329 mostrando un layout compacto: selector circular, pulsadores de jog en columna y teclas de usuario en bloque. La imagen ilustra la codificación por bits de las teclas (user y jog) que se consultan en KEYBD1/2/3 y variantes por panel."@es ;
+    ex:ilustradoEn ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:DRENA a ex:ModoOperacion ;
-    ex:identificador "DRENA(axis)" ;
-    ex:textoExtracto "Representa DRENA(axis)" .
+ex:QC_C65_10K
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel QC-C65□-10K (pantalla integrada, keypad numérico y teclas de jog)"@es ;
+    ex:textoExtracto "Fotografía del panel QC-C65□-10K con pantalla integrada y keypad numérico; a la derecha, un bloque de teclas de jog dispuesto en rejilla. La figura apoya la correspondencia entre posiciones físicas y bits de los registros KEYBDx para este modelo."@es ;
+    ex:ilustradoEn ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:REFPOIN a ex:ModoOperacion ;
-    ex:identificador "REFPOIN(axis)" ;
-    ex:textoExtracto "Representa REFPOIN(axis)" .
+### Componentes lógicos (señales como parámetros monitorizados)
+ex:Se_al_PARK
+    a ex:Parametro ;
+    rdfs:label "PARK(axis)"@es ;
+    ex:textoExtracto "Representa PARK(axis) en el diagrama temporal de maniobra desde PLC."@es ;
+    ex:monitoreaParametro ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:PanelOP_PANEL a ex:InterfazUsuario ;
-    ex:textoExtracto "Fotografía del panel OP-PANEL con teclado de usuario y bloque de teclas de jog. Se distinguen pulsadores iluminables, con agrupación jerárquica por funciones (usuario, jog, husillo, start/stop) y distribución matricial que el texto asocia a bits KEYBD1/2/3." ;
-    ex:compuestoPor ex:TecladoUsuario, ex:BloqueTeclasJog, ex:PulsadoresIluminables .
+ex:Se_al_UNPARK
+    a ex:Parametro ;
+    rdfs:label "UNPARK(axis)"@es ;
+    ex:textoExtracto "Representa UNPARK(axis) en el diagrama temporal de maniobra desde PLC."@es ;
+    ex:monitoreaParametro ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:TecladoUsuario a ex:ComponenteElectrico ;
-    ex:textoExtracto "teclado de usuario" .
+ex:Se_al_PARKED
+    a ex:Parametro ;
+    rdfs:label "PARKED(axis)"@es ;
+    ex:textoExtracto "Representa PARKED(axis) en el diagrama temporal, con iniciación por PARKED."@es ;
+    ex:monitoreaParametro ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:BloqueTeclasJog a ex:ComponenteElectrico ;
-    ex:textoExtracto "bloque de teclas de jog" .
+ex:Se_al_DRENA
+    a ex:Parametro ;
+    rdfs:label "DRENA(axis)"@es ;
+    ex:textoExtracto "Representa DRENA(axis) en el diagrama temporal de maniobra desde PLC."@es ;
+    ex:monitoreaParametro ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:PulsadoresIluminables a ex:ComponenteElectrico ;
-    ex:textoExtracto "pulsadores iluminables" .
+ex:Se_al_REFPOIN
+    a ex:Parametro ;
+    rdfs:label "REFPOIN(axis)"@es ;
+    ex:textoExtracto "Representa REFPOIN(axis) en el diagrama temporal de maniobra desde PLC."@es ;
+    ex:monitoreaParametro ex:DiagramaTemporal_PLC_Se_alesEjes .
 
-ex:PanelOP_PANEL_329 a ex:InterfazUsuario ;
-    ex:textoExtracto "Fotografía del panel OP-PANEL-329 mostrando un layout compacto: selector circular, pulsadores de jog en columna y teclas de usuario en bloque." ;
-    ex:compuestoPor ex:SelectorCircular, ex:PulsadoresJogColumna, ex:TeclasUsuarioBloque .
-
-ex:SelectorCircular a ex:ComponenteElectrico ;
-    ex:textoExtracto "selector circular" .
-
-ex:PulsadoresJogColumna a ex:ComponenteElectrico ;
-    ex:textoExtracto "pulsadores de jog en columna" .
-
-ex:TeclasUsuarioBloque a ex:ComponenteElectrico ;
-    ex:textoExtracto "teclas de usuario en bloque" .
-
-ex:PanelQC_C65_10K a ex:InterfazUsuario ;
-    ex:identificador "QC-C65□-10K" ;
-    ex:textoExtracto "Fotografía del panel QC-C65□-10K con pantalla integrada y keypad numérico; a la derecha, un bloque de teclas de jog dispuesto en rejilla." ;
-    ex:compuestoPor ex:PantallaIntegrada, ex:KeypadNumerico, ex:BloqueTeclasJogRejilla .
-
-ex:PantallaIntegrada a ex:ComponenteElectrico ;
-    ex:textoExtracto "pantalla integrada" .
-
-ex:KeypadNumerico a ex:ComponenteElectrico ;
-    ex:textoExtracto "keypad numérico" .
-
-ex:BloqueTeclasJogRejilla a ex:ComponenteElectrico ;
-    ex:textoExtracto "bloque de teclas de jog dispuesto en rejilla" .
+### Registros de consulta (agrupados como sistema lógico)
+ex:Registros_KEYBD
+    a ex:Sistema ;
+    rdfs:label "Registros KEYBD1/KEYBD2/KEYBD3 para mapeo de teclas"@es ;
+    ex:textoExtracto "Bits KEYBD1/2/3 asociados a la distribución matricial de pulsadores en los paneles OP-PANEL, OP-PANEL-329 y QC-C65-10K."@es ;
+    ex:tieneComponente ex:OP_PANEL_TecladoUsuario, ex:OP_PANEL_329, ex:QC_C65_10K .

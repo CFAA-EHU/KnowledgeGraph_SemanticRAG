@@ -1,20 +1,42 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ModoLimitadorSenal a ex:ModoOperacion ;
-    ex:textoExtracto "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG4 hasta que transcurra el tiempo indicado mediante la constante de tiempo, o hasta que se produzca un flanco de bajada en la entrada TG4." ;
-    ex:tieneComponente ex:EntradaTG4, ex:Temporizador .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:EntradaTG4 a ex:Sensor ;
-    ex:textoExtracto "entrada TG4" .
+ex:ModoOperacion_LimitadorSenial_TG4
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo limitador de la señal (entrada TG4)"@es ;
+    ex:textoExtracto      "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG4 hasta que transcurra el tiempo indicado mediante la constante de tiempo, o hasta que se produzca un flanco de bajada en la entrada TG4."@es ;
+    ex:tieneComponente    ex:Parametro_TEN ,
+                          ex:Parametro_TRS ,
+                          ex:Parametro_T ,
+                          ex:Parametro_ConstanteTiempo ,
+                          ex:Entrada_TG4 .
 
-ex:Temporizador a ex:ComponenteElectrico ;
-    ex:textoExtracto "el temporizador se activa al producirse un flanco de subida en la entrada TG4. En este momento la salida de estado del temporizador (T) cambia de estado (T=1) y comienza la temporización t a partir del valor 0." ;
-    ex:tieneComponente ex:SalidaEstadoTemporizador .
+ex:Parametro_TEN
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro TEN (enable)"@es ;
+    ex:textoExtracto "Con TEN=1 y TRS=0, el temporizador se activa al producirse un flanco de subida en la entrada TG4. [...] Si una vez activado el temporizador se selecciona TEN=0, el PLC detiene la temporización, siendo necesario asignar TEN=1 para que dicha temporización continúe."@es ;
+    ex:valor         "0" , "1" .
 
-ex:SalidaEstadoTemporizador a ex:ComponenteElectrico ;
-    ex:textoExtracto "salida de estado del temporizador (T)" .
+ex:Parametro_TRS
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro TRS (reset)"@es ;
+    ex:textoExtracto "Si se produce un flanco de subida en la entrada TRS, durante la temporización o después de ella, el PLC inicializa el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta (la inicializa a 0)."@es ;
+    ex:valor         "0" .
 
-ex:EntradaTRS a ex:Sensor ;
-    ex:textoExtracto "entrada TRS" .
+ex:Parametro_T
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro T (estado del temporizador)"@es ;
+    ex:textoExtracto "la salida de estado del temporizador (T) cambia de estado (T=1) y comienza la temporización t a partir del valor 0. [...] desactivándose la salida de estado del temporizador (T=0)."@es ;
+    ex:valor         "0" , "1" .
 
-ex:EntradaTEN a ex:Sensor ;
-    ex:textoExtracto "entrada TEN" .
+ex:Parametro_ConstanteTiempo
+    a               ex:Parametro ;
+    rdfs:label      "Constante de tiempo"@es ;
+    ex:textoExtracto "hasta que transcurra el tiempo indicado mediante la constante de tiempo"@es .
+
+ex:Entrada_TG4
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Entrada TG4"@es ;
+    ex:textoExtracto "el temporizador se activa al producirse un flanco de subida en la entrada TG4. [...] Si antes de haber transcurrido el tiempo especificado se produce un flanco de bajada de la entrada de arranque TG4, el PLC da por finalizada la temporización."@es .

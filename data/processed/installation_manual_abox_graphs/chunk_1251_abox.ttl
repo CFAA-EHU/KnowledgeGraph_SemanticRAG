@@ -1,30 +1,42 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:VolanteAvance_1251 a ex:ComponenteMecanico ;
-    rdfs:label "volante de avance" ;
-    ex:textoExtracto "El volante de avance permite utilizar uno de los volantes de la máquina para controlar dicho avance en función de lo rápido que gire el volante." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ConmutadorPanelMando_1251 a ex:InterfazUsuario ;
-    rdfs:label "conmutador del panel de mando" ;
-    ex:textoExtracto "Habitualmente, cuando se mecaniza una pieza por primera vez, el avance se controla mediante el conmutador del panel de mando." .
+ex:VolanteAvance_1251
+    a ex:ComponenteMecanico ;
+    rdfs:label "Volante de avance" ;
+    ex:textoExtracto "El volante de avance permite utilizar uno de los volantes de la máquina para controlar dicho avance en función de lo rápido que gire el volante." ;
+    ex:controla ex:AvanceMecanizado_1251 ;
+    ex:monitoreaParametro ex:VariableImpulsosVolante_1251 .
 
-ex:PulsadorExterno_1251 a ex:ElementoSeguridad ;
-    rdfs:label "pulsador externo" ;
-    ex:textoExtracto "Habitualmente esta prestación se activa y desactiva mediante un pulsador externo o una tecla configurada a tal efecto." .
+ex:AvanceMecanizado_1251
+    a ex:Parametro ;
+    rdfs:label "Avance de mecanizado" ;
+    ex:textoExtracto "El avance se controla mediante el conmutador del panel de mando." ;
+    ex:valor "Controlado por conmutador o volante de avance"@es .
 
-ex:VariableGHandP_1251 a ex:Parametro ;
+ex:VariableImpulsosVolante_1251
+    a ex:Parametro ;
+    rdfs:label "Número de impulsos del volante" ;
     ex:identificador "(V.)G.HANDP[hw]" ;
-    ex:textoExtracto "Conocer el número de impulsos enviados por el volante. La lectura del número de impulsos del volante se realiza con la siguiente variable. | Variable. | Significado. | | --- | --- | | (V.)G.HANDP[hw] | Número de impulsos enviados por el volante desde el arranque del sistema." ;
-    ex:valor "Número de impulsos enviados por el volante desde el arranque del sistema" .
+    ex:textoExtracto "| Variable. | Significado. | --- | --- | (V.)G.HANDP[hw] | Número de impulsos enviados por el volante desde el arranque del sistema." ;
+    ex:valor "Número de impulsos desde arranque"@es .
 
-ex:PLC_1251 a ex:Sistema ;
-    rdfs:label "PLC" ;
-    ex:textoExtracto "La gestión del volante de avance se debe realizar desde el PLC." .
-
-ex:ConmutadorFeedOverride_1251 a ex:InterfazUsuario ;
-    rdfs:label "conmutador feed override" ;
+ex:ConmutadorFeedOverride_1251
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conmutador feed override" ;
     ex:textoExtracto "Inhibir desde el PLC todas las posiciones del conmutador feed override." .
 
-ex:Volante_1251 a ex:ComponenteMecanico ;
-    rdfs:label "volante" ;
-    ex:textoExtracto "Detectar cuánto gira el volante (lectura de los impulsos recibidos)." .
+ex:PLC_1251
+    a ex:Sistema ;
+    rdfs:label "PLC de control" ;
+    ex:textoExtracto "La gestión del volante de avance se debe realizar desde el PLC. [...] La maniobra del PLC debe contemplar los siguientes elementos: [...] Fijar desde el PLC el feed override en función de los impulsos de volante." ;
+    ex:controla ex:VolanteAvance_1251 ;
+    ex:controla ex:ConmutadorFeedOverride_1251 ;
+    ex:monitoreaParametro ex:VariableImpulsosVolante_1251 .
+
+ex:PulsadorActivacionVolante_1251
+    a ex:ComponenteElectrico ;
+    rdfs:label "Pulsador de activación del volante de avance" ;
+    ex:textoExtracto "Habitualmente esta prestación se activa y desactiva mediante un pulsador externo o una tecla configurada a tal efecto." .

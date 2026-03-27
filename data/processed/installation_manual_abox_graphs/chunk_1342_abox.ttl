@@ -1,78 +1,81 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PorcentajeAvance_1342_732 a ex:Parametro ;
-    rdfs:label "Porcentaje de avance (feed override)" ;
-    ex:textoExtracto "El porcentaje de avance (feed override) se puede fijar, de más a más prioridad, por programa (variable V.G.PRGFRO), por PLC (variable V.PLC.FRO) o desde el conmutador del panel de mando." ;
-    ex:valor "fijado por programa, PLC o conmutador del panel de mando" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:VariablePrograma_1342_732 a ex:Parametro ;
-    rdfs:label "Variable V.G.PRGFRO" ;
-    ex:identificador "V.G.PRGFRO" ;
-    ex:textoExtracto "por programa (variable V.G.PRGFRO)" .
+ex:Parametro_V_GPRGFRO
+    a ex:Parametro ;
+    rdfs:label "Variable de porcentaje de avance por programa (V.G.PRGFRO)"@es ;
+    ex:textoExtracto "El porcentaje de avance (feed override) se puede fijar [...] por programa (variable V.G.PRGFRO)"@es ;
+    ex:identificador "V.G.PRGFRO" .
 
-ex:VariablePLC_1342_732 a ex:Parametro ;
-    rdfs:label "Variable V.PLC.FRO" ;
-    ex:identificador "V.PLC.FRO" ;
-    ex:textoExtracto "por PLC (variable V.PLC.FRO)" .
+ex:Parametro_V_PLC_FRO
+    a ex:Parametro ;
+    rdfs:label "Variable de porcentaje de avance por PLC (V.PLC.FRO)"@es ;
+    ex:textoExtracto "El porcentaje de avance (feed override) se puede fijar [...] por PLC (variable V.PLC.FRO)"@es ;
+    ex:identificador "V.PLC.FRO" .
 
-ex:ConmutadorPanelMando_1342_732 a ex:InterfazUsuario ;
-    rdfs:label "Conmutador del panel de mando" ;
-    ex:textoExtracto "desde el conmutador del panel de mando" .
+ex:InterfazUsuario_ConmutadorPanelMando
+    a ex:InterfazUsuario ;
+    rdfs:label "Conmutador del panel de mando para feed override"@es ;
+    ex:textoExtracto "El porcentaje de avance (feed override) se puede fijar [...] desde el conmutador del panel de mando"@es .
 
-ex:VariableDMC_1342_732 a ex:Parametro ;
-    rdfs:label "Variable DMC" ;
-    ex:identificador "DMC" ;
-    ex:textoExtracto "El porcentaje fijado por el DMC afecta al porcentaje fijado desde el conmutador." .
+ex:Parametro_OVRMIN_DMCON
+    a ex:Parametro ;
+    rdfs:label "Límite mínimo de override DMC (OVRMIN en #DMCON)"@es ;
+    ex:textoExtracto "El DMC podrá modificar su override dentro de los límites fijados por la sentencia #DMCON (comandos OVRMIN, OVRMAX)"@es ;
+    ex:identificador "OVRMIN" .
 
-ex:SentenciaDMCON_1342_732 a ex:Esquema ;
-    rdfs:label "#DMCON" ;
-    ex:identificador "#DMCON" ;
-    ex:textoExtracto "dentro de los límites fijados por la sentencia #DMCON (comandos OVRMIN, OVRMAX)" .
+ex:Parametro_OVRMAX_DMCON
+    a ex:Parametro ;
+    rdfs:label "Límite máximo de override DMC (OVRMAX en #DMCON)"@es ;
+    ex:textoExtracto "El DMC podrá modificar su override dentro de los límites fijados por la sentencia #DMCON (comandos OVRMIN, OVRMAX)"@es ;
+    ex:identificador "OVRMAX" .
 
-ex:ParametroMINDMCOVR_1342_732 a ex:Parametro ;
-    rdfs:label "MINDMCOVR" ;
-    ex:identificador "MINDMCOVR" ;
-    ex:textoExtracto "los límites estarán fijados por los parámetros máquina MINDMCOVR y MAXDMCOVR" .
+ex:Parametro_MINDMCOVR
+    a ex:Parametro ;
+    rdfs:label "Límite mínimo de override DMC (parámetro máquina MINDMCOVR)"@es ;
+    ex:textoExtracto "si no se definen [OVRMIN/OVRMAX], los límites estarán fijados por los parámetros máquina MINDMCOVR y MAXDMCOVR"@es ;
+    ex:identificador "MINDMCOVR" .
 
-ex:ParametroMAXDMCOVR_1342_732 a ex:Parametro ;
-    rdfs:label "MAXDMCOVR" ;
-    ex:identificador "MAXDMCOVR" ;
-    ex:textoExtracto "los límites estarán fijados por los parámetros máquina MINDMCOVR y MAXDMCOVR" .
+ex:Parametro_MAXDMCOVR
+    a ex:Parametro ;
+    rdfs:label "Límite máximo de override DMC (parámetro máquina MAXDMCOVR)"@es ;
+    ex:textoExtracto "si no se definen [OVRMIN/OVRMAX], los límites estarán fijados por los parámetros máquina MINDMCOVR y MAXDMCOVR"@es ;
+    ex:identificador "MAXDMCOVR" .
 
-ex:ParametroMAXOVR_1342_732 a ex:Parametro ;
-    rdfs:label "MAXOVR" ;
-    ex:identificador "MAXOVR" ;
-    ex:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR" .
+ex:Parametro_MAXOVR
+    a ex:Parametro ;
+    rdfs:label "Límite máximo de override global (parámetro máquina MAXOVR)"@es ;
+    ex:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR"@es ;
+    ex:identificador "MAXOVR" .
 
-ex:ComandoOVRMIN_1342_732 a ex:Parametro ;
-    rdfs:label "OVRMIN" ;
-    ex:identificador "OVRMIN" ;
-    ex:textoExtracto "comandos OVRMIN, OVRMAX" .
+ex:Parametro_FZMIN_DMCON
+    a ex:Parametro ;
+    rdfs:label "Avance por diente mínimo (FZMIN en #DMCON)"@es ;
+    ex:textoExtracto "El CNC respeta el avance por diente mínimo [...] fijado para la herramienta en la sentencia #DMCON (comandos FZMIN, FZMAX)"@es ;
+    ex:identificador "FZMIN" .
 
-ex:ComandoOVRMAX_1342_732 a ex:Parametro ;
-    rdfs:label "OVRMAX" ;
-    ex:identificador "OVRMAX" ;
-    ex:textoExtracto "comandos OVRMIN, OVRMAX" .
+ex:Parametro_FZMAX_DMCON
+    a ex:Parametro ;
+    rdfs:label "Avance por diente máximo (FZMAX en #DMCON)"@es ;
+    ex:textoExtracto "El CNC respeta el avance por diente máximo [...] fijado para la herramienta en la sentencia #DMCON (comandos FZMIN, FZMAX)"@es ;
+    ex:identificador "FZMAX" .
 
-ex:ParametroFZMIN_1342_732 a ex:Parametro ;
-    rdfs:label "FZMIN" ;
-    ex:identificador "FZMIN" ;
-    ex:textoExtracto "el avance por diente mínimo y máximo fijado para la herramienta en la sentencia #DMCON (comandos FZMIN, FZMAX)" .
+ex:Sistema_DMC
+    a ex:Sistema ;
+    rdfs:label "Sistema DMC (Dynamic Machining Control)"@es ;
+    ex:textoExtracto "El porcentaje fijado por el DMC afecta al porcentaje fijado desde el conmutador. [...] El DMC podrá modificar su override dentro de los límites fijados por la sentencia #DMCON"@es ;
+    ex:monitoreaParametro ex:Parametro_OVRMIN_DMCON ;
+    ex:monitoreaParametro ex:Parametro_OVRMAX_DMCON ;
+    ex:monitoreaParametro ex:Parametro_FZMIN_DMCON ;
+    ex:monitoreaParametro ex:Parametro_FZMAX_DMCON .
 
-ex:ParametroFZMAX_1342_732 a ex:Parametro ;
-    rdfs:label "FZMAX" ;
-    ex:identificador "FZMAX" ;
-    ex:textoExtracto "el avance por diente mínimo y máximo fijado para la herramienta en la sentencia #DMCON (comandos FZMIN, FZMAX)" .
-
-ex:PorcentajeAvance_1342_732 ex:tieneComponente ex:VariablePrograma_1342_732 ;
-    ex:tieneComponente ex:VariablePLC_1342_732 ;
-    ex:tieneComponente ex:ConmutadorPanelMando_1342_732 ;
-    ex:tieneComponente ex:VariableDMC_1342_732 ;
-    ex:tieneComponente ex:SentenciaDMCON_1342_732 ;
-    ex:tieneComponente ex:ParametroMINDMCOVR_1342_732 ;
-    ex:tieneComponente ex:ParametroMAXDMCOVR_1342_732 ;
-    ex:tieneComponente ex:ParametroMAXOVR_1342_732 ;
-    ex:tieneComponente ex:ComandoOVRMIN_1342_732 ;
-    ex:tieneComponente ex:ComandoOVRMAX_1342_732 ;
-    ex:tieneComponente ex:ParametroFZMIN_1342_732 ;
-    ex:tieneComponente ex:ParametroFZMAX_1342_732 .
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC (Control Numérico Computarizado)"@es ;
+    ex:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR. [...] El CNC respeta el avance por diente mínimo y máximo fijado para la herramienta"@es ;
+    ex:monitoreaParametro ex:Parametro_MAXOVR ;
+    ex:monitoreaParametro ex:Parametro_MINDMCOVR ;
+    ex:monitoreaParametro ex:Parametro_MAXDMCOVR ;
+    ex:controla ex:Sistema_DMC .

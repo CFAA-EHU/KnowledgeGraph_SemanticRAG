@@ -1,51 +1,58 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Polilinea1415 a ex:Componente ;
-    rdfs:label "Polilínea" ;
-    ex:textoExtracto "La polilínea muestra cómo se alcanza cada posición con el avance del propio bloque, el del siguiente o avance nulo, evidenciando los cambios de consigna entre tramos." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SSTROBE a ex:Sensor ;
+### Interfaz de visualización de errores (pág. 403)
+ex:Interfaz_MessagesAndErrors
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz MESSAGES AND ERRORS"@es ;
+    ex:textoExtracto "Captura de interfaz 'MESSAGES AND ERRORS' con una tabla tipo lista de mensajes numerados (MSG1… ERRxxx) y su estado, más un área inferior que muestra campos 'SHOW', 'MESSAGE FILE', 'PLC RUNNING', etc."@es ;
+    ex:ilustradoEn ex:Figura_VisualizacionErroresPLC .
+
+ex:Figura_VisualizacionErroresPLC
+    a ex:Figura ;
+    rdfs:label "Diagrama de visualización de errores y mensajes del PLC"@es ;
+    ex:textoExtracto "Captura de interfaz 'MESSAGES AND ERRORS' con una tabla tipo lista de mensajes numerados (MSG1… ERRxxx) y su estado, más un área inferior que muestra campos 'SHOW', 'MESSAGE FILE', 'PLC RUNNING', etc."@es .
+
+### Parámetro de temporización (págs. 402-403)
+ex:Parametro_MINAENDW
+    a ex:Parametro ;
+    rdfs:label "MINAENDW" ;
+    ex:identificador "MINAENDW" ;
+    ex:textoExtracto "El gráfico ilustra [...] el tiempo mínimo definido (MINAENDW) antes de concluir la operación."@es ;
+    ex:monitoreaParametro ex:Sensor_AUXEND ;
+    ex:ilustradoEn ex:Figura_DiagramaTemporalSincronizado, ex:Figura_DiagramaTemporalNoSincronizado .
+
+### Señales digitales (págs. 402-403)
+ex:Sensor_SSTROBE
+    a ex:Sensor ;
     rdfs:label "SSTROBE" ;
-    ex:textoExtracto "tres señales digitales (SSTROBE, MSTROBE y AUXEND)" .
+    ex:identificador "SSTROBE" ;
+    ex:textoExtracto "Diagrama temporal con tres señales digitales (SSTROBE, MSTROBE y AUXEND) representadas en forma de trenes de impulsos"@es ;
+    ex:ilustradoEn ex:Figura_DiagramaTemporalSincronizado, ex:Figura_DiagramaTemporalNoSincronizado .
 
-ex:MSTROBE a ex:Sensor ;
+ex:Sensor_MSTROBE
+    a ex:Sensor ;
     rdfs:label "MSTROBE" ;
-    ex:textoExtracto "tres señales digitales (SSTROBE, MSTROBE y AUXEND)" .
+    ex:identificador "MSTROBE" ;
+    ex:textoExtracto "Diagrama temporal con tres señales digitales (SSTROBE, MSTROBE y AUXEND) representadas en forma de trenes de impulsos"@es ;
+    ex:ilustradoEn ex:Figura_DiagramaTemporalSincronizado, ex:Figura_DiagramaTemporalNoSincronizado .
 
-ex:AUXEND a ex:Sensor ;
+ex:Sensor_AUXEND
+    a ex:Sensor ;
     rdfs:label "AUXEND" ;
-    ex:textoExtracto "tres señales digitales (SSTROBE, MSTROBE y AUXEND)" .
+    ex:identificador "AUXEND" ;
+    ex:textoExtracto "Diagrama temporal con tres señales digitales (SSTROBE, MSTROBE y AUXEND) representadas en forma de trenes de impulsos"@es ;
+    ex:ilustradoEn ex:Figura_DiagramaTemporalSincronizado, ex:Figura_DiagramaTemporalNoSincronizado .
 
-ex:MINAENDW1 a ex:Parametro ;
-    rdfs:label "MINAENDW" ;
-    ex:textoExtracto "Se resalta el parámetro de temporización MINAENDW mediante una cota horizontal." ;
-    ex:valor "tiempo mínimo" .
+### Figuras de diagramas temporales
+ex:Figura_DiagramaTemporalSincronizado
+    a ex:Figura ;
+    rdfs:label "Diagrama temporal de transferencia sincronizada (SSTROBE/MSTROBE/AUXEND)"@es ;
+    ex:textoExtracto "Diagrama temporal con tres señales digitales (SSTROBE, MSTROBE y AUXEND) representadas en forma de trenes de impulsos y numeradas (1–4) para indicar la secuencia de ejecución. Se resalta el parámetro de temporización MINAENDW mediante una cota horizontal."@es .
 
-ex:MINAENDW2 a ex:Parametro ;
-    rdfs:label "MINAENDW" ;
-    ex:textoExtracto "incluyendo una cota de duración MINAENDW" ;
-    ex:valor "tiempo mínimo" .
-
-ex:InterfazMensajesErrores a ex:InterfazUsuario ;
-    rdfs:label "MESSAGES AND ERRORS" ;
-    ex:textoExtracto "Captura de interfaz 'MESSAGES AND ERRORS' con una tabla tipo lista de mensajes numerados (MSG1… ERRxxx) y su estado, más un área inferior que muestra campos 'SHOW', 'MESSAGE FILE', 'PLC RUNNING', etc." .
-
-ex:MSG1 a ex:AvisoSeguridad ;
-    rdfs:label "MSG1" ;
-    ex:textoExtracto "tabla tipo lista de mensajes numerados (MSG1… ERRxxx)" .
-
-ex:ERRxxx a ex:AvisoSeguridad ;
-    rdfs:label "ERRxxx" ;
-    ex:textoExtracto "tabla tipo lista de mensajes numerados (MSG1… ERRxxx)" .
-
-ex:CampoSHOW a ex:Parametro ;
-    rdfs:label "SHOW" ;
-    ex:textoExtracto "área inferior que muestra campos 'SHOW', 'MESSAGE FILE', 'PLC RUNNING', etc." .
-
-ex:CampoMESSAGEFILE a ex:Parametro ;
-    rdfs:label "MESSAGE FILE" ;
-    ex:textoExtracto "área inferior que muestra campos 'SHOW', 'MESSAGE FILE', 'PLC RUNNING', etc." .
-
-ex:CampoPLCRUNNING a ex:Parametro ;
-    rdfs:label "PLC RUNNING" ;
-    ex:textoExtracto "área inferior que muestra campos 'SHOW', 'MESSAGE FILE', 'PLC RUNNING', etc." .
+ex:Figura_DiagramaTemporalNoSincronizado
+    a ex:Figura ;
+    rdfs:label "Diagrama temporal de transferencia no sincronizada (SSTROBE/MSTROBE/PLC EXECUTION)"@es ;
+    ex:textoExtracto "Diagrama temporal con SSTROBE/MSTROBE y la traza 'PLC EXECUTION', incluyendo una cota de duración MINAENDW. Muestra que, en transferencias no sincronizadas, el CNC mantiene el 'strobe' durante el tiempo mínimo y continúa la ejecución sin esperar confirmación del PLC."@es .

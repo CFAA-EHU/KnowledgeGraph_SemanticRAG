@@ -1,28 +1,67 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:GamasDeTrabajo_1392 a ex:Sistema ;
-    ex:textoExtracto "Gamas de trabajo | Título: — --- panel 'Ajuste apropiado' (icono de verificación) para AC-Forward: respuesta del sistema sin ganancia AC-forward (10 µm por cuadro) frente a respuesta con AC-forward (1 µm por cuadro). Se muestran dos trazas superpuestas donde la segunda reduce picos en arranques y paradas, indicando menor error de seguimiento en cambios de aceleración." ;
-    ex:compuestoPor ex:PanelAjusteApropiado_1392 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PanelAjusteApropiado_1392 a ex:InterfazUsuario ;
-    ex:textoExtracto "panel 'Ajuste apropiado' (icono de verificación) para AC-Forward" .
+ex:Parametro_ACForward
+    a ex:Parametro ;
+    rdfs:label "AC-Forward" ;
+    ex:textoExtracto "respuesta del sistema sin ganancia AC-forward (10 µm por cuadro) frente a respuesta con AC-forward (1 µm por cuadro). Se muestran dos trazas superpuestas donde la segunda reduce picos en arranques y paradas, indicando menor error de seguimiento en cambios de aceleración." ;
+    ex:monitoreaParametro ex:InterfazUsuario_AjusteApropiado .
 
-ex:GamasDeTrabajo_1392_2 a ex:Sistema ;
-    ex:textoExtracto "Gamas de trabajo | Título: — --- panel 'Picos invertidos; ajuste inapropiado' (icono de equis) que evidencia un AC-Forward excesivo: los picos de error se invierten y aparecen oscilaciones, señalando un sobreajuste de la constante de tiempo/ganancia de aceleración." ;
-    ex:compuestoPor ex:PanelPicosInvertidos_1392 .
+ex:Parametro_ACForward_Excesivo
+    a ex:Parametro ;
+    rdfs:label "AC-Forward excesivo" ;
+    ex:textoExtracto "los picos de error se invierten y aparecen oscilaciones, señalando un sobreajuste de la constante de tiempo/ganancia de aceleración." ;
+    ex:monitoreaParametro ex:InterfazUsuario_PicosInvertidos .
 
-ex:PanelPicosInvertidos_1392 a ex:InterfazUsuario ;
-    ex:textoExtracto "panel 'Picos invertidos; ajuste inapropiado' (icono de equis)" .
+ex:Parametro_ACCJERK
+    a ex:Parametro ;
+    rdfs:label "ACCJERK" ;
+    ex:textoExtracto "rampas con pendiente limitada por ACCJERK/DECJERK, mostrando cómo los límites de jerk suavizan la transición de aceleración." .
 
-ex:GamasDeTrabajo_1392_3 a ex:Sistema ;
-    ex:textoExtracto "conjunto de tres gráficos sincronizados para aceleración trapezoidal/seno-cuadrado: velocidad v(t), aceleración a(t) y jerk j(t). Se numeran siete fases (1–7) con líneas de puntos, mostrando rampas con pendiente limitada por ACCJERK/DECJERK, mesetas a ACCEL/DECEL y tramos de avance constante. El esquema visualiza cómo los límites de jerk suavizan la transición de aceleración." ;
-    ex:compuestoPor ex:EsquemaAceleracionTrapezoidal_1392 .
+ex:Parametro_DECJERK
+    a ex:Parametro ;
+    rdfs:label "DECJERK" ;
+    ex:textoExtracto "rampas con pendiente limitada por ACCJERK/DECJERK." .
 
-ex:EsquemaAceleracionTrapezoidal_1392 a ex:Esquema ;
-    ex:textoExtracto "conjunto de tres gráficos sincronizados para aceleración trapezoidal/seno-cuadrado: velocidad v(t), aceleración a(t) y jerk j(t)" .
+ex:Parametro_ACCEL
+    a ex:Parametro ;
+    rdfs:label "ACCEL" ;
+    ex:textoExtracto "mesetas a ACCEL/DECEL y tramos de avance constante." .
 
-ex:GamasDeTrabajo_1392_4 a ex:Sistema ;
+ex:Parametro_DECEL
+    a ex:Parametro ;
+    rdfs:label "DECEL" ;
+    ex:textoExtracto "mesetas a ACCEL/DECEL." .
+
+ex:Parametro_G00FEED
+    a ex:Parametro ;
+    rdfs:label "G00FEED" ;
+    ex:textoExtracto "tríptico de aceleración trapezoidal para alcanzar G00FEED en tiempo t." .
+
+ex:InterfazUsuario_AjusteApropiado
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel 'Ajuste apropiado'" ;
+    ex:identificador "icono de verificación" ;
+    ex:textoExtracto "panel 'Ajuste apropiado' (icono de verificación) para AC-Forward: respuesta del sistema sin ganancia AC-forward (10 µm por cuadro) frente a respuesta con AC-forward (1 µm por cuadro)." ;
+    ex:ilustradoEn ex:Esquema_GamasTrabajo_Ejes .
+
+ex:InterfazUsuario_PicosInvertidos
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel 'Picos invertidos; ajuste inapropiado'" ;
+    ex:identificador "icono de equis" ;
+    ex:textoExtracto "panel 'Picos invertidos; ajuste inapropiado' (icono de equis) que evidencia un AC-Forward excesivo: los picos de error se invierten y aparecen oscilaciones." ;
+    ex:ilustradoEn ex:Esquema_GamasTrabajo_Ejes .
+
+ex:Esquema_GamasTrabajo_Ejes
+    a ex:Esquema ;
+    rdfs:label "Gamas de trabajo - Parámetros máquina de los ejes" ;
+    ex:textoExtracto "conjunto de tres gráficos sincronizados para aceleración trapezoidal/seno-cuadrado: velocidad v(t), aceleración a(t) y jerk j(t). Se numeran siete fases (1–7) con líneas de puntos, mostrando rampas con pendiente limitada por ACCJERK/DECJERK, mesetas a ACCEL/DECEL y tramos de avance constante." ;
+    ex:detalladoEnEsquema ex:Parametro_ACCJERK, ex:Parametro_DECJERK, ex:Parametro_ACCEL, ex:Parametro_DECEL .
+
+ex:Esquema_TripticoG00FEED
+    a ex:Esquema ;
+    rdfs:label "Tríptico de aceleración trapezoidal para G00FEED" ;
     ex:textoExtracto "tríptico de aceleración trapezoidal para alcanzar G00FEED en tiempo t: gráficos v(t), a(t) y j(t) con indicaciones t/2 o t/3. Se comparan dos parametrizaciones: (i) ACCEL máxima y ACCJERK mínimo; (ii) ACCEL menor y ACCJERK mayor, que acorta el tiempo hasta aceleración máxima y mantiene más tiempo la meseta." ;
-    ex:compuestoPor ex:TripticoAceleracionTrapezoidal_1392 .
-
-ex:TripticoAceleracionTrapezoidal_1392 a ex:InterfazUsuario ;
-    ex:textoExtracto "tríptico de aceleración trapezoidal para alcanzar G00FEED en tiempo t: gráficos v(t), a(t) y j(t)" .
+    ex:detalladoEnEsquema ex:Parametro_G00FEED, ex:Parametro_ACCEL, ex:Parametro_ACCJERK .

@@ -1,13 +1,28 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Tabla_Parametros_2_9_1 a ex:Tabla ;
-    ex:textoExtracto "No se modifica el valor de estos parámetros en la tabla de parámetros. | TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0. Variable asociada: (V.)MPK.TDATAkin[nb] Variable asociada: (V.)MPK.MAXOFTDATAkin[nb] Parámetro numérico en formato decimal. Para cada parámetro hay que definir los siguientes campos." ;
-    rdfs:label "Tabla de parámetros de cinemáticas" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Parametro_TDATA a ex:Parametro ;
-    ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0." ;
-    rdfs:label "TDATA" .
+ex:Parametro_TDATA
+    a ex:Parametro ;
+    rdfs:label "Parámetro TDATA"@es ;
+    ex:textoExtracto "TDATA n Parámetro numérico en formato decimal. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0."@es ;
+    ex:identificador "TDATA" ;
+    ex:valor "0"^^xsd:decimal .
 
-ex:Parametro_MAXOFTDATAkin a ex:Parametro ;
-    ex:textoExtracto "Variable asociada: (V.)MPK.MAXOFTDATAkin[nb] Parámetro numérico en formato decimal." ;
-    rdfs:label "MAXOFTDATAkin" .
+ex:Variable_MPK_TDATAkin
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)MPK.TDATAkin[nb]"@es ;
+    ex:textoExtracto "Variable asociada: (V.)MPK.TDATAkin[nb]"@es ;
+    ex:identificador "MPK.TDATAkin" .
+
+ex:Variable_MPK_MAXOFTDATAkin
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)MPK.MAXOFTDATAkin[nb]"@es ;
+    ex:textoExtracto "Variable asociada: (V.)MPK.MAXOFTDATAkin[nb]"@es ;
+    ex:identificador "MPK.MAXOFTDATAkin" .
+
+ex:Parametro_TDATA
+    ex:monitoreaParametro ex:Variable_MPK_TDATAkin ;
+    ex:monitoreaParametro ex:Variable_MPK_MAXOFTDATAkin .

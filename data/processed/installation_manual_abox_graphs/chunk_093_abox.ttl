@@ -1,24 +1,29 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-ex:ModoMechatrolink_I a ex:ModoOperacion ;
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MLINK
+    a ex:Parametro ;
+    rdfs:label "MLINK (Modo Mechatrolink)" ;
     ex:textoExtracto "MLINK Modo Mechatrolink. Valores posibles: No / Mlink-I / Mlink-II. Valor por defecto: No. Variable asociada: (V.)MPG.MLINK Este parámetro permite configurar el bus Mechatrolink en modo Mlink-I o Mlink-II." ;
-    ex:identificador "Mlink-I" .
+    ex:identificador "V.MPG.MLINK" ;
+    ex:valor "No" .
 
-ex:ModoMechatrolink_II a ex:ModoOperacion ;
-    ex:textoExtracto "MLINK Modo Mechatrolink. Valores posibles: No / Mlink-I / Mlink-II. Valor por defecto: No. Variable asociada: (V.)MPG.MLINK Este parámetro permite configurar el bus Mechatrolink en modo Mlink-I o Mlink-II." ;
-    ex:identificador "Mlink-II" .
+ex:Parametro_DATASIZE
+    a ex:Parametro ;
+    rdfs:label "DATASIZE (Tamaño del telegrama en Mlink-II)" ;
+    ex:textoExtracto "DATASIZE Tamaño del telegrama en el modo Mlink-II. Valores posibles: 17 / 32 bytes. Valor por defecto: 32 bytes. Variable asociada: (V.)MPG.DATASIZE Este parámetro define el tamaño del telegrama para el modo Mlink-II." ;
+    ex:identificador "V.MPG.DATASIZE" ;
+    ex:valor "32 bytes" .
 
-ex:ParametroMLINK a ex:Parametro ;
-    ex:textoExtracto "Este parámetro permite configurar el bus Mechatrolink en modo Mlink-I o Mlink-II. Todos los elementos del bus deben operar en el mismo modo (Mlink-I o Mlink-II), por lo que la selección estará condicionada por el modo disponible en los esclavos conectados en el bus." ;
-    ex:identificador "(V.)MPG.MLINK" .
-
-ex:ParametroDATASIZE a ex:Parametro ;
-    ex:textoExtracto "DATASIZE Tamaño del telegrama en el modo Mlink-II. Valores posibles: 17 / 32 bytes. Valor por defecto: 32 bytes. Variable asociada: (V.)MPG.DATASIZE Este parámetro define el tamaño del telegrama para el modo Mlink-II. Todos los elementos del bus deben operar con el mismo tamaño del telegrama, por el que la selección estará condicionada por las propiedades de los esclavos conectados en el bus." ;
-    ex:identificador "(V.)MPG.DATASIZE" .
-
-ex:SistemaBusMechatrolink a ex:Sistema ;
+ex:Sistema_BusMechatrolink
+    a ex:Sistema ;
+    rdfs:label "Sistema de bus Mechatrolink" ;
     ex:textoExtracto "Todos los elementos del bus deben operar en el mismo modo (Mlink-I o Mlink-II), por lo que la selección estará condicionada por el modo disponible en los esclavos conectados en el bus." ;
-    ex:identificador "bus Mechatrolink" .
+    ex:tieneComponente ex:Parametro_MLINK, ex:Parametro_DATASIZE .
 
-ex:LimitacionSistemaMechatrolink a ex:DiagnosticoFallo ;
-    ex:textoExtracto "Limitaciones de un sistema con bus Mechatrolink. • El CNC no realiza ningún proceso de homogeneización de parámetros con los reguladores Mechatrolink. La parametrización y ajuste de los reguladores deberá hacerse con ayuda de herramientas externas proporcionadas por el fabricante del regulador, a través del interface del propio dispositivo o escribiendo los parámetros desde los modos DDSSetup y Tuning del CNC. • No se permite segunda captación, por lo que no es posible la mezcla de captaciones (parámetro FBMIXTIME) ni el cambio de captación (parámetro FBACKSRC). Tampoco se permite ninguna configuración similar a semi-Sercos. • No se permiten ejes o cabezales tándem. • No se permite aparcar ejes o cabezales. • No está disponible el bode. • No se permite el cambio de gama. • No se permite inicializar la cota. • El cambio dinámico de feed forward, AC forward y Kv dependerá de los dispositivos conectados en el bus." .
+ex:AvisoSeguridad_LimitacionesMechatrolink
+    a ex:AvisoSeguridad ;
+    rdfs:label "Limitaciones de configuración del bus Mechatrolink" ;
+    ex:textoExtracto "• El CNC no realiza ningún proceso de homogeneización de parámetros con los reguladores Mechatrolink. La parametrización y ajuste de los reguladores deberá hacerse con ayuda de herramientas externas proporcionadas por el fabricante del regulador, a través del interface del propio dispositivo o escribiendo los parámetros desde los modos DDSSetup y Tuning del CNC. • No se permite segunda captación, por lo que no es posible la mezcla de captaciones (parámetro FBMIXTIME) ni el cambio de captación (parámetro FBACKSRC). Tampoco se permite ninguna configuración similar a semi-Sercos. • No se permiten ejes o cabezales tándem. • No se permite aparcar ejes o cabezales. • No está disponible el bode. • No se permite el cambio de gama. • No se permite inicializar la cota. • El cambio dinámico de feed forward, AC forward y Kv dependerá de los dispositivos conectados en el bus." .

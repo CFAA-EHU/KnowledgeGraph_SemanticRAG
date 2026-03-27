@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_AXISTYPE
+    a ex:Parametro ;
+    rdfs:label "AXISTYPE" ;
+    ex:textoExtracto "AXISTYPE | Rotativo." ;
+    ex:valor "Rotativo" .
+
+ex:Parametro_AXISMODE
+    a ex:Parametro ;
+    rdfs:label "AXISMODE" ;
+    ex:textoExtracto "AXISMODE | Módulo." ;
+    ex:valor "Módulo" .
+
+ex:Parametro_UNIDIR
+    a ex:Parametro ;
+    rdfs:label "UNIDIR" ;
+    ex:textoExtracto "UNIDIR | No." ;
+    ex:valor "No" .
+
+ex:Parametro_SHORTESTWAY
+    a ex:Parametro ;
+    rdfs:label "SHORTESTWAY" ;
+    ex:textoExtracto "SHORTESTWAY | Sí." ;
+    ex:valor "Sí" .
+
+ex:Parametro_MODUPLIM
+    a ex:Parametro ;
+    rdfs:label "MODUPLIM" ;
+    ex:textoExtracto "MODUPLIM | Límites del módulo. Límites para visualizar las cotas." ;
+    ex:valor "Límites del módulo" .
+
+ex:Parametro_MODLOWLIM
+    a ex:Parametro ;
+    rdfs:label "MODLOWLIM" ;
+    ex:textoExtracto "MODLOWLIM | Límites del módulo. Límites para visualizar las cotas." ;
+    ex:valor "Límites del módulo" .
+
+ex:Tabla_ConfiguracionEjeRotativo a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de eje rotativo (G90/G91)" ;
+    ex:textoExtracto "Configuración de los parámetros máquina. Los parámetros máquina MODUPLIM y MODLOWLIM establecen los límites del módulo del eje; no hay límites de recorrido." ;
+    ex:detalladoEnEsquema ex:Parametro_AXISTYPE, ex:Parametro_AXISMODE, ex:Parametro_UNIDIR, ex:Parametro_SHORTESTWAY, ex:Parametro_MODUPLIM, ex:Parametro_MODLOWLIM .
+
+ex:ModoOperacion_G90
+    a ex:ModoOperacion ;
+    rdfs:label "Modo G90 (absoluto)" ;
+    ex:textoExtracto "El eje se desplaza por el camino más corto, hasta alcanzar la cota programada. Aunque el desplazamiento programado sea superior al módulo, el eje nunca da más de una vuelta." ;
+    ex:ilustradoEn ex:Tabla_ConfiguracionEjeRotativo .
+
+ex:ModoOperacion_G91
+    a ex:ModoOperacion ;
+    rdfs:label "Modo G91 (incremental)" ;
+    ex:textoExtracto "Movimiento incremental normal. El signo de la cota indica el sentido del desplazamiento; el valor absoluto de la cota indica el incremento de posición. Si el desplazamiento programado es superior al módulo, el eje da más de una vuelta." ;
+    ex:ilustradoEn ex:Tabla_ConfiguracionEjeRotativo .

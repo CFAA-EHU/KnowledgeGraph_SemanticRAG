@@ -1,63 +1,46 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Volante1 a ex:ComponenteMecanico ;
-    rdfs:label "Volante 1" ;
-    ex:textoExtracto "Volantes conectados a través de los grupos remotos CAN. Los volantes se numeran de 1 a 40." ;
-    ex:identificador "1" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Volante2 a ex:ComponenteMecanico ;
-    rdfs:label "Volante 2" ;
-    ex:textoExtracto "Los volantes se numeran de 1 a 40." ;
-    ex:identificador "2" .
-
-ex:Volante3 a ex:ComponenteMecanico ;
-    rdfs:label "Volante 3" ;
-    ex:textoExtracto "Los volantes se numeran de 1 a 40." ;
-    ex:identificador "3" .
-
-ex:Volante4 a ex:ComponenteMecanico ;
-    rdfs:label "Volante 4" ;
-    ex:textoExtracto "Los volantes se numeran de 1 a 40." ;
-    ex:identificador "4" .
-
-ex:VolanteGeneral a ex:ComponenteMecanico ;
-    rdfs:label "Volante general" ;
-    ex:textoExtracto "Para definir un volante general, no asignar ningún valor al parámetro, dejarlo en blanco." .
-
-ex:GrupoRemotoCAN a ex:ComponenteElectrico ;
-    rdfs:label "Grupo remoto CAN" ;
-    ex:textoExtracto "Volantes conectados a través de los grupos remotos CAN." .
-
-ex:ModuloContador a ex:ComponenteElectrico ;
-    rdfs:label "Módulo contador" ;
-    ex:textoExtracto "Si hay más de un módulo contador dentro de cada grupo, el orden es de arriba a abajo y de izquierda a derecha." .
-
-ex:ModuloRCSS a ex:ComponenteElectrico ;
-    rdfs:label "Módulo RCS-S (contadora Sercos)" ;
-    ex:textoExtracto "Volantes conectados a través de los módulos RCS-S (contadora Sercos)." .
-
-ex:EntradaCaptacionLocal a ex:ComponenteElectrico ;
-    rdfs:label "Entrada de captación local" ;
-    ex:textoExtracto "Volantes conectados a través de las entradas de captación locales." .
-
-ex:EntradaVariable a ex:ComponenteElectrico ;
-    rdfs:label "Entrada Variable" ;
-    ex:textoExtracto "Volantes conectados a través de una entrada 'Variable'." .
-
-ex:TerminalRemotoHBH3HBH4 a ex:ComponenteElectrico ;
-    rdfs:label "Terminal remoto HBH3/HBH4" ;
-    ex:textoExtracto "El terminal remoto HBH3/HBH4 siempre tendrá valor ꞏ1ꞏ." .
-
-ex:ParametroHWFBTYPE a ex:Parametro ;
+ex:Parametro_HWFBTYPE
+    a ex:Parametro ;
     rdfs:label "HWFBTYPE" ;
     ex:textoExtracto "HWFBTYPE Tipo de captación asociada a la entrada del volante. Valores posibles: TTL / TTLDIFF. Valor por defecto: TTLDIFF." ;
     ex:valor "TTLDIFF" .
 
-ex:ParametroMPGAXIS a ex:Parametro ;
+ex:Parametro_MPGAXIS
+    a ex:Parametro ;
     rdfs:label "MPGAXIS" ;
-    ex:textoExtracto "MPGAXIS Nombre del eje asociado al volante. Valores posibles: Cualquier eje definido en AXISNAME." .
+    ex:textoExtracto "MPGAXIS Nombre del eje asociado al volante. Valores posibles: Cualquier eje definido en AXISNAME. [...] Para definir un volante individual, definir el nombre del eje al que está asociado. Para definir un volante general, no asignar ningún valor al parámetro, dejarlo en blanco." .
 
-ex:TablaMANPG a ex:Tabla ;
+ex:Tabla_MANPG a ex:Tabla ;
+     a ex:Tabla ;
     rdfs:label "Tabla MANPG" ;
     ex:textoExtracto "Parámetro incluido en la tabla MANPG." ;
-    ex:compuestoPor ex:ParametroHWFBTYPE, ex:ParametroMPGAXIS .
+    ex:documentadoEn ex:Manual_ModoManual .
+
+ex:Manual_ModoManual
+    a ex:Manual ;
+    rdfs:label "Sección 2.7 Parámetros máquina del modo manual" ;
+    ex:textoExtracto "Volantes conectados a través de los grupos remotos CAN. [...] Volantes conectados a través de una entrada 'Variable'." ;
+    ex:tieneComponente ex:Tabla_MANPG .
+
+ex:Sistema_CAN
+    a ex:Sistema ;
+    rdfs:label "Sistema de grupos remotos CAN" ;
+    ex:textoExtracto "Volantes conectados a través de los grupos remotos CAN. Los volantes se numeran de 1 a 40." ;
+    ex:detalladoEnEsquema ex:Manual_ModoManual .
+
+ex:Sistema_RCS_S
+    a ex:Sistema ;
+    rdfs:label "Sistema RCS-S (contadora Sercos)" ;
+    ex:textoExtracto "Volantes conectados a través de los módulos RCS-S (contadora Sercos). Los volantes se numeran de 1 a 32." ;
+    ex:detalladoEnEsquema ex:Manual_ModoManual ;
+    ex:identificador "SERCOUNTID" .
+
+ex:Interfaz_HBH3_HBH4
+    a ex:InterfazUsuario ;
+    rdfs:label "Terminal remoto HBH3/HBH4" ;
+    ex:textoExtracto "El terminal remoto HBH3/HBH4 siempre tendrá valor ꞏ1ꞏ. [...] Para el terminal remoto HBH3/HBH4, dejar este parámetro sin definir." ;
+    ex:documentadoEn ex:Manual_ModoManual .

@@ -1,78 +1,60 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:Bancada rdfs:label "bancada" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Incluye rotulación 'X', 'X'' y 'Z' junto a la ilustración de bancada, carro y pieza" .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Carro rdfs:label "carro" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Incluye rotulación 'X', 'X'' y 'Z' junto a la ilustración de bancada, carro y pieza" .
-
-ex:Pieza rdfs:label "pieza" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Incluye rotulación 'X', 'X'' y 'Z' junto a la ilustración de bancada, carro y pieza" .
-
-ex:EjeCartesianoZ rdfs:label "eje cartesiano Z" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Diagrama de definición de la transformación angular: se muestra un eje cartesiano Z" .
-
-ex:GuiaInclinada rdfs:label "guía inclinada" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "sobre una guía inclinada, el eje X' formando un ángulo ANGANTR con X" .
-
-ex:EjeXPrima rdfs:label "eje X'" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "el eje X' formando un ángulo ANGANTR con X" .
-
-ex:SistemaInclinado rdfs:label "sistema inclinado" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "el origen del sistema inclinado" .
-
-ex:ParametroANGANTR rdfs:label "ANGANTR" ;
+### Parametros de cinemática (páginas 310, 312)
+ex:Parametro_ANGANTR
     a ex:Parametro ;
+    rdfs:label "Ángulo de transformación entre ejes X y X'"@es ;
+    ex:identificador "ANGANTR" ;
     ex:valor "60º" ;
-    ex:textoExtracto "Las etiquetas 'ANGAXNA=X ORTAXNA=Z ANGANTR=60º' refuerzan la configuración" .
+    ex:textoExtracto "Las etiquetas 'ANGAXNA=X ORTAXNA=Z ANGANTR=60º' refuerzan la configuración."@es .
 
-ex:ParametroOFFANGAX rdfs:label "OFFANGAX" ;
+ex:Parametro_OFFANGAX
     a ex:Parametro ;
-    ex:textoExtracto "aparece una cota de offset 'OFFANGAX' entre el cero máquina y el origen del sistema inclinado" .
+    rdfs:label "Offset angular entre cero máquina y origen del sistema inclinado"@es ;
+    ex:identificador "OFFANGAX" ;
+    ex:textoExtracto "aparece una cota de offset 'OFFANGAX' entre el cero máquina y el origen del sistema inclinado."@es .
 
-ex:ParametroANGAXNA rdfs:label "ANGAXNA" ;
-    a ex:Parametro ;
-    ex:textoExtracto "Las etiquetas 'ANGAXNA=X ORTAXNA=Z ANGANTR=60º' refuerzan la configuración" .
+ex:SistemaEjesNoOrtogonales
+    a ex:Sistema ;
+    rdfs:label "Sistema de ejes no ortogonales (X, X', Z)"@es ;
+    ex:textoExtracto "Incluye rotulación 'X', 'X'' y 'Z' junto a la ilustración [...] destacando el concepto de ejes no ortogonales."@es ;
+    ex:tieneComponente ex:Parametro_ANGANTR, ex:Parametro_OFFANGAX .
 
-ex:ParametroORTAXNA rdfs:label "ORTAXNA" ;
-    a ex:Parametro ;
-    ex:textoExtracto "Las etiquetas 'ANGAXNA=X ORTAXNA=Z ANGANTR=60º' refuerzan la configuración" .
-
-ex:CabezalFresa rdfs:label "cabezal con fresa" ;
+### Cinemática de husillo/herramienta (página 316)
+ex:ComponenteMecanico_HusilloHerramienta
     a ex:ComponenteMecanico ;
-    ex:textoExtracto "Ilustración de cinemática de ejes paralelos aplicada al husillo/herramienta: un cabezal con fresa" .
+    rdfs:label "Husillo con fresa (cinemática de ejes paralelos)"@es ;
+    ex:textoExtracto "Ilustración de cinemática de ejes paralelos aplicada al husillo/herramienta: un cabezal con fresa y dos flechas curvas azules paralelas indican suma de desplazamientos de un eje aditivo sobre el eje principal."@es .
 
-ex:FlechaCurvaAzul rdfs:label "flecha curva azul" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "dos flechas curvas azules paralelas indican suma de desplazamientos de un eje aditivo sobre el eje principal" .
+### Sistema de almacenamiento de herramientas (página 316)
+ex:SistemaAlmacenamiento_Asincrono
+    a ex:Sistema ;
+    rdfs:label "Sistema de cambio asíncrono (carrusel-gantry + brazo de doble pinza)"@es ;
+    ex:textoExtracto "Escena del tipo 'Asíncrono': un carrusel-gantry y brazo de doble pinza realizan el intercambio con la herramienta; flechas indican secuencia alrededor del cabezal."@es .
 
-ex:EjeAditivo rdfs:label "eje aditivo" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "suma de desplazamientos de un eje aditivo sobre el eje principal" .
+ex:SistemaAlmacenamiento_Sincrono
+    a ex:Sistema ;
+    rdfs:label "Sistema de cambio síncrono (carrusel sin brazo cambiador)"@es ;
+    ex:textoExtracto "Escena del tipo 'Síncrono': un carrusel se aproxima al cabezal sin brazo cambiador; flechas de aproximación/retirada muestran la imposibilidad de cambiar durante el mecanizado."@es .
 
-ex:EjePrincipal rdfs:label "eje principal" ;
+ex:ComponenteMecanico_BrazoDoblePinza
     a ex:ComponenteMecanico ;
-    ex:textoExtracto "suma de desplazamientos de un eje aditivo sobre el eje principal" .
+    rdfs:label "Brazo de doble pinza para cambio de herramienta"@es ;
+    ex:textoExtracto "un carrusel-gantry y brazo de doble pinza realizan el intercambio con la herramienta"@es ;
+    ex:compuestoPor ex:SistemaAlmacenamiento_Asincrono .
 
-ex:CarruselGantry rdfs:label "carrusel-gantry" ;
+ex:ComponenteMecanico_CarruselGantry
     a ex:ComponenteMecanico ;
-    ex:textoExtracto "Escena del tipo 'Asíncrono': un carrusel-gantry y brazo de doble pinza realizan el intercambio con la herramienta" .
+    rdfs:label "Carrusel tipo gantry para almacenamiento de herramientas"@es ;
+    ex:textoExtracto "un carrusel-gantry y brazo de doble pinza"@es ;
+    ex:compuestoPor ex:SistemaAlmacenamiento_Asincrono .
 
-ex:BrazoDoblePinza rdfs:label "brazo de doble pinza" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Escena del tipo 'Asíncrono': un carrusel-gantry y brazo de doble pinza realizan el intercambio con la herramienta" .
+### Relaciones entre sistemas y componentes
+ex:SistemaAlmacenamiento_Asincrono
+    ex:tieneComponente ex:ComponenteMecanico_CarruselGantry, ex:ComponenteMecanico_BrazoDoblePinza .
 
-ex:CarruselSincrono rdfs:label "carrusel" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Escena del tipo 'Síncrono': un carrusel se aproxima al cabezal sin brazo cambiador" .
-
-ex:BrazoCambiador rdfs:label "brazo cambiador" ;
-    a ex:ComponenteMecanico ;
-    ex:textoExtracto "Escena del tipo 'Síncrono': un carrusel se aproxima al cabezal sin brazo cambiador" .
+ex:SistemaEjesNoOrtogonales
+    ex:tieneComponente ex:ComponenteMecanico_HusilloHerramienta .

@@ -1,21 +1,115 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:MensajeError_2427 a ex:AvisoSeguridad ;
-    ex:textoExtracto "2427 #DMC ON [<PWRSP value><,OVRMIN value><,OVRMAX value><,FZMIN value><,FZMAX value>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MensajeError_2428 a ex:AvisoSeguridad ;
-    ex:textoExtracto "2428 #DMC OFF DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ex:Error_2427
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2427: Sintaxis incorrecta en #DMC ON" ;
+    ex:identificador "2427" ;
+    ex:textoExtracto "#DMC ON [<PWRSP value><,OVRMIN value><,OVRMAX value><,FZMIN value><,FZMAX value>] [...] CAUSA La sintaxis de la sentencia no es correcta." ;
+    ex:mitigaRiesgo ex:Solucion_2427 .
 
-ex:MensajeError_2429 a ex:AvisoSeguridad ;
-    ex:textoExtracto "2429 Parámetro DMC fuera de rango DETECCIÓN Durante la edición y ejecución. CAUSA Algún comando de la sentencia #DMC tiene un valor no válido. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ex:Error_2428
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2428: Sintaxis incorrecta en #DMC OFF" ;
+    ex:identificador "2428" ;
+    ex:textoExtracto "#DMC OFF [...] CAUSA La sintaxis de la sentencia no es correcta." ;
+    ex:mitigaRiesgo ex:Solucion_2428 .
 
-ex:MensajeError_2430 a ex:AvisoSeguridad ;
-    ex:textoExtracto "2430 #DMC ON: FZMIN debe ser menor que FZMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el avance mínimo es mayor que el avance máximo. SOLUCIÓN El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
+ex:Error_2429
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2429: Parámetro DMC fuera de rango" ;
+    ex:identificador "2429" ;
+    ex:textoExtracto "2429 Parámetro DMC fuera de rango [...] CAUSA Algún comando de la sentencia #DMC tiene un valor no válido." ;
+    ex:mitigaRiesgo ex:Solucion_2429 .
 
-ex:MensajeError_2431 a ex:AvisoSeguridad ;
-    ex:textoExtracto "2431 #DMC ON: OVRMIN debe ser menor que OVRMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el override mínimo es mayor que el override máximo. SOLUCIÓN El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." .
+ex:Error_2430
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2430: FZMIN ≥ FZMAX en #DMC ON" ;
+    ex:identificador "2430" ;
+    ex:textoExtracto "#DMC ON: FZMIN debe ser menor que FZMAX. [...] CAUSA En la función #DMC, el avance mínimo es mayor que el avance máximo." ;
+    ex:mitigaRiesgo ex:Solucion_2430 .
 
-ex:MensajeError_2432 a ex:AvisoSeguridad ;
-    ex:textoExtracto "2432 #DMCON:Programación no permitida con cabezal analógico. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico. SOLUCIÓN El DMC sólo se puede activar sobre cabezales digitales." .
+ex:Error_2431
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2431: OVRMIN ≥ OVRMAX en #DMC ON" ;
+    ex:identificador "2431" ;
+    ex:textoExtracto "#DMC ON: OVRMIN debe ser menor que OVRMAX. [...] CAUSA En la función #DMC, el override mínimo es mayor que el override máximo." ;
+    ex:mitigaRiesgo ex:Solucion_2431 .
 
-ex:MensajeError_2433 a ex:AvisoSeguridad ;
-    ex:textoExtracto "2433 Es obligatorio programar ON/OFF. DETECCIÓN Durante la ejecución. CAUSA Falta programar el comando ON/OFF para activar o anular la función. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ex:Error_2432
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2432: DMCON no permitido con cabezal analógico" ;
+    ex:identificador "2432" ;
+    ex:textoExtracto "#DMCON: Programación no permitida con cabezal analógico. [...] CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico." ;
+    ex:mitigaRiesgo ex:Solucion_2432 .
+
+ex:Error_2433
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2433: Falta comando ON/OFF en DMC" ;
+    ex:identificador "2433" ;
+    ex:textoExtracto "Es obligatorio programar ON/OFF. [...] CAUSA Falta programar el comando ON/OFF para activar o anular la función." ;
+    ex:mitigaRiesgo ex:Solucion_2433 .
+
+ex:Solucion_2427
+    a ex:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis de #DMC ON en manual de programación" ;
+    ex:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ex:Solucion_2428
+    a ex:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis de #DMC OFF en manual de programación" ;
+    ex:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ex:Solucion_2429
+    a ex:TareaMantenimiento ;
+    rdfs:label "Revisar valores válidos de parámetros DMC en manual de programación" ;
+    ex:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ex:Solucion_2430
+    a ex:TareaMantenimiento ;
+    rdfs:label "Ajustar FZMIN < FZMAX en #DMC ON" ;
+    ex:textoExtracto "SOLUCIÓN El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
+
+ex:Solucion_2431
+    a ex:TareaMantenimiento ;
+    rdfs:label "Ajustar OVRMIN < OVRMAX en #DMC ON" ;
+    ex:textoExtracto "SOLUCIÓN El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." .
+
+ex:Solucion_2432
+    a ex:TareaMantenimiento ;
+    rdfs:label "Usar cabezal digital para DMCON" ;
+    ex:textoExtracto "SOLUCIÓN El DMC sólo se puede activar sobre cabezales digitales." .
+
+ex:Solucion_2433
+    a ex:TareaMantenimiento ;
+    rdfs:label "Programar comando ON/OFF para DMC" ;
+    ex:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ex:Parametro_FZMIN
+    a ex:Parametro ;
+    rdfs:label "Parámetro FZMIN (avance mínimo en DMC)" ;
+    ex:textoExtracto "FZMIN debe ser menor que FZMAX. [...] avance mínimo" .
+
+ex:Parametro_FZMAX
+    a ex:Parametro ;
+    rdfs:label "Parámetro FZMAX (avance máximo en DMC)" ;
+    ex:textoExtracto "FZMIN debe ser menor que FZMAX. [...] avance máximo" .
+
+ex:Parametro_OVRMIN
+    a ex:Parametro ;
+    rdfs:label "Parámetro OVRMIN (override mínimo en DMC)" ;
+    ex:textoExtracto "OVRMIN debe ser menor que OVRMAX. [...] override mínimo" .
+
+ex:Parametro_OVRMAX
+    a ex:Parametro ;
+    rdfs:label "Parámetro OVRMAX (override máximo en DMC)" ;
+    ex:textoExtracto "OVRMIN debe ser menor que OVRMAX. [...] override máximo" .
+
+ex:Sistema_DMC
+    a ex:Sistema ;
+    rdfs:label "Sistema DMC (Dynamic Motion Control)" ;
+    ex:textoExtracto "#DMC ON/OFF [...] función #DMC [...] DMCON" ;
+    ex:tieneComponente ex:Parametro_FZMIN, ex:Parametro_FZMAX, ex:Parametro_OVRMIN, ex:Parametro_OVRMAX ;
+    ex:monitoreaParametro ex:Parametro_FZMIN, ex:Parametro_FZMAX, ex:Parametro_OVRMIN, ex:Parametro_OVRMAX .

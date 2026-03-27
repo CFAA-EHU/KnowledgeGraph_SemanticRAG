@@ -1,38 +1,65 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:TablaAlmacenHerramientas_884_479 a ex:Tabla ;
-    ex:textoExtracto "En cada una de las tablas del almacén existen softkeys que permiten inicializar, cargar y descargar herramientas en el almacén de forma manual y automática." ;
-    ex:compuestoPor ex:SoftkeyCargaDescargaHerramientas_884_479 .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:SoftkeyCargaDescargaHerramientas_884_479 a ex:InterfazUsuario ;
-    ex:textoExtracto "En cada una de las tablas del almacén existen softkeys que permiten inicializar, cargar y descargar herramientas en el almacén de forma manual y automática." .
+ex:AlmacenHerramientas_7.5
+    a ex:Sistema ;
+    rdfs:label "Sistema de almacenamiento de herramientas"@es ;
+    ex:textoExtracto "Carga y descarga de herramientas del almacén. En cada una de las tablas del almacén existen softkeys que permiten inicializar, cargar y descargar herramientas en el almacén de forma manual y automática."@es ;
+    ex:tieneComponente ex:SoftkeysAlmacen_7.5 ;
+    ex:tieneComponente ex:TablaAlmacen_7.5 ;
+    ex:tieneComponente ex:CabezalHerramientas_7.5 ;
+    ex:tieneComponente ex:PinzasBrazoCambiador_7.5 .
 
-ex:TablaAlmacenCabezal_884_479 a ex:Tabla ;
-    ex:textoExtracto "La carga y descarga de herramientas en el cabezal y en las pinzas del brazo cambiador hay que hacerlo siempre de forma manual desde la tabla del almacén." .
+ex:SoftkeysAlmacen_7.5
+    a ex:InterfazUsuario ;
+    rdfs:label "Softkeys de control del almacén"@es ;
+    ex:textoExtracto "En cada una de las tablas del almacén existen softkeys que permiten inicializar, cargar y descargar herramientas en el almacén de forma manual y automática."@es .
 
-ex:VariableTM_MZMODE_884 a ex:Parametro ;
-    ex:identificador "V.TM.MZMODE" ;
-    ex:textoExtracto "Personalizar la variable V.TM.MZMODE=1, para indicar al gestor que se desea trabajar en modo de carga de almacén." ;
-    ex:valor "1" .
+ex:TablaAlmacen_7.5
+    a ex:InterfazUsuario ;
+    rdfs:label "Tabla de control del almacén"@es ;
+    ex:textoExtracto "La carga y descarga de herramientas en el cabezal y en las pinzas del brazo cambiador hay que hacerlo siempre de forma manual desde la tabla del almacén."@es .
 
-ex:VariableTM_MZMODE_884_2 a ex:Parametro ;
-    ex:identificador "V.TM.MZMODE" ;
-    ex:textoExtracto "Personalizar la variable V.TM.MZMODE=2, para indicar al gestor que se desea trabajar en modo descarga de almacén." ;
-    ex:valor "2" .
+ex:CabezalHerramientas_7.5
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal de herramientas"@es ;
+    ex:textoExtracto "La carga y descarga de herramientas en el cabezal y en las pinzas del brazo cambiador hay que hacerlo siempre de forma manual desde la tabla del almacén."@es ;
+    ex:textoExtracto "La carga del almacén se hace llevando las herramientas, una a una, desde tierra al almacén pasando por el cabezal."@es .
 
-ex:InstruccionTM6_884 a ex:TareaMantenimiento ;
-    ex:identificador "T1 M6" ;
-    ex:textoExtracto "Si a continuación se ejecuta la instrucción T1 M6 el gestor entiende que se desea llevar la herramienta T1 de tierra al almacén pasando por el cabezal y se lo comunicará al PLC con TMOPERATION=9." .
+ex:PinzasBrazoCambiador_7.5
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinzas del brazo cambiador"@es ;
+    ex:textoExtracto "La carga y descarga de herramientas en el cabezal y en las pinzas del brazo cambiador hay que hacerlo siempre de forma manual desde la tabla del almacén."@es .
 
-ex:InstruccionTM6_884_2 a ex:TareaMantenimiento ;
-    ex:identificador "T1 M6" ;
-    ex:textoExtracto "Si a continuación se ejecuta la instrucción T1 M6 el gestor entiende que se desea llevar la herramienta T1 del almacén a tierra pasando por el cabezal y se lo comunicará al PLC con TMOPERATION=10." .
+ex:ModoCargaAlmacen_7.5
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de carga de almacén"@es ;
+    ex:identificador "V.TM.MZMODE=1" ;
+    ex:textoExtracto "Personalizar la variable V.TM.MZMODE=1, para indicar al gestor que se desea trabajar en modo de carga de almacén."@es .
 
-ex:TMOPERATION_9_884 a ex:Parametro ;
-    ex:identificador "TMOPERATION" ;
-    ex:textoExtracto "el gestor ... se lo comunicará al PLC con TMOPERATION=9." ;
-    ex:valor "9" .
+ex:ModoDescargaAlmacen_7.5
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de descarga de almacén"@es ;
+    ex:identificador "V.TM.MZMODE=2" ;
+    ex:textoExtracto "Personalizar la variable V.TM.MZMODE=2, para indicar al gestor que se desea trabajar en modo descarga de almacén."@es .
 
-ex:TMOPERATION_10_884 a ex:Parametro ;
-    ex:identificador "TMOPERATION" ;
-    ex:textoExtracto "el gestor ... se lo comunicará al PLC con TMOPERATION=10." ;
-    ex:valor "10" .
+ex:OperacionCargaHerramienta_7.5
+    a ex:TareaMantenimiento ;
+    rdfs:label "Operación de carga de herramienta (T1 M6 en modo carga)"@es ;
+    ex:identificador "TMOPERATION=9" ;
+    ex:textoExtracto "Si a continuación se ejecuta la instrucción T1 M6 el gestor entiende que se desea llevar la herramienta T1 de tierra al almacén pasando por el cabezal y se lo comunicará al PLC con TMOPERATION=9."@es ;
+    ex:requiereMantenimiento ex:ModoCargaAlmacen_7.5 .
+
+ex:OperacionDescargaHerramienta_7.5
+    a ex:TareaMantenimiento ;
+    rdfs:label "Operación de descarga de herramienta (T1 M6 en modo descarga)"@es ;
+    ex:identificador "TMOPERATION=10" ;
+    ex:textoExtracto "Si a continuación se ejecuta la instrucción T1 M6 el gestor entiende que se desea llevar la herramienta T1 del almacén a tierra pasando por el cabezal y se lo comunicará al PLC con TMOPERATION=10."@es ;
+    ex:requiereMantenimiento ex:ModoDescargaAlmacen_7.5 .
+
+ex:SubrutinaM06_7.5
+    a ex:Sistema ;
+    rdfs:label "Subrutina asociada a la función M06"@es ;
+    ex:textoExtracto "En la subrutina asociada a la función M06 y en el programa del PLC deberá estar definida la maniobra necesaria para realizar el cambio."@es .

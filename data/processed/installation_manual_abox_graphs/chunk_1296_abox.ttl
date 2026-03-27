@@ -1,9 +1,49 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:FEEDHOL a ex:Parametro ;
-    rdfs:label "_FEEDHOL" ;
-    ex:textoExtracto "Si el PLC pone esta marca a nivel lógico bajo, el canal del CNC detiene temporalmente el avance de los ejes. Cuando la marca vuelve a nivel lógico alto, el movimiento de los ejes continúa. Todas las paradas y arranques de ejes se producen con las rampas de aceleración deceleración correspondientes. • Esta marca no afecta al movimiento independiente de un eje (interpolador independiente). • En los ejes hirth, si el eje no se detiene en una posición correcta, no se activa la marca MATCH(axis). • Esta marca no apaga el láser. Si está el control de potencia activo, el láser saca la potencia mínima definida. Si el PLC pone la marca _FEEDHOL a nivel lógico bajo en un bloque sin movimiento, el CNC continua la ejecución del programa hasta detectar un bloque con movimiento. El texto \"Freal\" de las pantallas de los modos automático y manual muestra el estado de esta marca. El texto aparece en color rojo cuando la marca _FEEDHOL está activa. Si en la pantalla no se dispone de este texto, no se muestra el estado de esta marca." .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:STOP a ex:Parametro ;
+ex:TablaSenalesPLC_16_2_6 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de señales del PLC (Sección 16.2.6)" ;
+    ex:textoExtracto "Señales del PLC. | Significado. | --- | --- | _FEEDHOL | Si el PLC pone esta marca a nivel lógico bajo... | _STOP | Si el PLC pone esta marca a nivel lógico bajo..." ;
+    ex:documentadoEn ex:Pagina_701 .
+
+ex:Pagina_701
+    a ex:Pagina ;
+    ex:identificador "701" ;
+    ex:textoExtracto "16.2.6 Señales del PLC." .
+
+ex:Senal_FEEDHOL
+    a ex:Parametro ;
+    rdfs:label "_FEEDHOL" ;
+    ex:identificador "_FEEDHOL" ;
+    ex:textoExtracto "Si el PLC pone esta marca a nivel lógico bajo, el canal del CNC detiene temporalmente el avance de los ejes. Cuando la marca vuelve a nivel lógico alto, el movimiento de los ejes continúa. Todas las paradas y arranques de ejes se producen con las rampas de aceleración/deceleración correspondientes." ;
+    ex:documentadoEn ex:TablaSenalesPLC_16_2_6 ;
+    ex:monitoreaParametro ex:InterfazUsuario_ModoAutomatico .
+
+ex:Senal_STOP
+    a ex:Parametro ;
     rdfs:label "_STOP" ;
-    ex:textoExtracto "Si el PLC pone esta marca a nivel lógico bajo, el canal del CNC detiene la ejecución del programa pieza. Para poder continuar con la ejecución del programa, además de poner esta marca a a nivel lógico alto, el PLC debe activar la marca CYSTART. • Esta marca no afecta al movimiento independiente de un eje (interpolador independiente), al que tampoco afecta la tecla [STOP]. • Esta marca no apaga el láser. • Esta marca no desactiva el control del gap, excepto en el movimiento de aproximación. En este caso, el eje permanecerá parado y sin control del gap hasta que se reanude el movimiento. El tratamiento que recibe la señal _STOP es similar al que recibe la tecla [STOP] del CNC." .
+    ex:identificador "_STOP" ;
+    ex:textoExtracto "Si el PLC pone esta marca a nivel lógico bajo, el canal del CNC detiene la ejecución del programa pieza. Para continuar, además de poner esta marca a nivel lógico alto, el PLC debe activar la marca CYSTART." ;
+    ex:documentadoEn ex:TablaSenalesPLC_16_2_6 .
+
+ex:Senal_CYSTART
+    a ex:Parametro ;
+    rdfs:label "CYSTART" ;
+    ex:identificador "CYSTART" ;
+    ex:textoExtracto "El PLC debe activar la marca CYSTART para reanudar la ejecución del programa tras _STOP." ;
+    ex:documentadoEn ex:TablaSenalesPLC_16_2_6 .
+
+ex:InterfazUsuario_ModoAutomatico
+    a ex:InterfazUsuario ;
+    rdfs:label "Pantalla de modo automático" ;
+    ex:textoExtracto "El texto \"Freal\" de las pantallas de los modos automático y manual muestra el estado de la marca _FEEDHOL. El texto aparece en color rojo cuando la marca _FEEDHOL está activa." ;
+    ex:ilustradoEn ex:TablaSenalesPLC_16_2_6 .
+
+ex:InterfazUsuario_ModoManual
+    a ex:InterfazUsuario ;
+    rdfs:label "Pantalla de modo manual" ;
+    ex:textoExtracto "El texto \"Freal\" de las pantallas de los modos automático y manual muestra el estado de la marca _FEEDHOL." ;
+    ex:ilustradoEn ex:TablaSenalesPLC_16_2_6 .

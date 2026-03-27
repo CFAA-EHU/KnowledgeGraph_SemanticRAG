@@ -1,36 +1,43 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MotorMaestroTandem1063 a ex:ComponenteMecanico ;
-    rdfs:label "motor maestro" ;
-    ex:textoExtracto "La distribución del par en el tándem se define con el parámetro TORQDIST, el cual indica qué porcentaje debe dar el motor maestro." ;
-    ex:identificador "TORQDIST" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:MotorEsclavoTandem1063 a ex:ComponenteMecanico ;
-    rdfs:label "motor esclavo" ;
-    ex:textoExtracto "La diferencia entre el valor de este parámetro y el 100% es el porcentaje que se aplicará al motor esclavo." .
-
-ex:ParametroPrecarga1063 a ex:Parametro ;
-    rdfs:label "PRELOAD" ;
-    ex:textoExtracto "La precarga se define con el parámetro PRELOAD, el cual indica qué porcentaje del par nominal del motor maestro se aplicará como precarga." ;
-    ex:valor "porcentaje del par nominal del motor maestro" .
-
-ex:ParametroDistribucionPar1063 a ex:Parametro ;
+ex:Parametro_TORQDIST
+    a ex:Parametro ;
     rdfs:label "TORQDIST" ;
     ex:textoExtracto "La distribución del par en el tándem se define con el parámetro TORQDIST, el cual indica qué porcentaje debe dar el motor maestro." ;
-    ex:valor "porcentaje de par" .
+    ex:valor "50%"^^xsd:string .
 
-ex:ParametroTiempoPrecarga1063 a ex:Parametro ;
+ex:Parametro_PRELOAD
+    a ex:Parametro ;
+    rdfs:label "PRELOAD" ;
+    ex:textoExtracto "La precarga se define con el parámetro PRELOAD, el cual indica qué porcentaje del par nominal del motor maestro se aplicará como precarga." .
+
+ex:Parametro_PRELFITI
+    a ex:Parametro ;
     rdfs:label "PRELFITI" ;
-    ex:textoExtracto "Para aplicar la precarga de una forma gradual y evitar así escalones de par en la entrada del compensador tándem se puede definir el parámetro PRELFITI." ;
-    ex:valor "tiempo para aplicar la precarga" .
+    ex:textoExtracto "Para aplicar la precarga de una forma gradual [...] se puede definir el parámetro PRELFITI. Este parámetro habilita un filtro de primer orden que establece el tiempo que tarda el CNC en aplicar la precarga de forma progresiva." .
 
-ex:ParametroGananciaProporcional1063 a ex:Parametro ;
+ex:Parametro_TPROGAIN
+    a ex:Parametro ;
     rdfs:label "TPROGAIN" ;
-    ex:textoExtracto "La ganancia proporcional se puede definir con el parámetro TPROGAIN." ;
-    ex:valor "ganancia proporcional (Kp)" .
+    ex:textoExtracto "La ganancia proporcional se puede definir con el parámetro TPROGAIN." .
 
-ex:SistemaTandem1063 a ex:Sistema ;
-    rdfs:label "tándem" ;
-    ex:textoExtracto "Distribución del par en el tándem. La distribución del par establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem." ;
-    ex:compuestoPor ex:MotorMaestroTandem1063, ex:MotorEsclavoTandem1063 ;
-    ex:tieneComponente ex:ParametroDistribucionPar1063, ex:ParametroPrecarga1063, ex:ParametroTiempoPrecarga1063, ex:ParametroGananciaProporcional1063 .
+ex:Sistema_Tandem
+    a ex:Sistema ;
+    rdfs:label "Sistema de eje tándem" ;
+    ex:textoExtracto "Distribución del par en el tándem. [...] La aplicación del valor de precarga implica necesariamente la unión mecánica entre los motores maestro y esclavo que forman el tándem." ;
+    ex:tieneComponente ex:Motor_Maestro, ex:Motor_Esclavo ;
+    ex:monitoreaParametro ex:Parametro_TORQDIST, ex:Parametro_PRELOAD, ex:Parametro_PRELFITI, ex:Parametro_TPROGAIN .
+
+ex:Motor_Maestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor maestro del tándem" ;
+    ex:textoExtracto "el parámetro TORQDIST [...] indica qué porcentaje debe dar el motor maestro. [...] PRELOAD [...] indica qué porcentaje del par nominal del motor maestro se aplicará como precarga." .
+
+ex:Motor_Esclavo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Motor esclavo del tándem" ;
+    ex:textoExtracto "La diferencia entre el valor de este parámetro [TORQDIST] y el 100% es el porcentaje que se aplicará al motor esclavo." .

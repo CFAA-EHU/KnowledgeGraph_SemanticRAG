@@ -1,18 +1,28 @@
 @prefix ex: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:MPG.DMCPEAKSIZE a ex:Parametro ;
-    rdfs:label "MPG.DMCPEAKSIZE" ;
-    ex:identificador "(V.)[ch].MPG.DMCPEAKSIZE" ;
-    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.DMCPEAKSIZE Exceso porcentual de potencia, sobre la potencia nominal, para monitorizar los picos de potencia en el DMC." ;
-    ex:valor "20 %" .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:DMCPWRPEAK a ex:AvisoSeguridad ;
-    ex:textoExtracto "el CNC muestra un warning, detiene los ejes manteniendo el giro de cabezal y activa la marca DMCPWRPEAK" .
+ex:Parametro_DMCPEAKSIZE
+    a ex:Parametro ;
+    rdfs:label "Exceso porcentual de potencia (DMCPEAKSIZE)"@es ;
+    ex:identificador "V.[ch].MPG.DMCPEAKSIZE" ;
+    ex:valor "20"^^xsd:integer ;  # Valor por defecto
+    ex:textoExtracto "Valor por defecto: 20 %. Variable asociada: (V.)[ch].MPG.DMCPEAKSIZE. Exceso porcentual de potencia, sobre la potencia nominal, para monitorizar los picos de potencia en el DMC."@es ;
+    .
 
-ex:Parametro_0_100 a ex:Parametro ;
-    ex:textoExtracto "Valores posibles: De 0 a 100 %." ;
-    ex:valor "0 a 100 %" .
+ex:AvisoSeguridad_DMCPWRPEAK
+    a ex:AvisoSeguridad ;
+    rdfs:label "Warning por pico de potencia (DMCPWRPEAK)"@es ;
+    ex:identificador "DMCPWRPEAK" ;
+    ex:textoExtracto "el CNC muestra un warning, detiene los ejes manteniendo el giro de cabezal y activa la marca DMCPWRPEAK."@es ;
+    .
 
-ex:Parametro_ValorDefecto_20 a ex:Parametro ;
-    ex:textoExtracto "Valor por defecto: 20 %." ;
-    ex:valor "20 %" .
+ex:Sistema_DMC
+    a ex:Sistema ;
+    rdfs:label "Sistema DMC (Dynamic Machining Control)"@es ;
+    ex:monitoreaParametro ex:Parametro_DMCPEAKSIZE ;
+    ex:activaAlarma ex:AvisoSeguridad_DMCPWRPEAK ;
+    ex:textoExtracto "Configuración del DMC [...] monitorizar los picos de potencia en el DMC."@es ;
+    .

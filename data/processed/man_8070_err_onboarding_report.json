@@ -1,0 +1,153 @@
+{
+  "summary": {
+    "manual_id": "man_8070_err",
+    "artifact_prefix": "man_8070_err",
+    "source_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\raw\\chunks_man_8070_err.txt",
+    "baseline_raw_merged_exists": true,
+    "published_to_operational_runtime": true,
+    "source_language_counts": {
+      "es": 962,
+      "en": 0
+    },
+    "source_language_avg_confidence": 0.9383
+  },
+  "paths": {
+    "density_report": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_density_report.json",
+    "language_detection_report": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_language_detection_report.json",
+    "abox_input": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_input.json",
+    "abox_manifest": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_generation_manifest.json",
+    "abox_chunks_dir": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_graphs",
+    "abox_debug_dir": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_debug",
+    "raw_merged_pilot": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_merged.ttl",
+    "raw_merged_operational": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl",
+    "canonical_abox": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_canonical.ttl",
+    "enriched_abox": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_enriched.ttl",
+    "linked_abox": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_linked.ttl",
+    "multilingual_lexicon": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\multilingual_lexicon.json"
+  },
+  "stages": [
+    {
+      "label": "man_8070_err_density_analyzer",
+      "script": "src\\1_ingestion\\density_analyzer.py",
+      "args": [
+        "--input",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\raw\\chunks_man_8070_err.txt",
+        "--manual-id",
+        "man_8070_err",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_density_report.json",
+        "--language-report-path",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_language_detection_report.json"
+      ],
+      "returncode": 0,
+      "duration_seconds": 10.687
+    },
+    {
+      "label": "man_8070_err_abox_input_builder",
+      "script": "src\\6_extraction\\abox_input_builder.py",
+      "args": [
+        "--density-report",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_density_report.json",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_input.json",
+        "--manual-id",
+        "man_8070_err"
+      ],
+      "returncode": 0,
+      "duration_seconds": 0.471
+    },
+    {
+      "label": "man_8070_err_abox_extractor",
+      "script": "src\\6_extraction\\abox_extractor.py",
+      "args": [
+        "--mode",
+        "resume-compatible",
+        "--retry-profile",
+        "micro-batch-recovery",
+        "--abox-input",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_input.json",
+        "--manifest-path",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_generation_manifest.json",
+        "--output-dir",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_graphs",
+        "--debug-dir",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_debug"
+      ],
+      "returncode": 0,
+      "duration_seconds": 7.882
+    },
+    {
+      "label": "man_8070_err_abox_merger",
+      "script": "src\\6_extraction\\abox_merger.py",
+      "args": [
+        "--input-dir",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_abox_graphs",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_merged.ttl"
+      ],
+      "returncode": 0,
+      "duration_seconds": 4.335
+    },
+    {
+      "label": "man_8070_err_publish_raw_merge",
+      "script": "src\\6_extraction\\abox_merger.py",
+      "args": [
+        "--input-graphs",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\man_8070_err_merged.ttl",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl"
+      ],
+      "returncode": 0,
+      "duration_seconds": 8.135
+    },
+    {
+      "label": "abox_canonicalizer",
+      "script": "src\\6_extraction\\abox_canonicalizer.py",
+      "args": [
+        "--input",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_merged.ttl",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_canonical.ttl"
+      ],
+      "returncode": 0,
+      "duration_seconds": 5.375
+    },
+    {
+      "label": "abox_graph_enricher",
+      "script": "src\\6_extraction\\abox_graph_enricher.py",
+      "args": [
+        "--input",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_canonical.ttl",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_enriched.ttl"
+      ],
+      "returncode": 0,
+      "duration_seconds": 266.104
+    },
+    {
+      "label": "abox_link_completer",
+      "script": "src\\6_extraction\\abox_link_completer.py",
+      "args": [
+        "--input",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_enriched.ttl",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_linked.ttl"
+      ],
+      "returncode": 0,
+      "duration_seconds": 10.52
+    },
+    {
+      "label": "multilingual_lexicon_builder",
+      "script": "src\\8_retrieval\\multilingual_lexicon_builder.py",
+      "args": [
+        "--abox-file",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_linked.ttl",
+        "--output",
+        "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\multilingual_lexicon.json"
+      ],
+      "returncode": 0,
+      "duration_seconds": 5.916
+    }
+  ]
+}

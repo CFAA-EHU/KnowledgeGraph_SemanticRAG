@@ -1,0 +1,67 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_2407
+    a ex:Alarma ;
+    rdfs:label "Alarma 2407: #LEAP con #GAPCTRL ON (POSLIMIT inferior a cota inicial)"@es ;
+    ex:identificador "2407" ;
+    ex:textoExtracto "2407 #LEAP con #GAPCTRL ON: POSLIMIT inferior a cota inicial del salto. DETECCIÓN Durante la preparación de bloques. CAUSA Hay un eje controlado mediante la instrucción #GAPCTRL ON. En esta situación, se ha programado la instrucción #LEAP con POSLIMIT (valor máximo del salto) inferior a las cotas inicial y final del salto."@es ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_2407_Solucion .
+
+ex:DiagnosticoFallo_2407_Solucion
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Solución para alarma 2407"@es ;
+    ex:textoExtracto "Las posibles soluciones son las siguientes: • Programar POSLIMIT en el comando #LEAP con una cota superior a la posición inicial del salto. • Anular el control del gap (#GAPCTRL OFF)."@es ;
+    ex:solucionaFallo ex:Alarma_2407 .
+
+ex:Alarma_2408
+    a ex:Alarma ;
+    rdfs:label "Alarma 2408: Conflicto entre #LEAP, #GAPCTRL ON y #SWTOUT ON"@es ;
+    ex:identificador "2408" ;
+    ex:textoExtracto "2408 #LEAP, #GAPCTRL ON #SWTOUT ON: Los tres comandos no pueden estar activos. DETECCIÓN Durante la preparación de bloques. CAUSA Los comandos #LEAP, #GAPCTRL ON y #SWTOUT ON no pueden estar activos simultáneamente."@es ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_2408_Solucion .
+
+ex:DiagnosticoFallo_2408_Solucion
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Solución para alarma 2408"@es ;
+    ex:textoExtracto "Desactivar uno de los otros dos comandos activos."@es ;
+    ex:solucionaFallo ex:Alarma_2408 .
+
+ex:Alarma_2409
+    a ex:Alarma ;
+    rdfs:label "Alarma 2409: Conflicto en eje esclavo 'LASER FOLLOW AXIS'"@es ;
+    ex:identificador "2409" ;
+    ex:textoExtracto "2409 No se puede programar el eje esclavo \"LASER FOLLOW AXIS\". DETECCIÓN Durante la preparación de bloques. CAUSA El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS."@es ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_2409_Solucion .
+
+ex:DiagnosticoFallo_2409_Solucion
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Solución para alarma 2409"@es ;
+    ex:textoExtracto "No programar el eje esclavo de #FOLLOW [MASTER]."@es ;
+    ex:solucionaFallo ex:Alarma_2409 .
+
+ex:Alarma_2410
+    a ex:Alarma ;
+    rdfs:label "Alarma 2410: Sintaxis incorrecta en #PWRCTRL"@es ;
+    ex:identificador "2410" ;
+    ex:textoExtracto "2410 #PWRCTRL ON/OFF [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>]. DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta."@es .
+
+ex:Parametro_POS
+    a ex:Parametro ;
+    rdfs:label "Parámetro POS (cota inicial/final en #LEAP)"@es ;
+    ex:textoExtracto "parámetro POS de la instrucción #LEAP"@es ;
+    ex:monitoreaParametro ex:Alarma_2407 .
+
+ex:Parametro_POSLIMIT
+    a ex:Parametro ;
+    rdfs:label "Parámetro POSLIMIT (valor máximo del salto en #LEAP)"@es ;
+    ex:textoExtracto "POSLIMIT (valor máximo del salto) inferior a las cotas inicial y final del salto"@es ;
+    ex:monitoreaParametro ex:Alarma_2407 .
+
+ex:Parametro_LASERFOLLOWAXIS
+    a ex:Parametro ;
+    rdfs:label "Parámetro máquina LASERFOLLOWAXIS"@es ;
+    ex:textoExtracto "parámetro máquina LASERFOLLOWAXIS"@es ;
+    ex:monitoreaParametro ex:Alarma_2409 .

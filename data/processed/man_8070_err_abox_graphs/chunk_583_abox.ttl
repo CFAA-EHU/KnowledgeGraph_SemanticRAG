@@ -1,0 +1,78 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FalloNodoCANopen_6011
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Fallo en nodo CANopen (código 6011)" ;
+    ex:identificador      "6011" ;
+    ex:textoExtracto      "Fallo en algún nodo de I/Os. SOLUCIÓN Póngase en contacto con el servicio de asistencia técnica. 6011 'Report de nodo CANopen:Emergencia indeterminada.' [...] Este error indica que un nodo CANopen ha enviado un mensaje de emergencia." ;
+    ex:solucionaFallo      ex:AsistenciaTecnica_Contacto .
+
+ex:AsistenciaTecnica_Contacto
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Contacto con servicio de asistencia técnica" ;
+    ex:textoExtracto      "SOLUCIÓN Póngase en contacto con el servicio de asistencia técnica." .
+
+ex:EntradasAnalogicas_5
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Entradas analógicas (ID 5)" ;
+    ex:identificador      "5" ;
+    ex:textoExtracto      "5 | Entradas analógicas." ;
+    ex:monitoreaParametro ex:Parametro_EntradasAnalogicas .
+
+ex:EntradasPT100_7
+    a                     ex:Sensor ;
+    rdfs:label            "Entradas PT100 (ID 7)" ;
+    ex:identificador      "7" ;
+    ex:textoExtracto      "7 | Entradas PT100." ;
+    ex:monitoreaParametro ex:Parametro_TemperaturaPT100 .
+
+ex:VolanteTecladoCAN_8
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Volante de teclado CAN (ID 8)" ;
+    ex:identificador      "8" ;
+    ex:textoExtracto      "8 | Volante de teclado CAN." .
+
+ex:Palpadores_9
+    a                     ex:Sensor ;
+    rdfs:label            "Palpadores (ID 9)" ;
+    ex:identificador      "9" ;
+    ex:textoExtracto      "9 | Palpadores." .
+
+ex:TecladoJog_10
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Teclado jog (ID 10)" ;
+    ex:identificador      "10" ;
+    ex:textoExtracto      "10 | Teclado jog." .
+
+ex:TecladoAlfanumerico_11
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Teclado alfanumérico (ID 11)" ;
+    ex:identificador      "11" ;
+    ex:textoExtracto      "11 | Teclado alfanumérico." .
+
+ex:Parametro_EntradasAnalogicas
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro de entradas analógicas" ;
+    ex:textoExtracto      "Entradas analógicas." .
+
+ex:Parametro_TemperaturaPT100
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro de temperatura (PT100)" ;
+    ex:textoExtracto      "Entradas PT100." .
+
+ex:SistemaCANopen
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CANopen" ;
+    ex:textoExtracto      "nodo CANopen ha enviado un mensaje de emergencia" ;
+    ex:tieneComponente    ex:EntradasAnalogicas_5, ex:EntradasPT100_7 ;
+    ex:compuestoPor       ex:VolanteTecladoCAN_8, ex:Palpadores_9, ex:TecladoJog_10, ex:TecladoAlfanumerico_11 ;
+    ex:activaAlarma       ex:Alarma_EmergenciaCANopen .
+
+ex:Alarma_EmergenciaCANopen
+    a                     ex:Alarma ;
+    rdfs:label            "Alarma por emergencia en nodo CANopen" ;
+    ex:textoExtracto      "'Report de nodo CANopen:Emergencia indeterminada.' 'Report de nodo CANopen:Emergencia genérica.' [...] 'Report de nodo CANopen:Emergencia específica de fabricante.'" ;
+    ex:documentadoEn      ex:FalloNodoCANopen_6011 .

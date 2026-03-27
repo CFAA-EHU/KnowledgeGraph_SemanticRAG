@@ -1,0 +1,72 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1109
+    a ex:Alarma ;
+    rdfs:label "Alarma 1109: Índice de eje incorrecto" ;
+    ex:textoExtracto "1109 'Indice de eje incorrecto' [...] CAUSA En las funciones G20 y G74, el índice programado junto al nombre del eje es incorrecto." ;
+    ex:identificador "1109" .
+
+ex:Alarma_1110
+    a ex:Alarma ;
+    rdfs:label "Alarma 1110: Valores para I, J, K doblemente programados" ;
+    ex:textoExtracto "1110 'Valores para I, J, K doblemente programados' [...] CAUSA Alguno de los parámetros I, J, K está programado más de una vez en el mismo bloque." ;
+    ex:identificador "1110" .
+
+ex:Alarma_1111
+    a ex:Alarma ;
+    rdfs:label "Alarma 1111: Sentencias de control $ programadas incorrectamente" ;
+    ex:textoExtracto "1111 'Las sentencias de control $ se programan solas en el bloque' [...] CAUSA Alguna sentencia no está programada sola en el bloque." ;
+    ex:identificador "1111" .
+
+ex:Alarma_1112
+    a ex:Alarma ;
+    rdfs:label "Alarma 1112: Sentencia $IF mal estructurada" ;
+    ex:textoExtracto "1112 'La sentencia $IF <condición> sólo puede ir seguida de $GOTO' [...] CAUSA La sentencia no está programada sola en el bloque y la información adicional no es un $GOTO." ;
+    ex:identificador "1112" .
+
+ex:Alarma_1113
+    a ex:Alarma ;
+    rdfs:label "Alarma 1113: $ELSE inesperado" ;
+    ex:textoExtracto "1113 'No se espera $ELSE' [...] CAUSA El CNC ha detectado una instrucción $ELSE sin una instrucción $IF previa." ;
+    ex:identificador "1113" .
+
+ex:Parametro_I
+    a ex:Parametro ;
+    rdfs:label "Parámetro I (coordenada circular)" ;
+    ex:textoExtracto "CAUSA Alguno de los parámetros I, J, K está programado más de una vez en el mismo bloque." .
+
+ex:Parametro_J
+    a ex:Parametro ;
+    rdfs:label "Parámetro J (coordenada circular)" ;
+    ex:textoExtracto "CAUSA Alguno de los parámetros I, J, K está programado más de una vez en el mismo bloque." .
+
+ex:Parametro_K
+    a ex:Parametro ;
+    rdfs:label "Parámetro K (coordenada circular)" ;
+    ex:textoExtracto "CAUSA Alguno de los parámetros I, J, K está programado más de una vez en el mismo bloque." .
+
+ex:Sentencia_G20
+    a ex:Parametro ;
+    rdfs:label "Función G20 (selección de plano)" ;
+    ex:textoExtracto "Con aquellas funciones que supongan movimiento de ejes, la doble programación de un eje puede ser debida a haber programado el eje en coordenadas cartesianas y en coordenadas polares. [...] En las funciones G20 y G74, el índice programado junto al nombre del eje es incorrecto." ;
+    ex:identificador "G20" .
+
+ex:Sentencia_G74
+    a ex:Parametro ;
+    rdfs:label "Función G74 (operación de mecanizado)" ;
+    ex:textoExtracto "En las funciones G20 y G74, el índice programado junto al nombre del eje es incorrecto." ;
+    ex:identificador "G74" .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC (control numérico)" ;
+    ex:textoExtracto "El índice del eje debe ser un valor entre 1 y el número máximo de ejes del sistema o del canal." .
+
+ex:Alarma_1109 ex:monitoreaParametro ex:Sentencia_G20 .
+ex:Alarma_1109 ex:monitoreaParametro ex:Sentencia_G74 .
+ex:Alarma_1110 ex:monitoreaParametro ex:Parametro_I .
+ex:Alarma_1110 ex:monitoreaParametro ex:Parametro_J .
+ex:Alarma_1110 ex:monitoreaParametro ex:Parametro_K .

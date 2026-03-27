@@ -1,0 +1,105 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Macro_G8777
+    a ex:Sistema ;
+    rdfs:label "Macro G8777" ;
+    ex:textoExtracto "de la macro G8777." .
+
+ex:Macro_G8077
+    a ex:Sistema ;
+    rdfs:label "Macro G8077" ;
+    ex:textoExtracto "El perfil de la macro G8077 es poligonal." ;
+    ex:identificador "G8077" .
+
+ex:DiagnosticoFallo_2437
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 2437: Perfil no recto en macro G8077" ;
+    ex:identificador "2437" ;
+    ex:textoExtracto "El perfil de la macro G8077 es poligonal. [...] SOLUCIÓN Modificar el perfil." ;
+    ex:solucionaFallo ex:Macro_G8077 .
+
+ex:Parametro_GAP
+    a ex:Parametro ;
+    rdfs:label "Parámetro GAP" ;
+    ex:textoExtracto "el comando #LEAP, que debe acabar a una determinada distancia sobre la chapa (parámetro GAP)." ;
+    ex:valor "distancia sobre la chapa" .
+
+ex:Comando_GAPCTRL_ON
+    a ex:Parametro ;
+    rdfs:label "Comando #GAPCTRL ON" ;
+    ex:textoExtracto "#GAPCTRL ON. [...] Previamente no se ha programado el comando #GAPCTRL ON." ;
+    ex:identificador "#GAPCTRL ON" .
+
+ex:Comando_LEAP
+    a ex:Parametro ;
+    rdfs:label "Comando #LEAP" ;
+    ex:textoExtracto "Se ha programado un salto con el comando #LEAP, que debe acabar a una determinada distancia sobre la chapa (parámetro GAP)." ;
+    ex:identificador "#LEAP" ;
+    ex:monitoreaParametro ex:Parametro_GAP .
+
+ex:DiagnosticoFallo_2438
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 2438: #GAPCTRL ON no programado antes de #LEAP" ;
+    ex:identificador "2438" ;
+    ex:textoExtracto "#LEAP[GAP] XY sin programar previamente #GAPCTRL ON. [...] SOLUCIÓN Las posibles soluciones son las siguientes: • Programar #GAPCTRL ON antes del #LEAP donde se detecta el error • Eliminar el parámetro GAP de los comandos #LEAP." ;
+    ex:solucionaFallo ex:Comando_LEAP .
+
+ex:Variable_DRV
+    a ex:Parametro ;
+    rdfs:label "Variable del regulador (DRV)" ;
+    ex:textoExtracto "La variable del regulador (DRV) asociada al nodo Sercos (regulador o RCS-S) es incorrecta." ;
+    ex:identificador "DRV" .
+
+ex:Nodo_Sercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Nodo Sercos (regulador o RCS-S)" ;
+    ex:textoExtracto "nodo Sercos (regulador o RCS-S)" .
+
+ex:DiagnosticoFallo_2439
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 2439: Nodo no programado tras \".\"" ;
+    ex:identificador "2439" ;
+    ex:textoExtracto "Programar el número de nodo tras el \".\". [...] SOLUCIÓN Programar un nodo entre 1 y 32." ;
+    ex:solucionaFallo ex:Nodo_Sercos .
+
+ex:DiagnosticoFallo_2440
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 2440: Nodo Sercos inexistente" ;
+    ex:identificador "2440" ;
+    ex:textoExtracto "Nodo inexistente. [...] SOLUCIÓN Programar un nodo entre 1 y 32." ;
+    ex:solucionaFallo ex:Nodo_Sercos .
+
+ex:Comando_FINALSUB
+    a ex:Parametro ;
+    rdfs:label "Comando #FINALSUB" ;
+    ex:textoExtracto "Doble programación de #FINALSUB. [...] Solo se permite una única programación." ;
+    ex:identificador "#FINALSUB" .
+
+ex:DiagnosticoFallo_2441
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 2441: Doble programación de #FINALSUB" ;
+    ex:identificador "2441" ;
+    ex:textoExtracto "Doble programación de #FINALSUB. [...] SOLUCIÓN Programar una única vez #FINALSUB." ;
+    ex:solucionaFallo ex:Comando_FINALSUB .
+
+ex:Macro_G8754
+    a ex:Sistema ;
+    rdfs:label "Macro G8754" ;
+    ex:identificador "G8754" ;
+    ex:textoExtracto "Programación no permitida fuera de una macro G8754." .
+
+ex:Funcion_G8753 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G8753" ;
+    ex:identificador "G8753" ;
+    ex:textoExtracto "Hay alguna función G8753 programada fuera de una macro G8754." .
+
+ex:DiagnosticoFallo_2442
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 2442: Función G8753 fuera de macro G8754" ;
+    ex:identificador "2442" ;
+    ex:textoExtracto "Programación no permitida fuera de una macro G8754. [...] SOLUCIÓN Revisar la programación." ;
+    ex:solucionaFallo ex:Funcion_G8753 .

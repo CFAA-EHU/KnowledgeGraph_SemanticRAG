@@ -1,0 +1,62 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ErrorInicializacionAnilloSercos_4000_1
+    a                   ex:AvisoSeguridad ;
+    ex:identificador     "4000(1)" ;
+    rdfs:label          "Error en la inicialización del anillo Sercos (Clase 0)"@es ;
+    ex:textoExtracto    "4000(1) 'Error en la inicialización del anillo Sercos' CLASE 0. CAUSA Error en la fase inicialización del chip. El CNC no detecta la placa Sercos u overflow en la DPRAM del SERCON por un número excesivo de ejes y datos a transmitir en el canal cíclico."@es ;
+    ex:solucionaFallo   ex:DiagnosticoFallo_PlacaSercosNoDetectada .
+
+ex:DiagnosticoFallo_PlacaSercosNoDetectada
+    a                   ex:DiagnosticoFallo ;
+    ex:textoExtracto    "Comprobar que la placa está instalada y que el CNC la detecta correctamente. Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
+
+ex:ErrorInicializacionAnilloSercos_4000_2
+    a                   ex:AvisoSeguridad ;
+    ex:identificador     "4000(2)" ;
+    rdfs:label          "Error en la inicialización del anillo Sercos (Clase 1)"@es ;
+    ex:textoExtracto    "4000(2) 'Error en la inicialización del anillo Sercos' CLASE 1. TRANSICIÓN 0. CAUSA Timeout en la petición de inicialización del anillo Sercos."@es .
+
+ex:ErrorInicializacionAnilloSercos_4000_3
+    a                   ex:AvisoSeguridad ;
+    ex:identificador     "4000(3)" ;
+    rdfs:label          "Error en la inicialización del anillo Sercos (Eje específico)"@es ;
+    ex:textoExtracto    "4000(3) 'Error en la inicialización del anillo Sercos' EJE Nombre del eje que da error. TRANSICIÓN 1 ID Sercos que provoca el error. Consultar el manual del regulador."@es .
+
+ex:Tabla_CodigosErrorInicializacionSercos a ex:Tabla ;
+     a                   ex:Tabla ;
+    rdfs:label          "Tabla de códigos de error en inicialización del anillo Sercos"@es ;
+    ex:textoExtracto    "| Punto. | Significado. | --- | --- | 0 | Timeout. | 1 | Error en cambio a Fase 0. (Problema en la fibra óptica) | 2 | Error en cambio a Fase 1. (Un regulador no responde; fallo de hardware o selector de nodo mal puesto) | 3 | Error en cambio a Fase 2. | 4 | Error en lectura de la versión del fabricante. | 5 | Error en lectura de T1mim. | 6 | Error en lectura de Tatmt. | 7 | Error en lectura de T4min. | 8 | Error en lectura de Tmtsy. | 9 | Error en lectura de Tmtsg. | 10 | Error en lectura de SlaveNr. | 11 | Error en lectura de Tatat. | 12 | Error en el cálculo de tiempos. | 13 | Error en escritura del password de fabricante. | 14 | Error en escritura de T1."@es ;
+    ex:documentadoEn    ex:ErrorInicializacionAnilloSercos_4000_3 .
+
+ex:SistemaSercos
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema de comunicación Sercos"@es ;
+    ex:textoExtracto    "El CNC no detecta la placa Sercos u overflow en la DPRAM del SERCON por un número excesivo de ejes y datos a transmitir en el canal cíclico."@es ;
+    ex:tieneComponente  ex:PlacaSercos ;
+    ex:tieneComponente  ex:DPRAM_SERCON ;
+    ex:tieneComponente  ex:FibraOptica_Sercos ;
+    ex:tieneComponente  ex:ReguladorSercos .
+
+ex:PlacaSercos
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Placa Sercos"@es ;
+    ex:textoExtracto    "El CNC no detecta la placa Sercos"@es .
+
+ex:DPRAM_SERCON
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "DPRAM del SERCON"@es ;
+    ex:textoExtracto    "overflow en la DPRAM del SERCON por un número excesivo de ejes y datos a transmitir en el canal cíclico"@es .
+
+ex:FibraOptica_Sercos
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Fibra óptica del anillo Sercos"@es ;
+    ex:textoExtracto    "Error en cambio a Fase 0. (Problema en la fibra óptica)"@es .
+
+ex:ReguladorSercos
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Regulador Sercos"@es ;
+    ex:textoExtracto    "Un regulador no responde; fallo de hardware o selector de nodo mal puesto"@es .

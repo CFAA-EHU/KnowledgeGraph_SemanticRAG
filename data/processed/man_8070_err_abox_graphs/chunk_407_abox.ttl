@@ -1,0 +1,81 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_2456
+    a ex:Alarma ;
+    rdfs:label "Alarma 2456: Conflicto con #GAPPOS y modificación de ejes" ;
+    ex:identificador "2456" ;
+    ex:textoExtracto "Con #GAPPOS activo no se permite cambiar los tres primeros ejes. DETECCIÓN Durante la preparación de bloques. CAUSA Se ha intentado modificar los tres primeros ejes del canal (#FREEAX o #SETAX) mientras la sentencia #GAPPOS está activa. SOLUCIÓN No modificar los tres primeros ejes del canal antes de la sentencia #GAPPOS o #GAPCTRL esté activa." .
+
+ex:Alarma_2457
+    a ex:Alarma ;
+    rdfs:label "Alarma 2457: Exceso de parámetros en #GAPPOS" ;
+    ex:identificador "2457" ;
+    ex:textoExtracto "#GAPPOS: demasiados parámetros. DETECCIÓN Durante la preparación de bloques. CAUSA Se han definido más de tres ejes en la sentencia #GAPPOS. SOLUCIÓN En la sentencia #GAPPOS sólo hay que definir los tres primeros ejes del canal." .
+
+ex:Alarma_2458
+    a ex:Alarma ;
+    rdfs:label "Alarma 2458: Parámetro DMCSPDL no configurado para DMC" ;
+    ex:identificador "2458" ;
+    ex:textoExtracto "#DMC ON:El cabezal master debe tener el parámetro DMCSPDL = Sí. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado activar el DMC en un cabezal que no tiene permiso para ello. SOLUCIÓN Para activar el DMC sobre un cabezal, éste debe tener su parámetro máquina DMCSPDL=Sí." .
+
+ex:Alarma_2459
+    a ex:Alarma ;
+    rdfs:label "Alarma 2459: Valor inválido en parámetro TYPE de #OPEN" ;
+    ex:identificador "2459" ;
+    ex:textoExtracto "#OPEN: valor de parámetro TYPE no válido. DETECCIÓN Durante la ejecución. CAUSA El comando TYPE tiene un valor no válido. SOLUCIÓN Revisar la programación de la sentencia #OPEN." .
+
+ex:Alarma_2461
+    a ex:Alarma ;
+    rdfs:label "Alarma 2461: Conflicto de eje en #GAPCTRL y transformadas" ;
+    ex:identificador "2461" ;
+    ex:textoExtracto "El eje del #GAPCTRL, no puede formar parte de los ejes de la transformada. DETECCIÓN Durante la ejecución. CAUSA El eje para el control de gap (#GAPCTRL) coincide con algún eje de las transformaciones #CS/#ACS, #RTCP, #ANGAX o #VIRTAX. SOLUCIÓN Programar el control de gap con un eje simulado." .
+
+ex:Alarma_2462
+    a ex:Alarma ;
+    rdfs:label "Alarma 2462: Eje fuera de plano o triedro" ;
+    ex:identificador "2462" ;
+    ex:textoExtracto "El eje programado debe pertenecer al plano o triedro. DETECCIÓN Durante la ejecución. CAUSA El eje no pertenece al plano principal o triedro. SOLUCIÓN Revisar la programación." .
+
+ex:Alarma_2463
+    a ex:Alarma ;
+    rdfs:label "Alarma 2463: Incompatibilidad entre #LEAP y GAP3D" ;
+    ex:identificador "2463" ;
+    ex:textoExtracto "#LEAP incompatible con GAP3D. DETECCIÓN Durante la ejecución." .
+
+ex:Parametro_DMCSPDL
+    a ex:Parametro ;
+    rdfs:label "Parámetro DMCSPDL" ;
+    ex:identificador "DMCSPDL" ;
+    ex:valor "Sí" ;
+    ex:textoExtracto "el parámetro DMCSPDL = Sí" .
+
+ex:InterfazUsuario_GAPPOS
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia #GAPPOS" ;
+    ex:identificador "#GAPPOS" ;
+    ex:textoExtracto "sentencia #GAPPOS" ;
+    ex:activaAlarma ex:Alarma_2456, ex:Alarma_2457 .
+
+ex:InterfazUsuario_GAPCTRL
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia #GAPCTRL" ;
+    ex:identificador "#GAPCTRL" ;
+    ex:textoExtracto "sentencia #GAPCTRL" ;
+    ex:activaAlarma ex:Alarma_2456, ex:Alarma_2461 .
+
+ex:InterfazUsuario_DMC
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia #DMC ON" ;
+    ex:identificador "#DMC ON" ;
+    ex:textoExtracto "comando #DMC ON" ;
+    ex:activaAlarma ex:Alarma_2458 .
+
+ex:InterfazUsuario_OPEN
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia #OPEN" ;
+    ex:identificador "#OPEN" ;
+    ex:textoExtracto "comando #OPEN" ;
+    ex:activaAlarma ex:Alarma_2459 .

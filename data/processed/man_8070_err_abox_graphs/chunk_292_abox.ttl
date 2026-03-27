@@ -1,0 +1,102 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Error_1806
+    a ex:DiagnosticoFallo ;
+    rdfs:label "G87: Diámetro de herramienta menor que L" ;
+    ex:identificador "1806" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El diámetro de la herramienta es menor que la demasía de acabado (parámetro L). SOLUCIÓN Seleccionar una herramienta de diámetro mayor." .
+
+ex:Error_1807
+    a ex:DiagnosticoFallo ;
+    rdfs:label "G87: Diámetro de herramienta = 0" ;
+    ex:identificador "1807" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA La herramienta tiene diámetro 0. SOLUCIÓN Corregir el valor del radio en la tabla de herramientas o seleccionar otra herramienta." .
+
+ex:Error_1808
+    a ex:DiagnosticoFallo ;
+    rdfs:label "G87: No hay herramienta" ;
+    ex:identificador "1808" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA No hay herramienta en el cabezal. SOLUCIÓN Programar una herramienta antes del ciclo o cargar una herramienta en el cabezal." .
+
+ex:Error_1809
+    a ex:DiagnosticoFallo ;
+    rdfs:label "G87: Diámetro de herramienta menor que C" ;
+    ex:identificador "1809" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El diámetro de la herramienta es menor que el paso de fresado (parámetro C). SOLUCIÓN Reducir el paso de fresado o utilizar una herramienta de diámetro mayor." .
+
+ex:Error_1810
+    a ex:DiagnosticoFallo ;
+    rdfs:label "G88: Profundidad = 0" ;
+    ex:identificador "1810" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA La profundidad resultante de la cajera es cero. La profundidad programada (parámetro I) coincide con la suma de los parámetros Z y D; si no se ha programado el parámetro Z, la profundidad programada (parámetro I) coincide con el parámetro D. SOLUCIÓN Corregir la programación de los parámetros I Z D." .
+
+ex:Error_1811
+    a ex:DiagnosticoFallo ;
+    rdfs:label "G88: Diámetro de herramienta mayor que cajera" ;
+    ex:identificador "1811" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El radio de la herramienta es mayor que las dimensiones de la cajera (parámetro J). SOLUCIÓN Seleccionar una herramienta de diámetro menor." .
+
+ex:Parametro_L
+    a ex:Parametro ;
+    rdfs:label "Parámetro L (demasía de acabado)" ;
+    ex:textoExtracto "parámetro L" ;
+    ex:valor "demasía de acabado" .
+
+ex:Parametro_C
+    a ex:Parametro ;
+    rdfs:label "Parámetro C (paso de fresado)" ;
+    ex:textoExtracto "parámetro C" ;
+    ex:valor "paso de fresado" .
+
+ex:Parametro_I
+    a ex:Parametro ;
+    rdfs:label "Parámetro I (profundidad programada)" ;
+    ex:textoExtracto "parámetro I" ;
+    ex:valor "profundidad programada" .
+
+ex:Parametro_Z
+    a ex:Parametro ;
+    rdfs:label "Parámetro Z (profundidad)" ;
+    ex:textoExtracto "parámetro Z" .
+
+ex:Parametro_D
+    a ex:Parametro ;
+    rdfs:label "Parámetro D (profundidad)" ;
+    ex:textoExtracto "parámetro D" .
+
+ex:Parametro_J
+    a ex:Parametro ;
+    rdfs:label "Parámetro J (dimensiones de cajera)" ;
+    ex:textoExtracto "parámetro J" ;
+    ex:valor "dimensiones de la cajera" .
+
+ex:Herramienta_G87_G88
+    a ex:Herramienta ;
+    rdfs:label "Herramienta para ciclos G87/G88" ;
+    ex:textoExtracto "herramienta" .
+
+ex:Error_1806
+    ex:solucionaFallo ex:Herramienta_G87_G88 .
+
+ex:Error_1807
+    ex:solucionaFallo ex:Herramienta_G87_G88 .
+
+ex:Error_1808
+    ex:solucionaFallo ex:Herramienta_G87_G88 .
+
+ex:Error_1809
+    ex:solucionaFallo ex:Herramienta_G87_G88 .
+
+ex:Error_1811
+    ex:solucionaFallo ex:Herramienta_G87_G88 .
+
+ex:Herramienta_G87_G88
+    ex:monitoreaParametro ex:Parametro_L ;
+    ex:monitoreaParametro ex:Parametro_C ;
+    ex:monitoreaParametro ex:Parametro_I ;
+    ex:monitoreaParametro ex:Parametro_Z ;
+    ex:monitoreaParametro ex:Parametro_D ;
+    ex:monitoreaParametro ex:Parametro_J .

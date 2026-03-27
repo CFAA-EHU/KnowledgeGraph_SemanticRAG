@@ -1,0 +1,73 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_9600 a ex:DiagnosticoFallo ;
+    rdfs:label "Tensión de red < 40% del valor esperado" ;
+    ex:textoExtracto "Durante un breve periodo, la tensión de red no ha alcanzado el 40 % del valor esperado. SOLUCIÓN Revisar tensiones de red y cableado hasta la tarjeta sense." ;
+    ex:identificador "9600" .
+
+ex:Fallo_9660 a ex:DiagnosticoFallo ;
+    rdfs:label "Nivel de tensión cerca del 0%" ;
+    ex:textoExtracto "Durante un breve periodo, la tensión de red ha sido cercana a 0 V. SOLUCIÓN Revisar tensiones de red y cableado hasta la tarjeta sense." ;
+    ex:identificador "9660" .
+
+ex:Fallo_9700 a ex:DiagnosticoFallo ;
+    rdfs:label "Límite del recorrido del eje sobrepasado" ;
+    ex:textoExtracto "Límite del recorrido del eje sobrepasado. SOLUCIÓN Tras recuperar potencia en el accionamiento, es posible desplazar el eje a la zona permitida." ;
+    ex:identificador "9700" .
+
+ex:Fallo_9702 a ex:DiagnosticoFallo ;
+    rdfs:label "Temperatura superior a la permitida en el drive" ;
+    ex:textoExtracto "El entorno de ubicación del regulador se encuentra a temperatura excesivamente elevada. SOLUCIÓN Reducir la temperatura ambiente y del armario." ;
+    ex:identificador "9702" ;
+    ex:monitoreaParametro ex:Parametro_TemperaturaDrive .
+
+ex:Fallo_9703 a ex:DiagnosticoFallo ;
+    rdfs:label "Temperatura superior a la permitida en el motor" ;
+    ex:textoExtracto "El motor supera la temperatura máxima permitida. Las posibles causas son: el cableado de medición de temperatura del motor (manguera del sensor de posición) o el termistor están en malas condiciones; la aplicación exige fuertes picos de corriente. SOLUCIÓN Detener el sistema unos minutos y disminuir el grado de esfuerzo exigido al regulador; ventilar el motor." ;
+    ex:identificador "9703" ;
+    ex:monitoreaParametro ex:Parametro_TemperaturaMotor .
+
+ex:Fallo_9706 a ex:DiagnosticoFallo ;
+    rdfs:label "Velocidad real fuera de límites" ;
+    ex:textoExtracto "El eje o cabezal ha superado el valor máximo definido en el parámetro G00FEED. SOLUCIÓN Revisar el parámetro G00FEED." ;
+    ex:identificador "9706" ;
+    ex:monitoreaParametro ex:Parametro_G00FEED .
+
+ex:Fallo_9709 a ex:DiagnosticoFallo ;
+    rdfs:label "Error de seguimiento excesivo" ;
+    ex:textoExtracto "El eje ha superado el error de seguimiento permitido (parámetro MAXFLWE)." ;
+    ex:identificador "9709" ;
+    ex:monitoreaParametro ex:Parametro_MAXFLWE .
+
+ex:Parametro_TemperaturaDrive a ex:Parametro ;
+    rdfs:label "Temperatura del drive" ;
+    ex:textoExtracto "Temperatura superior a la permitida en el drive." .
+
+ex:Parametro_TemperaturaMotor a ex:Parametro ;
+    rdfs:label "Temperatura del motor" ;
+    ex:textoExtracto "Temperatura superior a la permitida en el motor." .
+
+ex:Parametro_G00FEED a ex:Parametro ;
+    rdfs:label "G00FEED" ;
+    ex:textoExtracto "valor máximo definido en el parámetro G00FEED" ;
+    ex:identificador "G00FEED" .
+
+ex:Parametro_MAXFLWE a ex:Parametro ;
+    rdfs:label "MAXFLWE" ;
+    ex:textoExtracto "error de seguimiento permitido (parámetro MAXFLWE)" ;
+    ex:identificador "MAXFLWE" .
+
+ex:Componente_TarjetaSense a ex:ComponenteElectrico ;
+    rdfs:label "Tarjeta sense" ;
+    ex:textoExtracto "Revisar tensiones de red y cableado hasta la tarjeta sense." .
+
+ex:Componente_SensorTemperaturaMotor a ex:Sensor ;
+    rdfs:label "Sensor de temperatura del motor" ;
+    ex:textoExtracto "cableado de medición de temperatura del motor (manguera del sensor de posición) o el termistor" .
+
+ex:Componente_Termistor a ex:ComponenteElectrico ;
+    rdfs:label "Termistor del motor" ;
+    ex:textoExtracto "cableado de medición de temperatura del motor (manguera del sensor de posición) o el termistor" .

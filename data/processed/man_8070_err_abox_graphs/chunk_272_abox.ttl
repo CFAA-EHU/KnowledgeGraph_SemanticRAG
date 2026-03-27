@@ -1,0 +1,86 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_1740
+    a ex:DiagnosticoFallo ;
+    rdfs:label "CAJERA RECTANGULAR: Diámetro de herramienta mayor que cajera" ;
+    ex:identificador "1740" ;
+    ex:textoExtracto "Durante la ejecución del ciclo. CAUSA En la operación de desbaste o acabado, el diámetro de la herramienta es mayor que las dimensiones de la cajera (parámetros L ó H). SOLUCIÓN Elegir una herramienta de menor diámetro." .
+
+ex:DiagnosticoFallo_1741
+    a ex:DiagnosticoFallo ;
+    rdfs:label "CAJERA RECTANGULAR: Diámetro de herramienta ACABADO menor que delta" ;
+    ex:identificador "1741" ;
+    ex:textoExtracto "Durante la ejecución del ciclo. CAUSA El diámetro de la herramienta de acabado es menor que las demasías en las paredes laterales (parámetro δ). SOLUCIÓN Elegir una herramienta de mayor diámetro para la pasada de acabado." .
+
+ex:DiagnosticoFallo_1742
+    a ex:DiagnosticoFallo ;
+    rdfs:label "CAJERA PREVACIADA: F = 0" ;
+    ex:identificador "1742" ;
+    ex:textoExtracto "Durante la ejecución del ciclo. CAUSA Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
+
+ex:DiagnosticoFallo_1743
+    a ex:DiagnosticoFallo ;
+    rdfs:label "CAJERA PREVACIADA: S = 0" ;
+    ex:identificador "1743" ;
+    ex:textoExtracto "Durante la ejecución del ciclo. CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
+
+ex:DiagnosticoFallo_1744
+    a ex:DiagnosticoFallo ;
+    rdfs:label "CAJERA PREVACIADA: T = 0" ;
+    ex:identificador "1744" ;
+    ex:textoExtracto "Durante la ejecución del ciclo. CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada. SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado. Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta." .
+
+ex:Parametro_PasoFresado
+    a ex:Parametro ;
+    rdfs:label "Paso de fresado (Δ)" ;
+    ex:textoExtracto "parámetro Δ" ;
+    ex:valor "Δ" .
+
+ex:Parametro_DemasiaParedes
+    a ex:Parametro ;
+    rdfs:label "Demasías en paredes laterales (δ)" ;
+    ex:textoExtracto "parámetro δ" ;
+    ex:valor "δ" .
+
+ex:Parametro_Avance
+    a ex:Parametro ;
+    rdfs:label "Avance (F)" ;
+    ex:textoExtracto "parámetro F" ;
+    ex:valor "F" .
+
+ex:Parametro_Velocidad
+    a ex:Parametro ;
+    rdfs:label "Velocidad (S)" ;
+    ex:textoExtracto "parámetro S" ;
+    ex:valor "S" .
+
+ex:Parametro_Herramienta
+    a ex:Parametro ;
+    rdfs:label "Herramienta (T)" ;
+    ex:textoExtracto "parámetro T" ;
+    ex:valor "T" .
+
+ex:Herramienta_Fresado
+    a ex:Herramienta ;
+    ex:textoExtracto "herramienta de diámetro mayor" .
+
+ex:Herramienta_Acabado
+    a ex:Herramienta ;
+    ex:textoExtracto "herramienta de acabado" .
+
+ex:TareaMantenimiento_AjusteParametros
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "Reducir el paso de fresado o utilizar una herramienta de diámetro mayor" .
+
+ex:TareaMantenimiento_ProgramacionHerramienta
+    a ex:TareaMantenimiento ;
+    ex:textoExtracto "Programar una herramienta para la operación de desbaste o acabado" .
+
+ex:DiagnosticoFallo_1740
+    ex:solucionaFallo ex:TareaMantenimiento_AjusteParametros .
+
+ex:DiagnosticoFallo_1744
+    ex:solucionaFallo ex:TareaMantenimiento_ProgramacionHerramienta .

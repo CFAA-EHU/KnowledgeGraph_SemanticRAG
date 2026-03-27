@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_2147
+    a ex:Alarma ;
+    rdfs:label "Programación de splines no permitida en modo HSC" ;
+    ex:identificador "2147" ;
+    ex:textoExtracto "2147 'Programación de splines no permitida en modo HSC' DETECCIÓN Durante la ejecución. CAUSA No se permite activar el spline con el modo HSC activo. SOLUCIÓN Desactivar el modo HSC para activar el modo spline." .
+
+ex:Alarma_2148
+    a ex:Alarma ;
+    rdfs:label "Demasiados bloques sin movimiento entre dos bloques en modo spline" ;
+    ex:identificador "2148" ;
+    ex:textoExtracto "2148 'Demasiados bloques sin movimiento entre dos bloques en modo spline' DETECCIÓN Durante la ejecución. CAUSA Con el modo spline activo, hay demasiados bloques de no movimiento (asignaciones de parámetros P, variables, etc) entre dos bloques de movimiento. SOLUCIÓN Reducir el número de bloques de no movimiento programados; por ejemplo, agrupar varios de estos bloques en uno solo." .
+
+ex:Alarma_2149
+    a ex:Alarma ;
+    rdfs:label "#TANGCTRL:Error interno en control tangencial" ;
+    ex:identificador "2149" ;
+    ex:textoExtracto "2149 #TANGCTRL:Error interno en control tangencial. DETECCIÓN Durante la ejecución. CAUSA No es posible realizar el control tangencial. SOLUCIÓN Eliminar el bloque que provoca el error. Póngase en contacto con Fagor Automation." .
+
+ex:Alarma_2150
+    a ex:Alarma ;
+    rdfs:label "#TANGCTRL:Bloque adicional entre dos polinomios" ;
+    ex:identificador "2150" ;
+    ex:textoExtracto "2150 #TANGCTRL:Bloque adicional entre dos polinomios. DETECCIÓN Durante la ejecución. CAUSA El CNC introduce un bloque adicional de posicionamiento para el eje tangencial, entre dos polinomios. SOLUCIÓN Póngase en contacto con Fagor Automation." .
+
+ex:Alarma_2151
+    a ex:Alarma ;
+    rdfs:label "Programación de splines y control tangencial incompatibles" ;
+    ex:identificador "2151" ;
+    ex:textoExtracto "2151 'Programación de splines y control tangencial incompatibles' DETECCIÓN Durante la ejecución. CAUSA No se permite activar el control tangencial con el modo splines activo ni viceversa. SOLUCIÓN No programar splines con el control tangencial." .
+
+ex:Alarma_2152
+    a ex:Alarma ;
+    rdfs:label "Posición teórica inalcanzable en el FACE, por desalineamiento de herramienta" ;
+    ex:identificador "2152" ;
+    ex:textoExtracto "2152 'Posición teórica inalcanzable en el FACE, por desalineamiento de herramienta' DETECCIÓN Durante la ejecución. CAUSA El eje C no puede alcanzar la posición debido al desalineamiento de la herramienta respecto al eje de giro. SOLUCIÓN Cambiar la trayectoria de mecanizado o trabajar sin desalineamiento de herramienta." .
+
+ex:Alarma_2153
+    a ex:Alarma ;
+    rdfs:label "Trayectoria helicoidal cercana al centro de giro del FACE" ;
+    ex:identificador "2153" ;
+    ex:textoExtracto "2153 'Trayectoria helicoidal cercana al centro de giro del FACE' DETECCIÓN Durante la ejecución." .
+
+ex:ModoOperacion_Spline
+    a ex:ModoOperacion ;
+    rdfs:label "Modo spline" ;
+    ex:textoExtracto "modo spline" .
+
+ex:ModoOperacion_HSC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC" ;
+    ex:textoExtracto "modo HSC" .
+
+ex:ModoOperacion_ControlTangencial
+    a ex:ModoOperacion ;
+    rdfs:label "Control tangencial" ;
+    ex:textoExtracto "control tangencial" .
+
+ex:Alarma_2147 ex:solucionaFallo ex:ModoOperacion_HSC .
+ex:Alarma_2148 ex:solucionaFallo ex:ModoOperacion_Spline .
+ex:Alarma_2149 ex:solucionaFallo ex:ModoOperacion_ControlTangencial .
+ex:Alarma_2151 ex:solucionaFallo ex:ModoOperacion_Spline , ex:ModoOperacion_ControlTangencial .

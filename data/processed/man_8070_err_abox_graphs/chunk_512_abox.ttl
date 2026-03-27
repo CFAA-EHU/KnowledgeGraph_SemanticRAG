@@ -1,0 +1,93 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_4004
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Parámetro G00FEED mayor en CNC que en Regulador" ;
+    ex:identificador "4004" ;
+    ex:textoExtracto "Parámetro G00FEED mayor en CNC que en Regulador. SOLUCIÓN Poner en mismo valor en el CNC y el regulador." ;
+    ex:monitoreaParametro ex:Parametro_G00FEED_CNC ;
+    ex:monitoreaParametro ex:Parametro_G00FEED_Regulador ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        ex:textoExtracto "Valor del parámetro G00FEED diferente en el CNC y en el regulador."
+    ] .
+
+ex:Parametro_G00FEED_CNC
+    a ex:Parametro ;
+    rdfs:label "G00FEED (CNC)" ;
+    ex:textoExtracto "Valor del parámetro en el CNC." .
+
+ex:Parametro_G00FEED_Regulador
+    a ex:Parametro ;
+    rdfs:label "G00FEED (Regulador)" ;
+    ex:textoExtracto "Valor del parámetro en el regulador." .
+
+ex:DiagnosticoFallo_4005
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Vigilancia de error de seguimiento no activa en el regulador" ;
+    ex:identificador "4005" ;
+    ex:textoExtracto "Vigilancia de error de seguimiento no activa en el regulador. SOLUCIÓN Activar parámetro PP159 en el regulador." ;
+    ex:monitoreaParametro ex:Parametro_PP159_Regulador ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        ex:textoExtracto "Vigilancia de error de seguimiento desactivada en el regulador."
+    ] .
+
+ex:Parametro_PP159_Regulador
+    a ex:Parametro ;
+    rdfs:label "PP159 (Regulador)" ;
+    ex:valor "0" ;
+    ex:textoExtracto "Valor del parámetro PP159 en el regulador." .
+
+ex:DiagnosticoFallo_4006
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Parámetro SP100 del regulador debe ser 0" ;
+    ex:identificador "4006" ;
+    ex:textoExtracto "Parámetro SP100 del regulador debe ser 0. SOLUCIÓN Poner el parámetro SP100 del regulador a 0." ;
+    ex:monitoreaParametro ex:Parametro_SP100_Regulador ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        ex:textoExtracto "El regulador tiene habilitada una consigna adicional."
+    ] .
+
+ex:Parametro_SP100_Regulador
+    a ex:Parametro ;
+    rdfs:label "SP100 (Regulador)" ;
+    ex:valor "0" ;
+    ex:textoExtracto "Valor del parámetro SP100 en el regulador." .
+
+ex:DiagnosticoFallo_4007
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Cabezal Sercos necesita una ganancia distinta de 0" ;
+    ex:identificador "4007" ;
+    ex:textoExtracto "Cabezal Sercos necesita una ganancia distinta de 0. SOLUCIÓN Definir la KV del regulador con un valor distinto de 0." ;
+    ex:monitoreaParametro ex:Parametro_KV_Regulador ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        ex:textoExtracto "La KV del cabezal es 0."
+    ] .
+
+ex:Parametro_KV_Regulador
+    a ex:Parametro ;
+    rdfs:label "KV (Regulador)" ;
+    ex:valor "0" ;
+    ex:textoExtracto "Valor de la KV en el regulador." .
+
+ex:DiagnosticoFallo_4008
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error+ en el anillo Sercos debido a un reset del regulador" ;
+    ex:identificador "4008" ;
+    ex:textoExtracto "Error+ en el anillo Sercos debido a un reset del regulador. SOLUCIÓN Descartar reset voluntarios del regulador desde botón de reset, WinDDS (grabación de versión, soft reset) o problemas hardware en el regulador." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        ex:textoExtracto "Aviso de que el regulador se ha reseteado."
+    ] .
+
+ex:DiagnosticoFallo_4009
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Superado el número de variables permitidas en un telegrama Sercos" ;
+    ex:identificador "4009" ;
+    ex:textoExtracto "Superado el número de variables permitidas en un telegrama Sercos." .

@@ -1,0 +1,101 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3704
+    a ex:Alarma ;
+    rdfs:label "Límite de software negativo sobrepasado" ;
+    ex:identificador "3704" ;
+    ex:textoExtracto "3704 'Límite de software negativo sobrepasado' DETECCIÓN Durante el movimiento del eje. CAUSA El eje ha superado la cota definida por el parámetro máquina LIMIT- o por la variable V.A.RTNEGLIMIT.xn. SOLUCIÓN Revisar la programación." .
+
+ex:Alarma_3703
+    a ex:Alarma ;
+    rdfs:label "Límite de software positivo sobrepasado" ;
+    ex:identificador "3703" ;
+    ex:textoExtracto "3703 'software positivo sobrepasado' DETECCIÓN Durante el movimiento del eje. CAUSA El eje ha superado la cota definida por el parámetro máquina LIMIT+ o por la variable V.A.RTPOSLIMIT.xn. SOLUCIÓN Revisar la programación." .
+
+ex:Alarma_3705
+    a ex:Alarma ;
+    rdfs:label "Es necesaria la búsqueda de cero" ;
+    ex:identificador "3705" ;
+    ex:textoExtracto "3705 'Es necesaria la búsqueda de cero' DETECCIÓN Durante la ejecución. CAUSA El CNC ha perdido la referencia del cabezal en la transición de lazo abierto a lazo cerrado. SOLUCIÓN Póngase en contacto con su proveedor." .
+
+ex:Alarma_3706
+    a ex:Alarma ;
+    rdfs:label "Error en la operación con palpador" ;
+    ex:identificador "3706" ;
+    ex:textoExtracto "3706 'Error en la operación con palpador' DETECCIÓN Durante la inicialización del palpador. CAUSA La entrada digital asignada al palpador no es válida. SOLUCIÓN Revisar los parámetros del palpador." .
+
+ex:Alarma_3707
+    a ex:Alarma ;
+    rdfs:label "Error en la búsqueda de cero" ;
+    ex:identificador "3707" ;
+    ex:textoExtracto "3707 'Error en la búsqueda de cero' DETECCIÓN Durante la búsqueda de referencia. CAUSA Error en el proceso de búsqueda de referencia. Puede ser debido a una parametrización inadecuada del eje, a un fallo en el módulo de contaje o en el regulador Sercos, en el sistema de captación o a un error en el conexionado." .
+
+ex:Alarma_3708
+    a ex:Alarma ;
+    rdfs:label "Tiempo máximo para entrar en banda de muerte superado" ;
+    ex:identificador "3708" ;
+    ex:textoExtracto "3708 'Tiempo máximo para entrar en banda de muerte superado' DETECCIÓN Durante la ejecución. CAUSA El tiempo que necesita el eje para entrar en la banda de muerte, para que el CNC considere que está en posición, supera al definido en el parámetro INPOMAX. SOLUCIÓN Ajustar el parámetro INPOMAX." .
+
+ex:Alarma_3709
+    a ex:Alarma ;
+    rdfs:label "Error en el refresco de las entradas analógicas" ;
+    ex:identificador "3709" ;
+    ex:textoExtracto "3709 'Error en el refresco de las entradas analógicas' DETECCIÓN Durante la lectura de entradas analógicas." .
+
+ex:Parametro_LIMIT
+    a ex:Parametro ;
+    rdfs:label "LIMIT+" ;
+    ex:textoExtracto "parámetro máquina LIMIT+" .
+
+ex:Parametro_LIMIT
+    a ex:Parametro ;
+    rdfs:label "LIMIT-" ;
+    ex:textoExtracto "parámetro máquina LIMIT-" .
+
+ex:Parametro_INPOMAX
+    a ex:Parametro ;
+    rdfs:label "INPOMAX" ;
+    ex:textoExtracto "parámetro INPOMAX" .
+
+ex:Variable_V.A.RTPOSLIMIT.xn
+    a ex:Parametro ;
+    rdfs:label "V.A.RTPOSLIMIT.xn" ;
+    ex:textoExtracto "variable V.A.RTPOSLIMIT.xn" .
+
+ex:Variable_V.A.RTNEGLIMIT.xn
+    a ex:Parametro ;
+    rdfs:label "V.A.RTNEGLIMIT.xn" ;
+    ex:textoExtracto "variable V.A.RTNEGLIMIT.xn" .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC ha perdido la referencia del cabezal en la transición de lazo abierto a lazo cerrado" .
+
+ex:ModuloContaje
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de contaje" ;
+    ex:textoExtracto "fallo en el módulo de contaje" .
+
+ex:ReguladorSercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "fallo en el regulador Sercos" .
+
+ex:SistemaCaptacion
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación" ;
+    ex:textoExtracto "fallo en el sistema de captación" .
+
+ex:Alarma_3703 ex:monitoreaParametro ex:Parametro_LIMIT .
+ex:Alarma_3703 ex:monitoreaParametro ex:Variable_V.A.RTPOSLIMIT.xn .
+ex:Alarma_3704 ex:monitoreaParametro ex:Parametro_LIMIT .
+ex:Alarma_3704 ex:monitoreaParametro ex:Variable_V.A.RTNEGLIMIT.xn .
+ex:Alarma_3705 ex:activaAlarma ex:SistemaCNC .
+ex:Alarma_3707 ex:activaAlarma ex:ModuloContaje .
+ex:Alarma_3707 ex:activaAlarma ex:ReguladorSercos .
+ex:Alarma_3707 ex:activaAlarma ex:SistemaCaptacion .
+ex:Alarma_3708 ex:monitoreaParametro ex:Parametro_INPOMAX .

@@ -1,0 +1,67 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Error_1487
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1487: Programación incorrecta de #CLEAR"@es ;
+    ex:identificador "1487" ;
+    ex:textoExtracto "Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque. 1487 'Programar: #CLEAR [señal, señal, señal, ...]'"@es ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque."@es .
+
+ex:Error_1489
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1489: Nombre de eje repetido"@es ;
+    ex:identificador "1489" ;
+    ex:textoExtracto "1489 'Nombre de eje repetido en el grupo resultante'"@es ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sentencia #RENAME ha intentado renombrar más de un eje con el mismo nombre. SOLUCIÓN Renombrar los ejes de forma que en el canal no haya dos con el mismo nombre."@es .
+
+ex:Error_1490
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1490: G63 requiere M19 previo"@es ;
+    ex:identificador "1490" ;
+    ex:textoExtracto "1490 'G63 necesita programar previamente M19'"@es ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer un roscado G63 con un cabezal Sercos sin posicionarlo previamente con M19. SOLUCIÓN Programar M19 antes de realizar el roscado."@es .
+
+ex:Error_1491
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1491: Número de palpador incorrecto"@es ;
+    ex:identificador "1491" ;
+    ex:textoExtracto "1491 'Número de palpador incorrecto'"@es ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El número de palpador seleccionado con la sentencia #SELECT PROBE no es correcto. SOLUCIÓN El número de palpador seleccionado deber ser 1 ó 2."@es .
+
+ex:Error_1492
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1492: Entrada digital de palpador no configurada"@es ;
+    ex:identificador "1492" ;
+    ex:textoExtracto "1492 'No existe entrada digital asociada al palpador (PRBDI1/2)'"@es ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado seleccionar un palpador (#SELECT PROBE) o realizar un movimiento de palpado (G100) y no existe ninguna entrada digital asociada al palpador. SOLUCIÓN Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)."@es .
+
+ex:Error_1493
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1493: Conflicto de programación simultánea"@es ;
+    ex:identificador "1493" ;
+    ex:textoExtracto "1493 'Programación simultánea de #SPLINE ON, G41/G42 y G136 no permitida'"@es ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado tener activas simultáneamente las funciones #SPLINE ON, G41, G42 y G136. SOLUCIÓN Desactivar alguna de estas funciones."@es .
+
+ex:Parametro_PRBDI1
+    a ex:Parametro ;
+    rdfs:label "Parámetro PRBDI1 (entrada digital para palpador 1)"@es ;
+    ex:identificador "PRBDI1" ;
+    ex:textoExtracto "parámetro PRBDI1 ó PRBDI2"@es ;
+    ex:monitoreaParametro ex:Error_1492 .
+
+ex:Parametro_PRBDI2
+    a ex:Parametro ;
+    rdfs:label "Parámetro PRBDI2 (entrada digital para palpador 2)"@es ;
+    ex:identificador "PRBDI2" ;
+    ex:textoExtracto "parámetro PRBDI1 ó PRBDI2"@es ;
+    ex:monitoreaParametro ex:Error_1492 .
+
+ex:Componente_Palpador
+    a ex:Sensor ;
+    rdfs:label "Sensor de palpado (probes)"@es ;
+    ex:textoExtracto "sentencia #SELECT PROBE"@es ;
+    ex:textoExtracto "movimiento de palpado (G100)"@es ;
+    ex:activaAlarma ex:Error_1491, ex:Error_1492 .

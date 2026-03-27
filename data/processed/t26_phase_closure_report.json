@@ -1,0 +1,194 @@
+{
+  "files_created": [
+    "run_t26_error_manual_onboarding.py",
+    "data/processed/t26_error_manual_golden_set_profile.json",
+    "data/processed/t26_error_runtime_collision_audit.json",
+    "data/processed/man_8070_err_golden_set_validation_report.json",
+    "data/processed/t26_error_extraction_policy_report.json",
+    "data/processed/man_8070_err_onboarding_report.json",
+    "data/processed/t26_runtime_regeneration_report.json",
+    "data/processed/t26_graphdb_consistency_report.json",
+    "data/processed/t26_error_manual_routing_audit.json",
+    "data/processed/t26_error_manual_anchor_design.json",
+    "data/processed/t26_error_manual_token_seed_design.json",
+    "data/processed/t26_error_manual_plan_catalog.json",
+    "data/processed/t26_error_manual_routing_implementation_report.json",
+    "data/processed/t26_error_manual_surface_mapping_report.json",
+    "data/processed/man_8070_err_eval_report.json",
+    "data/processed/t26_error_manual_eval_delta_report.json",
+    "data/processed/man_8070_err_decision_report.json",
+    "data/processed/t26_phase_closure_report.json",
+    "data/processed/t26_phase_closure_decision_report.json"
+  ],
+  "files_modified": [
+    "artifact_contracts.py",
+    "run_operational_pipeline.py",
+    "src/8_retrieval/text_to_sparql.py",
+    "src/8_retrieval/multilingual_query_normalizer.py",
+    "src/8_retrieval/synthesis_pipeline.py",
+    "data/golden_set/QA_chunks_man_8070_err.json"
+  ],
+  "artifacts_generated": [
+    "t26_error_manual_golden_set_profile.json",
+    "t26_error_runtime_collision_audit.json",
+    "man_8070_err_golden_set_validation_report.json",
+    "t26_error_extraction_policy_report.json",
+    "man_8070_err_onboarding_report.json",
+    "t26_runtime_regeneration_report.json",
+    "t26_graphdb_consistency_report.json",
+    "t26_error_manual_routing_audit.json",
+    "t26_error_manual_anchor_design.json",
+    "t26_error_manual_token_seed_design.json",
+    "t26_error_manual_plan_catalog.json",
+    "t26_error_manual_routing_implementation_report.json",
+    "t26_error_manual_surface_mapping_report.json",
+    "man_8070_err_eval_report.json",
+    "t26_error_manual_eval_delta_report.json",
+    "man_8070_err_decision_report.json",
+    "t26_phase_closure_report.json",
+    "t26_phase_closure_decision_report.json"
+  ],
+  "error_families_added": [
+    "error_safety_mode_policy_lookup",
+    "error_code_condition_attribute_lookup",
+    "error_code_resolution_procedure_lookup",
+    "error_code_comparison_lookup",
+    "error_parameter_range_lookup"
+  ],
+  "anchor_groups_added": [
+    "error_safety_mode_policy",
+    "error_code_condition_attribute",
+    "error_resolution_procedure",
+    "error_code_comparison",
+    "error_parameter_range"
+  ],
+  "technical_tokens_added": [
+    "0008",
+    "0040",
+    "0169",
+    "0173",
+    "1067",
+    "1166",
+    "1167",
+    "1359",
+    "1737",
+    "4026",
+    "5026",
+    "8023",
+    "8042",
+    "8026",
+    "8458",
+    "8459",
+    "8789",
+    "cncwr",
+    "feedat",
+    "endat",
+    "sqrt",
+    "log",
+    "ln",
+    "pim",
+    "pit",
+    "oem",
+    "geometry_error",
+    "li_li16",
+    "lo_lo8"
+  ],
+  "extraction_policy": {
+    "profile_name": "micro-batch-recovery",
+    "max_concurrency": 1,
+    "batch_size": 1,
+    "retry_policy": {
+      "max_retries": 6,
+      "retryable_errors": [
+        "rate_limit",
+        "timeout",
+        "network_error",
+        "api_error"
+      ]
+    },
+    "backoff_policy": [
+      30,
+      60,
+      120,
+      240,
+      480,
+      900
+    ],
+    "flush_strategy": "persist_after_each_chunk",
+    "reason_for_conservative_mode": "Preventive extraction profile for a new high-cardinality error manual to avoid Mistral saturation.",
+    "source_normalization": {
+      "path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\raw\\chunks_man_8070_err.txt",
+      "encoding_detected": "utf-8-sig",
+      "repaired": false
+    },
+    "golden_set_normalization": {
+      "path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\golden_set\\QA_chunks_man_8070_err.json",
+      "encoding_detected": "utf-8-sig",
+      "repaired": true
+    },
+    "model_fallback_order": [
+      "mistral-medium-latest",
+      "open-mistral-nemo",
+      "mistral-small-latest"
+    ],
+    "model_attempts": [
+      {
+        "model_name": "mistral-medium-latest",
+        "returncode": 0,
+        "rate_limit_detected": false
+      }
+    ]
+  },
+  "benchmarks_executed": [
+    "python -m py_compile artifact_contracts.py run_operational_pipeline.py src/8_retrieval/text_to_sparql.py src/8_retrieval/multilingual_query_normalizer.py src/8_retrieval/qa_evaluator.py",
+    "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_chunks_man_8070_err.json --report-path data/processed/man_8070_err_eval_report.json",
+    "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual_v2.json",
+    "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json",
+    "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json",
+    "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json",
+    "python src/7_database/graphdb_healthcheck.py",
+    "python src/7_database/publish_to_graphdb.py",
+    "python query_workbench.py \"?Qu? directiva cumple la m?quina?\" --backend rdflib",
+    "python query_workbench.py \"?Qu? directiva cumple la m?quina?\" --backend graphdb"
+  ],
+  "validation_results": {
+    "man_8070_err": "15/15",
+    "qa_quick_ref_v2_operational_green": true,
+    "qa_canonical": "13/13",
+    "qa_multihop": "7/7",
+    "qa_cross_operational_green": true,
+    "graphdb_repository_ready": true,
+    "graphdb_triple_count": 83570
+  },
+  "manual_final_state": {
+    "manual_id": "man_8070_err",
+    "integration_status": "accepted_for_runtime",
+    "successful_questions": 15,
+    "total_questions": 15,
+    "pass_rate": 1.0,
+    "classification_counts": {
+      "ok": 15
+    },
+    "plan_family_counts": {
+      "error_safety_mode_policy_lookup": 2,
+      "error_code_condition_attribute_lookup": 5,
+      "error_code_resolution_procedure_lookup": 4,
+      "error_code_comparison_lookup": 2,
+      "error_parameter_range_lookup": 2
+    },
+    "fallback_count": 0,
+    "misrouting_dominant": false,
+    "notes": [
+      "El golden set del manual de errores converge por completo sobre familias espec?ficas del dominio.",
+      "El caso 8789 queda contestado con LO1-LO8, consistente con la fuente y el grafo operativo actual."
+    ]
+  },
+  "graphdb_final_state": {
+    "graphdb_repository_ready": true,
+    "publication_attempted": true,
+    "publication_ok": true,
+    "triple_count": 83570,
+    "notes": "Mirror GraphDB republicado tras integrar man_8070_err y validar el runtime ampliado."
+  },
+  "phase_summary": "T26 integr? man_8070_err con extracci?n conservadora, runtime consolidado, routing preventivo y mirror GraphDB sincronizado sin romper los baselines hist?ricos."
+}

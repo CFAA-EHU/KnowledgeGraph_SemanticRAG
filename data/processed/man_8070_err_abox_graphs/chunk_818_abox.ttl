@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_9381
+    a                   ex:DiagnosticoFallo ;
+    ex:identificador    "9381" ;
+    rdfs:label          "Fallo 9381: Volante HBH no admitido"@es ;
+    ex:textoExtracto    "No se admite más de 1 volante tipo HBH. [...] SOLUCIÓN El CNC sólo permite un volante HBH."@es .
+
+ex:Fallo_9382
+    a                   ex:DiagnosticoFallo ;
+    ex:identificador    "9382" ;
+    rdfs:label          "Fallo 9382: Configuración de buses requiere reinicio"@es ;
+    ex:textoExtracto    "configuración de buses, necesita reiniciar CNC. [...] DETECCIÓN Durante el arranque."@es .
+
+ex:Parametro_VolanteHBH
+    a                   ex:Parametro ;
+    rdfs:label          "Parámetro de volante HBH"@es ;
+    ex:textoExtracto    "Se ha parametrizado más de 1 volante HBH."@es ;
+    ex:monitoreaParametro ex:Fallo_9381 .
+
+ex:Parametro_BusesCNC
+    a                   ex:Parametro ;
+    rdfs:label          "Configuración de buses del CNC"@es ;
+    ex:textoExtracto    "configuración de buses, necesita reiniciar CNC"@es ;
+    ex:monitoreaParametro ex:Fallo_9382 .
+
+ex:SistemaCNC
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema CNC"@es ;
+    ex:textoExtracto    "El CNC sólo permite un volante HBH. [...] Durante el arranque."@es ;
+    ex:controla         ex:Parametro_VolanteHBH ;
+    ex:controla         ex:Parametro_BusesCNC .

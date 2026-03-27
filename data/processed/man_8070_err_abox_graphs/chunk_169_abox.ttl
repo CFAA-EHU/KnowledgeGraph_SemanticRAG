@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_NPARSETS
+    a ex:Parametro ;
+    rdfs:label "Parámetro NPARSETS (número de gamas del cabezal)" ;
+    ex:textoExtracto "El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS)." ;
+    ex:identificador "NPARSETS" .
+
+ex:Parametro_AUTOGEAR
+    a ex:Parametro ;
+    rdfs:label "Parámetro AUTOGEAR (cambio de gama automático)" ;
+    ex:textoExtracto "El cabezal tiene cambio de gama automático (parámetro AUTOGEAR)." ;
+    ex:identificador "AUTOGEAR" .
+
+ex:AvisoSeguridad_1405
+    a ex:AvisoSeguridad ;
+    rdfs:label "Aviso 1405: 'El valor de la S supera la gama máxima'" ;
+    ex:textoExtracto "1405 'El valor de la S supera la gama máxima' [...] DETECCIÓN Durante la ejecución. CAUSA El cabezal tiene cambio de gama automático (parámetro AUTOGEAR) y hay programada una velocidad superior a la máxima de cualquiera de las gamas existentes para ese cabezal." ;
+    ex:identificador "1405" .
+
+ex:Componente_Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal (con cambio de gama automático)" ;
+    ex:textoExtracto "El cabezal tiene cambio de gama automático (parámetro AUTOGEAR) y hay programada una velocidad superior a la máxima de cualquiera de las gamas existentes para ese cabezal." ;
+    ex:monitoreaParametro ex:Parametro_AUTOGEAR ;
+    ex:monitoreaParametro ex:Parametro_NPARSETS .
+
+ex:Maquina_CNC
+    a ex:Maquina ;
+    rdfs:label "CNC (sistema de control)" ;
+    ex:textoExtracto "El CNC sólo aceptará las funciones M41 a M44 de las gamas de cabezal que existan." ;
+    ex:controla ex:Componente_Cabezal ;
+    ex:activaAlarma ex:AvisoSeguridad_1405 .

@@ -1,0 +1,62 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_9318
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Dos ejes en diferentes grupos multieje con el mismo COUNTERID en alguno de sus SETs" ;
+    ex:identificador "9318" ;
+    ex:textoExtracto "Dos ejes en diferentes grupos multieje con el mismo COUNTERID en alguno de sus SETs. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA Hay ejes en diferentes grupos MULTIAXIS que comparten la misma entrada de captación. SOLUCIÓN Cambiar el parámetro CONTERID de los ejes implicados para que no compartan la misma entrada de captación." ;
+    ex:solucionaFallo ex:Parametro_COUNTERID .
+
+ex:DiagnosticoFallo_9319
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Dos ejes en diferentes grupos multieje con el mismo ANAOUTID en alguno de sus SETs" ;
+    ex:identificador "9319" ;
+    ex:textoExtracto "Dos ejes en diferentes grupos multieje con el mismo ANAOUTID en alguno de sus SETs. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA Hay ejes en diferentes grupos MULTIAXIS que comparten la misma salida analógica. SOLUCIÓN Cambiar el parámetro ANAOUTID de los ejes implicados para que no compartan la misma salida analógica." ;
+    ex:solucionaFallo ex:Parametro_ANAOUTID .
+
+ex:DiagnosticoFallo_9320
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Los ejes maestro y esclavo deben tener el mismo ABSFEEDBACK" ;
+    ex:identificador "9320" ;
+    ex:textoExtracto "Los ejes maestro y esclavo deben tener el mismo ABSFEEDBACK. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay un grupo MULTIAXIS cuyos ejes tienen diferente parámetro ABSFEEDBACK. SOLUCIÓN Revisar los parámetros máquina. Todos los ejes de un grupo MULTIAXIS deben tener el parámetro ABSFEEDBACK igual." ;
+    ex:solucionaFallo ex:Parametro_ABSFEEDBACK .
+
+ex:DiagnosticoFallo_9321
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Los ejes del grupo multiaxis tienen que tener el mismo DRIVETYPE" ;
+    ex:identificador "9321" ;
+    ex:textoExtracto "Los ejes del grupo multiaxis tienen que tener el mismo DRIVETYPE. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA Hay un grupo MULTIAXIS cuyos ejes tienen diferente parámetro DRIVETYPE. SOLUCIÓN Revisar los parámetros máquina. Todos los ejes de un grupo MULTIAXIS deben tener el parámetro DRIVETYPE igual; todos los ejes deben analógicos o todos Sercos." ;
+    ex:solucionaFallo ex:Parametro_DRIVETYPE .
+
+ex:Parametro_COUNTERID
+    a ex:Parametro ;
+    rdfs:label "COUNTERID" ;
+    ex:textoExtracto "parámetro COUNTERID igual; si el parámetro no es igual, los ejes deben ser ejes Sercos velocidad." ;
+    ex:valor "Identificador de entrada de captación" .
+
+ex:Parametro_ANAOUTID
+    a ex:Parametro ;
+    rdfs:label "ANAOUTID" ;
+    ex:textoExtracto "parámetro ANAOUTID en alguno de sus SETs" ;
+    ex:valor "Identificador de salida analógica" .
+
+ex:Parametro_ABSFEEDBACK
+    a ex:Parametro ;
+    rdfs:label "ABSFEEDBACK" ;
+    ex:textoExtracto "parámetro ABSFEEDBACK" ;
+    ex:valor "Retroalimentación absoluta" .
+
+ex:Parametro_DRIVETYPE
+    a ex:Parametro ;
+    rdfs:label "DRIVETYPE" ;
+    ex:textoExtracto "parámetro DRIVETYPE" ;
+    ex:valor "Tipo de accionamiento (analógico o Sercos)" .
+
+ex:Sistema_MULTIAXIS
+    a ex:Sistema ;
+    rdfs:label "Grupo MULTIAXIS" ;
+    ex:textoExtracto "grupo MULTIAXIS cuyos ejes tienen diferente parámetro" ;
+    ex:tieneComponente ex:Parametro_COUNTERID, ex:Parametro_ANAOUTID, ex:Parametro_ABSFEEDBACK, ex:Parametro_DRIVETYPE .

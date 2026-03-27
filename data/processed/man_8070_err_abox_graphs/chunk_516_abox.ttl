@@ -1,0 +1,50 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_4015
+    a ex:DiagnosticoFallo ;
+    rdfs:label "TimeOut en la inicialización del anillo Sercos" ;
+    ex:identificador "4015" ;
+    ex:textoExtracto "4015 'TimeOut en la inicialización del anillo Sercos' DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset. SOLUCIÓN Revisar la configuración y parametrización de Sercos." .
+
+ex:DiagnosticoFallo_4016
+    a ex:DiagnosticoFallo ;
+    rdfs:label "El Regulador no es Fagor. Opción de software no permitida" ;
+    ex:identificador "4016" ;
+    ex:textoExtracto "4016 'El Regulador no es Fagor. Opción de software no permitida' DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset. CAUSA El sistema ha detectado un regulador no Fagor, sin disponer de la opción de software correspondiente. SOLUCIÓN Es necesario activar en el CNC la opción de regulación digital no Fagor para poder conectar regulación Sercos de terceros." .
+
+ex:DiagnosticoFallo_4017
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Recalcular valor del parámetro PP4 (HomingSwitchOffset) del regulador" ;
+    ex:identificador "4017" ;
+    ex:textoExtracto "4017 'Es necesario recalcular el valor del parámetro PP4(HomingSwitchOffset) del regulador' DETECCIÓN En el encendido del CNC. CAUSA El cálculo de módulo ha pasado del regulador al CNC, lo que supone que el valor de PP4 no es válido y es necesario recalcularlo. En el encendido del CNC, este comprueba si en los cabezales y ejes rotativos con módulo hay una relación de transmisión no entera y si el parámetro PP76(7)=1. En este caso, en lugar de escribir un 0 en dicho bit, el CNC muestra un mensaje indicando que hay una mala parametrización en el regulador y que es necesario volver a calcular el valor de PP4 con PP76(7)=0. SOLUCIÓN Desde el modo DDSsetup definir el parámetro PP76(7)=0, validarlo y ejecutar el comando GC6 para que el regulador recalcule el nuevo valor de PP4. Finalmente grabar parámetros en la flash del regulador." .
+
+ex:Parametro_PP4
+    a ex:Parametro ;
+    rdfs:label "PP4 (HomingSwitchOffset)" ;
+    ex:identificador "PP4" ;
+    ex:textoExtracto "parámetro PP4(HomingSwitchOffset) del regulador" .
+
+ex:Parametro_PP76
+    a ex:Parametro ;
+    rdfs:label "PP76 (bit 7)" ;
+    ex:identificador "PP76(7)" ;
+    ex:textoExtracto "parámetro PP76(7)" .
+
+ex:DiagnosticoFallo_4018
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Captación remota Sercos con FEEDBACKTYPE incoherente en diferentes gamas" ;
+    ex:identificador "4018" ;
+    ex:textoExtracto "4018 Captación remota Sercos con FEEDBACKTYPE incoherente en diferentes gamas. DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset." .
+
+ex:Sistema_Sercos
+    a ex:Sistema ;
+    rdfs:label "Sistema Sercos" ;
+    ex:textoExtracto "bus Sercos; inicialización del anillo Sercos; parametrización de Sercos; regulación Sercos" .
+
+ex:DiagnosticoFallo_4015 ex:solucionaFallo ex:Sistema_Sercos .
+ex:DiagnosticoFallo_4016 ex:solucionaFallo ex:Sistema_Sercos .
+ex:DiagnosticoFallo_4017 ex:solucionaFallo ex:Sistema_Sercos .
+ex:DiagnosticoFallo_4018 ex:solucionaFallo ex:Sistema_Sercos .

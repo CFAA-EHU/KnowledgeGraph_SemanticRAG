@@ -1,0 +1,28 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Error_3739
+    a                     ex:AvisoSeguridad ;
+    rdfs:label            "Error 3739: Fallo en señal de sonda durante #GAPCTRL"@es ;
+    ex:identificador      "3739" ;
+    ex:textoExtracto      "3739 Error en la señal de la sonda durante el proceso de #GAPCTRL. DETECCIÓN Durante la ejecución. CAUSA Con el control de gap activo, el CNC lee una distancia mayor que el máximo posible"@es .
+
+ex:Parametro_MAXDIFREF
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro MAXDIFREF (diferencia máxima permitida en cota de regulador)"@es ;
+    ex:textoExtracto      "El eje se ha movido más de lo indicado en el parámetro MAXDIFREF"@es ;
+    ex:valor               "MAXDIFREF" .
+
+ex:Diagnostico_DesajusteCotaRegulador
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Desajuste en cota absoluta del regulador vs. sesión CNC"@es ;
+    ex:textoExtracto      "CAUSA La cota absoluta del regulador no se corresponde con la cota salvada en la última sesión de CNC"@es ;
+    ex:solucionaFallo      ex:Error_3739 .
+
+ex:Tarea_VerificacionPosicionEje
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Verificación de posición del eje"@es ;
+    ex:textoExtracto      "SOLUCIÓN Verificar que la posición del eje es correcta"@es ;
+    ex:solucionaFallo      ex:Diagnostico_DesajusteCotaRegulador .

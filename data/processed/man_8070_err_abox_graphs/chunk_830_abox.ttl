@@ -1,0 +1,34 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_9529
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 9529: INDUCTOSYN - Checksum EEPROM incorrecto" ;
+    ex:textoExtracto "9529 INDUCTOSYN: Checksum EEPROM incorrecto. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." ;
+    ex:identificador "9529" .
+
+ex:Modulo_ABSIND
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo ABSIND" ;
+    ex:textoExtracto "pruebe a sustituir el módulo ABSIND y/o el cable asociado a esa captación." .
+
+ex:Cable_Captacion_ABSIND
+    a ex:ComponenteElectrico ;
+    rdfs:label "Cable asociado a la captación ABSIND" ;
+    ex:textoExtracto "pruebe a sustituir el módulo ABSIND y/o el cable asociado a esa captación." .
+
+ex:Accion_Sustitucion_ABSIND
+    a ex:TareaMantenimiento ;
+    rdfs:label "Sustitución del módulo ABSIND o cable asociado" ;
+    ex:textoExtracto "pruebe a sustituir el módulo ABSIND y/o el cable asociado a esa captación." ;
+    ex:solucionaFallo ex:Error_9529 ;
+    ex:requiereConsumible ex:Modulo_ABSIND ;
+    ex:requiereConsumible ex:Cable_Captacion_ABSIND .
+
+ex:Accion_Comprobar_Tierra
+    a ex:TareaMantenimiento ;
+    rdfs:label "Comprobación de conexiones de tierra en el armario" ;
+    ex:textoExtracto "Comprobar las conexiones de tierra en el armario (ruido eléctrico sobre las señales)." ;
+    ex:mitigaRiesgo ex:Error_9529 .

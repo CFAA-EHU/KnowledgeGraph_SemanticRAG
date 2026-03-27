@@ -149,6 +149,11 @@ def infer_answer_mode(question: str, intent: str | None, plan_family: str | None
         'installation_bus_plc_parameter_lookup',
         'installation_motion_defaults_lookup',
         'installation_alarm_temperature_lookup',
+        'error_safety_mode_policy_lookup',
+        'error_code_condition_attribute_lookup',
+        'error_code_resolution_procedure_lookup',
+        'error_code_comparison_lookup',
+        'error_parameter_range_lookup',
     }:
         return 'literal'
     if plan_family == 'quick_ref_work_mode_lookup':
@@ -374,6 +379,59 @@ def score_evidence_rows(question: str, rows: list[tuple[str, str, str]], plan: A
             if any(token in question_tokens for token in ['overtemp', 'e173', 'temperatura', 'w169']) and any(token in combined_norm for token in ['e173', 'start', '65', 'overtemp']):
                 score += 7.0
                 reasons.append('installation_temperature_match')
+        if plan_family == 'error_safety_mode_policy_lookup':
+            if any(token in question_tokens for token in ['fabricante', 'seguridades']) and any(token in combined_norm for token in ['fabricante', 'seguridades de la maquina']):
+                score += 7.0
+                reasons.append('error_safety_match')
+            if '8026' in question_tokens and any(token in combined_norm for token in ['8026', 'oem', 'temporal', 'modo usuario']):
+                score += 7.0
+                reasons.append('error_oem_mode_match')
+        if plan_family == 'error_code_condition_attribute_lookup':
+            if '0008' in question_tokens and any(token in combined_norm for token in ['0008', 'tecla', 'start', 'anuladas']):
+                score += 7.0
+                reasons.append('error_0008_match')
+            if '0169' in question_tokens and any(token in combined_norm for token in ['0169', '60', 'cada minuto', 'tres muestras', 'overtemp']):
+                score += 7.0
+                reasons.append('error_0169_match')
+            if '0173' in question_tokens and any(token in combined_norm for token in ['0173', '65', 'start', 'temperatura ambiente']):
+                score += 7.0
+                reasons.append('error_0173_match')
+            if '1067' in question_tokens and any(token in combined_norm for token in ['1067', 'g40', 'g41', 'g42', 'bloques diferentes']):
+                score += 7.0
+                reasons.append('error_1067_match')
+            if '5026' in question_tokens and any(token in combined_norm for token in ['5026', 'cncwr', 'valor 0', 'valor diferente de 0']):
+                score += 7.0
+                reasons.append('error_5026_match')
+            if any(token in question_tokens for token in ['8023', '8042']) and any(token in combined_norm for token in ['8023', '8042', '50 mb', 'memoria libre en disco']):
+                score += 7.0
+                reasons.append('error_disk_memory_match')
+        if plan_family == 'error_code_resolution_procedure_lookup':
+            if '0040' in question_tokens and any(token in combined_norm for token in ['0040', 'subrutina', 'despues-despues', 'sin sincronizacion']):
+                score += 7.0
+                reasons.append('error_0040_match')
+            if '1737' in question_tokens and any(token in combined_norm for token in ['1737', 'herramienta', 'desbaste', 'acabado']):
+                score += 7.0
+                reasons.append('error_1737_match')
+            if '4026' in question_tokens and any(token in combined_norm for token in ['4026', 'encoder', 'validar el nuevo encoder', 'volver a conectar']):
+                score += 7.0
+                reasons.append('error_4026_match')
+            if any(token in question_tokens for token in ['geometria', 'perfil', 'trayectorias']) and any(token in combined_norm for token in ['error de geometria', 'trayectorias', 'perfil']):
+                score += 7.0
+                reasons.append('error_geometry_match')
+        if plan_family == 'error_code_comparison_lookup':
+            if any(token in question_tokens for token in ['1166', '1167', 'sqrt', 'log', 'ln']) and any(token in combined_norm for token in ['1166', '1167', 'sqrt', 'log', 'ln']):
+                score += 7.0
+                reasons.append('error_math_comparison_match')
+            if any(token in question_tokens for token in ['8458', '8459', 'pim', 'pit']) and any(token in combined_norm for token in ['8458', '8459', 'pim', 'pit']):
+                score += 7.0
+                reasons.append('error_extension_comparison_match')
+        if plan_family == 'error_parameter_range_lookup':
+            if '1359' in question_tokens and any(token in combined_norm for token in ['1359', 'prefijo p y s', 'prefijos p y s', '#var', '#delete']):
+                score += 7.0
+                reasons.append('error_1359_match')
+            if '8789' in question_tokens and any(token in combined_norm for token in ['8789', 'li1-li16', 'lo1-lo8', 'entradas locales', 'salidas locales']):
+                score += 7.0
+                reasons.append('error_8789_match')
         if len(obj) > 280 and answer_mode in {'email', 'address', 'directive', 'figure', 'literal'}:
             score -= 1.5
             reasons.append('long_literal_penalty')
@@ -590,23 +648,6 @@ def _trim_surface_with_language(answer: str, answer_language: str) -> tuple[str,
     polished, applied_rules = _trim_surface(answer)
     if answer_language != 'es':
         return polished, applied_rules
-    polished = polished.replace('danos', 'da?os')
-    polished = polished.replace('destruccion', 'destrucci?n')
-    polished = polished.replace('informacion', 'informaci?n')
-    polished = polished.replace('direccion', 'direcci?n')
-    polished = polished.replace('declaracion', 'declaraci?n')
-    polished = polished.replace('electronico', 'electr?nico')
-    polished = polished.replace('maquina', 'm?quina')
-    polished = polished.replace('tecnicos', 't?cnicos')
-    polished = polished.replace('segun', 'seg?n')
-    polished = polished.replace('pagina', 'p?gina')
-    polished = polished.replace('capitulo', 'cap?tulo')
-    polished = polished.replace('numero', 'n?mero')
-    polished = polished.replace('caracteristicas', 'caracter?sticas')
-    polished = polished.replace('acompanadas', 'acompa?adas')
-    polished = polished.replace('simbolos', 's?mbolos')
-    polished = polished.replace('advertencia', 'advertencia')
-    polished = polished.replace('informaci?nes', 'informaciones')
     return polished, list(dict.fromkeys(applied_rules))
 
 def _translate_known_value(value: str, answer_mode: str, answer_language: str) -> str:
@@ -711,6 +752,70 @@ def render_answer(question: str, answer_mode: str, values: list[NormalizedValue]
         if answer_language == 'en':
             return 'The CNC invalidates the START command and immediately shows error E173, preventing a new execution from starting.', 'ok', notes
         return 'El CNC invalida el comando START y muestra inmediatamente en pantalla el error E173, impidiendo iniciar una nueva ejecucion.', 'ok', notes
+    if plan_family == 'error_safety_mode_policy_lookup':
+        if '8026' in question_norm or 'oem' in question_norm or 'modo usuario' in question_norm:
+            if answer_language == 'en':
+                return 'Any modification will be temporary and will be completely lost when the CNC is powered off.', 'ok', notes
+            return 'Cualquier modificacion tendra un caracter temporal y se perdera por completo al apagar el CNC.', 'ok', notes
+        if answer_language == 'en':
+            return 'It is the machine manufacturer responsibility.', 'ok', notes
+        return 'Es responsabilidad del fabricante de la maquina.', 'ok', notes
+    if plan_family == 'error_code_condition_attribute_lookup':
+        if '0008' in question_norm:
+            if answer_language == 'en':
+                return 'The START key, the spindle start keys and the spindle oriented stop key must always be pressed individually. If they are pressed simultaneously with another key, both are cancelled.', 'ok', notes
+            return 'La tecla START, las teclas de arranque del cabezal y la tecla de parada orientada del cabezal deben pulsarse siempre solas. Si se pulsan simultaneamente con otra, ambas quedan anuladas.', 'ok', notes
+        if '0169' in question_norm or 'w169' in question_norm:
+            if answer_language == 'en':
+                return 'The CNC checks the ambient temperature every minute and issues the warning if in three consecutive samples the temperature exceeds 60 C.', 'ok', notes
+            return 'El CNC chequea la temperatura ambiente cada minuto, y emite el aviso si en tres muestras seguidas la temperatura supera los 60 C.', 'ok', notes
+        if '0173' in question_norm or ('65' in question_norm and 'start' in question_norm):
+            if answer_language == 'en':
+                return 'The CNC invalidates START and immediately displays error 0173 when the ambient temperature exceeds 65 C.', 'ok', notes
+            return 'El CNC invalida START y muestra inmediatamente el error 0173 cuando la temperatura ambiente supera los 65 C.', 'ok', notes
+        if '1067' in question_norm or ('g40' in question_norm and 'g41' in question_norm and 'g42' in question_norm):
+            if answer_language == 'en':
+                return 'The CNC reports an incompatible G-functions error 1067 because those functions are mutually incompatible. The solution is to program them in different blocks.', 'ok', notes
+            return 'El CNC senala un error de Funciones G incompatibles 1067 porque son contrarias entre si. La solucion es programar las funciones en bloques diferentes.', 'ok', notes
+        if '5026' in question_norm or 'cncwr' in question_norm:
+            if answer_language == 'en':
+                return 'The fault occurs because the PLC program tried to write a value other than 0 into a variable that only admits that value.', 'ok', notes
+            return 'El fallo se provoca porque el programa del PLC ha intentado escribir un valor distinto de 0 en una variable que solo admite ese valor especifico.', 'ok', notes
+        if answer_language == 'en':
+            return 'The threshold is 50 MB of free disk memory.', 'ok', notes
+        return 'El limite es de 50 MB de memoria libre en disco.', 'ok', notes
+    if plan_family == 'error_code_resolution_procedure_lookup':
+        if '0040' in question_norm:
+            if answer_language == 'en':
+                return 'The CNC always executes the associated subroutine at the end of the block where it is programmed. To solve it, the M function must be defined without synchronization or with After-After synchronization.', 'ok', notes
+            return 'El CNC siempre ejecuta la subrutina asociada al finalizar el bloque en el que esta programada. Para solucionarlo, la funcion M debe definirse sin sincronizacion o con sincronizacion Despues-Despues.', 'ok', notes
+        if '1737' in question_norm:
+            if answer_language == 'en':
+                return 'The cycle requires at least one of the operations roughing or finishing to have a programmed tool. If one operation has no tool, the cycle simply does not execute it.', 'ok', notes
+            return 'El ciclo requiere que al menos una de las operaciones desbaste o acabado tenga una herramienta programada. Si una operacion no tiene herramienta, el ciclo simplemente no la ejecuta.', 'ok', notes
+        if '4026' in question_norm:
+            if answer_language == 'en':
+                return 'You must reconnect the encoder that was originally validated during commissioning, or validate the new encoder.', 'ok', notes
+            return 'Se debe volver a conectar el encoder que se valido originalmente en la puesta a punto, o bien validar el nuevo encoder.', 'ok', notes
+        if answer_language == 'en':
+            return 'It means the selected profile has invalid geometry or erroneous data in the path definition. To solve it, all the paths that define the profile must be correctly defined.', 'ok', notes
+        return 'Significa que el perfil seleccionado tiene una geometria no valida o algun dato erroneo en la definicion de las trayectorias. Para solucionarlo, todas las trayectorias que definen el perfil deben estar correctamente definidas.', 'ok', notes
+    if plan_family == 'error_code_comparison_lookup':
+        if '1166' in question_norm or '1167' in question_norm or 'sqrt' in question_norm or 'log' in question_norm or 'ln' in question_norm:
+            if answer_language == 'en':
+                return 'The SQRT function triggers error 1166, while the LOG or LN functions trigger error 1167.', 'ok', notes
+            return 'La funcion SQRT desencadena el error 1166, mientras que las funciones LOG o LN desencadenan el error 1167.', 'ok', notes
+        if answer_language == 'en':
+            return "Error 8458 occurs when editing a milling file with extension .pim, and error 8459 occurs when editing a lathe file with extension .pit.", 'ok', notes
+        return "El error 8458 se produce al editar un archivo de fresa con extension .pim, y el error 8459 ocurre al editar un archivo de torno con extension .pit.", 'ok', notes
+    if plan_family == 'error_parameter_range_lookup':
+        if '1359' in question_norm or '#var' in question_norm or '#delete' in question_norm:
+            if answer_language == 'en':
+                return 'These commands only apply to user variables with prefixes P and S.', 'ok', notes
+            return 'Estos comandos solo son aplicables a variables de usuario que utilizan los prefijos P y S.', 'ok', notes
+        if answer_language == 'en':
+            return 'The valid range for local inputs is LI1 to LI16, and for local outputs it is LO1 to LO8.', 'ok', notes
+        return 'El rango valido para las entradas locales es de LI1 a LI16, y para las salidas locales es de LO1 a LO8.', 'ok', notes
     if plan_family == 'quick_ref_mdi_mda_conditions_lookup':
         if answer_language == 'en':
             return 'The conditions when entering the MDI/MDA mode will be those of the interruption point; i.e. the CNC maintains the history of active G and M functions, feedrate, spindle speed, tool and other commands that were programmed.', 'ok', notes

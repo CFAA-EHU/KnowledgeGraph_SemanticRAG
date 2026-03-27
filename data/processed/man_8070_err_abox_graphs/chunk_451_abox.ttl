@@ -1,0 +1,57 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_3083
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 3083: Retardo excesivo en activación láser" ;
+    ex:textoExtracto "'No es posible tanto retardo para activar la salida digital' [...] El retardo programado para el láser es excesivo. SOLUCIÓN Revisar el valor de los parámetros de anticipación TON / TOF." ;
+    ex:identificador "3083" .
+
+ex:Fallo_3084
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 3084: Fallo en driver de activación/desactivación láser" ;
+    ex:textoExtracto "'Error del driver en la activación/desactivación del láser' [...] No se cumplen las condiciones hardware o de parametrización necesarias para poder utilizar la prestación de corte por láser." ;
+    ex:identificador "3084" .
+
+ex:Parametro_NLOCOUT
+    a ex:Parametro ;
+    rdfs:label "Parámetro NLOCOUT" ;
+    ex:textoExtracto "El parámetro NLOCOUT debe ser 8." ;
+    ex:valor "8" ;
+    ex:mitigaRiesgo ex:Fallo_3084 .
+
+ex:Parametro_PWMOUTPUT
+    a ex:Parametro ;
+    rdfs:label "Parámetro PWMOUTPUT" ;
+    ex:textoExtracto "El parámetro PWMOUTPUT no puede ser superior a 2 (0, 1, 2)." ;
+    ex:valor "0,1,2" ;
+    ex:mitigaRiesgo ex:Fallo_3084 .
+
+ex:Componente_PlacaExpansionSercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Placa de expansión tipo Sercos" ;
+    ex:textoExtracto "Debe existir una placa de expansión tipo Sercos, con ID software igual o superior a 1.2." ;
+    ex:identificador "Sercos_v1.2+" ;
+    ex:mitigaRiesgo ex:Fallo_3084 .
+
+ex:Fallo_3086
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 3086: Cambio de ejes en modo simulación" ;
+    ex:textoExtracto "No se admite cambio de ejes del plano activo en modo ejecución simulada: Plano Principal. [...] Se ha realizado un cambio de plano durante la ejecución simulada." ;
+    ex:identificador "3086" .
+
+ex:Fallo_3087
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 3087: PWM activado en canal duplicado" ;
+    ex:textoExtracto "'PWM activado en otro canal' [...] La prestación PWM ya está activada en un canal diferente al que se desea." ;
+    ex:identificador "3087" .
+
+ex:Fallo_3088
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 3088: Configuración incorrecta de máscara láser" ;
+    ex:textoExtracto "'Error en la programación de la máscara del láser' [...] No se cumplen las condiciones hardware o de parametrización necesarias para poder utilizar la prestación de corte por láser." ;
+    ex:identificador "3088" ;
+    ex:solucionaFallo ex:Componente_PlacaExpansionSercos ,
+                      ex:Parametro_NLOCOUT .

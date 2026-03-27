@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AvisoSeguridad_20014
+    a ex:AvisoSeguridad ;
+    rdfs:label "Espera por final de búsqueda de cero del cabezal %x"@es ;
+    ex:identificador "20014" ;
+    ex:textoExtracto "20014 Esperando final de búsqueda de cero del cabezal %x. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo."@es ;
+    ex:mitigaRiesgo ex:AccionProhibida_AnalisisCausasRetraso .
+
+ex:AccionProhibida_AnalisisCausasRetraso
+    a ex:AccionProhibida ;
+    rdfs:label "Omitir análisis de causas tras pulsar RESET"@es ;
+    ex:textoExtracto "SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso."@es .
+
+ex:InterfazUsuario_Reset
+    a ex:InterfazUsuario ;
+    rdfs:label "Botón RESET"@es ;
+    ex:textoExtracto "Pulsar [RESET]"@es ;
+    ex:habilitadoPor ex:Sistema_ControlPLC .
+
+ex:Sistema_ControlPLC
+    a ex:Sistema ;
+    rdfs:label "Sistema de control PLC"@es ;
+    ex:textoExtracto "El PLC debe confirmar la nueva gama."@es ;
+    ex:controla ex:ComponenteMecanico_Cabezal ,
+                 ex:InterfazUsuario_Reset ;
+    ex:monitoreaParametro ex:Parametro_TiempoEspera .
+
+ex:ComponenteMecanico_Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal %x"@es ;
+    ex:textoExtracto "búsqueda de cero del cabezal %x"@es .
+
+ex:Parametro_TiempoEspera
+    a ex:Parametro ;
+    rdfs:label "Tiempo máximo de espera para búsqueda de cero"@es ;
+    ex:textoExtracto "La espera ha superado un tiempo determinado"@es .

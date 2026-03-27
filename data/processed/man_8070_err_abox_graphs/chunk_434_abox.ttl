@@ -1,0 +1,31 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_3037
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Eje bloqueado (3037)" ;
+    ex:identificador "3037" ;
+    ex:textoExtracto "3037 'Eje bloqueado' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta mover un eje, pero el PLC no ha puesto la señal SERVO(axis)ON." ;
+    ex:solucionaFallo [
+        a               ex:TareaMantenimiento ;
+        rdfs:label      "Comprobar programa PLC para señal SERVO(axis)ON" ;
+        ex:textoExtracto "SOLUCIÓN Comprobar el programa de PLC. [...] Comprobar en el programa de PLC el tratamiento de la señal SERVO(axis)ON o aumentar el valor del parámetro DWELL del eje."
+    ] .
+
+ex:Parametro_DWELL
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro DWELL del eje" ;
+    ex:textoExtracto "aumentar el valor del parámetro DWELL del eje" ;
+    ex:monitoreaParametro [
+        a               ex:Sensor ;
+        rdfs:label      "Señal SERVO(axis)ON" ;
+        ex:textoExtracto "el PLC no ha puesto la señal SERVO(axis)ON"
+    ] .
+
+ex:ModoOperacion_G50_G5_HSC
+    a               ex:ModoOperacion ;
+    rdfs:label      "Empalme de bloques (G50, G5 o HSC)" ;
+    ex:textoExtracto "El CNC puede dar este error cuando trabaja con empalme de bloques (G50, G5 o HSC)" ;
+    ex:activaAlarma  ex:Fallo_3037 .

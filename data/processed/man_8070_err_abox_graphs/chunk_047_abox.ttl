@@ -1,0 +1,77 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_0110
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "No se pudo cargar la cinemática de usuario"@es ;
+    ex:identificador "0110" ;
+    ex:textoExtracto """
+    0110 'No se pudo cargar la cinemática de usuario'
+    DETECCIÓN Durante el arranque del CNC.
+    CAUSA El CNC no encuentra el fichero c:\\FagorCNC\\drivers\\kinematic.sys (o c:\\Cnc8070\\drivers\\kinematic.sys).
+    SOLUCIÓN Compruebe que al hacer el make de cinemática de usuario no se producen errores y que el driver kinematic.sys se genera correctamente.
+    """@es .
+
+ex:Fallo_0111
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Error en la inicialización de datos de la cinemática de usuario"@es ;
+    ex:identificador "0111" ;
+    ex:textoExtracto """
+    0111 'Error en la inicialización de datos de la cinemática de usuario'
+    DETECCIÓN Durante el arranque del CNC.
+    CAUSA Error en la función de inicialización y carga de datos de la cinemática de usuario (UserTransforDataInit) implementada en el fichero Kin_iniData.c.
+    SOLUCIÓN Analizar y corregir los posibles motivos por los que la función da error.
+    """@es .
+
+ex:Fallo_0112
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Error en la inicialización de la cinemática de usuario"@es ;
+    ex:identificador "0112" ;
+    ex:textoExtracto """
+    0112 'Error en la inicialización de la cinemática de usuario'
+    DETECCIÓN Al activar una cinemática de usuario.
+    CAUSA Error en la función de inicialización de la cinemática (UserTransforInit) implementada en el fichero Kin_impl.c.
+    SOLUCIÓN Analizar y corregir los posibles motivos por los que la función da error.
+    """@es .
+
+ex:Fallo_0113
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Error en la inicialización de parámetros de la cinemática de usuario"@es ;
+    ex:identificador "0113" ;
+    ex:textoExtracto """
+    0113 'Error en la inicialización de parámetros de la cinemática de usuario'
+    DETECCIÓN Al activar una cinemática de usuario.
+    CAUSA Error en la función de inicialización de la cinemática (UserTransforParamInit) implementada en el fichero Kin_impl.c.
+    SOLUCIÓN Analizar y corregir los posibles motivos por los que la función da error.
+    """@es .
+
+ex:Fallo_0114
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "No es posible validar parámetros durante la simulación de un programa en el canal"@es ;
+    ex:identificador "0114" ;
+    ex:textoExtracto """
+    0114 No es posible validar parámetros durante la simulación de un programa en el canal.
+    DETECCIÓN Durante la validación de los parámetros máquina.
+    CAUSA El usuario ha intentado validar los parámetros durante la simulación de un programa.
+    SOLUCIÓN Detener la simulación del programa para validar los parámetros.
+    """@es .
+
+ex:SistemaCNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC"@es ;
+    ex:textoExtracto "tipo de acciones con cabezales sincronizados activos, ya que implican un reset del sistema."@es ;
+    ex:activaAlarma  ex:Fallo_0110 , ex:Fallo_0111 , ex:Fallo_0112 , ex:Fallo_0113 , ex:Fallo_0114 .
+
+ex:ParametroCinematica
+    a               ex:Parametro ;
+    rdfs:label      "Parámetros de cinemática de usuario"@es ;
+    ex:textoExtracto "La validación de parámetros o compilación del programa PLC debe ser previa a la sincronización de cabezales"@es ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:AvisoSincronizacion
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Validación de parámetros previa a sincronización de cabezales"@es ;
+    ex:textoExtracto "La validación de parámetros o compilación del programa PLC debe ser previa a la sincronización de cabezales, o desincronizar los cabezales momentáneamente para llevar a cabo la acción deseada."@es ;
+    ex:mitigaRiesgo ex:SistemaCNC .

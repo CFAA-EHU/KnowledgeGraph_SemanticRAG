@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error5015
+    a                     ex:AvisoSeguridad ;
+    rdfs:label            "Error 5015: Fallo en lectura de variable desde PLC"@es ;
+    ex:identificador      "5015" ;
+    ex:textoExtracto      "'La lectura de la variable desde PLC no pudo realizarse'"@es .
+
+ex:ParametroNDOMOD
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro NDOMOD (configuración de I/Os digitales)"@es ;
+    ex:identificador      "NDOMOD" ;
+    ex:textoExtracto      "Revisar tabla de configuración de I/Os digitales (parámetro NDOMOD)"@es .
+
+ex:ParametroPLCFREQ
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro PLCFREQ (tiempo de ciclo)"@es ;
+    ex:identificador      "PLCFREQ" ;
+    ex:textoExtracto      "aumentar el tiempo de ciclo en el parámetro PLCFREQ"@es .
+
+ex:InstruccionCNCRD
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Instrucción CNCRD"@es ;
+    ex:identificador      "CNCRD" ;
+    ex:textoExtracto      "Al ejecutar una instrucción CNCRD"@es ;
+    ex:activaAlarma        ex:Error5015 .
+
+ex:DiagnosticoError5015
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Diagnóstico para error 5015"@es ;
+    ex:textoExtracto      "SOLUCIÓN Revisar tabla de configuración de I/Os digitales (parámetro NDOMOD), comprobar la integridad del bus o aumentar el tiempo de ciclo en el parámetro PLCFREQ."@es ;
+    ex:solucionaFallo      ex:Error5015 ;
+    ex:monitoreaParametro ex:ParametroNDOMOD , ex:ParametroPLCFREQ .

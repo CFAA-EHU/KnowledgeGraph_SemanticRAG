@@ -60,6 +60,7 @@ BOUNDEDNESS_POLICIES = {
     "quick_ref_strict": {"seed_limit": 6, "candidate_limit": 6, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
     "cross_manual_strict": {"seed_limit": 8, "candidate_limit": 8, "result_limit": 28, "too_broad_raw": 28, "too_narrow_min": 1, "degrade_to_fallback": False},
     "installation_strict": {"seed_limit": 6, "candidate_limit": 6, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
+    "error_strict": {"seed_limit": 6, "candidate_limit": 6, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
     "generalized_lookup": {"seed_limit": 4, "candidate_limit": 5, "result_limit": 16, "too_broad_raw": 18, "too_narrow_min": 1, "degrade_to_fallback": True},
     "generic_fallback": {"seed_limit": 6, "candidate_limit": 8, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
 }
@@ -591,6 +592,171 @@ STRICT_INSTALLATION_FAMILIES = [
         "steps": [
             {"step_id": "seed", "purpose": "seed_installation_alarm_temperature", "mode": "fixed_seed", "fixed_uris": [_uri("Marca_OVERTEMP"), _uri("Error_E173")], "max_candidates": 2, "max_results": 2},
             {"step_id": "detail", "purpose": "installation_alarm_temperature_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+]
+
+STRICT_ERROR_FAMILIES = [
+    {
+        "family_id": "error_safety_mode_policy_lookup",
+        "template_id": "ERR_T1_safety_mode_policy",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "error_strict",
+        "policy_id": "error_strict",
+        "canonical_anchor": "error_safety_mode_policy",
+        "anchor_groups_any": ["error_safety_mode_policy"],
+        "keywords_any": [
+            ["seguridades", "fabricante"],
+            ["proteccion oem", "modo usuario"],
+            ["caracter temporal"],
+        ],
+        "seed_uris": [_uri("Sistema_SeguridadesCNC"), _uri("Alarma_8026")],
+        "seed_token_map": {
+            "fabricante": [_uri("Sistema_SeguridadesCNC")],
+            "seguridades": [_uri("Sistema_SeguridadesCNC")],
+            "8026": [_uri("Alarma_8026")],
+            "oem": [_uri("Alarma_8026")],
+            "modo usuario": [_uri("Alarma_8026")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_error_safety_mode_policy", "mode": "fixed_seed", "fixed_uris": [_uri("Sistema_SeguridadesCNC"), _uri("Alarma_8026")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "error_safety_mode_policy_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+    {
+        "family_id": "error_code_condition_attribute_lookup",
+        "template_id": "ERR_T2_condition_attribute",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "error_strict",
+        "policy_id": "error_strict",
+        "canonical_anchor": "error_code_condition_attribute",
+        "anchor_groups_any": ["error_code_condition_attribute"],
+        "keywords_any": [
+            ["0008"],
+            ["0169"],
+            ["0173"],
+            ["1067"],
+            ["5026"],
+            ["8023"],
+            ["8042"],
+            ["memoria libre en disco"],
+        ],
+        "technical_tokens_any": ["0008", "0169", "0173", "1067", "5026", "8023", "8042", "cncwr"],
+        "seed_uris": [_uri("Alarma_0008"), _uri("Error_0169"), _uri("Alarma_0173"), _uri("AvisoSeguridad_1067"), _uri("Alarma_5026"), _uri("Error_8023"), _uri("Error_8042"), _uri("Marca_OVERTEMP")],
+        "seed_token_map": {
+            "0008": [_uri("Alarma_0008")],
+            "0169": [_uri("Error_0169"), _uri("Marca_OVERTEMP")],
+            "0173": [_uri("Alarma_0173"), _uri("Marca_OVERTEMP")],
+            "1067": [_uri("AvisoSeguridad_1067")],
+            "5026": [_uri("Alarma_5026")],
+            "cncwr": [_uri("Alarma_5026")],
+            "8023": [_uri("Error_8023"), _uri("Error_8042")],
+            "8042": [_uri("Error_8042"), _uri("Error_8023")],
+            "50 mb": [_uri("Error_8023"), _uri("Error_8042")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_error_condition_attribute", "mode": "fixed_seed", "fixed_uris": [_uri("Alarma_0008"), _uri("Error_0169"), _uri("Alarma_0173"), _uri("AvisoSeguridad_1067"), _uri("Alarma_5026"), _uri("Error_8023"), _uri("Error_8042"), _uri("Marca_OVERTEMP")], "max_candidates": 6, "max_results": 6},
+            {"step_id": "detail", "purpose": "error_condition_attribute_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 6, "max_results": 24},
+        ],
+    },
+    {
+        "family_id": "error_code_resolution_procedure_lookup",
+        "template_id": "ERR_T3_resolution_procedure",
+        "intent": "procedure_lookup",
+        "hop_depth": 1,
+        "family_type": "error_strict",
+        "policy_id": "error_strict",
+        "canonical_anchor": "error_resolution_procedure",
+        "anchor_groups_any": ["error_resolution_procedure"],
+        "keywords_any": [
+            ["0040"],
+            ["1737"],
+            ["4026"],
+            ["editor de perfiles"],
+            ["error de geometria"],
+        ],
+        "technical_tokens_any": ["0040", "1737", "4026", "geometry_error", "feedat", "endat"],
+        "seed_uris": [_uri("Error_0040"), _uri("Alarma_1737"), _uri("Fallo_4026"), _uri("AvisoSeguridad_960_03"), _uri("InterfazUsuario_EditorPerfiles")],
+        "seed_token_map": {
+            "0040": [_uri("Error_0040")],
+            "1737": [_uri("Alarma_1737")],
+            "4026": [_uri("Fallo_4026")],
+            "feedat": [_uri("Fallo_4026")],
+            "endat": [_uri("Fallo_4026")],
+            "editor de perfiles": [_uri("AvisoSeguridad_960_03"), _uri("InterfazUsuario_EditorPerfiles")],
+            "error de geometria": [_uri("AvisoSeguridad_960_03"), _uri("InterfazUsuario_EditorPerfiles")],
+            "geometry error": [_uri("AvisoSeguridad_960_03"), _uri("InterfazUsuario_EditorPerfiles")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_error_resolution_procedure", "mode": "fixed_seed", "fixed_uris": [_uri("Error_0040"), _uri("Alarma_1737"), _uri("Fallo_4026"), _uri("AvisoSeguridad_960_03"), _uri("InterfazUsuario_EditorPerfiles")], "max_candidates": 5, "max_results": 5},
+            {"step_id": "detail", "purpose": "error_resolution_procedure_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 5, "max_results": 22},
+        ],
+    },
+    {
+        "family_id": "error_code_comparison_lookup",
+        "template_id": "ERR_T4_code_comparison",
+        "intent": "component_relation_lookup",
+        "hop_depth": 2,
+        "family_type": "error_strict",
+        "policy_id": "error_strict",
+        "canonical_anchor": "error_code_comparison",
+        "anchor_groups_any": ["error_code_comparison"],
+        "keywords_any": [
+            ["1166"],
+            ["1167"],
+            ["8458"],
+            ["8459"],
+        ],
+        "technical_tokens_any": ["1166", "1167", "8458", "8459", "sqrt", "log", "ln", "pim", "pit"],
+        "seed_uris": [_uri("Alarma_1166"), _uri("Alarma_1167"), _uri("Error_8458"), _uri("Error_8459")],
+        "seed_token_map": {
+            "1166": [_uri("Alarma_1166"), _uri("Alarma_1167")],
+            "1167": [_uri("Alarma_1167"), _uri("Alarma_1166")],
+            "sqrt": [_uri("Alarma_1166"), _uri("Alarma_1167")],
+            "log": [_uri("Alarma_1167"), _uri("Alarma_1166")],
+            "ln": [_uri("Alarma_1167"), _uri("Alarma_1166")],
+            "8458": [_uri("Error_8458"), _uri("Error_8459")],
+            "8459": [_uri("Error_8459"), _uri("Error_8458")],
+            "pim": [_uri("Error_8458"), _uri("Error_8459")],
+            "pit": [_uri("Error_8459"), _uri("Error_8458")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_error_code_comparison", "mode": "fixed_seed", "fixed_uris": [_uri("Alarma_1166"), _uri("Alarma_1167"), _uri("Error_8458"), _uri("Error_8459")], "max_candidates": 4, "max_results": 4},
+            {"step_id": "detail", "purpose": "error_code_comparison_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 4, "max_results": 18},
+        ],
+    },
+    {
+        "family_id": "error_parameter_range_lookup",
+        "template_id": "ERR_T5_parameter_range",
+        "intent": "parameter_lookup",
+        "hop_depth": 1,
+        "family_type": "error_strict",
+        "policy_id": "error_strict",
+        "canonical_anchor": "error_parameter_range",
+        "anchor_groups_any": ["error_parameter_range"],
+        "keywords_any": [
+            ["1359"],
+            ["8789"],
+            ["var", "endvar", "delete"],
+            ["li", "lo", "era"],
+        ],
+        "technical_tokens_any": ["1359", "8789", "li_li16", "lo_lo8"],
+        "seed_uris": [_uri("AvisoSeguridad_1359"), _uri("Error_8789"), _uri("LI1-LI16"), _uri("IO_Local_LO1_LO8")],
+        "seed_token_map": {
+            "1359": [_uri("AvisoSeguridad_1359")],
+            "#var": [_uri("AvisoSeguridad_1359")],
+            "#endvar": [_uri("AvisoSeguridad_1359")],
+            "#delete": [_uri("AvisoSeguridad_1359")],
+            "8789": [_uri("Error_8789"), _uri("LI1-LI16"), _uri("IO_Local_LO1_LO8")],
+            "era": [_uri("Error_8789"), _uri("LI1-LI16"), _uri("IO_Local_LO1_LO8")],
+            "li1": [_uri("Error_8789"), _uri("LI1-LI16"), _uri("IO_Local_LO1_LO8")],
+            "lo1": [_uri("Error_8789"), _uri("IO_Local_LO1_LO8"), _uri("LI1-LI16")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_error_parameter_range", "mode": "fixed_seed", "fixed_uris": [_uri("AvisoSeguridad_1359"), _uri("Error_8789"), _uri("LI1-LI16"), _uri("IO_Local_LO1_LO8")], "max_candidates": 4, "max_results": 4},
+            {"step_id": "detail", "purpose": "error_parameter_range_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 4, "max_results": 18},
         ],
     },
 ]
@@ -1394,7 +1560,7 @@ def _family_confidence(parse: QuestionParse, family: dict[str, Any]) -> float:
     confidence = 0.45
     if family.get("family_type") == "benchmark_seeded":
         confidence += 0.25
-    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict", "installation_strict"}:
+    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict", "installation_strict", "error_strict"}:
         confidence += 0.28
     if parse.matched_anchor_rule:
         confidence += 0.15
@@ -1482,7 +1648,7 @@ def _family_score(parse: QuestionParse, question: str, family: dict[str, Any]) -
             keyword_matched = True
     if family.get("require_keyword_match") and not keyword_matched:
         return None
-    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict", "installation_strict"} and not matched_evidence:
+    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict", "installation_strict", "error_strict"} and not matched_evidence:
         return None
     return score
 
@@ -1530,6 +1696,34 @@ STRICT_RUNTIME_CUES = [
     "modo utilidades",
     "fagorcnc",
     "users prg",
+    "0008",
+    "0040",
+    "0169",
+    "0173",
+    "1067",
+    "1166",
+    "1167",
+    "1359",
+    "1737",
+    "4026",
+    "5026",
+    "8023",
+    "8042",
+    "8026",
+    "8458",
+    "8459",
+    "8789",
+    "cncwr",
+    "feedat",
+    "endat",
+    "oem",
+    "pim",
+    "pit",
+    "#var",
+    "#endvar",
+    "#delete",
+    "error de geometria",
+    "editor de perfiles",
 ]
 
 
@@ -1555,6 +1749,11 @@ def _has_strict_runtime_context(parse: QuestionParse, question: str) -> bool:
         "installation_bus_plc",
         "installation_motion_defaults",
         "installation_alarm_temperature",
+        "error_safety_mode_policy",
+        "error_code_condition_attribute",
+        "error_resolution_procedure",
+        "error_code_comparison",
+        "error_parameter_range",
     }
     if set(parse.anchor_groups).intersection(strong_anchor_groups) or parse.technical_tokens:
         return True
@@ -1565,12 +1764,37 @@ def _has_strict_runtime_context(parse: QuestionParse, question: str) -> bool:
 
 def select_plan_family(parse: QuestionParse, question: str) -> dict[str, Any] | None:
     if _has_strict_runtime_context(parse, question):
+        normalized = normalize_text(question)
+        error_anchor_groups = {
+            "error_safety_mode_policy",
+            "error_code_condition_attribute",
+            "error_resolution_procedure",
+            "error_code_comparison",
+            "error_parameter_range",
+        }
+        error_technical_tokens = {
+            "0008", "0040", "0169", "0173", "1067", "1166", "1167", "1359",
+            "1737", "4026", "5026", "8023", "8042", "8026", "8458", "8459", "8789",
+            "cncwr", "feedat", "endat", "pim", "pit", "geometry_error",
+        }
+        has_error_context = (
+            bool(set(parse.anchor_groups).intersection(error_anchor_groups))
+            or bool(set(parse.technical_tokens).intersection(error_technical_tokens))
+            or any(cue in normalized for cue in ["error de geometria", "editor de perfiles", "#var", "#endvar", "#delete"])
+        )
+        if has_error_context:
+            strict_error = _select_strict_family(parse, question, STRICT_ERROR_FAMILIES)
+            if strict_error is not None:
+                return strict_error
         strict_cross = _select_strict_family(parse, question, STRICT_CROSS_FAMILIES)
         if strict_cross is not None:
             return strict_cross
         strict_installation = _select_strict_family(parse, question, STRICT_INSTALLATION_FAMILIES)
         if strict_installation is not None:
             return strict_installation
+        strict_error = _select_strict_family(parse, question, STRICT_ERROR_FAMILIES)
+        if strict_error is not None:
+            return strict_error
         strict_quick_ref = _select_strict_family(parse, question, STRICT_QUICK_REF_FAMILIES)
         if strict_quick_ref is not None:
             return strict_quick_ref

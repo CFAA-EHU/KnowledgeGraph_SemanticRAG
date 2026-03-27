@@ -1,0 +1,99 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_5015
+    a ex:Alarma ;
+    rdfs:label "Alarma 5015: Lectura de variable desde PLC no realizada" ;
+    ex:textoExtracto "'La lectura de la variable desde PLC no pudo realizarse' DETECCIÓN Al ejecutar una instrucción CNCRD. CAUSA Lectura de un parámetro aritmético global o local que no existe." ;
+    ex:identificador "5015" .
+
+ex:Alarma_5016
+    a ex:Alarma ;
+    rdfs:label "Alarma 5016: Valor de lectura fuera de rango" ;
+    ex:textoExtracto "'Valor de lectura fuera de rango' DETECCIÓN Al ejecutar una instrucción CNCRD. CAUSA Dato leído fuera de rango." ;
+    ex:identificador "5016" .
+
+ex:Alarma_5017
+    a ex:Alarma ;
+    rdfs:label "Alarma 5017: Bloque nulo de CNCEX" ;
+    ex:textoExtracto "'Bloque nulo de CNCEX' DETECCIÓN Al ejecutar una instrucción CNCEX. CAUSA El bloque programado en la instrucción CNCEX es nulo o la canal programado no está disponible." ;
+    ex:identificador "5017" .
+
+ex:Alarma_5018
+    a ex:Alarma ;
+    rdfs:label "Alarma 5018: Marca de comunicación activa" ;
+    ex:textoExtracto "'No se ha ejecutado CNCEX por estar la marca de comunicación a \"1\"' DETECCIÓN Al ejecutar una instrucción CNCEX. CAUSA La marca programada en la instrucción CNCEX ya está activa al ejecutar la instrucción." ;
+    ex:identificador "5018" .
+
+ex:Alarma_5019
+    a ex:Alarma ;
+    rdfs:label "Alarma 5019: Canal de ejecución no disponible" ;
+    ex:textoExtracto "'CNCEX: Canal de ejecución no disponible' DETECCIÓN Al ejecutar una instrucción CNCEX. CAUSA El canal programado en la instrucción CNCEX no está disponible." ;
+    ex:identificador "5019" .
+
+ex:Alarma_5020
+    a ex:Alarma ;
+    rdfs:label "Alarma 5020: Ejecución no finalizada" ;
+    ex:textoExtracto "'CNCEX: Ejecución no finalizada' DETECCIÓN Al ejecutar una instrucción CNCEX. CAUSA La instrucción CNCEX no puede ejecutar el bloque en el canal indicado." ;
+    ex:identificador "5020" .
+
+ex:DiagnosticoFallo_5015
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico para alarma 5015" ;
+    ex:textoExtracto "Comprobar la parametrización de los parámetros globales y locales, así como el programa de PLC." ;
+    ex:solucionaFallo ex:Alarma_5015 .
+
+ex:DiagnosticoFallo_5016
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico para alarma 5016" ;
+    ex:textoExtracto "Comprobar la sintaxis de la instrucción." ;
+    ex:solucionaFallo ex:Alarma_5016 .
+
+ex:DiagnosticoFallo_5017
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico para alarma 5017" ;
+    ex:textoExtracto "Revisar el bloque a ejecutar y el estado del canal." ;
+    ex:solucionaFallo ex:Alarma_5017 .
+
+ex:DiagnosticoFallo_5018
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico para alarma 5018" ;
+    ex:textoExtracto "Revisar en el programa de PLC la lógica de la instrucción CNCEX y de las marcas utilizadas." ;
+    ex:solucionaFallo ex:Alarma_5018 .
+
+ex:DiagnosticoFallo_5019
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico para alarma 5019" ;
+    ex:textoExtracto "Comprobar el estado del canal programado en la instrucción CNCEX." ;
+    ex:solucionaFallo ex:Alarma_5019 .
+
+ex:DiagnosticoFallo_5020
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico para alarma 5020" ;
+    ex:textoExtracto "Comprobar el estado del canal programado en la instrucción CNCEX." ;
+    ex:solucionaFallo ex:Alarma_5020 .
+
+ex:Parametro_Global
+    a ex:Parametro ;
+    rdfs:label "Parámetro aritmético global" ;
+    ex:textoExtracto "Lectura de un parámetro aritmético global o local que no existe." .
+
+ex:Parametro_Local
+    a ex:Parametro ;
+    rdfs:label "Parámetro aritmético local" ;
+    ex:textoExtracto "Lectura de un parámetro aritmético global o local que no existe." .
+
+ex:Instruccion_CNCRD
+    a ex:Componente ;
+    rdfs:label "Instrucción CNCRD" ;
+    ex:textoExtracto "Al ejecutar una instrucción CNCRD." ;
+    ex:monitoreaParametro ex:Parametro_Global, ex:Parametro_Local ;
+    ex:activaAlarma ex:Alarma_5015, ex:Alarma_5016 .
+
+ex:Instruccion_CNCEX
+    a ex:Componente ;
+    rdfs:label "Instrucción CNCEX" ;
+    ex:textoExtracto "Al ejecutar una instrucción CNCEX." ;
+    ex:activaAlarma ex:Alarma_5017, ex:Alarma_5018, ex:Alarma_5019, ex:Alarma_5020 .

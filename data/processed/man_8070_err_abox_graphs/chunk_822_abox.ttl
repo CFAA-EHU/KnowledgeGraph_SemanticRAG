@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Error9512
+    a                   ex:DiagnosticoFallo ;
+    rdfs:label          "Error en la actualización de versión FPGA"@es ;
+    ex:identificador    "9512" ;
+    ex:textoExtracto    "9512 Error en la actualización de versión FPGA. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El CNC no puede actualizar la versión de la FPGA en algún regulador o RPS."@es ;
+    ex:solucionaFallo   ex:Accion_ComprobarConexionado_9512 .
+
+ex:Error9513
+    a                   ex:DiagnosticoFallo ;
+    rdfs:label          "Error en la actualización de versión CPLD"@es ;
+    ex:identificador    "9513" ;
+    ex:textoExtracto    "9513 Error en la actualización de versión CPLD. DETECCIÓN Durante el"@es .
+
+ex:Accion_ComprobarConexionado_9512
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Comprobar conexionado (Error 9512)"@es ;
+    ex:textoExtracto    "Compruebe el conexionado."@es .
+
+ex:FPGA_ReguladorRPS
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "FPGA en regulador o RPS"@es ;
+    ex:textoExtracto    "la versión de la FPGA en algún regulador o RPS"@es ;
+    ex:monitoreaParametro  ex:Param_VersionFPGA .
+
+ex:Param_VersionFPGA
+    a                   ex:Parametro ;
+    rdfs:label          "Versión de FPGA"@es ;
+    ex:textoExtracto    "versión de la FPGA"@es .
+
+ex:CNC_SistemaControl
+    a                   ex:Sistema ;
+    rdfs:label          "CNC (Sistema de control)"@es ;
+    ex:textoExtracto    "El CNC no puede actualizar la versión de la FPGA"@es ;
+    ex:controla         ex:FPGA_ReguladorRPS .

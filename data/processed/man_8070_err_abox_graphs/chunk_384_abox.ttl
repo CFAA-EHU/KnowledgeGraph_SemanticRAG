@@ -1,0 +1,27 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_2388
+    a ex:Alarma ;
+    rdfs:label "Estado de zona de trabajo no válido" ;
+    ex:identificador "2388" ;
+    ex:textoExtracto "2388 Estado de zona de trabajo no válido. DETECCIÓN Durante la preparación de bloques. CAUSA El estado de la zona de trabajo no tiene un valor correcto." .
+
+ex:Parametro_G122
+    a ex:Parametro ;
+    ex:identificador "G122" ;
+    ex:textoExtracto "El valor programado en G122 no es correcto." ;
+    ex:monitoreaParametro ex:Alarma_2388 .
+
+ex:DiagnosticoFallo_2388
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "Existen dos posibilidades. • El valor programado en G122 no es correcto. • El valor recuperado tras algún proceso de recuperación de datos (arranque, reset, inspección) no es correcto." ;
+    ex:solucionaFallo ex:Alarma_2388 .
+
+ex:TareaMantenimiento_ProgramarEstadoZona
+    a ex:TareaMantenimiento ;
+    rdfs:label "Programar estado de zona" ;
+    ex:textoExtracto "Programar un valor correcto para el estado de la zona; de 0" ;
+    ex:solucionaFallo ex:Alarma_2388 .

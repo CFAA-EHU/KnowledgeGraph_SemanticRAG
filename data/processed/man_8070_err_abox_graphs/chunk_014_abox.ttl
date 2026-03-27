@@ -1,0 +1,82 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_0027
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Eje no es Mechatrolink"@es ;
+    ex:identificador "0027" ;
+    ex:textoExtracto "El eje no es mechatrolink. DETECCIÓN Al definir variables en un canal del osciloscopio. CAUSA La variable o parámetro es exclusivo de un eje mechatrolink, pero el eje para el que se pide la variable o parámetro no es un eje mechatrolink. SOLUCIÓN Seleccionar un eje Mechatrolink. La variable o parámetro de eje debe existir para el eje pedido."@es ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Uso de parámetros Mechatrolink en eje no compatible"@es ;
+        ex:textoExtracto "La variable o parámetro es exclusivo de un eje mechatrolink, pero el eje para el que se pide la variable o parámetro no es un eje mechatrolink."@es
+    ] .
+
+ex:DiagnosticoFallo_0028
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Parámetro Mechatrolink no asociable a canal de osciloscopio"@es ;
+    ex:identificador "0028" ;
+    ex:textoExtracto "No se permite asociar un parámetro mechatrolink a un canal del oscilo. DETECCIÓN Al definir variables en un canal del osciloscopio. CAUSA En el osciloscopio hay definido un parámetro Mechatrolink o una variable DRV asociada a un parámetro mechatrolink. SOLUCIÓN El acceso a variables y/o parámetros de los dispositivos Mechatrolink sólo está disponible para el modo Mlink-II a 32 bytes."@es ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Asociación no permitida de parámetros Mechatrolink en modo incorrecto"@es ;
+        ex:textoExtracto "En el osciloscopio hay definido un parámetro Mechatrolink o una variable DRV asociada a un parámetro mechatrolink."@es
+    ] .
+
+ex:DiagnosticoFallo_0029
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Modo Mlink-I activo para variables Mechatrolink"@es ;
+    ex:identificador "0029" ;
+    ex:textoExtracto "'Sólo MLINKII permite variables DRV o MLINK en un canal del oscilo' DETECCIÓN Al definir variables en un canal del osciloscopio. CAUSA En el osciloscopio hay definida una variable Mechatrolink o una variable DRV, pero en el CNC está activo el modo Mlink-I (parámetro MLINK). SOLUCIÓN El acceso a variables y/o parámetros de los dispositivos Mechatrolink sólo está disponible para el modo Mlink-II a 32 bytes."@es ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Uso de variables Mechatrolink en modo Mlink-I"@es ;
+        ex:textoExtracto "En el osciloscopio hay definida una variable Mechatrolink o una variable DRV, pero en el CNC está activo el modo Mlink-I (parámetro MLINK)."@es
+    ] .
+
+ex:DiagnosticoFallo_0030
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Programación de eje por índice en variables DRV"@es ;
+    ex:identificador "0030" ;
+    ex:textoExtracto "'Se debe programar el eje de la variable mediante su nombre' DETECCIÓN Durante la ejecución. CAUSA En alguna variable del regulador (DRV), el eje está programado mediante su número lógico o indice en el canal. SOLUCIÓN En estas variables, el eje se debe programar mediante su nombre."@es ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Programación de eje por número lógico en variables DRV"@es ;
+        ex:textoExtracto "En alguna variable del regulador (DRV), el eje está programado mediante su número lógico o indice en el canal."@es
+    ] .
+
+ex:DiagnosticoFallo_0031
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Parámetros Mechatrolink en osciloscopio con modo incorrecto"@es ;
+    ex:identificador "0031" ;
+    ex:textoExtracto "'Sólo MLINKII permite parámetros mechatrolink en el oscilo' DETECCIÓN Al definir parámetros en un canal del osciloscopio."@es ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Definición de parámetros Mechatrolink en modo no compatible"@es ;
+        ex:textoExtracto "Definición de parámetros Mechatrolink en un canal del osciloscopio con modo no compatible (requiere Mlink-II)."@es
+    ] .
+
+ex:ModoOperacion_MlinkII
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Mlink-II (32 bytes)"@es ;
+    ex:textoExtracto "El acceso a variables y/o parámetros de los dispositivos Mechatrolink sólo está disponible para el modo Mlink-II a 32 bytes."@es ;
+    ex:habilitadoPor [
+        a ex:Parametro ;
+        rdfs:label "Parámetro MLINK (modo Mlink-II)"@es ;
+        ex:valor "Mlink-II" ;
+        ex:textoExtracto "parámetro MLINK en modo Mlink-II."@es
+    ] .
+
+ex:Parametro_DRV
+    a ex:Parametro ;
+    rdfs:label "Variable DRV (regulador)"@es ;
+    ex:textoExtracto "variable del regulador (DRV)."@es ;
+    ex:monitoreaParametro ex:ModoOperacion_MlinkII .
+
+ex:InterfazUsuario_Osciloscopio
+    a ex:InterfazUsuario ;
+    rdfs:label "Canal del osciloscopio (definición de variables)"@es ;
+    ex:textoExtracto "canal del osciloscopio [...] Al definir variables en un canal del osciloscopio."@es ;
+    ex:requiereMantenimiento ex:DiagnosticoFallo_0027, ex:DiagnosticoFallo_0028, ex:DiagnosticoFallo_0029, ex:DiagnosticoFallo_0031 .

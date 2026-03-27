@@ -1,0 +1,156 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_CodigosErrorSercos a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de códigos de error SERCOS"@es ;
+    ex:textoExtracto """
+| Código. | Significado. |
+| --- | --- |
+| 0x00000002 | Rotura de fibra óptica. |
+| 0x00000100 | Pérdida de ATs. |
+| 0x00000200 | Pérdida de MSTs. |
+| 0x00008000 | Error en la transmisión de ATs. (Fibra óptica o regulador reseteado) |
+| 0xFFFF0000 | Fallo en accesos a la RAM común del SERCON.
+"""@es ;
+    ex:documentadoEn ex:Pagina_162 .
+
+ex:Alarma_0x00000002
+    a ex:Alarma ;
+    rdfs:label "Rotura de fibra óptica (0x00000002)"@es ;
+    ex:identificador "0x00000002" ;
+    ex:textoExtracto "Rotura de fibra óptica."@es ;
+    ex:documentadoEn ex:Tabla_CodigosErrorSercos .
+
+ex:Alarma_0x00000100
+    a ex:Alarma ;
+    rdfs:label "Pérdida de ATs (0x00000100)"@es ;
+    ex:identificador "0x00000100" ;
+    ex:textoExtracto "Pérdida de ATs."@es ;
+    ex:documentadoEn ex:Tabla_CodigosErrorSercos .
+
+ex:Alarma_0x00000200
+    a ex:Alarma ;
+    rdfs:label "Pérdida de MSTs (0x00000200)"@es ;
+    ex:identificador "0x00000200" ;
+    ex:textoExtracto "Pérdida de MSTs."@es ;
+    ex:documentadoEn ex:Tabla_CodigosErrorSercos .
+
+ex:Alarma_0x00008000
+    a ex:Alarma ;
+    rdfs:label "Error en transmisión de ATs (0x00008000)"@es ;
+    ex:identificador "0x00008000" ;
+    ex:textoExtracto "Error en la transmisión de ATs. (Fibra óptica o regulador reseteado)"@es ;
+    ex:documentadoEn ex:Tabla_CodigosErrorSercos .
+
+ex:Alarma_0xFFFF0000
+    a ex:Alarma ;
+    rdfs:label "Fallo en RAM común del SERCON (0xFFFF0000)"@es ;
+    ex:identificador "0xFFFF0000" ;
+    ex:textoExtracto "Fallo en accesos a la RAM común del SERCON."@es ;
+    ex:documentadoEn ex:Tabla_CodigosErrorSercos .
+
+ex:AvisoSeguridad_4206
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error en regulador SERCOS (4206)"@es ;
+    ex:identificador "4206" ;
+    ex:textoExtracto """
+'Error en regulador SERCOS'
+EJE Número lógico del eje.
+CAUSA El regulador reporta error.
+SOLUCIÓN Analizar códigos de error. Consultar el manual del regulador.
+"""@es ;
+    ex:documentadoEn ex:Pagina_163 .
+
+ex:AvisoSeguridad_4207
+    a ex:AvisoSeguridad ;
+    rdfs:label "Falta Drive Status Ready (4207)"@es ;
+    ex:identificador "4207" ;
+    ex:textoExtracto """
+'Falta Drive Status Ready (DRSTAF/DRSTAS)'
+DETECCIÓN Durante la ejecución.
+CAUSA Vigilancia DRSTAF, DRSTAS o del tandem, cuando el eje está en movimiento.
+SOLUCIÓN Comprobar las señales de habilitación y el estado del regulador.
+"""@es ;
+    ex:documentadoEn ex:Pagina_164 .
+
+ex:AvisoSeguridad_4209
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error en el anillo Sercos (fibra óptica) (4209)"@es ;
+    ex:identificador "4209" ;
+    ex:textoExtracto """
+'Error en el anillo Sercos (fibra óptica)'
+VALOR Códigos de error que identifican la fuente o fuentes del problema.
+CAUSA Ruptura del anillo Sercos, que provoca pérdida de fase 4.
+SOLUCIÓN Realizar las siguientes comprobaciones:
+• Garantizar el buen conexionado e integridad de la fibra óptica.
+• Comprobar la parametrización en el CNC y reguladores. Selector de nodo del regulador (DriveID), parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc.
+"""@es ;
+    ex:documentadoEn ex:Pagina_165 .
+
+ex:AvisoSeguridad_4210
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error en el anillo Sercos (MST perdido) (4210)"@es ;
+    ex:identificador "4210" ;
+    ex:textoExtracto """
+'Error en el anillo Sercos (MST perdido)'
+VALOR Códigos de error que identifican la fuente o fuentes del problema.
+"""@es ;
+    ex:documentadoEn ex:Pagina_166 .
+
+ex:Parametro_DRSTAF
+    a ex:Parametro ;
+    rdfs:label "DRSTAF (Drive Status A)"@es ;
+    ex:textoExtracto "Vigilancia DRSTAF, DRSTAS o del tandem"@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4207 .
+
+ex:Parametro_DRSTAS
+    a ex:Parametro ;
+    rdfs:label "DRSTAS (Drive Status B)"@es ;
+    ex:textoExtracto "Vigilancia DRSTAF, DRSTAS o del tandem"@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4207 .
+
+ex:Parametro_DriveID
+    a ex:Parametro ;
+    rdfs:label "DriveID (Selector de nodo del regulador)"@es ;
+    ex:textoExtracto "Selector de nodo del regulador (DriveID)"@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4209 .
+
+ex:Parametro_LOOPTIME
+    a ex:Parametro ;
+    rdfs:label "LOOPTIME" ;
+    ex:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc."@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4209 .
+
+ex:Parametro_SERPOWSE
+    a ex:Parametro ;
+    rdfs:label "SERPOWSE" ;
+    ex:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc."@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4209 .
+
+ex:Parametro_SERBRATE
+    a ex:Parametro ;
+    rdfs:label "SERBRATE" ;
+    ex:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc."@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4209 .
+
+ex:Parametro_OPMODE
+    a ex:Parametro ;
+    rdfs:label "OPMODE" ;
+    ex:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc."@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4209 .
+
+ex:Sistema_Sercos
+    a ex:Sistema ;
+    rdfs:label "Sistema SERCOS"@es ;
+    ex:textoExtracto "Error en el bus Sercos que provoca pérdida de fase 4"@es ;
+    ex:documentadoEn ex:Pagina_162 .
+
+ex:ComponenteElectrico_FibraOptica
+    a ex:ComponenteElectrico ;
+    rdfs:label "Fibra óptica del anillo SERCOS"@es ;
+    ex:textoExtracto "Garantizar el buen conexionado e integridad de la fibra óptica"@es ;
+    ex:documentadoEn ex:AvisoSeguridad_4209 ;
+    ex:tieneComponente ex:Sistema_Sercos .

@@ -1,0 +1,112 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Modulo_ABSIND
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Módulo ABSIND" ;
+    ex:textoExtracto       "ha podido leer la información de identificación del módulo ABSIND durante el arranque del sistema. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y la contadora Sercos asociado a esa captación." ;
+    ex:monitoreaParametro  ex:Parametro_Ganancia_ABSIND ;
+    ex:monitoreaParametro  ex:Parametro_Fase_ABSIND ;
+    ex:tieneComponente     ex:Cable_ABSIND_Transductor .
+
+ex:Contadora_Sercos
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Contadora Sercos" ;
+    ex:textoExtracto "problema de conexionado entre el módulo ABSIND y la contadora Sercos asociado a esa captación." .
+
+ex:Transductor_InductosynResolver
+    a               ex:Sensor ;
+    rdfs:label      "Transductor Inductosyn/Resolver" ;
+    ex:textoExtracto "Nivel de la señal incremental del transductor inductosyn/resolver demasiado bajo. [...] Comprobar el cable y la conexión entre el módulo ABSIND y transductor inductosyn/resolver." .
+
+ex:Cable_ABSIND_Transductor
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Cable entre módulo ABSIND y transductor" ;
+    ex:textoExtracto "Comprobar el cable y la conexión entre el módulo ABSIND y transductor inductosyn/resolver." .
+
+ex:Parametro_Ganancia_ABSIND
+    a               ex:Parametro ;
+    rdfs:label      "Ganancia del módulo ABSIND" ;
+    ex:textoExtracto "Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste." .
+
+ex:Parametro_Fase_ABSIND
+    a               ex:Parametro ;
+    rdfs:label      "Fase del módulo ABSIND" ;
+    ex:textoExtracto "Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste." .
+
+ex:Alarma_E183
+    a               ex:Alarma ;
+    ex:identificador "E183" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-low en captación E21A" ;
+    ex:textoExtracto "E183 INDUCTOSYN: INC signal too-low en captación E21A." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Alarma_E283
+    a               ex:Alarma ;
+    ex:identificador "E283" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-low en captación E21B" ;
+    ex:textoExtracto "E283 INDUCTOSYN: INC signal too-low en captación E21B." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Alarma_E383
+    a               ex:Alarma ;
+    ex:identificador "E383" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-low en captación E21C" ;
+    ex:textoExtracto "E383 INDUCTOSYN: INC signal too-low en captación E21C." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Alarma_E483
+    a               ex:Alarma ;
+    ex:identificador "E483" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-low en captación E21D" ;
+    ex:textoExtracto "E483 INDUCTOSYN: INC signal too-low en captación E21D." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Alarma_E184
+    a               ex:Alarma ;
+    ex:identificador "E184" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-high en captación E21A" ;
+    ex:textoExtracto "E184 INDUCTOSYN: INC signal too-high en captación E21A." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Alarma_E284
+    a               ex:Alarma ;
+    ex:identificador "E284" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-high en captación E21B" ;
+    ex:textoExtracto "E284 INDUCTOSYN: INC signal too-high en captación E21B." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Alarma_E384
+    a               ex:Alarma ;
+    ex:identificador "E384" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-high en captación E21C" ;
+    ex:textoExtracto "E384 INDUCTOSYN: INC signal too-high en captación E21C." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Alarma_E484
+    a               ex:Alarma ;
+    ex:identificador "E484" ;
+    rdfs:label      "INDUCTOSYN: INC signal too-high en captación E21D" ;
+    ex:textoExtracto "E484 INDUCTOSYN: INC signal too-high en captación E21D." ;
+    ex:activaAlarma  ex:Modulo_ABSIND .
+
+ex:Diagnostico_SenalBaja_Inductosyn
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Diagnóstico: Señal incremental demasiado baja en transductor Inductosyn/Resolver" ;
+    ex:textoExtracto       "Nivel de la señal incremental del transductor inductosyn/resolver demasiado bajo. Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. Comprobar el cable y la conexión entre el módulo ABSIND y transductor inductosyn/resolver." ;
+    ex:solucionaFallo      ex:Modulo_ABSIND ;
+    ex:solucionaFallo      ex:Cable_ABSIND_Transductor .
+
+ex:Diagnostico_SenalAlta_Inductosyn
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Diagnóstico: Señal incremental demasiado alta en transductor Inductosyn/Resolver" ;
+    ex:textoExtracto       "Nivel de la señal incremental del transductor inductosyn/resolver demasiado alto. Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. Comprobar el cable y la conexión entre el módulo ABSIND y transductor inductosyn/resolver." ;
+    ex:solucionaFallo      ex:Modulo_ABSIND ;
+    ex:solucionaFallo      ex:Cable_ABSIND_Transductor .
+
+ex:Empresa_FagorAutomation
+    a               ex:Empresa ;
+    rdfs:label      "Fagor Automation" ;
+    ex:textoExtracto "Si el problema persiste, contacte con Fagor Automation." .

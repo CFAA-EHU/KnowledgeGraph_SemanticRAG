@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ErrorBusSercos_4300
+    a                   ex:DiagnosticoFallo ;
+    rdfs:label          "Error en el bus Sercos (4300)"@es ;
+    ex:identificador    "4300" ;
+    ex:textoExtracto    "CAUSA Error en el bus Sercos, debido a problemas de conexión, parametrización, problemas en las placas de Sercos, etc. [...] 4300 'No hay registrado ningún servidor de variables Sercos'"@es .
+
+ex:SistemaBusSercos
+    a                   ex:Sistema ;
+    rdfs:label          "Bus Sercos III"@es ;
+    ex:textoExtracto    "Revisar la conexión del bus Sercos III"@es ;
+    ex:tieneComponente   ex:PlacasSercos .
+
+ex:PlacasSercos
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Placas de Sercos"@es ;
+    ex:textoExtracto    "problemas en las placas de Sercos"@es .
+
+ex:ServidorVariablesSercos
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Servidor de variables Sercos"@es ;
+    ex:textoExtracto    "no hay ningún servidor de variables Sercos para responder a la petición"@es .
+
+ex:VariableSercos_Osciloscopio
+    a                   ex:Parametro ;
+    rdfs:label          "Variable Sercos (osciloscopio)"@es ;
+    ex:textoExtracto    "En el osciloscopio [...] hay definida una variable Sercos"@es ;
+    ex:monitoreaParametro ex:ServidorVariablesSercos .
+
+ex:Diagnostico_4300
+    a                   ex:DiagnosticoFallo ;
+    rdfs:label          "Diagnóstico: Falta de servidor de variables Sercos (4300)"@es ;
+    ex:identificador    "4300" ;
+    ex:textoExtracto    "'No hay registrado ningún servidor de variables Sercos'. DETECCIÓN En el osciloscopio. CAUSA En un canal del osciloscopio hay definida una variable Sercos, pero no hay ningún servidor de variables Sercos para responder a la petición."@es ;
+    ex:solucionaFallo   ex:ErrorBusSercos_4300 .

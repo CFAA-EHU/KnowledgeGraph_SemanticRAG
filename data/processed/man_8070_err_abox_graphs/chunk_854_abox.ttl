@@ -1,0 +1,56 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_PerdidaPosicionAbsoluta
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Error en la pista absoluta"@es ;
+    ex:textoExtracto """
+    Error en la pista absoluta.
+    DETECCIÓN Durante el arranque o funcionamiento habitual del sistema.
+    CAUSA Las posibles causas son las siguientes:
+    • El captador no puede calcular la posición absoluta.
+    • Pérdida de contaje.
+    • La señal analógica < 0,20 Vpp.
+    """@es .
+
+ex:Sensor_EncoderPosicion
+    a               ex:Sensor ;
+    rdfs:label      "Encóder de posición"@es ;
+    ex:textoExtracto "Comprobar que el encóder o la regla están trabajando a una velocidad apropiada."@es ;
+    ex:monitoreaParametro ex:Parametro_PosicionAbsoluta .
+
+ex:Parametro_PosicionAbsoluta
+    a               ex:Parametro ;
+    rdfs:label      "Posición absoluta"@es ;
+    ex:textoExtracto "El captador no puede calcular la posición absoluta."@es .
+
+ex:Parametro_SenalAnalogica
+    a               ex:Parametro ;
+    rdfs:label      "Señal analógica del sensor"@es ;
+    ex:textoExtracto "La señal analógica < 0,20 Vpp."@es ;
+    ex:valor         "< 0.20 Vpp" .
+
+ex:Componente_ReglaMedicion
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Regla de medición (cristal/cinta de acero)"@es ;
+    ex:textoExtracto "Limpiar el cristal o la cinta de acero de la regla."@es .
+
+ex:TareaMantenimiento_LimpiezaRegla
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Limpieza de regla de medición"@es ;
+    ex:textoExtracto "Limpiar el cristal o la cinta de acero de la regla."@es ;
+    ex:solucionaFallo ex:Fallo_PerdidaPosicionAbsoluta .
+
+ex:TareaMantenimiento_VerificacionMontaje
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Verificación de tolerancias de montaje"@es ;
+    ex:textoExtracto "Comprobar las tolerancias de montaje."@es ;
+    ex:solucionaFallo ex:Fallo_PerdidaPosicionAbsoluta .
+
+ex:TareaMantenimiento_VerificacionVelocidadEncoder
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Verificación de velocidad del encóder"@es ;
+    ex:textoExtracto "Comprobar que el encóder [...] está trabajando a una velocidad apropiada."@es ;
+    ex:solucionaFallo ex:Fallo_PerdidaPosicionAbsoluta .

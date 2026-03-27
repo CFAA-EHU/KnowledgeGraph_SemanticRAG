@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_3043
+    a                   ex:DiagnosticoFallo ;
+    rdfs:label          "Cabezal en M5 al activar roscado electrónico" ;
+    ex:identificador    "3043" ;
+    ex:textoExtracto    "3043 'Cabezal en M5 al activar roscado electrónico' DETECCIÓN Durante la ejecución. CAUSA El cabezal utilizado para un roscado electrónico (G33/G34) está parado o se ha programado una M5 en el mismo bloque que G33/G34."@es .
+
+ex:Parametro_SYNC
+    a                   ex:Parametro ;
+    rdfs:label          "Registro SYNC del PLC" ;
+    ex:textoExtracto    "el valor del registro SYNC del PLC no es válido. [...] El valor del registro SYNC del PLC debe ser un valor comprendido entre 1 y el número de cabezales del sistema. También puede tener valor cero."@es ;
+    ex:valor            "0-<n_cabezales>" .
+
+ex:SistemaRoscado
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema de roscado electrónico" ;
+    ex:textoExtracto    "número de cabezales del sistema"@es ;
+    ex:tieneComponente  ex:CabezalRoscado .
+
+ex:CabezalRoscado
+    a                   ex:ComponenteMecanico ;
+    rdfs:label          "Cabezal de roscado electrónico" ;
+    ex:textoExtracto    "El cabezal utilizado para un roscado electrónico (G33/G34) está parado o se ha programado una M5 en el mismo bloque que G33/G34."@es .
+
+ex:Funcion_G33 a ex:Tabla ;
+     a                   ex:ModoOperacion ;
+    rdfs:label          "Función G33 (roscado electrónico)" ;
+    ex:identificador    "G33" ;
+    ex:textoExtracto    "Hay una función G33, G34 o G95 activa"@es .
+
+ex:Funcion_G34 a ex:Tabla ;
+     a                   ex:ModoOperacion ;
+    rdfs:label          "Función G34 (roscado electrónico)" ;
+    ex:identificador    "G34" ;
+    ex:textoExtracto    "Hay una función G33, G34 o G95 activa"@es .
+
+ex:Funcion_G95 a ex:Tabla ;
+     a                   ex:ModoOperacion ;
+    rdfs:label          "Función G95 (roscado)" ;
+    ex:identificador    "G95" ;
+    ex:textoExtracto    "Hay una función G33, G34 o G95 activa"@es .
+
+ex:Comando_M5
+    a                   ex:ModoOperacion ;
+    rdfs:label          "Comando M5 (parada de cabezal)" ;
+    ex:identificador    "M5" ;
+    ex:textoExtracto    "se ha programado una M5 en el mismo bloque que G33/G34"@es .
+
+ex:Fallo_3043
+    ex:solucionaFallo    ex:Comando_M5 ;
+    ex:solucionaFallo    ex:Parametro_SYNC .

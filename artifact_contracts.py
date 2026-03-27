@@ -130,6 +130,24 @@ T25_3_INSTALLATION_ROUTING_IMPLEMENTATION_REPORT_PATH = PROCESSED_DATA_DIR / "t2
 T25_3_GRAPHDB_CONSISTENCY_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_graphdb_consistency_report.json"
 T25_3_RECOVERY_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_recovery_report.json"
 T25_3_ROUTING_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_routing_decision_report.json"
+T26_ERROR_MANUAL_GOLDEN_SET_PROFILE_PATH = PROCESSED_DATA_DIR / "t26_error_manual_golden_set_profile.json"
+T26_ERROR_RUNTIME_COLLISION_AUDIT_PATH = PROCESSED_DATA_DIR / "t26_error_runtime_collision_audit.json"
+MAN_8070_ERR_GOLDEN_SET_VALIDATION_REPORT_PATH = PROCESSED_DATA_DIR / "man_8070_err_golden_set_validation_report.json"
+T26_ERROR_EXTRACTION_POLICY_REPORT_PATH = PROCESSED_DATA_DIR / "t26_error_extraction_policy_report.json"
+MAN_8070_ERR_ONBOARDING_REPORT_PATH = PROCESSED_DATA_DIR / "man_8070_err_onboarding_report.json"
+T26_RUNTIME_REGENERATION_REPORT_PATH = PROCESSED_DATA_DIR / "t26_runtime_regeneration_report.json"
+T26_GRAPHDB_CONSISTENCY_REPORT_PATH = PROCESSED_DATA_DIR / "t26_graphdb_consistency_report.json"
+T26_ERROR_MANUAL_ROUTING_AUDIT_PATH = PROCESSED_DATA_DIR / "t26_error_manual_routing_audit.json"
+T26_ERROR_MANUAL_ANCHOR_DESIGN_PATH = PROCESSED_DATA_DIR / "t26_error_manual_anchor_design.json"
+T26_ERROR_MANUAL_TOKEN_SEED_DESIGN_PATH = PROCESSED_DATA_DIR / "t26_error_manual_token_seed_design.json"
+T26_ERROR_MANUAL_PLAN_CATALOG_PATH = PROCESSED_DATA_DIR / "t26_error_manual_plan_catalog.json"
+T26_ERROR_MANUAL_ROUTING_IMPLEMENTATION_REPORT_PATH = PROCESSED_DATA_DIR / "t26_error_manual_routing_implementation_report.json"
+T26_ERROR_MANUAL_SURFACE_MAPPING_REPORT_PATH = PROCESSED_DATA_DIR / "t26_error_manual_surface_mapping_report.json"
+MAN_8070_ERR_EVAL_REPORT_PATH = PROCESSED_DATA_DIR / "man_8070_err_eval_report.json"
+T26_ERROR_MANUAL_EVAL_DELTA_REPORT_PATH = PROCESSED_DATA_DIR / "t26_error_manual_eval_delta_report.json"
+MAN_8070_ERR_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "man_8070_err_decision_report.json"
+T26_PHASE_CLOSURE_REPORT_PATH = PROCESSED_DATA_DIR / "t26_phase_closure_report.json"
+T26_PHASE_CLOSURE_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t26_phase_closure_decision_report.json"
 
 GRAPHDB_BASE_URL = os.getenv("GRAPHDB_BASE_URL", "http://localhost:7200").rstrip("/")
 GRAPHDB_REPOSITORY_ID = os.getenv("GRAPHDB_REPOSITORY_ID", "semanticrag_operational_mirror")
@@ -287,6 +305,24 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "t25_3_graphdb_consistency_report": T25_3_GRAPHDB_CONSISTENCY_REPORT_PATH,
     "t25_3_recovery_report": T25_3_RECOVERY_REPORT_PATH,
     "t25_3_routing_decision_report": T25_3_ROUTING_DECISION_REPORT_PATH,
+    "t26_error_manual_golden_set_profile": T26_ERROR_MANUAL_GOLDEN_SET_PROFILE_PATH,
+    "t26_error_runtime_collision_audit": T26_ERROR_RUNTIME_COLLISION_AUDIT_PATH,
+    "man_8070_err_golden_set_validation_report": MAN_8070_ERR_GOLDEN_SET_VALIDATION_REPORT_PATH,
+    "t26_error_extraction_policy_report": T26_ERROR_EXTRACTION_POLICY_REPORT_PATH,
+    "man_8070_err_onboarding_report": MAN_8070_ERR_ONBOARDING_REPORT_PATH,
+    "t26_runtime_regeneration_report": T26_RUNTIME_REGENERATION_REPORT_PATH,
+    "t26_graphdb_consistency_report": T26_GRAPHDB_CONSISTENCY_REPORT_PATH,
+    "t26_error_manual_routing_audit": T26_ERROR_MANUAL_ROUTING_AUDIT_PATH,
+    "t26_error_manual_anchor_design": T26_ERROR_MANUAL_ANCHOR_DESIGN_PATH,
+    "t26_error_manual_token_seed_design": T26_ERROR_MANUAL_TOKEN_SEED_DESIGN_PATH,
+    "t26_error_manual_plan_catalog": T26_ERROR_MANUAL_PLAN_CATALOG_PATH,
+    "t26_error_manual_routing_implementation_report": T26_ERROR_MANUAL_ROUTING_IMPLEMENTATION_REPORT_PATH,
+    "t26_error_manual_surface_mapping_report": T26_ERROR_MANUAL_SURFACE_MAPPING_REPORT_PATH,
+    "man_8070_err_eval_report": MAN_8070_ERR_EVAL_REPORT_PATH,
+    "t26_error_manual_eval_delta_report": T26_ERROR_MANUAL_EVAL_DELTA_REPORT_PATH,
+    "man_8070_err_decision_report": MAN_8070_ERR_DECISION_REPORT_PATH,
+    "t26_phase_closure_report": T26_PHASE_CLOSURE_REPORT_PATH,
+    "t26_phase_closure_decision_report": T26_PHASE_CLOSURE_DECISION_REPORT_PATH,
     "quick_ref_source": QUICK_REF_SOURCE_PATH,
     "quick_ref_density_report": QUICK_REF_DENSITY_REPORT_PATH,
     "quick_ref_language_detection_report": QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,

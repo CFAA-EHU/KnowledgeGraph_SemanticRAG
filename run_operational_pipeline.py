@@ -48,6 +48,12 @@ def parse_args() -> argparse.Namespace:
         default="",
         help="Identificador opcional del manual cuando se usa --source-chunks.",
     )
+    parser.add_argument(
+        "--retry-profile",
+        choices=["standard", "rate-limit-drain", "micro-batch-recovery"],
+        default="standard",
+        help="Perfil de reintentos a propagar al extractor A-Box.",
+    )
     return parser.parse_args()
 
 
@@ -154,12 +160,12 @@ def resolve_manual_id(source_chunks: Path, manual_id: str) -> str:
     return source_chunks.stem.replace("chunks_", "")
 
 
-def build_default_runtime(stages: list[Path], mode: str) -> dict:
+def build_default_runtime(stages: list[Path], mode: str, retry_profile: str) -> dict:
     stage_records: list[dict] = []
     stage_records.append(run_stage(stages[0], None, label="abox_input_builder"))
     ensure_extraction_credentials()
     run_stage_args = [
-        (stages[1], ["--mode", mode], "abox_extractor"),
+        (stages[1], ["--mode", mode, "--retry-profile", retry_profile], "abox_extractor"),
         (stages[2], None, "abox_merger"),
         (stages[3], None, "abox_canonicalizer"),
         (stages[4], None, "abox_graph_enricher"),
@@ -178,7 +184,7 @@ def build_default_runtime(stages: list[Path], mode: str) -> dict:
     return {"mode": "default_runtime", "stages": stage_records}
 
 
-def build_quick_ref_pilot(stages: list[Path], mode: str, source_chunks: Path, manual_id: str) -> dict:
+def build_quick_ref_pilot(stages: list[Path], mode: str, source_chunks: Path, manual_id: str, retry_profile: str) -> dict:
     profile = build_onboarding_profile(manual_id, source_chunks)
     baseline_raw_merged_exists = RAW_MERGED_ABOX_PATH.exists()
     stage_records: list[dict] = []
@@ -237,6 +243,8 @@ def build_quick_ref_pilot(stages: list[Path], mode: str, source_chunks: Path, ma
                 [
                     "--mode",
                     mode,
+                    "--retry-profile",
+                    retry_profile,
                     "--abox-input",
                     str(profile.abox_input_path),
                     "--manifest-path",
@@ -391,7 +399,12 @@ def run_validation_suite(profile=None) -> dict:
         )
     ensure_file_exists(GENERALIZATION_EVAL_REPORT_PATH, f"No se genero el reporte canonical: {GENERALIZATION_EVAL_REPORT_PATH}")
     ensure_file_exists(MULTIHOP_EVAL_REPORT_PATH, f"No se genero el reporte multihop: {MULTIHOP_EVAL_REPORT_PATH}")
-    if profile is not None and profile.bilingual_eval_report_path:
+    if (
+        profile is not None
+        and profile.bilingual_dataset_path
+        and profile.bilingual_eval_report_path
+        and profile.bilingual_debug_report_path
+    ):
         ensure_file_exists(profile.bilingual_eval_report_path, f"No se genero el reporte bilingue quick ref: {profile.bilingual_eval_report_path}")
         ensure_file_exists(profile.bilingual_debug_report_path, f"No se genero el debug bilingue quick ref: {profile.bilingual_debug_report_path}")
     return {"validation_stages": validation_records}
@@ -499,9 +512,9 @@ def main() -> None:
         resolved_source = args.source_chunks.resolve()
         ensure_file_exists(resolved_source, f"Falta el manual/chunks de onboarding: {resolved_source}")
         manual_id = resolve_manual_id(resolved_source, args.manual_id)
-        onboarding_result = build_quick_ref_pilot(stages, args.mode, resolved_source, manual_id)
+        onboarding_result = build_quick_ref_pilot(stages, args.mode, resolved_source, manual_id, args.retry_profile)
     else:
-        onboarding_result = build_default_runtime(stages, args.mode)
+        onboarding_result = build_default_runtime(stages, args.mode, args.retry_profile)
 
     validation_result = {"validation_stages": []}
     if onboarding_result.get("blocked"):
@@ -531,6 +544,7 @@ def main() -> None:
         if onboarding_result.get("blocked"):
             print(f"- Estado onboarding: bloqueado por {onboarding_result['blocking_issue']}")
     print(f"- Modo extractor: {args.mode}")
+    print(f"- Retry profile: {args.retry_profile}")
 
 
 if __name__ == "__main__":

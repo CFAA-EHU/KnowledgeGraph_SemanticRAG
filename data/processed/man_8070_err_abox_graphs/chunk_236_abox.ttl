@@ -1,0 +1,74 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1613
+    a ex:Alarma ;
+    rdfs:label "Alarma 1613: Transformación angular desactivada"@es ;
+    ex:textoExtracto "'Se ha desactivado la transformación angular #ANGAX' [...] SOLUCIÓN La transformación angular está desactivada; para activarla, volver a poner en el canal los ejes que forman la transformación angular."@es ;
+    ex:identificador "1613" .
+
+ex:Alarma_1614
+    a ex:Alarma ;
+    rdfs:label "Alarma 1614: Programación no permitida con transformación angular activa"@es ;
+    ex:textoExtracto "'Programación no permitida con la transformación angular #ANGAX activa' [...] SOLUCIÓN Desactivar la transformación angular activa para ejecutar las funciones incompatibles."@es ;
+    ex:identificador "1614" .
+
+ex:Alarma_1615
+    a ex:Alarma ;
+    rdfs:label "Alarma 1615: Conflicto eje Hirth con transformación angular"@es ;
+    ex:textoExtracto "'No se puede activar el eje como Hirth, por formar parte de la transformación #ANGAX' [...] SOLUCIÓN Desactivar la transformación angular para activar el eje hirth."@es ;
+    ex:identificador "1615" .
+
+ex:Alarma_1616
+    a ex:Alarma ;
+    rdfs:label "Alarma 1616: Radio polar no permitido en G31"@es ;
+    ex:textoExtracto "'G31 no permite la programación del radio polar' [...] SOLUCIÓN La función G31 no admite la programación del radio polar."@es ;
+    ex:identificador "1616" .
+
+ex:Alarma_1617
+    a ex:Alarma ;
+    rdfs:label "Alarma 1617: Índice Q no permitido"@es ;
+    ex:textoExtracto "'Indice de Q no permitido' [...] SOLUCIÓN Revisar la programación. Para la programación en polares utilizar el parámetro Q. Para la función G33 utilizar el parámetro Q1."@es ;
+    ex:identificador "1617" .
+
+ex:Alarma_1618
+    a ex:Alarma ;
+    rdfs:label "Alarma 1618: Valor Q doblemente programado"@es ;
+    ex:textoExtracto "'Valor Q doblemente programado' [...]"@es ;
+    ex:identificador "1618" .
+
+ex:Parametro_Q
+    a ex:Parametro ;
+    rdfs:label "Parámetro Q (coordenadas polares)"@es ;
+    ex:textoExtracto "Para la programación en polares utilizar el parámetro Q."@es .
+
+ex:Parametro_Q1
+    a ex:Parametro ;
+    rdfs:label "Parámetro Q1 (función G33)"@es ;
+    ex:textoExtracto "Para la función G33 utilizar el parámetro Q1."@es .
+
+ex:Funcion_G31 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G31 (coordenadas polares)"@es ;
+    ex:textoExtracto "La función G31 sólo admite coordenadas polares de la forma G31 Q I J; es decir, programando el ángulo y una o ambas coordenadas del centro."@es .
+
+ex:Funcion_G33 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G33"@es ;
+    ex:textoExtracto "Para la función G33 utilizar el parámetro Q1."@es .
+
+ex:TransformacionAngular_ANGAX
+    a ex:ModoOperacion ;
+    rdfs:label "Transformación angular #ANGAX"@es ;
+    ex:textoExtracto "transformación angular #ANGAX [...] Desactivar la transformación angular antes de eliminar los ejes del canal."@es ;
+    ex:identificador "#ANGAX" .
+
+ex:Alarma_1613 ex:solucionaFallo ex:TransformacionAngular_ANGAX .
+ex:Alarma_1614 ex:solucionaFallo ex:TransformacionAngular_ANGAX .
+ex:Alarma_1615 ex:solucionaFallo ex:TransformacionAngular_ANGAX .
+ex:Funcion_G31 a ex:Tabla ;
+    ex:monitoreaParametro ex:Parametro_Q .
+ex:Funcion_G33 a ex:Tabla ;
+    ex:monitoreaParametro ex:Parametro_Q1 .

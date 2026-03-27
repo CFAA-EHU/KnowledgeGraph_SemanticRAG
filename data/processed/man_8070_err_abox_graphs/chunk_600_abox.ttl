@@ -1,0 +1,110 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Diagnósticos de Fallo (Alarmas)
+ex:Fallo_6037
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Parámetro LOOPTIME no es válido para la configuración de CAN"@es ;
+    ex:textoExtracto "6037 'Parámetro LOOPTIME no es válido para la configuración de CAN' [...] El valor del parámetro LOOPTIME es demasiado pequeño o no es válido. [...] Comprobar que el valor asignado al parámetro LOOPTIME es múltiplo de 0,5 ms y mayor de 1,5 ms."@es ;
+    ex:identificador "6037" .
+
+ex:Fallo_6038
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Sobrepasado el límite máximo de elementos CAN en el sistema"@es ;
+    ex:textoExtracto "6038 'Sobrepasado el límite máximo de elementos CAN en el sistema' [...] Algún elemento del bus CAN supera el máximo permitido; número entradas o salidas analógicas, entradas o salidas digitales o contadoras."@es ;
+    ex:identificador "6038" .
+
+ex:Fallo_6039
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en la habilitación de entrada PT100"@es ;
+    ex:textoExtracto "6039 'Error en la habilitación de entrada PT100' [...] Parametrización incorrecta de alguna de las entradas PT100. [...] Revisar los parámetros máquina generales NPT100 y PT100."@es ;
+    ex:identificador "6039" .
+
+ex:Fallo_6040
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en la lectura del jog local"@es ;
+    ex:textoExtracto "6040 'Error en la lectura del jog local' [...] Error reiterativo en la lectura del módulo local de jog de la unidad central ICU MCU."@es ;
+    ex:identificador "6040" .
+
+ex:Fallo_6041
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Detectado teclado configurado en modo 15\""@es ;
+    ex:textoExtracto "6041 'Detectado teclado configurado en modo 15\"' [...] El CNC ha detectado un teclado 8065 (qwerty o jog) configurado para comunicarse con versiones anteriores a la V04.10."@es ;
+    ex:identificador "6041" .
+
+### Parámetros y Componentes Relacionados
+ex:Param_LOOPTIME
+    a ex:Parametro ;
+    rdfs:label "LOOPTIME" ;
+    ex:textoExtracto "El valor del parámetro LOOPTIME es demasiado pequeño o no es válido. [...] Comprobar que el valor asignado al parámetro LOOPTIME es múltiplo de 0,5 ms y mayor de 1,5 ms."@es ;
+    ex:valor ">1.5 ms (múltiplo de 0.5 ms)" .
+
+ex:Param_NPT100
+    a ex:Parametro ;
+    rdfs:label "NPT100" ;
+    ex:textoExtracto "Revisar los parámetros máquina generales NPT100 y PT100."@es .
+
+ex:Param_PT100
+    a ex:Parametro ;
+    rdfs:label "PT100" ;
+    ex:textoExtracto "Revisar los parámetros máquina generales NPT100 y PT100."@es .
+
+ex:BusCAN
+    a ex:Sistema ;
+    rdfs:label "Bus CAN"@es ;
+    ex:textoExtracto "Algún elemento del bus CAN supera el máximo permitido; número entradas o salidas analógicas, entradas o salidas digitales o contadoras."@es .
+
+ex:EntradaPT100
+    a ex:Sensor ;
+    rdfs:label "Entrada PT100"@es ;
+    ex:textoExtracto "Parametrización incorrecta de alguna de las entradas PT100."@es .
+
+ex:ModuloJogLocal
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo local de jog (ICU/MCU)"@es ;
+    ex:textoExtracto "Error reiterativo en la lectura del módulo local de jog de la unidad central ICU MCU."@es .
+
+ex:Teclado_8065
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclado 8065 (qwerty o jog)"@es ;
+    ex:textoExtracto "El CNC ha detectado un teclado 8065 (qwerty o jog) configurado para comunicarse con versiones anteriores a la V04.10."@es ;
+    ex:identificador "8065" .
+
+ex:UnidadCentral_ICU
+    a ex:ComponenteElectrico ;
+    rdfs:label "Unidad central ICU"@es ;
+    ex:textoExtracto "Falta la alimentación en las I/Os locales (unidades centrales ICU y MCU)."@es .
+
+ex:UnidadCentral_MCU
+    a ex:ComponenteElectrico ;
+    rdfs:label "Unidad central MCU"@es ;
+    ex:textoExtracto "Falta la alimentación en las I/Os locales (unidades centrales ICU y MCU)."@es .
+
+### Relaciones
+ex:Fallo_6037
+    ex:solucionaFallo ex:Param_LOOPTIME .
+
+ex:Fallo_6038
+    ex:solucionaFallo ex:BusCAN .
+
+ex:Fallo_6039
+    ex:solucionaFallo ex:EntradaPT100 ;
+    ex:solucionaFallo ex:Param_NPT100 , ex:Param_PT100 .
+
+ex:Fallo_6040
+    ex:solucionaFallo ex:ModuloJogLocal ;
+    ex:activaAlarma ex:UnidadCentral_ICU , ex:UnidadCentral_MCU .
+
+ex:Fallo_6041
+    ex:solucionaFallo ex:Teclado_8065 .
+
+ex:ModuloJogLocal
+    ex:tieneComponente ex:UnidadCentral_ICU , ex:UnidadCentral_MCU .
+
+ex:BusCAN
+    ex:monitoreaParametro ex:Param_LOOPTIME .
+
+ex:EntradaPT100
+    ex:controla ex:Param_NPT100 , ex:Param_PT100 .

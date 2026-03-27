@@ -1,0 +1,46 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_9638_INDUCTOSYN
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Error 9638 INDUCTOSYN"@es ;
+    ex:identificador "9638" ;
+    ex:textoExtracto "INDUCTOSYN: Error desconocido. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema."@es .
+
+ex:Modulo_ABSIND
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Módulo ABSIND"@es ;
+    ex:textoExtracto "Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. [...] sustituir el módulo ABSIND asociado a esa captación."@es ;
+    ex:solucionaFallo ex:Error_9638_INDUCTOSYN .
+
+ex:SoftwareAjuste_ABSIND
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Software de ajuste del módulo ABSIND"@es ;
+    ex:textoExtracto "Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste."@es ;
+    ex:controla     ex:Modulo_ABSIND .
+
+ex:Parametro_Ganancia_ABSIND
+    a               ex:Parametro ;
+    rdfs:label      "Ganancia del módulo ABSIND"@es ;
+    ex:textoExtracto "valores de la ganancia [...] del módulo ABSIND"@es ;
+    ex:monitoreaParametro ex:Modulo_ABSIND .
+
+ex:Parametro_Fase_ABSIND
+    a               ex:Parametro ;
+    rdfs:label      "Fase del módulo ABSIND"@es ;
+    ex:textoExtracto "valores de [...] la fase del módulo ABSIND"@es ;
+    ex:monitoreaParametro ex:Modulo_ABSIND .
+
+ex:Tarea_Sustitucion_ABSIND
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Sustitución del módulo ABSIND"@es ;
+    ex:textoExtracto "pruebe a sustituir el módulo ABSIND asociado a esa captación"@es ;
+    ex:requiereMantenimiento ex:Modulo_ABSIND ;
+    ex:solucionaFallo ex:Error_9638_INDUCTOSYN .
+
+ex:Empresa_FagorAutomation
+    a               ex:Empresa ;
+    rdfs:label      "Fagor Automation"@es ;
+    ex:textoExtracto "póngase en contacto con Fagor Automation"@es .

@@ -1,0 +1,97 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:TablaCompensacionHusillo a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de compensación de husillo"@es ;
+    ex:textoExtracto "parámetros máquina (tabla de compensación de husillo). En las tablas de compensación de husillo, la diferencia entre dos errores consecutivos es mayor que la distancia que separa ambos puntos."@es ;
+    ex:monitoreaParametro ex:ParametroErrorHusillo .
+
+ex:ParametroErrorHusillo
+    a ex:Parametro ;
+    rdfs:label "Pendiente de error en compensación de husillo"@es ;
+    ex:textoExtracto "la pendiente del error no puede ser mayor que 1"@es ;
+    ex:valor "1" .
+
+ex:TablaHMI a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de HMI"@es ;
+    ex:identificador "0058" ;
+    ex:textoExtracto "'Para asumir los cambios en la tabla de HMI es necesario rearrancar el CNC'"@es ;
+    ex:documentadoEn ex:InterfazCNC .
+
+ex:InterfazCNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC"@es ;
+    ex:textoExtracto "aplicación CNC"@es .
+
+ex:Alarma_0058
+    a ex:Alarma ;
+    rdfs:label "Alarma 0058: Reinicio requerido para cambios en tabla HMI"@es ;
+    ex:identificador "0058" ;
+    ex:textoExtracto "Para asumir los cambios en la tabla de HMI es necesario rearrancar el CNC. SOLUCIÓN: Reiniciar el CNC."@es ;
+    ex:activaAlarma ex:TablaHMI .
+
+ex:TablaAlmacen a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla del almacén"@es ;
+    ex:identificador "0059" ;
+    ex:textoExtracto "'Para asumir los cambios en la tabla del almacén es necesario rearrancar el CNC'"@es ;
+    ex:documentadoEn ex:InterfazCNC .
+
+ex:Alarma_0059
+    a ex:Alarma ;
+    rdfs:label "Alarma 0059: Reinicio requerido para cambios en tabla de almacén"@es ;
+    ex:identificador "0059" ;
+    ex:textoExtracto "Para asumir los cambios en la tabla del almacén es necesario rearrancar el CNC. SOLUCIÓN: Reiniciar el CNC."@es ;
+    ex:activaAlarma ex:TablaAlmacen .
+
+ex:Parametro_MAXMANFEED
+    a ex:Parametro ;
+    rdfs:label "MAXMANFEED" ;
+    ex:identificador "MAXMANFEED" ;
+    ex:textoExtracto "El parámetro MAXMANFEED es superior a G00FEED."@es ;
+    ex:monitoreaParametro ex:Parametro_G00FEED .
+
+ex:Parametro_G00FEED
+    a ex:Parametro ;
+    rdfs:label "G00FEED" ;
+    ex:identificador "G00FEED" ;
+    ex:textoExtracto "velocidad máxima del eje"@es .
+
+ex:Alarma_0060
+    a ex:Alarma ;
+    rdfs:label "Alarma 0060: Velocidad manual excede límite del eje"@es ;
+    ex:identificador "0060" ;
+    ex:textoExtracto "'La velocidad máxima de manual supera la velocidad máxima del eje'. CAUSA: El parámetro MAXMANFEED es superior a G00FEED. SOLUCIÓN: Disminuir el valor del parámetro MAXMANFEED; debe ser inferior a G00FEED."@es ;
+    ex:activaAlarma ex:Parametro_MAXMANFEED .
+
+ex:Parametro_JOGRAPFEED
+    a ex:Parametro ;
+    rdfs:label "JOGRAPFEED" ;
+    ex:identificador "JOGRAPFEED" ;
+    ex:textoExtracto "El parámetro JOGRAPFEED es superior a G00FEED."@es ;
+    ex:monitoreaParametro ex:Parametro_G00FEED .
+
+ex:Alarma_0061
+    a ex:Alarma ;
+    rdfs:label "Alarma 0061: Velocidad rápida manual excede límite del eje"@es ;
+    ex:identificador "0061" ;
+    ex:textoExtracto "'La velocidad rápida de manual supera la velocidad máxima del eje'. CAUSA: El parámetro JOGRAPFEED es superior a G00FEED. SOLUCIÓN: Disminuir el valor del parámetro JOGRAPFEED; debe ser inferior a G00FEED."@es ;
+    ex:activaAlarma ex:Parametro_JOGRAPFEED .
+
+ex:Parametro_JOGFEED
+    a ex:Parametro ;
+    rdfs:label "JOGFEED" ;
+    ex:identificador "JOGFEED" ;
+    ex:textoExtracto "El parámetro JOGFEED es superior a G00FEED."@es ;
+    ex:monitoreaParametro ex:Parametro_G00FEED .
+
+ex:Alarma_0062
+    a ex:Alarma ;
+    rdfs:label "Alarma 0062: Velocidad de jog continuo excede límite del eje"@es ;
+    ex:identificador "0062" ;
+    ex:textoExtracto "'La velocidad de jog continuo supera la velocidad máxima del eje'. CAUSA: El parámetro JOGFEED es superior a G00FEED. SOLUCIÓN: Disminuir el valor del parámetro JOGFEED; debe ser inferior a G00FEED."@es ;
+    ex:activaAlarma ex:Parametro_JOGFEED .

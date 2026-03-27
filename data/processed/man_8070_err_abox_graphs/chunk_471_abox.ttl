@@ -1,0 +1,53 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3605
+    a ex:Alarma ;
+    rdfs:label "Sentido del giro de cabezal contrario al de parámetro máquina"@es ;
+    ex:identificador "3605" ;
+    ex:textoExtracto "3605 'Sentido del giro de cabezal contrario al de parámetro máquina' DETECCIÓN Durante la ejecución. CAUSA El giro programado requiere un movimiento del cabezal en sentido contrario al indicado por parámetro máquina con UNIDIR. SOLUCIÓN Revisar la programación y el parámetro máquina UNIDIR del cabezal."@es .
+
+ex:Alarma_3606
+    a ex:Alarma ;
+    rdfs:label "El posicionamiento del cabezal requiere cota absoluta"@es ;
+    ex:identificador "3606" ;
+    ex:textoExtracto "3606 'El posicionamiento del cabezal requiere cota absoluta' DETECCIÓN Durante la ejecución. CAUSA Tras un giro del cabezal en lazo abierto, el posicionamiento debe ser en cotas absolutas. SOLUCIÓN Programar el posicionamiento en cotas absolutas."@es .
+
+ex:Alarma_3607
+    a ex:Alarma ;
+    rdfs:label "No se puede sincronizar el cabezal teniendo activo PLCCNTL"@es ;
+    ex:identificador "3607" ;
+    ex:textoExtracto "3607 'No se puede sincronizar el cabezal teniendo activo PLCCNTL' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado realizar una sincronización mientras la marca PLCCNTL está activa. SOLUCIÓN Desactivar la marca PLCCNTL del PLC."@es .
+
+ex:Alarma_3608
+    a ex:Alarma ;
+    rdfs:label "No se admite PLCCNTL si el cabezal está sincronizado"@es ;
+    ex:identificador "3608" ;
+    ex:textoExtracto "3608 'No se admite PLCCNTL si el cabezal está sincronizado'. DETECCIÓN Durante la ejecución. CAUSA El PLC ha activado la marca PLCCNTL en un cabezal que está sincronizado, ya sea como maestro o como esclavo. SOLUCIÓN Desactivar la marca PLCCNTL del PLC."@es .
+
+ex:Alarma_3609
+    a ex:Alarma ;
+    rdfs:label "No se permite #SERVO ON si no se ha buscado el cero del cabezal previamente"@es ;
+    ex:identificador "3609" ;
+    ex:textoExtracto "3609 'No se permite #SERVO ON si no se ha buscado el cero del cabezal previamente'. DETECCIÓN Durante la ejecución. CAUSA Hay programada una sentencia #SERVO ON para un cabezal que no está referenciado. SOLUCIÓN Hacer una búsqueda de referencia del cabezal, con M19 o G74, antes de utilizar la instrucción #SERVO ON."@es .
+
+ex:Alarma_3610
+    a ex:Alarma ;
+    rdfs:label "No se puede abrir el lazo por estar en M19 o en sincronización"@es ;
+    ex:identificador "3610" ;
+    ex:textoExtracto "3610 'No se puede abrir el lazo por estar en M19 o en sincronización' DETECCIÓN Durante la ejecución. CAUSA Hay programada una sentencia #SERVO OFF pero no se puede abrir el lazo porque el cabezal estaba en M19 antes de #SERVOON. SOLUCIÓN El cabezal se mantiene en lazo cerrado."@es .
+
+ex:Parametro_UNIDIR
+    a ex:Parametro ;
+    rdfs:label "Parámetro máquina UNIDIR"@es ;
+    ex:identificador "UNIDIR" ;
+    ex:textoExtracto "Revisar la programación y el parámetro máquina UNIDIR del cabezal."@es .
+
+ex:Componente_Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal"@es ;
+    ex:textoExtracto "Revisar la programación y el parámetro máquina UNIDIR del cabezal."@es ;
+    ex:monitoreaParametro ex:Parametro_UNIDIR ;
+    ex:activaAlarma ex:Alarma_3605, ex:Alarma_3606, ex:Alarma_3607, ex:Alarma_3608, ex:Alarma_3609, ex:Alarma_3610 .

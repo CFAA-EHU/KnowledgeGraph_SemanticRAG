@@ -1,0 +1,87 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AvisoSeguridad_1587
+    a ex:AvisoSeguridad ;
+    rdfs:label "Parámetro no modificable desde la puesta a punto"@es ;
+    ex:identificador "1587" ;
+    ex:textoExtracto "1587 'Parámetro no modificable desde la puesta a punto' [...] SOLUCIÓN El parámetro máquina se podrá modificar directamente en la tabla de parámetros máquina."@es ;
+    ex:mitigaRiesgo ex:Parametro_1587 .
+
+ex:Parametro_1587
+    a ex:Parametro ;
+    ex:textoExtracto "El parámetro máquina no tiene permiso de escritura desde el entorno de puesta a punto."@es .
+
+ex:AvisoSeguridad_1588
+    a ex:AvisoSeguridad ;
+    rdfs:label "El cabezal esclavo a sincronizar debe pertenecer al canal"@es ;
+    ex:identificador "1588" ;
+    ex:textoExtracto "1588 'El cabezal esclavo a sincronizar debe pertenecer al canal' [...] SOLUCIÓN Sincronizar el cabezal esclavo desde su canal, añadirlo a la configuración del canal actual o utilizar otro cabezal del canal como esclavo."@es ;
+    ex:mitigaRiesgo ex:Componente_1588_Master, ex:Componente_1588_Esclavo .
+
+ex:Componente_1588_Master
+    a ex:Componente ;
+    rdfs:label "Cabezal master de sincronización"@es ;
+    ex:textoExtracto "El cabezal master de una sincronización puede ser de cualquier canal, pero el cabezal esclavo debe ser del canal en el que se programa la sincronización."@es .
+
+ex:Componente_1588_Esclavo
+    a ex:Componente ;
+    rdfs:label "Cabezal esclavo de sincronización"@es ;
+    ex:textoExtracto "el cabezal esclavo debe ser del canal en el que se programa la sincronización."@es .
+
+ex:AvisoSeguridad_1589
+    a ex:AvisoSeguridad ;
+    rdfs:label "El cabezal esclavo no puede coincidir con el maestro"@es ;
+    ex:identificador "1589" ;
+    ex:textoExtracto "1589 'El cabezal esclavo no puede coincidir con el maestro' [...] SOLUCIÓN Revisar la programación."@es ;
+    ex:mitigaRiesgo ex:Componente_1589_Master, ex:Componente_1589_Esclavo .
+
+ex:Componente_1589_Master
+    a ex:Componente ;
+    rdfs:label "Cabezal master (1589)"@es ;
+    ex:textoExtracto "En la sincronización, el cabezal esclavo es el mismo que el maestro."@es .
+
+ex:Componente_1589_Esclavo
+    a ex:Componente ;
+    rdfs:label "Cabezal esclavo (1589)"@es ;
+    ex:textoExtracto "el cabezal esclavo es el mismo que el maestro."@es .
+
+ex:AvisoSeguridad_1590
+    a ex:AvisoSeguridad ;
+    rdfs:label "Programación incorrecta de #SYNC"@es ;
+    ex:identificador "1590" ;
+    ex:textoExtracto "1590 'Programar #SYNC[Sm,Ss,Nx,Dx,Ox,CLOOP/OLOOP,CANCEL/NOCANCEL]' [...] SOLUCIÓN Revisar la programación."@es ;
+    ex:mitigaRiesgo ex:Parametro_1590_Sintaxis .
+
+ex:Parametro_1590_Sintaxis
+    a ex:Parametro ;
+    rdfs:label "Sintaxis #SYNC[Sm,Ss,Nx,Dx,Ox,CLOOP/OLOOP,CANCEL/NOCANCEL]"@es ;
+    ex:textoExtracto "La sintaxis de la sentencia no es correcta o hay más información en el bloque."@es .
+
+ex:AvisoSeguridad_1591
+    a ex:AvisoSeguridad ;
+    rdfs:label "Numerador no válido en sincronización"@es ;
+    ex:identificador "1591" ;
+    ex:textoExtracto "1591 'Numerador no válido' [...] SOLUCIÓN El valor puede ser positivo o negativo, no necesariamente entero, pero distinto de cero."@es ;
+    ex:mitigaRiesgo ex:Parametro_1591_Numerador .
+
+ex:Parametro_1591_Numerador
+    a ex:Parametro ;
+    rdfs:label "Numerador de relación de transmisión"@es ;
+    ex:textoExtracto "el valor del numerador de la relación de transmisión no es válido; por ejemplo, es cero."@es ;
+    ex:valor "distinto_de_cero" .
+
+ex:AvisoSeguridad_1592
+    a ex:AvisoSeguridad ;
+    rdfs:label "Denominador no válido en sincronización"@es ;
+    ex:identificador "1592" ;
+    ex:textoExtracto "1592 'Denominador no válido' [...] SOLUCIÓN El valor puede ser positivo o negativo, no necesariamente entero, pero distinto de cero."@es ;
+    ex:mitigaRiesgo ex:Parametro_1592_Denominador .
+
+ex:Parametro_1592_Denominador
+    a ex:Parametro ;
+    rdfs:label "Denominador de relación de transmisión"@es ;
+    ex:textoExtracto "el valor del denominador de la relación de transmisión no es válido; por ejemplo, es cero."@es ;
+    ex:valor "distinto_de_cero" .

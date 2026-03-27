@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_ServoOff_M19
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo al abrir lazo con #SERVO OFF cuando cabezal está en M19"@es ;
+    ex:textoExtracto "Hay programada una sentencia #SERVO OFF pero no se puede abrir el lazo porque el cabezal estaba en M19 antes de #SERVOON. [...] Si el cabezal está en M19, la sentencia #SERVO OFF no puede abrir el lazo; para abrir el lazo, programar M3, M4, M5 o hacer un reset."@es ;
+    ex:identificador "3611" .
+
+ex:Accion_ServoOff
+    a ex:AccionProhibida ;
+    rdfs:label "#SERVO OFF"@es ;
+    ex:textoExtracto "sentencia #SERVO OFF [...] cancela la sentencia #SERVO ON y si puede abre el lazo."@es ;
+    ex:solucionaFallo ex:Fallo_ServoOff_M19 .
+
+ex:Accion_ServoOn
+    a ex:AccionProhibida ;
+    rdfs:label "#SERVO ON"@es ;
+    ex:textoExtracto "sentencia #SERVO OFF cancela la sentencia #SERVO ON"@es .
+
+ex:ModoOperacion_M19
+    a ex:ModoOperacion ;
+    rdfs:label "M19"@es ;
+    ex:textoExtracto "el cabezal estaba en M19 antes de #SERVOON. [...] Si el cabezal está en M19, la sentencia #SERVO OFF no puede abrir el lazo"@es .
+
+ex:ModoOperacion_M3
+    a ex:ModoOperacion ;
+    rdfs:label "M3"@es ;
+    ex:textoExtracto "para abrir el lazo, programar M3, M4, M5 o hacer un reset"@es .
+
+ex:ModoOperacion_M4
+    a ex:ModoOperacion ;
+    rdfs:label "M4"@es ;
+    ex:textoExtracto "para abrir el lazo, programar M3, M4, M5 o hacer un reset"@es .
+
+ex:ModoOperacion_M5
+    a ex:ModoOperacion ;
+    rdfs:label "M5"@es ;
+    ex:textoExtracto "para abrir el lazo, programar M3, M4, M5 o hacer un reset"@es .
+
+ex:Sistema_Sincronizacion
+    a ex:Sistema ;
+    rdfs:label "Sincronización del cabezal master"@es ;
+    ex:textoExtracto "El cabezal master de la sincronización no está en la gama adecuada (SYNCSET"@es ;
+    ex:tieneComponente ex:Componente_CabezalMaster .
+
+ex:Componente_CabezalMaster
+    a ex:Componente ;
+    rdfs:label "Cabezal master"@es ;
+    ex:textoExtracto "el cabezal estaba en M19 antes de #SERVOON. [...] El cabezal master de la sincronización no está en la gama adecuada"@es .

@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_0098
+    a ex:Alarma ;
+    rdfs:label "Alarma 0098: Diferencia en parámetro AXISEXCH"@es ;
+    ex:identificador "0098" ;
+    ex:textoExtracto "El eje maestro y el esclavo tienen diferente parámetro AXISEXCH. DETECCIÓN: Durante la validación de los parámetros máquina. CAUSA: Hay una pareja gantry o tándem cuyos ejes maestro y esclavo tienen el parámetro AXISEXCH con diferente valor."@es .
+
+ex:Alarma_0099
+    a ex:Alarma ;
+    rdfs:label "Alarma 0099: PROBEFEED demasiado alto"@es ;
+    ex:identificador "0099" ;
+    ex:textoExtracto "'EL valor del PROBEFEED es demasiado alto para frenar respetando DECEL y JERK'. DETECCIÓN: Durante la validación de los parámetros máquina. CAUSA: El avance máximo de palpado (parámetro PROBEFEED) es superior al avance necesario para frenar en el espacio definido en PROBERANGE, respetando los valores de aceleración y de jerk del eje."@es .
+
+ex:Alarma_0100
+    a ex:Alarma ;
+    rdfs:label "Alarma 0100: Exceso de variables a reportar"@es ;
+    ex:identificador "0100" ;
+    ex:textoExtracto "'Demasiadas variables esperando ser reportadas'. DETECCIÓN: Durante la ejecución. CAUSA: El número de variables modificadas en el CNC y que hay que reportar hacia el interface supera el máximo permitido."@es .
+
+ex:Alarma_0103
+    a ex:Alarma ;
+    rdfs:label "Alarma 0103: Timeout en validación de parámetros"@es ;
+    ex:identificador "0103" ;
+    ex:textoExtracto "Validación de parámetros máquina no finalizada (timeout). DETECCIÓN: Durante la validación de los parámetros máquina. CAUSA: La parametrización ha producido un bloqueo en la validación de parámetros máquina."@es .
+
+ex:Alarma_0104
+    a ex:Alarma ;
+    rdfs:label "Alarma 0104: Timeout de comunicación"@es ;
+    ex:identificador "0104" ;
+    ex:textoExtracto "'Time out de comunicación'. DETECCIÓN: Durante la ejecución. CAUSA: El CNC no finaliza con éxito la lectura o escritura de una variable externa."@es .
+
+ex:Parametro_AXISEXCH
+    a ex:Parametro ;
+    rdfs:label "AXISEXCH" ;
+    ex:textoExtracto "parámetro AXISEXCH"@es ;
+    ex:monitoreaParametro ex:Alarma_0098 .
+
+ex:Parametro_PROBEFEED
+    a ex:Parametro ;
+    rdfs:label "PROBEFEED" ;
+    ex:textoExtracto "parámetro PROBEFEED"@es ;
+    ex:monitoreaParametro ex:Alarma_0099 .
+
+ex:Parametro_PROBERANGE
+    a ex:Parametro ;
+    rdfs:label "PROBERANGE" ;
+    ex:textoExtracto "espacio definido en PROBERANGE"@es ;
+    ex:monitoreaParametro ex:Alarma_0099 .
+
+ex:Maquina_CNC
+    a ex:Maquina ;
+    rdfs:label "CNC"@es ;
+    ex:textoExtracto "el CNC anula las parejas definidas"@es ;
+    ex:activaAlarma ex:Alarma_0098, ex:Alarma_0099, ex:Alarma_0100, ex:Alarma_0103, ex:Alarma_0104 .

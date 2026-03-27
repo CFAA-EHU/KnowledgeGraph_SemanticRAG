@@ -1,0 +1,29 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_5006 a ex:DiagnosticoFallo ;
+    rdfs:label "Escritura de variable desde PLC fuera de rango"@es ;
+    ex:identificador "5006" ;
+    ex:textoExtracto "5006 'Escritura de variable desde PLC fuera de rango' [...] El valor asignado a la variable no es válido."@es ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Asignación de valor inválido a variable CNC"@es ;
+        ex:textoExtracto "El valor asignado a la variable no es válido."@es
+    ] .
+
+ex:Fallo_5007 a ex:DiagnosticoFallo ;
+    rdfs:label "Error sintáctico en la escritura de variable desde PLC"@es ;
+    ex:identificador "5007" ;
+    ex:textoExtracto "5007 'Error sintáctico en la escritura de variable desde PLC' [...] La variable no existe o no tiene permiso de escritura desde el PLC."@es ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Escritura en variable CNC no existente o sin permisos"@es ;
+        ex:textoExtracto "La variable no existe o no tiene permiso de escritura desde el PLC."@es
+    ] .
+
+ex:Instruccion_CNCWR a ex:InterfazUsuario ;
+    rdfs:label "Instrucción CNCWR (escritura de variable desde PLC)"@es ;
+    ex:textoExtracto "Al ejecutar una instrucción CNCWR."@es ;
+    ex:activaAlarma ex:Fallo_5006, ex:Fallo_5007 .

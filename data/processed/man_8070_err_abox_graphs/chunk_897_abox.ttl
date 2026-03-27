@@ -1,0 +1,20 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_23152 a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo 23152: Nombre de tabla demasiado largo"@es ;
+    ex:textoExtracto "23152 Nombre de tabla demasiado largo. [...] El nombre de la tabla de parámetros máquina (feedback, motor, tandem, etc) indicado en la variable no existe, o es demasiado largo."@es ;
+    ex:identificador "23152" .
+
+ex:Parametro_TablaMaquina a ex:Parametro ;
+    rdfs:label "Tabla de parámetros máquina (feedback, motor, tandem)"@es ;
+    ex:textoExtracto "tabla de parámetros máquina (feedback, motor, tandem, etc)"@es ;
+    ex:monitoreaParametro ex:Fallo_23152 .
+
+ex:Sistema_Parametrizacion a ex:Sistema ;
+    rdfs:label "Sistema de parametrización de máquina"@es ;
+    ex:textoExtracto "El nombre o número de tabla de parámetros máquina [...] indicado en la variable debe ser una tabla válida."@es ;
+    ex:tieneComponente ex:Parametro_TablaMaquina ;
+    ex:activaAlarma ex:Fallo_23152 .

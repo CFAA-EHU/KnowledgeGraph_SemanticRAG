@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_7049
+    a ex:DiagnosticoFallo ;
+    rdfs:label "ROTATEMZ: el registro MZPOS del PLC no puede ser 0" ;
+    ex:identificador "7049" ;
+    ex:textoExtracto "7049 ROTATEMZ: el registro MZPOS del PLC no puede ser 0. DETECCIÓN Durante la ejecución. CAUSA La sentencia #ROTATEMZ está forzando la posición 0 del almacén. SOLUCIÓN Revisar la programación. La sentencia #ROTATEMZ sólo se puede ejecutar en un almacén torreta." .
+
+ex:Fallo_7050
+    a ex:DiagnosticoFallo ;
+    rdfs:label "ROTATEMZ: Posición no válida" ;
+    ex:identificador "7050" ;
+    ex:textoExtracto "7050 ROTATEMZ: Posición no válida. DETECCIÓN Durante la ejecución. CAUSA La posición programada en #ROTATEMZ no es válida. SOLUCIÓN Revisar la programación." .
+
+ex:AlmacenTorreta
+    a ex:ComponenteMecanico ;
+    rdfs:label "Almacén torreta" ;
+    ex:textoExtracto "La sentencia #ROTATEMZ sólo se puede ejecutar en un almacén torreta." .
+
+ex:Sentencia_ROTATEMZ
+    a ex:Parametro ;
+    rdfs:label "Sentencia #ROTATEMZ" ;
+    ex:textoExtracto "La sentencia #ROTATEMZ está forzando la posición 0 del almacén." ;
+    ex:valor "ROTATEMZ" .
+
+ex:Registro_MZPOS
+    a ex:Parametro ;
+    rdfs:label "Registro MZPOS del PLC" ;
+    ex:textoExtracto "el registro MZPOS del PLC no puede ser 0" ;
+    ex:valor "MZPOS" .
+
+ex:Fallo_7049
+    ex:solucionaFallo ex:Sentencia_ROTATEMZ ;
+    ex:solucionaFallo ex:Registro_MZPOS .
+
+ex:Fallo_7050
+    ex:solucionaFallo ex:Sentencia_ROTATEMZ .

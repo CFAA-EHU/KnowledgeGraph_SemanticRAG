@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:alarma_8045
+    a ex:Alarma ;
+    rdfs:label "Código de validación expirado"@es ;
+    ex:identificador "8045" ;
+    ex:textoExtracto "8045 'Código de validación expirado. Reinicie el CNC' DETECCIÓN Durante el arranque del CNC o durante la ejecución."@es ;
+    ex:activaAlarma ex:modoOperacion_CNC_Estandar .
+
+ex:alarma_8046
+    a ex:Alarma ;
+    rdfs:label "Código de validación temporal expirado"@es ;
+    ex:identificador "8046" ;
+    ex:textoExtracto "8046 'El código de validación temporal ha sido"@es ;
+    ex:activaAlarma ex:modoOperacion_CNC_Estandar .
+
+ex:modoOperacion_CNC_Estandar
+    a ex:ModoOperacion ;
+    rdfs:label "Modo CNC estándar"@es ;
+    ex:textoExtracto "SOLUCIÓN Pase a modo CNC estándar para editar o ejecutar el programa."@es .
+
+ex:accionProhibida_ArranqueConCodigoExpirado
+    a ex:AccionProhibida ;
+    rdfs:label "Arranque del CNC con código de validación expirado"@es ;
+    ex:textoExtracto "El CNC no permitirá la marcha hasta que el usuario haya reiniciado el CNC."@es ;
+    ex:mitigaRiesgo ex:alarma_8045 .
+
+ex:tareaMantenimiento_ReinicioCNC
+    a ex:TareaMantenimiento ;
+    rdfs:label "Reinicio del CNC"@es ;
+    ex:textoExtracto "SOLUCIÓN Reiniciar el CNC."@es ;
+    ex:solucionaFallo ex:alarma_8045 .

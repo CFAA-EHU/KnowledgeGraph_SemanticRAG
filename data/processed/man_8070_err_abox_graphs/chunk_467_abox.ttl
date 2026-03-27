@@ -1,0 +1,107 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3504
+    a               ex:Alarma ;
+    ex:identificador "3504" ;
+    rdfs:label      "Velocidad de cambio de aceleración mayor que la máxima"@es ;
+    ex:textoExtracto "3504 'Velocidad de cambio de aceleración mayor que la máxima' DETECCIÓN Durante el arranque o la ejecución. CAUSA La velocidad programada para el cambio de aceleración es mayor que la máxima. SOLUCIÓN Programar una velocidad menor que la máxima."@es .
+
+ex:Alarma_3505
+    a               ex:Alarma ;
+    ex:identificador "3505" ;
+    rdfs:label      "Límite de jerk sobrepasado"@es ;
+    ex:textoExtracto "3505 'Límite de jerk sobrepasado' DETECCIÓN Durante la ejecución. CAUSA Sobrepasamiento de jerk en esa trayectoria. SOLUCIÓN Póngase en contacto con Fagor."@es .
+
+ex:Alarma_3506
+    a               ex:Alarma ;
+    ex:identificador "3506" ;
+    rdfs:label      "El límite de jerk se va a sobrepasar"@es ;
+    ex:textoExtracto "3506 'El límite de jerk se va a sobrepasar' DETECCIÓN Durante la ejecución del comando de análisis de frecuencias. CAUSA La frecuencia es demasiado grande para la amplitud programada. SOLUCIÓN Reducir la frecuencia máxima o reducir la amplitud."@es .
+
+ex:Alarma_3507
+    a               ex:Alarma ;
+    ex:identificador "3507" ;
+    rdfs:label      "Límite de aceleración sobrepasada"@es ;
+    ex:textoExtracto "3507 'Límite de aceleración sobrepasada' DETECCIÓN Durante la ejecución. CAUSA Sobrepasamiento de aceleración en esa trayectoria. SOLUCIÓN Póngase en contacto con Fagor."@es .
+
+ex:Alarma_3508
+    a               ex:Alarma ;
+    ex:identificador "3508" ;
+    rdfs:label      "Frecuencia demasiado grande para la velocidad programada"@es ;
+    ex:textoExtracto "3508 'Frecuencia demasiado grande para la velocidad programada' DETECCIÓN Durante la ejecución del comando de análisis de frecuencias. CAUSA La velocidad aditiva es menor que la resultante para la frecuencia máxima. SOLUCIÓN Reducir la frecuencia máxima o bien programar una velocidad aditiva superior."@es .
+
+ex:Alarma_3509
+    a               ex:Alarma ;
+    ex:identificador "3509" ;
+    rdfs:label      "Límite de error sobrepasado en modo HSC"@es ;
+    ex:textoExtracto "3509 Límite de error sobrepasado en modo HSC. DETECCIÓN Durante la ejecución. CAUSA La trayectoria teórica supera la tolerancia máxima programada. SOLUCIÓN La precisión de la pieza mecanizada puede ser inferior a la tolerancia programada. Modificar las condiciones de mecanizado."@es .
+
+ex:Alarma_3510
+    a               ex:Alarma ;
+    ex:identificador "3510" ;
+    rdfs:label      "El movimiento programado va a colisionar con la sonda de palpado"@es ;
+    ex:textoExtracto "3510 El movimiento programado va a colisionar con la sonda de palpado. DETECCIÓN Durante la ejecución. CAUSA El movimiento del eje va a superar los límites fijados por el movimiento de palpado anterior."@es .
+
+ex:Parametro_AceleracionMaxima
+    a               ex:Parametro ;
+    rdfs:label      "Aceleración máxima programada"@es ;
+    ex:textoExtracto "La aceleración programada es mayor que la máxima."@es .
+
+ex:Parametro_VelocidadCambioAceleracion
+    a               ex:Parametro ;
+    rdfs:label      "Velocidad de cambio de aceleración"@es ;
+    ex:textoExtracto "La velocidad programada para el cambio de aceleración es mayor que la máxima."@es .
+
+ex:Parametro_Jerk
+    a               ex:Parametro ;
+    rdfs:label      "Límite de jerk"@es ;
+    ex:textoExtracto "Sobrepasamiento de jerk en esa trayectoria."@es .
+
+ex:Parametro_FrecuenciaMaxima
+    a               ex:Parametro ;
+    rdfs:label      "Frecuencia máxima"@es ;
+    ex:textoExtracto "La frecuencia es demasiado grande para la amplitud programada."@es .
+
+ex:Parametro_AceleracionTrayectoria
+    a               ex:Parametro ;
+    rdfs:label      "Aceleración en trayectoria"@es ;
+    ex:textoExtracto "Sobrepasamiento de aceleración en esa trayectoria."@es .
+
+ex:Parametro_VelocidadAditiva
+    a               ex:Parametro ;
+    rdfs:label      "Velocidad aditiva"@es ;
+    ex:textoExtracto "La velocidad aditiva es menor que la resultante para la frecuencia máxima."@es .
+
+ex:Parametro_ToleranciaHSC
+    a               ex:Parametro ;
+    rdfs:label      "Tolerancia máxima en modo HSC"@es ;
+    ex:textoExtracto "La trayectoria teórica supera la tolerancia máxima programada."@es .
+
+ex:Parametro_LimitePalpado
+    a               ex:Parametro ;
+    rdfs:label      "Límite de movimiento de palpado"@es ;
+    ex:textoExtracto "El movimiento del eje va a superar los límites fijados por el movimiento de palpado anterior."@es .
+
+ex:Alarma_3504
+    ex:monitoreaParametro ex:Parametro_VelocidadCambioAceleracion .
+
+ex:Alarma_3505
+    ex:monitoreaParametro ex:Parametro_Jerk .
+
+ex:Alarma_3506
+    ex:monitoreaParametro ex:Parametro_FrecuenciaMaxima .
+
+ex:Alarma_3507
+    ex:monitoreaParametro ex:Parametro_AceleracionTrayectoria .
+
+ex:Alarma_3508
+    ex:monitoreaParametro ex:Parametro_FrecuenciaMaxima , ex:Parametro_VelocidadAditiva .
+
+ex:Alarma_3509
+    ex:monitoreaParametro ex:Parametro_ToleranciaHSC .
+
+ex:Alarma_3510
+    ex:monitoreaParametro ex:Parametro_LimitePalpado .

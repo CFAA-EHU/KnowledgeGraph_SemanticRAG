@@ -1,0 +1,56 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error7023
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 7023: 'En modo carga: M6 obligatoria'" ;
+    ex:identificador "7023" ;
+    ex:textoExtracto "7023 'En modo carga:M6 obligatoria' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo carga. Hay programadas dos herramientas consecutivas sin M06 SOLUCIÓN Programar M06 detrás de cada herramienta." ;
+    ex:mitigaRiesgo ex:AccionProhibida_7023 .
+
+ex:AccionProhibida_7023
+    a ex:AccionProhibida ;
+    rdfs:label "Programación de dos herramientas consecutivas sin M06 en modo carga" ;
+    ex:textoExtracto "Hay programadas dos herramientas consecutivas sin M06" .
+
+ex:Solucion7023
+    a ex:TareaMantenimiento ;
+    rdfs:label "Programar M06 tras cada herramienta en modo carga" ;
+    ex:textoExtracto "Programar M06 detrás de cada herramienta." ;
+    ex:solucionaFallo ex:Error7023 .
+
+ex:Error7024
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 7024: 'En modo descarga: T0 no admitida'" ;
+    ex:identificador "7024" ;
+    ex:textoExtracto "7024 'En modo descarga:T0 no admitida' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. No se permite programar T0." ;
+    ex:mitigaRiesgo ex:AccionProhibida_7024 .
+
+ex:AccionProhibida_7024
+    a ex:AccionProhibida ;
+    rdfs:label "Programación de T0 en modo descarga" ;
+    ex:textoExtracto "No se permite programar T0." .
+
+ex:ModoOperacion_Carga
+    a ex:ModoOperacion ;
+    rdfs:label "Modo carga del almacén" ;
+    ex:textoExtracto "Almacén en modo carga" ;
+    ex:requiereMantenimiento ex:Solucion7023 .
+
+ex:ModoOperacion_Setting
+    a ex:ModoOperacion ;
+    rdfs:label "Modo setting del almacén" ;
+    ex:textoExtracto "Almacén en modo setting" ;
+    ex:mitigaRiesgo ex:AccionProhibida_Setting .
+
+ex:AccionProhibida_Setting
+    a ex:AccionProhibida ;
+    rdfs:label "Programación de M06 en modo setting" ;
+    ex:textoExtracto "No se permite programar M06." .
+
+ex:ModoOperacion_Descarga
+    a ex:ModoOperacion ;
+    rdfs:label "Modo descarga del almacén" ;
+    ex:textoExtracto "Almacén en modo descarga" .

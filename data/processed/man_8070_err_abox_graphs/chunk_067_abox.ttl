@@ -1,0 +1,78 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_0250_DYNOVR
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo 0250: DYNOVR fuera del rango permitido" ;
+    ex:textoExtracto "0250 DYNOVR fuera del rango permitido por MINDYNOVR y MAXDYNOVR. DETECCIÓN Durante la ejecución. CAUSA La variable V.G.DYNOVR tiene un valor fuera de los límites fijados por los parámetros MINDYNOVR y MAXDYNOVR. SOLUCIÓN Definir la variable con un valor adecuado o modificar la dinámica con ayuda de la barra-override ([CTRL][H])." ;
+    ex:identificador "0250" ;
+    ex:monitoreaParametro ex:Parametro_DYNOVR, ex:Parametro_MINDYNOVR, ex:Parametro_MAXDYNOVR .
+
+ex:Parametro_DYNOVR
+    a ex:Parametro ;
+    rdfs:label "Parámetro DYNOVR" ;
+    ex:textoExtracto "La variable V.G.DYNOVR tiene un valor fuera de los límites fijados por los parámetros MINDYNOVR y MAXDYNOVR." ;
+    ex:identificador "V.G.DYNOVR" .
+
+ex:Parametro_MINDYNOVR
+    a ex:Parametro ;
+    rdfs:label "Parámetro MINDYNOVR" ;
+    ex:textoExtracto "DYNOVR fuera del rango permitido por MINDYNOVR y MAXDYNOVR." ;
+    ex:identificador "MINDYNOVR" .
+
+ex:Parametro_MAXDYNOVR
+    a ex:Parametro ;
+    rdfs:label "Parámetro MAXDYNOVR" ;
+    ex:textoExtracto "DYNOVR fuera del rango permitido por MINDYNOVR y MAXDYNOVR." ;
+    ex:identificador "MAXDYNOVR" .
+
+ex:Fallo_0251_CompensacionVolumetrica
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo 0251: Compensación volumétrica inexistente" ;
+    ex:textoExtracto "0251 Compensación volumétrica inexistente. DETECCIÓN Durante la ejecución. CAUSA El PLC ha intentado activar una compensación volumétrica que no existe. SOLUCIÓN Comprobar que está activa la opción de software asociada a la compensación volumétrica. Comprobar la lista de compensaciones volumétricas definidas (parámetro VOLCOMPn)." ;
+    ex:identificador "0251" ;
+    ex:monitoreaParametro ex:Parametro_VOLCOMPn .
+
+ex:Parametro_VOLCOMPn
+    a ex:Parametro ;
+    rdfs:label "Parámetro VOLCOMPn" ;
+    ex:textoExtracto "Comprobar la lista de compensaciones volumétricas definidas (parámetro VOLCOMPn)." ;
+    ex:identificador "VOLCOMPn" .
+
+ex:Fallo_0252_MaterialInactivo
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo 0252: Variable inexistente sin un material activo" ;
+    ex:textoExtracto "0252 Variable inexistente sin un material activo. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado leer el nombre del material activo y no hay ninguno. SOLUCIÓN Activar un material desde las tablas tecnológicas." ;
+    ex:identificador "0252" .
+
+ex:Fallo_0253_COMPID_Invalido
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo 0253: COMPID no válido" ;
+    ex:textoExtracto "0253 COMPID no valido. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El parámetro COMPID de la cinemática tiene que ser menor que 7 y no puede haber más de una cinemática con el mismo COMPID. SOLUCIÓN Revisar el parámetro COMPID." ;
+    ex:identificador "0253" ;
+    ex:monitoreaParametro ex:Parametro_COMPID .
+
+ex:Parametro_COMPID
+    a ex:Parametro ;
+    rdfs:label "Parámetro COMPID" ;
+    ex:textoExtracto "El parámetro COMPID de la cinemática tiene que ser menor que 7 y no puede haber más de una cinemática con el mismo COMPID." ;
+    ex:identificador "COMPID" .
+
+ex:Fallo_CorteAlimentacionCNC
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo: Corte en la alimentación del CNC" ;
+    ex:textoExtracto "CAUSA Hay un corte en la alimentación del CNC y la batería de emergencia está alimentado el CNC. SOLUCIÓN Tanto si el corte es fortuito como provocado por el usuario, dejar que el CNC termine la secuencia automática de apagado. Si el corte en la alimentación ha sido fortuito, comprobar las posibles causas." ;
+    ex:identificador "CorteAlimentacionCNC" .
+
+ex:BateriaEmergencia
+    a ex:ComponenteElectrico ;
+    rdfs:label "Batería de emergencia del CNC" ;
+    ex:textoExtracto "la batería de emergencia está alimentado el CNC." ;
+    ex:alimenta ex:Sistema_CNC .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "Hay un corte en la alimentación del CNC y la batería de emergencia está alimentado el CNC." .

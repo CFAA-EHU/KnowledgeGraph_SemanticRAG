@@ -1,0 +1,93 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_8553
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 8553: Sintaxis incorrecta en sentencia #DGWZ" ;
+    ex:textoExtracto "#DGWZ<CYL>[limInfEje1,limSupEje1,radio/diamInterno,radio/diamExterno]<Pi,Ci,...> DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." ;
+    ex:identificador "8553" .
+
+ex:Error_8554
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 8554: Radio/diámetro interno mayor que externo" ;
+    ex:textoExtracto "El radio o diámetro interno debe ser menor que el externo. DETECCIÓN Durante la edición y ejecución. CAUSA En la pieza circular definida con la sentencia #DGWZ, el radio o diámetro interno es mayor que el externo. SOLUCIÓN Programar un radio o diámetro interno es mayor que el externo." ;
+    ex:identificador "8554" .
+
+ex:Error_8555
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 8555: Sintaxis incorrecta en función G4" ;
+    ex:textoExtracto "Se esperaba K expresión tras G04. DETECCIÓN Durante la edición. CAUSA Función G4 mal programada. SOLUCIÓN La función G4 se puede programar como G4 <time> ó G4 K<time>, donde <time> es el tiempo de espera." ;
+    ex:identificador "8555" .
+
+ex:Error_8556
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 8556: Solución de tangencia no válida" ;
+    ex:textoExtracto "Solución de tangencia no válida. DETECCIÓN Durante la edición y ejecución. CAUSA Se ha programado en la función G831, G832, G833 una solución de tangencia no válida. SOLUCIÓN El rango de valores admisible para la solución de tangencia es de 1 a 8." ;
+    ex:identificador "8556" .
+
+ex:Error_8557
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 8557: Solución de tangencia no permitida en bloque" ;
+    ex:textoExtracto "Solución de tangencia no permitida en el bloque. DETECCIÓN Durante la edición y ejecución. CAUSA La sentencia o función G programada en el bloque no permite la programación de una solución de tangencia. SOLUCIÓN La solución de tangencia sólo se permite en las funciones G831 a G833." ;
+    ex:identificador "8557" .
+
+ex:Error_8558
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 8558: Programación incremental no permitida" ;
+    ex:textoExtracto "'Programación incremental no permitida' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA Hay programado un movimiento incremental (comando I) en una función que no lo permite. SOLUCIÓN Revisar la programación." ;
+    ex:identificador "8558" .
+
+ex:Error_8559
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 8559: Múltiples cotas no permitidas en bloque" ;
+    ex:textoExtracto "Sólo G820 permite programar varias cotas en el bloque. DETECCIÓN Durante la edición y ejecución. CAUSA La sentencia o función G programada en el bloque no permite la programación de cotas separadas por comas." ;
+    ex:identificador "8559" .
+
+ex:Funcion_G4 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G4 (Tiempo de espera)" ;
+    ex:textoExtracto "La función G4 se puede programar como G4 <time> ó G4 K<time>, donde <time> es el tiempo de espera." ;
+    ex:valor "G4" .
+
+ex:Funcion_G831 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G831 (Solución de tangencia)" ;
+    ex:textoExtracto "Se ha programado en la función G831, G832, G833 una solución de tangencia no válida." ;
+    ex:valor "G831" .
+
+ex:Funcion_G832 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G832 (Solución de tangencia)" ;
+    ex:textoExtracto "Se ha programado en la función G831, G832, G833 una solución de tangencia no válida." ;
+    ex:valor "G832" .
+
+ex:Funcion_G833 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G833 (Solución de tangencia)" ;
+    ex:textoExtracto "Se ha programado en la función G831, G832, G833 una solución de tangencia no válida." ;
+    ex:valor "G833" .
+
+ex:Funcion_G820 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G820 (Múltiples cotas)" ;
+    ex:textoExtracto "Sólo G820 permite programar varias cotas en el bloque." ;
+    ex:valor "G820" .
+
+ex:Sentencia_DGWZ
+    a ex:Parametro ;
+    rdfs:label "Sentencia #DGWZ (Definición de pieza circular)" ;
+    ex:textoExtracto "#DGWZ<CYL>[limInfEje1,limSupEje1,radio/diamInterno,radio/diamExterno]<Pi,Ci,...>" ;
+    ex:valor "#DGWZ" .
+
+ex:Error_8556 ex:solucionaFallo ex:Funcion_G831 .
+ex:Error_8556 ex:solucionaFallo ex:Funcion_G832 .
+ex:Error_8556 ex:solucionaFallo ex:Funcion_G833 .
+ex:Error_8557 ex:solucionaFallo ex:Funcion_G831 .
+ex:Error_8557 ex:solucionaFallo ex:Funcion_G832 .
+ex:Error_8557 ex:solucionaFallo ex:Funcion_G833 .
+ex:Error_8555 ex:solucionaFallo ex:Funcion_G4 .
+ex:Error_8559 ex:solucionaFallo ex:Funcion_G820 .
+ex:Error_8553 ex:solucionaFallo ex:Sentencia_DGWZ .
+ex:Error_8554 ex:solucionaFallo ex:Sentencia_DGWZ .

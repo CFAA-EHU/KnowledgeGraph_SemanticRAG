@@ -1,0 +1,34 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FalloDRV_4028
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Fallo en variable DRV con IDN inexistente en nodo Sercos"@es ;
+    ex:textoExtracto      "4028 Variable DRV cuyo IDN no existe en el nodo Sercos. DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset. CAUSA La inicialización del bus Sercos ha fallado porque una variable DRVVAR tiene IDN incorrecto."@es ;
+    ex:identificador      "4028" .
+
+ex:TablaDRVVAR a ex:Tabla ;
+     a                     ex:Tabla ;
+    rdfs:label            "Tabla DRVVAR"@es ;
+    ex:textoExtracto      "Revisar la tabla DRVVAR y corregir la parametrización."@es .
+
+ex:ParametroDRVVAR_IDN
+    a                     ex:Parametro ;
+    rdfs:label            "Variable DRVVAR con IDN"@es ;
+    ex:textoExtracto      "una variable DRVVAR tiene IDN incorrecto"@es ;
+    ex:monitoreaParametro ex:FalloDRV_4028 ;
+    ex:documentadoEn      ex:TablaDRVVAR .
+
+ex:SistemaSercos
+    a                     ex:Sistema ;
+    rdfs:label            "Bus Sercos"@es ;
+    ex:textoExtracto      "inicialización del bus Sercos"@es ;
+    ex:activaAlarma       ex:FalloDRV_4028 .
+
+ex:TareaMantenimiento_4028
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Revisión y corrección de parametrización DRVVAR"@es ;
+    ex:textoExtracto      "Revisar la tabla DRVVAR y corregir la parametrización."@es ;
+    ex:solucionaFallo      ex:FalloDRV_4028 .

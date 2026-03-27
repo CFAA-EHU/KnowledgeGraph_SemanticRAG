@@ -1,0 +1,69 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3710
+    a ex:Alarma ;
+    ex:identificador "3710" ;
+    rdfs:label "'Rango de valores de la consigna de posición sobrepasados'" ;
+    ex:textoExtracto "3710 'Rango de valores de la consigna de posición sobrepasados' [...] Overflow en la variable de la consigna de posición."@es ;
+    ex:solucionaFallo ex:DiagnosticoFallo_3710 .
+
+ex:DiagnosticoFallo_3710
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "Overflow en la variable de la consigna de posición. SOLUCIÓN Revisar la parametrización del eje."@es .
+
+ex:Alarma_3711
+    a ex:Alarma ;
+    ex:identificador "3711" ;
+    rdfs:label "'Error en el refresco de contajes CAN'" ;
+    ex:textoExtracto "3711 'Error en el refresco de contajes CAN' [...] El error puede ser debido a un error en el bus CAN, a un fallo en algún contaje, en el módulo de contaje o a la saturación del bus CAN."@es ;
+    ex:solucionaFallo ex:DiagnosticoFallo_3711 .
+
+ex:DiagnosticoFallo_3711
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "El CNC no completó la lectura de los contajes de ese eje [...] Revisar la conexión y configuración del bus CAN, el módulo de contaje o aumentar el parámetro LOOPTIME en caso de saturación en el bus."@es .
+
+ex:Alarma_3712
+    a ex:Alarma ;
+    ex:identificador "3712" ;
+    rdfs:label "'Micro del maestro pulsado durante la búsqueda de cero del esclavo'" ;
+    ex:textoExtracto "3712 'Micro del maestro pulsado durante la búsqueda de cero del esclavo' [...] Durante la búsqueda de referencia de un eje gantry, el CNC ha detectado el micro del eje maestro antes que el del eje esclavo."@es ;
+    ex:solucionaFallo ex:DiagnosticoFallo_3712 .
+
+ex:DiagnosticoFallo_3712
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "Ajustar posición de los micros de los ejes gantry; el eje esclavo debe ser el primero en pulsar el micro."@es .
+
+ex:Alarma_3713
+    a ex:Alarma ;
+    ex:identificador "3713" ;
+    rdfs:label "'El control tándem no se encuentra activo'" ;
+    ex:textoExtracto "3713 'El control tándem no se encuentra activo' [...] El CNC no ha podido inicializar el control de par adicional porque la información de algún parámetro no está disponible."@es ;
+    ex:solucionaFallo ex:DiagnosticoFallo_3713 .
+
+ex:DiagnosticoFallo_3713
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "Definir y validar los parámetros máquina del eje tándem o habilitar el eje esclavo y reseatear el CNC."@es .
+
+ex:ComponenteElectrico_BusCAN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Bus CAN" ;
+    ex:textoExtracto "Revisar el estado del bus CAN, de los módulos de entradas analógicas, el conexionado, etc."@es ;
+    ex:monitoreaParametro ex:Parametro_LOOPTIME .
+
+ex:Parametro_LOOPTIME
+    a ex:Parametro ;
+    ex:identificador "LOOPTIME" ;
+    ex:textoExtracto "aumentar el parámetro LOOPTIME en caso de saturación en el bus"@es .
+
+ex:ComponenteElectrico_ModuloEntradasAnalogicas
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de entradas analógicas" ;
+    ex:textoExtracto "problemas en la COMPCI, el bus CAN, el módulo de entradas analógicas"@es .
+
+ex:ComponenteElectrico_ModuloContaje
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de contaje" ;
+    ex:textoExtracto "fallo en algún contaje, en el módulo de contaje"@es .

@@ -1,0 +1,33 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_G33_G34_3072
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Fallo 3072: Avance máximo superado en roscado G33/G34" ;
+    ex:identificador      "3072" ;
+    ex:textoExtracto      "'Paso y S de cabezal programados para G33/G34 superan avance máximo permitido'" ;
+    ex:textoExtracto      "Durante la ejecución. CAUSA: Al empezar un roscado G33/G34, el CNC ha detectado que el paso y la velocidad programados implican un avance que supera el máximo permitido. El avance máximo puede estar limitado por los parámetros máquina o por PLC." .
+
+ex:Parametro_AvanceMaximo
+    a                     ex:Parametro ;
+    rdfs:label            "Avance máximo permitido en roscado" ;
+    ex:textoExtracto      "avance máximo permitido" ;
+    ex:textoExtracto      "El avance máximo puede estar limitado por los parámetros máquina o por PLC." ;
+    ex:monitoreaParametro ex:Fallo_G33_G34_3072 .
+
+ex:Sistema_CNC
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CNC" ;
+    ex:textoExtracto      "el CNC ha detectado que el paso y la velocidad programados implican un avance que supera el máximo permitido" ;
+    ex:controla           ex:Parametro_AvanceMaximo ;
+    ex:activaAlarma       ex:Fallo_G33_G34_3072 .
+
+ex:Funcion_G33_G34 a ex:Tabla ;
+     a                     ex:ModoOperacion ;
+    rdfs:label            "Función de roscado G33/G34" ;
+    ex:identificador      "G33/G34" ;
+    ex:textoExtracto      "programación de la función G33/G34" ;
+    ex:textoExtracto      "Al empezar un roscado G33/G34" ;
+    ex:requiereMantenimiento ex:Fallo_G33_G34_3072 .

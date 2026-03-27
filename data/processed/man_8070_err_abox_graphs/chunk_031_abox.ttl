@@ -1,0 +1,45 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_0068
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0068: Ejes Gantry/Tandem - Esclavo precede al maestro"@es ;
+    ex:identificador "0068" ;
+    ex:textoExtracto "'Ejes Gantrys/Tandem: El esclavo no puede preceder al maestro en AXISNAME' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En las tablas de asignación de nombres de ejes (parámetro AXISNAME), el eje esclavo está definido antes del eje maestro."@es .
+
+ex:Error_0069
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0069: Ejes Gantry - Configuración DECINPUT inconsistente"@es ;
+    ex:identificador "0069" ;
+    ex:textoExtracto "'Ejes Gantry: El esclavo no puede tener DECINPUT (micro de referencia) si el maestro no lo tiene' DETECCIÓN Durante la validación de los parámetros máquina."@es .
+
+ex:Parametro_AXISNAME
+    a ex:Parametro ;
+    rdfs:label "AXISNAME (tabla de asignación de nombres de ejes)"@es ;
+    ex:textoExtracto "parámetro AXISNAME [...] tablas de asignación de nombres de ejes"@es ;
+    ex:monitoreaParametro ex:Error_0068 .
+
+ex:Parametro_DECINPUT
+    a ex:Parametro ;
+    rdfs:label "DECINPUT (micro de referencia)"@es ;
+    ex:textoExtracto "DECINPUT (micro de referencia)"@es ;
+    ex:monitoreaParametro ex:Error_0069 .
+
+ex:SistemaEjesGantry
+    a ex:Sistema ;
+    rdfs:label "Sistema de ejes Gantry/Tándem"@es ;
+    ex:textoExtracto "Ejes Gantrys/Tandem [...] eje maestro y esclavo en la pareja gantry o tándem"@es ;
+    ex:tieneComponente ex:EjeMaestro , ex:EjeEsclavo ;
+    ex:controla ex:Parametro_AXISNAME , ex:Parametro_DECINPUT .
+
+ex:EjeMaestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro (Gantry/Tándem)"@es ;
+    ex:textoExtracto "eje maestro [...] en la pareja gantry o tándem"@es .
+
+ex:EjeEsclavo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo (Gantry/Tándem)"@es ;
+    ex:textoExtracto "eje esclavo [...] en la pareja gantry o tándem"@es .

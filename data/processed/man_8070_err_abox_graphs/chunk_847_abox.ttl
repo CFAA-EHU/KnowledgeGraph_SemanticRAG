@@ -1,0 +1,97 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Error_9629
+    a                   ex:AvisoSeguridad ;
+    rdfs:label          "Error de comunicación en captación (CRC incorrecto)"@es ;
+    ex:textoExtracto    "9629 Error de comunicación en captación. CRC incorrecto. [...] Pérdida de la configuración del encóder o de la cabeza de la regla. El CRC de la regla absoluta FAGOR conectada no ha sido identificado por el regulador."@es ;
+    ex:identificador    "9629" ;
+    ex:mitigaRiesgo     ex:Solucion_9629 .
+
+ex:Error_9630
+    a                   ex:AvisoSeguridad ;
+    rdfs:label          "Error de comunicación en captación (No ACK)"@es ;
+    ex:textoExtracto    "9630 Error de comunicación en captación. No se recibió acknowledge. [...] Error en la lectura de la cota absoluta; no se recibió acknowledge."@es ;
+    ex:identificador    "9630" ;
+    ex:mitigaRiesgo     ex:Solucion_9630 .
+
+ex:Error_9631
+    a                   ex:AvisoSeguridad ;
+    rdfs:label          "Error de sincronismo ABSIND"@es ;
+    ex:textoExtracto    "9631 ABSIND: Error de sincronismo. [...] El regulador ha perdido la sincronización con el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta."@es ;
+    ex:identificador    "9631" ;
+    ex:mitigaRiesgo     ex:Solucion_9631 .
+
+ex:Error_9632
+    a                   ex:AvisoSeguridad ;
+    rdfs:label          "Error de lectura ABSIND"@es ;
+    ex:textoExtracto    "9632 ABSIND: Error leyendo información."@es ;
+    ex:identificador    "9632" .
+
+ex:Error_FrecuenciaContajeExcesiva
+    a                   ex:AvisoSeguridad ;
+    rdfs:label          "Frecuencia de contaje excesiva"@es ;
+    ex:textoExtracto    "Frecuencia de contaje excesiva. [...] La velocidad del eje excede la capacidad de muestreo del hardware, para ese tipo de señal del encóder."@es ;
+    ex:mitigaRiesgo     ex:Solucion_FrecuenciaContajeExcesiva .
+
+ex:Solucion_9629
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Solución para error 9629 (CRC encóder)"@es ;
+    ex:textoExtracto    "Compruebe el cable y el conexionado con el captador. Verifique la correcta parametrización del captador. Si todo es correcto y sigue produciéndose el error, reemplazar el encóder o la cabeza de la regla."@es ;
+    ex:requiereConsumible [
+        a                   ex:ComponenteElectrico ;
+        rdfs:label          "Cableado de encóder/regla FAGOR"@es ;
+        ex:textoExtracto    "Compruebe el cable y el conexionado con el captador."@es
+    ] ;
+    ex:requiereMantenimiento [
+        a                   ex:ComponenteElectrico ;
+        rdfs:label          "Encóder o cabeza de regla FAGOR"@es ;
+        ex:textoExtracto    "reemplazar el encóder o la cabeza de la regla."@es
+    ] .
+
+ex:Solucion_9630
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Solución para error 9630 (No ACK)"@es ;
+    ex:textoExtracto    "Compruebe el cable y el conexionado con el captador. El error puede deberse a un problema en el captador."@es ;
+    ex:requiereConsumible [
+        a                   ex:ComponenteElectrico ;
+        rdfs:label          "Cableado de captador"@es ;
+        ex:textoExtracto    "Compruebe el cable y el conexionado con el captador."@es
+    ] .
+
+ex:Solucion_9631
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Solución para error 9631 (sincronismo ABSIND)"@es ;
+    ex:textoExtracto    "Comprobar que la conexión y el cableado son satisfactorios."@es ;
+    ex:requiereConsumible [
+        a                   ex:ComponenteElectrico ;
+        rdfs:label          "Conexionado módulo ABSIND-regulador"@es ;
+        ex:textoExtracto    "problema de conexionado entre el módulo ABSIND y el regulador."@es
+    ] .
+
+ex:Solucion_FrecuenciaContajeExcesiva
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Reducción de velocidad del eje"@es ;
+    ex:textoExtracto    "Disminuya la velocidad máxima de movimiento del eje."@es .
+
+ex:Modulo_ABSIND
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Módulo ABSIND"@es ;
+    ex:textoExtracto    "módulo ABSIND [...] problema de conexionado entre el módulo ABSIND y el regulador."@es .
+
+ex:Regulador_Sistema
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "Regulador del sistema"@es ;
+    ex:textoExtracto    "El CRC de la regla absoluta FAGOR conectada no ha sido identificado por el regulador. [...] El regulador ha perdido la sincronización con el módulo ABSIND."@es .
+
+ex:Encoder_FAGOR
+    a                   ex:Sensor ;
+    rdfs:label          "Encóder/regla absoluta FAGOR"@es ;
+    ex:textoExtracto    "Pérdida de la configuración del encóder o de la cabeza de la regla. El CRC de la regla absoluta FAGOR conectada no ha sido identificado por el regulador."@es ;
+    ex:monitoreaParametro [
+        a                   ex:Parametro ;
+        rdfs:label          "Velocidad del eje"@es ;
+        ex:textoExtracto    "La velocidad del eje excede la capacidad de muestreo del hardware, para ese tipo de señal del encóder."@es
+    ] .

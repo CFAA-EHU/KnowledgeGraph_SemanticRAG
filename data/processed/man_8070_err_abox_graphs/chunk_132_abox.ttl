@@ -1,0 +1,34 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1257
+    a ex:Alarma ;
+    rdfs:label "Alarma 1257: Doble programación del paso de husillo"@es ;
+    ex:identificador "1257" ;
+    ex:textoExtracto "1257 'Doble programación del paso de husillo' [...] SOLUCIÓN Revisar la programación. Definir el paso de la rosca una sola vez en el bloque."@es ;
+    ex:mitigaRiesgo ex:AccionProhibida_DobleProgramacionPasoHusillo .
+
+ex:Alarma_1258
+    a ex:Alarma ;
+    rdfs:label "Alarma 1258: Paso de husillo igual cero"@es ;
+    ex:identificador "1258" ;
+    ex:textoExtracto "1258 'Paso de husillo igual cero' [...] CAUSA En la función G33, el paso de la rosca tiene valor"@es ;
+    ex:mitigaRiesgo ex:AccionProhibida_PasoHusilloCero .
+
+ex:AccionProhibida_DobleProgramacionPasoHusillo
+    a ex:AccionProhibida ;
+    rdfs:label "Doble programación del paso de husillo en función G33"@es ;
+    ex:textoExtracto "En la función G33, el paso de la rosca está programado más de una vez."@es .
+
+ex:AccionProhibida_PasoHusilloCero
+    a ex:AccionProhibida ;
+    rdfs:label "Paso de husillo con valor cero en función G33"@es ;
+    ex:textoExtracto "En la función G33, el paso de la rosca tiene valor [cero]."@es .
+
+ex:Parametro_PasoRosca_G33
+    a ex:Parametro ;
+    rdfs:label "Paso de rosca (función G33)"@es ;
+    ex:textoExtracto "el paso de la rosca está programado más de una vez [...] el paso de la rosca tiene valor"@es ;
+    ex:monitoreaParametro ex:Alarma_1257, ex:Alarma_1258 .

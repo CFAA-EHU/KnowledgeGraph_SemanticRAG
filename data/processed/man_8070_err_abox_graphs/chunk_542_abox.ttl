@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ErrorConfiguracionBus_4603
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Error 4603: Error en la fase de configuración del bus EtherCAT"@es ;
+    ex:identificador "4603" ;
+    ex:textoExtracto "4603 Error en la fase de configuración del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la fase de configuración de esclavos conectados al bus."@es .
+
+ex:BusEtherCAT
+    a               ex:Sistema ;
+    rdfs:label      "Bus EtherCAT"@es ;
+    ex:textoExtracto "bus EtherCAT"@es ;
+    ex:tieneComponente ex:EsclavosBus_4603 .
+
+ex:EsclavosBus_4603
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Esclavos conectados al bus EtherCAT"@es ;
+    ex:textoExtracto "esclavos conectados al bus"@es .
+
+ex:ArchivoConfiguracionBus
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Archivo de configuración del bus EtherCAT"@es ;
+    ex:textoExtracto "archivo de configuración"@es ;
+    ex:controla     ex:BusEtherCAT .
+
+ex:TareaMantenimiento_RevisionCableado_4603
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Revisión de cableado, conexionado y alimentación de esclavos (Error 4603)"@es ;
+    ex:textoExtracto "Revisar el cableado, conexionado y alimentación de los esclavos. En el caso del bus EtherCAT, revisar el archivo de configuración."@es ;
+    ex:solucionaFallo ex:ErrorConfiguracionBus_4603 .
+
+ex:TareaMantenimiento_RevisionConfiguracion_4603
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Revisión del archivo de configuración del bus EtherCAT (Error 4603)"@es ;
+    ex:textoExtracto "revisar el archivo de configuración"@es ;
+    ex:solucionaFallo ex:ErrorConfiguracionBus_4603 .

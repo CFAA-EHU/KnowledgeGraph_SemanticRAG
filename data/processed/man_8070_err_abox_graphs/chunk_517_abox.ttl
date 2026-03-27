@@ -1,0 +1,45 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_4018
+    a ex:Parametro ;
+    rdfs:label "FEEDBACKTYPE" ;
+    ex:identificador "FEEDBACKTYPE" ;
+    ex:textoExtracto "parámetro FEEDBACKTYPE" ;
+    ex:monitoreaParametro ex:Sistema_Sercos .
+
+ex:Sistema_Sercos
+    a ex:Sistema ;
+    rdfs:label "Sistema de bus Sercos" ;
+    ex:textoExtracto "bus Sercos" ;
+    ex:tieneComponente ex:Modulo_RCS_S ;
+    ex:tieneComponente ex:Parametro_4018 .
+
+ex:Modulo_RCS_S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RCS-S" ;
+    ex:identificador "RCS-S" ;
+    ex:textoExtracto "módulo RCS-S" .
+
+ex:Alarma_4018
+    a ex:Alarma ;
+    rdfs:label "Alarma 4018: Captación remota Sercos con FEEDBACKTYPE incoherente" ;
+    ex:identificador "4018" ;
+    ex:textoExtracto "4018 Captación remota Sercos con FEEDBACKTYPE incoherente en diferentes gamas. DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset. CAUSA En alguna entrada de captación del módulo RCS-S, el tipo de captación (parámetro FEEDBACKTYPE) no es igual en todos lo sets." ;
+    ex:activaAlarma ex:Sistema_Sercos ;
+    ex:solucionaFallo ex:TareaMantenimiento_CorregirParametrizacion_4018 .
+
+ex:TareaMantenimiento_CorregirParametrizacion_4018
+    a ex:TareaMantenimiento ;
+    rdfs:label "Corregir parametrización de FEEDBACKTYPE" ;
+    ex:textoExtracto "Corregir la parametrización." ;
+    ex:requiereMantenimiento ex:Sistema_Sercos .
+
+ex:Alarma_4019
+    a ex:Alarma ;
+    rdfs:label "Alarma 4019: Error en el anillo Sercos debido a un Reset de contadora" ;
+    ex:identificador "4019" ;
+    ex:textoExtracto "4019 Error en el anillo Sercos debido a un Reset de contadora." ;
+    ex:activaAlarma ex:Sistema_Sercos .

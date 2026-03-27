@@ -1,0 +1,42 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Error1318_CambioParametrosSistemaCoordenadasActivo
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 1318: Cambio de parámetros en sistema de coordenadas activo"@es ;
+    ex:textoExtracto "CAUSA El CNC ha intentado cambiar los parámetros de un sistema de coordenadas activo. SOLUCIÓN Revisar la programación. El CNC no permite modificar los parámetros de un sistema de coordenadas activo; si permite modificar los parámetros de un sistema de coordenadas ya definido pero no activo."@es ;
+    ex:identificador "1318" .
+
+ex:Error1319_AnidamientoSentenciasCS_ACS_Sobrepasado
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 1319: Anidamiento de sentencias #CS ON/#ACS ON sobrepasado"@es ;
+    ex:textoExtracto "1319 'Anidamiento de sentencias #CS ON/#ACS ON sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha superado"@es ;
+    ex:identificador "1319" .
+
+ex:ParametroSistemaCoordenadas
+    a ex:Parametro ;
+    rdfs:label "Parámetro de sistema de coordenadas"@es ;
+    ex:textoExtracto "parámetros de un sistema de coordenadas"@es .
+
+ex:SistemaCoordenadasActivo
+    a ex:Sistema ;
+    rdfs:label "Sistema de coordenadas activo"@es ;
+    ex:textoExtracto "sistema de coordenadas activo"@es ;
+    ex:monitoreaParametro ex:ParametroSistemaCoordenadas .
+
+ex:SistemaCoordenadasInactivo
+    a ex:Sistema ;
+    rdfs:label "Sistema de coordenadas inactivo"@es ;
+    ex:textoExtracto "sistema de coordenadas ya definido pero no activo"@es ;
+    ex:monitoreaParametro ex:ParametroSistemaCoordenadas .
+
+ex:Error1318_CambioParametrosSistemaCoordenadasActivo
+    ex:mitigaRiesgo ex:SistemaCoordenadasActivo .
+
+ex:TareaRevisarProgramacion
+    a ex:TareaMantenimiento ;
+    rdfs:label "Revisión de programación CNC"@es ;
+    ex:textoExtracto "Revisar la programación"@es ;
+    ex:solucionaFallo ex:Error1318_CambioParametrosSistemaCoordenadasActivo .

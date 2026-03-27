@@ -1,0 +1,37 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:FalloTensionAlimentacion_9647
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label             "Error de tensión de alimentación en captación digital"@es ;
+    ex:textoExtracto       "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA La tensión de alimentación debe estar entre 5,3 V y 4,1 V."@es ;
+    ex:identificador       "9647" ;
+    ex:monitoreaParametro  ex:ParametroTensionAlimentacion_5.3V-4.1V .
+
+ex:ParametroTensionAlimentacion_5.3V-4.1V
+    a               ex:Parametro ;
+    rdfs:label      "Tensión de alimentación (rango: 5.3V - 4.1V)"@es ;
+    ex:textoExtracto "La tensión de alimentación debe estar entre 5,3 V y 4,1 V."@es ;
+    ex:valor         "4.1V - 5.3V" .
+
+ex:CableAlimentacionEncoder
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Cable de alimentación del encóder/regla"@es ;
+    ex:textoExtracto "Comprobar que el cable de alimentación del encóder o de la regla no está deteriorado."@es .
+
+ex:TareaInspeccionCableado_9647
+    a                     ex:TareaMantenimiento ;
+    rdfs:label             "Inspección de cableado y conexiones (Error 9647)"@es ;
+    ex:textoExtracto       "Comprobar que el cable de alimentación del encóder o de la regla no está deteriorado. Comprobar que la longitud del cable es adecuada y la conexión del cableado es satisfactoria."@es ;
+    ex:solucionaFallo       ex:FalloTensionAlimentacion_9647 ;
+    ex:requiereMantenimiento ex:CableAlimentacionEncoder .
+
+ex:SistemaCaptacionDigitalFagor
+    a                     ex:Sistema ;
+    rdfs:label             "Sistema de captación digital Fagor"@es ;
+    ex:textoExtracto       "9647 Captación digital Fagor. Error de parámetros en captación."@es ;
+    ex:identificador       "9647" ;
+    ex:tieneComponente     ex:CableAlimentacionEncoder ;
+    ex:controla            ex:ParametroTensionAlimentacion_5.3V-4.1V .

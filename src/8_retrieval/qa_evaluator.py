@@ -159,6 +159,16 @@ def _load_dataset_payload(qa_file: Path):
     return json.loads(qa_file.read_text(encoding="utf-8-sig"))
 
 
+def _expected_answer_from_item(item: dict) -> str:
+    answer = item.get("answer")
+    if isinstance(answer, str) and answer.strip():
+        return answer
+    expected_answer = item.get("expected_answer")
+    if isinstance(expected_answer, str):
+        return expected_answer
+    return ""
+
+
 def _is_bilingual_payload(payload) -> bool:
     return isinstance(payload, dict) and isinstance(payload.get("pairs"), list)
 
@@ -541,7 +551,8 @@ class EvaluadorRAG:
                     "question_index": question_index,
                     "chunk_summary": item.get("notes"),
                     "question": item["question"],
-                    "answer": item.get("answer", item.get("notes", "")),
+                    "answer": _expected_answer_from_item(item),
+                    "expected_answer": item.get("expected_answer", ""),
                     "expected_uris": item.get("expected_uris", []),
                     "source_dataset": self.qa_file.name,
                     "reconciliation_label": item.get("notes"),
@@ -621,7 +632,7 @@ class EvaluadorRAG:
 
         classification = self._clasificar_pregunta(
             expected_uris=expected_uris,
-            expected_answer=item.get("answer", ""),
+            expected_answer=_expected_answer_from_item(item),
             precision=precision,
             recall=recall,
             tripletas_limpias=tripletas_limpias,
@@ -710,8 +721,6 @@ class EvaluadorRAG:
         synthesis_error: str | None,
         question: str,
     ) -> str:
-        if not expected_uris:
-            return "golden_set_mismatch_or_ambiguity"
         if query_error:
             return "query_generation_failed"
         if synthesis_error:
@@ -740,6 +749,15 @@ class EvaluadorRAG:
             or answer_norm in expected_answer_norm
             or answer_overlap >= 0.8
         )
+
+        if not expected_uris:
+            if not expected_answer_norm:
+                return "golden_set_mismatch_or_ambiguity"
+            if not tripletas_limpias:
+                return "query_too_broad_or_too_narrow"
+            if answer_is_negative:
+                return "answer_synthesis_failed"
+            return "ok" if strong_answer_match else "query_too_broad_or_too_narrow"
 
         expected_exists = all(uri in self.subject_uris for uri in expected_uris)
         neighborhood = " ".join(self._vecindario_uri(uri) for uri in expected_uris if uri in self.subject_uris)
@@ -1116,7 +1134,7 @@ class EvaluadorRAG:
 
             classification = self._clasificar_pregunta(
                 expected_uris=expected_uris,
-                expected_answer=item.get("answer", ""),
+                expected_answer=_expected_answer_from_item(item),
                 precision=precision,
                 recall=recall,
                 tripletas_limpias=tripletas_limpias,

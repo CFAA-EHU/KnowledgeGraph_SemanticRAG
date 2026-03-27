@@ -59,6 +59,7 @@ BOUNDEDNESS_POLICIES = {
     "direct_seed_literal": {"seed_limit": 2, "candidate_limit": 2, "result_limit": 10, "too_broad_raw": 10, "too_narrow_min": 1, "degrade_to_fallback": False},
     "quick_ref_strict": {"seed_limit": 6, "candidate_limit": 6, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
     "cross_manual_strict": {"seed_limit": 8, "candidate_limit": 8, "result_limit": 28, "too_broad_raw": 28, "too_narrow_min": 1, "degrade_to_fallback": False},
+    "installation_strict": {"seed_limit": 6, "candidate_limit": 6, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
     "generalized_lookup": {"seed_limit": 4, "candidate_limit": 5, "result_limit": 16, "too_broad_raw": 18, "too_narrow_min": 1, "degrade_to_fallback": True},
     "generic_fallback": {"seed_limit": 6, "candidate_limit": 8, "result_limit": 24, "too_broad_raw": 24, "too_narrow_min": 1, "degrade_to_fallback": False},
 }
@@ -414,6 +415,182 @@ STRICT_QUICK_REF_FAMILIES = [
         "steps": [
             {"step_id": "seed", "purpose": "seed_multiple_machining", "mode": "fixed_seed", "fixed_uris": [_uri("ParametroQ10_013"), _uri("AccionProhibidaNoMaquinadoQ10_013")], "max_candidates": 2, "max_results": 2},
             {"step_id": "detail", "purpose": "multiple_machining_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 12},
+        ],
+    },
+]
+
+STRICT_INSTALLATION_FAMILIES = [
+    {
+        "family_id": "installation_modes_and_storage_lookup",
+        "template_id": "INS_T1_modes_storage",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "installation_strict",
+        "policy_id": "installation_strict",
+        "canonical_anchor": "installation_modes_storage",
+        "anchor_groups_all": ["installation_modes_storage"],
+        "keywords_any": [
+            ["modo administrador", "modo setup"],
+            ["mtb_t", "mtb_m"],
+            ["carpeta", "users"],
+        ],
+        "seed_uris": [
+            _uri("ModoOperacion_Administrador"),
+            _uri("ModoOperacion_Setup"),
+            _uri("ModoUsuario"),
+            _uri("InterfazUsuario_ModoAdministrador"),
+            _uri("InterfazUsuario_ModoSetup"),
+            _uri("CarpetaMTB_T"),
+            _uri("CarpetaMTB_M"),
+            _uri("CarpetaUSERS"),
+        ],
+        "seed_token_map": {
+            "mtb_t": [_uri("CarpetaMTB_T"), _uri("CarpetaMTB_M")],
+            "mtb_m": [_uri("CarpetaMTB_M"), _uri("CarpetaMTB_T")],
+            "users": [_uri("CarpetaUSERS")],
+            "programas pieza": [_uri("CarpetaUSERS")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_installation_modes_storage", "mode": "fixed_seed", "fixed_uris": [_uri("ModoOperacion_Administrador"), _uri("ModoOperacion_Setup"), _uri("ModoUsuario"), _uri("InterfazUsuario_ModoAdministrador"), _uri("InterfazUsuario_ModoSetup"), _uri("CarpetaMTB_T"), _uri("CarpetaMTB_M"), _uri("CarpetaUSERS")], "max_candidates": 6, "max_results": 6},
+            {"step_id": "detail", "purpose": "installation_modes_storage_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 6, "max_results": 18},
+        ],
+    },
+    {
+        "family_id": "installation_tandem_gantry_parameter_lookup",
+        "template_id": "INS_T2_tandem_gantry",
+        "intent": "component_attribute_lookup",
+        "hop_depth": 1,
+        "family_type": "installation_strict",
+        "policy_id": "installation_strict",
+        "canonical_anchor": "installation_tandem_gantry",
+        "anchor_groups_all": ["installation_tandem_gantry"],
+        "keywords_any": [
+            ["tandem", "torqdist"],
+            ["gantry", "warncoupe"],
+            ["gantry", "unidir"],
+            ["gantry", "hirth"],
+        ],
+        "seed_uris": [
+            _uri("Parametro_TORQDIST"),
+            _uri("Parametro_WARNCOUPE"),
+            _uri("Parametro_MAXCOUPE"),
+            _uri("Parametro_UNIDIR_69"),
+            _uri("Parametro_HIRTH_69"),
+        ],
+        "seed_token_map": {
+            "torqdist": [_uri("Parametro_TORQDIST")],
+            "warncoupe": [_uri("Parametro_WARNCOUPE"), _uri("Parametro_MAXCOUPE")],
+            "maxcoupe": [_uri("Parametro_MAXCOUPE"), _uri("Parametro_WARNCOUPE")],
+            "unidir": [_uri("Parametro_UNIDIR_69")],
+            "hirth": [_uri("Parametro_HIRTH_69")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_installation_tandem_gantry", "mode": "fixed_seed", "fixed_uris": [_uri("Parametro_TORQDIST"), _uri("Parametro_WARNCOUPE"), _uri("Parametro_MAXCOUPE"), _uri("Parametro_UNIDIR_69"), _uri("Parametro_HIRTH_69")], "max_candidates": 5, "max_results": 5},
+            {"step_id": "detail", "purpose": "installation_tandem_gantry_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 5, "max_results": 18},
+        ],
+    },
+    {
+        "family_id": "installation_bus_plc_parameter_lookup",
+        "template_id": "INS_T3_bus_plc",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "installation_strict",
+        "policy_id": "installation_strict",
+        "canonical_anchor": "installation_bus_plc",
+        "anchor_groups_all": ["installation_bus_plc"],
+        "keywords_any": [
+            ["rio5", "250 khz"],
+            ["plcdatasize", "hbh3"],
+            ["plcdatasize", "hbh4"],
+            ["plctype"],
+            ["ndimod", "canopen"],
+            ["ndimod", "canfagor"],
+        ],
+        "seed_uris": [
+            _uri("Frecuencia_250kHz"),
+            _uri("Sistema_HBH3_HBH4"),
+            _uri("Parametro_PLCDATASIZE"),
+            _uri("Parametro_PLCTYPE"),
+            _uri("Parametro_NDIMOD"),
+        ],
+        "seed_token_map": {
+            "rio5": [_uri("Frecuencia_250kHz")],
+            "250 khz": [_uri("Frecuencia_250kHz")],
+            "plcdatasize": [_uri("Sistema_HBH3_HBH4"), _uri("Parametro_PLCDATASIZE")],
+            "hbh3": [_uri("Sistema_HBH3_HBH4"), _uri("Parametro_PLCDATASIZE")],
+            "hbh4": [_uri("Sistema_HBH3_HBH4"), _uri("Parametro_PLCDATASIZE")],
+            "plctype": [_uri("Parametro_PLCTYPE")],
+            "ndimod": [_uri("Parametro_NDIMOD")],
+            "canopen": [_uri("Parametro_NDIMOD")],
+            "canfagor": [_uri("Parametro_NDIMOD")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_installation_bus_plc", "mode": "fixed_seed", "fixed_uris": [_uri("Frecuencia_250kHz"), _uri("Sistema_HBH3_HBH4"), _uri("Parametro_PLCDATASIZE"), _uri("Parametro_PLCTYPE"), _uri("Parametro_NDIMOD")], "max_candidates": 5, "max_results": 5},
+            {"step_id": "detail", "purpose": "installation_bus_plc_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 5, "max_results": 18},
+        ],
+    },
+    {
+        "family_id": "installation_motion_defaults_lookup",
+        "template_id": "INS_T4_motion_defaults",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "installation_strict",
+        "policy_id": "installation_strict",
+        "canonical_anchor": "installation_motion_defaults",
+        "anchor_groups_all": ["installation_motion_defaults"],
+        "keywords_any": [
+            ["gapapproachdyn"],
+            ["slopetype"],
+            ["synccancel"],
+            ["kinid"],
+        ],
+        "seed_uris": [
+            _uri("GapApproachDyn"),
+            _uri("Parametro_MPG_GAPAPPROACHDYN"),
+            _uri("Parametro_SLOPETYPE"),
+            _uri("Parametro_SYNCCANCEL"),
+            _uri("Parametro_KINID"),
+            _uri("Sistema_CNC"),
+        ],
+        "seed_token_map": {
+            "gapapproachdyn": [_uri("GapApproachDyn"), _uri("Parametro_MPG_GAPAPPROACHDYN")],
+            "slopetype": [_uri("Parametro_SLOPETYPE"), _uri("Sistema_CNC")],
+            "synccancel": [_uri("Parametro_SYNCCANCEL"), _uri("Sistema_CNC")],
+            "kinid": [_uri("Parametro_KINID")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_installation_motion_defaults", "mode": "fixed_seed", "fixed_uris": [_uri("GapApproachDyn"), _uri("Parametro_MPG_GAPAPPROACHDYN"), _uri("Parametro_SLOPETYPE"), _uri("Parametro_SYNCCANCEL"), _uri("Parametro_KINID"), _uri("Sistema_CNC")], "max_candidates": 6, "max_results": 6},
+            {"step_id": "detail", "purpose": "installation_motion_defaults_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "valor"], "max_candidates": 6, "max_results": 22},
+        ],
+    },
+    {
+        "family_id": "installation_alarm_temperature_lookup",
+        "template_id": "INS_T5_alarm_temperature",
+        "intent": "literal_lookup",
+        "hop_depth": 1,
+        "family_type": "installation_strict",
+        "policy_id": "installation_strict",
+        "canonical_anchor": "installation_alarm_temperature",
+        "anchor_groups_all": ["installation_alarm_temperature"],
+        "keywords_any": [
+            ["overtemp"],
+            ["e173"],
+            ["temperatura ambiente", "65"],
+            ["w169"],
+        ],
+        "seed_uris": [
+            _uri("Marca_OVERTEMP"),
+            _uri("Error_E173"),
+        ],
+        "seed_token_map": {
+            "overtemp": [_uri("Marca_OVERTEMP"), _uri("Error_E173")],
+            "e173": [_uri("Error_E173"), _uri("Marca_OVERTEMP")],
+            "w169": [_uri("Marca_OVERTEMP"), _uri("Error_E173")],
+            "65": [_uri("Error_E173"), _uri("Marca_OVERTEMP")],
+        },
+        "steps": [
+            {"step_id": "seed", "purpose": "seed_installation_alarm_temperature", "mode": "fixed_seed", "fixed_uris": [_uri("Marca_OVERTEMP"), _uri("Error_E173")], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "installation_alarm_temperature_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador"], "max_candidates": 2, "max_results": 12},
         ],
     },
 ]
@@ -1217,7 +1394,7 @@ def _family_confidence(parse: QuestionParse, family: dict[str, Any]) -> float:
     confidence = 0.45
     if family.get("family_type") == "benchmark_seeded":
         confidence += 0.25
-    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict"}:
+    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict", "installation_strict"}:
         confidence += 0.28
     if parse.matched_anchor_rule:
         confidence += 0.15
@@ -1305,7 +1482,7 @@ def _family_score(parse: QuestionParse, question: str, family: dict[str, Any]) -
             keyword_matched = True
     if family.get("require_keyword_match") and not keyword_matched:
         return None
-    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict"} and not matched_evidence:
+    if family.get("family_type") in {"quick_ref_strict", "cross_manual_strict", "installation_strict"} and not matched_evidence:
         return None
     return score
 
@@ -1324,8 +1501,6 @@ def _select_strict_family(parse: QuestionParse, question: str, families: list[di
 
 
 STRICT_RUNTIME_CUES = [
-    "8070",
-    "cnc",
     "mdi",
     "mda",
     "edisimu",
@@ -1375,6 +1550,11 @@ def _has_strict_runtime_context(parse: QuestionParse, question: str) -> bool:
         "machine_program_recovery",
         "machine_utilities_navigation",
         "machine_program_storage",
+        "installation_modes_storage",
+        "installation_tandem_gantry",
+        "installation_bus_plc",
+        "installation_motion_defaults",
+        "installation_alarm_temperature",
     }
     if set(parse.anchor_groups).intersection(strong_anchor_groups) or parse.technical_tokens:
         return True
@@ -1388,6 +1568,9 @@ def select_plan_family(parse: QuestionParse, question: str) -> dict[str, Any] | 
         strict_cross = _select_strict_family(parse, question, STRICT_CROSS_FAMILIES)
         if strict_cross is not None:
             return strict_cross
+        strict_installation = _select_strict_family(parse, question, STRICT_INSTALLATION_FAMILIES)
+        if strict_installation is not None:
+            return strict_installation
         strict_quick_ref = _select_strict_family(parse, question, STRICT_QUICK_REF_FAMILIES)
         if strict_quick_ref is not None:
             return strict_quick_ref

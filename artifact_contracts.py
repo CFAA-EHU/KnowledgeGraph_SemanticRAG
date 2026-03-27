@@ -123,6 +123,13 @@ T25_2_RUNTIME_REGENERATION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_2_runtime_reg
 T25_2_GRAPHDB_SYNC_REPORT_PATH = PROCESSED_DATA_DIR / "t25_2_graphdb_sync_report.json"
 T25_2_RECOVERY_REPORT_PATH = PROCESSED_DATA_DIR / "t25_2_recovery_report.json"
 T25_2_RECOVERY_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_2_recovery_decision_report.json"
+T25_3_INSTALLATION_ROUTING_AUDIT_PATH = PROCESSED_DATA_DIR / "t25_3_installation_routing_audit.json"
+T25_3_INSTALLATION_PLAN_CATALOG_PATH = PROCESSED_DATA_DIR / "t25_3_installation_plan_catalog.json"
+T25_3_INSTALLATION_SURFACE_MAPPING_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_installation_surface_mapping_report.json"
+T25_3_INSTALLATION_ROUTING_IMPLEMENTATION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_installation_routing_implementation_report.json"
+T25_3_GRAPHDB_CONSISTENCY_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_graphdb_consistency_report.json"
+T25_3_RECOVERY_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_recovery_report.json"
+T25_3_ROUTING_DECISION_REPORT_PATH = PROCESSED_DATA_DIR / "t25_3_routing_decision_report.json"
 
 GRAPHDB_BASE_URL = os.getenv("GRAPHDB_BASE_URL", "http://localhost:7200").rstrip("/")
 GRAPHDB_REPOSITORY_ID = os.getenv("GRAPHDB_REPOSITORY_ID", "semanticrag_operational_mirror")
@@ -273,6 +280,13 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "t25_2_graphdb_sync_report": T25_2_GRAPHDB_SYNC_REPORT_PATH,
     "t25_2_recovery_report": T25_2_RECOVERY_REPORT_PATH,
     "t25_2_recovery_decision_report": T25_2_RECOVERY_DECISION_REPORT_PATH,
+    "t25_3_installation_routing_audit": T25_3_INSTALLATION_ROUTING_AUDIT_PATH,
+    "t25_3_installation_plan_catalog": T25_3_INSTALLATION_PLAN_CATALOG_PATH,
+    "t25_3_installation_surface_mapping_report": T25_3_INSTALLATION_SURFACE_MAPPING_REPORT_PATH,
+    "t25_3_installation_routing_implementation_report": T25_3_INSTALLATION_ROUTING_IMPLEMENTATION_REPORT_PATH,
+    "t25_3_graphdb_consistency_report": T25_3_GRAPHDB_CONSISTENCY_REPORT_PATH,
+    "t25_3_recovery_report": T25_3_RECOVERY_REPORT_PATH,
+    "t25_3_routing_decision_report": T25_3_ROUTING_DECISION_REPORT_PATH,
     "quick_ref_source": QUICK_REF_SOURCE_PATH,
     "quick_ref_density_report": QUICK_REF_DENSITY_REPORT_PATH,
     "quick_ref_language_detection_report": QUICK_REF_LANGUAGE_DETECTION_REPORT_PATH,

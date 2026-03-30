@@ -30,10 +30,10 @@ El planificador semántico, la recuperación (*retrieval*), la evaluación y la 
 
 ### Capas del A-Box
 El flujo de extracción genera cuatro capas incrementales separadas para garantizar la trazabilidad:
-1. `abox_merged.ttl`: Snapshot bruto post-merge para diagnóstico.
-2. `abox_canonical.ttl`: Snapshot canónico intermedio para consolidación estructural.
-3. `abox_enriched.ttl`: Snapshot enriquecido intermedio para *linking* y *value surfaces* genéricos.
-4. `abox_linked.ttl`: Snapshot operativo final con *link completion* residual de alta confianza.
+1.  **`abox_merged.ttl`:** Snapshot bruto post-merge para diagnóstico.
+2.  **`abox_canonical.ttl`:** Snapshot canónico intermedio para consolidación estructural.
+3.  **`abox_enriched.ttl`:** Snapshot enriquecido intermedio para *linking* y *value surfaces* genéricos.
+4.  **`abox_linked.ttl`:** Snapshot operativo final con *link completion* residual de alta confianza.
 
 ### Backends de Consulta (Post-T23)
 El runtime mantiene dos backends de consulta para ejecutar las sentencias SPARQL generadas por el planificador:
@@ -77,44 +77,38 @@ La ejecución de este proyecto requiere la configuración de dependencias extern
 ---
 ## Entrypoints Oficiales (Ejecución)
 
-1. Pipeline Operativo
-Ejecuta la secuencia completa de construcción del grafo: abox_input_builder, abox_extractor, abox_merger, abox_canonicalizer, abox_graph_enricher, abox_link_completer y multilingual_lexicon_builder.
+1.  **Pipeline Operativo:** Ejecuta la secuencia completa de construcción del grafo: abox_input_builder, abox_extractor, abox_merger, abox_canonicalizer, abox_graph_enricher, abox_link_completer y multilingual_lexicon_builder.
 
 - Recuperación/Ejecución del pipeline sobre el estado actual:
-python run_operational_pipeline.py --mode resume-compatible
+```python run_operational_pipeline.py --mode resume-compatible```
 
 - Onboarding piloto de un manual nuevo:
-python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible
+```python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible```
 
-2. Workbench de Consultas
-El script query_workbench.py permite probar preguntas nuevas interactivamente. Muestra la traza completa de ejecución: intención detectada, ancla, idioma normalizado, familia de plan, profundidad prevista (boundedness), evidencia recuperada, evidencia seleccionada y respuesta sintetizada.
+2.  **Workbench de Consultas:** El script query_workbench.py permite probar preguntas nuevas interactivamente. Muestra la traza completa de ejecución: intención detectada, ancla, idioma normalizado, familia de plan, profundidad prevista (boundedness), evidencia recuperada, evidencia seleccionada y respuesta sintetizada.
 
 - Consulta usando el backend en memoria (por defecto):
-python query_workbench.py "¿Qué directiva cumple la máquina?" 
+```python query_workbench.py "¿Qué directiva cumple la máquina?"``` 
 
-3. Benchmarks Formales (Evaluador QA)
-Verifica que las implementaciones de enrutamiento no rompan los baselines establecidos.
+3.  **Benchmarks Formales (Evaluador QA):** Verifica que las implementaciones de enrutamiento no rompan los baselines establecidos.
 
 - Validaciones de regresión:
-python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json
-python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json
+```python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json```
+```python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json```
 
-4. Integración con GraphDB
-Scripts para publicar la A-Box final en Ontotext GraphDB y monitorizar su estado de salud.
+4.  **Integración con GraphDB:** Scripts para publicar la A-Box final en Ontotext GraphDB y monitorizar su estado de salud.
 
 - Comandos de publicación y revisión:
-python src/7_database/graphdb_healthcheck.py
-python src/7_database/publish_to_graphdb.py
+```python src/7_database/graphdb_healthcheck.py```
+```python src/7_database/publish_to_graphdb.py```
 
-5. Sandbox Diagnóstico
-Entorno para validación de resolución de entidades, promoción estructural y convergencia ES/EN. Utiliza QA_sandbox.json (diagnóstico estructural) y QA_bilingual.json (validación de que diferentes idiomas convergen en la misma intención, familia, ancla y SPARQL).
+5. **Sandbox Diagnóstico:** Entorno para validación de resolución de entidades, promoción estructural y convergencia ES/EN. Utiliza QA_sandbox.json (diagnóstico estructural) y QA_bilingual.json (validación de que diferentes idiomas convergen en la misma intención, familia, ancla y SPARQL).
 
 - Ejecución:
-python src/8_retrieval/qa_sandbox_diagnostic.py
+```python src/8_retrieval/qa_sandbox_diagnostic.py```
 
 
 ## Carriles del Repositorio
-
 La arquitectura define la separación estricta entre experimentación y el entorno productivo. La fuente única de verdad para rutas y contratos de lectura/escritura reside en artifact_contracts.py.
 
 - Carril Experimental: Se conserva para exploración y pruebas aisladas, pero no define el runtime por defecto.
@@ -164,5 +158,4 @@ El pipeline productivo genera y consume los siguientes artefactos en el director
 
 
 ## Licencia
-
 Este proyecto se distribuye bajo la Licencia MIT. Para más detalles, consulte el archivo LICENSE incluido en el repositorio. Configuración del Entorno

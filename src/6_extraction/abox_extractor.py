@@ -221,6 +221,20 @@ def normalizar_puntuacion_problematica(ttl_text: str) -> str:
     return ttl_normalizado
 
 
+def normalizar_hex_binary_invalidos(ttl_text: str) -> str:
+    pattern = re.compile(r'"([^"\n]*)"\^\^xsd:hexBinary')
+
+    def replacer(match: re.Match[str]) -> str:
+        lexical = match.group(1).strip()
+        normalized = lexical[1:] if lexical.startswith("$") else lexical
+        normalized = normalized.replace(" ", "").upper()
+        if normalized and len(normalized) % 2 == 0 and re.fullmatch(r"[0-9A-F]+", normalized):
+            return f'"{normalized}"^^xsd:hexBinary'
+        return f'"{lexical}"^^xsd:string'
+
+    return pattern.sub(replacer, ttl_text)
+
+
 def escapar_comillas_internas_en_literales(ttl_text: str) -> str:
     resultado: list[str] = []
     i = 0
@@ -423,6 +437,7 @@ def normalizar_vocabulario_canonico(ttl_text: str) -> str:
         ttl_normalizado = ttl_normalizado.replace(origen, destino)
     ttl_normalizado = tipar_tablas_canonicas(ttl_normalizado)
     ttl_normalizado = normalizar_curies_ex_invalidos(ttl_normalizado)
+    ttl_normalizado = normalizar_hex_binary_invalidos(ttl_normalizado)
     ttl_normalizado = escapar_barras_invertidas_en_literales(ttl_normalizado)
     ttl_normalizado = escapar_comillas_internas_en_literales(ttl_normalizado)
     return ttl_normalizado

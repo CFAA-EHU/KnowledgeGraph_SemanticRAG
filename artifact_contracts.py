@@ -373,6 +373,10 @@ PROHIBITED_OPERATIONAL_INPUTS = {
 
 SCRIPT_CLASSIFICATIONS = {
     "run_operational_pipeline.py": "operational_entrypoint",
+    "check_mistral_api_usage.py": "utility_script",
+    "run_t25_sequential_integration.py": "historical_task_tooling",
+    "run_t25_2_installation_recovery.py": "historical_task_tooling",
+    "run_t26_error_manual_onboarding.py": "historical_task_tooling",
     "src/2_extraction/prompt_assembler.py": "experimental",
     "src/2_extraction/llm_extractor.py": "experimental",
     "src/3_merging/graph_merger.py": "experimental",
@@ -393,7 +397,6 @@ SCRIPT_CLASSIFICATIONS = {
     "src/8_retrieval/schema_condenser.py": "operational_consumer",
     "src/8_retrieval/qa_evaluator.py": "operational_consumer",
     "src/9_rag_orchestrator/semantic_rag.py": "operational_consumer",
-    "run_t25_sequential_integration.py": "operational_entrypoint",
 }
 
 

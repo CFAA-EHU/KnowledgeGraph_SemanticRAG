@@ -39,3 +39,4 @@ Indice de documentacion operativa, contractual y transversal del proyecto.
 - `src/2_extraction/`, `src/3_merging/` y `src/5_alignment/` quedan como utilidades experimentales.
 - No deben confundirse con el carril operativo actual basado en `run_operational_pipeline.py` y `src/6_extraction/`.
 - La documentacion operativa ya no debe tratar esos modulos como pasos del runtime por defecto.
+- Los scripts `run_t25_sequential_integration.py`, `run_t25_2_installation_recovery.py` y `run_t26_error_manual_onboarding.py` quedan como tooling historico de campaña, no como entrypoints operativos generales.

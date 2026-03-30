@@ -121,6 +121,13 @@ Utilidades experimentales todavía conservadas:
 
 Ninguna de esas piezas participa en el build, la consulta ni la evaluación del runtime operativo actual.
 
+Tooling histórico de campaña en la raíz:
+- `run_t25_sequential_integration.py`
+- `run_t25_2_installation_recovery.py`
+- `run_t26_error_manual_onboarding.py`
+
+Se conservan por trazabilidad de onboarding y recuperación, pero no son entrypoints del runtime diario.
+
 ## Artefactos Clave del Carril Operativo
 El pipeline productivo genera y consume los siguientes artefactos en el directorio data/processed/:
 

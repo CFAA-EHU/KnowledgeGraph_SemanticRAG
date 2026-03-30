@@ -72,7 +72,7 @@ def clusterizar_entidades(uris: list, labels: list, model: SentenceTransformer) 
 
 def alinear_instancias():
     if not GRAPH_PATH.exists():
-        print(f"Error: {GRAPH_PATH} no existe. Ejecuta primero abox_merger.py")
+        print(f"Error: {GRAPH_PATH} no existe. Reconstruye primero el runtime operativo para generar abox_linked.ttl")
         sys.exit(1)
 
     g = Graph()

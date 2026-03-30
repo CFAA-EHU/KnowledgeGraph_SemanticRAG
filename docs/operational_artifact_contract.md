@@ -50,11 +50,13 @@ python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_re
 
 When extraction credentials are unavailable, the pilot lane must still persist density/input/onboarding artifacts and stop before `abox_extractor.py` with an explicit blocker.
 
-### Experimental lane
+### Experimental tooling retained outside the runtime
 
 - Dynamic T-Box prompts: `data/processed/tbox_prompts.json`
 - Merged experimental ontology: `data/processed/ontology_merged.ttl`
 - Optional aligned A-Box: `data/processed/abox_aligned.ttl`
+
+These artifacts belong to the exploratory toolchain (`src/2_extraction/`, `src/3_merging/`, `src/5_alignment/`). They are not consumed by the operational runtime, the formal evaluator, the sandbox diagnostic or GraphDB publication.
 
 ## Operational A-Box contract
 

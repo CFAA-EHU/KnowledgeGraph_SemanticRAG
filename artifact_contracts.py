@@ -375,6 +375,7 @@ SCRIPT_CLASSIFICATIONS = {
     "run_operational_pipeline.py": "operational_entrypoint",
     "src/2_extraction/prompt_assembler.py": "experimental",
     "src/2_extraction/llm_extractor.py": "experimental",
+    "src/3_merging/graph_merger.py": "experimental",
     "src/5_alignment/semantic_reduction.py": "experimental",
     "src/6_extraction/abox_input_builder.py": "operational_producer",
     "src/6_extraction/abox_extractor.py": "operational_producer",

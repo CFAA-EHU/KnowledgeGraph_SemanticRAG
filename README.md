@@ -114,6 +114,13 @@ La arquitectura define la separación estricta entre experimentación y el entor
 - Carril Experimental: Se conserva para exploración y pruebas aisladas, pero no define el runtime por defecto.
 - Carril Operativo: Es el camino oficial de build, consulta y evaluación.
 
+Utilidades experimentales todavía conservadas:
+- `src/2_extraction/` para prompts T-Box y extracción TTL exploratoria.
+- `src/3_merging/graph_merger.py` para fusionar TTLs del carril T-Box experimental.
+- `src/5_alignment/semantic_reduction.py` para pruebas de alineamiento semántico fuera del runtime.
+
+Ninguna de esas piezas participa en el build, la consulta ni la evaluación del runtime operativo actual.
+
 ## Artefactos Clave del Carril Operativo
 El pipeline productivo genera y consume los siguientes artefactos en el directorio data/processed/:
 

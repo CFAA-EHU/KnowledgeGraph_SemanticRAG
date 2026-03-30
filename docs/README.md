@@ -33,3 +33,9 @@ Indice de documentacion operativa, contractual y transversal del proyecto.
 - `rdflib` sigue siendo el backend de referencia.
 - Los benchmarks formales siguen separados del sandbox diagnostico.
 - Los artefactos operativos y de evaluacion viven en `data/processed/`.
+
+## Fuera del runtime
+
+- `src/2_extraction/`, `src/3_merging/` y `src/5_alignment/` quedan como utilidades experimentales.
+- No deben confundirse con el carril operativo actual basado en `run_operational_pipeline.py` y `src/6_extraction/`.
+- La documentacion operativa ya no debe tratar esos modulos como pasos del runtime por defecto.

@@ -1,6 +1,6 @@
 # Módulo 1: Ingesta, Filtrado Cognitivo y Análisis de Densidad
 
-Este directorio contiene el "Kilómetro Cero" del pipeline del Gemelo Digital Cognitivo. A diferencia de los parsers de texto tradicionales, este módulo no se limita a extraer texto de documentos; actúa como un **filtro semántico y económico** antes de que la información alcance la fase de extracción con Modelos Fundacionales (LLMs).
+A diferencia de los parsers de texto tradicionales, este módulo no se limita a extraer texto de documentos; actúa como un **filtro semántico y económico** antes de que la información alcance la fase de extracción con Modelos Fundacionales (LLMs).
 
 Su objetivo principal es dotar al sistema de vocabulario técnico de la Industria 4.0, normalizar el texto, detectar el idioma a nivel de fragmento (chunk) y descartar el "ruido" (índices, portadas, texto de marketing) para **minimizar el consumo innecesario de tokens en la API de Mistral**.
 

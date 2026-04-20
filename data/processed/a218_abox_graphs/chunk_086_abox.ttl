@@ -1,0 +1,86 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:PortonFrontal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Portón frontal" ;
+    ex:textoExtracto "Portón frontal y puertas correderas laterales: Son de apertura manual y disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." ;
+    ex:tieneComponente ex:DispositivoBloqueoPortonFrontal .
+
+ex:PuertasCorrederasLaterales
+    a ex:ComponenteMecanico ;
+    rdfs:label "Puertas correderas laterales" ;
+    ex:textoExtracto "Portón frontal y puertas correderas laterales: Son de apertura manual y disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." ;
+    ex:tieneComponente ex:DispositivoBloqueoPuertasLaterales .
+
+ex:DispositivoBloqueoPortonFrontal
+    a ex:ElementoSeguridad ;
+    rdfs:label "Dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico (portón frontal)" ;
+    ex:textoExtracto "disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." .
+
+ex:DispositivoBloqueoPuertasLaterales
+    a ex:ElementoSeguridad ;
+    rdfs:label "Dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico (puertas laterales)" ;
+    ex:textoExtracto "disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." .
+
+ex:BotonAperturaPuertas
+    a ex:InterfazUsuario ;
+    rdfs:label "Botón 'Apertura puertas'" ;
+    ex:textoExtracto "pulsar el botón 'Apertura puertas'." .
+
+ex:ModoEmergencia
+    a ex:ModoOperacion ;
+    rdfs:label "Modo emergencia" ;
+    ex:textoExtracto "Máquina en emergencia" ;
+    ex:habilitadoPor ex:AperturaPuertasEnEmergencia .
+
+ex:AperturaPuertasEnEmergencia
+    a ex:AccionProhibida ;
+    rdfs:label "Apertura de puertas en emergencia" ;
+    ex:textoExtracto "Máquina en emergencia" ;
+    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
+
+ex:ModoServicio
+    a ex:ModoOperacion ;
+    rdfs:label "Modo servicio" ;
+    ex:textoExtracto "Máquina en servicio y pulsar el botón 'Apertura puertas'" ;
+    ex:habilitadoPor ex:AperturaPuertasConBoton .
+
+ex:AperturaPuertasConBoton
+    a ex:AccionProhibida ;
+    rdfs:label "Apertura de puertas en modo servicio con botón" ;
+    ex:textoExtracto "Máquina en servicio y pulsar el botón 'Apertura puertas'" ;
+    ex:requiereMantenimiento ex:BotonAperturaPuertas ;
+    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
+
+ex:CicloCambioCremallera
+    a ex:ModoOperacion ;
+    rdfs:label "Ciclo de cambio de cremallera" ;
+    ex:textoExtracto "Ciclo de cambio de cremallera con carro porta-pieza en posición inferior." ;
+    ex:habilitadoPor ex:AperturaPuertasEnCicloCambio .
+
+ex:AperturaPuertasEnCicloCambio
+    a ex:AccionProhibida ;
+    rdfs:label "Apertura de puertas durante ciclo de cambio de cremallera" ;
+    ex:textoExtracto "Ciclo de cambio de cremallera con carro porta-pieza en posición inferior." ;
+    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
+
+ex:ModoSetup
+    a ex:ModoOperacion ;
+    rdfs:label "Modo set-up" ;
+    ex:textoExtracto "Modo set-up y pulsar 'Apertura puertas' / En modo set-up se pueden realizar movimientos con puertas abiertas a velocidad reducida." ;
+    ex:habilitadoPor ex:AperturaPuertasEnSetup, ex:MovimientoVelocidadReducida .
+
+ex:AperturaPuertasEnSetup
+    a ex:AccionProhibida ;
+    rdfs:label "Apertura de puertas en modo set-up" ;
+    ex:textoExtracto "Modo set-up y pulsar 'Apertura puertas'" ;
+    ex:requiereMantenimiento ex:BotonAperturaPuertas ;
+    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
+
+ex:MovimientoVelocidadReducida
+    a ex:ModoOperacion ;
+    rdfs:label "Movimiento a velocidad reducida (puertas abiertas)" ;
+    ex:textoExtracto "se pueden realizar movimientos con puertas abiertas a velocidad reducida." .

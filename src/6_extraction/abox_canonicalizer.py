@@ -30,6 +30,7 @@ from canonical_resolution_policy import (
     candidates_to_jsonable,
     clusters_to_jsonable,
     collect_resolution_diagnostics,
+    collect_surface_variant_diagnostics,
     group_resolution_candidates,
     selections_to_jsonable,
     select_canonical_entity,
@@ -76,6 +77,31 @@ def resolve_mapping_chain(initial_mapping: dict[str, str]) -> dict[str, str]:
             current = initial_mapping[current]
         return current
     return {source: resolve(target) for source, target in initial_mapping.items()}
+
+
+def merge_resolution_candidates(*candidate_sets: list) -> list:
+    merged: dict[tuple[str, str, str], Any] = {}
+    for candidate_list in candidate_sets:
+        for candidate in candidate_list:
+            key = (candidate.source_uri, candidate.candidate_uri, candidate.suggested_structural_issue)
+            existing = merged.get(key)
+            if existing is None:
+                merged[key] = candidate
+                continue
+            existing.support_count = max(existing.support_count, candidate.support_count)
+            existing.question_ids = sorted(set(existing.question_ids) | set(candidate.question_ids))
+            existing.source_types = sorted(set(existing.source_types) | set(candidate.source_types))
+            existing.candidate_types = sorted(set(existing.candidate_types) | set(candidate.candidate_types))
+            existing.source_alignment_score = max(existing.source_alignment_score, candidate.source_alignment_score)
+            existing.candidate_alignment_score = max(existing.candidate_alignment_score, candidate.candidate_alignment_score)
+            existing.improvement_score = max(existing.improvement_score, candidate.improvement_score)
+            existing.evidence = {**existing.evidence, **candidate.evidence}
+            if existing.candidate_origin != candidate.candidate_origin:
+                existing.candidate_origin = f"{existing.candidate_origin}+{candidate.candidate_origin}"
+    return sorted(
+        merged.values(),
+        key=lambda item: (item.priority, -item.support_count, -item.improvement_score, -item.candidate_alignment_score, item.source_uri, item.candidate_uri),
+    )
 
 
 def rewrite_graph(raw_graph: Graph, selections) -> tuple[Graph, dict[str, Any], dict[str, dict[str, Any]]]:
@@ -190,14 +216,29 @@ def main() -> None:
         sandbox_decision,
         sandbox_report,
     )
-    accepted_candidates = diagnostics['accepted']
+    surface_variant_diagnostics = collect_surface_variant_diagnostics(raw_graph)
+    accepted_candidates = merge_resolution_candidates(
+        diagnostics['accepted'],
+        surface_variant_diagnostics['accepted'],
+    )
     clusters = group_resolution_candidates(accepted_candidates)
     selections = [select_canonical_entity(cluster, raw_graph) for cluster in clusters]
 
     resolution_payload = {
-        'summary': diagnostics['summary'],
+        'summary': {
+            **diagnostics['summary'],
+            'surface_variant_groups_inspected': surface_variant_diagnostics['summary']['surface_variant_groups_inspected'],
+            'surface_variant_candidates_accepted': surface_variant_diagnostics['summary']['accepted_candidates'],
+            'surface_variant_candidates_discarded': surface_variant_diagnostics['summary']['discarded_candidates'],
+            'accepted_candidates': len(accepted_candidates),
+            'discarded_candidates': len(diagnostics['discarded']) + len(surface_variant_diagnostics['discarded']),
+            'candidate_origins': {
+                'sandbox': diagnostics['summary'].get('candidate_origins', {}).get('sandbox', 0),
+                'surface_variant_scan': surface_variant_diagnostics['summary'].get('candidate_origins', {}).get('surface_variant_scan', 0),
+            },
+        },
         'results': candidates_to_jsonable(accepted_candidates),
-        'discarded': diagnostics['discarded'],
+        'discarded': diagnostics['discarded'] + surface_variant_diagnostics['discarded'],
     }
     write_json(args.resolution_candidates_path, resolution_payload)
 
@@ -213,10 +254,13 @@ def main() -> None:
             'output_path': str(args.output),
             'resolution_candidates_path': str(args.resolution_candidates_path),
             'entity_map_path': str(args.entity_map_path),
+            'surface_variant_groups_inspected': surface_variant_diagnostics['summary']['surface_variant_groups_inspected'],
+            'surface_variant_candidates_accepted': surface_variant_diagnostics['summary']['accepted_candidates'],
+            'surface_variant_candidates_discarded': surface_variant_diagnostics['summary']['discarded_candidates'],
         },
         'clusters_processed': clusters_to_jsonable(clusters),
         'selections': selections_to_jsonable(selections),
-        'discarded_candidates': diagnostics['discarded'],
+        'discarded_candidates': diagnostics['discarded'] + surface_variant_diagnostics['discarded'],
     }
     write_json(args.report_path, report_payload)
 

@@ -40,6 +40,7 @@ from artifact_contracts import (
     OPERATIONAL_ABOX_MANIFEST_PATH,
     OPERATIONAL_TBOX_PATH,
     hash_file_content,
+    resolve_mistral_model_chain,
 )
 from abox_resume_policy import build_manifest_entry, determine_chunk_action, load_manifest, save_manifest
 from abox_semantic_validator import (
@@ -55,7 +56,8 @@ MANIFEST_PATH = OPERATIONAL_ABOX_MANIFEST_PATH
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 OUTPUT_DIR = ABOX_CHUNKS_DIR
 DEBUG_DIR = ABOX_DEBUG_DIR
-MODEL = os.environ.get("MISTRAL_MODEL", "mistral-small-latest").strip() or "mistral-small-latest"
+MODEL_CHAIN = resolve_mistral_model_chain()
+PRIMARY_MODEL = MODEL_CHAIN[0]
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 ABOX_PROMPT_VERSION = "semantic-guardrails-v3"
 EXTRACTION_MODE = "abox_from_text_chunk"
@@ -73,6 +75,14 @@ class RetryProfile:
     backoff_seconds: tuple[int, ...]
     jitter_range: tuple[float, float]
     request_spacing_seconds: float
+
+
+@dataclass(frozen=True)
+class ModelFallbackExhaustedError(Exception):
+    error_cause: str
+    error_message: str
+    attempted_models: tuple[str, ...]
+    last_model_name: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -141,6 +151,10 @@ def get_client() -> Mistral:
             raise RuntimeError("Define la variable de entorno MISTRAL_API_KEY antes de ejecutar regeneraciones A-Box.")
         client = Mistral(api_key=api_key)
     return client
+
+
+def get_model_chain() -> tuple[str, ...]:
+    return MODEL_CHAIN
 
 
 def compilar_vocabulario_tbox() -> str:
@@ -450,16 +464,21 @@ def persistir_debug_chunk_fallido(
     error_message: str,
     raw_response: str | None,
     normalized_ttl: str | None,
+    model_name: str | None = None,
+    attempted_models: tuple[str, ...] | None = None,
 ) -> None:
     DEBUG_DIR.mkdir(parents=True, exist_ok=True)
     metadata_path = DEBUG_DIR / f"chunk_{chunk_id:03d}_failure.json"
     payload = {
         "chunk_id": chunk_id,
         "prompt_version": ABOX_PROMPT_VERSION,
-        "model_name": MODEL,
+        "model_name": model_name or PRIMARY_MODEL,
+        "model_chain": list(get_model_chain()),
         "error_cause": error_cause,
         "error_message": error_message,
     }
+    if attempted_models:
+        payload["attempted_models"] = list(attempted_models)
     if raw_response:
         raw_path = DEBUG_DIR / f"chunk_{chunk_id:03d}_raw_response.txt"
         raw_path.write_text(raw_response, encoding="utf-8")
@@ -471,9 +490,29 @@ def persistir_debug_chunk_fallido(
     metadata_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-async def llamada_llm_once(mensajes: list) -> str:
-    respuesta = await get_client().chat.complete_async(model=MODEL, temperature=0.0, messages=mensajes)
-    return respuesta.choices[0].message.content
+async def llamada_llm_once(mensajes: list) -> tuple[str, str]:
+    attempted_models: list[str] = []
+    last_error_cause = "api_error"
+    last_error_message = "No fue posible completar la llamada al LLM."
+    last_model_name = PRIMARY_MODEL
+
+    for model_name in get_model_chain():
+        attempted_models.append(model_name)
+        last_model_name = model_name
+        try:
+            respuesta = await get_client().chat.complete_async(model=model_name, temperature=0.0, messages=mensajes)
+            return respuesta.choices[0].message.content, model_name
+        except Exception as exc:
+            last_error_cause, last_error_message = classify_exception(exc)
+            continue
+
+    attempted_display = ", ".join(attempted_models) or PRIMARY_MODEL
+    raise ModelFallbackExhaustedError(
+        error_cause=last_error_cause,
+        error_message=f"{last_error_message} | model_chain_attempted={attempted_display}",
+        attempted_models=tuple(attempted_models),
+        last_model_name=last_model_name,
+    )
 
 
 def classify_exception(exc: Exception) -> tuple[str, str]:
@@ -604,6 +643,8 @@ async def procesar_chunk_abox(
         last_semantic_report = None
         last_raw_response: str | None = None
         last_normalized_ttl: str | None = None
+        last_model_name = PRIMARY_MODEL
+        attempted_models: tuple[str, ...] = tuple()
 
         if es_chunk_pagina_en_blanco(chunk_data):
             ttl_puro = construir_ttl_pagina_en_blanco(chunk_data)
@@ -616,13 +657,14 @@ async def procesar_chunk_abox(
                     error_message=summarize_semantic_result(semantic_result),
                     raw_response=ttl_puro,
                     normalized_ttl=ttl_puro,
+                    model_name=last_model_name,
                 )
                 entry = build_manifest_entry(
                     chunk_data,
                     output_path=output_path,
                     status="error",
                     prompt_version=ABOX_PROMPT_VERSION,
-                    model_name=MODEL,
+                    model_name=last_model_name,
                     extraction_mode=EXTRACTION_MODE,
                     tbox_hash=tbox_hash,
                     error_cause="semantic_invalid",
@@ -640,7 +682,7 @@ async def procesar_chunk_abox(
                 output_path=output_path,
                 status="ok",
                 prompt_version=ABOX_PROMPT_VERSION,
-                model_name=MODEL,
+                model_name=last_model_name,
                 extraction_mode=EXTRACTION_MODE,
                 tbox_hash=tbox_hash,
                 semantic_report=last_semantic_report,
@@ -654,7 +696,8 @@ async def procesar_chunk_abox(
             api_call_attempted = False
             try:
                 api_call_attempted = True
-                contenido = await llamada_llm_once(mensajes)
+                contenido, resolved_model_name = await llamada_llm_once(mensajes)
+                last_model_name = resolved_model_name
                 if retry_profile.request_spacing_seconds > 0:
                     await asyncio.sleep(retry_profile.request_spacing_seconds)
                 last_raw_response = contenido
@@ -678,7 +721,7 @@ async def procesar_chunk_abox(
                                 output_path=output_path,
                                 status="ok",
                                 prompt_version=ABOX_PROMPT_VERSION,
-                                model_name=MODEL,
+                                model_name=last_model_name,
                                 extraction_mode=EXTRACTION_MODE,
                                 tbox_hash=tbox_hash,
                                 semantic_report=last_semantic_report,
@@ -692,6 +735,13 @@ async def procesar_chunk_abox(
                     else:
                         last_error_cause = "ttl_invalid"
                         last_error_message = ttl_error or "El TTL generado no parsea correctamente."
+            except ModelFallbackExhaustedError as exc:
+                if api_call_attempted and retry_profile.request_spacing_seconds > 0:
+                    await asyncio.sleep(retry_profile.request_spacing_seconds)
+                last_error_cause = exc.error_cause
+                last_error_message = exc.error_message
+                attempted_models = exc.attempted_models
+                last_model_name = exc.last_model_name
             except Exception as exc:
                 if api_call_attempted and retry_profile.request_spacing_seconds > 0:
                     await asyncio.sleep(retry_profile.request_spacing_seconds)
@@ -714,6 +764,8 @@ async def procesar_chunk_abox(
             error_message=last_error_message,
             raw_response=last_raw_response,
             normalized_ttl=last_normalized_ttl,
+            model_name=last_model_name,
+            attempted_models=attempted_models,
         )
 
         entry = build_manifest_entry(
@@ -721,7 +773,7 @@ async def procesar_chunk_abox(
             output_path=output_path,
             status="error",
             prompt_version=ABOX_PROMPT_VERSION,
-            model_name=MODEL,
+            model_name=last_model_name,
             extraction_mode=EXTRACTION_MODE,
             tbox_hash=tbox_hash,
             error_cause=last_error_cause,
@@ -771,8 +823,9 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
             manifest_entry=manifest_entry,
             mode=mode,
             prompt_version=ABOX_PROMPT_VERSION,
-            model_name=MODEL,
+            model_name=PRIMARY_MODEL,
             extraction_mode=EXTRACTION_MODE,
+            compatible_model_names=get_model_chain(),
             tbox_hash=tbox_hash,
         )
 
@@ -787,7 +840,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
                         output_path=output_path,
                         status="ok",
                         prompt_version=ABOX_PROMPT_VERSION,
-                        model_name=MODEL,
+                        model_name=str((manifest_entry or {}).get("model_name") or PRIMARY_MODEL),
                         extraction_mode=EXTRACTION_MODE,
                         tbox_hash=tbox_hash,
                         semantic_report=semantic_result.to_manifest_summary(),
@@ -804,7 +857,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
                 output_path=output_path,
                 status="error",
                 prompt_version=ABOX_PROMPT_VERSION,
-                model_name=MODEL,
+                model_name=str((manifest_entry or {}).get("model_name") or PRIMARY_MODEL),
                 extraction_mode=EXTRACTION_MODE,
                 tbox_hash=tbox_hash,
                 error_cause=error_cause,
@@ -819,7 +872,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
             output_path=output_path,
             status=status,
             prompt_version=ABOX_PROMPT_VERSION,
-            model_name=MODEL,
+            model_name=PRIMARY_MODEL,
             extraction_mode=EXTRACTION_MODE,
             tbox_hash=tbox_hash,
         )
@@ -838,6 +891,7 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
     if chunk_ids:
         alcance = f" ({len(abox_input)} bloques filtrados: {sorted(chunk_ids)})"
     print(f"Iniciando extraccion A-Box en modo {mode}{alcance} con perfil {retry_profile.name}...")
+    print(f"Cadena de modelos Mistral: {', '.join(get_model_chain())}")
 
     if chunks_to_run:
         try:

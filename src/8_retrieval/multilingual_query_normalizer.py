@@ -381,7 +381,6 @@ ANCHOR_GROUP_RULES = {
         "evitar lesiones a personas",
         "proteger danos al cnc",
         "proteccion oem",
-        "modo usuario",
         "caracter temporal",
         "cambios tendran caracter temporal",
     ],
@@ -449,7 +448,6 @@ ANCHOR_GROUP_RULES = {
         "#var",
         "#endvar",
         "#delete",
-        "var",
         "endvar",
         "delete",
         "prefijos p y s",
@@ -706,7 +704,7 @@ def _extract_anchor_groups(*question_variants: str) -> list[str]:
     normalized_variants = [normalize_text(question) for question in question_variants if question]
     groups: list[str] = []
     for group_id, phrases in ANCHOR_GROUP_RULES.items():
-        if any(any(phrase in normalized for phrase in phrases) for normalized in normalized_variants):
+        if any(any(re.search(_surface_regex(normalize_text(phrase)), normalized) for phrase in phrases) for normalized in normalized_variants):
             groups.append(group_id)
     return groups
 

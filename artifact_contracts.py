@@ -6,7 +6,7 @@ import re
 from dataclasses import asdict, dataclass
 from hashlib import sha256
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 
 REPO_ROOT = Path(__file__).resolve().parent
@@ -195,6 +195,13 @@ ABOX_MICRO_BATCH_RECOVERY_MAX_RETRIES = 6
 ABOX_MICRO_BATCH_RECOVERY_BACKOFF_SECONDS = (30, 60, 120, 240, 480, 900)
 ABOX_MICRO_BATCH_RECOVERY_JITTER_RANGE = (0.9, 1.1)
 ABOX_MICRO_BATCH_RECOVERY_REQUEST_SPACING_SECONDS = 3.0
+
+DEFAULT_MISTRAL_MODEL = "mistral-small-latest"
+DEFAULT_MISTRAL_MODEL_CHAIN = (
+    DEFAULT_MISTRAL_MODEL,
+    "mistral-medium-latest",
+    "open-mistral-nemo",
+)
 
 OPERATIONAL_RUNTIME_CONTRACT = {
     "tbox": OPERATIONAL_TBOX_PATH,
@@ -483,6 +490,36 @@ def hash_text_content(text: str) -> str:
     return sha256(text.encode("utf-8")).hexdigest()
 
 
+def resolve_mistral_model_chain(
+    *,
+    primary_model: str | None = None,
+    fallback_models: str | Sequence[str] | None = None,
+) -> tuple[str, ...]:
+    ordered_models: list[str] = []
+
+    def register(value: str | None) -> None:
+        normalized = (value or "").strip()
+        if normalized and normalized not in ordered_models:
+            ordered_models.append(normalized)
+
+    register(primary_model or os.environ.get("MISTRAL_MODEL") or DEFAULT_MISTRAL_MODEL)
+
+    if fallback_models is None:
+        fallback_models = os.environ.get("MISTRAL_MODEL_FALLBACKS", "")
+
+    if isinstance(fallback_models, str):
+        for item in fallback_models.split(","):
+            register(item)
+    else:
+        for item in fallback_models:
+            register(item)
+
+    for default_model in DEFAULT_MISTRAL_MODEL_CHAIN:
+        register(default_model)
+
+    return tuple(ordered_models)
+
+
 def hash_json_content(value: Any) -> str:
     payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return sha256(payload.encode("utf-8")).hexdigest()
@@ -530,6 +567,7 @@ def is_reusable_abox_output(
     prompt_version: str,
     model_name: str,
     extraction_mode: str,
+    compatible_model_names: Sequence[str] | None = None,
     tbox_hash: str | None = None,
     tbox_path: Path = OPERATIONAL_TBOX_PATH,
 ) -> bool:
@@ -546,4 +584,15 @@ def is_reusable_abox_output(
         tbox_path=tbox_path,
     )
 
-    return persisted_metadata == abox_reuse_signature_dict(expected)
+    expected_payload = abox_reuse_signature_dict(expected)
+    if persisted_metadata == expected_payload:
+        return True
+
+    if compatible_model_names:
+        persisted_model_name = str(persisted_metadata.get("model_name", "")).strip()
+        if persisted_model_name and persisted_model_name in compatible_model_names:
+            relaxed_expected = dict(expected_payload)
+            relaxed_expected["model_name"] = persisted_model_name
+            return persisted_metadata == relaxed_expected
+
+    return False

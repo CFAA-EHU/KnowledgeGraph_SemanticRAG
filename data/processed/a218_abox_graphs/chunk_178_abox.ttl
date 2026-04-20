@@ -1,0 +1,93 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Esquemas eléctricos (Páginas 123-126)
+ex:Esquema_123_MonitorPanelPC
+    a ex:Esquema ;
+    rdfs:label "Esquema de conexiones: Monitor y Panel PC" ;
+    ex:textoExtracto "Conexiones de Monitor y Panel PC: alimentación 24PNL/0PNL, enlaces USB/VGA (15WUSB1/15WVGA1) y LAN A–D con salto al esquema de red. Esquemas rectangulares de los equipos con conectores etiquetados." ;
+    ex:identificador "123" .
+
+ex:Esquema_124_CNC8070
+    a ex:Esquema ;
+    rdfs:label "Esquema eléctrico: CNC 8070" ;
+    ex:textoExtracto "Módulo CNC 8070 con buses CAN, SERCOS II, EtherCAT, Ethernet; alimentación 24CNC/0CNC y relé 16KA1 (PLC OK). Puertos y señales se representan como bornes alineados; referencias cruzadas a otras láminas." ;
+    ex:identificador "124" .
+
+ex:Esquema_125_FuenteDrives
+    a ex:Esquema ;
+    rdfs:label "Esquema: Fuente de alimentación para drives/reguladores" ;
+    ex:textoExtracto "Fuente de drives/reguladores: entradas L1/L2/L3, DC BUS+/–, señales RESET/SYSTEM OK/ENABLE y salidas a 24CNC/24E. Bloques de potencia con bornes X1–X3 y relés asociados (27KA3–4)." ;
+    ex:identificador "125" .
+
+ex:Esquema_126_ServomotorAXD2
+    a ex:Esquema ;
+    rdfs:label "Esquema eléctrico: Servomotor IZQUIERDA AXD2" ;
+    ex:textoExtracto "Drive AXD2 con U/V/W/PE, entradas DRIVE/SPEED ENABLE, DC BUS y encoder lineal. Buses SERCOS, señales 24S/24SAFE, relés 27KAx y enlaces a bornes XT1. Líneas rojas (potencia) y verdes/azules (control/safety)." ;
+    ex:identificador "126" .
+
+### Componentes eléctricos (extraídos de esquemas)
+ex:ComponenteElectrico_15WUSB1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conector USB 15WUSB1" ;
+    ex:textoExtracto "enlaces USB/VGA (15WUSB1/15WVGA1)" ;
+    ex:detalladoEnEsquema ex:Esquema_123_MonitorPanelPC .
+
+ex:ComponenteElectrico_15WVGA1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conector VGA 15WVGA1" ;
+    ex:textoExtracto "enlaces USB/VGA (15WUSB1/15WVGA1)" ;
+    ex:detalladoEnEsquema ex:Esquema_123_MonitorPanelPC .
+
+ex:ComponenteElectrico_16KA1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Relé 16KA1 (PLC OK)" ;
+    ex:textoExtracto "relé 16KA1 (PLC OK)" ;
+    ex:detalladoEnEsquema ex:Esquema_124_CNC8070 .
+
+ex:ComponenteElectrico_27KA3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Relé 27KA3" ;
+    ex:textoExtracto "relés asociados (27KA3–4)" ;
+    ex:detalladoEnEsquema ex:Esquema_125_FuenteDrives .
+
+ex:ComponenteElectrico_27KA4
+    a ex:ComponenteElectrico ;
+    rdfs:label "Relé 27KA4" ;
+    ex:textoExtracto "relés asociados (27KA3–4)" ;
+    ex:detalladoEnEsquema ex:Esquema_125_FuenteDrives .
+
+ex:ComponenteElectrico_27KAx_AXD2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Relés 27KAx (Servomotor AXD2)" ;
+    ex:textoExtracto "relés 27KAx" ;
+    ex:detalladoEnEsquema ex:Esquema_126_ServomotorAXD2 .
+
+ex:ComponenteElectrico_Borne_X1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Borner X1 (Fuente de drives)" ;
+    ex:textoExtracto "bornes X1–X3" ;
+    ex:detalladoEnEsquema ex:Esquema_125_FuenteDrives .
+
+ex:ComponenteElectrico_Borne_XT1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Borner XT1 (Servomotor AXD2)" ;
+    ex:textoExtracto "enlaces a bornes XT1" ;
+    ex:detalladoEnEsquema ex:Esquema_126_ServomotorAXD2 .
+
+### Sistemas y módulos (agregaciones)
+ex:Sistema_CNC8070
+    a ex:Sistema ;
+    rdfs:label "Módulo CNC 8070" ;
+    ex:textoExtracto "Módulo CNC 8070 con buses CAN, SERCOS II, EtherCAT, Ethernet; alimentación 24CNC/0CNC" ;
+    ex:compuestoPor ex:ComponenteElectrico_16KA1 ;
+    ex:detalladoEnEsquema ex:Esquema_124_CNC8070 .
+
+ex:Sistema_ServomotorAXD2
+    a ex:Sistema ;
+    rdfs:label "Servomotor IZQUIERDA AXD2" ;
+    ex:textoExtracto "Drive AXD2 con U/V/W/PE, entradas DRIVE/SPEED ENABLE, DC BUS y encoder lineal" ;
+    ex:compuestoPor ex:ComponenteElectrico_27KAx_AXD2, ex:ComponenteElectrico_Borne_XT1 ;
+    ex:detalladoEnEsquema ex:Esquema_126_ServomotorAXD2 .

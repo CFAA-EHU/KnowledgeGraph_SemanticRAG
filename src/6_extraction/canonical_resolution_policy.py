@@ -15,6 +15,23 @@ from rdflib.namespace import RDF
 PREFERRED_SURFACE_PREDICATES = ('identificador', 'label', 'textoExtracto', 'valor')
 SUPPORTED_ISSUES = {'graph_canonicalization_gap', 'graph_linking_gap', 'missing_value_surface'}
 ISSUE_PRIORITY = {'graph_canonicalization_gap': 1, 'graph_linking_gap': 2, 'missing_value_surface': 3}
+SURFACE_VARIANT_CONTEXT_BLOCKERS = {
+    'version',
+    'v',
+    'seccion',
+    'section',
+    'canal',
+    'channel',
+    'cabezal',
+    'head',
+    'indice',
+    'index',
+    'pagina',
+    'page',
+    'capitulo',
+    'chapter',
+}
+SURFACE_VARIANT_MIN_KEY_LENGTH = 5
 
 
 @dataclass
@@ -34,6 +51,7 @@ class ResolutionCandidate:
     candidate_alignment_score: float = 0.0
     improvement_score: float = 0.0
     reason: str | None = None
+    candidate_origin: str = 'sandbox'
     evidence: dict[str, Any] = field(default_factory=dict)
 
 
@@ -137,6 +155,39 @@ def _load_json(payload_or_path: Any) -> Any:
     return payload_or_path
 
 
+def _normalize_surface_variant_text(text: str) -> str:
+    text = unicodedata.normalize('NFKD', text or '')
+    text = ''.join(ch for ch in text if not unicodedata.combining(ch))
+    text = re.sub(r'(?<=[a-z0-9])(?=[A-Z])', ' ', text)
+    text = re.sub(r'(?<=[A-Z])(?=[A-Z][a-z])', ' ', text)
+    text = text.replace('_', ' ').replace('-', ' ')
+    text = re.sub(r'[^A-Za-z0-9 ]+', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip().lower()
+    return text
+
+
+def _compact_surface_variant_key(text: str) -> str:
+    normalized = _normalize_surface_variant_text(text)
+    return normalized.replace(' ', '')
+
+
+def _surface_variant_tokens(text: str) -> list[str]:
+    return [token for token in _normalize_surface_variant_text(text).split() if token]
+
+
+def _has_contextual_surface_blockers(*values: str) -> bool:
+    tokens: set[str] = set()
+    for value in values:
+        tokens.update(_surface_variant_tokens(value))
+    if any(token in SURFACE_VARIANT_CONTEXT_BLOCKERS for token in tokens):
+        return True
+    if any(re.fullmatch(r'v\d+(?:\.\d+)*', token) for token in tokens):
+        return True
+    if any(re.fullmatch(r'\d+', token) for token in tokens):
+        return True
+    return False
+
+
 def describe_entity(graph: Graph, uri: str) -> dict[str, Any]:
     subject = URIRef(uri)
     surface_literals: list[dict[str, str]] = []
@@ -164,6 +215,46 @@ def describe_entity(graph: Graph, uri: str) -> dict[str, Any]:
         'preferred_identifier': preferred_identifier,
         'preferred_label': preferred_label,
     }
+
+
+def _surface_variant_key_matches(source_desc: dict[str, Any], candidate_desc: dict[str, Any]) -> tuple[bool, list[str]]:
+    source_values = [
+        source_desc.get('preferred_label') or '',
+        source_desc.get('preferred_identifier') or '',
+        source_desc.get('best_surface') or '',
+        source_desc.get('local_name') or '',
+    ]
+    candidate_values = [
+        candidate_desc.get('preferred_label') or '',
+        candidate_desc.get('preferred_identifier') or '',
+        candidate_desc.get('best_surface') or '',
+        candidate_desc.get('local_name') or '',
+    ]
+    source_keys = {_compact_surface_variant_key(value) for value in source_values if value}
+    candidate_keys = {_compact_surface_variant_key(value) for value in candidate_values if value}
+    source_keys = {key for key in source_keys if len(key) >= SURFACE_VARIANT_MIN_KEY_LENGTH}
+    candidate_keys = {key for key in candidate_keys if len(key) >= SURFACE_VARIANT_MIN_KEY_LENGTH}
+    shared = sorted(source_keys & candidate_keys)
+    return bool(shared), shared
+
+
+def _surface_variant_pair_acceptable(source_desc: dict[str, Any], candidate_desc: dict[str, Any]) -> tuple[bool, str, list[str]]:
+    compatible = _types_compatible(source_desc['types'], candidate_desc['types'])
+    if not compatible:
+        return False, 'incompatible_entity_types', []
+    shared, shared_keys = _surface_variant_key_matches(source_desc, candidate_desc)
+    if not shared:
+        return False, 'surface_variant_key_mismatch', []
+    best_surface_similarity = max(
+        _string_similarity(source_desc.get('best_surface') or '', candidate_desc.get('best_surface') or ''),
+        _string_similarity(source_desc.get('preferred_label') or '', candidate_desc.get('preferred_label') or ''),
+        _string_similarity(source_desc.get('local_name') or '', candidate_desc.get('local_name') or ''),
+    )
+    if best_surface_similarity < 0.92:
+        return False, 'surface_similarity_below_threshold', shared_keys
+    if _has_contextual_surface_blockers(source_desc.get('local_name') or '', candidate_desc.get('local_name') or ''):
+        return False, 'contextual_suffix_blocked', shared_keys
+    return True, 'surface_variant_canonicalization', shared_keys
 
 
 def _best_surface_against_expected(description: dict[str, Any], expected_answer: str) -> tuple[str | None, float]:
@@ -307,6 +398,7 @@ def collect_resolution_diagnostics(
                     candidate_alignment_score=signals['candidate_alignment'],
                     improvement_score=signals['improvement'],
                     reason=reason,
+                    candidate_origin='sandbox',
                     evidence={
                         'source_key_hits': signals['source_key_hits'],
                         'candidate_key_hits': signals['candidate_key_hits'],
@@ -335,6 +427,116 @@ def collect_resolution_diagnostics(
             'structural_gap_counts': sandbox_summary.get('summary', {}).get('structural_gap_counts', {}),
             'accepted_candidates': len(accepted),
             'discarded_candidates': len(discarded),
+            'candidate_origins': {'sandbox': len(accepted)},
+        },
+    }
+
+
+def collect_surface_variant_diagnostics(graph: Graph) -> dict[str, Any]:
+    descriptions: dict[str, dict[str, Any]] = {}
+    for subject, _, obj in graph.triples((None, RDF.type, None)):
+        if not isinstance(subject, URIRef) or not isinstance(obj, URIRef):
+            continue
+        uri = str(subject)
+        if uri not in descriptions:
+            descriptions[uri] = describe_entity(graph, uri)
+
+    grouped: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+    for uri, description in descriptions.items():
+        candidate_values = {
+            description.get('preferred_label') or '',
+            description.get('preferred_identifier') or '',
+            description.get('best_surface') or '',
+            description.get('local_name') or '',
+        }
+        for value in candidate_values:
+            key = _compact_surface_variant_key(value)
+            if len(key) < SURFACE_VARIANT_MIN_KEY_LENGTH:
+                continue
+            grouped[key][uri] = description
+
+    accepted: list[ResolutionCandidate] = []
+    discarded: list[dict[str, Any]] = []
+    inspected_groups = 0
+
+    for key, members in grouped.items():
+        if len(members) < 2:
+            continue
+        inspected_groups += 1
+        ordered_members = sorted(
+            members.values(),
+            key=lambda item: (-item.get('incoming_count', 0), -len(item.get('surface_literals', [])), item.get('local_name', '')),
+        )
+        source_desc = ordered_members[0]
+        accepted_for_group = 0
+        for candidate_desc in ordered_members[1:]:
+            keep, reason, shared_keys = _surface_variant_pair_acceptable(source_desc, candidate_desc)
+            if not keep:
+                discarded.append(
+                    {
+                        'source_uri': source_desc['uri'],
+                        'candidate_uri': candidate_desc['uri'],
+                        'reason': reason,
+                        'issue': 'graph_canonicalization_gap',
+                        'candidate_origin': 'surface_variant_scan',
+                        'shared_surface_variant_keys': shared_keys,
+                    }
+                )
+                continue
+            pair_similarity = max(
+                _string_similarity(source_desc.get('best_surface') or '', candidate_desc.get('best_surface') or ''),
+                _string_similarity(source_desc.get('preferred_label') or '', candidate_desc.get('preferred_label') or ''),
+                _string_similarity(source_desc.get('local_name') or '', candidate_desc.get('local_name') or ''),
+            )
+            accepted.append(
+                ResolutionCandidate(
+                    source_uri=source_desc['uri'],
+                    candidate_uri=candidate_desc['uri'],
+                    entity_type=(source_desc['types'][0] if source_desc['types'] else 'Unknown'),
+                    suggested_structural_issue='graph_canonicalization_gap',
+                    priority=ISSUE_PRIORITY['graph_canonicalization_gap'],
+                    support_count=1,
+                    question_ids=[],
+                    source_types=source_desc['types'],
+                    candidate_types=candidate_desc['types'],
+                    source_best_surface_literal=source_desc.get('best_surface'),
+                    candidate_best_surface_literal=candidate_desc.get('best_surface'),
+                    source_alignment_score=round(pair_similarity, 4),
+                    candidate_alignment_score=round(pair_similarity, 4),
+                    improvement_score=round(pair_similarity, 4),
+                    reason=reason,
+                    candidate_origin='surface_variant_scan',
+                    evidence={
+                        'pair_surface_similarity': round(pair_similarity, 4),
+                        'shared_surface_variant_keys': shared_keys,
+                        'source_local_name': source_desc.get('local_name'),
+                        'candidate_local_name': candidate_desc.get('local_name'),
+                        'source_incoming_count': source_desc.get('incoming_count', 0),
+                        'candidate_incoming_count': candidate_desc.get('incoming_count', 0),
+                    },
+                )
+            )
+            accepted_for_group += 1
+        if accepted_for_group == 0:
+            discarded.append(
+                {
+                    'source_uri': source_desc['uri'],
+                    'candidate_uri': None,
+                    'reason': 'no_safe_surface_variant_candidates',
+                    'issue': 'graph_canonicalization_gap',
+                    'candidate_origin': 'surface_variant_scan',
+                    'shared_surface_variant_keys': [key],
+                }
+            )
+
+    return {
+        'accepted': accepted,
+        'discarded': discarded,
+        'summary': {
+            'surface_variant_groups_inspected': inspected_groups,
+            'accepted_candidates': len(accepted),
+            'discarded_candidates': len(discarded),
+            'candidate_origins': {'surface_variant_scan': len(accepted)},
         },
     }
 

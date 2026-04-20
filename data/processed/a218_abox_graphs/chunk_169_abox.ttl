@@ -1,0 +1,85 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Interfaces de usuario y componentes de control
+ex:InterfazTecladoJOG
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de teclado JOG" ;
+    ex:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados. Zonas de estado en la parte inferior y lateral; contraste claro entre teclas activas/inactivas para la conducción manual de ejes." .
+
+ex:PantallaPrincipalSinoptico
+    a ex:InterfazUsuario ;
+    rdfs:label "Pantalla principal sinóptico" ;
+    ex:textoExtracto "Sinóptico con lecturas de ejes Z, Z1 y C, avance y propiedades del ciclo. Softkeys resaltadas (Inspección, Ciclo brochado). Estructura por paneles oscuros con texto claro que prioriza valores en tiempo real." .
+
+ex:InterfazMovimientosManualesMaquina
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de movimientos manuales (máquina)" ;
+    ex:textoExtracto "Interfaz para llevar el carro a posiciones superior/intermedia/inferior y subir/bajar/girar la mesa. Indicadores de frenos MAYR, consumos y temperaturas; flechas y etiquetas guían direccionalidad y estados." .
+
+ex:PanelArranqueMotores
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de arranque de motores" ;
+    ex:textoExtracto "Panel con cuatro columnas (Marcha, Motor, Disyuntor, Señales). Indicadores circulares para estado de motores (refrigerante, trasvase, hidráulico, extractor, engrase) y alarmas de nivel/caudal; jerarquía orientada a diagnóstico." .
+
+ex:InterfazCicloCambioBrocha
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de ciclo de cambio de brocha" ;
+    ex:textoExtracto "Secuencia guiada de pasos con conmutadores de verificación; disposición en dos columnas que ordena la ejecución del procedimiento sin habilitar movimientos desde esta pantalla." .
+
+ex:MatrizDiagnosticoCondicionesMaquina
+    a ex:InterfazUsuario ;
+    rdfs:label "Matriz de diagnóstico de condiciones de máquina" ;
+    ex:textoExtracto "Matriz de señalizadores de diagnóstico OK/Error. Presentación plana y repetitiva que facilita la detección rápida de incidencias de sensores y subsistemas." .
+
+### Componentes eléctricos y mecánicos referenciados
+ex:FrenosMAYR
+    a ex:ComponenteMecanico ;
+    rdfs:label "Frenos MAYR" ;
+    ex:textoExtracto "Indicadores de frenos MAYR" .
+
+ex:MotorRefrigerante
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del sistema de refrigerante" ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (refrigerante, ...)" .
+
+ex:MotorTrasvase
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del sistema de trasvase" ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (..., trasvase, ...)" .
+
+ex:MotorHidraulico
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del sistema hidráulico" ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (..., hidráulico, ...)" .
+
+ex:MotorExtractor
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del extractor" ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (..., extractor, ...)" .
+
+ex:MotorEngrase
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del sistema de engrase" ;
+    ex:textoExtracto "Indicadores circulares para estado de motores (..., engrase)" .
+
+### Relaciones entre interfaces y componentes
+ex:PanelArranqueMotores
+    ex:monitoreaParametro ex:MotorRefrigerante ;
+    ex:monitoreaParametro ex:MotorTrasvase ;
+    ex:monitoreaParametro ex:MotorHidraulico ;
+    ex:monitoreaParametro ex:MotorExtractor ;
+    ex:monitoreaParametro ex:MotorEngrase .
+
+ex:InterfazMovimientosManualesMaquina
+    ex:monitoreaParametro ex:FrenosMAYR .
+
+ex:MatrizDiagnosticoCondicionesMaquina
+    ex:mitigaRiesgo ex:FrenosMAYR ;
+    ex:mitigaRiesgo ex:MotorRefrigerante ;
+    ex:mitigaRiesgo ex:MotorTrasvase ;
+    ex:mitigaRiesgo ex:MotorHidraulico ;
+    ex:mitigaRiesgo ex:MotorExtractor ;
+    ex:mitigaRiesgo ex:MotorEngrase .

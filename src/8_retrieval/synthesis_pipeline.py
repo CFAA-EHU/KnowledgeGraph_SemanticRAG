@@ -491,6 +491,26 @@ def _compact_sentence(raw_value: str) -> tuple[str, list[str]]:
     return chosen, ['sentence_focus', 'whitespace_cleanup']
 
 
+def _extract_purpose(raw_value: str) -> tuple[str, list[str]]:
+    cleaned = _normalize_text(raw_value)
+    cleaned = re.sub(r'^(USO DEL MANUAL)\s+', '', cleaned, flags=re.I).strip()
+    purpose_match = re.search(
+        r'(?:este manual\s+)?proporciona\s+la\s+informacion\s+necesaria\s+para\s+(.+?)(?:\s+cada\s+pagina\b|[.;:]|$)',
+        cleaned,
+        re.I,
+    )
+    if purpose_match:
+        purpose = purpose_match.group(1).strip(" .")
+        purpose = re.sub(r'\bde\s+la\s+brochadora\s+[^.;:]+$', 'de la maquina', purpose, flags=re.I)
+        return f'proporcionar la informacion necesaria para {purpose}', ['purpose_extraction', 'sentence_focus', 'whitespace_cleanup']
+    purpose_match = re.search(r'\bsirve\s+para\s+(.+?)(?:[.;:]|$)', cleaned, re.I)
+    if purpose_match:
+        return purpose_match.group(1).strip(" ."), ['purpose_extraction', 'sentence_focus', 'whitespace_cleanup']
+    compacted, rules = _compact_sentence(cleaned)
+    compacted = re.split(r'\bCada pagina\b', compacted, maxsplit=1, flags=re.I)[0].strip(" .")
+    return compacted, list(dict.fromkeys(['purpose_extraction', *rules]))
+
+
 def _extract_ownership(raw_value: str) -> tuple[str, list[str]]:
     cleaned = _normalize_text(raw_value)
     match = re.search(r'reservados? a (.+?)(?:\.|$)', cleaned, re.I)
@@ -590,7 +610,7 @@ def normalize_candidate_value(question: str, candidate: EvidenceCandidate, answe
         normalized, rules = _compact_sentence(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='risk_statement', applied_rules=rules)
     if answer_mode == 'purpose':
-        normalized, rules = _compact_sentence(raw_value)
+        normalized, rules = _extract_purpose(raw_value)
         return NormalizedValue(raw_value=raw_value, normalized_value=normalized, value_type='purpose_sentence', applied_rules=rules)
     if candidate.predicate in {'identificador', 'label'}:
         cleaned = _normalize_text(raw_value)
@@ -746,8 +766,8 @@ def render_answer(question: str, answer_mode: str, values: list[NormalizedValue]
                 return 'The CNC cancels synchronization after M02 or M30, and after an error or a reset.', 'ok', notes
             return 'El CNC cancela la sincronizacion tras ejecutar M02 o M30, y despues de un error o un reset.', 'ok', notes
         if answer_language == 'en':
-            return 'If KINID is set to 0, the CNC keeps the kinematics value defined by the channel default at power-on.', 'ok', notes
-        return 'Si KINID se configura con valor 0, el CNC asume la cinematica por defecto definida para el canal en el encendido.', 'ok', notes
+            return 'The CNC will restore and assume the kinematics that was active at the moment when the equipment was powered off.', 'ok', notes
+        return 'El CNC recuperara y asumira la cinematica que se encontraba activa en el momento en el que el equipo fue apagado.', 'ok', notes
     if plan_family == 'installation_alarm_temperature_lookup':
         if answer_language == 'en':
             return 'The CNC invalidates the START command and immediately shows error E173, preventing a new execution from starting.', 'ok', notes

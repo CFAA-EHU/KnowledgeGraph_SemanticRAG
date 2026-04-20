@@ -108,6 +108,7 @@ def determine_chunk_action(
     prompt_version: str,
     model_name: str,
     extraction_mode: str,
+    compatible_model_names: tuple[str, ...] | None = None,
     tbox_hash: str,
 ) -> tuple[str, str]:
     if mode not in VALID_RESUME_MODES:
@@ -128,6 +129,7 @@ def determine_chunk_action(
         prompt_version=prompt_version,
         model_name=model_name,
         extraction_mode=extraction_mode,
+        compatible_model_names=compatible_model_names,
         tbox_hash=tbox_hash,
     ) and manifest_entry is not None and manifest_entry.get("status") == "ok"
 

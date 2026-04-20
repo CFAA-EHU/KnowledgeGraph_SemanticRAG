@@ -1,0 +1,98 @@
+{
+  "task": "T27A-004",
+  "policy_version": 1,
+  "generated_from": "misc/coding-team/repo-reusability-core-split/generate_processed_artifact_policy.py",
+  "source_inventory": "data/processed/t27_repo_reusability_inventory.json",
+  "source_policy": "data/processed/t27_core_vs_project_policy.json",
+  "policy_goal": "Treat data/processed as a governed artifact space with explicit runtime, project-operational, historical, and diagnostic semantics instead of as a flat namespace.",
+  "historical_tooling_declassified_from_operational_path": true,
+  "processed_policy_groups": {
+    "runtime_contract": {
+      "description": "Live runtime artifacts that define the active runtime state after a rebuild, publication, or validation cycle.",
+      "allowed_to_define_runtime_contract": true,
+      "allowed_as_clean_rebuild_authoritative_input": false,
+      "default_lifecycle": {
+        "rebuild_policy": "rebuild_from_stable_runtime_path",
+        "preservation_policy": "overwrite_with_fresh_runtime_outputs",
+        "candidate_for_future_archive": false,
+        "non_contractual": false
+      }
+    },
+    "accepted_project_operational_artifact": {
+      "description": "Accepted manual-level outputs retained for project continuity, onboarding traceability, and accepted-scope rebuild support.",
+      "allowed_to_define_runtime_contract": false,
+      "allowed_as_clean_rebuild_authoritative_input": true,
+      "default_lifecycle": {
+        "rebuild_policy": "rebuild_or_refresh_from_accepted_project_scope",
+        "preservation_policy": "preserve_as_project_operational_state",
+        "candidate_for_future_archive": false,
+        "non_contractual": false
+      }
+    },
+    "historical_campaign_traceability": {
+      "description": "Historical outputs from completed campaigns and cleanup work that remain useful for traceability but are non-contractual.",
+      "allowed_to_define_runtime_contract": false,
+      "allowed_as_clean_rebuild_authoritative_input": false,
+      "default_lifecycle": {
+        "rebuild_policy": "preserve_only_do_not_consume_as_runtime_input",
+        "preservation_policy": "preserve_for_traceability",
+        "candidate_for_future_archive": true,
+        "non_contractual": true
+      }
+    },
+    "debug_and_diagnostics": {
+      "description": "Transient audit and debug outputs that may be overwritten during investigation and must never be consumed as authoritative runtime state.",
+      "allowed_to_define_runtime_contract": false,
+      "allowed_as_clean_rebuild_authoritative_input": false,
+      "default_lifecycle": {
+        "rebuild_policy": "refresh_or_overwrite_when_debugging",
+        "preservation_policy": "retain_temporarily_or_archive_separately",
+        "candidate_for_future_archive": true,
+        "non_contractual": true
+      }
+    }
+  },
+  "authoritative_input_rules": {
+    "allowed_processed_inputs_for_clean_rebuild": [
+      "accepted_project_operational_artifact"
+    ],
+    "disallowed_processed_inputs_for_clean_rebuild": [
+      "runtime_contract",
+      "historical_campaign_traceability",
+      "debug_and_diagnostics"
+    ],
+    "notes": [
+      "A clean rebuild should prefer source manuals, accepted manifests, and explicit project config.",
+      "Runtime-contract outputs may be consumed after they are rebuilt, but they are not the authoritative source for rebuilding themselves.",
+      "Historical and diagnostic artifacts remain visible for traceability but are explicitly excluded from runtime input contracts."
+    ]
+  },
+  "processed_namespace_policy": {
+    "rebuild_category_a_from_scratch": true,
+    "rebuild_category_b_for_accepted_project_scope": true,
+    "preserve_category_c_for_traceability": true,
+    "allow_category_d_to_be_overwritten": true,
+    "do_not_physically_move_processed_contents_in_t27a": true
+  },
+  "registry_summary": {
+    "processed_item_count": 31,
+    "counts_by_policy_group": {
+      "accepted_project_operational_artifact": 4,
+      "debug_and_diagnostics": 2,
+      "historical_campaign_traceability": 3,
+      "runtime_contract": 22
+    },
+    "counts_by_inventory_category": {
+      "accepted_project_artifact": 4,
+      "candidate_for_archive": 3,
+      "debug_or_diagnostic": 2,
+      "runtime_contract": 22
+    },
+    "non_contractual_count": 5,
+    "candidate_for_future_archive_count": 5
+  },
+  "notes": [
+    "This policy is contractual and documentary in T27A; it does not move or delete processed artifacts.",
+    "The registry is intended to support later archival or relocation work without changing the runtime contract in T27A."
+  ]
+}

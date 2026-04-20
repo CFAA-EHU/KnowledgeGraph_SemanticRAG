@@ -1765,6 +1765,13 @@ def _has_strict_runtime_context(parse: QuestionParse, question: str) -> bool:
 def select_plan_family(parse: QuestionParse, question: str) -> dict[str, Any] | None:
     if _has_strict_runtime_context(parse, question):
         normalized = normalize_text(question)
+        installation_anchor_groups = {
+            "installation_modes_storage",
+            "installation_tandem_gantry",
+            "installation_bus_plc",
+            "installation_motion_defaults",
+            "installation_alarm_temperature",
+        }
         error_anchor_groups = {
             "error_safety_mode_policy",
             "error_code_condition_attribute",
@@ -1777,10 +1784,17 @@ def select_plan_family(parse: QuestionParse, question: str) -> dict[str, Any] | 
             "1737", "4026", "5026", "8023", "8042", "8026", "8458", "8459", "8789",
             "cncwr", "feedat", "endat", "pim", "pit", "geometry_error",
         }
-        has_error_context = (
-            bool(set(parse.anchor_groups).intersection(error_anchor_groups))
-            or bool(set(parse.technical_tokens).intersection(error_technical_tokens))
+        installation_context = bool(set(parse.anchor_groups).intersection(installation_anchor_groups))
+        explicit_error_context = (
+            bool(set(parse.technical_tokens).intersection(error_technical_tokens))
             or any(cue in normalized for cue in ["error de geometria", "editor de perfiles", "#var", "#endvar", "#delete"])
+        )
+        has_error_context = (
+            explicit_error_context
+            or (
+                bool(set(parse.anchor_groups).intersection(error_anchor_groups))
+                and not installation_context
+            )
         )
         if has_error_context:
             strict_error = _select_strict_family(parse, question, STRICT_ERROR_FAMILIES)

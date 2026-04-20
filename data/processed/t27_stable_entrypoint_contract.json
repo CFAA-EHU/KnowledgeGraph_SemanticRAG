@@ -1,0 +1,118 @@
+{
+  "task": "T27A-003",
+  "contract_version": 1,
+  "generated_from": "misc/coding-team/repo-reusability-core-split/generate_stable_entrypoint_contract.py",
+  "source_inventory": "data/processed/t27_repo_reusability_inventory.json",
+  "source_policy": "data/processed/t27_core_vs_project_policy.json",
+  "historical_tooling_declassified_from_operational_path": true,
+  "runtime_rebuild_entrypoint": {
+    "path": "run_runtime_clean_rebuild.py",
+    "classification": "official_primary",
+    "supported_scope": "clean_multi_manual_runtime_rebuild_for_accepted_manuals",
+    "why_primary": "It is the only entrypoint that rebuilds the accepted runtime scope end-to-end under a single explicit contract, including validation and optional GraphDB publication.",
+    "invocation_example": "python run_runtime_clean_rebuild.py --mode resume-compatible",
+    "supported_options": {
+      "mode": [
+        "resume-compatible",
+        "force-stale",
+        "force-all"
+      ],
+      "retry_profile": [
+        "standard",
+        "rate-limit-drain",
+        "micro-batch-recovery"
+      ],
+      "skip_publish": true
+    }
+  },
+  "supporting_operational_entrypoints": [
+    {
+      "path": "run_operational_pipeline.py",
+      "classification": "stable_supporting_entrypoint",
+      "supported_scope": "default_runtime_build_and_single_manual_onboarding",
+      "why_not_primary": "It remains a stable operational script, but its contract is narrower and more tactical than the clean multi-manual rebuild path.",
+      "invocation_examples": [
+        "python run_operational_pipeline.py --mode resume-compatible",
+        "python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible"
+      ]
+    }
+  ],
+  "graphdb_publish_entrypoint": {
+    "path": "src/7_database/publish_to_graphdb.py",
+    "classification": "official_primary",
+    "supported_scope": "publish_current_runtime_mirror",
+    "invocation_example": "python src/7_database/publish_to_graphdb.py"
+  },
+  "graphdb_healthcheck_entrypoint": {
+    "path": "src/7_database/graphdb_healthcheck.py",
+    "classification": "official_primary",
+    "supported_scope": "healthcheck_current_runtime_mirror",
+    "invocation_example": "python src/7_database/graphdb_healthcheck.py"
+  },
+  "evaluation_entrypoints": [
+    {
+      "path": "src/8_retrieval/qa_evaluator.py",
+      "classification": "official_primary",
+      "supported_scope": "baseline_and_project_gate_evaluation",
+      "required_gate_datasets": [
+        "data/golden_set/QA_canonical.json",
+        "data/golden_set/QA_multihop.json",
+        "data/golden_set/QA_8070_quick_ref_bilingual_v2.json",
+        "data/golden_set/QA_cross.json"
+      ],
+      "examples": [
+        "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json",
+        "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json",
+        "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual_v2.json",
+        "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json"
+      ]
+    }
+  ],
+  "query_entrypoints": [
+    {
+      "path": "query_workbench.py",
+      "classification": "official_primary_for_manual_queries",
+      "supported_scope": "planner_retrieval_and_synthesis_queries",
+      "invocation_example": "python query_workbench.py \"Que directiva cumple la maquina?\" --backend rdflib"
+    }
+  ],
+  "supported_manifests": {
+    "accepted_runtime_manual_set": {
+      "manifest_type": "embedded_manual_spec_set",
+      "owner_entrypoint": "run_runtime_clean_rebuild.py",
+      "location": "run_runtime_clean_rebuild.py:ACCEPTED_MANUALS",
+      "status": "supported",
+      "notes": "The current clean rebuild contract uses an embedded accepted-manual set rather than an external JSON manifest. This is the supported rebuild manifest for the live runtime."
+    },
+    "single_manual_onboarding_profile": {
+      "manifest_type": "derived_manual_profile",
+      "owner_entrypoint": "run_operational_pipeline.py",
+      "location": "artifact_contracts.build_onboarding_profile()",
+      "status": "supported_for_onboarding_only",
+      "notes": "Single-manual onboarding remains a supported operational capability, but it is not the primary rebuild contract for the full runtime."
+    },
+    "external_rebuild_manifest": {
+      "manifest_type": "external_json_manifest",
+      "owner_entrypoint": "run_runtime_clean_rebuild.py",
+      "status": "not_yet_supported",
+      "notes": "No standalone source-manifest file is part of the stable runtime contract yet. The rebuild entrypoint currently owns the accepted manual set directly."
+    }
+  },
+  "non_primary_but_retained": {
+    "historical_wrappers": [
+      "run_t25_sequential_integration.py",
+      "run_t25_2_installation_recovery.py",
+      "run_t26_error_manual_onboarding.py",
+      "docs/runtime_clean_rebuild_plan.md",
+      "misc/coding-team/repo-reusability-core-split/"
+    ],
+    "diagnostic_utility_scripts": [
+      "check_mistral_api_usage.py"
+    ]
+  },
+  "notes": [
+    "Documentation should point to one runtime rebuild path only: run_runtime_clean_rebuild.py.",
+    "Historical campaign wrappers remain traceable but must not be documented as normal rebuild entrypoints.",
+    "run_operational_pipeline.py remains supported as a lower-level operational and onboarding script, not the primary full-runtime rebuild contract."
+  ]
+}

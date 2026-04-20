@@ -1,0 +1,102 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Esquemas eléctricos (bornes de entrada digital)
+ex:Esquema_BorneEntradaDigital_19A3
+    a ex:Esquema ;
+    rdfs:label "Esquema de borne de entrada digital (módulo 19A3)" ;
+    ex:textoExtracto "Entradas E10–E17 (módulo 19A3) para monitorizar alimentaciones internas: CNC, salidas ET200SP, I/O externos (cabecero/salidas), panel operador, safety, entradas. Cada línea asciende desde 24S/24PNL/24EBC/24VAN/24SAFE/24CNC, diferenciadas por etiquetas y referencias cruzadas." ;
+    ex:identificador "19A3" .
+
+ex:Esquema_BorneEntradaDigital_19A4
+    a ex:Esquema ;
+    rdfs:label "Esquema de borne de entrada digital (módulo 19A4)" ;
+    ex:textoExtracto "Entradas E20–E27 (módulo 19A4) asociadas a disyuntores y protecciones: motores de refrigerante, trasvase, limpieza bastidor, extractor de virutas, grupo hidráulico, protección fuente y enfriador de armario. Los ramales se etiquetan con 14QM1…14QM5, 13QF1, 17Q1; el trazado en rojo indica señal a 24E." ;
+    ex:identificador "19A4" .
+
+ex:Esquema_BorneEntradaDigital_19A5
+    a ex:Esquema ;
+    rdfs:label "Esquema de borne de entrada digital (módulo 19A5)" ;
+    ex:textoExtracto "Entradas E30–E37 (módulo 19A5) para estados de motores en marcha (refrigerante, extractor, limpieza, trasvase, hidráulico), feedback frenos IZQ/DCH, modo setup y enable puertas. Los contactos intermedios (KA00–KA04, 27KA7/27KA8, SA36/SBL37) aparecen como bloques con bobina y contactos, enlazando la lógica." ;
+    ex:identificador "19A5" .
+
+### Módulos de entrada digital (actuadores lógicos)
+ex:Modulo_19A3
+    a ex:Actuador ;
+    rdfs:label "Módulo de entrada digital 19A3" ;
+    ex:textoExtracto "Entradas E10–E17 (módulo 19A3) para monitorizar alimentaciones internas" ;
+    ex:identificador "19A3" ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A3 .
+
+ex:Modulo_19A4
+    a ex:Actuador ;
+    rdfs:label "Módulo de entrada digital 19A4" ;
+    ex:textoExtracto "Entradas E20–E27 (módulo 19A4) asociadas a disyuntores y protecciones" ;
+    ex:identificador "19A4" ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A4 .
+
+ex:Modulo_19A5
+    a ex:Actuador ;
+    rdfs:label "Módulo de entrada digital 19A5" ;
+    ex:textoExtracto "Entradas E30–E37 (módulo 19A5) para estados de motores en marcha" ;
+    ex:identificador "19A5" ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A5 .
+
+### Componentes eléctricos monitorizados (ejemplos representativos)
+ex:ComponenteElectrico_24SAFE
+    a ex:ComponenteElectrico ;
+    rdfs:label "Alimentación de seguridad 24SAFE" ;
+    ex:textoExtracto "alimentaciones internas: [...] 24SAFE" ;
+    ex:identificador "24SAFE" ;
+    ex:monitoreaParametro ex:Parametro_EstadoAlimentacionSeguridad ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A3 .
+
+ex:ComponenteElectrico_24CNC
+    a ex:ComponenteElectrico ;
+    rdfs:label "Alimentación CNC 24CNC" ;
+    ex:textoExtracto "alimentaciones internas: CNC, [...] 24CNC" ;
+    ex:identificador "24CNC" ;
+    ex:monitoreaParametro ex:Parametro_EstadoAlimentacionCNC ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A3 .
+
+ex:ComponenteElectrico_14QM1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Disyuntor motor 14QM1" ;
+    ex:textoExtracto "Los ramales se etiquetan con 14QM1…14QM5" ;
+    ex:identificador "14QM1" ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A4 .
+
+ex:ComponenteElectrico_13QF1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Protección 13QF1" ;
+    ex:textoExtracto "Los ramales se etiquetan con [...] 13QF1" ;
+    ex:identificador "13QF1" ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A4 .
+
+### Parámetros monitorizados (ejemplos)
+ex:Parametro_EstadoAlimentacionSeguridad
+    a ex:Parametro ;
+    rdfs:label "Estado de alimentación de seguridad" ;
+    ex:textoExtracto "monitorizar alimentaciones internas: [...] safety" ;
+    ex:monitoreaParametro ex:ComponenteElectrico_24SAFE .
+
+ex:Parametro_EstadoAlimentacionCNC
+    a ex:Parametro ;
+    rdfs:label "Estado de alimentación CNC" ;
+    ex:textoExtracto "monitorizar alimentaciones internas: CNC" ;
+    ex:monitoreaParametro ex:ComponenteElectrico_24CNC .
+
+ex:Parametro_EstadoMotorRefrigerante
+    a ex:Parametro ;
+    rdfs:label "Estado del motor de refrigerante" ;
+    ex:textoExtracto "estados de motores en marcha (refrigerante, [...])" ;
+    ex:detalladoEnEsquema ex:Esquema_BorneEntradaDigital_19A5 .
+
+### Relés de seguridad (mención explícita)
+ex:ComponenteElectrico_RelesSeguridadPILZ
+    a ex:ComponenteElectrico ;
+    rdfs:label "Relés de seguridad PILZ" ;
+    ex:textoExtracto "Discordancia relés de seguridad, PILZ OK" ;
+    ex:identificador "PILZ" .

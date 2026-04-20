@@ -1,13 +1,15 @@
 {
-  "task": "T27A-006",
+  "task": "T27B-010",
   "report_version": 1,
-  "generated_from": "misc/coding-team/repo-reusability-core-split/generate_t27a_validation_and_decision.py",
+  "generated_from": "misc/coding-team/repo-reusability-core-split/generate_t27b_validation_and_decision.py",
   "source_artifacts": [
     "data/processed/t27_core_vs_project_policy.json",
     "data/processed/t27_stable_entrypoint_contract.json",
     "data/processed/t27_historical_tooling_registry.json",
     "data/processed/t27_processed_artifact_policy.json",
-    "data/processed/t27_documentation_alignment_report.json",
+    "data/processed/t27_processed_artifact_registry.json",
+    "data/processed/t27_repo_structure_refactor_report.json",
+    "data/processed/t27_project_specific_boundary_registry.json",
     "data/processed/generalization_eval_report.json",
     "data/processed/multihop_eval_report.json",
     "data/processed/quick_ref_v2_eval_report.json",
@@ -35,6 +37,7 @@
     },
     "qa_canonical": {
       "report_path": "data/processed/generalization_eval_report.json",
+      "report_mtime_utc": "2026-04-20T12:55:03.824475+00:00",
       "dataset_path": "data\\golden_set\\QA_canonical.json",
       "summary": {
         "total_questions": 13,
@@ -80,6 +83,7 @@
     },
     "qa_multihop": {
       "report_path": "data/processed/multihop_eval_report.json",
+      "report_mtime_utc": "2026-04-20T12:54:14.108676+00:00",
       "dataset_path": "data\\golden_set\\QA_multihop.json",
       "summary": {
         "total_questions": 7,
@@ -120,7 +124,12 @@
       "gate_status": true
     },
     "qa_8070_quick_ref_bilingual_v2": {
+      "command": "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual_v2.json",
+      "timed_out_in_shell_wrapper": true,
+      "timeout_seconds": 300,
+      "report_artifact_refreshed_this_session": true,
       "report_path": "data/processed/quick_ref_v2_eval_report.json",
+      "report_mtime_utc": "2026-04-20T13:00:25.720945+00:00",
       "dataset_path": "data\\golden_set\\QA_8070_quick_ref_bilingual_v2.json",
       "summary": {
         "total_pairs": 20,
@@ -153,10 +162,19 @@
         "abox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_linked.ttl",
         "multilingual_runtime": true
       },
-      "gate_status": true
+      "gate_status": true,
+      "notes": [
+        "The evaluator command exceeded the shell timeout, but the report artifact was refreshed during this validation run and contains a complete summary.",
+        "T27B uses the refreshed report summary as the authoritative evidence for the operational gate."
+      ]
     },
     "qa_cross": {
+      "command": "python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json",
+      "timed_out_in_shell_wrapper": true,
+      "timeout_seconds": 300,
+      "report_artifact_refreshed_this_session": true,
       "report_path": "data/processed/cross_eval_report.json",
+      "report_mtime_utc": "2026-04-20T13:00:29.261360+00:00",
       "dataset_path": "data\\golden_set\\QA_cross.json",
       "summary": {
         "total_pairs": 11,
@@ -187,7 +205,11 @@
         "abox_path": "C:\\Users\\Leonardo\\Documents\\00 Projects\\Activos\\2026 SemanticOnt\\KnowledgeGraph_SemanticRAG\\data\\processed\\abox_linked.ttl",
         "multilingual_runtime": true
       },
-      "gate_status": true
+      "gate_status": true,
+      "notes": [
+        "The evaluator command exceeded the shell timeout, but the report artifact was refreshed during this validation run and contains a complete summary.",
+        "T27B uses the refreshed report summary as the authoritative evidence for the operational gate."
+      ]
     },
     "graphdb_healthcheck": {
       "command": "C:\\Users\\Leonardo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe src/7_database/graphdb_healthcheck.py",
@@ -211,15 +233,16 @@
     "project_specific_boundary_defined": true,
     "stable_entrypoint_contract_defined": true,
     "historical_tooling_declassified_from_operational_path": true,
-    "historical_tooling_isolated": false,
+    "historical_tooling_isolated": true,
     "processed_artifact_policy_defined": true,
     "baseline_ok": true,
     "graphdb_ok": true,
-    "ready_to_proceed_to_t27b": true
+    "project_split_preparation_visible": true
   },
   "notes": [
-    "T27A closes the contractual and documentation layer only; it does not claim structural isolation of historical tooling.",
+    "T27B closes the structural isolation wave only after the runtime gates remain healthy.",
     "Quick-ref and cross remain green under the current operational gate used by this repository: benchmark_runner_blocker_count = 0.",
-    "repo_ready_for_reuse and repo_ready_for_case_specific_split stay false in T27A because those outcomes depend on T27B structural isolation work."
+    "The broaching/CNC 8070 case remains retained in this repository for compatibility, but now has an explicit canonical grouping area under projects/broaching-cnc-8070/ for the future split.",
+    "Project-tuned retrieval modules remain in place and are tracked as retained project coupling rather than falsely presented as generic runtime core."
   ]
 }

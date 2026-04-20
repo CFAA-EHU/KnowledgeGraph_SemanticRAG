@@ -1,0 +1,60 @@
+{
+  "project_id": "broaching-cnc-8070-reference",
+  "project_grouping_area": "projects/broaching-cnc-8070/",
+  "manifest_purpose": "Make the retained broaching/CNC 8070 reference scope explicit without moving live runtime inputs or breaking current rebuildability.",
+  "status": "retained_in_core_repo_for_compatibility_and_future_split_preparation",
+  "future_target": "new_broaching_use_case_repository",
+  "current_live_paths_retained_in_place": {
+    "source_manual_space": "data/raw/",
+    "golden_set_space": "data/golden_set/",
+    "shared_terms_cache": "cache/terms_cache.json",
+    "accepted_processed_artifact_groups": [
+      "data/processed/a218_*",
+      "data/processed/installation_manual_* and data/processed/8070_installation_*",
+      "data/processed/man_8070_err_*",
+      "data/processed/quick_ref_*"
+    ]
+  },
+  "accepted_runtime_scope": {
+    "source_manuals": [
+      "data/raw/chunks_manual_instrucciones_a218.txt",
+      "data/raw/chunks_8070_quick_ref.txt",
+      "data/raw/chunks_8070_installation_manual.txt",
+      "data/raw/chunks_man_8070_err.txt"
+    ],
+    "golden_sets_and_current_gates": [
+      "data/golden_set/QA_canonical.json",
+      "data/golden_set/QA_multihop.json",
+      "data/golden_set/QA_cross.json",
+      "data/golden_set/QA_8070_quick_ref_bilingual_v2.json",
+      "data/golden_set/QA_chunks_8070_installation_manual.json",
+      "data/golden_set/QA_chunks_man_8070_err.json"
+    ],
+    "project_tuned_runtime_modules": [
+      "src/8_retrieval/text_to_sparql.py",
+      "src/8_retrieval/multilingual_query_normalizer.py",
+      "src/8_retrieval/synthesis_pipeline.py"
+    ]
+  },
+  "future_project_onboarding_candidates": [
+    "data/raw/chunks_8070_operating_programming_manual.txt",
+    "data/raw/chunks_8070_programming_manual.txt",
+    "data/raw/chunks_8070_remote_modules.txt",
+    "data/raw/chunks_manual_variables_cnc_8070.txt",
+    "data/raw/chunks_dds_soft.txt",
+    "data/golden_set/QA_chunks_8070_operating_programming_manual.json",
+    "data/golden_set/QA_chunks_8070_programming_manual.json",
+    "data/golden_set/QA_chunks_8070_remote_modules.json",
+    "data/golden_set/QA_chunks_manual_variables_cnc_8070.json",
+    "data/golden_set/QA_chunks_dds_soft.json"
+  ],
+  "compatibility_rules": [
+    "Do not move data/raw, data/golden_set, or accepted manual-specific processed artifacts during T27B.",
+    "Use this grouping area as the canonical boundary marker while live paths remain unchanged.",
+    "Treat project-tuned retrieval modules as retained-in-place until a later planner/retrieval config split exists."
+  ],
+  "notes": [
+    "This manifest is documentary and contractual. It does not replace the current live paths.",
+    "The future split should move the project scope represented here into a dedicated repository once the reusable core is fully separated."
+  ]
+}

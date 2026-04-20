@@ -13,6 +13,9 @@ Indice de la documentacion contractual y operativa del repositorio.
 - [operational_artifact_contract.md](operational_artifact_contract.md)
   Contrato de artefactos del carril operativo.
 
+- [..\projects\broaching-cnc-8070\README.md](..\projects\broaching-cnc-8070\README.md)
+  Frontera canonica del proyecto de referencia retenido dentro del repo reusable.
+
 ## Documentacion modular
 
 - [src/6_extraction/README.md](..\src\6_extraction\README.md)
@@ -34,14 +37,17 @@ La documentacion del repositorio debe comunicar siempre estas reglas:
 - `src/2_extraction/`, `src/3_merging/` y `src/5_alignment/` son carriles legacy o experimentales, no pasos del runtime por defecto
 - los scripts `run_t25*`, `run_t26*` y utilidades de recovery o smoke test quedan desclasificados del camino operativo primario
 - `data/processed` contiene artefactos con semantica distinta: runtime vivo, proyecto aceptado, historia de campanas y diagnostico
+- el perimetro project-specific retenido debe quedar visible en `projects/broaching-cnc-8070/` y no solo inferirse desde `data/raw/` o `data/golden_set/`
 
 ## Fuera del camino operativo primario
 
 Estas piezas pueden seguir siendo utiles para trazabilidad, investigacion o contexto, pero no deben presentarse como contrato normal del runtime:
 
-- `run_t25_sequential_integration.py`
-- `run_t25_2_installation_recovery.py`
-- `run_t26_error_manual_onboarding.py`
-- `check_mistral_api_usage.py`
-- `docs/runtime_clean_rebuild_plan.md`
+- `history/tooling/campaigns/run_t25_sequential_integration.py`
+- `history/tooling/campaigns/run_t25_2_installation_recovery.py`
+- `history/tooling/campaigns/run_t26_error_manual_onboarding.py`
+- `history/tooling/diagnostics/check_mistral_api_usage.py`
+- `history/tooling/runtime_clean_rebuild_plan.md`
 - `misc/coding-team/repo-reusability-core-split/`
+
+Los wrappers y la utilidad de diagnostico mantienen shims en la raiz solo por compatibilidad historica; no deben documentarse ni consumirse como path operativo preferido.

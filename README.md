@@ -37,6 +37,22 @@ En el estado actual del repositorio siguen siendo especificos del proyecto de re
 
 Estos elementos se mantienen para soportar el runtime actual y preparar una futura separacion del caso de uso a otro repositorio.
 
+## Area canonica del proyecto de referencia
+
+La frontera project-specific ya no queda solo implicita en `data/raw/`, `data/golden_set/` y los artefactos manual-especificos. El repositorio expone ahora un area canonica para el proyecto retenido:
+
+- `projects/broaching-cnc-8070/`
+
+Esa area no sustituye las rutas vivas actuales. Su funcion es:
+
+- hacer visible el perimetro del proyecto de referencia
+- apuntar al manifiesto contractual del caso de uso retenido
+- preparar el futuro split a un repositorio propio sin romper el rebuild actual
+
+Manifest principal del proyecto retenido:
+
+- `projects/broaching-cnc-8070/project_scope_manifest.json`
+
 ## Entrypoints oficiales
 
 El contrato operativo estable del repositorio queda asi:
@@ -157,14 +173,25 @@ Se conservan, pero no forman parte del runtime por defecto:
 
 Los siguientes scripts y areas se conservan por trazabilidad, pero estan fuera del camino operativo primario:
 
-- `run_t25_sequential_integration.py`
-- `run_t25_2_installation_recovery.py`
-- `run_t26_error_manual_onboarding.py`
-- `check_mistral_api_usage.py`
-- `docs/runtime_clean_rebuild_plan.md`
+- `history/tooling/campaigns/run_t25_sequential_integration.py`
+- `history/tooling/campaigns/run_t25_2_installation_recovery.py`
+- `history/tooling/campaigns/run_t26_error_manual_onboarding.py`
+- `history/tooling/diagnostics/check_mistral_api_usage.py`
+- `history/tooling/runtime_clean_rebuild_plan.md`
 - `misc/coding-team/repo-reusability-core-split/`
 
+Se conservan shims de compatibilidad en la raiz para los wrappers historicos y la utilidad de diagnostico, pero su ubicacion canonica ya no es la raiz del repositorio.
+
 Ninguno de ellos debe presentarse como entrypoint normal del runtime.
+
+## Preparacion para split futuro
+
+El siguiente split de repositorio no debe empezar desde cero. La referencia contractual actual para lo que pertenece al caso brochadora/CNC 8070 queda visible en:
+
+- `projects/broaching-cnc-8070/project_scope_manifest.json`
+- `data/processed/t27_project_specific_boundary_registry.json`
+
+Mientras ese split no exista, las rutas vivas siguen donde estan hoy por compatibilidad operativa.
 
 ## Requisitos
 

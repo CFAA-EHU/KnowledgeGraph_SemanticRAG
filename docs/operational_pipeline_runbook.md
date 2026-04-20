@@ -106,6 +106,15 @@ Regla operativa:
 - no consume `historical_campaign_traceability` como input contractual
 - puede sobreescribir `debug_and_diagnostics`
 
+## Frontera del proyecto retenido
+
+El proyecto de referencia brochadora/CNC 8070 sigue retenido dentro de este repo por compatibilidad y validacion, pero su frontera ya debe leerse desde:
+
+- `projects/broaching-cnc-8070/project_scope_manifest.json`
+- `data/processed/t27_project_specific_boundary_registry.json`
+
+Estas rutas no reemplazan los paths vivos de `data/raw/`, `data/golden_set/` o `data/processed/*` manual-especifico. Solo hacen explicita la agrupacion canonicamente project-specific mientras el split futuro aun no se ejecuta.
+
 ## Consulta manual
 
 El entrypoint principal para consultas manuales es:
@@ -179,12 +188,14 @@ El proyecto actual conserva ademas evaluaciones manual-especificas aceptadas. Es
 
 No deben documentarse como entrypoints operativos normales:
 
-- `run_t25_sequential_integration.py`
-- `run_t25_2_installation_recovery.py`
-- `run_t26_error_manual_onboarding.py`
-- `check_mistral_api_usage.py`
-- `docs/runtime_clean_rebuild_plan.md`
+- `history/tooling/campaigns/run_t25_sequential_integration.py`
+- `history/tooling/campaigns/run_t25_2_installation_recovery.py`
+- `history/tooling/campaigns/run_t26_error_manual_onboarding.py`
+- `history/tooling/diagnostics/check_mistral_api_usage.py`
+- `history/tooling/runtime_clean_rebuild_plan.md`
 - `misc/coding-team/repo-reusability-core-split/`
+
+Si se invocan los shims de compatibilidad que siguen en la raiz, deben entenderse solo como redirects historicos y nunca como el camino preferido del runtime.
 
 Tampoco forman parte del runtime por defecto:
 

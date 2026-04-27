@@ -11,6 +11,8 @@ Planner, evaluacion, sandbox y sintesis operan sobre:
 
 Los snapshots `abox_merged.ttl`, `abox_canonical.ttl` y `abox_enriched.ttl` solo se usan para comparaciones estructurales o diagnostico controlado.
 
+`schema_condensed.txt` se regenera desde `ontology_aligned.ttl` y debe mantenerse alineado cuando cambian axiomas de T-Box como `rdfs:subClassOf`, `rdfs:domain`, `rdfs:range` u `owl:disjointWith`.
+
 ## Componentes principales
 
 ### `text_to_sparql.py`
@@ -40,6 +42,13 @@ Normalizacion bilingue ES/EN previa a `build_query_plan(...)`.
 
 ### `multilingual_lexicon_builder.py`
 Construye `data/processed/multilingual_lexicon.json` a partir del grafo operativo final, la ontologia y `cache/terms_cache.json`.
+
+Este modulo no cambia URIs ni traduce el RDF. Solo construye soporte lexical para normalizacion y planificacion multilingue.
+
+### `schema_condenser.py`
+Genera `data/processed/schema_condensed.txt` a partir de la T-Box operativa.
+
+Debe ejecutarse despues de cambios en `ontology_aligned.ttl`, especialmente tras enriquecimientos C13. El schema condensado es insumo del planner y de la sintesis, por lo que no debe quedar obsoleto respecto a la T-Box publicada.
 
 ### `qa_evaluator.py`
 Evalua el runtime formal sobre:
@@ -101,6 +110,26 @@ Uso principal:
   - cross-manual: `11/11`
 - el planner ya no debe degradar a familias genericas cuando existe una familia quick-ref o cross con evidencia positiva del catalogo
 
+## Estado tras estabilizacion A-Box/T-Box y C13
+
+El runtime actual se evalua sobre un grafo final saneado:
+
+- `abox_linked.ttl` no contiene hard failures semanticos
+- `ontology_aligned.ttl` incluye axiomas T-Box seguros y evidenciados
+- `schema_condensed.txt` esta regenerado desde esa T-Box
+- GraphDB esta publicado como espejo del mismo runtime
+
+Estado de gates tras la estabilizacion:
+
+- `QA_canonical`: `13/13`
+- `QA_multihop`: `7/7`
+- `QA_chunks_8070_installation_manual`: `15/15`
+- `QA_chunks_man_8070_err`: `15/15`
+- `QA_8070_quick_ref_bilingual_v2`: sin benchmark runner blockers
+- `QA_cross`: sin benchmark runner blockers
+
+Quick-ref v2 y cross siguen teniendo casos de alineacion no perfecta en sus decision reports; se consideran operativos sin blocker, no gates completamente solidos.
+
 ## Regresion y diagnostico
 
 Antes de cerrar cambios en esta capa, ejecutar segun el objetivo del cambio:
@@ -112,6 +141,15 @@ Antes de cerrar cambios en esta capa, ejecutar segun el objetivo del cambio:
 - gate cross-manual: `python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json --report-path data/processed/cross_eval_report.json --debug-report-path data/processed/cross_debug_report.json`
 - sandbox batch: `python src/8_retrieval/qa_sandbox_diagnostic.py`
 - preguntas nuevas interactivas: `python query_workbench.py "?Cual es el correo electronico de contacto de EKIN indicado en el manual?" --with-synthesis`
+
+Si el cambio toca T-Box o schema:
+
+```bash
+python src/8_retrieval/schema_condenser.py
+python src/6_extraction/abox_semantic_validator.py --abox-path data/processed/abox_linked.ttl
+python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json
+python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json
+```
 
 ## Entry points dentro del modulo
 

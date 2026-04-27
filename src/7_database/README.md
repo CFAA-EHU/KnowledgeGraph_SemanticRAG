@@ -43,6 +43,14 @@ Publica los artefactos operativos ya existentes en GraphDB:
 Genera:
 - `data/processed/graphdb_publication_report.json`
 
+La publicacion recrea el repositorio operativo antes de importar los TTL. Esto es intencional: el runtime se corrige por regeneracion completa y reimportacion, no por migraciones en caliente sobre el grafo existente.
+
+Antes de publicar debe existir una auditoria A-Box aceptable:
+
+- `data/processed/abox_semantic_audit.json`
+
+El A-Box final no debe contener hard failures como blank nodes de dominio, IRIs `file:///`, clases no canonicas, individuos usados como clases, sujetos sin tipo o sujetos sin trazabilidad.
+
 ### `graphdb_healthcheck.py`
 Comprueba:
 - disponibilidad del servidor
@@ -73,6 +81,14 @@ Comprobar el backend espejo:
 python src/7_database/graphdb_healthcheck.py
 ```
 
+El healthcheck esperado tras la publicacion operativa es:
+
+- `status = repository_ready`
+- `repository_has_data = true`
+- `errors = []`
+
+El triple count puede cambiar cuando se regeneran snapshots o se enriquece la T-Box. El ultimo runtime saneado y publicado tras C13 contiene `91270` triples en GraphDB.
+
 Comparar equivalencia basica:
 
 ```bash
@@ -99,3 +115,13 @@ Los stores consumen solo artefactos del carril operativo final:
 `abox_merged.ttl` queda reservado como snapshot bruto, `abox_canonical.ttl` como snapshot intermedio de consolidacion y `abox_enriched.ttl` como snapshot previo al link completion residual. Ninguno de ellos debe tratarse como runtime final.
 
 GraphDB entra como backend espejo del runtime actual. No sustituye todavia a `rdflib` como backend de referencia ni como backend por defecto del planner y la evaluacion.
+
+## Relacion con la T-Box enriquecida
+
+GraphDB publica la T-Box operativa junto con el A-Box final. La T-Box puede incluir axiomas de soporte para validacion y canonicalizacion, por ejemplo:
+
+- `rdfs:subClassOf`
+- `owl:disjointWith`
+- dominios y rangos declarados
+
+Estos axiomas no se deben usar para ocultar duplicados de identidad que el pipeline pueda resolver antes de publicacion. La regla preferida sigue siendo materializar una unica URI canonica en `abox_linked.ttl` y publicar ese grafo ya saneado.

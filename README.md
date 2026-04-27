@@ -124,6 +124,11 @@ Tambien forman parte del contrato operativo los reportes y mapas estructurales:
 - `data/processed/link_completion_report.json`
 - `data/processed/link_completion_map.json`
 - `data/processed/link_completion_candidates.json`
+- `data/processed/abox_semantic_audit.json`
+- `data/processed/abox_minted_entity_registry.json`
+- `data/processed/abox_merger_rejected_chunks.json`
+- `data/processed/t_tbox_enrichment_evidence.json`
+- `data/processed/schema_condensed.txt`
 - `data/processed/graphdb_publication_report.json`
 
 Los gates operativos vigentes del proyecto actual siguen siendo:
@@ -147,6 +152,52 @@ Los gates operativos vigentes del proyecto actual siguen siendo:
    artefactos transitorios de auditoria y depuracion
 
 Solo los artefactos de proyecto aceptado pueden usarse como input procesado autoritativo de un rebuild limpio. Los artefactos historicos y diagnosticos no deben definir el camino del runtime.
+
+## Calidad semantica del runtime
+
+El runtime operativo actual incorpora una barrera explicita entre T-Box y A-Box:
+
+- `ontology_aligned.ttl` declara clases, propiedades y axiomas permitidos
+- `abox_linked.ttl` materializa individuos y enlaces entre individuos
+- los objetos de `rdf:type` no se mintean, no se canonicalizan y no se tratan como entidades A-Box
+- GraphDB publica el resultado ya saneado, no corrige duplicados ni fusiona por labels
+
+La validacion semantica bloquea:
+
+- clases o propiedades no canonicas
+- individuos usados como clases
+- blank nodes de dominio
+- IRIs `file:///`
+- tipos redundantes explicitos
+- sujetos sin tipo o sin trazabilidad
+
+La deuda historica de `long_local_name` se mantiene como diagnostico de fase 1, no como hard failure.
+
+## Enriquecimiento T-Box evidenciado
+
+La T-Box puede enriquecerse solo con axiomas sobre vocabulario existente y con evidencia del runtime. El auditor:
+
+- `src/6_extraction/tbox_enrichment_auditor.py`
+
+produce:
+
+- `data/processed/t_tbox_enrichment_evidence.json`
+
+Tras C13, la T-Box incluye axiomas seguros como:
+
+- `ex:Esquema rdfs:subClassOf ex:Figura`
+- `ex:Maquina owl:disjointWith ex:Manual, ex:Directiva, ex:PiezaRecambio`
+- `ex:Empresa owl:disjointWith ex:Directiva`
+
+Despues de cualquier cambio en la T-Box se debe regenerar:
+
+- `data/processed/schema_condensed.txt`
+
+con:
+
+```bash
+python src/8_retrieval/schema_condenser.py
+```
 
 ## Carriles del repositorio
 

@@ -14,6 +14,23 @@ Convertir texto tecnico chunkificado en instancias RDF:
 
 El resultado final de este carril es `data/processed/abox_linked.ttl`.
 
+## Frontera A-Box/T-Box
+
+La regla central del carril operativo es:
+
+- la T-Box define clases, propiedades y axiomas permitidos
+- el A-Box materializa individuos y relaciones entre individuos
+
+El extractor y las etapas estructurales no deben crear clases nuevas, propiedades nuevas ni usar individuos como objeto de `rdf:type`.
+
+El objeto de `rdf:type` es frontera dura. Por ejemplo:
+
+```ttl
+ex:SistemaCNC rdf:type ex:Sistema .
+```
+
+es valido si `ex:Sistema` existe como clase en `ontology_aligned.ttl`. En cambio, un tipo como `ex:Sistema_abc123` es invalido si representa un individuo A-Box.
+
 ## Rol dentro del runtime
 
 Este directorio forma el carril estructural principal del runtime actual.
@@ -79,7 +96,17 @@ Este script tambien protege el runtime frente a salidas defectuosas del modelo:
 - reintentos controlados
 - clasificacion de errores retryable y non-retryable
 - reanudacion por chunk
-- saneamiento de ciertos literales problematicos antes de escribir TTL
+- fallback entre modelos Mistral cuando un modelo queda limitado por cuota o rate limit
+- saneamiento RDF antes de validar y escribir TTL
+- endurecimiento del prompt para evitar que el modelo cree clases, propiedades o IRIs desde frases largas
+
+Reglas relevantes del prompt y del post-proceso:
+
+- `rdf:type` solo puede apuntar a clases declaradas en la T-Box
+- no se construyen IRIs a partir de `textoExtracto`
+- cada entidad debe tener una surface breve, preferentemente `rdfs:label` o `identificador`
+- `textoExtracto` es evidencia, no identidad
+- los local names nuevos creados por saneado se limitan a 80 caracteres
 
 ### 3. `abox_merger.py`
 
@@ -89,6 +116,23 @@ Fusiona todos los TTL por chunk ya validados en un unico snapshot bruto:
 - salida: `data/processed/abox_merged.ttl`
 
 Este merge es estructural. No decide equivalencias semanticas ni resuelve entidades duplicadas.
+
+Antes de fusionar cada chunk, el merger ejecuta saneado y validacion semantica. Un chunk con hard failures no entra en `abox_merged.ttl` y queda trazado en:
+
+- `data/processed/abox_merger_rejected_chunks.json`
+
+El saneado final del grafo fusionado es parcial y no minta IRIs nuevas. Solo aplica defensas idempotentes como:
+
+- downgrade de literales `xsd:hexBinary` invalidos
+- eliminacion de supertypes redundantes
+- limpieza o acotacion de `textoExtracto`
+- eliminacion de tipos `Tabla` incidentales en entradas que realmente son funciones, parametros, modos o comandos
+
+El reporte de colisiones:
+
+- `data/processed/abox_merged_uri_collision_report.json`
+
+puede existir aunque el merge sea valido. El criterio operativo es que no exista o que tenga `blocker_count = 0`.
 
 ### 4. `abox_canonicalizer.py`
 
@@ -106,6 +150,16 @@ Produce:
 - `data/processed/canonicalization_resolution_candidates.json`
 
 Su objetivo es reducir duplicados operativos sin abrir una alineacion libre basada solo en similitud textual.
+
+La canonicalizacion reescribe sujetos y objetos de relaciones ordinarias, pero no reescribe objetos de `rdf:type`. Esta proteccion evita convertir clases T-Box en individuos canonicos.
+
+La compatibilidad de tipos es conservadora:
+
+- tipos iguales son compatibles
+- subtipo/supertipo declarados con `rdfs:subClassOf` son compatibles
+- pares declarados con `owl:disjointWith` no se fusionan
+- pares manualmente conflictivos siguen actuando como fallback
+- tipos distintos sin jerarquia no se fusionan solo por similitud textual
 
 ### 5. `abox_graph_enricher.py`
 
@@ -126,7 +180,11 @@ Produce:
 El enrichment esta restringido para no introducir ruido semantico:
 
 - linking enrichment solo con evidencia estructural fuerte
-- surface enrichment solo con `label`, `identificador`, `textoExtracto` y `valor`
+- surface enrichment solo con `rdfs:label` y propiedades de datos declaradas en la T-Box
+- no se anaden surfaces con object properties ni `rdf:type`
+- no se anaden valores de surface largos
+
+El reporte incluye validacion semantica del snapshot enriquecido.
 
 ### 6. `abox_link_completer.py`
 
@@ -145,7 +203,68 @@ Produce:
 
 Este es el ultimo paso estructural del pipeline. `abox_linked.ttl` es el artefacto final que usa el runtime.
 
-### 7. `src/8_retrieval/multilingual_lexicon_builder.py`
+Antes de anadir un enlace, el link completer valida que:
+
+- source y target sean individuos tipados
+- source y target no sean clases T-Box
+- el predicado sea una `owl:ObjectProperty`
+- el enlace no sea un self-loop
+
+Si `abox_linked.ttl` contiene hard failures semanticos, la etapa falla y no debe publicarse.
+
+### 7. `abox_graph_sanitizer.py`
+
+Saneador RDF comun, idempotente y reutilizado por extractor, merger, canonicalizer, enricher y link completer.
+
+Corrige o controla:
+
+- blank nodes de dominio como sujeto u objeto
+- IRIs `file:///`
+- objetos de `rdf:type` protegidos frente a minting/remapping
+- supertypes redundantes
+- local names nuevos demasiado largos
+- uso indebido de `textoExtracto` como identidad
+- sujetos con surface/enlaces pero sin tipo inferible de forma segura
+- sujetos tipados sin trazabilidad textual minima
+
+El saneador mantiene el registro persistente:
+
+- `data/processed/abox_minted_entity_registry.json`
+
+Ese registro evita que ejecuciones parciales generen IRIs distintas para el mismo patron superficial.
+
+### 8. `abox_semantic_validator.py`
+
+Validador semantico de snapshots A-Box.
+
+Hard failures:
+
+- clase no canonica en `rdf:type`
+- propiedad no canonica
+- sujeto de dominio sin tipo
+- sujeto tipado sin trazabilidad
+- blank node de dominio
+- IRI `file:///`
+- tipo redundante explicito
+- individuo usado como clase
+
+Diagnosticos no bloqueantes en fase actual:
+
+- `weak_linkage`
+- `long_local_name`
+- `no_useful_links`
+
+### 9. `tbox_enrichment_auditor.py`
+
+Audita el uso real de `abox_linked.ttl` frente a `ontology_aligned.ttl` para justificar enriquecimientos de T-Box.
+
+Produce:
+
+- `data/processed/t_tbox_enrichment_evidence.json`
+
+Este modulo no crea clases ni propiedades nuevas. Solo genera evidencia para axiomas sobre vocabulario ya existente.
+
+### 10. `src/8_retrieval/multilingual_lexicon_builder.py`
 
 Aunque vive fuera de este directorio, se ejecuta inmediatamente despues del build estructural.
 
@@ -175,6 +294,8 @@ Valida la sintaxis Turtle de texto generado o de archivos ya escritos.
 
 Comprueba que el TTL use clases y propiedades compatibles con la T-Box operativa.
 
+Tambien genera `data/processed/abox_semantic_audit.json` cuando se ejecuta como auditoria de snapshot.
+
 ### `canonical_resolution_policy.py`
 
 Define las reglas de consolidacion canonica:
@@ -182,6 +303,8 @@ Define las reglas de consolidacion canonica:
 - agrupacion de candidatos
 - criterios de seleccion del nodo canonico
 - casos donde no se debe consolidar
+- compatibilidad por `rdfs:subClassOf`
+- bloqueo por `owl:disjointWith`
 
 ### `enrichment_policy.py`
 
@@ -227,6 +350,25 @@ Define la whitelist del link completion residual:
 - mapas de enrichment
 - reportes y mapas de link completion
 - artefactos de debug por chunk cuando falla la extraccion
+- `abox_semantic_audit.json`
+- `abox_merger_rejected_chunks.json`
+- `abox_minted_entity_registry.json`
+- `t_tbox_enrichment_evidence.json`
+
+## Estado operativo actual
+
+El runtime publicado tras la estabilizacion A-Box/T-Box cumple:
+
+- `blank nodes` de dominio: 0
+- IRIs `file:///`: 0
+- `non_canonical_class`: 0
+- `individual_used_as_class`: 0
+- `missing_type`: 0
+- `missing_traceability`: 0
+- `redundant_type_assertion`: 0
+- `abox_merged_uri_collision_report.blocker_count`: 0
+
+`long_local_name` permanece como diagnostico de deuda historica, no como hard failure de fase 1.
 
 ## Que hace y que no hace este directorio
 
@@ -234,11 +376,13 @@ Define la whitelist del link completion residual:
 
 - extraccion A-Box operativa por chunk
 - validacion TTL
-- validacion semantica ligera
+- validacion semantica por snapshot
+- saneado RDF idempotente
 - merge estructural
 - consolidacion canonica
 - enrichment residual
 - link completion residual controlado
+- auditoria evidenciada para enriquecimiento T-Box
 
 ### No hace
 
@@ -247,6 +391,7 @@ Define la whitelist del link completion residual:
 - planificacion SPARQL
 - sintesis de respuestas
 - publicacion en GraphDB
+- migraciones en caliente sobre GraphDB existente
 
 Esas responsabilidades viven en otros directorios.
 
@@ -259,3 +404,11 @@ python run_operational_pipeline.py --mode resume-compatible
 ```
 
 Para trabajar con un manual concreto se puede generar un carril parametrizado con `--source-chunks` y `--manual-id`, manteniendo el mismo pipeline estructural.
+
+Validaciones recomendadas:
+
+```bash
+python -m unittest
+python src/6_extraction/abox_semantic_validator.py --abox-path data/processed/abox_linked.ttl
+python src/6_extraction/tbox_enrichment_auditor.py
+```

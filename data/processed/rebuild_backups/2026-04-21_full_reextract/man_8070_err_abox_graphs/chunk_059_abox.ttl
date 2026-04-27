@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_0158
+    a ex:Alarma ;
+    rdfs:label "Alarma 0158: #WRITE necesita un #OPEN previo" ;
+    ex:identificador "0158" ;
+    ex:textoExtracto "#WRITE necesita un #OPEN previo. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado escribir (#WRITE) en un archivo que no está abierto. SOLUCIÓN El CNC tiene que abrir un archivo (#OPEN) para poder escribir en él (#WRITE)." .
+
+ex:Alarma_0159
+    a ex:Alarma ;
+    rdfs:label "Alarma 0159: #OPEN:Fichero ya abierto por otro canal" ;
+    ex:identificador "0159" ;
+    ex:textoExtracto "#OPEN:Fichero ya abierto por otro canal. DETECCIÓN Durante la ejecución. CAUSA Un canal ha intentado abrir un archivo que está abierto por otro canal. SOLUCIÓN Las posibles soluciones son las siguientes: • Cierre el archivo (#CLOSE). • No hace falta abrir el mismo canal en todos los canales. Un canal puede escribir en un archivo abierto por otro canal, si conoce el identificador del archivo (F1 a F4)." .
+
+ex:Alarma_0160
+    a ex:Alarma ;
+    rdfs:label "Alarma 0160: 'Eje/Set no disponible en el sistema'" ;
+    ex:identificador "0160" ;
+    ex:textoExtracto "'Eje/Set no disponible en el sistema' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • Las sentencias #SET AX o #CALL AX están intentando añadir al canal un eje inexistente o que está en otro canal. • En la función G112 hay programado un set de parámetros inexistente. SOLUCIÓN Revisar la programación. Si el eje está en otro canal, liberarlo mediante la sentencia #FREE AX." .
+
+ex:Alarma_0161
+    a ex:Alarma ;
+    rdfs:label "Alarma 0161: #OPEN:Modo APPEND no permitido sobre un fichero no Unicode" ;
+    ex:identificador "0161" ;
+    ex:textoExtracto "#OPEN:Modo APPEND no permitido sobre un fichero no Unicode. DETECCIÓN Durante la ejecución. CAUSA Un canal ha intentado abrir un archivo no-Unicode con modo de acceso \"APPEND\". SOLUCIÓN Convertir el archivo a formato Unicode con un editor de terceros. El modo de acceso \"APPEND\" sólo permite abrir archivos Unicode. El modo de acceso \"DELETTE\" puede abrir archivos no-Unicode, pero borra el contenido." .
+
+ex:Alarma_0162
+    a ex:Alarma ;
+    rdfs:label "Alarma 0162: #OPEN:El parámetro TYPE no se corresponde con el formato del fichero" ;
+    ex:identificador "0162" ;
+    ex:textoExtracto "#OPEN:El parámetro TYPE no se corresponde con el formato del fichero. DETECCIÓN Durante la ejecución. CAUSA El formato del archivo no coincide con el formato seleccionado en TYPE. SOLUCIÓN Las posibles soluciones son las siguientes: • Al abrir un archivo con el comando \"A\" (APPEND), el comando TYPE debe coincidir con el formato del archivo. Si el archivo no existe, el CNC crea uno nuevo en el formato especificado en el comando TYPE." .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "El CNC ha intentado escribir (#WRITE) en un archivo que no está abierto." ;
+    ex:activaAlarma ex:Alarma_0158, ex:Alarma_0159, ex:Alarma_0160, ex:Alarma_0161, ex:Alarma_0162 .

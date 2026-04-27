@@ -1,0 +1,68 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Diagnósticos de fallo (Alarmas)
+ex:Alarma_0085
+    a ex:Alarma ;
+    rdfs:label "No hay ningún eje digital (Sercos/Mechatrolink)"@es ;
+    ex:identificador "0085" ;
+    ex:textoExtracto "Durante la validación de los parámetros máquina. CAUSA En la tabla de parámetros OEM hay definidas variables de regulador (DRV) y no hay ejes digitales (Sercos/Mechatrolink) en el sistema."@es .
+
+ex:Alarma_0086
+    a ex:Alarma ;
+    rdfs:label "No es eje digital (Sercos/Mechatrolink)"@es ;
+    ex:identificador "0086" ;
+    ex:textoExtracto "Durante la validación de los parámetros máquina. CAUSA Hay definida una variable de regulador (DRV) para un eje que no es digital (Sercos/Mechatrolink)."@es .
+
+ex:Alarma_0087
+    a ex:Alarma ;
+    rdfs:label "Número máximo de variables DRV sobrepasado"@es ;
+    ex:identificador "0087" ;
+    ex:textoExtracto "Durante la validación de los parámetros máquina. CAUSA En la tabla de parámetros OEM hay definidas más variables de regulador (DRV) de las permitidas."@es .
+
+ex:Alarma_0088
+    a ex:Alarma ;
+    rdfs:label "Traza de variables internas activada"@es ;
+    ex:identificador "0088" ;
+    ex:textoExtracto "Durante la validación de los parámetros máquina. CAUSA El CNC está ejecutando la traza de una variable interna."@es .
+
+ex:Alarma_0089
+    a ex:Alarma ;
+    rdfs:label "Se arranca con un único canal debido a errores detectados en parámetros máquina"@es ;
+    ex:identificador "0089" ;
+    ex:textoExtracto "Durante la validación de los parámetros máquina. CAUSA La validación de parámetros máquina ha detectado errores o warnings relacionados con los ejes o cabezales de algún canal. Por ejemplo, un canal tiene asociado un eje que no se encuentra en la lista de ejes del sistema."@es .
+
+### Diagnóstico genérico (sin código)
+ex:DiagnosticoFallo_AsignacionEjes
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo de asignación de ejes/cabezales"@es ;
+    ex:textoExtracto "Hay un eje o cabezal sin permiso de intercambio que no está asignado a ningún canal. SOLUCIÓN Los cabezales o ejes que no son de intercambio (parámetro AXISEXCH) tienen que estar obligatoriamente asignados a un canal."@es .
+
+### Parámetros críticos
+ex:Parametro_AXISEXCH
+    a ex:Parametro ;
+    rdfs:label "AXISEXCH (permiso de intercambio de ejes/cabezales)"@es ;
+    ex:identificador "AXISEXCH" ;
+    ex:textoExtracto "Los cabezales o ejes que no son de intercambio (parámetro AXISEXCH) tienen que estar obligatoriamente asignados a un canal."@es .
+
+ex:Parametro_DRV
+    a ex:Parametro ;
+    rdfs:label "DRV (variables de regulador)"@es ;
+    ex:identificador "DRV" ;
+    ex:textoExtracto "En la tabla de parámetros OEM hay definidas variables de regulador (DRV) y no hay ejes digitales (Sercos/Mechatrolink) en el sistema."@es .
+
+### Tabla de parámetros OEM
+ex:Tabla_ParametrosOEM a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros OEM"@es ;
+    ex:textoExtracto "En la tabla de parámetros OEM hay definidas variables de regulador (DRV) y no hay ejes digitales (Sercos/Mechatrolink) en el sistema."@es ;
+    ex:detalladoEnEsquema ex:Parametro_DRV .
+
+### Relaciones
+ex:Alarma_0085 ex:mitigaRiesgo ex:DiagnosticoFallo_AsignacionEjes .
+ex:Alarma_0086 ex:mitigaRiesgo ex:DiagnosticoFallo_AsignacionEjes .
+ex:Alarma_0087 ex:mitigaRiesgo ex:DiagnosticoFallo_AsignacionEjes .
+ex:Tabla_ParametrosOEM a ex:Tabla ;
+    ex:monitoreaParametro ex:Parametro_DRV .

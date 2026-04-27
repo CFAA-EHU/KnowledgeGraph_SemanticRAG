@@ -1,0 +1,59 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error4200
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error en el canal cíclico de Sercos" ;
+    ex:textoExtracto "4200 'Error en el canal cíclico de Sercos' [...] Error en los procesos de lectura o escritura del canal cíclico (telegrama inválido o fase distinta de 4)." ;
+    ex:identificador "4200" .
+
+ex:Error4201
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error en el canal de servicio de Sercos" ;
+    ex:textoExtracto "4201 'Error en el canal de servicio de Sercos' [...] Error el canal de servicio de Sercos, en los procesos desencadenados desde el lazo: Lectura de variables, Escritura de variables, Ejecución de comandos." ;
+    ex:identificador "4201" .
+
+ex:Error4202
+    a ex:AvisoSeguridad ;
+    rdfs:label "Falta Drive Enable (DRENA)" ;
+    ex:textoExtracto "4202 'Falta Drive Enable (DRENA)' [...] Durante el movimiento de un eje, cae la habilitación DRENA de PLC." ;
+    ex:identificador "4202" .
+
+ex:Error4203
+    a ex:AvisoSeguridad ;
+    rdfs:label "Falta Speed Enable (SPENA)" ;
+    ex:textoExtracto "4203 'Falta Speed Enable (SPENA)' [...] Durante el movimiento de un eje, cae la habilitación SPENA de PLC." ;
+    ex:identificador "4203" .
+
+ex:Error4204
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error al resetear el driver de SERCOS" ;
+    ex:textoExtracto "4204 'Error al resetear el driver de SERCOS' [...] VALOR 1 Errores en el driver de Sercos." ;
+    ex:identificador "4204" .
+
+ex:ReguladorAXD_v9.10
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador AXD (versión software v9.10 o superior)" ;
+    ex:textoExtracto "regulador AXD con una versión de software v9.10 o superior." ;
+    ex:identificador "AXD_v9.10" ;
+    ex:activaAlarma ex:Error4200, ex:Error4201, ex:Error4202, ex:Error4203, ex:Error4204 .
+
+ex:DriverSERCOS
+    a ex:ComponenteElectrico ;
+    rdfs:label "Driver de SERCOS" ;
+    ex:textoExtracto "Errores en el driver de Sercos. Ver códigos de error descritos en el error 4000." ;
+    ex:activaAlarma ex:Error4201, ex:Error4204 .
+
+ex:Se_alDRENA
+    a ex:ComponenteElectrico ;
+    rdfs:label "Señal Drive Enable (DRENA)" ;
+    ex:textoExtracto "Durante el movimiento de un eje, cae la habilitación DRENA de PLC." ;
+    ex:activaAlarma ex:Error4202 .
+
+ex:Se_alSPENA
+    a ex:ComponenteElectrico ;
+    rdfs:label "Señal Speed Enable (SPENA)" ;
+    ex:textoExtracto "Durante el movimiento de un eje, cae la habilitación SPENA de PLC." ;
+    ex:activaAlarma ex:Error4203 .

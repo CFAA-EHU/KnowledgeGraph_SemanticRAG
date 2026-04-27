@@ -1,0 +1,49 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error23040 a ex:AvisoSeguridad ;
+    ex:identificador "23040" ;
+    rdfs:label "Error en el fichero de compensación volumétrica: no se puede abrir el fichero de volumetría"@es ;
+    ex:textoExtracto "23040 Error en el fichero de compensación volumétrica: no se puede abrir el fichero de volumetría. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El archivo de definición de la compensación volumétrica no se puede abrir."@es ;
+    ex:monitoreaParametro ex:ParametroVolumetria .
+
+ex:Error23041 a ex:AvisoSeguridad ;
+    ex:identificador "23041" ;
+    rdfs:label "Error en el fichero de compensación volumétrica: no hay memoria suficiente para cargar la volumetría"@es ;
+    ex:textoExtracto "23041 Error en el fichero de compensación volumétrica: no hay memoria suficiente para cargar la volumetría. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El archivo de definición de la compensación volumétrica no se puede cargar por falta de memoria."@es ;
+    ex:monitoreaParametro ex:ParametroVolumetria .
+
+ex:Error23042 a ex:AvisoSeguridad ;
+    ex:identificador "23042" ;
+    rdfs:label "Error en el fichero de compensación volumétrica: la compensación está desactivada"@es ;
+    ex:textoExtracto "23042 Error en el fichero de compensación volumétrica: la compensación está desactivada. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA No se ha calculado el vector de compensación; la compensación está desactivada."@es ;
+    ex:monitoreaParametro ex:ParametroVolumetria .
+
+ex:Error23043 a ex:AvisoSeguridad ;
+    ex:identificador "23043" ;
+    rdfs:label "Error en el fichero de compensación volumétrica: fichero de volumetría incompleto"@es ;
+    ex:textoExtracto "23043 Error en el fichero de compensación volumétrica: fichero de volumetría incompleto. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El archivo de definición de la compensación volumétrica no está completo, le falta un elemento."@es ;
+    ex:monitoreaParametro ex:ParametroVolumetria .
+
+ex:Error23101 a ex:AvisoSeguridad ;
+    ex:identificador "23101" ;
+    rdfs:label "Error en el análisis del fichero de definición de la compensación volumétrica"@es ;
+    ex:textoExtracto "23101 'Error en el análisis del fichero de definición de la compensación volumétrica' [...] DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El fichero de definición de la compensación volumétrica no contiene los datos adecuados. Compensación volumétrica básica: • El fichero no es del tipo csv. • El formato del fichero definido en VCOMPFILE no es correcto. • El fichero definido en VCOMPFILE no tiene definidos todos los puntos."@es ;
+    ex:monitoreaParametro ex:ParametroVolumetria .
+
+ex:ParametroVolumetria a ex:Parametro ;
+    rdfs:label "Parámetro de compensación volumétrica (VCOMPFILE)"@es ;
+    ex:textoExtracto "parámetros máquina [...] El fichero de definición de la compensación volumétrica [...] El formato del fichero definido en VCOMPFILE no es correcto."@es ;
+    ex:identificador "VCOMPFILE" .
+
+ex:SistemaCNC a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "Durante el arranque del sistema o validación de los parámetros máquina [...] Durante la validación de los parámetros máquina o el arranque del CNC."@es ;
+    ex:tieneComponente ex:ParametroVolumetria .
+
+ex:AvisoSeguridad_23040_23101 a ex:AvisoSeguridad ;
+    rdfs:label "Conjunto de avisos de compensación volumétrica (23040-23101)"@es ;
+    ex:textoExtracto "Errores 23040 a 23101 relacionados con la compensación volumétrica durante el arranque del sistema o validación de parámetros máquina."@es ;
+    ex:documentadoEn ex:ManualSistema .

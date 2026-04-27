@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoOperacion_ValoresReales
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo de operación con valores reales (REA)"@es ;
+    ex:textoExtracto      "Con valores reales (REA) la salida O5 toma el valor 1 al finalizar el primer scan o ciclo, mientras que necesita 4 ciclos con valores imagen (IMA). [...] El sistema es más rápido trabajando con valores reales (REA)"@es ;
+    ex:identificador      "REA" .
+
+ex:ModoOperacion_ValoresImagen
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo de operación con valores imagen (IMA)"@es ;
+    ex:textoExtracto      "necesita 4 ciclos con valores imagen (IMA). [...] trabajar con valores imagen (IMA) permite analizar un mismo recurso a lo largo del programa con el mismo valor, independientemente del valor real que en ese momento disponga."@es ;
+    ex:identificador      "IMA" .
+
+ex:Directiva_L
+    a                     ex:Directiva ;
+    rdfs:label            "Directiva L (Etiqueta)"@es ;
+    ex:textoExtracto      "L Etiqueta. Sirve para identificar una línea de programa. Se puede definir de 2 formas: • Con L seguido de hasta 7 cifras (L1 - L9999999). • Con L_ seguido de hasta 8 caracteres (L_GEAR)."@es ;
+    ex:identificador      "L" .
+
+ex:Directiva_SUB
+    a                     ex:Directiva ;
+    rdfs:label            "Directiva SUB (Subrutina)"@es ;
+    ex:textoExtracto      "SUB Definición de subrutina. Indica el comienzo de una subrutina. [...] Se define con SUB seguido de un espacio y hasta 24 caracteres. Una subrutina debe finalizar siempre con la directiva END."@es ;
+    ex:identificador      "SUB" .
+
+ex:Directiva_EXTERN
+    a                     ex:Directiva ;
+    rdfs:label            "Directiva EXTERN (Subrutina externa)"@es ;
+    ex:textoExtracto      "EXTERN Definición de subrutina externa. Las subrutinas definidas en el fichero de lenguaje C que utiliza el programa deben estar definidas como externas al principio del programa, antes que la directiva DEF y los módulos CY1, PRE y PEt."@es ;
+    ex:identificador      "EXTERN" .
+
+ex:Sistema_ProgramacionPLC
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de programación del PLC (modos REA/IMA y directivas)"@es ;
+    ex:textoExtracto      "M1 M2 Con valores reales (REA) la salida O5 toma el valor 1 al finalizar el primer scan o ciclo, mientras que necesita 4 ciclos con valores imagen (IMA). [...] Una subrutina también puede comenzar la directiva L y finalizar con la directiva END."@es ;
+    ex:cumpleNormativa    ex:Directiva_L , ex:Directiva_SUB , ex:Directiva_EXTERN ;
+    ex:tieneFrecuencia    ex:ModoOperacion_ValoresReales , ex:ModoOperacion_ValoresImagen .

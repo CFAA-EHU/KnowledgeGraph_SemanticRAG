@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:EjemploProgramacionPLC_638
+    a ex:Sistema ;
+    rdfs:label "Ejemplo de programación PLC"@es ;
+    ex:textoExtracto """
+| Ejemplo de programación: |  |
+| --- | --- |
+| PRG | ; Proposición directiva |
+| ; Ejemplo | ; Comentario |
+| I100 = M102 | ; Proposición ejecutable |
+| I28 AND I30 | ; Expresión lógica |
+| = O25 | ; Instrucción de acción |
+| I32 \\ | ; Instrucción de consulta (1ª parte de expresión) |
+| AND I36 | ; Instrucción de consulta (2ª parte de expresión) |
+| = M300 | ; Instrucción de acción |
+| END | ; Proposición directiva """@es ;
+    ex:identificador "PRG_638" .
+
+ex:DirectivaPRG_638
+    a ex:Directiva ;
+    rdfs:label "Proposición directiva PRG"@es ;
+    ex:textoExtracto "PRG ; Proposición directiva"@es ;
+    ex:identificador "PRG" .
+
+ex:DirectivaEND_638
+    a ex:Directiva ;
+    rdfs:label "Proposición directiva END"@es ;
+    ex:textoExtracto "END ; Proposición directiva"@es ;
+    ex:identificador "END" .
+
+ex:InstruccionI100_M102_638
+    a ex:AccionProhibida ;
+    rdfs:label "Asignación I100 = M102"@es ;
+    ex:textoExtracto "I100 = M102 ; Proposición ejecutable"@es .
+
+ex:InstruccionO25_638
+    a ex:AccionProhibida ;
+    rdfs:label "Asignación lógica a O25"@es ;
+    ex:textoExtracto """
+I28 AND I30
+= O25 ; Instrucción de acción"""@es .
+
+ex:InstruccionM300_638
+    a ex:AccionProhibida ;
+    rdfs:label "Asignación lógica a M300"@es ;
+    ex:textoExtracto """
+I32 \\
+AND I36
+= M300 ; Instrucción de acción"""@es .
+
+ex:EjemploProgramacionPLC_638
+    ex:compuestoPor ex:DirectivaPRG_638 ;
+    ex:compuestoPor ex:InstruccionI100_M102_638 ;
+    ex:compuestoPor ex:InstruccionO25_638 ;
+    ex:compuestoPor ex:InstruccionM300_638 ;
+    ex:compuestoPor ex:DirectivaEND_638 .

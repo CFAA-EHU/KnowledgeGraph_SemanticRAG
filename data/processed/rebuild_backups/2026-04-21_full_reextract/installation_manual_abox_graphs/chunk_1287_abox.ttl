@@ -1,0 +1,98 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Comando_GAPCTRL_ON_Z_GAP1
+    a                  ex:InterfazUsuario ;
+    rdfs:label         "Comando GAPCTRL ON [Z, GAP 1]"@es ;
+    ex:textoExtracto   "#GAPCTRL ON [Z, GAP 1]"@es ;
+    ex:identificador   "GAPCTRL ON [Z, GAP 1]" .
+
+ex:Comando_GAPCTRL_ON_Z11_GAP2
+    a                  ex:InterfazUsuario ;
+    rdfs:label         "Comando GAPCTRL ON [Z-11, GAP 2]"@es ;
+    ex:textoExtracto   "#GAPCTRL ON [Z-11, GAP 2]"@es ;
+    ex:identificador   "GAPCTRL ON [Z-11, GAP 2]" .
+
+ex:Comando_GAPCTRL_ON_GAP5
+    a                  ex:InterfazUsuario ;
+    rdfs:label         "Comando GAPCTRL ON [GAP 5]"@es ;
+    ex:textoExtracto   "#GAPCTRL ON [GAP 5]"@es ;
+    ex:identificador   "GAPCTRL ON [GAP 5]" .
+
+ex:Comando_GAPCTRL_ON_Z10
+    a                  ex:InterfazUsuario ;
+    rdfs:label         "Comando GAPCTRL ON [Z-10]"@es ;
+    ex:textoExtracto   "#GAPCTRL ON [Z-10]"@es ;
+    ex:identificador   "GAPCTRL ON [Z-10]" .
+
+ex:Comando_GAPCTRL_ON
+    a                  ex:InterfazUsuario ;
+    rdfs:label         "Comando GAPCTRL ON"@es ;
+    ex:textoExtracto   "#GAPCTRL ON"@es ;
+    ex:identificador   "GAPCTRL ON" .
+
+ex:Comando_GAPCTRL_OFF
+    a                  ex:InterfazUsuario ;
+    rdfs:label         "Comando GAPCTRL OFF"@es ;
+    ex:textoExtracto   "#GAPCTRL OFF"@es ;
+    ex:identificador   "GAPCTRL OFF" .
+
+ex:Sensor_GAP1
+    a                  ex:Sensor ;
+    rdfs:label         "Sensor de gap 1"@es ;
+    ex:textoExtracto   "el eje asociado al sensor se mueve al avance programado [...] hasta detectar la pieza con el sensor"@es .
+
+ex:Sensor_GAP2
+    a                  ex:Sensor ;
+    rdfs:label         "Sensor de gap 2"@es ;
+    ex:textoExtracto   "#GAPCTRL ON [Z-11, GAP 2]"@es .
+
+ex:Sensor_GAP5
+    a                  ex:Sensor ;
+    rdfs:label         "Sensor de gap 5"@es ;
+    ex:textoExtracto   "#GAPCTRL ON [GAP 5]"@es .
+
+ex:Parametro_GAPTOL
+    a                  ex:Parametro ;
+    rdfs:label         "Parámetro GAPTOL"@es ;
+    ex:textoExtracto   "El CNC considera que el bloque de aproximación ha terminado cuando el sensor alcanza el gap con la tolerancia definida en el parámetro máquina GAPTOL"@es ;
+    ex:identificador   "GAPTOL" .
+
+ex:Parametro_GAPTOLCANCEL
+    a                  ex:Parametro ;
+    rdfs:label         "Parámetro GAPTOLCANCEL"@es ;
+    ex:textoExtracto   "dependiendo del parámetro máquina GAPTOLCANCEL"@es ;
+    ex:identificador   "GAPTOLCANCEL" .
+
+ex:Parametro_MAXFEED
+    a                  ex:Parametro ;
+    rdfs:label         "Parámetro MAXFEED"@es ;
+    ex:textoExtracto   "si no hay avance programado, al avance definido en MAXFEED"@es ;
+    ex:identificador   "MAXFEED" .
+
+ex:Sistema_ControlGap
+    a                  ex:Sistema ;
+    rdfs:label         "Sistema de control del gap"@es ;
+    ex:textoExtracto   "Control del gap. [...] El PLC puede activar el control del gap ejecutando con el comando CNCEX el bloque de CNC correspondiente"@es ;
+    ex:tieneComponente ex:Sensor_GAP1, ex:Sensor_GAP2, ex:Sensor_GAP5 ;
+    ex:monitoreaParametro ex:Parametro_GAPTOL, ex:Parametro_GAPTOLCANCEL, ex:Parametro_MAXFEED .
+
+ex:Comando_GAPCTRL_ON_Z_GAP1
+    ex:controla ex:Sistema_ControlGap .
+
+ex:Comando_GAPCTRL_ON_Z11_GAP2
+    ex:controla ex:Sistema_ControlGap .
+
+ex:Comando_GAPCTRL_ON_GAP5
+    ex:controla ex:Sistema_ControlGap .
+
+ex:Comando_GAPCTRL_ON_Z10
+    ex:controla ex:Sistema_ControlGap .
+
+ex:Comando_GAPCTRL_ON
+    ex:controla ex:Sistema_ControlGap .
+
+ex:Comando_GAPCTRL_OFF
+    ex:controla ex:Sistema_ControlGap .

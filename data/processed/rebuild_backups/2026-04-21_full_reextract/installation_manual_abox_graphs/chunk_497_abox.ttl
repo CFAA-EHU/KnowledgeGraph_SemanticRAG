@@ -1,0 +1,95 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_NKIN
+    a ex:Parametro ;
+    rdfs:label "Número de cinemáticas definidas (NKIN)" ;
+    ex:textoExtracto "NKIN Número de cinemáticas definidas. Valores posibles: De 0 a 6. Valor por defecto: 0." ;
+    ex:identificador "NKIN" ;
+    ex:valor "0-6"^^xsd:string ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas .
+
+ex:Parametro_KINID
+    a ex:Parametro ;
+    rdfs:label "Identificador de cinemática por canal (KINID)" ;
+    ex:textoExtracto "El parámetro máquina de canal KINID indica el número de cinemática (no tipo) que asume el CNC en ese canal tras el encendido." ;
+    ex:identificador "KINID" ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas .
+
+ex:Parametro_TYPE
+    a ex:Parametro ;
+    rdfs:label "Tipo de cinemática (TYPE)" ;
+    ex:textoExtracto "TYPE Tipo de cinemática. Valores posibles: De 0 a 99 (cinemáticas predefinidas por Fagor) / de 100 a 105 (cinemáticas OEM). Valor por defecto: 0." ;
+    ex:identificador "TYPE" ;
+    ex:valor "0-99 (Fagor), 100-105 (OEM)"^^xsd:string ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas .
+
+ex:Parametro_HEADREF
+    a ex:Parametro ;
+    rdfs:label "Posición de referencia HEAD/TOOL (HEADREF)" ;
+    ex:textoExtracto "HEADREF Posición de referencia máquina HEAD/TOOL." ;
+    ex:identificador "HEADREF" ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas .
+
+ex:Parametro_NKINAX
+    a ex:Parametro ;
+    rdfs:label "Número de ejes de la cinemática (NKINAX)" ;
+    ex:textoExtracto "NKINAX Número de ejes de la cinemática." ;
+    ex:identificador "NKINAX" ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas_OEM .
+
+ex:Parametro_PARAM_D_SIZE
+    a ex:Parametro ;
+    rdfs:label "Número de parámetros decimales (PARAM_D_SIZE)" ;
+    ex:textoExtracto "PARAM_D_SIZE Número de parámetros numéricos en formato decimal." ;
+    ex:identificador "PARAM_D_SIZE" ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas_OEM .
+
+ex:Parametro_PARAM_I_SIZE
+    a ex:Parametro ;
+    rdfs:label "Número de parámetros enteros (PARAM_I_SIZE)" ;
+    ex:textoExtracto "PARAM_I_SIZE Número de parámetros en formato entero de la cinemática." ;
+    ex:identificador "PARAM_I_SIZE" ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas_OEM .
+
+ex:Parametro_AUXCTE_SIZE
+    a ex:Parametro ;
+    rdfs:label "Tamaño de variables auxiliares (AUXCTE_SIZE)" ;
+    ex:textoExtracto "AUXCTE_SIZE Tamaño del área de variables auxiliares." ;
+    ex:identificador "AUXCTE_SIZE" ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas_OEM .
+
+ex:Parametro_KINDATA_SIZE
+    a ex:Parametro ;
+    rdfs:label "Tamaño de datos generales (KINDATA_SIZE)" ;
+    ex:textoExtracto "KINDATA_SIZE Tamaño del área de datos de propósito general." ;
+    ex:identificador "KINDATA_SIZE" ;
+    ex:monitoreaParametro ex:Sistema_Cinematicas_OEM .
+
+ex:Sistema_Cinematicas
+    a ex:Sistema ;
+    rdfs:label "Sistema de configuración de cinemáticas" ;
+    ex:textoExtracto "Se pueden personalizar hasta 6 cinemáticas distintas para una misma máquina, debiendo indicarse en cada una de ellas el tipo de cinemática a aplicar." ;
+    ex:tieneComponente ex:Parametro_NKIN, ex:Parametro_KINID, ex:Parametro_TYPE, ex:Parametro_HEADREF .
+
+ex:Sistema_Cinematicas_OEM
+    a ex:Sistema ;
+    rdfs:label "Sistema de cinemáticas OEM" ;
+    ex:textoExtracto "Las cinemáticas OEM disponen de los siguientes parámetros máquina para su configuración: NKINAX, PARAM_D_SIZE, TDATA, PARAM_I_SIZE, TDATA_I, AUXCTE_SIZE, KINDATA_SIZE." ;
+    ex:tieneComponente ex:Parametro_NKINAX, ex:Parametro_PARAM_D_SIZE, ex:Parametro_PARAM_I_SIZE, ex:Parametro_AUXCTE_SIZE, ex:Parametro_KINDATA_SIZE .
+
+ex:Tabla_Cinematicas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de definición de cinemáticas" ;
+    ex:textoExtracto "Tabla de cinemáticas. Muestra la tabla para definir las cinemáticas del sistema." ;
+    ex:documentadoEn ex:Manual_CNC ;
+    ex:detalladoEnEsquema ex:Sistema_Cinematicas, ex:Sistema_Cinematicas_OEM .
+
+ex:InterfazUsuario_KINEMATIC
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia KINEMATIC para selección de cinemática" ;
+    ex:textoExtracto "Para seleccionar una cinemática desde el programa pieza, utilizar la sentencia #KIN ID. KINEMATIC n" ;
+    ex:controla ex:Sistema_Cinematicas .

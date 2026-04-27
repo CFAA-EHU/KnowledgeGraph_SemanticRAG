@@ -1,0 +1,171 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Esquemas y diagramas principales
+ex:DiagramaLazoControlCNC
+    a ex:Esquema ;
+    rdfs:label "Diagrama de bloques del lazo de control del CNC"@es ;
+    ex:textoExtracto "Diagrama de bloques del lazo de control del CNC que encadena SLOPE, INTERPOLATOR, TRANSFOR y FILTER, seguido de la entrada al lazo de posición. Incluye sumadores/compensadores (COMP, DELTA), consignas (POSCMD, FTEO), señales de retroalimentación (POSNC), y rutas para salidas analógicas y buses (Sercos Vel./Pos.)."@es ;
+    ex:ilustradoEn ex:Pagina_640 .
+
+ex:DiagramaTemporalReset
+    a ex:Esquema ;
+    rdfs:label "Diagrama temporal del proceso de reset"@es ;
+    ex:textoExtracto "Diagrama temporal del proceso de reset con dos trazas digitales (RESETIN y RESETOUT) y la ventana MINAENDW marcada sobre RESETOUT. La línea de tiempo (t) indica cuatro hitos numerados: activación de RESETIN, tiempo para asumir condiciones iniciales, activación de RESETOUT y final de reset, tras lo cual se ejecuta la subrutina PROGRAM_RESET."@es ;
+    ex:ilustradoEn ex:Pagina_665 .
+
+ex:DiagramaBusCAN
+    a ex:Esquema ;
+    rdfs:label "Diagrama del bus CAN con paneles de mando y E/S remotas"@es ;
+    ex:textoExtracto "Diagrama del bus CAN que ilustra la numeración y orden de los paneles de mando y grupos de E/S remotas. Se muestran iconos del CNC (Address=0), módulos de E/S remotas (Address=1,3,4) y dos 'Jog-Panel' (Address=2 y 5)."@es ;
+    ex:ilustradoEn ex:Pagina_665 .
+
+### Componentes del lazo de control (mapeados a clases canónicas)
+ex:Componente_SLOPE
+    a ex:ComponenteElectrico ;
+    rdfs:label "SLOPE" ;
+    ex:textoExtracto "lazo de control del CNC que encadena SLOPE, INTERPOLATOR, TRANSFOR y FILTER"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Componente_INTERPOLATOR
+    a ex:ComponenteElectrico ;
+    rdfs:label "INTERPOLATOR" ;
+    ex:textoExtracto "lazo de control del CNC que encadena SLOPE, INTERPOLATOR, TRANSFOR y FILTER"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Componente_TRANSFOR
+    a ex:ComponenteElectrico ;
+    rdfs:label "TRANSFOR" ;
+    ex:textoExtracto "lazo de control del CNC que encadena SLOPE, INTERPOLATOR, TRANSFOR y FILTER"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Componente_FILTER
+    a ex:ComponenteElectrico ;
+    rdfs:label "FILTER" ;
+    ex:textoExtracto "lazo de control del CNC que encadena SLOPE, INTERPOLATOR, TRANSFOR y FILTER"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Componente_COMP
+    a ex:ComponenteElectrico ;
+    rdfs:label "Sumador/Compensador (COMP)" ;
+    ex:textoExtracto "Incluye sumadores/compensadores (COMP, DELTA)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Componente_DELTA
+    a ex:ComponenteElectrico ;
+    rdfs:label "Sumador/Compensador (DELTA)" ;
+    ex:textoExtracto "Incluye sumadores/compensadores (COMP, DELTA)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Parametro_POSCMD
+    a ex:Parametro ;
+    rdfs:label "Consigna POSCMD" ;
+    ex:textoExtracto "consignas (POSCMD, FTEO)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Parametro_FTEO
+    a ex:Parametro ;
+    rdfs:label "Consigna FTEO" ;
+    ex:textoExtracto "consignas (POSCMD, FTEO)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Parametro_POSNC
+    a ex:Parametro ;
+    rdfs:label "Señal de retroalimentación POSNC" ;
+    ex:textoExtracto "señales de retroalimentación (POSNC)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Parametro_VGPATHFEED
+    a ex:Parametro ;
+    rdfs:label "Variable V.G.PATHFEED" ;
+    ex:textoExtracto "etiquetas de variables (p. ej., V.G.PATHFEED, V.A.LOOPTPOS.xn)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+ex:Parametro_VALOOPTPOS
+    a ex:Parametro ;
+    rdfs:label "Variable V.A.LOOPTPOS.xn" ;
+    ex:textoExtracto "etiquetas de variables (p. ej., V.G.PATHFEED, V.A.LOOPTPOS.xn)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaLazoControlCNC .
+
+### Señales del proceso de reset
+ex:Senal_RESETIN
+    a ex:Sensor ;
+    rdfs:label "Señal digital RESETIN" ;
+    ex:textoExtracto "trazas digitales (RESETIN y RESETOUT)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaTemporalReset .
+
+ex:Senal_RESETOUT
+    a ex:Sensor ;
+    rdfs:label "Señal digital RESETOUT" ;
+    ex:textoExtracto "trazas digitales (RESETIN y RESETOUT)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaTemporalReset .
+
+ex:Parametro_MINAENDW
+    a ex:Parametro ;
+    rdfs:label "Ventana temporal MINAENDW" ;
+    ex:textoExtracto "ventana MINAENDW marcada sobre RESETOUT"@es ;
+    ex:detalladoEnEsquema ex:DiagramaTemporalReset .
+
+### Dispositivos en el bus CAN
+ex:Interfaz_CNC_BusCAN
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel CNC (Address=0)" ;
+    ex:textoExtracto "iconos del CNC (Address=0)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaBusCAN .
+
+ex:Interfaz_JogPanel_2
+    a ex:InterfazUsuario ;
+    rdfs:label "Jog-Panel (Address=2)" ;
+    ex:textoExtracto "dos 'Jog-Panel' (Address=2 y 5)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaBusCAN .
+
+ex:Interfaz_JogPanel_5
+    a ex:InterfazUsuario ;
+    rdfs:label "Jog-Panel (Address=5)" ;
+    ex:textoExtracto "dos 'Jog-Panel' (Address=2 y 5)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaBusCAN .
+
+ex:Componente_ESRemota_1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo E/S remota (Address=1)" ;
+    ex:textoExtracto "módulos de E/S remotas (Address=1,3,4)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaBusCAN .
+
+ex:Componente_ESRemota_3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo E/S remota (Address=3)" ;
+    ex:textoExtracto "módulos de E/S remotas (Address=1,3,4)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaBusCAN .
+
+ex:Componente_ESRemota_4
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo E/S remota (Address=4)" ;
+    ex:textoExtracto "módulos de E/S remotas (Address=1,3,4)"@es ;
+    ex:detalladoEnEsquema ex:DiagramaBusCAN .
+
+### Relaciones entre esquemas y componentes
+ex:DiagramaLazoControlCNC
+    ex:tieneComponente ex:Componente_SLOPE, ex:Componente_INTERPOLATOR, ex:Componente_TRANSFOR, ex:Componente_FILTER,
+                         ex:Componente_COMP, ex:Componente_DELTA ;
+    ex:monitoreaParametro ex:Parametro_POSCMD, ex:Parametro_FTEO, ex:Parametro_POSNC,
+                          ex:Parametro_VGPATHFEED, ex:Parametro_VALOOPTPOS .
+
+ex:DiagramaTemporalReset
+    ex:monitoreaParametro ex:Senal_RESETIN, ex:Senal_RESETOUT, ex:Parametro_MINAENDW .
+
+ex:DiagramaBusCAN
+    ex:tieneComponente ex:Interfaz_CNC_BusCAN, ex:Interfaz_JogPanel_2, ex:Interfaz_JogPanel_5,
+                       ex:Componente_ESRemota_1, ex:Componente_ESRemota_3, ex:Componente_ESRemota_4 .
+
+### Páginas de referencia
+ex:Pagina_640
+    a ex:Pagina ;
+    ex:identificador "640" ;
+    ex:textoExtracto "Página 640: Sección 14. Subrutinas — 14.3 Subrutina asociada al reset"@es .
+
+ex:Pagina_665
+    a ex:Pagina ;
+    ex:identificador "665" ;
+    ex:textoExtracto "Página 665: Sección 15.1 Gestión de varios teclados"@es .

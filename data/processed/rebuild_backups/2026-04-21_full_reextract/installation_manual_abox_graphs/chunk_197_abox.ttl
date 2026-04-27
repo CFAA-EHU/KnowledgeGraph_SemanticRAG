@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_FREQRES a ex:Parametro ;
+    rdfs:label "FREQRES" ;
+    ex:textoExtracto "FREQRES Primera frecuencia de resonancia de la máquina. Valores posibles: De 0 a 500.0000. Valor por defecto: 0. Variable asociada: (V.)[ch].MPG.FREQRES Frecuencia de resonancia que el CNC debe eliminar en la generación de la consigna." ;
+    ex:valor "0" ;
+    ex:identificador "(V.)[ch].MPG.FREQRES" .
+
+ex:Parametro_SOFTFREQ a ex:Parametro ;
+    rdfs:label "SOFTFREQ" ;
+    ex:textoExtracto "SOFTFREQ Frecuencia del filtro de trayectoria para perfiles de aceleración lineal. Valores posibles: De 0 a 500.0000 Hz. Valor por defecto: 25 Hz. Variable asociada: (V.)[ch].MPG.SOFTFREQ Este parámetro permite suavizar el perfil de velocidad en modo HSC SURFACE, lo que permite mejorar el tiempo y la calidad superficial del mecanizado." ;
+    ex:valor "25 Hz" ;
+    ex:identificador "(V.)[ch].MPG.SOFTFREQ" .
+
+ex:Parametro_HSCROUND a ex:Parametro ;
+    rdfs:label "HSCROUND" ;
+    ex:textoExtracto "HSCROUND Valor por defecto del error máximo de la trayectoria en HSC. Valores posibles: De 0.0001 a 99999.9999 mm / de 0 a 3937.00787 inch. Valor por defecto: 0.06 mm / 0.00236 inch. Variable asociada: (V.)[ch].MPG.HSCROUND Error máximo de la trayectoria en HSC." ;
+    ex:valor "0.06 mm" ;
+    ex:identificador "(V.)[ch].MPG.HSCROUND" .
+
+ex:Parametro_ORISMOOTH a ex:Parametro ;
+    rdfs:label "ORISMOOTH" ;
+    ex:textoExtracto "ORISMOOTH Suavizado de la orientación de los ejes rotativos trabajando con RTCP. Valores posibles: De 0 a 200 ms. Valor por defecto: 60 ms. Variable asociada: (V.)[ch].MPG.ORISMOOTH Este parámetro suaviza la orientación de los ejes rotativos, sin error en la punta de la herramienta, al trabajar con RTCP en modo HSC SURFACE." ;
+    ex:valor "60 ms" ;
+    ex:identificador "(V.)[ch].MPG.ORISMOOTH" .
+
+ex:ModoOperacion_HSC a ex:ModoOperacion ;
+    rdfs:label "Modo HSC" ;
+    ex:textoExtracto "modo HSC CONTERROR [...] modo HSC SURFACE" ;
+    ex:tieneComponente ex:Parametro_FREQRES, ex:Parametro_SOFTFREQ, ex:Parametro_HSCROUND, ex:Parametro_ORISMOOTH .
+
+ex:ModoOperacion_HSC_CONTERRO a ex:ModoOperacion ;
+    rdfs:label "Modo HSC CONTERROR" ;
+    ex:textoExtracto "modo HSC CONTERROR" ;
+    ex:monitoreaParametro ex:Parametro_FREQRES .
+
+ex:ModoOperacion_HSC_SURFACE a ex:ModoOperacion ;
+    rdfs:label "Modo HSC SURFACE" ;
+    ex:textoExtracto "modo HSC SURFACE" ;
+    ex:monitoreaParametro ex:Parametro_SOFTFREQ, ex:Parametro_HSCROUND, ex:Parametro_ORISMOOTH .

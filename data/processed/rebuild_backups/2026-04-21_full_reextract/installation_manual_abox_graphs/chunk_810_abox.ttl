@@ -1,0 +1,96 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Marca_CNCOFF
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca CNCOFF" ;
+    ex:textoExtracto "Si el PLC pone esta marca a (=1) comienza la secuencia de apagado del CNC. Activar esta marca es equivalente a pulsar la combinación de teclas [ALT][F4]." ;
+    ex:identificador "CNCOFF" .
+
+ex:Registro_SYNC
+    a ex:Parametro ;
+    rdfs:label "Registro SYNC" ;
+    ex:textoExtracto "Hay un registro para cada canal. Los mnemónicos para cada canal son los siguientes. SYNC1 SYNC2 SYNC3 SYNC4 [...] El registro SYNC tomará valores de ꞏ1ꞏ a ꞏ4ꞏ; si se asigna valor ꞏ0ꞏ, se utilizará el cabezal master del canal." ;
+    ex:identificador "SYNC" ;
+    ex:valor "0,1,2,3,4" .
+
+ex:Registro_SYNC1
+    a ex:Parametro ;
+    rdfs:label "SYNC1" ;
+    ex:textoExtracto "SYNC1" ;
+    ex:identificador "SYNC1" .
+
+ex:Registro_SYNC2
+    a ex:Parametro ;
+    rdfs:label "SYNC2" ;
+    ex:textoExtracto "SYNC2" ;
+    ex:identificador "SYNC2" .
+
+ex:Registro_SYNC3
+    a ex:Parametro ;
+    rdfs:label "SYNC3" ;
+    ex:textoExtracto "SYNC3" ;
+    ex:identificador "SYNC3" .
+
+ex:Registro_SYNC4
+    a ex:Parametro ;
+    rdfs:label "SYNC4" ;
+    ex:textoExtracto "SYNC4" ;
+    ex:identificador "SYNC4" .
+
+ex:Marca_RETRACE
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca RETRACE" ;
+    ex:textoExtracto "Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. RETRACEC1 RETRACEC2 RETRACEC3 RETRACEC4 [...] Si el PLC pone esta marca a (=1) durante la ejecución de un programa en modo automático, se activa la función retrace en el canal seleccionado." ;
+    ex:identificador "RETRACE" .
+
+ex:Marca_RETRACEC1
+    a ex:InterfazUsuario ;
+    rdfs:label "RETRACEC1" ;
+    ex:textoExtracto "RETRACEC1" ;
+    ex:identificador "RETRACEC1" .
+
+ex:Marca_RETRACEC2
+    a ex:InterfazUsuario ;
+    rdfs:label "RETRACEC2" ;
+    ex:textoExtracto "RETRACEC2" ;
+    ex:identificador "RETRACEC2" .
+
+ex:Marca_RETRACEC3
+    a ex:InterfazUsuario ;
+    rdfs:label "RETRACEC3" ;
+    ex:textoExtracto "RETRACEC3" ;
+    ex:identificador "RETRACEC3" .
+
+ex:Marca_RETRACEC4
+    a ex:InterfazUsuario ;
+    rdfs:label "RETRACEC4" ;
+    ex:textoExtracto "RETRACEC4" ;
+    ex:identificador "RETRACEC4" .
+
+ex:Parametro_NRETBLK
+    a ex:Parametro ;
+    rdfs:label "NRETBLK" ;
+    ex:textoExtracto "El número máximo de bloques a ejecutar en retrace lo define el parámetro máquina NRETBLK." ;
+    ex:identificador "NRETBLK" .
+
+ex:Funcion_G33 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G33" ;
+    ex:textoExtracto "Con la función G33, cuando interesa roscar con un cabezal determinado." ;
+    ex:identificador "G33" .
+
+ex:Funcion_G95 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G95" ;
+    ex:textoExtracto "Con la función G95, cuando se quiere programar el avance en función de la velocidad de giro de un cabezal determinado." ;
+    ex:identificador "G95" .
+
+ex:Registro_SYNC
+    ex:monitoreaParametro ex:Funcion_G33 ;
+    ex:monitoreaParametro ex:Funcion_G95 .
+
+ex:Marca_RETRACE
+    ex:controla ex:Parametro_NRETBLK .

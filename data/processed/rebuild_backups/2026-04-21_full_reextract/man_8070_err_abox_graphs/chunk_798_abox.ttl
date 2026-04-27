@@ -1,0 +1,34 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_9317
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Grupo de ejes con diferentes captaciones"@es ;
+    ex:identificador "9317" ;
+    ex:textoExtracto "'Grupo de ejes con dif. captaciones: todos los ejes SERCOS deben ser velocidad' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay algún grupo multieje cuyos ejes tienen diferente parámetro COUNTERID y los ejes no son Sercos velocidad. SOLUCIÓN Revisar los parámetros máquina. Todos los ejes de un grupo multieje deben tener el parámetro COUNTERID igual; si el parámetro no es igual, los ejes deben ser ejes Sercos"@es .
+
+ex:Parametro_COUNTERID
+    a ex:Parametro ;
+    rdfs:label "COUNTERID" ;
+    ex:textoExtracto "parámetro COUNTERID"@es ;
+    ex:monitoreaParametro ex:Fallo_9317 .
+
+ex:SistemaMultieje
+    a ex:Sistema ;
+    rdfs:label "Grupo multieje"@es ;
+    ex:textoExtracto "grupo multieje cuyos ejes tienen diferente parámetro COUNTERID"@es ;
+    ex:tieneComponente ex:EjesSERCOS_Velocidad ;
+    ex:tieneComponente ex:EjesNoSERCOS_Velocidad .
+
+ex:EjesSERCOS_Velocidad
+    a ex:ComponenteMecanico ;
+    rdfs:label "Ejes SERCOS velocidad"@es ;
+    ex:textoExtracto "ejes Sercos velocidad"@es .
+
+ex:EjesNoSERCOS_Velocidad
+    a ex:ComponenteMecanico ;
+    rdfs:label "Ejes no SERCOS con COUNTERID desigual"@es ;
+    ex:textoExtracto "ejes no son Sercos velocidad"@es ;
+    ex:controla ex:Parametro_COUNTERID .

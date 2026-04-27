@@ -1,0 +1,56 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_2470
+    a ex:Alarma ;
+    rdfs:label "Alarma 2470: Programación TABLE o COROT no permitida"@es ;
+    ex:identificador "2470" ;
+    ex:textoExtracto "Programación TABLE o COROT no permitida en cinemáticas sin mesa. DETECCIÓN Durante la ejecución. CAUSA Se ha programado un RTCP con la opción TABLE o COROT para una cinemática sin mesa. SOLUCIÓN Revisar la programación."@es .
+
+ex:Alarma_2471
+    a ex:Alarma ;
+    rdfs:label "Alarma 2471: Fichero de material o tabla no programados"@es ;
+    ex:identificador "2471" ;
+    ex:textoExtracto "Es obligatorio programar el nombre del fichero de material y/o la tabla seleccionada. DETECCIÓN Durante la ejecución. CAUSA Se ha programado la sentencia #TECHTABLE sin indicar el fichero de material ni la tabla seleccionada. SOLUCIÓN Revisar la programación. Tanto el fichero de material como la tabla tecnológica son opcionales, pero hay que programar uno de ellos."@es .
+
+ex:Alarma_2472
+    a ex:Alarma ;
+    rdfs:label "Alarma 2472: Fichero de material inactivo"@es ;
+    ex:identificador "2472" ;
+    ex:textoExtracto "No hay fichero de material activo. DETECCIÓN Durante la ejecución. CAUSA Se ha programado la sentencia #TECHTABLE sin indicar el fichero de material, y no hay ninguno activo. SOLUCIÓN Activar un fichero de material. La programación del fichero de material sólo es opcional cuando hay uno activo."@es .
+
+ex:Alarma_2473
+    a ex:Alarma ;
+    rdfs:label "Alarma 2473: Número de set fuera de rango"@es ;
+    ex:identificador "2473" ;
+    ex:textoExtracto "Número de set fuera de rango. DETECCIÓN Durante la ejecución. CAUSA El número de set (grupo de parámetros) programado en la sentencia #TECHTABLE no es válido o no existe. SOLUCIÓN Revisar la programación. Comprobar que el grupo de parámetros programado existe en la tabla. El rango válido es 1..256."@es .
+
+ex:Alarma_2474
+    a ex:Alarma ;
+    rdfs:label "Alarma 2474: Variable Piercing no disponible"@es ;
+    ex:identificador "2474" ;
+    ex:textoExtracto "Variable inexistente sin un material activo que tenga tabla Piercing. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado leer una variable \"TTPIR.name\" pero no hay un fichero de material activo, o el fichero activo tiene tabla de Piercing. SOLUCIÓN Activar un fichero de material que tenga una tabla de Piercing."@es .
+
+ex:Alarma_2475
+    a ex:Alarma ;
+    rdfs:label "Alarma 2475: Variable Cutting no disponible"@es ;
+    ex:identificador "2475" ;
+    ex:textoExtracto "Variable inexistente sin un material activo que tenga tabla Cutting. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado leer una variable \"TTCUT.name\" pero no hay un fichero de material activo, o el fichero activo tiene tabla de Cutting."@es .
+
+ex:Parametro_TTPIR
+    a ex:Parametro ;
+    rdfs:label "TTPIR.name" ;
+    ex:textoExtracto "Variable \"TTPIR.name\" asociada a tabla Piercing de material activo."@es .
+
+ex:Parametro_TTCUT
+    a ex:Parametro ;
+    rdfs:label "TTCUT.name" ;
+    ex:textoExtracto "Variable \"TTCUT.name\" asociada a tabla Cutting de material activo."@es .
+
+ex:Tabla_TechTable a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "#TECHTABLE" ;
+    ex:textoExtracto "Sentencia #TECHTABLE para configuración de fichero de material y/o tabla tecnológica (rango de sets: 1..256)."@es ;
+    ex:tieneComponente ex:Parametro_TTPIR, ex:Parametro_TTCUT .

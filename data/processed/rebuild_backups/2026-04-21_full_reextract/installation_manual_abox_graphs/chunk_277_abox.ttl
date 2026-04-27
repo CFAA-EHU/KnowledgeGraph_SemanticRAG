@@ -1,0 +1,42 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Param_HIRTH
+    a               ex:Parametro ;
+    rdfs:label      "Eje Hirth (HIRTH)" ;
+    ex:textoExtracto "Se denomina eje Hirth al que debe posicionarse siempre en posiciones múltiplos de un valor dado. [...] Variable asociada: (V.)[ch].MPA.HIRTH.xn" ;
+    ex:valor         "No"^^xsd:string ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Param_HPITCH
+    a               ex:Parametro ;
+    rdfs:label      "Paso del eje Hirth (HPITCH)" ;
+    ex:textoExtracto "HPITCH Paso del eje Hirth. [...] Valor por defecto: 1 mm / 0.03937 inch / 1 grado. Variable asociada: (V.)[ch].MPA.HPITCH.xn" ;
+    ex:valor         "1 mm"^^xsd:string ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Param_REFVALUE
+    a               ex:Parametro ;
+    rdfs:label      "Cota inicial del eje Hirth (REFVALUE)" ;
+    ex:textoExtracto "El parámetro REFVALUE será tomado como cota inicial para los sucesivos incrementos." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:TablaParametrosEje a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de parámetros del eje Hirth" ;
+    ex:textoExtracto "Las posiciones del conmutador para los movimientos en jog se pueden personalizar en la tabla de parámetros del eje, para que se correspondan con los pasos deseados." ;
+    ex:documentadoEn ex:ManualCNC .
+
+ex:SistemaCNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC" ;
+    ex:textoExtracto "el CNC dará error. [...] Los movimientos en jog incremental solo serán válidos si son superiores al HPITCH y se limitarán a múltiplos de este valor." ;
+    ex:tieneComponente ex:InterfazFGUIM .
+
+ex:InterfazFGUIM
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Interfaz FGUIM" ;
+    ex:textoExtracto "La visualización en pantalla de los decimales de un eje Hirth se configurará desde el FGUIM." .

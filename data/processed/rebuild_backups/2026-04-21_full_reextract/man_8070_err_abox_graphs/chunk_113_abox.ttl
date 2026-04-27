@@ -1,0 +1,83 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1175
+    a ex:Alarma ;
+    rdfs:label "Alarma 1175: '#LINK: no se ha definido acoplo'"@es ;
+    ex:identificador "1175" ;
+    ex:textoExtracto """
+    1175 '#LINK: no se ha definido acoplo'
+    DETECCIÓN Durante la ejecución.
+    CAUSA No hay ningún acoplo de ejes definido en la sentencia #LINK.
+    SOLUCIÓN Programar los ejes maestro y esclavo en la sentencia #LINK.
+    """ .
+
+ex:Alarma_1176
+    a ex:Alarma ;
+    rdfs:label "Alarma 1176: '#LINK: el eje maestro no pertenece a la configuración de ejes actual'"@es ;
+    ex:identificador "1176" ;
+    ex:textoExtracto """
+    1176 '#LINK: el eje maestro no pertenece a la configuración de ejes actual'
+    DETECCIÓN Durante la ejecución.
+    CAUSA Las posibles causas son las siguientes:
+    • El eje maestro del acoplo no existe o no está disponible en el canal.
+    • El CNC ha intentado anular un acoplo cuyo eje maestro no existe o no está disponible en el canal.
+    SOLUCIÓN Los ejes maestro y esclavo deben existir en el canal que ejecuta la sentencia.
+    """ .
+
+ex:Alarma_1177
+    a ex:Alarma ;
+    rdfs:label "Alarma 1177: '#LINK: el eje esclavo no pertenece a la configuración de ejes actual'"@es ;
+    ex:identificador "1177" ;
+    ex:textoExtracto """
+    1177 '#LINK: el eje esclavo no pertenece a la configuración de ejes actual'
+    DETECCIÓN Durante la ejecución.
+    CAUSA Las posibles causas son las siguientes:
+    • El eje esclavo del acoplo no existe o no está disponible en el canal.
+    • El CNC ha intentado anular un acoplo cuyo eje esclavo no existe o no está disponible en el canal.
+    SOLUCIÓN Los ejes maestro y esclavo deben existir en el canal que ejecuta la sentencia.
+    """ .
+
+ex:Alarma_1178
+    a ex:Alarma ;
+    rdfs:label "Alarma 1178: '#LINK: el eje esclavo no puede ser un eje del plano principal'"@es ;
+    ex:identificador "1178" ;
+    ex:textoExtracto """
+    1178 '#LINK: el eje esclavo no puede ser un eje del plano principal'
+    DETECCIÓN Durante la ejecución.
+    CAUSA El eje esclavo del acoplo es uno de los tres ejes principales.
+    SOLUCIÓN Revisar la programación.
+    """ .
+
+ex:Alarma_1179
+    a ex:Alarma ;
+    rdfs:label "Alarma 1179: '#LINK: los ejes maestro y esclavo deben ser del mismo tipo (AXISTYPE)'"@es ;
+    ex:identificador "1179" ;
+    ex:textoExtracto """
+    1179 '#LINK: los ejes maestro y esclavo deben ser del mismo tipo (AXISTYPE)'
+    DETECCIÓN Durante la ejecución.
+    CAUSA Los ejes maestro y esclavo del acoplo no son del mismo tipo, lineal o rotativo.
+    SOLUCIÓN Ambos ejes de un acoplo deben ser del mismo tipo (parámetro AXISTYPE).
+    """ .
+
+ex:Parametro_AXISTYPE
+    a ex:Parametro ;
+    rdfs:label "AXISTYPE"@es ;
+    ex:textoExtracto "parámetro AXISTYPE"@es ;
+    ex:valor "lineal/rotativo"@es .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "El CNC ha intentado anular un acoplo cuyo eje maestro no existe o no está disponible en el canal."@es ;
+    ex:activaAlarma ex:Alarma_1175, ex:Alarma_1176, ex:Alarma_1177, ex:Alarma_1178, ex:Alarma_1179 .
+
+ex:InterfazUsuario_Programacion
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de programación #LINK"@es ;
+    ex:textoExtracto """
+    Revisar la programación. Desactivar el primer acoplo antes de activar el segundo. Para tener ambos acoplos, desactivar el primer acoplo y activar ambos con una única sentencia #LINK.
+    """ ;
+    ex:activaAlarma ex:Alarma_1175, ex:Alarma_1176, ex:Alarma_1177, ex:Alarma_1178, ex:Alarma_1179 .

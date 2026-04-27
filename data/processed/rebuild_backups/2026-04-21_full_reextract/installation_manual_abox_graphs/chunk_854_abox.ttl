@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Se_al_IXFERINH
+    a ex:Parametro ;
+    rdfs:label "Señal _IXFERINH(axis)" ;
+    ex:textoExtracto "Si el PLC pone esta marca a (=0), el movimiento independiente finaliza y queda en espera hasta que el PLC vuelva a activar la marca. Para gestionar el transfer inhibit en un movimiento independiente, el PLC también dispone de una marca general por canal (marca _XFERINH)." ;
+    ex:identificador "_IXFERINH(axis)" ;
+    ex:valor "0" .
+
+ex:Se_al_XFERINH
+    a ex:Parametro ;
+    rdfs:label "Señal _XFERINH" ;
+    ex:textoExtracto "marca general por canal (marca _XFERINH). El CNC evalúa ambas marcas de la siguiente manera: En los movimientos independientes programados desde el CNC, éste evalúa primero el transfer inhibit del canal (marca _XFERINH) y a continuación el particular del eje (marca _IXFERINH(axis))." ;
+    ex:identificador "_XFERINH" .
+
+ex:Parametro_XFITOIND
+    a ex:Parametro ;
+    rdfs:label "Parámetro XFITOIND" ;
+    ex:textoExtracto "El CNC primero evalúa el transfer inhibit del canal (marca _XFERINH) y a continuación el particular del eje (marca _IXFERINH(axis))." ;
+    ex:identificador "XFITOIND" .
+
+ex:Se_al_IRESET
+    a ex:Parametro ;
+    rdfs:label "Señal IRESET(axis)" ;
+    ex:textoExtracto "Para los movimientos de eje independiente, si el PLC pone esta marca a (=1), se detiene la sentencia en ejecución y se eliminan las sentencias pendientes de ejecución." ;
+    ex:identificador "IRESET(axis)" ;
+    ex:valor "1" .
+
+ex:Se_al_IABORT
+    a ex:Parametro ;
+    rdfs:label "Señal IABORT(axis)" ;
+    ex:textoExtracto "Para los movimientos de eje independiente, si el PLC pone esta marca a (=1), el bloque de posicionamiento que se está ejecutando (si lo hay) se detiene, sin eliminar el resto de bloques de posicionamiento pendientes de ejecución." ;
+    ex:identificador "IABORT(axis)" ;
+    ex:valor "1" .
+
+ex:Tabla_XFITOIND a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de valores del parámetro XFITOIND" ;
+    ex:textoExtracto "| XFITOIND | Significado. | --- | --- | Sí | El CNC primero evalúa el transfer inhibit del canal (marca _XFERINH) y a continuación el particular del eje (marca _IXFERINH(axis)). | No | El CNC sólo evalúa el transfer inhibit particular del eje (marca _IXFERINH(axis))." ;
+    ex:documentadoEn ex:Pagina_457 .
+
+ex:Pagina_457
+    a ex:Pagina ;
+    rdfs:label "Página 457 - Señales modificables del interpolador independiente" ;
+    ex:identificador "457" ;
+    ex:textoExtracto "Sección 6.12 Señales modificables del interpolador independiente." .
+
+ex:Sistema_InterpoladorIndependiente
+    a ex:Sistema ;
+    rdfs:label "Interpolador independiente" ;
+    ex:textoExtracto "movimiento independiente finaliza y queda en espera... condiciones iniciales en el interpolador independiente del eje." ;
+    ex:tieneComponente ex:Se_al_IXFERINH ;
+    ex:tieneComponente ex:Se_al_XFERINH ;
+    ex:tieneComponente ex:Parametro_XFITOIND ;
+    ex:tieneComponente ex:Se_al_IRESET ;
+    ex:tieneComponente ex:Se_al_IABORT ;
+    ex:documentadoEn ex:Pagina_457 .

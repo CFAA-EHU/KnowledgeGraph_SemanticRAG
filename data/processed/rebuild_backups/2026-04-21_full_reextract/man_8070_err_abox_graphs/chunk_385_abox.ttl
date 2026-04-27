@@ -1,0 +1,79 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_2389
+    a ex:DiagnosticoFallo ;
+    rdfs:label "El radio sólo se puede programar con R" ;
+    ex:identificador "2389" ;
+    ex:textoExtracto "DETECCIÓN: Durante la preparación de bloques. CAUSA: La instrucción programada sólo permite programar el radio con 'R'; no admite 'R1' ni G263. SOLUCIÓN: Programar el radio con 'R'." .
+
+ex:Fallo_2390
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Falta programar el radio" ;
+    ex:identificador "2390" ;
+    ex:textoExtracto "DETECCIÓN: Durante la preparación de bloques. CAUSA: No se ha programado el radio. SOLUCIÓN: Programar el radio." .
+
+ex:Fallo_2391
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Zona circular: Es obligatorio programar el centro con dos ejes del canal" ;
+    ex:identificador "2391" ;
+    ex:textoExtracto "DETECCIÓN: Durante la preparación de bloques. CAUSA: En la función G123 no se ha programado correctamente el centro de la zona circular. SOLUCIÓN: El centro de la zona circular G123 se debe definir con dos ejes del canal. La función G123 sólo admite dos ejes, que deben ser diferentes, y pertenecer al canal en el que se activa la zona." .
+
+ex:Fallo_2392
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Zona lineal: Límite inferior debe ser menor que límite superior en cada eje" ;
+    ex:identificador "2392" ;
+    ex:textoExtracto "DETECCIÓN: Durante la preparación de bloques. CAUSA: El CNC ha intentado habilitar una zona de trabajo donde el límite inferior en un eje es mayor que el límite superior. SOLUCIÓN: En una zona lineal, el límite inferior del eje debe ser menor que límite superior. Modificar el límite inferior (G120) o superior (G121) del eje." .
+
+ex:Fallo_2393
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Función E doblemente programada" ;
+    ex:identificador "2393" ;
+    ex:textoExtracto "DETECCIÓN: Durante la preparación de bloques. CAUSA: El parámetro 'E' está programado más de una vez en el bloque." .
+
+ex:Fallo_ValorZonaIncorrecto
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Valor recuperado de zona incorrecto" ;
+    ex:textoExtracto "El valor recuperado tras algún proceso de recuperación de datos (arranque, reset, inspección) no es correcto. SOLUCIÓN: Programar un valor correcto para el estado de la zona; de 0 a 2. En el primer caso, programar un valor correcto en el parámetro 'E' de la función G122. En el segundo caso, escribir desde el PLC el valor correcto en la variable 'G.ZONEST[zone]'." .
+
+ex:Parametro_E
+    a ex:Parametro ;
+    rdfs:label "Parámetro E" ;
+    ex:textoExtracto "programar un valor correcto en el parámetro 'E' de la función G122" ;
+    ex:valor "E" .
+
+ex:Parametro_G122
+    a ex:Parametro ;
+    rdfs:label "Función G122" ;
+    ex:textoExtracto "programar un valor correcto en el parámetro 'E' de la función G122" ;
+    ex:valor "G122" .
+
+ex:Variable_G_ZONEST
+    a ex:Parametro ;
+    rdfs:label "Variable G.ZONEST[zone]" ;
+    ex:textoExtracto "escribir desde el PLC el valor correcto en la variable 'G.ZONEST[zone]'" ;
+    ex:valor "G.ZONEST[zone]" .
+
+ex:Funcion_G123 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G123" ;
+    ex:textoExtracto "En la función G123 no se ha programado correctamente el centro de la zona circular" ;
+    ex:valor "G123" .
+
+ex:Funcion_G120 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G120 (límite inferior)" ;
+    ex:textoExtracto "Modificar el límite inferior (G120) del eje" ;
+    ex:valor "G120" .
+
+ex:Funcion_G121 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G121 (límite superior)" ;
+    ex:textoExtracto "Modificar el límite superior (G121) del eje" ;
+    ex:valor "G121" .
+
+ex:Fallo_2391 ex:solucionaFallo ex:Funcion_G123 .
+ex:Fallo_2392 ex:solucionaFallo ex:Funcion_G120 , ex:Funcion_G121 .
+ex:Fallo_ValorZonaIncorrecto ex:solucionaFallo ex:Parametro_E , ex:Variable_G_ZONEST .

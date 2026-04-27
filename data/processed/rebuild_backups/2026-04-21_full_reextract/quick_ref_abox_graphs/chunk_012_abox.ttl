@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:ModoCalibracionSemiAutomatica a ex:ModoOperacion ;
+    rdfs:label "Semi-automatic calibration"@en ;
+    ex:textoExtracto "Semi-automatic calibration. Calibration with a probe. The positioning movements are carried out manually and the CNC executes the probing movements."@en .
+
+ex:ModoCalibracionAutomatica a ex:ModoOperacion ;
+    rdfs:label "Automatic calibration"@en ;
+    ex:textoExtracto "Automatic calibration. Calibration with a probe and a canned cycle. The calibration is done using a probing canned cycle."@en .
+
+ex:TablaHerramientas a ex:Tabla ;
+    rdfs:label "tool table"@en ;
+    ex:textoExtracto "the new values are saved in the tool table"@en .
+
+ex:EjeSeleccionado a ex:Parametro ;
+    rdfs:label "axis"@en ;
+    ex:textoExtracto "Select the axis and the probing direction on the softkey menu"@en .
+
+ex:DireccionProbing a ex:Parametro ;
+    rdfs:label "probing direction"@en ;
+    ex:textoExtracto "Select the axis and the probing direction on the softkey menu"@en .
+
+ex:ModeloFresado a ex:ModoOperacion ;
+    rdfs:label "Milling model"@en ;
+    ex:textoExtracto "• Milling model. Calibrate the length or radius of the endmills and the offsets of the lathe tools."@en .
+
+ex:ModeloTorno a ex:ModoOperacion ;
+    rdfs:label "Lathe model"@en ;
+    ex:textoExtracto "• Lathe model. Calibrate the offset of any tool."@en .
+
+ex:SondaCalibracion a ex:Sensor ;
+    rdfs:label "probe"@en ;
+    ex:textoExtracto "Calibration with a probe"@en .
+
+ex:HerramientaActiva a ex:Componente ;
+    rdfs:label "active tool"@en ;
+    ex:textoExtracto "In this mode, only the active tool can be calibrated."@en .
+
+ex:TablaHerramientas ex:compuestoPor ex:HerramientaActiva ;
+    ex:textoExtracto "the new values are saved in the tool table"@en .
+
+ex:ModeloFresado ex:compuestoPor ex:SondaCalibracion ;
+    ex:textoExtracto "• Milling model. Calibrate the length or radius of the endmills and the offsets of the lathe tools."@en .
+
+ex:ModeloTorno ex:compuestoPor ex:SondaCalibracion ;
+    ex:textoExtracto "• Lathe model. Calibrate the offset of any tool."@en .
+
+ex:ModoCalibracionSemiAutomatica ex:controla ex:TablaHerramientas ;
+    ex:textoExtracto "the new values are saved in the tool table"@en .
+
+ex:ModoCalibracionSemiAutomatica ex:controla ex:SondaCalibracion ;
+    ex:textoExtracto "Calibration with a probe. The positioning movements are carried out manually and the CNC executes the probing movements."@en .
+
+ex:ModoCalibracionAutomatica ex:controla ex:SondaCalibracion ;
+    ex:textoExtracto "Automatic calibration. Calibration with a probe and a canned cycle. The calibration is done using a probing canned cycle."@en .

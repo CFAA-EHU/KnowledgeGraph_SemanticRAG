@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SistemaSinAlmacenHerramientas
+    a               ex:Sistema ;
+    rdfs:label      "Sistema sin almacén de herramientas"@es ;
+    ex:textoExtracto "Cuando no hay almacén de herramientas, para realizar el cambio de herramienta sólo es necesario programar la función T, sin necesidad de M6. [...] Esto no impide que pueda tener una subrutina asociada, como cualquier otra función M."@es ;
+    ex:tieneComponente ex:FuncionT_SistemaSinAlmacen ;
+    ex:tieneComponente ex:FuncionM06_SistemaSinAlmacen .
+
+ex:FuncionT_SistemaSinAlmacen a ex:Tabla ;
+     a               ex:ModoOperacion ;
+    rdfs:label      "Función T (cambio de herramienta)"@es ;
+    ex:identificador "T" ;
+    ex:textoExtracto "para realizar el cambio de herramienta sólo es necesario programar la función T, sin necesidad de M6. [...] La sincronización con el gestor tras finalizar el cambio de herramienta (MZWAIT) se hará tras gestionar el bloque de la T en ejecución."@es ;
+    ex:controla     ex:GestorCambioHerramienta .
+
+ex:FuncionM06_SistemaSinAlmacen a ex:Tabla ;
+     a               ex:ModoOperacion ;
+    rdfs:label      "Función M06 (sin almacén de herramientas)"@es ;
+    ex:identificador "M06" ;
+    ex:textoExtracto "la función M6 programada no se interpreta como un cambio de herramienta, sino como una función M más, sin significado especial alguno. [...] La función M6 no activará marcas de PLC (por ejemplo DM06) ni ejecutará nada relacionado con el cambio de herramienta."@es .
+
+ex:GestorCambioHerramienta
+    a               ex:Sistema ;
+    rdfs:label      "Gestor de cambio de herramienta"@es ;
+    ex:textoExtracto "El gestor envía una orden al PLC para que pueda efectuar el cambio. [...] El CNC espera a que el gestor dé por finalizada la operación para continuar con la ejecución del programa."@es ;
+    ex:controla     ex:PLC_SistemaSinAlmacen .
+
+ex:PLC_SistemaSinAlmacen
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "PLC (controlador lógico programable)"@es ;
+    ex:textoExtracto "El gestor envía una orden al PLC para que pueda efectuar el cambio."@es .

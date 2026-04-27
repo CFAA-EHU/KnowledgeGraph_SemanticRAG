@@ -1,0 +1,53 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_3414
+    a ex:DiagnosticoFallo ;
+    rdfs:label "No se puede programar leva para ejes con diferente valor de módulo" ;
+    ex:identificador "3414" ;
+    ex:textoExtracto "Durante la ejecución. CAUSA En la sincronización de la leva, el eje maestro y esclavo tienen módulos diferentes. SOLUCIÓN Ambos ejes deben tener el mismo módulo (parámetros MODUPLIM y MODLOWLIM iguales)." .
+
+ex:Fallo_3415
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Búsqueda de cero independiente no permitida en ejecución" ;
+    ex:identificador "3415" ;
+    ex:textoExtracto "Durante la ejecución. CAUSA El PLC intenta realizar una búsqueda de referencia mientras el CNC está ejecutado otra. SOLUCIÓN El PLC debe esperar a que el CNC termine su búsqueda de referencia." .
+
+ex:Fallo_3417
+    a ex:DiagnosticoFallo ;
+    rdfs:label "LEAPFROG no posible con las cotas dadas" ;
+    ex:identificador "3417" ;
+    ex:textoExtracto "Durante la ejecución. CAUSA El CNC no puede ejecutar el salto (#LEAP/#LEAPBEGIN) con los datos programados. SOLUCIÓN Revisar la programación." .
+
+ex:Fallo_3500
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Aceleración lineal del tramo 1 menor o igual a cero" ;
+    ex:identificador "3500" ;
+    ex:textoExtracto "Durante el arranque o durante la ejecución. CAUSA La aceleración programada tiene valor cero. SOLUCIÓN Programar un valor positivo para la aceleración." .
+
+ex:Fallo_3501
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Aceleración lineal del tramo 1 mayor que la máxima" ;
+    ex:identificador "3501" ;
+    ex:textoExtracto "Durante el arranque o la ejecución. CAUSA La aceleración programada es mayor que la máxima. SOLUCIÓN Programar un valor menor que el máximo para la aceleración." .
+
+ex:Fallo_3502
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Aceleración lineal del tramo 2 menor o igual a cero" ;
+    ex:identificador "3502" ;
+    ex:textoExtracto "Durante el arranque o durante la ejecución. CAUSA La aceleración programada tiene valor cero. SOLUCIÓN Programar un valor positivo para la aceleración." .
+
+ex:Parametro_MODUPLIM
+    a ex:Parametro ;
+    rdfs:label "Parámetro MODUPLIM (límite superior del módulo)" ;
+    ex:textoExtracto "parámetros MODUPLIM y MODLOWLIM iguales" .
+
+ex:Parametro_MODLOWLIM
+    a ex:Parametro ;
+    rdfs:label "Parámetro MODLOWLIM (límite inferior del módulo)" ;
+    ex:textoExtracto "parámetros MODUPLIM y MODLOWLIM iguales" .
+
+ex:Fallo_3414
+    ex:solucionaFallo ex:Parametro_MODUPLIM , ex:Parametro_MODLOWLIM .

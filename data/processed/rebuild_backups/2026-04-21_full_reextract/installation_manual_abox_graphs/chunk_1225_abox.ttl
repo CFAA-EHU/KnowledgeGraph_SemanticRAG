@@ -1,0 +1,27 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Subrutina_FINALSUB
+    a               ex:Sistema ;
+    rdfs:label      "Subrutina asociada al comando #FINALSUB"@es ;
+    ex:textoExtracto "El comando #FINALSUB tiene una subrutina asociada, que el CNC ejecuta junto al comando. Este comando esta orientado a máquina láser, donde esta subrutina debe realizar las operaciones finales del láser."@es ;
+    ex:identificador "#FINALSUB" ;
+    ex:requiereMantenimiento [
+        a               ex:TareaMantenimiento ;
+        rdfs:label      "Configuración OEM para gestión del láser"@es ;
+        ex:textoExtracto "Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM."@es ;
+        ex:ejecutadoPor ex:OEM_Fagor
+    ] .
+
+ex:OEM_Fagor
+    a               ex:Empresa ;
+    rdfs:label      "Fagor (OEM)"@es ;
+    ex:textoExtracto "Es responsabilidad del OEM garantizar que la subrutina cumple todos los aspectos de seguridad relativos al manejo del láser."@es .
+
+ex:MaquinaLaser
+    a               ex:Maquina ;
+    rdfs:label      "Máquina láser"@es ;
+    ex:textoExtracto "subrutina orientada al modelo láser... Este comando está orientado a máquina láser"@es ;
+    ex:tieneComponente ex:Subrutina_FINALSUB .

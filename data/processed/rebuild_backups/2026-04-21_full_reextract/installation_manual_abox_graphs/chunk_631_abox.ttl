@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoOperacion_RetardoConexion_TG2
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo retardo a la conexión (Entrada TG2)"@es ;
+    ex:textoExtracto       "Este modo de funcionamiento permite realizar un retardo entre la activación de la entrada de arranque TG2 y la activación de la salida de estado T del temporizador. La duración del retardo la fija la constante de tiempo."@es ;
+    ex:tieneComponente     ex:Entrada_TG2, ex:Salida_T, ex:Parametro_ConstanteTiempo, ex:Parametro_TEN, ex:Parametro_TRS .
+
+ex:Entrada_TG2
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Entrada TG2 (flanco de subida/bajada)"@es ;
+    ex:textoExtracto "al producirse un flanco de subida en la entrada TG2... hasta que se produzca un flanco de bajada en la entrada de arranque TG2."@es .
+
+ex:Salida_T
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Salida de estado T (temporizador)"@es ;
+    ex:textoExtracto "se activa la salida de estado del temporizador (T=1) manteniéndose en este estado hasta que se produzca un flanco de bajada en la entrada de arranque TG2."@es .
+
+ex:Parametro_ConstanteTiempo
+    a               ex:Parametro ;
+    rdfs:label      "Constante de tiempo (duración del retardo)"@es ;
+    ex:textoExtracto "La duración del retardo la fija la constante de tiempo... Una vez transcurrido el tiempo especificado en la constante de tiempo se da por finalizada la temporización."@es .
+
+ex:Parametro_TEN
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro TEN (enable)"@es ;
+    ex:identificador "TEN" ;
+    ex:textoExtracto "Con TEN=1 y TRS=0, el temporizador se activa... Si una vez activado el temporizador se selecciona TEN=0, el PLC detiene la temporización, siendo necesario asignar TEN=1 para que dicha temporización continúe."@es ;
+    ex:valor         "0"^^<http://www.w3.org/2001/XMLSchema#integer> , "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:Parametro_TRS
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro TRS (reset)"@es ;
+    ex:identificador "TRS" ;
+    ex:textoExtracto "Si se produce un flanco de subida en la entrada TRS, durante la temporización o después de ella, el PLC inicializa el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta."@es ;
+    ex:valor         "0"^^<http://www.w3.org/2001/XMLSchema#integer> , "1"^^<http://www.w3.org/2001/XMLSchema#integer> .

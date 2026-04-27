@@ -1,0 +1,81 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_0152
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0152: No se puede abrir el fichero" ;
+    ex:identificador "0152" ;
+    ex:textoExtracto "0152 'No se puede abrir el fichero' DETECCIÓN Al acceder a un archivo. CAUSA No es posible abrir el fichero indicado en la sentencia #OPEN. SOLUCIÓN Comprobar que el fichero existe y que tiene los permisos adecuados. Si en la sentencia #OPEN se ha programado la opción MUTED, la variable G.FILEERRNO indica la causa del error." .
+
+ex:Error_0153
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0153: Acceso de lectura denegado" ;
+    ex:identificador "0153" ;
+    ex:textoExtracto "0153 'Acceso de lectura denegado' DETECCIÓN Al acceder a un archivo. CAUSA El CNC ha intentado leer un archivo que no tiene permiso de lectura. SOLUCIÓN Dar al fichero permiso de lectura." .
+
+ex:Error_0154
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0154: Programa o rutina protegida" ;
+    ex:identificador "0154" ;
+    ex:textoExtracto "0154 'Programa o rutina protegida' DETECCIÓN Durante al acceso a un archivo. CAUSA El CNC ha intentado leer un archivo encriptado, sin tener permiso de acceso. SOLUCIÓN Póngase en contacto con el fabricante de la máquina para obtener los códigos de encriptación del fichero." .
+
+ex:Error_0155
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0155: No es posible carga rápida de fichero" ;
+    ex:identificador "0155" ;
+    ex:textoExtracto "0155 'No es posible carga rápida de fichero' DETECCIÓN Durante al acceso a un archivo. CAUSA El CNC ha intentado leer un fichero cuyo tamaño supera el espacio libre de la zona de memoria asignada para carga rápida de ficheros. SOLUCIÓN Ejecutar desde memoria RAM (subrutinas con extensión fst) sólo a aquellos ficheros que son llamados con mayor frecuencia." .
+
+ex:Error_0156
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0156: Demasiados ficheros abiertos para escritura" ;
+    ex:identificador "0156" ;
+    ex:textoExtracto "0156 Demasiados ficheros abiertos para escritura. DETECCIÓN Durante la ejecución. CAUSA La sentencia #OPEN ha intentado abrir demasiados archivos. SOLUCIÓN Cerrar algún archivo." .
+
+ex:Error_0157
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0157: #OPEN/#CLOSE: Handle de fichero no válido" ;
+    ex:identificador "0157" ;
+    ex:textoExtracto "0157 #OPEN/#CLOSE:Handle de fichero no válido. DETECCIÓN Durante la edición y ejecución. CAUSA El identificador del archivo no es correcto. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. Los identificadores válidos son F1 a F4, y su programación es opcional. El identificador del archivo permite que un canal pueda escribir en un archivo abierto por otro canal." .
+
+ex:Error_0158
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0158: #WRITE necesita un #OPEN previo" ;
+    ex:identificador "0158" ;
+    ex:textoExtracto "#WRITE necesita un #OPEN previo." .
+
+ex:Error_0151
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 0151: Permiso de escritura denegado" ;
+    ex:textoExtracto "El CNC ha intentado escribir en un archivo que no tiene permiso de escritura. SOLUCIÓN Dar al fichero permiso de escritura." .
+
+ex:Variable_G_FILEERRNO
+    a ex:Parametro ;
+    rdfs:label "Variable G.FILEERRNO" ;
+    ex:textoExtracto "la variable G.FILEERRNO indica la causa del error" ;
+    ex:monitoreaParametro ex:Error_0152 .
+
+ex:Sentencia_OPEN
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia #OPEN" ;
+    ex:textoExtracto "sentencia #OPEN" ;
+    ex:activaAlarma ex:Error_0152, ex:Error_0156, ex:Error_0157 .
+
+ex:Sentencia_WRITE
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia #WRITE" ;
+    ex:textoExtracto "#WRITE necesita un #OPEN previo" ;
+    ex:activaAlarma ex:Error_0158 .
+
+ex:Sentencia_CLOSE
+    a ex:InterfazUsuario ;
+    rdfs:label "Sentencia #CLOSE" ;
+    ex:textoExtracto "#OPEN/#CLOSE" ;
+    ex:activaAlarma ex:Error_0157 .
+
+ex:MemoriaRAM
+    a ex:ComponenteElectrico ;
+    rdfs:label "Memoria RAM" ;
+    ex:textoExtracto "Ejecutar desde memoria RAM (subrutinas con extensión fst)" ;
+    ex:solucionaFallo ex:Error_0155 .

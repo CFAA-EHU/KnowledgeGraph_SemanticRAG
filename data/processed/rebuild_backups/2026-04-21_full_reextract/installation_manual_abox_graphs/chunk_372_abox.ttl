@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_LOOPCH
+    a ex:Parametro ;
+    rdfs:label "LOOPCH (Cambio de signo de la consigna)"@es ;
+    ex:textoExtracto "LOOPCH Cambio de signo de la consigna. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.LOOPCH[set].xn"@es ;
+    ex:valor "No" ;
+    ex:identificador "LOOPCH" .
+
+ex:Parametro_AXISCH
+    a ex:Parametro ;
+    rdfs:label "AXISCH (Cambio de signo del contaje)"@es ;
+    ex:textoExtracto "AXISCH Cambio de signo del contaje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.AXISCH[set].xn"@es ;
+    ex:valor "No" ;
+    ex:identificador "AXISCH" .
+
+ex:Parametro_INPOSW
+    a ex:Parametro ;
+    rdfs:label "INPOSW (Banda de muerte)"@es ;
+    ex:textoExtracto "INPOSW Banda de muerte. Parámetro válido para ejes lineales, rotativos y cabezales. [...] Se define como banda de muerte la zona anterior y posterior de la cota programada en la que se considera que el eje se encuentra en posición. El parámetro INPOSW define la anchura de ambas zonas."@es ;
+    ex:valor "0.0100" ;
+    ex:identificador "INPOSW" .
+
+ex:Sistema_RegulacionEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de regulación de ejes (analógico, Sercos y simulado)"@es ;
+    ex:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado."@es ;
+    ex:tieneComponente ex:Parametro_LOOPCH ;
+    ex:tieneComponente ex:Parametro_AXISCH ;
+    ex:tieneComponente ex:Parametro_INPOSW ;
+    ex:monitoreaParametro ex:Parametro_LOOPCH ;
+    ex:monitoreaParametro ex:Parametro_AXISCH ;
+    ex:monitoreaParametro ex:Parametro_INPOSW .

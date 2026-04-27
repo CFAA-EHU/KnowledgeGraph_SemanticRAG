@@ -1,0 +1,27 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Marca_CUTVARACT
+    a               ex:Parametro ;
+    rdfs:label      "Marca CUTVARACT" ;
+    ex:textoExtracto "El CNC activa esta marca cuando el usuario valida los parámetros de cutting de la tabla activa. El PLC debe desactivar esta marca cuando termina su gestión con estas variables." ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Sistema_CNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC" ;
+    ex:textoExtracto "El CNC activa esta marca cuando el usuario valida los parámetros de cutting de la tabla activa." .
+
+ex:Sistema_PLC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema PLC" ;
+    ex:textoExtracto "El PLC debe desactivar esta marca cuando termina su gestión con estas variables." ;
+    ex:controla     ex:Marca_CUTVARACT .
+
+ex:Subrutina_Cuttingon.fst
+    a               ex:Componente ;
+    rdfs:label      "Subrutina Cuttingon.fst" ;
+    ex:textoExtracto "Cuando la subrutina Cuttingon.fst sólo cambia el tipo de cutting (#CUTTING ON), el CNC no activa esta marca ya que la sincronización con el PLC es a través" ;
+    ex:documentadoEn ex:Manual_6.5 .

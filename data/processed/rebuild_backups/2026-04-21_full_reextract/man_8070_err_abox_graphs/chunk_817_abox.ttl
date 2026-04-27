@@ -1,0 +1,82 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Alarmas de diagnóstico de motor y parámetros
+ex:Alarma_9372
+    a ex:Alarma ;
+    rdfs:label "Nuevo motor detectado (9372)" ;
+    ex:textoExtracto "9372 Nuevo motor detectado. DETECCIÓN Durante el arranque o validación de los parámetros máquina. CAUSA Se ha cambiado el motor asociado a un eje. SOLUCIÓN Confirmar que el motor es correcto." ;
+    ex:identificador "9372" .
+
+ex:Alarma_9373
+    a ex:Alarma ;
+    rdfs:label "Mal función en Autophasing (9373)" ;
+    ex:textoExtracto "9373 Mal función en el comando de Autophasing. DETECCIÓN Durante la ejecución. CAUSA El Autophasing se ha deshabilitado durante el proceso o devuelve un resultado incoherente. SOLUCIÓN Revisar la habilitación del sistema y chequear el motor seleccionado." ;
+    ex:identificador "9373" .
+
+ex:Alarma_9375
+    a ex:Alarma ;
+    rdfs:label "Parametrización incompatible ABSFEEDBACK/M19SPDLEREV (9375)" ;
+    ex:textoExtracto "9375 Parametrización ABSFEEDBACK y M19SPDLEREV incompatible, posible pérdida de posición. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Los valores ABSFEEDBACK = YES y M19SPDLEREV = YES pueden llevar a una pérdida de cota si se aplica un cambio de SDPLEREV. SOLUCIÓN Parametrizar M19SPDLEREV=FALSE y utilizar los parámetros LOOPCH, AXISCH, PP55 para cambiar el signo." ;
+    ex:identificador "9375" .
+
+ex:Alarma_9376
+    a ex:Alarma ;
+    rdfs:label "Configuración incorrecta de ejes MOVAXIS (9376)" ;
+    ex:textoExtracto "9376 Todos los ejes lineales o todos rotativos y máximo 2 rotativos. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Los MOVAXIS introducidos en la tabla son incorrectos. SOLUCIÓN Revisar los parámetros MOVAXIS." ;
+    ex:identificador "9376" .
+
+ex:Alarma_9379
+    a ex:Alarma ;
+    rdfs:label "Error en captador Stegmann (9379)" ;
+    ex:textoExtracto "9379 Error en la ejecución del comando de acceso al captador Stegmann. DETECCIÓN Durante la ejecución. CAUSA Error durante el proceso. SOLUCIÓN Revisar los parámetros del comando, el conexionado y el estado y tipo de captador." ;
+    ex:identificador "9379" .
+
+ex:Alarma_9380
+    a ex:Alarma ;
+    rdfs:label "Correcciones duplicadas en tabla de compensación (9380)" ;
+    ex:textoExtracto "9380 No se permiten correcciones distintas para una misma posición. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA La tabla de compensación de husillo o una tabla de compensación cruzada del eje, tiene definidas distintas correcciones para una misma posición. SOLUCIÓN Revisar las tablas de compensación." ;
+    ex:identificador "9380" .
+
+ex:Alarma_9381
+    a ex:Alarma ;
+    rdfs:label "Límite de volantes HBH excedido (9381)" ;
+    ex:textoExtracto "9381 No se admite más de 1 volante tipo HBH. DETECCIÓN Durante la validación de los parámetros máquina." ;
+    ex:identificador "9381" .
+
+### Parámetros críticos mencionados
+ex:Parametro_ABSFEEDBACK
+    a ex:Parametro ;
+    rdfs:label "ABSFEEDBACK" ;
+    ex:textoExtracto "ABSFEEDBACK = YES" ;
+    ex:valor "YES" .
+
+ex:Parametro_M19SPDLEREV
+    a ex:Parametro ;
+    rdfs:label "M19SPDLEREV" ;
+    ex:textoExtracto "M19SPDLEREV = YES" ;
+    ex:valor "YES" .
+
+ex:Parametro_MOVAXIS
+    a ex:Parametro ;
+    rdfs:label "MOVAXIS" ;
+    ex:textoExtracto "Los MOVAXIS introducidos en la tabla son incorrectos." .
+
+### Relaciones entre alarmas y parámetros
+ex:Alarma_9375
+    ex:monitoreaParametro ex:Parametro_ABSFEEDBACK ;
+    ex:monitoreaParametro ex:Parametro_M19SPDLEREV .
+
+ex:Alarma_9376
+    ex:monitoreaParametro ex:Parametro_MOVAXIS .
+
+### Componente genérico (captador Stegmann)
+ex:Sensor_Stegmann
+    a ex:Sensor ;
+    rdfs:label "Captador Stegmann" ;
+    ex:textoExtracto "Error en la ejecución del comando de acceso al captador Stegmann." .
+
+ex:Alarma_9379
+    ex:monitoreaParametro ex:Sensor_Stegmann .

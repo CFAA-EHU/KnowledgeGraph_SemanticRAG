@@ -1,0 +1,49 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Accion_AparcarEje
+    a ex:AccionProhibida ;
+    rdfs:label "Aparcar eje"@es ;
+    ex:textoExtracto "El CNC no permitirá aparcar un eje en los siguientes casos..."@es .
+
+ex:Accion_AparcarCabezal
+    a ex:AccionProhibida ;
+    rdfs:label "Aparcar cabezal"@es ;
+    ex:textoExtracto "El CNC no permitirá aparcar un cabezal en los siguientes casos..."@es .
+
+ex:Senal_PARK
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal PARK"@es ;
+    ex:textoExtracto "El CNC utiliza las señales PARK y UNPARK para informar al PLC que se ha desencadenado el proceso correspondiente de aparcar o desaparcar."@es .
+
+ex:Senal_UNPARK
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal UNPARK"@es ;
+    ex:textoExtracto "El CNC utiliza las señales PARK y UNPARK para informar al PLC que se ha desencadenado el proceso correspondiente de aparcar o desaparcar."@es .
+
+ex:Comando_PARK
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando #PARK"@es ;
+    ex:identificador "#PARK" ;
+    ex:textoExtracto "La maniobra de aparcar/desaparcar ejes desde un programa pieza o MDI se controla mediante las sentencias de programación #PARK y #UNPARK."@es .
+
+ex:Comando_UNPARK
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando #UNPARK"@es ;
+    ex:identificador "#UNPARK" ;
+    ex:textoExtracto "La maniobra de aparcar/desaparcar ejes desde un programa pieza o MDI se controla mediante las sentencias de programación #PARK y #UNPARK."@es .
+
+ex:Condicion_HabilitacionEje
+    a ex:Parametro ;
+    rdfs:label "Señal de habilitación de eje/cabezal"@es ;
+    ex:valor "0" ;
+    ex:textoExtracto "Para poder aparcar un eje o cabezal, sus señales de habilitación tienen que estar (=0)."@es .
+
+ex:ModoOperacion_AparcadoAutomatico
+    a ex:ModoOperacion ;
+    rdfs:label "Park/Unpark desde CNC (automático)"@es ;
+    ex:textoExtracto "Este tipo de maniobra está indicado para aplicaciones que necesitan ejecutar el proceso de aparcar ejes o cabezales de forma automática, por ejemplo desde un programa pieza."@es ;
+    ex:ilustradoEn ex:Comando_PARK, ex:Comando_UNPARK ;
+    ex:activaAlarma ex:Senal_PARK, ex:Senal_UNPARK .

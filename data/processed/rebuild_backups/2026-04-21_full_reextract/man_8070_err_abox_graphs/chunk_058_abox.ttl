@@ -1,0 +1,26 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ErrorEscrituraArchivoCNC
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error de escritura en archivo CNC (#WRITE sin #OPEN)"@es ;
+    ex:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. [...] 0158 #WRITE necesita un #OPEN previo. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado escribir (#WRITE) en un archivo que no está abierto."@es ;
+    ex:identificador "0158" .
+
+ex:OperacionWrite
+    a ex:AccionProhibida ;
+    rdfs:label "Operación #WRITE sin archivo abierto"@es ;
+    ex:textoExtracto "#WRITE necesita un #OPEN previo."@es ;
+    ex:identificador "#WRITE" .
+
+ex:OperacionOpen
+    a ex:TareaMantenimiento ;
+    rdfs:label "Operación #OPEN (apertura de archivo)"@es ;
+    ex:textoExtracto "#WRITE necesita un #OPEN previo."@es ;
+    ex:identificador "#OPEN" .
+
+ex:ErrorEscrituraArchivoCNC
+    ex:solucionaFallo ex:OperacionWrite ;
+    ex:requiereMantenimiento ex:OperacionOpen .

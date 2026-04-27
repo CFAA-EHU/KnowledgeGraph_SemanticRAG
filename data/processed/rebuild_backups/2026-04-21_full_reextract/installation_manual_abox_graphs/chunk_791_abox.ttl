@@ -1,0 +1,90 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Se_al_EMERGENC1
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _EMERGENC1" ;
+    ex:textoExtracto "_EMERGENC1 (también se puede programar como _EMERGEN)" ;
+    ex:identificador "_EMERGENC1" .
+
+ex:Se_al_EMERGENC2
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _EMERGENC2" ;
+    ex:textoExtracto "_EMERGENC2" ;
+    ex:identificador "_EMERGENC2" .
+
+ex:Se_al_EMERGENC3
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _EMERGENC3" ;
+    ex:textoExtracto "_EMERGENC3" ;
+    ex:identificador "_EMERGENC3" .
+
+ex:Se_al_EMERGENC4
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _EMERGENC4" ;
+    ex:textoExtracto "_EMERGENC4" ;
+    ex:identificador "_EMERGENC4" .
+
+ex:Se_al_STOPC1
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _STOPC1" ;
+    ex:textoExtracto "_STOPC1 (también se puede programar como _STOP)" ;
+    ex:identificador "_STOPC1" .
+
+ex:Se_al_STOPC2
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _STOPC2" ;
+    ex:textoExtracto "_STOPC2" ;
+    ex:identificador "_STOPC2" .
+
+ex:Se_al_STOPC3
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _STOPC3" ;
+    ex:textoExtracto "_STOPC3" ;
+    ex:identificador "_STOPC3" .
+
+ex:Se_al_STOPC4
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _STOPC4" ;
+    ex:textoExtracto "_STOPC4" ;
+    ex:identificador "_STOPC4" .
+
+ex:Se_al_FEEDHOL
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _FEEDHOL" ;
+    ex:textoExtracto "Las señales _EMERGEN, _STOP, _FEEDHOL, _XFERINH y CYSTART deben estar definidas en el programa de PLC." ;
+    ex:identificador "_FEEDHOL" .
+
+ex:Se_al_XFERINH
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal _XFERINH" ;
+    ex:textoExtracto "Las señales _EMERGEN, _STOP, _FEEDHOL, _XFERINH y CYSTART deben estar definidas en el programa de PLC." ;
+    ex:identificador "_XFERINH" .
+
+ex:Se_al_CYSTART
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal CYSTART" ;
+    ex:textoExtracto "Las señales _EMERGEN, _STOP, _FEEDHOL, _XFERINH y CYSTART deben estar definidas en el programa de PLC. [...] el PLC debe activar la marca CYSTART." ;
+    ex:identificador "CYSTART" .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "el CNC detiene el avance de los ejes y el giro del cabezal, visualizando en la pantalla el error correspondiente. [...] el canal del CNC prohíbe la ejecución de programas y aborta cualquier intento de movimiento de los ejes o de cabezal." ;
+    ex:tieneComponente ex:Se_al_EMERGENC1, ex:Se_al_EMERGENC2, ex:Se_al_EMERGENC3, ex:Se_al_EMERGENC4,
+                       ex:Se_al_STOPC1, ex:Se_al_STOPC2, ex:Se_al_STOPC3, ex:Se_al_STOPC4,
+                       ex:Se_al_FEEDHOL, ex:Se_al_XFERINH, ex:Se_al_CYSTART .
+
+ex:AccionDetencionEmergencia
+    a ex:AccionProhibida ;
+    rdfs:label "Detención de emergencia por _EMERGEN" ;
+    ex:textoExtracto "Si el PLC pone esta marca a (=0), el CNC detiene el avance de los ejes y el giro del cabezal, visualizando en la pantalla el error correspondiente. [...] Mientras la marca _EMERGEN está a (=0) el canal del CNC prohíbe la ejecución de programas y aborta cualquier intento de movimiento de los ejes o de cabezal." ;
+    ex:activaAlarma ex:SistemaCNC .
+
+ex:AccionDetencionPrograma
+    a ex:AccionProhibida ;
+    rdfs:label "Detención de programa por _STOP" ;
+    ex:textoExtracto "Si el PLC pone esta marca a nivel lógico bajo, el canal del CNC detiene la ejecución del programa pieza." ;
+    ex:activaAlarma ex:SistemaCNC .

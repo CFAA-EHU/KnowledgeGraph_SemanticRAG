@@ -1,0 +1,46 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3714
+    a               ex:Alarma ;
+    rdfs:label      "Alarma 3714: Fallo en inicialización de control de par adicional"@es ;
+    ex:textoExtracto "CAUSA: El CNC no ha podido inicializar el control de par adicional porque la información de algún parámetro no está disponible. [...] 3714 No se pueden aparcar ejes gantry o tándem ni ejes habilitados con DRENA o SPENA"@es ;
+    ex:identificador "3714" .
+
+ex:Parametro_EjeTandem
+    a               ex:Parametro ;
+    rdfs:label      "Parámetros máquina del eje tándem"@es ;
+    ex:textoExtracto "Definir y validar los parámetros máquina del eje tándem"@es ;
+    ex:monitoreaParametro ex:Alarma_3714 .
+
+ex:Parametro_EjeEsclavo
+    a               ex:Parametro ;
+    rdfs:label      "Configuración de eje esclavo"@es ;
+    ex:textoExtracto "habilitar el eje esclavo y reseatear el CNC"@es ;
+    ex:monitoreaParametro ex:Alarma_3714 .
+
+ex:Sistema_EjesGantry
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de ejes gantry"@es ;
+    ex:textoExtracto "eje que forma parte de una pareja gantry"@es ;
+    ex:activaAlarma ex:Alarma_3714 .
+
+ex:Sistema_EjesTandem
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de ejes tándem"@es ;
+    ex:textoExtracto "eje o cabezal que forma parte de una pareja tándem"@es ;
+    ex:activaAlarma ex:Alarma_3714 .
+
+ex:ModoOperacion_DRENA
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo DRENA"@es ;
+    ex:textoExtracto "eje habilitado (DRENA/SPENA)"@es ;
+    ex:activaAlarma ex:Alarma_3714 .
+
+ex:ModoOperacion_SPENA
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo SPENA"@es ;
+    ex:textoExtracto "eje habilitado (DRENA/SPENA)"@es ;
+    ex:activaAlarma ex:Alarma_3714 .

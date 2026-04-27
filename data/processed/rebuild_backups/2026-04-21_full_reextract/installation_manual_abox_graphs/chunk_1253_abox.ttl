@@ -1,0 +1,21 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_R103 a ex:Parametro ;
+    rdfs:label "Registro R103 (Feed Override)" ;
+    ex:identificador "R103" ;
+    ex:textoExtracto "Ajustar el valor del registro R103; ignorar el sentido de giro del volante (signo) y limitar el valor al 120%." ;
+    ex:valor "0-120%" .
+
+ex:InterfazUsuario_CPS a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de Configuración CPS" ;
+    ex:textoExtracto "CPS R103 LT 0 = SBS 0 R103 R103 ; CPS R103 GT 120 = MOV 120 R103" ;
+    ex:monitoreaParametro ex:Parametro_R103 .
+
+ex:Sistema_DFU a ex:Sistema ;
+    rdfs:label "Sistema de Actualización de Feed Override (DFU)" ;
+    ex:identificador "CLK100" ;
+    ex:textoExtracto "DFU CLK100 = CNCWR (R103,PLC.FRO, M1001) ; Con el flanco de subida en el reloj CLK100, fijar el valor de feed override calculado." ;
+    ex:controla ex:Parametro_R103 .

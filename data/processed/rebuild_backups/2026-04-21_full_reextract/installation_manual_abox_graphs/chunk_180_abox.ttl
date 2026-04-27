@@ -1,0 +1,70 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_ConfiguracionEjesCanal a ex:Tabla ;
+     a ex:Tabla ;
+    ex:textoExtracto """
+| Plano. | Eje de abscisas. | Eje de ordenadas. | Eje longitudinal. |
+| --- | --- | --- | --- |
+| G17 | CHAXISNAME 1 | CHAXISNAME 2 | CHAXISNAME 3 |
+| G18 | CHAXISNAME 3 | CHAXISNAME 1 | CHAXISNAME 2 |
+| G19 | CHAXISNAME 2 | CHAXISNAME 3 | CHAXISNAME 1 |
+""" ;
+    rdfs:label "Tabla de configuración de ejes del canal (G17, G18, G19)"@es .
+
+ex:Parametro_GEOCONFIG
+    a ex:Parametro ;
+    ex:identificador "GEOCONFIG" ;
+    ex:textoExtracto "Configuración geométrica de los ejes del canal. Valores posibles: Plano / Triedro. Valor por defecto: Triedro. Variable asociada: (V.)[ch].MPG.GEOCONFIG"@es ;
+    ex:valor "Triedro" ;
+    rdfs:label "Parámetro GEOCONFIG (configuración geométrica de ejes)"@es .
+
+ex:Parametro_IPLANE
+    a ex:Parametro ;
+    ex:identificador "IPLANE" ;
+    ex:textoExtracto "El plano habitual de trabajo será G18 (si se ha configurado así en el parámetro IPLANE)."@es ;
+    rdfs:label "Parámetro IPLANE (plano de trabajo por defecto)"@es .
+
+ex:Funcion_G17 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    ex:identificador "G17" ;
+    ex:textoExtracto "Plano G17: CHAXISNAME 1 (abscisas), CHAXISNAME 2 (ordenadas), CHAXISNAME 3 (longitudinal)."@es ;
+    rdfs:label "Función G17 (selección de plano de trabajo)"@es .
+
+ex:Funcion_G18 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    ex:identificador "G18" ;
+    ex:textoExtracto "Plano G18: CHAXISNAME 3 (abscisas), CHAXISNAME 1 (ordenadas), CHAXISNAME 2 (longitudinal)."@es ;
+    rdfs:label "Función G18 (selección de plano de trabajo)"@es .
+
+ex:Funcion_G19 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    ex:identificador "G19" ;
+    ex:textoExtracto "Plano G19: CHAXISNAME 2 (abscisas), CHAXISNAME 3 (ordenadas), CHAXISNAME 1 (longitudinal)."@es ;
+    rdfs:label "Función G19 (selección de plano de trabajo)"@es .
+
+ex:Funcion_G20 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    ex:identificador "G20" ;
+    ex:textoExtracto "Con la función G20 podemos formar cualquier plano de trabajo con los ejes del canal."@es ;
+    rdfs:label "Función G20 (definición personalizada de plano de trabajo)"@es .
+
+ex:Tabla_ConfiguracionEjesCanal a ex:Tabla ;
+    ex:documentadoEn ex:Manual ;
+    ex:detalladoEnEsquema ex:Esquema_ConfiguracionTriedro , ex:Esquema_ConfiguracionPlano .
+
+ex:Esquema_ConfiguracionTriedro
+    a ex:Esquema ;
+    ex:textoExtracto "Configuración de ejes tipo 'triedro'. Y+ X+ Z+ Esta configuración dispone de tres ejes formando un triedro cartesiano tipo XYZ como en una fresadora."@es ;
+    rdfs:label "Esquema de configuración de ejes en triedro (XYZ)"@es .
+
+ex:Esquema_ConfiguracionPlano
+    a ex:Esquema ;
+    ex:textoExtracto "Configuración de ejes tipo 'plano'."@es ;
+    rdfs:label "Esquema de configuración de ejes en plano"@es .
+
+ex:Parametro_GEOCONFIG
+    ex:monitoreaParametro ex:Funcion_G17 , ex:Funcion_G18 , ex:Funcion_G19 ;
+    ex:documentadoEn ex:Manual .

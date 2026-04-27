@@ -8,9 +8,9 @@ if str(REPO_ROOT) not in sys.path:
 import argparse
 import json
 from collections import Counter
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 
-from rdflib import Graph, OWL, RDF, RDFS, URIRef
+from rdflib import BNode, Graph, OWL, RDF, RDFS, URIRef
 
 from artifact_contracts import ABOX_SEMANTIC_AUDIT_PATH, OPERATIONAL_ABOX_PATH, OPERATIONAL_TBOX_PATH
 
@@ -39,12 +39,18 @@ class SemanticValidationResult:
     subjects_without_type: int
     subjects_without_traceability: int
     weakly_linked_subjects: int
+    blank_node_entities: int
+    file_uri_entities: int
+    redundant_type_assertions: int
     error_categories: dict[str, int]
     invalid_class_values: list[list[object]]
     invalid_predicate_values: list[list[object]]
     sample_subjects_without_type: list[str]
     sample_subjects_without_traceability: list[str]
     sample_weakly_linked_subjects: list[str]
+    sample_blank_node_entities: list[str]
+    sample_file_uri_entities: list[str]
+    sample_redundant_type_entities: list[str]
 
     def to_manifest_summary(self) -> dict[str, object]:
         return {
@@ -56,12 +62,18 @@ class SemanticValidationResult:
             "subjects_without_type": self.subjects_without_type,
             "subjects_without_traceability": self.subjects_without_traceability,
             "weakly_linked_subjects": self.weakly_linked_subjects,
+            "blank_node_entities": self.blank_node_entities,
+            "file_uri_entities": self.file_uri_entities,
+            "redundant_type_assertions": self.redundant_type_assertions,
             "error_categories": self.error_categories,
             "invalid_class_values": self.invalid_class_values[:10],
             "invalid_predicate_values": self.invalid_predicate_values[:10],
             "sample_subjects_without_type": self.sample_subjects_without_type[:10],
             "sample_subjects_without_traceability": self.sample_subjects_without_traceability[:10],
             "sample_weakly_linked_subjects": self.sample_weakly_linked_subjects[:10],
+            "sample_blank_node_entities": self.sample_blank_node_entities[:10],
+            "sample_file_uri_entities": self.sample_file_uri_entities[:10],
+            "sample_redundant_type_entities": self.sample_redundant_type_entities[:10],
         }
 
 
@@ -93,18 +105,73 @@ def load_semantic_vocabulary(tbox_path: Path = OPERATIONAL_TBOX_PATH) -> Semanti
     )
 
 
+def _build_subclass_closure(graph: Graph) -> dict[str, set[str]]:
+    parents: dict[str, set[str]] = {}
+    for child, _, parent in graph.triples((None, RDFS.subClassOf, None)):
+        if isinstance(child, URIRef) and isinstance(parent, URIRef):
+            parents.setdefault(str(child), set()).add(str(parent))
+
+    closure: dict[str, set[str]] = {}
+
+    def visit(uri: str, seen: set[str] | None = None) -> set[str]:
+        if uri in closure:
+            return closure[uri]
+        seen = seen or set()
+        if uri in seen:
+            return set()
+        seen.add(uri)
+        ancestors = set(parents.get(uri, set()))
+        for parent_uri in list(ancestors):
+            ancestors |= visit(parent_uri, seen)
+        closure[uri] = ancestors
+        return ancestors
+
+    for uri in parents:
+        visit(uri)
+    return closure
+
+
 def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None = None) -> SemanticValidationResult:
     vocabulary = vocabulary or load_semantic_vocabulary()
+    tbox_graph = Graph()
+    tbox_graph.parse(OPERATIONAL_TBOX_PATH, format="turtle")
+    subclass_closure = _build_subclass_closure(tbox_graph)
 
     typed_subjects = {subject for subject in graph.subjects(RDF.type, None) if isinstance(subject, URIRef)}
     described_subjects = {subject for subject in graph.subjects() if isinstance(subject, URIRef)}
     candidate_subjects = typed_subjects.union(described_subjects)
+    blank_node_entities = sorted({str(subject) for subject in graph.subjects(RDF.type, None) if isinstance(subject, BNode)})
+    blank_node_entities.extend(
+        sorted(
+            {
+                str(node)
+                for node in graph.all_nodes()
+                if isinstance(node, BNode)
+                and any(True for predicate in (RDFS.label, URIRef(BASE_URI + "identificador"), TEXTO_EXTRACTO) for _ in graph.objects(node, predicate))
+            }
+        )
+    )
+    blank_node_entities = sorted(set(blank_node_entities))
+    file_uri_entities = sorted(
+        {
+            str(subject)
+            for subject in candidate_subjects
+            if str(subject).startswith("file:///")
+        }
+        | {
+            str(obj)
+            for obj in graph.objects()
+            if isinstance(obj, URIRef) and str(obj).startswith("file:///")
+        }
+    )
 
     invalid_classes: Counter[str] = Counter()
     invalid_predicates: Counter[str] = Counter()
     subjects_without_type: list[str] = []
     subjects_without_traceability: list[str] = []
     weakly_linked_subjects: list[str] = []
+    redundant_type_entities: list[str] = []
+    redundant_type_assertions = 0
 
     outgoing_object_links: dict[URIRef, int] = Counter()
     incoming_object_links: dict[URIRef, int] = Counter()
@@ -133,6 +200,13 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
             if useful_links == 0:
                 weakly_linked_subjects.append(str(subject))
 
+        subject_types = sorted({str(obj) for obj in graph.objects(subject, RDF.type) if isinstance(obj, URIRef)})
+        for type_uri in subject_types:
+            if any(type_uri in subclass_closure.get(other, set()) for other in subject_types if other != type_uri):
+                redundant_type_assertions += 1
+                redundant_type_entities.append(str(subject))
+                break
+
     error_categories: dict[str, int] = {}
     if invalid_classes:
         error_categories["non_canonical_class"] = sum(invalid_classes.values())
@@ -144,10 +218,24 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         error_categories["missing_traceability"] = len(subjects_without_traceability)
     if weakly_linked_subjects:
         error_categories["weak_linkage"] = len(weakly_linked_subjects)
+    if blank_node_entities:
+        error_categories["blank_node_entity"] = len(blank_node_entities)
+    if file_uri_entities:
+        error_categories["file_uri_entity"] = len(file_uri_entities)
+    if redundant_type_assertions:
+        error_categories["redundant_type_assertion"] = redundant_type_assertions
     if len(typed_subjects) > 1 and total_object_links == 0:
         error_categories["no_useful_links"] = len(typed_subjects)
 
-    hard_failure_keys = {"non_canonical_class", "non_canonical_property", "missing_type", "missing_traceability"}
+    hard_failure_keys = {
+        "non_canonical_class",
+        "non_canonical_property",
+        "missing_type",
+        "missing_traceability",
+        "blank_node_entity",
+        "file_uri_entity",
+        "redundant_type_assertion",
+    }
     ok = not any(key in error_categories for key in hard_failure_keys)
 
     return SemanticValidationResult(
@@ -159,12 +247,18 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         subjects_without_type=len(subjects_without_type),
         subjects_without_traceability=len(subjects_without_traceability),
         weakly_linked_subjects=len(weakly_linked_subjects),
+        blank_node_entities=len(blank_node_entities),
+        file_uri_entities=len(file_uri_entities),
+        redundant_type_assertions=redundant_type_assertions,
         error_categories=error_categories,
         invalid_class_values=[[ _local_name(uri), count ] for uri, count in invalid_classes.most_common(15)],
         invalid_predicate_values=[[ _local_name(uri), count ] for uri, count in invalid_predicates.most_common(15)],
         sample_subjects_without_type=[_local_name(uri) for uri in subjects_without_type[:15]],
         sample_subjects_without_traceability=[_local_name(uri) for uri in subjects_without_traceability[:15]],
         sample_weakly_linked_subjects=[_local_name(uri) for uri in weakly_linked_subjects[:15]],
+        sample_blank_node_entities=blank_node_entities[:15],
+        sample_file_uri_entities=[_local_name(uri) for uri in file_uri_entities[:15]],
+        sample_redundant_type_entities=[_local_name(uri) for uri in redundant_type_entities[:15]],
     )
 
 
@@ -200,6 +294,12 @@ def summarize_semantic_result(result: SemanticValidationResult) -> str:
         fragments.append("sin enlaces utiles")
     if result.weakly_linked_subjects:
         fragments.append(f"nodos poco enlazados={result.weakly_linked_subjects}")
+    if result.blank_node_entities:
+        fragments.append(f"blank_nodes_de_dominio={result.blank_node_entities}")
+    if result.file_uri_entities:
+        fragments.append(f"file_uris={result.file_uri_entities}")
+    if result.redundant_type_assertions:
+        fragments.append(f"tipos_redundantes={result.redundant_type_assertions}")
     return "A-Box semanticamente invalida: " + ", ".join(fragments)
 
 

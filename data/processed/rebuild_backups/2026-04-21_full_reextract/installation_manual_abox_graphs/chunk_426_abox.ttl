@@ -1,0 +1,33 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_REFFEED1
+    a ex:Parametro ;
+    rdfs:label "REFFEED1" ;
+    ex:identificador "REFFEED1" ;
+    ex:textoExtracto "Velocidad rápida de búsqueda de referencia. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:valor "1000.0000 mm/min / 39.37001 inch/min / 1000.0000 grados/min / 100.0000 rpm"^^xsd:string .
+
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
+    rdfs:label "REFFEED2" ;
+    ex:identificador "REFFEED2" ;
+    ex:textoExtracto "Velocidad lenta de búsqueda de referencia. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:valor "100.0000 mm/min / 3.93700 inch/min / 100.0000 grados/min / 10.0000 rpm"^^xsd:string .
+
+ex:Parametro_REFPULSE
+    a ex:Parametro ;
+    rdfs:label "REFPULSE" ;
+    ex:identificador "REFPULSE" ;
+    ex:textoExtracto "Tipo de impulso del I0." .
+
+ex:SistemaCaptacion
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación" ;
+    ex:textoExtracto "Cuando el sistema de captación no dispone de I0 codificado la búsqueda de referencia se ejecuta al avance indicado en REFFEED1 hasta que se pulsa el micro de referencia máquina, invierte el sentido a REFFEED2 y, tras despulsar el micro, continúa al avance indicado en REFFEED2 hasta que se recibe el impulso de I0 del sistema de captación." ;
+    ex:monitoreaParametro ex:Parametro_REFFEED1 ;
+    ex:monitoreaParametro ex:Parametro_REFFEED2 ;
+    ex:monitoreaParametro ex:Parametro_REFPULSE .

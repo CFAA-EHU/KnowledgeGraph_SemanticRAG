@@ -1,0 +1,24 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Parametro_PEAKDISP
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro PEAKDISP"@es ;
+    ex:identificador      "MPA.PEAKDISP[set].xn" ;
+    ex:textoExtracto      "Parámetro válido para regulador analógico y Sercos. [...] El parámetro PEAKDISP define la distancia real recorrida por el eje, después de la inversión de movimiento teórica"@es ;
+    ex:valor              "0.0050"^^xsd:string .  # Valor por defecto en contexto
+
+ex:Sistema_ReguladorAnalogicoSercos
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de regulador analógico y Sercos"@es ;
+    ex:textoExtracto      "Parámetro válido para regulador analógico y Sercos"@es ;
+    ex:tieneComponente     ex:Parametro_PEAKDISP .
+
+ex:ModoOperacion_ImpulsoAdicional
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo de impulso adicional de consigna"@es ;
+    ex:textoExtracto      "El CNC sólo tiene en cuenta este parámetro cuando trabaja con impulso adicional de consigna; parámetro BAKANOUT distinto de cero"@es ;
+    ex:controla           ex:Parametro_PEAKDISP .

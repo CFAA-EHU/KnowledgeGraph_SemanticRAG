@@ -1,0 +1,27 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Comando_CNCEX
+    a               ex:AccionProhibida ;
+    rdfs:label      "Comando CNCEX" ;
+    ex:textoExtracto "El comando CNCEX se ejecuta a través de una canal del CNC mientras que los comandos MOVE* se ejecutan directamente en el interpolador (habitualmente ejecución más rápida). No se recomienda utilizar ambas en el mismo programa o subrutina." ;
+    ex:identificador "CNCEX" .
+
+ex:Comando_MOVE_ADD
+    a               ex:AccionProhibida ;
+    rdfs:label      "Comando MOVE* (ejemplo: MOVE ADD)" ;
+    ex:textoExtracto "Los comandos MOVE* se ejecutan directamente en el interpolador (habitualmente ejecución más rápida). No se recomienda utilizar ambas en el mismo programa o subrutina. () = CNCEX(#MOVE ADD [X100,F100,NULL], M120,1) () =" ;
+    ex:identificador "MOVE ADD" .
+
+ex:Sistema_CNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC" ;
+    ex:textoExtracto "El comando CNCEX se ejecuta a través de una canal del CNC" ;
+    ex:tieneComponente ex:Interpolador_CNC .
+
+ex:Interpolador_CNC
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Interpolador del CNC" ;
+    ex:textoExtracto "los comandos MOVE* se ejecutan directamente en el interpolador (habitualmente ejecución más rápida)" .

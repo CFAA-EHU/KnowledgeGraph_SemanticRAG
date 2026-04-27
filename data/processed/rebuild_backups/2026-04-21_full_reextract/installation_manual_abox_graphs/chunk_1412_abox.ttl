@@ -1,0 +1,89 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_TG2
+    a                     ex:Parametro ;
+    rdfs:label            "Temporizador TG2 (retardo a la conexión)"@es ;
+    ex:textoExtracto      "Si TG2 baja antes de completar el tiempo, la temporización se cancela y t mantiene el valor alcanzado. [...] Diagrama del efecto de TEN en TG2: con el retardo en marcha, poner TEN=0 pausa la rampa de t; al devolver TEN=1, la temporización se reanuda."@es ;
+    ex:identificador      "TG2" .
+
+ex:Parametro_TEN_TG2
+    a                     ex:Parametro ;
+    rdfs:label            "Señal TEN para TG2 (enable)"@es ;
+    ex:textoExtracto      "con el retardo en marcha, poner TEN=0 pausa la rampa de t; al devolver TEN=1, la temporización se reanuda."@es ;
+    ex:identificador      "TEN" ;
+    ex:monitoreaParametro ex:Parametro_TG2 .
+
+ex:Parametro_t_TG2
+    a                     ex:Parametro ;
+    rdfs:label            "Valor temporal 't' en TG2"@es ;
+    ex:textoExtracto      "t mantiene el valor alcanzado [...] la rampa de t; al devolver TEN=1, la temporización se reanuda."@es ;
+    ex:identificador      "t" ;
+    ex:monitoreaParametro ex:Parametro_TG2 .
+
+ex:Parametro_T_TG2
+    a                     ex:Parametro ;
+    rdfs:label            "Salida T del temporizador TG2"@es ;
+    ex:textoExtracto      "Se muestran, en secuencia, los estados de TG2, TEN, t y T."@es ;
+    ex:identificador      "T" ;
+    ex:monitoreaParametro ex:Parametro_TG2 .
+
+ex:Parametro_TG3
+    a                     ex:Parametro ;
+    rdfs:label            "Temporizador TG3 (retardo a la desconexión)"@es ;
+    ex:textoExtracto      "tras un flanco de subida en TG3, T=1; el retardo comienza con el flanco de bajada de TG3 (t sube desde 0) y, al agotarse el tiempo, T pasa a 0."@es ;
+    ex:identificador      "TG3" .
+
+ex:Parametro_TEN_TG3
+    a                     ex:Parametro ;
+    rdfs:label            "Señal TEN para TG3 (enable)"@es ;
+    ex:textoExtracto      "con el retardo activo, TEN=0 pausa t; al restituir TEN=1, la cuenta continúa hasta completar la constante de tiempo."@es ;
+    ex:identificador      "TEN" ;
+    ex:monitoreaParametro ex:Parametro_TG3 .
+
+ex:Parametro_TRS_TG3
+    a                     ex:Parametro ;
+    rdfs:label            "Señal TRS para TG3 (reset)"@es ;
+    ex:textoExtracto      "un flanco de subida en TRS inicializa el temporizador (T=0, t=0) y exige una nueva activación por TG3 para reiniciar la secuencia."@es ;
+    ex:identificador      "TRS" ;
+    ex:monitoreaParametro ex:Parametro_TG3 .
+
+ex:Parametro_t_TG3
+    a                     ex:Parametro ;
+    rdfs:label            "Valor temporal 't' en TG3"@es ;
+    ex:textoExtracto      "el retardo comienza con el flanco de bajada de TG3 (t sube desde 0) [...] al agotarse el tiempo, T pasa a 0."@es ;
+    ex:identificador      "t" ;
+    ex:monitoreaParametro ex:Parametro_TG3 .
+
+ex:Parametro_T_TG3
+    a                     ex:Parametro ;
+    rdfs:label            "Salida T del temporizador TG3"@es ;
+    ex:textoExtracto      "tras un flanco de subida en TG3, T=1; [...] al agotarse el tiempo, T pasa a 0."@es ;
+    ex:identificador      "T" ;
+    ex:monitoreaParametro ex:Parametro_TG3 .
+
+ex:Figura_DiagramaTG2_TEN
+    a                     ex:Figura ;
+    rdfs:label            "Diagrama del efecto de TEN en TG2"@es ;
+    ex:textoExtracto      "Diagrama del efecto de TEN en TG2: con el retardo en marcha, poner TEN=0 pausa la rampa de t; al devolver TEN=1, la temporización se reanuda. Se muestran, en secuencia, los estados de TG2, TEN, t y T."@es ;
+    ex:ilustradoEn         ex:Parametro_TG2, ex:Parametro_TEN_TG2, ex:Parametro_t_TG2, ex:Parametro_T_TG2 .
+
+ex:Figura_DiagramaTG3_Desconexion
+    a                     ex:Figura ;
+    rdfs:label            "Diagrama del retardo a la desconexión (TG3)"@es ;
+    ex:textoExtracto      "Diagrama del retardo a la desconexión: tras un flanco de subida en TG3, T=1; el retardo comienza con el flanco de bajada de TG3 (t sube desde 0) y, al agotarse el tiempo, T pasa a 0."@es ;
+    ex:ilustradoEn         ex:Parametro_TG3, ex:Parametro_t_TG3, ex:Parametro_T_TG3 .
+
+ex:Figura_DiagramaTG3_TRS
+    a                     ex:Figura ;
+    rdfs:label            "Diagrama del efecto de TRS en TG3"@es ;
+    ex:textoExtracto      "Diagrama del efecto de TRS en TG3: un flanco de subida en TRS inicializa el temporizador (T=0, t=0) y exige una nueva activación por TG3 para reiniciar la secuencia. Se muestran claramente las relaciones entre TG3, TRS, t y T."@es ;
+    ex:ilustradoEn         ex:Parametro_TG3, ex:Parametro_TRS_TG3, ex:Parametro_t_TG3, ex:Parametro_T_TG3 .
+
+ex:Figura_DiagramaTG3_TEN
+    a                     ex:Figura ;
+    rdfs:label            "Diagrama del efecto de TEN en TG3"@es ;
+    ex:textoExtracto      "Diagrama del efecto de TEN en TG3: con el retardo activo, TEN=0 pausa t; al restituir TEN=1, la cuenta continúa hasta completar la constante de tiempo, tras lo cual T se desactiva."@es ;
+    ex:ilustradoEn         ex:Parametro_TG3, ex:Parametro_TEN_TG3, ex:Parametro_t_TG3, ex:Parametro_T_TG3 .

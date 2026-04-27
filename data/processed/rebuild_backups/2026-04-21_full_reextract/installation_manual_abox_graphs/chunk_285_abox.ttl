@@ -1,0 +1,59 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_AXISMODE
+    a ex:Parametro ;
+    rdfs:label "AXISMODE" ;
+    ex:textoExtracto "AXISMODE Modo de trabajo del eje rotativo. Parámetro válido para ejes rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Linearlike / Módulo. Valor por defecto: Módulo." ;
+    ex:identificador "V.[ch].MPA.AXISMODE.xn" ;
+    ex:valor "Módulo"@es .
+
+ex:Parametro_MODUPLIM
+    a ex:Parametro ;
+    rdfs:label "Límite superior de módulo (MODUPLIM)" ;
+    ex:textoExtracto "Los límites de módulo (límites de recorrido del eje rotativo) vienen fijados por los parámetros de gama MODUPLIM y MODLOWLIM." .
+
+ex:Parametro_MODLOWLIM
+    a ex:Parametro ;
+    rdfs:label "Límite inferior de módulo (MODLOWLIM)" ;
+    ex:textoExtracto "Los límites de módulo (límites de recorrido del eje rotativo) vienen fijados por los parámetros de gama MODUPLIM y MODLOWLIM." .
+
+ex:Parametro_SHORTESTWAY
+    a ex:Parametro ;
+    rdfs:label "SHORTESTWAY" ;
+    ex:textoExtracto "Hay que definir los parámetros SHORTESTWAY y UNIDIR." ;
+    ex:valor "No"@es .
+
+ex:Parametro_UNIDIR
+    a ex:Parametro ;
+    rdfs:label "UNIDIR" ;
+    ex:textoExtracto "Hay que definir los parámetros SHORTESTWAY y UNIDIR." ;
+    ex:valor "No"@es .
+
+ex:ModoOperacion_Modulo
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Módulo (eje rotativo)" ;
+    ex:textoExtracto "Comportamiento cuando AXISMODE = Módulo. El eje actúa como un eje rotativo. Se pueden programar desplazamientos en G0/G1 y G90/G91." .
+
+ex:ModoOperacion_Linearlike
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Linearlike" ;
+    ex:textoExtracto "Comportamiento cuando AXISMODE = Linearlike." .
+
+ex:Sistema_EjeRotativo
+    a ex:Sistema ;
+    rdfs:label "Sistema de eje rotativo" ;
+    ex:textoExtracto "AXISMODE Modo de trabajo del eje rotativo. Parámetro válido para ejes rotativos." ;
+    ex:tieneComponente ex:Parametro_AXISMODE ;
+    ex:tieneComponente ex:Parametro_MODUPLIM ;
+    ex:tieneComponente ex:Parametro_MODLOWLIM ;
+    ex:tieneComponente ex:Parametro_SHORTESTWAY ;
+    ex:tieneComponente ex:Parametro_UNIDIR .
+
+ex:ModoOperacion_Modulo
+    ex:documentadoEn ex:Sistema_EjeRotativo .
+
+ex:ModoOperacion_Linearlike
+    ex:documentadoEn ex:Sistema_EjeRotativo .

@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1569
+    a ex:Alarma ;
+    rdfs:label "Ejecución no permitida, el canal es exclusivo de PLC"@es ;
+    ex:identificador "1569" ;
+    ex:textoExtracto "1569 'Ejecución no permitida, el canal es exclusivo de PLC' DETECCIÓN Durante la ejecución. CAUSA Cuando el canal es sólo de PLC, el CNC no tiene permiso para ejecutar en él programas, bloques de MDI, movimientos de jog o cualquier otra acción desde el modo manual. SOLUCIÓN Si se desea ejecutar dichas acciones en ese canal habrá que configurarlo como canal de CNC o de CNC+PLC (parámetro CHTYPE)."@es .
+
+ex:Alarma_1570
+    a ex:Alarma ;
+    rdfs:label "No se permite G74 y movimiento del cabezal simultáneos"@es ;
+    ex:identificador "1570" ;
+    ex:textoExtracto "1570 'No se permite G74 y movimiento del cabezal simultáneos' DETECCIÓN Durante la ejecución. CAUSA En el mismo bloque hay programada una función M de movimiento de cabezal y la función G74 de búsqueda de cero. SOLUCIÓN Revisar la programación."@es .
+
+ex:Alarma_1571
+    a ex:Alarma ;
+    rdfs:label "No se admite el carácter '%' dentro de subrutina global"@es ;
+    ex:identificador "1571" ;
+    ex:textoExtracto "1571 'No se admite el carácter \"%\" dentro de subrutina global' DETECCIÓN Durante la ejecución. CAUSA Hay programado el carácter \"%\" dentro de una subrutina global, en una línea diferente a la de la definición del nombre de la subrutina. SOLUCIÓN Revisar la programación."@es .
+
+ex:Alarma_1572
+    a ex:Alarma ;
+    rdfs:label "Variable sólo accesible para su canal"@es ;
+    ex:identificador "1572" ;
+    ex:textoExtracto "1572 'Variable sólo accesible para su canal' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acceder a una variable de preparación de herramienta de otro canal (prefijo \"G\" o \"A\"). SOLUCIÓN Las únicas variables de herramientas accesibles desde otro canal son las asociadas al gestor (prefijo \"TM\")."@es .
+
+ex:Alarma_1573
+    a ex:Alarma ;
+    rdfs:label "Error capturando muestras de la variable"@es ;
+    ex:identificador "1573" ;
+    ex:textoExtracto "1573 'Error capturando muestras de la variable' DETECCIÓN Durante la ejecución. CAUSA Se ha producido un error mientras el osciloscopio intentaba leer el valor de la variable asignada a uno de sus canales. SOLUCIÓN Resetear el control y volver a capturar la traza."@es .
+
+ex:Alarma_1574
+    a ex:Alarma ;
+    rdfs:label "Parámetro no modificable desde el oscilo"@es ;
+    ex:identificador "1574" ;
+    ex:textoExtracto "1574 'Parámetro no modificable desde el oscilo' DETECCIÓN Durante la ejecución. CAUSA El usuario ha intentado modificar desde la pantalla del osciloscopio un parámetro máquina que no tiene permiso de escritura."@es .
+
+ex:Parametro_CHTYPE
+    a ex:Parametro ;
+    rdfs:label "Parámetro CHTYPE (tipo de canal CNC/PLC)"@es ;
+    ex:identificador "CHTYPE" ;
+    ex:textoExtracto "Si se desea ejecutar dichas acciones en ese canal habrá que configurarlo como canal de CNC o de CNC+PLC (parámetro CHTYPE)."@es ;
+    ex:mitigaRiesgo ex:Alarma_1569 .
+
+ex:InterfazUsuario_Osciloscopio
+    a ex:InterfazUsuario ;
+    rdfs:label "Pantalla del osciloscopio"@es ;
+    ex:textoExtracto "El usuario ha intentado modificar desde la pantalla del osciloscopio un parámetro máquina que no tiene permiso de escritura."@es ;
+    ex:activaAlarma ex:Alarma_1574 ;
+    ex:monitoreaParametro ex:Parametro_VariableOsciloscopio .
+
+ex:Parametro_VariableOsciloscopio
+    a ex:Parametro ;
+    rdfs:label "Variable asignada a canal del osciloscopio"@es ;
+    ex:textoExtracto "Se ha producido un error mientras el osciloscopio intentaba leer el valor de la variable asignada a uno de sus canales."@es ;
+    ex:activaAlarma ex:Alarma_1573 .

@@ -1,75 +1,111 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:XT1M a ex:InterfazUsuario ;
-    ex:textoExtracto "Diagrama matricial del bloque XT1M con filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico) y climatizador." ;
-    ex:tieneComponente ex:MotorRefrigerante, ex:MotorTrasvase, ex:MotorExtractor, ex:GrupoHidraulico, ex:Climatizador .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:MotorRefrigerante a ex:ComponenteElectrico ;
-    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
+ns1:XT1_1_4 a ns1:Esquema ;
+    rdfs:label "Plano de conexiones — XT1 (1/4)" ;
+    ns1:detalladoEnEsquema ns1:XT1M ;
+    ns1:textoExtracto "Diagrama matricial del bloque XT1M ... esquema de conexiones (no tabla de datos)." .
 
-ex:MotorTrasvase a ex:ComponenteElectrico ;
-    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
+ns1:XT1_2_4 a ns1:Esquema ;
+    rdfs:label "Plano de conexiones — XT1 (2/4)" ;
+    ns1:detalladoEnEsquema ns1:XT1 ;
+    ns1:textoExtracto "Vista de bornes XT1 con asignaciones a 0V/24V de distintos sistemas (API, CNC, PNL, S, SAFE) y señales de puertas, columna luminosa y motores." .
 
-ex:MotorExtractor a ex:ComponenteElectrico ;
-    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
+ns1:XT1_3_4 a ns1:Esquema ;
+    rdfs:label "Plano de conexiones — XT1 (3/4)" ;
+    ns1:detalladoEnEsquema ns1:XT1 ;
+    ns1:textoExtracto "Continuación de XT1 con líneas dedicadas a alimentaciones (24API/24CNC/24E/24EBC/24PNL/24S/24SAFE) y vínculos a servomotores (mesa e izquierda)." .
 
-ex:GrupoHidraulico a ex:ComponenteHidraulico ;
-    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
+ns1:XT1M a ns1:ComponenteElectrico ;
+    rdfs:label "XT1M" ;
+    ns1:compuestoPor ns1:borne_U,
+        ns1:borne_V,
+        ns1:borne_W,
+        ns1:climatizador,
+        ns1:grupo_hidraulico,
+        ns1:motor_extractor,
+        ns1:motor_refrigerante,
+        ns1:motor_trasvase ;
+    ns1:textoExtracto "Diagrama matricial del bloque XT1M con filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico) y climatizador." .
 
-ex:Climatizador a ex:ComponenteElectrico ;
-    ex:textoExtracto "filas etiquetadas U/V/W para motores (refrigerante, trasvase, extractor, grupo hidráulico) y climatizador." .
+ns1:borne_0V a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "asignaciones a 0V/24V" .
 
-ex:XT1 a ex:InterfazUsuario ;
-    ex:textoExtracto "Vista de bornes XT1 con asignaciones a 0V/24V de distintos sistemas (API, CNC, PNL, S, SAFE) y señales de puertas, columna luminosa y motores." ;
-    ex:tieneComponente ex:ColumnaLuminosa, ex:Motor, ex:Puerta ;
-    ex:compuestoPor ex:Borne0V, ex:Borne24V .
+ns1:borne_24V a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "asignaciones a 0V/24V" .
 
-ex:ColumnaLuminosa a ex:ComponenteElectrico ;
-    ex:textoExtracto "señales de ... columna luminosa" .
+ns1:borne_API a ns1:ComponenteElectrico ;
+    rdfs:label "borne API" ;
+    ns1:textoExtracto "asignaciones a ... sistemas (API, CNC, PNL, S, SAFE)" .
 
-ex:Motor a ex:ComponenteElectrico ;
-    ex:textoExtracto "señales de ... motores" .
+ns1:borne_CNC a ns1:ComponenteElectrico ;
+    rdfs:label "borne CNC" ;
+    ns1:textoExtracto "asignaciones a ... sistemas (API, CNC, PNL, S, SAFE)" .
 
-ex:Puerta a ex:ElementoSeguridad ;
-    ex:textoExtracto "señales de ... puertas" .
+ns1:borne_PNL a ns1:ComponenteElectrico ;
+    rdfs:label "borne PNL" ;
+    ns1:textoExtracto "asignaciones a ... sistemas (API, CNC, PNL, S, SAFE)" .
 
-ex:Borne0V a ex:ComponenteElectrico ;
-    ex:textoExtracto "asignaciones a 0V/24V de distintos sistemas" .
+ns1:borne_S a ns1:ComponenteElectrico ;
+    rdfs:label "borne S" ;
+    ns1:textoExtracto "asignaciones a ... sistemas (API, CNC, PNL, S, SAFE)" .
 
-ex:Borne24V a ex:ComponenteElectrico ;
-    ex:textoExtracto "asignaciones a 0V/24V de distintos sistemas" .
+ns1:borne_SAFE a ns1:ComponenteElectrico ;
+    rdfs:label "borne SAFE" ;
+    ns1:textoExtracto "asignaciones a ... sistemas (API, CNC, PNL, S, SAFE)" .
 
-ex:XT1_3_4 a ex:InterfazUsuario ;
-    ex:textoExtracto "Continuación de XT1 con líneas dedicadas a alimentaciones (24API/24CNC/24E/24EBC/24PNL/24S/24SAFE) y vínculos a servomotores (mesa e izquierda). Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety' y referencias cruzadas a páginas funcionales." ;
-    ex:tieneComponente ex:ServomotorMesa, ex:ServomotorIzquierda, ex:BorneAlimentacionEntradas, ex:BorneAlimentacionSalidas, ex:BorneAlimentacionSafety .
+ns1:borne_U a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "filas etiquetadas U/V/W para motores" .
 
-ex:ServomotorMesa a ex:ComponenteElectrico ;
-    ex:textoExtracto "vínculos a servomotores (mesa e izquierda)" .
+ns1:borne_V a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "filas etiquetadas U/V/W para motores" .
 
-ex:ServomotorIzquierda a ex:ComponenteElectrico ;
-    ex:textoExtracto "vínculos a servomotores (mesa e izquierda)" .
+ns1:borne_W a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "filas etiquetadas U/V/W para motores" .
 
-ex:BorneAlimentacionEntradas a ex:ComponenteElectrico ;
-    ex:textoExtracto "Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety'" .
+ns1:climatizador a ns1:ComponenteElectrico ;
+    rdfs:label "climatizador" ;
+    ns1:textoExtracto "motores (refrigerante, trasvase, extractor, grupo hidráulico) y climatizador" .
 
-ex:BorneAlimentacionSalidas a ex:ComponenteElectrico ;
-    ex:textoExtracto "Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety'" .
+ns1:grupo_hidraulico a ns1:ComponenteHidraulico ;
+    rdfs:label "grupo hidráulico" ;
+    ns1:textoExtracto "motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-ex:BorneAlimentacionSafety a ex:ComponenteElectrico ;
-    ex:textoExtracto "Se resaltan bornes de 'ALIMENTACIÓN ENTRADAS/SALIDAS/Safety'" .
+ns1:motor_extractor a ns1:ComponenteElectrico ;
+    rdfs:label "motor extractor" ;
+    ns1:textoExtracto "motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-ex:XT1_4_4 a ex:InterfazUsuario ;
-    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización), alimentaciones de panel y señales SAFE (puertas/escotilla). El diagrama ordena por grupos funcionales y muestra numeración correlativa (1104, 1117, 1204, etc.) para localizar físicamente cada borne." ;
-    ex:tieneComponente ex:Toma, ex:Iluminacion, ex:Climatizacion, ex:BorneSAFE ;
-    ex:identificador "1104", "1117", "1204" .
+ns1:motor_refrigerante a ns1:ComponenteElectrico ;
+    rdfs:label "motor refrigerante" ;
+    ns1:textoExtracto "motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-ex:Toma a ex:ComponenteElectrico ;
-    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización)" .
+ns1:motor_trasvase a ns1:ComponenteElectrico ;
+    rdfs:label "motor trasvase" ;
+    ns1:textoExtracto "motores (refrigerante, trasvase, extractor, grupo hidráulico)" .
 
-ex:Iluminacion a ex:ComponenteElectrico ;
-    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización)" .
+ns1:senal_columna_luminosa a ns1:Sensor ;
+    rdfs:label "señal columna luminosa" ;
+    ns1:textoExtracto "señales de ... columna luminosa" .
 
-ex:Climatizacion a ex:ComponenteElectrico ;
-    ex:textoExtracto "Asignaciones a I/O de máquina (tomas, iluminación, climatización)" .
+ns1:senal_motores a ns1:Sensor ;
+    rdfs:label "señal motores" ;
+    ns1:textoExtracto "señales de ... y motores" .
 
-ex:BorneSAFE a ex:ComponenteElectrico ;
-    ex:textoExtracto "señales SAFE (puertas/escotilla)" .
+ns1:senal_puertas a ns1:Sensor ;
+    rdfs:label "señal puertas" ;
+    ns1:textoExtracto "señales de puertas" .
+
+ns1:XT1 a ns1:ComponenteElectrico ;
+    rdfs:label "XT1" ;
+    ns1:compuestoPor ns1:borne_0V,
+        ns1:borne_24V,
+        ns1:borne_API,
+        ns1:borne_CNC,
+        ns1:borne_PNL,
+        ns1:borne_S,
+        ns1:borne_SAFE,
+        ns1:senal_columna_luminosa,
+        ns1:senal_motores,
+        ns1:senal_puertas ;
+    ns1:textoExtracto "Vista de bornes XT1 con asignaciones a 0V/24V de distintos sistemas (API, CNC, PNL, S, SAFE) y señales de puertas, columna luminosa y motores." .
+

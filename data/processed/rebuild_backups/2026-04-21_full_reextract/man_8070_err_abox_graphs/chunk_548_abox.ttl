@@ -1,0 +1,27 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_4632
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Node hardware ID desconocido"@es ;
+    ex:textoExtracto       "4632 Node hardware id desconocido. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno en la detección de nodos Sercos III."@es ;
+    ex:identificador       "4632" .
+
+ex:Fallo_ParametrosConexion
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Conexión no existente en parámetro CNC"@es ;
+    ex:textoExtracto       "DETECCIÓN Durante el arranque del CNC, la validación de parámetros máquina o tras un reset. CAUSA La conexión especificada en el parámetro no existe. SOLUCIÓN Revisar el apartado conexiones del CNC y comprobar que existen todas las conexiones que se van a utilizar."@es .
+
+ex:Parametro_ConexionCNC
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro de conexión CNC"@es ;
+    ex:textoExtracto       "La conexión especificada en el parámetro no existe."@es ;
+    ex:monitoreaParametro ex:Fallo_ParametrosConexion .
+
+ex:Sistema_SercosIII
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema Sercos III"@es ;
+    ex:textoExtracto       "Se ha producido un error interno en la detección de nodos Sercos III."@es ;
+    ex:activaAlarma        ex:Fallo_4632 .

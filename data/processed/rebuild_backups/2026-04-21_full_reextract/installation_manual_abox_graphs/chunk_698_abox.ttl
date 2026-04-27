@@ -1,0 +1,47 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ZonaTrabajo_2_Z1 a ex:AccionProhibida ;
+    rdfs:label "Zona prohibida en canal 2, Zona 1"@es ;
+    ex:textoExtracto "| [2].G.ZONEST[1] | Canal ꞏ2ꞏ. Zona 1. |"@es ;
+    ex:identificador "G.ZONEST[1]" .
+
+ex:LimiteSuperior_Z1_EjeZ a ex:Parametro ;
+    rdfs:label "Límite superior Zona 1 (Eje Z)"@es ;
+    ex:textoExtracto "A.ZONEUPLIM[1].Z | Eje Z. Zona 1."@es ;
+    ex:identificador "A.ZONEUPLIM[1].Z" .
+
+ex:LimiteSuperior_Z1_Eje4 a ex:Parametro ;
+    rdfs:label "Límite superior Zona 1 (Eje lógico 4)"@es ;
+    ex:textoExtracto "A.ZONEUPLIM[1].4 | Eje con número lógico ꞏ4ꞏ. Zona 1."@es ;
+    ex:identificador "A.ZONEUPLIM[1].4" .
+
+ex:LimiteSuperior_Z1_Eje1_Canal2 a ex:Parametro ;
+    rdfs:label "Límite superior Zona 1 (Eje 1, Canal 2)"@es ;
+    ex:textoExtracto "[2].A.ZONEUPLIM[1].1 | Eje con índice ꞏ1ꞏ en el canal ꞏ2ꞏ. Zona 1."@es ;
+    ex:identificador "A.ZONEUPLIM[1].1" .
+
+ex:LimiteInferior_Z1_EjeX a ex:Parametro ;
+    rdfs:label "Límite inferior Zona 1 (Eje X, 0 mm)"@es ;
+    ex:textoExtracto "MOV 0 R1 = CNCWR(R1, A.ZONELOWLIM[1].X, M1)"@es ;
+    ex:identificador "A.ZONELOWLIM[1].X" ;
+    ex:valor "0"^^xsd:integer .
+
+ex:LimiteSuperior_Z1_EjeX a ex:Parametro ;
+    rdfs:label "Límite superior Zona 1 (Eje X, 100 mm)"@es ;
+    ex:textoExtracto "MOV 1000000 R1 = CNCWR(R1, A.ZONEUPLIM[1].X, M1)"@es ;
+    ex:identificador "A.ZONEUPLIM[1].X" ;
+    ex:valor "1000000"^^xsd:integer .
+
+ex:ZonaProhibida_EjeX_0_100mm a ex:AccionProhibida ;
+    rdfs:label "Zona prohibida Eje X (0-100 mm)"@es ;
+    ex:textoExtracto "Ejemplo de activación de una zona de trabajo desde PLC [...] definir como zona prohibida del eje X la comprendida entre las cotas 0 y 100 mm"@es ;
+    ex:identificador "G.ZONEST[1]_EjeX" ;
+    ex:activaAlarma ex:ZonaTrabajo_2_Z1 .
+
+ex:SincronizacionZonasPLC a ex:ModoOperacion ;
+    rdfs:label "Sincronización de zonas entre PLC y programa pieza"@es ;
+    ex:textoExtracto "Sincronizar cambios en las zonas desde el programa pieza y el PLC. [...] Para asegurar la correcta sincronización de los cambios entre el programa pieza y el PLC, estos últimos deberían ejecutarse a través de subrutinas de interrupción."@es .

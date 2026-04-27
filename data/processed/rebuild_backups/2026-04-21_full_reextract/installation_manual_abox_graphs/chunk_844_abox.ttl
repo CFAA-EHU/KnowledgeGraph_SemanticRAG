@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:PLC_ControlCabezales
+    a ex:Sistema ;
+    rdfs:label "PLC de control de cabezales" ;
+    ex:textoExtracto "El PLC podrá modificar la velocidad del cabezal mediante la variable (V.)PLC.S.sn [...] Cuando el PLC activa una de estas marcas, el CNC activa la marca MSTROBE y escribe en el registro MFUN la función M correspondiente." ;
+    ex:controla ex:CNC_SistemaControl ;
+    ex:monitoreaParametro ex:Parametro_VelocidadCabezal .
+
+ex:CNC_SistemaControl
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "el CNC activa la marca MSTROBE y escribe en el registro MFUN la función M correspondiente. Tras finalizar la sincronización de la función M en el PLC (señal AUXEND), el CNC comienza a enviar consigna a dicho cabezal" ;
+    ex:controla ex:Cabezal_Generico ;
+    ex:monitoreaParametro ex:Parametro_AUTOGEAR .
+
+ex:Cabezal_Generico
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal (genérico)" ;
+    ex:textoExtracto "El PLC podrá modificar la velocidad del cabezal mediante la variable (V.)PLC.S.sn [...] el CNC comienza a enviar consigna a dicho cabezal" ;
+    ex:tieneComponente ex:ComponenteElectrico_SLIMITACSPDL .
+
+ex:Parametro_VelocidadCabezal
+    a ex:Parametro ;
+    rdfs:label "Velocidad del cabezal (V.)PLC.S.sn" ;
+    ex:textoExtracto "la velocidad del cabezal mediante la variable (V.)PLC.S.sn" ;
+    ex:identificador "V.PLC.S.sn" .
+
+ex:Parametro_AUTOGEAR
+    a ex:Parametro ;
+    rdfs:label "Parámetro AUTOGEAR (cambio de gama automático)" ;
+    ex:textoExtracto "sin generar un cambio de gama aunque éste sea automático (parámetro AUTOGEAR)" ;
+    ex:identificador "AUTOGEAR" .
+
+ex:Parametro_MSTROBE
+    a ex:Parametro ;
+    rdfs:label "Marca MSTROBE" ;
+    ex:textoExtracto "el CNC activa la marca MSTROBE y escribe en el registro MFUN la función M correspondiente" ;
+    ex:identificador "MSTROBE" .
+
+ex:Parametro_MFUN
+    a ex:Parametro ;
+    rdfs:label "Registro MFUN (función M)" ;
+    ex:textoExtracto "escribe en el registro MFUN la función M correspondiente" ;
+    ex:identificador "MFUN" .
+
+ex:Parametro_AUXEND
+    a ex:Parametro ;
+    rdfs:label "Señal AUXEND (fin de sincronización)" ;
+    ex:textoExtracto "Tras finalizar la sincronización de la función M en el PLC (señal AUXEND)" ;
+    ex:identificador "AUXEND" .
+
+ex:ComponenteElectrico_SLIMITACSPDL
+    a ex:ComponenteElectrico ;
+    rdfs:label "Marca SLIMITACSPDL (límite de velocidad por cabezal)" ;
+    ex:textoExtracto "SLIMITACSPDL [...] Hay una marca para cada cabezal." ;
+    ex:identificador "SLIMITACSPDL" .

@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MAXFEED
+    a ex:Parametro ;
+    rdfs:label "Parámetro MAXFEED" ;
+    ex:identificador "MPA.MAXFEED[set].xn" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.MAXFEED[set].xn. Este parámetro establece el avance máximo de mecanizado (movimientos en G01/G02/G03) del eje; si se define con valor ꞏ0ꞏ, no se limita el avance." ;
+    ex:valor "0"^^xsd:string .  # Valor por defecto según el texto
+
+ex:Parametro_G00FEED
+    a ex:Parametro ;
+    rdfs:label "Parámetro G00FEED" ;
+    ex:textoExtracto "Este parámetro no se podrá definir con un valor superior al del parámetro G00FEED. [...] el CNC asume como avance máximo para todos los desplazamientos el definido en el parámetro máquina G00FEED." ;
+    ex:monitoreaParametro ex:Parametro_MAXFEED .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "el CNC limita el avance al valor definido en MAXFEED sin mostrar ningún error ni warning. [...] el CNC asume como avance máximo para todos los desplazamientos el definido en el parámetro máquina G00FEED." ;
+    ex:controla ex:Parametro_MAXFEED ;
+    ex:controla ex:Parametro_G00FEED .
+
+ex:InterfazUsuario_PanelMando
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de mando" ;
+    ex:textoExtracto "desde el panel de mando, el CNC limita el avance al valor definido en MAXFEED" ;
+    ex:ilustradoEn ex:Sistema_CNC .
+
+ex:ModoOperacion_G00
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación G00 (avance rápido)" ;
+    ex:textoExtracto "avance máximo de mecanizado (movimientos en G01/G02/G03) del eje; [...] el CNC asume como avance máximo para todos los desplazamientos el definido en el parámetro máquina G00FEED." ;
+    ex:tieneFrecuencia ex:Parametro_G00FEED .
+
+ex:ModoOperacion_G01
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación G01 (interpolación lineal)" ;
+    ex:textoExtracto "avance máximo de mecanizado (movimientos en G01/G02/G03) del eje" ;
+    ex:tieneFrecuencia ex:Parametro_MAXFEED .
+
+ex:ModoOperacion_G02
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación G02 (interpolación circular horaria)" ;
+    ex:textoExtracto "avance máximo de mecanizado (movimientos en G01/G02/G03) del eje" ;
+    ex:tieneFrecuencia ex:Parametro_MAXFEED .
+
+ex:ModoOperacion_G03
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación G03 (interpolación circular antihoraria)" ;
+    ex:textoExtracto "avance máximo de mecanizado (movimientos en G01/G02/G03) del eje" ;
+    ex:tieneFrecuencia ex:Parametro_MAXFEED .

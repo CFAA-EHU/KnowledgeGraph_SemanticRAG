@@ -1,0 +1,100 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3756
+    a ex:Alarma ;
+    rdfs:label "Alarma 3756: RPS, tiempo de parámetro SSTIME alcanzado sin tensión de bus estable" ;
+    ex:textoExtracto "3756 RPS, tiempo de parámetro SSTIME alcanzado sin tener una tensión de bus estable. DETECCIÓN Al arrancar la maniobra de la RPS con las marcas PWSENAF y PWSENAS. CAUSA No se carga la tensión de bus en el tiempo estimado." ;
+    ex:identificador "3756" .
+
+ex:Alarma_3757
+    a ex:Alarma ;
+    rdfs:label "Alarma 3757: RPS, error en sincronización de placa sense" ;
+    ex:textoExtracto "3757 RPS, error en la ejecución del comando de sincronización de la placa sense. DETECCIÓN Al arrancar la maniobra de la RPS con las marcas PWSENAF y PWSENAS. CAUSA No se detecta tensión en alguna de las ramas de la placa sense durante el comando de sincronización." ;
+    ex:identificador "3757" .
+
+ex:Alarma_3758
+    a ex:Alarma ;
+    rdfs:label "Alarma 3758: RPS, regulador en error o estado incorrecto" ;
+    ex:textoExtracto "3758 RPS, regulador en error o en un estado incorrecto. DETECCIÓN Al arrancar la maniobra de la RPS con las marcas PWSENAF y PWSENAS. CAUSA El regulador se encuentra en error o en un estado no esperado por el CNC." ;
+    ex:identificador "3758" .
+
+ex:Alarma_3759
+    a ex:Alarma ;
+    rdfs:label "Alarma 3759: RPS, fallo en contactor (sobrecorriente en salida X12)" ;
+    ex:textoExtracto "3759 RPS, fallo en el control del contactor, sobrecorriente en la salida X12 freno-contactor. DETECCIÓN Al arrancar la maniobra de la RPS con las marcas PWSENAF y PWSENAS. CAUSA Sobrecorriente en la salida del freno-contactor." ;
+    ex:identificador "3759" .
+
+ex:Parametro_PLOOPRESOL
+    a ex:Parametro ;
+    rdfs:label "PLOOPRESOL" ;
+    ex:textoExtracto "Verificar el valor del parámetro PLOOPRESOL y la versión del regulador." ;
+    ex:identificador "PLOOPRESOL" .
+
+ex:Parametro_SSTIME
+    a ex:Parametro ;
+    rdfs:label "SSTIME" ;
+    ex:textoExtracto "Aumentar el tiempo SSTIME." ;
+    ex:identificador "SSTIME" .
+
+ex:ComponenteElectrico_PlacaSense
+    a ex:ComponenteElectrico ;
+    rdfs:label "Placa sense" ;
+    ex:textoExtracto "No se detecta tensión en alguna de las ramas de la placa sense durante el comando de sincronización." .
+
+ex:ComponenteElectrico_Conector_X60
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conector X60 (captación de tensión de línea)" ;
+    ex:textoExtracto "Revisar el conexionado, la placa sense, el conector X60 (captación de la tensión de línea) y el conector X11." ;
+    ex:identificador "X60" .
+
+ex:ComponenteElectrico_Conector_X11
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conector X11 (cable de potencia)" ;
+    ex:textoExtracto "Revisar el conexionado, la placa sense, el conector X60 (captación de la tensión de línea) y el conector X11 (cable de potencia X11)." ;
+    ex:identificador "X11" .
+
+ex:ComponenteElectrico_Salida_X12
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salida X12 (freno-contactor)" ;
+    ex:textoExtracto "Fallo en el control del contactor, sobrecorriente en la salida X12 freno-contactor." ;
+    ex:identificador "X12" .
+
+ex:Sistema_RPS
+    a ex:Sistema ;
+    rdfs:label "Sistema RPS" ;
+    ex:textoExtracto "Al arrancar la maniobra de la RPS con las marcas PWSENAF y PWSENAS." ;
+    ex:tieneComponente ex:ComponenteElectrico_PlacaSense , ex:ComponenteElectrico_Conector_X60 , ex:ComponenteElectrico_Conector_X11 , ex:ComponenteElectrico_Salida_X12 ;
+    ex:activaAlarma ex:Alarma_3756 , ex:Alarma_3757 , ex:Alarma_3758 , ex:Alarma_3759 .
+
+ex:DiagnosticoFallo_ReguladorIncompatible
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Regulador con versión incompatible para PLOOPRESOL" ;
+    ex:textoExtracto "El regulador no tiene la versión adecuada para el valor de PLOOPRESOL." ;
+    ex:solucionaFallo ex:Alarma_3756 .
+
+ex:DiagnosticoFallo_TensionBusInestable
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Tensión de bus no establecida en tiempo SSTIME" ;
+    ex:textoExtracto "No se carga la tensión de bus en el tiempo estimado." ;
+    ex:solucionaFallo ex:Alarma_3756 .
+
+ex:DiagnosticoFallo_SincronizacionPlacaSense
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo en sincronización de placa sense (sin tensión en ramas)" ;
+    ex:textoExtracto "No se detecta tensión en alguna de las ramas de la placa sense durante el comando de sincronización." ;
+    ex:solucionaFallo ex:Alarma_3757 .
+
+ex:DiagnosticoFallo_ReguladorEnError
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Regulador en error o estado no esperado" ;
+    ex:textoExtracto "El regulador se encuentra en error o en un estado no esperado por el CNC." ;
+    ex:solucionaFallo ex:Alarma_3758 .
+
+ex:DiagnosticoFallo_SobrecorrienteX12
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Sobrecorriente en salida X12 (freno-contactor)" ;
+    ex:textoExtracto "Sobrecorriente en la salida del freno-contactor." ;
+    ex:solucionaFallo ex:Alarma_3759 .

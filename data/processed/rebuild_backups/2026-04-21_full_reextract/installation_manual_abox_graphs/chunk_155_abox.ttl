@@ -1,0 +1,49 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_GAPSENSORFILTER a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla GAPSENSORFILTER" ;
+    ex:textoExtracto "GAPSENSORFILTER | --- | --- | ORDER | Orden del filtro. | TYPE | Tipo de filtro. | FREQUENCY | Frecuencia de corte." ;
+    ex:tieneComponente ex:Parametro_ORDER ;
+    ex:tieneComponente ex:Parametro_TYPE ;
+    ex:tieneComponente ex:Parametro_FREQUENCY ;
+    ex:tieneComponente ex:Parametro_GAPERRORCANCEL .
+
+ex:Parametro_ORDER
+    a ex:Parametro ;
+    rdfs:label "ORDER (Orden del filtro)" ;
+    ex:identificador "MPG.ORDER" ;
+    ex:textoExtracto "Orden del filtro. Valores posibles: De 0 a 50. Valor por defecto: 0 (no se aplica filtro). Variable asociada: (V.)MPG.ORDER. A mayor número de orden, mayor pendiente de atenuación. Se recomienda utilizar un orden 2." ;
+    ex:valor "0" .
+
+ex:Parametro_TYPE
+    a ex:Parametro ;
+    rdfs:label "TYPE (Tipo de filtro)" ;
+    ex:identificador "MPG.TYPE" ;
+    ex:textoExtracto "Tipo de filtro. Valores posibles: Paso bajo. Valor por defecto: Paso bajo. Variable asociada: (V.)MPG.TYPE. Un filtro paso bajo permite el paso de las frecuencias más bajas y atenúa las más altas." ;
+    ex:valor "Paso bajo" .
+
+ex:Parametro_FREQUENCY
+    a ex:Parametro ;
+    rdfs:label "FREQUENCY (Frecuencia de corte)" ;
+    ex:identificador "MPG.FREQUENCY" ;
+    ex:textoExtracto "Frecuencia de corte. Valores posibles: De 0 a 500.0000 Hz. Valor por defecto: 30.0000 Hz. Variable asociada: (V.)MPG.FREQUENCY. Frecuencia de corte del filtro. Se recomienda una valor de 30 Hz." ;
+    ex:valor "30.0000" .
+
+ex:Parametro_GAPERRORCANCEL
+    a ex:Parametro ;
+    rdfs:label "GAPERRORCANCEL (Anulación de error de gap)" ;
+    ex:identificador "MPG.GAPERRORCANCEL" ;
+    ex:textoExtracto "Anular el error de gap fuera del rango definido por GAPMIN/GAPMAX. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)MPG.GAPERRORCANCEL. El parámetro GAPERRORCANCEL establece el comportamiento del CNC cuando el gap sobrepasa el rango GAPMIN - GAPMAX." ;
+    ex:valor "No" .
+
+ex:Sensor_Gap
+    a ex:Sensor ;
+    rdfs:label "Sensor de gap" ;
+    ex:textoExtracto "GAP SENSOR POSITION FEEDBACK LOOP GAP P-GAIN V.G.GAP CUTOF FILTER" ;
+    ex:monitoreaParametro ex:Parametro_ORDER ;
+    ex:monitoreaParametro ex:Parametro_TYPE ;
+    ex:monitoreaParametro ex:Parametro_FREQUENCY .

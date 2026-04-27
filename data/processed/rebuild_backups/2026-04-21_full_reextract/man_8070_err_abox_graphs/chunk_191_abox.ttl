@@ -1,0 +1,29 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1470
+    a ex:Alarma ;
+    rdfs:label "Eje rotativo UNIDIR con programación incremental incorrecta"@es ;
+    ex:identificador "1470" ;
+    ex:textoExtracto "'Eje rotativo UNIDIR con programación incremental incorrecta' DETECCIÓN Durante la ejecución. CAUSA La cota incremental programada para el eje rotativo unidireccional (parámetro UNIDIR) no es válida."@es .
+
+ex:Parametro_UNIDIR
+    a ex:Parametro ;
+    rdfs:label "Parámetro máquina UNIDIR del eje rotativo"@es ;
+    ex:textoExtracto "parámetro máquina UNIDIR del eje rotativo"@es ;
+    ex:valor "POSITIVO/NEGATIVO"@es .
+
+ex:DiagnosticoFallo_1470
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico para alarma 1470"@es ;
+    ex:textoExtracto "Si el parámetro máquina UNIDIR del eje rotativo es POSITIVO la cota incremental programada debe ser positiva o nula. Si el parámetro máquina UNIDIR del eje rotativo es NEGATIVO la cota incremental programada debe ser negativa o nula."@es ;
+    ex:solucionaFallo ex:Alarma_1470 .
+
+ex:ComponenteMecanico_EjeRotativo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo unidireccional"@es ;
+    ex:textoExtracto "eje rotativo unidireccional"@es ;
+    ex:monitoreaParametro ex:Parametro_UNIDIR ;
+    ex:activaAlarma ex:Alarma_1470 .

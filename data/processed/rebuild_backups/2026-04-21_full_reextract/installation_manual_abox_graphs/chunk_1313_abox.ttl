@@ -1,0 +1,76 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:MesaRotativa_AB_TYPE9
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Mesa rotativa AB (TYPE=9)"@es ;
+    ex:textoExtracto "En este ejemplo se calculan las dimensiones de una mesa rotativa AB con un rango de movimientos del eje A -90º a 90º y del eje B de 0º a -90º; parámetro TYPE con valor ꞏ9ꞏ. [...] Dimensiones a calcular en una mesa rotativa AB (TYPE=9)."@es ;
+    ex:identificador "TYPE=9" ;
+    ex:tieneComponente ex:EjeRotativo_Primario_AB, ex:EjeRotativo_Secundario_AB ;
+    ex:monitoreaParametro ex:Parametro_TDATA2, ex:Parametro_TDATA3, ex:Parametro_TDATA4, ex:Parametro_TDATA5 .
+
+ex:EjeRotativo_Primario_AB
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje rotativo primario (eje A)"@es ;
+    ex:textoExtracto "rango de movimientos del eje A -90º a 90º"@es .
+
+ex:EjeRotativo_Secundario_AB
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje rotativo secundario (eje B)"@es ;
+    ex:textoExtracto "rango de movimientos del eje B de 0º a -90º"@es .
+
+ex:Palpador_CNC
+    a               ex:Sensor ;
+    rdfs:label      "Palpador para CNC"@es ;
+    ex:textoExtracto "Los parámetros máquina asociados al movimiento del palpador deben estar definidos y el palpador debe estar correctamente calibrado. Hay que conocer la longitud (L) y el radio (R) del palpador para calcular las dimensiones del cabezal."@es ;
+    ex:requiereMantenimiento ex:CalibracionPalpador ;
+    ex:monitoreaParametro ex:Parametro_LongitudPalpador, ex:Parametro_RadioPalpador .
+
+ex:Parametro_LongitudPalpador
+    a               ex:Parametro ;
+    rdfs:label      "Longitud del palpador (L)"@es ;
+    ex:textoExtracto "Hay que conocer la longitud (L) [...] del palpador"@es ;
+    ex:valor         "L" .
+
+ex:Parametro_RadioPalpador
+    a               ex:Parametro ;
+    rdfs:label      "Radio del palpador (R)"@es ;
+    ex:textoExtracto "Hay que conocer [...] el radio (R) del palpador"@es ;
+    ex:valor         "R" .
+
+ex:CalibracionPalpador
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Calibración del palpador"@es ;
+    ex:textoExtracto "el palpador debe estar correctamente calibrado"@es .
+
+ex:Parametro_TDATA2
+    a               ex:Parametro ;
+    rdfs:label      "TDATA2 (Posición eje secundario en X)"@es ;
+    ex:textoExtracto "TDATA2 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje X."@es ;
+    ex:valor         "TDATA2" .
+
+ex:Parametro_TDATA3
+    a               ex:Parametro ;
+    rdfs:label      "TDATA3 (Posición eje secundario en Y)"@es ;
+    ex:textoExtracto "TDATA3 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje Y."@es ;
+    ex:valor         "TDATA3" .
+
+ex:Parametro_TDATA4
+    a               ex:Parametro ;
+    rdfs:label      "TDATA4 (Posición eje secundario en Z)"@es ;
+    ex:textoExtracto "TDATA4 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje Z."@es ;
+    ex:valor         "TDATA4" .
+
+ex:Parametro_TDATA5
+    a               ex:Parametro ;
+    rdfs:label      "TDATA5 (Distancia entre ejes rotativos)"@es ;
+    ex:textoExtracto "TDATA5 Indica la distancia entre el eje rotativo secundario y el principal."@es ;
+    ex:valor         "TDATA5" .
+
+ex:Aviso_FalloPalpador
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Riesgo de ruptura del palpador por falta de activación"@es ;
+    ex:textoExtracto "Si se realiza un movimiento de palpación sin activar el palpador, éste no enviará ninguna señal al CNC cuando haga contacto. Esta circunstancia puede ocasionar la ruptura del palpador, ya que no se detendrá el movimiento de palpación."@es ;
+    ex:mitigaRiesgo ex:CalibracionPalpador .

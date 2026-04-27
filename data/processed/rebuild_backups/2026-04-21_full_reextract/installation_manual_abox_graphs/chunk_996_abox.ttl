@@ -1,0 +1,63 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:RutinaM06 a ex:ModoOperacion ;
+    rdfs:label "Rutina M06 (Cambio de herramienta)"@es ;
+    ex:textoExtracto "$BREAK $CASE 2 ; Dejar la herramienta del cabezal en el almacén... $BREAK $CASE 3 ; Colocar la herramienta de tierra en el cabezal."@es ;
+    ex:identificador "M06" .
+
+ex:Subrutina_SPD_AUTCHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_AUTCHG (Llevar cabezal a punto de cambio automático)"@es ;
+    ex:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático."@es ;
+    ex:identificador "SUB_SPD_AUTCHG" .
+
+ex:Subrutina_ARM_TO_CHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_ARM_TO_CHG (Llevar brazo cambiador a punto de cambio)"@es ;
+    ex:textoExtracto "LL SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio."@es ;
+    ex:identificador "SUB_ARM_TO_CHG" .
+
+ex:Subrutina_SPD_TO_CH2 a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_TO_CH2 (Coger herramienta con pinza 2)"@es ;
+    ex:textoExtracto "LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2."@es ;
+    ex:identificador "SUB_SPD_TO_CH2" .
+
+ex:Subrutina_ARM_BACK a ex:TareaMantenimiento ;
+    rdfs:label "SUB_ARM_BACK (Retirar brazo cambiador)"@es ;
+    ex:textoExtracto "LL SUB_ARM_BACK ; Retirar el brazo cambiador."@es ;
+    ex:identificador "SUB_ARM_BACK" .
+
+ex:Subrutina_CH2_TO_MZ a ex:TareaMantenimiento ;
+    rdfs:label "SUB_CH2_TO_MZ (Enviar herramienta al almacén)"@es ;
+    ex:textoExtracto "LL SUB_CH2_TO_MZ ; Comenzar el envío del brazo cambiador al almacén para dejar la herramienta de la pinza 2."@es ;
+    ex:identificador "SUB_CH2_TO_MZ" .
+
+ex:Subrutina_SPD_GMCHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_GMCHG (Llevar cabezal a punto de cambio manual)"@es ;
+    ex:textoExtracto "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual."@es ;
+    ex:identificador "SUB_SPD_GMCHG" .
+
+ex:Subrutina_GR_TO_SPD a ex:TareaMantenimiento ;
+    rdfs:label "SUB_GR_TO_SPD (Colocar herramienta de tierra en cabezal)"@es ;
+    ex:textoExtracto "LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el"@es ;
+    ex:identificador "SUB_GR_TO_SPD" .
+
+ex:Senal_TCHANGEOK a ex:Parametro ;
+    rdfs:label "Marca TCHANGEOK (Confirmación de cambio de herramienta)"@es ;
+    ex:textoExtracto "V.PLC.M[1100]=1 ; Orden al PLC para que active la marca TCHANGEOK, indicando al gestor que puede continuar la ejecución."@es ;
+    ex:identificador "TCHANGEOK" ;
+    ex:valor "1" .
+
+ex:PLC a ex:Sistema ;
+    rdfs:label "PLC (Controlador lógico programable)"@es ;
+    ex:textoExtracto "V.PLC.M[1100]=1 ; Orden al PLC para que active la marca TCHANGEOK..."@es ;
+    ex:controla ex:Senal_TCHANGEOK .
+
+ex:RutinaM06 ex:compuestoPor ex:Subrutina_SPD_AUTCHG ,
+    ex:Subrutina_ARM_TO_CHG ,
+    ex:Subrutina_SPD_TO_CH2 ,
+    ex:Subrutina_ARM_BACK ,
+    ex:Subrutina_CH2_TO_MZ ,
+    ex:Subrutina_SPD_GMCHG ,
+    ex:Subrutina_GR_TO_SPD .

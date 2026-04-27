@@ -1,0 +1,78 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error2492
+    a                     ex:AvisoSeguridad ;
+    ex:identificador      "2492" ;
+    rdfs:label            "Comodín no permitido fuera de la subrutina asociada a #CAX"@es ;
+    ex:textoExtracto      "2492 Comodín no permitido fuera de la subrutina asociada a #CAX. DETECCIÓN Durante la ejecución. CAUSA Se ha programado el comodín @S o @C fuera de la subrutina asociada a la sentencia #CAX (parámetro máquina CAXSUB). SOLUCIÓN Revisar la programación. No se permite el uso de estos comodines fuera de la subrutina asociada a #CAX."@es .
+
+ex:Error2493
+    a                     ex:AvisoSeguridad ;
+    ex:identificador      "2493" ;
+    rdfs:label            "#FACE/CYL: se espera 'Q', programación del origen del eje C, en grados"@es ;
+    ex:textoExtracto      "2493 #FACE/CYL: se espera 'Q', programación del origen del eje C, en grados. DETECCIÓN Durante la ejecución. CAUSA No se ha programado el origen del eje C en la instrucción #FACECYL. SOLUCIÓN Revisar la programación."@es .
+
+ex:ParametroCAXSUB
+    a                     ex:Parametro ;
+    ex:identificador      "CAXSUB" ;
+    rdfs:label            "Parámetro máquina CAXSUB"@es ;
+    ex:textoExtracto      "parámetro máquina CAXSUB"@es ;
+    ex:monitoreaParametro ex:Error2492 .
+
+ex:ParametroFACECYL_Q
+    a                     ex:Parametro ;
+    ex:identificador      "Q" ;
+    rdfs:label            "Parámetro 'Q' para origen del eje C en #FACECYL"@es ;
+    ex:textoExtracto      "se espera 'Q', programación del origen del eje C, en grados"@es ;
+    ex:monitoreaParametro ex:Error2493 .
+
+ex:InstruccionFACECYL
+    a                     ex:InterfazUsuario ;
+    ex:identificador      "#FACECYL" ;
+    rdfs:label            "Instrucción #FACECYL para programación de eje C"@es ;
+    ex:textoExtracto      "instrucción #FACECYL"@es ;
+    ex:controla           ex:ParametroFACECYL_Q .
+
+ex:InstruccionCAX
+    a                     ex:InterfazUsuario ;
+    ex:identificador      "#CAX" ;
+    rdfs:label            "Instrucción #CAX con subrutina asociada"@es ;
+    ex:textoExtracto      "subrutina asociada a la sentencia #CAX"@es ;
+    ex:controla           ex:ParametroCAXSUB .
+
+ex:InstruccionDMC_ON
+    a                     ex:InterfazUsuario ;
+    ex:identificador      "#DMC ON" ;
+    rdfs:label            "Instrucción #DMC ON con parámetros opcionales"@es ;
+    ex:textoExtracto      "#DMC ON [<PWRSP> <,OVRMIN> <,OVRMAX> <,FZMIN>"@es .
+
+ex:ParametroPWRSP
+    a                     ex:Parametro ;
+    ex:identificador      "PWRSP" ;
+    rdfs:label            "Parámetro PWRSP en instrucción #DMC ON"@es ;
+    ex:textoExtracto      "PWRSP"@es ;
+    ex:monitoreaParametro ex:InstruccionDMC_ON .
+
+ex:ParametroOVRMIN
+    a                     ex:Parametro ;
+    ex:identificador      "OVRMIN" ;
+    rdfs:label            "Parámetro OVRMIN en instrucción #DMC ON"@es ;
+    ex:textoExtracto      "OVRMIN"@es ;
+    ex:monitoreaParametro ex:InstruccionDMC_ON .
+
+ex:ParametroOVRMAX
+    a                     ex:Parametro ;
+    ex:identificador      "OVRMAX" ;
+    rdfs:label            "Parámetro OVRMAX en instrucción #DMC ON"@es ;
+    ex:textoExtracto      "OVRMAX"@es ;
+    ex:monitoreaParametro ex:InstruccionDMC_ON .
+
+ex:ParametroFZMIN
+    a                     ex:Parametro ;
+    ex:identificador      "FZMIN" ;
+    rdfs:label            "Parámetro FZMIN en instrucción #DMC ON"@es ;
+    ex:textoExtracto      "FZMIN"@es ;
+    ex:monitoreaParametro ex:InstruccionDMC_ON .

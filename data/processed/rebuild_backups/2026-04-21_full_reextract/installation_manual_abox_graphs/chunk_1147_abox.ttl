@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_FILTER
+    a ex:Parametro ;
+    rdfs:label "FILTER" ;
+    ex:textoExtracto "el parámetro FILTER se suman a los efectos de los filtros activos en HSC" ;
+    ex:monitoreaParametro ex:ModoOperacion_HSC .
+
+ex:Parametro_HSCFILTFREQ
+    a ex:Parametro ;
+    rdfs:label "HSCFILTFREQ" ;
+    ex:textoExtracto "parámetro HSCFILTFREQ para el modo CONTERROR" ;
+    ex:monitoreaParametro ex:ModoOperacion_CONTERROR .
+
+ex:Parametro_FASTFACTOR
+    a ex:Parametro ;
+    rdfs:label "FASTFACTOR" ;
+    ex:textoExtracto "el porcentaje definido en el parámetro FASTFACTOR. Este parámetro afecta directamente a la velocidad de paso por las esquinas" ;
+    ex:monitoreaParametro ex:ModoOperacion_FAST .
+
+ex:Parametro_FASTFILTFREQ
+    a ex:Parametro ;
+    rdfs:label "FASTFILTFREQ" ;
+    ex:textoExtracto "La frecuencia de este filtro para todos los ejes se parametriza en el parámetro FASTFILTFREQ" ;
+    ex:monitoreaParametro ex:ModoOperacion_FAST .
+
+ex:Parametro_LACC1
+    a ex:Parametro ;
+    rdfs:label "LACC1" ;
+    ex:textoExtracto "el porcentaje de avance a aplicar, sobre el máximo que es capaz de alcanzar el CNC en función de como se hayan parametrizado los parámetros LACC1 y LACC2" .
+
+ex:Parametro_LACC2
+    a ex:Parametro ;
+    rdfs:label "LACC2" ;
+    ex:textoExtracto "el porcentaje de avance a aplicar, sobre el máximo que es capaz de alcanzar el CNC en función de como se hayan parametrizado los parámetros LACC1 y LACC2" .
+
+ex:Parametro_SLOPETYPE
+    a ex:Parametro ;
+    rdfs:label "SLOPETYPE" ;
+    ex:textoExtracto "Este modo utiliza aceleración lineal, independientemente de lo definido en el parámetro SLOPETYPE" ;
+    ex:monitoreaParametro ex:ModoOperacion_FAST .
+
+ex:ModoOperacion_HSC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo HSC" ;
+    ex:textoExtracto "Mecanizado HSC optimizando el avance (modo FAST). Es el modo recomendado de trabajo en las siguientes circunstancias" .
+
+ex:ModoOperacion_CONTERROR
+    a ex:ModoOperacion ;
+    rdfs:label "Modo CONTERROR" ;
+    ex:textoExtracto "parámetro HSCFILTFREQ para el modo CONTERROR. Cuando el error con el que se ha generado la pieza no es considerablemente inferior al error que se pretende pedir al modo CONTERROR" .
+
+ex:ModoOperacion_FAST
+    a ex:ModoOperacion ;
+    rdfs:label "Modo FAST" ;
+    ex:textoExtracto "Mecanizado HSC optimizando el avance (modo FAST). En el modo FAST se logra una superficie mecanizada más suave y una velocidad más continua" ;
+    ex:tieneComponente ex:Parametro_FASTFACTOR, ex:Parametro_FASTFILTFREQ .

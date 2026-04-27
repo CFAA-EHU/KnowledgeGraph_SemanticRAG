@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_8502
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Interpolación circular en polares: radio no admitido" ;
+    ex:identificador "8502" ;
+    ex:textoExtracto "'La interpolación circular en polares no admite radio' [...] Error al programar en lenguaje del 8055. La interpolación circular en polares no admite la programación del radio; sólo admite el parámetro Q." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Programar radio en interpolación polar (solo parámetro Q permitido)" ;
+        ex:textoExtracto "La interpolación circular en polares no admite la programación del radio; sólo admite el parámetro Q."
+    ] .
+
+ex:DiagnosticoFallo_8503
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Falta cota final de movimiento" ;
+    ex:identificador "8503" ;
+    ex:textoExtracto "'Falta programar la cota final del movimiento' [...] Falta la cota final de movimiento en G8, G9 o G33." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Omitir cota final en comandos G8, G9 o G33" ;
+        ex:textoExtracto "Falta la cota final de movimiento en G8, G9 o G33."
+    ] .
+
+ex:Parametro_Q
+    a ex:Parametro ;
+    rdfs:label "Parámetro Q (radio implícito en interpolación polar)" ;
+    ex:textoExtracto "sólo admite el parámetro Q" ;
+    ex:monitoreaParametro ex:DiagnosticoFallo_8502 .
+
+ex:Manual_8055
+    a ex:Manual ;
+    rdfs:label "Manual de programación 8055" ;
+    ex:identificador "8055" ;
+    ex:textoExtracto "Consultar en el manual del 8055 la sintaxis correcta" ;
+    ex:documentadoEn ex:DiagnosticoFallo_8502, ex:DiagnosticoFallo_8503 .

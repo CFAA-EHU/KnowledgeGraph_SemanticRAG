@@ -1,0 +1,80 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_G171
+    a ex:Parametro ;
+    rdfs:label "G171 (función eje Hirth)" ;
+    ex:textoExtracto "G171 indican si se desea que el eje trabaje como eje Hirth (G171, función por defecto) o como un eje rotativo o lineal normal (G170)." ;
+    ex:identificador "G171" .
+
+ex:Parametro_G170
+    a ex:Parametro ;
+    rdfs:label "G170 (función eje normal)" ;
+    ex:textoExtracto "G171 indican si se desea que el eje trabaje como eje Hirth (G171, función por defecto) o como un eje rotativo o lineal normal (G170)." ;
+    ex:identificador "G170" .
+
+ex:Parametro_MATCH_axis
+    a ex:Parametro ;
+    rdfs:label "MATCH(axis)" ;
+    ex:textoExtracto "La marca MATCH(axis) indica si el eje Hirth está bien posicionado (=1) o no (=0)." ;
+    ex:identificador "MATCH(axis)" .
+
+ex:Parametro_LUBR_axis
+    a ex:Parametro ;
+    rdfs:label "LUBR(axis)" ;
+    ex:textoExtracto "El CNC pone esta marca a (=1) cuando el eje o cabezal correspondiente debe ser engrasado." ;
+    ex:identificador "LUBR(axis)" .
+
+ex:Parametro_DISTLUBRI
+    a ex:Parametro ;
+    rdfs:label "DISTLUBRI (distancia para engrasado)" ;
+    ex:textoExtracto "El parámetro máquina DISTLUBRI indica la distancia que se debe mover antes de ser engrasado." ;
+    ex:identificador "DISTLUBRI" .
+
+ex:Parametro_LUBRENA_axis
+    a ex:Parametro ;
+    rdfs:label "LUBRENA(axis)" ;
+    ex:textoExtracto "Ver en la página 449. \"LUBRENA(axis) LUBROK(axis)\"" ;
+    ex:identificador "LUBRENA(axis)" .
+
+ex:Parametro_LUBROK_axis
+    a ex:Parametro ;
+    rdfs:label "LUBROK(axis)" ;
+    ex:textoExtracto "Ver en la página 449. \"LUBRENA(axis) LUBROK(axis)\"" ;
+    ex:identificador "LUBROK(axis)" .
+
+ex:Parametro_PARK_axis
+    a ex:Parametro ;
+    rdfs:label "PARK(axis)" ;
+    ex:textoExtracto "El CNC pone la marca PARK(axis) a (=1) para indicar que se está aparcando un eje o cabezal." ;
+    ex:identificador "PARK(axis)" .
+
+ex:Parametro_UNPARK_axis
+    a ex:Parametro ;
+    rdfs:label "UNPARK(axis)" ;
+    ex:textoExtracto "El CNC pone la marca UNPARK(axis) a (=1) para indicar que se está desaparcando." ;
+    ex:identificador "UNPARK(axis)" .
+
+ex:Parametro_PARKED_axis
+    a ex:Parametro ;
+    rdfs:label "PARKED(axis)" ;
+    ex:textoExtracto "También se emplea la marca PARKED(axis), que es modificable y está comentada más adelante." ;
+    ex:identificador "PARKED(axis)" .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "El CNC pone esta marca a (=1) cuando el eje o cabezal correspondiente debe ser engrasado." ;
+    ex:controla ex:Parametro_LUBR_axis ;
+    ex:controla ex:Parametro_PARK_axis ;
+    ex:controla ex:Parametro_UNPARK_axis ;
+    ex:monitoreaParametro ex:Parametro_MATCH_axis .
+
+ex:TareaMantenimiento_EngrasadoEjes
+    a ex:TareaMantenimiento ;
+    rdfs:label "Engrasado de ejes/cabezales" ;
+    ex:textoExtracto "El CNC pone esta marca a (=1) cuando el eje o cabezal correspondiente debe ser engrasado." ;
+    ex:requiereMantenimiento ex:Parametro_LUBR_axis ;
+    ex:requiereMantenimiento ex:Parametro_DISTLUBRI .

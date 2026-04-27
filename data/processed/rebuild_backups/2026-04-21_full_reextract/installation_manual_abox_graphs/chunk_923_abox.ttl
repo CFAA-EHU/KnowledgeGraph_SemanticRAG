@@ -1,0 +1,77 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Funcion_T a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función T (TMOPERATION=11)" ;
+    ex:textoExtracto "Cuando se ejecuta la función T el gestor envía al PLC el código TMOPERATION=11. En general es una optimización del cambio que permite orientar el almacén durante el mecanizado." ;
+    ex:identificador "TMOPERATION=11" .
+
+ex:Marca_MZROT
+    a ex:Parametro ;
+    rdfs:label "Marca MZROT" ;
+    ex:textoExtracto "Activar la marca MZROT para indicar al gestor que se ha finalizado la operación." ;
+    ex:identificador "MZROT" .
+
+ex:Funcion_M06 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función M06" ;
+    ex:textoExtracto "Cada vez que la rutina M06 finaliza una acción se lo indica al PLC para que active la marca correspondiente del gestor." ;
+    ex:identificador "M06" .
+
+ex:Marca_SPDLTOGR
+    a ex:Parametro ;
+    rdfs:label "Marca SPDLTOGR" ;
+    ex:textoExtracto "La herramienta se ha llevado del cabezal a tierra." ;
+    ex:identificador "SPDLTOGR" .
+
+ex:Marca_GRTOSPDL
+    a ex:Parametro ;
+    rdfs:label "Marca GRTOSPDL" ;
+    ex:textoExtracto "La herramienta se ha llevado de tierra al cabezal." ;
+    ex:identificador "GRTOSPDL" .
+
+ex:Marca_MZTOSPDL
+    a ex:Parametro ;
+    rdfs:label "Marca MZTOSPDL" ;
+    ex:textoExtracto "La herramienta se ha llevado del almacén al cabezal." ;
+    ex:identificador "MZTOSPDL" .
+
+ex:Marca_SPDLTOMZ
+    a ex:Parametro ;
+    rdfs:label "Marca SPDLTOMZ" ;
+    ex:textoExtracto "La herramienta se ha llevado del cabezal al almacén." ;
+    ex:identificador "SPDLTOMZ" .
+
+ex:FuncionAuxiliar_M109 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M109" ;
+    ex:textoExtracto "Seleccionar en el almacén la posición que indica TAKEPOS y poner la herramienta en el cabezal." ;
+    ex:identificador "M109" .
+
+ex:FuncionAuxiliar_M110 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M110" ;
+    ex:textoExtracto "Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta del cabezal." ;
+    ex:identificador "M110" .
+
+ex:Registro_LEAVEPOS
+    a ex:Parametro ;
+    rdfs:label "Registro LEAVEPOS" ;
+    ex:textoExtracto "Este registro indica la posición de almacén en la que hay que dejar la herramienta." ;
+    ex:identificador "LEAVEPOS" .
+
+ex:Funcion_T a ex:Tabla ;
+    ex:activaAlarma ex:Marca_MZROT .
+ex:Funcion_M06 a ex:Tabla ;
+    ex:activaAlarma ex:Marca_SPDLTOGR .
+ex:Funcion_M06 a ex:Tabla ;
+    ex:activaAlarma ex:Marca_GRTOSPDL .
+ex:Funcion_M06 a ex:Tabla ;
+    ex:activaAlarma ex:Marca_MZTOSPDL .
+ex:Funcion_M06 a ex:Tabla ;
+    ex:activaAlarma ex:Marca_SPDLTOMZ .
+ex:Funcion_M06 a ex:Tabla ;
+    ex:activaAlarma ex:Marca_MZROT .

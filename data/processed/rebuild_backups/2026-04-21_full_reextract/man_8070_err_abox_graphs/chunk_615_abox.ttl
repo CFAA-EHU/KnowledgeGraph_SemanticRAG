@@ -1,0 +1,64 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error7024
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 7024: 'En modo descarga: T0 no admitida'" ;
+    ex:textoExtracto "'En modo descarga:T0 no admitida' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. No se permite programar T0. SOLUCIÓN Programar la herramienta a descargar en el almacén." ;
+    ex:identificador "7024" .
+
+ex:Error7025
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 7025: 'En modo descarga: M6 obligatoria'" ;
+    ex:textoExtracto "'En modo descarga:M6 obligatoria' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. Hay programadas dos herramientas consecutivas sin M06. SOLUCIÓN Programar M06 detrás de cada herramienta." ;
+    ex:identificador "7025" .
+
+ex:Error7026
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 7026: 'En modo descarga: Esta herramienta ya está descargada'" ;
+    ex:textoExtracto "'En modo descarga:Esta herramienta ya está descargada' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. La herramienta no está en el almacén. SOLUCIÓN Programar la herramienta a descargar en el almacén." ;
+    ex:identificador "7026" .
+
+ex:Error7027
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 7027: 'M6 sin T'" ;
+    ex:textoExtracto "'M6 sin T' DETECCIÓN Durante la ejecución. CAUSA Hay programada una M06 sin su correspondiente herramienta. SOLUCIÓN Programar una herramienta y a continuación la función M06 o modificar el parámetro máquina para cambiar el comportamiento del CNC." ;
+    ex:identificador "7027" .
+
+ex:Error7028
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 7028: 'T0 no admitida'" ;
+    ex:textoExtracto "'T0 no admitida' DETECCIÓN Durante la ejecución. CAUSA El almacén de tipo torreta no admite T0. SOLUCIÓN No se admite esta programación." ;
+    ex:identificador "7028" .
+
+ex:Error7029
+    a ex:Alarma ;
+    rdfs:label "Error 7029: 'Gestor de herramientas en estado de error'" ;
+    ex:textoExtracto "'La operación no pudo efectuarse:Gestor de herramientas en estado de error' DETECCIÓN Durante la ejecución. CAUSA Almacén en estado de emergencia. El PLC ha activado una marca no válida de la maniobra, el PLC ha activado la marca SETTMEM o hay un error en la maniobra. SOLUCIÓN Corregir en el programa de PLC la maniobra de cambio de herramienta." ;
+    ex:identificador "7029" .
+
+ex:ParametroCNC_ComportamientoM06
+    a ex:Parametro ;
+    rdfs:label "Parámetro máquina para comportamiento del CNC ante M06 sin T" ;
+    ex:textoExtracto "Hay un parámetro máquina que indica al CNC qué hacer en esta situación, mostrar un error, un warning o no hacer nada." ;
+    ex:valor "Configurable (error/warning/ninguno)" .
+
+ex:SistemaGestionHerramientas
+    a ex:Sistema ;
+    rdfs:label "Sistema de gestión de herramientas (PLC + almacén)" ;
+    ex:textoExtracto "Almacén en modo descarga... El PLC ha activado una marca no válida de la maniobra... SETTMEM... maniobra de cambio de herramienta." ;
+    ex:tieneComponente ex:PLC_GestionHerramientas ;
+    ex:tieneComponente ex:AlmacenHerramientas .
+
+ex:PLC_GestionHerramientas
+    a ex:Actuador ;
+    rdfs:label "PLC de gestión de herramientas" ;
+    ex:textoExtracto "El PLC ha activado una marca no válida de la maniobra... SETTMEM... corregir en el programa de PLC la maniobra de cambio de herramienta." ;
+    ex:activaAlarma ex:Error7029 .
+
+ex:AlmacenHerramientas
+    a ex:ComponenteMecanico ;
+    rdfs:label "Almacén de herramientas (modo descarga/torreta)" ;
+    ex:textoExtracto "Almacén en modo descarga... El almacén de tipo torreta no admite T0... cambio de herramienta se realiza girando la torreta." .

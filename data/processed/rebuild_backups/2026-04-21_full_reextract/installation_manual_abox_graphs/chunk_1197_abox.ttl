@@ -1,0 +1,73 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Subrutina_Sub_Probe_Tool_Begin
+    a ex:Componente ;
+    rdfs:label "Sub_Probe_Tool_Begin.fst" ;
+    ex:identificador "Sub_Probe_Tool_Begin.fst" ;
+    ex:textoExtracto "Fagor suministra la subrutina Sub_Probe_Tool_Begin.fst asociada a la entrada de palpador 1" ;
+    ex:documentadoEn ex:Manual_CicloMedicion .
+
+ex:Subrutina_Sub_Probe_Piece_Begin
+    a ex:Componente ;
+    rdfs:label "Sub_Probe_Piece_Begin.fst" ;
+    ex:identificador "Sub_Probe_Piece_Begin.fst" ;
+    ex:textoExtracto "subrutina Sub_Probe_Piece_Begin.fst asociada a la entrada de palpador 2", "Subrutina asociada al inicio del ciclo de medición de pieza" ;
+    ex:documentadoEn ex:Manual_CicloMedicion ;
+    ex:habilitadoPor ex:Marca_PROBE1ENA, ex:Marca_PROBE2ENA .
+
+ex:Subrutina_Sub_Probe_Piece_End
+    a ex:Componente ;
+    rdfs:label "Sub_Probe_Piece_End.fst" ;
+    ex:identificador "Sub_Probe_Piece_End.fst" ;
+    ex:textoExtracto "Subrutina asociada al final del ciclo de medición de pieza" ;
+    ex:documentadoEn ex:Manual_CicloMedicion .
+
+ex:Marca_PROBE1ENA
+    a ex:Parametro ;
+    rdfs:label "PROBE1ENA" ;
+    ex:identificador "PROBE1ENA" ;
+    ex:textoExtracto "marcas PROBE1ENA/PROBE2ENA en la subrutina. Estas marcas indican que el palpador está habilitado" ;
+    ex:monitoreaParametro ex:Subrutina_Sub_Probe_Piece_Begin .
+
+ex:Marca_PROBE2ENA
+    a ex:Parametro ;
+    rdfs:label "PROBE2ENA" ;
+    ex:identificador "PROBE2ENA" ;
+    ex:textoExtracto "marcas PROBE1ENA/PROBE2ENA en la subrutina. Estas marcas indican que el palpador está habilitado" ;
+    ex:monitoreaParametro ex:Subrutina_Sub_Probe_Piece_Begin .
+
+ex:Marca_PROBE1MONIT
+    a ex:Parametro ;
+    rdfs:label "PROBE1MONIT" ;
+    ex:identificador "PROBE1MONIT" ;
+    ex:textoExtracto "marcas PROBE1MONIT/PROBE2MONIT en la subrutina. Estas marcas están asociadas al modo seguro del palpador" ;
+    ex:monitoreaParametro ex:Subrutina_Sub_Probe_Piece_Begin .
+
+ex:Marca_PROBE2MONIT
+    a ex:Parametro ;
+    rdfs:label "PROBE2MONIT" ;
+    ex:identificador "PROBE2MONIT" ;
+    ex:textoExtracto "marcas PROBE1MONIT/PROBE2MONIT en la subrutina. Estas marcas están asociadas al modo seguro del palpador" ;
+    ex:monitoreaParametro ex:Subrutina_Sub_Probe_Piece_Begin .
+
+ex:Manual_CicloMedicion
+    a ex:Manual ;
+    rdfs:label "Sección 14.7: Subrutinas asociadas al ciclo de medición de pieza" ;
+    ex:textoExtracto "Las subrutinas suministradas por Fagor ofrecen una gestión básica de los palpadores, por lo que deben ser adaptadas y configuradas apropiadamente por el OEM" .
+
+ex:FuncionesM_Antes a ex:Tabla ;
+     a ex:Componente ;
+    rdfs:label "Funciones M-antes del ciclo de medición" ;
+    ex:textoExtracto "cuatro funciones M para ejecutarlas antes del ciclo y otras cuatro funciones M para ejecutarlas después. Todas estas funciones pueden llevar asociada una subrutina" ;
+    ex:documentadoEn ex:Manual_CicloMedicion ;
+    ex:ejecutadoPor ex:Subrutina_Sub_Probe_Piece_Begin .
+
+ex:FuncionesM_Despues a ex:Tabla ;
+     a ex:Componente ;
+    rdfs:label "Funciones M-después del ciclo de medición" ;
+    ex:textoExtracto "cuatro funciones M para ejecutarlas después. Todas estas funciones pueden llevar asociada una subrutina" ;
+    ex:documentadoEn ex:Manual_CicloMedicion ;
+    ex:ejecutadoPor ex:Subrutina_Sub_Probe_Piece_End .

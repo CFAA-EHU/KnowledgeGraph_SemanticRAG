@@ -1,0 +1,77 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Param_AUTOGEAR
+    a ex:Parametro ;
+    rdfs:label "AUTOGEAR" ;
+    ex:textoExtracto "AUTOGEAR Cambio de gama automático. Parámetro válido para cabezales. [...] Este parámetro indica si el cambio de gama se genera automáticamente, activando (si es necesario) las funciones auxiliares M41, M42, M43 y M44 al programar la velocidad." ;
+    ex:valor "Sí / No" ;
+    ex:identificador "(V.)[ch].MPA.AUTOGEAR.xn" .
+
+ex:Param_LOSPDLIM
+    a ex:Parametro ;
+    rdfs:label "LOSPDLIM" ;
+    ex:textoExtracto "LOSPDLIM Porcentaje inferior de rpm OK. [...] Valores posibles: De 0 a 255. Valor por defecto: 50." ;
+    ex:valor "0-255" ;
+    ex:identificador "(V.)[ch].MPA.LOSPDLIM.xn" .
+
+ex:Param_UPSPDLIM
+    a ex:Parametro ;
+    rdfs:label "UPSPDLIM" ;
+    ex:textoExtracto "UPSPDLIM Porcentaje superior de rpm OK. [...] Valores posibles: De 0 a 255. Valor por defecto: 150." ;
+    ex:valor "0-255" ;
+    ex:identificador "(V.)[ch].MPA.UPSPDLIM.xn" ;
+    ex:textoExtracto "Cuando se trabaja con M3 y M4 la señal REVOK se pone a nivel lógico alto cuando las revoluciones reales del cabezal se encuentran entre dichos porcentajes." .
+
+ex:Param_SPDLTIME
+    a ex:Parametro ;
+    rdfs:label "SPDLTIME" ;
+    ex:textoExtracto "SPDLTIME Tiempo estimado para una función S. [...] Valores posibles: De 0 a 1000000 ms. Valor por defecto: 0 ms." ;
+    ex:valor "0-1000000 ms" ;
+    ex:identificador "(V.)[ch].MPA.SPDLTIME.xn" ;
+    ex:textoExtracto "En el modo de trabajo EDISIMU hay una opción que permite calcular el tiempo que se necesitará para ejecutar la pieza con las condiciones de mecanizado establecidas en el programa." .
+
+ex:Modo_EDISIMU
+    a ex:ModoOperacion ;
+    rdfs:label "EDISIMU" ;
+    ex:textoExtracto "En el modo de trabajo EDISIMU hay una opción que permite calcular el tiempo que se necesitará para ejecutar la pieza con las condiciones de mecanizado establecidas en el programa." .
+
+ex:Senal_REVOK
+    a ex:ComponenteElectrico ;
+    rdfs:label "REVOK" ;
+    ex:textoExtracto "Cuando se trabaja con M3 y M4 la señal REVOK se pone a nivel lógico alto cuando las revoluciones reales del cabezal se encuentran entre dichos porcentajes." ;
+    ex:textoExtracto "La señal REVOK se puede utilizar para gestionar la señal Feed-hold y evitar el mecanizado con revoluciones inferiores y superiores a las programadas." .
+
+ex:Funcion_FeedHold a ex:Tabla ;
+     a ex:AccionProhibida ;
+    rdfs:label "Feed-hold" ;
+    ex:textoExtracto "La señal REVOK se puede utilizar para gestionar la señal Feed-hold y evitar el mecanizado con revoluciones inferiores y superiores a las programadas." .
+
+ex:Funcion_M41 a ex:Tabla ;
+     a ex:TareaMantenimiento ;
+    rdfs:label "M41" ;
+    ex:textoExtracto "activando (si es necesario) las funciones auxiliares M41, M42, M43 y M44 al programar la velocidad." .
+
+ex:Funcion_M42 a ex:Tabla ;
+     a ex:TareaMantenimiento ;
+    rdfs:label "M42" ;
+    ex:textoExtracto "activando (si es necesario) las funciones auxiliares M41, M42, M43 y M44 al programar la velocidad." .
+
+ex:Funcion_M43 a ex:Tabla ;
+     a ex:TareaMantenimiento ;
+    rdfs:label "M43" ;
+    ex:textoExtracto "activando (si es necesario) las funciones auxiliares M41, M42, M43 y M44 al programar la velocidad." .
+
+ex:Funcion_M44 a ex:Tabla ;
+     a ex:TareaMantenimiento ;
+    rdfs:label "M44" ;
+    ex:textoExtracto "activando (si es necesario) las funciones auxiliares M41, M42, M43 y M44 al programar la velocidad." .
+
+ex:Param_AUTOGEAR
+    ex:habilitadoPor ex:Funcion_M41, ex:Funcion_M42, ex:Funcion_M43, ex:Funcion_M44 .
+
+ex:Senal_REVOK
+    ex:controla ex:Funcion_FeedHold ;
+    ex:monitoreaParametro ex:Param_LOSPDLIM, ex:Param_UPSPDLIM .

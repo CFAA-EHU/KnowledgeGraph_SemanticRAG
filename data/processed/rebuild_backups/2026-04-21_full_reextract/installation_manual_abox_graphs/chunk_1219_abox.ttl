@@ -1,0 +1,31 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Comando_PIERCING
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Comando #PIERCING" ;
+    ex:textoExtracto       "El comando #PIERCING ejecuta la subrutina que tiene asociada después de actualizar las variables del piercing ((V.)TTPIR.name). Este comando esta orientado a máquina láser, donde esta subrutina debe realizar las operaciones iniciales del piercing." ;
+    ex:identificador       "#PIERCING" ;
+    ex:controla           ex:Subrutina_Piercing .
+
+ex:Subrutina_Piercing
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Subrutina asociada al comando #PIERCING" ;
+    ex:textoExtracto       "Subrutina orientada al modelo láser. Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM. [...] El OEM debe gestionar la marca PIERCING desde esta subrutina." ;
+    ex:identificador       "Piercing.fst" ;
+    ex:documentadoEn       ex:Manual_Fagor .
+
+ex:Variable_PIERCING
+    a                     ex:Parametro ;
+    rdfs:label            "Marca PIERCING" ;
+    ex:textoExtracto       "El OEM debe activar la marca PIERCING (asignarle valor 1) para indicar al PLC que empieza la operación de piercing. Al final de la subrutina (o cuando el OEM lo considere necesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing." ;
+    ex:identificador       "V.PLC.PIERCING" ;
+    ex:valor               "0" , "1" ;
+    ex:monitoreaParametro  ex:Subrutina_Piercing .
+
+ex:Manual_Fagor
+    a                     ex:Manual ;
+    rdfs:label            "Manual de subrutinas Fagor" ;
+    ex:textoExtracto       "Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM." .

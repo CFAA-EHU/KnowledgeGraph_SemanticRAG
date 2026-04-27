@@ -1,0 +1,45 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoOperacion_ModoSeguroPalpador
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo seguro del palpador"@es ;
+    ex:textoExtracto
+        "PROBE1MONIT PROBE2MONIT Estas marcas están asociadas al modo seguro del palpador. Si la marca está activa, el palpador está en modo seguro monitorizando colisiones."@es ;
+    ex:identificador "PROBE1MONIT", "PROBE2MONIT" .
+
+ex:Sensor_Palpador1
+    a               ex:Sensor ;
+    rdfs:label      "Palpador 1"@es ;
+    ex:textoExtracto
+        "palpador [...] monitorizando colisiones"@es ;
+    ex:monitoreaParametro ex:Parametro_ColisionPalpador1 .
+
+ex:Sensor_Palpador2
+    a               ex:Sensor ;
+    rdfs:label      "Palpador 2"@es ;
+    ex:textoExtracto
+        "palpador [...] monitorizando colisiones"@es ;
+    ex:monitoreaParametro ex:Parametro_ColisionPalpador2 .
+
+ex:Parametro_ColisionPalpador1
+    a               ex:Parametro ;
+    rdfs:label      "Estado de colisión del Palpador 1"@es ;
+    ex:textoExtracto
+        "controlando todas las situaciones de colisión en [...] el palpador"@es .
+
+ex:Parametro_ColisionPalpador2
+    a               ex:Parametro ;
+    rdfs:label      "Estado de colisión del Palpador 2"@es ;
+    ex:textoExtracto
+        "controlando todas las situaciones de colisión en [...] el palpador"@es .
+
+ex:Sistema_MonitorizacionColisiones
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de monitorización de colisiones a nivel de lazo"@es ;
+    ex:textoExtracto
+        "Monitorización a nivel de lazo, controlando todas las situaciones de colisión en cualquiera de los dos palpadores."@es ;
+    ex:controla    ex:Sensor_Palpador1, ex:Sensor_Palpador2 ;
+    ex:habilitadoPor ex:ModoOperacion_ModoSeguroPalpador .

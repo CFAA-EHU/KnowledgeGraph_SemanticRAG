@@ -1,0 +1,81 @@
+```turtle
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_9341
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Contadora Sercos: set activo de varios ejes no pueden tener igual el parámetro ANAOUTID"@es ;
+    ex:textoExtracto "CAUSA Varios sets que con la misma entrada de captación de un módulo RCS-S (parámetro COUNTERID), no tienen el mismo valor en alguno de los siguientes parámetros: FEEDBACKTYPE, SSITYPE, SSI, I0TYPE, ABSOFF, EXTMULT, REFPULSE, I0CODDI1, I0CODDI2, NPULSES y FBACKAL. SOLUCIÓN En los sets con igual COUNTERID, definir los parámetros indicados con el mismo valor. [...] CAUSA El set activo en varios ejes está utilizando la misma salida analógica de un módulo RCS-S (parámetro"@es ;
+    ex:solucionaFallo [
+        a ex:Parametro ;
+        rdfs:label "Parámetro COUNTERID (consistencia en sets)"@es ;
+        ex:textoExtracto "En los sets con igual COUNTERID, definir los parámetros indicados con el mismo valor."@es ;
+        ex:identificador "COUNTERID"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "Parámetro ANAOUTID (unicidad por eje)"@es ;
+        ex:textoExtracto "El set activo en varios ejes está utilizando la misma salida analógica de un módulo RCS-S (parámetro ANAOUTID)."@es ;
+        ex:identificador "ANAOUTID"
+    ] ;
+    ex:monitoreaParametro [
+        a ex:Parametro ;
+        rdfs:label "FEEDBACKTYPE"@es ;
+        ex:identificador "FEEDBACKTYPE"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "SSITYPE"@es ;
+        ex:identificador "SSITYPE"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "SSI"@es ;
+        ex:identificador "SSI"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "I0TYPE"@es ;
+        ex:identificador "I0TYPE"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "ABSOFF"@es ;
+        ex:identificador "ABSOFF"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "EXTMULT"@es ;
+        ex:identificador "EXTMULT"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "REFPULSE"@es ;
+        ex:identificador "REFPULSE"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "I0CODDI1"@es ;
+        ex:identificador "I0CODDI1"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "I0CODDI2"@es ;
+        ex:identificador "I0CODDI2"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "NPULSES"@es ;
+        ex:identificador "NPULSES"
+    ], [
+        a ex:Parametro ;
+        rdfs:label "FBACKAL"@es ;
+        ex:identificador "FBACKAL"
+    ] .
+
+ex:Modulo_RCS-S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RCS-S"@es ;
+    ex:textoExtracto "entrada de captación de un módulo RCS-S (parámetro COUNTERID)"@es ;
+    ex:monitoreaParametro [
+        a ex:Parametro ;
+        rdfs:label "Salida analógica (ANAOUTID)"@es ;
+        ex:identificador "ANAOUTID"
+    ] .
+
+ex:Proceso_ArranqueCNC
+    a ex:ModoOperacion ;
+    rdfs:label "Arranque del CNC o validación de parámetros máquina"@es ;
+    ex:textoExtracto "Durante el arranque del CNC o la validación de los parámetros máquina."@es ;
+    ex:detectaFallo ex:Fallo_9341 .
+```

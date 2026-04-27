@@ -1,0 +1,95 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Interfaz de Usuario (Modo Automático DMC)
+ex:InterfazUsuario_DMC_ModoAutomatico
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de usuario - Modo automático DMC"@es ;
+    ex:textoExtracto "Pantalla del modo automático con vista 'DMC': barras e indicadores para estado ON/OFF, override del DMC (con límites), avance por diente (FZ), potencia consumida, potencia objetivo y potencia en vacío; además de 'Saved Time' y override final. Se señalan zonas A–J que describen cada elemento de la UI."@es ;
+    ex:tieneComponente ex:Parametro_DMC_Override,
+                       ex:Parametro_DMC_FZ,
+                       ex:Parametro_DMC_Power,
+                       ex:Parametro_DMC_PowerSetPoint,
+                       ex:Parametro_DMC_NoLoadPower,
+                       ex:Parametro_DMC_SavedTime ;
+    ex:ilustradoEn ex:Figura_DMC_ZonasA_J .
+
+ex:Parametro_DMC_Override
+    a ex:Parametro ;
+    rdfs:label "Override del DMC"@es ;
+    ex:textoExtracto "override del DMC (con límites)"@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_DMC_ModoAutomatico .
+
+ex:Parametro_DMC_FZ
+    a ex:Parametro ;
+    rdfs:label "Avance por diente (FZ)"@es ;
+    ex:textoExtracto "avance por diente (FZ)"@es ;
+    ex:valor "FZ mínimo/máximo"@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_DMC_ModoAutomatico .
+
+ex:Parametro_DMC_Power
+    a ex:Parametro ;
+    rdfs:label "Potencia consumida (Power)"@es ;
+    ex:textoExtracto "potencia consumida"@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_DMC_ModoAutomatico .
+
+ex:Parametro_DMC_PowerSetPoint
+    a ex:Parametro ;
+    rdfs:label "Potencia objetivo (Power Set Point)"@es ;
+    ex:textoExtracto "potencia objetivo"@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_DMC_ModoAutomatico .
+
+ex:Parametro_DMC_NoLoadPower
+    a ex:Parametro ;
+    rdfs:label "Potencia en vacío (No Load Power)"@es ;
+    ex:textoExtracto "potencia en vacío"@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_DMC_ModoAutomatico .
+
+ex:Parametro_DMC_SavedTime
+    a ex:Parametro ;
+    rdfs:label "Tiempo ahorrado (Saved Time)"@es ;
+    ex:textoExtracto "'Saved Time'"@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_DMC_ModoAutomatico .
+
+ex:Figura_DMC_ZonasA_J
+    a ex:Figura ;
+    rdfs:label "Diagrama de zonas A–J de la interfaz DMC"@es ;
+    ex:textoExtracto "Se señalan zonas A–J que describen cada elemento de la UI."@es .
+
+### Menú de Opciones DMC
+ex:InterfazUsuario_DMC_Opciones
+    a ex:InterfazUsuario ;
+    rdfs:label "Menú de softkeys 'Opciones DMC'"@es ;
+    ex:textoExtracto "Menú vertical de softkeys 'Opciones DMC' con tres acciones: repetir fase de aprendizaje, desactivar DMC y re-activar DMC."@es ;
+    ex:tieneComponente ex:Accion_RepetirAprendizaje,
+                       ex:Accion_DesactivarDMC,
+                       ex:Accion_ReactivarDMC .
+
+ex:Accion_RepetirAprendizaje
+    a ex:TareaMantenimiento ;
+    rdfs:label "Repetir fase de aprendizaje (DMC)"@es ;
+    ex:textoExtracto "repetir fase de aprendizaje"@es .
+
+ex:Accion_DesactivarDMC
+    a ex:TareaMantenimiento ;
+    rdfs:label "Desactivar DMC"@es ;
+    ex:textoExtracto "desactivar DMC"@es .
+
+ex:Accion_ReactivarDMC
+    a ex:TareaMantenimiento ;
+    rdfs:label "Re-activar DMC"@es ;
+    ex:textoExtracto "re-activar DMC"@es .
+
+### Osciloscopio (Bus EtherCAT)
+ex:InterfazUsuario_Osciloscopio_EtherCAT
+    a ex:InterfazUsuario ;
+    rdfs:label "Captura de osciloscopio (Bus EtherCAT)"@es ;
+    ex:textoExtracto "Captura del osciloscopio con trazas de override, detección de G00, entradas/salidas a pieza y tramos a avance mínimo/máximo por diente. Se señalan hitos A–F (control del override, vacío, entrada, vacío con override máximo, mecanizado a FZ máx. y a FZ mín.) con leyenda y ejes temporales."@es ;
+    ex:ilustradoEn ex:Figura_Osciloscopio_HitosA_F .
+
+ex:Figura_Osciloscopio_HitosA_F
+    a ex:Figura ;
+    rdfs:label "Trazas de osciloscopio con hitos A–F (Bus EtherCAT)"@es ;
+    ex:textoExtracto "Se señalan hitos A–F (control del override, vacío, entrada, vacío con override máximo, mecanizado a FZ máx. y a FZ mín.)"@es .

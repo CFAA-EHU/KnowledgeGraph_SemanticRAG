@@ -1,0 +1,51 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_3100
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3100: Potencia excesiva en el cabezal detectada durante DMC" ;
+    ex:textoExtracto "3100 Potencia excesiva en el cabezal detectada durante DMC. [...] Esto puede indicar que la herramienta está desgastada o deteriorada." ;
+    ex:identificador "3100" .
+
+ex:Error_3101
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3101: Potencia excesiva en el cabezal detectada durante DMC" ;
+    ex:textoExtracto "3101 Potencia excesiva en el cabezal detectada durante DMC. [...] Esto puede indicar que la herramienta ha colisionado con la pieza, por lo que el CNC detiene los ejes manteniendo el giro del cabezal." ;
+    ex:identificador "3101" .
+
+ex:Error_3103
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3103: Potencia objetivo insuficiente para el funcionamiento correcto con DMC" ;
+    ex:textoExtracto "3103 Potencia objetivo insuficiente para el funcionamiento correcto con DMC. [...] La potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío." ;
+    ex:identificador "3103" .
+
+ex:Parametro_DMCSPDL
+    a ex:Parametro ;
+    rdfs:label "Parámetro máquina DMCSPDL" ;
+    ex:textoExtracto "Para activar el DMC sobre un cabezal, éste debe tener su parámetro máquina DMCSPDL=Sí." ;
+    ex:identificador "DMCSPDL" ;
+    ex:valor "Sí" .
+
+ex:Variable_TV51
+    a ex:Parametro ;
+    rdfs:label "Variable TV51 del regulador (potencia)" ;
+    ex:textoExtracto "El DMC ha detectado un consumo de potencia (variable TV51 del regulador) excesivo durante cierto tiempo." ;
+    ex:identificador "TV51" .
+
+ex:Herramienta_DMC
+    a ex:Herramienta ;
+    rdfs:label "Herramienta utilizada en modo DMC" ;
+    ex:textoExtracto "Esto puede indicar que la herramienta está desgastada o deteriorada. [...] Comprobar el estado de la herramienta y del mecanizado." .
+
+ex:Modo_DMC
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación DMC" ;
+    ex:textoExtracto "Para activar el DMC sobre un cabezal [...] El DMC ha detectado un consumo de potencia [...] durante DMC." ;
+    ex:identificador "DMC" .
+
+ex:Error_3100 ex:mitigaRiesgo ex:Herramienta_DMC .
+ex:Error_3101 ex:mitigaRiesgo ex:Herramienta_DMC .
+ex:Error_3103 ex:monitoreaParametro ex:Variable_TV51 .
+ex:Modo_DMC ex:requiereMantenimiento ex:Herramienta_DMC .

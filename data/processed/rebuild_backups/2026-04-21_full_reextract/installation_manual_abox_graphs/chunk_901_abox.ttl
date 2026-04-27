@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:RutinaM06_CambioHerramienta
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Rutina M06 (Cambio de herramienta)" ;
+    ex:textoExtracto      "G1 Z_ F_ ; Desplazar el cabezal. # RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. [...] M6 ; Orden al gestor para comenzar el cambio de herramienta." ;
+    ex:identificador      "M06" ;
+    ex:requiereMantenimiento ex:SistemaCambioAutomaticoHerramientas .
+
+ex:SistemaCambioAutomaticoHerramientas
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de cambio automático de herramientas" ;
+    ex:textoExtracto      "Llevar el cabezal al punto de cambio automático. [...] M6 ; Orden al gestor para comenzar el cambio de herramienta." ;
+    ex:controla           ex:ParametroEjecucion .
+
+ex:ParametroEjecucion
+    a                     ex:Parametro ;
+    rdfs:label            "Modo de ejecución (simulación/real)" ;
+    ex:textoExtracto      "$IF [V.S.EXECUTION == 1] ; CNC en ejecución [...] $ELSE V.S.EXECUTION = 0 ; Simulación" ;
+    ex:valor              "0 (simulación), 1 (ejecución real)" .
+
+ex:ParametroEstadoCNC
+    a                     ex:Parametro ;
+    rdfs:label            "Estado del CNC (V.G.FULLSTATUS)" ;
+    ex:textoExtracto      "$IF [[[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]]" ;
+    ex:valor              "Rango crítico: <9 o >13" .
+
+ex:ParametroEstadoAutomatismo
+    a                     ex:Parametro ;
+    rdfs:label            "Estado de automatismo (V.G.CNCAUTSTATUS)" ;
+    ex:textoExtracto      "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]]" ;
+    ex:valor              "Flags: 4096, 8192" .
+
+ex:ParametroTipoOperacion
+    a                     ex:Parametro ;
+    rdfs:label            "Tipo de operación (V.PLC.TMOPERATION)" ;
+    ex:textoExtracto      "$SWITCH V.PLC.TMOPERATION; Analiza el tipo de operación. $CASE 1 ; Asumir la herramienta actual [...] $CASE 3 ; Colocar la herramienta" ;
+    ex:valor              "1 (asumir herramienta), 3 (colocar herramienta)" .

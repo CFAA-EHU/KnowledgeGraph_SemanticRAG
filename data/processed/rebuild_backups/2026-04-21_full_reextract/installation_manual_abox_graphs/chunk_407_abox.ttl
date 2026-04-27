@@ -1,0 +1,23 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_ACCEL
+    a ex:Parametro ;
+    rdfs:label "ACCEL (aceleración trapezoidal)"@es ;
+    ex:textoExtracto "G00FEED ACCEL ACCJERK [...] ACCEL = x"@es ;
+    ex:valor "x" .
+
+ex:Parametro_ACCJERK
+    a ex:Parametro ;
+    rdfs:label "ACCJERK (jerk en seno cuadrado)"@es ;
+    ex:textoExtracto "G00FEED ACCEL ACCJERK [...] ACCJERK = 3 x"@es ;
+    ex:valor "3x" .
+
+ex:ModoOperacion_G00FEED
+    a ex:ModoOperacion ;
+    rdfs:label "Modo G00FEED (aceleración trapezoidal y seno cuadrado)"@es ;
+    ex:textoExtracto "v a j G00FEED ACCEL ACCJERK t t t t/3 t t/3 t t/3 t 3 G00FEED ACCEL ACCEL = x ACCJERK = 3 x"@es ;
+    ex:monitoreaParametro ex:Parametro_ACCEL ;
+    ex:monitoreaParametro ex:Parametro_ACCJERK .

@@ -1,99 +1,104 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-### Esquemas eléctricos y componentes asociados
-ex:Esquema_Servomotor_DERECHA_AXD2
-    a ex:Esquema ;
-    rdfs:label "Esquema eléctrico - Servomotor DERECHA AXD2" ;
-    ex:textoExtracto "Buses SERCOS, señales 24S/24SAFE, relés 27KAx y enlaces a bornes XT1. Líneas rojas (potencia) y verdes/azules (control/safety)." ;
-    ex:identificador "AXD2" ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_27KAx_DCHA ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_Bornes_XT1_DCHA ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_Bus_SERCOS_DCHA .
+ns1:Bloque_CTP_L1_AP_M_HA_AZ_SA a ns1:ComponenteElectrico ;
+    rdfs:label "bloque CTP-L1-AP-M-HA-AZ-SA" ;
+    ns1:textoExtracto "Dos bloques CTP-L1-AP-M-HA-AZ-SA (izquierda/derecha) con Safety Outputs/Monitoring Outputs." .
 
-ex:Esquema_Servomotor_MESA_AXD1
-    a ex:Esquema ;
-    rdfs:label "Esquema eléctrico - Servomotor MESA AXD1" ;
-    ex:textoExtracto "Drive AXD1 de mesa: potencia U/V/W, DC BUS, habilitaciones por 27KA1/2/5/6, retorno de encoder y enlaces 24CNC/0CNC." ;
-    ex:identificador "AXD1" ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_27KA1_MESA ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_27KA2_MESA ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_27KA5_MESA ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_27KA6_MESA .
+ns1:Sensor_EUCHNER_STP a ns1:Sensor ;
+    rdfs:label "Sensor EUCHNER STP" ;
+    ns1:compuestoPor ns1:Contacto_11_12,
+        ns1:Contacto_21_22,
+        ns1:Contacto_33_34,
+        ns1:Contacto_41_42 ;
+    ns1:monitoreaParametro ns1:Se_al_0S,
+        ns1:Se_al_24SAFE ;
+    ns1:textoExtracto "Sensor EUCHNER STP para puerta frontal con contactos etiquetados (21/22, 41/42, 11/12, 33/34) y líneas a 0S/24SAFE." .
 
-ex:Esquema_Puertas_Seguridad_Frontal
-    a ex:Esquema ;
-    rdfs:label "Esquema eléctrico - Puertas de Seguridad (Frontal)" ;
-    ex:textoExtracto "Sensor EUCHNER STP para puerta frontal con contactos etiquetados (21/22, 41/42, 11/12, 33/34) y líneas a 0S/24SAFE." ;
-    ex:detalladoEnEsquema ex:Sensor_Puerta_Frontal_EUCHNER_STP .
+ns1:Servomotor_DERECHA_AXD2 a ns1:ComponenteElectrico ;
+    rdfs:label "Servomotor DERECHA AXD2" ;
+    ns1:compuestoPor ns1:Borne_XT1,
+        ns1:Rel_27KAx ;
+    ns1:detalladoEnEsquema ns1:Esquema_el_ctrico_Eje_tracci_n_DCHA ;
+    ns1:textoExtracto "Servomotor DERECHA AXD2" .
 
-ex:Esquema_Puertas_Seguridad_Laterales
-    a ex:Esquema ;
-    rdfs:label "Esquema eléctrico - Puertas de Seguridad (Laterales)" ;
-    ex:textoExtracto "Dos bloques CTP-L1-AP-M-HA-AZ-SA (izquierda/derecha) con Safety Outputs/Monitoring Outputs." ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_CTP_L1_AP_Izquierda ;
-    ex:detalladoEnEsquema ex:ComponenteElectrico_CTP_L1_AP_Derecha .
+ns1:Servomotor_MESA_AXD1 a ns1:ComponenteElectrico ;
+    rdfs:label "Servomotor MESA AXD1" ;
+    ns1:compuestoPor ns1:Drive_AXD1 ;
+    ns1:detalladoEnEsquema ns1:Esquema_el_ctrico_Eje_mesa_giratoria ;
+    ns1:textoExtracto "Servomotor MESA AXD1" .
 
-### Componentes eléctricos
-ex:ComponenteElectrico_27KAx_DCHA
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relés 27KAx (eje tracción DCHA)" ;
-    ex:textoExtracto "relés 27KAx" ;
-    ex:identificador "27KAx" .
+ns1:Borne_XT1 a ns1:ComponenteElectrico ;
+    rdfs:label "borne XT1" ;
+    ns1:textoExtracto "enlaces a bornes XT1" .
 
-ex:ComponenteElectrico_Bornes_XT1_DCHA
-    a ex:ComponenteElectrico ;
-    rdfs:label "Bornes XT1 (eje tracción DCHA)" ;
-    ex:textoExtracto "enlaces a bornes XT1" ;
-    ex:identificador "XT1" .
+ns1:Contacto_11_12 a ns1:ComponenteElectrico ;
+    rdfs:label "contacto 11/12" ;
+    ns1:textoExtracto "contactos etiquetados (21/22, 41/42, 11/12, 33/34)" .
 
-ex:ComponenteElectrico_Bus_SERCOS_DCHA
-    a ex:ComponenteElectrico ;
-    rdfs:label "Bus SERCOS (eje tracción DCHA)" ;
-    ex:textoExtracto "Buses SERCOS" ;
-    ex:identificador "SERCOS" .
+ns1:Contacto_21_22 a ns1:ComponenteElectrico ;
+    rdfs:label "contacto 21/22" ;
+    ns1:textoExtracto "contactos etiquetados (21/22, 41/42, 11/12, 33/34)" .
 
-ex:ComponenteElectrico_27KA1_MESA
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA1 (mesa giratoria)" ;
-    ex:textoExtracto "habilitaciones por 27KA1" ;
-    ex:identificador "27KA1" .
+ns1:Contacto_33_34 a ns1:ComponenteElectrico ;
+    rdfs:label "contacto 33/34" ;
+    ns1:textoExtracto "contactos etiquetados (21/22, 41/42, 11/12, 33/34)" .
 
-ex:ComponenteElectrico_27KA2_MESA
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA2 (mesa giratoria)" ;
-    ex:textoExtracto "habilitaciones por 27KA2" ;
-    ex:identificador "27KA2" .
+ns1:Contacto_41_42 a ns1:ComponenteElectrico ;
+    rdfs:label "contacto 41/42" ;
+    ns1:textoExtracto "contactos etiquetados (21/22, 41/42, 11/12, 33/34)" .
 
-ex:ComponenteElectrico_27KA5_MESA
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA5 (mesa giratoria)" ;
-    ex:textoExtracto "habilitaciones por 27KA5" ;
-    ex:identificador "27KA5" .
+ns1:DC_BUS a ns1:ComponenteElectrico ;
+    rdfs:label "DC BUS" ;
+    ns1:textoExtracto "DC BUS" .
 
-ex:ComponenteElectrico_27KA6_MESA
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA6 (mesa giratoria)" ;
-    ex:textoExtracto "habilitaciones por 27KA6" ;
-    ex:identificador "27KA6" .
+ns1:Drive_AXD1 a ns1:ComponenteElectrico ;
+    rdfs:label "Drive AXD1" ;
+    ns1:alimenta ns1:DC_BUS ;
+    ns1:compuestoPor ns1:Rel_27KA1,
+        ns1:Rel_27KA2,
+        ns1:Rel_27KA5,
+        ns1:Rel_27KA6,
+        ns1:Sensor_encoder ;
+    ns1:textoExtracto "Drive AXD1 de mesa: potencia U/V/W, DC BUS, habilitaciones por 27KA1/2/5/6, retorno de encoder y enlaces 24CNC/0CNC." .
 
-ex:ComponenteElectrico_CTP_L1_AP_Izquierda
-    a ex:ComponenteElectrico ;
-    rdfs:label "Bloque CTP-L1-AP-M-HA-AZ-SA (puerta lateral izquierda)" ;
-    ex:textoExtracto "bloques CTP-L1-AP-M-HA-AZ-SA (izquierda)" ;
-    ex:identificador "CTP-L1-AP-M-HA-AZ-SA-Izquierda" .
+ns1:Esquema_el_ctrico_Eje_mesa_giratoria a ns1:Esquema ;
+    rdfs:label "Esquema eléctrico — Eje mesa giratoria" ;
+    ns1:textoExtracto "Esquema gemelo del anterior para el servo derecho: mismas funciones y cableados (19W1–W3, 1910). Se detallan saltos a buses y señales de safety." .
 
-ex:ComponenteElectrico_CTP_L1_AP_Derecha
-    a ex:ComponenteElectrico ;
-    rdfs:label "Bloque CTP-L1-AP-M-HA-AZ-SA (puerta lateral derecha)" ;
-    ex:textoExtracto "bloques CTP-L1-AP-M-HA-AZ-SA (derecha)" ;
-    ex:identificador "CTP-L1-AP-M-HA-AZ-SA-Derecha" .
+ns1:Esquema_el_ctrico_Eje_tracci_n_DCHA a ns1:Esquema ;
+    rdfs:label "Esquema eléctrico — Eje tracción DCHA" ;
+    ns1:textoExtracto "Buses SERCOS, señales 24S/24SAFE, relés 27KAx y enlaces a bornes XT1. Líneas rojas (potencia) y verdes/azules (control/safety)." .
 
-### Sensores
-ex:Sensor_Puerta_Frontal_EUCHNER_STP
-    a ex:Sensor ;
-    rdfs:label "Sensor EUCHNER STP (puerta frontal)" ;
-    ex:textoExtracto "Sensor EUCHNER STP para puerta frontal con contactos etiquetados (21/22, 41/42, 11/12, 33/34)" ;
-    ex:identificador "EUCHNER_STP" .
+ns1:Rel_27KA1 a ns1:ComponenteElectrico ;
+    rdfs:label "relé 27KA1" ;
+    ns1:textoExtracto "habilitaciones por 27KA1/2/5/6" .
+
+ns1:Rel_27KA2 a ns1:ComponenteElectrico ;
+    rdfs:label "relé 27KA2" ;
+    ns1:textoExtracto "habilitaciones por 27KA1/2/5/6" .
+
+ns1:Rel_27KA5 a ns1:ComponenteElectrico ;
+    rdfs:label "relé 27KA5" ;
+    ns1:textoExtracto "habilitaciones por 27KA1/2/5/6" .
+
+ns1:Rel_27KA6 a ns1:ComponenteElectrico ;
+    rdfs:label "relé 27KA6" ;
+    ns1:textoExtracto "habilitaciones por 27KA1/2/5/6" .
+
+ns1:Rel_27KAx a ns1:ComponenteElectrico ;
+    rdfs:label "relé 27KAx" ;
+    ns1:textoExtracto "relés 27KAx" .
+
+ns1:Se_al_0S a ns1:ComponenteElectrico ;
+    rdfs:label "señal 0S" ;
+    ns1:textoExtracto "líneas a 0S/24SAFE" .
+
+ns1:Se_al_24SAFE a ns1:ComponenteElectrico ;
+    rdfs:label "señal 24SAFE" ;
+    ns1:textoExtracto "líneas a 0S/24SAFE" .
+
+ns1:Sensor_encoder a ns1:Sensor ;
+    rdfs:label "sensor de encoder" ;
+    ns1:textoExtracto "retorno de encoder" .
+

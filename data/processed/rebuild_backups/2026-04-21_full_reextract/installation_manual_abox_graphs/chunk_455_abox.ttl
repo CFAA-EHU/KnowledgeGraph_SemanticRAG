@@ -1,0 +1,37 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DRIVESET
+    a ex:Parametro ;
+    rdfs:label "DRIVESET" ;
+    ex:textoExtracto "DRIVESET Set del regulador a utilizar. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador Sercos. Valores posibles: De 0 a 8. Valor por defecto: 0." ;
+    ex:valor "0-8" ;
+    ex:identificador "DRIVESET" .
+
+ex:Parametro_FFGAIN
+    a ex:Parametro ;
+    rdfs:label "FFGAIN" ;
+    ex:textoExtracto "feed forward (parámetro FFGAIN)" ;
+    ex:identificador "FFGAIN" .
+
+ex:Parametro_ACFGAIN
+    a ex:Parametro ;
+    rdfs:label "ACFGAIN" ;
+    ex:textoExtracto "AC forward (parámetro ACFGAIN)" ;
+    ex:identificador "ACFGAIN" .
+
+ex:Sistema_ReguladorSercos
+    a ex:Sistema ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "Parámetro válido para regulador Sercos." ;
+    ex:monitoreaParametro ex:Parametro_DRIVESET ;
+    ex:monitoreaParametro ex:Parametro_FFGAIN ;
+    ex:monitoreaParametro ex:Parametro_ACFGAIN .
+
+ex:Componente_CNC
+    a ex:ComponenteElectrico ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC envía los cambios de Kv, feed forward (parámetro FFGAIN) y AC forward (parámetro ACFGAIN) al set indicado en este parámetro." ;
+    ex:controla ex:Sistema_ReguladorSercos .

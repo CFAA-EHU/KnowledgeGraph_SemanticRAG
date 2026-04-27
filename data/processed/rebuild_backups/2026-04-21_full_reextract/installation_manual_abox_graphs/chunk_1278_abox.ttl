@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ConfiguracionEntradasPT100_15_6
+    a               ex:Parametro ;
+    rdfs:label      "Configuración de entradas PT100 (Sección 15.6)"@es ;
+    ex:textoExtracto "5..6 • (address = 2) RIOR - Entradas analógicas. - 7..8 - Entradas PT100. - 9..10 Para tener 3 entradas PT100 activas (las dos del primer módulo y la primera del segundo módulo), los parámetros PT100 pueden estar definidos de la siguiente forma. NPT100 = 3 PT100 1 = 5 PT100 2 = 6 PT100 3 = 9"@es ;
+    ex:identificador "NPT100 = 3 ; PT100 1 = 5 ; PT100 2 = 6 ; PT100 3 = 9" ;
+    ex:valor         "3"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:SondaPT100_1
+    a               ex:Sensor ;
+    rdfs:label      "Sonda PT100 1"@es ;
+    ex:textoExtracto "PT100 1 = 5"@es ;
+    ex:identificador "5" ;
+    ex:monitoreaParametro ex:ConfiguracionEntradasPT100_15_6 .
+
+ex:SondaPT100_2
+    a               ex:Sensor ;
+    rdfs:label      "Sonda PT100 2"@es ;
+    ex:textoExtracto "PT100 2 = 6"@es ;
+    ex:identificador "6" ;
+    ex:monitoreaParametro ex:ConfiguracionEntradasPT100_15_6 .
+
+ex:SondaPT100_3
+    a               ex:Sensor ;
+    rdfs:label      "Sonda PT100 3"@es ;
+    ex:textoExtracto "PT100 3 = 9"@es ;
+    ex:identificador "9" ;
+    ex:monitoreaParametro ex:ConfiguracionEntradasPT100_15_6 .
+
+ex:ModuloControlPT100
+    a               ex:Sistema ;
+    rdfs:label      "Módulo de control de sondas PT100"@es ;
+    ex:textoExtracto "Las entradas PT100 se activan desde los parámetro máquina. Para poder deshabilitar la sonda temporalmente (por ejemplo, en un cambio de cabezal), el PLC dispone de las siguientes marcas."@es ;
+    ex:tieneComponente ex:SondaPT100_1, ex:SondaPT100_2, ex:SondaPT100_3 ;
+    ex:controla      ex:ConfiguracionEntradasPT100_15_6 .

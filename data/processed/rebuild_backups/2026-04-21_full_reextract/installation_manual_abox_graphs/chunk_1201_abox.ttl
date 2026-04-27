@@ -1,0 +1,23 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SubrutinaCambioHerramienta_T
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina asociada a la función T (cambio de herramienta)"@es ;
+    ex:textoExtracto      "La subrutina asociada a la herramienta se ejecuta automáticamente cada vez que se ejecuta una función T (selección de herramienta). Si dentro de esta subrutina se incluye la función M06, el proceso de carga de la herramienta se realizará cuando se ejecute el código 'T'."@es ;
+    ex:identificador      "T" ;
+    ex:requiereMantenimiento ex:SistemaCambioHerramienta_Torreta .
+
+ex:SistemaCambioHerramienta_Torreta
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de cambio de herramienta (almacén tipo torreta)"@es ;
+    ex:textoExtracto      "En un almacén tipo torreta, se recomienda que la rutina asociada a T incluya la función M06. Cuando el CNC selecciona una herramienta, la rutina asociada a T ejecuta la función M06 (cambio de herramienta)."@es .
+
+ex:FuncionM06 a ex:Tabla ;
+     a                     ex:ModoOperacion ;
+    rdfs:label            "Función M06 (cambio de herramienta)"@es ;
+    ex:textoExtracto      "Si dentro de esta subrutina se incluye la función M06, el proceso de carga de la herramienta se realizará cuando se ejecute el código 'T'."@es ;
+    ex:identificador      "M06" ;
+    ex:ejecutadoPor       ex:SubrutinaCambioHerramienta_T .

@@ -1,0 +1,90 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error3739
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error en la señal de la sonda durante el proceso de #GAPCTRL" ;
+    ex:textoExtracto "3739 Error en la señal de la sonda durante el proceso de #GAPCTRL. DETECCIÓN Durante la ejecución. CAUSA Con el control de gap activo, el CNC lee una distancia mayor que el máximo posible (parámetro GAPDISTLIMIT). Las posibles causas son las siguientes: • La sonda funciona mal. • La señal que recibe el CNC no es de la sonda (sonda mal conectada). • La sonda esté mal parametrizada (parámetros GAPDISTLIMIT y GAPVOLTLIMIT)." ;
+    ex:identificador "3739" .
+
+ex:Error3740
+    a ex:AvisoSeguridad ;
+    rdfs:label "ENABLEGAP: No se puede activar #GAPCTRL por estar alejado del GAP programado" ;
+    ex:textoExtracto "3740 ENABLEGAP: No se puede activar #GAPCTRL por estar alejado del GAP programado. DETECCIÓN Durante la ejecución. CAUSA El control del gap está activo (#GAPCTRL) pero deshabilitado por PLC (marca ENABLEGAP). El CNC no puede habilitar el control del gap porque la sonda está fuera del gap." ;
+    ex:identificador "3740" .
+
+ex:Error3741
+    a ex:AvisoSeguridad ;
+    rdfs:label "#GAPCTRL: fuera del rango [GAPMAX - GAPMIN]" ;
+    ex:textoExtracto "3741 #GAPCTRL: fuera del rango [GAPMAX - GAPMIN]. DETECCIÓN Durante la ejecución. CAUSA El gap ha sobrepasado los valores máximo o mínimo permitido, fijado por GAPMAX o GAPMIN. Es posible que el sensor no de una lectura correcta." ;
+    ex:identificador "3741" .
+
+ex:Error3742
+    a ex:AvisoSeguridad ;
+    rdfs:label "#GAPCTRL: fuera del rango GAPTOL" ;
+    ex:textoExtracto "3742 #GAPCTRL: fuera del rango GAPTOL. DETECCIÓN Durante la ejecución. CAUSA La diferencia entre la señal del gap y el gap programado es superior a la tolerancia permitida (parámetro GAPTOL)." ;
+    ex:identificador "3742" .
+
+ex:Error3743
+    a ex:AvisoSeguridad ;
+    rdfs:label "Colisión de palpador" ;
+    ex:textoExtracto "3743 Colisión de palpador. DETECCIÓN Durante la ejecución. CAUSA Ha llegado señal de la sonda de palpado cuando no se esperaba." ;
+    ex:identificador "3743" .
+
+ex:SondaGAP
+    a ex:Sensor ;
+    rdfs:label "Sonda de control de gap" ;
+    ex:textoExtracto "La sonda funciona mal. [...] La señal que recibe el CNC no es de la sonda (sonda mal conectada). [...] La sonda esté mal parametrizada (parámetros GAPDISTLIMIT y GAPVOLTLIMIT)." .
+
+ex:Parametro_GAPDISTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPDISTLIMIT" ;
+    ex:textoExtracto "parámetro GAPDISTLIMIT" ;
+    ex:identificador "GAPDISTLIMIT" .
+
+ex:Parametro_GAPVOLTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPVOLTLIMIT" ;
+    ex:textoExtracto "parámetro GAPVOLTLIMIT" ;
+    ex:identificador "GAPVOLTLIMIT" .
+
+ex:Parametro_GAPMAX
+    a ex:Parametro ;
+    rdfs:label "GAPMAX" ;
+    ex:textoExtracto "parámetro GAPMAX" ;
+    ex:identificador "GAPMAX" .
+
+ex:Parametro_GAPMIN
+    a ex:Parametro ;
+    rdfs:label "GAPMIN" ;
+    ex:textoExtracto "parámetro GAPMIN" ;
+    ex:identificador "GAPMIN" .
+
+ex:Parametro_GAPTOL
+    a ex:Parametro ;
+    rdfs:label "GAPTOL" ;
+    ex:textoExtracto "parámetro GAPTOL" ;
+    ex:identificador "GAPTOL" .
+
+ex:Parametro_GAPERRORCANCEL
+    a ex:Parametro ;
+    rdfs:label "GAPERRORCANCEL" ;
+    ex:textoExtracto "parámetro GAPERRORCANCEL" ;
+    ex:identificador "GAPERRORCANCEL" .
+
+ex:Parametro_GAPTOLCANCEL
+    a ex:Parametro ;
+    rdfs:label "GAPTOLCANCEL" ;
+    ex:textoExtracto "parámetro GAPTOLCANCEL" ;
+    ex:identificador "GAPTOLCANCEL" .
+
+ex:SondaGAP ex:monitoreaParametro ex:Parametro_GAPDISTLIMIT .
+ex:SondaGAP ex:monitoreaParametro ex:Parametro_GAPVOLTLIMIT .
+ex:SondaGAP ex:monitoreaParametro ex:Parametro_GAPMAX .
+ex:SondaGAP ex:monitoreaParametro ex:Parametro_GAPMIN .
+ex:SondaGAP ex:monitoreaParametro ex:Parametro_GAPTOL .
+
+ex:Error3739 ex:activaAlarma ex:SondaGAP .
+ex:Error3741 ex:activaAlarma ex:SondaGAP .

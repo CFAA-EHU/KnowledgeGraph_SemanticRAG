@@ -1,0 +1,75 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Marca_REFPOIN_axis
+    a                     ex:Parametro ;
+    rdfs:label            "REFPOIN(axis)" ;
+    ex:textoExtracto      "La marca REFPOIN(axis) siempre está activa (=1). No es necesaria la búsqueda de referencia. Captación absoluta en una vuelta."@es ;
+    ex:valor              "1" .
+
+ex:Parametro_MAXDIFREF
+    a                     ex:Parametro ;
+    rdfs:label            "MAXDIFREF" ;
+    ex:textoExtracto      "diferencia de posiciones menor que el parámetro MAXDIFREF"@es .
+
+ex:Parametro_ABSFEEDBACK
+    a                     ex:Parametro ;
+    rdfs:label            "ABSFEEDBACK" ;
+    ex:textoExtracto      "Sin captación absoluta (parámetro ABSFEEDBACK=No)."@es ;
+    ex:valor              "No" .
+
+ex:Marca_DRSTAF
+    a                     ex:Parametro ;
+    rdfs:label            "DRSTAF(axis)" ;
+    ex:textoExtracto      "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador. Marcas DRSTAF(*)=0"@es ;
+    ex:valor              "0" .
+
+ex:Marca_DRSTAS
+    a                     ex:Parametro ;
+    rdfs:label            "DRSTAS(axis)" ;
+    ex:textoExtracto      "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador. Marcas DRSTAS(*)=1"@es ;
+    ex:valor              "1" .
+
+ex:Sistema_Sercos
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de comunicación Sercos" ;
+    ex:textoExtracto      "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador."@es .
+
+ex:Regulador_Eje
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Regulador de eje" ;
+    ex:textoExtracto      "Tras accionar el interruptor general del armario eléctrico se le proporcionan 24 V DC al regulador. El regulador efectúa una comprobación interna. Si es correcta activa la salida System OK."@es .
+
+ex:Se_al_SystemOK
+    a                     ex:Parametro ;
+    rdfs:label            "System OK" ;
+    ex:textoExtracto      "El regulador efectúa una comprobación interna. Si es correcta activa la salida System OK."@es ;
+    ex:valor              "1" .
+
+ex:FuenteAlimentacion
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Fuente de alimentación del regulador" ;
+    ex:textoExtracto      "A partir de este momento suministrar potencia a la fuente."@es .
+
+ex:Sistema_CNC
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CNC" ;
+    ex:textoExtracto      "El CNC activa (=1) la marca REFPOIN(axis) en el arranque si en la sesión anterior el eje ha sido referenciado correctamente."@es .
+
+ex:Sistema_CNC
+    ex:monitoreaParametro ex:Marca_REFPOIN_axis ;
+    ex:monitoreaParametro ex:Parametro_MAXDIFREF ;
+    ex:monitoreaParametro ex:Parametro_ABSFEEDBACK ;
+    ex:monitoreaParametro ex:Marca_DRSTAF ;
+    ex:monitoreaParametro ex:Marca_DRSTAS .
+
+ex:Sistema_Sercos
+    ex:tieneComponente    ex:Regulador_Eje ;
+    ex:controla           ex:Marca_DRSTAF ;
+    ex:controla           ex:Marca_DRSTAS .
+
+ex:Regulador_Eje
+    ex:controla           ex:Se_al_SystemOK ;
+    ex:alimenta           ex:FuenteAlimentacion .

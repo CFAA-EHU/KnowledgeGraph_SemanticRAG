@@ -1,0 +1,99 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1562
+    a ex:Alarma ;
+    rdfs:label "Eje esclavo no válido" ;
+    ex:textoExtracto "'Eje esclavo no válido' DETECCIÓN Durante la ejecución. CAUSA En las sentencias #CAM o #FOLLOW, el eje esclavo es incorrecto. SOLUCIÓN El eje debe pertenecer al canal." ;
+    ex:identificador "1562" .
+
+ex:Alarma_1561
+    a ex:Alarma ;
+    rdfs:label "Eje maestro no válido" ;
+    ex:textoExtracto "'válido' DETECCIÓN Durante la ejecución. CAUSA En las sentencias #CAM o #FOLLOW, el eje maestro es incorrecto. SOLUCIÓN El eje debe pertenecer al canal." ;
+    ex:identificador "1561" .
+
+ex:Alarma_1563
+    a ex:Alarma ;
+    rdfs:label "Función G74 mal programada" ;
+    ex:textoExtracto "'La función G74 se programa con ejes o sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA Programación incorrecta de la función G74. SOLUCIÓN La función G74 se puede programar bien con los ejes cuya búsqueda de cero se quiere realizar o bien sola en el bloque." ;
+    ex:identificador "1563" .
+
+ex:Alarma_1564
+    a ex:Alarma ;
+    rdfs:label "Eje aparcado no programable" ;
+    ex:textoExtracto "'No se puede programar un eje aparcado' DETECCIÓN Durante la ejecución. CAUSA La instrucción programada no se puede ejecutar sobre un eje aparcado. SOLUCIÓN Revisar la programación." ;
+    ex:identificador "1564" .
+
+ex:Alarma_1565
+    a ex:Alarma ;
+    rdfs:label "Cabezal sin permiso para eje C" ;
+    ex:textoExtracto "'El cabezal no puede funcionar como eje C, CAXIS = No' DETECCIÓN Durante la ejecución. CAUSA En la instrucción #CAX hay programado un cabezal que no tiene permiso para trabajar como eje C (parámetro CAXIS)." ;
+    ex:identificador "1565" .
+
+ex:Alarma_1566
+    a ex:Alarma ;
+    rdfs:label "Imagen espejo no admitida en ejes UNIDIR" ;
+    ex:textoExtracto "'No se admite imagen espejo con ejes UNIDIR' DETECCIÓN Durante la ejecución. CAUSA No se puede programar imagen espejo sobre un eje rotativo unidireccional (parámetro UNIDIR), ya que este tipo de ejes no puede girar en sentido contrario al que tienen definido." ;
+    ex:identificador "1566" .
+
+ex:Alarma_1567
+    a ex:Alarma ;
+    rdfs:label "Radio polar programado incorrectamente" ;
+    ex:textoExtracto "'El radio polar sólo se puede programar con R' DETECCIÓN Durante la ejecución. CAUSA El radio de un movimiento en coordenadas polares está programado con el parámetro R1 o con la función G263." ;
+    ex:identificador "1567" .
+
+ex:Parametro_CAXIS
+    a ex:Parametro ;
+    rdfs:label "Parámetro CAXIS (permiso para eje C)" ;
+    ex:textoExtracto "parámetro CAXIS" ;
+    ex:identificador "CAXIS" .
+
+ex:Parametro_UNIDIR
+    a ex:Parametro ;
+    rdfs:label "Parámetro UNIDIR (eje unidireccional)" ;
+    ex:textoExtracto "parámetro UNIDIR" ;
+    ex:identificador "UNIDIR" .
+
+ex:Parametro_REFPSUB
+    a ex:Parametro ;
+    rdfs:label "Parámetro REFPSUB (subrutina asociada a G74)" ;
+    ex:textoExtracto "parámetro REFPSUB" ;
+    ex:identificador "REFPSUB" .
+
+ex:Funcion_G74 a ex:Tabla ;
+     a ex:Componente ;
+    rdfs:label "Función G74 (búsqueda de cero)" ;
+    ex:textoExtracto "función G74" ;
+    ex:identificador "G74" .
+
+ex:Funcion_G263 a ex:Tabla ;
+     a ex:Componente ;
+    rdfs:label "Función G263 (coordenadas polares)" ;
+    ex:textoExtracto "función G263" ;
+    ex:identificador "G263" .
+
+ex:Instruccion_CAM
+    a ex:Componente ;
+    rdfs:label "Sentencia #CAM" ;
+    ex:textoExtracto "sentencias #CAM" ;
+    ex:identificador "#CAM" .
+
+ex:Instruccion_FOLLOW
+    a ex:Componente ;
+    rdfs:label "Sentencia #FOLLOW" ;
+    ex:textoExtracto "sentencias #FOLLOW" ;
+    ex:identificador "#FOLLOW" .
+
+ex:Instruccion_CAX
+    a ex:Componente ;
+    rdfs:label "Instrucción #CAX" ;
+    ex:textoExtracto "instrucción #CAX" ;
+    ex:identificador "#CAX" .
+
+ex:Alarma_1565 ex:monitoreaParametro ex:Parametro_CAXIS .
+ex:Alarma_1566 ex:monitoreaParametro ex:Parametro_UNIDIR .
+ex:Alarma_1563 ex:monitoreaParametro ex:Funcion_G74 .
+ex:Alarma_1567 ex:monitoreaParametro ex:Funcion_G263 .

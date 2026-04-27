@@ -1,0 +1,51 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_1163_VariablesBloqueEjecucion a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de variables asociadas al bloque en ejecución (pág. 626)"@es ;
+    ex:textoExtracto """
+| Variables. | PRG | PLC | INT |
+| --- | --- | --- | --- |
+| (V.)[ch].G.BLKN
+Última etiqueta ejecutada (número). Si no se ha ejecutado ninguna
+etiqueta, la variable devuelve valor -1. Unidades: -. | R | R | R |
+| (V.)[ch].G.LINEN
+Número de bloques de programa ejecutados o preparados. La lectura
+de la variable desde el PLC o interfaz devuelve el número de bloques
+ejecutados; la lectura desde el programa pieza o MDI devuelve el
+número de bloques preparados. Unidades: -. | R | R | R |
+""" .
+
+ex:Parametro_V_ch_G_BLKN
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)[ch].G.BLKN"@es ;
+    ex:identificador "V.[ch].G.BLKN" ;
+    ex:valor "-1" ;  # Valor por defecto si no se ejecuta etiqueta
+    ex:textoExtracto """
+(V.)[ch].G.BLKN: Última etiqueta ejecutada (número). Si no se ha ejecutado ninguna etiqueta, la variable devuelve valor -1.
+""" ;
+    ex:documentadoEn ex:Tabla_1163_VariablesBloqueEjecucion .
+
+ex:Parametro_V_ch_G_LINEN
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)[ch].G.LINEN"@es ;
+    ex:identificador "V.[ch].G.LINEN" ;
+    ex:textoExtracto """
+(V.)[ch].G.LINEN: Número de bloques de programa ejecutados o preparados. La lectura desde el PLC o interfaz devuelve el número de bloques ejecutados; desde el programa pieza o MDI devuelve el número de bloques preparados.
+""" ;
+    ex:documentadoEn ex:Tabla_1163_VariablesBloqueEjecucion .
+
+ex:InterfazUsuario_MDI
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz MDI"@es ;
+    ex:textoExtracto "programa pieza o MDI"@es ;
+    ex:monitoreaParametro ex:Parametro_V_ch_G_LINEN .
+
+ex:Sistema_PLC
+    a ex:Sistema ;
+    rdfs:label "PLC"@es ;
+    ex:textoExtracto "PLC"@es ;
+    ex:monitoreaParametro ex:Parametro_V_ch_G_BLKN , ex:Parametro_V_ch_G_LINEN .

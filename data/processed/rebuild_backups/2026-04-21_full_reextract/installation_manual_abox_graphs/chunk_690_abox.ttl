@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_InstruccionesLatcheoCotas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de instrucciones de latcheo de cotas con palpador o entrada digital"@es ;
+    ex:textoExtracto """
+| CNC               | PLC                     |  |
+|-------------------|-------------------------|------|
+| #SELECT PROBE [1] | ꞏꞏ = TOUCHPROBE (X,1)   | Incorrecto. |
+| #SELECT PROBE [1] | ꞏꞏ = TOUCHPROBE (Z,1)   | Incorrecto. |
+| #SELECT PROBE [1] | ꞏꞏ = TOUCHPROBE (X,2)   | Correcto. |
+| #SELECT PROBE [2] | ꞏꞏ = TOUCHPROBE (X,1)   | Correcto. |
+"""@es .
+
+ex:Comando_SelectProbe_1
+    a ex:Parametro ;
+    rdfs:label "SELECT PROBE [1]"@en ;
+    ex:identificador "SELECT PROBE [1]" ;
+    ex:textoExtracto "#SELECT PROBE [1]"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
+
+ex:Comando_TouchProbe_X1
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (X,1)"@en ;
+    ex:identificador "TOUCHPROBE (X,1)" ;
+    ex:textoExtracto "ꞏꞏ = TOUCHPROBE (X,1)"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
+
+ex:Comando_TouchProbe_Z1
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (Z,1)"@en ;
+    ex:identificador "TOUCHPROBE (Z,1)" ;
+    ex:textoExtracto "ꞏꞏ = TOUCHPROBE (Z,1)"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
+
+ex:Comando_TouchProbe_X2
+    a ex:Parametro ;
+    rdfs:label "TOUCHPROBE (X,2)"@en ;
+    ex:identificador "TOUCHPROBE (X,2)" ;
+    ex:textoExtracto "ꞏꞏ = TOUCHPROBE (X,2)"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
+
+ex:Comando_SelectProbe_2
+    a ex:Parametro ;
+    rdfs:label "SELECT PROBE [2]"@en ;
+    ex:identificador "SELECT PROBE [2]" ;
+    ex:textoExtracto "#SELECT PROBE [2]"@es ;
+    ex:documentadoEn ex:Tabla_InstruccionesLatcheoCotas .
+
+ex:Sistema_CNC_PLC_Latcheo
+    a ex:Sistema ;
+    rdfs:label "Sistema de latcheo CNC-PLC para palpador/entrada digital"@es ;
+    ex:textoExtracto "Instrucciones de latcheo de cotas con un palpador o entrada digital"@es ;
+    ex:compuestoPor ex:Comando_SelectProbe_1, ex:Comando_SelectProbe_2 ;
+    ex:detalladoEnEsquema ex:Tabla_InstruccionesLatcheoCotas .

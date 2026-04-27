@@ -1,93 +1,72 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-### Esquemas eléctricos (Páginas 123-126)
-ex:Esquema_123_MonitorPanelPC
-    a ex:Esquema ;
-    rdfs:label "Esquema de conexiones: Monitor y Panel PC" ;
-    ex:textoExtracto "Conexiones de Monitor y Panel PC: alimentación 24PNL/0PNL, enlaces USB/VGA (15WUSB1/15WVGA1) y LAN A–D con salto al esquema de red. Esquemas rectangulares de los equipos con conectores etiquetados." ;
-    ex:identificador "123" .
+ns1:Barras_L1_L2_L3 a ns1:ComponenteElectrico ;
+    rdfs:label "Barras L1/L2/L3" ;
+    ns1:textoExtracto "Tres barras L1/L2/L3 en cabeza" .
 
-ex:Esquema_124_CNC8070
-    a ex:Esquema ;
-    rdfs:label "Esquema eléctrico: CNC 8070" ;
-    ex:textoExtracto "Módulo CNC 8070 con buses CAN, SERCOS II, EtherCAT, Ethernet; alimentación 24CNC/0CNC y relé 16KA1 (PLC OK). Puertos y señales se representan como bornes alineados; referencias cruzadas a otras láminas." ;
-    ex:identificador "124" .
+ns1:Esquema_Electrico_CNC_8070 a ns1:Esquema ;
+    rdfs:label "Esquema eléctrico CNC 8070" ;
+    ns1:compuestoPor ns1:CNC_8070,
+        ns1:Relay_16KA1 ;
+    ns1:textoExtracto "Módulo CNC 8070 con buses CAN, SERCOS II, EtherCAT, Ethernet; alimentación 24CNC/0CNC y relé 16KA1 (PLC OK). Puertos y señales se representan como bornes alineados; referencias cruzadas a otras láminas." .
 
-ex:Esquema_125_FuenteDrives
-    a ex:Esquema ;
-    rdfs:label "Esquema: Fuente de alimentación para drives/reguladores" ;
-    ex:textoExtracto "Fuente de drives/reguladores: entradas L1/L2/L3, DC BUS+/–, señales RESET/SYSTEM OK/ENABLE y salidas a 24CNC/24E. Bloques de potencia con bornes X1–X3 y relés asociados (27KA3–4)." ;
-    ex:identificador "125" .
+ns1:Esquema_Electrico_Fuente_Drives a ns1:Esquema ;
+    rdfs:label "Esquema eléctrico Fuente de alimentación reguladores" ;
+    ns1:compuestoPor ns1:Fuente_Alimentacion_Drives,
+        ns1:Relay_27KA3_4 ;
+    ns1:textoExtracto "Fuente de drives/reguladores: entradas L1/L2/L3, DC BUS+/–, señales RESET/SYSTEM OK/ENABLE y salidas a 24CNC/24E. Bloques de potencia con bornes X1–X3 y relés asociados (27KA3–4)." .
 
-ex:Esquema_126_ServomotorAXD2
-    a ex:Esquema ;
-    rdfs:label "Esquema eléctrico: Servomotor IZQUIERDA AXD2" ;
-    ex:textoExtracto "Drive AXD2 con U/V/W/PE, entradas DRIVE/SPEED ENABLE, DC BUS y encoder lineal. Buses SERCOS, señales 24S/24SAFE, relés 27KAx y enlaces a bornes XT1. Líneas rojas (potencia) y verdes/azules (control/safety)." ;
-    ex:identificador "126" .
+ns1:Esquema_Electrico_Monitor_Panel_PC a ns1:Esquema ;
+    rdfs:label "Esquema eléctrico Monitor Panel PC" ;
+    ns1:compuestoPor ns1:Alimentacion_24PNL_0PNL,
+        ns1:Enlace_USB_VGA,
+        ns1:Monitor_Panel_PC ;
+    ns1:textoExtracto "Conexiones de Monitor y Panel PC: alimentación 24PNL/0PNL, enlaces USB/VGA (15WUSB1/15WVGA1) y LAN A–D con salto al esquema de red. Esquemas rectangulares de los equipos con conectores etiquetados." .
 
-### Componentes eléctricos (extraídos de esquemas)
-ex:ComponenteElectrico_15WUSB1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Conector USB 15WUSB1" ;
-    ex:textoExtracto "enlaces USB/VGA (15WUSB1/15WVGA1)" ;
-    ex:detalladoEnEsquema ex:Esquema_123_MonitorPanelPC .
+ns1:Esquema_Electrico_Servomotor_IZQUIERDA a ns1:Esquema ;
+    rdfs:label "Esquema eléctrico Servomotor IZQUIERDA AXD2" ;
+    ns1:compuestoPor ns1:Relay_27KAx,
+        ns1:Servomotor_IZQUIERDA_AXD2 ;
+    ns1:textoExtracto "Drive AXD2 con U/V/W/PE, entradas DRIVE/SPEED ENABLE, DC BUS y encoder lineal. Buses SERCOS, señales 24S/24SAFE, relés 27KAx y enlaces a bornes XT1." .
 
-ex:ComponenteElectrico_15WVGA1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Conector VGA 15WVGA1" ;
-    ex:textoExtracto "enlaces USB/VGA (15WUSB1/15WVGA1)" ;
-    ex:detalladoEnEsquema ex:Esquema_123_MonitorPanelPC .
+ns1:Motor_UVW_PE a ns1:ComponenteElectrico ;
+    rdfs:label "Motor U/V/W/PE" ;
+    ns1:textoExtracto "cada motor con U/V/W/PE y cableados WMx con longitudes." .
 
-ex:ComponenteElectrico_16KA1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 16KA1 (PLC OK)" ;
-    ex:textoExtracto "relé 16KA1 (PLC OK)" ;
-    ex:detalladoEnEsquema ex:Esquema_124_CNC8070 .
+ns1:Alimentacion_24PNL_0PNL a ns1:ComponenteElectrico ;
+    rdfs:label "Alimentación 24PNL/0PNL" ;
+    ns1:textoExtracto "alimentación 24PNL/0PNL" .
 
-ex:ComponenteElectrico_27KA3
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA3" ;
-    ex:textoExtracto "relés asociados (27KA3–4)" ;
-    ex:detalladoEnEsquema ex:Esquema_125_FuenteDrives .
-
-ex:ComponenteElectrico_27KA4
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA4" ;
-    ex:textoExtracto "relés asociados (27KA3–4)" ;
-    ex:detalladoEnEsquema ex:Esquema_125_FuenteDrives .
-
-ex:ComponenteElectrico_27KAx_AXD2
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relés 27KAx (Servomotor AXD2)" ;
-    ex:textoExtracto "relés 27KAx" ;
-    ex:detalladoEnEsquema ex:Esquema_126_ServomotorAXD2 .
-
-ex:ComponenteElectrico_Borne_X1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Borner X1 (Fuente de drives)" ;
-    ex:textoExtracto "bornes X1–X3" ;
-    ex:detalladoEnEsquema ex:Esquema_125_FuenteDrives .
-
-ex:ComponenteElectrico_Borne_XT1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Borner XT1 (Servomotor AXD2)" ;
-    ex:textoExtracto "enlaces a bornes XT1" ;
-    ex:detalladoEnEsquema ex:Esquema_126_ServomotorAXD2 .
-
-### Sistemas y módulos (agregaciones)
-ex:Sistema_CNC8070
-    a ex:Sistema ;
+ns1:CNC_8070 a ns1:Sistema ;
     rdfs:label "Módulo CNC 8070" ;
-    ex:textoExtracto "Módulo CNC 8070 con buses CAN, SERCOS II, EtherCAT, Ethernet; alimentación 24CNC/0CNC" ;
-    ex:compuestoPor ex:ComponenteElectrico_16KA1 ;
-    ex:detalladoEnEsquema ex:Esquema_124_CNC8070 .
+    ns1:textoExtracto "Módulo CNC 8070 con buses CAN, SERCOS II, EtherCAT, Ethernet; alimentación 24CNC/0CNC y relé 16KA1 (PLC OK)." .
 
-ex:Sistema_ServomotorAXD2
-    a ex:Sistema ;
+ns1:Enlace_USB_VGA a ns1:ComponenteElectrico ;
+    rdfs:label "Enlaces USB/VGA" ;
+    ns1:textoExtracto "enlaces USB/VGA (15WUSB1/15WVGA1)" .
+
+ns1:Fuente_Alimentacion_Drives a ns1:ComponenteElectrico ;
+    rdfs:label "Fuente de alimentación reguladores" ;
+    ns1:textoExtracto "Fuente de drives/reguladores: entradas L1/L2/L3, DC BUS+/–, señales RESET/SYSTEM OK/ENABLE y salidas a 24CNC/24E. Bloques de potencia con bornes X1–X3 y relés asociados (27KA3–4)." .
+
+ns1:Monitor_Panel_PC a ns1:InterfazUsuario ;
+    rdfs:label "Monitor Panel PC" ;
+    ns1:textoExtracto "Conexiones de Monitor y Panel PC: alimentación 24PNL/0PNL, enlaces USB/VGA (15WUSB1/15WVGA1) y LAN A–D con salto al esquema de red. Esquemas rectangulares de los equipos con conectores etiquetados." .
+
+ns1:Relay_16KA1 a ns1:ComponenteElectrico ;
+    rdfs:label "Relé 16KA1" ;
+    ns1:textoExtracto "relé 16KA1 (PLC OK)" .
+
+ns1:Relay_27KA3_4 a ns1:ComponenteElectrico ;
+    rdfs:label "Relés 27KA3–4" ;
+    ns1:textoExtracto "relés asociados (27KA3–4)" .
+
+ns1:Relay_27KAx a ns1:ComponenteElectrico ;
+    rdfs:label "Relés 27KAx" ;
+    ns1:textoExtracto "relés 27KAx" .
+
+ns1:Servomotor_IZQUIERDA_AXD2 a ns1:ComponenteElectrico ;
     rdfs:label "Servomotor IZQUIERDA AXD2" ;
-    ex:textoExtracto "Drive AXD2 con U/V/W/PE, entradas DRIVE/SPEED ENABLE, DC BUS y encoder lineal" ;
-    ex:compuestoPor ex:ComponenteElectrico_27KAx_AXD2, ex:ComponenteElectrico_Borne_XT1 ;
-    ex:detalladoEnEsquema ex:Esquema_126_ServomotorAXD2 .
+    ns1:textoExtracto "Drive AXD2 con U/V/W/PE, entradas DRIVE/SPEED ENABLE, DC BUS y encoder lineal. Buses SERCOS, señales 24S/24SAFE, relés 27KAx y enlaces a bornes XT1." .
+

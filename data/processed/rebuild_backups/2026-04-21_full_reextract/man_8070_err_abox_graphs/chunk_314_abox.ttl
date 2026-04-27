@@ -1,0 +1,76 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_1881
+    a ex:AvisoSeguridad ;
+    rdfs:label "Cajera con islas: F de semiacabado no válida" ;
+    ex:textoExtracto "1881 'Cajera con islas: F de semiacabado no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El avance para la operación de semiacabado tiene valor 0. SOLUCIÓN Definir un avance mayor que 0." .
+
+ex:Error_1882
+    a ex:AvisoSeguridad ;
+    rdfs:label "Cajera con islas: S de semiacabado no válida" ;
+    ex:textoExtracto "1882 'Cajera con islas: S de semiacabado no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA La velocidad para la operación de semiacabado tiene valor 0. SOLUCIÓN Definir una velocidad mayor que 0." .
+
+ex:Error_1883
+    a ex:AvisoSeguridad ;
+    rdfs:label "Cajera con islas: Cajera ya en ejecución" ;
+    ex:textoExtracto "1883 'Cajera con islas: Cajera ya en ejecución' DETECCIÓN Durante la ejecución del ciclo. CAUSA El CNC no puede simular o ejecutar la cajera porque ésta ya se encuentra en ejecución o simulación. SOLUCIÓN Esperar a que el CNC termine la simulación o ejecución." .
+
+ex:Error_1884
+    a ex:AvisoSeguridad ;
+    rdfs:label "Cajera con islas: Arco mal programado en perfil" ;
+    ex:textoExtracto "1884 'Cajera con islas: Arco mal programado en perfil' DETECCIÓN Durante la ejecución del ciclo. CAUSA En algún perfil de la cajera hay un arco mal definido o el perfil se ha modificado con otro programa diferente al editor de perfiles. SOLUCIÓN Corregir la geometría del perfil desde el editor de perfiles." .
+
+ex:Error_1885
+    a ex:AvisoSeguridad ;
+    rdfs:label "Cajera con islas: Geometría de la cajera no válida" ;
+    ex:textoExtracto "1885 'Cajera con islas: Geometría de la cajera no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA En algún perfil de la cajera hay un tramo mal definido (redondeos, chaflanes, etc). SOLUCIÓN Corregir la geometría del perfil desde el editor de perfiles." .
+
+ex:Error_1886
+    a ex:AvisoSeguridad ;
+    rdfs:label "Cajera con islas: Angulo de profundización de la herramienta de desbaste no válido" ;
+    ex:textoExtracto "1886 'Cajera con islas: Angulo de profundización de la herramienta de desbaste no válido' DETECCIÓN Durante la ejecución del ciclo." .
+
+ex:Herramienta_No_Definida
+    a ex:AvisoSeguridad ;
+    rdfs:label "Herramienta programada no existe en la tabla de herramientas" ;
+    ex:textoExtracto "herramienta programada no existe en la tabla de herramientas. SOLUCIÓN Definir la herramienta en la tabla o seleccionar otra herramienta." .
+
+ex:Parametro_F
+    a ex:Parametro ;
+    rdfs:label "Avance de semiacabado (F)" ;
+    ex:valor "0" ;
+    ex:textoExtracto "El avance para la operación de semiacabado tiene valor 0." .
+
+ex:Parametro_S
+    a ex:Parametro ;
+    rdfs:label "Velocidad de semiacabado (S)" ;
+    ex:valor "0" ;
+    ex:textoExtracto "La velocidad para la operación de semiacabado tiene valor 0." .
+
+ex:Parametro_Angulo_Profundizacion
+    a ex:Parametro ;
+    rdfs:label "Ángulo de profundización de herramienta de desbaste" ;
+    ex:textoExtracto "Angulo de profundización de la herramienta de desbaste no válido" .
+
+ex:Herramienta_Desbaste
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de desbaste" ;
+    ex:textoExtracto "Angulo de profundización de la herramienta de desbaste no válido" .
+
+ex:Operacion_Semiacabado
+    a ex:ModoOperacion ;
+    rdfs:label "Operación de semiacabado" ;
+    ex:textoExtracto "operación de semiacabado" .
+
+ex:Operacion_Desbaste
+    a ex:ModoOperacion ;
+    rdfs:label "Operación de desbaste" ;
+    ex:textoExtracto "operación de desbaste" .
+
+ex:Error_1881 ex:monitoreaParametro ex:Parametro_F .
+ex:Error_1882 ex:monitoreaParametro ex:Parametro_S .
+ex:Error_1886 ex:monitoreaParametro ex:Parametro_Angulo_Profundizacion .
+ex:Parametro_Angulo_Profundizacion ex:documentadoEn ex:Herramienta_Desbaste .

@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FragmentoCodigo_6_8_1
+    a ex:InterfazUsuario ;
+    rdfs:label "Ejemplo de código para tiempo de mecanizado (CY1 y PRG)"@es ;
+    ex:textoExtracto """
+| Ejemplo de utilización para conocer el tiempo de mecanizado. |
+| --- |
+| CY1
+()= MOV 0 R100
+()= CNCWR (R100, PLC.TIMER, M11)
+Inicializa el contador a 0 tras el encendido. END |
+| PRG
+AUTOMAT AND INCYCLE = TIMERON
+Contador activo durante el mecanizado. ()= CNCRD (PLC.TIMER, R300, M12)
+El registro R300 muestra el valor del contador. END
+"""@es ;
+    ex:identificador "6.8.1" .
+
+ex:Parametro_TiempoMecanizado
+    a ex:Parametro ;
+    rdfs:label "PLC.TIMER" ;
+    ex:textoExtracto "PLC.TIMER"@es ;
+    ex:monitoreaParametro ex:FragmentoCodigo_6_8_1 .
+
+ex:Registro_R100
+    a ex:Parametro ;
+    rdfs:label "Registro R100 (inicialización)" ;
+    ex:textoExtracto "MOV 0 R100 [...] Inicializa el contador a 0 tras el encendido"@es ;
+    ex:valor "0" ;
+    ex:monitoreaParametro ex:FragmentoCodigo_6_8_1 .
+
+ex:Registro_R300
+    a ex:Parametro ;
+    rdfs:label "Registro R300 (valor del contador)" ;
+    ex:textoExtracto "El registro R300 muestra el valor del contador"@es ;
+    ex:monitoreaParametro ex:FragmentoCodigo_6_8_1 .

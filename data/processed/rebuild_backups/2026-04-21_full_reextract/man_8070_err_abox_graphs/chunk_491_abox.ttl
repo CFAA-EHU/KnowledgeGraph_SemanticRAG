@@ -1,0 +1,84 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_3745
+    a ex:AvisoSeguridad ;
+    ex:identificador "3745" ;
+    rdfs:label "Colisión de sonda" ;
+    ex:textoExtracto "La sonda ha colisionado. DETECCIÓN Durante la ejecución. CAUSA El PLC ha indicado mediante la marca GAPCOLLISION que se ha producido una colisión en el sensor." ;
+    ex:mitigaRiesgo ex:Sensor_Sonda .
+
+ex:Error_3746
+    a ex:AvisoSeguridad ;
+    ex:identificador "3746" ;
+    rdfs:label "Posición inicial fuera de rango" ;
+    ex:textoExtracto "Posición inicial fuera de rango. DETECCIÓN En el arranque o recuperación de la fase operativa del bus. CAUSA El CNC ha calculado una posición que excede el rango permitido." .
+
+ex:Error_3749
+    a ex:AvisoSeguridad ;
+    ex:identificador "3749" ;
+    rdfs:label "Fallo de señal de sonda" ;
+    ex:textoExtracto "No se ha detectado señal de sonda en #GAPCTRL o #LEAP. DETECCIÓN Durante la ejecución. CAUSA Durante #GAPCTRL o #LEAP, el eje ha alcanzado el punto de acercamiento sin recibir la señal de sonda." ;
+    ex:mitigaRiesgo ex:Sensor_Sonda .
+
+ex:Sensor_Sonda
+    a ex:Sensor ;
+    rdfs:label "Sonda de medición" ;
+    ex:textoExtracto "No hay señal del sensor, a partir de la cual el CNC calcula la distancia." ;
+    ex:monitoreaParametro ex:Parametro_GAPANAINTYPE, ex:Parametro_GAPAANAINID .
+
+ex:Parametro_GAPANAINTYPE
+    a ex:Parametro ;
+    ex:identificador "GAPANAINTYPE" ;
+    rdfs:label "Tipo de entrada analógica de sonda" ;
+    ex:textoExtracto "Verificar que las conexiones de la sonda y los parámetros máquina relacionados con la sonda (GAPANAINTYPE y GAPAANAINID)." .
+
+ex:Parametro_GAPAANAINID
+    a ex:Parametro ;
+    ex:identificador "GAPAANAINID" ;
+    rdfs:label "Identificador de entrada analógica de sonda" ;
+    ex:textoExtracto "Verificar que las conexiones de la sonda y los parámetros máquina relacionados con la sonda (GAPANAINTYPE y GAPAANAINID)." .
+
+ex:Parametro_GAPCOLLISION
+    a ex:Parametro ;
+    ex:identificador "GAPCOLLISION" ;
+    rdfs:label "Marca de colisión de sonda" ;
+    ex:textoExtracto "El PLC ha indicado mediante la marca GAPCOLLISION que se ha producido una colisión en el sensor." .
+
+ex:Parametro_GAPCOLLISIONMODE
+    a ex:Parametro ;
+    ex:identificador "GAPCOLLISIONMODE" ;
+    rdfs:label "Modo de detección de colisión" ;
+    ex:textoExtracto "Si el error continua, el OEM tendrá que modificar el parámetro máquina GAPCOLLISIONMODE." .
+
+ex:Parametro_PITCH
+    a ex:Parametro ;
+    ex:identificador "PITCH" ;
+    rdfs:label "Parámetro de paso" ;
+    ex:textoExtracto "Revisar los parámetros PITCH, NPULSES, INPUTREV, OUTPUTREV y ABSOFF." .
+
+ex:Parametro_NPULSES
+    a ex:Parametro ;
+    ex:identificador "NPULSES" ;
+    rdfs:label "Número de pulsos" ;
+    ex:textoExtracto "Revisar los parámetros PITCH, NPULSES, INPUTREV, OUTPUTREV y ABSOFF." .
+
+ex:Parametro_INPUTREV
+    a ex:Parametro ;
+    ex:identificador "INPUTREV" ;
+    rdfs:label "Revoluciones de entrada" ;
+    ex:textoExtracto "Revisar los parámetros PITCH, NPULSES, INPUTREV, OUTPUTREV y ABSOFF." .
+
+ex:Parametro_OUTPUTREV
+    a ex:Parametro ;
+    ex:identificador "OUTPUTREV" ;
+    rdfs:label "Revoluciones de salida" ;
+    ex:textoExtracto "Revisar los parámetros PITCH, NPULSES, INPUTREV, OUTPUTREV y ABSOFF." .
+
+ex:Parametro_ABSOFF
+    a ex:Parametro ;
+    ex:identificador "ABSOFF" ;
+    rdfs:label "Offset absoluto" ;
+    ex:textoExtracto "Revisar los parámetros PITCH, NPULSES, INPUTREV, OUTPUTREV y ABSOFF." .

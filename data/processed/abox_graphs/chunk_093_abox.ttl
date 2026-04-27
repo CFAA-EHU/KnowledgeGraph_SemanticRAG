@@ -1,19 +1,27 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-ex:ModoSetUp a ex:ModoOperacion ;
-    ex:textoExtracto "Para seleccionar el modo set-up: Con máquina en servicio y presión general de aire OK.  Puertas con enclavamiento de seguridad cerradas y bloqueadas.  Habilitar el selector de Set-up en el panel operador.  Este modo sirve para la apertura de puertas durante el ciclo de brochado sin tener que salir del ciclo automático, por ejemplo, para la verificación de la posición del carro respecto al primer diente. Para poder abrir las puertas, una vez habilitado el selector de Set-up, hay que pulsar el botón “Apertura puertas”." .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:SelectorSetUp a ex:ComponenteElectrico ;
-    ex:textoExtracto "Habilitar el selector de Set-up en el panel operador." .
+ns1:BotonAperturaPuertas_74 a ns1:InterfazUsuario ;
+    rdfs:label "Botón Apertura puertas"@es ;
+    ns1:controla ns1:PuertasConEnclavamiento_74 ;
+    ns1:textoExtracto "Para poder abrir las puertas, una vez habilitado el selector de Set-up, hay que pulsar el botón 'Apertura puertas'."@es .
 
-ex:PanelOperador a ex:InterfazUsuario ;
-    ex:textoExtracto "Habilitar el selector de Set-up en el panel operador." ;
-    ex:compuestoPor ex:SelectorSetUp .
+ns1:ModoSetUp_74 a ns1:ModoOperacion ;
+    rdfs:label "Modo Set-up"@es ;
+    ns1:habilitadoPor ns1:SelectorSetUp_74 ;
+    ns1:requiereMantenimiento ns1:TareaVerificacionPosicion_74 ;
+    ns1:textoExtracto "Para seleccionar el modo set-up: [...] Este modo sirve para la apertura de puertas durante el ciclo de brochado sin tener que salir del ciclo automático, por ejemplo, para la verificación de la posición del carro respecto al primer diente."@es .
 
-ex:BotonAperturaPuertas a ex:ComponenteElectrico ;
-    ex:textoExtracto "Para poder abrir las puertas, una vez habilitado el selector de Set-up, hay que pulsar el botón “Apertura puertas”." .
+ns1:PuertasConEnclavamiento_74 a ns1:ElementoSeguridad ;
+    rdfs:label "Puertas con enclavamiento de seguridad"@es ;
+    ns1:textoExtracto "Puertas con enclavamiento de seguridad cerradas y bloqueadas."@es .
 
-ex:PuertaBrochado a ex:ElementoSeguridad ;
-    ex:textoExtracto "Puertas con enclavamiento de seguridad cerradas y bloqueadas." .
+ns1:SelectorSetUp_74 a ns1:InterfazUsuario ;
+    rdfs:label "Selector de Set-up"@es ;
+    ns1:textoExtracto "Habilitar el selector de Set-up en el panel operador."@es .
 
-ex:CarroBrochado a ex:ComponenteMecanico ;
-    ex:textoExtracto "para la verificación de la posición del carro respecto al primer diente" .
+ns1:TareaVerificacionPosicion_74 a ns1:TareaMantenimiento ;
+    rdfs:label "Verificación de posición del carro"@es ;
+    ns1:ejecutadoPor ns1:Personal_Operador ;
+    ns1:textoExtracto "para la verificación de la posición del carro respecto al primer diente"@es .
+

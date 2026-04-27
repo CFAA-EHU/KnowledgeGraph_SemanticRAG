@@ -1,0 +1,67 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Maquina_CNC a ns1:Maquina ;
+    rdfs:label "Máquina CNC (sistema de control)"@es ;
+    ns1:controla ns1:Sistema_DMC ;
+    ns1:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR."@es ;
+    ns1:tieneComponente ns1:InterfazUsuario_PanelMando .
+
+ns1:Parametro_MAXOVR a ns1:Parametro ;
+    rdfs:label "Límite máximo de override global (MAXOVR)"@es ;
+    ns1:identificador "MAXOVR" ;
+    ns1:textoExtracto "parámetro máquina MAXOVR"@es .
+
+ns1:Parametro_V_G_PRGFRO a ns1:Parametro ;
+    rdfs:label "Variable de porcentaje de avance por programa (V.G.PRGFRO)"@es ;
+    ns1:identificador "V.G.PRGFRO" ;
+    ns1:textoExtracto "variable V.G.PRGFRO"@es .
+
+ns1:Parametro_V_PLC_FRO a ns1:Parametro ;
+    rdfs:label "Variable de porcentaje de avance por PLC (V.PLC.FRO)"@es ;
+    ns1:identificador "V.PLC.FRO" ;
+    ns1:textoExtracto "variable V.PLC.FRO"@es .
+
+ns1:ComponenteElectrico_ConmutadorPanelMando a ns1:ComponenteElectrico ;
+    rdfs:label "Conmutador de porcentaje de avance en panel de mando"@es ;
+    ns1:textoExtracto "conmutador del panel de mando"@es .
+
+ns1:InterfazUsuario_PanelMando a ns1:InterfazUsuario ;
+    rdfs:label "Panel de mando (interfaz de override)"@es ;
+    ns1:textoExtracto "panel de mando"@es ;
+    ns1:tieneComponente ns1:ComponenteElectrico_ConmutadorPanelMando .
+
+ns1:Pagina_732_Manual a ns1:Pagina ;
+    rdfs:label "Página 732: Porcentaje de avance (feed override)"@es ;
+    ns1:identificador "732" ;
+    ns1:textoExtracto "Ver '18.4.3 Porcentaje de avance (feed override).' en la página 732."@es .
+
+ns1:Parametro_FZMAX a ns1:Parametro ;
+    rdfs:label "Avance por diente máximo (FZMAX) en sentencia #DMCON"@es ;
+    ns1:identificador "FZMAX" ;
+    ns1:textoExtracto "comandos FZMAX"@es .
+
+ns1:Parametro_FZMIN a ns1:Parametro ;
+    rdfs:label "Avance por diente mínimo (FZMIN) en sentencia #DMCON"@es ;
+    ns1:identificador "FZMIN" ;
+    ns1:textoExtracto "comandos FZMIN"@es .
+
+ns1:Parametro_MAXDMCOVR a ns1:Parametro ;
+    rdfs:label "Límite máximo de override DMC (MAXDMCOVR)"@es ;
+    ns1:identificador "MAXDMCOVR" ;
+    ns1:textoExtracto "parámetro máquina MAXDMCOVR"@es .
+
+ns1:Parametro_MINDMCOVR a ns1:Parametro ;
+    rdfs:label "Límite mínimo de override DMC (MINDMCOVR)"@es ;
+    ns1:identificador "MINDMCOVR" ;
+    ns1:textoExtracto "parámetro máquina MINDMCOVR"@es .
+
+ns1:Sistema_DMC a ns1:Sistema ;
+    rdfs:label "Sistema DMC (Dynamic Machining Control)"@es ;
+    ns1:documentadoEn ns1:Pagina_732_Manual ;
+    ns1:monitoreaParametro ns1:Parametro_FZMAX,
+        ns1:Parametro_FZMIN,
+        ns1:Parametro_MAXDMCOVR,
+        ns1:Parametro_MINDMCOVR ;
+    ns1:textoExtracto "DMC"@es .
+

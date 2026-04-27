@@ -1,0 +1,86 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:RutinaM06
+    a ex:TareaMantenimiento ;
+    rdfs:label "Rutina M06 (Cambio de herramienta)" ;
+    ex:textoExtracto """
+%L SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1.
+%L SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal.
+%L SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2.
+%L SUB_CH2_TO_MZ ; Comenzar el envío del brazo cambiador al almacén para dejar la herramienta de la pinza 2.
+%L SUB_SPD_TO_GR ; Quitar la herramienta del cabezal (llevarla a tierra).
+%L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal.""" .
+
+ex:Pinza1
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 1" ;
+    ex:textoExtracto "Coger la herramienta del almacén con la pinza 1. Llevar la herramienta de la pinza 1 al cabezal." ;
+    ex:compuestoPor ex:RutinaM06 .
+
+ex:Pinza2
+    a ex:ComponenteMecanico ;
+    rdfs:label "Pinza 2" ;
+    ex:textoExtracto "Coger la herramienta del cabezal con la pinza 2. Comenzar el envío del brazo cambiador al almacén para dejar la herramienta de la pinza 2." ;
+    ex:compuestoPor ex:RutinaM06 .
+
+ex:Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal" ;
+    ex:textoExtracto "Llevar la herramienta de la pinza 1 al cabezal. Quitar la herramienta del cabezal (llevarla a tierra). Colocar la herramienta de tierra en el cabezal." ;
+    ex:compuestoPor ex:RutinaM06 .
+
+ex:AlmacenHerramientas
+    a ex:Sistema ;
+    rdfs:label "Almacén de herramientas" ;
+    ex:textoExtracto "Coger la herramienta del almacén con la pinza 1. Comenzar el envío del brazo cambiador al almacén para dejar la herramienta de la pinza 2." ;
+    ex:compuestoPor ex:RutinaM06 .
+
+ex:FuncionM101 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M101 (MZTOCH1)" ;
+    ex:identificador "M101" ;
+    ex:textoExtracto "M101 ; Función auxiliar para ejecutar acción. V.PLC.M[1101]=1 ; Marca MZTOCH1 al gestor." ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:FuncionM102 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M102 (CH1TOSPDL)" ;
+    ex:identificador "M102" ;
+    ex:textoExtracto "M102 ; Función auxiliar para ejecutar acción. V.PLC.M[1102]=1 ; Marca CH1TOSPDL al gestor." ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:FuncionM104 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M104 (SPDLTOCH2)" ;
+    ex:identificador "M104" ;
+    ex:textoExtracto "M104 ; Función auxiliar para ejecutar acción. V.PLC.M[1104]=1 ; Marca SPDLTOCH2 al gestor." ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:FuncionM106 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M106 (CH2TOMZ)" ;
+    ex:identificador "M106" ;
+    ex:textoExtracto "M106 ; Función auxiliar para ejecutar acción. La marca CH2TOMZ la pondrá el PLC cuando se haya dejado la herramienta." ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:FuncionM107 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M107 (SPDLTOGR)" ;
+    ex:identificador "M107" ;
+    ex:textoExtracto "V.PLC.M[1107]=1 ; Marca SPDLTOGR al gestor." ;
+    ex:ejecutadoPor ex:RutinaM06 .
+
+ex:MensajeExtraccion
+    a ex:InterfazUsuario ;
+    rdfs:label "Mensaje de extracción de herramienta" ;
+    ex:textoExtracto "# MSG [\"Extraer herramienta T%D y pulsar MARCHA\", V.TM.TOOL] ; Mensaje al operario para que quite la herramienta." ;
+    ex:ilustradoEn ex:RutinaM06 .
+
+ex:MensajeInsercion
+    a ex:InterfazUsuario ;
+    rdfs:label "Mensaje de inserción de herramienta" ;
+    ex:textoExtracto "# MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." ;
+    ex:ilustradoEn ex:RutinaM06 .

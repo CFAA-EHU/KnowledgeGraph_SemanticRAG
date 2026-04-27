@@ -1,0 +1,30 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:marca_DIFFCOMP
+    a ex:Parametro ;
+    rdfs:label "DIFFCOMP(axis)" ;
+    ex:textoExtracto "La marca DIFFCOMP(axis) corrige la diferencia de cota entre el eje maestro y esclavo..." ;
+    ex:identificador "DIFFCOMP(axis)" .
+
+ex:marca_SERVOON
+    a ex:Parametro ;
+    rdfs:label "SERVO(axis)ON" ;
+    ex:textoExtracto "Con el flanco de subida de SERVO(axis)ON si DIFFCOMP(axis) está activa..." ;
+    ex:identificador "SERVO(axis)ON" .
+
+ex:marca_REFPOIN
+    a ex:Parametro ;
+    rdfs:label "REFPOIN(axis)" ;
+    ex:textoExtracto "La marca REFPOIN(axis) de ambos ejes se activa cuando termina la corrección de la cota." ;
+    ex:identificador "REFPOIN(axis)" .
+
+ex:proceso_correccion_cota
+    a ex:TareaMantenimiento ;
+    rdfs:label "Corrección de diferencia de cota (ejes gantry)" ;
+    ex:textoExtracto "La marca DIFFCOMP(axis) corrige la diferencia de cota entre el eje maestro y esclavo..." ;
+    ex:monitoreaParametro ex:marca_DIFFCOMP ;
+    ex:monitoreaParametro ex:marca_SERVOON ;
+    ex:habilitadoPor ex:marca_REFPOIN .

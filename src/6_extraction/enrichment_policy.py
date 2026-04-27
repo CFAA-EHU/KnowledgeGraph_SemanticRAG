@@ -469,17 +469,30 @@ def _best_structured_value(description: dict[str, Any], expected_answer: str, re
 
 
 def _best_short_extract(description: dict[str, Any], expected_answer: str, related_desc: dict[str, Any] | None = None) -> tuple[str | None, str | None]:
+    def _extract_describes_entity(value: str, entity_description: dict[str, Any]) -> bool:
+        entity_tokens = _significant_tokens(
+            entity_description.get("local_name", ""),
+            *entity_description.get("labels", []),
+            *entity_description.get("identifiers", []),
+        )
+        extract_tokens = _significant_tokens(value)
+        if not extract_tokens:
+            return False
+        return bool(entity_tokens & extract_tokens) and len(value) <= 220
+
     candidates: list[tuple[str, str]] = []
     for text in description.get("text_extracts", []):
         for fragment in split_text_fragments(text):
-            candidates.append((fragment, "existing_extract_fragment"))
+            if _extract_describes_entity(fragment, description):
+                candidates.append((fragment, "existing_extract_fragment"))
     if related_desc and _bridge_allowed(description, related_desc):
         best_related, _ = best_surface_literal(related_desc, expected_answer)
-        if best_related and 8 <= len(best_related) <= 160:
+        if best_related and 8 <= len(best_related) <= 160 and _extract_describes_entity(best_related, description):
             candidates.append((best_related, "related_entity_bridge"))
         for text in related_desc.get("text_extracts", []):
             for fragment in split_text_fragments(text):
-                candidates.append((fragment, "related_entity_bridge"))
+                if _extract_describes_entity(fragment, description):
+                    candidates.append((fragment, "related_entity_bridge"))
     best_value, best_reason, best_score = None, None, -1.0
     for value, reason in candidates:
         score = _preferred_surface_score(value, expected_answer) - (0.05 if reason == "related_entity_bridge" else 0.0)

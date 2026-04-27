@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Temporizador_T20
+    a ex:ComponenteElectrico ;
+    rdfs:label "Temporizador T20" ;
+    ex:textoExtracto "Activa el temporizador T20 en modo monoestable (TG1) con una constante de tiempo de 100 ms." ;
+    ex:identificador "T20" .
+
+ex:Temporizador_T22
+    a ex:ComponenteElectrico ;
+    rdfs:label "Temporizador T22" ;
+    ex:textoExtracto "Activa el temporizador T22 en modo de retardo a la conexión (TG2) con la constante de tiempo que fija el valor del registro R200, en ms." ;
+    ex:identificador "T22" .
+
+ex:Temporizador_T123
+    a ex:ComponenteElectrico ;
+    rdfs:label "Temporizador T123" ;
+    ex:textoExtracto "T123 coincide con la salida de estado [...] Su representación T123 coincide con la salida de estado pero se utilizan en instrucciones de tipo distinto." ;
+    ex:identificador "T123" .
+
+ex:Registro_R200
+    a ex:Parametro ;
+    rdfs:label "Registro R200" ;
+    ex:textoExtracto "constante de tiempo que fija el valor del registro R200, en ms." ;
+    ex:identificador "R200" ;
+    ex:valor "ms" .
+
+ex:Marca_M100
+    a ex:Parametro ;
+    rdfs:label "Marca M100" ;
+    ex:textoExtracto "Asigna a M100 el estado (0/1) de T123. [...] Compara si el tiempo de T123 es mayor que 1000, en cuyo caso activa la marca M100." ;
+    ex:identificador "M100" .
+
+ex:ModoOperacion_TG1
+    a ex:ModoOperacion ;
+    rdfs:label "Modo monoestable (TG1)" ;
+    ex:textoExtracto "modo monoestable (TG1)" ;
+    ex:identificador "TG1" .
+
+ex:ModoOperacion_TG2
+    a ex:ModoOperacion ;
+    rdfs:label "Modo retardo a la conexión (TG2)" ;
+    ex:textoExtracto "modo de retardo a la conexión (TG2)" ;
+    ex:identificador "TG2" .
+
+ex:Temporizador_T20 ex:tieneFrecuencia ex:ModoOperacion_TG1 .
+ex:Temporizador_T22 ex:tieneFrecuencia ex:ModoOperacion_TG2 .
+ex:Temporizador_T22 ex:monitoreaParametro ex:Registro_R200 .
+ex:Temporizador_T123 ex:monitoreaParametro ex:Marca_M100 .

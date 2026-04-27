@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_EntradaCaptacionEje
+    a ex:Parametro ;
+    rdfs:label "Número de la entrada de captación del eje"@es ;
+    ex:textoExtracto "Direct Feedback Motor Feedback Sercos Número de la entrada de captación del eje. Dependiendo del tipo de captación, este parámetro indicará cuál es la entrada de captación a utilizar (si la captación es local o remota) o el número de regulador."@es ;
+    ex:monitoreaParametro ex:Sensor_EntradaCaptacionLocal, ex:Sensor_EntradaCaptacionRemota, ex:Sensor_EntradaCaptacionSercos .
+
+ex:Sensor_EntradaCaptacionLocal
+    a ex:Sensor ;
+    rdfs:label "Entrada de captación local"@es ;
+    ex:textoExtracto "La unidad central dispone de dos entradas de captación. Este parámetro indica la entrada de captación que se utiliza."@es .
+
+ex:Sensor_EntradaCaptacionRemota
+    a ex:Sensor ;
+    rdfs:label "Entrada de captación en módulos remotos CANfagor"@es ;
+    ex:textoExtracto "Para la entrada de captación se utiliza un módulo de contadoras en los módulos remotos. [...] Las contadoras del primer módulo serán 1 a 4, las del segundo 5 a 8 y así sucesivamente."@es ;
+    ex:tieneComponente ex:ComponenteElectrico_ModuloContadoras .
+
+ex:ComponenteElectrico_ModuloContadoras
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de contadoras (CANfagor)"@es ;
+    ex:textoExtracto "módulo de contadoras en los módulos remotos CANfagor. [...] Los módulos de las contadoras se numeran según el orden lógico de los grupos remotos."@es .
+
+ex:Sensor_EntradaCaptacionSercos
+    a ex:Sensor ;
+    rdfs:label "Entrada de captación en reguladores Sercos"@es ;
+    ex:textoExtracto "En este caso siempre se utilizará la segunda entrada de captación del regulador. [...] La dirección lógica la establece el conmutador rotativo 'address' (de 1 a 32)."@es .
+
+ex:Parametro_DireccionLogicaRegulador
+    a ex:Parametro ;
+    rdfs:label "Dirección lógica del regulador Sercos"@es ;
+    ex:textoExtracto "El parámetro indica la dirección lógica del regulador (de 1 a 32)."@es ;
+    ex:valor "1-32" .
+
+ex:Tabla_TiposCaptacion a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tipos de captación y entradas asociadas"@es ;
+    ex:textoExtracto "| Tipo de captación. | Número de la entrada de captación del eje. | [...] Entrada de captación en los módulos remotos CANfagor. | [...] Entrada de captación en los reguladores Sercos. | [...] Entrada de captación local. |"@es ;
+    ex:documentadoEn ex:Pagina_586_588 .

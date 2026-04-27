@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_ABSOFF
+    a ex:Parametro ;
+    rdfs:label "Parámetro ABSOFF" ;
+    ex:textoExtracto "al actualizar una versión anterior en máquinas con captación absoluta, hay que poner en el parámetro ABSOFF el valor que tiene el regulador en PP177 ó PP178" ;
+    ex:valor "PP177/PP178" .
+
+ex:Parametro_PP177
+    a ex:Parametro ;
+    rdfs:label "Parámetro PP177" ;
+    ex:textoExtracto "el valor que tiene el regulador en PP177 ó PP178" ;
+    ex:identificador "PP177" .
+
+ex:Parametro_PP178
+    a ex:Parametro ;
+    rdfs:label "Parámetro PP178" ;
+    ex:textoExtracto "el valor que tiene el regulador en PP177 ó PP178" ;
+    ex:identificador "PP178" .
+
+ex:Parametro_COUNTERTYPE
+    a ex:Parametro ;
+    rdfs:label "Parámetro COUNTERTYPE" ;
+    ex:textoExtracto "cambiar el valor del parámetro COUNTERTYPE de 'remoto' a 'regulador' en los ejes implicados" ;
+    ex:valor "remoto/regulador" .
+
+ex:Parametro_COUNTERID
+    a ex:Parametro ;
+    rdfs:label "Parámetro COUNTERID" ;
+    ex:textoExtracto "los valores de los parámetros COUNTERTYPE y COUNTERID son incompatibles" ;
+    ex:identificador "COUNTERID" .
+
+ex:Error_E9332
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error E9332" ;
+    ex:textoExtracto "el CNC mostrará un error E9332 por cada eje Sercos con captación externa. Este error indica que los valores de los parámetros COUNTERTYPE y COUNTERID son incompatibles" ;
+    ex:identificador "E9332" .
+
+ex:Sistema_CNC8070_V3.15
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC8070 (versión V3.15)" ;
+    ex:textoExtracto "A partir de la versión V3.15, al actualizar una versión anterior en máquinas con captación absoluta, hay que poner en el parámetro ABSOFF el valor que tiene el regulador en PP177 ó PP178" ;
+    ex:identificador "V3.15" ;
+    ex:tieneComponente ex:Parametro_ABSOFF .
+
+ex:Sistema_CNC8070_V3.20
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC8070 (versión V3.20)" ;
+    ex:textoExtracto "A partir de la versión V3.20, cuando instalamos el software por primera vez, no aparece ninguna carpeta MTB en la carpeta CNC8070. En la nueva carpeta CONFIGURATION, el CNC dispone de una carpeta MTB diferente para cada tipo de software instalado" ;
+    ex:identificador "V3.20" .
+
+ex:Sistema_CNC8070_V4.00
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC8070 (versión V4.00)" ;
+    ex:textoExtracto "Al instalar la versión V4.00 no se garantiza que el CNC mantenga los orígenes activos ni el estado de las marcas de sincronización. Ejes Sercos. Durante la actualización desde una versión V3.00 o posterior, el CNC mostrará un error E9332 por cada eje Sercos con captación externa" ;
+    ex:identificador "V4.00" ;
+    ex:activaAlarma ex:Error_E9332 .
+
+ex:Manual_ActualizacionSoftware
+    a ex:Manual ;
+    rdfs:label "Manual de actualización del software CNC8070" ;
+    ex:textoExtracto "Actualización del software desde versiones anteriores" ;
+    ex:documentadoEn ex:Sistema_CNC8070_V3.15 , ex:Sistema_CNC8070_V3.20 , ex:Sistema_CNC8070_V4.00 .

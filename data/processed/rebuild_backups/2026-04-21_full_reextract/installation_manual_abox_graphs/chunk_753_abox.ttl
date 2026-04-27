@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:MarcaSobretemperaturaCNC
+    a                   ex:Parametro ;
+    rdfs:label          "Marca de sobretemperatura en PLC" ;
+    ex:textoExtracto    "Incluir esta marca en la maniobra del PLC para restringir la operativa del CNC en caso de sobretemperatura. Si el PLC activa esta marca, existe riesgo de sobretemperatura y está en peligro la integridad del equipo." ;
+    ex:monitoreaParametro  ex:SistemaTemperaturaCNC ;
+    ex:activaAlarma      ex:AlarmaSobretemperatura .
+
+ex:SistemaTemperaturaCNC
+    a                   ex:Sensor ;
+    rdfs:label          "Sensor de temperatura del CNC" ;
+    ex:textoExtracto    "riesgo de sobretemperatura" .
+
+ex:AlarmaSobretemperatura
+    a                   ex:Alarma ;
+    rdfs:label          "Alarma por sobretemperatura" ;
+    ex:textoExtracto    "Si el PLC activa esta marca, existe riesgo de sobretemperatura y está en peligro la integridad del equipo." ;
+    ex:mitigaRiesgo     ex:AccionApagadoEquipo .
+
+ex:AccionApagadoEquipo
+    a                   ex:AccionProhibida ;
+    rdfs:label          "Apagado obligatorio del equipo por sobretemperatura" ;
+    ex:textoExtracto    "Apagar el equipo para evitar" .
+
+ex:PLC_CNC
+    a                   ex:ComponenteElectrico ;
+    rdfs:label          "PLC del sistema CNC" ;
+    ex:textoExtracto    "Incluir esta marca en la maniobra del PLC para restringir la operativa del CNC" ;
+    ex:controla         ex:MarcaSobretemperaturaCNC .
+
+ex:CNC_Maquina
+    a                   ex:Maquina ;
+    rdfs:label          "CNC" ;
+    ex:textoExtracto    "El CNC permitirá finalizar la ejecución en marcha, pero no permitirá reanudarla tras una interrupción" ;
+    ex:tieneComponente  ex:PLC_CNC .

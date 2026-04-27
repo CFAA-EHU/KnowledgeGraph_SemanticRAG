@@ -1,36 +1,24 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:plataforma_cambio_herramienta
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Plataforma interior cambio de herramienta" ;
-    ex:textoExtracto "En la parte superior del carro porta-piezas se ha instalado una plataforma que se utiliza para realizar el cambio de herramienta." ;
-    ex:tieneComponente ex:trampilla_plataforma .
+ns1:PlataformaInteriorCambioHerramienta a ns1:Sistema ;
+    rdfs:label "Plataforma interior cambio de herramienta" ;
+    ns1:compuestoPor ns1:PlataformaCambioHerramienta ;
+    ns1:textoExtracto "En la parte superior del carro porta-piezas se ha instalado una plataforma que se utiliza para realizar el cambio de herramienta." .
 
-ex:trampilla_plataforma
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Trampilla de plataforma" ;
-    ex:textoExtracto "La plataforma dispone de una trampilla en la parte central que se abre para realizar el cambio del plato divisor." ;
-    ex:tieneComponente ex:sensor_seguridad_25SQ1 ;
-    ex:mitigaRiesgo ex:interrupcion_circuito_maquina .
+ns1:PlataformaCambioHerramienta a ns1:ComponenteMecanico ;
+    rdfs:label "Plataforma cambio de herramienta" ;
+    ns1:compuestoPor ns1:EnclavamientoElectronicoSeguridad25SQ1,
+        ns1:TrampillaPlataformaCambioHerramienta ;
+    ns1:textoExtracto "La plataforma dispone de una trampilla en la parte central que se abre para realizar el cambio del plato divisor." .
 
-ex:sensor_seguridad_25SQ1
-    a               ex:Sensor ;
-    rdfs:label      "Enclavamiento electrónico de seguridad (25SQ1) EUCHNER" ;
-    ex:identificador "25SQ1" ;
-    ex:textoExtracto "La trampilla está equipada con un enclavamiento electrónico de seguridad (25SQ1) EUCHNER que se acciona automáticamente cuando la máquina está en funcionamiento." ;
-    ex:controla ex:interrupcion_circuito_maquina .
+ns1:TrampillaPlataformaCambioHerramienta a ns1:ElementoSeguridad ;
+    rdfs:label "Trampilla Plataforma plataforma Micro de seguridad" ;
+    ns1:textoExtracto "La plataforma dispone de una trampilla en la parte central que se abre para realizar el cambio del plato divisor. La trampilla está equipada con un enclavamiento electrónico de seguridad (25SQ1) EUCHNER que se acciona automáticamente cuando la máquina está en funcionamiento." ;
+    ns1:tieneComponente ns1:EnclavamientoElectronicoSeguridad25SQ1 .
 
-ex:interrupcion_circuito_maquina
-    a               ex:AccionProhibida ;
-    rdfs:label      "Interrupción del circuito eléctrico de la máquina" ;
-    ex:textoExtracto "en caso de apertura, también se abre el circuito eléctrico de la máquina que pasa por el interruptor." .
+ns1:EnclavamientoElectronicoSeguridad25SQ1 a ns1:ComponenteElectrico ;
+    rdfs:label "Enclavamiento electrónico de seguridad (25SQ1) EUCHNER" ;
+    ns1:identificador "25SQ1" ;
+    ns1:textoExtracto "La trampilla está equipada con un enclavamiento electrónico de seguridad (25SQ1) EUCHNER que se acciona automáticamente cuando la máquina está en funcionamiento." .
 
-ex:figura_2_4
-    a               ex:Figura ;
-    rdfs:label      "Figura 2-4. Plataforma cambio de herramienta" ;
-    ex:identificador "2-4" ;
-    ex:textoExtracto "Trampilla Plataforma plataforma Micro de seguridad (25SQ1) Figura 2-4. Plataforma cambio de herramienta" ;
-    ex:ilustradoEn ex:plataforma_cambio_herramienta .

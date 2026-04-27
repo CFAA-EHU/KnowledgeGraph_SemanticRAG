@@ -1,0 +1,81 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SenalActivacionMaterial
+    a                   ex:Parametro ;
+    rdfs:label          "ACTIVEMATERIALON" ;
+    ex:textoExtracto    "ACTIVEMATERIALON: El CNC activa esta marca cuando hay un fichero de material activo (por la ejecución de #MATERIAL, #TECHTABLE, por activación desde HMI o por recuperación en el arranque)." ;
+    ex:identificador    "ACTIVEMATERIALON" ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:SenalPiercingActivo
+    a                   ex:Parametro ;
+    rdfs:label          "PIERCING" ;
+    ex:textoExtracto    "PIERCING: Piercing activo. El OEM debe gestionar esta marca desde la subrutina asociada al piercing (por defecto, Piercing.fst), para indicar al PLC cuando empieza (valor 1) y acaba (valor 0) la operación de piercing." ;
+    ex:identificador    "PIERCING" ;
+    ex:monitoreaParametro ex:SistemaCNC ;
+    ex:valor            "0" , "1" .
+
+ex:VariablePLC_Piercing
+    a                   ex:Parametro ;
+    rdfs:label          "V.PLC.PIERCING" ;
+    ex:textoExtracto    "Esta marca refleja el estado de la variable V.PLC.PIERCING. El OEM también puede utilizar esta variable en la subrutina asociada al piercing (por defecto, Piercing.fst), para modificar el estado de esta marca." ;
+    ex:identificador    "V.PLC.PIERCING" ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:SenalCuttingActivo
+    a                   ex:Parametro ;
+    rdfs:label          "CUTTING" ;
+    ex:textoExtracto    "CUTTING: Cutting activo. El OEM debe gestionar esta marca desde las subrutinas asociadas al cutting (por defecto, Cuttingon.fst / Cuttingoff.fst), para indicar al PLC cuando empieza (valor 1) y acaba (valor 0) la operación de cutting." ;
+    ex:identificador    "CUTTING" ;
+    ex:monitoreaParametro ex:SistemaCNC ;
+    ex:valor            "0" , "1" .
+
+ex:VariablePLC_Cutting
+    a                   ex:Parametro ;
+    rdfs:label          "V.PLC.CUTTING" ;
+    ex:textoExtracto    "Esta marca refleja el estado de la variable V.PLC.CUTTING. El OEM también puede utilizar esta variable en las subrutinas asociadas al cutting (por defecto, Cuttingon.fst / Cuttingoff.fst), para modificar el estado de esta marca." ;
+    ex:identificador    "V.PLC.CUTTING" ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:SenalComVarAct
+    a                   ex:Parametro ;
+    rdfs:label          "COMVARACT" ;
+    ex:textoExtracto    "COMVARACT: El CNC activa esta marca cuando el usuario valida los parámetros comunes de la tabla de piercing o cutting activa. El PLC debe desactivar esta marca cuando termina su gestión con estas variables." ;
+    ex:identificador    "COMVARACT" ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:SenalCutVarAct
+    a                   ex:Parametro ;
+    rdfs:label          "CUTVARACT" ;
+    ex:textoExtracto    "CUTVARACT: El CNC activa esta marca cuando el usuario valida los parámetros de cutting de la tabla activa. El PLC debe desactivar esta marca cuando termina su gestión con estas variables." ;
+    ex:identificador    "CUTVARACT" ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:SistemaCNC
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema CNC" ;
+    ex:textoExtracto    "El CNC activa esta marca..." .
+
+ex:SubrutinaPiercing
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Piercing.fst" ;
+    ex:textoExtracto    "subrutina asociada al piercing (por defecto, Piercing.fst)" ;
+    ex:identificador    "Piercing.fst" ;
+    ex:ejecutadoPor     ex:SistemaCNC .
+
+ex:SubrutinaCuttingOn
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Cuttingon.fst" ;
+    ex:textoExtracto    "subrutinas asociadas al cutting (por defecto, Cuttingon.fst / Cuttingoff.fst)" ;
+    ex:identificador    "Cuttingon.fst" ;
+    ex:ejecutadoPor     ex:SistemaCNC .
+
+ex:SubrutinaCuttingOff
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "Cuttingoff.fst" ;
+    ex:textoExtracto    "subrutinas asociadas al cutting (por defecto, Cuttingon.fst / Cuttingoff.fst)" ;
+    ex:identificador    "Cuttingoff.fst" ;
+    ex:ejecutadoPor     ex:SistemaCNC .

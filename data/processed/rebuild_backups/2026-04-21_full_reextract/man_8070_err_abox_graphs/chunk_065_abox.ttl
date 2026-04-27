@@ -1,0 +1,96 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Alarmas y Diagnósticos de Fallo
+ex:Alarma_0173
+    a ex:Alarma ;
+    rdfs:label "Marcha no permitida por sobrepasar temperatura de seguridad" ;
+    ex:identificador "0173" ;
+    ex:textoExtracto "0173 Marcha no permitida por sobrepasar temperatura de seguridad. Apagar el cnc y contactar con el SAT. DETECCIÓN Durante el funcionamiento del CNC. CAUSA Cada vez que se pulsa [START], el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF), y en caso de superar dicho valor, invalida el [START] y muestra este error." ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_0173 .
+
+ex:DiagnosticoFallo_0173
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Sobrecalentamiento del habitáculo del CNC" ;
+    ex:identificador "0173" ;
+    ex:textoExtracto "La causa del aumento de temperatura puede ser un fallo en el sistema de refrigeración del hardware o una temperatura ambiente muy elevada. SOLUCIÓN Respetar las dimensiones recomendadas para el habitáculo y las distancia mínima recomendada entre las paredes del habitáculo y la unidad central. En caso necesario, instalar ventiladores para airear el habitáculo." ;
+    ex:solucionaFallo ex:AvisoSeguridad_0173 .
+
+ex:AvisoSeguridad_0173
+    a ex:AvisoSeguridad ;
+    rdfs:label "Recomendaciones para ventilación del habitáculo" ;
+    ex:identificador "0173" ;
+    ex:textoExtracto "Respetar las dimensiones recomendadas para el habitáculo y las distancia mínima recomendada entre las paredes del habitáculo y la unidad central. En caso necesario, instalar ventiladores para airear el habitáculo." .
+
+ex:Alarma_0174
+    a ex:Alarma ;
+    rdfs:label "Ejes rotativos incompletos" ;
+    ex:identificador "0174" ;
+    ex:textoExtracto "0174 Ejes rotativos, es necesario completar la vuelta completa. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El CNC no puede activar la compensación volumétrica porque entre los ejes que se mueven (parámetro MOVAXIS) hay más de un eje rotativo módulo, y el recorrido del segundo eje no es completo (0 a 360º)." ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_0174 .
+
+ex:DiagnosticoFallo_0174
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Configuración incorrecta de ejes rotativos" ;
+    ex:identificador "0174" ;
+    ex:textoExtracto "El CNC no puede activar la compensación volumétrica porque entre los ejes que se mueven (parámetro MOVAXIS) hay más de un eje rotativo módulo, y el recorrido del segundo eje no es completo (0 a 360º). SOLUCIÓN Definir el módulo del segundo eje rotativo entre 0 y 360º y validar la compensación volumétrica." .
+
+ex:Parametro_MOVAXIS
+    a ex:Parametro ;
+    rdfs:label "Parámetro MOVAXIS (ejes móviles)" ;
+    ex:identificador "MOVAXIS" ;
+    ex:textoExtracto "parámetro MOVAXIS" ;
+    ex:monitoreaParametro ex:DiagnosticoFallo_0174 .
+
+ex:Alarma_0200
+    a ex:Alarma ;
+    rdfs:label "Fallo en la petición a un VxD" ;
+    ex:identificador "0200" ;
+    ex:textoExtracto "0200 'Fallo en la petición a un VxD' DETECCIÓN Al leer el estado de la batería. CAUSA El CNC no se puede conectar con VcompciD." .
+
+ex:Alarma_0201
+    a ex:Alarma ;
+    rdfs:label "Corte en la red. PC alimentado con batería" ;
+    ex:identificador "0201" ;
+    ex:textoExtracto "0201 'Corte en la red. PC alimentado con batería' DETECCIÓN Al leer el estado de la batería." .
+
+### Componentes y Sistema de Refrigeración
+ex:SistemaRefrigeracion_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema de refrigeración del hardware del CNC" ;
+    ex:textoExtracto "fallo en el sistema de refrigeración del hardware" ;
+    ex:tieneComponente ex:Ventilador_CNC ;
+    ex:requiereMantenimiento ex:TareaMantenimiento_VentilacionHabitaculo .
+
+ex:Ventilador_CNC
+    a ex:ComponenteElectrico ;
+    rdfs:label "Ventilador del sistema de refrigeración" ;
+    ex:textoExtracto "vigila que dicho ventilador esté en marcha. Dicho testeo se realizará cada minuto, al igual que la vigilancia de temperatura" ;
+    ex:monitoreaParametro ex:Parametro_TemperaturaAmbiente .
+
+ex:Parametro_TemperaturaAmbiente
+    a ex:Parametro ;
+    rdfs:label "Temperatura ambiente del habitáculo" ;
+    ex:identificador "65°C (149°F)" ;
+    ex:valor "65" ;
+    ex:textoExtracto "el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF)" .
+
+ex:TareaMantenimiento_VentilacionHabitaculo
+    a ex:TareaMantenimiento ;
+    rdfs:label "Instalación de ventiladores adicionales en el habitáculo" ;
+    ex:textoExtracto "instalar ventiladores para airear el habitáculo" ;
+    ex:requiereConsumible ex:VentiladoresAdicionales .
+
+ex:VentiladoresAdicionales
+    a ex:Consumible ;
+    rdfs:label "Ventiladores para aireación del habitáculo" ;
+    ex:textoExtracto "ventiladores para airear el habitáculo" .
+
+### Interfaz de Usuario
+ex:InterfazUsuario_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Botón START del CNC" ;
+    ex:textoExtracto "Cada vez que se pulsa [START], el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC" ;
+    ex:activaAlarma ex:Alarma_0173 .

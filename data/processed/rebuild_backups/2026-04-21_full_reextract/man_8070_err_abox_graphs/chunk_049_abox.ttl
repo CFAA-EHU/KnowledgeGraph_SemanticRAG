@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_0115
+    a ex:DiagnosticoFallo ;
+    ex:identificador "0115" ;
+    rdfs:label "Código de validación -tipo de CPU- no coherente con el hardware" ;
+    ex:textoExtracto "0115 Código de validación -tipo de CPU-, NO coherente con el hardware. DETECCIÓN Durante el arranque del CNC. CAUSA El tipo de CPU definido en el código de validación no es válido para ese hardware. SOLUCIÓN Póngase en contacto con Fagor para obtener un código de validación válido." .
+
+ex:DiagnosticoFallo_0116
+    a ex:DiagnosticoFallo ;
+    ex:identificador "0116" ;
+    rdfs:label "Error al leer la tabla tecnológica" ;
+    ex:textoExtracto "0116 'Error al leer la tabla tecnológica' DETECCIÓN Durante el arranque del CNC, acceso a la tabla tecnológica o ejecución del comando #TECHTABLE. CAUSA El fichero ..\\mtb\\data\\techTable\\TTDsc.xml que define la tabla o tabla no existe o no es ..\\mtb\\data\\techTable\\Material Files\\*xml con los datos de la correcto. Es posible que haya cambios en la tabla (nuevas variables, nuevos tipos enumerados) y no se ha reiniciado el CNC. SOLUCIÓN Comprobar el nombre y contenido de la tabla. Si la tabla existe, reiniciar el CNC." ;
+    ex:documentadoEn ex:Tabla_Tecnologica .
+
+ex:Tabla_Tecnologica a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla tecnológica (TTDsc.xml)" ;
+    ex:textoExtracto "El fichero ..\\mtb\\data\\techTable\\TTDsc.xml que define la tabla o tabla no existe o no es ..\\mtb\\data\\techTable\\Material Files\\*xml con los datos de la correcto." ;
+    ex:identificador "TTDsc.xml" .
+
+ex:DiagnosticoFallo_0117
+    a ex:DiagnosticoFallo ;
+    ex:identificador "0117" ;
+    rdfs:label "Número de cores no coherente con el hardware" ;
+    ex:textoExtracto "0117 El número de cores definidos en el código de validación NO es coherente con el hardware. DETECCIÓN Durante el arranque del CNC. CAUSA El número de cores definido en el código de validación no es válido para ese hardware. SOLUCIÓN Póngase en contacto con Fagor para obtener un código de validación válido." .
+
+ex:DiagnosticoFallo_0118
+    a ex:DiagnosticoFallo ;
+    ex:identificador "0118" ;
+    rdfs:label "Fallo en hardware de SERCOS III o error en driver" ;
+    ex:textoExtracto "0118 No hay hardware de SERCOS III o error en la carga del driver. DETECCIÓN Durante el arranque del CNC o la validación de los parámetros máquina. CAUSA El CNC no detecta el hardware asociado a Sercos III o no puede cargar el driver. SOLUCIÓN Reiniciar el CNC. Si el error persiste, póngase en contacto con Fagor Automation." ;
+    ex:solucionaFallo ex:Sistema_SERCOS_III .
+
+ex:Sistema_SERCOS_III
+    a ex:Sistema ;
+    rdfs:label "Sistema SERCOS III" ;
+    ex:textoExtracto "No hay hardware de SERCOS III o error en la carga del driver." .
+
+ex:DiagnosticoFallo_0119
+    a ex:DiagnosticoFallo ;
+    ex:identificador "0119" ;
+    rdfs:label "Actualización de SW correcta de dispositivos PwC conectados a SERCOS3" ;
+    ex:textoExtracto "0119 Actualización de SW correcta de los dispositivos PwC conectados a SERCOS3 - OK. DETECCIÓN Durante el arranque del CNC. CAUSA El CNC ha actualizado el software de los PwC. SOLUCIÓN El CNC informa de la actualización; no es necesaria ninguna acción." ;
+    ex:solucionaFallo ex:Sistema_SERCOS_III .
+
+ex:Parametro_ValidacionCPU
+    a ex:Parametro ;
+    rdfs:label "Código de validación (tipo de CPU)" ;
+    ex:textoExtracto "El tipo de CPU definido en el código de validación no es válido para ese hardware." ;
+    ex:monitoreaParametro ex:DiagnosticoFallo_0115 .
+
+ex:Parametro_ValidacionCores
+    a ex:Parametro ;
+    rdfs:label "Código de validación (número de cores)" ;
+    ex:textoExtracto "El número de cores definido en el código de validación no es válido para ese hardware." ;
+    ex:monitoreaParametro ex:DiagnosticoFallo_0117 .

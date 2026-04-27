@@ -1,0 +1,31 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ZONELIMITTOL
+    a ex:Parametro ;
+    rdfs:label "ZONELIMITTOL" ;
+    ex:identificador "ZONELIMITTOL" ;
+    ex:valor "0.1000" ;
+    ex:textoExtracto "Parámetro válido para ejes lineales y rotativos. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: De 0 a 99999.9999 mm o grados / de 0 a 3937.00787 inch. Valor por defecto: 0.1000 mm o grados / 0.00394 inch." ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    ex:textoExtracto "el CNC detiene los ejes cuando alguno de ellos alcanza la distancia de seguridad. La distancia de seguridad se define por eje, el cual tendrá la misma distancia de seguridad en todas las zonas." .
+
+ex:Variable_ZONELIMITTOL_Arranque
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].A.ZONELIMITTOL.xn" ;
+    ex:identificador "(V.)[ch].A.ZONELIMITTOL.xn" ;
+    ex:textoExtracto "Distancia de seguridad de los límites de las zonas de trabajo. La distancia de seguridad se puede modificar con la siguiente variable, que en el arranque tomará el valor de este parámetro." ;
+    ex:monitoreaParametro ex:SistemaCNC ;
+    ex:valor "0.1000" .  # Valor por defecto heredado de ZONELIMITTOL
+
+ex:Variable_ZONELIMITTOL_Operacion
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].MPA.ZONELIMITTOL.xn" ;
+    ex:identificador "(V.)[ch].MPA.ZONELIMITTOL.xn" ;
+    ex:textoExtracto "Distancia de seguridad que aplica el CNC al eje respecto el límite de la zona de trabajo." ;
+    ex:monitoreaParametro ex:SistemaCNC .

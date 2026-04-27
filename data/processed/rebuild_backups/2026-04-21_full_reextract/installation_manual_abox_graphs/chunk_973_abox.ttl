@@ -1,0 +1,62 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AlmacenAsincrono_BrazoCambiador
+    a                     ex:Sistema ;
+    rdfs:label            "Almacén asíncrono con brazo cambiador"@es ;
+    ex:textoExtracto      "Los almacenes asíncronos tienen el almacén alejado del cabezal y el cambio se realiza con ayuda del brazo cambiador. La mayoría de los movimientos se pueden efectuar durante el mecanizado de la pieza, minimizando tiempos."@es ;
+    ex:compuestoPor       ex:BrazoCambiador_AlmacenAsincrono ;
+    ex:compuestoPor       ex:AlmacenHerramientas_Asincrono ;
+    ex:controla          ex:ProcesoCambioHerramienta_M06 .
+
+ex:BrazoCambiador_AlmacenAsincrono
+    a                     ex:Actuador ;
+    rdfs:label            "Brazo cambiador de herramienta"@es ;
+    ex:textoExtracto      "el cambio se realiza con ayuda del brazo cambiador"@es .
+
+ex:AlmacenHerramientas_Asincrono
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Almacén de herramientas (asíncrono)"@es ;
+    ex:textoExtracto      "Los almacenes asíncronos tienen el almacén alejado del cabezal"@es .
+
+ex:ProcesoCambioHerramienta_M06
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Proceso de cambio de herramienta (M06)"@es ;
+    ex:textoExtracto      "Ejecución de la función M06. 1 Cuando el CNC ejecuta la función M06, realiza una llamada a la rutina asociada. Dentro de dicha rutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta. 2 El gestor envía una orden al PLC para efectuar el cambio. 3 El CNC espera a que el gestor de por finalizada la operación para continuar con la ejecución del programa."@es ;
+    ex:ejecutadoPor       ex:PLC_ControlAlmacen ;
+    ex:requiereMantenimiento ex:SistemaGestionHerramientas .
+
+ex:PLC_ControlAlmacen
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "PLC de control del almacén"@es ;
+    ex:textoExtracto      "La comunicación entre el gestor y el PLC se realiza en 2 fases [...] El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén [...] El gestor envía una orden al PLC para efectuar el cambio."@es ;
+    ex:controla          ex:BrazoCambiador_AlmacenAsincrono ;
+    ex:controla          ex:AlmacenHerramientas_Asincrono .
+
+ex:SistemaGestionHerramientas
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de gestión de herramientas (gestor)"@es ;
+    ex:textoExtracto      "La comunicación entre el gestor y el PLC se realiza en 2 fases; la primera con la ejecución de la función T y la segunda con la ejecución de la función M06."@es ;
+    ex:controla          ex:PLC_ControlAlmacen .
+
+ex:FuncionT_SeleccionHerramienta a ex:Tabla ;
+     a                     ex:ModoOperacion ;
+    rdfs:label            "Función T (selección de herramienta)"@es ;
+    ex:textoExtracto      "Ejecución de la función T. 1 Cuando el CNC ejecuta la función T, se lo indica al gestor. 2 El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén. 3 El CNC continúa con la ejecución del programa, no espera a que el gestor de por finalizada la operación."@es ;
+    ex:habilitadoPor      ex:SistemaGestionHerramientas .
+
+ex:FuncionM06_CambioHerramienta a ex:Tabla ;
+     a                     ex:ModoOperacion ;
+    rdfs:label            "Función M06 (cambio de herramienta)"@es ;
+    ex:textoExtracto      "Ejecución de la función M06. 1 Cuando el CNC ejecuta la función M06, realiza una llamada a la rutina asociada. Dentro de dicha rutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta."@es ;
+    ex:habilitadoPor      ex:SistemaGestionHerramientas ;
+    ex:solucionaFallo     ex:ProcesoCambioHerramienta_M06 .
+
+ex:MarcaTCHANGEOK
+    a                     ex:Parametro ;
+    rdfs:label            "Marca TCHANGEOK"@es ;
+    ex:textoExtracto      "activar la marca TCHANGEOK para que el CNC continúe con la ejecución del programa mientras se deja la herramienta en el almacén."@es ;
+    ex:valor              "TCHANGEOK" ;
+    ex:monitoreaParametro ex:PLC_ControlAlmacen .

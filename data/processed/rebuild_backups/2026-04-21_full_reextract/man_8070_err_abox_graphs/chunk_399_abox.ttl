@@ -1,0 +1,91 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_2431
+    a ex:Alarma ;
+    rdfs:label "Alarma 2431: #DMC ON - OVRMIN > OVRMAX" ;
+    ex:identificador "2431" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el override mínimo es mayor que el override máximo. SOLUCIÓN El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." ;
+    .
+
+ex:Alarma_2432
+    a ex:Alarma ;
+    rdfs:label "Alarma 2432: #DMCON - Programación no permitida con cabezal analógico" ;
+    ex:identificador "2432" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico. SOLUCIÓN El DMC sólo se puede activar sobre cabezales digitales." ;
+    .
+
+ex:Alarma_2433
+    a ex:Alarma ;
+    rdfs:label "Alarma 2433: Programación obligatoria de ON/OFF en #DMC" ;
+    ex:identificador "2433" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Falta programar el comando ON/OFF para activar o anular la función. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. Incluir el comando ON para activar la función (por ejemplo, #DMCON [...]) o el comando OFF para anularla (por ejemplo, #DMC OFF)." ;
+    .
+
+ex:Alarma_2434
+    a ex:Alarma ;
+    rdfs:label "Alarma 2434: Programación no permitida fuera de macro G8077" ;
+    ex:identificador "2434" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8078 programada fuera de una macro G8077. SOLUCIÓN Revisar la programación. Las funciones G8078 se deben programar a continuación de la macro G8077." ;
+    .
+
+ex:Alarma_2435
+    a ex:Alarma ;
+    rdfs:label "Alarma 2435: Programación no permitida fuera de macro G8079" ;
+    ex:identificador "2435" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8078 programada fuera de una macro G8079. SOLUCIÓN Revisar la programación. Las funciones G8078 se deben programar a continuación de la macro G8079." ;
+    .
+
+ex:Alarma_2436
+    a ex:Alarma ;
+    rdfs:label "Alarma 2436: Programación no permitida fuera de macro G8777" ;
+    ex:identificador "2436" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777. SOLUCIÓN Revisar la programación." ;
+    .
+
+ex:Parametro_FZMIN
+    a ex:Parametro ;
+    rdfs:label "Parámetro FZMIN (avance mínimo)" ;
+    ex:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." ;
+    .
+
+ex:Parametro_FZMAX
+    a ex:Parametro ;
+    rdfs:label "Parámetro FZMAX (avance máximo)" ;
+    ex:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." ;
+    .
+
+ex:Parametro_OVRMIN
+    a ex:Parametro ;
+    rdfs:label "Parámetro OVRMIN (override mínimo)" ;
+    ex:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." ;
+    .
+
+ex:Parametro_OVRMAX
+    a ex:Parametro ;
+    rdfs:label "Parámetro OVRMAX (override máximo)" ;
+    ex:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." ;
+    .
+
+ex:Sistema_DMC
+    a ex:Sistema ;
+    rdfs:label "Sistema DMC (Dynamic Machining Control)" ;
+    ex:textoExtracto "En la función #DMC, el avance mínimo es mayor que el avance máximo. [...] El DMC sólo se puede activar sobre cabezales digitales." ;
+    .
+
+ex:Sistema_DMC
+    ex:monitoreaParametro ex:Parametro_FZMIN ;
+    ex:monitoreaParametro ex:Parametro_FZMAX ;
+    ex:monitoreaParametro ex:Parametro_OVRMIN ;
+    ex:monitoreaParametro ex:Parametro_OVRMAX ;
+    .
+
+ex:Alarma_2431
+    ex:activaAlarma ex:Sistema_DMC ;
+    .
+
+ex:Alarma_2432
+    ex:activaAlarma ex:Sistema_DMC ;
+    .

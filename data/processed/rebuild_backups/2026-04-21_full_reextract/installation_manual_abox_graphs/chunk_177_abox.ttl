@@ -1,0 +1,68 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_GROUPID
+    a ex:Parametro ;
+    rdfs:label "GROUPID" ;
+    ex:textoExtracto "Grupo al que pertenece el canal. Valores posibles: De 0 a 2. Valor por defecto: 0 (no pertenece a ningún grupo). Variable asociada: (V.)[ch].MPG.GROUPID" ;
+    ex:valor "0-2" ;
+    ex:identificador "V.[ch].MPG.GROUPID" .
+
+ex:Parametro_CHTYPE
+    a ex:Parametro ;
+    rdfs:label "CHTYPE" ;
+    ex:textoExtracto "Tipo de canal. Valores posibles: CNC / PLC / CNC+PLC. Valor por defecto: CNC. Variable asociada: (V.)[ch].MPG.CHTYPE" ;
+    ex:valor "CNC, PLC, CNC+PLC" ;
+    ex:identificador "V.[ch].MPG.CHTYPE" .
+
+ex:Parametro_HIDDENCH
+    a ex:Parametro ;
+    rdfs:label "HIDDENCH" ;
+    ex:textoExtracto "Canal oculto. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPG.HIDDENCH" ;
+    ex:valor "Sí/No" ;
+    ex:identificador "V.[ch].MPG.HIDDENCH" .
+
+ex:ModoOperacion_Manual
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual" ;
+    ex:textoExtracto "modo manual" .
+
+ex:ModoOperacion_Automatico
+    a ex:ModoOperacion ;
+    rdfs:label "Modo automático" ;
+    ex:textoExtracto "modo automático" .
+
+ex:ModoOperacion_MDI_MDA
+    a ex:ModoOperacion ;
+    rdfs:label "Modo MDI/MDA" ;
+    ex:textoExtracto "modo MDI/MDA" .
+
+ex:ModoOperacion_EDISIMU
+    a ex:ModoOperacion ;
+    rdfs:label "Modo EDISIMU" ;
+    ex:textoExtracto "modo EDISIMU" .
+
+ex:Sistema_ResetCanal
+    a ex:Sistema ;
+    rdfs:label "Sistema de reset de canales" ;
+    ex:textoExtracto "Un reset en cualquiera de los canales del grupo afecta a todos ellos. [...] para resetearlo habrá que agruparlo con otro canal o bien resetearlo desde el PLC mediante la marca RESETIN" .
+
+ex:Sistema_GrupoCanales
+    a ex:Sistema ;
+    rdfs:label "Sistema de agrupación de canales" ;
+    ex:textoExtracto "Dos o más canales se pueden configurar para formar un grupo. Los canales de un mismo grupo se comportan de la siguiente manera: [...] Si se produce un error en cualquiera de los canales del grupo, se detiene la ejecución en todos ellos" ;
+    ex:compuestoPor ex:Parametro_GROUPID .
+
+ex:Sistema_GobernanzaCanal
+    a ex:Sistema ;
+    rdfs:label "Sistema de gobernanza de canales CNC/PLC" ;
+    ex:textoExtracto "Un canal se puede gobernar desde el CNC, desde el PLC o desde ambos. Los canales gobernados desde el PLC no disponen de modo manual ni modo MDI/MDA" ;
+    ex:compuestoPor ex:Parametro_CHTYPE .
+
+ex:Sistema_VisualizacionCanales
+    a ex:Sistema ;
+    rdfs:label "Sistema de visualización de canales" ;
+    ex:textoExtracto "Los canales ocultos no se visualizan y no se pueden seleccionar" ;
+    ex:compuestoPor ex:Parametro_HIDDENCH .

@@ -1,0 +1,37 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Se_al_STOP_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Señal STOP del CNC" ;
+    ex:textoExtracto "[STOP] del CNC. Con esta señal a nivel lógico bajo, todas las teclas permanecen habilitadas." .
+
+ex:Marca_ENABLEGAP
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca ENABLEGAP" ;
+    ex:textoExtracto "Marca activa por defecto. El PLC desactiva esta marca para deshabilitar el control del gap activo. El PLC activa esta marca para habilitar el control del gap activo en el CNC; si no hay un control del gap activo, esta marca no hace nada." ;
+    ex:controla ex:Modo_GapActivo .
+
+ex:Modo_GapActivo
+    a ex:ModoOperacion ;
+    rdfs:label "Control del gap activo" ;
+    ex:textoExtracto "control del gap activo" .
+
+ex:Sensor_Colision_Gap
+    a ex:Sensor ;
+    rdfs:label "Sensor de colisión del gap" ;
+    ex:textoExtracto "sensor de colisión" ;
+    ex:activaAlarma ex:Marca_GAPCOLLISION .
+
+ex:Marca_GAPCOLLISION
+    a ex:AvisoSeguridad ;
+    rdfs:label "Marca GAPCOLLISION" ;
+    ex:textoExtracto "El PLC activa esta marca para indicar que se ha activado el sensor de colisión. Esta marca no se memoriza. Con esta marca activa, el CNC mostrará o no un error según lo definido en el parámetro GAPCOLLISIONMODE." ;
+    ex:monitoreaParametro ex:Parametro_GAPCOLLISIONMODE .
+
+ex:Parametro_GAPCOLLISIONMODE
+    a ex:Parametro ;
+    rdfs:label "Parámetro GAPCOLLISIONMODE" ;
+    ex:textoExtracto "parámetro GAPCOLLISIONMODE" .

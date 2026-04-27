@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_Eje_Avance
+    a ex:Parametro ;
+    rdfs:label "Parámetro de avance de eje" ;
+    ex:textoExtracto "avances, ganancias, aceleraciones" ;
+    ex:valor "variable según set" .
+
+ex:Parametro_VelocidadCabezal
+    a ex:Parametro ;
+    rdfs:label "Velocidad del cabezal (modelo láser)" ;
+    ex:textoExtracto "velocidad del cabezal (definida en rpm)" ;
+    ex:valor "rpm" ;
+    ex:identificador "velocidad_cabezal" .
+
+ex:Parametro_PotenciaLaser
+    a ex:Parametro ;
+    rdfs:label "Potencia del láser" ;
+    ex:textoExtracto "definen la potencia (definida en watios)" ;
+    ex:valor "watios" ;
+    ex:identificador "potencia_laser" .
+
+ex:Sistema_ConfiguracionEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de configuración de parámetros de ejes" ;
+    ex:textoExtracto "Se pueden definir hasta 4 sets de parámetros distintos para indicar la dinámica del eje en cada una de ellas" ;
+    ex:tieneComponente ex:Parametro_Eje_Avance ;
+    ex:tieneComponente ex:Parametro_VelocidadCabezal ;
+    ex:tieneComponente ex:Parametro_PotenciaLaser .
+
+ex:Parametro_VelocidadCabezal
+    ex:monitoreaParametro ex:Parametro_PotenciaLaser .

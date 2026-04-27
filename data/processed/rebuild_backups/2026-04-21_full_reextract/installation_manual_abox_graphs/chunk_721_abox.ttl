@@ -1,0 +1,27 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:TablaMensajesErroresPLC a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de mensajes y errores del PLC"@es ;
+    ex:textoExtracto "En el PLC hay una tabla de mensajes y errores en la que se puede asociar a cada mensaje o error lo siguiente: • Un número (campo ID). • Un texto (campo \"Mensaje\"). • Un archivo de información adicional (campo \"Archivo asociado\"), que podrá ser un fichero del tipo bmp, txt, jpg, gif, htm, html ó avi. • Si al activarse un error o mensaje, se debe mostrar directamente el fichero de ayuda adicional (campo \"Mostrar\" seleccionado) o sólo el texto del mensaje o error. • En el caso de los errores, si estos abren o no el relé de emergencia de la unidad central."@es ;
+    ex:identificador "MSG1-1024/ERR1-1024" .
+
+ex:InterfazMensajesPLC
+    a ex:InterfazUsuario ;
+    rdfs:label "Ventana de mensajes del PLC"@es ;
+    ex:textoExtracto "Al activarse una de las marcas MSG, el CNC muestra en la ventana de mensajes del PLC, dentro de la barra de estado, el número de mensaje y su texto asociado. [...] Cuando hay más de un mensaje activo se muestra siempre el más prioritario, el de menor número. En la ventana de mensajes del PLC aparece el símbolo \"+\", indicativo de que existen más mensajes activados por el PLC."@es .
+
+ex:SistemaVisualizacionErrores
+    a ex:Sistema ;
+    rdfs:label "Sistema de visualización de errores y mensajes del PLC"@es ;
+    ex:textoExtracto "El PLC dispone de 1024 marcas para visualización de mensajes y 1024 marcas para visualizar errores en el CNC. Cuando la marca está a (=1) el mensaje o error está activo. MSG1 - MSG1024 para visualizar mensajes. ERR1 - ERR1024 para visualizar errores."@es ;
+    ex:compuestoPor ex:TablaMensajesErroresPLC ;
+    ex:compuestoPor ex:InterfazMensajesPLC .
+
+ex:ComponenteElectrico_ReleEmergencia
+    a ex:ComponenteElectrico ;
+    rdfs:label "Relé de emergencia de la unidad central"@es ;
+    ex:textoExtracto "En el caso de los errores, si estos abren o no el relé de emergencia de la unidad central."@es .

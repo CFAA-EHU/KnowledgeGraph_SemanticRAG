@@ -1,0 +1,72 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_Se_alesPLC_VOLCOMP
+    a ex:Tabla ;
+    rdfs:label "Tabla de señales PLC para compensación volumétrica"@es ;
+    ex:textoExtracto """
+| Señal de PLC. |  | Significado. |
+| --- | --- | --- |
+| VOLCOMP1 PLC_M
+VOLCOMP2 (R/W)
+VOLCOMP3
+VOLCOMP4 |  | Si el PLC activa una de estas marcas (cambio de 0 a 1), el CNC activa la compensación volumétrica correspondiente..."""@es ;
+    ex:documentadoEn ex:Pagina_607 .
+
+ex:Se_al_VOLCOMP1
+    a ex:Parametro ;
+    rdfs:label "VOLCOMP1 (PLC_M)"@es ;
+    ex:identificador "VOLCOMP1" ;
+    ex:valor "0/1" ;
+    ex:textoExtracto "Si el PLC activa [...] la marca VOLCOMP1 corresponde a la primera compensación volumétrica (parámetro VOLCOMP1)"@es ;
+    ex:documentadoEn ex:Tabla_Se_alesPLC_VOLCOMP ;
+    ex:monitoreaParametro ex:CompensacionVolumetrica_1 .
+
+ex:Se_al_VOLCOMP2
+    a ex:Parametro ;
+    rdfs:label "VOLCOMP2 (R/W)"@es ;
+    ex:identificador "VOLCOMP2" ;
+    ex:valor "0/1" ;
+    ex:textoExtracto "la marca VOLCOMP2 a la segunda [compensación volumétrica]"@es ;
+    ex:documentadoEn ex:Tabla_Se_alesPLC_VOLCOMP ;
+    ex:monitoreaParametro ex:CompensacionVolumetrica_2 .
+
+ex:Se_al_VOLCOMP3
+    a ex:Parametro ;
+    rdfs:label "VOLCOMP3"@es ;
+    ex:identificador "VOLCOMP3" ;
+    ex:valor "0/1" ;
+    ex:textoExtracto "Señal de PLC para compensación volumétrica (tercera marca)"@es ;
+    ex:documentadoEn ex:Tabla_Se_alesPLC_VOLCOMP ;
+    ex:monitoreaParametro ex:CompensacionVolumetrica_3 .
+
+ex:Se_al_VOLCOMP4
+    a ex:Parametro ;
+    rdfs:label "VOLCOMP4"@es ;
+    ex:identificador "VOLCOMP4" ;
+    ex:valor "0/1" ;
+    ex:textoExtracto "Señal de PLC para compensación volumétrica (cuarta marca)"@es ;
+    ex:documentadoEn ex:Tabla_Se_alesPLC_VOLCOMP ;
+    ex:monitoreaParametro ex:CompensacionVolumetrica_4 .
+
+ex:CompensacionVolumetrica_1
+    a ex:Parametro ;
+    rdfs:label "Compensación volumétrica 1 (VOLCOMP1)"@es ;
+    ex:identificador "VOLCOMP1" ;
+    ex:textoExtracto "primera compensación volumétrica (parámetro VOLCOMP1)"@es .
+
+ex:CompensacionVolumetrica_2
+    a ex:Parametro ;
+    rdfs:label "Compensación volumétrica 2 (VOLCOMP2)"@es ;
+    ex:identificador "VOLCOMP2" ;
+    ex:textoExtracto "segunda compensación volumétrica"@es .
+
+ex:Sistema_CompensacionVolumetrica
+    a ex:Sistema ;
+    rdfs:label "Sistema de compensación volumétrica (PLC-CNC)"@es ;
+    ex:textoExtracto "El CNC aplica la compensación volumétrica después de aplicar la compensación de husillo y la compensación cruzada. La compensación volumétrica permanece activa tras un reset, error o fin de programa (M30)"@es ;
+    ex:compuestoPor ex:Se_al_VOLCOMP1, ex:Se_al_VOLCOMP2, ex:Se_al_VOLCOMP3, ex:Se_al_VOLCOMP4 ;
+    ex:controla ex:CompensacionVolumetrica_1, ex:CompensacionVolumetrica_2, ex:CompensacionVolumetrica_3, ex:CompensacionVolumetrica_4 ;
+    ex:documentadoEn ex:Tabla_Se_alesPLC_VOLCOMP .

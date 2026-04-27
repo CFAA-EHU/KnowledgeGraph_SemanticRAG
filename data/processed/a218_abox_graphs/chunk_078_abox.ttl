@@ -1,26 +1,25 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:pantalla_cambio_brocha
-    a ex:InterfazUsuario ;
-    rdfs:label "Pantalla de ciclo cambio de brocha" ;
-    ex:textoExtracto "Esta pantalla guía al operario en los pasos que tiene que realizar para realizar el cambio de herramienta." ;
-    ex:ilustradoEn ex:pantalla_movimientos_maquina .
+ns1:PantallaCambioBrocha a ns1:InterfazUsuario ;
+    rdfs:label "Pantalla cambio de brocha" ;
+    ns1:documentadoEn ns1:ManualBroaching ;
+    ns1:textoExtracto "Esta pantalla guía al operario en los pasos que tiene que realizar para realizar el cambio de herramienta." .
 
-ex:pantalla_movimientos_maquina
-    a ex:InterfazUsuario ;
+ns1:PantallaDiagnosticoErrores a ns1:InterfazUsuario ;
+    rdfs:label "Pantalla de diagnóstico de errores" ;
+    ns1:documentadoEn ns1:ManualBroaching ;
+    ns1:textoExtracto "Esta pantalla muestra el estado de las señales de diagnóstico de la máquina. En caso de que haya algún error se accede a esta página para detectarlo." .
+
+ns1:PantallaMovimientosMaquina a ns1:InterfazUsuario ;
     rdfs:label "Pantalla de Movimientos máquina" ;
-    ex:textoExtracto "para ello hay que acceder a la pantalla de 'Movimientos máquina'." .
+    ns1:documentadoEn ns1:ManualBroaching ;
+    ns1:textoExtracto "Desde esta pantalla no se pueden ejecutar los movimientos, para ello hay que acceder a la pantalla de 'Movimientos máquina'." .
 
-ex:pantalla_condiciones_maquina
-    a ex:InterfazUsuario ;
-    rdfs:label "Pantalla de Condiciones máquina" ;
-    ex:textoExtracto "Esta pantalla muestra el estado de las señales de diagnóstico de la máquina. En caso de que haya algún error se accede a esta página para detectarlo." ;
-    ex:monitoreaParametro ex:se_ales_diagnostico .
+ns1:ManualBroaching a ns1:Manual ;
+    ns1:identificador "6.2.6.2" ;
+    ns1:textoExtracto "Sección 6.2.6.2 Movimientos manuales" ;
+    ns1:tieneComponente ns1:PantallaCambioBrocha,
+        ns1:PantallaDiagnosticoErrores,
+        ns1:PantallaMovimientosMaquina .
 
-ex:se_ales_diagnostico
-    a ex:Parametro ;
-    rdfs:label "Señales de diagnóstico de la máquina" ;
-    ex:textoExtracto "el estado de las señales de diagnóstico de la máquina" .

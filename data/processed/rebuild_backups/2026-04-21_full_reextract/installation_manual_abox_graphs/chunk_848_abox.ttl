@@ -1,0 +1,47 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_Se_alesLogicasPWM_848
+    a ex:Tabla ;
+    rdfs:label "Tabla de estados lógicos del PWM (CNC/PLC)"@es ;
+    ex:textoExtracto """
+| Estado del PWM desde el CNC. | Estado del PWM desde el PLC. | Estado de PWM. |
+| --- | --- | --- |
+| Apagado. | Apagado. | PWM apagado. |
+| Activo. | Apagado. | PWM activo desde el CNC. |
+| Apagado. | Activo. | PWM activo desde el PLC. |
+| Activo. | Activo. | PWM activo desde el PLC. |
+"""@es ;
+    ex:documentadoEn ex:Pagina_455_456 .
+
+ex:Pagina_455_456
+    a ex:Pagina ;
+    ex:identificador "455-456" ;
+    ex:textoExtracto "Sección 6.11: Señales lógicas modificables; láser"@es .
+
+ex:SistemaControlPWM
+    a ex:Sistema ;
+    rdfs:label "Sistema de control PWM (CNC/PLC)"@es ;
+    ex:textoExtracto "Estado del PWM desde el CNC / Estado del PWM desde el PLC"@es ;
+    ex:detalladoEnEsquema ex:Tabla_Se_alesLogicasPWM_848 .
+
+ex:Parametro_PWM
+    a ex:Parametro ;
+    rdfs:label "Parámetro PWM"@es ;
+    ex:textoExtracto "Estado de PWM"@es ;
+    ex:monitoreaParametro ex:SistemaControlPWM ;
+    ex:valor "apagado"@es, "activo desde el CNC"@es, "activo desde el PLC"@es .
+
+ex:InterfazCNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC (control PWM)"@es ;
+    ex:textoExtracto "Estado del PWM desde el CNC"@es ;
+    ex:controla ex:SistemaControlPWM .
+
+ex:InterfazPLC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz PLC (control PWM)"@es ;
+    ex:textoExtracto "Estado del PWM desde el PLC"@es ;
+    ex:controla ex:SistemaControlPWM .

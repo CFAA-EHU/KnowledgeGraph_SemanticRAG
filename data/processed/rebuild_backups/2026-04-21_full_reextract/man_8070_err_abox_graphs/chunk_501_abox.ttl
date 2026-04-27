@@ -1,0 +1,97 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_3808
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Eje inexistente o no disponible"@es ;
+    ex:identificador      "3808" ;
+    ex:textoExtracto      """
+    DETECCIÓN Durante la ejecución.
+    CAUSA Las posibles causas son las siguientes:
+    • El eje no estaba en modo manual al abandonar dicho modo.
+    • El CNC ha detectado la función G101 o G102 para el eje esclavo de una pareja gantry.
+    • Nombre de eje no válido en la sentencia #TANGCTRLON.
+    SOLUCIÓN Las posibles soluciones son las siguientes:
+    • Pulsar reset para poder salir del modo manual.
+    • Las funciones G101 y G102 se deben programar para el eje maestro de la pareja gantry.
+    • Revisar la programación de la sentencia #TANGCTRLON.
+    """@es .
+
+ex:Error_3809
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Velocidad programada de cabezal nula en G95"@es ;
+    ex:identificador      "3809" ;
+    ex:textoExtracto      """
+    DETECCIÓN Durante la ejecución.
+    CAUSA El CNC ha intentado mover un eje en jog continuo o incremental con la función G95 activa y velocidad cero en el cabezal utilizado para la sincronización.
+    SOLUCIÓN Programar una velocidad para el cabezal master del canal o para el cabezal utilizado para la sincronización (registro SYNC).
+    """@es .
+
+ex:Error_3810
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Modo Volante no permitido con eje Hirth"@es ;
+    ex:identificador      "3810" ;
+    ex:textoExtracto      """
+    DETECCIÓN Durante la ejecución.
+    CAUSA El CNC ha intentado seleccionar en eje Hirth para desplazarlo en modo volante.
+    SOLUCIÓN No está permitido mover en modo volante un eje Hirth; puede moverse en modo jog continuo y jog incremental.
+    """@es .
+
+ex:Error_3811
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Límite de incremento de volante superado"@es ;
+    ex:identificador      "3811" ;
+    ex:textoExtracto      """
+    DETECCIÓN En modo manual, durante la lectura del contaje de un volante.
+    CAUSA Incremento demasiado grande en el contaje de volante.
+    SOLUCIÓN Revisar la captación conectada en la entrada de volante; niveles de señal, frecuencia, etc.
+    """@es .
+
+ex:Error_3812
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Error en refresco de volantes"@es ;
+    ex:identificador      "3812" ;
+    ex:textoExtracto      """
+    DETECCIÓN En modo manual, durante la lectura del contaje de un volante.
+    CAUSA Lectura incorrecta del volante.
+    """@es .
+
+ex:Variable_PLC_INCJOGIDX
+    a                     ex:Parametro ;
+    rdfs:label            "Variable PLC.INCJOGIDX"@es ;
+    ex:identificador      "PLC.INCJOGIDX" ;
+    ex:textoExtracto      "Revisar en el programa de PLC la escritura de la variable (V.)PLC.INCJOGIDX."@es ;
+    ex:monitoreaParametro ex:Error_3808 .
+
+ex:Funcion_G101 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función G101"@es ;
+    ex:identificador      "G101" ;
+    ex:textoExtracto      "Las funciones G101 y G102 se deben programar para el eje maestro de la pareja gantry."@es .
+
+ex:Funcion_G102 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función G102"@es ;
+    ex:identificador      "G102" ;
+    ex:textoExtracto      "Las funciones G101 y G102 se deben programar para el eje maestro de la pareja gantry."@es .
+
+ex:Sentencia_TANGCTRLON
+    a                     ex:Parametro ;
+    rdfs:label            "Sentencia #TANGCTRLON"@es ;
+    ex:identificador      "#TANGCTRLON" ;
+    ex:textoExtracto      "Nombre de eje no válido en la sentencia #TANGCTRLON. Revisar la programación de la sentencia #TANGCTRLON."@es .
+
+ex:Funcion_G95 a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función G95"@es ;
+    ex:identificador      "G95" ;
+    ex:textoExtracto      "El CNC ha intentado mover un eje en jog continuo o incremental con la función G95 activa y velocidad cero en el cabezal utilizado para la sincronización."@es ;
+    ex:monitoreaParametro ex:Error_3809 .
+
+ex:Registro_SYNC
+    a                     ex:Parametro ;
+    rdfs:label            "Registro SYNC"@es ;
+    ex:identificador      "SYNC" ;
+    ex:textoExtracto      "Programar una velocidad para el cabezal master del canal o para el cabezal utilizado para la sincronización (registro SYNC)."@es .

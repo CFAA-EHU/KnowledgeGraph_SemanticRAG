@@ -1,0 +1,51 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:BusquedaCero_264
+    a               ex:ModoOperacion ;
+    rdfs:label      "Búsqueda de cero" ;
+    ex:textoExtracto "La búsqueda de cero la controla el CNC. La búsqueda de cero se realiza sin parar el cabezal, si previamente se encontraba girando."@es ;
+    ex:controla     ex:CNC_264 .
+
+ex:CNC_264
+    a               ex:Sistema ;
+    rdfs:label      "CNC" ;
+    ex:textoExtracto "La búsqueda de cero la controla el CNC. [...] El error de seguimiento y la compensación de holgura se calculan en el CNC. El feed forward y AC-Forward lo aplica el CNC."@es ;
+    ex:monitoreaParametro ex:ErrorSeguimiento_264 ;
+    ex:monitoreaParametro ex:CompensacionHolgura_264 ;
+    ex:monitoreaParametro ex:FeedForward_264 ;
+    ex:monitoreaParametro ex:ACForward_264 .
+
+ex:ErrorSeguimiento_264
+    a               ex:Parametro ;
+    rdfs:label      "Error de seguimiento" ;
+    ex:textoExtracto "El error de seguimiento [...] se calculan en el CNC."@es .
+
+ex:CompensacionHolgura_264
+    a               ex:Parametro ;
+    rdfs:label      "Compensación de holgura" ;
+    ex:textoExtracto "la compensación de holgura se calculan en el CNC."@es .
+
+ex:FeedForward_264
+    a               ex:Parametro ;
+    rdfs:label      "Feed forward" ;
+    ex:textoExtracto "El feed forward [...] lo aplica el CNC."@es .
+
+ex:ACForward_264
+    a               ex:Parametro ;
+    rdfs:label      "AC-Forward" ;
+    ex:textoExtracto "El [...] AC-Forward lo aplica el CNC."@es .
+
+ex:DeceleracionM19_264
+    a               ex:ModoOperacion ;
+    rdfs:label      "Deceleración por M19" ;
+    ex:textoExtracto "Si está girando en M03 ó M04 y se programa M19, el cabezal decelera hasta REFFEED1 y comienza el proceso de búsqueda de cero."@es ;
+    ex:requiereMantenimiento ex:BusquedaCero_264 .
+
+ex:REFFEED1_264
+    a               ex:Parametro ;
+    rdfs:label      "REFFEED1" ;
+    ex:identificador "REFFEED1" ;
+    ex:textoExtracto "el cabezal decelera hasta REFFEED1"@es .

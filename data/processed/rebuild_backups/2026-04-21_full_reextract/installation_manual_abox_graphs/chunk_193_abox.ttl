@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoHSC_CONTERROR
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo HSC CONTERROR" ;
+    ex:textoExtracto "SLOPETYPE), que es el perfil de aceleración por defecto para el modo HSC CONTERROR. [...] Este parámetro activa un filtro automático FIR para todos los ejes del canal durante la ejecución en modo CONTERROR." .
+
+ex:ModoHSC_FAST
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo HSC FAST" ;
+    ex:textoExtracto "FASTFACTOR Porcentaje de avance por defecto (modo FAST). [...] Este parámetro afecta al avance en las esquinas e indica el porcentaje de aceleración que se desea alcanzar, sobre el máximo que es capaz de conseguir el CNC, en el modo FAST." .
+
+ex:ModoHSC_SURFACE
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo HSC SURFACE" ;
+    ex:textoExtracto "FTIMELIM Diferencia de tiempo admisible en la interpolación del avance (modo FAST y SURFACE). [...] La interpolación del avance en los modos HSC FAST y SURFACE mejora la calidad del mecanizado." .
+
+ex:Parametro_HSCFILTFREQ
+    a               ex:Parametro ;
+    rdfs:label      "HSCFILTFREQ" ;
+    ex:identificador "HSCFILTFREQ" ;
+    ex:valor         "40" ;
+    ex:textoExtracto "HSCFILTFREQ Frecuencia del filtro (modo CONTERROR). Valores posibles: De 0 a 500.0000. Valor por defecto: 40. [...] Este parámetro activa un filtro automático FIR para todos los ejes del canal durante la ejecución en modo CONTERROR." ;
+    ex:monitoreaParametro ex:ModoHSC_CONTERROR .
+
+ex:Parametro_FASTFACTOR
+    a               ex:Parametro ;
+    rdfs:label      "FASTFACTOR" ;
+    ex:identificador "FASTFACTOR" ;
+    ex:valor         "100" ;
+    ex:textoExtracto "FASTFACTOR Porcentaje de avance por defecto (modo FAST). Valores posibles: De 0 a 100. Valor por defecto: 100. [...] Este parámetro afecta al avance en las esquinas e indica el porcentaje de aceleración que se desea alcanzar, sobre el máximo que es capaz de conseguir el CNC, en el modo FAST." ;
+    ex:monitoreaParametro ex:ModoHSC_FAST .
+
+ex:Parametro_FTIMELIM
+    a               ex:Parametro ;
+    rdfs:label      "FTIMELIM" ;
+    ex:identificador "FTIMELIM" ;
+    ex:valor         "200" ;
+    ex:textoExtracto "FTIMELIM Diferencia de tiempo admisible en la interpolación del avance (modo FAST y SURFACE). Valores posibles: De 0 a 100000.0000 %. Valor por defecto: 200 %. [...] El parámetro FTIMELIM permite limitar el tiempo que emplea el CNC para la interpolación del avance en cada tramo." ;
+    ex:monitoreaParametro ex:ModoHSC_FAST , ex:ModoHSC_SURFACE .

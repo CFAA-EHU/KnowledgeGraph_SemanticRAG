@@ -1,0 +1,63 @@
+ex:MSG_InsertarHerramienta ex:Herramienta ;
+    rdfs:label "MSG Insertar herramienta T%D y pulsar MARCHA" ;
+    ex:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." ;
+    ex:tieneComponente ex:Tecla_MARCHA .
+
+ex:Tecla_MARCHA a ex:InterfazUsuario ;
+    rdfs:label "Tecla MARCHA" ;
+    ex:textoExtracto "pulsar MARCHA" .
+
+ex:MSG_QuitarMensaje ex:Herramienta ;
+    rdfs:label "MSG Quitar mensaje" ;
+    ex:textoExtracto "MSG [\"\"] ; Quitar mensaje." .
+
+ex:Marca_GRTOSPDL a ex:Parametro ;
+    rdfs:label "Marca GRTOSPDL" ;
+    ex:identificador "V.PLC.M[1108]" ;
+    ex:textoExtracto "V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor." .
+
+ex:Espera_FinOperacion a ex:AccionProhibida ;
+    rdfs:label "Espera a que finalice la operación" ;
+    ex:textoExtracto "M0 ; Esperar a que finalice la operación." .
+
+ex:SUB_SPD_GMCHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_GMCHG" ;
+    ex:textoExtracto "V.PLC.M[1108]==0] #RET %L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
+
+ex:CabezalCambioManual a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal punto de cambio manual" ;
+    ex:textoExtracto "Llevar el cabezal al punto de cambio manual." .
+
+ex:SUB_SPD_AUTCHG a ex:TareaMantenimiento ;
+    rdfs:label "SUB_SPD_AUTCHG" ;
+    ex:textoExtracto "G1 Z_ F_ ; Desplazar el cabezal. # RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
+
+ex:CabezalCambioAutomatico a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal punto de cambio automático" ;
+    ex:textoExtracto "Llevar el cabezal al punto de cambio automático." .
+
+ex:SUB_M6.nc a ex:Esquema ;
+    rdfs:label "SUB_M6.nc" ;
+    ex:textoExtracto "# RET %SUB_M6.nc #ESBLK ; Activar tratamiento de bloque único" .
+
+ex:Tecla_STOP a ex:InterfazUsuario ;
+    rdfs:label "Tecla STOP" ;
+    ex:textoExtracto "#DSTOP ; Deshabilitar tecla STOP" .
+
+ex:Orden_M6 a ex:AccionProhibida ;
+    rdfs:label "Orden M6" ;
+    ex:textoExtracto "M6 ; Orden al gestor para comenzar el cambio de herramienta." .
+
+ex:Parametro_FULLSTATUS a ex:Parametro ;
+    rdfs:label "Parámetro FULLSTATUS" ;
+    ex:identificador "V.G.FULLSTATUS" ;
+    ex:textoExtracto "$IF [[[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]]" .
+
+ex:Parametro_CNCAUTSTATUS a ex:Parametro ;
+    rdfs:label "Parámetro CNCAUTSTATUS" ;
+    ex:identificador "V.G.CNCAUTSTATUS" ;
+    ex:textoExtracto "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]]" .
+
+ex:Ejecucion_Simulada a ex:ModoOperacion ;
+    rdfs:label "Ejecución simulada" ;
+    ex:textoExtracto "V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G." .

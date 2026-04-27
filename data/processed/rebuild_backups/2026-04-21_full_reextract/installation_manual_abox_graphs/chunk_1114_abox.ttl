@@ -1,0 +1,38 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:LimitesSoftware_1161
+    a ex:Parametro ;
+    rdfs:label "Límites de software (sección 11.6.1)"@es ;
+    ex:textoExtracto "Los límites de software pueden ser positivos o negativos, pero los límites inferiores deben ser menores que los límites superiores; en caso contrario, puede suceder que el eje no se desplace en ninguna dirección. [...] Los límites de software siempre se aplican en radios, independientemente del parámetro DIAMPROG, de la función G151/G152 activa y del método elegido para establecerlos."@es ;
+    ex:identificador "LIMIT+ / LIMIT-" ;
+    ex:valor "Definidos en parámetros máquina (valores por defecto al encendido)"@es .
+
+ex:Parametro_LIMIT
+    a ex:Parametro ;
+    rdfs:label "LIMIT+"@es ;
+    ex:textoExtracto "Límites superiores de software."@es ;
+    ex:identificador "LIMIT+" .
+
+ex:Parametro_LIMIT
+    a ex:Parametro ;
+    rdfs:label "LIMIT-"@es ;
+    ex:textoExtracto "Límites inferiores de software."@es ;
+    ex:identificador "LIMIT-" .
+
+ex:Tabla_ParametrosLimitesSoftware_1161 a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros de límites de software (11.6.1)"@es ;
+    ex:textoExtracto "| Parámetro. | Significado. | --- | --- | LIMIT+ | Límites superiores de software. | LIMIT- | Límites inferiores de software."@es ;
+    ex:documentadoEn ex:Manual_Broaching ;
+    ex:detalladoEnEsquema ex:LimitesSoftware_1161 .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "el CNC anula dichos límites en ese eje y aplica los del otro grupo. [...] el CNC asume en adelante dichos valores como nuevos límites en este grupo."@es ;
+    ex:monitoreaParametro ex:Parametro_LIMIT ;
+    ex:monitoreaParametro ex:Parametro_LIMIT ;
+    ex:controla ex:LimitesSoftware_1161 .

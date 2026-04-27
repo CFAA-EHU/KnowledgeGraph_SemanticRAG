@@ -1,0 +1,113 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Diagnósticos de fallo (Alarmas y Avisos de Seguridad)
+ex:Fallo_7031
+    a ex:DiagnosticoFallo ;
+    rdfs:label "T con dos M6" ;
+    ex:identificador "7031" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay programadas dos M06 consecutivas para una misma herramienta. SOLUCIÓN Programar una M06 para cada herramienta." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Programación incorrecta de M06" ;
+        ex:textoExtracto "Hay programadas dos M06 consecutivas para una misma herramienta."
+    ] .
+
+ex:Fallo_7032
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en operación de cambio de herramienta" ;
+    ex:identificador "7032" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Error en la secuencia de cambio de herramienta, en el programa del PLC. SOLUCIÓN Comprobar el programa de PLC." ;
+    ex:solucionaFallo [
+        a ex:Alarma ;
+        rdfs:label "Error en secuencia PLC de cambio de herramienta" ;
+        ex:textoExtracto "Error en la secuencia de cambio de herramienta, en el programa del PLC."
+    ] .
+
+ex:Fallo_7033
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Emergencia en almacén de herramientas (PLC)" ;
+    ex:identificador "7033" ;
+    ex:textoExtracto "DETECCIÓN Siempre que esté funcionando el PLC. CAUSA El PLC activa la señal de emergencia en el gestor de herramientas. SOLUCIÓN Quitar la emergencia y analizar las causas por las que el PLC la ha activado." ;
+    ex:activaAlarma [
+        a ex:Alarma ;
+        rdfs:label "Emergencia en almacén de herramientas" ;
+        ex:textoExtracto "El PLC activa la señal de emergencia en el gestor de herramientas."
+    ] .
+
+ex:Fallo_7034
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error de operación: Sin espacio en almacén" ;
+    ex:identificador "7034" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La maniobra del PLC genera error. SOLUCIÓN Comprobar el programa de PLC." ;
+    ex:activaAlarma [
+        a ex:Alarma ;
+        rdfs:label "Sin espacio en almacén de herramientas" ;
+        ex:textoExtracto "No se pudo encontrar sitio en almacén."
+    ] .
+
+ex:Fallo_7035
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en tabla de almacenamiento" ;
+    ex:identificador "7035" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Error en el almacén durante una maniobra. SOLUCIÓN Comprobar el estado del almacén. Es posible que no haya sitio libre en el almacén." ;
+    ex:activaAlarma [
+        a ex:Alarma ;
+        rdfs:label "Error en maniobra de almacén" ;
+        ex:textoExtracto "Error en el almacén durante una maniobra."
+    ] .
+
+ex:Fallo_7036
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Cambio de familia no admitido" ;
+    ex:identificador "7036" ;
+    ex:textoExtracto "DETECCIÓN Durante la edición de tablas o durante la ejecución. CAUSA Por motivos de seguridad no se puede cambiar la familia de una herramienta que está en el almacén. SOLUCIÓN Descargar primero la herramienta." ;
+    ex:mitigaRiesgo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Restricción de cambio de familia en herramientas almacenadas" ;
+        ex:textoExtracto "Por motivos de seguridad no se puede cambiar la familia de una herramienta que está en el almacén."
+    ] .
+
+ex:Fallo_7037
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Cabezal no vacío para CARGA/DESCARGA" ;
+    ex:identificador "7037" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El cabezal tiene que estar vacío para los modos CARGA o DESCARGA." ;
+    ex:mitigaRiesgo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Cabezal debe estar vacío para operaciones de carga/descarga" ;
+        ex:textoExtracto "El cabezal tiene que estar vacío para los modos CARGA o DESCARGA."
+    ] .
+
+ex:Fallo_M06_sin_herramienta
+    a ex:DiagnosticoFallo ;
+    rdfs:label "M06 sin herramienta programada" ;
+    ex:textoExtracto "CAUSA Hay programada una M06 sin su correspondiente herramienta. SOLUCIÓN Programar una herramienta y a continuación la función M6 o modificar el parámetro máquina para cambiar el comportamiento del CNC." ;
+    ex:activaAlarma [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Falta de herramienta en función M06" ;
+        ex:textoExtracto "Hay programada una M06 sin su correspondiente herramienta."
+    ] .
+
+### Componentes del sistema (genéricos, vinculados a diagnósticos)
+ex:SistemaGestorHerramientas
+    a ex:Sistema ;
+    rdfs:label "Gestor de herramientas (PLC)" ;
+    ex:textoExtracto "Error en la secuencia de cambio de herramienta, en el programa del PLC." ;
+    ex:tieneComponente [
+        a ex:Actuador ;
+        rdfs:label "Almacén de herramientas" ;
+        ex:textoExtracto "Error en el almacén durante una maniobra. Es posible que no haya sitio libre en el almacén."
+    ], [
+        a ex:ComponenteMecanico ;
+        rdfs:label "Cabezal de herramientas" ;
+        ex:textoExtracto "El cabezal tiene que estar vacío para los modos CARGA o DESCARGA."
+    ] .
+
+ex:ParametroComportamientoM06
+    a ex:Parametro ;
+    rdfs:label "Parámetro de comportamiento CNC para M06" ;
+    ex:textoExtracto "Hay un parámetro máquina que indica al CNC qué hacer en esta situación, mostrar un error, un warning o no hacer nada." ;
+    ex:monitoreaParametro ex:SistemaGestorHerramientas .

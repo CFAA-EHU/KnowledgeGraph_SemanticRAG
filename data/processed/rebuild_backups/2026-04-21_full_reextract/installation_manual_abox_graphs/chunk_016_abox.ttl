@@ -1,0 +1,47 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_ABSOFF
+    a ex:Parametro ;
+    rdfs:label "Parámetro ABSOFF"@es ;
+    ex:textoExtracto "el valor del parámetro ABSOFF"@es ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:Parametro_PP177
+    a ex:Parametro ;
+    rdfs:label "Parámetro PP177"@es ;
+    ex:identificador "PP177" ;
+    ex:textoExtracto "el valor que tiene el regulador en PP177"@es .
+
+ex:Parametro_PP178
+    a ex:Parametro ;
+    rdfs:label "Parámetro PP178"@es ;
+    ex:identificador "PP178" ;
+    ex:textoExtracto "el CNC también envía el valor del parámetro ABSOFF al regulador (PP177/PP178)"@es .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "el CNC enviaba al regulador el valor del parámetro ABSOFF"@es ;
+    ex:controla ex:Regulador .
+
+ex:Regulador
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador"@es ;
+    ex:textoExtracto "el CNC enviaba al regulador el valor del parámetro ABSOFF"@es ;
+    ex:monitoreaParametro ex:Parametro_PP177, ex:Parametro_PP178 .
+
+ex:SistemaCaptacionAbsoluta
+    a ex:Sistema ;
+    rdfs:label "Sistema de captación absoluta"@es ;
+    ex:textoExtracto "cuando el sistema dispone de captación absoluta"@es ;
+    ex:tieneComponente ex:SistemaCNC, ex:Regulador .
+
+ex:VersionSoftware_V3_15
+    a ex:Manual ;
+    rdfs:label "Versión de software V3.15"@es ;
+    ex:identificador "V3.15" ;
+    ex:textoExtracto "A partir de la versión V3.15, al actualizar una versión anterior en máquinas con captación absoluta"@es ;
+    ex:documentadoEn ex:ManualMantenimiento .

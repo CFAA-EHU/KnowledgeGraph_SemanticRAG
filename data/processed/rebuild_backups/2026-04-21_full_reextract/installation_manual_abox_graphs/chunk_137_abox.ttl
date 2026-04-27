@@ -1,0 +1,33 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_PROBE
+    a ex:Parametro ;
+    rdfs:label "PROBE" ;
+    ex:identificador "MPG.PROBE" ;
+    ex:textoExtracto "PROBE [...] Este parámetro indica si se dispone de algún palpador en la máquina. Valores posibles: Sí / No. Valor por defecto: No." ;
+    ex:valor "No"^^xsd:string .
+
+ex:Parametro_PROBEDATA
+    a ex:Parametro ;
+    rdfs:label "PROBEDATA" ;
+    ex:textoExtracto "PROBEDATA [...] Este parámetro muestra la tabla de parámetros necesarios para configurar el palpador." .
+
+ex:Componente_PalpadorSobremesa
+    a ex:Componente ;
+    rdfs:label "Palpador de sobremesa (torno)" ;
+    ex:textoExtracto "habitualmente será un palpador de sobremesa para calibrar herramientas" .
+
+ex:Componente_PalpadorMedida
+    a ex:Componente ;
+    rdfs:label "Palpador de medida" ;
+    ex:textoExtracto "un palpador de medida para realizar mediciones en la pieza" .
+
+ex:Maquina_CNC
+    a ex:Maquina ;
+    ex:tieneComponente ex:Componente_PalpadorSobremesa, ex:Componente_PalpadorMedida ;
+    ex:monitoreaParametro ex:Parametro_PROBE, ex:Parametro_PROBEDATA ;
+    ex:textoExtracto "El CNC puede tener configurados dos palpadores; habitualmente será un palpador de sobremesa para calibrar herramientas y un palpador de medida para realizar mediciones en la pieza." .

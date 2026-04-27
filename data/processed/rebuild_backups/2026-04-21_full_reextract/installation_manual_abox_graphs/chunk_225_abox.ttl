@@ -1,0 +1,57 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_INT1SUB
+    a ex:Parametro ;
+    rdfs:label "Parámetro INT1SUB (subrutina de interrupción 1)" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.INT1SUB. Estos parámetros indican el nombre de las subrutinas de interrupción asociadas a las marcas INT1 a INT4 del PLC." ;
+    ex:identificador "(V.)[ch].MPG.INT1SUB" ;
+    ex:valor "Cualquier texto de hasta 64 caracteres" .
+
+ex:Parametro_INT4SUB
+    a ex:Parametro ;
+    rdfs:label "Parámetro INT4SUB (subrutina de interrupción 4)" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.INT4SUB. Estos parámetros indican el nombre de las subrutinas de interrupción asociadas a las marcas INT1 a INT4 del PLC." ;
+    ex:identificador "(V.)[ch].MPG.INT4SUB" ;
+    ex:valor "Cualquier texto de hasta 64 caracteres" .
+
+ex:Parametro_INITIALSUB
+    a ex:Parametro ;
+    rdfs:label "Parámetro INITIALSUB" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.INITIALSUB. Este parámetro indica el nombre de la subrutina asociada a la sentencia #INITIALSUB." ;
+    ex:identificador "(V.)[ch].MPG.INITIALSUB" ;
+    ex:valor "Cualquier texto de hasta 64 caracteres" .
+
+ex:Parametro_PIERCING
+    a ex:Parametro ;
+    rdfs:label "Parámetro PIERCING" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.PIERCING. Este parámetro indica el nombre de la subrutina asociada a la sentencia #PIERCING. Cada vez que el CNC ejecuta esta sentencia, efectúa una llamada a la subrutina asociada (por defecto, Piercing.fst)." ;
+    ex:identificador "(V.)[ch].MPG.PIERCING" ;
+    ex:valor "Cualquier texto de hasta 64 caracteres" .
+
+ex:Parametro_PIERCING_Marca
+    a ex:Parametro ;
+    rdfs:label "Marca PIERCING (estado de operación)" ;
+    ex:textoExtracto "Al comienzo de la subrutina (o cuando el OEM lo considere necesario), el OEM debe activar la marca PIERCING (asignarle valor 1) para indicar al PLC que empieza la operación de piercing. Al final de la subrutina (o cuando el OEM lo considere necesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing." ;
+    ex:identificador "PIERCING" ;
+    ex:valor "0 o 1" .
+
+ex:Parametro_CUTTINGON
+    a ex:Parametro ;
+    rdfs:label "Parámetro CUTTINGON" ;
+    ex:textoExtracto "Subrutina asociada al comando #CUTTING ON." ;
+    ex:identificador "#CUTTINGON" .
+
+ex:Subrutina_Piercing
+    a ex:TareaMantenimiento ;
+    rdfs:label "Subrutina Piercing.fst" ;
+    ex:textoExtracto "por defecto, Piercing.fst. Es responsabilidad del OEM garantizar que la subrutina tiene en cuenta todos los aspectos de seguridad relativos al manejo del láser." ;
+    ex:identificador "Piercing.fst" ;
+    ex:requiereEPI ex:EPI_Laser .
+
+ex:EPI_Laser
+    a ex:EPI ;
+    rdfs:label "Equipo de protección individual para manejo de láser" ;
+    ex:textoExtracto "Es responsabilidad del OEM garantizar que la subrutina tiene en cuenta todos los aspectos de seguridad relativos al manejo del láser." .

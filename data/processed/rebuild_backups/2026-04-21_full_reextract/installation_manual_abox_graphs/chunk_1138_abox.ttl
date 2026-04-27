@@ -1,0 +1,83 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_1138_VariablesCompensacionVolumetrica a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de variables de compensación volumétrica (PRG/PLC/INT)"@es ;
+    ex:textoExtracto "La tabla indica, para cada variable, si el acceso es de lectura (R) o de escritura (W). [...] | Variables. | PRG | PLC | INT | --- | --- | --- | --- | (V.)MPG.VCOMPAXIS1[tbl] [...] V.MPG.NPOINTAX2[2] | Número de puntos del segundo eje de la segunda tabla de compensación volumétrica."@es ;
+    ex:documentadoEn ex:Pagina_614-615 .
+
+ex:Parametro_VMPG_VCOMPAXIS1
+    a ex:Parametro ;
+    rdfs:label "V.MPG.VCOMPAXIS1[tbl]" ;
+    ex:identificador "V.MPG.VCOMPAXIS1" ;
+    ex:valor "Nombre del eje a compensar (tabla 1)" ;
+    ex:textoExtracto "(V.)MPG.VCOMPAXIS1[tbl] [...] Nombre del eje que a compensar."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica .
+
+ex:Parametro_VMPG_VCOMPAXIS2
+    a ex:Parametro ;
+    rdfs:label "V.MPG.VCOMPAXIS2[tbl]" ;
+    ex:identificador "V.MPG.VCOMPAXIS2" ;
+    ex:valor "Nombre del eje a compensar (tabla 2)" ;
+    ex:textoExtracto "(V.)MPG.VCOMPAXIS2[tbl] [...] V.MPG.VMOVAXIS2[1] | Nombre del segundo eje de la primera tabla de compensación volumétrica."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica .
+
+ex:Parametro_VMPG_VCOMPAXIS3
+    a ex:Parametro ;
+    rdfs:label "V.MPG.VCOMPAXIS3[tbl]" ;
+    ex:identificador "V.MPG.VCOMPAXIS3" ;
+    ex:valor "Nombre del eje a compensar (tabla 3)" ;
+    ex:textoExtracto "(V.)MPG.VCOMPAXIS3[tbl] [...] Nombre del eje que a compensar."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica .
+
+ex:Parametro_VMPG_VCOMPFILE
+    a ex:Parametro ;
+    rdfs:label "V.MPG.VCOMPFILE[tbl]" ;
+    ex:identificador "V.MPG.VCOMPFILE" ;
+    ex:valor "Archivo con datos de compensación volumétrica" ;
+    ex:textoExtracto "(V.)MPG.VCOMPFILE[tbl] | Archivo con los datos de la compensación volumétrica."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica .
+
+ex:Parametro_VMPG_VMOVAXIS2_1
+    a ex:Parametro ;
+    rdfs:label "V.MPG.VMOVAXIS2[1]" ;
+    ex:identificador "V.MPG.VMOVAXIS2[1]" ;
+    ex:valor "Nombre del segundo eje (tabla 1)" ;
+    ex:textoExtracto "V.MPG.VMOVAXIS2[1] | Nombre del segundo eje de la primera tabla de compensación volumétrica."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica .
+
+ex:Parametro_VMPG_NPOINTAX2_2
+    a ex:Parametro ;
+    rdfs:label "V.MPG.NPOINTAX2[2]" ;
+    ex:identificador "V.MPG.NPOINTAX2[2]" ;
+    ex:valor "Número de puntos del segundo eje (tabla 2)" ;
+    ex:textoExtracto "V.MPG.NPOINTAX2[2] | Número de puntos del segundo eje de la segunda tabla de compensación volumétrica."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica .
+
+ex:Parametro_VPLC_VOLCOMP1
+    a ex:Parametro ;
+    rdfs:label "V.PLC.VOLCOMP1" ;
+    ex:identificador "V.PLC.VOLCOMP1" ;
+    ex:valor "Marca PLC para activar compensación volumétrica 1" ;
+    ex:textoExtracto "(V.)PLC.VOLCOMP1 [...] Si el PLC activa una de estas marcas (cambio de 0 a 1), el CNC activa la compensación volumétrica correspondiente."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica ;
+    ex:monitoreaParametro ex:Parametro_VMPG_VCOMPAXIS1 .
+
+ex:Parametro_VPLC_VOLCOMP2
+    a ex:Parametro ;
+    rdfs:label "V.PLC.VOLCOMP2" ;
+    ex:identificador "V.PLC.VOLCOMP2" ;
+    ex:valor "Marca PLC para activar compensación volumétrica 2" ;
+    ex:textoExtracto "(V.)PLC.VOLCOMP2 [...] el CNC activa la compensación volumétrica correspondiente."@es ;
+    ex:documentadoEn ex:Tabla_1138_VariablesCompensacionVolumetrica ;
+    ex:monitoreaParametro ex:Parametro_VMPG_VCOMPAXIS2 .
+
+ex:Sistema_CNC_CompensacionVolumetrica
+    a ex:Sistema ;
+    rdfs:label "Sistema de compensación volumétrica del CNC"@es ;
+    ex:textoExtracto "El CNC evalúa la variable durante la ejecución (detiene la preparación de bloques). [...] Si el PLC activa una de estas marcas (cambio de 0 a 1), el CNC activa la compensación volumétrica correspondiente (parámetro VOLCOMP)."@es ;
+    ex:tieneComponente ex:Parametro_VPLC_VOLCOMP1, ex:Parametro_VPLC_VOLCOMP2, ex:Parametro_VPLC_VOLCOMP3, ex:Parametro_VPLC_VOLCOMP4 ;
+    ex:detalladoEnEsquema ex:Tabla_1138_VariablesCompensacionVolumetrica .

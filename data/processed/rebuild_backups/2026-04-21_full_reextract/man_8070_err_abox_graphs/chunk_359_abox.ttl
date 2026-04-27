@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_2154
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Retardo del palpador mal ajustado" ;
+    ex:textoExtracto "2154 Retardo del palpador mal ajustado. Parametrizar PROBEDELAY %f." ;
+    ex:solucionaFallo [
+        a ex:Parametro ;
+        rdfs:label "PROBEDELAY" ;
+        ex:textoExtracto "Parametrizar PROBEDELAY %f." ;
+        ex:valor "PROBEDELAY"
+    ] ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El valor calculado de PROBEDELAY no coincide con el valor definido en el parámetro máquina. SOLUCIÓN Definir el parámetro PROBEDELAY con el valor indicado en el mensaje. También puede utilizar ciclo de calibración de palpador (#PROBE 2) para calcular el valor correcto." .
+
+ex:Fallo_2300
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Solución de orientación #CSROT no válida ó no encontrada" ;
+    ex:textoExtracto "2300 'Solución de orientación #CSROT no válida ó no encontrada' DETECCIÓN Durante la ejecución. CAUSA Los ejes rotativos de la cinemática no se han podido orientar en la posición programada, en el sistema de referencia maquina. SOLUCIÓN Desactivar la función #CSROT o cambiar de orientación." .
+
+ex:Fallo_2301
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Solución de orientación #CSROT no encontrada según criterio definido en #DEFROT" ;
+    ex:textoExtracto "2301 'Solución de orientación #CSROT no encontrada según criterio definido en #DEFROT' DETECCIÓN Durante la ejecución. CAUSA Los ejes rotativos de la cinemática no se han podido orientar en la posición programada, en el sistema de referencia maquina, según el criterio seleccionado en #DEFROT. SOLUCIÓN Desactivar la función #CSROT o cambiar de orientación." .
+
+ex:Fallo_2302
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Solución de orientación #CSROT discontinua respecto lo programado" ;
+    ex:textoExtracto "2302 'Solución de orientación #CSROT discontinua respecto lo programado. Rotativo principal / Rotativo secundario' DETECCIÓN Durante la ejecución. CAUSA La orientación de los ejes rotativos de la cinemática en el sistema de referencia máquina, requiere un movimiento respecto al valor programado, superior al ángulo definido #DEFROT. SOLUCIÓN Aumentar el valor del ángulo definido en #DEFROT." ;
+    ex:solucionaFallo [
+        a ex:Parametro ;
+        rdfs:label "#DEFROT" ;
+        ex:textoExtracto "Aumentar el valor del ángulo definido en #DEFROT." ;
+        ex:valor "#DEFROT"
+    ] .
+
+ex:Fallo_2303
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Función CSROT no aplicable a cinemática" ;
+    ex:textoExtracto "2300 'La función CSROT solo es aplicable a cinemáticas de dos ejes de tipo cabezal, mesa ó cabezal-mesa' DETECCIÓN Durante la ejecución. CAUSA El tipo de cinemática no es compatible con la función #CSROT. SOLUCIÓN Desactivar la función #CSROT." .
+
+ex:Parametro_CSROT
+    a ex:Parametro ;
+    rdfs:label "#CSROT" ;
+    ex:identificador "#CSROT" ;
+    ex:textoExtracto "Desactivar la función #CSROT" .
+
+ex:Parametro_DEFROT
+    a ex:Parametro ;
+    rdfs:label "#DEFROT" ;
+    ex:identificador "#DEFROT" ;
+    ex:textoExtracto "criterio seleccionado en #DEFROT" .
+
+ex:Parametro_PROBEDELAY
+    a ex:Parametro ;
+    rdfs:label "PROBEDELAY" ;
+    ex:identificador "PROBEDELAY" ;
+    ex:textoExtracto "Parametrizar PROBEDELAY %f" .
+
+ex:TareaMantenimiento_CalibracionPalpador
+    a ex:TareaMantenimiento ;
+    rdfs:label "Ciclo de calibración de palpador" ;
+    ex:identificador "#PROBE 2" ;
+    ex:textoExtracto "ciclo de calibración de palpador (#PROBE 2) para calcular el valor correcto" .

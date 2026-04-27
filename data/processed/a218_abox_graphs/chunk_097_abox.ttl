@@ -1,88 +1,24 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 
-ex:Tabla_TrabajosMantenimiento_77 a ex:Tabla ;
-     a ex:Tabla ;
-    rdfs:label "Tabla de trabajos de mantenimiento (pág. 77)" ;
-    ex:textoExtracto "OPERACION | PERIODO | RESPONSABLE\n--- | --- | ---\nComprobar y, si procede, cambiar el filtro del refrigerador del armario | Cada 200 h | OPERARIO / MANTENIMIENTO\nComprobar visualmente el estado de los cepillos del sistema de limpieza brocha | Cada 200 h | OPERARIO\nComprobar la instalación de refrigerante | Cada 200 h | OPERARIO\nComprobar las presiones de trabajo | Cada 200 h | OPERARIO" ;
-    ex:documentadoEn ex:Pagina_77 .
+ns1:SistemaLimpiezaBrocha_97 a ns1:Sistema ;
+    ns1:textoExtracto "sistema de limpieza brocha" .
 
-ex:Pagina_77
-    a ex:Pagina ;
-    ex:identificador "77" ;
-    ex:textoExtracto "7.1.1 Trabajos semanales de mantenimiento - 7.1.2 Trabajos mensuales de mantenimiento" ;
-    ex:ilustradoEn ex:Manual .
+ns1:Tabla_97_77 a ns1:Tabla ;
+    ns1:textoExtracto "Comprobar y, si procede, cambiar el filtro del refrigerador del armario Cada 200 h OPERARIO / MANTENIMIENTO Comprobar visualmente el estado de los cepillos del sistema de limpieza brocha Cada 200 h OPERARIO Comprobar la instalación de refrigerante Cada 200 h OPERARIO Comprobar las presiones de trabajo Cada 200 h OPERARIO" ;
+    ns1:tieneComponente ns1:CepillosSistemaLimpiezaBrocha_97,
+        ns1:FiltroRefrigeradorArmario_97,
+        ns1:InstalacionRefrigerante_97,
+        ns1:PresionesTrabajo_97 .
 
-ex:TareaMantenimiento_FiltroRefrigerador
-    a ex:TareaMantenimiento ;
-    rdfs:label "Comprobar/cambiar filtro del refrigerador del armario" ;
-    ex:textoExtracto "Comprobar y, si procede, cambiar el filtro del refrigerador del armario" ;
-    ex:tieneFrecuencia ex:Frecuencia_200h ;
-    ex:ejecutadoPor ex:Personal_OperarioMantenimiento ;
-    ex:requiereMantenimiento ex:Componente_FiltroRefrigerador ;
-    ex:documentadoEn ex:Tabla_TrabajosMantenimiento_77 .
+ns1:CepillosSistemaLimpiezaBrocha_97 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "cepillos del sistema de limpieza brocha" .
 
-ex:TareaMantenimiento_CepillosLimpieza
-    a ex:TareaMantenimiento ;
-    rdfs:label "Comprobar estado de cepillos del sistema de limpieza" ;
-    ex:textoExtracto "Comprobar visualmente el estado de los cepillos del sistema de limpieza brocha" ;
-    ex:tieneFrecuencia ex:Frecuencia_200h ;
-    ex:ejecutadoPor ex:Personal_Operario ;
-    ex:requiereMantenimiento ex:Componente_CepillosLimpieza ;
-    ex:documentadoEn ex:Tabla_TrabajosMantenimiento_77 .
+ns1:FiltroRefrigeradorArmario_97 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "filtro del refrigerador del armario" .
 
-ex:TareaMantenimiento_InstalacionRefrigerante
-    a ex:TareaMantenimiento ;
-    rdfs:label "Comprobar instalación de refrigerante" ;
-    ex:textoExtracto "Comprobar la instalación de refrigerante" ;
-    ex:tieneFrecuencia ex:Frecuencia_200h ;
-    ex:ejecutadoPor ex:Personal_Operario ;
-    ex:requiereMantenimiento ex:Sistema_Refrigeracion ;
-    ex:documentadoEn ex:Tabla_TrabajosMantenimiento_77 .
+ns1:InstalacionRefrigerante_97 a ns1:ComponenteHidraulico ;
+    ns1:textoExtracto "instalación de refrigerante" .
 
-ex:TareaMantenimiento_PresionesTrabajo
-    a ex:TareaMantenimiento ;
-    rdfs:label "Comprobar presiones de trabajo" ;
-    ex:textoExtracto "Comprobar las presiones de trabajo" ;
-    ex:tieneFrecuencia ex:Frecuencia_200h ;
-    ex:ejecutadoPor ex:Personal_Operario ;
-    ex:monitoreaParametro ex:Parametro_PresionTrabajo ;
-    ex:documentadoEn ex:Tabla_TrabajosMantenimiento_77 .
+ns1:PresionesTrabajo_97 a ns1:Parametro ;
+    ns1:textoExtracto "presiones de trabajo" .
 
-ex:Frecuencia_200h
-    a ex:Frecuencia ;
-    rdfs:label "Cada 200 horas" ;
-    ex:valor "200" ;
-    ex:textoExtracto "Cada 200 h" .
-
-ex:Personal_Operario
-    a ex:Personal ;
-    rdfs:label "Operario" ;
-    ex:textoExtracto "OPERARIO" .
-
-ex:Personal_OperarioMantenimiento
-    a ex:Personal ;
-    rdfs:label "Operario/Mantenimiento" ;
-    ex:textoExtracto "OPERARIO / MANTENIMIENTO" .
-
-ex:Componente_FiltroRefrigerador
-    a ex:Componente ;
-    rdfs:label "Filtro del refrigerador del armario" ;
-    ex:textoExtracto "filtro del refrigerador del armario" .
-
-ex:Componente_CepillosLimpieza
-    a ex:ComponenteMecanico ;
-    rdfs:label "Cepillos del sistema de limpieza brocha" ;
-    ex:textoExtracto "cepillos del sistema de limpieza brocha" .
-
-ex:Sistema_Refrigeracion
-    a ex:Sistema ;
-    rdfs:label "Sistema de refrigeración" ;
-    ex:textoExtracto "instalación de refrigerante" .
-
-ex:Parametro_PresionTrabajo
-    a ex:Parametro ;
-    rdfs:label "Presiones de trabajo" ;
-    ex:textoExtracto "presiones de trabajo" .

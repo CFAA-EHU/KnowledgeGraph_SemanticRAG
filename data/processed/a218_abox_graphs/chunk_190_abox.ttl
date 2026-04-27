@@ -1,105 +1,59 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 
-### Armario Eléctrico (Vistas y cotas)
-ex:ArmarioElectrico_Principal
-    a ex:ComponenteElectrico ;
-    rdfs:label "Armario eléctrico principal"@es ;
-    ex:textoExtracto "Alzado frontal y lateral del armario con dimensiones principales (alto 1800 mm, ancho 1200 mm, fondo 500 mm aprox.) y ubicación de elementos exteriores (selector, seta de emergencia, climatizador, pasamuros)."@es ;
-    ex:identificador "1800x1200x500" .
+ns1:ArmarioElectrico_VistasYCotas a ns1:Esquema ;
+    ns1:textoExtracto "Alzado frontal y lateral del armario con dimensiones principales (alto 1800 mm, ancho 1200 mm, fondo 500 mm aprox.) y ubicación de elementos exteriores (selector, seta de emergencia, climatizador, pasamuros). Cotas y símbolos de seguridad se representan con flechas y etiquetas." ;
+    ns1:tieneComponente ns1:Climatizador_1,
+        ns1:Pasamuros_1,
+        ns1:Selector_1,
+        ns1:SetaEmergencia_1 .
 
-ex:Selector_Armario
-    a ex:ComponenteElectrico ;
-    rdfs:label "Selector del armario"@es ;
-    ex:textoExtracto "ubicación de elementos exteriores (selector, seta de emergencia, climatizador, pasamuros)."@es ;
-    ex:compuestoPor ex:ArmarioElectrico_Principal .
+ns1:Grafcet_SecuenciaCiclo a ns1:Esquema ;
+    ns1:textoExtracto "Diagrama de etapas/acciones numeradas (0–15) para la broachadora: origen, subir/girar/bajar mesa giratoria, movimiento del carro de tracción, avance/retroceso de cepillos y fin de ciclo. Flechas y ramas paralelas representan transiciones y condiciones; cada etapa se anota con su precondición (110.x/111.x)." .
 
-ex:SetaEmergencia_Armario
-    a ex:ElementoSeguridad ;
-    rdfs:label "Seta de emergencia"@es ;
-    ex:textoExtracto "ubicación de elementos exteriores (selector, seta de emergencia, climatizador, pasamuros)."@es ;
-    ex:compuestoPor ex:ArmarioElectrico_Principal .
+ns1:PlacaCaracteristicas_A218 a ns1:Esquema ;
+    ns1:identificador "A218" ;
+    ns1:textoExtracto "control (220 V/24 V =)" .
 
-ex:Climatizador_Armario
-    a ex:ComponenteElectrico ;
-    rdfs:label "Climatizador del armario"@es ;
-    ex:textoExtracto "ubicación de elementos exteriores (selector, seta de emergencia, climatizador, pasamuros)."@es ;
-    ex:compuestoPor ex:ArmarioElectrico_Principal .
+ns1:PlacaMontaje_DisposicionEquipos a ns1:Esquema ;
+    ns1:textoExtracto "Vista interior del armario con disposición y cotas entre carriles y equipos: se distinguen seccionadores, contactores, fuentes SITOP, módulos Phoenix, relés, climatizador y pasacables. Líneas de cota (mm) y rótulos de referencia (p. ej., 19A1…19A9, 27KAx) dan jerarquía y ubicación precisa." ;
+    ns1:tieneComponente ns1:Climatizador_2,
+        ns1:Contactor_1,
+        ns1:FuenteSITOP_1,
+        ns1:ModuloPhoenix_1,
+        ns1:Pasacables_1,
+        ns1:Rel_1,
+        ns1:Seccionador_1 .
 
-### Disposición de equipos sobre placa
-ex:PlacaMontaje_Armario
-    a ex:ComponenteElectrico ;
-    rdfs:label "Placa de montaje del armario"@es ;
-    ex:textoExtracto "Vista interior del armario con disposición y cotas entre carriles y equipos: se distinguen seccionadores, contactores, fuentes SITOP, módulos Phoenix, relés, climatizador y pasacables."@es ;
-    ex:compuestoPor ex:ArmarioElectrico_Principal .
+ns1:Climatizador_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "climatizador" .
 
-ex:Seccionador_19A1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Seccionador 19A1"@es ;
-    ex:textoExtracto "se distinguen seccionadores, contactores, fuentes SITOP, módulos Phoenix, relés, climatizador y pasacables. Líneas de cota (mm) y rótulos de referencia (p. ej., 19A1…19A9, 27KAx)."@es ;
-    ex:identificador "19A1" ;
-    ex:compuestoPor ex:PlacaMontaje_Armario .
+ns1:Climatizador_2 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "climatizador" .
 
-ex:Contactor_27KAx
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contactor 27KAx"@es ;
-    ex:textoExtracto "se distinguen seccionadores, contactores, fuentes SITOP, módulos Phoenix, relés, climatizador y pasacables. Líneas de cota (mm) y rótulos de referencia (p. ej., 19A1…19A9, 27KAx)."@es ;
-    ex:identificador "27KAx" ;
-    ex:compuestoPor ex:PlacaMontaje_Armario .
+ns1:Contactor_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "contactores" .
 
-ex:FuenteSITOP
-    a ex:ComponenteElectrico ;
-    rdfs:label "Fuente de alimentación SITOP"@es ;
-    ex:textoExtracto "se distinguen seccionadores, contactores, fuentes SITOP, módulos Phoenix, relés, climatizador y pasacables."@es ;
-    ex:compuestoPor ex:PlacaMontaje_Armario .
+ns1:FuenteSITOP_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "fuentes SITOP" .
 
-ex:ModuloPhoenix
-    a ex:ComponenteElectrico ;
-    rdfs:label "Módulo Phoenix"@es ;
-    ex:textoExtracto "se distinguen seccionadores, contactores, fuentes SITOP, módulos Phoenix, relés, climatizador y pasacables."@es ;
-    ex:compuestoPor ex:PlacaMontaje_Armario .
+ns1:ModuloPhoenix_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "módulos Phoenix" .
 
-### Placa de características (A218)
-ex:PlacaCaracteristicas_A218
-    a ex:InterfazUsuario ;
-    rdfs:label "Placa de características A218"@es ;
-    ex:textoExtracto "Placa ilustrada con logotipo y campos: potencia instalada (80 kVA), alimentación (3×380 V 50 Hz), control (220 V/24 V =), año, protección (125 A, 10 kA) y datos del fabricante."@es ;
-    ex:identificador "A218" ;
-    ex:documentadoEn ex:ArmarioElectrico_Principal .
+ns1:Pasacables_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "pasacables" .
 
-ex:Parametro_PotenciaInstalada
-    a ex:Parametro ;
-    rdfs:label "Potencia instalada"@es ;
-    ex:textoExtracto "potencia instalada (80 kVA)."@es ;
-    ex:valor "80 kVA" ;
-    ex:documentadoEn ex:PlacaCaracteristicas_A218 .
+ns1:Pasamuros_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "pasamuros" .
 
-ex:Parametro_Alimentacion
-    a ex:Parametro ;
-    rdfs:label "Alimentación eléctrica"@es ;
-    ex:textoExtracto "alimentación (3×380 V 50 Hz)."@es ;
-    ex:valor "3×380 V 50 Hz" ;
-    ex:documentadoEn ex:PlacaCaracteristicas_A218 .
+ns1:Rel_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "relés" .
 
-### Secuencia de ciclo (GRAFCET)
-ex:Grafcet_CicloBroachadora
-    a ex:Esquema ;
-    rdfs:label "GRAFCET de secuencia de ciclo"@es ;
-    ex:textoExtracto "Diagrama de etapas/acciones numeradas (0–15) para la broachadora: origen, subir/girar/bajar mesa giratoria, movimiento del carro de tracción, avance/retroceso de cepillos y fin de ciclo."@es ;
-    ex:detalladoEnEsquema ex:Maquina_Broachadora .
+ns1:Seccionador_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "seccionadores" .
 
-ex:EtapaGrafcet_0
-    a ex:ModoOperacion ;
-    rdfs:label "Etapa 0 (Origen)"@es ;
-    ex:textoExtracto "Diagrama de etapas/acciones numeradas (0–15) para la broachadora: origen, subir/girar/bajar mesa giratoria, movimiento del carro de tracción, avance/retroceso de cepillos y fin de ciclo."@es ;
-    ex:identificador "0" ;
-    ex:detalladoEnEsquema ex:Grafcet_CicloBroachadora .
+ns1:Selector_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "selector" .
 
-ex:EtapaGrafcet_15
-    a ex:ModoOperacion ;
-    rdfs:label "Etapa 15 (Fin de ciclo)"@es ;
-    ex:textoExtracto "Diagrama de etapas/acciones numeradas (0–15) para la broachadora: origen, subir/girar/bajar mesa giratoria, movimiento del carro de tracción, avance/retroceso de cepillos y fin de ciclo."@es ;
-    ex:identificador "15" ;
-    ex:detalladoEnEsquema ex:Grafcet_CicloBroachadora .
+ns1:SetaEmergencia_1 a ns1:ElementoSeguridad ;
+    ns1:textoExtracto "seta de emergencia" .
+

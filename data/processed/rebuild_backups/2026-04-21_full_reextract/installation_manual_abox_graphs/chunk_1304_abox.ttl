@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_TDATA7
+    a ex:Parametro ;
+    rdfs:label "TDATA7 (Ángulo entre ejes rotativos principal y secundario)"@es ;
+    ex:identificador "TDATA7" ;
+    ex:valor "45" ;
+    ex:textoExtracto "TDATA7 Indica el ángulo entre los ejes rotativos principal y secundario, en los cabezales rotativos (en este caso TDATA7 = 45)."@es .
+
+ex:Parametro_TDATA1
+    a ex:Parametro ;
+    rdfs:label "TDATA1 (Parámetro de corrección de centro de giro)"@es ;
+    ex:identificador "TDATA1" ;
+    ex:textoExtracto "Cálculo del parámetro TDATA1. [...] Con el cambio de posición respecto al centro de giro ꞏ2ꞏ, el único dato desconocido tras ambos palpaciones es TDATA1."@es .
+
+ex:Sistema_CabezalAngular
+    a ex:Sistema ;
+    rdfs:label "Sistema de cabezal angular con ejes rotativos B y C"@es ;
+    ex:textoExtracto "el eje Y. [...] cabezales rotativos [...] B=0º C=0º [...] B=0º C=180º"@es ;
+    ex:tieneComponente ex:EjeRotativo_B, ex:EjeRotativo_C ;
+    ex:monitoreaParametro ex:Parametro_TDATA1, ex:Parametro_TDATA7 .
+
+ex:EjeRotativo_B
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo B"@es ;
+    ex:identificador "B" ;
+    ex:textoExtracto "Con los ejes rotativos B y C posicionados en 0º [...] B=0º C=0º [...] B=0º C=180º"@es .
+
+ex:EjeRotativo_C
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje rotativo C"@es ;
+    ex:identificador "C" ;
+    ex:textoExtracto "Con los ejes rotativos B y C posicionados en 0º [...] C=180º"@es .
+
+ex:Proceso_CalculoTDATA1
+    a ex:TareaMantenimiento ;
+    rdfs:label "Procedimiento de cálculo de TDATA1 mediante palpación"@es ;
+    ex:textoExtracto "Primera palpación. Con los ejes rotativos B y C posicionados en 0º realizar un movimiento de palpación sobre la cara Z y preseleccionar la cota Z=0. Segunda palpación. Con el eje rotativo B posicionado en 0º y el eje C en 180º realizar un movimiento de palpación sobre la misma cara. Anotar la cota que aparece en el CNC, denominada en el dibujo Z."@es ;
+    ex:requiereMantenimiento ex:Sistema_CabezalAngular ;
+    ex:monitoreaParametro ex:Parametro_TDATA1 .

@@ -1,0 +1,23 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:alarma_8024
+    a ex:Alarma ;
+    rdfs:label "Alarma 8024: CNC trabajando en Modo Puesta a Punto"@es ;
+    ex:identificador "8024" ;
+    ex:textoExtracto "'CNC trabajando en Modo Puesta a Punto' DETECCIÓN Durante el arranque del sistema, en modo puesta a punto. CAUSA El CNC ha arrancado en modo puesta a punto y está trabajando con el disco desprotegido."@es ;
+    ex:mitigaRiesgo ex:modoPuestaPunto_8024 .
+
+ex:modoPuestaPunto_8024
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Puesta a Punto (CNC)"@es ;
+    ex:textoExtracto "CNC trabajando en Modo Puesta a Punto [...] El CNC ha arrancado en modo puesta a punto y está trabajando con el disco desprotegido."@es ;
+    ex:activaAlarma ex:alarma_8024 .
+
+ex:accionProhibida_8024
+    a ex:AccionProhibida ;
+    rdfs:label "Trabajar con disco desprotegido en modo usuario"@es ;
+    ex:textoExtracto "Si no va a realizar la puesta a punto del CNC, apaguelo y utilice la utilidad DiskMonitor para pasar a modo usuario y trabajar con el disco protegido."@es ;
+    ex:mitigaRiesgo ex:alarma_8024 .

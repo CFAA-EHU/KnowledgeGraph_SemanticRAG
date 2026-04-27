@@ -1,86 +1,47 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:PortonFrontal
-    a ex:ComponenteMecanico ;
-    rdfs:label "Portón frontal" ;
-    ex:textoExtracto "Portón frontal y puertas correderas laterales: Son de apertura manual y disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." ;
-    ex:tieneComponente ex:DispositivoBloqueoPortonFrontal .
+ns1:BotonAperturaPuertas a ns1:InterfazUsuario ;
+    rdfs:label "botón 'Apertura puertas'" ;
+    ns1:textoExtracto "pulsar el botón 'Apertura puertas'" .
 
-ex:PuertasCorrederasLaterales
-    a ex:ComponenteMecanico ;
-    rdfs:label "Puertas correderas laterales" ;
-    ex:textoExtracto "Portón frontal y puertas correderas laterales: Son de apertura manual y disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." ;
-    ex:tieneComponente ex:DispositivoBloqueoPuertasLaterales .
+ns1:CarroPortaPieza a ns1:ComponenteMecanico ;
+    rdfs:label "carro porta-pieza" ;
+    ns1:textoExtracto "Ciclo de cambio de cremallera con carro porta-pieza en posición inferior" .
 
-ex:DispositivoBloqueoPortonFrontal
-    a ex:ElementoSeguridad ;
-    rdfs:label "Dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico (portón frontal)" ;
-    ex:textoExtracto "disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." .
-
-ex:DispositivoBloqueoPuertasLaterales
-    a ex:ElementoSeguridad ;
-    rdfs:label "Dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico (puertas laterales)" ;
-    ex:textoExtracto "disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." .
-
-ex:BotonAperturaPuertas
-    a ex:InterfazUsuario ;
-    rdfs:label "Botón 'Apertura puertas'" ;
-    ex:textoExtracto "pulsar el botón 'Apertura puertas'." .
-
-ex:ModoEmergencia
-    a ex:ModoOperacion ;
-    rdfs:label "Modo emergencia" ;
-    ex:textoExtracto "Máquina en emergencia" ;
-    ex:habilitadoPor ex:AperturaPuertasEnEmergencia .
-
-ex:AperturaPuertasEnEmergencia
-    a ex:AccionProhibida ;
-    rdfs:label "Apertura de puertas en emergencia" ;
-    ex:textoExtracto "Máquina en emergencia" ;
-    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
-
-ex:ModoServicio
-    a ex:ModoOperacion ;
-    rdfs:label "Modo servicio" ;
-    ex:textoExtracto "Máquina en servicio y pulsar el botón 'Apertura puertas'" ;
-    ex:habilitadoPor ex:AperturaPuertasConBoton .
-
-ex:AperturaPuertasConBoton
-    a ex:AccionProhibida ;
-    rdfs:label "Apertura de puertas en modo servicio con botón" ;
-    ex:textoExtracto "Máquina en servicio y pulsar el botón 'Apertura puertas'" ;
-    ex:requiereMantenimiento ex:BotonAperturaPuertas ;
-    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
-
-ex:CicloCambioCremallera
-    a ex:ModoOperacion ;
+ns1:CicloCambioCremallera a ns1:TareaMantenimiento ;
     rdfs:label "Ciclo de cambio de cremallera" ;
-    ex:textoExtracto "Ciclo de cambio de cremallera con carro porta-pieza en posición inferior." ;
-    ex:habilitadoPor ex:AperturaPuertasEnCicloCambio .
+    ns1:textoExtracto "Ciclo de cambio de cremallera con carro porta-pieza en posición inferior" .
 
-ex:AperturaPuertasEnCicloCambio
-    a ex:AccionProhibida ;
-    rdfs:label "Apertura de puertas durante ciclo de cambio de cremallera" ;
-    ex:textoExtracto "Ciclo de cambio de cremallera con carro porta-pieza en posición inferior." ;
-    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
+ns1:DesbloqueoElectrico a ns1:Actuador ;
+    rdfs:label "desbloqueo eléctrico" ;
+    ns1:textoExtracto "disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico" .
 
-ex:ModoSetup
-    a ex:ModoOperacion ;
+ns1:DispositivoSeguridadBloqueoMecanico a ns1:ElementoSeguridad ;
+    rdfs:label "dispositivo de seguridad de bloqueo mecánico" ;
+    ns1:textoExtracto "disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico" .
+
+ns1:ModoEmergencia a ns1:ModoOperacion ;
+    rdfs:label "Máquina en emergencia" ;
+    ns1:textoExtracto "Máquina en emergencia" .
+
+ns1:ModoServicio a ns1:ModoOperacion ;
+    rdfs:label "Máquina en servicio" ;
+    ns1:textoExtracto "Máquina en servicio y pulsar el botón 'Apertura puertas'" .
+
+ns1:ModoSetUp a ns1:ModoOperacion ;
     rdfs:label "Modo set-up" ;
-    ex:textoExtracto "Modo set-up y pulsar 'Apertura puertas' / En modo set-up se pueden realizar movimientos con puertas abiertas a velocidad reducida." ;
-    ex:habilitadoPor ex:AperturaPuertasEnSetup, ex:MovimientoVelocidadReducida .
+    ns1:textoExtracto "Modo set-up y pulsar 'Apertura puertas'" .
 
-ex:AperturaPuertasEnSetup
-    a ex:AccionProhibida ;
-    rdfs:label "Apertura de puertas en modo set-up" ;
-    ex:textoExtracto "Modo set-up y pulsar 'Apertura puertas'" ;
-    ex:requiereMantenimiento ex:BotonAperturaPuertas ;
-    ex:mitigaRiesgo ex:DispositivoBloqueoPortonFrontal, ex:DispositivoBloqueoPuertasLaterales .
+ns1:PortonFrontal a ns1:ComponenteMecanico ;
+    rdfs:label "Portón frontal" ;
+    ns1:textoExtracto "Portón frontal y puertas correderas laterales: Son de apertura manual y disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." .
 
-ex:MovimientoVelocidadReducida
-    a ex:ModoOperacion ;
-    rdfs:label "Movimiento a velocidad reducida (puertas abiertas)" ;
-    ex:textoExtracto "se pueden realizar movimientos con puertas abiertas a velocidad reducida." .
+ns1:PuertaCorrederaLateral a ns1:ComponenteMecanico ;
+    rdfs:label "puertas correderas laterales" ;
+    ns1:textoExtracto "Portón frontal y puertas correderas laterales: Son de apertura manual y disponen de un dispositivo de seguridad de bloqueo mecánico y desbloqueo eléctrico." .
+
+ns1:Maquina a ns1:Maquina ;
+    rdfs:label "Máquina" ;
+    ns1:textoExtracto "Máquina en emergencia" .
+

@@ -1,0 +1,44 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ProcesoReferenciadoEjesGantry_1109
+    a               ex:ModoOperacion ;
+    rdfs:label      "Proceso de referencia de ejes gantry (maestro-esclavo)"@es ;
+    ex:textoExtracto
+        "El CNC envía al regulador la orden de referenciar el eje esclavo. Durante el proceso, el CNC lee el incremento en la cota real del eje esclavo y la envía al eje maestro como incremento de la cota teórica, haciendo así que el eje maestro siga al esclavo con tan solo el retraso entre la cota teórica y la real."@es .
+
+ex:EjeEsclavo_1109
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje esclavo (sistema gantry)"@es ;
+    ex:textoExtracto
+        "eje esclavo"@es ;
+    ex:monitoreaParametro  ex:ParametroCotaReal_1109 .
+
+ex:EjeMaestro_1109
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Eje maestro (sistema gantry)"@es ;
+    ex:textoExtracto
+        "eje maestro"@es ;
+    ex:monitoreaParametro  ex:ParametroCotaTeorica_1109 .
+
+ex:ParametroCotaReal_1109
+    a               ex:Parametro ;
+    rdfs:label      "Cota real del eje esclavo"@es ;
+    ex:textoExtracto
+        "cota real del eje esclavo"@es .
+
+ex:ParametroCotaTeorica_1109
+    a               ex:Parametro ;
+    rdfs:label      "Cota teórica del eje maestro"@es ;
+    ex:textoExtracto
+        "cota teórica"@es .
+
+ex:SistemaGantry_1109
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de ejes gantry (maestro-esclavo)"@es ;
+    ex:textoExtracto
+        "ejes gantry"@es ;
+    ex:tieneComponente  ex:EjeEsclavo_1109 , ex:EjeMaestro_1109 ;
+    ex:controla         ex:ProcesoReferenciadoEjesGantry_1109 .

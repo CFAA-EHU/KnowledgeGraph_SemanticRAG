@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1157
+    a               ex:Alarma ;
+    rdfs:label      "Subrutina global no encontrada"@es ;
+    ex:identificador "1157" ;
+    ex:textoExtracto "1157 'Subrutina global no encontrada' DETECCIÓN Durante la ejecución. CAUSA El CNC no encuentra la subrutina global. SOLUCIÓN Comprobar que el nombre y path de la subrutina son correctos. Si en la llamada a la subrutina no está definido el path, el CNC aplicará el criterio de búsqueda por defecto (consulte el manual de programación)."@es .
+
+ex:Alarma_1158
+    a               ex:Alarma ;
+    rdfs:label      "No existe subrutina asociada a G"@es ;
+    ex:identificador "1158" ;
+    ex:textoExtracto "1158 No existe subrutina asociada a G. DETECCIÓN Durante la ejecución. CAUSA Se ha programado un subrutina de usuario (G500-G599) o subrutina OEM (G180-G189/G380-G399) y no existe la subrutina. SOLUCIÓN Comprobar que la función G es correcta o definir la subrutina asociada."@es .
+
+ex:Alarma_1159
+    a               ex:Alarma ;
+    rdfs:label      "Nombre de subrutina local demasiado largo"@es ;
+    ex:identificador "1159" ;
+    ex:textoExtracto "1159 'Nombre de subrutina local demasiado largo' DETECCIÓN Durante la ejecución. CAUSA El nombre de la subrutina supera el número de caracteres permitido por el CNC. El nombre de una subrutina puede tener un máximo de 63 caracteres. SOLUCIÓN Revisar la programación."@es .
+
+ex:Alarma_1160
+    a               ex:Alarma ;
+    rdfs:label      "Subrutina local no encontrada"@es ;
+    ex:identificador "1160" ;
+    ex:textoExtracto "1160 'Subrutina local no encontrada' DETECCIÓN Durante la ejecución. CAUSA El CNC no encuentra la subrutina local. Las posibles causas son las siguientes: • La subrutina local no está definida al principio del programa principal. • El programa ha activado un subrutina local como modal, y a continuación ha ejecutado una subrutina de usuario (por ejemplo, G500 a G599) con bloques de movimiento. La subrutina de usuario no encuentra la subrutina local porque pertenece a otro programa. SOLUCIÓN Las posibles soluciones son las siguientes: • Comprobar que el nombre de la subrutina local en el bloque de llamada es idéntico al nombre que aparece en su definición. Las subrutinas locales deben estar definidas al principio del programa. • Definir la subrutina local como global."@es .
+
+ex:Alarma_1161
+    a               ex:Alarma ;
+    rdfs:label      "Bloques de control $ abiertos"@es ;
+    ex:identificador "1161" ;
+    ex:textoExtracto "1161 'Bloques de control $ abiertos' DETECCIÓN Durante la ejecución. CAUSA El CNC ha encontrado un bloque de control \"$\" que no tiene su correspondiente instrucción de cierre."@es .
+
+ex:Sistema_CNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC"@es ;
+    ex:textoExtracto "El CNC no encuentra la subrutina global... El CNC ha encontrado un bloque de control \"$\" que no tiene su correspondiente instrucción de cierre."@es ;
+    ex:activaAlarma  ex:Alarma_1157, ex:Alarma_1158, ex:Alarma_1159, ex:Alarma_1160, ex:Alarma_1161 .

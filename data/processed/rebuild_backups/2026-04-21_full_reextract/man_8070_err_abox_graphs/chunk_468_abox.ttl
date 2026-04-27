@@ -1,0 +1,29 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:alarma_3510
+    a ex:Alarma ;
+    rdfs:label "Colisión con sonda de palpado" ;
+    ex:identificador "3510" ;
+    ex:textoExtracto "El movimiento programado va a colisionar con la sonda de palpado. [...] El CNC detiene el movimiento antes de que haya una colisión." ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El movimiento del eje va a superar los límites fijados por el movimiento de palpado anterior." .
+
+ex:alarma_3511
+    a ex:Alarma ;
+    rdfs:label "Cancelada M3 o M4 de PLC en G96 sin S programada" ;
+    ex:identificador "3511" ;
+    ex:textoExtracto "Cancelada M3 o M4 de PLC en G96 sin S programada. DETECCIÓN Durante la ejecución." .
+
+ex:sonda_palpado
+    a ex:Sensor ;
+    rdfs:label "Sonda de palpado" ;
+    ex:textoExtracto "El movimiento programado va a colisionar con la sonda de palpado." ;
+    ex:activaAlarma ex:alarma_3510 .
+
+ex:diagnostico_3510
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Revisión de movimiento post-palpación" ;
+    ex:textoExtracto "SOLUCIÓN Revisar el movimiento posterior a la palpación." ;
+    ex:solucionaFallo ex:alarma_3510 .

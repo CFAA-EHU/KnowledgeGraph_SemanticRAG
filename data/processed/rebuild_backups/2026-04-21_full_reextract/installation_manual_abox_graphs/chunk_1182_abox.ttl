@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:MemoriaRAM_CNC
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Memoria RAM del CNC"@es ;
+    ex:textoExtracto "el espacio reservado en la memoria RAM para las subrutinas es 5 Mb"@es ;
+    ex:valor         "5 Mb" .
+
+ex:SubrutinasFST_Usuario
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Subrutinas fst de usuario"@es ;
+    ex:textoExtracto "Subrutinas con extensión fst que no están guardadas en la carpeta ..mtb/sub. Las rutinas de usuario cuya extensión sea fst, se cargan en la memoria RAM durante la preparación de bloques."@es ;
+    ex:identificador "*.fst (usuario)" .
+
+ex:SubrutinasFST_Fabricante
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Subrutinas fst de fabricante (OEM)"@es ;
+    ex:textoExtracto "Subrutinas con extensión fst guardadas en la carpeta ..mtb/sub. Con el CNC en modo USER, las rutinas OEM cuya extensión sea fst, se cargan en la memoria RAM en el arranque de la aplicación CNC."@es ;
+    ex:identificador "*.fst (OEM)" .
+
+ex:CNC_ModoUSER
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo USER (CNC)"@es ;
+    ex:textoExtracto "Con el CNC en modo USER, las rutinas OEM cuya extensión sea fst, se cargan en la memoria RAM en el arranque de la aplicación CNC."@es .
+
+ex:CNC_ModoSETUP
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo SETUP (puesta a punto, CNC)"@es ;
+    ex:textoExtracto "Con el CNC en modo SETUP (puesta a punto), las rutinas OEM cuya extensión sea fst se cargan en la memoria RAM durante la preparación de bloques."@es .
+
+ex:MemoriaRAM_CNC
+    ex:tieneComponente ex:SubrutinasFST_Usuario ;
+    ex:tieneComponente ex:SubrutinasFST_Fabricante .
+
+ex:SubrutinasFST_Fabricante
+    ex:habilitadoPor ex:CNC_ModoUSER ;
+    ex:habilitadoPor ex:CNC_ModoSETUP .

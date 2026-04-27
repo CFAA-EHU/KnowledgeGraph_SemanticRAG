@@ -1,0 +1,170 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Interfaces de Usuario y Componentes del Sistema OPENPCS REMOTO
+ex:Sistema_OPENPCS_Remoto
+    a ex:Sistema ;
+    rdfs:label "Sistema OPENPCS Remoto" ;
+    ex:textoExtracto "Se muestran iconos del CNC (Address=0), módulos de E/S remotas (Address=1,3,4) y dos 'Jog-Panel' (Address=2 y 5), dispuestos en un esquema lineal del bus." ;
+    ex:tieneComponente ex:CNC_Address0, ex:ModuloES_Address1, ex:ModuloES_Address3, ex:ModuloES_Address4, ex:JogPanel_Address2, ex:JogPanel_Address5 ;
+    ex:detalladoEnEsquema ex:EsquemaBus_OPENPCS .
+
+ex:EsquemaBus_OPENPCS
+    a ex:Esquema ;
+    rdfs:label "Esquema lineal del bus OPENPCS Remoto" ;
+    ex:textoExtracto "esquema lineal del bus. Incluye una relación 'Address → Elemento → Número de orden' que clarifica la jerarquía y la asociación física en el bus." ;
+    ex:ilustradoEn ex:Sistema_OPENPCS_Remoto .
+
+ex:CNC_Address0
+    a ex:InterfazUsuario ;
+    rdfs:label "CNC (Address=0)" ;
+    ex:identificador "0" ;
+    ex:textoExtracto "iconos del CNC (Address=0)" .
+
+ex:ModuloES_Address1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo E/S remota (Address=1)" ;
+    ex:identificador "1" ;
+    ex:textoExtracto "módulos de E/S remotas (Address=1,3,4)" .
+
+ex:ModuloES_Address3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo E/S remota (Address=3)" ;
+    ex:identificador "3" ;
+    ex:textoExtracto "módulos de E/S remotas (Address=1,3,4)" .
+
+ex:ModuloES_Address4
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo E/S remota (Address=4)" ;
+    ex:identificador "4" ;
+    ex:textoExtracto "módulos de E/S remotas (Address=1,3,4)" .
+
+ex:JogPanel_Address2
+    a ex:InterfazUsuario ;
+    rdfs:label "Jog-Panel (Address=2)" ;
+    ex:identificador "2" ;
+    ex:textoExtracto "dos 'Jog-Panel' (Address=2 y 5)" ;
+    ex:compuestoPor ex:TecladoJog_15Teclas ;
+    ex:documentadoEn ex:Manual_OPENPCS_15_1 .
+
+ex:JogPanel_Address5
+    a ex:InterfazUsuario ;
+    rdfs:label "Jog-Panel (Address=5)" ;
+    ex:identificador "5" ;
+    ex:textoExtracto "dos 'Jog-Panel' (Address=2 y 5)" ;
+    ex:compuestoPor ex:TecladoJog_15Teclas .
+
+ex:TecladoJog_15Teclas
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclado de jog con 15 teclas numeradas" ;
+    ex:textoExtracto "Ilustración del teclado de jog con distribución de teclas numeradas (1–15) y ejemplo de mapeo de funciones para ejes y sentidos de desplazamiento (p. ej., X+, 7+)." ;
+    ex:tieneComponente ex:TeclaEjeXPositivo, ex:TeclaEje7Positivo, ex:TeclaSeleccionEje, ex:TeclaSentido, ex:TeclaRapido ;
+    ex:ilustradoEn ex:EsquemaTecladoJog ;
+    ex:documentadoEn ex:Manual_OPENPCS_15_1 .
+
+ex:EsquemaTecladoJog
+    a ex:Esquema ;
+    rdfs:label "Esquema de teclado jog con teclas 1-15" ;
+    ex:textoExtracto "Ilustración del teclado de jog con distribución de teclas numeradas (1–15) y ejemplo de mapeo de funciones para ejes y sentidos de desplazamiento (p. ej., X+, 7+)." .
+
+ex:TeclaEjeXPositivo
+    a ex:ComponenteElectrico ;
+    rdfs:label "Tecla X+" ;
+    ex:textoExtracto "teclas que seleccionan eje y sentido, p. ej., X+." ;
+    ex:documentadoEn ex:Manual_OPENPCS_15_1 .
+
+ex:TeclaEje7Positivo
+    a ex:ComponenteElectrico ;
+    rdfs:label "Tecla 7+" ;
+    ex:textoExtracto "ejemplo de mapeo de funciones para ejes y sentidos de desplazamiento (p. ej., X+, 7+)." .
+
+ex:TeclaSeleccionEje
+    a ex:ComponenteElectrico ;
+    rdfs:label "Tecla de selección de eje" ;
+    ex:textoExtracto "teclas de selección de eje." .
+
+ex:TeclaSentido
+    a ex:ComponenteElectrico ;
+    rdfs:label "Tecla de sentido" ;
+    ex:textoExtracto "teclas de sentido." .
+
+ex:TeclaRapido
+    a ex:ComponenteElectrico ;
+    rdfs:label "Tecla de rápido" ;
+    ex:textoExtracto "tecla de rápido." .
+
+ex:TeclasUsuario_JOGKEYS
+    a ex:InterfazUsuario ;
+    rdfs:label "Teclas de usuario (JOGKEYS) 1-16" ;
+    ex:textoExtracto "Esquema compacto de 'Teclas de usuario' tratadas como teclas de jog. Se representa una banda de teclas numeradas (1, 2, …, 15, 16) bajo la leyenda 'JOGKEYS'." ;
+    ex:ilustradoEn ex:EsquemaJOGKEYS ;
+    ex:documentadoEn ex:Manual_OPENPCS_15_4 .
+
+ex:EsquemaJOGKEYS
+    a ex:Esquema ;
+    rdfs:label "Esquema de teclas de usuario (JOGKEYS)" ;
+    ex:textoExtracto "banda de teclas numeradas (1, 2, …, 15, 16) bajo la leyenda 'JOGKEYS'." .
+
+### Módulo Remoto RCS-S-4F4AO
+ex:Modulo_RCS_S_4F4AO
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RCS-S-4F4AO" ;
+    ex:textoExtracto "Vista frontal del módulo RCS-S-4F4AO con llamadas (callouts) a conectores y recursos: cuatro entradas de contaje (E21A–E21D) y cuatro salidas analógicas ±10 V de 16 bits (I37A/I37B)." ;
+    ex:tieneComponente ex:EntradaContaje_E21A, ex:EntradaContaje_E21B, ex:EntradaContaje_E21C, ex:EntradaContaje_E21D, ex:SalidaAnalogica_I37A, ex:SalidaAnalogica_I37B ;
+    ex:ilustradoEn ex:VistaFrontal_RCS_S_4F4AO .
+
+ex:VistaFrontal_RCS_S_4F4AO
+    a ex:Figura ;
+    rdfs:label "Vista frontal del módulo RCS-S-4F4AO" ;
+    ex:textoExtracto "Vista frontal del módulo RCS-S-4F4AO con llamadas (callouts) a conectores y recursos." .
+
+ex:EntradaContaje_E21A
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de contaje E21A (TTL/TTL diferencial/Vpp, SSI/FeeDat/EnDat 2.1/2.2)" ;
+    ex:identificador "E21A" ;
+    ex:textoExtracto "cuatro entradas de contaje (E21A–E21D) compatibles con TTL/TTL diferencial/Vpp y protocolos SSI/FeeDat/EnDat 2.1/2.2." .
+
+ex:EntradaContaje_E21B
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de contaje E21B" ;
+    ex:identificador "E21B" ;
+    ex:textoExtracto "cuatro entradas de contaje (E21A–E21D)." .
+
+ex:EntradaContaje_E21C
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de contaje E21C" ;
+    ex:identificador "E21C" ;
+    ex:textoExtracto "cuatro entradas de contaje (E21A–E21D)." .
+
+ex:EntradaContaje_E21D
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada de contaje E21D" ;
+    ex:identificador "E21D" ;
+    ex:textoExtracto "cuatro entradas de contaje (E21A–E21D)." .
+
+ex:SalidaAnalogica_I37A
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salida analógica I37A (±10 V, 16 bits)" ;
+    ex:identificador "I37A" ;
+    ex:valor "±10 V / 16 bits" ;
+    ex:textoExtracto "cuatro salidas analógicas ±10 V de 16 bits (I37A/I37B)." .
+
+ex:SalidaAnalogica_I37B
+    a ex:ComponenteElectrico ;
+    rdfs:label "Salida analógica I37B (±10 V, 16 bits)" ;
+    ex:identificador "I37B" ;
+    ex:valor "±10 V / 16 bits" ;
+    ex:textoExtracto "cuatro salidas analógicas ±10 V de 16 bits (I37A/I37B)." .
+
+### Documentación de referencia
+ex:Manual_OPENPCS_15_1
+    a ex:Manual ;
+    rdfs:label "Sección 15.1: Gestión de varios teclados" ;
+    ex:textoExtracto "Sección: 15.1 Gestión de varios teclados." .
+
+ex:Manual_OPENPCS_15_4
+    a ex:Manual ;
+    rdfs:label "Sección 15.4: Módulo remoto RCS-S" ;
+    ex:textoExtracto "Sección: 15.4 Módulo remoto RCS-S." .

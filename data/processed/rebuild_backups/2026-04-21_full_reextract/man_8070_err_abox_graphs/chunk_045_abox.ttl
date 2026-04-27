@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_0106
+    a ex:Alarma ;
+    rdfs:label "No es posible validar parámetros: Cabezal o eje en movimiento o en sincronización"@es ;
+    ex:identificador "0106" ;
+    ex:textoExtracto "0106 'No es posible validar parámetros: Cabezal o eje movimiento o en sincronización' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El usuario ha intentado validar una tabla de parámetros máquina mientras hay un cabezal o un eje en movimiento. Un eje puede estar en moviendo como consecuencia de un comando de eje independiente. SOLUCIÓN Detener el movimiento del eje o cabezal."@es .
+
+ex:Alarma_0107
+    a ex:Alarma ;
+    rdfs:label "Error al registrar variables DRV"@es ;
+    ex:identificador "0107" ;
+    ex:textoExtracto "0107 'Error al registrar variables DRV' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El CNC ha generado un error al intentar registrar las variables definidas en la tabla de parámetros OEM. SOLUCIÓN Póngase en contacto con Fagor."@es .
+
+ex:Alarma_0108
+    a ex:Alarma ;
+    rdfs:label "Oscilo: No es posible reajustar tiempo de muestreo con el nuevo LOOPTIME"@es ;
+    ex:identificador "0108" ;
+    ex:textoExtracto "0108 'Oscilo: No es posible reajustar tiempo de muestreo con el nuevo LOOPTIME' DETECCIÓN Durante la ejecución. CAUSA El usuario ha utilizado el osciloscopio sin validar una traza, ha modificado el parámetro LOOPTIME y ha validado los parámetros máquina. SOLUCIÓN El warning dejará de aparecer cuando el usuario ejecute una traza en el osciloscopio. El ajuste del tiempo de muestreo de una traza del osciloscopio depende del parámetro LOOPTIME. Para que el CNC pueda realizar este ajuste necesita tener una traza del osciloscopio validada; es decir, que la traza se haya ejecutado al menos una vez."@es .
+
+ex:Alarma_0109
+    a ex:Alarma ;
+    rdfs:label "No es posible validar parámetros: cabezal en sincronización"@es ;
+    ex:identificador "0109" ;
+    ex:textoExtracto "0109 'No es posible validar parámetros: cabezal en sincronización' DETECCIÓN Durante la validación de los parámetros máquina o compilación del programa PLC. CAUSA El CNC no admite este tipo de acciones con cabezales sincronizados activos, ya que implican un reset del sistema."@es .
+
+ex:Parametro_LOOPTIME
+    a ex:Parametro ;
+    rdfs:label "LOOPTIME" ;
+    ex:textoExtracto "El ajuste del tiempo de muestreo de una traza del osciloscopio depende del parámetro LOOPTIME."@es .
+
+ex:Tabla_ParametrosMaquina a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros máquina"@es ;
+    ex:textoExtracto "El usuario ha intentado validar una tabla de parámetros máquina mientras hay un programa pieza en ejecución o interrumpido, o hay un movimiento independiente en ejecución."@es .
+
+ex:Tabla_ParametrosOEM a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros OEM"@es ;
+    ex:textoExtracto "El CNC ha generado un error al intentar registrar las variables definidas en la tabla de parámetros OEM."@es .
+
+ex:Sistema_Osciloscopio
+    a ex:Sistema ;
+    rdfs:label "Osciloscopio"@es ;
+    ex:textoExtracto "El usuario ha utilizado el osciloscopio sin validar una traza, ha modificado el parámetro LOOPTIME y ha validado los parámetros máquina."@es ;
+    ex:monitoreaParametro ex:Parametro_LOOPTIME .
+
+ex:Maquina_CNC
+    a ex:Maquina ;
+    rdfs:label "CNC"@es ;
+    ex:textoExtracto "El CNC ha generado un error al intentar registrar las variables definidas en la tabla de parámetros OEM."@es ;
+    ex:activaAlarma ex:Alarma_0106, ex:Alarma_0107, ex:Alarma_0108, ex:Alarma_0109 .

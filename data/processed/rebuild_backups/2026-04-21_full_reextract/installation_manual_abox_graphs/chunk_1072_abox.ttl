@@ -1,0 +1,53 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:MaquinaTandem_1072
+    a               ex:Maquina ;
+    rdfs:label      "Máquina tándem"@es ;
+    ex:textoExtracto "una máquina tándem posee frecuencia de resonancia baja"@es ;
+    ex:tieneComponente ex:Motor_EjeMaestro_1072, ex:Motor_EjeEsclavo_1072 ;
+    ex:tieneComponente ex:SistemaControlCNC_1072 .
+
+ex:Motor_EjeMaestro_1072
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Motor del eje maestro"@es ;
+    ex:textoExtracto "asegurar un perfecto funcionamiento tanto del eje maestro [...] Comprobar además que ambos ejes se mueven en el mismo sentido"@es ;
+    ex:monitoreaParametro ex:Parametro_SP43_1072, ex:Parametro_TP85_1072 .
+
+ex:Motor_EjeEsclavo_1072
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Motor del eje esclavo"@es ;
+    ex:textoExtracto "el segundo motor está siendo arrastrado por el primero [...] Comprobar que los sentidos de giro de ambos motores son coherentes"@es ;
+    ex:monitoreaParametro ex:Parametro_SP43_1072, ex:Parametro_TP85_1072 .
+
+ex:SistemaControlCNC_1072
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC de control de la máquina tándem"@es ;
+    ex:textoExtracto "el CNC debe generar consignas de posición sin componentes frecuenciales superiores a la frecuencia de resonancia"@es ;
+    ex:controla     ex:Motor_EjeMaestro_1072, ex:Motor_EjeEsclavo_1072 .
+
+ex:Parametro_SP43_1072
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro SP43 (valor monitorizado de par)"@es ;
+    ex:identificador "SP43" ;
+    ex:textoExtracto "cambiar el signo de sus valores monitorizados mediante los parámetros SP43 y TP85 del regulador"@es .
+
+ex:Parametro_TP85_1072
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro TP85 (valor monitorizado de par)"@es ;
+    ex:identificador "TP85" ;
+    ex:textoExtracto "cambiar el signo de sus valores monitorizados mediante los parámetros SP43 y TP85 del regulador"@es .
+
+ex:ProcesoAjusteTandem_1072
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Proceso de ajuste del tándem"@es ;
+    ex:textoExtracto "Pasos a seguir en el ajuste. 1 Mover los dos ejes independientemente [...] 3 Repetir el proceso con el segundo eje"@es ;
+    ex:requiereMantenimiento ex:MaquinaTandem_1072 ;
+    ex:ejecutadoPor ex:Personal_Tecnico_1072 .
+
+ex:Personal_Tecnico_1072
+    a               ex:Personal ;
+    rdfs:label      "Técnico de ajuste"@es ;
+    ex:textoExtracto "Proceso de ajuste del tándem (implicito: requiere intervención técnica)"@es .

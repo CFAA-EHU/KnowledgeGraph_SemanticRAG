@@ -1,0 +1,28 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_CAN_6011
+    a                   ex:DiagnosticoFallo ;
+    rdfs:label          "Error de CAN en nodo remoto"@es ;
+    ex:identificador    "6011" ;
+    ex:textoExtracto    "6011 'Error de CAN en nodo remoto' [...] Error reportado por un nodo. Los códigos de error son diferentes para los casos de bus CANfagor y del bus CANopen. La ventana de error indica cuál es el módulo provoca el error."@es .
+
+ex:Sistema_CANfagor
+    a                   ex:Sistema ;
+    rdfs:label          "Bus CANfagor"@es ;
+    ex:textoExtracto    "bus CANfagor"@es ;
+    ex:monitoreaParametro  ex:Error_CAN_6011 .
+
+ex:Sistema_CANopen
+    a                   ex:Sistema ;
+    rdfs:label          "Bus CANopen"@es ;
+    ex:textoExtracto    "bus CANopen"@es ;
+    ex:monitoreaParametro  ex:Error_CAN_6011 .
+
+ex:InterfazUsuario_VentanaError
+    a                   ex:InterfazUsuario ;
+    rdfs:label          "Ventana de error (nodo CAN)"@es ;
+    ex:textoExtracto    "La ventana de error indica cuál es el módulo provoca el error."@es ;
+    ex:activaAlarma     ex:Error_CAN_6011 .

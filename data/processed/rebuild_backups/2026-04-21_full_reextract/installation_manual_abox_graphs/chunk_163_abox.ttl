@@ -1,0 +1,28 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_LASERFOLLOW
+    a ex:Parametro ;
+    rdfs:label "LASERFOLLOW" ;
+    ex:textoExtracto "LASERFOLLOW Compensar la dispersión por el recorrido del láser de CO2. Este parámetro muestra la tabla para definir la compensación."@es ;
+    ex:identificador "LASERFOLLOW" .
+
+ex:Tabla_CompensacionDispersionLaser a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de compensación de dispersión láser" ;
+    ex:textoExtracto "Este parámetro muestra la tabla para definir la compensación."@es ;
+    ex:documentadoEn ex:Parametro_LASERFOLLOW .
+
+ex:Sistema_CompensacionEjeEsclavo
+    a ex:Sistema ;
+    rdfs:label "Sistema de compensación con eje esclavo" ;
+    ex:textoExtracto "Para la compensación se utiliza un eje esclavo que sigue a los ejes principales."@es ;
+    ex:controla ex:Parametro_LASERFOLLOW .
+
+ex:InterfazUsuario_ComandoFOLLOW
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando FOLLOW (PLC/Programa)" ;
+    ex:textoExtracto "La compensación de la dispersión se activa desde el programa mediante la sentencia #FOLLOW o desde el PLC mediante el comando FOLLOW."@es ;
+    ex:habilitadoPor ex:Sistema_CompensacionEjeEsclavo .

@@ -15,6 +15,7 @@ from typing import Any
 from rdflib import Graph, Literal, URIRef
 
 from artifact_contracts import (
+    ABOX_MINTED_ENTITY_REGISTRY_PATH,
     ENRICHED_ABOX_PATH,
     CANONICALIZATION_REPORT_PATH,
     ENRICHMENT_LINK_MAP_PATH,
@@ -26,7 +27,9 @@ from artifact_contracts import (
     SANDBOX_DIAGNOSTIC_REPORT_PATH,
     SANDBOX_STRUCTURAL_GAP_SUMMARY_PATH,
     SANDBOX_ENTITY_RESOLUTION_CANDIDATES_PATH,
+    OPERATIONAL_TBOX_PATH,
 )
+from abox_graph_sanitizer import load_mint_registry, sanitize_abox_graph, save_mint_registry
 
 EXTRACTION_DIR = Path(__file__).resolve().parent
 if str(EXTRACTION_DIR) not in sys.path:
@@ -134,6 +137,14 @@ def main() -> None:
     links = detect_link_enrichments(canonical_graph, accepted_candidates)
     surfaces = detect_surface_enrichments(canonical_graph, accepted_candidates, links)
     enriched_graph, stats = apply_enrichments(canonical_graph, links, surfaces)
+    tbox_graph = load_graph(OPERATIONAL_TBOX_PATH)
+    mint_registry = load_mint_registry(ABOX_MINTED_ENTITY_REGISTRY_PATH)
+    enriched_graph, sanitization_result = sanitize_abox_graph(
+        enriched_graph,
+        tbox_graph=tbox_graph,
+        mint_registry=mint_registry,
+    )
+    save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     enriched_graph.serialize(destination=args.output, format='turtle')
@@ -149,6 +160,7 @@ def main() -> None:
     report_payload = {
         'summary': {
             **stats,
+            'sanitization': sanitization_result.to_manifest_summary(),
             'input_path': str(args.input),
             'output_path': str(args.output),
             'resolution_candidates_path': str(args.resolution_candidates_path),

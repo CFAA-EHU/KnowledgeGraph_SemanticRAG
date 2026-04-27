@@ -1,0 +1,70 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OperacionTM11
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Operación de cambio de herramienta (TMOPERATION=11)"@es ;
+    ex:textoExtracto "el gestor envía el código TMOPERATION=11 para coger la herramienta del almacén con la pinza 1. 1 Coger la herramienta del cabezal con la pinza ꞏ2ꞏ y activar la marca SPDLTOCH2. 2 Dejar la herramienta de la pinza ꞏ2ꞏ en el almacén y activar la marca CH2TOMZ. 3 Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal y activar la marca CH1TOSPDL."@es ;
+    ex:identificador "TMOPERATION=11" ;
+    ex:requiereMantenimiento ex:Pinza1 , ex:Pinza2 .
+
+ex:OperacionTM16
+    a               ex:TareaMantenimiento ;
+    rdfs:label      "Operación optimizada de cambio de herramienta (TMOPERATION=16)"@es ;
+    ex:textoExtracto "TMOPERATION = 16 Dejar la herramienta del brazo (pinza ꞏ2ꞏ) en el almacén. Coger una herramienta del almacén y ponerla en el brazo (pinza ꞏ1ꞏ). Esta operación es una optimización del cambio de herramienta que permite dejar la en el almacén la herramienta de la pinza ꞏ2ꞏ del brazo cambiador."@es ;
+    ex:identificador "TMOPERATION=16" ;
+    ex:requiereMantenimiento ex:Pinza1 , ex:Pinza2 .
+
+ex:Pinza1
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Pinza 1 (brazo cambiador)"@es ;
+    ex:textoExtracto "coger la herramienta del almacén con la pinza 1"@es , "Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal"@es , "Coger la herramienta del almacén con la pinza ꞏ1ꞏ"@es .
+
+ex:Pinza2
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Pinza 2 (brazo cambiador)"@es ;
+    ex:textoExtracto "Coger la herramienta del cabezal con la pinza ꞏ2ꞏ"@es , "Dejar la herramienta de la pinza ꞏ2ꞏ en el almacén"@es , "Dejar la herramienta del brazo (pinza ꞏ2ꞏ) en el almacén"@es .
+
+ex:AlmacenHerramientas
+    a               ex:Sistema ;
+    rdfs:label      "Almacén de herramientas"@es ;
+    ex:textoExtracto "coger la herramienta del almacén"@es , "Dejar la herramienta [...] en el almacén"@es ;
+    ex:tieneComponente ex:Pinza1 , ex:Pinza2 .
+
+ex:ParametroTAKEPOS
+    a               ex:Parametro ;
+    rdfs:label      "TAKEPOS"@es ;
+    ex:textoExtracto "TAKEPOS=# Posición que ocupa la herramienta."@es ;
+    ex:valor         "#" .  # Marcador de posición genérico según texto
+
+ex:ParametroLEAVEPOS
+    a               ex:Parametro ;
+    rdfs:label      "LEAVEPOS"@es ;
+    ex:textoExtracto "LEAVEPOS=# Posición para dejar la herramienta."@es ;
+    ex:valor         "#" .  # Marcador de posición genérico según texto
+
+ex:MarcaSPDLTOCH2
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Marca SPDLTOCH2"@es ;
+    ex:textoExtracto "activar la marca SPDLTOCH2"@es ;
+    ex:mitigaRiesgo  ex:OperacionTM11 .
+
+ex:MarcaCH2TOMZ
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Marca CH2TOMZ"@es ;
+    ex:textoExtracto "activar la marca CH2TOMZ"@es ;
+    ex:mitigaRiesgo  ex:OperacionTM11 , ex:OperacionTM16 .
+
+ex:MarcaCH1TOSPDL
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Marca CH1TOSPDL"@es ;
+    ex:textoExtracto "activar la marca CH1TOSPDL"@es ;
+    ex:mitigaRiesgo  ex:OperacionTM11 .
+
+ex:MarcaMZTOCH1
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Marca MZTOCH1"@es ;
+    ex:textoExtracto "activar la marca MZTOCH1"@es ;
+    ex:mitigaRiesgo  ex:OperacionTM16 .

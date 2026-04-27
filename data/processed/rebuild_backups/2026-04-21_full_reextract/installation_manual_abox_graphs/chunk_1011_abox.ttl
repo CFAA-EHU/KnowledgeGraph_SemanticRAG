@@ -1,0 +1,51 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Variable_G_KEY
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)G.KEY"@es ;
+    ex:textoExtracto "Para simular el teclado desde el PLC, escribir en la variable (V.)G.KEY el código de la tecla."@es ;
+    ex:identificador "G.KEY" ;
+    ex:monitoreaParametro ex:InterfazTecladoPLC .
+
+ex:InterfazTecladoPLC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de simulación de teclado desde PLC"@es ;
+    ex:textoExtracto "Para simular el teclado desde el PLC, escribir en la variable (V.)G.KEY el código de la tecla."@es ;
+    ex:controla ex:ComandoCNCWR .
+
+ex:ComandoCNCWR
+    a ex:AccionProhibida ;  # Interpretado como acción crítica que requiere precaución (retardos de seguridad)
+    rdfs:label "Comando CNCWR"@es ;
+    ex:textoExtracto "El comando CNCWR escribe en la variable el valor del registro R101. [...] { condición} = CNCWR(R101,G.KEY,M101)"@es ;
+    ex:identificador "CNCWR" ;
+    ex:requiereMantenimiento [
+        a ex:TareaMantenimiento ;
+        rdfs:label "Retardo de seguridad entre códigos de tecla"@es ;
+        ex:textoExtracto "se recomienda utilizar un retardo de al menos 200 ms entre el envío de ambos códigos (por seguridad)."@es ;
+        ex:tieneFrecuencia [
+            a ex:Frecuencia ;
+            rdfs:label "200 ms"@es ;
+            ex:valor "200" ;
+            ex:textoExtracto "retardo de al menos 200 ms"@es
+        ]
+    ] .
+
+ex:TeclaShift
+    a ex:Componente ;
+    rdfs:label "Tecla [SHIFT]"@es ;
+    ex:textoExtracto "para el segundo carácter (mayúsculas), añadir el código correspondiente a la tecla [SHIFT]."@es ;
+    ex:ilustradoEn ex:InterfazTecladoPLC .
+
+ex:ProcesoSimulacionTecla
+    a ex:ModoOperacion ;
+    rdfs:label "Proceso de simulación de tecla con mayúsculas"@es ;
+    ex:textoExtracto "1 Enviar el código asociado a pulsar la tecla [SHIFT]. 2 Enviar el código asociado a pulsar la tecla de la letra. 3 Enviar el código asociado a soltar la tecla [SHIFT]. 4 Enviar el código asociado a soltar la tecla de la letra."@es ;
+    ex:requiereMantenimiento ex:ComandoCNCWR_requiereMantenimiento ;
+    ex:documentadoEn [
+        a ex:Pagina ;
+        ex:identificador "545-546" ;
+        ex:textoExtracto "Sección 8.4 Simular el teclado desde el PLC."@es
+    ] .

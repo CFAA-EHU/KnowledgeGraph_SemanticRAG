@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_DRIVEVAR a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla DRIVEVAR" ;
+    ex:textoExtracto "| DRIVEVAR |  | --- | --- | SIZE | Número de elementos de la tabla de variables del regulador | DATA | Variables de los reguladores. |" ;
+    ex:tieneComponente ex:Parametro_DRIVEVAR_SIZE ;
+    ex:tieneComponente ex:Parametro_DRIVEVAR_DATA ;
+    ex:documentadoEn ex:Manual_604 .
+
+ex:Parametro_DRIVEVAR_SIZE
+    a ex:Parametro ;
+    rdfs:label "SIZE (Número de variables a consultar en el regulador)" ;
+    ex:identificador "DRV.SIZE" ;
+    ex:valor "0"^^xsd:integer ;  # Valor por defecto
+    ex:textoExtracto "SIZE: Número de variables a consultar en el regulador. Valores posibles: De 0 a 99. Valor por defecto: 0. Variable asociada: (V.)DRV.SIZE" ;
+    ex:monitoreaParametro ex:Sistema_Mechatrolink .
+
+ex:Parametro_DRIVEVAR_DATA
+    a ex:Parametro ;
+    rdfs:label "DATA (Variables de los reguladores)" ;
+    ex:identificador "DRV.DATA" ;
+    ex:textoExtracto "DATA: Variables de los reguladores. Este parámetro muestra la tabla para definir la lista de variables DRV." ;
+    ex:monitoreaParametro ex:Sistema_Mechatrolink .
+
+ex:Sistema_Mechatrolink
+    a ex:Sistema ;
+    rdfs:label "Sistema Mechatrolink" ;
+    ex:textoExtracto "Características y limitaciones de los dispositivos Mechatrolink. El acceso mediante variables DRV a los dispositivos Mechatrolink tiene las siguientes características y limitaciones: acceso asíncrono a variables (solo lectura) y síncrono a parámetros (lectura/escritura), exclusión entre variables y parámetros por eje, límite de 2 variables por eje." ;
+    ex:detalladoEnEsquema ex:Tabla_DRIVEVAR .
+
+ex:Manual_604
+    a ex:Manual ;
+    rdfs:label "Sección 2.12.1: Lectura de variables del regulador (Sercos o Mechatrolink)" ;
+    ex:textoExtracto "2.12 Parámetros máquina OEM. - 2.12.1 Lectura de variables del regulador (Sercos o Mechatrolink)." ;
+    ex:ilustradoEn ex:Tabla_DRIVEVAR .

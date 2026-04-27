@@ -1,0 +1,93 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Figuras y Esquemas
+ex:Figura_2_2 a ex:Figura ;
+    ex:identificador "Figura 2-2" ;
+    rdfs:label "Paneles desmontables de mantenimiento"@es ;
+    ex:textoExtracto "Ilustración explodida del carenado con flechas a paneles no controlados; recuadros indican su posición y el riesgo de apertura en servicio automático; codificación cromática diferencia accesos."@es .
+
+ex:Figura_2_3 a ex:Figura ;
+    ex:identificador "Figura 2-3" ;
+    rdfs:label "Puertas controladas con interruptor de seguridad"@es ;
+    ex:textoExtracto "Vista frontal y laterales con microinterruptores EUCHNER etiquetados (23SQ1, 24SQ1, 24SQ2); flechas relacionan cada puerta con su sensor, indicando enclavamiento y parada por apertura."@es .
+
+ex:Figura_2_4 a ex:Figura ;
+    ex:identificador "Figura 2-4" ;
+    rdfs:label "Plataforma cambio de herramienta"@es ;
+    ex:textoExtracto "Corte isométrico del carro porta-piezas; se señalan plataforma, trampilla central y micro de seguridad 25SQ1; flechas describen la zona de intervención para cambio del plato divisor."@es .
+
+ex:Figura_2_5 a ex:Figura ;
+    ex:identificador "Figura 2-5" ;
+    rdfs:label "Pulsadores de parada de emergencia"@es ;
+    ex:textoExtracto "Fotografías de detalle de los pulsadores en armario y botonera; rótulos indican su función y localización para detención inmediata."@es .
+
+ex:Figura_2_6 a ex:Figura ;
+    ex:identificador "Figura 2-6" ;
+    rdfs:label "Interruptor general del armario eléctrico"@es ;
+    ex:textoExtracto "Composición con primer plano del seccionador, luz de presencia de tensión y pictograma de máquina consignada; el encuadre y flechas muestran posiciones ON/OFF y uso de candado."@es .
+
+### Componentes de Seguridad
+ex:Sensor_23SQ1 a ex:Sensor ;
+    ex:identificador "23SQ1" ;
+    rdfs:label "Microinterruptor EUCHNER 23SQ1"@es ;
+    ex:textoExtracto "microinterruptores EUCHNER etiquetados (23SQ1, 24SQ1, 24SQ2)"@es ;
+    ex:ilustradoEn ex:Figura_2_3 ;
+    ex:mitigaRiesgo ex:AvisoSeguridad_AperturaPuertas .
+
+ex:Sensor_24SQ1 a ex:Sensor ;
+    ex:identificador "24SQ1" ;
+    rdfs:label "Microinterruptor EUCHNER 24SQ1"@es ;
+    ex:textoExtracto "microinterruptores EUCHNER etiquetados (23SQ1, 24SQ1, 24SQ2)"@es ;
+    ex:ilustradoEn ex:Figura_2_3 ;
+    ex:mitigaRiesgo ex:AvisoSeguridad_AperturaPuertas .
+
+ex:Sensor_24SQ2 a ex:Sensor ;
+    ex:identificador "24SQ2" ;
+    rdfs:label "Microinterruptor EUCHNER 24SQ2"@es ;
+    ex:textoExtracto "microinterruptores EUCHNER etiquetados (23SQ1, 24SQ1, 24SQ2)"@es ;
+    ex:ilustradoEn ex:Figura_2_3 ;
+    ex:mitigaRiesgo ex:AvisoSeguridad_AperturaPuertas .
+
+ex:Sensor_25SQ1 a ex:Sensor ;
+    ex:identificador "25SQ1" ;
+    rdfs:label "Microinterruptor de seguridad 25SQ1"@es ;
+    ex:textoExtracto "micro de seguridad 25SQ1"@es ;
+    ex:ilustradoEn ex:Figura_2_4 ;
+    ex:mitigaRiesgo ex:AvisoSeguridad_PlataformaHerramienta .
+
+### Actuadores y Elementos de Control
+ex:PulsadorEmergencia_Armario a ex:Actuador ;
+    rdfs:label "Pulsador de parada de emergencia (armario)"@es ;
+    ex:textoExtracto "Fotografías de detalle de los pulsadores en armario y botonera; rótulos indican su función y localización para detención inmediata."@es ;
+    ex:ilustradoEn ex:Figura_2_5 ;
+    ex:activaAlarma ex:Alarma_ParadaEmergencia .
+
+ex:PulsadorEmergencia_Botonera a ex:Actuador ;
+    rdfs:label "Pulsador de parada de emergencia (botonera)"@es ;
+    ex:textoExtracto "Fotografías de detalle de los pulsadores en armario y botonera; rótulos indican su función y localización para detención inmediata."@es ;
+    ex:ilustradoEn ex:Figura_2_5 ;
+    ex:activaAlarma ex:Alarma_ParadaEmergencia .
+
+ex:InterruptorGeneral a ex:ComponenteElectrico ;
+    rdfs:label "Interruptor general del armario eléctrico"@es ;
+    ex:textoExtracto "primer plano del seccionador, luz de presencia de tensión y pictograma de máquina consignada; el encuadre y flechas muestran posiciones ON/OFF y uso de candado."@es ;
+    ex:ilustradoEn ex:Figura_2_6 .
+
+### Avisos y Alarmas
+ex:AvisoSeguridad_AperturaPuertas a ex:AvisoSeguridad ;
+    rdfs:label "Riesgo por apertura de puertas en servicio automático"@es ;
+    ex:textoExtracto "recuadros indican su posición y el riesgo de apertura en servicio automático"@es ;
+    ex:documentadoEn ex:Figura_2_2 .
+
+ex:AvisoSeguridad_PlataformaHerramienta a ex:AvisoSeguridad ;
+    rdfs:label "Zona de intervención para cambio de plato divisor"@es ;
+    ex:textoExtracto "flechas describen la zona de intervención para cambio del plato divisor."@es ;
+    ex:documentadoEn ex:Figura_2_4 .
+
+ex:Alarma_ParadaEmergencia a ex:Alarma ;
+    rdfs:label "Alarma de parada de emergencia"@es ;
+    ex:textoExtracto "rótulos indican su función y localización para detención inmediata."@es ;
+    ex:documentadoEn ex:Figura_2_5 .

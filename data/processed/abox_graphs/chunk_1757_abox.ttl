@@ -1,0 +1,51 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Parametro_TV51_PotenciaInstantanea a ns1:Parametro ;
+    rdfs:label "TV51 (Potencia instantánea del regulador)"@es ;
+    ns1:identificador "TV51" ;
+    ns1:monitoreaParametro ns1:Sistema_DMC ;
+    ns1:textoExtracto "variable TV51 del regulador"@es .
+
+ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal de la máquina"@es ;
+    ns1:textoExtracto "el CNC detiene los ejes manteniendo el giro del cabezal"@es .
+
+ns1:Error_3103_PotenciaObjetivoInsuficiente a ns1:AvisoSeguridad ;
+    rdfs:label "Error 3103: Potencia objetivo insuficiente para el funcionamiento correcto con DMC"@es ;
+    ns1:identificador "3103" ;
+    ns1:mitigaRiesgo ns1:Solucion_3103_RevisarPotenciaObjetivo ;
+    ns1:textoExtracto "3103 Potencia objetivo insuficiente para el funcionamiento correcto con DMC. DETECCIÓN Durante la ejecución. CAUSA Los valores de la potencia en vacío y la potencia objetivo durante el mecanizado son similares. Es posible que el DMC no pueda distinguir con exactitud las entradas y salidas de la pieza."@es .
+
+ns1:Error_ColisionHerramientaPieza a ns1:AvisoSeguridad ;
+    rdfs:label "Error: Potencia instantánea superada (TV51) - Posible colisión herramienta-pieza"@es ;
+    ns1:mitigaRiesgo ns1:Solucion_ColisionHerramienta_Inspeccion ;
+    ns1:textoExtracto "CAUSA El DMC ha detectado que la potencia instantánea (variable TV51 del regulador) ha superado la potencia objetivo en un rango prefijado. Esto puede indicar que la herramienta ha colisionado con la pieza, por lo que el CNC detiene los ejes manteniendo el giro del cabezal."@es .
+
+ns1:Herramienta_Mecanizado a ns1:Herramienta ;
+    rdfs:label "Herramienta de mecanizado"@es ;
+    ns1:textoExtracto "la herramienta ha colisionado con la pieza"@es .
+
+ns1:Personal_OperadorCNC a ns1:Personal ;
+    rdfs:label "Operador de CNC"@es ;
+    ns1:textoExtracto "El CNC permite reanudar la ejecución pulsando [START], entrar en modo inspección de herramienta o dar por terminada la ejecución."@es .
+
+ns1:Solucion_3103_RevisarPotenciaObjetivo a ns1:TareaMantenimiento ;
+    rdfs:label "Ajuste de potencia objetivo (mínimo 20% sobre potencia en vacío)"@es ;
+    ns1:requiereMantenimiento ns1:Sistema_DMC ;
+    ns1:textoExtracto "La potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío."@es .
+
+ns1:Solucion_ColisionHerramienta_Inspeccion a ns1:TareaMantenimiento ;
+    rdfs:label "Inspección de herramienta y pieza tras colisión"@es ;
+    ns1:ejecutadoPor ns1:Personal_OperadorCNC ;
+    ns1:requiereMantenimiento ns1:Herramienta_Mecanizado ;
+    ns1:textoExtracto "Comprobar el estado de la herramienta y del mecanizado. El CNC permite reanudar la ejecución pulsando [START], entrar en modo inspección de herramienta o dar por terminada la ejecución."@es .
+
+ns1:Sistema_DMC a ns1:Sistema ;
+    rdfs:label "Sistema DMC (Dynamic Machining Control)"@es ;
+    ns1:activaAlarma ns1:Error_3103_PotenciaObjetivoInsuficiente,
+        ns1:Error_ColisionHerramientaPieza ;
+    ns1:controla ns1:Componente_Cabezal ;
+    ns1:identificador "DMC" ;
+    ns1:textoExtracto "DMC ha detectado que la potencia instantánea...; Es posible que el DMC no pueda distinguir con exactitud las entradas y salidas de la pieza."@es .
+

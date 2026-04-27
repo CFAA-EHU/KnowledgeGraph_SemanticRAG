@@ -1,0 +1,76 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_9633
+    a ex:DiagnosticoFallo ;
+    rdfs:label "INDUCTOSYN: señal INC demasiado baja" ;
+    ex:identificador "9633" ;
+    ex:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Nivel de la señal incremental del transductor inductosyn/resolver demasiado bajo. SOLUCIÓN Las posibles soluciones son las siguientes: • Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. • Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver. • Si el error persiste y no se puede eliminar con las acciones anteriores, pruebe a sustituir el módulo ABSIND y/o el cable asociado a esa captación." .
+
+ex:Fallo_9634
+    a ex:DiagnosticoFallo ;
+    rdfs:label "INDUCTOSYN: señal INC demasiado alta" ;
+    ex:identificador "9634" ;
+    ex:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Nivel de la señal incremental del transductor inductosyn/resolver demasiado alto. SOLUCIÓN Las posibles soluciones son las siguientes: • Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. • Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver. • Si el error persiste y no se puede eliminar con las acciones anteriores, pruebe a sustituir el módulo ABSIND y/o el cable asociado a esa captación." .
+
+ex:Fallo_9635
+    a ex:DiagnosticoFallo ;
+    rdfs:label "INDUCTOSYN: señal GRAY no presente" ;
+    ex:identificador "9635" ;
+    ex:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." .
+
+ex:Fallo_ModuloABSIND_NoIdentificado
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error de identificación del módulo ABSIND" ;
+    ex:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador no ha podido leer la identificación del módulo ABSIND durante el arranque del sistema. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y el regulador. SOLUCIÓN Comprobar que la conexión y el cableado son satisfactorios. Si el error persiste, póngase en contacto con Fagor Automation." .
+
+ex:ModuloABSIND
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo ABSIND" ;
+    ex:textoExtracto "El regulador no ha podido leer la identificación del módulo ABSIND durante el arranque del sistema. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y el regulador." .
+
+ex:TransductorInductosynResolver
+    a ex:Sensor ;
+    rdfs:label "Transductor inductosyn/resolver" ;
+    ex:textoExtracto "Nivel de la señal incremental del transductor inductosyn/resolver demasiado bajo. [...] Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver." .
+
+ex:CableadoABSIND_Inductosyn
+    a ex:ComponenteElectrico ;
+    rdfs:label "Cableado entre módulo ABSIND y transductor inductosyn/resolver" ;
+    ex:textoExtracto "Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver." .
+
+ex:ReguladorSistema
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador del sistema" ;
+    ex:textoExtracto "El regulador no ha podido leer la identificación del módulo ABSIND durante el arranque del sistema." .
+
+ex:FagorAutomation
+    a ex:Empresa ;
+    rdfs:label "Fagor Automation" ;
+    ex:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation." .
+
+# Relaciones entre individuos
+ex:ModuloABSIND
+    ex:monitoreaParametro ex:Fallo_9633, ex:Fallo_9634, ex:Fallo_9635 ;
+    ex:tieneComponente ex:CableadoABSIND_Inductosyn .
+
+ex:TransductorInductosynResolver
+    ex:monitoreaParametro ex:Fallo_9633, ex:Fallo_9634, ex:Fallo_9635 .
+
+ex:ReguladorSistema
+    ex:controla ex:ModuloABSIND ;
+    ex:monitoreaParametro ex:Fallo_ModuloABSIND_NoIdentificado .
+
+ex:Fallo_ModuloABSIND_NoIdentificado
+    ex:solucionaFallo ex:ModuloABSIND .
+
+ex:Fallo_9633
+    ex:solucionaFallo ex:ModuloABSIND, ex:TransductorInductosynResolver, ex:CableadoABSIND_Inductosyn .
+
+ex:Fallo_9634
+    ex:solucionaFallo ex:ModuloABSIND, ex:TransductorInductosynResolver, ex:CableadoABSIND_Inductosyn .
+
+ex:Fallo_9635
+    ex:solucionaFallo ex:ModuloABSIND, ex:TransductorInductosynResolver, ex:CableadoABSIND_Inductosyn .

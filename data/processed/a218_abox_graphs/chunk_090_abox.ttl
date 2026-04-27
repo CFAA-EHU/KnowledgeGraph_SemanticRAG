@@ -1,109 +1,53 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:ModoAutomatico
-    a ex:ModoOperacion ;
-    rdfs:label "Modo automático" ;
-    ex:textoExtracto "Para seleccionar el modo de trabajo automático: Con máquina en servicio y presión general de aire OK. [...] A partir de este momento se pueden ejecutar los siguientes ciclos: Plana, anillo e inspección." ;
-    ex:requiereMantenimiento ex:EnclavamientoPuertas ;
-    ex:habilitadoPor ex:PresionGeneralAire .
+ns1:CicloAnilloAcabado a ns1:TareaMantenimiento ;
+    rdfs:label "Ciclo anillo acabado"@es ;
+    ns1:textoExtracto "4. Ciclo anillo acabado El ciclo inicia con el carro posicionándose en la cota de inspección con el plato girado en el primer diente."@es .
 
-ex:EnclavamientoPuertas
-    a ex:ElementoSeguridad ;
-    rdfs:label "Enclavamiento de seguridad de puertas" ;
-    ex:textoExtracto "Puertas con enclavamiento de seguridad cerradas y bloqueadas." .
+ns1:CicloAnilloDesbaste a ns1:TareaMantenimiento ;
+    rdfs:label "Ciclo anillo desbaste"@es ;
+    ns1:textoExtracto "3. Ciclo anillo desbaste El ciclo inicia aproximando el carro a la posición de verificación con el plato en 0º, hay un M0 donde se pueden abrir las puertas para verificar que el 0º de la anilla está correctamente posicionada (así queda verificado que en el retorno que siempre es a 0º es correcto). Se cierran las puertas y dando 'Marcha ciclo' el carro sube hasta arriba a velocidad de brochado para que en el caso de que no estuviera bien posicionada la anilla la broche en 0º. Los siguientes brochados se hacen respecto al inicio del primer brochado con su incremento y número de dientes. Siempre volviendo a 0º para la bajada del carro. Se podrá seleccionar si se desea con ciclo inspección o no."@es .
 
-ex:PresionGeneralAire
-    a ex:Parametro ;
-    rdfs:label "Presión general de aire" ;
-    ex:textoExtracto "presión general de aire OK" ;
-    ex:valor "OK" .
+ns1:CicloInspeccion a ns1:TareaMantenimiento ;
+    rdfs:label "Ciclo inspección"@es ;
+    ns1:textoExtracto "1. Ciclo inspección El carro sube a posición de inspección con el plato en 0º. En esta posición se pueden abrir las puertas y mover el carro hasta la posición deseada para la primera foto. Una vez cerradas las puertas, la posición actual se coge como primer punto de inspección y hace movimiento hasta el siguiente incremento y volviendo a parar con un M0. La última posición es la de carro arriba (3150mm). Este ciclo se utiliza con anillo, pudiendo seleccionar cada cuantas ranuras se desea ejecutar este ciclo."@es .
 
-ex:CicloInspeccion
-    a ex:TareaMantenimiento ;
-    rdfs:label "Ciclo inspección" ;
-    ex:textoExtracto "1. Ciclo inspección: El carro sube a posición de inspección con el plato en 0º. [...] Este ciclo se utiliza con anillo, pudiendo seleccionar cada cuantas ranuras se desea ejecutar este ciclo." ;
-    ex:ejecutadoPor ex:MaquinaBrochadora ;
-    ex:tieneFrecuencia ex:FrecuenciaInspeccion .
+ns1:CicloPlana a ns1:TareaMantenimiento ;
+    rdfs:label "Ciclo plana"@es ;
+    ns1:textoExtracto "2. Ciclo plana La pieza a brochar se coloca a 90º. Selección de desbaste (limitado la velocidad de brochado a 5000 mm/min) o acabado (limitado la velocidad de brochado a 5000 mm/min). No tiene la opción de inspección ."@es .
 
-ex:CicloPlana
-    a ex:TareaMantenimiento ;
-    rdfs:label "Ciclo plana" ;
-    ex:textoExtracto "2. Ciclo plana: La pieza a brochar se coloca a 90º. Selección de desbaste (limitado la velocidad de brochado a 5000 mm/min) o acabado (limitado la velocidad de brochado a 5000 mm/min)." ;
-    ex:ejecutadoPor ex:MaquinaBrochadora ;
-    ex:tieneFrecuencia ex:FrecuenciaPlana .
+ns1:M0 a ns1:TareaMantenimiento ;
+    rdfs:label "M0"@es ;
+    ns1:textoExtracto "volviendo a parar con un M0"@es .
 
-ex:CicloAnilloDesbaste
-    a ex:TareaMantenimiento ;
-    rdfs:label "Ciclo anillo desbaste" ;
-    ex:textoExtracto "3. Ciclo anillo desbaste: [...] Se cierran las puertas y dando 'Marcha ciclo' el carro sube hasta arriba a velocidad de brochado para que en el caso de que no estuviera bien posicionada la anilla la broche en 0º." ;
-    ex:ejecutadoPor ex:MaquinaBrochadora ;
-    ex:tieneFrecuencia ex:FrecuenciaAnilloDesbaste .
+ns1:ModoAutomatico a ns1:ModoOperacion ;
+    rdfs:label "modo automático"@es ;
+    ns1:textoExtracto "Para seleccionar el modo de trabajo automático: Con máquina en servicio y presión general de aire OK.  Puertas con enclavamiento de seguridad cerradas y bloqueadas.  Seleccionar el modo automático."@es .
 
-ex:CicloAnilloAcabado
-    a ex:TareaMantenimiento ;
-    rdfs:label "Ciclo anillo acabado" ;
-    ex:textoExtracto "4. Ciclo anillo acabado: El ciclo inicia con el carro posicionándose en la cota de inspección con el plato girado en el primer diente." ;
-    ex:ejecutadoPor ex:MaquinaBrochadora ;
-    ex:tieneFrecuencia ex:FrecuenciaAnilloAcabado .
+ns1:Plato0 a ns1:Parametro ;
+    rdfs:label "plato en 0º"@es ;
+    ns1:textoExtracto "con el plato en 0º"@es .
 
-ex:MaquinaBrochadora
-    a ex:Maquina ;
-    rdfs:label "Máquina brochadora" ;
-    ex:textoExtracto "Con máquina en servicio y presión general de aire OK." ;
-    ex:tieneComponente ex:CarroBrochadora ;
-    ex:tieneComponente ex:PlatoGiratorio ;
-    ex:tieneComponente ex:PuertasSeguridad .
+ns1:Plato90 a ns1:Parametro ;
+    rdfs:label "plato en 90º"@es ;
+    ns1:textoExtracto "La pieza a brochar se coloca a 90º."@es .
 
-ex:CarroBrochadora
-    a ex:ComponenteMecanico ;
-    rdfs:label "Carro" ;
-    ex:textoExtracto "El carro sube a posición de inspección con el plato en 0º. [...] La última posición es la de carro arriba (3150mm)." ;
-    ex:monitoreaParametro ex:PosicionCarro .
+ns1:PosicionCarroArriba a ns1:Parametro ;
+    rdfs:label "posición de carro arriba"@es ;
+    ns1:textoExtracto "La última posición es la de carro arriba (3150mm)."@es ;
+    ns1:valor "3150mm" .
 
-ex:PosicionCarro
-    a ex:Parametro ;
-    rdfs:label "Posición del carro" ;
-    ex:textoExtracto "La última posición es la de carro arriba (3150mm)." ;
-    ex:valor "3150mm" .
+ns1:PosicionInspeccion a ns1:Parametro ;
+    rdfs:label "posición de inspección"@es ;
+    ns1:textoExtracto "El carro sube a posición de inspección con el plato en 0º."@es .
 
-ex:PlatoGiratorio
-    a ex:ComponenteMecanico ;
-    rdfs:label "Plato giratorio" ;
-    ex:textoExtracto "El carro sube a posición de inspección con el plato en 0º. [...] con el plato girado en el primer diente." ;
-    ex:monitoreaParametro ex:AnguloPlato .
+ns1:PosicionVerificacion a ns1:Parametro ;
+    rdfs:label "posición de verificación"@es ;
+    ns1:textoExtracto "aproximando el carro a la posición de verificación con el plato en 0º"@es .
 
-ex:AnguloPlato
-    a ex:Parametro ;
-    rdfs:label "Ángulo del plato" ;
-    ex:textoExtracto "plato en 0º. [...] plato girado en el primer diente." ;
-    ex:valor "0°" .
+ns1:VelocidadBrochado5000 a ns1:Parametro ;
+    rdfs:label "velocidad de brochado 5000 mm/min"@es ;
+    ns1:textoExtracto "limitado la velocidad de brochado a 5000 mm/min"@es ;
+    ns1:valor "5000 mm/min" .
 
-ex:PuertasSeguridad
-    a ex:ElementoSeguridad ;
-    rdfs:label "Puertas de seguridad" ;
-    ex:textoExtracto "Puertas con enclavamiento de seguridad cerradas y bloqueadas." .
-
-ex:FrecuenciaInspeccion
-    a ex:Frecuencia ;
-    rdfs:label "Frecuencia de inspección" ;
-    ex:textoExtracto "pudiendo seleccionar cada cuantas ranuras se desea ejecutar este ciclo." .
-
-ex:FrecuenciaPlana
-    a ex:Frecuencia ;
-    rdfs:label "Frecuencia de ciclo plana" ;
-    ex:textoExtracto "limitado la velocidad de brochado a 5000 mm/min" ;
-    ex:valor "5000 mm/min" .
-
-ex:FrecuenciaAnilloDesbaste
-    a ex:Frecuencia ;
-    rdfs:label "Frecuencia de ciclo anillo desbaste" ;
-    ex:textoExtracto "velocidad de brochado para que en el caso de que no estuviera bien posicionada la anilla la broche en 0º." ;
-    ex:valor "5000 mm/min" .
-
-ex:FrecuenciaAnilloAcabado
-    a ex:Frecuencia ;
-    rdfs:label "Frecuencia de ciclo anillo acabado" ;
-    ex:textoExtracto "velocidad de brochado" .

@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_1832
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Fallo 1832: Desbaste I=0" ;
+    ex:textoExtracto "1832 'DESBASTE: I = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro I (paso máximo de profundización) tiene valor 0. SOLUCIÓN Asignar al parámetro un valor distinto de cero y menor que la longitud de corte de la herramienta." ;
+    ex:identificador "1832" .
+
+ex:Fallo_1833
+    a               ex:DiagnosticoFallo ;
+    rdfs:label      "Fallo 1833: Acabado N=0 y longitud de herramienta no definida" ;
+    ex:textoExtracto "1833 'ACABADO: N = 0 y longitud de corte de herramienta no definida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro N (número de pasadas de profundización) tiene valor 0 y la herramienta de acabado no tiene una longitud de corte definida. SOLUCIÓN Programar el número de pasadas de profundización (parámetro N) o definir la longitud de corte en la tabla de herramientas." ;
+    ex:identificador "1833" .
+
+ex:Parametro_I
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro I (paso máximo de profundización)" ;
+    ex:textoExtracto "El parámetro I (paso máximo de profundización) tiene valor 0." ;
+    ex:monitoreaParametro ex:Fallo_1832 ;
+    ex:valor        "0" .
+
+ex:Parametro_N
+    a               ex:Parametro ;
+    rdfs:label      "Parámetro N (número de pasadas de profundización)" ;
+    ex:textoExtracto "El parámetro N (número de pasadas de profundización) tiene valor 0" ;
+    ex:monitoreaParametro ex:Fallo_1833 ;
+    ex:valor        "0" .
+
+ex:Herramienta_Acabado
+    a               ex:Herramienta ;
+    rdfs:label      "Herramienta de acabado" ;
+    ex:textoExtracto "la herramienta de acabado no tiene una longitud de corte definida" ;
+    ex:requiereMantenimiento [
+        a               ex:TareaMantenimiento ;
+        rdfs:label      "Definir longitud de corte en tabla de herramientas" ;
+        ex:textoExtracto "definir la longitud de corte en la tabla de herramientas" ;
+        ex:solucionaFallo ex:Fallo_1833
+    ] .

@@ -1,0 +1,94 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Esquemas y Diagramas
+ex:Esquema_ConexionSensorGapRIOR
+    a ex:Esquema ;
+    rdfs:label "Diagrama de conexión del sensor de gap a módulos remotos CAN (RIOR)"@es ;
+    ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena 'CNC – RIOR – CAN – GAP SENSOR', mostrando alternativa de cableado cuando no se usa el regulador."@es ;
+    ex:identificador "CNC – RIOR – CAN – GAP SENSOR" .
+
+ex:Esquema_LazoControlGap
+    a ex:Esquema ;
+    rdfs:label "Diagrama de bloques del lazo de control del gap"@es ;
+    ex:textoExtracto "Diagrama de bloques del lazo de control del gap: 'GAP SENSOR FEEDBACK' → filtro paso bajo (ORDER/FREQUENCY) → 'POSITION LOOP' con 'GAP P-GAIN'. Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER."@es .
+
+ex:Grafico_PerfilVelocidadGap
+    a ex:Figura ;
+    rdfs:label "Perfil de velocidad y aceleración sin sobrepasamiento en el gap"@es ;
+    ex:textoExtracto "Gráfico tipo osciloscopio 'Perfil de velocidad y aceleración sin sobrepasamiento en el gap' con cuatro trazas etiquetadas: (A) G.GAP, (B) error de seguimiento A.FLWE.Z, (C) velocidad DIFF(A.TPOS.Z), (D) aceleración DIFF(DIFF(A.TPOS.Z))."@es .
+
+ex:Grafico_CalibracionSensorGap
+    a ex:Figura ;
+    rdfs:label "Gráfico lineal distancia–voltaje del sensor de gap"@es ;
+    ex:textoExtracto "Gráfico lineal distancia–voltaje del sensor con origen desplazado (GAPSENSOROFFSET), límites GAPDISTLIMIT (mm/in) y GAPVOLTLIMIT (mV). Incluye ejes con unidades, recta de calibración y flechas que marcan la correspondencia física y eléctrica."@es .
+
+### Sensores y Parámetros
+ex:SensorGap
+    a ex:Sensor ;
+    rdfs:label "Sensor de gap"@es ;
+    ex:textoExtracto "sensor de gap"@es ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGapRIOR ;
+    ex:ilustradoEn ex:Grafico_CalibracionSensorGap ;
+    ex:monitoreaParametro ex:Parametro_GGAP .
+
+ex:Parametro_GGAP
+    a ex:Parametro ;
+    rdfs:label "G.GAP"@es ;
+    ex:textoExtracto "G.GAP"@es ;
+    ex:valor "Distancia del gap (unidad implícita: mm)"@es .
+
+ex:Parametro_GAPSENSOROFFSET
+    a ex:Parametro ;
+    rdfs:label "GAPSENSOROFFSET" ;
+    ex:textoExtracto "origen desplazado (GAPSENSOROFFSET)"@es .
+
+ex:Parametro_GAPDISTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPDISTLIMIT" ;
+    ex:textoExtracto "límite GAPDISTLIMIT (mm/in)"@es ;
+    ex:valor "mm o pulgadas"@es .
+
+ex:Parametro_GAPVOLTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPVOLTLIMIT" ;
+    ex:textoExtracto "GAPVOLTLIMIT (mV)"@es ;
+    ex:valor "milivoltios (mV)"@es .
+
+ex:Parametro_GAPGAIN
+    a ex:Parametro ;
+    rdfs:label "GAP P-GAIN"@es ;
+    ex:textoExtracto "GAP P-GAIN"@es .
+
+ex:Parametro_GAPSENSORFILTER
+    a ex:Parametro ;
+    rdfs:label "GAPSENSORFILTER"@es ;
+    ex:textoExtracto "filtro paso bajo (ORDER/FREQUENCY)"@es .
+
+### Relaciones Funcionales
+ex:Esquema_ConexionSensorGapRIOR
+    ex:detalladoEnEsquema ex:SensorGap .
+
+ex:Esquema_LazoControlGap
+    ex:tieneComponente ex:SensorGap ;
+    ex:ilustradoEn ex:Grafico_PerfilVelocidadGap .
+
+ex:SensorGap
+    ex:monitoreaParametro ex:Parametro_GAPSENSOROFFSET ,
+                        ex:Parametro_GAPDISTLIMIT ,
+                        ex:Parametro_GAPVOLTLIMIT .
+
+### Componentes Eléctricos (pines)
+ex:Pin_AI1
+    a ex:ComponenteElectrico ;
+    rdfs:label "AI1+" ;
+    ex:textoExtracto "pines AI1+"@es ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGapRIOR .
+
+ex:Pin_AI1
+    a ex:ComponenteElectrico ;
+    rdfs:label "AI1−" ;
+    ex:textoExtracto "AI1−"@es ;
+    ex:detalladoEnEsquema ex:Esquema_ConexionSensorGapRIOR .

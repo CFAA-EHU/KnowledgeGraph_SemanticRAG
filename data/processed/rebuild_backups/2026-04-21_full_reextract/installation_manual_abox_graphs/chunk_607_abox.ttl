@@ -1,0 +1,29 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_PP216
+    a ex:Parametro ;
+    rdfs:label "PP216 (VelocityFeedForwardPercentage)"@es ;
+    ex:identificador "PP216" ;
+    ex:textoExtracto "el parámetro PP216 (VelocityFeedForwardPercentage) del regulador. Las unidades de la variable serán las del regulador (en centésimas)."@es ;
+    ex:valor "9000"^^xsd:integer ;  # Ejemplo concreto del fragmento (90% en centésimas)
+    .
+
+ex:Tabla_DRIVEVAR a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla DRIVEVAR"@es ;
+    ex:textoExtracto "En la tabla DRIVEVAR, definir la variable de la siguiente manera."@es ;
+    ex:detalladoEnEsquema ex:Parametro_PP216 ;
+    .
+
+ex:Variable_FFGAIN
+    a ex:Parametro ;
+    rdfs:label "FFGAIN (Variable síncrona para PP216)"@es ;
+    ex:identificador "V.DRV.FFGAIN.2" ;  # Ejemplo del fragmento
+    ex:textoExtracto "Se desea modificar el FFGAIN del eje X (nodo 2). El acceso desde el CNC será V.DRV.FFGAIN.2. V.DRV.FFGAIN.2=9000 (Aplicar un feed-forward en el segundo regulador del 90 %)."@es ;
+    ex:monitoreaParametro ex:Parametro_PP216 ;
+    ex:valor "9000"^^xsd:integer ;
+    .

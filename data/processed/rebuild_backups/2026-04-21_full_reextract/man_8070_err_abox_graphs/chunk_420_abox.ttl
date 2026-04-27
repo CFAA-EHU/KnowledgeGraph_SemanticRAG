@@ -1,0 +1,30 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_2500
+    a ex:AccionProhibida ;
+    rdfs:label "Movimiento de eje rotativo no permitido con RTCP STATIC activo y compensación de radio activa (G41/G42)"@es ;
+    ex:identificador "2500" ;
+    ex:textoExtracto "Movimiento de eje rotativo no permitido con RTCP STATIC activo y compensación de radio activa (G41/G42). DETECCIÓN Durante la ejecución. CAUSA Se ha intentado mover un eje rotativo de la cinemática, con RTCP STATIC y compensación de radio activa. SOLUCIÓN Desactivar la compensación de radio para mover el eje rotativo."@es .
+
+ex:Fallo_2501
+    a ex:AvisoSeguridad ;
+    rdfs:label "Programación simultánea de eje lineal y rotativo no permitida con RTCP STATIC activo"@es ;
+    ex:identificador "2501" ;
+    ex:textoExtracto "No se permite programar en el mismo bloque eje lineal y rotativo, con RTCP STATIC activo. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado mover un eje lineal junto a un eje rotativo de la cinemática, con RTCP STATIC activo. SOLUCIÓN Mover el eje rotativo y el eje lineal individualmente."@es .
+
+ex:Modo_RTCP_STATIC
+    a ex:ModoOperacion ;
+    rdfs:label "RTCP STATIC"@es ;
+    ex:textoExtracto "RTCP STATIC activo"@es ;
+    ex:activaAlarma ex:Fallo_2500 ;
+    ex:activaAlarma ex:Fallo_2501 .
+
+ex:Compensacion_G41_G42
+    a ex:Parametro ;
+    rdfs:label "Compensación de radio (G41/G42)"@es ;
+    ex:identificador "G41/G42" ;
+    ex:textoExtracto "compensación de radio activa (G41/G42)"@es ;
+    ex:activaAlarma ex:Fallo_2500 .

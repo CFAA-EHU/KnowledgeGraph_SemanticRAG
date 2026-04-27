@@ -1,0 +1,76 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_ParametrosRIOR a ex:Tabla ;
+    ex:textoExtracto """
+| Parámetro. | Valor. | Comentario. |
+| --- | --- | --- |
+| NDIMOD | 2 | 2 bloques, uno para cada nodo RIOR. En la serie RIOR, cada módulo se debe configurar como un bloque lógico. |
+| DIMODADDR | - - - | Ver tabla inferior.
+""" ;
+    rdfs:label "Tabla de parámetros NDIMOD y DIMODADDR para configuración de módulos RIOR" .
+
+ex:Tabla_ParametrosDOMOD a ex:Tabla ;
+    ex:textoExtracto """
+| Parámetro. | Valor. | Comentario. |
+| --- | --- | --- |
+| NDOMOD | 2 | 2 bloques, uno para cada nodo RIOR. En la serie RIOR, cada módulo se debe configurar como un bloque lógico. |
+| DOMODADDR | - - - | Ver tabla inferior.
+""" ;
+    rdfs:label "Tabla de parámetros NDOMOD y DOMODADDR para configuración de módulos RIOR" .
+
+ex:Parametro_NDIMOD a ex:Parametro ;
+    ex:textoExtracto "NDIMOD | 2 | 2 bloques, uno para cada nodo RIOR. En la serie RIOR, cada módulo se debe configurar como un bloque lógico." ;
+    ex:identificador "NDIMOD" ;
+    ex:valor "2" ;
+    ex:documentadoEn ex:Tabla_ParametrosRIOR .
+
+ex:Parametro_DIMODADDR a ex:Parametro ;
+    ex:textoExtracto "DIMODADDR | - - - | Ver tabla inferior." ;
+    ex:identificador "DIMODADDR" ;
+    ex:documentadoEn ex:Tabla_ParametrosRIOR .
+
+ex:Parametro_NDOMOD a ex:Parametro ;
+    ex:textoExtracto "NDOMOD | 2 | 2 bloques, uno para cada nodo RIOR. En la serie RIOR, cada módulo se debe configurar como un bloque lógico." ;
+    ex:identificador "NDOMOD" ;
+    ex:valor "2" ;
+    ex:documentadoEn ex:Tabla_ParametrosDOMOD .
+
+ex:Parametro_DOMODADDR a ex:Parametro ;
+    ex:textoExtracto "DOMODADDR | - - - | Ver tabla inferior." ;
+    ex:identificador "DOMODADDR" ;
+    ex:documentadoEn ex:Tabla_ParametrosDOMOD .
+
+ex:Sistema_BusCANopen a ex:Sistema ;
+    ex:textoExtracto "Un bus CANopen dispone de los siguientes grupos remotos. • Nodo 1: Grupo remoto RIO5 con 3 módulos de 24 entradas digitales cada uno. • Nodo 2: Grupo remoto RIOW con 64 entradas digitales." ;
+    rdfs:label "Sistema de bus CANopen con nodos remotos RIO5 y RIOW" .
+
+ex:ComponenteElectrico_Nodo1_RIO5 a ex:ComponenteElectrico ;
+    ex:textoExtracto "Nodo 1: Grupo remoto RIO5 con 3 módulos de 24 entradas digitales cada uno." ;
+    rdfs:label "Grupo remoto RIO5 (Nodo 1)" ;
+    ex:compuestoPor ex:ComponenteElectrico_ModuloRIO5_1 ,
+                    ex:ComponenteElectrico_ModuloRIO5_2 ,
+                    ex:ComponenteElectrico_ModuloRIO5_3 ;
+    ex:tieneComponente ex:Sistema_BusCANopen .
+
+ex:ComponenteElectrico_ModuloRIO5_1 a ex:ComponenteElectrico ;
+    ex:textoExtracto "3 módulos de 24 entradas digitales cada uno" ;
+    rdfs:label "Módulo 1 de 24 entradas digitales (RIO5)" ;
+    ex:compuestoPor ex:Sistema_BusCANopen .
+
+ex:ComponenteElectrico_ModuloRIO5_2 a ex:ComponenteElectrico ;
+    ex:textoExtracto "3 módulos de 24 entradas digitales cada uno" ;
+    rdfs:label "Módulo 2 de 24 entradas digitales (RIO5)" ;
+    ex:compuestoPor ex:Sistema_BusCANopen .
+
+ex:ComponenteElectrico_ModuloRIO5_3 a ex:ComponenteElectrico ;
+    ex:textoExtracto "3 módulos de 24 entradas digitales cada uno" ;
+    rdfs:label "Módulo 3 de 24 entradas digitales (RIO5)" ;
+    ex:compuestoPor ex:Sistema_BusCANopen .
+
+ex:ComponenteElectrico_Nodo2_RIOW a ex:ComponenteElectrico ;
+    ex:textoExtracto "Nodo 2: Grupo remoto RIOW con 64 entradas digitales." ;
+    rdfs:label "Grupo remoto RIOW (Nodo 2)" ;
+    ex:tieneComponente ex:Sistema_BusCANopen .

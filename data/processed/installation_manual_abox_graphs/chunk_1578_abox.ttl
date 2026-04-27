@@ -1,0 +1,181 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Parametro_XMH a ns1:Parametro ;
+    rdfs:label "Cota XMH (distancia X entre OM y H)" ;
+    ns1:textoExtracto "cotas XMH/ZMH" ;
+    ns1:valor "XMH" .
+
+ns1:Parametro_XMW a ns1:Parametro ;
+    rdfs:label "Cota XMW (distancia X entre OM y OW)" ;
+    ns1:textoExtracto "cotas XMW/ZMW" ;
+    ns1:valor "XMW" .
+
+ns1:Parametro_ZMH a ns1:Parametro ;
+    rdfs:label "Cota ZMH (distancia Z entre OM y H)" ;
+    ns1:textoExtracto "cotas XMH/ZMH" ;
+    ns1:valor "ZMH" .
+
+ns1:Parametro_ZMW a ns1:Parametro ;
+    rdfs:label "Cota ZMW (distancia Z entre OW y H)" ;
+    ns1:textoExtracto "cotas XMW/ZMW" ;
+    ns1:valor "ZMW" .
+
+ns1:ProcesoReferenciadoMechatrolink a ns1:ModoOperacion ;
+    rdfs:label "Búsqueda de referencia máquina (Mechatrolink)" ;
+    ns1:ilustradoEn ns1:EsquemaCronogramaReferenciado ;
+    ns1:monitoreaParametro ns1:Parametro_PulsosI0,
+        ns1:Parametro_PulsosMicro,
+        ns1:Parametro_REFFEED1 ;
+    ns1:textoExtracto "Cronograma de señales durante la búsqueda: perfiles de velocidad (REFFEED1) y aproximaciones, pulsos de micro y de I0; se indican fases 1–4 mediante marcas temporales y niveles lógicos que guían la secuencia de referenciado." .
+
+ns1:SistemaLimitesTorno a ns1:Sistema ;
+    rdfs:label "Sistema de límites físicos/software del torno" ;
+    ns1:ilustradoEn ns1:Esquema3D_LimitesTorno ;
+    ns1:textoExtracto "Ilustración 3D del volumen de trabajo con límites físicos (FL) y límites de software (SL) para X-Y-Z; el punto T (portaherramientas) se relaciona con OM y se sombrean regiones válidas/inválidas para posiciones programables según herramienta activa." ;
+    ns1:tieneComponente ns1:LimiteFisico_FL,
+        ns1:LimiteSoftware_SL,
+        ns1:PuntoPortaherramientas_T .
+
+ns1:SistemaMultieje_Ejemplo2 a ns1:Sistema ;
+    rdfs:label "Sistema con dos ejes y un único motor (Ejemplo 2)" ;
+    ns1:ilustradoEn ns1:EsquemaMultieje_Ejemplo2 ;
+    ns1:textoExtracto "Disposición en la que un único motor alimenta mecánicamente A1 y A2; ambos ejes usan captación directa a módulos remotos diferentes (1 y 2). Se representan los bloques de regulador, bus CAN y contadoras." ;
+    ns1:tieneComponente ns1:BusCAN_Ejemplo2,
+        ns1:Contadora_Ejemplo2,
+        ns1:ModuloRemoto_1,
+        ns1:ModuloRemoto_2,
+        ns1:Motor_Ejemplo2,
+        ns1:Regulador_Ejemplo2 .
+
+ns1:SistemaReferenciasTorno a ns1:Sistema ;
+    rdfs:label "Sistema de referencias del torno (OM, OW, H)" ;
+    ns1:ilustradoEn ns1:EsquemaReferenciasTorno_Vista1,
+        ns1:EsquemaReferenciasTorno_Vista2 ;
+    ns1:textoExtracto "Dibujo esquemático de un torno que define cero máquina (OM), cero pieza (OW) y punto de referencia H, con cotas XMH/ZMH y XMW/ZMW; flechas y ejes X-Z situan geometría de referencia respecto a la torreta." ;
+    ns1:tieneComponente ns1:Eje_X_Torno,
+        ns1:Eje_Z_Torno,
+        ns1:PuntoReferencia_H,
+        ns1:PuntoReferencia_OM,
+        ns1:PuntoReferencia_OW .
+
+ns1:BusCAN_Ejemplo2 a ns1:ComponenteElectrico ;
+    rdfs:label "Bus CAN del sistema multieje (Ejemplo 2)" ;
+    ns1:textoExtracto "Se representan [...] bus CAN" .
+
+ns1:Contadora_Ejemplo2 a ns1:ComponenteElectrico ;
+    rdfs:label "Contadora del sistema multieje (Ejemplo 2)" ;
+    ns1:textoExtracto "Se representan [...] contadoras" .
+
+ns1:Eje_A1 a ns1:ComponenteMecanico ;
+    rdfs:label "Eje A1" ;
+    ns1:textoExtracto "un único motor alimenta mecánicamente A1 y A2" .
+
+ns1:Eje_A2 a ns1:ComponenteMecanico ;
+    rdfs:label "Eje A2" ;
+    ns1:textoExtracto "un único motor alimenta mecánicamente A1 y A2" .
+
+ns1:Eje_X_Torno a ns1:ComponenteMecanico ;
+    rdfs:label "Eje X del torno" ;
+    ns1:textoExtracto "flechas y ejes X-Z situan geometría de referencia" .
+
+ns1:Eje_Z_Torno a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Z del torno" ;
+    ns1:textoExtracto "flechas y ejes X-Z situan geometría de referencia" .
+
+ns1:Esquema3D_LimitesTorno a ns1:Esquema ;
+    rdfs:label "Esquema 3D de límites físicos/software del torno" ;
+    ns1:textoExtracto "Ilustración 3D del volumen de trabajo con límites físicos (FL) y límites de software (SL) para X-Y-Z" .
+
+ns1:EsquemaCronogramaReferenciado a ns1:Esquema ;
+    rdfs:label "Cronograma de señales durante búsqueda de referencia (Mechatrolink)" ;
+    ns1:textoExtracto "Cronograma de señales durante la búsqueda: perfiles de velocidad (REFFEED1) y aproximaciones, pulsos de micro y de I0; se indican fases 1–4" .
+
+ns1:EsquemaMultieje_Ejemplo2 a ns1:Esquema ;
+    rdfs:label "Esquema del sistema multieje (Ejemplo 2)" ;
+    ns1:textoExtracto "Disposición en la que un único motor alimenta mecánicamente A1 y A2; ambos ejes usan captación directa a módulos remotos diferentes (1 y 2). Se representan los bloques de regulador, bus CAN y contadoras." .
+
+ns1:EsquemaReferenciasTorno_Vista1 a ns1:Esquema ;
+    rdfs:label "Esquema de referencias del torno (vista lateral)" ;
+    ns1:textoExtracto "Dibujo esquemático de un torno que define cero máquina (OM), cero pieza (OW) y punto de referencia H, con cotas XMH/ZMH y XMW/ZMW" .
+
+ns1:EsquemaReferenciasTorno_Vista2 a ns1:Esquema ;
+    rdfs:label "Esquema de referencias del torno (vista frontal/planta)" ;
+    ns1:textoExtracto "Segunda vista del mismo concepto de referencias (vista frontal/planta), con ejes X y Z y la localización de OM, OW, H" .
+
+ns1:LimiteFisico_FL a ns1:Parametro ;
+    rdfs:label "Límite físico (FL)" ;
+    ns1:textoExtracto "límites físicos (FL)" ;
+    ns1:valor "FL" .
+
+ns1:LimiteSoftware_SL a ns1:Parametro ;
+    rdfs:label "Límite de software (SL)" ;
+    ns1:textoExtracto "límites de software (SL)" ;
+    ns1:valor "SL" .
+
+ns1:ParametroPosicion_A1 a ns1:Parametro ;
+    rdfs:label "Posición del eje A1" ;
+    ns1:monitoreaParametro ns1:ModuloRemoto_1 ;
+    ns1:textoExtracto "captación directa a módulos remotos" .
+
+ns1:ParametroPosicion_A2 a ns1:Parametro ;
+    rdfs:label "Posición del eje A2" ;
+    ns1:monitoreaParametro ns1:ModuloRemoto_2 ;
+    ns1:textoExtracto "captación directa a módulos remotos" .
+
+ns1:Parametro_PulsosI0 a ns1:Parametro ;
+    rdfs:label "Pulsos de I0" ;
+    ns1:textoExtracto "pulsos de [...] I0" ;
+    ns1:valor "I0" .
+
+ns1:Parametro_PulsosMicro a ns1:Parametro ;
+    rdfs:label "Pulsos de micro" ;
+    ns1:textoExtracto "pulsos de micro" ;
+    ns1:valor "micro" .
+
+ns1:Parametro_REFFEED1 a ns1:Parametro ;
+    rdfs:label "Perfil de velocidad REFFEED1" ;
+    ns1:textoExtracto "perfiles de velocidad (REFFEED1)" ;
+    ns1:valor "REFFEED1" .
+
+ns1:PuntoPortaherramientas_T a ns1:Parametro ;
+    rdfs:label "Punto T (portaherramientas)" ;
+    ns1:textoExtracto "el punto T (portaherramientas)" ;
+    ns1:valor "T" .
+
+ns1:PuntoReferencia_H a ns1:Parametro ;
+    rdfs:label "Punto de referencia H" ;
+    ns1:textoExtracto "punto de referencia H" ;
+    ns1:valor "H" .
+
+ns1:PuntoReferencia_OM a ns1:Parametro ;
+    rdfs:label "Cero máquina (OM)" ;
+    ns1:textoExtracto "cero máquina (OM)" ;
+    ns1:valor "OM" .
+
+ns1:PuntoReferencia_OW a ns1:Parametro ;
+    rdfs:label "Cero pieza (OW)" ;
+    ns1:textoExtracto "cero pieza (OW)" ;
+    ns1:valor "OW" .
+
+ns1:Regulador_Ejemplo2 a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador del sistema multieje (Ejemplo 2)" ;
+    ns1:controla ns1:Motor_Ejemplo2 ;
+    ns1:textoExtracto "Se representan los bloques de regulador" .
+
+ns1:ModuloRemoto_1 a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo remoto 1 (captación eje A1)" ;
+    ns1:monitoreaParametro ns1:ParametroPosicion_A1 ;
+    ns1:textoExtracto "ambos ejes usan captación directa a módulos remotos diferentes (1 y 2)" .
+
+ns1:ModuloRemoto_2 a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo remoto 2 (captación eje A2)" ;
+    ns1:monitoreaParametro ns1:ParametroPosicion_A2 ;
+    ns1:textoExtracto "ambos ejes usan captación directa a módulos remotos diferentes (1 y 2)" .
+
+ns1:Motor_Ejemplo2 a ns1:ComponenteMecanico ;
+    rdfs:label "Motor del sistema multieje (Ejemplo 2)" ;
+    ns1:alimenta ns1:Eje_A1,
+        ns1:Eje_A2 ;
+    ns1:textoExtracto "un único motor alimenta mecánicamente A1 y A2" .
+

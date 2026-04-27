@@ -1,0 +1,34 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_EntradaCaptacionEje
+    a ex:Parametro ;
+    rdfs:label "Parámetro de ubicación de entrada de captación del eje"@es ;
+    ex:textoExtracto "Este parámetro indica dónde está ubicada la entrada de captación del eje; en los módulos remotos, en la captación libre de un regulador Sercos, en un módulo RCS-S (contadora Sercos) o en las entradas de captación locales de la unidad central."@es ;
+    ex:valor "PP5=-0,0001"@es ;
+    ex:textoExtracto "Cuando la captación del eje esté en un regulador Sercos, en este regulador parametrizar el parámetro PP5=-0,0001."@es .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "el CNC no permite realizar la búsqueda de referencia del eje"@es ;
+    ex:monitoreaParametro ex:Parametro_EntradaCaptacionEje .
+
+ex:ReguladorSercos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador Sercos"@es ;
+    ex:textoExtracto "en la captación libre de un regulador Sercos"@es ;
+    ex:monitoreaParametro ex:Parametro_EntradaCaptacionEje .
+
+ex:ModuloRCS_S
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo RCS-S (contadora Sercos)"@es ;
+    ex:textoExtracto "en un módulo RCS-S (contadora Sercos)"@es .
+
+ex:UnidadCentral
+    a ex:ComponenteElectrico ;
+    rdfs:label "Unidad central"@es ;
+    ex:textoExtracto "en las entradas de captación locales de la unidad central"@es ;
+    ex:tieneComponente ex:Parametro_EntradaCaptacionEje .

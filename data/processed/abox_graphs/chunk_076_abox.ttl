@@ -1,92 +1,91 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-ex:PantallaMovimientosManuales a ex:InterfazUsuario ;
-    rdfs:label "Pantallas de movimientos manuales" ;
-    ex:textoExtracto "Hay cuatro pantallas de movimientos manuales (Movimientos máquina, Arranque motores, Ciclo cambio de brocha y Condiciones máquina)." ;
-    ex:tieneComponente ex:BotonCUSTOM, ex:BotonOPMAN1_4 .
 
-ex:BotonCUSTOM a ex:Componente ;
-    rdfs:label "Botón CUSTOM" ;
-    ex:textoExtracto "Para acceder a las pantallas hay que pulsar el botón “CUSTOM” desde el teclado." .
+ns1:GrupoHidraulico a ns1:ComponenteHidraulico ;
+    rdfs:label "grupo hidráulico" ;
+    ns1:textoExtracto "En la columna 'SEÑALES' hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
 
-ex:BotonOPMAN1_4 a ex:Componente ;
-    rdfs:label "Botón OP MAN 1/4" ;
-    ex:textoExtracto "Para cambiar de una pantalla a otra hay que pulsar el botón “OP MAN 1/4” de la parte superior." .
+ns1:MotorEngrase a ns1:ComponenteElectrico ;
+    rdfs:label "motor MOTOR ENGRASE" ;
+    ns1:textoExtracto "muestra el estado de todos los motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
 
-ex:PantallaMovimientosMaquina a ex:InterfazUsuario ;
-    rdfs:label "Pantalla Movimientos máquina" ;
-    ex:textoExtracto "Esta pantalla permite controlar los movimientos de la máquina. El carro de tracción se puede llevar a tres posiciones (superior, intermedio e inferior), mientras que la mesa giratoria se puede subir/bajar y girar. Además, dispone de varios señalizadores que indican el estado en el que se encuentran los frenos MAYR y los consumos de los motores de los ejes del carro de tracción y de la mesa giratoria. También muestra la temperatura de los motores y las posiciones de los ejes Z, Z1 y C." ;
-    ex:compuestoPor ex:CarroTraccion, ex:MesaGiratoria, ex:SenalizadorFrenosMAYR, ex:SenalizadorConsumosMotores, ex:SenalizadorTemperaturaMotores, ex:SenalizadorPosicionesEjes .
+ns1:MotorExtractorVirutas a ns1:ComponenteElectrico ;
+    rdfs:label "motor EXTRACTOR DE VIRUTAS" ;
+    ns1:textoExtracto "muestra el estado de todos los motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
 
-ex:CarroTraccion a ex:ComponenteMecanico ;
-    rdfs:label "Carro de tracción" ;
-    ex:textoExtracto "El carro de tracción se puede llevar a tres posiciones (superior, intermedio e inferior)." .
+ns1:MotorRefrigeranteBrochaBastidor a ns1:ComponenteElectrico ;
+    rdfs:label "motor REFRIGERANTE A BROCHA/BASTIDOR" ;
+    ns1:textoExtracto "muestra el estado de todos los motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
 
-ex:MesaGiratoria a ex:ComponenteMecanico ;
-    rdfs:label "Mesa giratoria" ;
-    ex:textoExtracto "la mesa giratoria se puede subir/bajar y girar." .
+ns1:PantallaArranqueMotores a ns1:InterfazUsuario ;
+    rdfs:label "pantalla Arranque motores" ;
+    ns1:compuestoPor ns1:ColumnaDisyuntor,
+        ns1:ColumnaMarcha,
+        ns1:ColumnaMotor,
+        ns1:ColumnaSenales ;
+    ns1:textoExtracto "Arranque motores  Esta pantalla muestra el estado de todos los motores de la máquina" .
 
-ex:SenalizadorFrenosMAYR a ex:Sensor ;
-    rdfs:label "Señalizadores de frenos MAYR" ;
-    ex:textoExtracto "dispone de varios señalizadores que indican el estado en el que se encuentran los frenos MAYR" .
+ns1:PantallaMovimientosManuales a ns1:InterfazUsuario ;
+    rdfs:label "pantallas de movimientos manuales" ;
+    ns1:textoExtracto "Hay cuatro pantallas de movimientos manuales (Movimientos máquina, Arranque motores, Ciclo cambio de brocha y Condiciones máquina)." ;
+    ns1:tieneComponente ns1:BotonCUSTOM,
+        ns1:BotonOPMAN1_4 .
 
-ex:SenalizadorConsumosMotores a ex:Sensor ;
-    rdfs:label "Señalizadores de consumos de motores" ;
-    ex:textoExtracto "los consumos de los motores de los ejes del carro de tracción y de la mesa giratoria." .
+ns1:PantallaMovimientosMaquina a ns1:InterfazUsuario ;
+    rdfs:label "pantalla Movimientos máquina" ;
+    ns1:compuestoPor ns1:CarroTraccion,
+        ns1:IndicadorPosicionesEjes,
+        ns1:IndicadorTemperaturaMotores,
+        ns1:MesaGiratoria,
+        ns1:SenalizadorConsumosMotores,
+        ns1:SenalizadorFrenosMAYR ;
+    ns1:textoExtracto "Movimientos máquina  Esta pantalla permite controlar los movimientos de la máquina." .
 
-ex:SenalizadorTemperaturaMotores a ex:Sensor ;
-    rdfs:label "Señalizadores de temperatura de motores" ;
-    ex:textoExtracto "También muestra la temperatura de los motores" .
+ns1:BotonCUSTOM a ns1:Componente ;
+    rdfs:label "botón CUSTOM" ;
+    ns1:textoExtracto "Para acceder a las pantallas hay que pulsar el botón 'CUSTOM' desde el teclado." .
 
-ex:SenalizadorPosicionesEjes a ex:Sensor ;
-    rdfs:label "Señalizadores de posiciones de ejes" ;
-    ex:textoExtracto "las posiciones de los ejes Z, Z1 y C." .
+ns1:BotonOPMAN1_4 a ns1:Componente ;
+    rdfs:label "botón OP MAN 1/4" ;
+    ns1:textoExtracto "Para cambiar de una pantalla a otra hay que pulsar el botón 'OP MAN 1/4' de la parte superior." .
 
-ex:PantallaArranqueMotores a ex:InterfazUsuario ;
-    rdfs:label "Pantalla Arranque motores" ;
-    ex:textoExtracto "Esta pantalla muestra el estado de todos los motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE) y dispone de cuatro columnas (MARCHA, MOTOR, DISYUNTOR y SEÑALES). La columna “MARCHA” permite arrancar y parar los motores de “REFRIGERANTE A BROCHA/BASTIDOR” y “EXTRACTOR DE VIRUTA” y activar una embolada de engrase. La columna “MOTOR” muestra el estado de los motores (si están activados o no) a través de unos señalizadores, mientras que la columna “DISYUNTOR” permite visualizar el estado de la protección eléctrica de los motores. En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." ;
-    ex:compuestoPor ex:ColumnaMarcha, ex:ColumnaMotor, ex:ColumnaDisyuntor, ex:ColumnaSenales .
+ns1:CarroTraccion a ns1:ComponenteMecanico ;
+    rdfs:label "carro de tracción" ;
+    ns1:textoExtracto "El carro de tracción se puede llevar a tres posiciones (superior, intermedio e inferior)" .
 
-ex:ColumnaMarcha a ex:InterfazUsuario ;
-    rdfs:label "Columna MARCHA" ;
-    ex:textoExtracto "La columna “MARCHA” permite arrancar y parar los motores de “REFRIGERANTE A BROCHA/BASTIDOR” y “EXTRACTOR DE VIRUTA” y activar una embolada de engrase." .
+ns1:ColumnaDisyuntor a ns1:InterfazUsuario ;
+    rdfs:label "columna DISYUNTOR" ;
+    ns1:textoExtracto "La columna 'DISYUNTOR' permite visualizar el estado de la protección eléctrica de los motores." .
 
-ex:ColumnaMotor a ex:InterfazUsuario ;
-    rdfs:label "Columna MOTOR" ;
-    ex:textoExtracto "La columna “MOTOR” muestra el estado de los motores (si están activados o no) a través de unos señalizadores" .
+ns1:ColumnaMarcha a ns1:InterfazUsuario ;
+    rdfs:label "columna MARCHA" ;
+    ns1:textoExtracto "La columna 'MARCHA' permite arrancar y parar los motores de 'REFRIGERANTE A BROCHA/BASTIDOR' y 'EXTRACTOR DE VIRUTA' y activar una embolada de engrase." .
 
-ex:ColumnaDisyuntor a ex:InterfazUsuario ;
-    rdfs:label "Columna DISYUNTOR" ;
-    ex:textoExtracto "la columna “DISYUNTOR” permite visualizar el estado de la protección eléctrica de los motores." .
+ns1:ColumnaMotor a ns1:InterfazUsuario ;
+    rdfs:label "columna MOTOR" ;
+    ns1:textoExtracto "La columna 'MOTOR' muestra el estado de los motores (si están activados o no) a través de unos señalizadores" .
 
-ex:ColumnaSenales a ex:InterfazUsuario ;
-    rdfs:label "Columna SEÑALES" ;
-    ex:textoExtracto "En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
+ns1:ColumnaSenales a ns1:InterfazUsuario ;
+    rdfs:label "columna SEÑALES" ;
+    ns1:textoExtracto "En la columna 'SEÑALES' hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
 
-ex:MotorRefrigeranteBrochaBastidor a ex:ComponenteElectrico ;
-    rdfs:label "Motor REFRIGERANTE A BROCHA/BASTIDOR" ;
-    ex:textoExtracto "motores de “REFRIGERANTE A BROCHA/BASTIDOR”" .
+ns1:IndicadorPosicionesEjes a ns1:Sensor ;
+    rdfs:label "indicador de posiciones de los ejes Z, Z1 y C" ;
+    ns1:textoExtracto "muestra [...] las posiciones de los ejes Z, Z1 y C" .
 
-ex:MotorTrasvaseRefrigerante a ex:ComponenteElectrico ;
-    rdfs:label "Motor TRASVASE REFRIGERANTE" ;
-    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
+ns1:IndicadorTemperaturaMotores a ns1:Sensor ;
+    rdfs:label "indicador de temperatura de los motores" ;
+    ns1:textoExtracto "También muestra la temperatura de los motores" .
 
-ex:GrupoHidraulico a ex:ComponenteHidraulico ;
-    rdfs:label "Grupo hidráulico" ;
-    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
+ns1:MesaGiratoria a ns1:ComponenteMecanico ;
+    rdfs:label "mesa giratoria" ;
+    ns1:textoExtracto "la mesa giratoria se puede subir/bajar y girar" .
 
-ex:MotorExtractorVirutas a ex:ComponenteElectrico ;
-    rdfs:label "Motor EXTRACTOR DE VIRUTAS" ;
-    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
+ns1:SenalizadorConsumosMotores a ns1:Sensor ;
+    rdfs:label "señalizadores de consumos de los motores" ;
+    ns1:textoExtracto "señalizadores que indican [...] los consumos de los motores de los ejes del carro de tracción y de la mesa giratoria" .
 
-ex:MotorEngrase a ex:ComponenteElectrico ;
-    rdfs:label "Motor ENGRASE" ;
-    ex:textoExtracto "motores de la máquina (REFRIGERANTE A BROCHA/BASTIDOR, TRASVASE REFRIGERANTE, GRUPO HIDRÁULICO, EXTRACTOR DE VIRUTAS y MOTOR ENGRASE)" .
+ns1:SenalizadorFrenosMAYR a ns1:Sensor ;
+    rdfs:label "señalizadores que indican el estado de los frenos MAYR" ;
+    ns1:textoExtracto "dispone de varios señalizadores que indican el estado en el que se encuentran los frenos MAYR" .
 
-ex:SenalizadorNivelMinimoRefrigerante a ex:Sensor ;
-    rdfs:label "Señalizador de nivel mínimo de refrigerante" ;
-    ex:textoExtracto "En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
-
-ex:SenalizadorNivelMinimoGrupoHidraulico a ex:Sensor ;
-    rdfs:label "Señalizador de nivel mínimo de grupo hidráulico" ;
-    ex:textoExtracto "En la columna “SEÑALES” hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .

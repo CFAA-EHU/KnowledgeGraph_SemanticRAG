@@ -1,0 +1,83 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3715
+    a ex:Alarma ;
+    rdfs:label "Sobrepasamiento en la compensación de módulo" ;
+    ex:identificador "3715" ;
+    ex:textoExtracto "3715 'Sobrepasamiento en la compensación de módulo' DETECCIÓN Durante el movimiento de un eje rotativo o cabezal. CAUSA En los eje Sercos posición, el CNC mantiene la cuenta de la compensación de módulo de forma absoluta; si todos los movimientos del eje se realizan en el mismo sentido, el CNC va acumulando la compensación. SOLUCIÓN Realizar una búsqueda de referencia máquina." .
+
+ex:Alarma_3716
+    a ex:Alarma ;
+    rdfs:label "Máxima consigna de velocidad superada" ;
+    ex:identificador "3716" ;
+    ex:textoExtracto "3716 'Máxima consigna de velocidad superada' DETECCIÓN Durante el movimiento de un eje o cabezal. CAUSA En los ejes Sercos velocidad, el CNC envía la consigna al regulador en diezmilésimas de rpm; el valor de la consigna ha sobrepasado el rango permitido. Aunque la velocidad programada no supere G00FEED, la consigna enviada al regulador tras aplicar Kv supera el máximo permitido. SOLUCIÓN Revisar los parámetros máquina PITCH, INPUTREV, OUTPUTREV y PROGAIN. Limitar la velocidad máxima (parámetro G00FEED) al valor que indica el warning para evitar el sobrepasamiento." .
+
+ex:Alarma_3717
+    a ex:Alarma ;
+    rdfs:label "Superado umbral de contaje del encoder" ;
+    ex:identificador "3717" ;
+    ex:textoExtracto "3717 Superado umbral de contaje del encoder. Buscar cero para recuperar cota. DETECCIÓN Durante la ejecución. CAUSA El encóder del eje o cabezal ha superado la velocidad de giro máxima permitida. Al superar este límite, el eje o cabezal ha perdido el punto de referencia, por lo que las cotas leídas no son correctas." .
+
+ex:ComponenteElectrico_EjeSercosPosicion
+    a ex:ComponenteElectrico ;
+    rdfs:label "Eje Sercos (modo posición)" ;
+    ex:textoExtracto "En los eje Sercos posición, el CNC mantiene la cuenta de la compensación de módulo de forma absoluta; si todos los movimientos del eje se realizan en el mismo sentido, el CNC va acumulando la compensación." ;
+    ex:activaAlarma ex:Alarma_3715 .
+
+ex:ComponenteElectrico_EjeSercosVelocidad
+    a ex:ComponenteElectrico ;
+    rdfs:label "Eje Sercos (modo velocidad)" ;
+    ex:textoExtracto "En los ejes Sercos velocidad, el CNC envía la consigna al regulador en diezmilésimas de rpm; el valor de la consigna ha sobrepasado el rango permitido." ;
+    ex:activaAlarma ex:Alarma_3716 .
+
+ex:ComponenteElectrico_Encoder
+    a ex:ComponenteElectrico ;
+    rdfs:label "Encóder de eje/cabezal" ;
+    ex:textoExtracto "El encóder del eje o cabezal ha superado la velocidad de giro máxima permitida. Al superar este límite, el eje o cabezal ha perdido el punto de referencia, por lo que las cotas leídas no son correctas." ;
+    ex:activaAlarma ex:Alarma_3717 .
+
+ex:Parametro_G00FEED
+    a ex:Parametro ;
+    rdfs:label "G00FEED" ;
+    ex:identificador "G00FEED" ;
+    ex:textoExtracto "Limitar la velocidad máxima (parámetro G00FEED) al valor que indica el warning para evitar el sobrepasamiento." ;
+    ex:monitoreaParametro ex:ComponenteElectrico_EjeSercosVelocidad .
+
+ex:Parametro_PITCH
+    a ex:Parametro ;
+    rdfs:label "PITCH" ;
+    ex:identificador "PITCH" ;
+    ex:textoExtracto "Revisar los parámetros máquina PITCH, INPUTREV, OUTPUTREV y PROGAIN." .
+
+ex:Parametro_INPUTREV
+    a ex:Parametro ;
+    rdfs:label "INPUTREV" ;
+    ex:identificador "INPUTREV" ;
+    ex:textoExtracto "Revisar los parámetros máquina PITCH, INPUTREV, OUTPUTREV y PROGAIN." .
+
+ex:Parametro_OUTPUTREV
+    a ex:Parametro ;
+    rdfs:label "OUTPUTREV" ;
+    ex:identificador "OUTPUTREV" ;
+    ex:textoExtracto "Revisar los parámetros máquina PITCH, INPUTREV, OUTPUTREV y PROGAIN." .
+
+ex:Parametro_PROGAIN
+    a ex:Parametro ;
+    rdfs:label "PROGAIN" ;
+    ex:identificador "PROGAIN" ;
+    ex:textoExtracto "Revisar los parámetros máquina PITCH, INPUTREV, OUTPUTREV y PROGAIN." .
+
+ex:TareaMantenimiento_BusquedaReferencia
+    a ex:TareaMantenimiento ;
+    rdfs:label "Búsqueda de referencia máquina" ;
+    ex:textoExtracto "Realizar una búsqueda de referencia máquina." ;
+    ex:solucionaFallo ex:Alarma_3715 .
+
+ex:TareaMantenimiento_BuscarCero
+    a ex:TareaMantenimiento ;
+    rdfs:label "Buscar cero para recuperar cota" ;
+    ex:textoExtracto "Buscar cero para recuperar cota." ;
+    ex:solucionaFallo ex:Alarma_3717 .

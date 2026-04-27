@@ -1,0 +1,67 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fresadora_1Canal_5Ejes_1Cabezal
+    a                     ex:Maquina ;
+    rdfs:label            "Fresadora con 1 canal, 5 ejes (2 libres) y 1 cabezal"@es ;
+    ex:textoExtracto       "Supongamos una máquina de un canal con tres ejes y cabezal y dos ejes sin asignar inicialmente. Los ejes y cabezales están distribuidos de la siguiente manera. Canal ꞏ1ꞏ. 3 ejes (X Y Z) 1 cabezal (S). Sin asignar. 2 ejes (A B)"@es ;
+    ex:tieneComponente     ex:Eje_X, ex:Eje_Y, ex:Eje_Z, ex:Eje_A, ex:Eje_B ;
+    ex:tieneComponente     ex:Cabezal_S1 ;
+    ex:compuestoPor        ex:SistemaEjes_Canal1 .
+
+ex:SistemaEjes_Canal1
+    a                     ex:Sistema ;
+    rdfs:label            "Configuración de ejes y cabezales del canal 1"@es ;
+    ex:textoExtracto       "Configuración de los ejes y cabezales del canal ꞏ1ꞏ."@es ;
+    ex:tieneComponente     ex:Eje_X, ex:Eje_Y, ex:Eje_Z, ex:Cabezal_S1 ;
+    ex:detalladoEnEsquema  ex:TablaConfiguracionEjes .
+
+ex:TablaConfiguracionEjes a ex:Tabla ;
+     a                     ex:Tabla ;
+    rdfs:label            "Tabla de configuración de ejes y cabezales"@es ;
+    ex:textoExtracto       " | AXISNAME | Valor. | Orden lógico. | Índice en el sistema. | | AXISNAME 1 | X | Número lógico ꞏ1ꞏ. | | AXISNAME 2 | Y | Número lógico ꞏ2ꞏ. | | AXISNAME 3 | Z | Número lógico ꞏ3ꞏ. | | AXISNAME 4 | A | Número lógico ꞏ4ꞏ. | | AXISNAME 5 | B | Número lógico ꞏ5ꞏ. | | SPDLNAME 1 | S1 | Número lógico ꞏ6ꞏ. | Cabezal con índice ꞏ1ꞏ. "@es .
+
+ex:Eje_X
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Eje X"@es ;
+    ex:identificador       "X" ;
+    ex:textoExtracto       "AXISNAME 1 | X | Número lógico ꞏ1ꞏ."@es ;
+    ex:valor               "1"^^xsd:integer .
+
+ex:Eje_Y
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Eje Y"@es ;
+    ex:identificador       "Y" ;
+    ex:textoExtracto       "AXISNAME 2 | Y | Número lógico ꞏ2ꞏ."@es ;
+    ex:valor               "2"^^xsd:integer .
+
+ex:Eje_Z
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Eje Z"@es ;
+    ex:identificador       "Z" ;
+    ex:textoExtracto       "AXISNAME 3 | Z | Número lógico ꞏ3ꞏ."@es ;
+    ex:valor               "3"^^xsd:integer .
+
+ex:Eje_A
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Eje A (libre)"@es ;
+    ex:identificador       "A" ;
+    ex:textoExtracto       "AXISNAME 4 | A | Número lógico ꞏ4ꞏ. Sin asignar inicialmente."@es ;
+    ex:valor               "4"^^xsd:integer .
+
+ex:Eje_B
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Eje B (libre)"@es ;
+    ex:identificador       "B" ;
+    ex:textoExtracto       "AXISNAME 5 | B | Número lógico ꞏ5ꞏ. Sin asignar inicialmente."@es ;
+    ex:valor               "5"^^xsd:integer .
+
+ex:Cabezal_S1
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Cabezal S1"@es ;
+    ex:identificador       "S1" ;
+    ex:textoExtracto       "SPDLNAME 1 | S1 | Número lógico ꞏ6ꞏ. Cabezal con índice ꞏ1ꞏ."@es ;
+    ex:valor               "6"^^xsd:integer .

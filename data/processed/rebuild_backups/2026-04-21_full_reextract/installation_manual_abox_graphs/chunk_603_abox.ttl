@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_DRVVAR a ex:Tabla ;
+     a                   ex:Tabla ;
+    rdfs:label          "Tabla de variables DRV (DRIVEVAR)" ;
+    ex:textoExtracto    "DRIVEVAR Tabla de variables de los reguladores. El parámetro DRIVEVAR permite definir la lista de variables DRV, aquellas que permiten acceder a las variables y/o parámetros de los reguladores digitales desde el programa pieza, modo MDI/MDA, PLC o interfaz."@es ;
+    ex:identificador    "DRIVEVAR" ;
+    ex:detalladoEnEsquema ex:Sistema_Sercos, ex:Sistema_Mechatrolink .
+
+ex:Sistema_Sercos
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema Sercos" ;
+    ex:textoExtracto    "Sercos. Las variables DRV pueden acceder a las variables del regulador. El acceso a las variables podrá ser solo lectura o de lectura y escritura."@es ;
+    ex:monitoreaParametro ex:Parametro_DRV_Sercos .
+
+ex:Sistema_Mechatrolink
+    a                   ex:Sistema ;
+    rdfs:label          "Sistema Mechatrolink" ;
+    ex:textoExtracto    "Mechatrolink. Las variables DRV pueden acceder a las variables y/o parámetros de los servos. El acceso a las variables del regulador será siempre de solo lectura, mientras que el acceso a los parámetros podrá ser de lectura o escritura."@es ;
+    ex:monitoreaParametro ex:Parametro_DRV_Mechatrolink .
+
+ex:Parametro_DRV_Sercos
+    a                   ex:Parametro ;
+    rdfs:label          "Variables DRV (Sercos)" ;
+    ex:textoExtracto    "Las variables DRV pueden acceder a las variables del regulador. El acceso a las variables podrá ser solo lectura o de lectura y escritura."@es ;
+    ex:valor            "lectura/escritura"@es .
+
+ex:Parametro_DRV_Mechatrolink
+    a                   ex:Parametro ;
+    rdfs:label          "Variables DRV (Mechatrolink)" ;
+    ex:textoExtracto    "Las variables DRV pueden acceder a las variables y/o parámetros de los servos. El acceso a las variables del regulador será siempre de solo lectura, mientras que el acceso a los parámetros podrá ser de lectura o escritura."@es ;
+    ex:valor            "solo lectura (variables); lectura/escritura (parámetros)"@es .

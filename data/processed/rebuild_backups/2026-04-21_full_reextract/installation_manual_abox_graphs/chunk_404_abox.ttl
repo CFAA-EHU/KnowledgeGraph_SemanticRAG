@@ -1,0 +1,25 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DECJERK
+    a ex:Parametro ;
+    rdfs:label "DECJERK" ;
+    ex:textoExtracto "DECJERK Jerk de deceleración. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:valor "45000.000 mm/s³ / 1771.65354 inch/s³ / 45000.000 grados/s³"^^xsd:string ;
+    ex:identificador "V.[ch].MPA.DECJERK[set].xn" .
+
+ex:Parametro_ACCJERK
+    a ex:Parametro ;
+    rdfs:label "ACCJERK" ;
+    ex:textoExtracto "Los parámetros ACCJERK y DECJERK definen la pendiente de la aceleración y deceleración." .
+
+ex:Sistema_ControlEjes
+    a ex:Sistema ;
+    ex:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:tieneComponente ex:Parametro_DECJERK ;
+    ex:tieneComponente ex:Parametro_ACCJERK ;
+    ex:monitoreaParametro ex:Parametro_DECJERK ;
+    ex:monitoreaParametro ex:Parametro_ACCJERK .

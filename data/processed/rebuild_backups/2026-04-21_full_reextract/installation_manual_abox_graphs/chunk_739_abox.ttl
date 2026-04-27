@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_MFUNC_Programacion a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de registros MFUNC para programación de funciones en canales"@es ;
+    ex:textoExtracto """
+| MFUN1C2 | MFUN2C2 | MFUN3C2 - MFUN7C2 |
+| --- | --- | --- |
+| 88 | 75 | $FFFFFFFF
+"""@es ;
+    ex:ilustradoEn ex:InterfazUsuario_CNC .
+
+ex:Tabla_HFUN_Registros a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de registros HFUN para funciones auxiliares H por canal"@es ;
+    ex:textoExtracto """
+HFUN1C1 (también se puede programar como HFUN1)
+HFUN1C2
+HFUN1C3
+HFUN1C4
+"""@es ;
+    ex:ilustradoEn ex:InterfazUsuario_CNC .
+
+ex:InterfazUsuario_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de programación CNC para análisis de funciones (MFUNC/ HFUN)"@es ;
+    ex:textoExtracto """
+Comandos MFUNC1* - MFUNC4*. Analizar si una función ha sido programada en el canal [...] HFUN1 HFUN7. Hay un registro para cada canal. Los mnemónicos para cada canal son los siguientes [...] El canal indica al PLC mediante estos registros las funciones auxiliares H que se han seleccionado para su ejecución.
+"""@es ;
+    ex:documentadoEn ex:Manual_Broaching .
+
+ex:Parametro_MFUNC1
+    a ex:Parametro ;
+    rdfs:label "Registro MFUNC1* (análisis de funciones en canal 1)"@es ;
+    ex:identificador "MFUNC1*" ;
+    ex:textoExtracto "MFUNC1* Para el canal 1. También se pueden programar como MFUN*."@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_CNC .
+
+ex:Parametro_MFUNC2
+    a ex:Parametro ;
+    rdfs:label "Registro MFUNC2* (análisis de funciones en canal 2)"@es ;
+    ex:identificador "MFUNC2*" ;
+    ex:textoExtracto "MFUNC2* Para el canal 2."@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_CNC .
+
+ex:Parametro_HFUN1C1
+    a ex:Parametro ;
+    rdfs:label "Registro HFUN1 para canal 1 (funciones auxiliares H)"@es ;
+    ex:identificador "HFUN1C1" ;
+    ex:valor "$FFFFFFFF" ;  # Valor por defecto si no programado
+    ex:textoExtracto "HFUN1C1 (también se puede programar como HFUN1). El canal indica al PLC mediante estos registros las funciones auxiliares H que se han seleccionado para su ejecución."@es ;
+    ex:monitoreaParametro ex:InterfazUsuario_CNC .
+
+ex:Sistema_CNC_PLC
+    a ex:Sistema ;
+    rdfs:label "Sistema de comunicación CNC-PLC para funciones programadas"@es ;
+    ex:textoExtracto """
+El canal indica al PLC mediante estos registros [MFUNC/ HFUN] las funciones que se han seleccionado para su ejecución. Si no se utilizan todos los registros, el CNC asigna el valor hexadecimal $FFFFFFFF a los que queden libres.
+"""@es ;
+    ex:controla ex:Parametro_MFUNC1 ;
+    ex:controla ex:Parametro_MFUNC2 ;
+    ex:controla ex:Parametro_HFUN1C1 ;
+    ex:tieneComponente ex:InterfazUsuario_CNC .

@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_HMITYPE
+    a ex:Parametro ;
+    rdfs:label "HMITYPE" ;
+    ex:textoExtracto "HMITYPE Tipo de interface del CNC. Valores posibles: Estándar / Clásico / Avanzado. Valor por defecto: Estándar. Este parámetro establece la forma de operar con el CNC, a través del interface." ;
+    ex:valor "Estándar" .
+
+ex:Parametro_SFTYPE
+    a ex:Parametro ;
+    rdfs:label "SFTYPE" ;
+    ex:textoExtracto "SFTYPE Tipo de árbol de softkeys. Valores posibles: Estándar / Desplegables. Valor por defecto: Estándar. Dependiendo del valor seleccionado, el árbol de softkeys aparece de la siguiente forma." ;
+    ex:valor "Estándar" .
+
+ex:InterfazUsuario_CNC_Estandar
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC Estándar" ;
+    ex:textoExtracto "Forma de operar por defecto en el CNC, que podrá ser la forma clásica o avanzada, dependiendo del modelo de CNC." .
+
+ex:InterfazUsuario_CNC_Clasico
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC Clásico" ;
+    ex:textoExtracto "Forma de operar basada en hotkeys, para seleccionar el modo de trabajo (automático, manual, editor, etc). Esta la forma de operar estándar del 8070." .
+
+ex:InterfazUsuario_CNC_Avanzado
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz CNC Avanzado" ;
+    ex:textoExtracto "Forma de operar basada en la tecla [Main-Menu], que muestra un menú principal desde el que se accede, mediante softkeys, a los diferentes modos de trabajo, (automático, manual, editor, etc). También es posible utilizar las hotkeys de acceso directo. Esta la forma de operar estándar del 8058, 8060 y 8065." .
+
+ex:Parametro_HMITYPE
+    ex:controla ex:InterfazUsuario_CNC_Estandar ;
+    ex:controla ex:InterfazUsuario_CNC_Clasico ;
+    ex:controla ex:InterfazUsuario_CNC_Avanzado .

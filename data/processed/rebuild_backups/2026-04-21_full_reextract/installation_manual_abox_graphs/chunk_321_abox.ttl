@@ -1,0 +1,47 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_SLIMITAC
+    a ex:Parametro ;
+    rdfs:label "Límite de seguridad para avance/velocidad (marca SLIMITAC)"@es ;
+    ex:textoExtracto "desde el PLC (marcas SLIMITAC o SLIMITACSPDL) y el CNC lo aplica en el bloque en ejecución."@es ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Parametro_SLIMITACSPDL
+    a ex:Parametro ;
+    rdfs:label "Límite de seguridad para velocidad de avance (marca SLIMITACSPDL)"@es ;
+    ex:textoExtracto "desde el PLC (marcas SLIMITAC o SLIMITACSPDL) y el CNC lo aplica en el bloque en ejecución."@es ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Parametro_PLCCNTL
+    a ex:Parametro ;
+    rdfs:label "Control de cabezales por PLC (marca PLCCNTL)"@es ;
+    ex:textoExtracto "El límite de seguridad también se aplica a los cabezales controlados por PLC (marca PLCCNTL), excepto cuando el cabezal es digital controlado en posición."@es ;
+    ex:controla ex:ComponenteMecanico_Cabezal .
+
+ex:Parametro_VelocidadMaximaG192
+    a ex:Parametro ;
+    rdfs:label "Velocidad máxima de giro (función G192)"@es ;
+    ex:textoExtracto "También es posible fijar una velocidad máxima de giro para el mecanizado, por programa (función G192)."@es ;
+    ex:identificador "G192" ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Parametro_VelocidadMaximaPLC
+    a ex:Parametro ;
+    rdfs:label "Velocidad máxima de giro (variable PLC: (V.)PLC.SL.sn)"@es ;
+    ex:textoExtracto "por PLC (variable (V.)PLC.SL.sn)."@es ;
+    ex:identificador "PLC.SL.sn" ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "el CNC lo aplica en el bloque en ejecución. [...] el CNC aplica el límite de velocidad más restrictivo."@es ;
+    ex:controla ex:ComponenteMecanico_Cabezal .
+
+ex:ComponenteMecanico_Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal controlado por PLC"@es ;
+    ex:textoExtracto "El límite de seguridad también se aplica a los cabezales controlados por PLC (marca PLCCNTL)."@es .

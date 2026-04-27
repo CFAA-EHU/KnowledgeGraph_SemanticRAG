@@ -1,0 +1,37 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FuncionAuxiliar_S a ex:Tabla ;
+     a                     ex:Parametro ;
+    rdfs:label            "Función auxiliar S"@es ;
+    ex:textoExtracto      "La función auxiliar S indica la velocidad de giro del cabezal con M03 y M04, o la posición a orientar el cabezal con M19."@es ;
+    ex:identificador      "S" .
+
+ex:Comando_SFUN1
+    a                     ex:Parametro ;
+    rdfs:label            "Registro SFUN1"@es ;
+    ex:textoExtracto      "El CNC indica el PLC mediante el registro de 32 bits SFUN1 el valor de la función S programada en el bloque."@es ;
+    ex:identificador      "SFUN1" ;
+    ex:valor              "FFFFFFFF"^^xsd:hexBinary .
+
+ex:Parametro_SPDLTIME
+    a                     ex:Parametro ;
+    rdfs:label            "Parámetro de cabezal SPDLTIME"@es ;
+    ex:textoExtracto      "El comando SFUN sólo toma el valor de la S programada si el parámetro de cabezal SPDLTIME es distinto de cero."@es ;
+    ex:identificador      "SPDLTIME" .
+
+ex:Pagina_400_TransferenciaFuncionesAuxiliares
+    a                     ex:Pagina ;
+    rdfs:label            "Página 400: Transferencia de las funciones auxiliares –M–, –H–, –S–"@es ;
+    ex:textoExtracto      "La transferencia de la función S está detallada más adelante en este mismo capítulo. Ver en la página 400. \"5.4 Transferencia de las funciones auxiliares –M–, –H–, –S–.\""@es ;
+    ex:identificador      "400" .
+
+ex:FuncionAuxiliar_S a ex:Tabla ;
+    ex:documentadoEn      ex:Pagina_400_TransferenciaFuncionesAuxiliares ;
+    ex:monitoreaParametro ex:Comando_SFUN1 .
+
+ex:Comando_SFUN1
+    ex:monitoreaParametro ex:FuncionAuxiliar_S .

@@ -1,56 +1,36 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Seccion6_2_6_2_MovimientosManuales
-    a ex:Capitulo ;
-    rdfs:label "6.2.6.2 Movimientos manuales"@es ;
-    ex:textoExtracto "En la columna 'SEÑALES' hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico. También hay un señalizador para el caudal del refrigerante y dos para los errores del engrase (error de embolada o de nivel mínimo). Ciclo cambio de brocha. Esta pantalla guía al operario en los pasos que tiene que realizar para realizar el cambio de herramienta."@es .
+ns1:HerramientaCambioBrocha a ns1:Herramienta ;
+    rdfs:label "herramienta para cambio de brocha" ;
+    ns1:textoExtracto "Esta pantalla guía al operario en los pasos que tiene que realizar para realizar el cambio de herramienta." .
 
-ex:InterfazUsuario_CambioBrocha
-    a ex:InterfazUsuario ;
-    rdfs:label "Pantalla de cambio de brocha"@es ;
-    ex:textoExtracto "Esta pantalla guía al operario en los pasos que tiene que realizar para realizar el cambio de herramienta. Desde esta pantalla no se pueden ejecutar los movimientos"@es ;
-    ex:documentadoEn ex:Seccion6_2_6_2_MovimientosManuales .
+ns1:PantallaCambioBrocha a ns1:InterfazUsuario ;
+    rdfs:label "pantalla guía para el cambio de brocha" ;
+    ns1:detalladoEnEsquema ns1:Se_alizadorCaudalRefrigerante,
+        ns1:Se_alizadorErrorEngraseEmbolada,
+        ns1:Se_alizadorErrorEngraseNivelMinimo,
+        ns1:Se_alizadorGrupoHidraulicoNivelMinimo,
+        ns1:Se_alizadorRefrigeranteNivelMinimo1 ;
+    ns1:textoExtracto "Esta pantalla guía al operario en los pasos que tiene que realizar para realizar el cambio de herramienta." .
 
-ex:Sensor_NivelMinimo_Refrigerante
-    a ex:Sensor ;
-    rdfs:label "Señalizador de nivel mínimo de refrigerante"@es ;
-    ex:textoExtracto "hay dos señalizadores de nivel mínimo; uno para el refrigerante"@es ;
-    ex:ilustradoEn ex:Seccion6_2_6_2_MovimientosManuales .
+ns1:Se_alizadorCaudalRefrigerante a ns1:Sensor ;
+    rdfs:label "señalizador para el caudal del refrigerante" ;
+    ns1:textoExtracto "También hay un señalizador para el caudal del refrigerante" .
 
-ex:Sensor_NivelMinimo_GrupoHidraulico
-    a ex:Sensor ;
-    rdfs:label "Señalizador de nivel mínimo del grupo hidráulico"@es ;
-    ex:textoExtracto "uno para el refrigerante y otro para el grupo hidráulico"@es ;
-    ex:ilustradoEn ex:Seccion6_2_6_2_MovimientosManuales .
+ns1:Se_alizadorErrorEngraseEmbolada a ns1:Sensor ;
+    rdfs:label "señalizador para el error de embolada en el engrase" ;
+    ns1:textoExtracto "dos para los errores del engrase (error de embolada o de nivel mínimo)" .
 
-ex:Sensor_Caudal_Refrigerante
-    a ex:Sensor ;
-    rdfs:label "Señalizador de caudal de refrigerante"@es ;
-    ex:textoExtracto "También hay un señalizador para el caudal del refrigerante"@es ;
-    ex:ilustradoEn ex:Seccion6_2_6_2_MovimientosManuales .
+ns1:Se_alizadorErrorEngraseNivelMinimo a ns1:Sensor ;
+    rdfs:label "señalizador para el error de nivel mínimo en el engrase" ;
+    ns1:textoExtracto "dos para los errores del engrase (error de embolada o de nivel mínimo)" .
 
-ex:Sensor_ErrorEngrase_Embolada
-    a ex:Sensor ;
-    rdfs:label "Señalizador de error de embolada en engrase"@es ;
-    ex:textoExtracto "dos para los errores del engrase (error de embolada o de nivel mínimo)"@es ;
-    ex:ilustradoEn ex:Seccion6_2_6_2_MovimientosManuales .
+ns1:Se_alizadorGrupoHidraulicoNivelMinimo a ns1:Sensor ;
+    rdfs:label "señalizador de nivel mínimo para el grupo hidráulico" ;
+    ns1:textoExtracto "En la columna 'SEÑALES' hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
 
-ex:Sensor_ErrorEngrase_NivelMinimo
-    a ex:Sensor ;
-    rdfs:label "Señalizador de error de nivel mínimo en engrase"@es ;
-    ex:textoExtracto "dos para los errores del engrase (error de embolada o de nivel mínimo)"@es ;
-    ex:ilustradoEn ex:Seccion6_2_6_2_MovimientosManuales .
+ns1:Se_alizadorRefrigeranteNivelMinimo1 a ns1:Sensor ;
+    rdfs:label "señalizador de nivel mínimo para el refrigerante" ;
+    ns1:textoExtracto "En la columna 'SEÑALES' hay dos señalizadores de nivel mínimo; uno para el refrigerante y otro para el grupo hidráulico." .
 
-ex:Sistema_Se_ales
-    a ex:Sistema ;
-    rdfs:label "Columna 'SEÑALES'"@es ;
-    ex:textoExtracto "En la columna 'SEÑALES' hay dos señalizadores de nivel mínimo"@es ;
-    ex:tieneComponente ex:Sensor_NivelMinimo_Refrigerante ;
-    ex:tieneComponente ex:Sensor_NivelMinimo_GrupoHidraulico ;
-    ex:tieneComponente ex:Sensor_Caudal_Refrigerante ;
-    ex:tieneComponente ex:Sensor_ErrorEngrase_Embolada ;
-    ex:tieneComponente ex:Sensor_ErrorEngrase_NivelMinimo ;
-    ex:detalladoEnEsquema ex:Seccion6_2_6_2_MovimientosManuales .

@@ -1,0 +1,53 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:Parametro_ABSOFF a ns1:Parametro ;
+    rdfs:label "ABSOFF (desplazamiento de origen)" ;
+    ns1:detalladoEnEsquema ns1:Esquema_EncoderLineal ;
+    ns1:monitoreaParametro ns1:Parametro_EXTMULT ;
+    ns1:textoExtracto "desplazamiento 'ABSOFF' [...] origen de codificación puede quedar dentro o fuera de la regla" .
+
+ns1:Parametro_ACCJERK a ns1:Parametro ;
+    rdfs:label "ACCJERK (jerk)" ;
+    ns1:monitoreaParametro ns1:Parametro_ACCEL ;
+    ns1:textoExtracto "ACCJERK mínimo [...] ACCJERK = 3·ACCEL/t" ;
+    ns1:valor "ACCJERK = 3·ACCEL/t"^^xsd:string .
+
+ns1:Parametro_FEDYNFAC a ns1:Parametro ;
+    rdfs:label "FEDYNFAC (factor dinámico)" ;
+    ns1:ilustradoEn ns1:Figura_BandaErrorSeguimiento ;
+    ns1:textoExtracto "límites proporcionales a F (pendiente ±%FEDYNFAC)" .
+
+ns1:Parametro_MAXFLWE a ns1:Parametro ;
+    rdfs:label "MAXFLWE (umbral de supervisión)" ;
+    ns1:ilustradoEn ns1:Figura_BandaErrorSeguimiento ;
+    ns1:textoExtracto "umbral MAXFLWE desde el que se activa la supervisión dinámica" .
+
+ns1:Parametro_t a ns1:Parametro ;
+    rdfs:label "t (tiempo)" ;
+    ns1:textoExtracto "acorta el tiempo hasta aceleración máxima y mantiene más tiempo la meseta" .
+
+ns1:Parametro_ACCEL a ns1:Parametro ;
+    rdfs:label "ACCEL (aceleración máxima)" ;
+    ns1:monitoreaParametro ns1:Parametro_G00FEED ;
+    ns1:textoExtracto "ACCEL máxima [...] ACCEL = (3/2)·G00FEED/(60·t)" ;
+    ns1:valor "ACCEL = (3/2)·G00FEED/(60·t)"^^xsd:string .
+
+ns1:Parametro_EXTMULT a ns1:Parametro ;
+    rdfs:label "EXTMULT" ;
+    ns1:detalladoEnEsquema ns1:Esquema_EncoderLineal ;
+    ns1:textoExtracto "uso de ABSOFF y EXTMULT en la referencia" .
+
+ns1:Parametro_G00FEED a ns1:Parametro ;
+    rdfs:label "G00FEED" ;
+    ns1:textoExtracto "relaciones ACCEL y ACCJERK con G00FEED" .
+
+ns1:Esquema_EncoderLineal a ns1:Esquema ;
+    rdfs:label "Esquema de encoder lineal con referencia codificada" ;
+    ns1:textoExtracto "esquema de encoder lineal con referencia codificada: se dibuja la regla con el 'cero del cristal (OG)', el 'cero máquina (OM)' y el desplazamiento 'ABSOFF'" .
+
+ns1:Figura_BandaErrorSeguimiento a ns1:Figura ;
+    rdfs:label "Gráfico de banda de error para monitorización lineal" ;
+    ns1:textoExtracto "gráfico de banda de error para monitorización lineal del error de seguimiento: en el plano (Fe)–(F) se representa una zona sombreada con límites proporcionales a F (pendiente ±%FEDYNFAC) y el umbral MAXFLWE desde el que se activa la supervisión dinámica" .
+

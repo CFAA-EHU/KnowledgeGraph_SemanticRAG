@@ -1,0 +1,102 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Diagnósticos de Fallo (Alarmas 9332-9336)
+ex:Alarma_9332
+    a ex:Alarma ;
+    rdfs:label "Alarma 9332: COUNTERTYPE remoto y COUNTERID 0 incompatibles" ;
+    ex:identificador "9332" ;
+    ex:textoExtracto """
+    'COUNTERTYPE remoto y COUNTERID 0 incompatibles'
+    DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC.
+    CAUSA: En los ejes analógicos con captación remota (parámetro COUNTERTYPE), el parámetro COUNTERID no puede valor 0 (cero).
+    SOLUCIÓN: Revisar los parámetros máquina. Comprobar el tipo de captación asignado al eje (parámetro COUNTERTYPE). En los ejes analógicos con captación remota, el parámetro COUNTERID indica la dirección lógica del regulador, que no puede ser cero.
+    """ .
+
+ex:Alarma_9333
+    a ex:Alarma ;
+    rdfs:label "Alarma 9333: Hardware Sercos no es compatible con ejes Mechatrolink" ;
+    ex:identificador "9333" ;
+    ex:textoExtracto """
+    'Hardware Sercos no es compatible con ejes Mechatrolink'
+    DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC.
+    CAUSA: El hardware de la unidad central es para el bus Sercos y los reguladores son Mechatrolink.
+    SOLUCIÓN: Utilizar reguladores Sercos. Comprobar el tipo de regulador definido en los parámetros máquina (parámetro DRIVETYPE).
+    """ .
+
+ex:Alarma_9334
+    a ex:Alarma ;
+    rdfs:label "Alarma 9334: Hardware Mechatrolink no es compatible con ejes Sercos" ;
+    ex:identificador "9334" ;
+    ex:textoExtracto """
+    'Hardware Mechatrolink no es compatible con ejes Sercos'
+    DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC.
+    CAUSA: El hardware de la unidad central es para el bus Mechatrolink y los reguladores son Sercos.
+    SOLUCIÓN: Utilizar reguladores Mechatrolink. Comprobar el tipo de regulador definido en los parámetros máquina (parámetro DRIVETYPE).
+    """ .
+
+ex:Alarma_9335
+    a ex:Alarma ;
+    rdfs:label "Alarma 9335: El eje debe tener el mismo tipo de captación en todas las gamas" ;
+    ex:identificador "9335" ;
+    ex:textoExtracto """
+    'El eje debe tener el mismo tipo de captación en todas las gamas'
+    DETECCIÓN: Durante la validación de los parámetros máquina.
+    CAUSA: En eje múltiple (multieje) todos los sets de parámetros deben tener el mismo tipo de captación.
+    SOLUCIÓN: Cambiar el tipo de captación en los sets diferentes.
+    """ .
+
+ex:Alarma_9336
+    a ex:Alarma ;
+    rdfs:label "Alarma 9336: Parámetros máquina incompatibles" ;
+    ex:identificador "9336" ;
+    ex:textoExtracto """
+    'Parámetros máquina incompatibles'
+    DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC.
+    """ .
+
+### Parámetros de Máquina (relacionados con alarmas)
+ex:Parametro_COUNTERTYPE
+    a ex:Parametro ;
+    rdfs:label "COUNTERTYPE (tipo de captación)" ;
+    ex:identificador "COUNTERTYPE" ;
+    ex:textoExtracto "parámetro COUNTERTYPE (tipo de captación en ejes analógicos)" .
+
+ex:Parametro_COUNTERID
+    a ex:Parametro ;
+    rdfs:label "COUNTERID (dirección lógica del regulador)" ;
+    ex:identificador "COUNTERID" ;
+    ex:textoExtracto "parámetro COUNTERID (dirección lógica del regulador, no puede ser cero en captación remota)" .
+
+ex:Parametro_DRIVETYPE
+    a ex:Parametro ;
+    rdfs:label "DRIVETYPE (tipo de regulador: Sercos/Mechatrolink)" ;
+    ex:identificador "DRIVETYPE" ;
+    ex:textoExtracto "parámetro DRIVETYPE (define el tipo de regulador: Sercos o Mechatrolink)" .
+
+ex:Parametro_MLINK
+    a ex:Parametro ;
+    rdfs:label "MLINK (configuración bus Mechatrolink)" ;
+    ex:identificador "MLINK" ;
+    ex:textoExtracto "parámetro MLINK (relacionado con el bus Mechatrolink II a 32 bytes)" .
+
+ex:Parametro_DATASIZE
+    a ex:Parametro ;
+    rdfs:label "DATASIZE (tamaño de datos en bus Mechatrolink)" ;
+    ex:identificador "DATASIZE" ;
+    ex:textoExtracto "parámetro DATASIZE (32 bytes en bus Mechatrolink II)" .
+
+### Relaciones entre Alarmas y Parámetros
+ex:Alarma_9332
+    ex:mitigaRiesgo ex:Parametro_COUNTERTYPE , ex:Parametro_COUNTERID .
+
+ex:Alarma_9333
+    ex:mitigaRiesgo ex:Parametro_DRIVETYPE .
+
+ex:Alarma_9334
+    ex:mitigaRiesgo ex:Parametro_DRIVETYPE .
+
+ex:Alarma_9335
+    ex:mitigaRiesgo ex:Parametro_COUNTERTYPE .

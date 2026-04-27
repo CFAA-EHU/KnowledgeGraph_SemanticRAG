@@ -1,0 +1,127 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_5008
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error de escritura de variable desde PLC (5008)" ;
+    ex:identificador "5008" ;
+    ex:textoExtracto "'La escritura de la variable desde PLC no pudo realizarse' DETECCIÓN Al ejecutar una instrucción CNCWR. CAUSA Escritura de un parámetro aritmético global o local que no existe. SOLUCIÓN Comprobar la parametrización de los parámetros globales y locales, así como el programa de PLC." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Escritura de parámetro no existente desde PLC" ;
+        ex:textoExtracto "Escritura de un parámetro aritmético global o local que no existe."
+    ] .
+
+ex:Error_5009
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error sintáctico en lectura de variable desde PLC (5009)" ;
+    ex:identificador "5009" ;
+    ex:textoExtracto "'Error sintáctico en la lectura de variable desde PLC' DETECCIÓN Al ejecutar una instrucción CNCRD. CAUSA La variable no existe o no tiene permiso de lectura desde el PLC. SOLUCIÓN Verificar la sintaxis y los permisos de la variable." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Lectura de variable no existente o sin permisos desde PLC" ;
+        ex:textoExtracto "La variable no existe o no tiene permiso de lectura desde el PLC."
+    ] .
+
+ex:Error_5010
+    a ex:DiagnosticoFallo ;
+    rdfs:label "División por cero en PLC (5010)" ;
+    ex:identificador "5010" ;
+    ex:textoExtracto "'División por cero en el PLC' DETECCIÓN Al ejecutar una instrucción DVS o MDS. CAUSA El denominador de una operación DVS o MDS es 0. SOLUCIÓN Revisar el programa PLC. No realizar divisiones por 0." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "División por cero en instrucciones DVS o MDS" ;
+        ex:textoExtracto "El denominador de una operación DVS o MDS es 0."
+    ] .
+
+ex:Error_5013
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en lectura de entradas digitales del PLC (5013)" ;
+    ex:identificador "5013" ;
+    ex:textoExtracto "'Error en la lectura de entradas digitales del PLC' DETECCIÓN Al leer las entradas digitales del PLC. CAUSA Fallo en la lectura de las entradas digitales remotas de PLC. SOLUCIÓN Revisar tabla de configuración de I/Os digitales (parámetro NDIMOD) y comprobar la integridad del bus." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Configuración incorrecta de I/Os digitales (NDIMOD) o fallo de bus" ;
+        ex:textoExtracto "Fallo en la lectura de las entradas digitales remotas de PLC. Revisar tabla de configuración de I/Os digitales (parámetro NDIMOD) y comprobar la integridad del bus."
+    ] .
+
+ex:Error_5014
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en escritura de salidas digitales del PLC (5014)" ;
+    ex:identificador "5014" ;
+    ex:textoExtracto "'Error en la escritura de salidas digitales del PLC' DETECCIÓN Al escribir las salidas digitales del PLC. CAUSA Fallo en la escritura de las salidas digitales remotas de PLC. La tabla de configuración de las I/Os digitales no es válida (parámetro NDOMOD) o el PLC ha recibido una petición de escritura antes de finalizar la anterior. SOLUCIÓN Revisar tabla de configuración de I/Os digitales (parámetro NDOMOD), comprobar la integridad del bus o aumentar el tiempo de ciclo en el parámetro PLCFREQ." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Configuración incorrecta de I/Os digitales (NDOMOD) o solapamiento de peticiones" ;
+        ex:textoExtracto "La tabla de configuración de las I/Os digitales no es válida (parámetro NDOMOD) o el PLC ha recibido una petición de escritura antes de finalizar la anterior."
+    ] .
+
+ex:Parametro_NDIMOD
+    a ex:Parametro ;
+    rdfs:label "Parámetro NDIMOD (configuración I/Os digitales)" ;
+    ex:identificador "NDIMOD" ;
+    ex:textoExtracto "tabla de configuración de I/Os digitales (parámetro NDIMOD)" .
+
+ex:Parametro_NDOMOD
+    a ex:Parametro ;
+    rdfs:label "Parámetro NDOMOD (configuración I/Os digitales)" ;
+    ex:identificador "NDOMOD" ;
+    ex:textoExtracto "tabla de configuración de las I/Os digitales no es válida (parámetro NDOMOD)" .
+
+ex:Parametro_PLCFREQ
+    a ex:Parametro ;
+    rdfs:label "Parámetro PLCFREQ (tiempo de ciclo PLC)" ;
+    ex:identificador "PLCFREQ" ;
+    ex:textoExtracto "aumentar el tiempo de ciclo en el parámetro PLCFREQ" .
+
+ex:Instruccion_CNCWR
+    a ex:Componente ;
+    rdfs:label "Instrucción CNCWR (escritura desde PLC)" ;
+    ex:textoExtracto "instrucción CNCWR" .
+
+ex:Instruccion_CNCRD
+    a ex:Componente ;
+    rdfs:label "Instrucción CNCRD (lectura desde PLC)" ;
+    ex:textoExtracto "instrucción CNCRD" .
+
+ex:Instruccion_DVS
+    a ex:Componente ;
+    rdfs:label "Instrucción DVS (división en PLC)" ;
+    ex:textoExtracto "instrucción DVS" .
+
+ex:Instruccion_MDS
+    a ex:Componente ;
+    rdfs:label "Instrucción MDS (división en PLC)" ;
+    ex:textoExtracto "instrucción MDS" .
+
+ex:Error_5008 ex:documentadoEn [
+    a ex:Pagina ;
+    ex:identificador "180-185" ;
+    ex:textoExtracto "Sección 5000-5999: Códigos de error PLC."
+] .
+
+ex:Error_5009 ex:documentadoEn [
+    a ex:Pagina ;
+    ex:identificador "180-185" ;
+    ex:textoExtracto "Sección 5000-5999: Códigos de error PLC."
+] .
+
+ex:Error_5010 ex:documentadoEn [
+    a ex:Pagina ;
+    ex:identificador "180-185" ;
+    ex:textoExtracto "Sección 5000-5999: Códigos de error PLC."
+] .
+
+ex:Error_5013 ex:documentadoEn [
+    a ex:Pagina ;
+    ex:identificador "180-185" ;
+    ex:textoExtracto "Sección 5000-5999: Códigos de error PLC."
+] .
+
+ex:Error_5014 ex:documentadoEn [
+    a ex:Pagina ;
+    ex:identificador "180-185" ;
+    ex:textoExtracto "Sección 5000-5999: Códigos de error PLC."
+] .

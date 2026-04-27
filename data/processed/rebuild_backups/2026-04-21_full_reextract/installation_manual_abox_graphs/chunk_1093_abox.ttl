@@ -1,0 +1,70 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SistemaMultieje_1093
+    a ex:Sistema ;
+    rdfs:label "Sistema multieje con dos ejes y un único motor"@es ;
+    ex:textoExtracto "Ejemplo 2. Sistema con dos ejes y sólo un motor. El sistema tiene las siguientes características: Un único regulador controla dos ejes con el mismo motor. Cada eje utiliza un tipo de captación diferente."@es ;
+    ex:tieneComponente ex:Motor_1093, ex:EjeA1_1093, ex:EjeA2_1093, ex:Regulador_1093 ;
+    ex:detalladoEnEsquema ex:EsquemaConfiguracion_1093 .
+
+ex:Motor_1093
+    a ex:ComponenteElectrico ;
+    rdfs:label "Motor del sistema multieje"@es ;
+    ex:textoExtracto "Un único regulador controla dos ejes con el mismo motor."@es ;
+    ex:controla ex:EjeA1_1093, ex:EjeA2_1093 .
+
+ex:EjeA1_1093
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje A1"@es ;
+    ex:identificador "A1" ;
+    ex:textoExtracto "Eje A1: La captación externa (directa) está conectada a los módulos remotos."@es ;
+    ex:monitoreaParametro ex:ParametroVelocidad_1093_A1 ;
+    ex:compuestoPor ex:SensorFeedback_1093_A1 .
+
+ex:EjeA2_1093
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje A2"@es ;
+    ex:identificador "A2" ;
+    ex:textoExtracto "Eje A2: La captación externa (directa) está conectada a los módulos remotos."@es ;
+    ex:monitoreaParametro ex:ParametroVelocidad_1093_A2 ;
+    ex:compuestoPor ex:SensorFeedback_1093_A2 .
+
+ex:Regulador_1093
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador de velocidad para ejes A1 y A2"@es ;
+    ex:textoExtracto "Un único regulador controla dos ejes con el mismo motor."@es ;
+    ex:controla ex:Motor_1093 .
+
+ex:ParametroVelocidad_1093_A1
+    a ex:Parametro ;
+    rdfs:label "Velocidad externa (modo regulador) para Eje A1"@es ;
+    ex:textoExtracto "Eje A1: Velocidad Externa Regulador"@es ;
+    ex:valor "Velocidad Externa Regulador" .
+
+ex:ParametroVelocidad_1093_A2
+    a ex:Parametro ;
+    rdfs:label "Velocidad externa (modo remoto) para Eje A2"@es ;
+    ex:textoExtracto "Eje A2: Velocidad Externa Remoto"@es ;
+    ex:valor "Velocidad Externa Remoto" .
+
+ex:SensorFeedback_1093_A1
+    a ex:Sensor ;
+    rdfs:label "Sensor de feedback directo para Eje A1"@es ;
+    ex:textoExtracto "Eje A1: La captación externa (directa) está conectada a los módulos remotos."@es ;
+    ex:monitoreaParametro ex:ParametroVelocidad_1093_A1 .
+
+ex:SensorFeedback_1093_A2
+    a ex:Sensor ;
+    rdfs:label "Sensor de feedback directo para Eje A2"@es ;
+    ex:textoExtracto "Eje A2: La captación externa (directa) está conectada a los módulos remotos."@es ;
+    ex:monitoreaParametro ex:ParametroVelocidad_1093_A2 .
+
+ex:EsquemaConfiguracion_1093
+    a ex:Esquema ;
+    rdfs:label "Esquema de configuración Sercos CAN para grupo multieje (MULTIAXIS GROUP_1)"@es ;
+    ex:identificador "MULTIAXIS | GROUP_1" ;
+    ex:textoExtracto "Sercos CAN Configuración del grupo multieje. | MULTIAXIS | GROUP_1 | [...] A1 A2 Configuración de los ejes. | DRIVEID | OPMODEP FBACK | SRC COUNTERTYPE | COUNTERID | Eje A1 | 1 | Velocidad Externa Regulador | 1 | Eje A2 | 1 | Velocidad Externa Remoto | 1"@es ;
+    ex:ilustradoEn ex:SistemaMultieje_1093 .

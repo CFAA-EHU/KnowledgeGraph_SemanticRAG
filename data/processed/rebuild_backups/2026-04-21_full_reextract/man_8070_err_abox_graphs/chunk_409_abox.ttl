@@ -1,0 +1,51 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AvisoSeguridad_2464
+    a ex:AvisoSeguridad ;
+    rdfs:label "Movimiento no permitido en selección de piercing con G92"@es ;
+    ex:identificador "2464" ;
+    ex:textoExtracto "Movimiento no permitido en selección de piercing con G92. Programar #MOVE. DETECCIÓN Durante la ejecución. CAUSA En la selección de piercing, se ha elegido la opción de repetir el programa en el mismo punto que la ejecución anterior, y el programa realiza una preselección (G92) en los bloques iniciales. El programa tiene un bloque de movimiento anterior en #INITIALSUB o antes de la primera G1 del programa. SOLUCIÓN Realizar otra selección de piercing o sustituir el movimiento por un movimiento independiente (#MOVE)."@es .
+
+ex:AvisoSeguridad_2465
+    a ex:AvisoSeguridad ;
+    rdfs:label "#RPT: la etiqueta N y el número de repeticiones deben ser números enteros"@es ;
+    ex:identificador "2465" ;
+    ex:textoExtracto "#RPT: la etiqueta N y el número de repeticiones deben ser números enteros. DETECCIÓN Durante la ejecución. CAUSA En la sentencia #RPT se ha programado para la etiqueta N o para el número de repeticiones un valor no entero. SOLUCIÓN El valor de la etiqueta N y el número de repeticiones deben ser números enteros."@es .
+
+ex:AvisoSeguridad_2466
+    a ex:AvisoSeguridad ;
+    rdfs:label "Se espera nombre de subrutina"@es ;
+    ex:identificador "2466" ;
+    ex:textoExtracto "Se espera nombre de subrutina. DETECCIÓN Durante la ejecución. CAUSA Se ha programado una subrutina local (%L) sin definir su nombre. SOLUCIÓN Definir el inicio de la subrutina local con \"%L nombre\"."@es .
+
+ex:AvisoSeguridad_2467
+    a ex:AvisoSeguridad ;
+    rdfs:label "Subrutina local ya existente"@es ;
+    ex:identificador "2467" ;
+    ex:textoExtracto "Subrutina local ya existente. DETECCIÓN Durante la ejecución. CAUSA Hay definidas más de una subrutina local (%L) con el mismo nombre. SOLUCIÓN En un programa no puede haber dos subrutinas locales con el mismo nombre."@es .
+
+ex:AvisoSeguridad_2468
+    a ex:AvisoSeguridad ;
+    rdfs:label "Programación COROT=FIX no permitida en cinemáticas cabezal-mesa, TYPE=13..16"@es ;
+    ex:identificador "2468" ;
+    ex:textoExtracto "Programación COROT=FIX no permitida en cinemáticas cabezal-mesa, TYPE=13..16. DETECCIÓN Durante la ejecución. CAUSA Se ha programado un RTCP sin giro del sistema de coordenadas para una cinemática cabezal+mesa (TYPE=13..16). SOLUCIÓN Este tipo de cinemática no admite esa programación. Programar el RTCP con giro del sistema de coordenadas o redefinir la cinemática como vectorial (TYPE 52)."@es .
+
+ex:AvisoSeguridad_2469
+    a ex:AvisoSeguridad ;
+    rdfs:label "Programación HEAD no permitida en cinemáticas sin cabezal"@es ;
+    ex:identificador "2469" ;
+    ex:textoExtracto "Programación HEAD no permitida en cinemáticas sin cabezal. DETECCIÓN Durante la ejecución. CAUSA Se ha programado un RTCP con la opción HEAD para una cinemática sin cabezal."@es .
+
+ex:InterfazUsuario_CNC
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de programación CNC"@es ;
+    ex:textoExtracto "Programación de subrutinas locales (%L), repeticiones (#RPT), preselección (G92), cinemáticas (TYPE=13..16, TYPE 52), y comandos como COROT=FIX y HEAD en entorno CNC."@es ;
+    ex:activaAlarma ex:AvisoSeguridad_2464 ;
+    ex:activaAlarma ex:AvisoSeguridad_2465 ;
+    ex:activaAlarma ex:AvisoSeguridad_2466 ;
+    ex:activaAlarma ex:AvisoSeguridad_2467 ;
+    ex:activaAlarma ex:AvisoSeguridad_2468 ;
+    ex:activaAlarma ex:AvisoSeguridad_2469 .

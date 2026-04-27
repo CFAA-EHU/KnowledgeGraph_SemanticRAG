@@ -1,0 +1,77 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Entrada_DriveEnable
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada Drive enable" ;
+    ex:textoExtracto "activar las entradas Drive enable y Speed enable. Marcas DRSTAF(*)=1 DRSTAS(*)=0"@es ;
+    ex:monitoreaParametro ex:Marca_DRSTAF .
+
+ex:Entrada_SpeedEnable
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada Speed enable" ;
+    ex:textoExtracto "activar las entradas Drive enable y Speed enable. Marcas DRSTAF(*)=1 DRSTAS(*)=0"@es ;
+    ex:monitoreaParametro ex:Marca_DRSTAS .
+
+ex:Marca_DRSTAF
+    a ex:Parametro ;
+    rdfs:label "DRSTAF" ;
+    ex:identificador "DRSTAF(*)" ;
+    ex:textoExtracto "Marcas DRSTAF(*)=1 DRSTAS(*)=0 [...] DRSTAF(*)=1 DRSTAS(*)=1 Regulador habilitado."@es ;
+    ex:valor "0" , "1" .
+
+ex:Marca_DRSTAS
+    a ex:Parametro ;
+    rdfs:label "DRSTAS" ;
+    ex:identificador "DRSTAS(*)" ;
+    ex:textoExtracto "Marcas DRSTAF(*)=1 DRSTAS(*)=0 [...] DRSTAF(*)=1 DRSTAS(*)=1 Regulador habilitado."@es ;
+    ex:valor "0" , "1" .
+
+ex:Marca_INPOS
+    a ex:Parametro ;
+    rdfs:label "INPOS" ;
+    ex:identificador "INPOS(axis)" ;
+    ex:textoExtracto "El CNC pone esta marca a (=1) cuando el eje o cabezal correspondiente se encuentra en posición y no hay ninguna petición de movimiento (marca ENABLE(axis) desactivada)."@es ;
+    ex:valor "0" , "1" .
+
+ex:Marca_INPOSI
+    a ex:Parametro ;
+    rdfs:label "INPOSI" ;
+    ex:identificador "INPOSI" ;
+    ex:textoExtracto "Hay una marca INPOS(axis) para cada eje y cabezal, y una marca INPOSI general para el canal que indica si todos sus ejes y cabezales activos han llegado a posición, exceptuando los ejes independientes programados desde el PLC. Ver en la página 410."@es ;
+    ex:valor "0" , "1" .
+
+ex:Marca_HIRTHON
+    a ex:Parametro ;
+    rdfs:label "HIRTHON" ;
+    ex:identificador "HIRTHON(axis)" ;
+    ex:textoExtracto "La marca HIRTHON(axis) indica si el eje Hirth está trabajando como eje Hirth (=1) o como un eje rotativo o lineal normal (=0), sin necesidad de posicionarse en posiciones concretas."@es ;
+    ex:valor "0" , "1" .
+
+ex:Parametro_INPOSW
+    a ex:Parametro ;
+    rdfs:label "INPOSW" ;
+    ex:identificador "INPOSW" ;
+    ex:textoExtracto "Un eje está en posición cuando permanece dentro de la banda de muerte (parámetro INPOSW) el tiempo indicado en el parámetro INPOTIME."@es .
+
+ex:Parametro_INPOTIME
+    a ex:Parametro ;
+    rdfs:label "INPOTIME" ;
+    ex:identificador "INPOTIME" ;
+    ex:textoExtracto "Un eje está en posición cuando permanece dentro de la banda de muerte (parámetro INPOSW) el tiempo indicado en el parámetro INPOTIME."@es .
+
+ex:Parametro_HIRTH
+    a ex:Parametro ;
+    rdfs:label "HIRTH" ;
+    ex:identificador "HIRTH" ;
+    ex:textoExtracto "El parámetro máquina HIRTH indica si el eje puede trabajar como eje Hirth."@es .
+
+ex:Sistema_Se_alesConsultaEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de señales de consulta de ejes y cabezales" ;
+    ex:textoExtracto "Señales de consulta de los ejes y cabezales. [...] Consulta de las marcas. Cuando se consultan las marcas DRSTAF(*) y DRSTAS(*) se pueden obtener los siguientes valores: [...]"@es ;
+    ex:tieneComponente ex:Entrada_DriveEnable , ex:Entrada_SpeedEnable ;
+    ex:monitoreaParametro ex:Marca_DRSTAF , ex:Marca_DRSTAS , ex:Marca_INPOS , ex:Marca_INPOSI , ex:Marca_HIRTHON ;
+    ex:controla ex:Parametro_INPOSW , ex:Parametro_INPOTIME , ex:Parametro_HIRTH .

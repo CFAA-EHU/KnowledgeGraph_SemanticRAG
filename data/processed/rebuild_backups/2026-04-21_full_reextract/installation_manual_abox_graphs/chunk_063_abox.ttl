@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_TMASTERAXIS
+    a               ex:Parametro ;
+    rdfs:label      "MASTERAXIS (Parámetro TMASTERAXIS)" ;
+    ex:textoExtracto "MASTERAXIS Pareja tándem. Eje/cabezal maestro o principal. [...] El motor maestro del tándem, además de generar par, es el responsable del posicionamiento." ;
+    ex:identificador "TMASTERAXIS" ;
+    ex:valor         "Cualquier eje definido en AXISNAME o cabezal definido en SPDLNAME" .
+
+ex:Parametro_TSLAVEAXIS
+    a               ex:Parametro ;
+    rdfs:label      "SLAVEAXIS (Parámetro TSLAVEAXIS)" ;
+    ex:textoExtracto "SLAVEAXIS Pareja tándem. Eje/cabezal esclavo. [...] El motor esclavo únicamente suministra par." ;
+    ex:identificador "TSLAVEAXIS" ;
+    ex:valor         "Cualquier eje definido en AXISNAME o cabezal definido en SPDLNAME" .
+
+ex:Parametro_TORQDIST
+    a               ex:Parametro ;
+    rdfs:label      "TORQDIST (Distribución del par)" ;
+    ex:textoExtracto "TORQDIST Pareja tándem. Distribución del par. [...] Este parámetro establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem." ;
+    ex:identificador "TORQDIST" ;
+    ex:valor         "De 1 a 99%. Valor por defecto: 50 %" .
+
+ex:Tabla_TANDEM a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla TANDEM (Configuración tándem)" ;
+    ex:textoExtracto "Parámetro incluido en la tabla TANDEM. [...] El control del tándem modifica la consigna de velocidad del eje/cabezal maestro y del eje/cabezal esclavo en función de la distribución de par y la precarga seleccionada." ;
+    ex:tieneComponente ex:Parametro_TMASTERAXIS ;
+    ex:tieneComponente ex:Parametro_TSLAVEAXIS ;
+    ex:tieneComponente ex:Parametro_TORQDIST .
+
+ex:Sistema_Tandem
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de configuración tándem" ;
+    ex:textoExtracto "El motor maestro del tándem, además de generar par, es el responsable del posicionamiento. [...] El CNC cierra el lazo de posición únicamente con la posición del eje maestro del tándem." ;
+    ex:documentadoEn ex:Tabla_TANDEM .
+
+ex:ComponenteElectrico_MotorMaestro
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Motor maestro (tándem)" ;
+    ex:textoExtracto "El motor maestro del tándem, además de generar par, es el responsable del posicionamiento." ;
+    ex:monitoreaParametro ex:Parametro_TMASTERAXIS ;
+    ex:monitoreaParametro ex:Parametro_TORQDIST ;
+    ex:compuestoPor ex:Sistema_Tandem .
+
+ex:ComponenteElectrico_MotorEsclavo
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Motor esclavo (tándem)" ;
+    ex:textoExtracto "El motor esclavo únicamente suministra par." ;
+    ex:monitoreaParametro ex:Parametro_TSLAVEAXIS ;
+    ex:monitoreaParametro ex:Parametro_TORQDIST ;
+    ex:compuestoPor ex:Sistema_Tandem .

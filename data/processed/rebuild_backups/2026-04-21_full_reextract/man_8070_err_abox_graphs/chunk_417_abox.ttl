@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AvisoSeguridad_2488
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2488: Calibración de gap no cargada" ;
+    ex:textoExtracto "Activar #FACE/#CYL sin cinemática o con una cinemática del tipo 41/42/43. 2488 Programar #LOAD GAPTABLE antes de #GAPCTRL ON o #LEAP. DETECCIÓN Durante la ejecución. CAUSA Por parámetro máquina se ha definido una calibración no lineal de gap. Se ha intentado usar la sonda del gap (#GAPCTRL ON o #LEAP) sin activar dicha tabla. SOLUCIÓN Activar una tabla de calibración del gap mediante el comando #LOAD GAPTABLE." ;
+    ex:identificador "2488" .
+
+ex:AvisoSeguridad_2489
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2489: RTCP en inspección con KINID TIP" ;
+    ex:textoExtracto "2489 No se permite programar #RTCP en INSPECCIÓN, con KINID TIP activo. DETECCIÓN Durante la ejecución. CAUSA Durante la inspección de herramienta, se ha intenta rehacer el sistema de coordenadas en un orden distinto en el que ha activado. SOLUCIÓN Mantener en el sistema #KIN ID [TIP] o #RTCP durante la inspección de herramienta." ;
+    ex:identificador "2489" .
+
+ex:AvisoSeguridad_2490
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2490: Secuencia RTCP/CS/ACS inválida" ;
+    ex:textoExtracto "2490 #RTCP ON/OFF: Programación no permitida con CS/ACS activo. DETECCIÓN Durante la ejecución. CAUSA La secuencia de activación y desactivación del RTCP y CS/ACS, en las cinemáticas de mesas sin giro del sistema de coordenadas, es fija; #RTCPON, #CS/ACSON, #CS/ACSOFF, #RTCPOFF. SOLUCIÓN Revisar la programación. Programar la secuencia correcta." ;
+    ex:identificador "2490" .
+
+ex:AvisoSeguridad_2491
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2491: Programación de #CAX en subrutina" ;
+    ex:textoExtracto "2491 Programación no permitida dentro de la subrutina asociada a #CAX. DETECCIÓN Durante la ejecución. CAUSA Se ha programado la sentencia #CAX con parámetros de llamada, dentro de la subrutina asociada a #CAX. SOLUCIÓN Revisar la programación. Dentro de la subrutina, programar #CAX sin parámetros." ;
+    ex:identificador "2491" .
+
+ex:AvisoSeguridad_2492
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 2492: Comodín fuera de subrutina #CAX" ;
+    ex:textoExtracto "2492 Comodín no permitido fuera de la subrutina asociada a #CAX. DETECCIÓN Durante la ejecución. CAUSA Se ha programado el comodín @S o @C fuera de la subrutina asociada a la sentencia #CAX (parámetro máquina CAXSUB)." ;
+    ex:identificador "2492" .
+
+ex:Parametro_GAPTABLE
+    a ex:Parametro ;
+    rdfs:label "Tabla de calibración de gap" ;
+    ex:textoExtracto "tabla de calibración del gap" ;
+    ex:monitoreaParametro ex:AvisoSeguridad_2488 .
+
+ex:Parametro_RTCP
+    a ex:Parametro ;
+    rdfs:label "Parámetro RTCP (Real-Time Coordinate Transformation)" ;
+    ex:textoExtracto "#RTCP ON/OFF" ;
+    ex:monitoreaParametro ex:AvisoSeguridad_2489 , ex:AvisoSeguridad_2490 .
+
+ex:Parametro_CAX
+    a ex:Parametro ;
+    rdfs:label "Parámetro de configuración de eje adicional (CAX)" ;
+    ex:textoExtracto "#CAX" ;
+    ex:monitoreaParametro ex:AvisoSeguridad_2491 , ex:AvisoSeguridad_2492 .
+
+ex:Parametro_CS_ACS
+    a ex:Parametro ;
+    rdfs:label "Sistema de coordenadas (CS/ACS)" ;
+    ex:textoExtracto "#CS/ACS" ;
+    ex:monitoreaParametro ex:AvisoSeguridad_2490 .

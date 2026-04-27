@@ -1,0 +1,79 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_USERKEY a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla USERKEY" ;
+    ex:textoExtracto "Esta tabla muestra los parámetros para configurar la tecla de usuario. La tabla dispone de los siguientes parámetros máquina." ;
+    ex:ilustradoEn ex:InterfazUsuario_CustomKey .
+
+ex:InterfazUsuario_CustomKey
+    a ex:InterfazUsuario ;
+    rdfs:label "Tecla [CUSTOM] (USERKEY)" ;
+    ex:textoExtracto "USERKEY Personalización de la tecla de usuario." ;
+    ex:tieneComponente ex:Parametro_FUNCTION ,
+                       ex:Parametro_COMPONENT ,
+                       ex:Parametro_APPLICATION .
+
+ex:Parametro_FUNCTION
+    a ex:Parametro ;
+    rdfs:label "FUNCTION" ;
+    ex:textoExtracto "Función de la tecla de usuario. Valores posibles: Windows / Componente / Aplicación / CNC OFF / Nada. Valor por defecto: Nada." ;
+    ex:documentadoEn ex:Tabla_USERKEY ;
+    ex:valor "Nada" .
+
+ex:Parametro_COMPONENT
+    a ex:Parametro ;
+    rdfs:label "COMPONENT" ;
+    ex:textoExtracto "Acceder a uno de los componentes del CNC. Valores posibles: Diagnosis / PLC / Parámetros máquina / DDSSETUP / TUNING" ;
+    ex:documentadoEn ex:Tabla_USERKEY .
+
+ex:Parametro_APPLICATION
+    a ex:Parametro ;
+    rdfs:label "APPLICATION" ;
+    ex:textoExtracto "Ejecutar una aplicación del PC. [...] Hay que indicar el path completo de la aplicación; por ejemplo ..\\Fagor\\Release\\Fguim.exe." ;
+    ex:documentadoEn ex:Tabla_USERKEY .
+
+ex:ModoOperacion_Diagnosis
+    a ex:ModoOperacion ;
+    rdfs:label "Diagnosis" ;
+    ex:textoExtracto "Diagnosis" ;
+    ex:habilitadoPor ex:Parametro_COMPONENT .
+
+ex:ModoOperacion_PLC
+    a ex:ModoOperacion ;
+    rdfs:label "PLC" ;
+    ex:textoExtracto "PLC" ;
+    ex:habilitadoPor ex:Parametro_COMPONENT .
+
+ex:ModoOperacion_ParametrosMaquina
+    a ex:ModoOperacion ;
+    rdfs:label "Parámetros máquina" ;
+    ex:textoExtracto "Parámetros máquina" ;
+    ex:habilitadoPor ex:Parametro_COMPONENT .
+
+ex:ModoOperacion_DDSSETUP
+    a ex:ModoOperacion ;
+    rdfs:label "DDSSETUP" ;
+    ex:textoExtracto "DDSSETUP" ;
+    ex:habilitadoPor ex:Parametro_COMPONENT .
+
+ex:ModoOperacion_TUNING
+    a ex:ModoOperacion ;
+    rdfs:label "TUNING" ;
+    ex:textoExtracto "TUNING" ;
+    ex:habilitadoPor ex:Parametro_COMPONENT .
+
+ex:Aplicacion_FGUIM
+    a ex:Sistema ;
+    rdfs:label "FGUIM" ;
+    ex:textoExtracto "Ejecutar una aplicación externa, por ejemplo el FGUIM. [...] ..\\Fagor\\Release\\Fguim.exe" ;
+    ex:habilitadoPor ex:Parametro_APPLICATION .
+
+ex:Aplicacion_LantekExpertInside
+    a ex:Sistema ;
+    rdfs:label "Lantek Expert Inside" ;
+    ex:textoExtracto "En un modelo láser, se recomienda utilizar la esta tecla para abrir la aplicación \"Lantek Expert Inside\" para el nesting; C:\\Lantek\\Expert\\Expert.exe." ;
+    ex:habilitadoPor ex:Parametro_APPLICATION .

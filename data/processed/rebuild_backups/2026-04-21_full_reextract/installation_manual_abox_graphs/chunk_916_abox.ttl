@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OperacionOrientarDosAlmacenes
+    a ex:TareaMantenimiento ;
+    rdfs:label "Orientar dos almacenes (TMOPERATION=13)"@es ;
+    ex:textoExtracto "TMOPERATION = 13 Orientar dos almacenes. Esta operación es una optimización del cambio de herramienta que permite orientar dos almacenes durante el mecanizado. Activar la marca MZROT en ambos almacenes para indicar que ha finalizado la operación, se hayan orientado los almacenes o no."@es ;
+    ex:identificador "TMOPERATION=13" .
+
+ex:OperacionCambioHerramientaEntreAlmacenes
+    a ex:TareaMantenimiento ;
+    rdfs:label "Dejar herramienta en almacén y coger de otro (TMOPERATION=14)"@es ;
+    ex:textoExtracto "TMOPERATION = 14 Dejar la herramienta del cabezal en el almacén y coger una herramienta de otro almacén."@es ;
+    ex:identificador "TMOPERATION=14" .
+
+ex:ParametroMZID
+    a ex:Parametro ;
+    rdfs:label "Registro MZID (almacén origen/destino)"@es ;
+    ex:textoExtracto "MZID En la parte baja de este registro se indica el almacén en el que hay que dejar la herramienta y en la parte alta el almacén del que hay que coger la herramienta."@es .
+
+ex:ParametroNEXTPOS
+    a ex:Parametro ;
+    rdfs:label "Posición para dejar herramienta (NEXTPOS)"@es ;
+    ex:textoExtracto "NEXTPOS=# Posición del almacén para dejar la herramienta."@es .
+
+ex:ParametroTAKEPOS
+    a ex:Parametro ;
+    rdfs:label "Posición para coger herramienta (TAKEPOS)"@es ;
+    ex:textoExtracto "TAKEPOS=# Posición del almacén para coger la herramienta."@es .
+
+ex:ParametroLEAVEPOS
+    a ex:Parametro ;
+    rdfs:label "Posición para dejar herramienta (LEAVEPOS)"@es ;
+    ex:textoExtracto "LEAVEPOS=# Posición del almacén para dejar la herramienta."@es .
+
+ex:MarcaSPDLTOMZ
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOMZ (herramienta dejada en almacén)"@es ;
+    ex:textoExtracto "Dejar la herramienta del cabezal en el almacén y activar la marca SPDLTOMZ."@es .
+
+ex:MarcaMZTOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca MZTOSPDL (herramienta cogida del almacén)"@es ;
+    ex:textoExtracto "Poner la herramienta del almacén en el cabezal y activar la marca MZTOSPDL."@es .
+
+ex:MarcaMZROT
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca MZROT (almacenes orientados)"@es ;
+    ex:textoExtracto "Activar la marca MZROT en ambos almacenes para indicar que ha finalizado la operación, se hayan orientado los almacenes o no."@es .
+
+ex:OperacionCambioHerramientaEntreAlmacenes
+    ex:requiereMantenimiento ex:OperacionOrientarDosAlmacenes ;
+    ex:controla ex:MarcaSPDLTOMZ , ex:MarcaMZTOSPDL .
+
+ex:OperacionOrientarDosAlmacenes
+    ex:controla ex:MarcaMZROT .

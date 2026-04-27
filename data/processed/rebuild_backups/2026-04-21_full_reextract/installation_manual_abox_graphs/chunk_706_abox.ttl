@@ -1,0 +1,71 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Comando_MFUN
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando MFUN*" ;
+    ex:textoExtracto "Comando MFUN*. Analizar si una función ha sido programada en el bloque. Para poder conocer si una determinada función M se encuentra programada en el bloque en ejecución, se puede utilizar uno de los siguientes métodos: • Analizar todos los registros MFUN uno a uno, hasta encontrar dicha función M o hasta que uno de ellos tenga el valor $FFFFFFFF. • Utilizar el comando MFUN* que permite analizar todos los registros a la vez. Ejemplo para detectar M30. Si se ha programado devolverá un \"1\"; un \"0\" en caso contrario. CPS MFUN* EQ 30 = ..." ;
+    ex:monitoreaParametro ex:Parametro_M30 .
+
+ex:Parametro_M30
+    a ex:Parametro ;
+    rdfs:label "Función M30" ;
+    ex:identificador "M30" ;
+    ex:textoExtracto "Ejemplo para detectar M30. Si se ha programado devolverá un \"1\"; un \"0\" en caso contrario." .
+
+ex:Tabla_FuncionesAuxiliares_M a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de funciones auxiliares –M–" ;
+    ex:identificador "5.1" ;
+    ex:textoExtracto "Dentro de los parámetros máquina del CNC, en la tabla de funciones auxiliares –M– se indica cuándo se envía la función y cuándo se sincroniza la ejecución del PLC. En ambos casos podrá ser antes o después del movimiento." ;
+    ex:documentadoEn ex:Capitulo_5 .
+
+ex:Capitulo_5
+    a ex:Capitulo ;
+    rdfs:label "Funciones auxiliares –M–" ;
+    ex:identificador "5" ;
+    ex:textoExtracto "5.1 Funciones auxiliares –M–." ;
+    ex:detalladoEnEsquema ex:Esquema_Transferencia_M .
+
+ex:Esquema_Transferencia_M
+    a ex:Esquema ;
+    rdfs:label "Transferencia de funciones auxiliares –M–" ;
+    ex:identificador "5.4" ;
+    ex:textoExtracto "La transferencia de las funciones auxiliares M está detallada más adelante en este mismo capítulo. Ver en la página 400. \"5.4 Transferencia de las funciones auxiliares –M–, –H–, –S–.\"" .
+
+ex:Funcion_M11 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M11 (sin sincronización)" ;
+    ex:identificador "M11" ;
+    ex:textoExtracto "M11 sin sincronización." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Funcion_M12 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M12 (envío antes, sincronización antes)" ;
+    ex:identificador "M12" ;
+    ex:textoExtracto "M12 se envía antes y se sincroniza antes el movimiento." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Funcion_M13 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M13 (envío antes, sincronización tras movimiento)" ;
+    ex:identificador "M13" ;
+    ex:textoExtracto "M13 se envía antes y se sincroniza tras el movimiento." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Funcion_M14 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función M14 (envío después, sincronización tras movimiento)" ;
+    ex:identificador "M14" ;
+    ex:textoExtracto "M14 se envía después y se sincroniza tras el movimiento." ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M .
+
+ex:Bloque_Ejemplo_X100_M11_M14
+    a ex:Parametro ;
+    rdfs:label "Bloque de ejemplo: X100 F1000 M11 M12 M13 M14" ;
+    ex:textoExtracto "Si se ejecuta un bloque del siguiente tipo. X100 F1000 M11 M12 M13 M14" ;
+    ex:documentadoEn ex:Tabla_FuncionesAuxiliares_M ;
+    ex:tieneComponente ex:Funcion_M11 , ex:Funcion_M12 , ex:Funcion_M13 , ex:Funcion_M14 .

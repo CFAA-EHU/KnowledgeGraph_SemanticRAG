@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ComunicacionGestorPLC_872
+    a ex:Sistema ;
+    rdfs:label "Sistema de comunicación entre gestor de herramientas y PLC"@es ;
+    ex:textoExtracto "Para la comunicación entre el gestor de herramientas y el PLC, cada canal y almacén dispone de un grupo de marcas y registros. [...] La comunicación entre el gestor y el PLC se realiza en 2 fases; cuando se ejecuta la función T y cuando se ejecuta la función M06."@es ;
+    ex:compuestoPor ex:FaseFuncionT_872, ex:FaseFuncionM06_872 ;
+    ex:tieneComponente ex:MarcasRegistrosLegacy_872, ex:AlmacenHerramientas_872, ex:BrazoCambiador_872 .
+
+ex:FaseFuncionT_872
+    a ex:ModoOperacion ;
+    rdfs:label "Fase de ejecución de función T (selección de herramienta)"@es ;
+    ex:textoExtracto "Cuando se ejecuta la función T el canal del CNC se lo indica al gestor. El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede). El CNC continúa con la ejecución del programa, no espera a que el gestor de por finalizada la operación."@es ;
+    ex:controla ex:AlmacenHerramientas_872 .
+
+ex:FaseFuncionM06_872
+    a ex:ModoOperacion ;
+    rdfs:label "Fase de ejecución de función M06 (cambio de herramienta)"@es ;
+    ex:textoExtracto "Cuando se ejecuta la función M06 se realiza una llamada a la rutina asociada. [...] El gestor envía una orden al PLC para efectuar el cambio. El CNC espera a que el gestor de por finalizada la operación para continuar con la ejecución del programa."@es ;
+    ex:controla ex:AlmacenHerramientas_872, ex:BrazoCambiador_872 .
+
+ex:MarcasRegistrosLegacy_872
+    a ex:InterfazUsuario ;
+    rdfs:label "Marcas y registros de versiones anteriores (compatibilidad)"@es ;
+    ex:textoExtracto "El CNC mantiene la compatibilidad con las marcas y registros de versiones anteriores, cuyos mnemónicos no hacen referencia a ningún canal o almacén en particular. A partir de la versión de software V2.00 estas señales hacen referencia al primer canal o almacén, según corresponda."@es ;
+    ex:identificador "V2.00" .
+
+ex:AlmacenHerramientas_872
+    a ex:ComponenteMecanico ;
+    rdfs:label "Almacén de herramientas"@es ;
+    ex:textoExtracto "El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén (si se puede)."@es .
+
+ex:BrazoCambiador_872
+    a ex:ComponenteMecanico ;
+    rdfs:label "Brazo cambiador de herramientas"@es ;
+    ex:textoExtracto "Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc.)."@es ;
+    ex:textoExtracto "En almacenes asíncronos (brazo cambiador de movimientos independientes) es posible [...] activar la marca TCHANGEOK para que el CNC continúe con la ejecución del programa mientras se deja la herramienta en el almacén."@es .

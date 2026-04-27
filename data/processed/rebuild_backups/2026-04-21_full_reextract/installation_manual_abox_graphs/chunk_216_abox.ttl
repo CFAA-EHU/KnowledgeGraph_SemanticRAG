@@ -1,0 +1,45 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MAXOVR
+    a ex:Parametro ;
+    rdfs:label "MAXOVR" ;
+    ex:textoExtracto "MAXOVR Override (%) máximo permitido. Valores posibles: De 0 a 255. Valor por defecto: 200. Variable asociada: (V.)[ch].MPG.MAXOVR Este parámetro indica el máximo porcentaje que se permite aplicar al avance programado de los ejes (feedrate override)." ;
+    ex:valor "200" ;
+    ex:identificador "(V.)[ch].MPG.MAXOVR" .
+
+ex:Parametro_RAPIDOVR
+    a ex:Parametro ;
+    rdfs:label "RAPIDOVR" ;
+    ex:textoExtracto "RAPIDOVR Override actúa en G00 (entre 0 y 100%). Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)[ch].MPG.RAPIDOVR Este parámetro indica si se permite modificar el porcentaje de avance (entre el 0% y el 100%) cuando se trabaja en G0." ;
+    ex:valor "Sí" ;
+    ex:identificador "(V.)[ch].MPG.RAPIDOVR" .
+
+ex:Parametro_FEEDND
+    a ex:Parametro ;
+    rdfs:label "FEEDND" ;
+    ex:textoExtracto "FEEDND Aplicar el avance programado a todos los ejes del canal. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPG.FEEDND Este parámetro indica si el avance programado se aplica a todos los ejes del canal o sólo a los ejes principales." ;
+    ex:valor "No" ;
+    ex:identificador "(V.)[ch].MPG.FEEDND" .
+
+ex:ModoOperacion_G00
+    a ex:ModoOperacion ;
+    rdfs:label "G00" ;
+    ex:textoExtracto "RAPIDOVR Override actúa en G00 (entre 0 y 100%)." .
+
+ex:InterfazUsuario_PanelMPG
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel MPG" ;
+    ex:textoExtracto "El porcentaje que se aplica al avance programado puede ser fijado por programa, por PLC o por el conmutador del panel, siendo el más prioritario el fijado por programa y el menos prioritario el seleccionado por el conmutador." .
+
+ex:Parametro_MAXOVR
+    ex:monitoreaParametro ex:ModoOperacion_G00 .
+
+ex:Parametro_RAPIDOVR
+    ex:monitoreaParametro ex:ModoOperacion_G00 ;
+    ex:ilustradoEn ex:InterfazUsuario_PanelMPG .
+
+ex:Parametro_FEEDND
+    ex:ilustradoEn ex:InterfazUsuario_PanelMPG .

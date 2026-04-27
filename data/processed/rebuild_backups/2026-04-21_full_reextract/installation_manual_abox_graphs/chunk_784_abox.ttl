@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Subrutina_Cuttingon_fst
+    a ex:Componente ;
+    rdfs:label "Subrutina Cuttingon.fst" ;
+    ex:textoExtracto "la subrutina Cuttingon.fst (o la asociada al proceso de cutting) realiza un serie de operaciones con las variables asociadas a las tablas tecnológicas" ;
+    ex:identificador "Cuttingon.fst" .
+
+ex:Subrutina_Piercing_fst
+    a ex:Componente ;
+    rdfs:label "Subrutina Piercing.fst" ;
+    ex:textoExtracto "la subrutina Piercing.fst (o la asociada al proceso de piercing) realiza un serie de operaciones con las variables asociadas a las tablas tecnológicas" ;
+    ex:identificador "Piercing.fst" .
+
+ex:Variable_PIRVARACT
+    a ex:Parametro ;
+    rdfs:label "PIRVARACT" ;
+    ex:textoExtracto "El CNC activa esta marca cuando el usuario valida los parámetros de piercing de la tabla activa. El PLC debe desactivar esta marca cuando termina su gestión con estas variables" ;
+    ex:identificador "PIRVARACT" .
+
+ex:Variable_INPOSGAP
+    a ex:Parametro ;
+    rdfs:label "INPOSGAP" ;
+    ex:textoExtracto "El CNC activa esta marca si el gap está dentro del rango definido por los parámetros GAPMIN-GAPMAX" ;
+    ex:identificador "INPOSGAP" .
+
+ex:Parametro_GAPMIN
+    a ex:Parametro ;
+    rdfs:label "GAPMIN" ;
+    ex:textoExtracto "rango definido por los parámetros GAPMIN-GAPMAX" ;
+    ex:identificador "GAPMIN" .
+
+ex:Parametro_GAPMAX
+    a ex:Parametro ;
+    rdfs:label "GAPMAX" ;
+    ex:textoExtracto "rango definido por los parámetros GAPMIN-GAPMAX" ;
+    ex:identificador "GAPMAX" .
+
+ex:Parametro_GAPERRORCANCEL
+    a ex:Parametro ;
+    rdfs:label "GAPERRORCANCEL" ;
+    ex:textoExtracto "El parámetro GAPERRORCANCEL establece el comportamiento del CNC cuando el gap sobrepasa el rango GAPMIN - GAPMAX" ;
+    ex:identificador "GAPERRORCANCEL" .
+
+ex:TablaTecnologica_Cutting a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla tecnológica de cutting" ;
+    ex:textoExtracto "operaciones con las variables asociadas a las tablas tecnológicas" .
+
+ex:TablaTecnologica_Piercing a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla tecnológica de piercing" ;
+    ex:textoExtracto "operaciones con las variables asociadas a las tablas tecnológicas" .
+
+ex:Subrutina_Cuttingon_fst
+    ex:documentadoEn ex:TablaTecnologica_Cutting .
+
+ex:Subrutina_Piercing_fst
+    ex:documentadoEn ex:TablaTecnologica_Piercing .
+
+ex:Variable_INPOSGAP
+    ex:monitoreaParametro ex:Parametro_GAPMIN ;
+    ex:monitoreaParametro ex:Parametro_GAPMAX .

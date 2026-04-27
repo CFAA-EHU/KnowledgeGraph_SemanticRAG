@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_REFFEED1
+    a ex:Parametro ;
+    rdfs:label "REFFEED1" ;
+    ex:textoExtracto "el CNC vigila que el incremento de la cota real se corresponda como máximo al avance de búsqueda de referencia (parámetro REFFEED1)" ;
+    ex:valor "avance de búsqueda de referencia" .
+
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
+    rdfs:label "REFFEED2" ;
+    ex:textoExtracto "el eje esclavo se moverá hasta alcanzar la cota del eje maestro, al avance especificado en el parámetro REFFEED2" ;
+    ex:valor "avance de corrección de cota" .
+
+ex:Parametro_DIFFCOMP
+    a ex:Parametro ;
+    rdfs:label "DIFFCOMP" ;
+    ex:identificador "DIFFCOMP" ;
+    ex:textoExtracto "el parámetro DIFFCOMP habilita la corrección de la diferencia de cota entre el eje maestro y el esclavo tras la búsqueda de referencia máquina" ;
+    ex:textoExtracto "si el parámetro DIFFCOMP está a 'Sí', el CNC corregirá la diferencia de cota al habilitar el eje" .
+
+ex:Marca_DIFFCOMP
+    a ex:Parametro ;
+    rdfs:label "DIFFCOMP(axis)" ;
+    ex:identificador "DIFFCOMP(axis)" ;
+    ex:textoExtracto "La marca DIFFCOMP(axis) corrige la diferencia de cota entre el eje maestro y esclavo" ;
+    ex:textoExtracto "Con el flanco de subida de SERVO(axis)ON si DIFFCOMP(axis) está activa. Con el flanco de subida de DIFFCOMP(axis) si SERVO(axis)ON está activa." .
+
+ex:Marca_SERVOxnON
+    a ex:Parametro ;
+    rdfs:label "SERVOxnON" ;
+    ex:identificador "SERVOxnON" ;
+    ex:textoExtracto "flanco de subida de la marca SERVOxnON del eje maestro o del esclavo" .
+
+ex:Sistema_ReferenciadoEjesGantry
+    a ex:Sistema ;
+    rdfs:label "Sistema de referencia de ejes gantry" ;
+    ex:textoExtracto "búsqueda de referencia máquina (ejes gantry)" ;
+    ex:textoExtracto "el CNC envía al regulador la orden de referenciar el eje maestro. En este caso es el eje esclavo el que sigue al eje maestro" ;
+    ex:textoExtracto "el CNC vigila que el incremento de la cota real se corresponda como máximo al avance de búsqueda de referencia (parámetro REFFEED1)" ;
+    ex:compuestoPor ex:Parametro_REFFEED1, ex:Parametro_REFFEED2, ex:Parametro_DIFFCOMP, ex:Marca_DIFFCOMP, ex:Marca_SERVOxnON .
+
+ex:Componente_EjeMaestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro (gantry)" ;
+    ex:textoExtracto "envía al eje maestro como incremento de la cota teórica" ;
+    ex:textoExtracto "el eje esclavo el que sigue al eje maestro" ;
+    ex:monitoreaParametro ex:Parametro_DIFFCOMP, ex:Marca_SERVOxnON .
+
+ex:Componente_EjeEsclavo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo (gantry)" ;
+    ex:textoExtracto "haciendo así que el eje maestro siga al esclavo con tan solo el retraso entre la cota teórica y la real" ;
+    ex:textoExtracto "el eje esclavo se moverá hasta alcanzar la cota del eje maestro" ;
+    ex:monitoreaParametro ex:Parametro_REFFEED1, ex:Parametro_REFFEED2, ex:Marca_SERVOxnON .

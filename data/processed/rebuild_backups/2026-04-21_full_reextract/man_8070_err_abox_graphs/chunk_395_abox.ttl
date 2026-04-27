@@ -1,0 +1,81 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Alarmas de control de potencia y sincronización
+ex:Alarma_2418
+    a ex:Alarma ;
+    rdfs:label "Alarma 2418: #PWRCTRL ON - OVRMIN > OVRMAX" ;
+    ex:identificador "2418" ;
+    ex:textoExtracto "#PWRCTRL ON: OVRMIN debe ser menor que OVRMAX. [...] CAUSA En la función #PWRCTRL, el override mínimo es mayor que el override máximo." ;
+    ex:monitoreaParametro ex:Parametro_OVRMIN, ex:Parametro_OVRMAX .
+
+ex:Alarma_2419
+    a ex:Alarma ;
+    rdfs:label "Alarma 2419: #PWRCTRL ON - Parámetros incompletos" ;
+    ex:identificador "2419" ;
+    ex:textoExtracto "#PWRCTRL ON: la primera vez es obligatorio programar todos los parámetros. [...] CAUSA Es la primera vez que se programa la función #PWRCTRL y falta algún parámetro." .
+
+ex:Alarma_2420
+    a ex:Alarma ;
+    rdfs:label "Alarma 2420: #FOLLOW ON - Conflicto de eje esclavo" ;
+    ex:identificador "2420" ;
+    ex:textoExtracto "#FOLLOW ON[MASTER, ]. El eje esclavo no puede ser esclavo de otro master. [...] SOLUCIÓN Un eje no puede ser esclavo en dos sincronizaciones." .
+
+ex:Alarma_2421
+    a ex:Alarma ;
+    rdfs:label "Alarma 2421: Cambio de cabezal con #PWRCTRL activo" ;
+    ex:identificador "2421" ;
+    ex:textoExtracto "No se admite cambiar o aparcar el cabezal master con PWRCTRL activo. [...] SOLUCIÓN Para cambiar o aparcar el cabezal master, desactivar el control de potencia (#PWRCTRL)." .
+
+ex:Alarma_2422
+    a ex:Alarma ;
+    rdfs:label "Alarma 2422: #TFOLLOW ON no permitido" ;
+    ex:identificador "2422" ;
+    ex:textoExtracto "No se permite #TFOLLOW ON [MASTER]. [...] CAUSA [...] no es posible sincronizar sobre las cotas teóricas." .
+
+### Parámetros críticos
+ex:Parametro_OVRMIN
+    a ex:Parametro ;
+    rdfs:label "Override mínimo (OVRMIN)" ;
+    ex:textoExtracto "el override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)" ;
+    ex:monitoreaParametro ex:Funcion_PWRCTRL .
+
+ex:Parametro_OVRMAX
+    a ex:Parametro ;
+    rdfs:label "Override máximo (OVRMAX)" ;
+    ex:textoExtracto "el override mínimo debe ser menor que el override máximo (OVRMAX)" ;
+    ex:monitoreaParametro ex:Funcion_PWRCTRL .
+
+ex:Parametro_LASERFOLLOWAXIS
+    a ex:Parametro ;
+    rdfs:label "Eje esclavo de seguimiento láser (LASERFOLLOWAXIS)" ;
+    ex:textoExtracto "El nombre de eje esclavo [...] coincide con el parámetro máquina LASERFOLLOWAXIS" ;
+    ex:monitoreaParametro ex:Funcion_FOLLOW .
+
+ex:Parametro_FLWMASTER
+    a ex:Parametro ;
+    rdfs:label "Variable FLWMASTER" ;
+    ex:textoExtracto "la variable FLWMASTER [...] la sincronización solo puede ser sobre las cotas reales" ;
+    ex:monitoreaParametro ex:Funcion_FOLLOW .
+
+### Funciones de control
+ex:Funcion_PWRCTRL a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Control de potencia (#PWRCTRL)" ;
+    ex:textoExtracto "En la función #PWRCTRL, el override mínimo es mayor que el override máximo. [...] desactivar el control de potencia (#PWRCTRL)." ;
+    ex:activaAlarma ex:Alarma_2418, ex:Alarma_2419, ex:Alarma_2421 .
+
+ex:Funcion_FOLLOW a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Sincronización de ejes (#FOLLOW)" ;
+    ex:textoExtracto "#FOLLOW ON[MASTER, ]. El eje esclavo no puede ser esclavo de otro master. [...] SOLUCIÓN No programar #FOLLOW ON con el eje esclavo que aparece en el mensaje de error" ;
+    ex:activaAlarma ex:Alarma_2420, ex:Alarma_2422 .
+
+### Componentes afectados
+ex:CabezalMaster
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal master" ;
+    ex:textoExtracto "cambiar o aparcar el cabezal master con PWRCTRL activo. [...] El control de potencia se aplica al cabezal master" ;
+    ex:controla ex:Funcion_PWRCTRL .

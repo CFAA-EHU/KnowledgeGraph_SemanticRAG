@@ -1,0 +1,130 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Diagnósticos de Fallo (MOYU RECTANGULAR/CIRCULAR)
+ex:Fallo_1753
+    a ex:DiagnosticoFallo ;
+    rdfs:label "MOYU RECTANGULAR: P = 0" ;
+    ex:identificador "1753" ;
+    ex:textoExtracto "El parámetro P tiene valor 0. No hay profundidad programada." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Asignar al parámetro P un valor mayor que 0" ;
+        ex:textoExtracto "Asignar al parámetro un valor mayor que 0."
+    ] .
+
+ex:Fallo_1754
+    a ex:DiagnosticoFallo ;
+    rdfs:label "MOYU RECTANGULAR: Diámetro de herramienta menor que DELTA" ;
+    ex:identificador "1754" ;
+    ex:textoExtracto "En la operación de desbaste o acabado, el diámetro de la herramienta es menor que el paso de fresado (parámetro Δ)." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Reducir paso de fresado o usar herramienta de mayor diámetro" ;
+        ex:textoExtracto "Reducir el paso de fresado o utilizar una herramienta de diámetro mayor."
+    ] .
+
+ex:Fallo_1755
+    a ex:DiagnosticoFallo ;
+    rdfs:label "MOYU RECTANGULAR: Diámetro de herramienta ACABADO menor que delta" ;
+    ex:identificador "1755" ;
+    ex:textoExtracto "El diámetro de la herramienta de acabado es menor que las demasías en las paredes laterales (parámetro δ)." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Herramienta de mayor diámetro para pasada de acabado" ;
+        ex:textoExtracto "Elegir una herramienta de mayor diámetro para la pasada de acabado."
+    ] .
+
+ex:Fallo_1756
+    a ex:DiagnosticoFallo ;
+    rdfs:label "MOYU CIRCULAR: F = 0" ;
+    ex:identificador "1756" ;
+    ex:textoExtracto "Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Asignar valor > 0 al parámetro F" ;
+        ex:textoExtracto "Asignar al parámetro un valor mayor que 0."
+    ] .
+
+ex:Fallo_1757
+    a ex:DiagnosticoFallo ;
+    rdfs:label "MOYU CIRCULAR: S = 0" ;
+    ex:identificador "1757" ;
+    ex:textoExtracto "Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Asignar valor > 0 al parámetro S" ;
+        ex:textoExtracto "Asignar al parámetro un valor mayor que 0."
+    ] .
+
+ex:Fallo_1758
+    a ex:DiagnosticoFallo ;
+    rdfs:label "MOYU CIRCULAR: T = 0" ;
+    ex:identificador "1758" ;
+    ex:textoExtracto "No hay herramienta programada. Si una operación no tiene herramienta, el ciclo no la ejecuta." ;
+    ex:solucionaFallo [
+        a ex:AvisoSeguridad ;
+        rdfs:label "Programar herramienta para desbaste/acabado" ;
+        ex:textoExtracto "Programar una herramienta para la operación de desbaste o acabado."
+    ] .
+
+### Parámetros Críticos (enlazados a fallos)
+ex:Parametro_P_Profundidad
+    a ex:Parametro ;
+    rdfs:label "Parámetro P (Profundidad)" ;
+    ex:identificador "P" ;
+    ex:valor "0"^^xsd:float ;
+    ex:textoExtracto "Parámetro P tiene valor 0. No hay profundidad programada." ;
+    ex:monitoreaParametro ex:Fallo_1753 .
+
+ex:Parametro_Delta_PasoFresado
+    a ex:Parametro ;
+    rdfs:label "Parámetro Δ (Paso de fresado)" ;
+    ex:identificador "Δ" ;
+    ex:textoExtracto "Paso de fresado (parámetro Δ) comparado con diámetro de herramienta." ;
+    ex:monitoreaParametro ex:Fallo_1754 .
+
+ex:Parametro_Delta_Demasias
+    a ex:Parametro ;
+    rdfs:label "Parámetro δ (Demasías en paredes laterales)" ;
+    ex:identificador "δ" ;
+    ex:textoExtracto "Demasías en las paredes laterales (parámetro δ)." ;
+    ex:monitoreaParametro ex:Fallo_1755 .
+
+ex:Parametro_F_Avance
+    a ex:Parametro ;
+    rdfs:label "Parámetro F (Avance)" ;
+    ex:identificador "F" ;
+    ex:valor "0"^^xsd:float ;
+    ex:textoExtracto "Parámetro F tiene valor 0; falta programar avance de desbaste/acabado." ;
+    ex:monitoreaParametro ex:Fallo_1756 .
+
+ex:Parametro_S_Velocidad
+    a ex:Parametro ;
+    rdfs:label "Parámetro S (Velocidad)" ;
+    ex:identificador "S" ;
+    ex:valor "0"^^xsd:float ;
+    ex:textoExtracto "Parámetro S tiene valor 0; falta programar velocidad para desbaste/acabado." ;
+    ex:monitoreaParametro ex:Fallo_1757 .
+
+ex:Parametro_T_Herramienta
+    a ex:Parametro ;
+    rdfs:label "Parámetro T (Herramienta)" ;
+    ex:identificador "T" ;
+    ex:valor "0"^^xsd:integer ;
+    ex:textoExtracto "Parámetro T tiene valor 0. No hay herramienta programada." ;
+    ex:monitoreaParametro ex:Fallo_1758 .
+
+### Herramientas Genéricas (referenciadas en soluciones)
+ex:Herramienta_Desbaste
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de desbaste" ;
+    ex:textoExtracto "Herramienta requerida para operación de desbaste." .
+
+ex:Herramienta_Acabado
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de acabado" ;
+    ex:textoExtracto "Herramienta de mayor diámetro para pasada de acabado." .

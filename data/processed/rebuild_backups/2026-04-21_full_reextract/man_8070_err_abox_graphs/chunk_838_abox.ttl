@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FalloTensionRed_9550
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo por tensión de red insuficiente (9550)" ;
+    ex:textoExtracto "DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Bajada en la tensión de red. Durante un breve periodo, la tensión de red no ha alcanzado el 80 % del valor esperado. SOLUCIÓN Revisar tensiones de red y cableado hasta la tarjeta sense. 9550 Nivel de tensión por debajo del 70%. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Bajada en la tensión de red." ;
+    ex:identificador "9550" ;
+    ex:solucionaFallo ex:TareaMantenimiento_RevisionTensionRed .
+
+ex:TareaMantenimiento_RevisionTensionRed
+    a ex:TareaMantenimiento ;
+    rdfs:label "Revisión de tensiones de red y cableado" ;
+    ex:textoExtracto "Revisar tensiones de red y cableado hasta la tarjeta sense." ;
+    ex:requiereMantenimiento ex:ComponenteElectrico_TarjetaSense .
+
+ex:ComponenteElectrico_TarjetaSense
+    a ex:ComponenteElectrico ;
+    rdfs:label "Tarjeta sense" ;
+    ex:textoExtracto "cableado hasta la tarjeta sense" .
+
+ex:Parametro_TensionRed
+    a ex:Parametro ;
+    rdfs:label "Tensión de red" ;
+    ex:textoExtracto "tensión de red" ;
+    ex:valor "80%"^^xsd:string ;
+    ex:monitoreaParametro ex:ComponenteElectrico_TarjetaSense .
+
+ex:Parametro_UmbralCriticoTension
+    a ex:Parametro ;
+    rdfs:label "Umbral crítico de tensión (70%)" ;
+    ex:textoExtracto "Nivel de tensión por debajo del 70%" ;
+    ex:valor "70%"^^xsd:string .

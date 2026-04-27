@@ -1,0 +1,80 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Esquemas y Diagramas
+ex:Esquema_GapSensorGraph
+    a ex:Esquema ;
+    rdfs:label "Gráfico del sensor de gap (mV vs mm/inch)"@es ;
+    ex:textoExtracto "Gráfico del sensor de gap con ejes mV (horizontal) y mm/inch (vertical). Representa la señal del sensor (SENSOR SIGNAL) frente al offset aplicado (GAPSENSOROFFSET), el límite de voltaje (GAPVOLTLIMIT) y el límite de distancia (GAPDISTLIMIT)."@es ;
+    ex:ilustradoEn ex:Param_GAPSENSOROFFSET, ex:Param_GAPVOLTLIMIT, ex:Param_GAPDISTLIMIT .
+
+ex:Esquema_GapControlLoop
+    a ex:Esquema ;
+    rdfs:label "Diagrama funcional del lazo de control del gap"@es ;
+    ex:textoExtracto "Diagrama funcional del lazo de control del gap: la realimentación del sensor (GAP SENSOR FEEDBACK) entra a un bucle de posición (POSITION LOOP) con ganancia proporcional de gap (GAP P-GAIN) y un filtro de corte (CUTOFF FILTER)."@es ;
+    ex:ilustradoEn ex:Param_GAP_PGAIN, ex:Filtro_Cutoff .
+
+ex:Esquema_GapToNeg_Yes
+    a ex:Esquema ;
+    rdfs:label "Esquema GAPTONEG = Sí (eje Z estándar)"@es ;
+    ex:textoExtracto "Esquema 'GAPTONEG = Sí': orienta el eje Z con Z+ hacia arriba (condición normal). El cabezal láser desciende (movimiento en sentido negativo) hasta alcanzar el gap respecto a la pieza (WORKPIECE)."@es .
+
+ex:Esquema_GapToNeg_No
+    a ex:Esquema ;
+    rdfs:label "Esquema GAPTONEG = No (eje Z invertido)"@es ;
+    ex:textoExtracto "Esquema 'GAPTONEG = No': representa un eje Z invertido (Z+ hacia abajo). El movimiento para lograr el gap se realiza en sentido positivo."@es .
+
+ex:Esquema_LaserCompensation
+    a ex:Esquema ;
+    rdfs:label "Diagrama de compensación de dispersión láser CO₂"@es ;
+    ex:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser."@es .
+
+### Sensores y Parámetros
+ex:Sensor_Gap
+    a ex:Sensor ;
+    rdfs:label "Sensor de gap"@es ;
+    ex:textoExtracto "Gráfico del sensor de gap con ejes mV (horizontal) y mm/inch (vertical). Representa la **señal del sensor** (SENSOR SIGNAL) frente al offset aplicado."@es ;
+    ex:monitoreaParametro ex:Param_GAPSENSOROFFSET, ex:Param_GAPDISTLIMIT ;
+    ex:ilustradoEn ex:Esquema_GapSensorGraph, ex:Esquema_GapControlLoop .
+
+ex:Param_GAPSENSOROFFSET
+    a ex:Parametro ;
+    rdfs:label "GAPSENSOROFFSET" ;
+    ex:identificador "GAPSENSOROFFSET" ;
+    ex:textoExtracto "offset aplicado (GAPSENSOROFFSET)."@es ;
+    ex:monitoreaParametro ex:Sensor_Gap .
+
+ex:Param_GAPVOLTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPVOLTLIMIT" ;
+    ex:identificador "GAPVOLTLIMIT" ;
+    ex:textoExtracto "límite de voltaje (GAPVOLTLIMIT)."@es .
+
+ex:Param_GAPDISTLIMIT
+    a ex:Parametro ;
+    rdfs:label "GAPDISTLIMIT" ;
+    ex:identificador "GAPDISTLIMIT" ;
+    ex:textoExtracto "límite de distancia (GAPDISTLIMIT)."@es .
+
+ex:Param_GAP_PGAIN
+    a ex:Parametro ;
+    rdfs:label "GAP P-GAIN" ;
+    ex:identificador "GAP P-GAIN" ;
+    ex:textoExtracto "ganancia proporcional de gap (GAP P-GAIN)."@es .
+
+### Componentes del Lazo de Control
+ex:Filtro_Cutoff
+    a ex:ComponenteElectrico ;
+    rdfs:label "Filtro de corte (CUTOFF FILTER)"@es ;
+    ex:textoExtracto "filtro de corte (CUTOFF FILTER), esquematizando dónde se atenúa la alta frecuencia antes del control de posición."@es ;
+    ex:ilustradoEn ex:Esquema_GapControlLoop .
+
+### Relaciones Funcionales
+ex:Esquema_GapControlLoop
+    ex:detalladoEnEsquema ex:Sensor_Gap, ex:Filtro_Cutoff, ex:Param_GAP_PGAIN .
+
+ex:Sensor_Gap
+    ex:documentadoEn ex:Esquema_GapSensorGraph ;
+    ex:detalladoEnEsquema ex:Esquema_GapControlLoop .

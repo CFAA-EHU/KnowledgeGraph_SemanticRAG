@@ -1,0 +1,74 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Modulo_RCS_S a ns1:Sistema ;
+    rdfs:label "Módulo RCS-S" ;
+    ns1:textoExtracto "MÓDULO RCS-S" ;
+    ns1:tieneComponente ns1:Alarma_E134,
+        ns1:Alarma_E234,
+        ns1:Alarma_E334,
+        ns1:Cable_SenalA,
+        ns1:Cable_SenalB_E21A,
+        ns1:Cable_SenalB_E21B,
+        ns1:Captador_E21A,
+        ns1:Captador_E21B .
+
+ns1:Alarma_E334 a ns1:Alarma ;
+    rdfs:label "Alarma E334" ;
+    ns1:identificador "E334" ;
+    ns1:textoExtracto "E334" .
+
+ns1:Cable_SenalA a ns1:ComponenteElectrico ;
+    rdfs:label "Cable de la señal A" ;
+    ns1:requiereMantenimiento ns1:Tarea_RevisionConexionado ;
+    ns1:textoExtracto "El cable de la señal A y/o /A puede estar roto o desconectado" .
+
+ns1:Cable_SenalB_E21A a ns1:ComponenteElectrico ;
+    rdfs:label "Cable de la señal B (E21A)" ;
+    ns1:requiereMantenimiento ns1:Tarea_RevisionConexionado ;
+    ns1:textoExtracto "E134 Cable roto, señal B de la captación E21A" .
+
+ns1:Cable_SenalB_E21B a ns1:ComponenteElectrico ;
+    rdfs:label "Cable de la señal B (E21B)" ;
+    ns1:requiereMantenimiento ns1:Tarea_RevisionConexionado ;
+    ns1:textoExtracto "E234 Cable roto, señal B de la captación E21B" .
+
+ns1:SenalB_E21A a ns1:Parametro ;
+    rdfs:label "Señal B (E21A)" ;
+    ns1:monitoreaParametro ns1:Captador_E21A ;
+    ns1:textoExtracto "nivel de las señales proporcionadas por el captador" .
+
+ns1:SenalB_E21B a ns1:Parametro ;
+    rdfs:label "Señal B (E21B)" ;
+    ns1:monitoreaParametro ns1:Captador_E21B ;
+    ns1:textoExtracto "nivel de las señales proporcionadas por el captador" .
+
+ns1:Alarma_E134 a ns1:Alarma ;
+    rdfs:label "Alarma E134" ;
+    ns1:identificador "E134" ;
+    ns1:textoExtracto "E134 Cable roto, señal B de la captación E21A" .
+
+ns1:Alarma_E234 a ns1:Alarma ;
+    rdfs:label "Alarma E234" ;
+    ns1:identificador "E234" ;
+    ns1:textoExtracto "E234 Cable roto, señal B de la captación E21B" .
+
+ns1:Captador_E21A a ns1:Sensor ;
+    rdfs:label "Captador E21A" ;
+    ns1:activaAlarma ns1:Alarma_E134 ;
+    ns1:identificador "E21A" ;
+    ns1:monitoreaParametro ns1:SenalB_E21A ;
+    ns1:textoExtracto "señal B de la captación E21A" .
+
+ns1:Captador_E21B a ns1:Sensor ;
+    rdfs:label "Captador E21B" ;
+    ns1:activaAlarma ns1:Alarma_E234 ;
+    ns1:identificador "E21B" ;
+    ns1:monitoreaParametro ns1:SenalB_E21B ;
+    ns1:textoExtracto "señal B de la captación E21B" .
+
+ns1:Tarea_RevisionConexionado a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión del conexionado" ;
+    ns1:ejecutadoPor ns1:Personal ;
+    ns1:textoExtracto "Revisar el conexionado" .
+

@@ -1,0 +1,34 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_0009
+    a                   ex:AvisoSeguridad ;
+    ex:identificador    "0009" ;
+    rdfs:label          "Aviso de sistema: fallo en la gestión de la fifo de aep"@es ;
+    ex:textoExtracto    "0009 Aviso de sistema: fallo en la gestión de la fifo de aep. DETECCIÓN Durante la ejecución. CAUSA El programa tiene un gran número de funciones G o parámetros aritméticos. SOLUCIÓN Reducir el número de parámetros aritméticos usados o programar #FLUSH (vaciado del canal) en puntos de programa donde pequeñas esperas no tengan importancia."@es .
+
+ex:Error_0010
+    a                   ex:AvisoSeguridad ;
+    ex:identificador    "0010" ;
+    rdfs:label          "Error en test de RAM con batería"@es ;
+    ex:textoExtracto    "0010 'Error en test de RAM con batería' DETECCIÓN Durante el arranque del CNC. CAUSA El test de arranque ha detectado un error de"@es .
+
+ex:ParametrosAritmeticos
+    a                   ex:Parametro ;
+    rdfs:label          "parámetros aritméticos"@es ;
+    ex:textoExtracto    "El programa tiene un gran número de [...] parámetros aritméticos"@es ;
+    ex:monitoreaParametro ex:Error_0009 .
+
+ex:FuncionesG a ex:Tabla ;
+     a                   ex:Parametro ;
+    rdfs:label          "funciones G"@es ;
+    ex:textoExtracto    "El programa tiene un gran número de funciones G o parámetros aritméticos"@es ;
+    ex:monitoreaParametro ex:Error_0009 .
+
+ex:Solucion_FLUSH
+    a                   ex:TareaMantenimiento ;
+    rdfs:label          "programar #FLUSH (vaciado del canal)"@es ;
+    ex:textoExtracto    "programar #FLUSH (vaciado del canal) en puntos de programa donde pequeñas esperas no tengan importancia"@es ;
+    ex:solucionaFallo   ex:Error_0009 .

@@ -1,0 +1,105 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3611
+    a ex:Alarma ;
+    rdfs:label "El cabezal master de la sincronización no está en la gama adecuada (SYNCSET ó CAXSET)"@es ;
+    ex:textoExtracto "3611 'El cabezal master de la sincronización no está en la gama adecuada (SYNCSET ó CAXSET)' DETECCIÓN Durante la ejecución. CAUSA El cabezal maestro o esclavo no están en la gama adecuada, parámetro SYNCSET o parámetro CAXSET si el cabezal maestro está como eje C. SOLUCIÓN Cambiar la gama del cabezal maestro y/o esclavo en su canal o pasar el cabezal maestro al canal del esclavo para que el cambio de gama sea automático."@es ;
+    ex:identificador "3611" .
+
+ex:Alarma_3612
+    a ex:Alarma ;
+    rdfs:label "No se admite SPDLEREV si el cabezal está sincronizado o en M19"@es ;
+    ex:textoExtracto "3612 No se admite SPDLEREV si el cabezal está sincronizado o en M19. DETECCIÓN Durante la ejecución. CAUSA El PLC ha activado la marca SPDLEREV en un cabezal que está sincronizado, ya sea como maestro o como esclavo. SOLUCIÓN Desactivar la marca SPDLEREV del PLC."@es ;
+    ex:identificador "3612" .
+
+ex:Alarma_3700
+    a ex:Alarma ;
+    rdfs:label "Límite de recorrido del eje sobrepasado (PLC)"@es ;
+    ex:textoExtracto "3700 'Límite de recorrido del eje sobrepasado (PLC)' DETECCIÓN Durante el movimiento del eje. CAUSA El PLC ha intentado sobrepasar los límites de recorrido. SOLUCIÓN Revisar la programación."@es ;
+    ex:identificador "3700" .
+
+ex:Alarma_3701
+    a ex:Alarma ;
+    rdfs:label "La posición de referencia sobrepasa los límites de software"@es ;
+    ex:textoExtracto "3701 'La posición de referencia sobrepasa los límites de software' DETECCIÓN Durante la validación de parámetros máquina. CAUSA El valor del parámetro REFVALUE sobrepasa los límites de software del eje. SOLUCIÓN Revisar el parámetro REFVALUE y los límites de software."@es ;
+    ex:identificador "3701" .
+
+ex:Alarma_3702
+    a ex:Alarma ;
+    rdfs:label "Error de seguimiento del eje fuera de límite"@es ;
+    ex:textoExtracto "3702 'Error de seguimiento del eje fuera de límite' DETECCIÓN Durante la ejecución. CAUSA El eje ha superado el error de seguimiento permitido, definido en los parámetros máquina (MAXFLWE, MINFLWE, FEDYNFAC, ESTDELAY)."@es ;
+    ex:identificador "3702" .
+
+ex:Parametro_SYNCSET
+    a ex:Parametro ;
+    rdfs:label "SYNCSET" ;
+    ex:textoExtracto "parámetro SYNCSET"@es .
+
+ex:Parametro_CAXSET
+    a ex:Parametro ;
+    rdfs:label "CAXSET" ;
+    ex:textoExtracto "parámetro CAXSET"@es .
+
+ex:Parametro_REFVALUE
+    a ex:Parametro ;
+    rdfs:label "REFVALUE" ;
+    ex:textoExtracto "parámetro REFVALUE"@es .
+
+ex:Parametro_MAXFLWE
+    a ex:Parametro ;
+    rdfs:label "MAXFLWE" ;
+    ex:textoExtracto "parámetro máquina (MAXFLWE)"@es .
+
+ex:Parametro_MINFLWE
+    a ex:Parametro ;
+    rdfs:label "MINFLWE" ;
+    ex:textoExtracto "parámetro máquina (MINFLWE)"@es .
+
+ex:Parametro_FEDYNFAC
+    a ex:Parametro ;
+    rdfs:label "FEDYNFAC" ;
+    ex:textoExtracto "parámetro máquina (FEDYNFAC)"@es .
+
+ex:Parametro_ESTDELAY
+    a ex:Parametro ;
+    rdfs:label "ESTDELAY" ;
+    ex:textoExtracto "parámetro máquina (ESTDELAY)"@es .
+
+ex:ModoOperacion_M19
+    a ex:ModoOperacion ;
+    rdfs:label "M19" ;
+    ex:textoExtracto "en M19, la sentencia #SERVO OFF no puede abrir el lazo; para abrir el lazo, programar M3, M4, M5 o hacer un reset"@es ;
+    ex:identificador "M19" .
+
+ex:ModoOperacion_M3
+    a ex:ModoOperacion ;
+    rdfs:label "M3" ;
+    ex:textoExtracto "programar M3, M4, M5 o hacer un reset"@es ;
+    ex:identificador "M3" .
+
+ex:ModoOperacion_M4
+    a ex:ModoOperacion ;
+    rdfs:label "M4" ;
+    ex:textoExtracto "programar M3, M4, M5 o hacer un reset"@es ;
+    ex:identificador "M4" .
+
+ex:ModoOperacion_M5
+    a ex:ModoOperacion ;
+    rdfs:label "M5" ;
+    ex:textoExtracto "programar M3, M4, M5 o hacer un reset"@es ;
+    ex:identificador "M5" .
+
+ex:Alarma_3611
+    ex:mitigaRiesgo ex:ModoOperacion_M19 .
+
+ex:Alarma_3612
+    ex:mitigaRiesgo ex:ModoOperacion_M19 .
+
+ex:Alarma_3702
+    ex:monitoreaParametro ex:Parametro_MAXFLWE ,
+                        ex:Parametro_MINFLWE ,
+                        ex:Parametro_FEDYNFAC ,
+                        ex:Parametro_ESTDELAY .

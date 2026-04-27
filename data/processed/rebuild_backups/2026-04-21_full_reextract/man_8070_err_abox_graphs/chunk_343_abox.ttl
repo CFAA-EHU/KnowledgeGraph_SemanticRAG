@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_2015
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Radio de herramienta demasiado grande (2015)" ;
+    ex:identificador "2015" ;
+    ex:textoExtracto "No hay intersección entre arco y línea: radio de herramienta demasiado grande. DETECCIÓN Durante la ejecución. CAUSA El radio de la herramienta es demasiado grande para mecanizar la parte del perfil indicada. SOLUCIÓN Usar una herramienta de menor radio." .
+
+ex:DiagnosticoFallo_2016
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Colisión en compensación de radio (2016)" ;
+    ex:identificador "2016" ;
+    ex:textoExtracto "'Se ha modificado el perfil para evitar una colisión' DETECCIÓN Durante la ejecución. CAUSA La detección de colisiones durante la compensación de radio ha detectado una trayectoria que daña el perfil programado y la ha eliminado. SOLUCIÓN Dependiendo de la colisión detectada su solución puede ser utilizar una herramienta de radio menor, programar el perfil de otra forma o simplemente aceptar la modificación propuesta por el proceso de detección de colisiones." .
+
+ex:DiagnosticoFallo_2017
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Programación no permitida con detección de colisiones activa (2017)" ;
+    ex:identificador "2017" ;
+    ex:textoExtracto "'Programación no permitida con detección de colisiones activa' DETECCIÓN Durante la ejecución. CAUSA La detección de colisiones no admite ciertos procesos como búsqueda de cero, movimiento con palpador, etc. SOLUCIÓN No activar la detección de colisiones si hay alguno de estos procesos programado." .
+
+ex:DiagnosticoFallo_2021
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Sobrecarga de CPU en detección de colisiones (2021)" ;
+    ex:identificador "2021" ;
+    ex:textoExtracto "Sobrecarga de CPU en el cálculo de detección de colisiones. DETECCIÓN Durante la preparación de bloques. CAUSA El modelo de la máquina y/o elementos colisionables es demasiado complejo. SOLUCIÓN Simplificar el modelo de la máquina." .
+
+ex:DiagnosticoFallo_2051
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Splines y control tangencial incompatibles (2051)" ;
+    ex:identificador "2051" ;
+    ex:textoExtracto "'Programación de splines y control tangencial incompatibles' DETECCIÓN Durante la ejecución. CAUSA El CNC no permite activar el control tangencial con las splines activas ni viceversa. SOLUCIÓN Desactivar los splines antes activar el control tangencial o viceversa." .
+
+ex:DiagnosticoFallo_2100
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Límite software positivo sobrepasado (2100)" ;
+    ex:identificador "2100" ;
+    ex:textoExtracto "'Límite software positivo sobrepasado en G5, G60 o HSC' DETECCIÓN Durante la ejecución." .
+
+ex:Herramienta_2015_2016
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de radio excesivo" ;
+    ex:textoExtracto "El radio de la herramienta es demasiado grande para mecanizar la parte del perfil indicada." ;
+    ex:solucionaFallo ex:DiagnosticoFallo_2015, ex:DiagnosticoFallo_2016 .
+
+ex:Herramienta_Correcta
+    a ex:Herramienta ;
+    rdfs:label "Herramienta de radio menor" ;
+    ex:textoExtracto "Usar una herramienta de menor radio." ;
+    ex:solucionaFallo ex:DiagnosticoFallo_2015, ex:DiagnosticoFallo_2016 .

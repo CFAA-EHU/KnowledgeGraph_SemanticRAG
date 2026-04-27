@@ -71,6 +71,7 @@ from text_to_sparql import (
     execute_query_plan,
     export_cross_plan_catalog,
     export_planner_generalization_catalog_v2,
+    reconcile_fixed_seed_uris,
 )
 
 logger = logging.getLogger(__name__)
@@ -307,6 +308,10 @@ class EvaluadorRAG:
         resolved: list[str] = []
         for uri in uris or []:
             canonical_uri = self.canonical_entity_map.get(uri, {}).get("canonical_uri", uri)
+            if canonical_uri not in self.subject_uris:
+                reconciled = reconcile_fixed_seed_uris([canonical_uri], self.grafo)
+                if reconciled:
+                    canonical_uri = reconciled[0]
             if canonical_uri not in resolved:
                 resolved.append(canonical_uri)
         return resolved

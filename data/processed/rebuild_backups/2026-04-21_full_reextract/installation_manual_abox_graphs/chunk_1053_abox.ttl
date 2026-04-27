@@ -1,0 +1,70 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_AXISTYPE
+    a ex:Parametro ;
+    rdfs:label "AXISTYPE" ;
+    ex:textoExtracto "AXISTYPE | Rotativo." ;
+    ex:valor "Rotativo" .
+
+ex:Parametro_AXISMODE
+    a ex:Parametro ;
+    rdfs:label "AXISMODE" ;
+    ex:textoExtracto "AXISMODE | Módulo." ;
+    ex:valor "Módulo" .
+
+ex:Parametro_UNIDIR
+    a ex:Parametro ;
+    rdfs:label "UNIDIR" ;
+    ex:textoExtracto "UNIDIR | No." ;
+    ex:valor "No" .
+
+ex:Parametro_SHORTESTWAY
+    a ex:Parametro ;
+    rdfs:label "SHORTESTWAY" ;
+    ex:textoExtracto "SHORTESTWAY | No." ;
+    ex:valor "No" .
+
+ex:Parametro_MODUPLIM
+    a ex:Parametro ;
+    rdfs:label "MODUPLIM" ;
+    ex:textoExtracto "MODUPLIM | Límites del módulo. Límites para visualizar las cotas." ;
+    ex:valor "Límite superior del módulo" .
+
+ex:Parametro_MODLOWLIM
+    a ex:Parametro ;
+    rdfs:label "MODLOWLIM" ;
+    ex:textoExtracto "MODLOWLIM | Límites del módulo. Límites para visualizar las cotas." ;
+    ex:valor "Límite inferior del módulo" .
+
+ex:Parametro_UNIDIR_PosNeg
+    a ex:Parametro ;
+    rdfs:label "UNIDIR (unidireccional positivo/negativo)" ;
+    ex:textoExtracto "UNIDIR | Positivo / Negativo." ;
+    ex:valor "Positivo/Negativo" .
+
+ex:ModoOperacion_G90
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación G90 (absoluto)" ;
+    ex:textoExtracto "Movimientos en G90. | El eje se desplaza según su sentido predeterminado, hasta alcanzar la cota programada." .
+
+ex:ModoOperacion_G91
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación G91 (incremental)" ;
+    ex:textoExtracto "Movimientos en G91. | El eje sólo admite movimientos según su sentido predeterminado. El signo de la cota indica el sentido del desplazamiento; el valor absoluto de la cota indica el incremento de posición." .
+
+ex:Sistema_ConfiguracionEjeRotativo
+    a ex:Sistema ;
+    rdfs:label "Configuración de eje rotativo (módulo)" ;
+    ex:textoExtracto "Configuración de los parámetros máquina. Los parámetros máquina MODUPLIM y MODLOWLIM establecen los límites del módulo del eje; no hay límites de recorrido." ;
+    ex:tieneComponente ex:Parametro_AXISTYPE, ex:Parametro_AXISMODE, ex:Parametro_UNIDIR, ex:Parametro_SHORTESTWAY, ex:Parametro_MODUPLIM, ex:Parametro_MODLOWLIM ;
+    ex:monitoreaParametro ex:Parametro_AXISTYPE, ex:Parametro_AXISMODE, ex:Parametro_UNIDIR, ex:Parametro_SHORTESTWAY, ex:Parametro_MODUPLIM, ex:Parametro_MODLOWLIM .
+
+ex:Sistema_ConfiguracionEjeUnidireccional
+    a ex:Sistema ;
+    rdfs:label "Configuración de eje rotativo unidireccional" ;
+    ex:textoExtracto "Eje rotativo unidireccional. Este tipo de eje rotativo sólo se desplaza en un sentido, el que tiene predeterminado." ;
+    ex:tieneComponente ex:Parametro_UNIDIR_PosNeg ;
+    ex:monitoreaParametro ex:Parametro_UNIDIR_PosNeg .

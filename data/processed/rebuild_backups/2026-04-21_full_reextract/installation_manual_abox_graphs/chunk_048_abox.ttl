@@ -1,0 +1,94 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_HomogeneizacionParametrosCNC_Drive a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de homogeneización de parámetros entre CNC y DRIVE"@es ;
+    ex:textoExtracto """
+| CNC       | DRIVE       | Sercos  | Feedback | Observaciones |
+|-----------|-------------|---------|----------|---------------|
+| AXISCH    | PP55 (bit 0,2,3) | Posición. |          | B1=0 B2=0 B3=0; No cambia el signo de contaje (AXISCH==NO)...
+| I0TYPE    | PP115 (bit 1,5)  |         | Externa. | B1=0 B5=0; Si I0 no codificado...""" ;
+    ex:identificador "Tabla 2.1 (pág. 51-52)" .
+
+ex:Parametro_AXISCH
+    a ex:Parametro ;
+    rdfs:label "AXISCH" ;
+    ex:textoExtracto "AXISCH"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:monitoreaParametro ex:ComponenteElectrico_PP55 .
+
+ex:ComponenteElectrico_PP55
+    a ex:ComponenteElectrico ;
+    rdfs:label "PP55 (bit 0, 2, 3)" ;
+    ex:identificador "PP55" ;
+    ex:textoExtracto "PP55 (bit 0,2,3)"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:valor "B1=0 B2=0 B3=0; No cambia el signo de contaje (AXISCH==NO). B1=1 B2=1 B3=1; Sí cambia el signo de contaje (AXISCH==SI)"@es .
+
+ex:Parametro_I0TYPE
+    a ex:Parametro ;
+    rdfs:label "I0TYPE" ;
+    ex:textoExtracto "I0TYPE"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:monitoreaParametro ex:ComponenteElectrico_PP115 .
+
+ex:ComponenteElectrico_PP115
+    a ex:ComponenteElectrico ;
+    rdfs:label "PP115 (bit 1, 5)" ;
+    ex:identificador "PP115" ;
+    ex:textoExtracto "PP115 (bit 1,5)"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:valor "B1=0 B5=0; Si I0 no codificado. B1=1 B5=0; Si I0 codificado creciente. B1=1 B5=1; Si I0 codificado decreciente."@es .
+
+ex:Parametro_REFDIREC
+    a ex:Parametro ;
+    rdfs:label "REFDIREC" ;
+    ex:textoExtracto "REFDIREC"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:monitoreaParametro ex:ComponenteElectrico_PP147_Bit0 .
+
+ex:ComponenteElectrico_PP147
+    a ex:ComponenteElectrico ;
+    rdfs:label "PP147 (bits 0,1,3,5)" ;
+    ex:identificador "PP147" ;
+    ex:textoExtracto "PP147 (bit 0,5,3,1)"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive .
+
+ex:ComponenteElectrico_PP147_Bit0
+    a ex:ComponenteElectrico ;
+    rdfs:label "PP147 (bit 0 - REFDIREC)" ;
+    ex:textoExtracto "PP147 (bit 0)"@es ;
+    ex:valor "B0=0; Sentido de búsqueda positivo. B0=1; Sentido de búsqueda negativo."@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:compuestoPor ex:ComponenteElectrico_PP147 .
+
+ex:Parametro_REFFEED1
+    a ex:Parametro ;
+    rdfs:label "REFFEED1" ;
+    ex:textoExtracto "REFFEED1"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:monitoreaParametro ex:ComponenteElectrico_PP41 .
+
+ex:ComponenteElectrico_PP41
+    a ex:ComponenteElectrico ;
+    rdfs:label "PP41" ;
+    ex:identificador "PP41" ;
+    ex:textoExtracto "PP41"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive .
+
+ex:Parametro_REFFEED2
+    a ex:Parametro ;
+    rdfs:label "REFFEED2" ;
+    ex:textoExtracto "REFFEED2"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive ;
+    ex:monitoreaParametro ex:ComponenteElectrico_PP1 .
+
+ex:ComponenteElectrico_PP1
+    a ex:ComponenteElectrico ;
+    rdfs:label "PP1" ;
+    ex:identificador "PP1" ;
+    ex:textoExtracto "PP1"@es ;
+    ex:documentadoEn ex:Tabla_HomogeneizacionParametrosCNC_Drive .

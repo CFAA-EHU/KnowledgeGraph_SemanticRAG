@@ -1,0 +1,80 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SenalENABLE
+    a ex:InterfazUsuario ;
+    rdfs:label "ENABLE(axis)" ;
+    ex:textoExtracto "ENABLE(axis) [...] El CNC pone esta marca a (=1) para indicar al PLC que va a mover el eje o cabezal correspondiente en lazo cerrado [...] Esta marca también se habilita en los movimientos de eje independiente, en los movimientos de cabezal en lazo cerrado (por ejemplo M19 ó G74), o cuando un cabezal pasa a lazo cerrado mediante la sentencia #SERVO ON." ;
+    ex:identificador "ENABLE" .
+
+ex:SenalINPOS
+    a ex:InterfazUsuario ;
+    rdfs:label "INPOS(axis)" ;
+    ex:textoExtracto "hasta que el CNC active la marca INPOS(axis)." ;
+    ex:identificador "INPOS" .
+
+ex:SenalDIR
+    a ex:InterfazUsuario ;
+    rdfs:label "DIR(axis)" ;
+    ex:textoExtracto "DIR(axis) [...] El CNC pone esta marca a (=1) para indicar que el eje se desplaza en sentido negativo y a (=0) cuando se desplaza en sentido positivo." ;
+    ex:identificador "DIR" .
+
+ex:Senal_FEEDHOL
+    a ex:InterfazUsuario ;
+    rdfs:label "_FEEDHOL" ;
+    ex:textoExtracto "Si el PLC detiene el avance de los ejes (marca _FEEDHOL=0) la señal ENABLE(axis) se mantiene a (=1)." ;
+    ex:identificador "_FEEDHOL" .
+
+ex:ModoLazoCerrado_M19
+    a ex:ModoOperacion ;
+    rdfs:label "M19" ;
+    ex:textoExtracto "cabezal en lazo cerrado (por ejemplo M19 ó G74)" ;
+    ex:identificador "M19" .
+
+ex:ModoLazoCerrado_G63
+    a ex:ModoOperacion ;
+    rdfs:label "G63" ;
+    ex:textoExtracto "Cuando el cabezal trabaja en lazo cerrado (M19 ó G63)" ;
+    ex:identificador "G63" .
+
+ex:ModoLazoCerrado_G74
+    a ex:ModoOperacion ;
+    rdfs:label "G74" ;
+    ex:textoExtracto "cabezal en lazo cerrado (por ejemplo M19 ó G74)" ;
+    ex:identificador "G74" .
+
+ex:Sentencia_SERVO_ON
+    a ex:Parametro ;
+    rdfs:label "#SERVO ON" ;
+    ex:textoExtracto "cuando un cabezal pasa a lazo cerrado mediante la sentencia #SERVO ON." ;
+    ex:identificador "#SERVO ON" .
+
+ex:Sentencia_LINK
+    a ex:Parametro ;
+    rdfs:label "#LINK" ;
+    ex:textoExtracto "ejes acoplados con #LINK" ;
+    ex:identificador "#LINK" .
+
+ex:Sentencia_FOLLOW
+    a ex:Parametro ;
+    rdfs:label "#FOLLOW" ;
+    ex:textoExtracto "ejes sincronizados con #FOLLOW" ;
+    ex:identificador "#FOLLOW" .
+
+ex:Sentencia_SYNC
+    a ex:Parametro ;
+    rdfs:label "#SYNC" ;
+    ex:textoExtracto "sincronización de cabezales en lazo cerrado mediante la sentencia #SYNC" ;
+    ex:identificador "#SYNC" .
+
+ex:SistemaEjesCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de ejes y cabezales (CNC/PLC)" ;
+    ex:textoExtracto "El CNC pone esta marca a (=1) para indicar al PLC que va a mover el eje o cabezal correspondiente en lazo cerrado, de manera que el PLC habilita el eje o cabezal si es necesario." ;
+    ex:tieneComponente ex:SenalENABLE, ex:SenalINPOS, ex:SenalDIR, ex:Senal_FEEDHOL ;
+    ex:controla ex:ModoLazoCerrado_M19, ex:ModoLazoCerrado_G63, ex:ModoLazoCerrado_G74 .
+
+ex:SenalENABLE
+    ex:habilitadoPor ex:ModoLazoCerrado_M19, ex:ModoLazoCerrado_G63, ex:ModoLazoCerrado_G74, ex:Sentencia_SERVO_ON .

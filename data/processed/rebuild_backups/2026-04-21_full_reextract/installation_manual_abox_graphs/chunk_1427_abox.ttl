@@ -1,0 +1,56 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Esquema_Tandem_Control_Precarga
+    a                       ex:Esquema ;
+    rdfs:label              "Esquema de control tándem con precarga"@es ;
+    ex:textoExtracto         "Diagrama de bloques del sistema con CNC, regulador y dos ejes (MASTER DRIVE y SLAVE DRIVE). Se detallan lazos de posición y velocidad, señales de consigna y realimentación, y el bloque 'Tandem control' que aplica precarga y distribución de par."@es ;
+    ex:identificador         "Tandem_Control_Precarga" .
+
+ex:Sistema_Tandem_Multieje
+    a                       ex:Sistema ;
+    rdfs:label              "Sistema tándem multieje con control de precarga"@es ;
+    ex:textoExtracto         "Grupo multieje compuesto por dos ejes, cada uno controlado por un motor. [...] configuración de un solo regulador."@es ;
+    ex:detalladoEnEsquema    ex:Esquema_Tandem_Control_Precarga ;
+    ex:tieneComponente       ex:Motor_Maestro_Tandem ;
+    ex:tieneComponente       ex:Motor_Esclavo_Tandem ;
+    ex:tieneComponente       ex:Regulador_Tandem ;
+    ex:tieneComponente       ex:Modulo_Control_Tandem .
+
+ex:Motor_Maestro_Tandem
+    a                       ex:ComponenteMecanico ;
+    rdfs:label              "MASTER DRIVE (Motor maestro en configuración tándem)"@es ;
+    ex:textoExtracto         "eje (MASTER DRIVE) [...] control mantiene tensión mecánica en frenadas."@es ;
+    ex:identificador         "MASTER_DRIVE" .
+
+ex:Motor_Esclavo_Tandem
+    a                       ex:ComponenteMecanico ;
+    rdfs:label              "SLAVE DRIVE (Motor esclavo en configuración tándem)"@es ;
+    ex:textoExtracto         "eje (SLAVE DRIVE) [...] seguimiento del esclavo."@es ;
+    ex:identificador         "SLAVE_DRIVE" .
+
+ex:Regulador_Tandem
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Regulador de sistema tándem"@es ;
+    ex:textoExtracto         "módulo de regulador; flechas indican el sentido de movimiento y se resaltan captaciones internas y directas por eje en configuración de un solo regulador."@es ;
+    ex:controla              ex:Motor_Maestro_Tandem ;
+    ex:controla              ex:Motor_Esclavo_Tandem .
+
+ex:Modulo_Control_Tandem
+    a                       ex:ComponenteElectrico ;
+    rdfs:label              "Tandem control (módulo de distribución de par y precarga)"@es ;
+    ex:textoExtracto         "bloque 'Tandem control' que aplica precarga y distribución de par. [...] incluye filtro de precarga y rutas de consigna de velocidad a ambos motores."@es ;
+    ex:monitoreaParametro    ex:Parametro_Precarga ;
+    ex:monitoreaParametro    ex:Parametro_Par_Distribuido .
+
+ex:Parametro_Precarga
+    a                       ex:Parametro ;
+    rdfs:label              "Precarga (preload) en sistema tándem"@es ;
+    ex:textoExtracto         "bloque de 'Preload' [...] enfatizando normalización y reparto de par."@es .
+
+ex:Parametro_Par_Distribuido
+    a                       ex:Parametro ;
+    rdfs:label              "Par distribuido (torque) en eje maestro/esclavo"@es ;
+    ex:textoExtracto         "el reparto de par se invierte respecto a la aceleración [...] distribución de par."@es .

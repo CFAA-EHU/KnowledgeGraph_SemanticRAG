@@ -1,97 +1,77 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-### Figuras y Esquemas Principales
-ex:Figura_5_3_DimensionesMaquina
-    a ex:Figura ;
+ns1:ControlCMas a ns1:ComponenteElectrico ;
+    rdfs:label "Control C+" ;
+    ns1:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados."@es .
+
+ns1:ControlCMenos a ns1:ComponenteElectrico ;
+    rdfs:label "Control C-" ;
+    ns1:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados."@es .
+
+ns1:ControlZMas a ns1:ComponenteElectrico ;
+    rdfs:label "Control Z+" ;
+    ns1:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados."@es .
+
+ns1:ControlZMenos a ns1:ComponenteElectrico ;
+    rdfs:label "Control Z-" ;
+    ns1:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados."@es .
+
+ns1:Figura5_3_DimensionesMaquina a ns1:Figura ;
     rdfs:label "Figura 5-3. Dimensiones máquina" ;
-    ex:textoExtracto "Figura 5-3. Dimensiones máquina --- Secuencia 1–2–3 con flechas verticales y curva que ilustran el volteo desde vertical a horizontal con dos grúas; vistas frontal y lateral para claridad espacial." ;
-    ex:ilustradoEn ex:Manual_Tecnico ;
-    ex:identificador "5-3" .
+    ns1:textoExtracto "Volteo máquina --- Secuencia 1–2–3 con flechas verticales y curva que ilustran el volteo desde vertical a horizontal con dos grúas; vistas frontal y lateral para claridad espacial."@es .
 
-ex:Figura_6_1_InterruptorGeneral
-    a ex:Figura ;
+ns1:Figura6_1_InterruptorGeneralArmarioElectrico a ns1:Figura ;
     rdfs:label "Figura 6-1. Interruptor general del armario eléctrico" ;
-    ex:textoExtracto "Primer plano del seccionador con flecha roja que indica el giro a ON. Se aprecia luz piloto y marcaje del mando; enfoque en la acción previa a la puesta en servicio y en la identificación visual del estado del interruptor." ;
-    ex:ilustradoEn ex:Manual_Tecnico ;
-    ex:identificador "6-1" .
+    ns1:textoExtracto "Plano con vistas planta, alzado y perspectiva acotadas (p. ej., 5850 y 5000 mm visibles). Rejilla y cartelas técnicas estructuran lectura y ubicación en planta."@es .
 
-ex:Figura_6_2_PanelOperador
-    a ex:Figura ;
+ns1:Figura6_2_PanelOperador a ns1:Figura ;
     rdfs:label "Figura 6-2. Panel operador" ;
-    ex:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas. La maquetación por bloques y flechas clarifica funciones y jerarquía de mandos." ;
-    ex:ilustradoEn ex:Manual_Tecnico ;
-    ex:identificador "6-2" .
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas. La maquetación por bloques y flechas clarifica funciones y jerarquía de mandos."@es .
 
-### Interfaz de Usuario (Componentes)
-ex:PanelOperador_Maquina
-    a ex:InterfazUsuario ;
-    rdfs:label "Panel operador de la máquina" ;
-    ex:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas." ;
-    ex:tieneComponente ex:Bot_n_ParadaEmergencia, ex:Bot_n_PuestaServicio, ex:Bot_n_ParoServicio, ex:Bot_n_MarchaCiclo, ex:Bot_n_ModoSetup, ex:Bot_n_HabilitarPuertas ;
-    ex:detalladoEnEsquema ex:Figura_6_2_PanelOperador .
+ns1:PanelOperador a ns1:InterfazUsuario ;
+    rdfs:label "Panel operador" ;
+    ns1:compuestoPor ns1:BotonHabilitarAperturaPuertas,
+        ns1:BotonMarchaCiclo,
+        ns1:BotonModoSetup,
+        ns1:BotonParadaEmergencia,
+        ns1:BotonParoServicio,
+        ns1:BotonPuestaServicio ;
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas. La maquetación por bloques y flechas clarifica funciones y jerarquía de mandos."@es .
 
-ex:Teclado_Control
-    a ex:InterfazUsuario ;
-    rdfs:label "Teclado de control (KEYBOARD)" ;
-    ex:textoExtracto "Captura KEYBOARD con agrupaciones de teclas funcionales (modo, navegación, utilidades). Distribución en celdas grandes/pequeñas y rótulos tipográficos que permiten identificar acciones rápidas." ;
-    ex:detalladoEnEsquema ex:Manual_Tecnico .
+ns1:SeccionadorInterruptorGeneral a ns1:ComponenteElectrico ;
+    rdfs:label "Seccionador interruptor general" ;
+    ns1:textoExtracto "Primer plano del seccionador con flecha roja que indica el giro a ON. Se aprecia luz piloto y marcaje del mando; enfoque en la acción previa a la puesta en servicio y en la identificación visual del estado del interruptor."@es .
 
-ex:Interfaz_JOG
-    a ex:InterfazUsuario ;
-    rdfs:label "Interfaz JOG para conducción manual" ;
-    ex:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados. Zonas de estado en la parte inferior y lateral; contraste claro entre teclas activas/inactivas para la conducción manual de ejes." ;
-    ex:detalladoEnEsquema ex:Manual_Tecnico .
+ns1:Teclado a ns1:InterfazUsuario ;
+    rdfs:label "Teclado" ;
+    ns1:textoExtracto "Captura KEYBOARD con agrupaciones de teclas funcionales (modo, navegación, utilidades). Distribución en celdas grandes/pequeñas y rótulos tipográficos que permiten identificar acciones rápidas."@es .
 
-### Componentes Eléctricos (Botones y Controles)
-ex:Bot_n_ParadaEmergencia
-    a ex:ComponenteElectrico ;
-    rdfs:label "Botón de parada de emergencia" ;
-    ex:textoExtracto "Parada emergencia" ;
-    ex:mitigaRiesgo ex:Alarma_Emergencia .
+ns1:TecladoJOG a ns1:InterfazUsuario ;
+    rdfs:label "Teclado JOG" ;
+    ns1:textoExtracto "Captura JOG con controles Z+/Z- y C+/C- destacados. Zonas de estado en la parte inferior y lateral; contraste claro entre teclas activas/inactivas para la conducción manual de ejes."@es .
 
-ex:Bot_n_PuestaServicio
-    a ex:ComponenteElectrico ;
-    rdfs:label "Botón de puesta en servicio" ;
-    ex:textoExtracto "Puesta servicio" .
+ns1:BotonHabilitarAperturaPuertas a ns1:ComponenteElectrico ;
+    rdfs:label "Boton Habilitar/Apertura puertas" ;
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas."@es .
 
-ex:Bot_n_ParoServicio
-    a ex:ComponenteElectrico ;
-    rdfs:label "Botón de paro de servicio" ;
-    ex:textoExtracto "Paro servicio" .
+ns1:BotonMarchaCiclo a ns1:ComponenteElectrico ;
+    rdfs:label "Boton Marcha ciclo" ;
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas."@es .
 
-ex:Bot_n_MarchaCiclo
-    a ex:ComponenteElectrico ;
-    rdfs:label "Botón de marcha de ciclo" ;
-    ex:textoExtracto "Marcha ciclo" .
+ns1:BotonModoSetup a ns1:ComponenteElectrico ;
+    rdfs:label "Boton Modo Setup" ;
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas."@es .
 
-ex:Bot_n_ModoSetup
-    a ex:ComponenteElectrico ;
-    rdfs:label "Botón de modo setup" ;
-    ex:textoExtracto "Modo Setup" .
+ns1:BotonParadaEmergencia a ns1:ComponenteElectrico ;
+    rdfs:label "Boton Parada emergencia" ;
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas."@es .
 
-ex:Bot_n_HabilitarPuertas
-    a ex:ComponenteElectrico ;
-    rdfs:label "Botón de habilitar/apertura de puertas" ;
-    ex:textoExtracto "Habilitar/Apertura puertas" .
+ns1:BotonParoServicio a ns1:ComponenteElectrico ;
+    rdfs:label "Boton Paro servicio" ;
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas."@es .
 
-ex:InterruptorGeneral_Armario
-    a ex:ComponenteElectrico ;
-    rdfs:label "Interruptor general del armario eléctrico" ;
-    ex:textoExtracto "Primer plano del seccionador con flecha roja que indica el giro a ON. Se aprecia luz piloto y marcaje del mando." ;
-    ex:detalladoEnEsquema ex:Figura_6_1_InterruptorGeneral .
+ns1:BotonPuestaServicio a ns1:ComponenteElectrico ;
+    rdfs:label "Boton Puesta servicio" ;
+    ns1:textoExtracto "Esquema frontal del pupitre con botones señalados mediante etiquetas: Parada emergencia, Puesta servicio, Paro servicio, Marcha ciclo, Modo Setup, Habilitar/Apertura puertas."@es .
 
-### Manual (Entidad Ancla)
-ex:Manual_Tecnico
-    a ex:Manual ;
-    rdfs:label "Manual técnico de la máquina" ;
-    ex:textoExtracto "CAPÍTULO 10 - ANEXOS - 10.1 – PLANOS MECANICOS - 10.2 – ESQUEMAS DE FLUIDOS - 10.3 – ESQUEMAS ELECTRICOS" ;
-    ex:documentadoEn ex:Capitulo_10_Anexos .
-
-ex:Capitulo_10_Anexos
-    a ex:Capitulo ;
-    rdfs:label "Capítulo 10 - Anexos" ;
-    ex:textoExtracto "10.1 – PLANOS MECANICOS - 10.2 – ESQUEMAS DE FLUIDOS - 10.3 – ESQUEMAS ELECTRICOS" ;
-    ex:compuestoPor ex:Figura_5_3_DimensionesMaquina, ex:Figura_6_1_InterruptorGeneral, ex:Figura_6_2_PanelOperador .

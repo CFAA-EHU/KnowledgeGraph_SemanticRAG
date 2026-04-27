@@ -1,0 +1,95 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FalloSintaxis_8901
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error de sintaxis en sentencia #LEAP"@es ;
+    ex:identificador "8901" ;
+    ex:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. 8901 #LEAP[<,INCPOS> <,G90/G91> <,POSvalor> <,POSLIMITvalor> <,GAPvalor> <,TIMEvalor> <,OVRvalor>] <nombreEje cotaEje>"@es ;
+    ex:textoExtracto "DETECCIÓN Durante la edición y ejecución."@es .
+
+ex:FalloSintaxis_8902
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error de sintaxis en sentencia #GAPCTRL"@es ;
+    ex:identificador "8902" ;
+    ex:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. 8902 #GAPCTRL ON/OFF[<INC> <nombreEje posiciónEje> <,GAPvalor> <,Fvalor> <,F3DPvalor> <,OFFDISTvalor>]"@es ;
+    ex:textoExtracto "DETECCIÓN"@es .
+
+ex:Parametro_INCPOS
+    a ex:Parametro ;
+    rdfs:label "INCPOS (parámetro de incremento de posición)"@es ;
+    ex:textoExtracto "#LEAP[<,INCPOS>..."@es .
+
+ex:Parametro_G90_G91
+    a ex:Parametro ;
+    rdfs:label "G90/G91 (sistema de coordenadas absoluto/incremental)"@es ;
+    ex:textoExtracto "#LEAP[<,G90/G91>..."@es .
+
+ex:Parametro_POSvalor
+    a ex:Parametro ;
+    rdfs:label "POSvalor (valor de posición)"@es ;
+    ex:textoExtracto "#LEAP[<,POSvalor>..."@es .
+
+ex:Parametro_POSLIMITvalor
+    a ex:Parametro ;
+    rdfs:label "POSLIMITvalor (límite de posición)"@es ;
+    ex:textoExtracto "#LEAP[<,POSLIMITvalor>..."@es .
+
+ex:Parametro_GAPvalor
+    a ex:Parametro ;
+    rdfs:label "GAPvalor (valor de hueco)"@es ;
+    ex:textoExtracto "#LEAP[<,GAPvalor>... / #GAPCTRL ... <,GAPvalor>..."@es .
+
+ex:Parametro_TIMEvalor
+    a ex:Parametro ;
+    rdfs:label "TIMEvalor (valor de tiempo)"@es ;
+    ex:textoExtracto "#LEAP[<,TIMEvalor>..."@es .
+
+ex:Parametro_OVRvalor
+    a ex:Parametro ;
+    rdfs:label "OVRvalor (valor de override)"@es ;
+    ex:textoExtracto "#LEAP[<,OVRvalor>..."@es .
+
+ex:Parametro_Fvalor
+    a ex:Parametro ;
+    rdfs:label "Fvalor (valor de avance)"@es ;
+    ex:textoExtracto "#GAPCTRL ... <,Fvalor>..."@es .
+
+ex:Parametro_F3DPvalor
+    a ex:Parametro ;
+    rdfs:label "F3DPvalor (valor de avance en 3D)"@es ;
+    ex:textoExtracto "#GAPCTRL ... <,F3DPvalor>..."@es .
+
+ex:Parametro_OFFDISTvalor
+    a ex:Parametro ;
+    rdfs:label "OFFDISTvalor (distancia de apagado)"@es ;
+    ex:textoExtracto "#GAPCTRL ... <,OFFDISTvalor>..."@es .
+
+ex:Comando_LEAP
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando #LEAP (movimiento controlado)"@es ;
+    ex:textoExtracto "#LEAP[<,INCPOS> <,G90/G91> <,POSvalor> <,POSLIMITvalor> <,GAPvalor> <,TIMEvalor> <,OVRvalor>] <nombreEje cotaEje>"@es ;
+    ex:monitoreaParametro ex:Parametro_INCPOS ;
+    ex:monitoreaParametro ex:Parametro_G90_G91 ;
+    ex:monitoreaParametro ex:Parametro_POSvalor ;
+    ex:monitoreaParametro ex:Parametro_POSLIMITvalor ;
+    ex:monitoreaParametro ex:Parametro_GAPvalor ;
+    ex:monitoreaParametro ex:Parametro_TIMEvalor ;
+    ex:monitoreaParametro ex:Parametro_OVRvalor .
+
+ex:Comando_GAPCTRL
+    a ex:InterfazUsuario ;
+    rdfs:label "Comando #GAPCTRL (control de hueco)"@es ;
+    ex:textoExtracto "#GAPCTRL ON/OFF[<INC> <nombreEje posiciónEje> <,GAPvalor> <,Fvalor> <,F3DPvalor> <,OFFDISTvalor>]"@es ;
+    ex:monitoreaParametro ex:Parametro_GAPvalor ;
+    ex:monitoreaParametro ex:Parametro_Fvalor ;
+    ex:monitoreaParametro ex:Parametro_F3DPvalor ;
+    ex:monitoreaParametro ex:Parametro_OFFDISTvalor .
+
+ex:FalloSintaxis_8901
+    ex:solucionaFallo ex:Comando_LEAP .
+
+ex:FalloSintaxis_8902
+    ex:solucionaFallo ex:Comando_GAPCTRL .

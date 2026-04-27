@@ -1,0 +1,49 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DWELL
+    a ex:Parametro ;
+    rdfs:label "DWELL" ;
+    ex:textoExtracto "definir el parámetro DWELL>0. Los ejes utilizan el parámetro DWELL como tiempo de espera antes de dar error por no tener la marca SWITCH activa." ;
+    ex:valor ">0" .
+
+ex:Marca_SWITCH
+    a ex:ComponenteElectrico ;
+    rdfs:label "SWITCH" ;
+    ex:textoExtracto "no tener la marca SWITCH activa" .
+
+ex:Marca_ENABLE
+    a ex:ComponenteElectrico ;
+    rdfs:label "ENABLE" ;
+    ex:textoExtracto "vigila qué marca ENABLE se activa" .
+
+ex:Marca_SERVOON
+    a ex:ComponenteElectrico ;
+    rdfs:label "SERVOON" ;
+    ex:textoExtracto "activar su marca [...] SERVOON" .
+
+ex:Marca_SPENA
+    a ex:ComponenteElectrico ;
+    rdfs:label "SPENA" ;
+    ex:textoExtracto "activar su marca [...] SPENA" .
+
+ex:Marca_DRENA
+    a ex:ComponenteElectrico ;
+    rdfs:label "DRENA" ;
+    ex:textoExtracto "activar su marca [...] DRENA" .
+
+ex:Sistema_GestionMultieje
+    a ex:Sistema ;
+    rdfs:label "Sistema de gestión dinámica de multieje" ;
+    ex:textoExtracto "Para hacer la gestión dinámica de un multieje, hay que configurar los ejes del grupo como ejes muertos y definir el parámetro DWELL>0." ;
+    ex:tieneComponente ex:Parametro_DWELL ;
+    ex:tieneComponente ex:Marca_SWITCH, ex:Marca_ENABLE, ex:Marca_SERVOON, ex:Marca_SPENA, ex:Marca_DRENA ;
+    ex:monitoreaParametro ex:Parametro_DWELL .
+
+ex:PLC_Multieje
+    a ex:Actuador ;
+    rdfs:label "PLC de control multieje" ;
+    ex:textoExtracto "El PLC vigila qué marca ENABLE se activa, para engranar ese eje y activar su marca SWITCH, SERVOON, SPENA y DRENA." ;
+    ex:controla ex:Marca_ENABLE, ex:Marca_SWITCH, ex:Marca_SERVOON, ex:Marca_SPENA, ex:Marca_DRENA .

@@ -1,112 +1,79 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-### Clases principales del fragmento
-ex:Maquina_221
-    a ex:Maquina ;
-    rdfs:label "Máquina con defensas de seguridad"@es ;
-    ex:textoExtracto "La máquina está equipada con 2 tipos de defensas: paneles desmontables de mantenimiento y puertas controladas por interruptor de seguridad."@es ;
-    ex:tieneComponente ex:PanelMantenimiento_221_1, ex:PanelMantenimiento_221_2, ex:PanelMantenimiento_221_3,
-                       ex:PanelMantenimiento_221_4, ex:PanelMantenimiento_221_5, ex:PanelMantenimiento_221_6,
-                       ex:PuertaSeguridad_23SQ1, ex:PuertaSeguridad_24SQ1, ex:PuertaSeguridad_24SQ2 ;
-    ex:tieneComponente ex:InterruptorSeguridad_EUCHNER_221_1, ex:InterruptorSeguridad_EUCHNER_221_2, ex:InterruptorSeguridad_EUCHNER_221_3 .
+ns1:SistemaPuertas a ns1:Sistema ;
+    rdfs:label "Sistema de puertas y paneles desmontables" ;
+    ns1:textoExtracto "La máquina está equipada con 2 tipos de defensas: paneles desmontables de mantenimiento y puertas controladas por interruptor de seguridad." ;
+    ns1:tieneComponente ns1:InterruptorSeguridadDerecha,
+        ns1:InterruptorSeguridadFrontal,
+        ns1:InterruptorSeguridadIzquierda,
+        ns1:PanelMantenimiento1,
+        ns1:PanelMantenimiento2,
+        ns1:PanelMantenimiento3,
+        ns1:PanelMantenimiento4,
+        ns1:PanelMantenimiento5,
+        ns1:PanelMantenimiento6,
+        ns1:PuertaFrontal,
+        ns1:PuertaLateralDerecha,
+        ns1:PuertaLateralIzquierda .
 
-### Paneles de mantenimiento (no controlados)
-ex:PanelMantenimiento_221_1
-    a ex:ComponenteMecanico ;
-    rdfs:label "Panel de mantenimiento trasero izquierdo"@es ;
-    ex:textoExtracto "La máquina dispone de seis paneles de este tipo, dos en la parte trasera y dos en cada lateral. Los paneles de mantenimiento están atornillados y no pueden abrirse sin las herramientas correspondientes."@es .
+ns1:InterruptorSeguridadDerecha a ns1:Sensor ;
+    rdfs:label "Interruptor de seguridad lateral derecho" ;
+    ns1:identificador "24SQ2" ;
+    ns1:textoExtracto "Micro de Puerta seguridad derecha (24SQ2)" .
 
-ex:PanelMantenimiento_221_2
-    a ex:ComponenteMecanico ;
-    rdfs:label "Panel de mantenimiento trasero derecho"@es ;
-    ex:textoExtracto "La máquina dispone de seis paneles de este tipo, dos en la parte trasera y dos en cada lateral."@es .
+ns1:InterruptorSeguridadFrontal a ns1:Sensor ;
+    rdfs:label "Interruptor de seguridad frontal" ;
+    ns1:identificador "23SQ1" ;
+    ns1:textoExtracto "Micro de Puerta seguridad frontal (23SQ1)" .
 
-ex:PanelMantenimiento_221_3
-    a ex:ComponenteMecanico ;
-    rdfs:label "Panel de mantenimiento lateral izquierdo (frontal)"@es ;
-    ex:textoExtracto "dos en cada lateral"@es .
+ns1:InterruptorSeguridadIzquierda a ns1:Sensor ;
+    rdfs:label "Interruptor de seguridad lateral izquierdo" ;
+    ns1:identificador "24SQ1" ;
+    ns1:textoExtracto "Micro de Puerta seguridad izquierda (24SQ1)" .
 
-ex:PanelMantenimiento_221_4
-    a ex:ComponenteMecanico ;
-    rdfs:label "Panel de mantenimiento lateral izquierdo (trasero)"@es ;
-    ex:textoExtracto "dos en cada lateral"@es .
+ns1:PanelMantenimiento1 a ns1:Componente ;
+    rdfs:label "Panel de mantenimiento trasero 1" ;
+    ns1:identificador "Panel trasero 1" ;
+    ns1:textoExtracto "dos en la parte trasera" .
 
-ex:PanelMantenimiento_221_5
-    a ex:ComponenteMecanico ;
-    rdfs:label "Panel de mantenimiento lateral derecho (frontal)"@es ;
-    ex:textoExtracto "dos en cada lateral"@es .
+ns1:PanelMantenimiento2 a ns1:Componente ;
+    rdfs:label "Panel de mantenimiento trasero 2" ;
+    ns1:identificador "Panel trasero 2" ;
+    ns1:textoExtracto "dos en la parte trasera" .
 
-ex:PanelMantenimiento_221_6
-    a ex:ComponenteMecanico ;
-    rdfs:label "Panel de mantenimiento lateral derecho (trasero)"@es ;
-    ex:textoExtracto "dos en cada lateral"@es .
+ns1:PanelMantenimiento3 a ns1:Componente ;
+    rdfs:label "Panel de mantenimiento lateral izquierdo 1" ;
+    ns1:identificador "Panel lateral izquierdo 1" ;
+    ns1:textoExtracto "dos en cada lateral" .
 
-### Puertas con interruptor de seguridad (controladas)
-ex:PuertaSeguridad_23SQ1
-    a ex:ComponenteMecanico ;
-    rdfs:label "Puerta frontal con interruptor de seguridad (23SQ1)"@es ;
-    ex:identificador "23SQ1" ;
-    ex:textoExtracto "La máquina dispone de tres puertas controladas con un interruptor de seguridad EUCHNER, una en la parte frontal (23SQ1)."@es ;
-    ex:controla ex:InterruptorSeguridad_EUCHNER_221_1 .
+ns1:PanelMantenimiento4 a ns1:Componente ;
+    rdfs:label "Panel de mantenimiento lateral izquierdo 2" ;
+    ns1:identificador "Panel lateral izquierdo 2" ;
+    ns1:textoExtracto "dos en cada lateral" .
 
-ex:PuertaSeguridad_24SQ1
-    a ex:ComponenteMecanico ;
-    rdfs:label "Puerta lateral izquierda con interruptor de seguridad (24SQ1)"@es ;
-    ex:identificador "24SQ1" ;
-    ex:textoExtracto "una en el lateral izquierdo (24SQ1)"@es ;
-    ex:controla ex:InterruptorSeguridad_EUCHNER_221_2 .
+ns1:PanelMantenimiento5 a ns1:Componente ;
+    rdfs:label "Panel de mantenimiento lateral derecho 1" ;
+    ns1:identificador "Panel lateral derecho 1" ;
+    ns1:textoExtracto "dos en cada lateral" .
 
-ex:PuertaSeguridad_24SQ2
-    a ex:ComponenteMecanico ;
-    rdfs:label "Puerta lateral derecha con interruptor de seguridad (24SQ2)"@es ;
-    ex:identificador "24SQ2" ;
-    ex:textoExtracto "una en el lateral derecho (24SQ2)"@es ;
-    ex:controla ex:InterruptorSeguridad_EUCHNER_221_3 .
+ns1:PanelMantenimiento6 a ns1:Componente ;
+    rdfs:label "Panel de mantenimiento lateral derecho 2" ;
+    ns1:identificador "Panel lateral derecho 2" ;
+    ns1:textoExtracto "dos en cada lateral" .
 
-### Interruptores de seguridad (EUCHNER)
-ex:InterruptorSeguridad_EUCHNER_221_1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Interruptor de seguridad EUCHNER (puerta frontal 23SQ1)"@es ;
-    ex:textoExtracto "interruptor de seguridad EUCHNER [...] El accionamiento de las puertas es manual y disponen de un enclavamiento electrónico de seguridad que se acciona automáticamente cuando la máquina está en funcionamiento."@es ;
-    ex:mitigaRiesgo ex:AvisoSeguridad_221_1 .
+ns1:PuertaFrontal a ns1:Componente ;
+    rdfs:label "Puerta frontal" ;
+    ns1:identificador "23SQ1" ;
+    ns1:textoExtracto "una en la parte frontal (23SQ1)" .
 
-ex:InterruptorSeguridad_EUCHNER_221_2
-    a ex:ComponenteElectrico ;
-    rdfs:label "Interruptor de seguridad EUCHNER (puerta lateral izquierda 24SQ1)"@es ;
-    ex:textoExtracto "interruptor de seguridad EUCHNER"@es ;
-    ex:mitigaRiesgo ex:AvisoSeguridad_221_1 .
+ns1:PuertaLateralDerecha a ns1:Componente ;
+    rdfs:label "Puerta lateral derecha" ;
+    ns1:identificador "24SQ2" ;
+    ns1:textoExtracto "una en el lateral derecho (24SQ2)" .
 
-ex:InterruptorSeguridad_EUCHNER_221_3
-    a ex:ComponenteElectrico ;
-    rdfs:label "Interruptor de seguridad EUCHNER (puerta lateral derecha 24SQ2)"@es ;
-    ex:textoExtracto "interruptor de seguridad EUCHNER"@es ;
-    ex:mitigaRiesgo ex:AvisoSeguridad_221_1 .
+ns1:PuertaLateralIzquierda a ns1:Componente ;
+    rdfs:label "Puerta lateral izquierda" ;
+    ns1:identificador "24SQ1" ;
+    ns1:textoExtracto "una en el lateral izquierdo (24SQ1)" .
 
-### Advertencias de seguridad (A-Box vinculada)
-ex:AvisoSeguridad_221_1
-    a ex:AvisoSeguridad ;
-    rdfs:label "Advertencia: Apertura de paneles durante funcionamiento"@es ;
-    ex:textoExtracto "LA APERTURA DE ESTOS PANELES DURANTE EL SERVICIO AUTOMÁTICO NO PROVOCA UNA PARADA DE LA MÁQUINA, LO QUE PUEDE OCASIONAR UN PELIGRO DE DAÑOS PERSONALES. ANTES DE CONECTAR LA MÁQUINA SE DEBE ASEGURAR QUE TODOS LOS PANELES DE MANTENIMIENTO ESTÁN CERRADOS."@es .
-
-ex:AvisoSeguridad_221_2
-    a ex:AvisoSeguridad ;
-    rdfs:label "Advertencia: Apertura de puertas durante funcionamiento"@es ;
-    ex:textoExtracto "NO SE DEBEN ABRIR LAS PUERTAS DE LA MÁQUINA DURANTE EL SERVICIO AUTOMÁTICO."@es .
-
-### Figuras referenciadas
-ex:Figura_2_2
-    a ex:Figura ;
-    rdfs:label "Figura 2-2: Paneles desmontables de mantenimiento"@es ;
-    ex:identificador "2-2" ;
-    ex:textoExtracto "Paneles de mantenimiento no controlados Figura 2-2. Paneles desmontables de mantenimiento"@es ;
-    ex:ilustradoEn ex:Maquina_221 .
-
-ex:Figura_2_3
-    a ex:Figura ;
-    rdfs:label "Figura 2-3: Puertas controladas con interruptor de seguridad"@es ;
-    ex:identificador "2-3" ;
-    ex:textoExtracto "Micro de seguridad Puerta frontal (23SQ1) [...] Figura 2-3. Puertas controladas con interruptor de seguridad"@es ;
-    ex:ilustradoEn ex:Maquina_221 .

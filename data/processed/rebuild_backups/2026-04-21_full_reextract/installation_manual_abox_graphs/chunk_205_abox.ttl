@@ -1,0 +1,86 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_PlanosTrabajo_205 a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de planos de trabajo y parámetros por defecto (G17, G18, G19, G20, G90, G91, G0, G1)"@es ;
+    ex:textoExtracto """
+| Plano. | Eje de abscisas. | Eje de ordenadas. | Eje longitudinal. |
+| --- | --- | --- | --- |
+| G17 | CHAXISNAME 1 | CHAXISNAME 2 | CHAXISNAME 3 |
+| G18 | CHAXISNAME 3 | CHAXISNAME 1 | CHAXISNAME 2 |
+"""@es .
+
+ex:Parametro_IPLANE
+    a               ex:Parametro ;
+    rdfs:label      "IPLANE (plano de trabajo por defecto)"@es ;
+    ex:identificador "IPLANE" ;
+    ex:valor        "G17"^^xsd:string ;
+    ex:textoExtracto """
+Se recomienda definir el parámetro IPLANE como G17. Para cambiar el plano de trabajo desde el programa pieza utilizar las funciones G17, G18, G19 ó G20.
+"""@es ;
+    ex:documentadoEn ex:Tabla_PlanosTrabajo_205 .
+
+ex:Parametro_ISYSTEM
+    a               ex:Parametro ;
+    rdfs:label      "ISYSTEM (tipo de coordenadas por defecto)"@es ;
+    ex:identificador "ISYSTEM" ;
+    ex:valor        "G90"^^xsd:string ;
+    ex:textoExtracto """
+ISYSTEM Tipo de coordenadas (G90/G91) por defecto. Valores posibles: G90 / G91. Valor por defecto: G90.
+Este parámetro indica el tipo de coordenadas que asume el CNC por defecto. Las coordenadas de un punto se pueden definir en cotas absolutas (G90) respecto el origen o en cotas incrementales (G91) desde respecto la posición actual.
+"""@es ;
+    ex:documentadoEn ex:Tabla_PlanosTrabajo_205 .
+
+ex:Parametro_IMOVE
+    a               ex:Parametro ;
+    rdfs:label      "IMOVE (tipo de movimiento por defecto)"@es ;
+    ex:identificador "IMOVE" ;
+    ex:valor        "G01"^^xsd:string ;
+    ex:textoExtracto """
+IMOVE Tipo de movimiento (G0/G1) por defecto. Valores posibles: G0 / G1. Valor por defecto: G01.
+Este parámetro indica el tipo de movimiento, G0 o G1, que asume el CNC por defecto (en el arranque, tras un reset o M30).
+"""@es ;
+    ex:documentadoEn ex:Tabla_PlanosTrabajo_205 .
+
+ex:Funcion_G17 a ex:Tabla ;
+     a               ex:Parametro ;
+    rdfs:label      "G17 (plano de trabajo: CHAXISNAME 1=abscisas, CHAXISNAME 2=ordenadas, CHAXISNAME 3=longitudinal)"@es ;
+    ex:identificador "G17" ;
+    ex:textoExtracto """
+| G17 | CHAXISNAME 1 | CHAXISNAME 2 | CHAXISNAME 3 |
+Se recomienda definir el parámetro IPLANE como G17.
+"""@es ;
+    ex:documentadoEn ex:Tabla_PlanosTrabajo_205 .
+
+ex:Funcion_G18 a ex:Tabla ;
+     a               ex:Parametro ;
+    rdfs:label      "G18 (plano de trabajo: CHAXISNAME 3=abscisas, CHAXISNAME 1=ordenadas, CHAXISNAME 2=longitudinal)"@es ;
+    ex:identificador "G18" ;
+    ex:textoExtracto """
+| G18 | CHAXISNAME 3 | CHAXISNAME 1 | CHAXISNAME 2 |
+Para cambiar el plano de trabajo desde el programa pieza utilizar las funciones G17, G18, G19 ó G20.
+"""@es ;
+    ex:documentadoEn ex:Tabla_PlanosTrabajo_205 .
+
+ex:Funcion_G90 a ex:Tabla ;
+     a               ex:Parametro ;
+    rdfs:label      "G90 (coordenadas absolutas)"@es ;
+    ex:identificador "G90" ;
+    ex:textoExtracto """
+ISYSTEM Tipo de coordenadas (G90/G91) por defecto. Valor por defecto: G90.
+Las coordenadas de un punto se pueden definir en cotas absolutas (G90) respecto el origen.
+"""@es ;
+    ex:documentadoEn ex:Tabla_PlanosTrabajo_205 .
+
+ex:Funcion_G01 a ex:Tabla ;
+     a               ex:Parametro ;
+    rdfs:label      "G01 (movimiento lineal interpolado)"@es ;
+    ex:identificador "G01" ;
+    ex:textoExtracto """
+IMOVE Tipo de movimiento (G0/G1) por defecto. Valor por defecto: G01.
+"""@es ;
+    ex:documentadoEn ex:Tabla_PlanosTrabajo_205 .

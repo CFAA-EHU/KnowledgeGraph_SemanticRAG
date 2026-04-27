@@ -1,141 +1,149 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-### Esquemas eléctricos y componentes asociados
-ex:Esquema_BorneSalidaDigital_1
-    a ex:Esquema ;
-    rdfs:label "Esquema: Borne de salida digital (módulo 19A9)"@es ;
-    ex:textoExtracto "Salidas A30–A37 (módulo 19A9) para marcha ciclo, enable puertas, apertura puerta, puesta en servicio, reset fuente drives, emergencia CNC. Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde."@es ;
-    ex:identificador "19A9" .
+ns1:A00_A07 a ns1:ComponenteElectrico ;
+    rdfs:label "salidas A00–A07" ;
+    ns1:identificador "A00–A07" ;
+    ns1:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'." .
 
-ex:Esquema_PowerModule_2
-    a ex:Esquema ;
-    rdfs:label "Esquema: Power Module (IB IL 24 PWR IN-PAC)"@es ;
-    ex:textoExtracto "Módulo de alimentación de riel (19A20/1) para la isla de E/S: bornes US/UM/GND/FE y conexión a 24S/0S. Dos relés (27KA1/27KA2) se muestran alimentados desde las barras; flechas rojas/verde marcan positivo y retorno."@es ;
-    ex:identificador "19A20/1" .
+ns1:A30_A37 a ns1:ComponenteElectrico ;
+    rdfs:label "salidas A30–A37" ;
+    ns1:identificador "A30–A37" ;
+    ns1:textoExtracto "Salidas A30–A37 (módulo 19A9) para marcha ciclo, enable puertas, apertura puerta, puesta en servicio, reset fuente drives, emergencia CNC." .
 
-ex:Esquema_BorneSalidaDigital_3
-    a ex:Esquema ;
-    rdfs:label "Esquema: Borne de salida digital (módulo 19A21)"@es ;
-    ex:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'."@es ;
-    ex:identificador "19A21" .
+ns1:HL33 a ns1:ComponenteElectrico ;
+    rdfs:label "piloto HL33" ;
+    ns1:identificador "HL33" ;
+    ns1:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde." .
 
-ex:Esquema_EntradaAnalogica_4
-    a ex:Esquema ;
-    rdfs:label "Esquema: Entrada analógica (módulo 19A35)"@es ;
-    ex:textoExtracto "Bloque de entradas diferenciales E80/E82/E84/E86 (+/–) en el módulo 19A35. Canales reservados (etiqueta RESERVA) con polaridad indicada y referencias a bornes XT1."@es ;
-    ex:identificador "19A35" .
+ns1:HL34 a ns1:ComponenteElectrico ;
+    rdfs:label "piloto HL34" ;
+    ns1:identificador "HL34" ;
+    ns1:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde." .
 
-### Componentes eléctricos (pilotos, relés, contactores, módulos)
-ex:Piloto_HL23
-    a ex:ComponenteElectrico ;
-    rdfs:label "Piloto HL23"@es ;
-    ex:textoExtracto "Los pilotos HL23–HL25 se agrupan en un bloque; la codificación cromática está indicada por el rótulo de cada lámpara."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_1 .
+ns1:bloquePilotosHL23_HL25 a ns1:ComponenteElectrico ;
+    rdfs:label "bloque de pilotos HL23–HL25" ;
+    ns1:compuestoPor ns1:HL23,
+        ns1:HL25 ;
+    ns1:identificador "bloque" ;
+    ns1:textoExtracto "Los pilotos HL23–HL25 se agrupan en un bloque; la codificación cromática está indicada por el rótulo de cada lámpara." .
 
-ex:Piloto_HL24
-    a ex:ComponenteElectrico ;
-    rdfs:label "Piloto HL24"@es ;
-    ex:textoExtracto "Los pilotos HL23–HL25 se agrupan en un bloque; la codificación cromática está indicada por el rótulo de cada lámpara."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_1 .
+ns1:borneFE a ns1:ComponenteElectrico ;
+    rdfs:label "borne FE" ;
+    ns1:identificador "FE" ;
+    ns1:textoExtracto "Módulo de alimentación de riel (19A20/1) para la isla de E/S: bornes US/UM/GND/FE y conexión a 24S/0S." .
 
-ex:Piloto_HL25
-    a ex:ComponenteElectrico ;
-    rdfs:label "Piloto HL25"@es ;
-    ex:textoExtracto "Los pilotos HL23–HL25 se agrupan en un bloque; la codificación cromática está indicada por el rótulo de cada lámpara."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_1 .
+ns1:borneGND a ns1:ComponenteElectrico ;
+    rdfs:label "borne GND" ;
+    ns1:identificador "GND" ;
+    ns1:textoExtracto "Módulo de alimentación de riel (19A20/1) para la isla de E/S: bornes US/UM/GND/FE y conexión a 24S/0S." .
 
-ex:Piloto_HL33
-    a ex:ComponenteElectrico ;
-    rdfs:label "Piloto HL33"@es ;
-    ex:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_1 .
+ns1:borneUM a ns1:ComponenteElectrico ;
+    rdfs:label "borne UM" ;
+    ns1:identificador "UM" ;
+    ns1:textoExtracto "Módulo de alimentación de riel (19A20/1) para la isla de E/S: bornes US/UM/GND/FE y conexión a 24S/0S." .
 
-ex:Piloto_HL34
-    a ex:ComponenteElectrico ;
-    rdfs:label "Piloto HL34"@es ;
-    ex:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_1 .
+ns1:borneUS a ns1:ComponenteElectrico ;
+    rdfs:label "borne US" ;
+    ns1:identificador "US" ;
+    ns1:textoExtracto "Módulo de alimentación de riel (19A20/1) para la isla de E/S: bornes US/UM/GND/FE y conexión a 24S/0S." .
 
-ex:ContactoIntermedio_26SBL1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contacto intermedio 26SBL1"@es ;
-    ex:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_1 .
+ns1:contactoIntermedio26SBL1 a ns1:ComponenteElectrico ;
+    rdfs:label "contacto intermedio 26SBL1" ;
+    ns1:identificador "26SBL1" ;
+    ns1:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde." .
 
-ex:ContactoIntermedio_34SBL2
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contacto intermedio 34SBL2"@es ;
-    ex:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_1 .
+ns1:contactoIntermedio34SBL2 a ns1:ComponenteElectrico ;
+    rdfs:label "contacto intermedio 34SBL2" ;
+    ns1:identificador "34SBL2" ;
+    ns1:textoExtracto "Se incluyen pilotos HL33/HL34 y contactos intermedios (26SBL1, 34SBL2), con retorno a 0S por línea verde." .
 
-ex:ModuloAlimentacion_19A20_1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Módulo de alimentación de riel 19A20/1"@es ;
-    ex:textoExtracto "Módulo de alimentación de riel (19A20/1) para la isla de E/S: bornes US/UM/GND/FE y conexión a 24S/0S."@es ;
-    ex:identificador "19A20/1" ;
-    ex:ilustradoEn ex:Esquema_PowerModule_2 .
+ns1:contactorKA00 a ns1:ComponenteElectrico ;
+    rdfs:label "contactor KA00" ;
+    ns1:identificador "KA00" ;
+    ns1:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'." .
 
-ex:Rel_27KA1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA1"@es ;
-    ex:textoExtracto "Dos relés (27KA1/27KA2) se muestran alimentados desde las barras; flechas rojas/verde marcan positivo y retorno."@es ;
-    ex:ilustradoEn ex:Esquema_PowerModule_2 .
+ns1:contactorKA01 a ns1:ComponenteElectrico ;
+    rdfs:label "contactor KA01" ;
+    ns1:identificador "KA01" ;
+    ns1:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'." .
 
-ex:Rel_27KA2
-    a ex:ComponenteElectrico ;
-    rdfs:label "Relé 27KA2"@es ;
-    ex:textoExtracto "Dos relés (27KA1/27KA2) se muestran alimentados desde las barras; flechas rojas/verde marcan positivo y retorno."@es ;
-    ex:ilustradoEn ex:Esquema_PowerModule_2 .
+ns1:contactorKA02 a ns1:ComponenteElectrico ;
+    rdfs:label "contactor KA02" ;
+    ns1:identificador "KA02" ;
+    ns1:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'." .
 
-ex:Contactor_KA00
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contactor KA00 (motor refrigeración brocha)"@es ;
-    ex:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico)."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_3 .
+ns1:contactorKA03 a ns1:ComponenteElectrico ;
+    rdfs:label "contactor KA03" ;
+    ns1:identificador "KA03" ;
+    ns1:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'." .
 
-ex:Contactor_KA01
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contactor KA01 (motor limpieza)"@es ;
-    ex:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico)."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_3 .
+ns1:contactorKA04 a ns1:ComponenteElectrico ;
+    rdfs:label "contactor KA04" ;
+    ns1:identificador "KA04" ;
+    ns1:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'." .
 
-ex:Contactor_KA02
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contactor KA02 (motor trasvase)"@es ;
-    ex:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico)."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_3 .
+ns1:modulo19A20_1 a ns1:ComponenteElectrico ;
+    rdfs:label "módulo de alimentación de riel 19A20/1" ;
+    ns1:identificador "19A20/1" ;
+    ns1:textoExtracto "Módulo de alimentación de riel (19A20/1) para la isla de E/S: bornes US/UM/GND/FE y conexión a 24S/0S." .
 
-ex:Contactor_KA03
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contactor KA03 (motor extractor)"@es ;
-    ex:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico)."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_3 .
+ns1:modulo19A21 a ns1:ComponenteElectrico ;
+    rdfs:label "módulo 19A21" ;
+    ns1:identificador "19A21" ;
+    ns1:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico) y una línea 'Activación freno desde PLC a PILZ'." .
 
-ex:Contactor_KA04
-    a ex:ComponenteElectrico ;
-    rdfs:label "Contactor KA04 (grupo hidráulico)"@es ;
-    ex:textoExtracto "Salidas A00–A07 (módulo 19A21) que accionan contactores KA00–KA04 (motores de refrigeración brocha, limpieza, trasvase, extractor, grupo hidráulico)."@es ;
-    ex:ilustradoEn ex:Esquema_BorneSalidaDigital_3 .
+ns1:modulo19A35 a ns1:ComponenteElectrico ;
+    rdfs:label "módulo 19A35" ;
+    ns1:compuestoPor ns1:E80,
+        ns1:E82,
+        ns1:E84,
+        ns1:E86 ;
+    ns1:identificador "19A35" ;
+    ns1:textoExtracto "Bloque de entradas diferenciales E80/E82/E84/E86 (+/–) en el módulo 19A35." .
 
-ex:Modulo_19A35
-    a ex:ComponenteElectrico ;
-    rdfs:label "Módulo de entradas analógicas 19A35"@es ;
-    ex:textoExtracto "Bloque de entradas diferenciales E80/E82/E84/E86 (+/–) en el módulo 19A35. Canales reservados (etiqueta RESERVA) con polaridad indicada."@es ;
-    ex:identificador "19A35" ;
-    ex:ilustradoEn ex:Esquema_EntradaAnalogica_4 .
+ns1:modulo19A9 a ns1:ComponenteElectrico ;
+    rdfs:label "módulo 19A9" ;
+    ns1:identificador "19A9" ;
+    ns1:textoExtracto "Salidas A30–A37 (módulo 19A9) para marcha ciclo, enable puertas, apertura puerta, puesta en servicio, reset fuente drives, emergencia CNC." .
 
-### Relaciones entre esquemas y componentes
-ex:Esquema_BorneSalidaDigital_1
-    ex:tieneComponente ex:Piloto_HL33, ex:Piloto_HL34, ex:ContactoIntermedio_26SBL1, ex:ContactoIntermedio_34SBL2 .
+ns1:rel_27KA1 a ns1:ComponenteElectrico ;
+    rdfs:label "relé 27KA1" ;
+    ns1:identificador "27KA1" ;
+    ns1:textoExtracto "Dos relés (27KA1/27KA2) se muestran alimentados desde las barras; flechas rojas/verde marcan positivo y retorno." .
 
-ex:Esquema_PowerModule_2
-    ex:tieneComponente ex:ModuloAlimentacion_19A20_1, ex:Rel_27KA1, ex:Rel_27KA2 .
+ns1:rel_27KA2 a ns1:ComponenteElectrico ;
+    rdfs:label "relé 27KA2" ;
+    ns1:identificador "27KA2" ;
+    ns1:textoExtracto "Dos relés (27KA1/27KA2) se muestran alimentados desde las barras; flechas rojas/verde marcan positivo y retorno." .
 
-ex:Esquema_BorneSalidaDigital_3
-    ex:tieneComponente ex:Contactor_KA00, ex:Contactor_KA01, ex:Contactor_KA02, ex:Contactor_KA03, ex:Contactor_KA04 .
+ns1:E80 a ns1:ComponenteElectrico ;
+    rdfs:label "bloque de entrada diferencial E80" ;
+    ns1:identificador "E80" ;
+    ns1:textoExtracto "Bloque de entradas diferenciales E80/E82/E84/E86 (+/–) en el módulo 19A35." .
 
-ex:Esquema_EntradaAnalogica_4
-    ex:tieneComponente ex:Modulo_19A35 .
+ns1:E82 a ns1:ComponenteElectrico ;
+    rdfs:label "bloque de entrada diferencial E82" ;
+    ns1:identificador "E82" ;
+    ns1:textoExtracto "Bloque de entradas diferenciales E80/E82/E84/E86 (+/–) en el módulo 19A35." .
+
+ns1:E84 a ns1:ComponenteElectrico ;
+    rdfs:label "bloque de entrada diferencial E84" ;
+    ns1:identificador "E84" ;
+    ns1:textoExtracto "Bloque de entradas diferenciales E80/E82/E84/E86 (+/–) en el módulo 19A35." .
+
+ns1:E86 a ns1:ComponenteElectrico ;
+    rdfs:label "bloque de entrada diferencial E86" ;
+    ns1:identificador "E86" ;
+    ns1:textoExtracto "Bloque de entradas diferenciales E80/E82/E84/E86 (+/–) en el módulo 19A35." .
+
+ns1:HL23 a ns1:ComponenteElectrico ;
+    rdfs:label "piloto HL23" ;
+    ns1:identificador "HL23" ;
+    ns1:textoExtracto "Los pilotos HL23–HL25 se agrupan en un bloque; la codificación cromática está indicada por el rótulo de cada lámpara." .
+
+ns1:HL25 a ns1:ComponenteElectrico ;
+    rdfs:label "piloto HL25" ;
+    ns1:identificador "HL25" ;
+    ns1:textoExtracto "Los pilotos HL23–HL25 se agrupan en un bloque; la codificación cromática está indicada por el rótulo de cada lámpara." .
+

@@ -1,0 +1,75 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:CNC_Multicanal
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC con opción multicabezal y canales" ;
+    ex:textoExtracto "El CNC puede disponer de hasta cuatro canales y cada canal puede ejecutar un programa pieza en paralelo con los demás. [...] Esto significa que, debido a que algunas funciones se generan automáticamente, se puede llegar a superar el máximo de siete funciones auxiliares por bloque." .
+
+ex:CanalCNC_1
+    a ex:Componente ;
+    rdfs:label "Canal 1 del CNC" ;
+    ex:textoExtracto "MFUN1C1 - MFUN7C1 para el primer canal." ;
+    ex:compuestoPor ex:Registro_MFUN1C1, ex:Registro_MFUN2C1, ex:Registro_MFUN3C1, ex:Registro_MFUN4C1, ex:Registro_MFUN5C1, ex:Registro_MFUN6C1, ex:Registro_MFUN7C1 .
+
+ex:CanalCNC_2
+    a ex:Componente ;
+    rdfs:label "Canal 2 del CNC" ;
+    ex:textoExtracto "MFUN1C2 - MFUN7C2 para el segundo canal." ;
+    ex:compuestoPor ex:Registro_MFUN1C2, ex:Registro_MFUN2C2, ex:Registro_MFUN3C2, ex:Registro_MFUN4C2, ex:Registro_MFUN5C2, ex:Registro_MFUN6C2, ex:Registro_MFUN7C2 .
+
+ex:CanalCNC_3
+    a ex:Componente ;
+    rdfs:label "Canal 3 del CNC" ;
+    ex:textoExtracto "MFUN1C3 - MFUN7C3 para el tercer canal." .
+
+ex:CanalCNC_4
+    a ex:Componente ;
+    rdfs:label "Canal 4 del CNC" ;
+    ex:textoExtracto "MFUN1C4 - MFUN7C4 para el cuarto canal." .
+
+ex:Registro_MFUN1C1
+    a ex:Parametro ;
+    rdfs:label "Registro MFUN1C1 (32 bits)" ;
+    ex:textoExtracto "Cada canal dispone de los registros de 32 bits MFUN1 a MFUN7, para indicar al PLC las funciones auxiliares M programadas en el bloque en ejecución." ;
+    ex:valor "100" ;
+    ex:documentadoEn ex:CNC_Multicanal .
+
+ex:Registro_MFUN2C1
+    a ex:Parametro ;
+    rdfs:label "Registro MFUN2C1 (32 bits)" ;
+    ex:textoExtracto "Cada canal dispone de los registros de 32 bits MFUN1 a MFUN7, para indicar al PLC las funciones auxiliares M programadas en el bloque en ejecución." ;
+    ex:valor "135" ;
+    ex:documentadoEn ex:CNC_Multicanal .
+
+ex:Registro_MFUN3C1
+    a ex:Parametro ;
+    rdfs:label "Registro MFUN3C1 (32 bits)" ;
+    ex:textoExtracto "Si no se utilizan todos los registros, el CNC asigna el valor hexadecimal $FFFFFFFF a los que queden libres, los de numeración más alta." ;
+    ex:valor "$FFFFFFFF" ;
+    ex:documentadoEn ex:CNC_Multicanal .
+
+ex:Registro_MFUN1C2
+    a ex:Parametro ;
+    rdfs:label "Registro MFUN1C2 (32 bits)" ;
+    ex:textoExtracto "el CNC pasará al PLC la siguiente información: [...] en el segundo canal las funciones M88 y M75" ;
+    ex:valor "88" ;
+    ex:documentadoEn ex:CNC_Multicanal .
+
+ex:Registro_MFUN2C2
+    a ex:Parametro ;
+    rdfs:label "Registro MFUN2C2 (32 bits)" ;
+    ex:textoExtracto "el CNC pasará al PLC la siguiente información: [...] en el segundo canal las funciones M88 y M75" ;
+    ex:valor "75" ;
+    ex:documentadoEn ex:CNC_Multicanal .
+
+ex:FuncionAuxiliar_M3_M4 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M3/M4 (arranque de cabezales)" ;
+    ex:textoExtracto "se da el caso de poder programar en un bloque [...] el arranque de los cuatro cabezales con M3/M4" ;
+    ex:documentadoEn ex:CNC_Multicanal .
+
+ex:CNC_Multicanal
+    ex:tieneComponente ex:CanalCNC_1, ex:CanalCNC_2, ex:CanalCNC_3, ex:CanalCNC_4 .

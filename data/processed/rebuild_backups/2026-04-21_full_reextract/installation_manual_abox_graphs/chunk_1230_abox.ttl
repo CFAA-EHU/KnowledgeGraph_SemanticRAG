@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FuncionesG8000_G8999
+    a ex:ModoOperacion ;
+    rdfs:label "Funciones G8000 a G8999" ;
+    ex:textoExtracto "El CNC permite al usuario definir hasta 1000 subrutinas [...] asociadas a las funciones G8000 a G8999, de manera que cuando el CNC ejecute una de estas funciones, ejecutará la subrutina que tiene asociada." ;
+    ex:requiereMantenimiento ex:SubrutinasUsuario .
+
+ex:SubrutinasUsuario
+    a ex:Sistema ;
+    rdfs:label "Subrutinas de usuario (G8000-G8999)" ;
+    ex:textoExtracto "El CNC permite al usuario definir hasta 1000 subrutinas, comunes a todos los canales, y que estarán asociadas a las funciones G8000 a G8999." ;
+    ex:tieneFrecuencia ex:FrecuenciaEjecucionVariable ;
+    ex:documentadoEn ex:ManualCNC_Seccion14_19 .
+
+ex:FrecuenciaEjecucionVariable
+    a ex:Frecuencia ;
+    rdfs:label "Frecuencia de ejecución variable (RAM/disco)" ;
+    ex:textoExtracto "Estas subrutinas se cargan en la memoria RAM la primera vez que se ejecutan. Si no hubiera sitio en RAM, el CNC dará un warning y ejecutará la subrutina desde el disco." ;
+    ex:valor "condicional (RAM > disco)" .
+
+ex:ManualCNC_Seccion14_19
+    a ex:Pagina ;
+    rdfs:label "Sección 14.19: Subrutinas de usuario (G8000-G8999)" ;
+    ex:identificador "14.19" ;
+    ex:textoExtracto "El CNC permite al usuario definir hasta 1000 subrutinas, comunes a todos los canales, y que estarán asociadas a las funciones G8000 a G8999." .
+
+ex:MacrosProGTL3_Preasignadas
+    a ex:Sistema ;
+    rdfs:label "Macros preasignadas ProGTL3" ;
+    ex:textoExtracto "Algunas de estas subrutinas tienen un funcionamiento preasignado por Fagor como macros del lenguaje ProGTL3. Si se programa una de estas funciones G, el CNC ejecuta la macro correspondiente y no la subrutina." ;
+    ex:cumpleNormativa ex:DirectivaFagor_ProGTL3 .
+
+ex:DirectivaFagor_ProGTL3
+    a ex:Directiva ;
+    rdfs:label "Especificación ProGTL3 (Fagor)" ;
+    ex:textoExtracto "macros del lenguaje ProGTL3" ;
+    ex:identificador "ProGTL3" .

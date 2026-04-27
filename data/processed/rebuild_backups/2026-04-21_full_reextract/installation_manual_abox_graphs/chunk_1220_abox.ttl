@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_PIERCING_CHN
+    a               ex:Parametro ;
+    rdfs:label      "PIERCING CHN" ;
+    ex:textoExtracto "Subrutina asociada al comando #PIERCING. [CHN].......Parámetro máquina; general del canal. Nombre y ubicación de la subrutina." ;
+    ex:identificador "PIERCING CHN" .
+
+ex:Subrutina_Piercing_fst
+    a               ex:Componente ;
+    rdfs:label      "Piercing.fst" ;
+    ex:textoExtracto "Esta subrutina debe estar definida en el parámetro general PIERCING (por defecto Piercing.fst) y estará guardada en la carpeta ..\\Mtb\\Sub. Al ser una subrutina OEM con extensión fst, el CNC carga esta subrutina en la memoria RAM del CNC." ;
+    ex:identificador "Piercing.fst" .
+
+ex:SistemaCNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC" ;
+    ex:textoExtracto "el CNC actúa de la siguiente manera... el CNC carga esta subrutina en la memoria RAM del CNC." ;
+    ex:tieneComponente ex:Subrutina_Piercing_fst ;
+    ex:monitoreaParametro ex:Parametro_PIERCING_CHN .
+
+ex:Tabla_ParametrosSubrutinas a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de parámetros de subrutinas (Sección 14.15.1)" ;
+    ex:textoExtracto "| Parámetro. |  | Significado. | --- | --- | --- | PIERCING CHN |  | Subrutina asociada al comando #PIERCING." ;
+    ex:documentadoEn ex:Pagina_654 ;
+    ex:detalladoEnEsquema ex:SistemaCNC .
+
+ex:Pagina_654
+    a               ex:Pagina ;
+    rdfs:label      "Página 654 (Configurar subrutinas)" ;
+    ex:identificador "654" ;
+    ex:textoExtracto "Si se actualiza la versión, el CNC actúa de la siguiente manera... Ver en la '14.1 Ejecutar subrutinas desde la memoria RAM (extensión *.fst).' página 637." .

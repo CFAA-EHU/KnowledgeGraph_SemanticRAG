@@ -1,110 +1,52 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 
-### Interfaces de Usuario y Modos de Operación
-ex:InterfazOperacionBrochado
-    a ex:InterfazUsuario ;
-    rdfs:label "Interfaz de ciclos de brochado"@es ;
-    ex:textoExtracto "Selector con iconos conmutables de pieza (ANILLO/PLANA), operación (DESBASTE/ACABADO) y refrigeración (CON/SIN); gráfico circular contextualiza trayectorias. Botonería con softkeys para ejecutar/simular/memorizar."@es ;
-    ex:ilustradoEn ex:EsquemaModosOperacion .
+ns1:BotoneriaSoftkeys a ns1:InterfazUsuario ;
+    ns1:textoExtracto "Botonería con softkeys para ejecutar/simular/memorizar." .
 
-ex:InterfazModosFuncionamiento
-    a ex:InterfazUsuario ;
-    rdfs:label "Panel de modos de funcionamiento (Reset/Auto/Manual)"@es ;
-    ex:textoExtracto "Fragmento de teclado con Reset / Auto / Manual enfatizados por color (rojo/amarillo/verde). Flechas rojas subrayan la secuencia de puesta en servicio y cambio de modo."@es .
+ns1:FragmentoTecladoResetAutoManual a ns1:InterfazUsuario ;
+    ns1:textoExtracto "Fragmento de teclado con Reset / Auto / Manual enfatizados por color (rojo/amarillo/verde)." .
 
-ex:ModoAuto
-    a ex:ModoOperacion ;
-    rdfs:label "Modo Automático"@es ;
-    ex:textoExtracto "Auto"@es ;
-    ex:habilitadoPor ex:InterfazModosFuncionamiento .
+ns1:PanelInfograficoAdvertencias a ns1:InterfazUsuario ;
+    ns1:textoExtracto "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas." .
 
-ex:ModoManual
-    a ex:ModoOperacion ;
-    rdfs:label "Modo Manual"@es ;
-    ex:textoExtracto "Manual"@es ;
-    ex:habilitadoPor ex:InterfazModosFuncionamiento .
+ns1:SelectorModoOperacion a ns1:ModoOperacion ;
+    ns1:textoExtracto "Selector con iconos conmutables de pieza (ANILLO/PLANA), operación (DESBASTE/ACABADO) y refrigeración (CON/SIN); gráfico circular contextualiza trayectorias." .
 
-ex:PanelAdvertenciasSeguridad
-    a ex:InterfazUsuario ;
-    rdfs:label "Panel de advertencias de seguridad"@es ;
-    ex:textoExtracto "Panel infográfico de advertencias con pictogramas STOP y triángulos de peligro; bloques rojos con texto blanco destacan consignación, prohibición de aire a presión y uso de mástil anticaídas."@es .
+ns1:Vista3DColumnaCarro a ns1:Esquema ;
+    ns1:textoExtracto "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores. La codificación visual enlaza cada ítem con su ubicación." ;
+    ns1:tieneComponente ns1:Cremallera1,
+        ns1:Freno1,
+        ns1:Fuelle1,
+        ns1:Guia1,
+        ns1:Sensor1,
+        ns1:Servomotor1 .
 
-### Esquemas y Figuras
-ex:EsquemaModosOperacion
-    a ex:Esquema ;
-    rdfs:label "Esquema de modos de operación"@es ;
-    ex:textoExtracto "Selector con iconos conmutables [...] Botonería con softkeys para ejecutar/simular/memorizar."@es .
+ns1:Vista3DPlatoDivisor a ns1:Esquema ;
+    ns1:textoExtracto "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2). Paleta de colores separa elementos y facilita la correspondencia con referencias comerciales." ;
+    ns1:tieneComponente ns1:Plato1,
+        ns1:Servomotor2 .
 
-ex:FiguraColumnaCarro
-    a ex:Figura ;
-    rdfs:label "Figura 8-1: Elementos de columna y carro porta-piezas"@es ;
-    ex:identificador "Figura 8-1"@es ;
-    ex:textoExtracto "Vista 3D a color de la columna y el carro con globos numerados y recuadros en rojo; identifica cremalleras, servomotores, guías, frenos, fuelles y sensores."@es .
+ns1:Cremallera1 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
-ex:FiguraPlatoDivisor
-    a ex:Figura ;
-    rdfs:label "Figura 8-2: Elementos del plato divisor"@es ;
-    ex:identificador "Figura 8-2"@es ;
-    ex:textoExtracto "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2)."@es .
+ns1:Freno1 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
-### Componentes Mecánicos (de Figura 8-1 y 8-2)
-ex:ColumnaMecanica
-    a ex:ComponenteMecanico ;
-    rdfs:label "Columna mecánica"@es ;
-    ex:textoExtracto "Vista 3D a color de la columna [...] con globos numerados y recuadros en rojo"@es ;
-    ex:ilustradoEn ex:FiguraColumnaCarro ;
-    ex:tieneComponente ex:CremalleraColumna, ex:ServomotorColumna, ex:GuiaColumna, ex:FrenoColumna, ex:FuelleColumna, ex:SensorColumna .
+ns1:Fuelle1 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
-ex:CarroPortaPiezas
-    a ex:ComponenteMecanico ;
-    rdfs:label "Carro porta-piezas"@es ;
-    ex:textoExtracto "Vista 3D a color de [...] el carro con globos numerados"@es ;
-    ex:ilustradoEn ex:FiguraColumnaCarro .
+ns1:Guia1 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
-ex:PlatoDivisor
-    a ex:ComponenteMecanico ;
-    rdfs:label "Plato divisor"@es ;
-    ex:identificador "1"@es ;  # Referencia en Figura 8-2
-    ex:textoExtracto "resaltado del plato (1)"@es ;
-    ex:ilustradoEn ex:FiguraPlatoDivisor .
+ns1:Plato1 a ns1:PiezaRecambio ;
+    ns1:textoExtracto "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2)" .
 
-ex:ServomotorPlato
-    a ex:ComponenteMecanico ;
-    rdfs:label "Servomotor del plato divisor"@es ;
-    ex:identificador "2"@es ;  # Referencia en Figura 8-2
-    ex:textoExtracto "servomotor (2)"@es ;
-    ex:ilustradoEn ex:FiguraPlatoDivisor .
+ns1:Sensor1 a ns1:Sensor ;
+    ns1:textoExtracto "identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
-### Componentes Genéricos (de Figura 8-1)
-ex:CremalleraColumna
-    a ex:ComponenteMecanico ;
-    rdfs:label "Cremallera de columna"@es ;
-    ex:textoExtracto "identifica cremalleras"@es .
+ns1:Servomotor1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "identifica cremalleras, servomotores, guías, frenos, fuelles y sensores" .
 
-ex:ServomotorColumna
-    a ex:ComponenteMecanico ;
-    rdfs:label "Servomotor de columna"@es ;
-    ex:textoExtracto "identifica [...] servomotores"@es .
+ns1:Servomotor2 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "Perspectiva del conjunto del plato sobre bancada con resaltado del plato (1) y servomotor (2)" .
 
-ex:GuiaColumna
-    a ex:ComponenteMecanico ;
-    rdfs:label "Guía de columna"@es ;
-    ex:textoExtracto "identifica [...] guías"@es .
-
-ex:FrenoColumna
-    a ex:ComponenteMecanico ;
-    rdfs:label "Freno de columna"@es ;
-    ex:textoExtracto "identifica [...] frenos"@es .
-
-ex:FuelleColumna
-    a ex:ComponenteMecanico ;
-    rdfs:label "Fuelle de protección de columna"@es ;
-    ex:textoExtracto "identifica [...] fuelles"@es .
-
-ex:SensorColumna
-    a ex:Sensor ;
-    rdfs:label "Sensor de columna"@es ;
-    ex:textoExtracto "identifica [...] sensores"@es .

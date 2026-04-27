@@ -1,0 +1,54 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:BusCANopen_1275
+    a ex:Sistema ;
+    rdfs:label "Bus CANopen" ;
+    ex:textoExtracto "Un bus CANopen dispone de los siguientes grupos remotos." ;
+    ex:tieneComponente ex:Nodo1_RIO5_1275, ex:Nodo2_RIOW_1275 ;
+    ex:identificador "Ejemplo 4" .
+
+ex:Nodo1_RIO5_1275
+    a ex:ComponenteElectrico ;
+    rdfs:label "Nodo 1 (RIO5)" ;
+    ex:textoExtracto "Nodo 1: Grupo remoto RIO5 con 3 módulos de 24 entradas digitales cada uno." ;
+    ex:compuestoPor ex:ModuloEntradasDigitales_RIO5_1_1275, ex:ModuloEntradasDigitales_RIO5_2_1275, ex:ModuloEntradasDigitales_RIO5_3_1275 ;
+    ex:identificador "RIO5" .
+
+ex:ModuloEntradasDigitales_RIO5_1_1275
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de 24 entradas digitales (RIO5, módulo 1)" ;
+    ex:textoExtracto "3 módulos de 24 entradas digitales cada uno" ;
+    ex:identificador "24DI (Módulo 1)" .
+
+ex:ModuloEntradasDigitales_RIO5_2_1275
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de 24 entradas digitales (RIO5, módulo 2)" ;
+    ex:textoExtracto "3 módulos de 24 entradas digitales cada uno" ;
+    ex:identificador "24DI (Módulo 2)" .
+
+ex:ModuloEntradasDigitales_RIO5_3_1275
+    a ex:ComponenteElectrico ;
+    rdfs:label "Módulo de 24 entradas digitales (RIO5, módulo 3)" ;
+    ex:textoExtracto "3 módulos de 24 entradas digitales cada uno" ;
+    ex:identificador "24DI (Módulo 3)" .
+
+ex:Nodo2_RIOW_1275
+    a ex:ComponenteElectrico ;
+    rdfs:label "Nodo 2 (RIOW)" ;
+    ex:textoExtracto "Nodo 2: Grupo remoto RIOW con 64 entradas digitales." ;
+    ex:identificador "RIOW" .
+
+ex:EsquemaConexionado_1275
+    a ex:Esquema ;
+    rdfs:label "Esquema de conexionado de módulos de E/S" ;
+    ex:textoExtracto "POW X1 SP ADD 9AB 8 765 L C X2 X3 | ER 24I/16O CHS O+214V GND +24V X4 GON8D O+294V X5 EED10 GON16D 4 0 RESS CD 3 E 2F1 ERR I1 RUN X6 T 10 AN GLS ND SHH I 1 2 H I 1 3 GLS ND SHH H X7 I24 | DIGIT +2O4V1 X1 GNOD8 +2O4V9 X2 GON1D6 I1 X3 I12 I13 X4 I24 | AL IN/OUT O+214V X5 GON8D O+294V X6 GON16D I1 X7 I12 I13 X8 I24" ;
+    ex:detalladoEnEsquema ex:Nodo1_RIO5_1275, ex:Nodo2_RIOW_1275, ex:ModuloEntradasDigitales_RIO5_1_1275, ex:ModuloEntradasDigitales_RIO5_2_1275, ex:ModuloEntradasDigitales_RIO5_3_1275 .
+
+ex:InterfazPanelControl_1275
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de control y estado del bus CANopen" ;
+    ex:textoExtracto "STOP RUN TX RX 24V 0V I/O Overflow 8DI 8DI 8DI 8DI 8DI 8DI 8DI 8DI 12345678" ;
+    ex:ilustradoEn ex:EsquemaConexionado_1275 .

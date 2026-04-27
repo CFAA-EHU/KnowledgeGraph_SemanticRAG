@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:TareaMantenimiento_CambioHerramienta
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta en cabezal"@es ;
+    ex:textoExtracto "maniobra necesaria para realizar el cambio. Tras descargar la herramienta el gestor actualiza la tabla de almacén. [...] Tras colocar la herramienta en el cabezal el gestor actualiza la tabla de almacén."@es ;
+    ex:requiereMantenimiento ex:Sistema_GestorHerramientas .
+
+ex:Sistema_GestorHerramientas
+    a ex:Sistema ;
+    rdfs:label "Gestor de herramientas"@es ;
+    ex:textoExtracto "el gestor actualiza la tabla de almacén. [...] el gestor comprueba si hay alguna herramienta en el cabezal [...] comunica al PLC la operación a efectuar"@es ;
+    ex:controla ex:Parametro_TMOPERATION ;
+    ex:monitoreaParametro ex:Parametro_VTM_MZMODE .
+
+ex:Parametro_VTM_MZMODE
+    a ex:Parametro ;
+    rdfs:label "V.TM.MZMODE"@es ;
+    ex:identificador "V.TM.MZMODE" ;
+    ex:textoExtracto "Personalizar la variable V.TM.MZMODE=0, para indicar al gestor que se desea trabajar en modo normal."@es ;
+    ex:valor "0 (modo normal)"@es .
+
+ex:Parametro_TMOPERATION
+    a ex:Parametro ;
+    rdfs:label "TMOPERATION"@es ;
+    ex:identificador "TMOPERATION" ;
+    ex:textoExtracto "comunica al PLC la operación a efectuar asignando a TMOPERATION el valor adecuado."@es .
+
+ex:Tabla_AlmacenHerramientas a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de almacén de herramientas"@es ;
+    ex:textoExtracto "el gestor actualiza la tabla de almacén. [...] Tras colocar la herramienta en el cabezal el gestor actualiza la tabla de almacén."@es ;
+    ex:documentadoEn ex:Manual_Operacion .

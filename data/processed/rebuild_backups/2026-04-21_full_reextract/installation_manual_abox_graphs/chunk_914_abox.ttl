@@ -1,0 +1,62 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OperacionTM8
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION=8" ;
+    ex:textoExtracto "Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR. 2 Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL." .
+
+ex:OperacionTM9
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION=9" ;
+    ex:textoExtracto "Coger una herramienta de tierra y llevarla al almacén pasando por el cabezal. TAKEPOS=-4 Herramienta de tierra. LEAVEPOS=# Posición del almacén para dejar la herramienta. La secuencia de esta operación es la siguiente. 1 Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL. 2 Dejar la herramienta del cabezal en el almacén y activar la marca SPDLTOMZ." .
+
+ex:OperacionTM10
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION=10" ;
+    ex:textoExtracto "Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal. TAKEPOS=# Posición del almacén para coger la herramienta. LEAVEPOS=-4 Herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Poner la herramienta del almacén en el cabezal y activar la marca MZTOSPDL. 2 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR." .
+
+ex:OperacionTM11
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION=11" ;
+    ex:textoExtracto "Orientar el almacén. Esta operación es una optimización del cambio de herramienta que permite orientar el almacén durante el mecanizado. Activar la marca MZROT para indicar que ha finalizado la operación, se haya orientado el almacén o no." .
+
+ex:OperacionTM12
+    a ex:TareaMantenimiento ;
+    ex:identificador "TMOPERATION=12" ;
+    ex:textoExtracto "Dejar la herramienta del cabezal en el almacén y coger una herramienta del mismo almacén (como TMOPERATION=5)." .
+
+ex:MarcaSPDLTOGR
+    a ex:InterfazUsuario ;
+    ex:identificador "SPDLTOGR" ;
+    ex:textoExtracto "Activar la marca SPDLTOGR." .
+
+ex:MarcaMZTOSPDL
+    a ex:InterfazUsuario ;
+    ex:identificador "MZTOSPDL" ;
+    ex:textoExtracto "Activar la marca MZTOSPDL." .
+
+ex:MarcaGRTOSPDL
+    a ex:InterfazUsuario ;
+    ex:identificador "GRTOSPDL" ;
+    ex:textoExtracto "Activar la marca GRTOSPDL." .
+
+ex:MarcaSPDLTOMZ
+    a ex:InterfazUsuario ;
+    ex:identificador "SPDLTOMZ" ;
+    ex:textoExtracto "Activar la marca SPDLTOMZ." .
+
+ex:MarcaMZROT
+    a ex:InterfazUsuario ;
+    ex:identificador "MZROT" ;
+    ex:textoExtracto "Activar la marca MZROT para indicar que ha finalizado la operación, se haya orientado el almacén o no." .
+
+ex:OperacionTM8 ex:habilitadoPor ex:MarcaSPDLTOGR .
+ex:OperacionTM8 ex:habilitadoPor ex:MarcaGRTOSPDL .
+ex:OperacionTM9 ex:habilitadoPor ex:MarcaGRTOSPDL .
+ex:OperacionTM9 ex:habilitadoPor ex:MarcaSPDLTOMZ .
+ex:OperacionTM10 ex:habilitadoPor ex:MarcaMZTOSPDL .
+ex:OperacionTM10 ex:habilitadoPor ex:MarcaSPDLTOGR .
+ex:OperacionTM11 ex:habilitadoPor ex:MarcaMZROT .

@@ -1,0 +1,88 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OperacionTM1
+    a ex:TareaMantenimiento ;
+    rdfs:label "Coger herramienta del almacén y ponerla en cabezal (TMOPERATION=1)" ;
+    ex:textoExtracto "TMOPERATION = 1 Coger una herramienta del almacén y ponerla en el cabezal. TAKEPOS=# Posición del almacén para coger la herramienta. La secuencia de esta operación es la siguiente. 1 Coger la herramienta del almacén con la pinza ꞏ1ꞏ y activar la marca MZTOCH1. 2 Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal y activar la marca CH1TOSPDL." ;
+    ex:identificador "TMOPERATION=1" .
+
+ex:OperacionTM2
+    a ex:TareaMantenimiento ;
+    rdfs:label "Dejar herramienta del cabezal en el almacén (TMOPERATION=2)" ;
+    ex:textoExtracto "TMOPERATION = 2 Dejar la herramienta del cabezal en el almacén. LEAVEPOS=# Posición del almacén para dejar la herramienta. La secuencia de esta operación es la siguiente. 1 Coger la herramienta del cabezal con la pinza ꞏ1ꞏ y activar la marca SPDLTOCH1. 2 Dejar la herramienta de la pinza ꞏ1ꞏ en el almacén y activar la marca CH1TOMZ." ;
+    ex:identificador "TMOPERATION=2" .
+
+ex:OperacionTM3
+    a ex:TareaMantenimiento ;
+    rdfs:label "Poner herramienta de tierra en el cabezal (TMOPERATION=3)" ;
+    ex:textoExtracto "TMOPERATION = 3 Poner en el cabezal una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca GRTOSPDL." ;
+    ex:identificador "TMOPERATION=3" .
+
+ex:OperacionTM4
+    a ex:TareaMantenimiento ;
+    rdfs:label "Dejar herramienta del cabezal en tierra (TMOPERATION=4)" ;
+    ex:textoExtracto "TMOPERATION = 4 Dejar la herramienta del cabezal en tierra. La secuencia de esta operación es la siguiente. 1 Tras finalizar la operación, activar la marca SPDLTOGR." ;
+    ex:identificador "TMOPERATION=4" .
+
+ex:OperacionTM5
+    a ex:TareaMantenimiento ;
+    rdfs:label "Intercambiar herramienta entre cabezal y almacén (TMOPERATION=5)" ;
+    ex:textoExtracto "TMOPERATION = 5 Dejar la herramienta del cabezal en el almacén y coger una herramienta del mismo almacén. TAKEPOS=# Posición del almacén para coger la herramienta. LEAVEPOS=# Posición del almacén para dejar la herramienta. La secuencia de esta operación es la siguiente. 1 Coger la herramienta del cabezal con la pinza ꞏ1ꞏ y activar la marca SPDLTOCH1. 2 Dejar la herramienta de la pinza ꞏ1ꞏ en el almacén y activar la marca CH1TOMZ. 3 Coger la herramienta del almacén con la pinza ꞏ1ꞏ y activar la marca MZTOCH1." ;
+    ex:identificador "TMOPERATION=5" .
+
+ex:Pinza1
+    a ex:Actuador ;
+    rdfs:label "Pinza 1 (ꞏ1ꞏ)" ;
+    ex:textoExtracto "pinza ꞏ1ꞏ" .
+
+ex:MarcaMZTOCH1
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca MZTOCH1" ;
+    ex:textoExtracto "activar la marca MZTOCH1" .
+
+ex:MarcaCH1TOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca CH1TOSPDL" ;
+    ex:textoExtracto "activar la marca CH1TOSPDL" .
+
+ex:MarcaSPDLTOCH1
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOCH1" ;
+    ex:textoExtracto "activar la marca SPDLTOCH1" .
+
+ex:MarcaCH1TOMZ
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca CH1TOMZ" ;
+    ex:textoExtracto "activar la marca CH1TOMZ" .
+
+ex:MarcaGRTOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca GRTOSPDL" ;
+    ex:textoExtracto "activar la marca GRTOSPDL" .
+
+ex:MarcaSPDLTOGR
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOGR" ;
+    ex:textoExtracto "activar la marca SPDLTOGR" .
+
+# Relaciones entre operaciones y componentes
+ex:OperacionTM1
+    ex:ejecutadoPor ex:Pinza1 ;
+    ex:controla ex:MarcaMZTOCH1, ex:MarcaCH1TOSPDL .
+
+ex:OperacionTM2
+    ex:ejecutadoPor ex:Pinza1 ;
+    ex:controla ex:MarcaSPDLTOCH1, ex:MarcaCH1TOMZ .
+
+ex:OperacionTM3
+    ex:controla ex:MarcaGRTOSPDL .
+
+ex:OperacionTM4
+    ex:controla ex:MarcaSPDLTOGR .
+
+ex:OperacionTM5
+    ex:ejecutadoPor ex:Pinza1 ;
+    ex:controla ex:MarcaSPDLTOCH1, ex:MarcaCH1TOMZ, ex:MarcaMZTOCH1 .

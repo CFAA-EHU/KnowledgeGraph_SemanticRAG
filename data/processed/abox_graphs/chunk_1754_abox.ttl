@@ -1,0 +1,59 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Comando_DMCON a ns1:AccionProhibida ;
+    rdfs:label "Comando #DMCON (activación no permitida con cabezal analógico)" ;
+    ns1:activaAlarma ns1:Error2432 ;
+    ns1:identificador "#DMCON" ;
+    ns1:textoExtracto "#DMCON: Programación no permitida con cabezal analógico." .
+
+ns1:Comando_ONOFF a ns1:AccionProhibida ;
+    rdfs:label "Comando ON/OFF (obligatorio en programación)" ;
+    ns1:activaAlarma ns1:Error2433 ;
+    ns1:identificador "ON/OFF" ;
+    ns1:textoExtracto "Falta programar el comando ON/OFF para activar o anular la función." .
+
+ns1:Funcion_DMC a ns1:ModoOperacion,
+        ns1:Tabla ;
+    rdfs:label "Función #DMC (Dynamic Motion Control)" ;
+    ns1:activaAlarma ns1:Error2431,
+        ns1:Error2432,
+        ns1:Error2433 ;
+    ns1:identificador "#DMC" ;
+    ns1:textoExtracto "En la función #DMC, el avance mínimo es mayor que el avance máximo." .
+
+ns1:Parametro_FZMAX a ns1:Parametro ;
+    rdfs:label "Parámetro FZMAX (avance máximo)" ;
+    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." ;
+    ns1:valor "FZMAX" .
+
+ns1:Parametro_FZMIN a ns1:Parametro ;
+    rdfs:label "Parámetro FZMIN (avance mínimo)" ;
+    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." ;
+    ns1:valor "FZMIN" .
+
+ns1:Parametro_OVRMAX a ns1:Parametro ;
+    rdfs:label "Parámetro OVRMAX (override máximo)" ;
+    ns1:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." ;
+    ns1:valor "OVRMAX" .
+
+ns1:Parametro_OVRMIN a ns1:Parametro ;
+    rdfs:label "Parámetro OVRMIN (override mínimo)" ;
+    ns1:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." ;
+    ns1:valor "OVRMIN" .
+
+ns1:Error2431 a ns1:AvisoSeguridad ;
+    rdfs:label "Error 2431: #DMC ON - Avance mínimo > avance máximo" ;
+    ns1:identificador "2431" ;
+    ns1:textoExtracto "2431 #DMC ON: OVRMIN debe ser menor que OVRMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el avance mínimo es mayor que el avance máximo. SOLUCIÓN El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
+
+ns1:Error2432 a ns1:AvisoSeguridad ;
+    rdfs:label "Error 2432: #DMCON - Cabezal analógico no compatible" ;
+    ns1:identificador "2432" ;
+    ns1:textoExtracto "2432 #DMCON: Programación no permitida con cabezal analógico. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico. SOLUCIÓN El DMC sólo se puede activar sobre cabezales digitales." .
+
+ns1:Error2433 a ns1:AvisoSeguridad ;
+    rdfs:label "Error 2433: Falta comando ON/OFF en programación" ;
+    ns1:identificador "2433" ;
+    ns1:textoExtracto "2433 Es obligatorio programar ON/OFF. DETECCIÓN Durante la ejecución. CAUSA Falta programar el comando ON/OFF para activar o anular la función." .
+

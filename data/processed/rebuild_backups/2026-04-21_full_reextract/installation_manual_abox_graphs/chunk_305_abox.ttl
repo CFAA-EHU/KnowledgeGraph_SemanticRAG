@@ -1,0 +1,45 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:PLCOINC
+    a ex:Parametro ;
+    rdfs:label "PLCOINC" ;
+    ex:identificador "PLCOINC" ;
+    ex:textoExtracto "PLCOINC Incremento del offset de PLC por ciclo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ex:monitoreaParametro ex:OffsetPLC ;
+    ex:valor "0"^^xsd:string ;  # Valor por defecto
+    .
+
+ex:OffsetPLC
+    a ex:Parametro ;
+    rdfs:label "Offset de PLC" ;
+    ex:textoExtracto "El offset de PLC es una compensación adicional sobre la cota real del eje. El CNC aplica esta compensación de forma transparente para el usuario, que no la ve reflejada en las cotas. Una utilidad típica es corregir las dilataciones del eje por temperatura." ;
+    ex:valor "0.25"^^xsd:string ;  # Ejemplo de valor inicial
+    .
+
+ex:Variable_V_MPA_PLCOINC_xn
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)[ch].MPA.PLCOINC.xn" ;
+    ex:identificador "(V.)[ch].MPA.PLCOINC.xn" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.PLCOINC.xn" ;
+    ex:monitoreaParametro ex:PLCOINC ;
+    .
+
+ex:Variable_V_A_PLCOF_xn
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)A.PLCOF.xn" ;
+    ex:identificador "(V.)A.PLCOF.xn" ;
+    ex:textoExtracto "El offset de PLC a aplicar está definido en la variable (V.)A.PLCOF.xn." ;
+    ex:monitoreaParametro ex:OffsetPLC ;
+    .
+
+ex:Variable_V_A_ACTPLCOF_xn
+    a ex:Parametro ;
+    rdfs:label "Variable (V.)A.ACTPLCOF.xn" ;
+    ex:identificador "(V.)A.ACTPLCOF.xn" ;
+    ex:textoExtracto "El offset de PLC aplicado hasta el momento se puede consultar en la variable (V.)A.ACTPLCOF.xn." ;
+    ex:monitoreaParametro ex:OffsetPLC ;
+    .

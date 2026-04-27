@@ -1,0 +1,26 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AXDELAY
+    a ex:Parametro ;
+    rdfs:label "AXDELAY" ;
+    ex:identificador "AXDELAY" ;
+    ex:textoExtracto "AXDELAY Estimación del retardo en el regulador. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Estándar / De 0 a 127 ciclos. Valor por defecto: Estándar." ;
+    ex:valor "Estándar"^^xsd:string ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPA.AXDELAY[set].xn" .
+
+ex:Tabla_Valores_AXDELAY a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de valores del parámetro AXDELAY" ;
+    ex:textoExtracto "| Valor. | Significado. | --- | --- | Estándar. | Para regulación Fagor, donde no es necesaria ninguna compensación de retardo. El CNC compensa automáticamente las diferencias de retardo entre los reguladores de los ejes del canal. | 0. | El CNC no aplica compensación de retardo en el regulador. | 1 a 127. | Ciclos de retardo en el regulador. El CNC compensa automáticamente las diferencias de retardo entre los reguladores de los ejes del canal." ;
+    ex:documentadoEn ex:AXDELAY .
+
+ex:Sistema_RegulacionEjes
+    a ex:Sistema ;
+    rdfs:label "Sistema de regulación de ejes (CNC)" ;
+    ex:textoExtracto "El parámetro AXDELAY es una estimación del retardo del regulador a la hora de aplicar la consigna enviada por el CNC. El CNC utiliza este parámetro para compensar la diferencia de retardo entre los ejes de un canal, de manera que la consigna llegue a todos los ejes de forma simultánea y el movimiento de los ejes comience y finalice a la vez." ;
+    ex:monitoreaParametro ex:AXDELAY ;
+    ex:textoExtracto "El CNC también tiene en cuenta este retardo en el calculo del tiempo de anticipación (marca ADVINPOS), en el repaso de roscas y en el cálculo de la distancia de frenado del palpador." .

@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:_9303
+  a ex:AvisoSeguridad ;
+  rdfs:label "El palpador debe asociarse a entrada digital de nodo Fagor"@es ;
+  ex:detalladoEnEsquema ex:EsquemaParametrosMaquina .
+
+ex:_9304
+  a ex:AvisoSeguridad ;
+  rdfs:label "Ejes gantry: Los dos ejes SERCOS tienen que tener igual OPMODEP"@es ;
+  ex:detalladoEnEsquema ex:EsquemaParametrosMaquina .
+
+ex:EsquemaParametrosMaquina
+  a ex:Esquema ;
+  ex:detalladoEnEsquema [ ex:tieneComponente ex:PRBDI1 ;
+                            ex:tieneComponente ex:PRBDI2 ;
+                            ex:tieneComponente ex:EjesGantry ] .
+
+ex:PRBDI1
+  a ex:Parametro ;
+  rdfs:label "PRBDI1"@es ;
+  ex:identificador "PRBDI1" .
+
+ex:PRBDI2
+  a ex:Parametro ;
+  rdfs:label "PRBDI2"@es ;
+  ex:identificador "PRBDI2" .
+
+ex:EjesGantry
+  a ex:Sistema ;
+  ex:tieneComponente [ a ex:EjeSERCOS ; ex:identificador "Eje Maestro" ] ;
+  ex:tieneComponente [ a ex:EjeSERCOS ; ex:identificador "Eje Esclavo" ] .
+
+ex:EjeSERCOS
+  a ex:ComponenteElectrico ;
+  ex:tieneParametro [ a ex:Parametro ; ex:identificador "OPMODEP" ] .

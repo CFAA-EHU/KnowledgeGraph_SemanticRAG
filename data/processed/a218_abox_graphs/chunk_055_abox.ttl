@@ -1,70 +1,44 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:sistemaEngrase_55
-    a                     ex:Sistema ;
-    rdfs:label            "Sistema de engrase"@es ;
-    ex:textoExtracto      "El sistema de engrase se encuentra situado en la parte posterior de la máquina, debajo del sistema neumático. Está compuesto por dos grupos: engrase automático de grasa y engrase manual de aceite."@es ;
-    ex:compuestoPor       ex:sistemaEngraseAutomatico_55 ;
-    ex:compuestoPor       ex:sistemaEngraseManual_55 ;
-    ex:tieneComponente    ex:centralLubricacion_55 ;
-    ex:tieneComponente    ex:pinyonLubricacion_55 ;
-    ex:tieneComponente    ex:bombaEmboloManual_55 ;
-    ex:ilustradoEn        ex:figura4_16_55 .
+ns1:SistemaEngrase_55 a ns1:Sistema ;
+    rdfs:label "Sistema de engrase"@es ;
+    ns1:compuestoPor ns1:EngraseAutomatico_55,
+        ns1:EngraseManual_55 ;
+    ns1:textoExtracto "El sistema de engrase se encuentra situado en la parte posterior de la máquina, debajo del sistema neumático."@es .
 
-ex:sistemaEngraseAutomatico_55
-    a                     ex:Sistema ;
-    rdfs:label            "Sistema de engrase automático"@es ;
-    ex:textoExtracto      "El engrase automático está compuesto por una central de lubricación y un piñón que lubrica el sistema piñón-cremallera."@es ;
-    ex:tieneComponente    ex:centralLubricacion_55 ;
-    ex:tieneComponente    ex:pinyonLubricacion_55 ;
-    ex:requiereConsumible ex:grasaAlphaG11_55 .
+ns1:AceiteG220ISO3498_55 a ns1:Consumible ;
+    rdfs:label "Aceite G220 según ISO 3498"@es ;
+    ns1:identificador "G220 según ISO 3498 (220cSt – 40ºC)" ;
+    ns1:textoExtracto "El sistema manual emplea un aceite G220 según ISO 3498 (220cSt – 40ºC)"@es .
 
-ex:sistemaEngraseManual_55
-    a                     ex:Sistema ;
-    rdfs:label            "Sistema de engrase manual"@es ;
-    ex:textoExtracto      "El engrase manual está compuesto por una bomba de émbolo con mando manual que se encarga de lubricar los rodamientos de los piñones superiores. Ejecutar una embolada por semana."@es ;
-    ex:tieneComponente    ex:bombaEmboloManual_55 ;
-    ex:requiereConsumible ex:aceiteG220_55 ;
-    ex:tieneFrecuencia    ex:frecuenciaMantenimientoManual_55 .
+ns1:BombaEmbolo_55 a ns1:ComponenteMecanico ;
+    rdfs:label "Bomba de émbolo"@es ;
+    ns1:textoExtracto "El engrase manual está compuesto por una bomba de émbolo con mando manual que se encarga de lubricar los rodamientos de los piñones superiores."@es .
 
-ex:centralLubricacion_55
-    a               ex:ComponenteHidraulico ;
-    rdfs:label      "Central de lubricación"@es ;
-    ex:textoExtracto "El engrase automático está compuesto por una central de lubricación y un piñón que lubrica el sistema piñón-cremallera. [...] El piñón recibe de la central la grasa que se aplica en el dentado de forma continua y automática"@es .
+ns1:CentralLubricacion_55 a ns1:ComponenteElectrico ;
+    rdfs:label "Central de lubricación"@es ;
+    ns1:textoExtracto "El engrase automático está compuesto por una central de lubricación y un piñón que lubrica el sistema piñón-cremallera."@es .
 
-ex:pinyonLubricacion_55
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Piñón de lubricación de espuma de poliuretano"@es ;
-    ex:textoExtracto "El piñón de lubricación es de espuma de poliuretano de célula abierta y garantiza un suministro óptimo de lubricante durante largos periodos de tiempo. [...] actúa limpiando el dentado desprotegido al aire."@es .
+ns1:EngraseAutomatico_55 a ns1:Componente ;
+    rdfs:label "Engrase automático"@es ;
+    ns1:compuestoPor ns1:CentralLubricacion_55,
+        ns1:PinonLubricacion_55 ;
+    ns1:textoExtracto "El engrase automático está compuesto por una central de lubricación y un piñón que lubrica el sistema piñón-cremallera."@es ;
+    ns1:tieneComponente ns1:GrassaAlphaG11NLGI01_55 .
 
-ex:bombaEmboloManual_55
-    a               ex:ComponenteHidraulico ;
-    rdfs:label      "Bomba de émbolo manual"@es ;
-    ex:textoExtracto "El engrase manual está compuesto por una bomba de émbolo con mando manual que se encarga de lubricar los rodamientos de los piñones superiores."@es .
+ns1:EngraseManual_55 a ns1:Componente ;
+    rdfs:label "Engrase manual"@es ;
+    ns1:compuestoPor ns1:BombaEmbolo_55 ;
+    ns1:textoExtracto "El engrase manual está compuesto por una bomba de émbolo con mando manual que se encarga de lubricar los rodamientos de los piñones superiores."@es ;
+    ns1:tieneComponente ns1:AceiteG220ISO3498_55 .
 
-ex:grasaAlphaG11_55
-    a               ex:Consumible ;
-    rdfs:label      "Grasa Alpha G11 NLGI 0-1"@es ;
-    ex:identificador "Alpha G11 NLGI 0-1 (176cSt – 40ºC)" ;
-    ex:textoExtracto "El sistema automático emplea una grasa Alpha G11 NLGI 0-1 (176cSt – 40ºC)"@es .
+ns1:GrassaAlphaG11NLGI01_55 a ns1:Consumible ;
+    rdfs:label "Grassa Alpha G11 NLGI 0-1"@es ;
+    ns1:identificador "Alpha G11 NLGI 0-1 (176cSt – 40ºC)" ;
+    ns1:textoExtracto "El sistema automático emplea una grasa Alpha G11 NLGI 0-1 (176cSt – 40ºC)"@es .
 
-ex:aceiteG220_55
-    a               ex:Consumible ;
-    rdfs:label      "Aceite G220"@es ;
-    ex:identificador "G220 según ISO 3498 (220cSt – 40ºC)" ;
-    ex:textoExtracto "el sistema manual emplea un aceite G220 según ISO 3498 (220cSt – 40ºC)"@es .
+ns1:PinonLubricacion_55 a ns1:ComponenteMecanico ;
+    rdfs:label "Piñón de lubricación"@es ;
+    ns1:textoExtracto "El piñón de lubricación es de espuma de poliuretano de célula abierta y garantiza un suministro óptimo de lubricante durante largos periodos de tiempo."@es .
 
-ex:frecuenciaMantenimientoManual_55
-    a               ex:Frecuencia ;
-    rdfs:label      "Frecuencia de engrase manual"@es ;
-    ex:textoExtracto "Ejecutar una embolada por semana."@es ;
-    ex:valor         "1 embolada/semana" .
-
-ex:figura4_16_55
-    a               ex:Figura ;
-    rdfs:label      "Figura 4-16. Sistema de engrase"@es ;
-    ex:identificador "4-16" ;
-    ex:textoExtracto "Engrase Engrase manual automático Figura 4-16. Sistema de engrase"@es .

@@ -1,0 +1,86 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Diagnósticos de fallo en ciclo de mecanizado
+ex:Fallo_1903
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Arco mal programado" ;
+    ex:identificador "1903" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA Arco mal definido en la geometría del ciclo fijo. SOLUCIÓN Corregir la programación." .
+
+ex:Fallo_1904
+    a ex:DiagnosticoFallo ;
+    rdfs:label "No se ha programado herramienta" ;
+    ex:identificador "1904" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA No hay herramienta programada. SOLUCIÓN Programar una herramienta antes del ciclo o cargar una herramienta en el cabezal." ;
+    ex:solucionaFallo ex:Herramienta_Generica .
+
+ex:Fallo_1905
+    a ex:DiagnosticoFallo ;
+    rdfs:label "RANURADO: Anchura de la cuchilla nula" ;
+    ex:identificador "1905" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA La anchura de la herramienta tiene valor 0. SOLUCIÓN Corregir el valor de la anchura de la herramienta o seleccionar otra herramienta." ;
+    ex:solucionaFallo ex:Herramienta_Ranurado .
+
+ex:Fallo_1906
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Factor de forma de la herramienta no válido" ;
+    ex:identificador "1906" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El factor de forma no es válido para el ciclo programado. SOLUCIÓN Corregir el factor de forma o seleccionar otra herramienta." .
+
+ex:Fallo_1907
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Avance F nulo anterior al ciclo" ;
+    ex:identificador "1907" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El avance de mecanizado tiene valor 0. SOLUCIÓN Definir un avance mayor que 0." ;
+    ex:monitoreaParametro ex:Parametro_AvanceF .
+
+ex:Fallo_1908
+    a ex:DiagnosticoFallo ;
+    rdfs:label "No se ha programado sobrante de material" ;
+    ex:identificador "1908" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA La demasía para el acabado tiene valor 0. SOLUCIÓN Definir una demasía para el acabado mayor que 0." ;
+    ex:monitoreaParametro ex:Parametro_SobranteMaterial .
+
+ex:Fallo_1909
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Paso de desbaste nulo" ;
+    ex:identificador "1909" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El paso de mecanizado tiene valor 0. SOLUCIÓN Definir un paso de mecanizado mayor que 0." ;
+    ex:monitoreaParametro ex:Parametro_PasoDesbaste .
+
+ex:Fallo_1910
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Paso de desbaste mayor que la anchura de la cuchilla" ;
+    ex:identificador "1910" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El paso de desbaste es mayor que la anchura de la cuchilla." ;
+    ex:monitoreaParametro ex:Parametro_PasoDesbaste .
+
+### Herramientas y parámetros asociados
+ex:Herramienta_Generica
+    a ex:Herramienta ;
+    ex:textoExtracto "Programar una herramienta antes del ciclo o cargar una herramienta en el cabezal." .
+
+ex:Herramienta_Ranurado
+    a ex:Herramienta ;
+    ex:textoExtracto "Corregir el valor de la anchura de la herramienta o seleccionar otra herramienta." .
+
+ex:Parametro_AvanceF
+    a ex:Parametro ;
+    rdfs:label "Avance F" ;
+    ex:valor "0" ;
+    ex:textoExtracto "El avance de mecanizado tiene valor 0." .
+
+ex:Parametro_SobranteMaterial
+    a ex:Parametro ;
+    rdfs:label "Sobrante de material" ;
+    ex:valor "0" ;
+    ex:textoExtracto "La demasía para el acabado tiene valor 0." .
+
+ex:Parametro_PasoDesbaste
+    a ex:Parametro ;
+    rdfs:label "Paso de desbaste" ;
+    ex:valor "0" ;
+    ex:textoExtracto "El paso de mecanizado tiene valor 0." .

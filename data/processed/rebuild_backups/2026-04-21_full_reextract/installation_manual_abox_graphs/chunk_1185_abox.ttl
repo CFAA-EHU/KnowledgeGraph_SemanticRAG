@@ -1,0 +1,31 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SubrutinaStart_1185
+    a                     ex:Sistema ;
+    rdfs:label            "Subrutina asociada al start"@es ;
+    ex:textoExtracto      "En cada canal, el start de ejecución puede tener asociada una subrutina, que se ejecuta al pulsar la tecla [START], desde el modo automático, para iniciar la ejecución del programa entero [...] Esta subrutina permite, por ejemplo, tener definidas unas condiciones de mecanizado que condicionen la ejecución de los programas de usuario."@es ;
+    ex:identificador      "SubrutinaStart" .
+
+ex:TeclaSTART_1185
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Tecla [START]"@es ;
+    ex:textoExtracto      "al pulsar la tecla [START] [...] El CNC tampoco llama a la subrutina al ejecutar un ciclo desde el modo conversacional."@es ;
+    ex:identificador      "START" ;
+    ex:activaAlarma        ex:SubrutinaStart_1185 .
+
+ex:ModoAutomatico_1185
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo automático"@es ;
+    ex:textoExtracto      "desde el modo automático, para iniciar la ejecución del programa entero"@es ;
+    ex:identificador      "ModoAutomatico" ;
+    ex:habilitadoPor       ex:TeclaSTART_1185 .
+
+ex:BarraEstadoCNC_1185
+    a                     ex:InterfazUsuario ;
+    rdfs:label            "Barra general de estado del CNC"@es ;
+    ex:textoExtracto      "Durante la ejecución, el CNC muestra en la barra general de estado el nombre de la subrutina."@es ;
+    ex:identificador      "BarraEstado" ;
+    ex:ilustradoEn         ex:SubrutinaStart_1185 .

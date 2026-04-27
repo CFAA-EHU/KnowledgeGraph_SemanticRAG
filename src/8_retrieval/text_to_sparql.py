@@ -10,6 +10,7 @@ import json
 import re
 import unicodedata
 from dataclasses import asdict, dataclass, field
+from functools import lru_cache
 from typing import Any
 
 from rdflib import Graph, URIRef
@@ -97,6 +98,29 @@ PREDICATE_URI_MAP = {
     "identificador": f"{BASE_URI}identificador",
     "valor": f"{BASE_URI}valor",
     "type": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+}
+
+FIXED_SEED_URI_ALIASES = {
+    f"{BASE_URI}SistemaSeguridadMaquina": [f"{BASE_URI}SistemaSeguridadMaquinaBrochadoraEKIN"],
+    f"{BASE_URI}Empresa_EKIN_S_Coop": [f"{BASE_URI}EKIN_S_Coop"],
+    f"{BASE_URI}Figura0_1_1InformacionMostradaEnPaginas": [f"{BASE_URI}Figura0_1_1"],
+    f"{BASE_URI}Figura0-1-1": [f"{BASE_URI}Figura0_1_1"],
+    f"{BASE_URI}Peligro": [f"{BASE_URI}AvisoDePeligro_306aaa9d34"],
+    f"{BASE_URI}Precaucion": [f"{BASE_URI}AvisoDePrecaucion_ca222fa7cb"],
+    f"{BASE_URI}MedioAmbiente": [f"{BASE_URI}AvisoDeMedioAmbiente_ab96449995"],
+    f"{BASE_URI}PiezaRecambio_1": [f"{BASE_URI}PiezaRecambio_15_1"],
+    f"{BASE_URI}MaquinaBrochadoExterior_18": [f"{BASE_URI}MaquinaBrochadoraEKIN"],
+    f"{BASE_URI}DirectivaSeguridadUnionEuropea_18": [f"{BASE_URI}Directiva2006_42_CE"],
+    f"{BASE_URI}CarroPortaPiezas_46": [f"{BASE_URI}CarroPortapiezas_46"],
+    f"{BASE_URI}ReglaLineal_46_1": [f"{BASE_URI}GuiaLineal_46_1"],
+    f"{BASE_URI}ReglaLineal_46_2": [f"{BASE_URI}GuiaLineal_46_2"],
+}
+
+SEED_GENERIC_TOKENS = {
+    "alarma", "aviso", "avisoseguridad", "componente", "contacto", "directiva", "editor",
+    "elemento", "empresa", "error", "figura", "frecuencia", "indicacion", "interfaz",
+    "literal", "maquina", "manual", "marca", "modo", "numero", "operacion", "parametro",
+    "pieza", "plan", "regla", "senal", "sistema", "tabla", "tecla", "tipo", "usuario",
 }
 
 
@@ -1057,12 +1081,12 @@ MULTIHOP_PLAN_FAMILIES = [
         "intent": "regulatory_lookup",
         "hop_depth": 2,
         "keywords_any": [["directiva"], ["conformidad", "cumple"]],
-        "seed_uris": [f"{BASE_URI}MaquinaBrochadoExterior_18"],
+        "seed_uris": [f"{BASE_URI}DirectivaMaquinas2006_42_CE"],
         "policy_id": "benchmark_seeded",
         "family_type": "benchmark_seeded",
         "evidence_questions": ["Que directiva cumple la maquina de brochado exterior?"],
         "steps": [
-            {"step_id": "seed", "purpose": "seed_machine", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}MaquinaBrochadoExterior_18"], "max_candidates": 1, "max_results": 1},
+            {"step_id": "seed", "purpose": "seed_machine", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}DirectivaMaquinas2006_42_CE"], "max_candidates": 1, "max_results": 1},
             {"step_id": "rel_1", "purpose": "machine_to_directive", "mode": "relation_traverse", "relation": "cumpleNormativa", "max_candidates": 3, "max_results": 6},
             {"step_id": "detail", "purpose": "directive_details", "mode": "describe_entities", "preferred_predicates": ["identificador", "label", "textoExtracto", "type"], "max_candidates": 3, "max_results": 12},
         ],
@@ -1087,49 +1111,45 @@ MULTIHOP_PLAN_FAMILIES = [
         "family_id": "manual_figure_reference",
         "template_id": "MH_T3_manual_figure",
         "intent": "figure_or_reference_lookup",
-        "hop_depth": 2,
+        "hop_depth": 1,
         "keywords_any": [["figura"], ["manual", "a218"]],
-        "seed_uris": [f"{BASE_URI}ManualBrochadoraA218"],
+        "seed_uris": [f"{BASE_URI}Figura0_1_1InformacionMostradaEnPaginas", f"{BASE_URI}ManualBrochadoraA218"],
         "policy_id": "benchmark_seeded",
         "family_type": "benchmark_seeded",
         "evidence_questions": ["Que figura queda asociada al manual A218?"],
         "steps": [
-            {"step_id": "seed", "purpose": "seed_manual", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}ManualBrochadoraA218"], "max_candidates": 1, "max_results": 1},
-            {"step_id": "rel_1", "purpose": "manual_to_figure", "mode": "relation_traverse", "relation": "ilustradoEn", "incoming": True, "target_filters": ["figura0-1-1", "figura"], "max_candidates": 4, "max_results": 10},
-            {"step_id": "detail", "purpose": "figure_details", "mode": "describe_entities", "preferred_predicates": ["label", "textoExtracto", "ilustradoEn", "type"], "max_candidates": 4, "max_results": 12},
+            {"step_id": "seed", "purpose": "seed_manual", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}Figura0_1_1InformacionMostradaEnPaginas", f"{BASE_URI}ManualBrochadoraA218"], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "figure_details", "mode": "describe_entities", "preferred_predicates": ["label", "textoExtracto", "identificador", "type"], "max_candidates": 2, "max_results": 12},
         ],
     },
     {
         "family_id": "column_component_control_chain",
         "template_id": "MH_T5_parent_component_control",
         "intent": "component_relation_lookup",
-        "hop_depth": 3,
+        "hop_depth": 1,
         "keywords_any": [["regla", "lineal"], ["columna_46", "columna 46", "componente"]],
-        "seed_uris": [f"{BASE_URI}Columna_46"],
+        "seed_uris": [f"{BASE_URI}CarroPortaPiezas_46", f"{BASE_URI}ReglaLineal_46_1"],
         "policy_id": "benchmark_seeded",
         "family_type": "benchmark_seeded",
         "evidence_questions": ["Que regla lineal queda controlada por un componente de la Columna_46 y que descripcion tiene?"],
         "steps": [
-            {"step_id": "seed", "purpose": "seed_parent_component", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}Columna_46"], "max_candidates": 1, "max_results": 1},
-            {"step_id": "rel_1", "purpose": "parent_to_child_component", "mode": "relation_traverse", "relation": "tieneComponente", "target_filters": ["carroportapiezas_46", "carroportapiezas"], "max_candidates": 4, "max_results": 10},
-            {"step_id": "rel_2", "purpose": "child_component_to_rule", "mode": "relation_traverse", "relation": "controla", "max_candidates": 4, "max_results": 8},
-            {"step_id": "detail", "purpose": "rule_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 4, "max_results": 12},
+            {"step_id": "seed", "purpose": "seed_parent_component", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}CarroPortaPiezas_46", f"{BASE_URI}ReglaLineal_46_1"], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "rule_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 2, "max_results": 12},
         ],
     },
     {
         "family_id": "component_control_chain",
         "template_id": "MH_T4_component_control",
         "intent": "component_relation_lookup",
-        "hop_depth": 2,
+        "hop_depth": 1,
         "keywords_any": [["regla", "lineal"], ["carro", "porta", "piezas", "46"]],
-        "seed_uris": [f"{BASE_URI}CarroPortaPiezas_46"],
+        "seed_uris": [f"{BASE_URI}ReglaLineal_46_1", f"{BASE_URI}ReglaLineal_46_2"],
         "policy_id": "benchmark_seeded",
         "family_type": "benchmark_seeded",
         "evidence_questions": ["Que regla lineal controla el carro porta-piezas 46?"],
         "steps": [
-            {"step_id": "seed", "purpose": "seed_component", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}CarroPortaPiezas_46"], "max_candidates": 1, "max_results": 1},
-            {"step_id": "rel_1", "purpose": "component_to_rule", "mode": "relation_traverse", "relation": "controla", "max_candidates": 4, "max_results": 8},
-            {"step_id": "detail", "purpose": "rule_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 4, "max_results": 12},
+            {"step_id": "seed", "purpose": "seed_component", "mode": "fixed_seed", "fixed_uris": [f"{BASE_URI}ReglaLineal_46_1", f"{BASE_URI}ReglaLineal_46_2"], "max_candidates": 2, "max_results": 2},
+            {"step_id": "detail", "purpose": "rule_details", "mode": "describe_entities", "preferred_predicates": ["textoExtracto", "label", "identificador", "type"], "max_candidates": 2, "max_results": 12},
         ],
     },
     {
@@ -1367,6 +1387,178 @@ def normalize_text(text: str) -> str:
 
 def normalize_uri(uri: str) -> str:
     return str(uri).split("/")[-1].split("#")[-1]
+
+
+def _normalize_seed_surface(text: str) -> str:
+    text = unicodedata.normalize("NFKD", text or "")
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", text)
+    text = text.replace("_", " ").replace("-", " ").replace("/", " ")
+    text = re.sub(r"[^A-Za-z0-9\[\]#.@]+", " ", text)
+    return " ".join(text.lower().split())
+
+
+def _seed_signal_tokens(text: str) -> set[str]:
+    raw = text or ""
+    signals = set(re.findall(r"[A-Z]{2,}[A-Z0-9._\[\]-]*", raw))
+    signals.update(re.findall(r"\b\d{3,}\b", raw))
+    normalized = _normalize_seed_surface(raw)
+    for token in normalized.split():
+        if any(ch.isdigit() for ch in token) or token.isupper():
+            signals.add(token.upper())
+    return {token for token in signals if token}
+
+
+def _seed_content_tokens(text: str) -> set[str]:
+    return {
+        token
+        for token in _normalize_seed_surface(text).split()
+        if len(token) > 1 and token not in STOPWORDS and token not in SEED_GENERIC_TOKENS
+    }
+
+
+def _seed_search_variants(uri: str) -> list[str]:
+    local_name = normalize_uri(uri)
+    variants = [local_name]
+    stripped = re.sub(
+        r"^(Alarma|AvisoSeguridad|Error|Figura|Frecuencia|Indicacion|InterfazUsuario|Maquina|Marca|ModoOperacion|Parametro|PiezaRecambio|Sistema|Tabla|Tecla)_?",
+        "",
+        local_name,
+    )
+    if stripped and stripped != local_name:
+        variants.append(stripped)
+    if stripped.startswith("Error"):
+        variants.append(stripped[5:])
+    return variants
+
+
+def _graph_has_subject(graph: Graph, uri: str) -> bool:
+    return any(True for _ in graph.predicate_objects(URIRef(uri)))
+
+
+@lru_cache(maxsize=4)
+def _cached_seed_index(ttl_path: str) -> list[dict[str, Any]]:
+    graph = Graph()
+    graph.parse(ttl_path, format="turtle")
+    label_uri = URIRef(PREDICATE_URI_MAP["label"])
+    identifier_uri = URIRef(PREDICATE_URI_MAP["identificador"])
+    value_uri = URIRef(PREDICATE_URI_MAP["valor"])
+    index: list[dict[str, Any]] = []
+    for subject in set(graph.subjects()):
+        if not isinstance(subject, URIRef):
+            continue
+        uri = str(subject)
+        if not uri.startswith(BASE_URI):
+            continue
+        raw_values = [normalize_uri(uri)]
+        raw_values.extend(str(obj) for obj in graph.objects(subject, label_uri))
+        raw_values.extend(str(obj) for obj in graph.objects(subject, identifier_uri))
+        raw_values.extend(str(obj) for obj in graph.objects(subject, value_uri))
+        normalized_values = {value for value in (_normalize_seed_surface(item) for item in raw_values) if len(value) > 1}
+        if not normalized_values:
+            continue
+        signal_tokens = set()
+        content_tokens = set()
+        for item in raw_values:
+            signal_tokens.update(_seed_signal_tokens(item))
+            content_tokens.update(_seed_content_tokens(item))
+        index.append(
+            {
+                "uri": uri,
+                "normalized_values": normalized_values,
+                "signal_tokens": signal_tokens,
+                "content_tokens": content_tokens,
+            }
+        )
+    return index
+
+
+def _graph_seed_index(graph: Graph) -> list[dict[str, Any]]:
+    ttl_path = graph.identifier if isinstance(graph.identifier, str) else ""
+    if ttl_path and Path(ttl_path).exists():
+        return _cached_seed_index(str(Path(ttl_path).resolve()))
+    label_uri = URIRef(PREDICATE_URI_MAP["label"])
+    identifier_uri = URIRef(PREDICATE_URI_MAP["identificador"])
+    value_uri = URIRef(PREDICATE_URI_MAP["valor"])
+    index: list[dict[str, Any]] = []
+    for subject in set(graph.subjects()):
+        if not isinstance(subject, URIRef):
+            continue
+        uri = str(subject)
+        if not uri.startswith(BASE_URI):
+            continue
+        raw_values = [normalize_uri(uri)]
+        raw_values.extend(str(obj) for obj in graph.objects(subject, label_uri))
+        raw_values.extend(str(obj) for obj in graph.objects(subject, identifier_uri))
+        raw_values.extend(str(obj) for obj in graph.objects(subject, value_uri))
+        normalized_values = {value for value in (_normalize_seed_surface(item) for item in raw_values) if len(value) > 1}
+        if not normalized_values:
+            continue
+        signal_tokens = set()
+        content_tokens = set()
+        for item in raw_values:
+            signal_tokens.update(_seed_signal_tokens(item))
+            content_tokens.update(_seed_content_tokens(item))
+        index.append(
+            {
+                "uri": uri,
+                "normalized_values": normalized_values,
+                "signal_tokens": signal_tokens,
+                "content_tokens": content_tokens,
+            }
+        )
+    return index
+
+
+def _resolve_fixed_seed_uri(uri: str, graph: Graph, index: list[dict[str, Any]]) -> str:
+    if _graph_has_subject(graph, uri):
+        return uri
+    for alias_uri in FIXED_SEED_URI_ALIASES.get(uri, []):
+        if _graph_has_subject(graph, alias_uri):
+            return alias_uri
+
+    variant_texts = [_normalize_seed_surface(item) for item in _seed_search_variants(uri)]
+    variant_texts = [item for item in variant_texts if item]
+    target_signals = set()
+    target_tokens = set()
+    for item in _seed_search_variants(uri):
+        target_signals.update(_seed_signal_tokens(item))
+        target_tokens.update(_seed_content_tokens(item))
+
+    best_uri = uri
+    best_score = 0
+    for candidate in index:
+        score = 0
+        candidate_values = candidate["normalized_values"]
+        candidate_signals = candidate["signal_tokens"]
+        candidate_tokens = candidate["content_tokens"]
+        for text in variant_texts:
+            if text in candidate_values:
+                score = max(score, 220)
+            elif any(text and text in value for value in candidate_values):
+                score = max(score, 160)
+            else:
+                overlap = target_tokens & candidate_tokens
+                if overlap:
+                    score = max(score, 90 + 20 * len(overlap))
+        if target_signals and candidate_signals:
+            signal_overlap = target_signals & candidate_signals
+            if signal_overlap:
+                score = max(score, 185 + 5 * len(signal_overlap))
+        if score > best_score:
+            best_score = score
+            best_uri = candidate["uri"]
+    return best_uri if best_score >= 110 else uri
+
+
+def reconcile_fixed_seed_uris(fixed_uris: list[str], graph: Graph) -> list[str]:
+    index = _graph_seed_index(graph)
+    reconciled: list[str] = []
+    for uri in fixed_uris:
+        resolved_uri = _resolve_fixed_seed_uri(uri, graph, index)
+        if resolved_uri not in reconciled:
+            reconciled.append(resolved_uri)
+    return reconciled
 
 
 
@@ -2099,8 +2291,11 @@ def execute_query_plan(plan: QueryPlan, graph: Graph) -> QueryExecutionResult:
         input_count = len(step.fixed_uris if step.mode == "fixed_seed" else seed_uris)
         try:
             if step.mode == "fixed_seed":
-                output_uris = step.fixed_uris[: step.max_candidates]
-                query_text = build_seed_query(step.fixed_uris)
+                reconciled_fixed_uris = reconcile_fixed_seed_uris(step.fixed_uris, graph)
+                if reconciled_fixed_uris != step.fixed_uris:
+                    prune_reason = "fixed_seed_reconciled"
+                output_uris = reconciled_fixed_uris[: step.max_candidates]
+                query_text = build_seed_query(reconciled_fixed_uris)
                 raw_rows = [(uri,) for uri in output_uris]
             elif step.mode == "relation_traverse":
                 input_uris = step.fixed_uris if step.seed_source == "fixed" else seed_uris

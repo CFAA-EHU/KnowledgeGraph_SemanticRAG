@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ParametrizacionCANopen
+    a ex:Parametro ;
+    rdfs:label "Parametrización de entradas digitales (bus CANopen)"@es ;
+    ex:textoExtracto """
+    La configuración debe cumplir los siguientes requisitos. Si la parametrización no se ajusta a estos requisitos, el CNC la ignora y numera las entradas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus.
+    • Se deben parametrizar todos los nodos de I/Os del bus; no se pueden dejar nodos sin definir.
+    • Se deben parametrizar todos los recursos de un nodo; no se pueden dejar I/Os sin numerar.
+    • El máximo número de bloques lógicos en el sistema será 64, tanto para entradas como para salidas digitales.
+    • El número de I/Os de un bloque lógico no puede ser cero, y debe ser un múltiplo de 8.
+    • Los valores del índice base deben cumplir con la fórmula \"8n + 1\" (es decir, 1, 9, 17, 25 ...).
+    • Los bloques se pueden distribuir como se desee dentro del rango de recursos gestionados por PLC (1...1024)."""@es ;
+    ex:valor "NODE: 1-126; BLOCK: 1-64; ADDRESS: 1-1017 (fórmula 8n+1)"@es ;
+    ex:documentadoEn ex:ManualCANopen .
+
+ex:ManualCANopen
+    a ex:Manual ;
+    ex:textoExtracto "Sección 2.3.21: Numeración de las entradas digitales (bus CANopen). Páginas 86-87."@es .
+
+ex:ParametroNODE
+    a ex:Parametro ;
+    rdfs:label "NODE (Número de nodo de la cabecera)"@es ;
+    ex:textoExtracto "NODE: Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os. Valores posibles: De 1 a 126. Valor por defecto: 0."@es ;
+    ex:valor "1-126 (defecto: 0)"@es ;
+    ex:documentadoEn ex:ManualCANopen .
+
+ex:ParametroBLOCK
+    a ex:Parametro ;
+    rdfs:label "BLOCK (Número de bloque lógico)"@es ;
+    ex:textoExtracto "BLOCK: Número de bloque lógico. Valores posibles: De 1 a 64. Valor por defecto: 0."@es ;
+    ex:valor "1-64 (defecto: 0)"@es ;
+    ex:documentadoEn ex:ManualCANopen .
+
+ex:ParametroADDRESS
+    a ex:Parametro ;
+    rdfs:label "ADDRESS (Dirección base del bloque lógico)"@es ;
+    ex:textoExtracto "ADDRESS: Dirección base del bloque lógico. Valores posibles: De 1 a 1017. Valor por defecto: El primer valor válido."@es ;
+    ex:valor "1-1017 (fórmula 8n+1)"@es ;
+    ex:documentadoEn ex:ManualCANopen .
+
+ex:VariableMPG_DIMODNODE
+    a ex:Parametro ;
+    rdfs:label "(V.)MPG.DIMODNODE[nb]"@es ;
+    ex:textoExtracto "Variable asociada: (V.)MPG.DIMODNODE[nb] (Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os)."@es ;
+    ex:documentadoEn ex:ManualCANopen .
+
+ex:VariableMPG_DIMODBLOCK
+    a ex:Parametro ;
+    rdfs:label "(V.)MPG.DIMODBLOCK[nb]"@es ;
+    ex:textoExtracto "Variable asociada: (V.)MPG.DIMODBLOCK[nb] (Número de bloque lógico)."@es ;
+    ex:documentadoEn ex:ManualCANopen .

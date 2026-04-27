@@ -1,0 +1,44 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_MINFLWE
+    a ex:Parametro ;
+    rdfs:label "Mínimo error de seguimiento permitido (eje parado)"@es ;
+    ex:textoExtracto "Este parámetro indica el máximo error de seguimiento permitido cuando el eje está parado. El valor de MINFLWE no podrá ser mayor que la cuarta parte del recorrido del eje (LIMIT+ a LIMIT-)."@es ;
+    ex:identificador "MPA.MINFLWE[set].xn" ;
+    ex:valor "1.0000" ;
+    ex:monitoreaParametro ex:Sistema_FLWEMONITOR .
+
+ex:Parametro_MAXFLWE
+    a ex:Parametro ;
+    rdfs:label "Máximo error de seguimiento en movimiento"@es ;
+    ex:textoExtracto "Con FLWEMONITOR = Standard, MAXFLWE indica el máximo error de seguimiento permitido cuando el eje está en movimiento. Con FLWEMONITOR = Lineal, MAXFLWE indica a partir de qué valor del error de seguimiento comienza la supervisión dinámica."@es ;
+    ex:identificador "MPA.MAXFLWE[set].xn" ;
+    ex:valor "30.0000" ;
+    ex:monitoreaParametro ex:Sistema_FLWEMONITOR .
+
+ex:Parametro_FEDYNFAC
+    a ex:Parametro ;
+    rdfs:label "Porcentaje de desviación permitido para error de seguimiento"@es ;
+    ex:textoExtracto "FEDYNFAC: Porcentaje de desviación permitido para el error de seguimiento. Valores posibles: De 0 a 100 %."@es ;
+    ex:identificador "MPA.FEDYNFAC[set].xn" ;
+    ex:valor "50" ;
+    ex:monitoreaParametro ex:Sistema_FLWEMONITOR .
+
+ex:Sistema_FLWEMONITOR
+    a ex:Sistema ;
+    rdfs:label "Sistema de monitorización de error de seguimiento (FLWEMONITOR)"@es ;
+    ex:textoExtracto "El CNC sólo tiene en cuenta estos parámetros con FLWEMONITOR distinto de OFF. El significado de MAXFLWE depende del valor de FLWEMONITOR (Standard/Lineal)."@es ;
+    ex:identificador "FLWEMONITOR" .
+
+ex:ModoOperacion_FLWEMONITOR_Standard
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Standard (FLWEMONITOR)"@es ;
+    ex:textoExtracto "Con FLWEMONITOR = Standard, MAXFLWE indica el máximo error de seguimiento permitido cuando el eje está en movimiento."@es .
+
+ex:ModoOperacion_FLWEMONITOR_Lineal
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Lineal (FLWEMONITOR)"@es ;
+    ex:textoExtracto "Con FLWEMONITOR = Lineal, MAXFLWE indica a partir de qué valor del error de seguimiento comienza la supervisión dinámica."@es .

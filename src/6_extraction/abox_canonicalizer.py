@@ -12,11 +12,13 @@ from typing import Any
 from rdflib import Graph, URIRef
 
 from artifact_contracts import (
+    ABOX_MINTED_ENTITY_REGISTRY_PATH,
     CANONICAL_ABOX_PATH,
     CANONICAL_ENTITY_MAP_PATH,
     CANONICALIZATION_REPORT_PATH,
     CANONICALIZATION_RESOLUTION_CANDIDATES_PATH,
     RAW_MERGED_ABOX_PATH,
+    OPERATIONAL_TBOX_PATH,
     SANDBOX_DECISION_REPORT_PATH,
     SANDBOX_DIAGNOSTIC_REPORT_PATH,
     SANDBOX_ENTITY_RESOLUTION_CANDIDATES_PATH,
@@ -35,6 +37,7 @@ from canonical_resolution_policy import (
     selections_to_jsonable,
     select_canonical_entity,
 )
+from abox_graph_sanitizer import load_mint_registry, sanitize_abox_graph, save_mint_registry
 
 
 def parse_args() -> argparse.Namespace:
@@ -243,6 +246,14 @@ def main() -> None:
     write_json(args.resolution_candidates_path, resolution_payload)
 
     canonical_graph, rewrite_stats, entity_map = rewrite_graph(raw_graph, selections)
+    tbox_graph = load_graph(OPERATIONAL_TBOX_PATH)
+    mint_registry = load_mint_registry(ABOX_MINTED_ENTITY_REGISTRY_PATH)
+    canonical_graph, sanitization_result = sanitize_abox_graph(
+        canonical_graph,
+        tbox_graph=tbox_graph,
+        mint_registry=mint_registry,
+    )
+    save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     canonical_graph.serialize(destination=args.output, format='turtle')
     write_json(args.entity_map_path, entity_map)
@@ -250,6 +261,7 @@ def main() -> None:
     report_payload = {
         'summary': {
             **rewrite_stats,
+            'sanitization': sanitization_result.to_manifest_summary(),
             'input_path': str(args.input),
             'output_path': str(args.output),
             'resolution_candidates_path': str(args.resolution_candidates_path),

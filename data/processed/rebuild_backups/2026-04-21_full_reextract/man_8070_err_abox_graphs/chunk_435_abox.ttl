@@ -1,0 +1,99 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error3038
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3038: Demasiados parámetros pendientes de reportar" ;
+    ex:textoExtracto "3038 'Demasiados parámetros pendientes de reportar' [...] SOLUCIÓN Cerrar las aplicaciones que no están relacionadas con el CNC. Si el error persiste, póngase en contacto con Fagor." ;
+    ex:identificador "3038" .
+
+ex:Error3039
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3039: No se ha encontrado bloque de parada en búsqueda de bloque" ;
+    ex:textoExtracto "3039 'No se ha encontrado bloque de parada en búsqueda de bloque' [...] SOLUCIÓN Cambiar el bloque de parada." ;
+    ex:identificador "3039" .
+
+ex:Error3040
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3040: Eje Hirth no posicionado correctamente" ;
+    ex:textoExtracto "3040 'Eje Hirth no posicionado correctamente' [...] SOLUCIÓN Posicionar correctamente el eje hirth en una posición válida o desactivarlo como eje hirth." ;
+    ex:identificador "3040" .
+
+ex:Error3041
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3041: No se ha definido cabezal para G33/G34/G95" ;
+    ex:textoExtracto "3041 'No se ha definido cabezal para G33/G34/G95' [...] SOLUCIÓN Definir un cabezal master en el canal o asignar un cabezal al registro SYNC del PLC." ;
+    ex:identificador "3041" .
+
+ex:Error3042
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 3042: El cabezal indicado en el registro SYNC no existe" ;
+    ex:textoExtracto "3042 'El cabezal indicado en el registro SYNC no existe' [...] SOLUCIÓN El valor del registro SYNC del PLC debe ser un valor comprendido entre 1 y el número de cabezales del sistema." ;
+    ex:identificador "3042" .
+
+ex:ParametroDWELL
+    a ex:Parametro ;
+    rdfs:label "Parámetro DWELL del eje" ;
+    ex:textoExtracto "aumentar el valor del parámetro DWELL del eje." .
+
+ex:SistemaCNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "El CNC puede dar este error cuando trabaja con empalme de bloques (G50, G5 o HSC) y es necesario forzar la parada del eje (con una M ó G7) antes del movimiento del eje muerto." .
+
+ex:FuncionG33 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G33" ;
+    ex:textoExtracto "Las funciones G33, G34 y G95 necesitan un cabezal para trabajar." ;
+    ex:identificador "G33" .
+
+ex:FuncionG34 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G34" ;
+    ex:textoExtracto "Las funciones G33, G34 y G95 necesitan un cabezal para trabajar." ;
+    ex:identificador "G34" .
+
+ex:FuncionG95 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función G95" ;
+    ex:textoExtracto "Las funciones G33, G34 y G95 necesitan un cabezal para trabajar." ;
+    ex:identificador "G95" .
+
+ex:RegistroSYNC
+    a ex:Parametro ;
+    rdfs:label "Registro SYNC del PLC" ;
+    ex:textoExtracto "el registro SYNC del PLC indica otro cabezal [...] El valor del registro SYNC del PLC debe ser un valor comprendido entre 1 y el número de cabezales del sistema." ;
+    ex:identificador "SYNC" .
+
+ex:PLC
+    a ex:ComponenteElectrico ;
+    rdfs:label "PLC del sistema CNC" ;
+    ex:textoExtracto "el registro SYNC del PLC indica otro cabezal [...] El valor del registro SYNC del PLC debe ser un valor comprendido entre 1 y el número de cabezales del sistema." .
+
+ex:EjeHirth
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Hirth" ;
+    ex:textoExtracto "El eje hirth no se encuentra posicionado en un número múltiplo de su paso." .
+
+ex:Seccion3000
+    a ex:Capitulo ;
+    rdfs:label "Sección 3000-3999: Códigos de error del sistema CNC" ;
+    ex:textoExtracto "Sección: 3000-3999" ;
+    ex:identificador "3000-3999" .
+
+ex:Error3038 ex:documentadoEn ex:Seccion3000 .
+ex:Error3039 ex:documentadoEn ex:Seccion3000 .
+ex:Error3040 ex:documentadoEn ex:Seccion3000 .
+ex:Error3041 ex:documentadoEn ex:Seccion3000 .
+ex:Error3042 ex:documentadoEn ex:Seccion3000 .
+
+ex:FuncionG33 a ex:Tabla ;
+    ex:requiereMantenimiento ex:SistemaCNC .
+ex:FuncionG34 a ex:Tabla ;
+    ex:requiereMantenimiento ex:SistemaCNC .
+ex:FuncionG95 a ex:Tabla ;
+    ex:requiereMantenimiento ex:SistemaCNC .
+
+ex:RegistroSYNC ex:monitoreaParametro ex:PLC .

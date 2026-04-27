@@ -1,0 +1,56 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error_8042
+    a ex:AvisoSeguridad ;
+    rdfs:label "Memoria por debajo del mínimo recomendado" ;
+    ex:identificador "8042" ;
+    ex:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado menos de 50 MB de memoria libre en disco. SOLUCIÓN Hay que liberar memoria en disco para poder arrancar el CNC. • Comprobar si hay arrancada alguna aplicación de terceros que esté consumiendo recursos del sistema, y si es así, cerrarla. • Apagar y encender el CNC. Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ex:Error_8043
+    a ex:AvisoSeguridad ;
+    rdfs:label "Memoria insuficiente para cargar el fichero" ;
+    ex:identificador "8043" ;
+    ex:textoExtracto "DETECCIÓN Durante la edición. CAUSA No hay memoria suficiente para cargar el fichero. SOLUCIÓN Hay que liberar memoria para cargar el fichero. • Compruebe si el CNC está ejecutando algún programa y si es así, detenga la ejecución e intente cargar el programa de nuevo. • Comprobar si hay arrancada alguna aplicación de terceros que esté consumiendo recursos del sistema, y si es así, cerrarla. • Apagar y encender el CNC. Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ex:Error_8044
+    a ex:AvisoSeguridad ;
+    rdfs:label "Programa demasiado grande para ser editado en modo conversacional" ;
+    ex:identificador "8044" ;
+    ex:textoExtracto "DETECCIÓN Durante la edición o la ejecución. CAUSA El programa conversacional tiene mas de 10 MB. SOLUCIÓN Pase a modo CNC estándar para editar o ejecutar el programa." .
+
+ex:Error_8045
+    a ex:AvisoSeguridad ;
+    rdfs:label "Código de validación expirado" ;
+    ex:identificador "8045" ;
+    ex:textoExtracto "DETECCIÓN Durante el arranque del CNC o durante la ejecución. CAUSA El CNC ha detectado que su código de validación temporal ha expirado." .
+
+ex:Solucion_8042_8043
+    a ex:TareaMantenimiento ;
+    rdfs:label "Liberar memoria en disco y reiniciar CNC" ;
+    ex:textoExtracto "Hay que liberar memoria en disco para poder arrancar el CNC. • Comprobar si hay arrancada alguna aplicación de terceros que esté consumiendo recursos del sistema, y si es así, cerrarla. • Apagar y encender el CNC." ;
+    ex:solucionaFallo ex:Error_8042, ex:Error_8043 .
+
+ex:Solucion_8044
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambiar a modo CNC estándar" ;
+    ex:textoExtracto "Pase a modo CNC estándar para editar o ejecutar el programa." ;
+    ex:solucionaFallo ex:Error_8044 .
+
+ex:Solucion_8045
+    a ex:TareaMantenimiento ;
+    rdfs:label "Reiniciar CNC por código expirado" ;
+    ex:textoExtracto "Reinicie el CNC" ;
+    ex:solucionaFallo ex:Error_8045 .
+
+ex:ModoOperacion_CNC_Estandar
+    a ex:ModoOperacion ;
+    rdfs:label "Modo CNC estándar" ;
+    ex:textoExtracto "modo CNC estándar para su edición o ejecución" .
+
+ex:ModoOperacion_Conversacional
+    a ex:ModoOperacion ;
+    rdfs:label "Modo conversacional" ;
+    ex:textoExtracto "modo conversacional" .

@@ -1,0 +1,70 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFallo_1000
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1000: Falta programación de ejes" ;
+    ex:identificador "1000" ;
+    ex:textoExtracto "'La función o sentencia requiere programación de ejes' DETECCIÓN Durante la ejecución. CAUSA Falta programar los ejes sobre los que debe actuar la sentencia o función G programada. SOLUCIÓN Revisar la programación." .
+
+ex:DiagnosticoFallo_1004
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1004: Velocidad de cabezal nula" ;
+    ex:identificador "1004" ;
+    ex:textoExtracto "'Velocidad de cabezal nula' DETECCIÓN Durante la ejecución. CAUSA El cabezal utilizado con la función G63 tiene velocidad cero. SOLUCIÓN Programar una velocidad de cabezal." .
+
+ex:DiagnosticoFallo_1005
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1005: Bloque de movimiento con avance nulo" ;
+    ex:identificador "1005" ;
+    ex:textoExtracto "'Bloque de movimiento con avance nulo' DETECCIÓN Durante la ejecución. CAUSA No hay un avance activo en el canal. SOLUCIÓN Programar el avance F." .
+
+ex:DiagnosticoFallo_1006
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1006: G20 no admite cabezal" ;
+    ex:identificador "1006" ;
+    ex:textoExtracto "'G20: no se admite cabezal' DETECCIÓN Durante la ejecución. CAUSA La función G20 no admite la programación de cabezal. SOLUCIÓN Revisar la programación." .
+
+ex:DiagnosticoFallo_1007
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1007: Falta eje principal" ;
+    ex:identificador "1007" ;
+    ex:textoExtracto "'La función programada requiere algún eje principal no existente' DETECCIÓN Durante la ejecución. CAUSA La función programada necesita uno o dos ejes principales y estos no existen o están aparcados. SOLUCIÓN Revisar la programación. • Las funciones G11, G12, G13 y G14 necesitan uno de los dos ejes del plano principal. • Las funciones G2, G3, G8, G9, G30, G36, G37, G38, G39, G73 necesitan los dos ejes del plano principal. • También hacen falta los dos ejes del plano principal para activar la detección de colisiones (#CD) y para la función G20 cuando la detección de colisiones está activa. • Recuperar mediante la sentencia #CALL AX/#SET AX el eje que falta. • Desaparcar el eje (#UNPARK)." .
+
+ex:DiagnosticoFallo_1008
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error 1008: Coordenadas fuera de rango" ;
+    ex:identificador "1008" ;
+    ex:textoExtracto "'Coordenadas fuera de rango' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • La cota programada para el eje es demasiado grande. • La función G101 intenta incluir en el eje un offset demasiado grande. SOLUCIÓN Revisar la programación." .
+
+ex:FuncionG63 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G63 (ciclo de torneado)" ;
+    ex:identificador "G63" ;
+    ex:textoExtracto "El cabezal utilizado con la función G63 tiene velocidad cero." .
+
+ex:FuncionG20 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G20 (detección de colisiones)" ;
+    ex:identificador "G20" ;
+    ex:textoExtracto "La función G20 no admite la programación de cabezal. [...] También hacen falta los dos ejes del plano principal para [...] la función G20 cuando la detección de colisiones está activa." .
+
+ex:FuncionG101 a ex:Tabla ;
+     a ex:Parametro ;
+    rdfs:label "Función G101 (offset de eje)" ;
+    ex:identificador "G101" ;
+    ex:textoExtracto "La función G101 intenta incluir en el eje un offset demasiado grande." .
+
+ex:Parametro_AvanceF
+    a ex:Parametro ;
+    rdfs:label "Parámetro F (avance)" ;
+    ex:identificador "F" ;
+    ex:textoExtracto "Programar el avance F." .
+
+ex:Sistema_DeteccionColisiones
+    a ex:Sistema ;
+    rdfs:label "Sistema de detección de colisiones (#CD)" ;
+    ex:identificador "#CD" ;
+    ex:textoExtracto "activar la detección de colisiones (#CD) y para la función G20 cuando la detección de colisiones está activa." .

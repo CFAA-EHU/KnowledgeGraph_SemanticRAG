@@ -1,82 +1,39 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 
-ex:Columna_4_2
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Columna con guías lineales y sistema de tracción"@es ;
-    ex:textoExtracto
-        "Sobre el zócalo se monta la columna con dos guías lineales por las que se desplaza el carro porta-piezas, siendo el recorrido máximo de 3000 mm. [...] Columna"@es ;
-    ex:tieneComponente
-        ex:GuiasLineales_Columna_4_2 ,
-        ex:ReglasLineales_Columna_4_2 ,
-        ex:SistemaPinonCremallera_4_2 ,
-        ex:Servomotores_CarroPortaPiezas_4_2 ,
-        ex:CarroPortaPiezas_4_2 ;
-    ex:ilustradoEn  ex:Figura_4_2 .
+ns1:Columna_46 a ns1:ComponenteMecanico ;
+    ns1:compuestoPor ns1:CarroPortapiezas_46,
+        ns1:GuiaLineal_46_1,
+        ns1:GuiaLineal_46_2 ;
+    ns1:textoExtracto "Sobe el zócalo se monta la columna con dos guías lineales por las que se desplaza el carro porta-piezas" .
 
-ex:GuiasLineales_Columna_4_2
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Guías lineales de la columna"@es ;
-    ex:textoExtracto
-        "dos guías lineales por las que se desplaza el carro porta-piezas"@es .
+ns1:ReglaLineal_46 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "dos reglas lineales colocadas en el lateral de la columna" .
 
-ex:ReglasLineales_Columna_4_2
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Reglas lineales de control de posición"@es ;
-    ex:textoExtracto
-        "La posición del carro se controla a través de dos reglas lineales colocadas en el lateral de la columna"@es ;
-    ex:monitoreaParametro  ex:Parametro_PosicionCarro_4_2 .
+ns1:ReglaLineal_46_1 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "dos reglas lineales colocadas en el lateral de la columna" .
 
-ex:SistemaPinonCremallera_4_2
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Sistema piñón/cremallera (WITTENSTEIN)"@es ;
-    ex:identificador "WITTENSTEIN" ;
-    ex:textoExtracto
-        "juegos de sistemas piñón/cremallera (WITTENSTEIN) accionados por dos servomotores"@es .
+ns1:ReglaLineal_46_2 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "dos reglas lineales colocadas en el lateral de la columna" .
 
-ex:Servomotores_CarroPortaPiezas_4_2
-    a               ex:ComponenteElectrico ;
-    rdfs:label      "Servomotores del carro porta-piezas"@es ;
-    ex:textoExtracto
-        "accionados por dos servomotores colocados sobre el carro porta-piezas que provocan su movimiento"@es ;
-    ex:controla     ex:CarroPortaPiezas_4_2 .
+ns1:CarroPortapiezas_46 a ns1:ComponenteMecanico ;
+    ns1:compuestoPor ns1:Servomotor_46_1,
+        ns1:Servomotor_46_2,
+        ns1:SistemaPinonCremallera_46 ;
+    ns1:textoExtracto "el carro porta-piezas" .
 
-ex:CarroPortaPiezas_4_2
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Carro porta-piezas"@es ;
-    ex:textoExtracto
-        "carro porta-piezas [...] siendo el recorrido máximo de 3000 mm"@es ,
-        "velocidad máxima de 40 m/min de avance y 40 m/min de retroceso. La fuerza máxima desarrollada en este movimiento es de 70 kNw"@es .
+ns1:GuiaLineal_46_1 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "dos guías lineales por las que se desplaza el carro porta-piezas" .
 
-ex:Parametro_PosicionCarro_4_2
-    a               ex:Parametro ;
-    rdfs:label      "Posición del carro porta-piezas"@es ;
-    ex:textoExtracto
-        "La posición del carro se controla a través de dos reglas lineales"@es ;
-    ex:valor         "0..3000"^^xsd:string .  # Rango de recorrido en mm
+ns1:GuiaLineal_46_2 a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "dos guías lineales por las que se desplaza el carro porta-piezas" .
 
-ex:Parametro_VelocidadAvance_4_2
-    a               ex:Parametro ;
-    rdfs:label      "Velocidad de avance/retroceso"@es ;
-    ex:textoExtracto
-        "velocidad máxima de 40 m/min de avance y 40 m/min de retroceso"@es ;
-    ex:valor         "40"^^xsd:string ;  # m/min
-    ex:monitoreaParametro  ex:CarroPortaPiezas_4_2 .
+ns1:Servomotor_46_1 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "dos servomotores colocados sobre el carro porta-piezas" .
 
-ex:Parametro_FuerzaMaxima_4_2
-    a               ex:Parametro ;
-    rdfs:label      "Fuerza máxima del movimiento"@es ;
-    ex:textoExtracto
-        "La fuerza máxima desarrollada en este movimiento es de 70 kNw"@es ;
-    ex:valor         "70"^^xsd:string ;  # kNw
-    ex:monitoreaParametro  ex:CarroPortaPiezas_4_2 .
+ns1:Servomotor_46_2 a ns1:ComponenteElectrico ;
+    ns1:textoExtracto "dos servomotores colocados sobre el carro porta-piezas" .
 
-ex:Figura_4_2
-    a               ex:Figura ;
-    rdfs:label      "Conjunto de tracción (Figura 4-2)"@es ;
-    ex:identificador "4-2" ;
-    ex:textoExtracto
-        "Columna [...] Figura 4-2. Conjunto tracción"@es .
+ns1:SistemaPinonCremallera_46 a ns1:ComponenteMecanico ;
+    ns1:identificador "WITTENSTEIN" ;
+    ns1:textoExtracto "juegos de sistemas piñón/cremallera (WITTENSTEIN) accionados por dos servomotores" .
+

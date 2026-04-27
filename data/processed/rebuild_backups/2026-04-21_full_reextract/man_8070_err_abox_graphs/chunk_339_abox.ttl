@@ -1,0 +1,108 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_2000
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Radio de herramienta mayor que radio del arco"@es ;
+    ex:identificador      "2000" ;
+    ex:textoExtracto      """
+    'Radio de herramienta mayor que radio del arco'
+    DETECCIÓN Durante la ejecución.
+    CAUSA El radio de la herramienta es mayor que el radio del arco que se intenta mecanizar.
+    SOLUCIÓN Usar una herramienta de menor radio.
+    """@es .
+
+ex:Fallo_2001
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Perfil dañado por compensación de radio"@es ;
+    ex:identificador      "2001" ;
+    ex:textoExtracto      """
+    'Perfil dañado por compensación de radio'
+    DETECCIÓN Durante la ejecución.
+    CAUSA El radio de la herramienta es demasiado grande para el perfil programado; la herramienta daña el perfil.
+    SOLUCIÓN Usar una herramienta de menor radio.
+    """@es .
+
+ex:Fallo_2002
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "El primer bloque de compensación de radio debe ser lineal"@es ;
+    ex:identificador      "2002" ;
+    ex:textoExtracto      """
+    'El primer bloque de compensación de radio debe ser lineal'
+    DETECCIÓN Durante la ejecución.
+    CAUSA Después de activar la compensación de radio (G41 o G42), el siguiente bloque de movimiento es un bloque circular. La compensación de radio no puede comenzar en un bloque circular.
+    SOLUCIÓN La compensación de radio debe empezar en un bloque de movimiento lineal. Por lo tanto, el bloque de movimiento que vaya a continuación de G41-G42 debe ser un bloque de movimiento lineal.
+    """@es .
+
+ex:Fallo_2003
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Radio de herramienta demasiado grande en arcos consecutivos"@es ;
+    ex:identificador      "2003" ;
+    ex:textoExtracto      """
+    'Radio de herramienta demasiado grande en arcos consecutivos'
+    DETECCIÓN Durante la ejecución.
+    CAUSA En el mecanizado de dos arcos consecutivos que forman un bucle (ambos arco se cortan), el radio de la herramienta es demasiado grande para poder mecanizar el interior del bucle.
+    SOLUCIÓN Usar una herramienta de menor radio.
+    """@es .
+
+ex:Fallo_2004
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Demasiados bloques sin movimiento entre dos bloques con compensación de radio"@es ;
+    ex:identificador      "2004" ;
+    ex:textoExtracto      """
+    'Demasiados bloques sin movimiento entre dos bloques con compensación de radio'
+    DETECCIÓN Durante la ejecución.
+    CAUSA Con la compensación de radio activa, hay demasiados bloques de no movimiento (asignaciones de parámetros P, variables, etc) entre dos bloques de movimiento.
+    SOLUCIÓN Reducir el número de bloques de no movimiento programados; por ejemplo, agrupar varios de estos bloques en uno solo.
+    """@es .
+
+ex:Fallo_2005
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "El último bloque de compensación de radio debe ser lineal"@es ;
+    ex:identificador      "2005" ;
+    ex:textoExtracto      """
+    'El último bloque de compensación de radio debe ser lineal'
+    DETECCIÓN Durante la ejecución.
+    CAUSA Después de desactivar la compensación de radio (G40), el siguiente bloque de movimiento es un bloque circular. La compensación de radio no puede acabar en un bloque circular.
+    """@es .
+
+ex:Herramienta_CompensacionRadio
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Herramienta de compensación de radio"@es ;
+    ex:textoExtracto      "Usar una herramienta de menor radio"@es .
+
+ex:Fallo_2000
+    ex:solucionaFallo      ex:Herramienta_CompensacionRadio .
+
+ex:Fallo_2001
+    ex:solucionaFallo      ex:Herramienta_CompensacionRadio .
+
+ex:Fallo_2003
+    ex:solucionaFallo      ex:Herramienta_CompensacionRadio .
+
+ex:Parametro_G41
+    a                     ex:Parametro ;
+    rdfs:label            "Compensación de radio (G41)"@es ;
+    ex:identificador      "G41" ;
+    ex:textoExtracto      "activar la compensación de radio (G41)"@es .
+
+ex:Parametro_G42
+    a                     ex:Parametro ;
+    rdfs:label            "Compensación de radio (G42)"@es ;
+    ex:identificador      "G42" ;
+    ex:textoExtracto      "activar la compensación de radio (G42)"@es .
+
+ex:Parametro_G40
+    a                     ex:Parametro ;
+    rdfs:label            "Desactivar compensación de radio (G40)"@es ;
+    ex:identificador      "G40" ;
+    ex:textoExtracto      "desactivar la compensación de radio (G40)"@es .
+
+ex:Fallo_2002
+    ex:monitoreaParametro ex:Parametro_G41 ,
+                         ex:Parametro_G42 .
+
+ex:Fallo_2005
+    ex:monitoreaParametro ex:Parametro_G40 .

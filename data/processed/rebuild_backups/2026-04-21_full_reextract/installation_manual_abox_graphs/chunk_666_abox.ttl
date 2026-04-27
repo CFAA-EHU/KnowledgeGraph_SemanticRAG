@@ -1,0 +1,54 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Comando_CNCWR
+    a ex:InterfazUsuario ;
+    rdfs:label "CNCWR" ;
+    ex:textoExtracto "CNCWR carga el contenido del registro en la variable. La marca se pone a \"1\" cuando comienza la operación y se mantiene a dicho valor hasta que finaliza la misma." ;
+    ex:monitoreaParametro ex:MarcaComunicacion_CNCWR .
+
+ex:Comando_CNCRD
+    a ex:InterfazUsuario ;
+    rdfs:label "CNCRD" ;
+    ex:textoExtracto "En la lectura mediante CNCRD de las variables de los parámetros aritméticos y de fabricante se devuelve el valor multiplicado por 10000 (lectura en modo float)." ;
+    ex:monitoreaParametro ex:MarcaComunicacion_CNCRD .
+
+ex:MarcaComunicacion_CNCWR
+    a ex:Parametro ;
+    rdfs:label "Marca de comunicación (CNCWR)" ;
+    ex:textoExtracto "La marca se pone a \"1\" cuando comienza la operación y se mantiene a dicho valor hasta que finaliza la misma. Siempre que se de un error en la lectura de la variable, la marca de comunicación se quedará a \"1\"." ;
+    ex:valor "1" .
+
+ex:MarcaComunicacion_CNCRD
+    a ex:Parametro ;
+    rdfs:label "Marca de comunicación (CNCRD)" ;
+    ex:textoExtracto "Siempre que se de un error en la lectura de la variable, la marca de comunicación se quedará a \"1\"." ;
+    ex:valor "1" .
+
+ex:Variable_TM_TOOL
+    a ex:Parametro ;
+    rdfs:label "TM.TOOL" ;
+    ex:textoExtracto "Ejemplo de acceso a variables asíncronas: <condición> AND NOT M11 = CNCRD (TM.TOOL, R11, M11) no repetir la consulta mientras no finalice la misma." .
+
+ex:Variable_G_GUP
+    a ex:Parametro ;
+    rdfs:label "G.GUP[i]" ;
+    ex:textoExtracto "Si el mnemónico de la variable contiene sufijos numéricos, por ejemplo (V.).G.GUP[i], éstos también se podrán definir mediante un número entero, un registro o un símbolo definido mediante DEF o PDEF." .
+
+ex:Sintaxis_CNCRD_CNCWR
+    a ex:Tabla ;
+    rdfs:label "Sintaxis de variables en comandos CNCRD y CNCWR" ;
+    ex:textoExtracto "Sintaxis de las variables en los comandos CNCRD y CNCWR. Para estos dos comandos, en el mnemónico de la variable se puede definir el número de canal mediante un número entero, un registro o un símbolo definido mediante DEF o PDEF." ;
+    ex:documentadoEn ex:Comando_CNCRD, ex:Comando_CNCWR .
+
+ex:Error_LecturaVariableInexistente
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error: Variable inexistente" ;
+    ex:textoExtracto "Si se solicita información de una variable inexistente (por ejemplo la cota de un eje que no existe) se mostrará un mensaje de error." .
+
+ex:Error_RangoExcedido
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error: Rango excedido" ;
+    ex:textoExtracto "Si se intenta leer un valor cuyo rango es mayor al del registro PLC, el CNC devolverá valor cero y mostrará el error correspondiente." .

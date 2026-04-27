@@ -1,0 +1,72 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1975
+    a ex:Alarma ;
+    rdfs:label "Alarma 1975: No se ha producido palpación"@es ;
+    ex:identificador "1975" ;
+    ex:textoExtracto "1975 'No se ha producido palpación' DETECCIÓN Durante la ejecución de un ciclo de palpador. CAUSA El palpador no ha tocado la pieza durante el movimiento de palpación. SOLUCIÓN Corregir la definición del ciclo fijo."@es .
+
+ex:Alarma_1976
+    a ex:Alarma ;
+    rdfs:label "Alarma 1976: No programado DESBASTE ni ACABADO"@es ;
+    ex:identificador "1976" ;
+    ex:textoExtracto "1976 'No programado DESBASTE ni ACABADO' DETECCIÓN Durante la ejecución del ciclo. CAUSA No hay definida ninguna operación en el ciclo fijo. SOLUCIÓN En el ciclo fijo debe estar definida la operación de desbaste o acabado. Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta."@es .
+
+ex:Alarma_1977
+    a ex:Alarma ;
+    rdfs:label "Alarma 1977: Radio de herramienta de taladrado demasiado grande"@es ;
+    ex:identificador "1977" ;
+    ex:textoExtracto "1977 'Radio de herramienta de taladrado demasiado grande' DETECCIÓN Durante la ejecución. CAUSA El radio de la herramienta de taladrado es demasiado grande para la geometría de la cajera. SOLUCIÓN Corregir el valor del radio en la tabla de herramientas o seleccionar otra herramienta."@es .
+
+ex:Alarma_1985
+    a ex:Alarma ;
+    rdfs:label "Alarma 1985: El palpador no ha tocado la esfera"@es ;
+    ex:identificador "1985" ;
+    ex:textoExtracto "1985 'El palpador no ha tocado la esfera' DETECCIÓN Durante la ejecución. CAUSA Al ejecutar el ciclo de calibración de cinemáticas, el palpador no ha tocado la esfera. SOLUCIÓN Revisar la programación. Antes de ejecutar el ciclo, colocar el palpador en la posición correcta; encima de la bola, a una distancia de unas 10 mm (0.4 pulgadas) aproximadamente."@es .
+
+ex:Alarma_1986
+    a ex:Alarma ;
+    rdfs:label "Alarma 1986: El palpador ha tocado la esfera cuando no se esperaba"@es ;
+    ex:identificador "1986" ;
+    ex:textoExtracto "1986 'El palpador ha tocado la esfera cuando no se esperaba' DETECCIÓN Durante la ejecución. CAUSA Al ejecutar el ciclo de calibración de cinemáticas, el palpador ha tocado la esfera cuando no debía hacerlo. SOLUCIÓN Revisar la programación. Antes de ejecutar el ciclo, colocar el palpador en la posición correcta; encima de la bola, a una distancia de unas 10 mm (0.4 pulgadas) aproximadamente."@es .
+
+ex:Alarma_1987
+    a ex:Alarma ;
+    rdfs:label "Alarma 1987: No hay contacto con la esfera"@es ;
+    ex:identificador "1987" ;
+    ex:textoExtracto "1987 'No hay contacto con la esfera' DETECCIÓN Durante la ejecución."@es .
+
+ex:Componente_EsferaCalibracion
+    a ex:ComponenteMecanico ;
+    rdfs:label "Esfera de calibración"@es ;
+    ex:textoExtracto "el palpador no ha tocado la esfera [...] colocar el palpador en la posición correcta; encima de la bola, a una distancia de unas 10 mm (0.4 pulgadas) aproximadamente."@es .
+
+ex:Componente_Palpador
+    a ex:ComponenteMecanico ;
+    rdfs:label "Palpador"@es ;
+    ex:textoExtracto "el palpador no ha tocado la pieza durante el movimiento de palpación [...] el palpador no ha tocado la esfera [...] el palpador ha tocado la esfera cuando no debía hacerlo."@es .
+
+ex:TareaMantenimiento_RevisarProgramacionPalpador
+    a ex:TareaMantenimiento ;
+    rdfs:label "Revisar programación del palpador"@es ;
+    ex:textoExtracto "SOLUCIÓN Revisar la programación. Antes de ejecutar el ciclo, colocar el palpador en la posición correcta; encima de la bola, a una distancia de unas 10 mm (0.4 pulgadas) aproximadamente."@es ;
+    ex:requiereMantenimiento ex:Componente_Palpador .
+
+ex:TareaMantenimiento_CorregirCicloFijo
+    a ex:TareaMantenimiento ;
+    rdfs:label "Corregir definición del ciclo fijo"@es ;
+    ex:textoExtracto "SOLUCIÓN Corregir la definición del ciclo fijo."@es .
+
+ex:TareaMantenimiento_CorregirRadioHerramienta
+    a ex:TareaMantenimiento ;
+    rdfs:label "Corregir radio de herramienta de taladrado"@es ;
+    ex:textoExtracto "SOLUCIÓN Corregir el valor del radio en la tabla de herramientas o seleccionar otra herramienta."@es .
+
+ex:Parametro_RadioHerramienta
+    a ex:Parametro ;
+    rdfs:label "Radio de herramienta de taladrado"@es ;
+    ex:textoExtracto "El radio de la herramienta de taladrado es demasiado grande para la geometría de la cajera."@es ;
+    ex:monitoreaParametro ex:Alarma_1977 .

@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SoftwareCNC8070
+    a ex:Sistema ;
+    rdfs:label "Software CNC 8070" ;
+    ex:textoExtracto "El CNC se puede instalar en un PC, el cual se utilizará como simulador para aprendizaje. El CNC instalado en un PC mantiene todas las prestaciones y funcionalidades; sin embargo, su funcionamiento queda restringido a modo simulador y no se podrá conectar a ningún tipo de máquina." ;
+    ex:identificador "CNC8070" ;
+    ex:tieneComponente ex:CarpetaCNC8070 ;
+    ex:tieneComponente ex:CarpetaMTB ;
+    ex:tieneComponente ex:LicenciaLocal ;
+    ex:tieneComponente ex:LicenciaRed ;
+    ex:requiereMantenimiento ex:InstalacionLicencia .
+
+ex:CarpetaCNC8070
+    a ex:InterfazUsuario ;
+    rdfs:label "Carpeta CNC8070" ;
+    ex:textoExtracto "los archivos necesarios para el funcionamiento del CNC se encuentran en la carpeta C:\\CNC8070 y sus correspondientes subcarpetas." ;
+    ex:identificador "C:\\CNC8070" .
+
+ex:CarpetaMTB
+    a ex:InterfazUsuario ;
+    rdfs:label "Carpeta MTB" ;
+    ex:textoExtracto "el fabricante dispone de la carpeta ..\\MTB para que pueda guardar las modificaciones que realiza en el CNC, como por ejemplo, el programa PLC, los parámetros máquina, etc." ;
+    ex:identificador "..\\MTB" .
+
+ex:LicenciaLocal
+    a ex:Componente ;
+    rdfs:label "Licencia local (LOCAL)" ;
+    ex:textoExtracto "Elija licencia local si la llave hardware va a estar conectada al PC en el que se está instalando el software del CNC." ;
+    ex:identificador "LOCAL" ;
+    ex:habilitadoPor ex:LlaveHardware .
+
+ex:LicenciaRed
+    a ex:Componente ;
+    rdfs:label "Licencia de red (NET)" ;
+    ex:textoExtracto "Elija licencia de red si la llave hardware va a estar conectada a un servidor." ;
+    ex:identificador "NET" ;
+    ex:habilitadoPor ex:LlaveHardware .
+
+ex:LlaveHardware
+    a ex:ComponenteElectrico ;
+    rdfs:label "Llave hardware Fagor" ;
+    ex:textoExtracto "La llave hardware suministrada por Fagor deberá estar conectada al puerto USB del PC (si eligió la opción de licencia local) o a un servidor (si eligió la opción de licencia de red)." .
+
+ex:InstalacionLicencia
+    a ex:TareaMantenimiento ;
+    rdfs:label "Instalación de licencias de uso" ;
+    ex:textoExtracto "Instalación de las licencias de uso. Licencia local o licencia de red. Durante la instalación usted deberá elegir el tipo de licencia; licencia local (LOCAL) o licencia en red (NET)." ;
+    ex:ejecutadoPor ex:Personal .

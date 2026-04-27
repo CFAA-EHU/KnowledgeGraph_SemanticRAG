@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModuloContadoras_CANfagor
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Módulo de contadoras en módulos remotos CANfagor"@es ;
+    ex:textoExtracto      "Para la entrada de captación se utiliza un módulo de contadoras en los módulos remotos. [...] Las contadoras del primer módulo serán 1 a 4, las del segundo 5 a 8 y así sucesivamente."@es ;
+    ex:identificador      "1-4 (primer módulo), 5-8 (segundo módulo)"@es .
+
+ex:EntradaCaptacion_CANfagor
+    a                     ex:Parametro ;
+    rdfs:label            "Número de entrada de captación (módulos CANfagor)"@es ;
+    ex:textoExtracto      "Este parámetro indica el número de la entrada de captación que se utiliza."@es ;
+    ex:monitoreaParametro ex:ModuloContadoras_CANfagor .
+
+ex:Regulador_Sercos
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Regulador Sercos"@es ;
+    ex:textoExtracto      "Entrada de captación en los reguladores Sercos. En este caso siempre se utilizará la segunda entrada de captación del regulador."@es .
+
+ex:EntradaCaptacion_Sercos
+    a                     ex:Parametro ;
+    rdfs:label            "Dirección lógica del regulador Sercos (1-32)"@es ;
+    ex:textoExtracto      "El parámetro indica la dirección lógica del regulador (de 1 a 32). La dirección lógica la establece el conmutador rotativo 'address'."@es ;
+    ex:valor               "1-32" ;
+    ex:monitoreaParametro ex:Regulador_Sercos .
+
+ex:Modulo_RCS_S
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Módulo RCS-S"@es ;
+    ex:textoExtracto      "Entrada de captación en un módulo RCS-S. [...] Los módulos RCS-S se numeran según su orden lógico (parámetro SERCOUNTID)."@es ;
+    ex:identificador      "SERCOUNTID" .
+
+ex:EntradaCaptacion_RCS_S
+    a                     ex:Parametro ;
+    rdfs:label            "Número de entrada de captación (módulo RCS-S)"@es ;
+    ex:textoExtracto      "Este parámetro indica el número de la entrada de captación que se utiliza. [...] Las entradas de captación del primer módulo serán 1 a 4, las del segundo 5 a 8 y así sucesivamente."@es ;
+    ex:monitoreaParametro ex:Modulo_RCS_S .
+
+ex:CabezalLaser
+    a                     ex:Componente ;
+    rdfs:label            "Cabezal láser"@es ;
+    ex:textoExtracto      "En el modelo láser, la entrada de captación del cabezal será 0 ya que no hay captación real."@es .
+
+ex:EntradaCaptacion_Laser
+    a                     ex:Parametro ;
+    rdfs:label            "Entrada de captación del cabezal láser"@es ;
+    ex:textoExtracto      "la entrada de captación del cabezal será 0 ya que no hay captación real."@es ;
+    ex:valor               "0" ;
+    ex:monitoreaParametro ex:CabezalLaser .
+
+ex:SistemaCaptacionEjes
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema de captación de ejes (CNC)"@es ;
+    ex:textoExtracto      "el CNC permite que ambos ejes utilicen la misma entrada de captación."@es ;
+    ex:tieneComponente    ex:ModuloContadoras_CANfagor , ex:Regulador_Sercos , ex:Modulo_RCS_S , ex:CabezalLaser .

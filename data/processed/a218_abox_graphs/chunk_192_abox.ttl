@@ -1,99 +1,74 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Esquema_PlanoConexiones_XT1
-    a ex:Esquema ;
-    rdfs:label "Plano de conexiones — XT1 (4/4)"@es ;
-    ex:textoExtracto "El diagrama ordena por grupos funcionales y muestra numeración correlativa (1104, 1117, 1204, etc.) para localizar físicamente cada borne."@es ;
-    ex:identificador "XT1 (4/4)" .
+ns1:PlanoConexionesXT1 a ns1:Esquema ;
+    rdfs:label "Plano de conexiones — XT1" ;
+    ns1:detalladoEnEsquema ns1:XT1 ;
+    ns1:textoExtracto "Último tramo de XT1 con salidas A20–A37 (desbloqueos de puertas, columna luminosa, marcha ciclo, reset drives, enable, etc.) y entradas E00–E17."@es .
 
-ex:Esquema_PlanoConexiones_XT1.3
-    a ex:Esquema ;
-    rdfs:label "Plano de conexiones — XT1.3"@es ;
-    ex:textoExtracto "Último tramo de XT1 con salidas A20–A37 (desbloqueos de puertas, columna luminosa, marcha ciclo, reset drives, enable, etc.) y entradas E00–E17. La jerarquía separa claramente salidas (Axx) e inputs (Exx), con leyenda de función por cada borne."@es ;
-    ex:identificador "XT1.3" .
+ns1:PlanoConexionesXT1_3 a ns1:Esquema ;
+    rdfs:label "Plano de conexiones — XT1.3" ;
+    ns1:detalladoEnEsquema ns1:XT1_3 ;
+    ns1:textoExtracto "Bloque XT1.3 para entradas E26–E57 y analógicas E80–E86, incluyendo señales de estado (feedback frenos, setup, enable puertas), proceso (presencia de papel, niveles, caudal, mesa) y safety."@es .
 
-ex:Esquema_PlanoConexiones_XT1.3_XT2
-    a ex:Esquema ;
-    rdfs:label "Plano de conexiones — XT1.3 y XT2"@es ;
-    ex:textoExtracto "Vista de transición entre bornes XT1.3 y XT2: se agrupan líneas SAFE (emergencia CH1/CH2, puertas, freno), salidas de mando (puesta en servicio, marcha ciclo) y tomas de corriente."@es ;
-    ex:identificador "XT1.3-XT2" .
+ns1:PlanoConexionesXT2_XTP1 a ns1:Esquema ;
+    rdfs:label "Plano de conexiones — XT2 y XTP1" ;
+    ns1:detalladoEnEsquema ns1:XT2,
+        ns1:XTP1 ;
+    ns1:textoExtracto "Bloques de bornes XT2 y XTP1 con asignaciones a 1204 (tensión 24 V) y enlaces T0M20/T1M21."@es .
 
-ex:Esquema_PlanoConexiones_XT2_XTP1
-    a ex:Esquema ;
-    rdfs:label "Plano de conexiones — XT2 y XTP1"@es ;
-    ex:textoExtracto "Bloques de bornes XT2 y XTP1 con asignaciones a 1204 (tensión 24 V) y enlaces T0M20/T1M21. Estructura de casillas alineadas por hilera que representa físicamente cada posición de borne y su destino."@es ;
-    ex:identificador "XT2-XTP1" .
+ns1:XT1 a ns1:ComponenteElectrico ;
+    rdfs:label "XT1" ;
+    ns1:compuestoPor ns1:XT1_A20_A37,
+        ns1:XT1_E00_E17 ;
+    ns1:identificador "XT1" ;
+    ns1:textoExtracto "Último tramo de XT1 con salidas A20–A37 (desbloqueos de puertas, columna luminosa, marcha ciclo, reset drives, enable, etc.) y entradas E00–E17."@es .
 
-ex:Sistema_Bornes_XT1
-    a ex:Sistema ;
-    rdfs:label "Bloque de bornes XT1"@es ;
-    ex:textoExtracto "Último tramo de XT1 con salidas A20–A37 (desbloqueos de puertas, columna luminosa, marcha ciclo, reset drives, enable, etc.) y entradas E00–E17."@es ;
-    ex:detalladoEnEsquema ex:Esquema_PlanoConexiones_XT1 ;
-    ex:detalladoEnEsquema ex:Esquema_PlanoConexiones_XT1.3 .
+ns1:XT1_3 a ns1:ComponenteElectrico ;
+    rdfs:label "XT1.3" ;
+    ns1:compuestoPor ns1:XT1_3_E26_E57,
+        ns1:XT1_3_E80_E86 ;
+    ns1:identificador "XT1.3" ;
+    ns1:textoExtracto "Bloque XT1.3 para entradas E26–E57 y analógicas E80–E86, incluyendo señales de estado (feedback frenos, setup, enable puertas), proceso (presencia de papel, niveles, caudal, mesa) y safety."@es .
 
-ex:Sistema_Bornes_XT1.3
-    a ex:Sistema ;
-    rdfs:label "Bloque de bornes XT1.3"@es ;
-    ex:textoExtracto "Bloque XT1.3 para entradas E26–E57 y analógicas E80–E86, incluyendo señales de estado (feedback frenos, setup, enable puertas), proceso (presencia de papel, niveles, caudal, mesa) y safety."@es ;
-    ex:detalladoEnEsquema ex:Esquema_PlanoConexiones_XT1.3 ;
-    ex:detalladoEnEsquema ex:Esquema_PlanoConexiones_XT1.3_XT2 .
+ns1:XT1_3_E26_E57 a ns1:ComponenteElectrico ;
+    ns1:identificador "E26–E57" ;
+    ns1:textoExtracto "Bloque XT1.3 para entradas E26–E57"@es .
 
-ex:Sistema_Bornes_XT2
-    a ex:Sistema ;
-    rdfs:label "Bloque de bornes XT2"@es ;
-    ex:textoExtracto "Bloques de bornes XT2 y XTP1 con asignaciones a 1204 (tensión 24 V) y enlaces T0M20/T1M21."@es ;
-    ex:detalladoEnEsquema ex:Esquema_PlanoConexiones_XT1.3_XT2 ;
-    ex:detalladoEnEsquema ex:Esquema_PlanoConexiones_XT2_XTP1 .
+ns1:XT1_3_E80_E86 a ns1:ComponenteElectrico ;
+    ns1:identificador "E80–E86" ;
+    ns1:textoExtracto "Bloque XT1.3 para ... analógicas E80–E86"@es .
 
-ex:Sistema_Bornes_XTP1
-    a ex:Sistema ;
-    rdfs:label "Bloque de bornes XTP1"@es ;
-    ex:textoExtracto "Bloques de bornes XT2 y XTP1 con asignaciones a 1204 (tensión 24 V) y enlaces T0M20/T1M21."@es ;
-    ex:detalladoEnEsquema ex:Esquema_PlanoConexiones_XT2_XTP1 .
+ns1:XT1_A20_A37 a ns1:ComponenteElectrico ;
+    ns1:identificador "A20–A37" ;
+    ns1:textoExtracto "Último tramo de XT1 con salidas A20–A37 (desbloqueos de puertas, columna luminosa, marcha ciclo, reset drives, enable, etc.)"@es .
 
-ex:ComponenteElectrico_ColumnaLuminosa
-    a ex:ComponenteElectrico ;
-    rdfs:label "Columna luminosa (salida A20–A37)"@es ;
-    ex:textoExtracto "desbloqueos de puertas, columna luminosa, marcha ciclo"@es ;
-    ex:documentadoEn ex:Esquema_PlanoConexiones_XT1.3 .
+ns1:XT1_E00_E17 a ns1:ComponenteElectrico ;
+    ns1:identificador "E00–E17" ;
+    ns1:textoExtracto "Último tramo de XT1 con ... entradas E00–E17."@es .
 
-ex:ComponenteElectrico_SalidaA20_A37
-    a ex:ComponenteElectrico ;
-    rdfs:label "Salidas A20–A37 (desbloqueos, marcha ciclo, reset drives)"@es ;
-    ex:textoExtracto "salidas A20–A37 (desbloqueos de puertas, columna luminosa, marcha ciclo, reset drives, enable, etc.)"@es ;
-    ex:documentadoEn ex:Esquema_PlanoConexiones_XT1.3 .
+ns1:XT2 a ns1:ComponenteElectrico ;
+    rdfs:label "XT2" ;
+    ns1:compuestoPor ns1:XT2_1204 ;
+    ns1:identificador "XT2" ;
+    ns1:textoExtracto "Bloques de bornes XT2 y XTP1 con asignaciones a 1204 (tensión 24 V) y enlaces T0M20/T1M21."@es .
 
-ex:ComponenteElectrico_EntradasE00_E17
-    a ex:ComponenteElectrico ;
-    rdfs:label "Entradas E00–E17"@es ;
-    ex:textoExtracto "entradas E00–E17"@es ;
-    ex:documentadoEn ex:Esquema_PlanoConexiones_XT1.3 .
+ns1:XT2_1204 a ns1:ComponenteElectrico ;
+    ns1:identificador "1204" ;
+    ns1:textoExtracto "Bloques de bornes XT2 y XTP1 con asignaciones a 1204 (tensión 24 V)"@es .
 
-ex:ComponenteElectrico_EntradasE26_E57
-    a ex:ComponenteElectrico ;
-    rdfs:label "Entradas digitales E26–E57"@es ;
-    ex:textoExtracto "entradas E26–E57"@es ;
-    ex:documentadoEn ex:Esquema_PlanoConexiones_XT1.3_XT2 .
+ns1:XTP1 a ns1:ComponenteElectrico ;
+    rdfs:label "XTP1" ;
+    ns1:compuestoPor ns1:XTP1_T0M20,
+        ns1:XTP1_T1M21 ;
+    ns1:identificador "XTP1" ;
+    ns1:textoExtracto "Bloques de bornes XT2 y XTP1 con asignaciones a 1204 (tensión 24 V) y enlaces T0M20/T1M21."@es .
 
-ex:ComponenteElectrico_EntradasAnalogicasE80_E86
-    a ex:ComponenteElectrico ;
-    rdfs:label "Entradas analógicas E80–E86"@es ;
-    ex:textoExtracto "analógicas E80–E86, incluyendo señales de estado (feedback frenos, setup, enable puertas), proceso (presencia de papel, niveles, caudal, mesa)"@es ;
-    ex:documentadoEn ex:Esquema_PlanoConexiones_XT1.3_XT2 .
+ns1:XTP1_T0M20 a ns1:ComponenteElectrico ;
+    ns1:identificador "T0M20" ;
+    ns1:textoExtracto "Bloques de bornes XT2 y XTP1 ... enlaces T0M20/T1M21."@es .
 
-ex:ComponenteElectrico_LineasSAFE_Emergencia
-    a ex:ComponenteElectrico ;
-    rdfs:label "Líneas SAFE (emergencia CH1/CH2, puertas, freno)"@es ;
-    ex:textoExtracto "líneas SAFE (emergencia CH1/CH2, puertas, freno)"@es ;
-    ex:documentadoEn ex:Esquema_PlanoConexiones_XT1.3_XT2 .
+ns1:XTP1_T1M21 a ns1:ComponenteElectrico ;
+    ns1:identificador "T1M21" ;
+    ns1:textoExtracto "Bloques de bornes XT2 y XTP1 ... enlaces T0M20/T1M21."@es .
 
-ex:ComponenteElectrico_Alimentacion1204_24V
-    a ex:ComponenteElectrico ;
-    rdfs:label "Alimentación 1204 (24 V)"@es ;
-    ex:textoExtracto "asignaciones a 1204 (tensión 24 V)"@es ;
-    ex:documentadoEn ex:Esquema_PlanoConexiones_XT2_XTP1 ;
-    ex:alimenta ex:Sistema_Bornes_XT2 ;
-    ex:alimenta ex:Sistema_Bornes_XTP1 .

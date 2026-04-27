@@ -21,6 +21,7 @@ CANONICAL_ABOX_PATH = PROCESSED_DATA_DIR / "abox_canonical.ttl"
 ENRICHED_ABOX_PATH = PROCESSED_DATA_DIR / "abox_enriched.ttl"
 OPERATIONAL_ABOX_PATH = PROCESSED_DATA_DIR / "abox_linked.ttl"
 OPERATIONAL_ABOX_MANIFEST_PATH = PROCESSED_DATA_DIR / "abox_generation_manifest.json"
+ABOX_MINTED_ENTITY_REGISTRY_PATH = PROCESSED_DATA_DIR / "abox_minted_entity_registry.json"
 OPERATIONAL_BUILD_ENTRYPOINT = REPO_ROOT / "run_operational_pipeline.py"
 ABOX_SEMANTIC_AUDIT_PATH = PROCESSED_DATA_DIR / "abox_semantic_audit.json"
 ABOX_DEBUG_DIR = PROCESSED_DATA_DIR / "abox_debug"
@@ -207,6 +208,7 @@ OPERATIONAL_RUNTIME_CONTRACT = {
     "tbox": OPERATIONAL_TBOX_PATH,
     "abox_input": OPERATIONAL_ABOX_INPUT_PATH,
     "abox_manifest": OPERATIONAL_ABOX_MANIFEST_PATH,
+    "abox_minted_entity_registry": ABOX_MINTED_ENTITY_REGISTRY_PATH,
     "abox": OPERATIONAL_ABOX_PATH,
     "abox_merged_raw": RAW_MERGED_ABOX_PATH,
     "abox_canonical": CANONICAL_ABOX_PATH,

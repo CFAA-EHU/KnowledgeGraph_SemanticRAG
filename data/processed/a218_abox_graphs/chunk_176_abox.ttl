@@ -1,131 +1,47 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-### Esquemas de Fluidos - Lubricación
-ex:Esquema_Lubricacion_Bomba_108
-    a ex:Esquema ;
-    rdfs:label "Esquema de lubricación (bomba y cableado)"@es ;
-    ex:textoExtracto "Hoja de lubricación con imagen de la bomba y su conexionado a bornes (XT1 24S/0S/E700, etc.). Se incluyen notas operativas (p. ej., 'Cantidad de lubricante por impulso: 0,15 cm³ (por salida); excitación secuencial 1.1→1.2'). Trazos indican alimentación y señales de control."@es ;
-    ex:identificador "Página 108 - Lubricación (bomba)" .
+ns1:BC44 a ns1:Sensor ;
+    rdfs:label "caudal BC44" ;
+    ns1:textoExtracto "Sensores de nivel (BN41/BN42) y caudal BC44." .
 
-ex:BombaLubricacion_516U1
-    a ex:ComponenteHidraulico ;
-    rdfs:label "Bomba de lubricación 516U1"@es ;
-    ex:textoExtracto "Distribución de engrase hacia piñones de cadena y cremalleras izquierda/derecha desde la unidad 516U1. Se especifica capacidad 400 cm³ y grasa hasta NLGI 3; caudal de 0,2 l/min."@es ;
-    ex:identificador "516U1" ;
-    ex:documentadoEn ex:Esquema_Lubricacion_Bomba_108 ;
-    ex:detalladoEnEsquema ex:Esquema_Distribucion_Engrase_115 .
+ns1:BN41 a ns1:Sensor ;
+    rdfs:label "Sensores de nivel (BN41/BN42)" ;
+    ns1:textoExtracto "Sensores de nivel (BN41/BN42) y caudal BC44." .
 
-ex:SensorNivel_BN41
-    a ex:Sensor ;
-    rdfs:label "Sensor de nivel BN41"@es ;
-    ex:textoExtracto "Sensores de nivel (BN41/BN42) y caudal BC44."@es ;
-    ex:identificador "BN41" ;
-    ex:documentadoEn ex:Esquema_Fluidos_Lubricacion_108 .
+ns1:BN42 a ns1:Sensor ;
+    rdfs:label "Sensores de nivel (BN41/BN42)" ;
+    ns1:textoExtracto "Sensores de nivel (BN41/BN42) y caudal BC44." .
 
-ex:SensorNivel_BN42
-    a ex:Sensor ;
-    rdfs:label "Sensor de nivel BN42"@es ;
-    ex:textoExtracto "Sensores de nivel (BN41/BN42) y caudal BC44."@es ;
-    ex:identificador "BN42" ;
-    ex:documentadoEn ex:Esquema_Fluidos_Lubricacion_108 .
+ns1:BombaLubricacion a ns1:ComponenteMecanico ;
+    rdfs:label "bomba" ;
+    ns1:textoExtracto "Hoja de lubricación con imagen de la bomba y su conexionado a bornes (XT1 24S/0S/E700, etc.)." .
 
-ex:SensorCaudal_BC44
-    a ex:Sensor ;
-    rdfs:label "Sensor de caudal BC44"@es ;
-    ex:textoExtracto "Sensores de nivel (BN41/BN42) y caudal BC44."@es ;
-    ex:identificador "BC44" ;
-    ex:documentadoEn ex:Esquema_Fluidos_Lubricacion_108 .
+ns1:CartuchoAtencion a ns1:ComponenteElectrico ;
+    rdfs:label "cartucho de ATENCIÓN" ;
+    ns1:textoExtracto "Diagrama unifilar de entrada 3×380 V/50 Hz con seccionador/interruptor (10QS1), cálculos (S total 67 kVA, Is 102 A), barras L1/L2/L3 y derivaciones a PE; cartucho de ATENCIÓN enmarcado." .
 
-ex:Esquema_Distribucion_Engrase_115
-    a ex:Esquema ;
-    rdfs:label "Esquema de distribución de engrase (página 115)"@es ;
-    ex:textoExtracto "Distribución de engrase hacia piñones de cadena y cremalleras izquierda/derecha desde la unidad 516U1. Flechas marcan el sentido de suministro y el bloque de la bomba aparece en recuadro con simbología de válvulas."@es ;
-    ex:identificador "Página 115 - Distribución de engrase" .
+ns1:EsquemaElectrico a ns1:Esquema ;
+    rdfs:label "Esquemas eléctricos" ;
+    ns1:textoExtracto "Cartucho ampliado con datos de empresa/cliente, descripción de proyecto, número de diseño, producto (Esquemas Eléctricos // Esquemas de Fluidos) y responsable/fecha." .
 
-ex:Parametro_Caudal_Engrase
-    a ex:Parametro ;
-    rdfs:label "Caudal de engrase"@es ;
-    ex:textoExtracto "caudal de 0,2 l/min"@es ;
-    ex:valor "0.2" ;
-    ex:monitoreaParametro ex:SensorCaudal_BC44 .
+ns1:EsquemaFluidos a ns1:Esquema ;
+    rdfs:label "Esquemas de fluidos" ;
+    ns1:textoExtracto "Hoja de lubricación con imagen de la bomba y su conexionado a bornes (XT1 24S/0S/E700, etc.)." .
 
-ex:Parametro_Capacidad_Tanque
-    a ex:Parametro ;
-    rdfs:label "Capacidad del tanque de lubricación"@es ;
-    ex:textoExtracto "capacidad 400 cm³"@es ;
-    ex:valor "400" ;
-    ex:monitoreaParametro ex:BombaLubricacion_516U1 .
+ns1:EsquemaLubricacion a ns1:Esquema ;
+    rdfs:label "Esquemas de fluidos — Lubricación" ;
+    ns1:textoExtracto "Hoja de lubricación con imagen de la bomba y su conexionado a bornes (XT1 24S/0S/E700, etc.)." .
 
-ex:Parametro_Lubricante_Por_Impulso
-    a ex:Parametro ;
-    rdfs:label "Cantidad de lubricante por impulso"@es ;
-    ex:textoExtracto "Cantidad de lubricante por impulso: 0,15 cm³ (por salida)"@es ;
-    ex:valor "0.15" ;
-    ex:monitoreaParametro ex:BombaLubricacion_516U1 .
+ns1:SeccionadorPrincipal_10QS1 a ns1:ComponenteElectrico ;
+    rdfs:label "seccionador/interruptor (10QS1)" ;
+    ns1:textoExtracto "Diagrama unifilar de entrada 3×380 V/50 Hz con seccionador/interruptor (10QS1), cálculos (S total 67 kVA, Is 102 A), barras L1/L2/L3 y derivaciones a PE; cartucho de ATENCIÓN enmarcado." .
 
-### Esquemas Eléctricos - Potencia
-ex:Esquema_Electrico_Seccionador_118
-    a ex:Esquema ;
-    rdfs:label "Esquema eléctrico - Seccionador principal (página 118)"@es ;
-    ex:textoExtracto "Diagrama unifilar de entrada 3×380 V/50 Hz con seccionador/interruptor (10QS1), cálculos (S total 67 kVA, Is 102 A), barras L1/L2/L3 y derivaciones a PE; cartucho de ATENCIÓN enmarcado."@es ;
-    ex:identificador "Página 118 - Seccionador principal" .
+ns1:Unidad516U1 a ns1:ComponenteMecanico ;
+    rdfs:label "unidad 516U1" ;
+    ns1:textoExtracto "Distribución de engrase hacia piñones de cadena y cremalleras izquierda/derecha desde la unidad 516U1." .
 
-ex:Seccionador_10QS1
-    a ex:ComponenteElectrico ;
-    rdfs:label "Seccionador principal 10QS1"@es ;
-    ex:textoExtracto "seccionador/interruptor (10QS1)"@es ;
-    ex:identificador "10QS1" ;
-    ex:documentadoEn ex:Esquema_Electrico_Seccionador_118 .
+ns1:XT1_24S_0S_E700 a ns1:ComponenteElectrico ;
+    rdfs:label "XT1 24S/0S/E700" ;
+    ns1:textoExtracto "Hoja de lubricación con imagen de la bomba y su conexionado a bornes (XT1 24S/0S/E700, etc.)." .
 
-ex:Parametro_Potencia_Aparente
-    a ex:Parametro ;
-    rdfs:label "Potencia aparente total (S)"@es ;
-    ex:textoExtracto "S total 67 kVA"@es ;
-    ex:valor "67" ;
-    ex:monitoreaParametro ex:Seccionador_10QS1 .
-
-ex:Parametro_Corriente_Nominal
-    a ex:Parametro ;
-    rdfs:label "Corriente nominal (Is)"@es ;
-    ex:textoExtracto "Is 102 A"@es ;
-    ex:valor "102" ;
-    ex:monitoreaParametro ex:Seccionador_10QS1 .
-
-### Conexionado Eléctrico (Bornes)
-ex:Interfaz_Bornes_XT1
-    a ex:InterfazUsuario ;
-    rdfs:label "Bornes de conexión XT1"@es ;
-    ex:textoExtracto "conexionado a bornes (XT1 24S/0S/E700, etc.)"@es ;
-    ex:identificador "XT1" ;
-    ex:documentadoEn ex:Esquema_Lubricacion_Bomba_108 .
-
-ex:ComponenteElectrico_Borne_24S
-    a ex:ComponenteElectrico ;
-    rdfs:label "Borne 24S (XT1)"@es ;
-    ex:textoExtracto "XT1 24S/0S/E700"@es ;
-    ex:identificador "24S" ;
-    ex:tieneComponente ex:Interfaz_Bornes_XT1 .
-
-ex:ComponenteElectrico_Borne_0S
-    a ex:ComponenteElectrico ;
-    rdfs:label "Borne 0S (XT1)"@es ;
-    ex:textoExtracto "XT1 24S/0S/E700"@es ;
-    ex:identificador "0S" ;
-    ex:tieneComponente ex:Interfaz_Bornes_XT1 .
-
-ex:ComponenteElectrico_Borne_E700
-    a ex:ComponenteElectrico ;
-    rdfs:label "Borne E700 (XT1)"@es ;
-    ex:textoExtracto "XT1 24S/0S/E700"@es ;
-    ex:identificador "E700" ;
-    ex:tieneComponente ex:Interfaz_Bornes_XT1 .
-
-### Cartucho de Portada (Metadatos)
-ex:Tabla_Metadatos_Proyecto_116 a ex:Tabla ;
-     a ex:Tabla ;
-    rdfs:label "Metadatos del proyecto (páginas 116-117)"@es ;
-    ex:textoExtracto "Cartucho ampliado con datos de empresa/cliente, descripción de proyecto, número de diseño, producto (Esquemas Eléctricos // Esquemas de Fluidos) y responsable/fecha."@es ;
-    ex:identificador "Páginas 116-117 - Metadatos" .

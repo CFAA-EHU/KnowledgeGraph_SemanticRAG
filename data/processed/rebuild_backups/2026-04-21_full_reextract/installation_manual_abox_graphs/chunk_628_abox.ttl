@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Temporizador_T10
+    a ex:ComponenteElectrico ;
+    rdfs:label "Temporizador T10" ;
+    ex:textoExtracto "I3 = TRS 10. La entrada I3 controla la entrada de reset del temporizador T10." ;
+    ex:identificador "T10" .
+
+ex:Entrada_I3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada I3 (reset temporizador)" ;
+    ex:textoExtracto "Por defecto y cada vez que se activa un temporizador el PLC pone esta entrada a (=0). I3 = TRS 10. La entrada I3 controla la entrada de reset del temporizador T10." ;
+    ex:identificador "I3" ;
+    ex:controla ex:Temporizador_T10 .
+
+ex:Entrada_TG1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG1 (modo monoestable)" ;
+    ex:textoExtracto "TG1 activa el modo monoestable." ;
+    ex:identificador "TG1" ;
+    ex:controla ex:Temporizador_T10 .
+
+ex:Entrada_TG2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG2 (modo retardo a la conexión)" ;
+    ex:textoExtracto "TG2 activa el modo retardo a la conexión." ;
+    ex:identificador "TG2" ;
+    ex:controla ex:Temporizador_T10 .
+
+ex:Entrada_TG3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG3 (modo retardo a la desconexión)" ;
+    ex:textoExtracto "TG3 activa el modo retardo a la desconexión." ;
+    ex:identificador "TG3" ;
+    ex:controla ex:Temporizador_T10 .
+
+ex:Entrada_TG4
+    a ex:ComponenteElectrico ;
+    rdfs:label "Entrada TG4 (modo limitador de señal)" ;
+    ex:textoExtracto "TG4 activa el modo limitador de señal." ;
+    ex:identificador "TG4" ;
+    ex:controla ex:Temporizador_T10 .
+
+ex:Parametro_ConstanteTiempo
+    a ex:Parametro ;
+    rdfs:label "Constante de tiempo (0-4294967295 ms)" ;
+    ex:textoExtracto "La constante de tiempo se define con un valor numérico o con el valor interno de un registro R. Su valor debe estar comprendido entre 0 y 4294967295 ms, lo que equivale a 1193 horas (casi 50 días)." ;
+    ex:valor "0-4294967295" ;
+    ex:monitoreaParametro ex:Temporizador_T10 .

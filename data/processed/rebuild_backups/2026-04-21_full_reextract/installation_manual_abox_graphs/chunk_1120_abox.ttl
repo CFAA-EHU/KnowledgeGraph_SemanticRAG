@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:CompensacionVolumetrica_Basica
+    a ex:ModoOperacion ;
+    rdfs:label "Compensación volumétrica básica" ;
+    ex:textoExtracto "• El volumen a compensar está definido por hasta 25 puntos en cada eje. • Esta compensación corrige los errores de traslación. • Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC. • El OEM debe definir en los parámetros máquina todos los datos de la compensación (ejes que se mueven, ejes a compensar, posición y tamaño del volumen a compensar, etc) y seleccionar el fichero que contiene los datos de la compensación. • La compensación básica es la más rápida de calibrar, pero puede ser menos precisa que las otras (corrige menos componentes de error)." .
+
+ex:CompensacionVolumetrica_Media
+    a ex:ModoOperacion ;
+    rdfs:label "Compensación volumétrica media" ;
+    ex:textoExtracto "• Volumen a compensar hasta 10 m³ (media). • Esta compensación corrige los 21 componentes del error geométrico (traslación, rotación y cuadratura). • Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC. • El OEM sólo debe definir en los parámetros máquina los ejes a compensar y seleccionar el fichero que contiene los datos de la calibración. • La compensación media y grande son más precisas que la básica, pero son más lentas de calibrar." .
+
+ex:CompensacionVolumetrica_Grande
+    a ex:ModoOperacion ;
+    rdfs:label "Compensación volumétrica grande" ;
+    ex:textoExtracto "• Volumen a compensar más de 10 m³ (grande). • Esta compensación corrige los 21 componentes del error geométrico (traslación, rotación y cuadratura). • Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC. • El OEM sólo debe definir en los parámetros máquina los ejes a compensar y seleccionar el fichero que contiene los datos de la calibración. • La compensación media y grande son más precisas que la básica, pero son más lentas de calibrar." .
+
+ex:CompensacionCruzada
+    a ex:ModoOperacion ;
+    rdfs:label "Compensación cruzada" ;
+    ex:textoExtracto "La compensación volumétrica incluye la compensación cruzada y de husillo, por lo que no es necesario definir estas dos últimas; no obstante, si están definidas, el CNC las tiene en cuenta. El CNC primero aplica la compensación cruzada y de husillo, y a continuación la compensación volumétrica." .
+
+ex:CompensacionHusillo
+    a ex:ModoOperacion ;
+    rdfs:label "Compensación de husillo" ;
+    ex:textoExtracto "La compensación volumétrica incluye la compensación cruzada y de husillo, por lo que no es necesario definir estas dos últimas; no obstante, si están definidas, el CNC las tiene en cuenta. El CNC primero aplica la compensación cruzada y de husillo, y a continuación la compensación volumétrica." .
+
+ex:Tabla_CompensacionVolumetrica a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de compensación volumétrica" ;
+    ex:textoExtracto "Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC." ;
+    ex:documentadoEn ex:CompensacionVolumetrica_Basica ;
+    ex:documentadoEn ex:CompensacionVolumetrica_Media ;
+    ex:documentadoEn ex:CompensacionVolumetrica_Grande .
+
+ex:ParametrosMaquina_Compensacion
+    a ex:Parametro ;
+    rdfs:label "Parámetros máquina para compensación" ;
+    ex:textoExtracto "El OEM debe definir en los parámetros máquina todos los datos de la compensación (ejes que se mueven, ejes a compensar, posición y tamaño del volumen a compensar, etc) y seleccionar el fichero que contiene los datos de la compensación." ;
+    ex:documentadoEn ex:CompensacionVolumetrica_Basica .
+
+ex:EjeMaestro_Gantry
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro (gantry)" ;
+    ex:textoExtracto "En los ejes gantry, la compensación se define para el eje maestro y el CNC la aplica también al eje esclavo." .
+
+ex:EjeEsclavo_Gantry
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo (gantry)" ;
+    ex:textoExtracto "En los ejes gantry, la compensación se define para el eje maestro y el CNC la aplica también al eje esclavo." .
+
+ex:SistemaGantry
+    a ex:Sistema ;
+    rdfs:label "Sistema de ejes gantry" ;
+    ex:textoExtracto "En los ejes gantry, la compensación se define para el eje maestro y el CNC la aplica también al eje esclavo." ;
+    ex:tieneComponente ex:EjeMaestro_Gantry ;
+    ex:tieneComponente ex:EjeEsclavo_Gantry .

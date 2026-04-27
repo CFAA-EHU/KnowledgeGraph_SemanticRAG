@@ -1,0 +1,34 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Proceso_ArranqueSistema a ns1:ModoOperacion ;
+    rdfs:label "Arranque del sistema"@es ;
+    ns1:activaAlarma ns1:Error23018 ;
+    ns1:textoExtracto "Durante el arranque del sistema o validación de los parámetros máquina."@es .
+
+ns1:Proceso_ValidacionParametros a ns1:ModoOperacion ;
+    rdfs:label "Validación de parámetros máquina"@es ;
+    ns1:activaAlarma ns1:Error23018 ;
+    ns1:textoExtracto "Durante el arranque del sistema o validación de los parámetros máquina."@es .
+
+ns1:SistemaCoordenadasMaquina a ns1:Sistema ;
+    rdfs:label "Sistema de coordenadas máquina"@es ;
+    ns1:monitoreaParametro ns1:Parametro_SQUARENESS_IS_POSITIVE ;
+    ns1:textoExtracto "El sistema de coordenadas definido en el archivo es incorrecto."@es .
+
+ns1:Tarea_ModificacionArchivoCompensacion a ns1:TareaMantenimiento ;
+    rdfs:label "Modificación del archivo de compensación volumétrica"@es ;
+    ns1:textoExtracto "Modificar el archivo de la compensación volumétrica."@es .
+
+ns1:Error23018 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el fichero de compensación volumétrica"@es ;
+    ns1:identificador "23018" ;
+    ns1:monitoreaParametro ns1:Parametro_SQUARENESS_IS_POSITIVE ;
+    ns1:solucionaFallo ns1:Tarea_ModificacionArchivoCompensacion ;
+    ns1:textoExtracto "Error en el fichero de compensación volumétrica: el valor del parámetro del fichero \"SQUARENESS_IS_POSITIVE\" es incorrecto."@es .
+
+ns1:Parametro_SQUARENESS_IS_POSITIVE a ns1:Parametro ;
+    rdfs:label "SQUARENESS_IS_POSITIVE" ;
+    ns1:identificador "SQUARENESS_IS_POSITIVE" ;
+    ns1:textoExtracto "valor del parámetro del fichero \"SQUARENESS_IS_POSITIVE\" es incorrecto"@es .
+

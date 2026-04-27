@@ -1,78 +1,64 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:plato_divisor_maquina_4_2_4
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Plato divisor" ;
-    ex:textoExtracto "El plato divisor de la máquina va colocado sobre el carro porta-piezas y dispone de un dentado Hirth con capacidad para hacer divisiones de 1º." ;
-    ex:tieneComponente ex:dentado_hirth_4_2_4 ;
-    ex:tieneComponente ex:servomotor_plato_divisor_4_2_4 ;
-    ex:tieneComponente ex:cilindro_hidraulico_plato_divisor_4_2_4 ;
-    ex:tieneComponente ex:torreta_micros_4_2_4 ;
-    ex:tieneComponente ex:base_plana_0grados_4_2_4 ;
-    ex:tieneComponente ex:base_inclinada_15grados_4_2_4 ;
-    ex:ilustradoEn   ex:figura_4_4 ;
-    ex:ilustradoEn   ex:figura_4_5 .
+ns1:CilindroHidraulico_48 a ns1:ComponenteHidraulico ;
+    rdfs:label "cilindro hidráulico"@es ;
+    ns1:alimenta ns1:DentadoHirth_48 ;
+    ns1:textoExtracto "El cilindro hidráulico permite que el engranaje superior del 'DENTADO HIRTH' se mueva verticalmente"@es .
 
-ex:dentado_hirth_4_2_4
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Dentado Hirth" ;
-    ex:textoExtracto "dispone de un dentado Hirth con capacidad para hacer divisiones de 1º." ;
-    ex:identificador "DENTADO HIRTH" .
+ns1:Figura4_5_48 a ns1:Figura ;
+    rdfs:label "Figura 4-5. Bases del plato divisor (0º y 15º)"@es ;
+    ns1:textoExtracto "Figura 4-5. Bases del plato divisor (0º y 15º)"@es .
 
-ex:servomotor_plato_divisor_4_2_4
-    a               ex:ComponenteElectrico ;
-    rdfs:label      "Servomotor del plato divisor" ;
-    ex:textoExtracto "Para que el movimiento del plato divisor pueda llevarse a cabo interviene un servomotor." ;
-    ex:controla     ex:plato_divisor_maquina_4_2_4 .
+ns1:PlatoDivisor_48 a ns1:ComponenteMecanico ;
+    rdfs:label "plato divisor"@es ;
+    ns1:compuestoPor ns1:DentadoHirth_48 ;
+    ns1:detalladoEnEsquema ns1:Figura4_4_48 ;
+    ns1:textoExtracto "El plato divisor de la máquina va colocado sobre el carro porta-piezas y dispone de un dentado Hirth con capacidad para hacer divisiones de 1º."@es ;
+    ns1:tieneComponente ns1:BaseInclinada_48,
+        ns1:BasePlana_48 .
 
-ex:cilindro_hidraulico_plato_divisor_4_2_4
-    a               ex:ComponenteHidraulico ;
-    rdfs:label      "Cilindro hidráulico del plato divisor" ;
-    ex:textoExtracto "el cilindro hidráulico permite que el engranaje superior del 'DENTADO HIRTH' se mueva verticalmente, liberando los dientes del engranaje inferior." ;
-    ex:controla     ex:dentado_hirth_4_2_4 .
+ns1:BaseInclinada_48 a ns1:ComponenteMecanico ;
+    rdfs:label "base inclinada del plato divisor"@es ;
+    ns1:textoExtracto "otra inclinada para brochar a 15º."@es .
 
-ex:torreta_micros_4_2_4
-    a               ex:ComponenteElectrico ;
-    rdfs:label      "Torreta de micros" ;
-    ex:textoExtracto "dispone de una torreta de micros que al girar se activan por medio de unas levas dando las siguientes señales: SQ46: MESA ABAJO (BLOQUEADO), SQ47: MESA ARRIBA (DESBLOQUEADO)." ;
-    ex:activaAlarma  ex:senal_sq46_bloqueado ;
-    ex:activaAlarma  ex:senal_sq47_desbloqueado .
+ns1:BasePlana_48 a ns1:ComponenteMecanico ;
+    rdfs:label "base plana del plato divisor"@es ;
+    ns1:textoExtracto "El plato divisor dispone de dos bases, una plana para brochar a 0º"@es .
 
-ex:senal_sq46_bloqueado
-    a               ex:AvisoSeguridad ;
-    rdfs:label      "SQ46: MESA ABAJO (BLOQUEADO)" ;
-    ex:textoExtracto "SQ46: MESA ABAJO (BLOQUEADO)" ;
-    ex:identificador "SQ46" .
+ns1:EngranajeInferior_48 a ns1:ComponenteMecanico ;
+    rdfs:label "engranaje inferior del dentado Hirth"@es ;
+    ns1:textoExtracto "liberando los dientes del engranaje inferior."@es .
 
-ex:senal_sq47_desbloqueado
-    a               ex:AvisoSeguridad ;
-    rdfs:label      "SQ47: MESA ARRIBA (DESBLOQUEADO)" ;
-    ex:textoExtracto "SQ47: MESA ARRIBA (DESBLOQUEADO)" ;
-    ex:identificador "SQ47" .
+ns1:EngranajeSuperior_48 a ns1:ComponenteMecanico ;
+    rdfs:label "engranaje superior del dentado Hirth"@es ;
+    ns1:textoExtracto "El cilindro hidráulico permite que el engranaje superior del 'DENTADO HIRTH' se mueva verticalmente, liberando los dientes del engranaje inferior."@es .
 
-ex:base_plana_0grados_4_2_4
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Base plana (0°)" ;
-    ex:textoExtracto "El plato divisor dispone de dos bases, una plana para brochar a 0°" ;
-    ex:identificador "Base 0°" .
+ns1:Figura4_4_48 a ns1:Figura ;
+    rdfs:label "Figura 4-4. Plato divisor"@es ;
+    ns1:textoExtracto "Figura 4-4. Plato divisor"@es .
 
-ex:base_inclinada_15grados_4_2_4
-    a               ex:ComponenteMecanico ;
-    rdfs:label      "Base inclinada (15°)" ;
-    ex:textoExtracto "otra inclinada para brochar a 15°" ;
-    ex:identificador "Base 15°" .
+ns1:Servomotor_48 a ns1:ComponenteElectrico ;
+    rdfs:label "servomotor"@es ;
+    ns1:controla ns1:DentadoHirth_48 ;
+    ns1:monitoreaParametro ns1:SQ46_48,
+        ns1:SQ47_48 ;
+    ns1:textoExtracto "Para que el movimiento del plato divisor pueda llevarse a cabo interviene un servomotor"@es .
 
-ex:figura_4_4
-    a               ex:Figura ;
-    rdfs:label      "Figura 4-4. Plato divisor" ;
-    ex:textoExtracto "Figura 4-4. Plato divisor" ;
-    ex:identificador "Figura 4-4" .
+ns1:SQ46_48 a ns1:Sensor ;
+    rdfs:label "SQ46"@es ;
+    ns1:textoExtracto "SQ46: MESA ABAJO (BLOQUEADO)"@es .
 
-ex:figura_4_5
-    a               ex:Figura ;
-    rdfs:label      "Figura 4-5. Bases del plato divisor (0° y 15°)" ;
-    ex:textoExtracto "Figura 4-5. Bases del plato divisor (0° y 15°)" ;
-    ex:identificador "Figura 4-5" .
+ns1:SQ47_48 a ns1:Sensor ;
+    rdfs:label "SQ47"@es ;
+    ns1:textoExtracto "SQ47: MESA ARRIBA (DESBLOQUEADO)"@es .
+
+ns1:DentadoHirth_48 a ns1:ComponenteMecanico ;
+    rdfs:label "dentado Hirth"@es ;
+    ns1:compuestoPor ns1:EngranajeInferior_48,
+        ns1:EngranajeSuperior_48 ;
+    ns1:controla ns1:Servomotor_48 ;
+    ns1:monitoreaParametro ns1:SQ46_48,
+        ns1:SQ47_48 ;
+    ns1:textoExtracto "dispone de un dentado Hirth con capacidad para hacer divisiones de 1º."@es .
+

@@ -1,0 +1,58 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Senal_ENABLE
+    a ex:ComponenteElectrico ;
+    rdfs:label "Señal ENABLE" ;
+    ex:textoExtracto "La señal ENABLE indica al PLC que permita el movimiento del eje"@es ;
+    ex:controla ex:MovimientoEje .
+
+ex:Senal_SERVOON
+    a ex:ComponenteElectrico ;
+    rdfs:label "Señal SERVOON" ;
+    ex:textoExtracto "la señal SERVOON que el regulador está listo"@es ;
+    ex:monitoreaParametro ex:Parametro_DWELL .
+
+ex:Parametro_DWELL
+    a ex:Parametro ;
+    rdfs:label "Parámetro DWELL" ;
+    ex:textoExtracto "el tiempo parametrizado en DWELL antes de generar movimiento en el eje 'muerto'"@es ;
+    ex:valor "Tiempo de espera" .
+
+ex:MovimientoEje
+    a ex:ModoOperacion ;
+    rdfs:label "Movimiento de eje" ;
+    ex:textoExtracto "el movimiento del eje y la señal SERVOON que el regulador está listo"@es ;
+    ex:habilitadoPor ex:Senal_ENABLE ;
+    ex:tieneFrecuencia ex:Parametro_DWELL .
+
+ex:EjeMuerto
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje muerto" ;
+    ex:textoExtracto "el movimiento en el eje 'muerto' solamente si éste no tiene activa la señal SERVOON"@es ;
+    ex:controla ex:MovimientoEje .
+
+ex:EjeTandem
+    a ex:Sistema ;
+    rdfs:label "Eje tándem" ;
+    ex:textoExtracto "En un eje tándem, tanto el eje maestro como esclavo deben estar habilitados antes de poder moverse"@es ;
+    ex:compuestoPor ex:EjeMaestro, ex:EjeEsclavo .
+
+ex:EjeMaestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro" ;
+    ex:textoExtracto "el CNC sólo aplica el tiempo parametrizado en DWELL a la señal SERVOON del eje maestro"@es ;
+    ex:monitoreaParametro ex:Parametro_DWELL .
+
+ex:EjeEsclavo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje esclavo" ;
+    ex:textoExtracto "si la habilitación del eje esclavo es más lenta, la maniobra del PLC debe verificar que ambos ejes están habilitados"@es .
+
+ex:Senal_DEAD_axis
+    a ex:ComponenteElectrico ;
+    rdfs:label "Señal DEAD(axis)" ;
+    ex:textoExtracto "habilitar el eje desde PLC como eje 'muerto' (señal DEAD(axis))"@es ;
+    ex:controla ex:EjeMuerto .

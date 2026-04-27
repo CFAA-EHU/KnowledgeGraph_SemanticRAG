@@ -1,0 +1,76 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Esquemas de cinemática (páginas 254-258)
+ex:Esquema_Cinematica_HeadTool
+    a ex:Esquema ;
+    rdfs:label "Esquema comparativo de posición de referencia HEAD/TOOL"@es ;
+    ex:textoExtracto "Doble esquema de 'posición de referencia HEAD/TOOL' que compara 'Tool base/Auto tool base' frente a 'Head base'. Se marca la nariz del portaherramientas y vectores de referencia para visualizar dónde se sitúa el punto de referencia tras calibración o activación."@es ;
+    ex:ilustradoEn ex:Pagina_256 ;
+    ex:detalladoEnEsquema ex:Parametro_TDATA .
+
+ex:Esquema_TiposCabezal_ABC
+    a ex:Esquema ;
+    rdfs:label "Tríptico comparativo de cabezales esférico/ortogonal/angular (A-B-C)"@es ;
+    ex:textoExtracto "Tríptico A-B-C con siluetas de 'cabezal esférico', 'cabezal ortogonal' y 'cabezal angular', seguido de dos esquemas comparativos que muestran la condición geométrica correcta/incorrecta del eje rotativo principal respecto a los ejes X/Y/Z. Incluye letras A/B/C y ángulo α para orientar distancias TDATA."@es ;
+    ex:ilustradoEn ex:Pagina_257 ;
+    ex:detalladoEnEsquema ex:Parametro_TDATA .
+
+ex:Esquema_TDATA_TYPE1_5
+    a ex:Esquema ;
+    rdfs:label "Planchas de cotas TDATA para cabezales TYPE=1–5"@es ;
+    ex:textoExtracto "Planchas con cinco viñetas (TYPE=1…5) que dibujan la cabeza y ejes con cotas TDATA1…TDATA7. Flechas y signos (+/−) identifican distancias desde la nariz del husillo al eje secundario, separaciones X/Y/Z entre centros de giro y el ángulo entre ejes rotativos."@es ;
+    ex:ilustradoEn ex:Pagina_258 ;
+    ex:detalladoEnEsquema ex:Parametro_TDATA .
+
+ex:Esquema_TDATA_TYPE6_8
+    a ex:Esquema ;
+    rdfs:label "Viñetas de cotas TDATA para cabezales angulares TYPE=6–8"@es ;
+    ex:textoExtracto "Tres viñetas (TYPE=6…8) con la misma gramática gráfica de cotas y signos para cabezales angulares YZ/ZX/ZY."@es ;
+    ex:ilustradoEn ex:Pagina_258 ;
+    ex:detalladoEnEsquema ex:Parametro_TDATA .
+
+### Parámetros y componentes mecánicos (derivados de los esquemas)
+ex:Parametro_TDATA
+    a ex:Parametro ;
+    rdfs:label "Parámetro TDATA (distancias y ángulos cinemáticos)"@es ;
+    ex:textoExtracto "Cotas TDATA1…TDATA7 que definen distancias desde la nariz del husillo al eje secundario, separaciones X/Y/Z entre centros de giro y ángulos entre ejes rotativos para cabezales TYPE=1–8."@es ;
+    ex:monitoreaParametro ex:ComponenteMecanico_Cabezal .
+
+ex:ComponenteMecanico_Cabezal
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cabezal mecánico (esférico/ortogonal/angular)"@es ;
+    ex:textoExtracto "Siluetas de 'cabezal esférico', 'cabezal ortogonal' y 'cabezal angular' con ejes rotativos principales y secundarios, referenciados en esquemas con cotas TDATA."@es ;
+    ex:tieneComponente ex:ComponenteMecanico_NarizHusillo .
+
+ex:ComponenteMecanico_NarizHusillo
+    a ex:ComponenteMecanico ;
+    rdfs:label "Nariz del husillo/portaherramientas"@es ;
+    ex:textoExtracto "Punto de referencia marcado en los esquemas como 'nariz del portaherramientas' para calibración de posiciones HEAD/TOOL."@es .
+
+### Páginas de referencia (anclaje documental)
+ex:Pagina_256
+    a ex:Pagina ;
+    ex:identificador "256" ;
+    ex:documentadoEn ex:Manual_OpenPCS ;
+    ex:textoExtracto "Sección 2.9.2: Definición de las cinemáticas del cabezal (página 256)."@es .
+
+ex:Pagina_257
+    a ex:Pagina ;
+    ex:identificador "257" ;
+    ex:documentadoEn ex:Manual_OpenPCS ;
+    ex:textoExtracto "Sección 2.9.2: Parámetros TDATA para TYPE 1–5 (página 257)."@es .
+
+ex:Pagina_258
+    a ex:Pagina ;
+    ex:identificador "258" ;
+    ex:documentadoEn ex:Manual_OpenPCS ;
+    ex:textoExtracto "Sección 2.9.2: Parámetros TDATA para TYPE 6–8 (página 258)."@es .
+
+### Manual (contexto documental)
+ex:Manual_OpenPCS
+    a ex:Manual ;
+    rdfs:label "Manual OPENPCS (sección cinemáticas)"@es ;
+    ex:textoExtracto "Documentación técnica de parámetros máquina para cinemáticas HEADREF y definiciones vectoriales (TYPE=41–52)."@es .

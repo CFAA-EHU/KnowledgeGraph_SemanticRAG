@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OverrideCNC
+    a ex:Parametro ;
+    rdfs:label "Override del cabezal en roscado" ;
+    ex:textoExtracto "el override, el CNC respeta el paso y la entrada de la rosca. [...] El CNC permite variar la velocidad del cabezal durante la pasada de roscado."@es ;
+    ex:monitoreaParametro ex:VelocidadCabezal .
+
+ex:VelocidadCabezal
+    a ex:Parametro ;
+    rdfs:label "Velocidad del cabezal" ;
+    ex:textoExtracto "El CNC permite variar la velocidad del cabezal durante la pasada de roscado."@es .
+
+ex:Parametro_OVRFILTER
+    a ex:Parametro ;
+    rdfs:label "OVRFILTER" ;
+    ex:identificador "OVRFILTER" ;
+    ex:valor "0-1000000 ms" ;
+    ex:textoExtracto "OVRFILTER Tiempo para hacer efectivo el cambio de override. [...] Valor por defecto: 0. [...] Este parámetro actúa como filtro para hacer efectivo el cambio de override."@es ;
+    ex:monitoreaParametro ex:OverrideCNC .
+
+ex:Funcion_G33 a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Roscado electrónico G33" ;
+    ex:textoExtracto "Roscado electrónico G33. Consideraciones relativas al cambio de override."@es ;
+    ex:requiereMantenimiento ex:ConfiguracionOverride .
+
+ex:ConfiguracionOverride
+    a ex:TareaMantenimiento ;
+    rdfs:label "Configuración de override en roscado" ;
+    ex:textoExtracto "Si hay programados dos o más G33 para la misma rosca, todos los roscados deben comenzar a la misma velocidad; en caso contrario, el punto de entrada a la rosca no coincidirá en todos los roscados."@es ;
+    ex:documentadoEn ex:ManualCNC .
+
+ex:ManualCNC
+    a ex:Manual ;
+    ex:textoExtracto "Sección 2.5.13 Cambio del override del cabezal durante el roscado."@es .

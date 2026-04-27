@@ -1,0 +1,99 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:InterfazUsuario_OpenPCSRemoto_21_21
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Interfaz OpenPCS Remoto (Sección 21.21)"@es ;
+    ex:textoExtracto "Se muestran palpados en Y y Z sobre un cilindro (puntos 1–4), las lecturas ΔY1/ΔY2 y ΔZ1/ΔZ2, y la obtención de TDATA3 (Y) y Pz (Z) con cotas y radio R."@es ;
+    ex:ilustradoEn  ex:Esquema_MesaRotativa_17_3 .
+
+ex:Esquema_MesaRotativa_17_3
+    a               ex:Esquema ;
+    rdfs:label      "Esquema de preselección y cálculo de parámetros para mesa rotativa (Sección 17.3)"@es ;
+    ex:identificador "17.3" ;
+    ex:textoExtracto "Dibujo de preselección X con A=90°, B=−90° y palpado en X sobre la mesa; se representa la lectura ΔX y la asignación X=−r para hacer coincidir X=0 con la superficie de la mesa, indicando el radio de bola del palpador r."@es ;
+    ex:textoExtracto "Dos disposiciones del eje B (A=0° con B=0° y B=−90°) para determinar TDATA2, TDATA4 y TDATA5. Se anotan lecturas ΔX1, ΔZ y ΔZ1, y se marcan distancias E y F desde la mesa hasta los ejes B y A respectivamente, con líneas de cota y referencias Pz y r."@es .
+
+ex:Sistema_MesaRotativa
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de mesa rotativa con palpador"@es ;
+    ex:textoExtracto "Mesa rotativa con palpado en X, Y, Z para determinación de parámetros TDATA2, TDATA3, TDATA4, TDATA5 y referencias Pz."@es ;
+    ex:detalladoEnEsquema ex:Esquema_MesaRotativa_17_3 ;
+    ex:tieneComponente ex:ComponenteMecanico_Palpador ;
+    ex:tieneComponente ex:ComponenteMecanico_MesaRotativa .
+
+ex:ComponenteMecanico_Palpador
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Palpador con radio de bola r"@es ;
+    ex:textoExtracto "radio de bola del palpador r"@es ;
+    ex:monitoreaParametro ex:Parametro_TDATA3_Y ;
+    ex:monitoreaParametro ex:Parametro_Pz_Z ;
+    ex:monitoreaParametro ex:Parametro_TDATA2 ;
+    ex:monitoreaParametro ex:Parametro_TDATA4 ;
+    ex:monitoreaParametro ex:Parametro_TDATA5 .
+
+ex:ComponenteMecanico_MesaRotativa
+    a               ex:ComponenteMecanico ;
+    rdfs:label      "Mesa rotativa con ejes A y B"@es ;
+    ex:textoExtracto "Dos disposiciones del eje B (A=0° con B=0° y B=−90°)"@es .
+
+ex:Parametro_TDATA3_Y
+    a               ex:Parametro ;
+    rdfs:label      "TDATA3 (Y)"@es ;
+    ex:identificador "TDATA3" ;
+    ex:valor        "Y" ;
+    ex:textoExtracto "obtención de TDATA3 (Y)"@es .
+
+ex:Parametro_Pz_Z
+    a               ex:Parametro ;
+    rdfs:label      "Pz (Z)"@es ;
+    ex:identificador "Pz" ;
+    ex:valor        "Z" ;
+    ex:textoExtracto "obtención de [...] Pz (Z)"@es .
+
+ex:Parametro_TDATA2
+    a               ex:Parametro ;
+    rdfs:label      "TDATA2"@es ;
+    ex:identificador "TDATA2" ;
+    ex:textoExtracto "determinar TDATA2"@es .
+
+ex:Parametro_TDATA4
+    a               ex:Parametro ;
+    rdfs:label      "TDATA4"@es ;
+    ex:identificador "TDATA4" ;
+    ex:textoExtracto "determinar TDATA4"@es .
+
+ex:Parametro_TDATA5
+    a               ex:Parametro ;
+    rdfs:label      "TDATA5"@es ;
+    ex:identificador "TDATA5" ;
+    ex:textoExtracto "determinar TDATA5"@es .
+
+ex:InterfazUsuario_TablaHerramientas_CNC
+    a               ex:InterfazUsuario ;
+    rdfs:label      "Tabla de herramientas CNC (Sección 18.3)"@es ;
+    ex:textoExtracto "Captura de interfaz de la tabla de herramientas del CNC con resaltados 'A' (tipo de herramienta) y 'B' (número de dientes 1–100). Incluye lista de herramientas, iconos, campos editables y un panel contextual de parámetros, útil para que el DMC limite el avance por diente."@es ;
+    ex:ilustradoEn  ex:Tabla_ParametrosHerramientas_18_3 .
+
+ex:Tabla_ParametrosHerramientas_18_3 a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de parámetros de herramientas (Sección 18.3)"@es ;
+    ex:identificador "18.3" ;
+    ex:textoExtracto "tabla de herramientas del CNC con resaltados 'A' (tipo de herramienta) y 'B' (número de dientes 1–100)"@es .
+
+ex:Parametro_NumDientes
+    a               ex:Parametro ;
+    rdfs:label      "Número de dientes (1–100)"@es ;
+    ex:identificador "B" ;
+    ex:valor        "1–100" ;
+    ex:textoExtracto "número de dientes 1–100"@es ;
+    ex:documentadoEn ex:Tabla_ParametrosHerramientas_18_3 .
+
+ex:Parametro_TipoHerramienta
+    a               ex:Parametro ;
+    rdfs:label      "Tipo de herramienta"@es ;
+    ex:identificador "A" ;
+    ex:textoExtracto "tipo de herramienta"@es ;
+    ex:documentadoEn ex:Tabla_ParametrosHerramientas_18_3 .

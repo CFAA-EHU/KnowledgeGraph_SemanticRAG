@@ -1,0 +1,103 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:RutinaM06
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Rutina M06 (Cambio de herramienta)"@es ;
+    ex:textoExtracto      "%L SUB_SPD_TO_GR ; Quitar la herramienta del cabezal (llevarla a tierra). [...] M6 ; Orden al gestor para comenzar el cambio de herramienta."@es ;
+    ex:identificador      "M06" .
+
+ex:Subrutina_SPD_TO_GR
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina SPD_TO_GR (Extraer herramienta a tierra)"@es ;
+    ex:textoExtracto      "%L SUB_SPD_TO_GR ; Quitar la herramienta del cabezal (llevarla a tierra). # MSG [\"Extraer herramienta T%D y pulsar MARCHA\", V.TM.TOOL] ; Mensaje al operario para que quite la herramienta."@es ;
+    ex:identificador      "SUB_SPD_TO_GR" .
+
+ex:Subrutina_GR_TO_SPD
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina GR_TO_SPD (Insertar herramienta desde tierra)"@es ;
+    ex:textoExtracto      "%L SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. # MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta."@es ;
+    ex:identificador      "SUB_GR_TO_SPD" .
+
+ex:Subrutina_MZ_TO_SPD
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina MZ_TO_SPD (Cargar herramienta desde almacén)"@es ;
+    ex:textoExtracto      "%L SUB_MZ_TO_SPD ; Coger la herramienta del almacén y ponerla en el cabezal. M109 ; Función auxiliar para ejecutar acción."@es ;
+    ex:identificador      "SUB_MZ_TO_SPD" .
+
+ex:Subrutina_SPD_TO_MZ
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina SPD_TO_MZ (Devolver herramienta a almacén)"@es ;
+    ex:textoExtracto      "%L SUB_SPD_TO_MZ ; Dejar la herramienta del cabezal en el almacén. M110 ; Función auxiliar para ejecutar acción."@es ;
+    ex:identificador      "SUB_SPD_TO_MZ" .
+
+ex:Subrutina_SPD_GMCHG
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina SPD_GMCHG (Posicionar cabezal para cambio manual)"@es ;
+    ex:textoExtracto      "%L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal."@es ;
+    ex:identificador      "SUB_SPD_GMCHG" .
+
+ex:Subrutina_SPD_AUTCHG
+    a                     ex:TareaMantenimiento ;
+    rdfs:label            "Subrutina SPD_AUTCHG (Posicionar cabezal para cambio automático)"@es ;
+    ex:textoExtracto      "%L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. G1 Z_ F_ ; Desplazar el cabezal."@es ;
+    ex:identificador      "SUB_SPD_AUTCHG" .
+
+ex:MensajeExtraerHerramienta
+    a                     ex:AvisoSeguridad ;
+    rdfs:label            "Mensaje: Extraer herramienta T%D y pulsar MARCHA"@es ;
+    ex:textoExtracto      "# MSG [\"Extraer herramienta T%D y pulsar MARCHA\", V.TM.TOOL] ; Mensaje al operario para que quite la herramienta."@es .
+
+ex:MensajeInsertarHerramienta
+    a                     ex:AvisoSeguridad ;
+    rdfs:label            "Mensaje: Insertar herramienta T%D y pulsar MARCHA"@es ;
+    ex:textoExtracto      "# MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta."@es .
+
+ex:MarcaPLC_M1107
+    a                     ex:Parametro ;
+    rdfs:label            "Marca SPDLTOGR (V.PLC.M[1107])"@es ;
+    ex:textoExtracto      "V.PLC.M[1107]=1 ; Marca SPDLTOGR al gestor."@es ;
+    ex:identificador      "M1107" ;
+    ex:valor              "1 (activo)"@es .
+
+ex:MarcaPLC_M1108
+    a                     ex:Parametro ;
+    rdfs:label            "Marca GRTOSPDL (V.PLC.M[1108])"@es ;
+    ex:textoExtracto      "V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor."@es ;
+    ex:identificador      "M1108" ;
+    ex:valor              "1 (activo)"@es .
+
+ex:MarcaPLC_M1109
+    a                     ex:Parametro ;
+    rdfs:label            "Marca MZTOSPDL (V.PLC.M[1109])"@es ;
+    ex:textoExtracto      "V.PLC.M[1109]=1 ; Marca MZTOSPDL al gestor."@es ;
+    ex:identificador      "M1109" ;
+    ex:valor              "1 (activo)"@es .
+
+ex:MarcaPLC_M1110
+    a                     ex:Parametro ;
+    rdfs:label            "Marca SPDLTOGR (V.PLC.M[1110])"@es ;
+    ex:textoExtracto      "V.PLC.M[1110]=1 ; Marca SPDLTOGR al gestor."@es ;
+    ex:identificador      "M1110" ;
+    ex:valor              "1 (activo)"@es .
+
+ex:RutinaM06
+    ex:compuestoPor       ex:Subrutina_SPD_TO_GR , ex:Subrutina_GR_TO_SPD ,
+                          ex:Subrutina_MZ_TO_SPD , ex:Subrutina_SPD_TO_MZ ,
+                          ex:Subrutina_SPD_GMCHG , ex:Subrutina_SPD_AUTCHG .
+
+ex:Subrutina_SPD_TO_GR
+    ex:activaAlarma       ex:MensajeExtraerHerramienta ;
+    ex:monitoreaParametro ex:MarcaPLC_M1107 .
+
+ex:Subrutina_GR_TO_SPD
+    ex:activaAlarma       ex:MensajeInsertarHerramienta ;
+    ex:monitoreaParametro ex:MarcaPLC_M1108 .
+
+ex:Subrutina_MZ_TO_SPD
+    ex:monitoreaParametro ex:MarcaPLC_M1109 .
+
+ex:Subrutina_SPD_TO_MZ
+    ex:monitoreaParametro ex:MarcaPLC_M1110 .

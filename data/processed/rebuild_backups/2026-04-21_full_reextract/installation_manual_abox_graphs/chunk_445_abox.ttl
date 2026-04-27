@@ -1,0 +1,38 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_SZERO
+    a ex:Parametro ;
+    rdfs:label "SZERO (Velocidad cero para cabezal)" ;
+    ex:textoExtracto "SZERO Velocidad que se considera cero. Parámetro válido para cabezales. [...] Este parámetro indica por debajo de qué valor se considera que el cabezal está parado." ;
+    ex:valor "0-100000 rpm" ;
+    ex:identificador "(V.)[ch].MPA.SZERO[set].xn" .
+
+ex:Parametro_POLARM3
+    a ex:Parametro ;
+    rdfs:label "POLARM3 (Signo consigna M3)" ;
+    ex:textoExtracto "POLARM3 Signo de la consigna para M3. Parámetro válido para cabezales. [...] Valores posibles: Positivo / Negativo." ;
+    ex:valor "Positivo/Negativo" ;
+    ex:identificador "(V.)[ch].MPA.POLARM3[set].xn" .
+
+ex:Parametro_POLARM4
+    a ex:Parametro ;
+    rdfs:label "POLARM4 (Signo consigna M4)" ;
+    ex:textoExtracto "POLARM4 Signo de la consigna para M4. [...] Valores posibles: Positivo / Negativo. Valor por defecto: Negativo." ;
+    ex:valor "Positivo/Negativo" ;
+    ex:identificador "(V.)[ch].MPA.POLARM4[set].xn" .
+
+ex:Variable_POLARITY
+    a ex:Parametro ;
+    rdfs:label "Variable POLARITY (Inversión de consigna)" ;
+    ex:textoExtracto "La variable permite invertir el significado de los parámetros POLARM3 y POLARM4. [...] (V.)[ch].A.POLARITY.sn (V.)[ch].SP.POLARITY.sn" ;
+    ex:identificador "(V.)[ch].A.POLARITY.sn / (V.)[ch].SP.POLARITY.sn" .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC (Control de cabezal)" ;
+    ex:textoExtracto "El CNC utiliza este parámetro para pasar el cabezal a eje C y también para aceptar la consigna programada con SANALOG cuando el cabezal está controlado desde el PLC." ;
+    ex:monitoreaParametro ex:Parametro_SZERO ;
+    ex:controla ex:Parametro_POLARM3, ex:Parametro_POLARM4 .

@@ -1,0 +1,59 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Sistema_ControlAvance a ns1:Sistema ;
+    rdfs:label "Sistema de Control de Avance por Feed-Forward"@es ;
+    ns1:compuestoPor ns1:Parametro_FFGAIN,
+        ns1:Parametro_PROGAIN ;
+    ns1:detalladoEnEsquema ns1:Esquema_FeedForward ;
+    ns1:ilustradoEn ns1:Interfaz_OscilogramaAjusteCorrecto,
+        ns1:Interfaz_OscilogramaAjusteIncorrecto,
+        ns1:Interfaz_PanelAjusteACForward ;
+    ns1:textoExtracto "El diagrama representa la descomposición de la consigna en parte proporcional al avance programado y parte proporcional al error."@es ;
+    ns1:tieneComponente ns1:Sensor_ErrorE .
+
+ns1:Interfaz_OscilogramaAjusteCorrecto a ns1:InterfazUsuario ;
+    rdfs:label "Oscilograma: Ajuste correcto con feed-forward"@es ;
+    ns1:identificador "oscillogram_correct_adjustment" ;
+    ns1:monitoreaParametro ns1:Sensor_ActualFeed,
+        ns1:Sensor_ErrorE ;
+    ns1:textoExtracto "oscilograma 'Ajuste correcto con feed forward'. Se representan 'Actual Feed' y 'Following Error (E)' con icono de verificación. El avance alcanza el valor objetivo con sobreimpulso mínimo y el error de seguimiento permanece acotado sin invertir signo; la escala indicada es 10 µm por cuadro."@es .
+
+ns1:Interfaz_OscilogramaAjusteIncorrecto a ns1:InterfazUsuario ;
+    rdfs:label "Oscilograma: Ajuste incorrecto con feed-forward"@es ;
+    ns1:identificador "oscillogram_incorrect_adjustment" ;
+    ns1:monitoreaParametro ns1:Sensor_ErrorE ;
+    ns1:textoExtracto "oscilograma 'Ajuste incorrecto con feed forward' con icono de equis. El 'Following Error (E)' presenta picos que invierten signo y oscilaciones amortiguadas, evidenciando exceso de feed-forward o ganancias mal calibradas."@es .
+
+ns1:Interfaz_PanelAjusteACForward a ns1:InterfazUsuario ;
+    rdfs:label "Panel: Ajuste apropiado para AC-Forward"@es ;
+    ns1:identificador "panel_ACForward_adjustment" ;
+    ns1:textoExtracto "panel 'Ajuste apropiado' (icono de verificación) para AC-Forward: respuesta del sistema sin ganancia AC-forward (10 µm por cuadro) frente a respuesta con AC-forward (1 µm por cuadro)."@es .
+
+ns1:Parametro_FFGAIN a ns1:Parametro ;
+    rdfs:label "Feed-Forward Gain (FFGAIN)"@es ;
+    ns1:documentadoEn ns1:Esquema_FeedForward ;
+    ns1:textoExtracto "'Programmed Feedrate' alimenta un bloque 'FFGAIN'"@es .
+
+ns1:Parametro_PROGAIN a ns1:Parametro ;
+    rdfs:label "Ganancia Proporcional (PROGAIN)"@es ;
+    ns1:documentadoEn ns1:Esquema_FeedForward ;
+    ns1:monitoreaParametro ns1:Sensor_ErrorE ;
+    ns1:textoExtracto "útil para visualizar el ajuste de la ganancia proporcional (PROGAIN)"@es .
+
+ns1:Sensor_ActualFeed a ns1:Sensor ;
+    rdfs:label "Sensor de Avance Real (Actual Feed)"@es ;
+    ns1:identificador "Actual_Feed" ;
+    ns1:textoExtracto "'Actual Feed'"@es .
+
+ns1:Esquema_FeedForward a ns1:Esquema ;
+    rdfs:label "Esquema de bloques de feed-forward"@es ;
+    ns1:identificador "feed-forward_block_diagram" ;
+    ns1:textoExtracto "esquema de bloques de feed-forward: 'Programmed Feedrate' alimenta un bloque 'FFGAIN'; 'Nominal Position' entra en un sumador con 'PROGAIN' y la señal de error 'ε'; la salida conjunta genera la 'Analog output' que actúa sobre la 'Actual position'."@es .
+
+ns1:Sensor_ErrorE a ns1:Sensor ;
+    rdfs:label "Sensor de Error de Seguimiento (ε)"@es ;
+    ns1:identificador "Following_Error_E" ;
+    ns1:ilustradoEn ns1:Esquema_FeedForward ;
+    ns1:textoExtracto "la señal de error 'ε'"@es .
+

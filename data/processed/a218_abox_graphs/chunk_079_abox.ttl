@@ -1,96 +1,79 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 
-ex:InterfazUsuario_CicloBrochado
-    a ex:InterfazUsuario ;
-    rdfs:label "Pantalla de Ciclo de Brochado"@es ;
-    ex:textoExtracto "El acceso a esta pantalla se realiza a través de la pantalla principal pulsando el botón 'Ciclo brochado'."@es ;
-    ex:tieneComponente ex:Parametro_TipoPieza ;
-    ex:tieneComponente ex:Parametro_TipoOperacion ;
-    ex:tieneComponente ex:Parametro_Refrigeracion ;
-    ex:tieneComponente ex:Parametro_AvanceDesbaste ;
-    ex:tieneComponente ex:Parametro_AvanceAcabado ;
-    ex:tieneComponente ex:Parametro_PosicionInicialPlato ;
-    ex:tieneComponente ex:Parametro_NumeroRanuras ;
-    ex:tieneComponente ex:Parametro_PasoEntreRanuras ;
-    ex:tieneComponente ex:Parametro_NumeroRanurasInspeccion ;
-    ex:tieneComponente ex:Parametro_PasoIncrementoInspeccion ;
-    ex:tieneComponente ex:Accion_SimularCiclo ;
-    ex:tieneComponente ex:Accion_EjecutarCiclo ;
-    ex:tieneComponente ex:Accion_MemorizarCiclo ;
-    ex:tieneComponente ex:Accion_InspeccionHerramienta .
+ns1:AvanceAcabado a ns1:Parametro ;
+    ns1:textoExtracto "Avance (F Desbaste y F Acabado)" .
 
-ex:Parametro_TipoPieza
-    a ex:Parametro ;
-    rdfs:label "Tipo de pieza"@es ;
-    ex:textoExtracto "Tipo de pieza: El tipo de pieza a seleccionar es entre anillo y plana."@es ;
-    ex:valor "anillo"@es, "plana"@es .
+ns1:AvanceDesbaste a ns1:Parametro ;
+    ns1:textoExtracto "Avance (F Desbaste y F Acabado)" .
 
-ex:Parametro_TipoOperacion
-    a ex:Parametro ;
-    rdfs:label "Tipo de operación"@es ;
-    ex:textoExtracto "Tipo de operación: El tipo de operación a seleccionar es entre desbaste y acabado."@es ;
-    ex:valor "desbaste"@es, "acabado"@es .
+ns1:CicloBrochado a ns1:ModoOperacion ;
+    ns1:detalladoEnEsquema ns1:PantallaPrincipal ;
+    ns1:textoExtracto "El acceso a esta pantalla se realiza a través de la pantalla principal pulsando el botón 'Ciclo brochado'." .
 
-ex:Parametro_Refrigeracion
-    a ex:Parametro ;
-    rdfs:label "Refrigeración"@es ;
-    ex:textoExtracto "Refrigeración: Seleccionar si el ciclo se va a realizar con o sin refrigerante."@es ;
-    ex:valor "con refrigerante"@es, "sin refrigerante"@es .
+ns1:ConRefrigerante a ns1:ModoOperacion ;
+    ns1:textoExtracto "Refrigeración: Seleccionar si el ciclo se va a realizar con o sin refrigerante." .
 
-ex:Parametro_AvanceDesbaste
-    a ex:Parametro ;
-    rdfs:label "Avance (F Desbaste)"@es ;
-    ex:textoExtracto "Avance (F Desbaste y F Acabado)"@es .
+ns1:MaquinaBrochadora a ns1:Maquina ;
+    ns1:textoExtracto "A través de las softkeys verticales existe la posibilidad de simular el ciclo pulsando el botón 'Simular ciclo', de ejecutar el ciclo pulsando el botón 'Ejecutar ciclo' y de guardar el ciclo en la memoria de la máquina con los parámetros seleccionados pulsando el botón 'Memorizar ciclo'. Otra posibilidad que ofrece la máquina para cada tipo de ciclo es la de incorporar un ciclo de inspección, que consiste en la captura de varias fotos de la herramienta." ;
+    ns1:tieneComponente ns1:CicloInspeccion,
+        ns1:EjecutarCiclo,
+        ns1:MemorizarCiclo,
+        ns1:SimularCiclo .
 
-ex:Parametro_AvanceAcabado
-    a ex:Parametro ;
-    rdfs:label "Avance (F Acabado)"@es ;
-    ex:textoExtracto "Avance (F Desbaste y F Acabado)"@es .
+ns1:NumeroRanuras a ns1:Parametro ;
+    ns1:textoExtracto "Número de ranuras" .
 
-ex:Parametro_PosicionInicialPlato
-    a ex:Parametro ;
-    rdfs:label "Posición inicial del plato (Ángulo)"@es ;
-    ex:textoExtracto "Posición inicial del plato (Ángulo)"@es .
+ns1:NumeroRanurasInspeccion a ns1:Parametro ;
+    ns1:textoExtracto "El valor de 'Número de ranuras' hace referencia a cada cuantos brochados se realiza la inspección." .
 
-ex:Parametro_NumeroRanuras
-    a ex:Parametro ;
-    rdfs:label "Número de ranuras"@es ;
-    ex:textoExtracto "Número de ranuras"@es .
+ns1:OperacionAcabado a ns1:ModoOperacion ;
+    ns1:textoExtracto "Tipo de operación: El tipo de operación a seleccionar es entre desbaste y acabado." .
 
-ex:Parametro_PasoEntreRanuras
-    a ex:Parametro ;
-    rdfs:label "Paso entre ranuras"@es ;
-    ex:textoExtracto "Paso entre ranuras"@es .
+ns1:OperacionDesbaste a ns1:ModoOperacion ;
+    ns1:textoExtracto "Tipo de operación: El tipo de operación a seleccionar es entre desbaste y acabado." .
 
-ex:Parametro_NumeroRanurasInspeccion
-    a ex:Parametro ;
-    rdfs:label "Número de ranuras (inspección)"@es ;
-    ex:textoExtracto "El valor de 'Número de ranuras' hace referencia a cada cuantos brochados se realiza la inspección."@es .
+ns1:PasoEntreRanuras a ns1:Parametro ;
+    ns1:textoExtracto "Paso entre ranuras" .
 
-ex:Parametro_PasoIncrementoInspeccion
-    a ex:Parametro ;
-    rdfs:label "Paso incremento (inspección)"@es ;
-    ex:textoExtracto "Con el valor de 'Paso incremento' se [define] la distancia entre cada foto realizada a la herramienta; la primera siempre se realiza al primer diente y la última al último diente."@es .
+ns1:PasoIncremento a ns1:Parametro ;
+    ns1:textoExtracto "Paso incremento" .
 
-ex:Accion_SimularCiclo
-    a ex:AccionProhibida ;
-    rdfs:label "Simular ciclo"@es ;
-    ex:textoExtracto "existe la posibilidad de simular el ciclo pulsando el botón 'Simular ciclo'"@es .
+ns1:PiezaAnillo a ns1:PiezaRecambio ;
+    ns1:textoExtracto "Tipo de pieza: El tipo de pieza a seleccionar es entre anillo y plana." .
 
-ex:Accion_EjecutarCiclo
-    a ex:AccionProhibida ;
-    rdfs:label "Ejecutar ciclo"@es ;
-    ex:textoExtracto "existe la posibilidad de [...] ejecutar el ciclo pulsando el botón 'Ejecutar ciclo'"@es .
+ns1:PiezaPlana a ns1:PiezaRecambio ;
+    ns1:textoExtracto "Tipo de pieza: El tipo de pieza a seleccionar es entre anillo y plana." .
 
-ex:Accion_MemorizarCiclo
-    a ex:AccionProhibida ;
-    rdfs:label "Memorizar ciclo"@es ;
-    ex:textoExtracto "existe la posibilidad de [...] guardar el ciclo en la memoria de la máquina [...] pulsando el botón 'Memorizar ciclo'."@es .
+ns1:PosicionInicialPlato a ns1:Parametro ;
+    ns1:textoExtracto "Posición inicial del plato (Ángulo)" .
 
-ex:Accion_InspeccionHerramienta
-    a ex:AccionProhibida ;
-    rdfs:label "Inspección de herramienta"@es ;
-    ex:textoExtracto "Otra posibilidad que ofrece la máquina para cada tipo de ciclo es la de incorporar un ciclo de inspección, que consiste en la captura de varias fotos de la herramienta."@es .
+ns1:Refrigeracion a ns1:Parametro ;
+    ns1:textoExtracto "Refrigeración: Seleccionar si el ciclo se va a realizar con o sin refrigerante." ;
+    ns1:valor "con refrigerante, sin refrigerante" .
+
+ns1:SinRefrigerante a ns1:ModoOperacion ;
+    ns1:textoExtracto "Refrigeración: Seleccionar si el ciclo se va a realizar con o sin refrigerante." .
+
+ns1:TipoOperacion a ns1:Parametro ;
+    ns1:textoExtracto "Tipo de operación: El tipo de operación a seleccionar es entre desbaste y acabado." ;
+    ns1:valor "desbaste, acabado" .
+
+ns1:TipoPieza a ns1:Parametro ;
+    ns1:textoExtracto "Tipo de pieza: El tipo de pieza a seleccionar es entre anillo y plana." ;
+    ns1:valor "anillo, plana" .
+
+ns1:CicloInspeccion a ns1:ModoOperacion ;
+    ns1:textoExtracto "Otra posibilidad que ofrece la máquina para cada tipo de ciclo es la de incorporar un ciclo de inspección, que consiste en la captura de varias fotos de la herramienta." .
+
+ns1:EjecutarCiclo a ns1:TareaMantenimiento ;
+    ns1:textoExtracto "de ejecutar el ciclo pulsando el botón 'Ejecutar ciclo'" .
+
+ns1:MemorizarCiclo a ns1:TareaMantenimiento ;
+    ns1:textoExtracto "y de guardar el ciclo en la memoria de la máquina con los parámetros seleccionados pulsando el botón 'Memorizar ciclo'." .
+
+ns1:PantallaPrincipal a ns1:InterfazUsuario ;
+    ns1:textoExtracto "El acceso a esta pantalla se realiza a través de la pantalla principal pulsando el botón 'Ciclo brochado'." .
+
+ns1:SimularCiclo a ns1:AccionProhibida ;
+    ns1:textoExtracto "A través de las softkeys verticales existe la posibilidad de simular el ciclo pulsando el botón 'Simular ciclo'." .
+

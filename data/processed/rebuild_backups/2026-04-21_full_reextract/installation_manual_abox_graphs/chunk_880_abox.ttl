@@ -1,0 +1,23 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:RegistroPosicionAlmacenTorreta
+    a               ex:Parametro ;
+    rdfs:label      "Registro de posición almacén torreta" ;
+    ex:textoExtracto "El PLC debe indicar en este registro la posición actual del almacén; si el registro tiene valor ꞏ0ꞏ, el PLC mostrará el error correspondiente." ;
+    ex:valor         "0" ;
+    ex:identificador "#ROTATEMZ" .
+
+ex:ErrorPosicionNoValida
+    a               ex:AvisoSeguridad ;
+    rdfs:label      "Error de posición no válida en almacén torreta" ;
+    ex:textoExtracto "si el registro tiene valor ꞏ0ꞏ, el PLC mostrará el error correspondiente" .
+
+ex:SistemaComunicacionPLC_Gestor
+    a               ex:Sistema ;
+    rdfs:label      "Sistema de comunicación PLC → Gestor (almacén torreta)" ;
+    ex:textoExtracto "Comunicación PLC --> Gestor. [...] En almacenes torreta se puede seleccionar una posición (sentencia #ROTATEMZ)." ;
+    ex:tieneComponente ex:RegistroPosicionAlmacenTorreta ;
+    ex:activaAlarma  ex:ErrorPosicionNoValida .

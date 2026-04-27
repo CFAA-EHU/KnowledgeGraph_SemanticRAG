@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SistemaControlGapLaser
+    a ex:Sistema ;
+    rdfs:label "Sistema de control del gap láser" ;
+    ex:textoExtracto "El control del gap permite mantener una distancia fija entre la boquilla del láser y la superficie de la chapa. Esta distancia la calcula un sensor conectado al CNC, de manera que éste compensará las variaciones del sensor sobre la distancia programada con movimientos adicionales en el eje longitudinal." ;
+    ex:tieneComponente ex:SensorGapLaser ;
+    ex:controla ex:ParametroGap .
+
+ex:SensorGapLaser
+    a ex:Sensor ;
+    rdfs:label "Sensor de control del gap láser" ;
+    ex:textoExtracto "un sensor conectado al CNC, de manera que éste compensará las variaciones del sensor sobre la distancia programada con movimientos adicionales en el eje longitudinal." ;
+    ex:monitoreaParametro ex:ParametroGap .
+
+ex:ParametroGap
+    a ex:Parametro ;
+    rdfs:label "Distancia del gap láser" ;
+    ex:textoExtracto "Distancia (gap) a mantener respecto de la superficie." ;
+    ex:valor "Milímetros o pulgadas"@es .
+
+ex:FuncionalidadGapControl a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Control del gap (#GAPCTRL)" ;
+    ex:textoExtracto "El CNC sólo permite un control de gap. [...] La sentencia #GAPCTRL ON permite activar el control del gap. La sentencia #GAPCTRL OFF desactiva el control del gap." ;
+    ex:identificador "#GAPCTRL" ;
+    ex:requiereMantenimiento ex:CalibracionSensorGap .
+
+ex:CalibracionSensorGap
+    a ex:TareaMantenimiento ;
+    rdfs:label "Calibración del sensor de gap" ;
+    ex:textoExtracto "Para conseguir un seguimiento correcto del sensor, se recomienda que la señal del sensor esté calibrada con el máximo número de puntos posible." .
+
+ex:OpcionSoftwareGapControl
+    a ex:Componente ;
+    rdfs:label "Opción de software 'GAP CONTROL'" ;
+    ex:textoExtracto "Para el control del gap es necesario disponer de la opción de software 'GAP CONTROL'." ;
+    ex:identificador "GAP CONTROL" .

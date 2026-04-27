@@ -1,0 +1,40 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:ErrorFrecuenciaContajeExcesiva a ns1:DiagnosticoFallo ;
+    rdfs:label "Frecuencia de contaje excesiva"@es ;
+    ns1:solucionaFallo ns1:EjeMecanico ;
+    ns1:textoExtracto "Frecuencia de contaje excesiva. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA La velocidad del eje excede la capacidad de muestreo del hardware, para ese tipo de señal del encóder. SOLUCIÓN Disminuya la velocidad máxima de movimiento del eje."@es .
+
+ns1:SistemaCaptacion a ns1:Sistema ;
+    rdfs:label "Sistema de captación y comunicación"@es ;
+    ns1:activaAlarma ns1:Error9629,
+        ns1:Error9630 ;
+    ns1:textoExtracto "Error de comunicación en captación. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema."@es ;
+    ns1:tieneComponente ns1:EncoderFAGOR,
+        ns1:ReguladorSistema .
+
+ns1:EjeMecanico a ns1:ComponenteMecanico ;
+    rdfs:label "Eje mecánico"@es ;
+    ns1:monitoreaParametro ns1:EncoderFAGOR ;
+    ns1:textoExtracto "La velocidad del eje excede la capacidad de muestreo del hardware, para ese tipo de señal del encóder."@es .
+
+ns1:Error9629 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de comunicación en captación (CRC incorrecto)"@es ;
+    ns1:identificador "9629" ;
+    ns1:textoExtracto "9629 Error de comunicación en captación. CRC incorrecto. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Pérdida de la configuración del encóder o de la cabeza de la regla. El CRC de la regla absoluta FAGOR conectada no ha sido identificado por el regulador. SOLUCIÓN Las posibles soluciones son las siguientes: • Compruebe el cable y el conexionado con el captador. • Verifique la correcta parametrización del captador. • Si todo es correcto y sigue produciéndose el error, reemplazar el encóder o la cabeza de la regla."@es .
+
+ns1:Error9630 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de comunicación en captación (No acknowledge)"@es ;
+    ns1:identificador "9630" ;
+    ns1:textoExtracto "9630 Error de comunicación en captación. No se recibió acknowledge."@es .
+
+ns1:ReguladorSistema a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador del sistema"@es ;
+    ns1:monitoreaParametro ns1:EncoderFAGOR ;
+    ns1:textoExtracto "El CRC de la regla absoluta FAGOR conectada no ha sido identificado por el regulador."@es .
+
+ns1:EncoderFAGOR a ns1:ComponenteElectrico ;
+    rdfs:label "Encoder o cabeza de regla absoluta FAGOR"@es ;
+    ns1:textoExtracto "Pérdida de la configuración del encóder o de la cabeza de la regla. El CRC de la regla absoluta FAGOR conectada no ha sido identificado por el regulador."@es .
+

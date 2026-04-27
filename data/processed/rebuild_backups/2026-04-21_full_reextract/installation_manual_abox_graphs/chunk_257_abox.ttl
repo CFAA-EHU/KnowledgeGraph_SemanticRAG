@@ -1,0 +1,35 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_AXISTYPE
+    a ex:Parametro ;
+    rdfs:label "AXISTYPE" ;
+    ex:textoExtracto "AXISTYPE Tipo de eje. Parámetro válido para ejes lineales, rotativos y cabezales. Valores posibles: Lineal / Rotativo / Cabezal. Valor por defecto: Lineal." ;
+    ex:valor "Lineal" ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Parametro_DRIVETYPE
+    a ex:Parametro ;
+    rdfs:label "DRIVETYPE" ;
+    ex:textoExtracto "DRIVETYPE Tipo de regulador. Valores posibles: Analógico / Sercos / Mlink (Mechatrolink) / Simulado. Valor por defecto: Simulado." ;
+    ex:valor "Simulado" ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Parametro_POSUNITS
+    a ex:Parametro ;
+    rdfs:label "POSUNITS" ;
+    ex:textoExtracto "POSUNITS Unidades del sistema de captación." ;
+    ex:monitoreaParametro ex:Sistema_CNC .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "El CNC no permite disponer de reguladores Sercos y Mechatrolink en un mismo sistema, pero sí permite combinar estos reguladores con reguladores analógicos." .
+
+ex:ModoOperacion_Simulado
+    a ex:ModoOperacion ;
+    rdfs:label "Modo Simulado" ;
+    ex:textoExtracto "La opción Simulado se debe usar cuando no hay eje físico o durante la puesta a punto. Con la opción Simulado, el CNC simula todos los movimientos, asume como cota real la cota teórica y no proporciona consignas al exterior." ;
+    ex:habilitadoPor ex:Parametro_DRIVETYPE .

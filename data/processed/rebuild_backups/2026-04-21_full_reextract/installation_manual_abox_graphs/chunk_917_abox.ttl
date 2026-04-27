@@ -1,0 +1,64 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ComunicacionPLC_M06
+    a ex:Sistema ;
+    rdfs:label "Comunicación entre PLC y rutina M06" ;
+    ex:textoExtracto "La comunicación entre el PLC y la rutina M06 se realiza mediante una serie de marcas y registros genéricos." ;
+    ex:tieneComponente ex:Marca_M1107, ex:Marca_M1108, ex:Marca_M1109, ex:Marca_M1110 ;
+    ex:tieneComponente ex:Funcion_M109, ex:Funcion_M110 ;
+    ex:controla ex:MovimientoHerramienta .
+
+ex:Marca_M1107
+    a ex:ComponenteElectrico ;
+    rdfs:label "M1107 (SPDLTOGR)" ;
+    ex:identificador "M1107" ;
+    ex:textoExtracto "SPDLTOGR: La herramienta se ha llevado del cabezal a tierra." ;
+    ex:monitoreaParametro ex:ParametroPosicionHerramienta .
+
+ex:Marca_M1108
+    a ex:ComponenteElectrico ;
+    rdfs:label "M1108 (GRTOSPDL)" ;
+    ex:identificador "M1108" ;
+    ex:textoExtracto "GRTOSPDL: La herramienta se ha llevado de tierra al cabezal." ;
+    ex:monitoreaParametro ex:ParametroPosicionHerramienta .
+
+ex:Marca_M1109
+    a ex:ComponenteElectrico ;
+    rdfs:label "M1109 (MZTOSPDL)" ;
+    ex:identificador "M1109" ;
+    ex:textoExtracto "MZTOSPDL: La herramienta se ha llevado del almacén al cabezal." ;
+    ex:monitoreaParametro ex:ParametroPosicionHerramienta .
+
+ex:Marca_M1110
+    a ex:ComponenteElectrico ;
+    rdfs:label "M1110 (SPDLTOMZ)" ;
+    ex:identificador "M1110" ;
+    ex:textoExtracto "SPDLTOMZ: La herramienta se ha llevado del cabezal al almacén." ;
+    ex:monitoreaParametro ex:ParametroPosicionHerramienta .
+
+ex:Funcion_M109 a ex:Tabla ;
+     a ex:ComponenteElectrico ;
+    rdfs:label "M109 (Selección de herramienta desde almacén)" ;
+    ex:identificador "M109" ;
+    ex:textoExtracto "Seleccionar en el almacén la posición que indica TAKEPOS y poner la herramienta en el cabezal." ;
+    ex:controla ex:MovimientoHerramienta .
+
+ex:Funcion_M110 a ex:Tabla ;
+     a ex:ComponenteElectrico ;
+    rdfs:label "M110 (Devolución de herramienta al almacén)" ;
+    ex:identificador "M110" ;
+    ex:textoExtracto "Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta del cabezal." ;
+    ex:controla ex:MovimientoHerramienta .
+
+ex:MovimientoHerramienta
+    a ex:ModoOperacion ;
+    rdfs:label "Movimiento controlado de herramienta (cabezal/almacén/tierra)" ;
+    ex:textoExtracto "Funciones –M– en el PLC Funciones M que implican movimientos controlados por el PLC." .
+
+ex:ParametroPosicionHerramienta
+    a ex:Parametro ;
+    rdfs:label "Posición de la herramienta (cabezal/almacén/tierra)" ;
+    ex:textoExtracto "Marcas que activa la rutina M06 para que el PLC active la marca correspondiente del gestor." .

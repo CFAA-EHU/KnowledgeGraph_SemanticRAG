@@ -1,0 +1,69 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Solucion9381
+  a ex:AvisoSeguridad ;
+  rdfs:label "SOLUCIÓN Revisar las tablas de compensación. 9381 No se admite más de 1 volante tipo HBH." ;
+  ex:detectadoDurante ex:ValidacionParametrosMaquina ;
+  ex:causadoPor [ ex:tieneComponente ex:VolanteHBH ; ex:requiereMantenimiento ex:RevisarTablasCompensacion ] ;
+  ex:solucionaFallo ex:FalloVolanteHBH ;
+  ex:documentadoEn ex:ManualMaquina .
+
+ex:Solucion9382
+  a ex:AvisoSeguridad ;
+  rdfs:label "SOLUCIÓN El CNC sólo permite un volante HBH." ;
+  ex:detectadoDurante ex:Arranque ;
+  ex:causadoPor [ ex:tieneComponente ex:VolanteHBH ; ex:requiereMantenimiento ex:ReiniciarCNC ] ;
+  ex:solucionaFallo ex:FalloVolanteHBH ;
+  ex:documentadoEn ex:ManualMaquina .
+
+ex:ValidacionParametrosMaquina
+  a ex:TareaMantenimiento ;
+  rdfs:label "validación de los parámetros máquina" ;
+  ex:ejecutadoPor ex:PersonalMantenimiento ;
+  ex:documentadoEn ex:ManualMaquina .
+
+ex:Arranque
+  a ex:ModoOperacion ;
+  rdfs:label "arranque" ;
+  ex:habilitadoPor ex:PersonalOperador ;
+  ex:documentadoEn ex:ManualMaquina .
+
+ex:VolanteHBH
+  a ex:ComponenteMecanico ;
+  rdfs:label "volante tipo HBH" ;
+  ex:requiereMantenimiento ex:RevisarTablasCompensacion .
+
+ex:FalloVolanteHBH
+  a ex:DiagnosticoFallo ;
+  rdfs:label "fallo del volante HBH" ;
+  ex:solucionaFallo ex:Solucion9381 ;
+  ex:solucionaFallo ex:Solucion9382 .
+
+ex:RevisarTablasCompensacion
+  a ex:TareaMantenimiento ;
+  rdfs:label "revisar las tablas de compensación" ;
+  ex:ejecutadoPor ex:PersonalMantenimiento ;
+  ex:documentadoEn ex:ManualMaquina .
+
+ex:ReiniciarCNC
+  a ex:TareaMantenimiento ;
+  rdfs:label "reiniciar CNC" ;
+  ex:ejecutadoPor ex:PersonalMantenimiento ;
+  ex:documentadoEn ex:ManualMaquina .
+
+ex:PersonalMantenimiento
+  a ex:Personal ;
+  rdfs:label "personal de mantenimiento" ;
+  ex:ejecutaTarea ex:RevisarTablasCompensacion ;
+  ex:ejecutaTarea ex:ReiniciarCNC .
+
+ex:PersonalOperador
+  a ex:Personal ;
+  rdfs:label "personal operador" ;
+  ex:habilitaModoOperacion ex:Arranque .
+
+ex:ManualMaquina
+  a ex:Manual ;
+  rdfs:label "manual de la máquina" ;
+  ex:documentadoEn ex:Maquina .

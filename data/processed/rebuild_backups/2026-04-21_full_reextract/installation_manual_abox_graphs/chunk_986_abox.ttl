@@ -1,0 +1,96 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OperacionCambioHerramienta_TM11
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta (TMOPERATION=11): Coger herramienta del almacén con pinza 1"@es ;
+    ex:textoExtracto "el gestor envía el código TMOPERATION=11 para coger la herramienta del almacén con la pinza 1. 1 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR. 2 Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal y activar la marca CH1TOSPDL."@es ;
+    ex:identificador "TMOPERATION=11" ;
+    ex:requiereMantenimiento ex:Pinza1 .
+
+ex:OperacionCambioHerramienta_TM8
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta (TMOPERATION=8): Dejar herramienta en tierra y coger herramienta de tierra"@es ;
+    ex:textoExtracto "TMOPERATION = 8 Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra. La secuencia de esta operación es la siguiente. 1 Dejar la herramienta del cabezal en tierra y activar la marca SPDLTOGR. 2 Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL."@es ;
+    ex:identificador "TMOPERATION=8" .
+
+ex:OperacionCambioHerramienta_TM9
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta (TMOPERATION=9): Llevar herramienta de tierra al almacén"@es ;
+    ex:textoExtracto "TMOPERATION = 9 Coger una herramienta de tierra y llevarla al almacén pasando por el cabezal. TAKEPOS=-4 Herramienta de tierra."@es ;
+    ex:identificador "TMOPERATION=9" ;
+    ex:requiereMantenimiento ex:HerramientaTierra .
+
+ex:OperacionCambioHerramienta_TM10
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta (TMOPERATION=10): Coger herramienta del almacén y dejarla en tierra"@es ;
+    ex:textoExtracto "TMOPERATION = 10 Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal. TAKEPOS=# Posición del almacén para coger la herramienta. LEAVEPOS=-4 Herramienta de tierra."@es ;
+    ex:identificador "TMOPERATION=10" .
+
+ex:Pinza1
+    a ex:Actuador ;
+    rdfs:label "Pinza 1 (cambiador de herramientas)"@es ;
+    ex:textoExtracto "coger la herramienta del almacén con la pinza 1. [...] Poner la herramienta de la pinza ꞏ1ꞏ en el cabezal"@es ;
+    ex:identificador "Pinza 1" .
+
+ex:Pinza2
+    a ex:Actuador ;
+    rdfs:label "Pinza 2 (cambiador de herramientas)"@es ;
+    ex:textoExtracto "Coger la herramienta del cabezal con la pinza ꞏ2ꞏ. [...] Dejar la herramienta de la pinza ꞏ2ꞏ en el almacén"@es ;
+    ex:identificador "Pinza 2" .
+
+ex:HerramientaTierra
+    a ex:ComponenteMecanico ;
+    rdfs:label "Herramienta en posición de tierra"@es ;
+    ex:textoExtracto "LEAVEPOS=-4 Herramienta de tierra. [...] Poner la herramienta de tierra en el cabezal. [...] Coger una herramienta de tierra"@es ;
+    ex:identificador "LEAVEPOS=-4" .
+
+ex:BrazoCambiador
+    a ex:Actuador ;
+    rdfs:label "Brazo cambiador de herramientas"@es ;
+    ex:textoExtracto "Herramienta en el brazo cambiador. [...] Comenzar el envío del brazo cambiador al almacén para dejar la herramienta de la pinza ꞏ2ꞏ. 4 Al abandonar el brazo la zona de posible colisión activar TCHANGEOK"@es .
+
+ex:MarcaSPDLTOGR
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOGR (señal de herramienta del cabezal a tierra)"@es ;
+    ex:textoExtracto "activar la marca SPDLTOGR"@es ;
+    ex:identificador "SPDLTOGR" .
+
+ex:MarcaCH1TOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca CH1TOSPDL (señal de pinza 1 a cabezal)"@es ;
+    ex:textoExtracto "activar la marca CH1TOSPDL"@es ;
+    ex:identificador "CH1TOSPDL" .
+
+ex:MarcaGRTOSPDL
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca GRTOSPDL (señal de herramienta de tierra a cabezal)"@es ;
+    ex:textoExtracto "activar la marca GRTOSPDL"@es ;
+    ex:identificador "GRTOSPDL" .
+
+ex:MarcaSPDLTOCH2
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca SPDLTOCH2 (señal de cabezal a pinza 2)"@es ;
+    ex:textoExtracto "activar la marca SPDLTOCH2"@es ;
+    ex:identificador "SPDLTOCH2" .
+
+ex:MarcaTCHANGEOK
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca TCHANGEOK (señal de cambio completado)"@es ;
+    ex:textoExtracto "activar TCHANGEOK, si se desea, para que continúe la ejecución del programa"@es ;
+    ex:identificador "TCHANGEOK" .
+
+ex:MarcaCH2TOMZ
+    a ex:InterfazUsuario ;
+    rdfs:label "Marca CH2TOMZ (señal de pinza 2 a almacén)"@es ;
+    ex:textoExtracto "activar la marca CH2TOMZ"@es ;
+    ex:identificador "CH2TOMZ" .
+
+# Relaciones funcionales clave
+ex:Pinza1 ex:ejecutadoPor ex:BrazoCambiador .
+ex:Pinza2 ex:ejecutadoPor ex:BrazoCambiador .
+ex:HerramientaTierra ex:controla ex:MarcaGRTOSPDL .
+ex:OperacionCambioHerramienta_TM11 ex:requiereMantenimiento ex:Pinza1 .
+ex:OperacionCambioHerramienta_TM9 ex:requiereMantenimiento ex:HerramientaTierra, ex:Pinza2 .

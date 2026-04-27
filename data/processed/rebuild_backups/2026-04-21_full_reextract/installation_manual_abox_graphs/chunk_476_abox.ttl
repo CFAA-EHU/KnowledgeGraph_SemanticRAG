@@ -1,0 +1,44 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_MANPG a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla MANPG (Parámetros de volantes en modo manual)" ;
+    ex:textoExtracto "Parámetro incluido en la tabla MANPG." .
+
+ex:Parametro_COUNTERTYPE
+    a ex:Parametro ;
+    rdfs:label "COUNTERTYPE" ;
+    ex:identificador "MPMAN.COUNTERTYPE[hw]" ;
+    ex:textoExtracto "COUNTERTYPE Tipo de entrada de captación del volante. Valores posibles: Remoto / Teclado / Local / Contadora Sercos / Variable. Valor por defecto: Remoto." ;
+    ex:documentadoEn ex:Tabla_MANPG ;
+    ex:valor "Remoto"^^xsd:string .
+
+ex:Parametro_COUNTERID
+    a ex:Parametro ;
+    rdfs:label "COUNTERID" ;
+    ex:identificador "MPMAN.COUNTERID[hw]" ;
+    ex:textoExtracto "COUNTERID Entrada de captación asociada al volante. Valores posibles: De 1 a 40 si captación remotas CAN / de -1 a -9 si captación en el teclado / de 1 a 2 si captación local / de 1 a 32 si captación en módulo RCS-S / 1 si la captación variable. Valor por defecto: 0." ;
+    ex:documentadoEn ex:Tabla_MANPG ;
+    ex:valor "0"^^xsd:integer .
+
+ex:Parametro_HWFBTYPE
+    a ex:Parametro ;
+    rdfs:label "HWFBTYPE" ;
+    ex:textoExtracto "HWFBTYPE Tipo de captación asociada a la entrada del volante." ;
+    ex:documentadoEn ex:Tabla_MANPG .
+
+ex:Parametro_MPGAXIS
+    a ex:Parametro ;
+    rdfs:label "MPGAXIS" ;
+    ex:textoExtracto "MPGAXIS Nombre del eje asociado al volante." ;
+    ex:documentadoEn ex:Tabla_MANPG .
+
+ex:ModoOperacion_Manual
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual (configuración de volantes)" ;
+    ex:textoExtracto "2.7 Parámetros máquina del modo manual. - 2.7.1 Configuración de los volantes." ;
+    ex:tieneComponente ex:Parametro_COUNTERTYPE, ex:Parametro_COUNTERID, ex:Parametro_HWFBTYPE, ex:Parametro_MPGAXIS .

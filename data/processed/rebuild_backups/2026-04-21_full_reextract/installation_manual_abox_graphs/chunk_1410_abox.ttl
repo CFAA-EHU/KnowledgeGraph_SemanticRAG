@@ -1,0 +1,46 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Esquema_NumeracionParametrosMaquina
+    a                       ex:Esquema ;
+    rdfs:label              "Esquema de numeración mediante parámetros máquina"@es ;
+    ex:textoExtracto         "dos grupos remotos con módulos DI/DO; sobre cada columna aparecen índices base (p. ej., 033, 049) junto a los módulos. El diagrama enfatiza asignación por índices múltiplos de 16+1 y cómo se distribuyen las entradas/salidas a partir de dichos índices."@es ;
+    ex:identificador         "Numeración mediante parámetros máquina"@es .
+
+ex:Esquema_Temporizador_TEN
+    a                       ex:Esquema ;
+    rdfs:label              "Diagrama temporal de la entrada TEN (enable) del temporizador"@es ;
+    ex:textoExtracto         "se representan, en paralelo y a lo largo del eje temporal, las señales TEN y TG1/TGx (flancos de activación), la rampa de conteo t (creciente desde 0) y el estado lógico T (alto mientras la temporización está activa). Se aprecian los flancos de subida/bajada que detienen (TEN=0) o reanudan (TEN=1) la cuenta y el mantenimiento del valor t al finalizar."@es ;
+    ex:identificador         "Temporizador_TEN"@es .
+
+ex:Esquema_Temporizador_TRS
+    a                       ex:Esquema ;
+    rdfs:label              "Diagrama temporal de la entrada TRS (reset) del temporizador"@es ;
+    ex:textoExtracto         "se muestran los flancos de subida de TRS que inicializan el temporizador (T→0 y t→0), así como la dependencia de la reactivación mediante la entrada de arranque. Las trazas incluyen TGx, TRS, la evolución de t (respuesta a 0) y el estado T que se fuerza a nivel bajo tras el reset."@es ;
+    ex:identificador         "Temporizador_TRS"@es .
+
+ex:Parametro_TEN
+    a                       ex:Parametro ;
+    rdfs:label              "TEN (enable)"@es ;
+    ex:textoExtracto         "entrada TEN (enable) y su efecto sobre el temporizador"@es ;
+    ex:ilustradoEn           ex:Esquema_Temporizador_TEN .
+
+ex:Parametro_TRS
+    a                       ex:Parametro ;
+    rdfs:label              "TRS (reset)"@es ;
+    ex:textoExtracto         "entrada TRS (reset) que inicializa el temporizador (T→0 y t→0)"@es ;
+    ex:ilustradoEn           ex:Esquema_Temporizador_TRS .
+
+ex:Parametro_T
+    a                       ex:Parametro ;
+    rdfs:label              "T (estado lógico del temporizador)"@es ;
+    ex:textoExtracto         "estado lógico T (alto mientras la temporización está activa)"@es ;
+    ex:ilustradoEn           ex:Esquema_Temporizador_TEN , ex:Esquema_Temporizador_TRS .
+
+ex:Parametro_t
+    a                       ex:Parametro ;
+    rdfs:label              "t (rampa de conteo del temporizador)"@es ;
+    ex:textoExtracto         "rampa de conteo t (creciente desde 0)"@es ;
+    ex:ilustradoEn           ex:Esquema_Temporizador_TEN , ex:Esquema_Temporizador_TRS .

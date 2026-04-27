@@ -22,6 +22,7 @@ from rdflib import Graph
 from artifact_contracts import (
     ABOX_CHUNKS_DIR,
     ABOX_DEBUG_DIR,
+    ABOX_MINTED_ENTITY_REGISTRY_PATH,
     ABOX_MAX_LOCAL_RETRIES,
     ABOX_MICRO_BATCH_RECOVERY_BACKOFF_SECONDS,
     ABOX_MICRO_BATCH_RECOVERY_JITTER_RANGE,
@@ -43,8 +44,10 @@ from artifact_contracts import (
     resolve_mistral_model_chain,
 )
 from abox_resume_policy import build_manifest_entry, determine_chunk_action, load_manifest, save_manifest
+from abox_graph_sanitizer import load_mint_registry, sanitize_abox_graph, save_mint_registry, serialize_graph
 from abox_semantic_validator import (
     load_semantic_vocabulary,
+    validate_abox_graph,
     summarize_semantic_result,
     validate_ttl_file_semantics,
     validate_ttl_text_semantics,
@@ -175,6 +178,29 @@ def compilar_vocabulario_tbox() -> str:
     )
 
 
+def parse_ttl_graph(ttl_text: str) -> Graph:
+    graph = Graph()
+    graph.parse(data=ttl_text, format="turtle")
+    return graph
+
+
+def sanitize_generated_ttl(
+    ttl_text: str,
+    *,
+    tbox_graph: Graph,
+    source_chunk_text: str | None = None,
+    mint_registry: dict[str, str] | None = None,
+) -> tuple[str, dict]:
+    graph = parse_ttl_graph(ttl_text)
+    sanitized_graph, sanitization_result = sanitize_abox_graph(
+        graph,
+        tbox_graph=tbox_graph,
+        source_chunk_text=source_chunk_text,
+        mint_registry=mint_registry,
+    )
+    return serialize_graph(sanitized_graph), sanitization_result.to_manifest_summary()
+
+
 def aislar_sintaxis_ttl(respuesta_llm: str) -> str:
     patron = r"`{3}(?:turtle|ttl)?\n(.*?)`{3}"
     match = re.search(patron, respuesta_llm, re.DOTALL | re.IGNORECASE)
@@ -184,6 +210,18 @@ def aislar_sintaxis_ttl(respuesta_llm: str) -> str:
 def es_chunk_pagina_en_blanco(chunk_data: dict) -> bool:
     texto = (chunk_data.get("texto_fuente") or "").strip().lower()
     return texto in {"pagina en blanco", "página en blanco", "blank page"}
+
+
+def es_chunk_no_informativo(chunk_data: dict) -> bool:
+    texto = " ".join((chunk_data.get("texto_fuente") or "").strip().split())
+    if not texto:
+        return True
+    if es_chunk_pagina_en_blanco(chunk_data):
+        return False
+    if re.search(r"[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]", texto):
+        return False
+    compact = re.sub(r"\s+", "", texto)
+    return len(compact) <= 12 and bool(re.fullmatch(r"[\d\W_]+", compact))
 
 
 def construir_ttl_pagina_en_blanco(chunk_data: dict) -> str:
@@ -196,6 +234,24 @@ def construir_ttl_pagina_en_blanco(chunk_data: dict) -> str:
         '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n'
         f'ex:PaginaEnBlanco_{paginas_slug} a ex:Pagina ;\n'
         f'    rdfs:label "{label}" ;\n'
+        f'    ex:textoExtracto "{texto_extracto}" .\n'
+    )
+
+
+def construir_ttl_chunk_no_informativo(chunk_data: dict) -> str:
+    paginas = (chunk_data.get("paginas") or "sin_pagina").strip("[]")
+    paginas_slug = re.sub(r"[^A-Za-z0-9_]+", "_", paginas).strip("_") or "sin_pagina"
+    seccion = " ".join((chunk_data.get("seccion") or "").split())
+    label = f"Página {paginas} - fragmento no informativo".strip()
+    if seccion:
+        label = f"{label} ({seccion[:80]})"
+    texto_extracto = f"Fragmento no informativo detectado en la página {paginas or 'sin página'}."
+    return (
+        f'@prefix ex: <{BASE_URI}> .\n'
+        '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n'
+        f'ex:PaginaNoInformativa_{paginas_slug} a ex:Pagina ;\n'
+        f'    rdfs:label "{label}" ;\n'
+        f'    ex:identificador "{paginas or "sin_pagina"}" ;\n'
         f'    ex:textoExtracto "{texto_extracto}" .\n'
     )
 
@@ -604,9 +660,12 @@ async def procesar_chunk_abox(
     vocabulario: str,
     *,
     retry_profile: RetryProfile,
+    tbox_graph: Graph,
     semantic_vocabulary,
     manifest_entries: dict[str, dict],
     manifest_lock: asyncio.Lock,
+    mint_registry: dict[str, str],
+    mint_registry_lock: asyncio.Lock,
     tbox_hash: str,
 ):
     chunk_id = chunk_data["chunk_id"]
@@ -646,10 +705,24 @@ async def procesar_chunk_abox(
         last_model_name = PRIMARY_MODEL
         attempted_models: tuple[str, ...] = tuple()
 
-        if es_chunk_pagina_en_blanco(chunk_data):
-            ttl_puro = construir_ttl_pagina_en_blanco(chunk_data)
-            semantic_result = validate_ttl_text_semantics(ttl_puro, vocabulary=semantic_vocabulary)
+        if es_chunk_pagina_en_blanco(chunk_data) or es_chunk_no_informativo(chunk_data):
+            if es_chunk_pagina_en_blanco(chunk_data):
+                ttl_puro = construir_ttl_pagina_en_blanco(chunk_data)
+                placeholder_error = "pagina_en_blanco_placeholder_invalid"
+            else:
+                ttl_puro = construir_ttl_chunk_no_informativo(chunk_data)
+                placeholder_error = "chunk_no_informativo_placeholder_invalid"
+            async with mint_registry_lock:
+                ttl_puro, sanitization_report = sanitize_generated_ttl(
+                    ttl_puro,
+                    tbox_graph=tbox_graph,
+                    source_chunk_text=texto_original,
+                    mint_registry=mint_registry,
+                )
+                save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
+            semantic_result = validate_abox_graph(parse_ttl_graph(ttl_puro), vocabulary=semantic_vocabulary)
             last_semantic_report = semantic_result.to_manifest_summary()
+            last_semantic_report["sanitization"] = sanitization_report
             if not semantic_result.ok:
                 persistir_debug_chunk_fallido(
                     chunk_id,
@@ -674,7 +747,7 @@ async def procesar_chunk_abox(
                 async with manifest_lock:
                     manifest_entries[str(chunk_id)] = entry
                     save_manifest(MANIFEST_PATH, manifest_entries)
-                return chunk_id, "Error[semantic_invalid]: pagina_en_blanco_placeholder_invalid"
+                return chunk_id, f"Error[semantic_invalid]: {placeholder_error}"
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(ttl_puro)
             entry = build_manifest_entry(
@@ -711,8 +784,17 @@ async def procesar_chunk_abox(
                     last_normalized_ttl = ttl_puro
                     ttl_ok, ttl_error = validate_ttl_text(ttl_puro)
                     if ttl_ok:
-                        semantic_result = validate_ttl_text_semantics(ttl_puro, vocabulary=semantic_vocabulary)
+                        async with mint_registry_lock:
+                            ttl_puro, sanitization_report = sanitize_generated_ttl(
+                                ttl_puro,
+                                tbox_graph=tbox_graph,
+                                source_chunk_text=texto_original,
+                                mint_registry=mint_registry,
+                            )
+                            save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
+                        semantic_result = validate_abox_graph(parse_ttl_graph(ttl_puro), vocabulary=semantic_vocabulary)
                         last_semantic_report = semantic_result.to_manifest_summary()
+                        last_semantic_report["sanitization"] = sanitization_report
                         if semantic_result.ok:
                             with open(output_path, "w", encoding="utf-8") as f:
                                 f.write(ttl_puro)
@@ -798,12 +880,16 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     retry_profile = resolve_retry_profile(retry_profile_name)
     vocabulario = compilar_vocabulario_tbox()
+    tbox_graph = Graph()
+    tbox_graph.parse(TBOX_PATH, format="turtle")
     semantic_vocabulary = load_semantic_vocabulary(TBOX_PATH)
     abox_input = load_abox_input()
     if chunk_ids:
         abox_input = [chunk for chunk in abox_input if int(chunk["chunk_id"]) in chunk_ids]
     manifest_entries = load_manifest(MANIFEST_PATH)
     manifest_lock = asyncio.Lock()
+    mint_registry = load_mint_registry(ABOX_MINTED_ENTITY_REGISTRY_PATH)
+    mint_registry_lock = asyncio.Lock()
     semaforo = asyncio.Semaphore(retry_profile.max_concurrency)
     tbox_hash = hash_file_content(TBOX_PATH)
 
@@ -907,9 +993,12 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
             chunk,
             vocabulario,
             retry_profile=retry_profile,
+            tbox_graph=tbox_graph,
             semantic_vocabulary=semantic_vocabulary,
             manifest_entries=manifest_entries,
             manifest_lock=manifest_lock,
+            mint_registry=mint_registry,
+            mint_registry_lock=mint_registry_lock,
             tbox_hash=tbox_hash,
         )
         for chunk in chunks_to_run

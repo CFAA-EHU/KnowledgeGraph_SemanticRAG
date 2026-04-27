@@ -1,0 +1,39 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_11_4_1_ParametrosGrupoMultieje a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de parámetros MUMLAXISNAME_n para configuración de grupo multieje"@es ;
+    ex:textoExtracto "La tabla muestra un parámetro MUMLAXISNAME_n por cada eje o cabezal que forma parte del grupo multieje."@es ;
+    ex:documentadoEn ex:Pagina_586 .
+
+ex:Parametro_MUMLAXISNAME_n
+    a ex:Parametro ;
+    rdfs:label "MUMLAXISNAME_n" ;
+    ex:textoExtracto "parámetro MUMLAXISNAME_n por cada eje o cabezal que forma parte del grupo multieje"@es ;
+    ex:documentadoEn ex:Tabla_11_4_1_ParametrosGrupoMultieje .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "En el arranque del sistema, el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador."@es ;
+    ex:monitoreaParametro ex:Parametro_MUMLAXISNAME_n .
+
+ex:EjeMaestro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje maestro"@es ;
+    ex:textoExtracto "el primer eje del grupo será el eje maestro, el que por defecto utilizará el regulador"@es ;
+    ex:monitoreaParametro ex:Parametro_MUMLAXISNAME_n .
+
+ex:Regulador
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador"@es ;
+    ex:textoExtracto "el regulador; el orden del resto de los ejes no es relevante. En el arranque del sistema, el CNC utilizará los parámetros del eje maestro para realizar la homogeneización de parámetros con el regulador. Configurar el set del regulador a utilizar."@es ;
+    ex:controla ex:EjeMaestro .
+
+ex:Pagina_586
+    a ex:Pagina ;
+    ex:identificador "586" ;
+    ex:textoExtracto "11.4.1 Configuración de un grupo multieje. Los parámetros máquina."@es .

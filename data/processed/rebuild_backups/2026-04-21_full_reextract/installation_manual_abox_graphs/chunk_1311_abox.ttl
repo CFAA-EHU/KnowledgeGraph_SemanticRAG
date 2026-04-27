@@ -1,0 +1,65 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_TDATA1
+    a ex:Parametro ;
+    rdfs:label "TDATA1" ;
+    ex:textoExtracto "TDATA1 | Dimensión a calcular." ;
+    ex:identificador "TDATA1" .
+
+ex:Parametro_TDATA5
+    a ex:Parametro ;
+    rdfs:label "TDATA5" ;
+    ex:textoExtracto "TDATA5 | Dimensión a calcular." ;
+    ex:identificador "TDATA5" .
+
+ex:Parametro_TDATA6
+    a ex:Parametro ;
+    rdfs:label "TDATA6" ;
+    ex:textoExtracto "Cálculo del parámetro TDATA6." ;
+    ex:identificador "TDATA6" .
+
+ex:Parametro_DeltaX
+    a ex:Parametro ;
+    rdfs:label "ΔX" ;
+    ex:textoExtracto "ΔX | Cota que indica el CNC." ;
+    ex:identificador "ΔX" .
+
+ex:Parametro_Xa
+    a ex:Parametro ;
+    rdfs:label "Xa" ;
+    ex:textoExtracto "Apuntar la cota que aparece en el CNC (Xa)." ;
+    ex:identificador "Xa" .
+
+ex:Parametro_Xb
+    a ex:Parametro ;
+    rdfs:label "Xb" ;
+    ex:textoExtracto "Apuntar la cota que aparece en el CNC (Xb)." ;
+    ex:identificador "Xb" .
+
+ex:Parametro_XM
+    a ex:Parametro ;
+    rdfs:label "X_M" ;
+    ex:textoExtracto "X = 0,5·(Xa + Xb)" ;
+    ex:identificador "X_M" .
+
+ex:Sistema_CabezalAngular
+    a ex:Sistema ;
+    rdfs:label "Cabezal angular" ;
+    ex:textoExtracto "Cálculo de las dimensiones con ayuda de un reloj" ;
+    ex:tieneComponente ex:Componente_Cilindro ;
+    ex:monitoreaParametro ex:Parametro_TDATA1, ex:Parametro_TDATA5, ex:Parametro_TDATA6, ex:Parametro_DeltaX, ex:Parametro_Xa, ex:Parametro_Xb, ex:Parametro_XM .
+
+ex:Componente_Cilindro
+    a ex:ComponenteMecanico ;
+    rdfs:label "Cilindro" ;
+    ex:textoExtracto "el reloj y el cilindro se toquen en el punto 1" .
+
+ex:TareaMantenimiento_CalculoTDATA6
+    a ex:TareaMantenimiento ;
+    rdfs:label "Cálculo de TDATA6" ;
+    ex:textoExtracto "Cálculo del parámetro TDATA6. Primer y segundo contacto." ;
+    ex:requiereMantenimiento ex:Sistema_CabezalAngular ;
+    ex:monitoreaParametro ex:Parametro_TDATA6, ex:Parametro_Xa, ex:Parametro_Xb .

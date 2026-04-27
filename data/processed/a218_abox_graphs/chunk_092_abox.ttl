@@ -1,28 +1,25 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 
-ex:ModoOperacion_Automatico_6_4_3
-    a ex:ModoOperacion ;
-    rdfs:label "Modo automático (Sección 6.4.3)"@es ;
-    ex:textoExtracto "en la cota de inspección con el plato girado en el primer diente... Ya hecha la verificación empieza a brochar desde el primer diente. Se podrá seleccionar si se desea con ciclo inspección o no."@es ;
-    ex:tieneComponente ex:PlatoDentado_Inspeccion ;
-    ex:tieneComponente ex:CicloInspeccion_Opcional ;
-    ex:tieneComponente ex:CotaVerificacion_Plato .
+ns1:SistemaBrochado a ns1:Maquina ;
+    ns1:compuestoPor ns1:Carro,
+        ns1:PlatoGiratorio,
+        ns1:Puerta ;
+    ns1:textoExtracto "empieza a brochar desde el primer diente" ;
+    ns1:tieneComponente ns1:CicloInspeccion,
+        ns1:CotaInspeccion .
 
-ex:PlatoDentado_Inspeccion
-    a ex:ComponenteMecanico ;
-    rdfs:label "Plato dentado (verificación)"@es ;
-    ex:textoExtracto "el plato girado en el primer diente... verificación visual de que el último diente concuerda"@es .
+ns1:Carro a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "el carro sube" .
 
-ex:CicloInspeccion_Opcional
-    a ex:ModoOperacion ;
-    rdfs:label "Ciclo de inspección (opcional)"@es ;
-    ex:textoExtracto "Se podrá seleccionar si se desea con ciclo inspección o no."@es .
+ns1:CicloInspeccion a ns1:ModoOperacion ;
+    ns1:textoExtracto "Se podrá seleccionar si se desea con ciclo inspección o no" .
 
-ex:CotaVerificacion_Plato
-    a ex:Parametro ;
-    rdfs:label "Cota de verificación del plato"@es ;
-    ex:textoExtracto "en la cota de inspección... sube el carro a cota de verificación"@es ;
-    ex:valor "cota de verificación"@es .
+ns1:CotaInspeccion a ns1:Parametro ;
+    ns1:textoExtracto "cota de inspección" .
+
+ns1:PlatoGiratorio a ns1:ComponenteMecanico ;
+    ns1:textoExtracto "plato girado en el primer diente" .
+
+ns1:Puerta a ns1:ElementoSeguridad ;
+    ns1:textoExtracto "se pueden abrir las puertas para verificación visual" .
+

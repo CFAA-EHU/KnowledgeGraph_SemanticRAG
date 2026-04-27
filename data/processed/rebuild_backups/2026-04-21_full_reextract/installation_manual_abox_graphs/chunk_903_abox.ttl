@@ -1,0 +1,72 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:FuncionT a ex:ModoOperacion ;
+    rdfs:label "Función T (TMOPERATION=11)" ;
+    ex:textoExtracto "Cuando se ejecuta la función –T– [...] el gestor envía al PLC el código TMOPERATION=11. En general es una optimización del cambio que permite orientar el almacén durante el mecanizado." ;
+    ex:identificador "TMOPERATION=11" .
+
+ex:MarcaMZROT a ex:Parametro ;
+    rdfs:label "Marca MZROT" ;
+    ex:textoExtracto "Activar la marca MZROT para indicar al gestor que se ha finalizado la operación." ;
+    ex:identificador "MZROT" ;
+    ex:monitoreaParametro ex:FuncionT .
+
+ex:RutinaM06 a ex:ModoOperacion ;
+    rdfs:label "Rutina M06" ;
+    ex:textoExtracto "Cada vez que la rutina M06 finaliza una acción se lo indica al PLC para que active la marca correspondiente del gestor." ;
+    ex:identificador "M06" .
+
+ex:MarcaSPDLTOGR a ex:Parametro ;
+    rdfs:label "Marca SPDLTOGR" ;
+    ex:textoExtracto "DFU M1107 = SET SPDLTOGR [...] La herramienta se ha llevado del cabezal a tierra." ;
+    ex:identificador "SPDLTOGR" ;
+    ex:monitoreaParametro ex:RutinaM06 .
+
+ex:MarcaGRTOSPDL a ex:Parametro ;
+    rdfs:label "Marca GRTOSPDL" ;
+    ex:textoExtracto "DFU M1108 = SET GRTOSPDL [...] La herramienta se ha llevado de tierra al cabezal." ;
+    ex:identificador "GRTOSPDL" ;
+    ex:monitoreaParametro ex:RutinaM06 .
+
+ex:MarcaMZTOSPDL a ex:Parametro ;
+    rdfs:label "Marca MZTOSPDL" ;
+    ex:textoExtracto "DFU M1109 = SET MZTOSPDL [...] La herramienta se ha llevado del almacén al cabezal." ;
+    ex:identificador "MZTOSPDL" ;
+    ex:monitoreaParametro ex:RutinaM06 .
+
+ex:MarcaMZROT_RutinaM06 a ex:Parametro ;
+    rdfs:label "Marca MZROT (Rutina M06)" ;
+    ex:textoExtracto "DFU M1111 = SET MZROT [...] Ya ha girado el almacén." ;
+    ex:identificador "MZROT" ;
+    ex:monitoreaParametro ex:RutinaM06 .
+
+ex:FuncionAuxiliarM109 a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M109" ;
+    ex:textoExtracto "M109 Seleccionar en el almacén la posición que indica TAKEPOS y poner la herramienta en el cabezal." ;
+    ex:identificador "M109" ;
+    ex:requiereMantenimiento ex:RutinaM06 .
+
+ex:FuncionAuxiliarM110 a ex:ModoOperacion ;
+    rdfs:label "Función auxiliar M110" ;
+    ex:textoExtracto "M110 Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta del cabezal." ;
+    ex:identificador "M110" ;
+    ex:requiereMantenimiento ex:RutinaM06 .
+
+ex:RegistroTAKEPOS a ex:Parametro ;
+    rdfs:label "Registro TAKEPOS" ;
+    ex:textoExtracto "TAKEPOS Este registro indica la posición de almacén que ocupa la herramienta que hay que coger." ;
+    ex:identificador "TAKEPOS" ;
+    ex:monitoreaParametro ex:FuncionAuxiliarM109 .
+
+ex:RegistroLEAVEPOS a ex:Parametro ;
+    rdfs:label "Registro LEAVEPOS" ;
+    ex:textoExtracto "LEAVEPOS Este registro indica la posición de almacén en la que hay que dejar la herramienta." ;
+    ex:identificador "LEAVEPOS" ;
+    ex:monitoreaParametro ex:FuncionAuxiliarM110 .
+
+ex:SenalEmergenciaGestor a ex:AvisoSeguridad ;
+    rdfs:label "Señal de emergencia del gestor" ;
+    ex:textoExtracto "Señal de emergencia del gestor." .

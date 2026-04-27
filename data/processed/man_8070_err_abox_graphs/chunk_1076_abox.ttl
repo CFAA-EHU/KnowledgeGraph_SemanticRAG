@@ -1,0 +1,81 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Aviso_AcknowledgeFallo a ns1:AvisoSeguridad ;
+    rdfs:label "Error de comunicación: Acknowledge no recibido" ;
+    ns1:mitigaRiesgo ns1:Diagnostico_CableadoCaptador ;
+    ns1:textoExtracto "No se recibió acknowledge. Compruebe el cable y el conexionado con el captador. El error puede deberse a un problema en el captador."@es .
+
+ns1:Aviso_CRCIncorrecto a ns1:AvisoSeguridad ;
+    rdfs:label "Error de comunicación: CRC incorrecto" ;
+    ns1:mitigaRiesgo ns1:Diagnostico_CableadoCaptador ;
+    ns1:textoExtracto "CRC incorrecto. Compruebe el cable y el conexionado con la regla ó el encoder. Verifique la correcta parametrización del captador."@es .
+
+ns1:Aviso_SincronismoABSIND a ns1:AvisoSeguridad ;
+    rdfs:label "Error de sincronismo ABSIND" ;
+    ns1:mitigaRiesgo ns1:Diagnostico_ModuloABSIND ;
+    ns1:textoExtracto "Se ha perdido la sincronización entre la contadora Sercos y el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y la contadora Sercos asociado a esa captación."@es .
+
+ns1:Empresa_FagorAutomation a ns1:Empresa ;
+    rdfs:label "Fagor Automation" ;
+    ns1:textoExtracto "Si el problema persiste, contacte con Fagor Automation."@es .
+
+ns1:Modulo_RCS_S a ns1:Sistema ;
+    rdfs:label "Módulo RCS-S" ;
+    ns1:textoExtracto "MÓDULO RCS-S"@es ;
+    ns1:tieneComponente ns1:Captacion_E21A,
+        ns1:Captacion_E21B,
+        ns1:Captacion_E21C,
+        ns1:Captacion_E21D,
+        ns1:Contadora_Sercos,
+        ns1:Encoder_CotaAbsoluta,
+        ns1:Modulo_ABSIND .
+
+ns1:Diagnostico_ModuloABSIND a ns1:DiagnosticoFallo ;
+    rdfs:label "Diagnóstico de módulo ABSIND o conexionado con contadora Sercos" ;
+    ns1:solucionaFallo ns1:Contadora_Sercos,
+        ns1:Modulo_ABSIND ;
+    ns1:textoExtracto "Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y la contadora Sercos asociado a esa captación."@es .
+
+ns1:Captacion_E21A a ns1:ComponenteElectrico ;
+    rdfs:label "Captación E21A" ;
+    ns1:identificador "E21A" ;
+    ns1:textoExtracto "en captación E21A. CRC incorrecto. [...] E144 Error de comunicación en captación E21A. No se recibió acknowledge. E145 ABSIND: Error de sincronismo en captación E21A."@es .
+
+ns1:Captacion_E21B a ns1:ComponenteElectrico ;
+    rdfs:label "Captación E21B" ;
+    ns1:identificador "E21B" ;
+    ns1:textoExtracto "E243 Error de comunicación en captación E21B. CRC incorrecto. [...] E244 Error de comunicación en captación E21B. No se recibió acknowledge. E245 ABSIND: Error de sincronismo en captación E21B."@es .
+
+ns1:Captacion_E21C a ns1:ComponenteElectrico ;
+    rdfs:label "Captación E21C" ;
+    ns1:identificador "E21C" ;
+    ns1:textoExtracto "E343 Error de comunicación en captación E21C. CRC incorrecto. [...] E344 Error de comunicación en captación E21C. No se recibió acknowledge. E345 ABSIND: Error de sincronismo en captación E21C."@es .
+
+ns1:Captacion_E21D a ns1:ComponenteElectrico ;
+    rdfs:label "Captación E21D" ;
+    ns1:identificador "E21D" ;
+    ns1:textoExtracto "E443 Error de comunicación en captación E21D. CRC incorrecto. [...] E444 Error de comunicación en captación E21D. No se recibió acknowledge. E445 ABSIND: Error de sincronismo en captación E21D."@es .
+
+ns1:Diagnostico_CableadoCaptador a ns1:DiagnosticoFallo ;
+    rdfs:label "Verificación de cableado y parametrización de captadores" ;
+    ns1:solucionaFallo ns1:Captacion_E21A,
+        ns1:Captacion_E21B,
+        ns1:Captacion_E21C,
+        ns1:Captacion_E21D ;
+    ns1:textoExtracto "Compruebe el cable y el conexionado con la regla ó el encoder. Verifique la correcta parametrización del captador."@es .
+
+ns1:Encoder_CotaAbsoluta a ns1:ComponenteElectrico ;
+    rdfs:label "Encoder de cota absoluta" ;
+    ns1:textoExtracto "Error en la lectura de la cota absoluta; CRC incorrecto. Compruebe el cable y el conexionado con la regla ó el encoder."@es .
+
+ns1:Modulo_ABSIND a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo ABSIND" ;
+    ns1:controla ns1:Contadora_Sercos ;
+    ns1:textoExtracto "Se ha perdido la sincronización entre la contadora Sercos y el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y la contadora Sercos asociado a esa captación."@es .
+
+ns1:Contadora_Sercos a ns1:ComponenteElectrico ;
+    rdfs:label "Contadora Sercos" ;
+    ns1:controla ns1:Encoder_CotaAbsoluta ;
+    ns1:textoExtracto "Se ha perdido la sincronización entre la contadora Sercos y el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta."@es .
+

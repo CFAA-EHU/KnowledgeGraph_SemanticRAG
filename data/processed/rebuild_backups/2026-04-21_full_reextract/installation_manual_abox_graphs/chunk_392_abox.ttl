@@ -1,0 +1,53 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_FFGAIN
+    a ex:Parametro ;
+    rdfs:label "FFGAIN" ;
+    ex:textoExtracto "El parámetro FFGAIN [...] define la parte de la consigna (analog output) que es proporcional al avance programado (programmed feedrate)." ;
+    ex:valor "FFGAIN" .
+
+ex:Parametro_MANFFGAIN
+    a ex:Parametro ;
+    rdfs:label "MANFFGAIN" ;
+    ex:textoExtracto "los parámetros FFGAIN y MANFFGAIN deberían ser iguales." ;
+    ex:valor "MANFFGAIN" .
+
+ex:Parametro_PROGAIN
+    a ex:Parametro ;
+    rdfs:label "PROGAIN" ;
+    ex:textoExtracto "Programmed FFGAIN Feedrate ε Analog Nominal PROGAIN output Position Actual position" ;
+    ex:valor "PROGAIN" .
+
+ex:ModoOperacion_Automatico
+    a ex:ModoOperacion ;
+    rdfs:label "Modo automático" ;
+    ex:textoExtracto "Un eje que vaya a trabajar como eje independiente debería tener definido el mismo feed forward en los modos automáticos y manual" .
+
+ex:ModoOperacion_Manual
+    a ex:ModoOperacion ;
+    rdfs:label "Modo manual" ;
+    ex:textoExtracto "Un eje que vaya a trabajar como eje independiente debería tener definido el mismo feed forward en los modos automáticos y manual" .
+
+ex:Parametro_FeedForward
+    a ex:Parametro ;
+    rdfs:label "Feed forward" ;
+    ex:textoExtracto "Un eje que vaya a trabajar como eje independiente debería tener definido el mismo feed forward en los modos automáticos y manual" ;
+    ex:valor "feed forward" .
+
+ex:ErrorSeguimiento_epsilon
+    a ex:Parametro ;
+    rdfs:label "Error de seguimiento (ε)" ;
+    ex:textoExtracto "minimizando el error de seguimiento \"\" [...] el resto de la consigna será proporcional al error de seguimiento \"\"" ;
+    ex:valor "ε" .
+
+ex:Sistema_ControlEje
+    a ex:Sistema ;
+    rdfs:label "Sistema de control de eje" ;
+    ex:textoExtracto "El parámetro define la parte de la consigna (analog output) que es proporcional al avance programado (programmed feedrate); el resto de la consigna será proporcional al error de seguimiento \"\"." ;
+    ex:monitoreaParametro ex:Parametro_FFGAIN ;
+    ex:monitoreaParametro ex:Parametro_MANFFGAIN ;
+    ex:monitoreaParametro ex:Parametro_PROGAIN ;
+    ex:monitoreaParametro ex:ErrorSeguimiento_epsilon .

@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_TDATA2
+    a ex:Parametro ;
+    rdfs:label "Posición del eje rotativo (TDATA2)" ;
+    ex:textoExtracto "TDATA2 Posición del eje rotativo. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0. Indica la distancia del eje rotativo al eje lineal sobre el que se desarrolla." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA4
+    a ex:Parametro ;
+    rdfs:label "Offset angular del eje rotativo (TDATA4)" ;
+    ex:textoExtracto "TDATA4 Offset angular del eje rotativo. Valores posibles: Entre ±999999999.0000º Valor por defecto: 0." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA5
+    a ex:Parametro ;
+    rdfs:label "Posición del eje de giro (TDATA5)" ;
+    ex:textoExtracto "TDATA5 Posición del eje de giro. Valores posibles: 0 (el eje de giro se encuentra en el cero pieza) / 1 (la posición del eje de giro viene indicada por DATA2). Valor por defecto: 0." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA6
+    a ex:Parametro ;
+    rdfs:label "Desalineamiento de la herramienta sobre el eje C (TDATA6)" ;
+    ex:textoExtracto "TDATA6 Desalineamiento de la herramienta sobre el eje C. Valores posibles: Entre ±999999999.0000 Valor por defecto: 0. Este parámetro permite corregir el desalineamiento de la herramienta. Una herramienta está desalineada si cuando se sitúa en cota cero y no coincide con el eje de giro del eje." ;
+    ex:valor "0" .
+
+ex:Parametro_TDATA10
+    a ex:Parametro ;
+    rdfs:label "Sentido de giro del eje giratorio (TDATA10)" ;
+    ex:textoExtracto "TDATA10 Sentido de giro del eje giratorio." .
+
+ex:InterfazUsuario_FuncionFACE
+    a ex:InterfazUsuario ;
+    rdfs:label "Función #FACE (selección de cinemática)" ;
+    ex:textoExtracto "Estas cinemáticas se seleccionan mediante la función #FACE desde el programa pieza. Si al ejecutar esta función no se selecciona la cinemática, el CNC cogerá de la primera cinemática del tipo 41 o 42 definida en la tabla." ;
+    ex:identificador "#FACE" .
+
+ex:Tabla_CinematicasTipos41_42
+    a ex:Tabla ;
+    rdfs:label "Tabla de cinemáticas (tipos 41-42)" ;
+    ex:textoExtracto "Si al ejecutar esta función no se selecciona la cinemática, el CNC cogerá de la primera cinemática del tipo 41 o 42 definida en la tabla." ;
+    ex:identificador "Tipos 41-42" .
+
+ex:Sistema_CinematicaEjeC
+    a ex:Sistema ;
+    rdfs:label "Sistema de cinemática del eje –C– (tipos 41-42)" ;
+    ex:textoExtracto "En este tipo de cinemáticas se define la situación física del eje rotativo respecto de los ejes lineales. Si no se definen estas cinemáticas, se asume que el eje rotativo coincide con el eje lineal (por ejemplo el cabezal de un torno)." ;
+    ex:documentadoEn ex:Tabla_CinematicasTipos41_42 ;
+    ex:tieneComponente ex:Parametro_TDATA2, ex:Parametro_TDATA4, ex:Parametro_TDATA5, ex:Parametro_TDATA6, ex:Parametro_TDATA10 .

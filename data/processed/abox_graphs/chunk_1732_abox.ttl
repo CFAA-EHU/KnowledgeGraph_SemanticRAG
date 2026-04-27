@@ -1,0 +1,46 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:ConsumoExcesivoPotencia a ns1:AvisoSeguridad ;
+    rdfs:label "Consumo excesivo de potencia" ;
+    ns1:mitigaRiesgo ns1:DMC_ModoOperacion ;
+    ns1:textoExtracto "el DMC se desactiva, pero seguirá detectando [...] los consumos excesivos de potencia." .
+
+ns1:EntradaPieza a ns1:Parametro ;
+    rdfs:label "Entrada a la pieza" ;
+    ns1:monitoreaParametro ns1:DMC_ModoOperacion ;
+    ns1:textoExtracto "Si la herramienta está entrando en la pieza, el DMC se desactivará cuando termine la entrada. [...] seguirá detectando las entradas a la pieza." .
+
+ns1:Fase_AprendizajeDMC a ns1:TareaMantenimiento ;
+    rdfs:label "Fase de aprendizaje DMC" ;
+    ns1:requiereMantenimiento ns1:DMC_ModoOperacion ;
+    ns1:textoExtracto "repetir la fase de aprendizaje [...] Durante la fase de aprendizaje, el DMC no cuenta como tiempo de aprendizaje el tiempo que dure la causa de desactivación." .
+
+ns1:Fase_EjecucionVacio a ns1:TareaMantenimiento ;
+    rdfs:label "Ejecución en vacío" ;
+    ns1:requiereMantenimiento ns1:DMC_ModoOperacion ;
+    ns1:textoExtracto "Durante la ejecución en vacío, el DMC se desactiva, pero seguirá detectando las entradas a la pieza." .
+
+ns1:PotenciaVacio a ns1:Parametro ;
+    rdfs:label "Potencia en vacío" ;
+    ns1:monitoreaParametro ns1:DMC_ModoOperacion ;
+    ns1:textoExtracto "Si el DMC está esperando a que el cabezal alcance la velocidad programada o está midiendo la potencia en vacío, el DMC se desactiva cuando acabe de medir la potencia en vacío." .
+
+ns1:SalidaPieza a ns1:Parametro ;
+    rdfs:label "Salida de la pieza" ;
+    ns1:monitoreaParametro ns1:DMC_ModoOperacion ;
+    ns1:textoExtracto "Si la herramienta está saliendo de la pieza, el DMC se desactiva cuando finaliza la salida. [...] seguirá detectando las salidas de pieza." .
+
+ns1:Softkey_AprendizajeDMC a ns1:InterfazUsuario ;
+    rdfs:label "Aprendizaje DMC" ;
+    ns1:habilitadoPor ns1:DMC_ModoOperacion ;
+    ns1:textoExtracto "pulsando la softkey 'Aprendizaje DMC'" .
+
+ns1:Softkey_SetDMCOff a ns1:InterfazUsuario ;
+    rdfs:label "Set DMC off" ;
+    ns1:textoExtracto "la softkey 'Set DMC off' desactivan temporalmente DMC" .
+
+ns1:DMC_ModoOperacion a ns1:ModoOperacion ;
+    rdfs:label "DMC" ;
+    ns1:textoExtracto "el DMC se activa automáticamente y permite repetir la fase de aprendizaje pulsando la softkey 'Aprendizaje DMC' [...] Las trayectorias en G0, parada de ejes con [STOP] y la softkey 'Set DMC off' desactivan temporalmente DMC." .
+

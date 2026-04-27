@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Marcador_RESETIN a ex:Componente ;
+    rdfs:label "Marca RESETIN" ;
+    ex:textoExtracto "El PLC activa la marca RESETIN." ;
+    ex:monitoreaParametro ex:Parametro_MINAENDW .
+
+ex:Marcador_RESETOUT a ex:Componente ;
+    rdfs:label "Marca RESETOUT" ;
+    ex:textoExtracto "El canal activa la marca RESETOUT. Esta marca permanece activa el tiempo fijado en el parámetro general MINAENDW." .
+
+ex:Parametro_MINAENDW a ex:Parametro ;
+    rdfs:label "Parámetro MINAENDW" ;
+    ex:textoExtracto "tiempo fijado en el parámetro general MINAENDW" ;
+    ex:valor "Tiempo de reset" .
+
+ex:Marcador_LATCHM a ex:Componente ;
+    rdfs:label "Marca LATCHM" ;
+    ex:textoExtracto "Esta marca permite seleccionar el tipo de funcionamiento de las teclas de JOG en el modo manual." .
+
+ex:Rutina_PROGRAM_RESET a ex:TareaMantenimiento ;
+    rdfs:label "Subrutina PROGRAM_RESET" ;
+    ex:textoExtracto "El canal ejecuta la subrutina asociada al reset (PROGRAM_RESET)." .
+
+ex:Marcador_BLKSKIP1 a ex:Componente ;
+    rdfs:label "Marca BLKSKIP1" ;
+    ex:textoExtracto "El PLC pone esta marca a (=1) para indicar al canal del CNC que la condición de salto de bloque '/' se cumple, por lo que no se ejecutarán los bloques que tengan esta condición." .
+
+ex:Marcador_M01STOP a ex:Componente ;
+    rdfs:label "Marca M01STOP" ;
+    ex:textoExtracto "El PLC pone esta marca a (=1) para indicar al canal del CNC que tenga en cuenta las paradas condicionales (M01)." .
+
+ex:Marcador_AUXEND a ex:Componente ;
+    rdfs:label "Marca AUXEND" ;
+    ex:textoExtracto "El PLC pone esta marca a (=1) para indicar al canal del CNC condiciones de finalización auxiliar." .
+
+ex:Sistema_Se_alesModificables a ex:Sistema ;
+    rdfs:label "Sistema de Señales Modificables Generales" ;
+    ex:textoExtracto "Señales modificables generales (PLC-CNC)" ;
+    ex:tieneComponente ex:Marcador_RESETIN, ex:Marcador_RESETOUT, ex:Parametro_MINAENDW, ex:Marcador_LATCHM, ex:Rutina_PROGRAM_RESET, ex:Marcador_BLKSKIP1, ex:Marcador_M01STOP, ex:Marcador_AUXEND .

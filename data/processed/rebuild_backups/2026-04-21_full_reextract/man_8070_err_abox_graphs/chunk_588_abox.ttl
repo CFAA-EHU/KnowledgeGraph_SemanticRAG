@@ -1,0 +1,100 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_6013
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Timeout en la inicialización de CAN" ;
+    ex:identificador "6013" ;
+    ex:textoExtracto "6013 'Timeout en la inicialización de CAN' [...] Fallo en el proceso de inicialización del bus CAN por problemas en el bus. Secuencia de apagado y encendido demasiado rápida." ;
+    ex:solucionaFallo ex:ComprobacionBusCAN_6013 .
+
+ex:Fallo_6014
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Fallo en accesos a DPRAM de la COMPCI" ;
+    ex:identificador "6014" ;
+    ex:textoExtracto "6014 'Fallo en accesos a DPRAM de la COMPCI' [...] Falla el acceso a la memoria RAM común de la COMPCI por error de hardware, mal contacto, etc." .
+
+ex:Fallo_6015
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Contador de errores CAN sobrepaso nivel 1" ;
+    ex:identificador "6015" ;
+    ex:textoExtracto "6015 'Contador de errores CAN sobrepaso nivel 1' [...] El contador de tramas de error (Rx/Tx) supera el nivel 1 (96)." ;
+    ex:solucionaFallo ex:ComprobacionBusCAN_6015 .
+
+ex:ComprobacionBusCAN_6013
+    a ex:TareaMantenimiento ;
+    rdfs:label "Comprobaciones de integridad del bus CAN (Error 6013)" ;
+    ex:textoExtracto "Realizar las siguientes comprobaciones y acciones para garantizar la integridad del bus CAN: • No hay grupos CAN con la misma dirección seleccionada. • El selector de nodo de la COMPCI debe ser 0. • Terminadores de línea. • Conexión de tierras. • Continuidad del cable CAN. • Conectores del cable CAN (si es necesario, soltarlos y volverlos a montar). • Conexión del cable plano entre los nodos y la fuente. • Fuentes de alimentación de los grupos CAN (niveles, posibles reset, etc.). • Ver en el modo diagnosis si se reconocen todos los módulos." ;
+    ex:requiereMantenimiento ex:BusCAN .
+
+ex:ComprobacionBusCAN_6015
+    a ex:TareaMantenimiento ;
+    rdfs:label "Comprobaciones de integridad del bus CAN (Error 6015)" ;
+    ex:textoExtracto "Realizar las comprobaciones oportunas para garantizar la integridad del bus CAN." ;
+    ex:requiereMantenimiento ex:BusCAN .
+
+ex:BusCAN
+    a ex:Sistema ;
+    rdfs:label "Bus CAN" ;
+    ex:textoExtracto "bus CAN" ;
+    ex:tieneComponente ex:TerminadoresLineaCAN ;
+    ex:tieneComponente ex:CableCAN ;
+    ex:tieneComponente ex:ConectoresCAN ;
+    ex:tieneComponente ex:CablePlanoNodos .
+
+ex:TerminadoresLineaCAN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Terminadores de línea del bus CAN" ;
+    ex:textoExtracto "Terminadores de línea." .
+
+ex:CableCAN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Cable CAN" ;
+    ex:textoExtracto "Continuidad del cable CAN. [...] Conectores del cable CAN" .
+
+ex:ConectoresCAN
+    a ex:ComponenteElectrico ;
+    rdfs:label "Conectores del cable CAN" ;
+    ex:textoExtracto "Conectores del cable CAN (si es necesario, soltarlos y volverlos a montar)." .
+
+ex:CablePlanoNodos
+    a ex:ComponenteElectrico ;
+    rdfs:label "Cable plano entre nodos y fuente" ;
+    ex:textoExtracto "Conexión del cable plano entre los nodos y la fuente." .
+
+ex:Herramienta_itfcCAN
+    a ex:Herramienta ;
+    rdfs:label "itfcCAN.exe" ;
+    ex:textoExtracto "Utilizar la herramienta itfcCAN.exe para comprobar el bus CAN (sólo servicio de asistencia técnica)." .
+
+ex:ModoDiagnosis
+    a ex:ModoOperacion ;
+    rdfs:label "Modo diagnosis" ;
+    ex:textoExtracto "modo diagnosis" ;
+    ex:monitoreaParametro ex:ContadorErroresCAN .
+
+ex:ContadorErroresCAN
+    a ex:Parametro ;
+    rdfs:label "Contador de errores CAN" ;
+    ex:textoExtracto "contador de errores CAN" ;
+    ex:valor "96"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:COMPCI
+    a ex:ComponenteElectrico ;
+    rdfs:label "COMPCI" ;
+    ex:textoExtracto "COMPCI" ;
+    ex:tieneComponente ex:SelectorNodoCOMPCI ;
+    ex:tieneComponente ex:DPRAM .
+
+ex:SelectorNodoCOMPCI
+    a ex:ComponenteElectrico ;
+    rdfs:label "Selector de nodo de la COMPCI" ;
+    ex:textoExtracto "El selector de nodo de la COMPCI debe ser 0." ;
+    ex:valor "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
+
+ex:DPRAM
+    a ex:ComponenteElectrico ;
+    rdfs:label "Memoria DPRAM de la COMPCI" ;
+    ex:textoExtracto "memoria RAM común de la COMPCI" .

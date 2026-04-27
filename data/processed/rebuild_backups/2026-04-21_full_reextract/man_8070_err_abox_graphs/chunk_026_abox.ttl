@@ -1,0 +1,75 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_0053
+    a ex:Alarma ;
+    rdfs:label "Alarma 0053: Parámetro MPGAXIS repetido en varios volantes" ;
+    ex:textoExtracto "0053 'Parámetro MPGAXIS repetido en varios volantes' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En la tabla de parámetros de manual, hay dos o más volantes asignados al mismo eje. SOLUCIÓN Un eje sólo puede tener asignando un volante." ;
+    ex:identificador "0053" .
+
+ex:Alarma_0054
+    a ex:Alarma ;
+    rdfs:label "Alarma 0054: Los ejes MOVAXIS y COMPAXIS deben ser distintos" ;
+    ex:textoExtracto "0054 'Los ejes MOVAXIS y COMPAXIS deben ser distintos' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En una de las tablas de compensación cruzada coinciden el eje compensado y el eje cuyo movimiento altera al eje que se compensa. SOLUCIÓN En cada tabla de compensación cruzada, ambos ejes deben ser distintos (parámetros MOVAXIS y COMPAXIS)." ;
+    ex:identificador "0054" .
+
+ex:Alarma_0055
+    a ex:Alarma ;
+    rdfs:label "Alarma 0055: Un mismo eje es a la vez causa y efecto de la compensación cruzada" ;
+    ex:textoExtracto "0055 'Un mismo eje es a la vez causa y efecto de la compensación cruzada' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En las tablas de compensación cruzada, siguiendo las diferentes asociaciones de ejes compensados (parámetro COMPAXIS) y ejes cuyos movimientos alteran a los ejes que se compensan (parámetro MOVAXIS), hay un eje cuyo movimiento depende de sí mismo. SOLUCIÓN Revisar la relación entre las compensaciones cruzadas definidas. Comprobar los parámetros MOVAXIS y COMPAXIS de las compensaciones cruzadas definidas." ;
+    ex:identificador "0055" .
+
+ex:Alarma_0056
+    a ex:Alarma ;
+    rdfs:label "Alarma 0056: Posiciones de la tabla de compensación no ascendentes" ;
+    ex:textoExtracto "0056 'Posiciones de la tabla de compensación no ascendentes' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En las tablas de compensación, los puntos a compensar no están ordenados correctamente o el valor a compensar en todos los puntos tienen valor cero. SOLUCIÓN El parámetro POSITION dentro de las tablas de compensación tiene que tomar valores ascendentes. El valor a compensar no puede ser cero en todos los puntos." ;
+    ex:identificador "0056" .
+
+ex:Alarma_0057
+    a ex:Alarma ;
+    rdfs:label "Alarma 0057: Tabla de compensación con pendiente de error superior a 1" ;
+    ex:textoExtracto "0057 'Tabla de compensación con pendiente de error superior a 1' DETECCIÓN Durante la validación de los parámetros máquina (tabla de compensación de husillo)." ;
+    ex:identificador "0057" .
+
+ex:Parametro_MPGAXIS
+    a ex:Parametro ;
+    rdfs:label "Parámetro MPGAXIS" ;
+    ex:textoExtracto "parámetro MPGAXIS repetido en varios volantes" ;
+    ex:identificador "MPGAXIS" .
+
+ex:Parametro_MOVAXIS
+    a ex:Parametro ;
+    rdfs:label "Parámetro MOVAXIS" ;
+    ex:textoExtracto "parámetros MOVAXIS y COMPAXIS" ;
+    ex:identificador "MOVAXIS" .
+
+ex:Parametro_COMPAXIS
+    a ex:Parametro ;
+    rdfs:label "Parámetro COMPAXIS" ;
+    ex:textoExtracto "parámetros MOVAXIS y COMPAXIS" ;
+    ex:identificador "COMPAXIS" .
+
+ex:Parametro_POSITION
+    a ex:Parametro ;
+    rdfs:label "Parámetro POSITION" ;
+    ex:textoExtracto "El parámetro POSITION dentro de las tablas de compensación tiene que tomar valores ascendentes." ;
+    ex:identificador "POSITION" .
+
+ex:Tabla_CompensacionCruzada a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de compensación cruzada" ;
+    ex:textoExtracto "En una de las tablas de compensación cruzada coinciden el eje compensado y el eje cuyo movimiento altera al eje que se compensa." ;
+    ex:tieneComponente ex:Parametro_MOVAXIS, ex:Parametro_COMPAXIS .
+
+ex:Tabla_CompensacionHusillo a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de compensación de husillo" ;
+    ex:textoExtracto "Durante la validación de los parámetros máquina (tabla de compensación de husillo)." ;
+    ex:tieneComponente ex:Parametro_POSITION .
+
+ex:Alarma_0053 ex:monitoreaParametro ex:Parametro_MPGAXIS .
+ex:Alarma_0054 ex:monitoreaParametro ex:Parametro_MOVAXIS, ex:Parametro_COMPAXIS .
+ex:Alarma_0055 ex:monitoreaParametro ex:Parametro_MOVAXIS, ex:Parametro_COMPAXIS .
+ex:Alarma_0056 ex:monitoreaParametro ex:Parametro_POSITION .

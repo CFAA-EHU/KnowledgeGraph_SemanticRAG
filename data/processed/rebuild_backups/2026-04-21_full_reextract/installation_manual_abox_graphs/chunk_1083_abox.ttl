@@ -1,0 +1,52 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DEFAULTSET
+    a ex:Parametro ;
+    rdfs:label "DEFAULTSET" ;
+    ex:textoExtracto "parámetro DEFAULTSET" ;
+    ex:identificador "DEFAULTSET" .
+
+ex:Parametro_ParametrosGeneralesEjeMaestro
+    a ex:Parametro ;
+    rdfs:label "Parámetros generales del eje maestro" ;
+    ex:textoExtracto "El CNC envía los parámetros generales del eje maestro a los parámetros generales del regulador." .
+
+ex:Parametro_ParametrosPrimerSetEjeMaestro
+    a ex:Parametro ;
+    rdfs:label "Parámetros del primer set del eje maestro" ;
+    ex:textoExtracto "El CNC envía los parámetros del set por defecto del eje maestro (set definido en el parámetro DEFAULTSET) a los parámetros generales o del primer set del regulador, según corresponda." .
+
+ex:Parametro_ParametrosGamasEjeMaestro
+    a ex:Parametro ;
+    rdfs:label "Parámetros de las gamas del eje maestro" ;
+    ex:textoExtracto "El CNC envía los parámetros de las gamas del eje maestro a los parámetros de las primeras gamas del regulador." .
+
+ex:Sistema_ReguladorSercos
+    a ex:Sistema ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "regulador Sercos" ;
+    ex:monitoreaParametro ex:Parametro_ParametrosGeneralesEjeMaestro ;
+    ex:monitoreaParametro ex:Parametro_ParametrosPrimerSetEjeMaestro ;
+    ex:monitoreaParametro ex:Parametro_ParametrosGamasEjeMaestro .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC asume el set por defecto (parámetro DEFAULTSET). Homogeneización de parámetros entre el CNC y el regulador Sercos." ;
+    ex:controla ex:Sistema_ReguladorSercos ;
+    ex:monitoreaParametro ex:Parametro_DEFAULTSET .
+
+ex:Componente_MotorMultieje
+    a ex:Componente ;
+    rdfs:label "Motor en configuración multieje" ;
+    ex:textoExtracto "multieje con un motor controlando dos ejes" .
+
+ex:ModoOperacion_Multieje
+    a ex:ModoOperacion ;
+    rdfs:label "Modo de operación multieje" ;
+    ex:textoExtracto "Gestión multieje" ;
+    ex:tieneComponente ex:Componente_MotorMultieje ;
+    ex:controla ex:Sistema_ReguladorSercos .

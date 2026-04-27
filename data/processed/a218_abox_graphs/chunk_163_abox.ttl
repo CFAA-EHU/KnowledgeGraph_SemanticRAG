@@ -1,149 +1,118 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:Figura_2_7_AlumbradoInterior
-    a               ex:Figura ;
-    ex:identificador "Figura 2-7" ;
-    rdfs:label      "Alumbrado interior de la máquina" ;
-    ex:textoExtracto "Vista exterior con llamadas a tres recuadros de detalle: dos luminarias verticales enfocando al plato divisor y dos horizontales hacia la herramienta; menciona protección IP67 y función de visibilidad en zona de trabajo." ;
-    ex:ilustradoEn   ex:Manual_Seccion_2.6_Alumbrado .
+ns1:AlumbradoInteriorMaquina a ns1:ElementoSeguridad ;
+    rdfs:label "Alumbrado interior de la máquina" ;
+    ns1:textoExtracto "Vista exterior con llamadas a tres recuadros de detalle: dos luminarias verticales enfocando al plato divisor y dos horizontales hacia la herramienta; menciona protección IP67 y función de visibilidad en zona de trabajo." ;
+    ns1:tieneComponente ns1:LuminariaHorizontal1,
+        ns1:LuminariaHorizontal2,
+        ns1:LuminariaVertical1,
+        ns1:LuminariaVertical2 .
 
-ex:LuminariaVertical_PlatoDivisor
-    a               ex:ComponenteElectrico ;
-    ex:textoExtracto "dos luminarias verticales enfocando al plato divisor" ;
-    ex:ilustradoEn   ex:Figura_2_7_AlumbradoInterior .
+ns1:CarroPortapiezasConjunto a ns1:ComponenteMecanico ;
+    rdfs:label "Carro porta-pieza y contrapesos" ;
+    ns1:textoExtracto "Explosivo funcional del carro y las guías traseras de contrapesos. Se destacan patines y bloqueos hidráulicos; etiquetas laterales listan frenos MAYR por posiciones izquierda/derecha." ;
+    ns1:tieneComponente ns1:BloqueoHidraulico,
+        ns1:FrenoMayrDerecha,
+        ns1:FrenoMayrIzquierda,
+        ns1:Patin .
 
-ex:LuminariaHorizontal_Herramienta
-    a               ex:ComponenteElectrico ;
-    ex:textoExtracto "dos horizontales hacia la herramienta" ;
-    ex:ilustradoEn   ex:Figura_2_7_AlumbradoInterior .
+ns1:Columna a ns1:ComponenteMecanico ;
+    rdfs:label "Columna" ;
+    ns1:textoExtracto "Corte 3D de la columna mostrando guías lineales, regla lineal, cremallera, piñón, servomotores y carro porta-piezas. Flechas y rótulos marcan la direccionalidad vertical del movimiento y la relación entre accionamientos y guiado." ;
+    ns1:tieneComponente ns1:CarroPortapiezas,
+        ns1:Cremallera,
+        ns1:GuiaLineal,
+        ns1:Pinon,
+        ns1:ReglaLineal,
+        ns1:ServomotorColumna .
 
-ex:Figura_4_1_Zocalo
-    a               ex:Figura ;
-    ex:identificador "Figura 4-1" ;
-    rdfs:label      "Zócalo" ;
-    ex:textoExtracto "Vista isométrica del zócalo con recuadros que señalan la cubeta superior y los apoyos antivibratorios. El tono gris del cuerpo y los resaltados en rojo ayudan a identificar la base estructural y su función como depósito/retorno del refrigerante y virutas." ;
-    ex:ilustradoEn   ex:Manual_Seccion_4.2.1 .
+ns1:PlatoDivisor a ns1:ComponenteMecanico ;
+    rdfs:label "Plato divisor" ;
+    ns1:textoExtracto "Perspectiva del plato con dentado Hirth, servomotor y torreta de micros (SQ46/SQ47). Colores cálidos resaltan el anillo dentado; flechas sugieren el giro tras el desbloqueo hidráulico." ;
+    ns1:tieneComponente ns1:DentadoHirth,
+        ns1:ServomotorPlato,
+        ns1:TorretaMicros .
 
-ex:Zocalo_Maquina
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "base estructural y su función como depósito/retorno del refrigerante y virutas" ;
-    ex:ilustradoEn   ex:Figura_4_1_Zocalo ;
-    ex:compuestoPor  ex:CubetaSuperior_Zocalo, ex:ApoyoAntivibratorio_Zocalo .
+ns1:Zocalo a ns1:ComponenteMecanico ;
+    rdfs:label "Zócalo" ;
+    ns1:textoExtracto "Vista isométrica del zócalo con recuadros que señalan la cubeta superior y los apoyos antivibratorios. El tono gris del cuerpo y los resaltados en rojo ayudan a identificar la base estructural y su función como depósito/retorno del refrigerante y virutas." ;
+    ns1:tieneComponente ns1:ApoyoAntivibratorio,
+        ns1:CubetaSuperior .
 
-ex:CubetaSuperior_Zocalo
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "cubeta superior" ;
-    ex:ilustradoEn   ex:Figura_4_1_Zocalo .
+ns1:ApoyoAntivibratorio a ns1:ComponenteMecanico ;
+    rdfs:label "Apoyo antivibratorio" ;
+    ns1:textoExtracto "apoyos antivibratorios" .
 
-ex:ApoyoAntivibratorio_Zocalo
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "apoyos antivibratorios" ;
-    ex:ilustradoEn   ex:Figura_4_1_Zocalo .
+ns1:BloqueoHidraulico a ns1:ComponenteHidraulico ;
+    rdfs:label "Bloqueo hidráulico" ;
+    ns1:textoExtracto "bloqueos hidráulicos" .
 
-ex:Figura_4_2_ColumnaTraccion
-    a               ex:Figura ;
-    ex:identificador "Figura 4-2" ;
-    rdfs:label      "Conjunto tracción" ;
-    ex:textoExtracto "Corte 3D de la columna mostrando guías lineales, regla lineal, cremallera, piñón, servomotores y carro porta-piezas. Flechas y rótulos marcan la direccionalidad vertical del movimiento y la relación entre accionamientos y guiado." ;
-    ex:ilustradoEn   ex:Manual_Seccion_4.2.2 .
+ns1:CarroPortapiezas a ns1:ComponenteMecanico ;
+    rdfs:label "Carro porta-piezas" ;
+    ns1:textoExtracto "carro porta-piezas" .
 
-ex:Columna_Maquina
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "guías lineales, regla lineal, cremallera, piñón, servomotores" ;
-    ex:ilustradoEn   ex:Figura_4_2_ColumnaTraccion ;
-    ex:tieneComponente ex:GuiasLineales_Columna, ex:ReglaLineal_Columna, ex:Cremallera_Columna, ex:Pinon_Columna, ex:Servomotor_Columna .
+ns1:Cremallera a ns1:ComponenteMecanico ;
+    rdfs:label "Cremallera" ;
+    ns1:textoExtracto "cremallera" .
 
-ex:GuiasLineales_Columna
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "guías lineales" ;
-    ex:ilustradoEn   ex:Figura_4_2_ColumnaTraccion .
+ns1:CubetaSuperior a ns1:ComponenteMecanico ;
+    rdfs:label "Cubeta superior" ;
+    ns1:textoExtracto "cubeta superior" .
 
-ex:ReglaLineal_Columna
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "regla lineal" ;
-    ex:ilustradoEn   ex:Figura_4_2_ColumnaTraccion .
+ns1:DentadoHirth a ns1:ComponenteMecanico ;
+    rdfs:label "Dentado Hirth" ;
+    ns1:textoExtracto "dentado Hirth" .
 
-ex:Cremallera_Columna
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "cremallera" ;
-    ex:ilustradoEn   ex:Figura_4_2_ColumnaTraccion .
+ns1:FrenoMayrDerecha a ns1:ComponenteMecanico ;
+    rdfs:label "Freno MAYR derecha" ;
+    ns1:textoExtracto "frenos MAYR por posiciones izquierda/derecha" .
 
-ex:Pinon_Columna
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "piñón" ;
-    ex:ilustradoEn   ex:Figura_4_2_ColumnaTraccion .
+ns1:FrenoMayrIzquierda a ns1:ComponenteMecanico ;
+    rdfs:label "Freno MAYR izquierda" ;
+    ns1:textoExtracto "frenos MAYR por posiciones izquierda/derecha" .
 
-ex:Servomotor_Columna
-    a               ex:Actuador ;
-    ex:textoExtracto "servomotores" ;
-    ex:ilustradoEn   ex:Figura_4_2_ColumnaTraccion .
+ns1:GuiaLineal a ns1:ComponenteMecanico ;
+    rdfs:label "Guía lineal" ;
+    ns1:textoExtracto "guías lineales" .
 
-ex:Figura_4_3_CarroPortaPiezas
-    a               ex:Figura ;
-    ex:identificador "Figura 4-3" ;
-    rdfs:label      "Carro porta-pieza y contrapesos" ;
-    ex:textoExtracto "Explosivo funcional del carro y las guías traseras de contrapesos. Se destacan patines y bloqueos hidráulicos; etiquetas laterales listan frenos MAYR por posiciones izquierda/derecha." ;
-    ex:ilustradoEn   ex:Manual_Seccion_4.2.3 .
+ns1:LuminariaHorizontal1 a ns1:ComponenteElectrico ;
+    rdfs:label "Luminaria horizontal 1" ;
+    ns1:textoExtracto "dos horizontales hacia la herramienta" .
 
-ex:CarroPortaPiezas
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "carro porta-piezas" ;
-    ex:ilustradoEn   ex:Figura_4_3_CarroPortaPiezas ;
-    ex:tieneComponente ex:Patines_Carro, ex:BloqueoHidraulico_Izquierdo, ex:BloqueoHidraulico_Derecho, ex:FrenoMAYR_Izquierdo, ex:FrenoMAYR_Derecho .
+ns1:LuminariaHorizontal2 a ns1:ComponenteElectrico ;
+    rdfs:label "Luminaria horizontal 2" ;
+    ns1:textoExtracto "dos horizontales hacia la herramienta" .
 
-ex:Patines_Carro
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "patines" ;
-    ex:ilustradoEn   ex:Figura_4_3_CarroPortaPiezas .
+ns1:LuminariaVertical1 a ns1:ComponenteElectrico ;
+    rdfs:label "Luminaria vertical 1" ;
+    ns1:textoExtracto "dos luminarias verticales enfocando al plato divisor" .
 
-ex:BloqueoHidraulico_Izquierdo
-    a               ex:ComponenteHidraulico ;
-    ex:textoExtracto "bloqueos hidráulicos" ;
-    ex:ilustradoEn   ex:Figura_4_3_CarroPortaPiezas .
+ns1:LuminariaVertical2 a ns1:ComponenteElectrico ;
+    rdfs:label "Luminaria vertical 2" ;
+    ns1:textoExtracto "dos luminarias verticales enfocando al plato divisor" .
 
-ex:BloqueoHidraulico_Derecho
-    a               ex:ComponenteHidraulico ;
-    ex:textoExtracto "bloqueos hidráulicos" ;
-    ex:ilustradoEn   ex:Figura_4_3_CarroPortaPiezas .
+ns1:Patin a ns1:ComponenteMecanico ;
+    rdfs:label "Patín" ;
+    ns1:textoExtracto "patines" .
 
-ex:FrenoMAYR_Izquierdo
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "frenos MAYR por posiciones izquierda" ;
-    ex:ilustradoEn   ex:Figura_4_3_CarroPortaPiezas .
+ns1:Pinon a ns1:ComponenteMecanico ;
+    rdfs:label "Piñón" ;
+    ns1:textoExtracto "piñón" .
 
-ex:FrenoMAYR_Derecho
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "frenos MAYR por posiciones derecha" ;
-    ex:ilustradoEn   ex:Figura_4_3_CarroPortaPiezas .
+ns1:ReglaLineal a ns1:ComponenteMecanico ;
+    rdfs:label "Regla lineal" ;
+    ns1:textoExtracto "regla lineal" .
 
-ex:Figura_4_4_PlatoDivisor
-    a               ex:Figura ;
-    ex:identificador "Figura 4-4" ;
-    rdfs:label      "Plato divisor" ;
-    ex:textoExtracto "Perspectiva del plato con dentado Hirth, servomotor y torreta de micros (SQ46/SQ47). Colores cálidos resaltan el anillo dentado; flechas sugieren el giro tras el desbloqueo hidráulico." ;
-    ex:ilustradoEn   ex:Manual_Seccion_4.2.4 .
+ns1:ServomotorColumna a ns1:ComponenteElectrico ;
+    rdfs:label "Servomotor de columna" ;
+    ns1:textoExtracto "servomotores" .
 
-ex:PlatoDivisor
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "dentado Hirth, servomotor y torreta de micros (SQ46/SQ47)" ;
-    ex:ilustradoEn   ex:Figura_4_4_PlatoDivisor ;
-    ex:tieneComponente ex:DentadoHirth_Plato, ex:Servomotor_Plato, ex:TorretaMicros_SQ46_SQ47 .
+ns1:ServomotorPlato a ns1:ComponenteElectrico ;
+    rdfs:label "Servomotor de plato" ;
+    ns1:textoExtracto "servomotor" .
 
-ex:DentadoHirth_Plato
-    a               ex:ComponenteMecanico ;
-    ex:textoExtracto "anillo dentado Hirth" ;
-    ex:ilustradoEn   ex:Figura_4_4_PlatoDivisor .
+ns1:TorretaMicros a ns1:ComponenteMecanico ;
+    rdfs:label "Torreta de micros" ;
+    ns1:textoExtracto "torreta de micros (SQ46/SQ47)" .
 
-ex:Servomotor_Plato
-    a               ex:Actuador ;
-    ex:textoExtracto "servomotor" ;
-    ex:ilustradoEn   ex:Figura_4_4_PlatoDivisor .
-
-ex:TorretaMicros_SQ46_SQ47
-    a               ex:ComponenteMecanico ;
-    ex:identificador "SQ46/SQ47" ;
-    ex:textoExtracto "torreta de micros (SQ46/SQ47)" ;
-    ex:ilustradoEn   ex:Figura_4_4_PlatoDivisor .

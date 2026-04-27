@@ -1,0 +1,62 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ErrorAlConvertirCadena {
+  rdfs:label "Error al convertir una cadena de caracteres a errores"@es ;
+  ex:textoExtracto "CAUSA Error al convertir una cadena de caracteres a errores. Algún carácter programado no es correcto. SOLUCIÓN Revisar en el manual de instalación la sintaxis."@es ;
+  ex:detalladoEnEsquema ex:ManualDeInstalacion ;
+  ex:requiereMantenimiento ex:RevisarSintaxis .
+}
+
+ex:PantallaFueraDeRango {
+  rdfs:label "Pantalla fuera de rango"@es ;
+  ex:textoExtracto "8824 Pantalla fuera de rango. DETECCIÓN Durante la edición del programa PLC. CAUSA La pantalla programada no es válida. SOLUCIÓN Revisar en el manual de instalación la sintaxis."@es ;
+  ex:detalladoEnEsquema ex:ManualDeInstalacion ;
+  ex:requiereMantenimiento ex:RevisarSintaxis .
+}
+
+ex:FalloDelLexerAlReconocerPantallas {
+  rdfs:label "Fallo del lexer al reconocer pantallas"@es ;
+  ex:textoExtracto "8825 Fallo del lexer al reconocer pantallas. DETECCIÓN"@es ;
+  ex:detalladoEnEsquema ex:ManualDeInstalacion ;
+  ex:requiereMantenimiento ex:RevisarSintaxis .
+}
+
+ex:ManualDeInstalacion {
+  rdfs:label "Manual de instalación"@es ;
+  ex:identificador "Manual de instalación" ;
+  ex:documentadoEn ex:SistemaDeControl .
+}
+
+ex:SistemaDeControl {
+  rdfs:label "Sistema de control"@es ;
+  ex:tieneComponente ex:PLC .
+}
+
+ex:PLC {
+  rdfs:label "PLC"@es ;
+  ex:tieneComponente ex:Lexer .
+}
+
+ex:Lexer {
+  rdfs:label "Lexer"@es ;
+  ex:tieneComponente ex:Pantalla .
+}
+
+ex:Pantalla {
+  rdfs:label "Pantalla"@es ;
+  ex:tieneComponente ex:Sintaxis .
+}
+
+ex:Sintaxis {
+  rdfs:label "Sintaxis"@es ;
+  ex:documentadoEn ex:ManualDeInstalacion .
+}
+
+ex:RevisarSintaxis {
+  rdfs:label "Revisar sintaxis"@es ;
+  ex:identificador "Revisar sintaxis" ;
+  ex:requiereMantenimiento ex:RevisarSintaxis .
+}

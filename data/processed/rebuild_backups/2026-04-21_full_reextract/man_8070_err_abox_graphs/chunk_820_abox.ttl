@@ -1,0 +1,49 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Alarma_Encoder_Vpp
+    a ex:Alarma ;
+    rdfs:label "Alarma de error en señales Vpp del encoder" ;
+    ex:textoExtracto "DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El regulador ha detectado un error en las señales Vpp del encoder." ;
+    ex:solucionaFallo ex:Fallo_Encoder_Vpp .
+
+ex:Fallo_Encoder_Vpp
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en señales Vpp del encoder" ;
+    ex:textoExtracto "El regulador ha detectado un error en las señales Vpp del encoder. SOLUCIÓN Revisar el conexionado del encoder." .
+
+ex:Alarma_Pulsos_I0s
+    a ex:Alarma ;
+    rdfs:label "Alarma de pulsos entre I0s" ;
+    ex:identificador "9505" ;
+    ex:textoExtracto "DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El regulador ha detectado un error en la correlación de los pulsos entre dos señales de I0" ;
+    ex:solucionaFallo ex:Fallo_Pulsos_I0s .
+
+ex:Fallo_Pulsos_I0s
+    a ex:DiagnosticoFallo ;
+    rdfs:label "Error en correlación de pulsos entre señales I0" ;
+    ex:textoExtracto "El regulador ha detectado un error en la correlación de los pulsos entre dos señales de I0" .
+
+ex:Encoder
+    a ex:ComponenteElectrico ;
+    rdfs:label "Encoder" ;
+    ex:textoExtracto "Revisar el conexionado del encoder." .
+
+ex:Regulador
+    a ex:ComponenteElectrico ;
+    rdfs:label "Regulador" ;
+    ex:textoExtracto "El regulador ha detectado un error en las señales Vpp del encoder", "El regulador ha detectado un error en la correlación de los pulsos entre dos señales de I0" ;
+    ex:activaAlarma ex:Alarma_Encoder_Vpp, ex:Alarma_Pulsos_I0s ;
+    ex:monitoreaParametro ex:Parametro_Vpp, ex:Parametro_Pulsos_I0 .
+
+ex:Parametro_Vpp
+    a ex:Parametro ;
+    rdfs:label "Señales Vpp del encoder" ;
+    ex:textoExtracto "error en las señales Vpp del encoder" .
+
+ex:Parametro_Pulsos_I0
+    a ex:Parametro ;
+    rdfs:label "Correlación de pulsos entre señales I0" ;
+    ex:textoExtracto "error en la correlación de los pulsos entre dos señales de I0" .

@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_5022
+    a ex:Alarma ;
+    rdfs:label "PLC:Demasiados CNCRD y CNCWR de variables asíncronas" ;
+    ex:identificador "5022" ;
+    ex:textoExtracto "Durante la ejecución de comandos CNCRD y CNCWR de variables asíncronas, así como durante la ejecución de comandos CNCEX. CAUSA Número excesivo de peticiones asíncronas desde PLC." ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_5022 .
+
+ex:DiagnosticoFallo_5022
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "Los valores que aparecen en el warning son los números de las marcas de PLC que controlan los procesos CNCRD, CNCWR y CNCEX que causan el error. Para eliminar el error, revisar la maniobra del PLC para que no sucedan tantas peticiones asíncronas a la vez." .
+
+ex:Alarma_5023
+    a ex:Alarma ;
+    rdfs:label "Error en la lectura de entradas digitales locales" ;
+    ex:identificador "5023" ;
+    ex:textoExtracto "Error en la lectura de entradas digitales locales. CAUSA Fallo en la lectura de las entradas digitales locales de PLC." ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_5023 .
+
+ex:DiagnosticoFallo_5023
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "Revisar la instalación de la aplicación y los drivers del CNC. Si el error persiste, póngase en contacto con Fagor Automation." .
+
+ex:Alarma_5024
+    a ex:Alarma ;
+    rdfs:label "Error en la escritura de salidas digitales locales" ;
+    ex:identificador "5024" ;
+    ex:textoExtracto "Error en la escritura de salidas digitales locales. CAUSA Fallo en la escritura de las salidas digitales locales de PLC." ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_5024 .
+
+ex:DiagnosticoFallo_5024
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "Revisar la instalación de la aplicación y los drivers del CNC. Si el error persiste, póngase en contacto con Fagor Automation." .
+
+ex:Alarma_5025
+    a ex:Alarma ;
+    rdfs:label "Contador de PLC deshabilitado" ;
+    ex:identificador "5025" ;
+    ex:textoExtracto "Durante el arranque del CNC. CAUSA El contador está deshabilitado, desde el programa de PLC o desde monitorización." ;
+    ex:mitigaRiesgo ex:DiagnosticoFallo_5025 .
+
+ex:DiagnosticoFallo_5025
+    a ex:DiagnosticoFallo ;
+    ex:textoExtracto "El contador está deshabilitado, desde el programa de PLC o desde monitorización." .
+
+ex:Sistema_PLC
+    a ex:Sistema ;
+    rdfs:label "PLC (Controlador Lógico Programable)" ;
+    ex:textoExtracto "Número excesivo de peticiones asíncronas desde PLC. [...] marcas de PLC que controlan los procesos CNCRD, CNCWR y CNCEX." ;
+    ex:controla ex:Parametro_CHTYPE .
+
+ex:Parametro_CHTYPE
+    a ex:Parametro ;
+    rdfs:label "Tipo de canal (parámetro CHTYPE)" ;
+    ex:identificador "CHTYPE" ;
+    ex:textoExtracto "Revisar en los parámetros máquina el tipo de canal (parámetro CHTYPE)." .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "Revisar la instalación de la aplicación y los drivers del CNC." ;
+    ex:tieneComponente ex:Sistema_PLC .

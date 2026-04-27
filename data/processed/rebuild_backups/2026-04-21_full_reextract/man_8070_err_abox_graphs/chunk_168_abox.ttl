@@ -1,0 +1,64 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_1400
+    a ex:Alarma ;
+    rdfs:label "Alarma 1400: Cambio de longitud de herramienta con RTCP activo" ;
+    ex:identificador "1400" ;
+    ex:textoExtracto "'No se admite cambio de longitud de herramienta con RTCP activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer un cambio de herramienta con la función RTCP activa. SOLUCIÓN Desactivar la función RTCP para hacer el cambio de herramienta." .
+
+ex:Alarma_1401
+    a ex:Alarma ;
+    rdfs:label "Alarma 1401: Activación de #TLC ON sin deselección previa" ;
+    ex:identificador "1401" ;
+    ex:textoExtracto "'No se admite #TLC ON sin deselección previa' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar la función TLC y ésta ya está activa. SOLUCIÓN Revisar la programación." .
+
+ex:Alarma_1402
+    a ex:Alarma ;
+    rdfs:label "Alarma 1402: Parámetros HIRTH/HPITCH incompatibles en acoplo de ejes" ;
+    ex:identificador "1402" ;
+    ex:textoExtracto "'#LINK: los ejes maestro y esclavo deben tener los mismos parámetros HIRTH y HPITCH' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos no es hirth o ambos ejes tienen paso diferente. SOLUCIÓN Para poder incluir un eje hirth en un acoplo, ambos ejes deben ser hirth (parámetro HIRTH) y tener el mismo paso (parámetro HPITCH)." .
+
+ex:Alarma_1403
+    a ex:Alarma ;
+    rdfs:label "Alarma 1403: Acoplo con eje Hirth desactivado" ;
+    ex:identificador "1403" ;
+    ex:textoExtracto "'#LINK: no se puede definir un acoplo con un eje Hirth desactivado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos está desactivado. SOLUCIÓN Para poder acoplar dos ejes hirth, ambos ejes deben estar activos (G171)." .
+
+ex:Alarma_1404
+    a ex:Alarma ;
+    rdfs:label "Alarma 1404: Gama de cabezal no existente" ;
+    ex:identificador "1404" ;
+    ex:textoExtracto "'La gama asociada a la M programada no existe' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado realizar un cambio de gama de cabezal mediante una función M41 a M44 y la gama no existe. SOLUCIÓN El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS)." .
+
+ex:ComponenteMecanico_EjeHirth
+    a ex:ComponenteMecanico ;
+    rdfs:label "Eje Hirth" ;
+    ex:textoExtracto "El eje hirth forma parte de la transformación de coordenadas activa. • El eje hirth forma parte de la cinemática activa y además hay activa una sentencia #RTCP, #TLC ó #TOOL ORI." .
+
+ex:Parametro_HIRTH
+    a ex:Parametro ;
+    rdfs:label "Parámetro HIRTH" ;
+    ex:identificador "HIRTH" ;
+    ex:textoExtracto "ambos ejes deben ser hirth (parámetro HIRTH)" .
+
+ex:Parametro_HPITCH
+    a ex:Parametro ;
+    rdfs:label "Parámetro HPITCH" ;
+    ex:identificador "HPITCH" ;
+    ex:textoExtracto "ambos ejes deben [...] tener el mismo paso (parámetro HPITCH)" .
+
+ex:Parametro_NPARSETS
+    a ex:Parametro ;
+    rdfs:label "Parámetro NPARSETS" ;
+    ex:identificador "NPARSETS" ;
+    ex:textoExtracto "El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS)." .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ex:textoExtracto "El CNC ha intentado hacer un cambio de herramienta con la función RTCP activa." ;
+    ex:tieneComponente ex:ComponenteMecanico_EjeHirth ;
+    ex:activaAlarma ex:Alarma_1400, ex:Alarma_1401, ex:Alarma_1402, ex:Alarma_1403, ex:Alarma_1404 .

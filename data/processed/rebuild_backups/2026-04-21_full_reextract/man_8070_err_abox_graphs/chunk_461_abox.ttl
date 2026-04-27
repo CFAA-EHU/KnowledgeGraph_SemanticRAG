@@ -1,0 +1,51 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Alarma_3403
+    a ex:Alarma ;
+    rdfs:label "Alarma 3403: No se admiten más operaciones con ejes independientes. En sincronización"@es ;
+    ex:identificador "3403" ;
+    ex:textoExtracto "3403 'No se admiten mas operaciones con ejes independientes. En sincronización' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar una operación de eje independiente pero existe una sincronización activa. SOLUCIÓN No programar operaciones de eje independiente con levas activas ni programar dos sincronizaciones seguidas."@es .
+
+ex:Alarma_3404
+    a ex:Alarma ;
+    rdfs:label "Alarma 3404: No se admite #FOLLOW OFF con otra operación pendiente"@es ;
+    ex:identificador "3404" ;
+    ex:textoExtracto "3404 'No se admite #FOLLOW OFF con otra operación pendiente' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar una sentencia #FOLLOW OFF pero existe una operación pendiente. SOLUCIÓN Desde el PLC abortar las sentencias pendientes (marca ABORT) o bien esperar a que haya espacio para almacenarla (marca FREE)."@es .
+
+ex:Alarma_3405
+    a ex:Alarma ;
+    rdfs:label "Alarma 3405: No se admite #MOVE INF para un eje con límites"@es ;
+    ex:identificador "3405" ;
+    ex:textoExtracto "3405 'No se admite #MOVE INF para un eje con límites' DETECCIÓN Durante la ejecución. CAUSA El eje programado en la sentencia #MOVE INF tiene límites de recorrido definidos. SOLUCIÓN Eliminar los límites de software o interrumpir el movimiento antes de que el eje alcance el límite."@es .
+
+ex:Alarma_3406
+    a ex:Alarma ;
+    rdfs:label "Alarma 3406: La velocidad necesaria para sincronizar es superior a la máxima"@es ;
+    ex:identificador "3406" ;
+    ex:textoExtracto "3406 'La velocidad necesaria para sincronizar es superior a la máxima' DETECCIÓN Durante la ejecución. CAUSA La sincronización programada implica superar el avance máximo del eje. SOLUCIÓN Programar la sincronización con el eje maestro moviéndose a un avance menor o programar un ratio de sincronización menor."@es .
+
+ex:Alarma_3407
+    a ex:Alarma ;
+    rdfs:label "Alarma 3407: Cota programada para eje independiente superior al límite positivo"@es ;
+    ex:identificador "3407" ;
+    ex:textoExtracto "3407 'Cota programada para eje independiente superior al límite positivo' DETECCIÓN Durante la ejecución. CAUSA La cota programada en la sentencia #MOVE está fuera de los límites de software. SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC."@es .
+
+ex:Alarma_3408
+    a ex:Alarma ;
+    rdfs:label "Alarma 3408: Cota programada para eje independiente inferior al límite negativo"@es ;
+    ex:identificador "3408" ;
+    ex:textoExtracto "3408 'Cota programada para eje independiente inferior al límite negativo' DETECCIÓN Durante la ejecución."@es .
+
+ex:Sistema_CNC
+    a ex:Sistema ;
+    rdfs:label "Sistema CNC"@es ;
+    ex:textoExtracto "El CNC intenta ejecutar una operación de eje independiente pero existe una sincronización activa."@es ;
+    ex:activaAlarma ex:Alarma_3403, ex:Alarma_3404, ex:Alarma_3405, ex:Alarma_3406, ex:Alarma_3407, ex:Alarma_3408 .
+
+ex:Sistema_PLC
+    a ex:Sistema ;
+    rdfs:label "Sistema PLC"@es ;
+    ex:textoExtracto "Desde el PLC abortar las sentencias pendientes (marca ABORT) o bien esperar a que finalice la sincronización."@es .

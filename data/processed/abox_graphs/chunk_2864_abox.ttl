@@ -1,0 +1,63 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:Fallo_9725 a ns1:DiagnosticoFallo ;
+    rdfs:label "Diferencia excesiva de la posición real" ;
+    ns1:identificador "9725" ;
+    ns1:mitigaRiesgo ns1:SensorPosicion_Externa,
+        ns1:SensorPosicion_Interna ;
+    ns1:solucionaFallo ns1:RevisionDeParametrizacionDeCaptacionesDelEje ;
+    ns1:textoExtracto "Diferencia excesiva de la posición real. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La diferencia de posición entre la captación interna y externa es mayor que el parámetro FBACKDIFF. SOLUCIÓN Revisar la parametrización de las captaciones del eje." .
+
+ns1:Fallo_9726 a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobrecarga en el regulador (I²t - ciclo de trabajo)" ;
+    ns1:identificador "9726" ;
+    ns1:mitigaRiesgo ns1:Regulador_Maquina ;
+    ns1:solucionaFallo ns1:AjusteDeCicloDeTrabajoOReemplazoDeRegulador ;
+    ns1:textoExtracto "Sobrecarga en el regulador. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Protección I²t del regulador. El ciclo de trabajo es demasiado exigente para el regulador. SOLUCIÓN Adecuar el ciclo de trabajo, reducir el par aplicado al motor o utilizar un regulador de más potencia." .
+
+ns1:Fallo_9727 a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobrecarga en el regulador (I²t)" ;
+    ns1:identificador "9727" ;
+    ns1:mitigaRiesgo ns1:Regulador_Maquina ;
+    ns1:textoExtracto "Sobrecarga en el regulador. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Protección I²t del regulador. El ciclo de trabajo es demasiado exigente para el regulador." .
+
+ns1:Parametro_FBACKDIFF a ns1:Parametro ;
+    rdfs:label "FBACKDIFF (diferencia de posición máxima permitida)" ;
+    ns1:textoExtracto "La diferencia de posición entre la captación interna y externa es mayor que el parámetro FBACKDIFF" ;
+    ns1:valor "umbral_configurable" .
+
+ns1:AjusteDeCicloDeTrabajoOReemplazoDeRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Ajuste de ciclo de trabajo o reemplazo de regulador" ;
+    ns1:textoExtracto "SOLUCIÓN Adecuar el ciclo de trabajo, reducir el par aplicado al motor o utilizar un regulador de más potencia." .
+
+ns1:Motor_Principal a ns1:ComponenteElectrico ;
+    rdfs:label "Motor principal de la máquina" ;
+    ns1:alimenta ns1:Regulador_Maquina ;
+    ns1:textoExtracto "reducir el par aplicado al motor" .
+
+ns1:Parametro_CicloTrabajo a ns1:Parametro ;
+    rdfs:label "Ciclo de trabajo del regulador" ;
+    ns1:textoExtracto "El ciclo de trabajo es demasiado exigente para el regulador" ;
+    ns1:valor "porcentaje_operación" .
+
+ns1:RevisionDeParametrizacionDeCaptacionesDelEje a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de parametrización de captaciones del eje" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la parametrización de las captaciones del eje." .
+
+ns1:SensorPosicion_Externa a ns1:Sensor ;
+    rdfs:label "Captación externa de posición" ;
+    ns1:textoExtracto "diferencia de posición entre la captación interna y externa" .
+
+ns1:SensorPosicion_Interna a ns1:Sensor ;
+    rdfs:label "Captación interna de posición" ;
+    ns1:textoExtracto "diferencia de posición entre la captación interna y externa" .
+
+ns1:Regulador_Maquina a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador de la máquina" ;
+    ns1:controla ns1:Motor_Principal ;
+    ns1:monitoreaParametro ns1:Parametro_CicloTrabajo ;
+    ns1:textoExtracto "Protección I²t del regulador. El ciclo de trabajo es demasiado exigente para el regulador" ;
+    ns1:tieneComponente ns1:SensorPosicion_Externa,
+        ns1:SensorPosicion_Interna .
+

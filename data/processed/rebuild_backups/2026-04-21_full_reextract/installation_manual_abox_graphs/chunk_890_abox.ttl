@@ -1,0 +1,54 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Registro_TMOPERATION
+    a ex:Parametro ;
+    rdfs:label "Registro TMOPERATION" ;
+    ex:textoExtracto "el gestor envía al PLC en el registro TMOPERATION el código correspondiente a la operación que se debe realizar" ;
+    ex:identificador "TMOPERATION" ;
+    ex:valor "3" , "4" , "8" .
+
+ex:Operacion_CambioHerramienta_TierraACabezal
+    a ex:ModoOperacion ;
+    rdfs:label "Cambio de herramienta (tierra → cabezal)" ;
+    ex:textoExtracto "TMOPERATION=3. El PLC ha llevado la herramienta desde tierra al cabezal" ;
+    ex:identificador "TMOPERATION_3" .
+
+ex:Operacion_CambioHerramienta_CabezalATierra
+    a ex:ModoOperacion ;
+    rdfs:label "Cambio de herramienta (cabezal → tierra)" ;
+    ex:textoExtracto "TMOPERATION=4. El PLC ha llevado la herramienta desde el cabezal a tierra" ;
+    ex:identificador "TMOPERATION_4" .
+
+ex:Senal_SPDLTOGR
+    a ex:Parametro ;
+    rdfs:label "Señal SPDLTOGR" ;
+    ex:textoExtracto "SET SPDLTOGR [...] El gestor ha desactivado la marca SPDLTOGR y TMOPERATION=8" ;
+    ex:identificador "SPDLTOGR" .
+
+ex:Senal_GRTOSPDL
+    a ex:Parametro ;
+    rdfs:label "Señal GRTOSPDL" ;
+    ex:textoExtracto "SET GRTOSPDL [...] Hay una petición de cambio de herramienta y TMOPERATION=3" ;
+    ex:identificador "GRTOSPDL" .
+
+ex:Senal_TMOPSTROBE
+    a ex:Parametro ;
+    rdfs:label "Señal TMOPSTROBE" ;
+    ex:textoExtracto "DFU TMOPSTROBE AND (CPS TMOPERATION EQ 3)" ;
+    ex:identificador "TMOPSTROBE" .
+
+ex:Funcion_T a ex:Tabla ;
+     a ex:ModoOperacion ;
+    rdfs:label "Función T (cambio de herramienta)" ;
+    ex:textoExtracto "Cuando se ejecuta la función T [...] Hay una petición de cambio de herramienta" .
+
+ex:Funcion_T a ex:Tabla ;
+    ex:monitoreaParametro ex:Registro_TMOPERATION ;
+    ex:controla ex:Senal_GRTOSPDL , ex:Senal_SPDLTOGR .
+
+ex:Registro_TMOPERATION
+    ex:habilitadoPor ex:Funcion_T ;
+    ex:controla ex:Operacion_CambioHerramienta_TierraACabezal , ex:Operacion_CambioHerramienta_CabezalATierra .

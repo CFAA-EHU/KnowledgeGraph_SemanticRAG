@@ -1,0 +1,48 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Fallo_9636
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "INDUCTOSYN: Transductor no estable en Power-ON" ;
+    ex:identificador      "9636" ;
+    ex:textoExtracto      "DETECCIÓN: Durante el arranque del sistema. CAUSA: La posición leída durante la inicialización del módulo ABSIND no es estable. SOLUCIÓN: Comprobar que el eje no se mueve durante el arranque o inicialización del módulo ABSIND. Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver. Comprobar las conexiones de tierra en el armario (ruido eléctrico sobre las señales)." .
+
+ex:Fallo_9637
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "INDUCTOSYN: Checksum EEPROM incorrecto" ;
+    ex:identificador      "9637" ;
+    ex:textoExtracto      "DETECCIÓN: Durante el arranque o funcionamiento habitual del sistema. CAUSA: El checksum leído durante la inicialización del módulo ABSIND es incorrecto. SOLUCIÓN: Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste." .
+
+ex:Fallo_SenalGrayAusente
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Nivel de la señal GRAY del transductor inductosyn/resolver ausente" ;
+    ex:textoExtracto      "DETECCIÓN: Durante el arranque o funcionamiento habitual del sistema. CAUSA: Nivel de la señal GRAY del transductor inductosyn/resolver ausente. SOLUCIÓN: Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver." .
+
+ex:Modulo_ABSIND
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Módulo ABSIND" ;
+    ex:textoExtracto      "Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver." .
+
+ex:Transductor_InductosynResolver
+    a                     ex:Sensor ;
+    rdfs:label            "Transductor inductosyn/resolver" ;
+    ex:textoExtracto      "Nivel de la señal GRAY del transductor inductosyn/resolver ausente. Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver." .
+
+ex:Cable_TransductorABSIND
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Cable entre módulo ABSIND y transductor inductosyn/resolver" ;
+    ex:textoExtracto      "Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver." .
+
+ex:Fallo_9636
+    ex:solucionaFallo      ex:Modulo_ABSIND , ex:Cable_TransductorABSIND .
+
+ex:Fallo_9637
+    ex:solucionaFallo      ex:Modulo_ABSIND .
+
+ex:Fallo_SenalGrayAusente
+    ex:solucionaFallo      ex:Modulo_ABSIND , ex:Cable_TransductorABSIND .
+
+ex:Modulo_ABSIND
+    ex:monitoreaParametro ex:Transductor_InductosynResolver .

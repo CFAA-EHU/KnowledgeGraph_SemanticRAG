@@ -1,0 +1,36 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_ConfiguracionReguladorSercos_FBACKSRC_FBMIXTIME a ex:Tabla ;
+     a               ex:Tabla ;
+    rdfs:label      "Tabla de configuración FBACKSRC/FBMIXTIME para regulador Sercos"@es ;
+    ex:textoExtracto """
+| FBACKSRC     | FBMIXTIME       | Tipo de captación. |
+|--------------|-----------------|--------------------|
+| Interna      | (Sin función)   | Captación interna. |
+| Externa      | 0               | Captación externa. |
+| Externa      | Valor > 0       | Mezcla de captaciones activa. |
+| Interna+Externa | 0            | Cambio vía PLC con FBACKSEL(axis). Captación interna/extern. |
+| Interna+Externa | Valor > 0    | Cambio vía PLC con FBACKSEL(axis). Captación interna/mezcla."""@es .
+
+ex:Parametro_FBACKSRC
+    a               ex:Parametro ;
+    rdfs:label      "FBACKSRC"@es ;
+    ex:textoExtracto "FBACKSRC (Tipo de captación: Interna, Externa, Interna+Externa)"@es ;
+    ex:documentadoEn ex:Tabla_ConfiguracionReguladorSercos_FBACKSRC_FBMIXTIME ;
+    ex:valor         "Interna"@es, "Externa"@es, "Interna+Externa"@es .
+
+ex:Parametro_FBMIXTIME
+    a               ex:Parametro ;
+    rdfs:label      "FBMIXTIME"@es ;
+    ex:textoExtracto "FBMIXTIME (0 o valor mayor que 0 para configuración de mezcla)"@es ;
+    ex:documentadoEn ex:Tabla_ConfiguracionReguladorSercos_FBACKSRC_FBMIXTIME ;
+    ex:valor         "0"@es, "Valor mayor que 0"@es .
+
+ex:Parametro_FBACKSEL
+    a               ex:Parametro ;
+    rdfs:label      "FBACKSEL(axis)"@es ;
+    ex:textoExtracto "FBACKSEL(axis) (Marca PLC para selección dinámica de captación)"@es ;
+    ex:documentadoEn ex:Tabla_ConfiguracionReguladorSercos_FBACKSRC_FBMIXTIME .

@@ -1,0 +1,63 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:ModoUtilidades
+    a ex:ModoOperacion ;
+    rdfs:label "Modo utilidades" ;
+    ex:textoExtracto "Parámetros máquina, definida en el modo utilidades. Al iniciar el equipo en este modo de trabajo, éste solicita la contraseña de acceso." ;
+    ex:requiereMantenimiento ex:Contrase_aAcceso .
+
+ex:ModoUsuario
+    a ex:ModoOperacion ;
+    rdfs:label "Modo usuario" ;
+    ex:textoExtracto "Modo usuario. Es el modo habitual de trabajo para el usuario, una vez terminada la puesta a punto. Este modo no permite actualizar el CNC ni acceder al sistema operativo." .
+
+ex:ModoDiagnosis
+    a ex:ModoOperacion ;
+    rdfs:label "Modo diagnosis" ;
+    ex:textoExtracto "Algunas utilidades del sistema operativo (administrador de tareas, reloj) estarán disponibles desde el modo diagnosis." .
+
+ex:ModoSetup
+    a ex:ModoOperacion ;
+    rdfs:label "Modo SETUP" ;
+    ex:textoExtracto "Modo SETUP (puesta a punto). En el encendido, el CNC mostrará un mensaje indicando que se encuentra en un modo no protegido y que la puesta a punto se encuentra sin finalizar." ;
+    ex:identificador "puesta a punto" .
+
+ex:Contrase_aAcceso
+    a ex:Parametro ;
+    rdfs:label "Contraseña de acceso" ;
+    ex:textoExtracto "Al iniciar el equipo en este modo de trabajo, éste solicita la contraseña de acceso." .
+
+ex:CarpetaUSERS
+    a ex:InterfazUsuario ;
+    rdfs:label "Carpeta USERS" ;
+    ex:textoExtracto "Los programas pieza deben guardarse en la carpeta ..\\USERS; el CNC considera los archivos guardados en otras carpetas como archivos temporales y serán borrados al apagar el CNC." ;
+    ex:identificador "..\\USERS" .
+
+ex:ExploradorUtilidades
+    a ex:InterfazUsuario ;
+    rdfs:label "Explorador del modo utilidades" ;
+    ex:textoExtracto "La gestión de ficheros de flash, pendrives, ethernet, etc se hará exclusivamente desde el explorador del modo utilidades." .
+
+ex:NivelProteccionMaxima
+    a ex:Parametro ;
+    rdfs:label "Nivel de protección máxima" ;
+    ex:textoExtracto "El modo usuario tiene el máximo nivel de protección, donde está desprotegido únicamente las carpetas y archivos susceptibles de ser modificados durante el trabajo normal de la máquina." .
+
+ex:AvisoSeguridadModoSetup
+    a ex:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad en modo SETUP" ;
+    ex:textoExtracto "En esta situación el CNC no dispone de garantía Fagor. Transcurrido un determinado tiempo, con el siguiente reset, el CNC vuelve a mostrar el mensaje." .
+
+ex:ProcesoCierreSetup
+    a ex:TareaMantenimiento ;
+    rdfs:label "Proceso de cierre del modo SETUP" ;
+    ex:textoExtracto "Al cerrar la aplicación, el CNC pregunta si se ha finalizado la puesta a punto. • Si se selecciona sí, y existen passwords, el CNC hace la copia de seguridad y pasa a modo USER (proceso correcto). • Si se selecciona sí, y no hay passwords, el CNC saca un mensaje de aviso y no cierra la aplicación." ;
+    ex:requiereMantenimiento ex:Contrase_aAcceso .
+
+ex:VerificacionInicialModoUser
+    a ex:TareaMantenimiento ;
+    rdfs:label "Verificación inicial en modo USER" ;
+    ex:textoExtracto "En el encendido, el CNC verifica que existen passwords y la copia de seguridad. En caso de que no exista alguno de los dos," .

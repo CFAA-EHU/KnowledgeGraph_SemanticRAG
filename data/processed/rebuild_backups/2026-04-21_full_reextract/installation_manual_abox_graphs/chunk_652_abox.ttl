@@ -1,0 +1,33 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:OperadorLogico_NOT a ex:Componente ;
+    rdfs:label "Operador NOT" ;
+    ex:textoExtracto "NOT Invierte el resultado de la consulta. NOT I2 = O3 La salida O3 estará activa cuando no lo esté la entrada I2." .
+
+ex:OperadorLogico_AND a ex:Componente ;
+    rdfs:label "Operador AND" ;
+    ex:textoExtracto "AND Función lógica \"Y\". I4 AND I5 = O6 La salida O6 estará activa cuando ambas entradas (I4, I5) estén activas." .
+
+ex:OperadorLogico_OR a ex:Componente ;
+    rdfs:label "Operador OR" ;
+    ex:textoExtracto "OR Función lógica \"O\". I7 OR I8 = O9 La salida O9 estará activa cuando una de las entradas (o ambas) estén activas." .
+
+ex:OperadorLogico_XOR a ex:Componente ;
+    rdfs:label "Operador XOR" ;
+    ex:textoExtracto "XOR Función lógica \"O Exclusivo\". I10 XOR I11 = O12 La salida O12 estará activa cuando las entradas I10 y I11 tengan niveles lógicos distintos." .
+
+ex:SimboloSaltoLinea a ex:Componente ;
+    rdfs:label "Símbolo salto de línea (\\)" ;
+    ex:textoExtracto "Salto de línea. Permite escribir una expresión lógica en 2 o más líneas diferentes. Se puede programar: DFU MSTROBE \\ AND CPS MFUN* EQ 3 = M1003" .
+
+ex:SimboloParentesis a ex:Componente ;
+    rdfs:label "Símbolos paréntesis ( )" ;
+    ex:textoExtracto "Abrir y cerrar paréntesis. Permiten clarificar y seleccionar el orden en que se produce la evaluación de la expresión lógica. ( I2 OR I3) AND (I4 OR (NOT I5 AND I6)) = O7" .
+
+ex:InterfazConsultaLogica a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de consulta lógica" ;
+    ex:textoExtracto "Permiten agrupar y efectuar operaciones entre las distintas instrucciones de consulta. Los operadores disponibles son NOT, AND, OR, XOR. Los símbolos disponibles son \\, (, )." ;
+    ex:tieneComponente ex:OperadorLogico_NOT, ex:OperadorLogico_AND, ex:OperadorLogico_OR, ex:OperadorLogico_XOR, ex:SimboloSaltoLinea, ex:SimboloParentesis .

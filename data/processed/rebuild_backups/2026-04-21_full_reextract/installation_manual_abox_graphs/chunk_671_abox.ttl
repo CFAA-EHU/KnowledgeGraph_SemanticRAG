@@ -1,0 +1,37 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:LevaElectronica_671
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Leva electrónica"@es ;
+    ex:textoExtracto      "información orientativa sobre esta funcionalidad [...] Activar la leva electrónica con las cotas reales (CAM ON), con las cotas teóricas (TCAM ON) o cancelar la leva electrónica (CAM OFF)."@es ;
+    ex:identificador      "CAM ON", "TCAM ON", "CAM OFF" .
+
+ex:Comando_CAM_ON_671
+    a                     ex:Parametro ;
+    rdfs:label            "Comando CAM ON"@es ;
+    ex:textoExtracto      "CAM ON (cam, master/'TIME', slave, master_off, slave_off, range_master, range_slave, type)"@es ;
+    ex:valor              "CAM ON (cam, master/'TIME', slave, master_off, slave_off, range_master, range_slave, type)" ;
+    ex:monitoreaParametro ex:LevaElectronica_671 .
+
+ex:Comando_TCAM_ON_671
+    a                     ex:Parametro ;
+    rdfs:label            "Comando TCAM ON"@es ;
+    ex:textoExtracto      "TCAM ON (cam, master/'TIME', slave, master_off, slave_off, range_master, range_slave, type)"@es ;
+    ex:valor              "TCAM ON (cam, master/'TIME', slave, master_off, slave_off, range_master, range_slave, type)" ;
+    ex:monitoreaParametro ex:LevaElectronica_671 .
+
+ex:Comando_CAM_OFF_671
+    a                     ex:Parametro ;
+    rdfs:label            "Comando CAM OFF"@es ;
+    ex:textoExtracto      "CAM OFF (slave) [...] eliminar la sincronización de la leva. Una vez programado este comando, la leva termina cuando se alcanza el final de su perfil."@es ;
+    ex:valor              "CAM OFF (slave)" ;
+    ex:controla           ex:LevaElectronica_671 .
+
+ex:ManualEspecificoLevaElectronica_671
+    a                     ex:Manual ;
+    rdfs:label            "Manual específico de la leva electrónica"@es ;
+    ex:textoExtracto      "Esta funcionalidad dispone de un manual específico. [...] Consulte la documentación específica para obtener más información acerca de los requisitos y el funcionamiento de la leva electrónica."@es ;
+    ex:documentadoEn      ex:LevaElectronica_671 .

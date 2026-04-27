@@ -1,0 +1,53 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_ConfiguracionPanelesJog a ex:Tabla ;
+     a ex:Tabla ;
+    rdfs:label "Tabla de configuración de paneles de jog"@es ;
+    ex:textoExtracto """
+    | Address | Elemento | Marca de PLC |
+    | --- | --- | --- |
+    | 0 | CNC |  |
+    | 1 | Grupo remoto (I/Os) |  |
+    | 2 | Panel de jog | PANELOFF1 |
+    | 3 | Grupo remoto (I/Os) |  |
+    | 4 | Grupo remoto (I/Os) |  |
+    | 5 | Panel de jog | PANELOFF2
+    """@es ;
+    ex:detalladoEnEsquema ex:Sistema_InterfazUsuario .
+
+ex:Sistema_InterfazUsuario
+    a ex:InterfazUsuario ;
+    rdfs:label "Sistema de interfaces de usuario (paneles de jog y grupos remotos)"@es ;
+    ex:textoExtracto "Se dispone de una marca para cada teclado o panel de jog. La marca PANELOFF1 deshabilita el primero del bus, la marca PANELOFF2 el segundo y así sucesivamente. Se admite PANELOFF o PANELOFF1 para el primer panel de jog."@es ;
+    ex:tieneComponente ex:PanelJog_1, ex:PanelJog_2 ;
+    ex:compuestoPor ex:GrupoRemoto_1, ex:GrupoRemoto_2, ex:GrupoRemoto_3 .
+
+ex:PanelJog_1
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de jog 1"@es ;
+    ex:identificador "PANELOFF1" ;
+    ex:textoExtracto "Panel de jog con marca PANELOFF1 en dirección 2 del bus."@es .
+
+ex:PanelJog_2
+    a ex:InterfazUsuario ;
+    rdfs:label "Panel de jog 2"@es ;
+    ex:identificador "PANELOFF2" ;
+    ex:textoExtracto "Panel de jog con marca PANELOFF2 en dirección 5 del bus."@es .
+
+ex:GrupoRemoto_1
+    a ex:ComponenteElectrico ;
+    rdfs:label "Grupo remoto (I/Os) en dirección 1"@es ;
+    ex:textoExtracto "Grupo remoto (I/Os) en dirección 1 del bus."@es .
+
+ex:GrupoRemoto_2
+    a ex:ComponenteElectrico ;
+    rdfs:label "Grupo remoto (I/Os) en dirección 3"@es ;
+    ex:textoExtracto "Grupo remoto (I/Os) en dirección 3 del bus."@es .
+
+ex:GrupoRemoto_3
+    a ex:ComponenteElectrico ;
+    rdfs:label "Grupo remoto (I/Os) en dirección 4"@es ;
+    ex:textoExtracto "Grupo remoto (I/Os) en dirección 4 del bus."@es .

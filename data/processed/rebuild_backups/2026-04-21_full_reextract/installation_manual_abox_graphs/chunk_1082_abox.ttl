@@ -1,0 +1,25 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_DEFAULTSET a ex:Parametro ;
+    rdfs:label "DEFAULTSET" ;
+    ex:textoExtracto "parámetro DEFAULTSET" ;
+    ex:identificador "DEFAULTSET" .
+
+ex:Sistema_ReguladorSercos a ex:Sistema ;
+    rdfs:label "Regulador Sercos" ;
+    ex:textoExtracto "regulador Sercos" ;
+    ex:monitoreaParametro ex:Parametro_DEFAULTSET .
+
+ex:InterfazUsuario_CNC a ex:InterfazUsuario ;
+    rdfs:label "CNC" ;
+    ex:textoExtracto "El CNC asume el set por defecto del eje (parámetro DEFAULTSET)" ;
+    ex:controla ex:Sistema_ReguladorSercos .
+
+ex:ComponenteElectrico_PLC a ex:ComponenteElectrico ;
+    rdfs:label "PLC" ;
+    ex:textoExtracto "maniobra del PLC" ;
+    ex:controla ex:Sistema_ReguladorSercos ;
+    ex:monitoreaParametro ex:Parametro_DEFAULTSET .

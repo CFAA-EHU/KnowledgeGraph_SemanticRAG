@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Parametro_G00FEED
+    a ex:Parametro ;
+    rdfs:label "G00FEED" ;
+    ex:textoExtracto "avance rápido definido en el parámetro G00FEED" ;
+    ex:monitoreaParametro ex:ModoOperacion_G0 .
+
+ex:Parametro_G0MODAL
+    a ex:Parametro ;
+    rdfs:label "G0MODAL" ;
+    ex:identificador "G0MODAL" ;
+    ex:textoExtracto "Parámetro G0MODAL; mantener la función G0 modal o no. Valores posibles: Sí / No. Valor por defecto: Sí." ;
+    ex:valor "Sí" .
+
+ex:ModoOperacion_G0
+    a ex:ModoOperacion ;
+    rdfs:label "G0" ;
+    ex:identificador "G0" ;
+    ex:textoExtracto "El CNC asume la función G0. Los desplazamientos en G0 se realizan al avance rápido definido en el parámetro G00FEED. El CNC visualiza G0 en la historia de funciones G. Al acceder al modo MDI/MDA y programar un movimiento sin G, el CNC lo ejecuta en G0. Al programar un movimiento desde el modo manual, el eje se mueve en G0." .
+
+ex:ModoOperacion_G1
+    a ex:ModoOperacion ;
+    rdfs:label "G1" ;
+    ex:identificador "G1" ;
+    ex:textoExtracto "El CNC asume la función G1. Los desplazamientos en G1 se realizan al avance activo en el CNC. El CNC no visualiza G1 en la historia de funciones G. Al acceder al modo MDI/MDA y programar un movimiento sin G, el CNC lo ejecuta en G1. Al programar un movimiento desde el modo manual, el eje se mueve en G1." .
+
+ex:Variable_V_MPG_G0MODAL
+    a ex:Parametro ;
+    rdfs:label "(V.)[ch].MPG.G0MODAL" ;
+    ex:identificador "(V.)[ch].MPG.G0MODAL" ;
+    ex:textoExtracto "Variable asociada: (V.)[ch].MPG.G0MODAL" ;
+    ex:monitoreaParametro ex:Parametro_G0MODAL .
+
+ex:Configuracion_IMOVE_G0
+    a ex:Parametro ;
+    rdfs:label "IMOVE=G0" ;
+    ex:identificador "IMOVE=G0" ;
+    ex:textoExtracto "El valor IMOVE=G0 tiene prioridad sobre G0MODAL=No. Aunque la función G0 esté definida como no-modal, con IMOVE=G0 el CNC asume la función G0 en el arranque, tras un reset o M30." ;
+    ex:controla ex:ModoOperacion_G0 .

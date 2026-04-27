@@ -1,0 +1,64 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Alarma_3000
+    a               ex:Alarma ;
+    rdfs:label      "No se puede programar una trayectoria circular con un eje esclavo"@es ;
+    ex:identificador "3000" ;
+    ex:textoExtracto """
+    3000 'No se puede programar una trayectoria circular con un eje esclavo'
+    DETECCIÓN Durante la ejecución.
+    CAUSA El CNC intenta mover individualmente el eje esclavo de un acoplo o de un eje gantry.
+    SOLUCIÓN Un eje esclavo no se puede desplazar individualmente. Para desplazar un eje esclavo, hay que desplazar el eje maestro al que se encuentra asociado.
+    """@es .
+
+ex:Alarma_3001
+    a               ex:Alarma ;
+    rdfs:label      "No se puede mover un eje en modo visualizador"@es ;
+    ex:identificador "3001" ;
+    ex:textoExtracto """
+    3001 'No se puede mover un eje en modo visualizador'
+    DETECCIÓN Durante la ejecución.
+    CAUSA El CNC intenta desplazar un eje que se encuentra en modo visualizador.
+    SOLUCIÓN El CNC no puede desplazar los ejes activos en modo visualizador. Para desplazar el eje, desactivar el modo visualizador (marca DRO(axis) del PLC).
+    """@es .
+
+ex:Alarma_3002
+    a               ex:Alarma ;
+    rdfs:label      "Límite positivo de software sobrepasado"@es ;
+    ex:identificador "3002" ;
+    ex:textoExtracto """
+    3002 'Límite positivo de software sobrepasado'
+    DETECCIÓN Durante la reposición de un eje.
+    CAUSA Durante el movimiento de reposicionamiento, el eje ha alcanzado los límites de software. Si el punto de reposición está fuera de los límites de software, el eje no puede alcanzar dicho punto.
+    SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC.
+    """@es .
+
+ex:Alarma_3003
+    a               ex:Alarma ;
+    rdfs:label      "Límite negativo de software sobrepasado"@es ;
+    ex:identificador "3003" ;
+    ex:textoExtracto """
+    3003 'Límite negativo de software sobrepasado'
+    DETECCIÓN Durante la reposición de un eje.
+    CAUSA Durante el movimiento de reposicionamiento, el eje ha alcanzado los límites de software. Si el punto de reposición está fuera de los límites de software, el eje no puede alcanzar dicho punto.
+    SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC.
+    """@es .
+
+ex:Alarma_3005
+    a               ex:Alarma ;
+    rdfs:label      "Error del control de posición en la inicialización del proceso de palpador"@es ;
+    ex:identificador "3005" ;
+    ex:textoExtracto """
+    3005 'Error del control de posición en la inicialización del proceso de palpador'
+    DETECCIÓN En la inicialización del proceso de palpado.
+    CAUSA Es una seguridad de habilitación del proceso de palpado. Algún eje programado no es válido o no está disponible.
+    """@es .
+
+ex:Sistema_CNC
+    a               ex:Sistema ;
+    rdfs:label      "Sistema CNC"@es ;
+    ex:textoExtracto "El CNC intenta mover individualmente el eje esclavo de un acoplo o de un eje gantry."@es ;
+    ex:activaAlarma  ex:Alarma_3000 , ex:Alarma_3001 , ex:Alarma_3002 , ex:Alarma_3003 , ex:Alarma_3005 .

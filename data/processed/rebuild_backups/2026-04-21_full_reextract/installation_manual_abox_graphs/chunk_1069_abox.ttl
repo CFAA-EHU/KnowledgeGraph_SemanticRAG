@@ -1,0 +1,45 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:EjeTandem_1069
+    a                     ex:Sistema ;
+    rdfs:label            "Eje tándem (configuración maestro-esclavo)"@es ;
+    ex:textoExtracto      "La aplicación del valor de precarga implica necesariamente la unión mecánica entre los motores maestro y esclavo que forman el eje tándem. De no ser así, los motores se moverán incluso sin consigna de control."@es ;
+    ex:tieneComponente    ex:MotorMaestro_1069, ex:MotorEsclavo_1069, ex:FiltroPrecarga_1069, ex:ControladorPI_1069 .
+
+ex:MotorMaestro_1069
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Motor maestro (eje tándem)"@es ;
+    ex:textoExtracto      "los pares suministrados por los motores maestro y esclavo"@es ;
+    ex:monitoreaParametro  ex:ParametroParMaestro_1069 .
+
+ex:MotorEsclavo_1069
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Motor esclavo (eje tándem)"@es ;
+    ex:textoExtracto      "los pares suministrados por los motores maestro y esclavo"@es ;
+    ex:monitoreaParametro  ex:ParametroParEsclavo_1069 .
+
+ex:FiltroPrecarga_1069
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Filtro de precarga (primer orden)"@es ;
+    ex:textoExtracto      "Filtro de primer orden cuyo fin es evitar la entrada de escalones de par al configurar la precarga."@es .
+
+ex:ControladorPI_1069
+    a                     ex:ComponenteElectrico ;
+    rdfs:label            "Controlador PI del tándem"@es ;
+    ex:textoExtracto      "PI del tándem. PI cuya función es conseguir que cada motor realice el par que le corresponde. Incrementa su consigna de velocidad si el par que se suministra es demasiado pequeño y la reduce si el par suministrado es demasiado elevado."@es ;
+    ex:controla           ex:MotorMaestro_1069, ex:MotorEsclavo_1069 .
+
+ex:ParametroParMaestro_1069
+    a                     ex:Parametro ;
+    rdfs:label            "Par suministrado (motor maestro)"@es ;
+    ex:textoExtracto      "los pares suministrados por los motores maestro y esclavo"@es ;
+    ex:valor              "diferencia de par (precarga)"@es .
+
+ex:ParametroParEsclavo_1069
+    a                     ex:Parametro ;
+    rdfs:label            "Par suministrado (motor esclavo)"@es ;
+    ex:textoExtracto      "los pares suministrados por los motores maestro y esclavo"@es ;
+    ex:valor              "diferencia de par (precarga)"@es .

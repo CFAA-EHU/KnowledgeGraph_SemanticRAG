@@ -1,0 +1,80 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Error4603
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 4603: Error en la fase de configuración del bus" ;
+    ex:textoExtracto "4603 Error en la fase de configuración del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la fase de configuración de esclavos conectados al bus. SOLUCIÓN Póngase en contacto con Fagor Automation." ;
+    ex:identificador "4603" .
+
+ex:Error4604
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 4604: Error en la fase preoperacional del bus" ;
+    ex:textoExtracto "4604 Error en la fase preoperacional del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la transición a la fase preoperacional del bus. En el caso de EtherCAT (código adicional de error ID 330-xxx), es posible que el archivo ENI de configuración sea incorrecto porque algún archivo ESI de los esclavos no sea adecuado." ;
+    ex:identificador "4604" .
+
+ex:Error4605
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 4605: Error en la fase operacional del bus" ;
+    ex:textoExtracto "4605 Error en la fase operacional del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la transición a la fase operacional del bus. En el caso de EtherCAT (código adicional de error ID 330-xxx), es posible que algún nodo esté en estado de error o que el archivo ENI de configuración sea incorrecto." ;
+    ex:identificador "4605" .
+
+ex:Error4606
+    a ex:AvisoSeguridad ;
+    rdfs:label "Error 4606: Error en comando de preparación del bus" ;
+    ex:textoExtracto "4606 Error en comando de preparación del bus. DETECCIÓN Durante el arranque del CNC." ;
+    ex:identificador "4606" .
+
+ex:BusEtherCAT
+    a ex:Sistema ;
+    rdfs:label "Bus EtherCAT" ;
+    ex:textoExtracto "En el caso de EtherCAT (código adicional de error ID 330-xxx), es posible que el archivo ENI de configuración sea incorrecto porque algún archivo ESI de los esclavos no sea adecuado." .
+
+ex:Error4603 a ex:AvisoSeguridad ;
+    ex:mitigaRiesgo ex:BusEtherCAT .
+
+ex:Error4604 a ex:AvisoSeguridad ;
+    ex:mitigaRiesgo ex:BusEtherCAT .
+
+ex:Error4605 a ex:AvisoSeguridad ;
+    ex:mitigaRiesgo ex:BusEtherCAT .
+
+ex:EmpresaFagorAutomation
+    a ex:Empresa ;
+    rdfs:label "Fagor Automation" ;
+    ex:textoExtracto "Póngase en contacto con Fagor Automation." .
+
+ex:Error4603 a ex:AvisoSeguridad ;
+    ex:solucionaFallo ex:EmpresaFagorAutomation .
+
+ex:Error4604 a ex:AvisoSeguridad ;
+    ex:solucionaFallo ex:EmpresaFagorAutomation .
+
+ex:Error4605 a ex:AvisoSeguridad ;
+    ex:solucionaFallo ex:EmpresaFagorAutomation .
+
+ex:Error4606 a ex:AvisoSeguridad ;
+    ex:solucionaFallo ex:EmpresaFagorAutomation .
+
+ex:ArchivoENI
+    a ex:InterfazUsuario ;
+    rdfs:label "Archivo ENI de configuración" ;
+    ex:textoExtracto "es posible que el archivo ENI de configuración sea incorrecto porque algún archivo ESI de los esclavos no sea adecuado." ;
+    ex:identificador "ENI" .
+
+ex:ArchivoESI
+    a ex:InterfazUsuario ;
+    rdfs:label "Archivo ESI de esclavos" ;
+    ex:textoExtracto "algún archivo ESI de los esclavos no sea adecuado." ;
+    ex:identificador "ESI" .
+
+ex:HerramientaKPA
+    a ex:Herramienta ;
+    rdfs:label "Herramienta KPA" ;
+    ex:textoExtracto "Volver a generar el archivo ENI de configuración utilizando la herramienta KPA, siguiendo los pasos adecuados para generar el archivo." ;
+    ex:identificador "KPA" .
+
+ex:HerramientaKPA
+    ex:controla ex:ArchivoENI .

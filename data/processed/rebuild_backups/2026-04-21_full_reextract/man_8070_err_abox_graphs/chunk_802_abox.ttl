@@ -1,0 +1,55 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:_9327_Alarma_Mechatrolink
+    a               ex:Alarma ;
+    rdfs:label      "Alarma 9327: Número máximo de ejes y cabezales sobrepasado"@es ;
+    ex:identificador "9327" ;
+    ex:textoExtracto "9327 'Mechatrolink:Número máximo de ejes y cabezales sobrepasado' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC."@es ;
+    ex:monitoreaParametro ex:Parametro_Mechatrolink_EjesMaximos .
+
+ex:Parametro_Mechatrolink_EjesMaximos
+    a               ex:Parametro ;
+    rdfs:label      "Número máximo de ejes y cabezales (servos e inverters) en Mechatrolink"@es ;
+    ex:textoExtracto "La configuración Mechatrolink supera el máximo permitido de ejes y cabezales (servos e inverters). El modo Mlink-I admite un máximo de 14 elementos y el modo Mlink-II 30 elementos."@es ;
+    ex:valor         "14 (Mlink-I) / 30 (Mlink-II)" .
+
+ex:Parametro_Mechatrolink_SlotTime
+    a               ex:Parametro ;
+    rdfs:label      "Slot Time en Mechatrolink"@es ;
+    ex:textoExtracto "Utilizar una ranura de tiempo (Slot Time) de 90 microsegundos en vez de 60, también reduce el número máximo de reguladores."@es ;
+    ex:valor         "60-90 microsegundos" .
+
+ex:Sistema_Mechatrolink
+    a               ex:Sistema ;
+    rdfs:label      "Sistema Mechatrolink"@es ;
+    ex:textoExtracto "La configuración Mechatrolink supera el máximo permitido de ejes y cabezales (servos e inverters)."@es ;
+    ex:tieneComponente ex:ComponenteElectrico_Servos ,
+                      ex:ComponenteElectrico_Inverters ;
+    ex:controla     ex:Parametro_Mechatrolink_EjesMaximos ,
+                      ex:Parametro_Mechatrolink_SlotTime .
+
+ex:ComponenteElectrico_Servos
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Servos (ejes y cabezales)"@es ;
+    ex:textoExtracto "ejes y cabezales (servos e inverters)"@es .
+
+ex:ComponenteElectrico_Inverters
+    a               ex:ComponenteElectrico ;
+    rdfs:label      "Inverters"@es ;
+    ex:textoExtracto "ejes y cabezales (servos e inverters)"@es .
+
+ex:ModoOperacion_MlinkI
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo Mlink-I"@es ;
+    ex:textoExtracto "El modo Mlink-I admite un máximo de 14 elementos"@es ;
+    ex:controla     ex:Parametro_Mechatrolink_EjesMaximos .
+
+ex:ModoOperacion_MlinkII
+    a               ex:ModoOperacion ;
+    rdfs:label      "Modo Mlink-II"@es ;
+    ex:textoExtracto "el modo Mlink-II 30 elementos"@es ,
+                     "utilizar el modo Mlink-II"@es ;
+    ex:controla     ex:Parametro_Mechatrolink_EjesMaximos .

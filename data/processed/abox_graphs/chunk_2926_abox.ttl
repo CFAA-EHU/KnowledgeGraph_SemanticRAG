@@ -1,0 +1,58 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:SistemaEtherCAT a ns1:Sistema ;
+    rdfs:label "Sistema de nodos EtherCAT" ;
+    ns1:textoExtracto "Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." ;
+    ns1:tieneComponente ns1:NodoEtherCAT_Generico .
+
+ns1:EmergenciaSoftwareInterno a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 24667: Emergencia en software interno" ;
+    ns1:identificador "24667" ;
+    ns1:solucionaFallo ns1:ConsultaManualNodo_EtherCAT ;
+    ns1:textoExtracto "24667 Emergencia en software interno. DETECCIÓN Durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+
+ns1:EntradaPT100_RotaNoConectada a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 24664: Entrada PT100 rota o no conectada" ;
+    ns1:identificador "24664" ;
+    ns1:solucionaFallo ns1:ConsultaManualNodo_EtherCAT ;
+    ns1:textoExtracto "24664 Entrada PT100 rota o no conectada. DETECCIÓN Durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+
+ns1:FalloTesteoMemoria_EtherCAT a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 24663: Testeo de memoria" ;
+    ns1:identificador "24663" ;
+    ns1:solucionaFallo ns1:ConsultaManualNodo_EtherCAT ;
+    ns1:textoExtracto "24663 Falló el testeo de memoria. DETECCIÓN Durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+
+ns1:FaltaTension24V_PlacaIOsDigitales a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 24665: Placa de IOs digitales sin tensión de +24 V" ;
+    ns1:identificador "24665" ;
+    ns1:solucionaFallo ns1:ConsultaManualNodo_EtherCAT ;
+    ns1:textoExtracto "24665 Placa de IOs digitales: No hay tensión de +24 V. DETECCIÓN Durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+
+ns1:IDPlacaAnalogicaIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 24668: Identificador de placa analógica incorrecto" ;
+    ns1:identificador "24668" ;
+    ns1:solucionaFallo ns1:ConsultaManualNodo_EtherCAT ;
+    ns1:textoExtracto "24668 Identificador de placa analógica incorrecto. DETECCIÓN Durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+
+ns1:NodoEtherCAT_Generico a ns1:ComponenteElectrico ;
+    rdfs:label "Nodo EtherCAT" ;
+    ns1:activaAlarma ns1:EmergenciaSoftwareInterno,
+        ns1:EntradaPT100_RotaNoConectada,
+        ns1:FalloTesteoMemoria_EtherCAT,
+        ns1:FaltaTension24V_PlacaIOsDigitales,
+        ns1:IDPlacaAnalogicaIncorrecto,
+        ns1:ReinicioPorWatchdog ;
+    ns1:textoExtracto "nodo EtherCAT" .
+
+ns1:ReinicioPorWatchdog a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 24666: Reinicio tras watchdog" ;
+    ns1:identificador "24666" ;
+    ns1:solucionaFallo ns1:ConsultaManualNodo_EtherCAT ;
+    ns1:textoExtracto "24666 El dispositivo se ha reiniciado después de un watchdog. DETECCIÓN Durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+
+ns1:ConsultaManualNodo_EtherCAT a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar manual específico del nodo EtherCAT" ;
+    ns1:textoExtracto "Se recomienda consultar en el manual específico del nodo, la información de diagnosis o el valor adicional que acompaña al error (código hexadecimal de la emergencia)." .
+

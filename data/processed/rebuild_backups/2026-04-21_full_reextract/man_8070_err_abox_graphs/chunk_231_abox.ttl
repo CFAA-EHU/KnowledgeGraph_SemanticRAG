@@ -1,0 +1,40 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:FalloSincronizacionCabezales_1600
+    a                     ex:DiagnosticoFallo ;
+    rdfs:label            "Fallo 1600: Cabezal sincronizado no puede trabajar como eje C o en G63"@es ;
+    ex:identificador      "1600" ;
+    ex:textoExtracto      "1600 'Un cabezal sincronizado no puede trabajar como eje C o en G63' [...] Durante la sincronización de dos cabezales, el CNC no permite el cambio de gama en ninguno de ellos. [...] El CNC ha intentado sincronizar un cabezal y éste está trabajando como eje C o tiene la función G63 activa."@es .
+
+ex:SistemaCNC
+    a                     ex:Sistema ;
+    rdfs:label            "Sistema CNC de control de cabezales"@es ;
+    ex:textoExtracto      "el CNC no permite el cambio de gama [...] El CNC ha intentado sincronizar un cabezal"@es ;
+    ex:activaAlarma        ex:FalloSincronizacionCabezales_1600 .
+
+ex:Componente_Cabezal
+    a                     ex:ComponenteMecanico ;
+    rdfs:label            "Cabezal sincronizable"@es ;
+    ex:textoExtracto      "sincronización de dos cabezales [...] un cabezal sincronizado no puede trabajar como eje C"@es ;
+    ex:controla           ex:SistemaCNC .
+
+ex:ModoOperacion_EjeC
+    a                     ex:ModoOperacion ;
+    rdfs:label            "Modo de operación como eje C"@es ;
+    ex:textoExtracto      "trabajando como eje C"@es .
+
+ex:Parametro_G63
+    a                     ex:Parametro ;
+    rdfs:label            "Función G63 (control de rosca)"@es ;
+    ex:identificador      "G63" ;
+    ex:textoExtracto      "tiene la función G63 activa"@es ;
+    ex:monitoreaParametro ex:SistemaCNC .
+
+ex:AvisoSeguridad_DesbloqueoSincronizacion
+    a                     ex:AvisoSeguridad ;
+    rdfs:label            "Procedimiento para cancelar sincronización de cabezales"@es ;
+    ex:textoExtracto      "Cancelar la sincronización para cambiar la gama del cabezal."@es ;
+    ex:mitigaRiesgo        ex:FalloSincronizacionCabezales_1600 .

@@ -1,0 +1,81 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Fallo_9722 a ex:DiagnosticoFallo ;
+    rdfs:label "Sobrecarga en el motor" ;
+    ex:textoExtracto "9722 Sobrecarga en el motor. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Protección I²t del motor. El ciclo de trabajo es demasiado exigente para el motor. SOLUCIÓN Adecuar el ciclo de trabajo, reducir el par aplicado al motor o utilizar un motor de mayor par." ;
+    ex:solucionaFallo [
+        a ex:AccionProhibida ;
+        rdfs:label "Ciclo de trabajo excesivo para el motor" ;
+        ex:textoExtracto "El ciclo de trabajo es demasiado exigente para el motor."
+    ] ;
+    ex:monitoreaParametro [
+        a ex:Parametro ;
+        rdfs:label "Protección I²t del motor" ;
+        ex:textoExtracto "Protección I²t del motor."
+    ] .
+
+ex:Fallo_9723 a ex:DiagnosticoFallo ;
+    rdfs:label "Error de saturación de par" ;
+    ex:textoExtracto "9723 Error de saturación de par. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Las posibles causas son las siguientes: • El accionamiento ha sufrido un bloqueo y no ha podido girar con libertad. • Con par motor muy elevado la velocidad de giro no ha superado GP8 durante un tiempo superior a GP7." ;
+    ex:monitoreaParametro [
+        a ex:Parametro ;
+        rdfs:label "GP7" ;
+        ex:identificador "GP7" ;
+        ex:textoExtracto "tiempo límite para superar GP8."
+    ] ,
+    [
+        a ex:Parametro ;
+        rdfs:label "GP8" ;
+        ex:identificador "GP8" ;
+        ex:textoExtracto "velocidad de giro no superada."
+    ] ,
+    [
+        a ex:Parametro ;
+        rdfs:label "NP116" ;
+        ex:identificador "NP116" ;
+        ex:textoExtracto "valor parametrizado (con motores no Fagor)."
+    ] ,
+    [
+        a ex:Parametro ;
+        rdfs:label "RV3" ;
+        ex:identificador "RV3" ;
+        ex:textoExtracto "valor correcto (o RP5 si se dispone de resolver)."
+    ] ;
+    ex:solucionaFallo [
+        a ex:TareaMantenimiento ;
+        rdfs:label "Liberar accionamiento bloqueado" ;
+        ex:textoExtracto "Liberar el accionamiento y si el error se repite sin un motivo aumentar los valores de GP7 y/o GP8."
+    ] ,
+    [
+        a ex:TareaMantenimiento ;
+        rdfs:label "Verificar conexionado eléctrico" ;
+        ex:textoExtracto "Comprobar que no existen dos fases intercambiadas y que los cables de potencia tienen un buen contacto en su amarre. Comprobar que el cable de captación no está deteriorado y que el conexionado entre pines es correcto."
+    ] .
+
+ex:Fallo_9724 a ex:DiagnosticoFallo ;
+    rdfs:label "Error en el seguimiento de la rampa de emergencia en frenada" ;
+    ex:textoExtracto "9724 Error en el seguimiento de la rampa de emergencia en frenada. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA La parada del eje o cabezal no puede seguir la rampa de emergencia (parámetros EMERGVELMAX y EMERGTIMEMAX)." ;
+    ex:monitoreaParametro [
+        a ex:Parametro ;
+        rdfs:label "EMERGVELMAX" ;
+        ex:identificador "EMERGVELMAX" ;
+        ex:textoExtracto "parámetro de velocidad máxima en rampa de emergencia."
+    ] ,
+    [
+        a ex:Parametro ;
+        rdfs:label "EMERGTIMEMAX" ;
+        ex:identificador "EMERGTIMEMAX" ;
+        ex:textoExtracto "parámetro de tiempo máximo en rampa de emergencia."
+    ] .
+
+ex:Motor a ex:ComponenteElectrico ;
+    rdfs:label "Motor" ;
+    ex:textoExtracto "Protección I²t del motor. El ciclo de trabajo es demasiado exigente para el motor." ;
+    ex:tieneFrecuencia [
+        a ex:Frecuencia ;
+        rdfs:label "Ciclo de trabajo del motor" ;
+        ex:textoExtracto "El ciclo de trabajo es demasiado exigente para el motor."
+    ] .

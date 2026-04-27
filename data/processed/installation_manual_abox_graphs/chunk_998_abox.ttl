@@ -1,64 +1,19 @@
-@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-PREFIX ex: <https://vocab.cfaa.eus/broaching/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-ex:RutinaM06 a ex:TareaMantenimiento ;
-    rdfs:label "Rutina M06 (Cambio de herramienta)"@es ;
-    ex:textoExtracto """
-LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2.
-LL SUB_ARM_BACK ; Retirar el brazo cambiador.
-LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual.
-LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal.
-LL SUB_CH2_TO_MZ ; Comenzar el envío del brazo cambiador al almacén para dejar la herramienta.
-$CASE 7 ; Dejar la herramienta del cabezal en tierra, y coger otra del almacén.
-; Previamente, durante el mecanizado (al ejecutar T), se pone la herramienta del almacén en la pinza 1."""@es ;
-    ex:identificador "M06" ;
-    ex:requiereMantenimiento ex:SistemaCambioHerramienta .
+ns1:LEAVEPOS a ns1:Sensor ;
+    rdfs:label "LEAVEPOS" ;
+    ns1:textoExtracto "señales TAKEPOS, LEAVEPOS, NEXTPOS y MZID están implicadas" .
 
-ex:SistemaCambioHerramienta a ex:Sistema ;
-    rdfs:label "Sistema de cambio automático de herramienta"@es ;
-    ex:textoExtracto """
-LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2.
-LL SUB_ARM_BACK ; Retirar el brazo cambiador.
-LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual.
-LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal.
-LL SUB_CH2_TO_MZ ; Comenzar el envío del brazo cambiador al almacén para dejar la herramienta."""@es ;
-    ex:tieneComponente ex:Pinza2 ;
-    ex:tieneComponente ex:Pinza1 ;
-    ex:tieneComponente ex:BrazoCambiador ;
-    ex:tieneComponente ex:CabezalHerramienta ;
-    ex:tieneComponente ex:AlmacenHerramientas ;
-    ex:controla ex:SenalTCHANGEOK .
+ns1:MZID a ns1:Sensor ;
+    rdfs:label "MZID" ;
+    ns1:textoExtracto "señales TAKEPOS, LEAVEPOS, NEXTPOS y MZID están implicadas" .
 
-ex:Pinza2 a ex:ComponenteMecanico ;
-    rdfs:label "Pinza 2 (sujeción de herramienta)"@es ;
-    ex:textoExtracto "Coger la herramienta del cabezal con la pinza 2."@es .
+ns1:NEXTPOS a ns1:Sensor ;
+    rdfs:label "NEXTPOS" ;
+    ns1:textoExtracto "señales TAKEPOS, LEAVEPOS, NEXTPOS y MZID están implicadas" .
 
-ex:Pinza1 a ex:ComponenteMecanico ;
-    rdfs:label "Pinza 1 (sujeción de herramienta)"@es ;
-    ex:textoExtracto "se pone la herramienta del almacén en la pinza 1."@es .
+ns1:TAKEPOS a ns1:Sensor ;
+    rdfs:label "TAKEPOS" ;
+    ns1:textoExtracto "señales TAKEPOS, LEAVEPOS, NEXTPOS y MZID están implicadas" .
 
-ex:BrazoCambiador a ex:ComponenteMecanico ;
-    rdfs:label "Brazo cambiador de herramientas"@es ;
-    ex:textoExtracto """
-LL SUB_ARM_BACK ; Retirar el brazo cambiador.
-LL SUB_CH2_TO_MZ ; Comenzar el envío del brazo cambiador al almacén para dejar la herramienta."""@es .
-
-ex:CabezalHerramienta a ex:ComponenteMecanico ;
-    rdfs:label "Cabezal de herramienta"@es ;
-    ex:textoExtracto """
-LL SUB_SPD_TO_CH2 ; Coger la herramienta del cabezal con la pinza 2.
-LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual.
-LL SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal."""@es .
-
-ex:AlmacenHerramientas a ex:ComponenteMecanico ;
-    rdfs:label "Almacén de herramientas"@es ;
-    ex:textoExtracto """
-LL SUB_CH2_TO_MZ ; Comenzar el envío del brazo cambiador al almacén para dejar la herramienta.
-$CASE 7 ; Dejar la herramienta del cabezal en tierra, y coger otra del almacén."""@es .
-
-ex:SenalTCHANGEOK a ex:InterfazUsuario ;
-    rdfs:label "Señal TCHANGEOK (confirmación de cambio)"@es ;
-    ex:textoExtracto "V.PLC.M[1100]=1 ; Orden al PLC para que active la marca TCHANGEOK, indicando al gestor que puede continuar la ejecución."@es ;
-    ex:identificador "TCHANGEOK" .

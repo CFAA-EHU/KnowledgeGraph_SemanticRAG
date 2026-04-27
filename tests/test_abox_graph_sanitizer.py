@@ -40,6 +40,8 @@ ex:Pagina a owl:Class .
 ex:InterfazUsuario a owl:Class .
 ex:Parametro a owl:Class .
 ex:TareaMantenimiento a owl:Class .
+ex:ModoOperacion a owl:Class .
+ex:Tabla a owl:Class .
 
 ex:tieneComponente a owl:ObjectProperty .
 ex:identificador a owl:DatatypeProperty .
@@ -98,6 +100,62 @@ class AboxGraphSanitizerTests(unittest.TestCase):
         self.assertEqual([str(obj) for obj in sanitized.objects(targets[0], EX.identificador)], ["ENC-1"])
         self.assertTrue(any(True for _ in sanitized.triples((targets[0], RDF.type, EX.Sensor))))
 
+    def test_rdf_type_object_is_not_minted_or_rewritten(self) -> None:
+        graph = load_graph_from_text(
+            """
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+            ex:Maquina a ex:Componente ;
+                rdfs:label "Maquina como recurso descrito" ;
+                ex:identificador "M-1" ;
+                ex:textoExtracto "Recurso descrito para probar la proteccion de rdf:type." .
+            ex:SistemaX a ex:Maquina .
+            """
+        )
+
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+        self.assertIn((EX.SistemaX, RDF.type, EX.Maquina), sanitized)
+        self.assertGreaterEqual(report.type_object_minting_prevented, 1)
+
+    def test_texto_extracto_is_not_used_as_primary_uri_surface(self) -> None:
+        long_extract = (
+            "Es el almacen tipico de torno para efectuar el cambio el almacen gira "
+            "hasta posicionar la herramienta solicitada y despues se ejecuta la secuencia."
+        )
+        graph = load_graph_from_text(
+            f"""
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            [] a ex:Sistema ;
+                ex:textoExtracto {json.dumps(long_extract)} .
+            """
+        )
+
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+        subject = next(sanitized.subjects(RDF.type, EX.Sistema))
+        local_name = str(subject).rsplit("/", 1)[-1]
+        self.assertRegex(local_name, r"^Sistema_[0-9a-f]{10}$")
+        self.assertLessEqual(len(local_name), 80)
+        self.assertEqual(report.hash_due_to_weak_identity, 1)
+
+    def test_long_new_local_name_is_truncated_with_hash(self) -> None:
+        long_label = "Sistema " + ("Cambio Herramienta " * 10)
+        graph = load_graph_from_text(
+            f"""
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+            [] a ex:Sistema ;
+                rdfs:label {json.dumps(long_label)} ;
+                ex:textoExtracto "Sistema de cambio de herramienta." .
+            """
+        )
+
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+        subject = next(sanitized.subjects(RDF.type, EX.Sistema))
+        local_name = str(subject).rsplit("/", 1)[-1]
+        self.assertLessEqual(len(local_name), 80)
+        self.assertRegex(local_name, r"_[0-9a-f]{10}$")
+        self.assertEqual(report.long_local_name_truncated, 1)
+
     def test_file_iris_are_replaced_or_purged(self) -> None:
         graph = load_graph_from_text(
             """
@@ -127,6 +185,74 @@ class AboxGraphSanitizerTests(unittest.TestCase):
         sanitized, _ = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
         types = {obj for obj in sanitized.objects(EX.ModuloX, RDF.type)}
         self.assertEqual(types, {EX.ComponenteElectrico})
+
+    def test_incidental_table_type_is_removed_from_function_entity(self) -> None:
+        graph = load_graph_from_text(
+            """
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+            ex:Funcion_DMC a ex:ModoOperacion, ex:Tabla ;
+                rdfs:label "Función #DMC" ;
+                ex:identificador "#DMC" ;
+                ex:textoExtracto "En la función #DMC, el avance mínimo es mayor que el avance máximo." .
+            """
+        )
+
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+        subject = next(sanitized.subjects(RDFS.label, Literal("Función #DMC")))
+        types = {obj for obj in sanitized.objects(subject, RDF.type)}
+        self.assertEqual(types, {EX.ModoOperacion})
+        self.assertEqual(report.incidental_table_types_removed, 1)
+
+    def test_real_table_type_is_preserved(self) -> None:
+        graph = load_graph_from_text(
+            """
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+            ex:TablaFuncionesM a ex:Tabla ;
+                rdfs:label "Tabla de funciones M" ;
+                ex:textoExtracto "Tabla de funciones M para control de movimientos." .
+            """
+        )
+
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+        self.assertIn((EX.TablaFuncionesM, RDF.type, EX.Tabla), sanitized)
+        self.assertEqual(report.incidental_table_types_removed, 0)
+
+    def test_missing_type_is_inferred_from_property_domain(self) -> None:
+        graph = load_graph_from_text(
+            """
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+            ex:DepositoRefrigeracion200L rdfs:label "Deposito Refrigeracion 200 L" ;
+                ex:requiereConsumible ex:AceiteCorte .
+            ex:AceiteCorte a ex:Consumible ;
+                rdfs:label "Aceite de corte" ;
+                ex:textoExtracto "Aceite de corte." .
+            """
+        )
+
+        self.tbox_graph.add((EX.Consumible, RDF.type, URIRef("http://www.w3.org/2002/07/owl#Class")))
+        self.tbox_graph.add((EX.requiereConsumible, RDFS.domain, EX.Sistema))
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+        self.assertIn((EX.DepositoRefrigeracion200L, RDF.type, EX.Sistema), sanitized)
+        self.assertEqual(report.inferred_missing_types, 1)
+
+    def test_minimal_traceability_is_added_from_label(self) -> None:
+        graph = load_graph_from_text(
+            """
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+            ex:OVERTEMP a ex:InterfazUsuario ;
+                rdfs:label "OVERTEMP" ;
+                ex:identificador "OVERTEMP" .
+            """
+        )
+
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+        subject = next(sanitized.subjects(RDFS.label, Literal("OVERTEMP")))
+        self.assertEqual([str(obj) for obj in sanitized.objects(subject, EX.textoExtracto)], ["OVERTEMP"])
+        self.assertEqual(report.texto_extracto_added_from_traceability, 1)
 
     def test_texto_extracto_equal_to_chunk_is_removed(self) -> None:
         chunk_text = "Este es el texto completo del chunk y no describe de forma especifica la entidad."

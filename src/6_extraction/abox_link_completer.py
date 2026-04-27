@@ -13,6 +13,7 @@ from collections import Counter
 from typing import Any
 
 from rdflib import Graph, URIRef
+from rdflib.namespace import RDF
 
 from artifact_contracts import (
     ABOX_MINTED_ENTITY_REGISTRY_PATH,
@@ -28,6 +29,7 @@ from artifact_contracts import (
     OPERATIONAL_TBOX_PATH,
 )
 from abox_graph_sanitizer import load_mint_registry, sanitize_abox_graph, save_mint_registry
+from abox_semantic_validator import load_semantic_vocabulary, validate_abox_graph
 
 EXTRACTION_DIR = Path(__file__).resolve().parent
 if str(EXTRACTION_DIR) not in sys.path:
@@ -79,12 +81,33 @@ def clone_graph(graph: Graph) -> Graph:
     return linked
 
 
-def apply_links(base_graph: Graph, links) -> tuple[Graph, dict[str, Any], list[dict[str, Any]]]:
+def apply_links(base_graph: Graph, links, *, vocabulary) -> tuple[Graph, dict[str, Any], list[dict[str, Any]]]:
     linked = clone_graph(base_graph)
     affected_entities: set[str] = set()
     added_links = []
     already_present = []
+    typed_individuals = {
+        str(subject)
+        for subject in base_graph.subjects(RDF.type, None)
+        if isinstance(subject, URIRef)
+    }
+    skipped_self_loop = 0
+    skipped_untyped = 0
+    skipped_noncanonical_predicate = 0
+    skipped_class_as_individual = 0
     for item in links:
+        if item.source_uri == item.target_uri:
+            skipped_self_loop += 1
+            continue
+        if item.source_uri in vocabulary.classes or item.target_uri in vocabulary.classes:
+            skipped_class_as_individual += 1
+            continue
+        if item.source_uri not in typed_individuals or item.target_uri not in typed_individuals:
+            skipped_untyped += 1
+            continue
+        if item.predicate not in vocabulary.object_properties:
+            skipped_noncanonical_predicate += 1
+            continue
         triple = (URIRef(item.source_uri), URIRef(item.predicate), URIRef(item.target_uri))
         if triple in linked:
             already_present.append({
@@ -107,6 +130,10 @@ def apply_links(base_graph: Graph, links) -> tuple[Graph, dict[str, Any], list[d
         'added_target_count': len({item.target_uri for item in added_links}),
         'affected_entities_count': len(affected_entities),
         'affected_entities': sorted(affected_entities),
+        'skipped_self_loop': skipped_self_loop,
+        'skipped_untyped': skipped_untyped,
+        'skipped_noncanonical_predicate': skipped_noncanonical_predicate,
+        'skipped_class_as_individual': skipped_class_as_individual,
     }, already_present
 
 
@@ -138,7 +165,8 @@ def main() -> None:
     write_json(args.candidates_path, candidate_payload)
 
     links = detect_residual_links(enriched_graph, candidates)
-    linked_graph, stats, already_present = apply_links(enriched_graph, links)
+    vocabulary = load_semantic_vocabulary(OPERATIONAL_TBOX_PATH)
+    linked_graph, stats, already_present = apply_links(enriched_graph, links, vocabulary=vocabulary)
     tbox_graph = load_graph(OPERATIONAL_TBOX_PATH)
     mint_registry = load_mint_registry(ABOX_MINTED_ENTITY_REGISTRY_PATH)
     linked_graph, sanitization_result = sanitize_abox_graph(
@@ -146,6 +174,12 @@ def main() -> None:
         tbox_graph=tbox_graph,
         mint_registry=mint_registry,
     )
+    semantic_validation = validate_abox_graph(linked_graph, vocabulary=vocabulary)
+    if not semantic_validation.ok:
+        raise SystemExit(
+            "[link-completer] A-Box linked semantic validation failed: "
+            + json.dumps(semantic_validation.error_categories, ensure_ascii=False, sort_keys=True)
+        )
     save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -176,6 +210,7 @@ def main() -> None:
         'summary': {
             **stats,
             'sanitization': sanitization_result.to_manifest_summary(),
+            'semantic_validation': semantic_validation.to_manifest_summary(),
             'input_path': str(args.input),
             'output_path': str(args.output),
             'candidates_path': str(args.candidates_path),

@@ -637,15 +637,18 @@ Cada sujeto debe representar una entidad concreta del dominio descrito por el te
 REGLAS OBLIGATORIAS:
 1. PROHIBIDO crear clases nuevas, propiedades nuevas o vocabulario auxiliar fuera de la T-Box canonica.
 2. Si una palabra del texto no coincide exactamente con una clase permitida (por ejemplo rele, relay, conector, motor, columna luminosa, latiguillo), debes mapearla a la clase canonica mas cercana ya permitida. En este manual, conectores, reles, latiguillos y pequenos elementos de cableado deben caer normalmente en ex:ComponenteElectrico, no en clases nuevas. Nunca escribas ex:Relay, ex:Rele, ex:Conector, ex:Motor, ex:ColumnaLuminosa, ex:Documento o variantes inventadas.
-3. Todo individuo debe tener exactamente el tipo canonico mas especifico que puedas justificar con el texto. No mezcles tipos incompatibles ni dupliques un tipo generico si ya usas uno especifico.
+3. Todo individuo debe tener exactamente el tipo canonico mas especifico que puedas justificar con el texto. El objeto de rdf:type debe ser exactamente una clase de la lista permitida, nunca un individuo, label, identificador, frase, valor o URI creada desde el texto. No mezcles tipos incompatibles ni dupliques un tipo generico si ya usas uno especifico.
 4. Cada individuo extraido debe llevar ex:textoExtracto con una cita literal o fragmento fiel del texto fuente que justifica su existencia.
 4.b. Conserva el idioma original del fragmento en los literales textuales. Si el chunk esta en ingles, no traduzcas ex:textoExtracto ni rdfs:label de cita textual; si esta en espanol, mantenlos en espanol.
-5. Usa ex:identificador solo para codigos, referencias, directivas, modelos o designadores textuales observables en el fragmento.
+5. Toda entidad debe tener un rdfs:label breve y especifico. Usa ex:identificador solo para codigos, referencias, directivas, modelos o designadores textuales observables en el fragmento.
 6. Usa solo propiedades canonicas. Si necesitas expresar fabricante, referencia comercial o unidad, absorbelo en rdfs:label, ex:identificador, ex:valor o ex:textoExtracto, pero NO inventes propiedades como ex:fabricadoPor, ex:referenciaFabricante, ex:unidad o similares.
 7. Prefiere entidades enlazadas mediante propiedades de objeto canonicas cuando el texto describa composicion, control, mantenimiento, seguridad, documentacion, esquema o relacion funcional. Si la relacion no es segura, omite la relacion antes que inventarla.
 8. Si el fragmento es una tabla, esquema, lista de materiales o bloque de conexionado, crea una entidad ancla canonica (por ejemplo ex:Esquema, ex:Tabla, ex:Sistema o ex:InterfazUsuario, segun corresponda) y conecta a ella los componentes listados usando relaciones permitidas como ex:tieneComponente, ex:compuestoPor, ex:detalladoEnEsquema, ex:documentadoEn o ex:ilustradoEn.
 9. Si extraes mas de un individuo y el texto aporta una relacion clara entre ellos, debe aparecer al menos un enlace util entre esos individuos.
-10. No generes comentarios, explicaciones, Markdown ni bloques vacios. Responde exclusivamente con Turtle valida.
+10. No construyas IRIs desde frases largas ni desde ex:textoExtracto. El local name debe tener menos de 80 caracteres; si la evidencia es muy generica, usa una clase superior y conserva la especificidad en rdfs:label, ex:identificador, ex:valor o ex:textoExtracto.
+11. textoExtracto debe ser breve y no puede ser el chunk completo.
+12. No extraigas entidades cuya unica evidencia sea una palabra generica.
+13. No generes comentarios, explicaciones, Markdown ni bloques vacios. Responde exclusivamente con Turtle valida.
 
 CRITERIOS DE CALIDAD:
 - Prioriza precision semantica frente a cobertura agresiva.

@@ -7,6 +7,7 @@ if str(REPO_ROOT) not in sys.path:
 
 import argparse
 import json
+import re
 from collections import Counter
 from dataclasses import dataclass
 
@@ -16,6 +17,9 @@ from artifact_contracts import ABOX_SEMANTIC_AUDIT_PATH, OPERATIONAL_ABOX_PATH, 
 
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 TEXTO_EXTRACTO = URIRef(BASE_URI + "textoExtracto")
+IDENTIFICADOR = URIRef(BASE_URI + "identificador")
+LOCAL_NAME_MAX_LENGTH = 100
+LOCAL_NAME_HARD_FAILURE = False
 
 
 @dataclass(frozen=True)
@@ -42,6 +46,8 @@ class SemanticValidationResult:
     blank_node_entities: int
     file_uri_entities: int
     redundant_type_assertions: int
+    individual_used_as_class_assertions: int
+    long_local_name_entities: int
     error_categories: dict[str, int]
     invalid_class_values: list[list[object]]
     invalid_predicate_values: list[list[object]]
@@ -51,6 +57,8 @@ class SemanticValidationResult:
     sample_blank_node_entities: list[str]
     sample_file_uri_entities: list[str]
     sample_redundant_type_entities: list[str]
+    sample_individuals_used_as_class: list[str]
+    sample_long_local_name_entities: list[str]
 
     def to_manifest_summary(self) -> dict[str, object]:
         return {
@@ -65,6 +73,8 @@ class SemanticValidationResult:
             "blank_node_entities": self.blank_node_entities,
             "file_uri_entities": self.file_uri_entities,
             "redundant_type_assertions": self.redundant_type_assertions,
+            "individual_used_as_class_assertions": self.individual_used_as_class_assertions,
+            "long_local_name_entities": self.long_local_name_entities,
             "error_categories": self.error_categories,
             "invalid_class_values": self.invalid_class_values[:10],
             "invalid_predicate_values": self.invalid_predicate_values[:10],
@@ -74,6 +84,8 @@ class SemanticValidationResult:
             "sample_blank_node_entities": self.sample_blank_node_entities[:10],
             "sample_file_uri_entities": self.sample_file_uri_entities[:10],
             "sample_redundant_type_entities": self.sample_redundant_type_entities[:10],
+            "sample_individuals_used_as_class": self.sample_individuals_used_as_class[:10],
+            "sample_long_local_name_entities": self.sample_long_local_name_entities[:10],
         }
 
 
@@ -167,11 +179,22 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
 
     invalid_classes: Counter[str] = Counter()
     invalid_predicates: Counter[str] = Counter()
+    individual_as_class: Counter[str] = Counter()
     subjects_without_type: list[str] = []
     subjects_without_traceability: list[str] = []
     weakly_linked_subjects: list[str] = []
     redundant_type_entities: list[str] = []
     redundant_type_assertions = 0
+    long_local_name_entities: list[str] = []
+
+    surface_predicates = {RDFS.label, IDENTIFICADOR, TEXTO_EXTRACTO}
+    individual_uris: set[str] = {str(subject) for subject in typed_subjects}
+    for predicate in surface_predicates:
+        individual_uris.update(
+            str(subject)
+            for subject in graph.subjects(predicate, None)
+            if isinstance(subject, URIRef)
+        )
 
     outgoing_object_links: dict[URIRef, int] = Counter()
     incoming_object_links: dict[URIRef, int] = Counter()
@@ -183,6 +206,14 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
             invalid_predicates[predicate_uri] += 1
         if predicate == RDF.type and isinstance(obj, URIRef) and str(obj) not in vocabulary.classes:
             invalid_classes[str(obj)] += 1
+            obj_str = str(obj)
+            local = _local_name(obj_str)
+            is_hash_pattern = bool(re.search(r"_[0-9a-f]{10}$", local))
+            is_known_individual = obj_str in individual_uris
+            has_surfaces = any(True for surface_predicate in surface_predicates for _ in graph.objects(obj, surface_predicate))
+            has_individual_local_name = bool(re.search(r"[A-Z][a-z]+\d+|_\d+$|\d{4,}", local))
+            if is_hash_pattern or is_known_individual or has_surfaces or has_individual_local_name:
+                individual_as_class[obj_str] += 1
         if predicate != RDF.type and isinstance(subject, URIRef) and isinstance(obj, URIRef):
             outgoing_object_links[subject] += 1
             incoming_object_links[obj] += 1
@@ -207,6 +238,10 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
                 redundant_type_entities.append(str(subject))
                 break
 
+        local = _local_name(str(subject))
+        if len(local) > LOCAL_NAME_MAX_LENGTH:
+            long_local_name_entities.append(str(subject))
+
     error_categories: dict[str, int] = {}
     if invalid_classes:
         error_categories["non_canonical_class"] = sum(invalid_classes.values())
@@ -224,6 +259,10 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         error_categories["file_uri_entity"] = len(file_uri_entities)
     if redundant_type_assertions:
         error_categories["redundant_type_assertion"] = redundant_type_assertions
+    if individual_as_class:
+        error_categories["individual_used_as_class"] = sum(individual_as_class.values())
+    if long_local_name_entities:
+        error_categories["long_local_name"] = len(long_local_name_entities)
     if len(typed_subjects) > 1 and total_object_links == 0:
         error_categories["no_useful_links"] = len(typed_subjects)
 
@@ -235,7 +274,10 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         "blank_node_entity",
         "file_uri_entity",
         "redundant_type_assertion",
+        "individual_used_as_class",
     }
+    if LOCAL_NAME_HARD_FAILURE:
+        hard_failure_keys.add("long_local_name")
     ok = not any(key in error_categories for key in hard_failure_keys)
 
     return SemanticValidationResult(
@@ -250,6 +292,8 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         blank_node_entities=len(blank_node_entities),
         file_uri_entities=len(file_uri_entities),
         redundant_type_assertions=redundant_type_assertions,
+        individual_used_as_class_assertions=sum(individual_as_class.values()),
+        long_local_name_entities=len(long_local_name_entities),
         error_categories=error_categories,
         invalid_class_values=[[ _local_name(uri), count ] for uri, count in invalid_classes.most_common(15)],
         invalid_predicate_values=[[ _local_name(uri), count ] for uri, count in invalid_predicates.most_common(15)],
@@ -259,6 +303,8 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         sample_blank_node_entities=blank_node_entities[:15],
         sample_file_uri_entities=[_local_name(uri) for uri in file_uri_entities[:15]],
         sample_redundant_type_entities=[_local_name(uri) for uri in redundant_type_entities[:15]],
+        sample_individuals_used_as_class=[_local_name(uri) for uri, _count in individual_as_class.most_common(15)],
+        sample_long_local_name_entities=[_local_name(uri) for uri in long_local_name_entities[:15]],
     )
 
 
@@ -300,6 +346,10 @@ def summarize_semantic_result(result: SemanticValidationResult) -> str:
         fragments.append(f"file_uris={result.file_uri_entities}")
     if result.redundant_type_assertions:
         fragments.append(f"tipos_redundantes={result.redundant_type_assertions}")
+    if result.individual_used_as_class_assertions:
+        fragments.append(f"individuos_usados_como_clase={result.individual_used_as_class_assertions}")
+    if result.long_local_name_entities:
+        fragments.append(f"local_names_largos={result.long_local_name_entities}")
     return "A-Box semanticamente invalida: " + ", ".join(fragments)
 
 
@@ -319,10 +369,15 @@ def audit_graph_to_json(abox_path: Path = OPERATIONAL_ABOX_PATH, *, tbox_path: P
                 "non_canonical_property",
                 "missing_type",
                 "missing_traceability",
+                "blank_node_entity",
+                "file_uri_entity",
+                "redundant_type_assertion",
+                "individual_used_as_class",
             ],
             "diagnostic_only": [
                 "weak_linkage",
                 "no_useful_links",
+                "long_local_name",
             ],
         },
         "summary": result.to_manifest_summary(),

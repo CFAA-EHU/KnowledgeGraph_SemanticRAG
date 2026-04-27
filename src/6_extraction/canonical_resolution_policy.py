@@ -10,7 +10,9 @@ from pathlib import Path
 from typing import Any
 
 from rdflib import Graph, URIRef
-from rdflib.namespace import RDF
+from rdflib.namespace import RDF, RDFS, OWL
+
+from artifact_contracts import OPERATIONAL_TBOX_PATH
 
 PREFERRED_SURFACE_PREDICATES = ('identificador', 'label', 'textoExtracto', 'valor')
 SUPPORTED_ISSUES = {'graph_canonicalization_gap', 'graph_linking_gap', 'missing_value_surface'}
@@ -32,6 +34,17 @@ SURFACE_VARIANT_CONTEXT_BLOCKERS = {
     'chapter',
 }
 SURFACE_VARIANT_MIN_KEY_LENGTH = 5
+MANUALLY_CONFLICTING_PAIRS: set[frozenset[str]] = {
+    frozenset({"Maquina", "Directiva"}),
+    frozenset({"Maquina", "Manual"}),
+    frozenset({"Maquina", "PiezaRecambio"}),
+    frozenset({"Empresa", "Directiva"}),
+    frozenset({"TareaMantenimiento", "ComponenteElectrico"}),
+    frozenset({"Alarma", "PlanMantenimiento"}),
+    frozenset({"CodigoError", "Figura"}),
+}
+_TBOX_SUBCLASS_CLOSURE: dict[str, set[str]] | None = None
+_TBOX_DISJOINT_PAIRS: set[frozenset[str]] | None = None
 
 
 @dataclass
@@ -87,6 +100,54 @@ def normalize_text(text: str) -> str:
 
 def normalize_uri(uri: str) -> str:
     return str(uri).split('/')[-1].split('#')[-1]
+
+
+def _load_tbox_subclass_closure() -> dict[str, set[str]]:
+    global _TBOX_SUBCLASS_CLOSURE
+    if _TBOX_SUBCLASS_CLOSURE is not None:
+        return _TBOX_SUBCLASS_CLOSURE
+
+    graph = Graph()
+    graph.parse(OPERATIONAL_TBOX_PATH, format='turtle')
+    parents: dict[str, set[str]] = {}
+    for child, _, parent in graph.triples((None, RDFS.subClassOf, None)):
+        if isinstance(child, URIRef) and isinstance(parent, URIRef):
+            parents.setdefault(normalize_uri(str(child)), set()).add(normalize_uri(str(parent)))
+
+    closure: dict[str, set[str]] = {}
+
+    def visit(uri: str, seen: set[str] | None = None) -> set[str]:
+        if uri in closure:
+            return closure[uri]
+        seen = seen or set()
+        if uri in seen:
+            return set()
+        seen.add(uri)
+        ancestors = set(parents.get(uri, set()))
+        for parent_uri in list(ancestors):
+            ancestors |= visit(parent_uri, seen)
+        closure[uri] = ancestors
+        return ancestors
+
+    for uri in parents:
+        visit(uri)
+    _TBOX_SUBCLASS_CLOSURE = closure
+    return closure
+
+
+def _load_tbox_disjoint_pairs() -> set[frozenset[str]]:
+    global _TBOX_DISJOINT_PAIRS
+    if _TBOX_DISJOINT_PAIRS is not None:
+        return _TBOX_DISJOINT_PAIRS
+
+    graph = Graph()
+    graph.parse(OPERATIONAL_TBOX_PATH, format='turtle')
+    pairs: set[frozenset[str]] = set()
+    for left, _, right in graph.triples((None, OWL.disjointWith, None)):
+        if isinstance(left, URIRef) and isinstance(right, URIRef):
+            pairs.add(frozenset({normalize_uri(str(left)), normalize_uri(str(right))}))
+    _TBOX_DISJOINT_PAIRS = pairs
+    return pairs
 
 
 def extract_key_literals(text: str) -> list[str]:
@@ -279,15 +340,23 @@ def _types_compatible(source_types: list[str], candidate_types: list[str]) -> bo
         return False
     source_set = set(source_types)
     candidate_set = set(candidate_types)
-    shared = source_set & candidate_set
-    if not shared:
-        return False
-    conflicting = {'TareaMantenimiento', 'Empresa', 'ComponenteElectrico', 'Directiva', 'AccionProhibida'}
-    exclusive_source = source_set - candidate_set
-    exclusive_candidate = candidate_set - source_set
-    if exclusive_source & conflicting and exclusive_candidate & conflicting:
-        return False
-    return True
+    if source_set & candidate_set:
+        return True
+
+    subclass_closure = _load_tbox_subclass_closure()
+    disjoint_pairs = _load_tbox_disjoint_pairs()
+    for source_type in source_set:
+        for candidate_type in candidate_set:
+            pair = frozenset({source_type, candidate_type})
+            if pair in disjoint_pairs:
+                return False
+            if candidate_type in subclass_closure.get(source_type, set()):
+                return True
+            if source_type in subclass_closure.get(candidate_type, set()):
+                return True
+            if pair in MANUALLY_CONFLICTING_PAIRS:
+                return False
+    return False
 
 
 def _pair_signals(graph: Graph, source_uri: str, candidate_uri: str, expected_answer: str) -> dict[str, Any]:

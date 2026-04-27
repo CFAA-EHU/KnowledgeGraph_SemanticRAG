@@ -1,5 +1,155 @@
 [
   {
+    "question": "¿De quién es la responsabilidad de que las seguridades de la máquina estén habilitadas para evitar lesiones a personas y prevenir daños al CNC?",
+    "intent": "literal_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "de quien es la responsabilidad de que las seguridades de la maquina esten habilitadas para evitar lesiones a personas y prevenir danos al cnc",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "maquina",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/MaquinaBrochadora18",
+            "entity_type": "Maquina_07a3d96d93",
+            "language": "es",
+            "surface": "MÁQUINA"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/MaquinaBrochadora18",
+            "entity_type": "Maquina_07a3d96d93",
+            "language": "alias",
+            "surface": "MÁQUINA"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Maquina_07a3d96d93",
+            "entity_type": "MaquinaBrochadora18",
+            "language": "es",
+            "surface": "máquina"
+          }
+        ]
+      },
+      {
+        "surface": "cnc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "alias",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCControlNumericoComputarizado",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_safety_mode_policy_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_safety_mode_policy",
+    "anchor_candidates": [
+      "error_safety_mode_policy",
+      "maquina",
+      "cnc",
+      "responsabilidad",
+      "seguridades",
+      "esten",
+      "habilitadas",
+      "evitar"
+    ],
+    "template_id": "ERR_T1_safety_mode_policy",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.88,
+      "overall": 0.77
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_safety_mode_policy",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Maquina_CNC> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Maquina_CNC"
+        ],
+        "sample_rows": [
+          [
+            "Maquina_CNC"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_safety_mode_policy_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Maquina_CNC> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 1,
+        "raw_result_count": 12,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Maquina_CNC"
+        ],
+        "sample_rows": [
+          [
+            "Maquina_CNC",
+            "textoExtracto",
+            "Máquina con ejes Sercos velocidad, donde el CNC envía la consigna al regulador en diezmilésimas de rpm."
+          ],
+          [
+            "Maquina_CNC",
+            "label",
+            "Máquina CNC (control numérico)"
+          ],
+          [
+            "Maquina_CNC",
+            "label",
+            "Máquina CNC (contexto de ciclos fijos)"
+          ],
+          [
+            "Maquina_CNC",
+            "label",
+            "Máquina CNC"
+          ],
+          [
+            "Maquina_CNC",
+            "label",
+            "Control Numérico Computarizado (CNC)"
+          ],
+          [
+            "Maquina_CNC",
+            "label",
+            "Máquina CNC con ejes Sercos"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
     "question": "¿Cuáles son los tres modos de trabajo preconfigurados que ofrecen diferentes niveles de protección del software en el CNC, y qué color de fondo de pantalla identifica al modo Administrador y al modo Setup?",
     "intent": "literal_lookup",
     "question_language": "es",
@@ -115,28 +265,32 @@
         "step_id": "seed",
         "purpose": "seed_installation_modes_storage",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> } }",
         "input_candidate_count": 6,
-        "raw_result_count": 5,
-        "output_candidate_count": 5,
+        "raw_result_count": 6,
+        "output_candidate_count": 6,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
+          "https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador",
           "https://vocab.cfaa.eus/broaching/ModoOperacion_Setup",
           "https://vocab.cfaa.eus/broaching/ModoUsuario",
+          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
           "https://vocab.cfaa.eus/broaching/ModoSetup",
           "https://vocab.cfaa.eus/broaching/CarpetaMTB_T"
         ],
         "sample_rows": [
           [
-            "ModoAdministrador_CNC"
+            "CartelaEstado_Administrador"
           ],
           [
             "ModoOperacion_Setup"
           ],
           [
             "ModoUsuario"
+          ],
+          [
+            "ModoAdministrador_CNC"
           ],
           [
             "ModoSetup"
@@ -152,38 +306,34 @@
         "step_id": "detail",
         "purpose": "installation_modes_storage_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 18",
-        "input_candidate_count": 5,
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "input_candidate_count": 6,
         "raw_result_count": 18,
-        "output_candidate_count": 4,
+        "output_candidate_count": 5,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
+          "https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador",
           "https://vocab.cfaa.eus/broaching/ModoOperacion_Setup",
           "https://vocab.cfaa.eus/broaching/ModoUsuario",
+          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
           "https://vocab.cfaa.eus/broaching/ModoSetup"
         ],
         "sample_rows": [
           [
-            "ModoAdministrador_CNC",
+            "CartelaEstado_Administrador",
             "textoExtracto",
-            "acceso al modo administrador se habilita con el código de validación"
+            "imagen de escritorio [...] fondo rojo y texto 'ADMINISTRATOR MODE'. Funciona como señalización visual del modo activo"
           ],
           [
-            "ModoAdministrador_CNC",
+            "CartelaEstado_Administrador",
             "label",
-            "Modo administrador (CNC)"
-          ],
-          [
-            "ModoAdministrador_CNC",
-            "label",
-            "Modo administrador"
+            "Cartela de estado 'ADMINISTRATOR MODE'"
           ],
           [
             "ModoOperacion_Setup",
             "textoExtracto",
-            "modo Setup (puesta a punto)"
+            "Con el CNC en modo SETUP (puesta a punto), las rutinas OEM cuya extensión sea fst se cargan en la memoria RAM durante la preparación de bloques."
           ],
           [
             "ModoOperacion_Setup",
@@ -194,6 +344,181 @@
             "ModoOperacion_Setup",
             "label",
             "Modo SETUP"
+          ],
+          [
+            "ModoUsuario",
+            "textoExtracto",
+            "Modo usuario (User Mode)."
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "En relación al error 0008 ('La tecla ha sido rechazada'), ¿qué teclas específicas deben pulsarse siempre de forma individual y qué ocurre si se pulsan simultáneamente con otra?",
+    "intent": "literal_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "en relacion al error 0008 la tecla ha sido rechazada que teclas especificas deben pulsarse siempre de forma individual y que ocurre si se pulsan simultaneamente con otra",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "tecla",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Tecla_SentidoPositivo",
+            "entity_type": "ComponenteElectrico",
+            "language": "es",
+            "surface": "Tecla +"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Tecla_SentidoPositivo",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "Tecla +"
+          }
+        ]
+      },
+      {
+        "surface": "0",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CicloT0",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "0"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity0_6c5a58ce87",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "0"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity0_6c5a58ce87",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "0"
+          }
+        ]
+      },
+      {
+        "surface": "8",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/DejarLaHerramientaDelCabezalEnTierraYCogerUnaHerramientaDeTierra_0b99056e9d",
+            "entity_type": "TareaMantenimiento",
+            "language": "alias",
+            "surface": "8"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/DejarLaHerramientaDelCabezalEnTierraYCogerUnaHerramientaDeTierra_18b41b4777",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "8"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity8_21583cfcdc",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "8"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_condition_attribute_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_code_condition_attribute",
+    "anchor_candidates": [
+      "error_code_condition_attribute",
+      "error",
+      "tecla",
+      "0",
+      "8",
+      "0008",
+      "relacion",
+      "sido"
+    ],
+    "template_id": "ERR_T2_condition_attribute",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.69
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_condition_attribute",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada"
+        ],
+        "sample_rows": [
+          [
+            "Error0008TeclaRechazada"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_condition_attribute_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 24",
+        "input_candidate_count": 1,
+        "raw_result_count": 2,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada"
+        ],
+        "sample_rows": [
+          [
+            "Error0008TeclaRechazada",
+            "textoExtracto",
+            "0008 'La tecla ha sido rechazada' [...] SOLUCIÓN Si ha sido un acto involuntario del usuario, ignorar el error."
+          ],
+          [
+            "Error0008TeclaRechazada",
+            "label",
+            "Error 0008: Tecla rechazada"
           ]
         ],
         "prune_reason": null,
@@ -386,28 +711,32 @@
         "step_id": "seed",
         "purpose": "seed_installation_modes_storage",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> } }",
         "input_candidate_count": 6,
-        "raw_result_count": 5,
-        "output_candidate_count": 5,
+        "raw_result_count": 6,
+        "output_candidate_count": 6,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
+          "https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador",
           "https://vocab.cfaa.eus/broaching/ModoOperacion_Setup",
           "https://vocab.cfaa.eus/broaching/ModoUsuario",
+          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
           "https://vocab.cfaa.eus/broaching/ModoSetup",
           "https://vocab.cfaa.eus/broaching/CarpetaMTB_T"
         ],
         "sample_rows": [
           [
-            "ModoAdministrador_CNC"
+            "CartelaEstado_Administrador"
           ],
           [
             "ModoOperacion_Setup"
           ],
           [
             "ModoUsuario"
+          ],
+          [
+            "ModoAdministrador_CNC"
           ],
           [
             "ModoSetup"
@@ -423,38 +752,34 @@
         "step_id": "detail",
         "purpose": "installation_modes_storage_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 18",
-        "input_candidate_count": 5,
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "input_candidate_count": 6,
         "raw_result_count": 18,
-        "output_candidate_count": 4,
+        "output_candidate_count": 5,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
+          "https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador",
           "https://vocab.cfaa.eus/broaching/ModoOperacion_Setup",
           "https://vocab.cfaa.eus/broaching/ModoUsuario",
+          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
           "https://vocab.cfaa.eus/broaching/ModoSetup"
         ],
         "sample_rows": [
           [
-            "ModoAdministrador_CNC",
+            "CartelaEstado_Administrador",
             "textoExtracto",
-            "acceso al modo administrador se habilita con el código de validación"
+            "imagen de escritorio [...] fondo rojo y texto 'ADMINISTRATOR MODE'. Funciona como señalización visual del modo activo"
           ],
           [
-            "ModoAdministrador_CNC",
+            "CartelaEstado_Administrador",
             "label",
-            "Modo administrador (CNC)"
-          ],
-          [
-            "ModoAdministrador_CNC",
-            "label",
-            "Modo administrador"
+            "Cartela de estado 'ADMINISTRATOR MODE'"
           ],
           [
             "ModoOperacion_Setup",
             "textoExtracto",
-            "modo Setup (puesta a punto)"
+            "Con el CNC en modo SETUP (puesta a punto), las rutinas OEM cuya extensión sea fst se cargan en la memoria RAM durante la preparación de bloques."
           ],
           [
             "ModoOperacion_Setup",
@@ -465,6 +790,260 @@
             "ModoOperacion_Setup",
             "label",
             "Modo SETUP"
+          ],
+          [
+            "ModoUsuario",
+            "textoExtracto",
+            "Modo usuario (User Mode)."
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Si al validar los parámetros máquina aparece el error 0040 debido a una función M con sincronización Antes-Antes o Antes-Después, ¿en qué momento ejecuta realmente el CNC la subrutina y cómo debe redefinirse la función M para solucionarlo?",
+    "intent": "procedure_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "si al validar los parametros maquina aparece el error 0040 debido a una funcion m con sincronizacion antes-antes o antes-despues en que momento ejecuta realmente el cnc la subrutina y como debe redefinirse la funcion m para solucionarlo",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "parametros maquina",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Contrase_aSetup",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "Parámetros máquina"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Contrase_aSetup",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "parámetros máquina"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Contrase_aSetup",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "Parámetros máquina"
+          }
+        ]
+      },
+      {
+        "surface": "error 0040",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_0040",
+            "entity_type": "AvisoSeguridad",
+            "language": "es",
+            "surface": "Error 0040"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_0040",
+            "entity_type": "AvisoSeguridad",
+            "language": "en",
+            "surface": "Error 0040"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_0040",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "Error 0040"
+          }
+        ]
+      },
+      {
+        "surface": "funcion m",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/FuncionM_05c83e23ee",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "Función M"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/FuncionM_05c83e23ee",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "Función M"
+          }
+        ]
+      },
+      {
+        "surface": "subrutina",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Subrutina_967_1",
+            "entity_type": "TareaMantenimiento",
+            "language": "es",
+            "surface": "subrutina"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Subrutina_967_1",
+            "entity_type": "TareaMantenimiento",
+            "language": "alias",
+            "surface": "subrutina"
+          }
+        ]
+      },
+      {
+        "surface": "maquina",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/MaquinaBrochadora18",
+            "entity_type": "Maquina_07a3d96d93",
+            "language": "es",
+            "surface": "MÁQUINA"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/MaquinaBrochadora18",
+            "entity_type": "Maquina_07a3d96d93",
+            "language": "alias",
+            "surface": "MÁQUINA"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Maquina_07a3d96d93",
+            "entity_type": "MaquinaBrochadora18",
+            "language": "es",
+            "surface": "máquina"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "0040",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_0040",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "0040"
+          }
+        ]
+      },
+      {
+        "surface": "cnc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "alias",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCControlNumericoComputarizado",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_resolution_procedure_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_resolution_procedure",
+    "anchor_candidates": [
+      "g_m_functions",
+      "parametros maquina",
+      "error 0040",
+      "funcion m",
+      "subrutina",
+      "maquina",
+      "error",
+      "0040"
+    ],
+    "template_id": "ERR_T3_resolution_procedure",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.78
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_resolution_procedure",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error_0040> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_0040"
+        ],
+        "sample_rows": [
+          [
+            "Error_0040"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_resolution_procedure_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error_0040> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_0040"
+        ],
+        "sample_rows": [
+          [
+            "Error_0040",
+            "textoExtracto",
+            "0040 'M Antes-Antes o Antes-Después con subrutina no admite movimientos en el bloque' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En la tabla de funciones M, hay una función con subrutina asociada y tipo de sincronización Antes-Antes o Antes-Después."
+          ],
+          [
+            "Error_0040",
+            "label",
+            "Error 0040: 'M Antes-Antes o Antes-Después con subrutina no admite movimientos en el bloque'"
+          ],
+          [
+            "Error_0040",
+            "identificador",
+            "0040"
           ]
         ],
         "prune_reason": null,
@@ -623,27 +1202,27 @@
         "step_id": "seed",
         "purpose": "seed_installation_tandem_gantry",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/TORQDIST_6692bf2b89> <https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6> <https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce> <https://vocab.cfaa.eus/broaching/PilotoLuminosoTension_69> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Parametro_a93704360e> <https://vocab.cfaa.eus/broaching/Parametro_167ca9e876> <https://vocab.cfaa.eus/broaching/Parametro_13c4989601> <https://vocab.cfaa.eus/broaching/PilotoLuminosoTension_69> } }",
         "input_candidate_count": 5,
         "raw_result_count": 4,
         "output_candidate_count": 4,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/TORQDIST_6692bf2b89",
-          "https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6",
-          "https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce",
+          "https://vocab.cfaa.eus/broaching/Parametro_a93704360e",
+          "https://vocab.cfaa.eus/broaching/Parametro_167ca9e876",
+          "https://vocab.cfaa.eus/broaching/Parametro_13c4989601",
           "https://vocab.cfaa.eus/broaching/PilotoLuminosoTension_69"
         ],
         "sample_rows": [
           [
-            "TORQDIST_6692bf2b89"
+            "Parametro_a93704360e"
           ],
           [
-            "WARNCOUPE_cd28a968a6"
+            "Parametro_167ca9e876"
           ],
           [
-            "MAXCOUPE_a5204a60ce"
+            "Parametro_13c4989601"
           ],
           [
             "PilotoLuminosoTension_69"
@@ -656,47 +1235,323 @@
         "step_id": "detail",
         "purpose": "installation_tandem_gantry_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/TORQDIST_6692bf2b89> <https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6> <https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce> <https://vocab.cfaa.eus/broaching/PilotoLuminosoTension_69> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Parametro_a93704360e> <https://vocab.cfaa.eus/broaching/Parametro_167ca9e876> <https://vocab.cfaa.eus/broaching/Parametro_13c4989601> <https://vocab.cfaa.eus/broaching/PilotoLuminosoTension_69> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
         "input_candidate_count": 4,
-        "raw_result_count": 18,
-        "output_candidate_count": 3,
+        "raw_result_count": 14,
+        "output_candidate_count": 4,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/TORQDIST_6692bf2b89",
-          "https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6",
-          "https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce"
+          "https://vocab.cfaa.eus/broaching/Parametro_a93704360e",
+          "https://vocab.cfaa.eus/broaching/Parametro_167ca9e876",
+          "https://vocab.cfaa.eus/broaching/Parametro_13c4989601",
+          "https://vocab.cfaa.eus/broaching/PilotoLuminosoTension_69"
         ],
         "sample_rows": [
           [
-            "TORQDIST_6692bf2b89",
+            "Parametro_a93704360e",
             "textoExtracto",
-            "TORQDIST Pareja tándem. Distribución del par. Valores posibles: De 1 a 99%. Valor por defecto: 50 %. Variable asociada: (V.)MPG.TORQDIST[nb] Parámetro incluido en la tabla TANDEM. Este parámetro establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem."
+            "La distribución del par en el tándem se define con el parámetro TORQDIST, el cual indica qué porcentaje debe dar el motor maestro."
           ],
           [
-            "TORQDIST_6692bf2b89",
-            "label",
-            "TORQDIST (Distribución del par)"
-          ],
-          [
-            "TORQDIST_6692bf2b89",
-            "label",
-            "MPG.TORQDIST[nb]"
-          ],
-          [
-            "TORQDIST_6692bf2b89",
+            "Parametro_a93704360e",
             "label",
             "TORQDIST"
           ],
           [
-            "TORQDIST_6692bf2b89",
-            "label",
-            "TORQDIST (Distribución del par)"
+            "Parametro_167ca9e876",
+            "textoExtracto",
+            "WARNCOUPE Eje gantry. Diferencia entre el error de seguimiento de ambos ejes para mostrar un warning. Valores posibles (1): De 0.0001 a 99999.9999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0.0001 a 99999.9999 grados. Valor por defecto: 1.0000 mm / 0.03937 inch / 1.0000 grado. Este parámetro establece la máxima diferencia permitida entre los errores de seguimiento de ambos ejes antes de mostrar un warning."
           ],
           [
-            "TORQDIST_6692bf2b89",
+            "Parametro_167ca9e876",
+            "label",
+            "WARNCOUPE"
+          ],
+          [
+            "Parametro_167ca9e876",
+            "label",
+            "WARNCOUPE"
+          ],
+          [
+            "Parametro_167ca9e876",
             "identificador",
-            "MPG.TORQDIST[nb]"
+            "WARNCOUPE"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "¿Bajo qué condiciones térmicas exactas el CNC emite el aviso 0169 de sobretemperatura activando la marca OVERTEMP, y con qué frecuencia realiza el chequeo?",
+    "intent": "literal_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "bajo que condiciones termicas exactas el cnc emite el aviso 0169 de sobretemperatura activando la marca overtemp y con que frecuencia realiza el chequeo",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "frecuencia",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Frecuencia_2515fd4881",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "Frecuencia"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Frecuencia_2515fd4881",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "Frecuencia"
+          }
+        ]
+      },
+      {
+        "surface": "overtemp",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/AvisoDeSobretemperaturaOVERTEMP_ec27748e27",
+            "entity_type": "Alarma",
+            "language": "alias",
+            "surface": "OVERTEMP"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Marca_OVERTEMP",
+            "entity_type": "AvisoSeguridad",
+            "language": "es",
+            "surface": "OVERTEMP"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Marca_OVERTEMP",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "OVERTEMP"
+          }
+        ]
+      },
+      {
+        "surface": "0169",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_0169",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "0169"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/SobrepasadaTemperaturaDeSeguridadCodigo0169",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "0169"
+          }
+        ]
+      },
+      {
+        "surface": "cnc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "alias",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCControlNumericoComputarizado",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          }
+        ]
+      },
+      {
+        "surface": "16",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/DejarLaHerramientaDelBrazoEnElAlmacen",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "16"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_16",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "16"
+          }
+        ]
+      },
+      {
+        "surface": "1",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Cabezal1_cb3d780a64",
+            "entity_type": "ComponenteMecanico",
+            "language": "alias",
+            "surface": "1"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CabezalConIndice1_662983449a",
+            "entity_type": "ComponenteMecanico",
+            "language": "alias",
+            "surface": "1"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CabezalConIndice1_a64bb7f18c",
+            "entity_type": "ComponenteMecanico",
+            "language": "alias",
+            "surface": "1"
+          }
+        ]
+      },
+      {
+        "surface": "0",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CicloT0",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "0"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity0_6c5a58ce87",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "0"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity0_6c5a58ce87",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "0"
+          }
+        ]
+      },
+      {
+        "surface": "9",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CogerUnaHerramientaDeTierraYLlevarlaAlAlmacenPasandoPorElCabezal_1a188637c6",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "9"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CogerUnaHerramientaDeTierraYLlevarlaAlAlmacenPasandoPorElCabezal_f0073a0a14",
+            "entity_type": "TareaMantenimiento",
+            "language": "alias",
+            "surface": "9"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity9_2dacd7013e",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "9"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_condition_attribute_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_code_condition_attribute",
+    "anchor_candidates": [
+      "installation_alarm_temperature",
+      "frecuencia",
+      "overtemp",
+      "0169",
+      "cnc",
+      "16",
+      "1",
+      "0"
+    ],
+    "template_id": "ERR_T2_condition_attribute",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.69
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_condition_attribute",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error_0169> <https://vocab.cfaa.eus/broaching/Alarma_33e64f3ef2> } }",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_0169",
+          "https://vocab.cfaa.eus/broaching/Alarma_33e64f3ef2"
+        ],
+        "sample_rows": [
+          [
+            "Error_0169"
+          ],
+          [
+            "Alarma_33e64f3ef2"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_condition_attribute_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error_0169> <https://vocab.cfaa.eus/broaching/Alarma_33e64f3ef2> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 24",
+        "input_candidate_count": 2,
+        "raw_result_count": 6,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_0169",
+          "https://vocab.cfaa.eus/broaching/Alarma_33e64f3ef2"
+        ],
+        "sample_rows": [
+          [
+            "Error_0169",
+            "textoExtracto",
+            "0169 Sobrepasada temperatura de seguridad."
+          ],
+          [
+            "Error_0169",
+            "label",
+            "Sobrepasada temperatura de seguridad"
+          ],
+          [
+            "Error_0169",
+            "identificador",
+            "0169"
+          ],
+          [
+            "Alarma_33e64f3ef2",
+            "textoExtracto",
+            "El CNC realiza cada minuto un chequeo de la temperatura ambiente del equipo; si en tres muestras seguidas la temperatura supera los 60ºC (140ºF), el CNC muestra este aviso y activa la marca OVERTEMP. [...] El warning muestra la temperatura actual."
+          ],
+          [
+            "Alarma_33e64f3ef2",
+            "label",
+            "Aviso de sobretemperatura (OVERTEMP)"
+          ],
+          [
+            "Alarma_33e64f3ef2",
+            "identificador",
+            "OVERTEMP"
           ]
         ],
         "prune_reason": null,
@@ -935,6 +1790,313 @@
             "PilotoLuminosoTension_69",
             "label",
             "PILOTO LUMINOSO TENSIÓN"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Si en un mismo bloque de programa se escriben las funciones G40, G41 y G42, ¿qué tipo de incompatibilidad señala el CNC y cuál es la solución?",
+    "intent": "literal_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "si en un mismo bloque de programa se escriben las funciones g40 g41 y g42 que tipo de incompatibilidad senala el cnc y cual es la solucion",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "programa",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "es",
+            "surface": "Programa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "en",
+            "surface": "Programa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "alias",
+            "surface": "Programa"
+          }
+        ]
+      },
+      {
+        "surface": "bloque",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Bloque_821_1",
+            "entity_type": "ComponenteElectrico",
+            "language": "es",
+            "surface": "bloque"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Bloque_821_1",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "bloque"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Bloque_CNC",
+            "entity_type": "Componente",
+            "language": "es",
+            "surface": "bloque"
+          }
+        ]
+      },
+      {
+        "surface": "tipo",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ParametroTIPODeLSFIT_a30ddfd24c",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "tipo"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ParametroTIPODeLSFIT_a30ddfd24c",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "TIPO"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ParametroTIPODeLSFIT_a30ddfd24c",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "tipo"
+          }
+        ]
+      },
+      {
+        "surface": "cnc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "alias",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCControlNumericoComputarizado",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          }
+        ]
+      },
+      {
+        "surface": "g40",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CancelacionDeCompensacionDeRadio",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "G40"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Fallo_CompensacionRadio_G40",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "G40"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/G40_7257d18287",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "G40"
+          }
+        ]
+      },
+      {
+        "surface": "g41",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CompensacionDeRadioAIzquierda",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "G41"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CompensacionDeRadioAIzquierda",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "G41"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CompensacionDeRadioG41",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "G41"
+          }
+        ]
+      },
+      {
+        "surface": "g42",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CompensacionDeRadioG42",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "G42"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/FuncionG42CompensacionDeRadioDerecha_072f6354eb",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "G42"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/G42_1622f1f3ce",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "G42"
+          }
+        ]
+      },
+      {
+        "surface": "40",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/EntradasAnal_gicasGP_EtherCAT",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "40"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/SalidasAnal_gicasGP_EtherCAT",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "40"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_condition_attribute_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_code_condition_attribute",
+    "anchor_candidates": [
+      "error_code_condition_attribute",
+      "programa",
+      "bloque",
+      "tipo",
+      "cnc",
+      "g40",
+      "g41",
+      "g42"
+    ],
+    "template_id": "ERR_T2_condition_attribute",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.78
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_condition_attribute",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada> <https://vocab.cfaa.eus/broaching/Error_0169> <https://vocab.cfaa.eus/broaching/MarchaNoPermitidaPorSobrepasarTemperaturaDeSeguridad> <https://vocab.cfaa.eus/broaching/FuncionesGIncompatiblesG40G41G42> <https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR> <https://vocab.cfaa.eus/broaching/Error_8023> } }",
+        "input_candidate_count": 6,
+        "raw_result_count": 6,
+        "output_candidate_count": 6,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada",
+          "https://vocab.cfaa.eus/broaching/Error_0169",
+          "https://vocab.cfaa.eus/broaching/MarchaNoPermitidaPorSobrepasarTemperaturaDeSeguridad",
+          "https://vocab.cfaa.eus/broaching/FuncionesGIncompatiblesG40G41G42",
+          "https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR",
+          "https://vocab.cfaa.eus/broaching/Error_8023"
+        ],
+        "sample_rows": [
+          [
+            "Error0008TeclaRechazada"
+          ],
+          [
+            "Error_0169"
+          ],
+          [
+            "MarchaNoPermitidaPorSobrepasarTemperaturaDeSeguridad"
+          ],
+          [
+            "FuncionesGIncompatiblesG40G41G42"
+          ],
+          [
+            "ErrorVariableCNCWR"
+          ],
+          [
+            "Error_8023"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_condition_attribute_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada> <https://vocab.cfaa.eus/broaching/Error_0169> <https://vocab.cfaa.eus/broaching/MarchaNoPermitidaPorSobrepasarTemperaturaDeSeguridad> <https://vocab.cfaa.eus/broaching/FuncionesGIncompatiblesG40G41G42> <https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR> <https://vocab.cfaa.eus/broaching/Error_8023> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 24",
+        "input_candidate_count": 6,
+        "raw_result_count": 17,
+        "output_candidate_count": 6,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error0008TeclaRechazada",
+          "https://vocab.cfaa.eus/broaching/Error_0169",
+          "https://vocab.cfaa.eus/broaching/MarchaNoPermitidaPorSobrepasarTemperaturaDeSeguridad",
+          "https://vocab.cfaa.eus/broaching/FuncionesGIncompatiblesG40G41G42",
+          "https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR",
+          "https://vocab.cfaa.eus/broaching/Error_8023"
+        ],
+        "sample_rows": [
+          [
+            "Error0008TeclaRechazada",
+            "textoExtracto",
+            "0008 'La tecla ha sido rechazada' [...] SOLUCIÓN Si ha sido un acto involuntario del usuario, ignorar el error."
+          ],
+          [
+            "Error0008TeclaRechazada",
+            "label",
+            "Error 0008: Tecla rechazada"
+          ],
+          [
+            "Error_0169",
+            "textoExtracto",
+            "0169 Sobrepasada temperatura de seguridad."
+          ],
+          [
+            "Error_0169",
+            "label",
+            "Sobrepasada temperatura de seguridad"
+          ],
+          [
+            "Error_0169",
+            "identificador",
+            "0169"
+          ],
+          [
+            "MarchaNoPermitidaPorSobrepasarTemperaturaDeSeguridad",
+            "textoExtracto",
+            "0173 Marcha no permitida por sobrepasar temperatura de seguridad. Apagar el cnc y contactar con el SAT. DETECCIÓN Durante el funcionamiento del CNC. CAUSA Cada vez que se pulsa [START], el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF), y en caso de superar dicho valor, invalida el [START] y muestra este error. La causa del aumento de temperatura puede ser un fallo en el sistema de refrigeración del hardware o una temperatura ambiente muy elevada. El error muestra la temperatura actual."
           ]
         ],
         "prune_reason": null,
@@ -1186,6 +2348,239 @@
     "notes": "ok"
   },
   {
+    "question": "Dentro del uso de expresiones matemáticas, ¿qué funciones específicas desencadenan el error 1166 ('Raíz de un número negativo') y el error 1167 ('Logaritmo de un número negativo o cero')?",
+    "intent": "component_relation_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "dentro del uso de expresiones matematicas que funciones especificas desencadenan el error 1166 raiz de un numero negativo y el error 1167 logaritmo de un numero negativo o cero",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "error 1167 logaritmo de un numero negativo o cero",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error1167LogaritmoDeUnNumeroNegativoOCero",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 1167: 'Logaritmo de un número negativo o cero'"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error1167LogaritmoDeUnNumeroNegativoOCero",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 1167: 'Logaritmo de un número negativo o cero'"
+          }
+        ]
+      },
+      {
+        "surface": "error 1166 raiz de un numero negativo",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error1166RaizDeUnNumeroNegativo",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 1166: 'Raíz de un número negativo'"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error1166RaizDeUnNumeroNegativo",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 1166: 'Raíz de un número negativo'"
+          }
+        ]
+      },
+      {
+        "surface": "error 11",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_11",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 11"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_11",
+            "entity_type": "DiagnosticoFallo",
+            "language": "en",
+            "surface": "Error 11"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_11",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 11"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "1166",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error1166RaizDeUnNumeroNegativo",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "1166"
+          }
+        ]
+      },
+      {
+        "surface": "1167",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error1167LogaritmoDeUnNumeroNegativoOCero",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "1167"
+          }
+        ]
+      },
+      {
+        "surface": "116",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity116_d17a11e58c",
+            "entity_type": "Pagina",
+            "language": "alias",
+            "surface": "116"
+          }
+        ]
+      },
+      {
+        "surface": "del",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Tecla_DEL",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "DEL"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_comparison_lookup",
+    "predicted_hop_depth": 2,
+    "anchor_text": "error_code_comparison",
+    "anchor_candidates": [
+      "error_code_comparison",
+      "error 1167 logaritmo de un numero negativo o cero",
+      "error 1166 raiz de un numero negativo",
+      "error 11",
+      "error",
+      "1166",
+      "1167",
+      "116"
+    ],
+    "template_id": "ERR_T4_code_comparison",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.78
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_code_comparison",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error1166RaizDeUnNumeroNegativo> <https://vocab.cfaa.eus/broaching/Error1167LogaritmoDeUnNumeroNegativoOCero> } }",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error1166RaizDeUnNumeroNegativo",
+          "https://vocab.cfaa.eus/broaching/Error1167LogaritmoDeUnNumeroNegativoOCero"
+        ],
+        "sample_rows": [
+          [
+            "Error1166RaizDeUnNumeroNegativo"
+          ],
+          [
+            "Error1167LogaritmoDeUnNumeroNegativoOCero"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_code_comparison_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error1166RaizDeUnNumeroNegativo> <https://vocab.cfaa.eus/broaching/Error1167LogaritmoDeUnNumeroNegativoOCero> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "input_candidate_count": 2,
+        "raw_result_count": 6,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error1166RaizDeUnNumeroNegativo",
+          "https://vocab.cfaa.eus/broaching/Error1167LogaritmoDeUnNumeroNegativoOCero"
+        ],
+        "sample_rows": [
+          [
+            "Error1166RaizDeUnNumeroNegativo",
+            "textoExtracto",
+            "DETECCIÓN Durante la ejecución. CAUSA En la expresión matemática hay una raíz cuadrada (SQRT) de un número negativo. SOLUCIÓN Revisar la programación."
+          ],
+          [
+            "Error1166RaizDeUnNumeroNegativo",
+            "label",
+            "Error 1166: 'Raíz de un número negativo'"
+          ],
+          [
+            "Error1166RaizDeUnNumeroNegativo",
+            "identificador",
+            "1166"
+          ],
+          [
+            "Error1167LogaritmoDeUnNumeroNegativoOCero",
+            "textoExtracto",
+            "DETECCIÓN Durante la ejecución. CAUSA En la expresión matemática hay un logaritmo (LOG/LN) de un número negativo o cero. SOLUCIÓN Revisar la programación."
+          ],
+          [
+            "Error1167LogaritmoDeUnNumeroNegativoOCero",
+            "label",
+            "Error 1167: 'Logaritmo de un número negativo o cero'"
+          ],
+          [
+            "Error1167LogaritmoDeUnNumeroNegativoOCero",
+            "identificador",
+            "1167"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
     "question": "Al verificar los parámetros de un eje gantry, ¿qué diferencia existe entre la función del parámetro WARNCOUPE y la del parámetro MAXCOUPE?",
     "intent": "component_attribute_lookup",
     "question_language": "es",
@@ -1329,22 +2724,22 @@
         "step_id": "seed",
         "purpose": "seed_installation_tandem_gantry",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6> <https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Parametro_167ca9e876> <https://vocab.cfaa.eus/broaching/Parametro_13c4989601> } }",
         "input_candidate_count": 2,
         "raw_result_count": 2,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6",
-          "https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce"
+          "https://vocab.cfaa.eus/broaching/Parametro_167ca9e876",
+          "https://vocab.cfaa.eus/broaching/Parametro_13c4989601"
         ],
         "sample_rows": [
           [
-            "WARNCOUPE_cd28a968a6"
+            "Parametro_167ca9e876"
           ],
           [
-            "MAXCOUPE_a5204a60ce"
+            "Parametro_13c4989601"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -1354,46 +2749,277 @@
         "step_id": "detail",
         "purpose": "installation_tandem_gantry_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6> <https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Parametro_167ca9e876> <https://vocab.cfaa.eus/broaching/Parametro_13c4989601> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
         "input_candidate_count": 2,
-        "raw_result_count": 15,
+        "raw_result_count": 10,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/WARNCOUPE_cd28a968a6",
-          "https://vocab.cfaa.eus/broaching/MAXCOUPE_a5204a60ce"
+          "https://vocab.cfaa.eus/broaching/Parametro_167ca9e876",
+          "https://vocab.cfaa.eus/broaching/Parametro_13c4989601"
         ],
         "sample_rows": [
           [
-            "WARNCOUPE_cd28a968a6",
+            "Parametro_167ca9e876",
             "textoExtracto",
-            "Eje gantry. Máxima diferencia permitida entre los errores de seguimiento de ambos ejes antes de mostrar un warning."
+            "WARNCOUPE Eje gantry. Diferencia entre el error de seguimiento de ambos ejes para mostrar un warning. Valores posibles (1): De 0.0001 a 99999.9999 mm. Valores posibles (2): De 0 a 3937.00787 inch. Valores posibles (3): De 0.0001 a 99999.9999 grados. Valor por defecto: 1.0000 mm / 0.03937 inch / 1.0000 grado. Este parámetro establece la máxima diferencia permitida entre los errores de seguimiento de ambos ejes antes de mostrar un warning."
           ],
           [
-            "WARNCOUPE_cd28a968a6",
+            "Parametro_167ca9e876",
             "label",
             "WARNCOUPE"
           ],
           [
-            "WARNCOUPE_cd28a968a6",
+            "Parametro_167ca9e876",
             "label",
             "WARNCOUPE"
           ],
           [
-            "WARNCOUPE_cd28a968a6",
+            "Parametro_167ca9e876",
             "identificador",
             "WARNCOUPE"
           ],
           [
-            "WARNCOUPE_cd28a968a6",
+            "Parametro_167ca9e876",
             "identificador",
             "MPG.WARNCOUPE[nb]"
           ],
           [
-            "WARNCOUPE_cd28a968a6",
+            "Parametro_167ca9e876",
             "valor",
             "Máxima diferencia permitida (error de seguimiento)"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Al producirse el error 1359 por intentar borrar una variable del sistema, ¿cuáles son los únicos prefijos de variable que los comandos #VAR, #ENDVAR y #DELETE tienen permitido manipular?",
+    "intent": "parameter_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "al producirse el error 1359 por intentar borrar una variable del sistema cuales son los unicos prefijos de variable que los comandos var endvar y delete tienen permitido manipular",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "error 13",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_13",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 13"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_13",
+            "entity_type": "DiagnosticoFallo",
+            "language": "en",
+            "surface": "Error 13"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_13",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 13"
+          }
+        ]
+      },
+      {
+        "surface": "variable",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Variable_aa536885a6",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "Variable"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Variable_aa536885a6",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "Variable"
+          }
+        ]
+      },
+      {
+        "surface": "sistema",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/SistemaDeCoordenadasCNC_dd59e8afdd",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "es",
+            "surface": "Sistema"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/SistemaDeCoordenadasCNC_dd59e8afdd",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "es",
+            "surface": "sistema"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/SistemaDeCoordenadasCNC_dd59e8afdd",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "alias",
+            "surface": "sistema"
+          }
+        ]
+      },
+      {
+        "surface": "delete",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/DELETE_abbc1b9dec",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "DELETE"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "1359",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error1359OperacionNoPermitidaEnVariablesDelSistema",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "1359"
+          }
+        ]
+      },
+      {
+        "surface": "del",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Tecla_DEL",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "DEL"
+          }
+        ]
+      },
+      {
+        "surface": "13",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity13_0fd70815b4",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "13"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity13_0fd70815b4",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "13"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity13_2a1e15d1ea",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "13"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_parameter_range_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_parameter_range",
+    "anchor_candidates": [
+      "machine_utilities_navigation",
+      "error 13",
+      "variable",
+      "sistema",
+      "delete",
+      "error",
+      "1359",
+      "del"
+    ],
+    "template_id": "ERR_T5_parameter_range",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.69
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_parameter_range",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error1359OperacionNoPermitidaEnVariablesDelSistema> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error1359OperacionNoPermitidaEnVariablesDelSistema"
+        ],
+        "sample_rows": [
+          [
+            "Error1359OperacionNoPermitidaEnVariablesDelSistema"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_parameter_range_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error1359OperacionNoPermitidaEnVariablesDelSistema> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error1359OperacionNoPermitidaEnVariablesDelSistema"
+        ],
+        "sample_rows": [
+          [
+            "Error1359OperacionNoPermitidaEnVariablesDelSistema",
+            "textoExtracto",
+            "Los comandos #VAR/#ENDVAR/#DELETE no permiten este tipo de variable. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado borrar una variable del CNC o se ha intentado crear una nueva variable con uno de los prefijos predefinidos por el CNC. SOLUCIÓN No se pueden borrar las variables predefinidas del CNC."
+          ],
+          [
+            "Error1359OperacionNoPermitidaEnVariablesDelSistema",
+            "label",
+            "Error 1359: Operación no permitida en variables del sistema"
+          ],
+          [
+            "Error1359OperacionNoPermitidaEnVariablesDelSistema",
+            "identificador",
+            "1359"
           ]
         ],
         "prune_reason": null,
@@ -1518,28 +3144,32 @@
         "step_id": "seed",
         "purpose": "seed_installation_modes_storage",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> } }",
         "input_candidate_count": 6,
-        "raw_result_count": 5,
-        "output_candidate_count": 5,
+        "raw_result_count": 6,
+        "output_candidate_count": 6,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
+          "https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador",
           "https://vocab.cfaa.eus/broaching/ModoOperacion_Setup",
           "https://vocab.cfaa.eus/broaching/ModoUsuario",
+          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
           "https://vocab.cfaa.eus/broaching/ModoSetup",
           "https://vocab.cfaa.eus/broaching/CarpetaMTB_T"
         ],
         "sample_rows": [
           [
-            "ModoAdministrador_CNC"
+            "CartelaEstado_Administrador"
           ],
           [
             "ModoOperacion_Setup"
           ],
           [
             "ModoUsuario"
+          ],
+          [
+            "ModoAdministrador_CNC"
           ],
           [
             "ModoSetup"
@@ -1555,38 +3185,34 @@
         "step_id": "detail",
         "purpose": "installation_modes_storage_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 18",
-        "input_candidate_count": 5,
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador> <https://vocab.cfaa.eus/broaching/ModoOperacion_Setup> <https://vocab.cfaa.eus/broaching/ModoUsuario> <https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC> <https://vocab.cfaa.eus/broaching/ModoSetup> <https://vocab.cfaa.eus/broaching/CarpetaMTB_T> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "input_candidate_count": 6,
         "raw_result_count": 18,
-        "output_candidate_count": 4,
+        "output_candidate_count": 5,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
+          "https://vocab.cfaa.eus/broaching/CartelaEstado_Administrador",
           "https://vocab.cfaa.eus/broaching/ModoOperacion_Setup",
           "https://vocab.cfaa.eus/broaching/ModoUsuario",
+          "https://vocab.cfaa.eus/broaching/ModoAdministrador_CNC",
           "https://vocab.cfaa.eus/broaching/ModoSetup"
         ],
         "sample_rows": [
           [
-            "ModoAdministrador_CNC",
+            "CartelaEstado_Administrador",
             "textoExtracto",
-            "acceso al modo administrador se habilita con el código de validación"
+            "imagen de escritorio [...] fondo rojo y texto 'ADMINISTRATOR MODE'. Funciona como señalización visual del modo activo"
           ],
           [
-            "ModoAdministrador_CNC",
+            "CartelaEstado_Administrador",
             "label",
-            "Modo administrador (CNC)"
-          ],
-          [
-            "ModoAdministrador_CNC",
-            "label",
-            "Modo administrador"
+            "Cartela de estado 'ADMINISTRATOR MODE'"
           ],
           [
             "ModoOperacion_Setup",
             "textoExtracto",
-            "modo Setup (puesta a punto)"
+            "Con el CNC en modo SETUP (puesta a punto), las rutinas OEM cuya extensión sea fst se cargan en la memoria RAM durante la preparación de bloques."
           ],
           [
             "ModoOperacion_Setup",
@@ -1597,6 +3223,247 @@
             "ModoOperacion_Setup",
             "label",
             "Modo SETUP"
+          ],
+          [
+            "ModoUsuario",
+            "textoExtracto",
+            "Modo usuario (User Mode)."
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Durante un ciclo de cajera rectangular, si el CNC reporta el error 1737 ('T = 0'), ¿qué requiere el ciclo como mínimo respecto a la programación de herramientas para las operaciones de desbaste o acabado?",
+    "intent": "procedure_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "durante un ciclo de cajera rectangular si el cnc reporta el error 1737 t 0 que requiere el ciclo como minimo respecto a la programacion de herramientas para las operaciones de desbaste o acabado",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "ciclo de cajera rectangular",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ciclo_cajera_rectangular",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "Ciclo de cajera rectangular"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ciclo_cajera_rectangular",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "Ciclo de cajera rectangular"
+          }
+        ]
+      },
+      {
+        "surface": "las operaciones",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/LasOperaciones",
+            "entity_type": "TareaMantenimiento",
+            "language": "es",
+            "surface": "Las Operaciones"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/LasOperaciones",
+            "entity_type": "TareaMantenimiento",
+            "language": "en",
+            "surface": "Las Operaciones"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/LasOperaciones",
+            "entity_type": "TareaMantenimiento",
+            "language": "alias",
+            "surface": "Las Operaciones"
+          }
+        ]
+      },
+      {
+        "surface": "error 17",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_17",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 17"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_17",
+            "entity_type": "DiagnosticoFallo",
+            "language": "en",
+            "surface": "Error 17"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_17",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 17"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "1737",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ParametroTHerramientaEnCajeraRectangular_973d940291",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "1737"
+          }
+        ]
+      },
+      {
+        "surface": "cnc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "alias",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCControlNumericoComputarizado",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          }
+        ]
+      },
+      {
+        "surface": "37",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ErrorPunto37",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "37"
+          }
+        ]
+      },
+      {
+        "surface": "17",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_17",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "17"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_resolution_procedure_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_resolution_procedure",
+    "anchor_candidates": [
+      "quick_ref_feed_speed_tool",
+      "ciclo de cajera rectangular",
+      "las operaciones",
+      "error 17",
+      "error",
+      "1737",
+      "cnc",
+      "37"
+    ],
+    "template_id": "ERR_T3_resolution_procedure",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.9,
+      "family": 0.96,
+      "overall": 0.74
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_resolution_procedure",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138"
+        ],
+        "sample_rows": [
+          [
+            "Parametro_23d2a9d138"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_resolution_procedure_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
+        "input_candidate_count": 1,
+        "raw_result_count": 4,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138"
+        ],
+        "sample_rows": [
+          [
+            "Parametro_23d2a9d138",
+            "textoExtracto",
+            "1737 'CAJERA RECTANGULAR: T = 0' [...] CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada."
+          ],
+          [
+            "Parametro_23d2a9d138",
+            "label",
+            "Parámetro T (herramienta) en cajera rectangular"
+          ],
+          [
+            "Parametro_23d2a9d138",
+            "identificador",
+            "1737"
+          ],
+          [
+            "Parametro_23d2a9d138",
+            "valor",
+            "0"
           ]
         ],
         "prune_reason": null,
@@ -1807,22 +3674,22 @@
         "step_id": "seed",
         "purpose": "seed_installation_motion_defaults",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/TipoDeFiltroGAPSENSOR> <https://vocab.cfaa.eus/broaching/FREQRESMPG> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Grafico_CalibracionSensorGap> <https://vocab.cfaa.eus/broaching/FTIMELIMMPG> } }",
         "input_candidate_count": 2,
         "raw_result_count": 2,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/TipoDeFiltroGAPSENSOR",
-          "https://vocab.cfaa.eus/broaching/FREQRESMPG"
+          "https://vocab.cfaa.eus/broaching/Grafico_CalibracionSensorGap",
+          "https://vocab.cfaa.eus/broaching/FTIMELIMMPG"
         ],
         "sample_rows": [
           [
-            "TipoDeFiltroGAPSENSOR"
+            "Grafico_CalibracionSensorGap"
           ],
           [
-            "FREQRESMPG"
+            "FTIMELIMMPG"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -1832,46 +3699,289 @@
         "step_id": "detail",
         "purpose": "installation_motion_defaults_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/TipoDeFiltroGAPSENSOR> <https://vocab.cfaa.eus/broaching/FREQRESMPG> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Grafico_CalibracionSensorGap> <https://vocab.cfaa.eus/broaching/FTIMELIMMPG> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
         "input_candidate_count": 2,
-        "raw_result_count": 7,
+        "raw_result_count": 5,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/TipoDeFiltroGAPSENSOR",
-          "https://vocab.cfaa.eus/broaching/FREQRESMPG"
+          "https://vocab.cfaa.eus/broaching/Grafico_CalibracionSensorGap",
+          "https://vocab.cfaa.eus/broaching/FTIMELIMMPG"
         ],
         "sample_rows": [
           [
-            "TipoDeFiltroGAPSENSOR",
+            "Grafico_CalibracionSensorGap",
             "textoExtracto",
-            "TYPE | Tipo de filtro. Valores posibles: Paso bajo. Valor por defecto: Paso bajo. Variable asociada: (V.)MPG.TYPE"
+            "Gráfico lineal distancia–voltaje del sensor con origen desplazado (GAPSENSOROFFSET), límites GAPDISTLIMIT (mm/in) y GAPVOLTLIMIT (mV). Incluye ejes con unidades, recta de calibración y flechas que marcan la correspondencia física y eléctrica."
           ],
           [
-            "TipoDeFiltroGAPSENSOR",
+            "Grafico_CalibracionSensorGap",
             "label",
-            "Tipo de filtro (GAP SENSOR)"
+            "Gráfico lineal distancia–voltaje del sensor de gap"
           ],
           [
-            "TipoDeFiltroGAPSENSOR",
+            "FTIMELIMMPG",
+            "textoExtracto",
+            "El parámetro FTIMELIM permite limitar el tiempo que emplea el CNC para la interpolación del avance en cada tramo. Si se programa con valor 0, el CNC no realiza la interpolación del avance y por tanto la ejecución es más rápida. Al aumentar el valor de este parámetro, aumenta el tiempo máximo permitido de ejecución total; por ejemplo, un valor de 200% o 300% permitirá hasta el doble o triple de tiempo de ejecución en el tramo interpolado."
+          ],
+          [
+            "FTIMELIMMPG",
+            "label",
+            "FTIMELIM MPG"
+          ],
+          [
+            "FTIMELIMMPG",
             "identificador",
-            "MPG.TYPE"
-          ],
+            "FTIMELIM MPG"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Si el bus Sercos devuelve el error 4026 indicando una incoherencia de datos en un encóder FeeDat/EnDat, ¿qué dos acciones directas propone la solución para solventarlo?",
+    "intent": "procedure_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "si el bus sercos devuelve el error 4026 indicando una incoherencia de datos en un encoder feedat/endat que dos acciones directas propone la solucion para solventarlo",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "encoder feedat/endat",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/EncoderFeeDatEnDat_2d80e4327f",
+            "entity_type": "Sensor",
+            "language": "es",
+            "surface": "Encoder FeeDat/EnDat"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/EncoderFeeDatEnDat_2d80e4327f",
+            "entity_type": "Sensor",
+            "language": "alias",
+            "surface": "Encoder FeeDat/EnDat"
+          }
+        ]
+      },
+      {
+        "surface": "bus sercos",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/BusSercos",
+            "entity_type": "ComponenteElectrico",
+            "language": "es",
+            "surface": "Bus Sercos"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/BusSercos",
+            "entity_type": "ComponenteElectrico",
+            "language": "en",
+            "surface": "Bus Sercos"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/BusSercos",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "Bus Sercos"
+          }
+        ]
+      },
+      {
+        "surface": "encoder",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Encoder_0763c65deb",
+            "entity_type": "ComponenteElectrico",
+            "language": "es",
+            "surface": "Encoder"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Encoder_0763c65deb",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "Encoder"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Encoder_3520117d55",
+            "entity_type": "Sensor",
+            "language": "es",
+            "surface": "Encoder"
+          }
+        ]
+      },
+      {
+        "surface": "error 4",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_4",
+            "entity_type": "AvisoSeguridad",
+            "language": "es",
+            "surface": "Error 4"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_4",
+            "entity_type": "AvisoSeguridad",
+            "language": "en",
+            "surface": "Error 4"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_4",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "Error 4"
+          }
+        ]
+      },
+      {
+        "surface": "sercos",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ReguladorSercos",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "Sercos"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ReguladorSercos_1424263905",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "SERCOS"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Sistema_Sercos",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "es",
+            "surface": "Sercos"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "4026",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Fallo_4026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "4026"
+          }
+        ]
+      },
+      {
+        "surface": "402",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity402_e8d09c3705",
+            "entity_type": "Pagina",
+            "language": "alias",
+            "surface": "402"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_resolution_procedure_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_resolution_procedure",
+    "anchor_candidates": [
+      "error_resolution_procedure",
+      "encoder feedat/endat",
+      "bus sercos",
+      "encoder",
+      "error 4",
+      "sercos",
+      "error",
+      "4026"
+    ],
+    "template_id": "ERR_T3_resolution_procedure",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.78
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_resolution_procedure",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Fallo_4026> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Fallo_4026"
+        ],
+        "sample_rows": [
           [
-            "TipoDeFiltroGAPSENSOR",
-            "valor",
-            "Paso bajo"
-          ],
+            "Fallo_4026"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_resolution_procedure_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Fallo_4026> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
+        "input_candidate_count": 1,
+        "raw_result_count": 4,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Fallo_4026"
+        ],
+        "sample_rows": [
           [
-            "FREQRESMPG",
+            "Fallo_4026",
             "textoExtracto",
-            "Frecuencia de resonancia que el CNC debe eliminar en la generación de la consigna. Este parámetro sólo es válido cuando el perfil de aceleración es trapezoidal o seno cuadrado (parámetro SLOPETYPE), que es el perfil de aceleración por defecto para el modo HSC CONTERROR."
+            "4026 Incoherencia en datos de encoder FeeDat/EnDat. Es necesario validar la nueva configuración."
           ],
           [
-            "FREQRESMPG",
+            "Fallo_4026",
             "label",
-            "FREQRES MPG"
+            "Incoherencia en datos de encoder FeeDat/EnDat"
+          ],
+          [
+            "Fallo_4026",
+            "label",
+            "Incoherencia en datos de encoder FeeDat/EnDat"
+          ],
+          [
+            "Fallo_4026",
+            "identificador",
+            "4026"
           ]
         ],
         "prune_reason": null,
@@ -2053,22 +4163,22 @@
         "step_id": "seed",
         "purpose": "seed_installation_bus_plc",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Interfaz_HBH3_HBH4> <https://vocab.cfaa.eus/broaching/PLCDATASIZE_a1736a2dd8> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/TerminalRemotoHBH3HBH4> <https://vocab.cfaa.eus/broaching/Parametro_d60ccabdcc> } }",
         "input_candidate_count": 2,
         "raw_result_count": 2,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/Interfaz_HBH3_HBH4",
-          "https://vocab.cfaa.eus/broaching/PLCDATASIZE_a1736a2dd8"
+          "https://vocab.cfaa.eus/broaching/TerminalRemotoHBH3HBH4",
+          "https://vocab.cfaa.eus/broaching/Parametro_d60ccabdcc"
         ],
         "sample_rows": [
           [
-            "Interfaz_HBH3_HBH4"
+            "TerminalRemotoHBH3HBH4"
           ],
           [
-            "PLCDATASIZE_a1736a2dd8"
+            "Parametro_d60ccabdcc"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -2078,46 +4188,301 @@
         "step_id": "detail",
         "purpose": "installation_bus_plc_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Interfaz_HBH3_HBH4> <https://vocab.cfaa.eus/broaching/PLCDATASIZE_a1736a2dd8> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/TerminalRemotoHBH3HBH4> <https://vocab.cfaa.eus/broaching/Parametro_d60ccabdcc> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
         "input_candidate_count": 2,
         "raw_result_count": 7,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/Interfaz_HBH3_HBH4",
-          "https://vocab.cfaa.eus/broaching/PLCDATASIZE_a1736a2dd8"
+          "https://vocab.cfaa.eus/broaching/TerminalRemotoHBH3HBH4",
+          "https://vocab.cfaa.eus/broaching/Parametro_d60ccabdcc"
         ],
         "sample_rows": [
           [
-            "Interfaz_HBH3_HBH4",
+            "TerminalRemotoHBH3HBH4",
             "textoExtracto",
-            "El terminal remoto HBH3/HBH4 siempre tendrá valor ꞏ1ꞏ. Volantes conectados a través de una entrada 'Variable'."
+            "El terminal remoto HBH3/HBH4 cuenta como un volante."
           ],
           [
-            "Interfaz_HBH3_HBH4",
+            "TerminalRemotoHBH3HBH4",
             "label",
             "Terminal remoto HBH3/HBH4"
           ],
           [
-            "Interfaz_HBH3_HBH4",
+            "TerminalRemotoHBH3HBH4",
             "identificador",
             "HBH3/HBH4"
           ],
           [
-            "PLCDATASIZE_a1736a2dd8",
+            "Parametro_d60ccabdcc",
             "textoExtracto",
             "PLCDATASIZE Tamaño de la zona de datos compartida del PLC. Valores posibles: De 0 a 500.000 bytes. Valor por defecto: 0."
           ],
           [
-            "PLCDATASIZE_a1736a2dd8",
+            "Parametro_d60ccabdcc",
             "label",
             "PLCDATASIZE"
           ],
           [
-            "PLCDATASIZE_a1736a2dd8",
+            "Parametro_d60ccabdcc",
             "identificador",
             "V.MPG.PLCDATASIZE"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Si aparece el error 5026 ('CNCWR: La variable únicamente admite el valor 0'), ¿qué acción en el programa del PLC ha provocado este fallo?",
+    "intent": "literal_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "si aparece el error 5026 cncwr la variable unicamente admite el valor 0 que accion en el programa del plc ha provocado este fallo",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "programa del plc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa_PLC",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "es",
+            "surface": "Programa del PLC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa_PLC",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "alias",
+            "surface": "Programa del PLC"
+          }
+        ]
+      },
+      {
+        "surface": "error 5026",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_5026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 5026"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_5026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "en",
+            "surface": "Error 5026"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_5026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 5026"
+          }
+        ]
+      },
+      {
+        "surface": "programa",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "es",
+            "surface": "Programa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "en",
+            "surface": "Programa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "alias",
+            "surface": "Programa"
+          }
+        ]
+      },
+      {
+        "surface": "variable",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Variable_aa536885a6",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "Variable"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Variable_aa536885a6",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "Variable"
+          }
+        ]
+      },
+      {
+        "surface": "error 5",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_5",
+            "entity_type": "AvisoSeguridad",
+            "language": "es",
+            "surface": "Error 5"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_5",
+            "entity_type": "AvisoSeguridad",
+            "language": "en",
+            "surface": "Error 5"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_5",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "Error 5"
+          }
+        ]
+      },
+      {
+        "surface": "cncwr",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCWR_519cabb2c0",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "CNCWR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCWR_519cabb2c0",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "CNCWR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Instruccion_CNCWR",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "CNCWR"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "5026",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "5026"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_5026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "5026"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_condition_attribute_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_code_condition_attribute",
+    "anchor_candidates": [
+      "simulation",
+      "programa del plc",
+      "error 5026",
+      "programa",
+      "variable",
+      "error 5",
+      "cncwr",
+      "error"
+    ],
+    "template_id": "ERR_T2_condition_attribute",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.69
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_condition_attribute",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR"
+        ],
+        "sample_rows": [
+          [
+            "ErrorVariableCNCWR"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_condition_attribute_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 24",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/ErrorVariableCNCWR"
+        ],
+        "sample_rows": [
+          [
+            "ErrorVariableCNCWR",
+            "textoExtracto",
+            "5026 'CNCWR:La variable únicamente admite el valor '0'' DETECCIÓN Durante la ejecución de comandos CNCWR. CAUSA El PLC ha intentado escribir un valor diferente de 0 en una variable"
+          ],
+          [
+            "ErrorVariableCNCWR",
+            "label",
+            "Error CNCWR: Variable con valor no permitido"
+          ],
+          [
+            "ErrorVariableCNCWR",
+            "identificador",
+            "5026"
           ]
         ],
         "prune_reason": null,
@@ -2317,22 +4682,22 @@
         "step_id": "seed",
         "purpose": "seed_installation_motion_defaults",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/SLOPETYPE_a654717889> <https://vocab.cfaa.eus/broaching/SistemaCNC_1242> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/TipoDeAceleracionPorDefectoSLOPETYPE> <https://vocab.cfaa.eus/broaching/CNC_1315> } }",
         "input_candidate_count": 2,
         "raw_result_count": 2,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/SLOPETYPE_a654717889",
-          "https://vocab.cfaa.eus/broaching/SistemaCNC_1242"
+          "https://vocab.cfaa.eus/broaching/TipoDeAceleracionPorDefectoSLOPETYPE",
+          "https://vocab.cfaa.eus/broaching/CNC_1315"
         ],
         "sample_rows": [
           [
-            "SLOPETYPE_a654717889"
+            "TipoDeAceleracionPorDefectoSLOPETYPE"
           ],
           [
-            "SistemaCNC_1242"
+            "CNC_1315"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -2342,46 +4707,285 @@
         "step_id": "detail",
         "purpose": "installation_motion_defaults_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/SLOPETYPE_a654717889> <https://vocab.cfaa.eus/broaching/SistemaCNC_1242> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/TipoDeAceleracionPorDefectoSLOPETYPE> <https://vocab.cfaa.eus/broaching/CNC_1315> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
         "input_candidate_count": 2,
-        "raw_result_count": 11,
+        "raw_result_count": 6,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/SLOPETYPE_a654717889",
-          "https://vocab.cfaa.eus/broaching/SistemaCNC_1242"
+          "https://vocab.cfaa.eus/broaching/TipoDeAceleracionPorDefectoSLOPETYPE",
+          "https://vocab.cfaa.eus/broaching/CNC_1315"
         ],
         "sample_rows": [
           [
-            "SLOPETYPE_a654717889",
+            "TipoDeAceleracionPorDefectoSLOPETYPE",
             "textoExtracto",
             "Tipo de aceleración por defecto. Valores posibles: Lineal / Trapezoidal / Seno cuadrado (Square sine). Valor por defecto: Seno cuadrado. Variable asociada: (V.)[ch].MPG.SLOPETYPE"
           ],
           [
-            "SLOPETYPE_a654717889",
-            "label",
-            "SLOPETYPE"
-          ],
-          [
-            "SLOPETYPE_a654717889",
-            "label",
-            "Parámetro SLOPETYPE (tipo de aceleración)"
-          ],
-          [
-            "SLOPETYPE_a654717889",
+            "TipoDeAceleracionPorDefectoSLOPETYPE",
             "label",
             "Tipo de aceleración por defecto (SLOPETYPE)"
           ],
           [
-            "SLOPETYPE_a654717889",
-            "identificador",
-            "(V.)[ch].MPG.SLOPETYPE"
-          ],
-          [
-            "SLOPETYPE_a654717889",
+            "TipoDeAceleracionPorDefectoSLOPETYPE",
             "identificador",
             "SLOPETYPE"
+          ],
+          [
+            "TipoDeAceleracionPorDefectoSLOPETYPE",
+            "valor",
+            "Seno cuadrado"
+          ],
+          [
+            "CNC_1315",
+            "textoExtracto",
+            "El CNC tampoco llama a la subrutina al ejecutar un ciclo desde el modo conversacional. [...] El CNC la ejecuta inmediatamente después de pulsar la tecla [START], antes de iniciar la ejecución del programa."
+          ],
+          [
+            "CNC_1315",
+            "label",
+            "Sistema CNC"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "¿Cuál es el valor umbral de memoria libre en disco por debajo del cual el CNC muestra avisos (errores 8023 o 8042) recomendando liberar espacio o cerrar aplicaciones de terceros?",
+    "intent": "literal_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "cual es el valor umbral de memoria libre en disco por debajo del cual el cnc muestra avisos errores 8023 o 8042 recomendando liberar espacio o cerrar aplicaciones de terceros",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "8023",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8023",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "8023"
+          }
+        ]
+      },
+      {
+        "surface": "8042",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8042",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "8042"
+          }
+        ]
+      },
+      {
+        "surface": "cnc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_CNC",
+            "entity_type": "Actuador",
+            "language": "alias",
+            "surface": "CNC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CNCControlNumericoComputarizado",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "CNC"
+          }
+        ]
+      },
+      {
+        "surface": "del",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Tecla_DEL",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "DEL"
+          }
+        ]
+      },
+      {
+        "surface": "42",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Senal_MFUN1",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "42"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/TYPE42",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "42"
+          }
+        ]
+      },
+      {
+        "surface": "23",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_23",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "23"
+          }
+        ]
+      },
+      {
+        "surface": "0",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CicloT0",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "0"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity0_6c5a58ce87",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "0"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity0_6c5a58ce87",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "0"
+          }
+        ]
+      },
+      {
+        "surface": "3",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ContadoraRCSSNodo3",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "3"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/EjeLogicoAXISNAME3",
+            "entity_type": "Componente",
+            "language": "alias",
+            "surface": "3"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/EjeLongitudinalDeLaHerramienta",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "3"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_condition_attribute_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_code_condition_attribute",
+    "anchor_candidates": [
+      "error_code_condition_attribute",
+      "8023",
+      "8042",
+      "cnc",
+      "del",
+      "42",
+      "23",
+      "0"
+    ],
+    "template_id": "ERR_T2_condition_attribute",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.69
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_condition_attribute",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error_8023> <https://vocab.cfaa.eus/broaching/Error_8042> } }",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8023",
+          "https://vocab.cfaa.eus/broaching/Error_8042"
+        ],
+        "sample_rows": [
+          [
+            "Error_8023"
+          ],
+          [
+            "Error_8042"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_condition_attribute_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error_8023> <https://vocab.cfaa.eus/broaching/Error_8042> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 24",
+        "input_candidate_count": 2,
+        "raw_result_count": 6,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8023",
+          "https://vocab.cfaa.eus/broaching/Error_8042"
+        ],
+        "sample_rows": [
+          [
+            "Error_8023",
+            "textoExtracto",
+            "DETECCIÓN Durante el arranque del sistema. CAUSA El CNC ha detectado menos de 50 MB de memoria libre en disco. SOLUCIÓN Comprobar si hay arrancada alguna aplicación de terceros que esté consumiendo recursos del sistema, y si es así, cerrarla. Apagar y encender el CNC. Si el error persiste, póngase en contacto con el servicio de asistencia técnica."
+          ],
+          [
+            "Error_8023",
+            "label",
+            "Memoria en disco por debajo del mínimo recomendado"
+          ],
+          [
+            "Error_8023",
+            "identificador",
+            "8023"
+          ],
+          [
+            "Error_8042",
+            "textoExtracto",
+            "8042 'Memoria por debajo del mínimo recomendado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado menos de 50 MB de memoria libre en disco. SOLUCIÓN Hay que liberar memoria en disco para poder arrancar el CNC."
+          ],
+          [
+            "Error_8042",
+            "label",
+            "Memoria por debajo del mínimo recomendado"
+          ],
+          [
+            "Error_8042",
+            "identificador",
+            "8042"
           ]
         ],
         "prune_reason": null,
@@ -2534,22 +5138,22 @@
         "step_id": "seed",
         "purpose": "seed_installation_motion_defaults",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/SYNCCANCEL_1273c5869d> <https://vocab.cfaa.eus/broaching/SistemaCNC_1242> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Parametro_944508d28a> <https://vocab.cfaa.eus/broaching/CNC_1315> } }",
         "input_candidate_count": 2,
         "raw_result_count": 2,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/SYNCCANCEL_1273c5869d",
-          "https://vocab.cfaa.eus/broaching/SistemaCNC_1242"
+          "https://vocab.cfaa.eus/broaching/Parametro_944508d28a",
+          "https://vocab.cfaa.eus/broaching/CNC_1315"
         ],
         "sample_rows": [
           [
-            "SYNCCANCEL_1273c5869d"
+            "Parametro_944508d28a"
           ],
           [
-            "SistemaCNC_1242"
+            "CNC_1315"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -2559,46 +5163,307 @@
         "step_id": "detail",
         "purpose": "installation_motion_defaults_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/SYNCCANCEL_1273c5869d> <https://vocab.cfaa.eus/broaching/SistemaCNC_1242> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Parametro_944508d28a> <https://vocab.cfaa.eus/broaching/CNC_1315> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
         "input_candidate_count": 2,
         "raw_result_count": 6,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/SYNCCANCEL_1273c5869d",
-          "https://vocab.cfaa.eus/broaching/SistemaCNC_1242"
+          "https://vocab.cfaa.eus/broaching/Parametro_944508d28a",
+          "https://vocab.cfaa.eus/broaching/CNC_1315"
         ],
         "sample_rows": [
           [
-            "SYNCCANCEL_1273c5869d",
+            "Parametro_944508d28a",
             "textoExtracto",
             "SYNCCANCEL Cancelar la sincronización de cabezales. Valores posibles: Sí / No. Valor por defecto: Sí. Variable asociada: (V.)MPG.SYNCCANCEL"
           ],
           [
-            "SYNCCANCEL_1273c5869d",
+            "Parametro_944508d28a",
             "label",
             "SYNCCANCEL"
           ],
           [
-            "SYNCCANCEL_1273c5869d",
+            "Parametro_944508d28a",
             "identificador",
             "MPG.SYNCCANCEL"
           ],
           [
-            "SYNCCANCEL_1273c5869d",
+            "Parametro_944508d28a",
             "valor",
             "Sí"
           ],
           [
-            "SistemaCNC_1242",
+            "CNC_1315",
             "textoExtracto",
-            "CNC"
+            "El CNC tampoco llama a la subrutina al ejecutar un ciclo desde el modo conversacional. [...] El CNC la ejecuta inmediatamente después de pulsar la tecla [START], antes de iniciar la ejecución del programa."
           ],
           [
-            "SistemaCNC_1242",
+            "CNC_1315",
             "label",
             "Sistema CNC"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Si el CNC se encuentra en el modo Usuario y tiene la protección OEM activada (error 8026), ¿qué durabilidad tienen las modificaciones realizadas en un programa PLC o parámetro máquina?",
+    "intent": "literal_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "si el cnc se encuentra en el modo usuario y tiene la proteccion oem activada error 8026 que durabilidad tienen las modificaciones realizadas en un programa plc o parametro maquina",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "parametro maquina",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ParametroMaquina",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "Parámetro máquina"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ParametroMaquina",
+            "entity_type": "Parametro",
+            "language": "es",
+            "surface": "Parametro Maquina"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ParametroMaquina",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "Parámetro máquina"
+          }
+        ]
+      },
+      {
+        "surface": "modo usuario",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ModoOperacion_ModoUsuario",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "Modo usuario"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ModoOperacion_ModoUsuario",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "Modo usuario"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ModoOperacion_Usuario",
+            "entity_type": "ModoOperacion",
+            "language": "es",
+            "surface": "Modo Usuario"
+          }
+        ]
+      },
+      {
+        "surface": "programa plc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ProgramaPLC",
+            "entity_type": "InterfazUsuario",
+            "language": "es",
+            "surface": "Programa PLC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ProgramaPLC",
+            "entity_type": "InterfazUsuario",
+            "language": "alias",
+            "surface": "Programa PLC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ProgramaPLC_46",
+            "entity_type": "Componente",
+            "language": "es",
+            "surface": "Programa PLC"
+          }
+        ]
+      },
+      {
+        "surface": "error 8026",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 8026"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "en",
+            "surface": "Error 8026"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 8026"
+          }
+        ]
+      },
+      {
+        "surface": "programa",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "es",
+            "surface": "Programa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "en",
+            "surface": "Programa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Programa",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "alias",
+            "surface": "Programa"
+          }
+        ]
+      },
+      {
+        "surface": "maquina",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/MaquinaBrochadora18",
+            "entity_type": "Maquina_07a3d96d93",
+            "language": "es",
+            "surface": "MÁQUINA"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/MaquinaBrochadora18",
+            "entity_type": "Maquina_07a3d96d93",
+            "language": "alias",
+            "surface": "MÁQUINA"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Maquina_07a3d96d93",
+            "entity_type": "MaquinaBrochadora18",
+            "language": "es",
+            "surface": "máquina"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "8026",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8026",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "8026"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_safety_mode_policy_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_safety_mode_policy",
+    "anchor_candidates": [
+      "simulation",
+      "parametro maquina",
+      "modo usuario",
+      "programa plc",
+      "error 8026",
+      "programa",
+      "maquina",
+      "error"
+    ],
+    "template_id": "ERR_T1_safety_mode_policy",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.35,
+      "anchor": 0.82,
+      "family": 0.88,
+      "overall": 0.68
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_safety_mode_policy",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error_8026> } }",
+        "input_candidate_count": 1,
+        "raw_result_count": 1,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8026"
+        ],
+        "sample_rows": [
+          [
+            "Error_8026"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_safety_mode_policy_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error_8026> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "input_candidate_count": 1,
+        "raw_result_count": 3,
+        "output_candidate_count": 1,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8026"
+        ],
+        "sample_rows": [
+          [
+            "Error_8026",
+            "textoExtracto",
+            "'Protección de OEM activada:Los cambios tendrán carácter temporal' DETECCIÓN Durante la edición de programas, programa PLC o parámetros máquina. CAUSA El CNC está en modo usuario, con la protección de OEM activada, por lo que todo cambio tendrá carácter temporal y se perderá al apagar el CNC. SOLUCIÓN Apagar el CNC y utilizar la utilidad DiskMonitor para pasar a modo puesta a punto. Volver a arrancar el CNC."
+          ],
+          [
+            "Error_8026",
+            "label",
+            "Error 8026: Protección OEM activada"
+          ],
+          [
+            "Error_8026",
+            "identificador",
+            "8026"
           ]
         ],
         "prune_reason": null,
@@ -2803,22 +5668,22 @@
         "step_id": "seed",
         "purpose": "seed_installation_alarm_temperature",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/OVERTEMP_9aad61f773> <https://vocab.cfaa.eus/broaching/AlarmaPorSobretemperaturaW169E173_b03865621c> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/InterfazUsuario_b3cc1577c8> <https://vocab.cfaa.eus/broaching/Alarma_272d279c51> } }",
         "input_candidate_count": 2,
         "raw_result_count": 2,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/OVERTEMP_9aad61f773",
-          "https://vocab.cfaa.eus/broaching/AlarmaPorSobretemperaturaW169E173_b03865621c"
+          "https://vocab.cfaa.eus/broaching/InterfazUsuario_b3cc1577c8",
+          "https://vocab.cfaa.eus/broaching/Alarma_272d279c51"
         ],
         "sample_rows": [
           [
-            "OVERTEMP_9aad61f773"
+            "InterfazUsuario_b3cc1577c8"
           ],
           [
-            "AlarmaPorSobretemperaturaW169E173_b03865621c"
+            "Alarma_272d279c51"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -2828,41 +5693,279 @@
         "step_id": "detail",
         "purpose": "installation_alarm_temperature_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/OVERTEMP_9aad61f773> <https://vocab.cfaa.eus/broaching/AlarmaPorSobretemperaturaW169E173_b03865621c> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 12",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/InterfazUsuario_b3cc1577c8> <https://vocab.cfaa.eus/broaching/Alarma_272d279c51> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> }\n  ?s ?p ?o .\n} LIMIT 12",
         "input_candidate_count": 2,
-        "raw_result_count": 5,
+        "raw_result_count": 6,
         "output_candidate_count": 2,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/OVERTEMP_9aad61f773",
-          "https://vocab.cfaa.eus/broaching/AlarmaPorSobretemperaturaW169E173_b03865621c"
+          "https://vocab.cfaa.eus/broaching/InterfazUsuario_b3cc1577c8",
+          "https://vocab.cfaa.eus/broaching/Alarma_272d279c51"
         ],
         "sample_rows": [
           [
-            "OVERTEMP_9aad61f773",
+            "InterfazUsuario_b3cc1577c8",
+            "textoExtracto",
+            "OVERTEMP"
+          ],
+          [
+            "InterfazUsuario_b3cc1577c8",
             "label",
             "OVERTEMP"
           ],
           [
-            "OVERTEMP_9aad61f773",
+            "InterfazUsuario_b3cc1577c8",
             "identificador",
             "OVERTEMP"
           ],
           [
-            "AlarmaPorSobretemperaturaW169E173_b03865621c",
+            "Alarma_272d279c51",
             "textoExtracto",
             "warning W169 avisando de esta circunstancia [...] error E173. El CNC permitirá finalizar la ejecución en marcha, pero no permitirá reanudarla tras una interrupción"
           ],
           [
-            "AlarmaPorSobretemperaturaW169E173_b03865621c",
+            "Alarma_272d279c51",
             "label",
             "Alarma por sobretemperatura (W169 / E173)"
           ],
           [
-            "AlarmaPorSobretemperaturaW169E173_b03865621c",
+            "Alarma_272d279c51",
             "identificador",
             "W169 (warning), E173 (error)"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "En la programación en lenguaje 8055, ¿qué extensiones de archivo están asociadas respectivamente a la aparición de los errores 8458 (por usar funciones de torno en fresadora) y 8459 (por usar funciones de fresa en torno)?",
+    "intent": "component_relation_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "en la programacion en lenguaje 8055 que extensiones de archivo estan asociadas respectivamente a la aparicion de los errores 8458 por usar funciones de torno en fresadora y 8459 por usar funciones de fresa en torno",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "fresa",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Fresa",
+            "entity_type": "HerramientaCNC_f45ca174ae",
+            "language": "es",
+            "surface": "fresa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Fresa",
+            "entity_type": "HerramientaCNC_f45ca174ae",
+            "language": "es",
+            "surface": "Fresa"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Fresa",
+            "entity_type": "HerramientaCNC_f45ca174ae",
+            "language": "en",
+            "surface": "Fresa"
+          }
+        ]
+      },
+      {
+        "surface": "8055",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity8055_5d045f80b9",
+            "entity_type": "MaquinaBrochadora18",
+            "language": "alias",
+            "surface": "8055"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8055",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "8055"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Fallo_8055",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "8055"
+          }
+        ]
+      },
+      {
+        "surface": "8459",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error8459FuncionOVariableInexistenteEnTorno",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "8459"
+          }
+        ]
+      },
+      {
+        "surface": "8458",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8458",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "8458"
+          }
+        ]
+      },
+      {
+        "surface": "55",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_55",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "55"
+          }
+        ]
+      },
+      {
+        "surface": "58",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_58",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "58"
+          }
+        ]
+      },
+      {
+        "surface": "59",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_59",
+            "entity_type": "AvisoSeguridad",
+            "language": "alias",
+            "surface": "59"
+          }
+        ]
+      },
+      {
+        "surface": "5",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Capitulo_5",
+            "entity_type": "Capitulo",
+            "language": "alias",
+            "surface": "5"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ContadoraRCSSNodo5",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "5"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/DejarLaHerramientaDelCabezalEnElAlmacenYCogerUnaHerramientaDelBrazo_5961c3d550",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "5"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_comparison_lookup",
+    "predicted_hop_depth": 2,
+    "anchor_text": "error_code_comparison",
+    "anchor_candidates": [
+      "error_code_comparison",
+      "fresa",
+      "8055",
+      "8459",
+      "8458",
+      "55",
+      "58",
+      "59"
+    ],
+    "template_id": "ERR_T4_code_comparison",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.78
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_code_comparison",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error_8458> <https://vocab.cfaa.eus/broaching/Error8459FuncionOVariableInexistenteEnTorno> } }",
+        "input_candidate_count": 2,
+        "raw_result_count": 2,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8458",
+          "https://vocab.cfaa.eus/broaching/Error8459FuncionOVariableInexistenteEnTorno"
+        ],
+        "sample_rows": [
+          [
+            "Error_8458"
+          ],
+          [
+            "Error8459FuncionOVariableInexistenteEnTorno"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_code_comparison_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error_8458> <https://vocab.cfaa.eus/broaching/Error8459FuncionOVariableInexistenteEnTorno> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "input_candidate_count": 2,
+        "raw_result_count": 6,
+        "output_candidate_count": 2,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8458",
+          "https://vocab.cfaa.eus/broaching/Error8459FuncionOVariableInexistenteEnTorno"
+        ],
+        "sample_rows": [
+          [
+            "Error_8458",
+            "textoExtracto",
+            "'Función o variable inexistente en fresadora' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. La función programada sólo existe en torno y el programa es de una fresa (archivo pim)."
+          ],
+          [
+            "Error_8458",
+            "label",
+            "Error 8458: Función o variable inexistente en fresadora"
+          ],
+          [
+            "Error_8458",
+            "identificador",
+            "8458"
+          ],
+          [
+            "Error8459FuncionOVariableInexistenteEnTorno",
+            "textoExtracto",
+            "8459 'Función o variable inexistente en torno' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. La función programada sólo existe en fresa y el programa es de un torno (archivo pit). SOLUCIÓN Cambiar el nombre del fichero o utilizar el software correcto."
+          ],
+          [
+            "Error8459FuncionOVariableInexistenteEnTorno",
+            "label",
+            "Error 8459: Función o variable inexistente en torno"
+          ],
+          [
+            "Error8459FuncionOVariableInexistenteEnTorno",
+            "identificador",
+            "8459"
           ]
         ],
         "prune_reason": null,
@@ -2958,18 +6061,18 @@
         "step_id": "seed",
         "purpose": "seed_installation_bus_plc",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/PLCTYPEIECFagorIECFagor> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Parametro_473e0a223b> } }",
         "input_candidate_count": 1,
         "raw_result_count": 1,
         "output_candidate_count": 1,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/PLCTYPEIECFagorIECFagor"
+          "https://vocab.cfaa.eus/broaching/Parametro_473e0a223b"
         ],
         "sample_rows": [
           [
-            "PLCTYPEIECFagorIECFagor"
+            "Parametro_473e0a223b"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -2979,40 +6082,303 @@
         "step_id": "detail",
         "purpose": "installation_bus_plc_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/PLCTYPEIECFagorIECFagor> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Parametro_473e0a223b> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
         "input_candidate_count": 1,
-        "raw_result_count": 5,
+        "raw_result_count": 4,
         "output_candidate_count": 1,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/PLCTYPEIECFagorIECFagor"
+          "https://vocab.cfaa.eus/broaching/Parametro_473e0a223b"
         ],
         "sample_rows": [
           [
-            "PLCTYPEIECFagorIECFagor",
+            "Parametro_473e0a223b",
             "textoExtracto",
             "PLCTYPE Tipo de PLC. Valores posibles: IEC / IEC+Fagor / Fagor. Valor por defecto: IEC. Variable asociada: (V.)MPG.PLCTYPE"
           ],
           [
-            "PLCTYPEIECFagorIECFagor",
+            "Parametro_473e0a223b",
             "label",
             "PLCTYPE"
           ],
           [
-            "PLCTYPEIECFagorIECFagor",
-            "label",
-            "PLCTYPE (IEC/Fagor/IEC+Fagor)"
-          ],
-          [
-            "PLCTYPEIECFagorIECFagor",
+            "Parametro_473e0a223b",
             "identificador",
             "MPG.PLCTYPE"
           ],
           [
-            "PLCTYPEIECFagorIECFagor",
+            "Parametro_473e0a223b",
             "valor",
             "IEC"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "De acuerdo con el error 8789 del compilador del PLC (índice fuera de rango en ERA), ¿cuál es la sintaxis permitida o rango válido para el direccionamiento de las Entradas locales (LI) y Salidas locales (LO)?",
+    "intent": "parameter_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "de acuerdo con el error 8789 del compilador del plc indice fuera de rango en era cual es la sintaxis permitida o rango valido para el direccionamiento de las entradas locales li y salidas locales lo",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "error 8789",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8789",
+            "entity_type": "DiagnosticoFallo",
+            "language": "es",
+            "surface": "Error 8789"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8789",
+            "entity_type": "DiagnosticoFallo",
+            "language": "en",
+            "surface": "Error 8789"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8789",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "Error 8789"
+          }
+        ]
+      },
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      },
+      {
+        "surface": "8789",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Error_8789",
+            "entity_type": "DiagnosticoFallo",
+            "language": "alias",
+            "surface": "8789"
+          }
+        ]
+      },
+      {
+        "surface": "plc",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_PLC",
+            "entity_type": "Actuador",
+            "language": "es",
+            "surface": "PLC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Actuador_PLC",
+            "entity_type": "Actuador",
+            "language": "alias",
+            "surface": "PLC"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/MTB_Carpeta_PLC",
+            "entity_type": "SistemaDeCoordenadasCNC_dd59e8afdd",
+            "language": "alias",
+            "surface": "PLC"
+          }
+        ]
+      },
+      {
+        "surface": "era",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Instruccion_ERA",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERA"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/OperacionERA",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "ERA"
+          }
+        ]
+      },
+      {
+        "surface": "del",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Tecla_DEL",
+            "entity_type": "ComponenteElectrico",
+            "language": "alias",
+            "surface": "DEL"
+          }
+        ]
+      },
+      {
+        "surface": "9",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CogerUnaHerramientaDeTierraYLlevarlaAlAlmacenPasandoPorElCabezal_1a188637c6",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "9"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/CogerUnaHerramientaDeTierraYLlevarlaAlAlmacenPasandoPorElCabezal_f0073a0a14",
+            "entity_type": "TareaMantenimiento",
+            "language": "alias",
+            "surface": "9"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity9_2dacd7013e",
+            "entity_type": "Parametro",
+            "language": "alias",
+            "surface": "9"
+          }
+        ]
+      },
+      {
+        "surface": "8",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/DejarLaHerramientaDelCabezalEnTierraYCogerUnaHerramientaDeTierra_0b99056e9d",
+            "entity_type": "TareaMantenimiento",
+            "language": "alias",
+            "surface": "8"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/DejarLaHerramientaDelCabezalEnTierraYCogerUnaHerramientaDeTierra_18b41b4777",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "8"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/Entity8_21583cfcdc",
+            "entity_type": "ModoOperacion",
+            "language": "alias",
+            "surface": "8"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_parameter_range_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_parameter_range",
+    "anchor_candidates": [
+      "simulation",
+      "error 8789",
+      "error",
+      "8789",
+      "plc",
+      "era",
+      "del",
+      "9"
+    ],
+    "template_id": "ERR_T5_parameter_range",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.78
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_parameter_range",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error_8789> <https://vocab.cfaa.eus/broaching/EntradasLocales_LI1_LI16> <https://vocab.cfaa.eus/broaching/SalidasLocales_LO1_LO8> } }",
+        "input_candidate_count": 3,
+        "raw_result_count": 3,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8789",
+          "https://vocab.cfaa.eus/broaching/EntradasLocales_LI1_LI16",
+          "https://vocab.cfaa.eus/broaching/SalidasLocales_LO1_LO8"
+        ],
+        "sample_rows": [
+          [
+            "Error_8789"
+          ],
+          [
+            "EntradasLocales_LI1_LI16"
+          ],
+          [
+            "SalidasLocales_LO1_LO8"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_parameter_range_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error_8789> <https://vocab.cfaa.eus/broaching/EntradasLocales_LI1_LI16> <https://vocab.cfaa.eus/broaching/SalidasLocales_LO1_LO8> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "input_candidate_count": 3,
+        "raw_result_count": 9,
+        "output_candidate_count": 3,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_8789",
+          "https://vocab.cfaa.eus/broaching/EntradasLocales_LI1_LI16",
+          "https://vocab.cfaa.eus/broaching/SalidasLocales_LO1_LO8"
+        ],
+        "sample_rows": [
+          [
+            "Error_8789",
+            "textoExtracto",
+            "8789 Índice final fuera de rango en ERA. DETECCIÓN Durante la edición del programa PLC. CAUSA El segundo indice no es un recurso válido. SOLUCIÓN El rango válido para cada recurso es el siguiente. • Entradas (I1-I1024). • Salidas (O1-O1024). • Entradas locales (LI1-LI16). • Salidas locales (LO1-LO8). • Marcas (M1-M8192). • Mensajes (MSG1-MSG1024). • Errores (ERR1-ERR1024). • Relojes (CLK). • Registros (R1-R1024). • Estado de los temporizadores (T1-T512). • Estado de los contadores (C1-C256)."
+          ],
+          [
+            "Error_8789",
+            "label",
+            "Error 8789: Índice final fuera de rango en ERA"
+          ],
+          [
+            "Error_8789",
+            "identificador",
+            "8789"
+          ],
+          [
+            "EntradasLocales_LI1_LI16",
+            "textoExtracto",
+            "Entradas locales (LI1-LI16) [...] Las unidades centrales ICU y MCU disponen de 8 entradas digitales [...] Se denominan entradas locales porque se encuentran en la unidad central."
+          ],
+          [
+            "EntradasLocales_LI1_LI16",
+            "label",
+            "Entradas locales LI1-LI16"
+          ],
+          [
+            "EntradasLocales_LI1_LI16",
+            "identificador",
+            "LI1-LI16"
           ]
         ],
         "prune_reason": null,
@@ -3120,18 +6486,18 @@
         "step_id": "seed",
         "purpose": "seed_installation_bus_plc",
         "mode": "fixed_seed",
-        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/NDIMOD_6a9fdf7881> } }",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/NDIMODNumeroDeBloquesDeEntrada> } }",
         "input_candidate_count": 1,
         "raw_result_count": 1,
         "output_candidate_count": 1,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/NDIMOD_6a9fdf7881"
+          "https://vocab.cfaa.eus/broaching/NDIMODNumeroDeBloquesDeEntrada"
         ],
         "sample_rows": [
           [
-            "NDIMOD_6a9fdf7881"
+            "NDIMODNumeroDeBloquesDeEntrada"
           ]
         ],
         "prune_reason": "fixed_seed_reconciled",
@@ -3141,30 +6507,182 @@
         "step_id": "detail",
         "purpose": "installation_bus_plc_details",
         "mode": "describe_entities",
-        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/NDIMOD_6a9fdf7881> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/NDIMODNumeroDeBloquesDeEntrada> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 18",
         "input_candidate_count": 1,
-        "raw_result_count": 3,
+        "raw_result_count": 4,
         "output_candidate_count": 1,
         "pruned_count": 0,
         "boundedness_status": "bounded",
         "output_uris": [
-          "https://vocab.cfaa.eus/broaching/NDIMOD_6a9fdf7881"
+          "https://vocab.cfaa.eus/broaching/NDIMODNumeroDeBloquesDeEntrada"
         ],
         "sample_rows": [
           [
-            "NDIMOD_6a9fdf7881",
+            "NDIMODNumeroDeBloquesDeEntrada",
             "textoExtracto",
-            "NDIMOD | 6 | En la serie RIO5, cada módulo se debe configurar como un bloque lógico."
+            "NDIMOD | 3 | 3 bloques; 2 para el primer nodo y 1 para el segundo."
           ],
           [
-            "NDIMOD_6a9fdf7881",
+            "NDIMODNumeroDeBloquesDeEntrada",
             "label",
+            "NDIMOD (Número de bloques de entrada)"
+          ],
+          [
+            "NDIMODNumeroDeBloquesDeEntrada",
+            "identificador",
             "NDIMOD"
           ],
           [
-            "NDIMOD_6a9fdf7881",
+            "NDIMODNumeroDeBloquesDeEntrada",
             "valor",
-            "6"
+            "3"
+          ]
+        ],
+        "prune_reason": null,
+        "error": null
+      }
+    ],
+    "notes": "ok"
+  },
+  {
+    "question": "Al intentar salvar un perfil en el 'Editor de Perfiles', ¿qué significa el 'Error de geometría' y qué condición indispensable deben cumplir sus elementos para solucionarlo?",
+    "intent": "procedure_lookup",
+    "question_language": "es",
+    "question_language_confidence": 0.95,
+    "normalized_question": "al intentar salvar un perfil en el editor de perfiles que significa el error de geometria y que condicion indispensable deben cumplir sus elementos para solucionarlo",
+    "multilingual_lexicon_hits": [
+      {
+        "surface": "error",
+        "candidates": [
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "es",
+            "surface": "error"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "ERROR"
+          },
+          {
+            "canonical_uri": "https://vocab.cfaa.eus/broaching/ERROR_b955650dca",
+            "entity_type": "AccionProhibida",
+            "language": "alias",
+            "surface": "error"
+          }
+        ]
+      }
+    ],
+    "plan_family": "error_code_resolution_procedure_lookup",
+    "predicted_hop_depth": 1,
+    "anchor_text": "error_resolution_procedure",
+    "anchor_candidates": [
+      "error_resolution_procedure",
+      "error",
+      "intentar",
+      "salvar",
+      "perfil",
+      "editor",
+      "perfiles",
+      "significa"
+    ],
+    "template_id": "ERR_T3_resolution_procedure",
+    "fallback_used": false,
+    "recommended_action": "execute",
+    "confidence": {
+      "intent": 0.6,
+      "anchor": 0.82,
+      "family": 0.91,
+      "overall": 0.78
+    },
+    "final_boundedness": "bounded",
+    "trace": [
+      {
+        "step_id": "seed",
+        "purpose": "seed_error_resolution_procedure",
+        "mode": "fixed_seed",
+        "query_text": "SELECT DISTINCT ?seed WHERE { VALUES ?seed { <https://vocab.cfaa.eus/broaching/Error_0040> <https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138> <https://vocab.cfaa.eus/broaching/Fallo_4026> <https://vocab.cfaa.eus/broaching/SMC_AN30_03> <https://vocab.cfaa.eus/broaching/CajeraConIslasInterseccionDePerfilesEnXYNoValida> } }",
+        "input_candidate_count": 5,
+        "raw_result_count": 5,
+        "output_candidate_count": 5,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_0040",
+          "https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138",
+          "https://vocab.cfaa.eus/broaching/Fallo_4026",
+          "https://vocab.cfaa.eus/broaching/SMC_AN30_03",
+          "https://vocab.cfaa.eus/broaching/CajeraConIslasInterseccionDePerfilesEnXYNoValida"
+        ],
+        "sample_rows": [
+          [
+            "Error_0040"
+          ],
+          [
+            "Parametro_23d2a9d138"
+          ],
+          [
+            "Fallo_4026"
+          ],
+          [
+            "SMC_AN30_03"
+          ],
+          [
+            "CajeraConIslasInterseccionDePerfilesEnXYNoValida"
+          ]
+        ],
+        "prune_reason": "fixed_seed_reconciled",
+        "error": null
+      },
+      {
+        "step_id": "detail",
+        "purpose": "error_resolution_procedure_details",
+        "mode": "describe_entities",
+        "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/Error_0040> <https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138> <https://vocab.cfaa.eus/broaching/Fallo_4026> <https://vocab.cfaa.eus/broaching/SMC_AN30_03> <https://vocab.cfaa.eus/broaching/CajeraConIslasInterseccionDePerfilesEnXYNoValida> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
+        "input_candidate_count": 5,
+        "raw_result_count": 16,
+        "output_candidate_count": 5,
+        "pruned_count": 0,
+        "boundedness_status": "bounded",
+        "output_uris": [
+          "https://vocab.cfaa.eus/broaching/Error_0040",
+          "https://vocab.cfaa.eus/broaching/Parametro_23d2a9d138",
+          "https://vocab.cfaa.eus/broaching/Fallo_4026",
+          "https://vocab.cfaa.eus/broaching/SMC_AN30_03",
+          "https://vocab.cfaa.eus/broaching/CajeraConIslasInterseccionDePerfilesEnXYNoValida"
+        ],
+        "sample_rows": [
+          [
+            "Error_0040",
+            "textoExtracto",
+            "0040 'M Antes-Antes o Antes-Después con subrutina no admite movimientos en el bloque' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En la tabla de funciones M, hay una función con subrutina asociada y tipo de sincronización Antes-Antes o Antes-Después."
+          ],
+          [
+            "Error_0040",
+            "label",
+            "Error 0040: 'M Antes-Antes o Antes-Después con subrutina no admite movimientos en el bloque'"
+          ],
+          [
+            "Error_0040",
+            "identificador",
+            "0040"
+          ],
+          [
+            "Parametro_23d2a9d138",
+            "textoExtracto",
+            "1737 'CAJERA RECTANGULAR: T = 0' [...] CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada."
+          ],
+          [
+            "Parametro_23d2a9d138",
+            "label",
+            "Parámetro T (herramienta) en cajera rectangular"
+          ],
+          [
+            "Parametro_23d2a9d138",
+            "identificador",
+            "1737"
           ]
         ],
         "prune_reason": null,
@@ -3329,7 +6847,7 @@
         "mode": "describe_entities",
         "query_text": "SELECT DISTINCT ?s ?p ?o WHERE {\n  VALUES ?s { <https://vocab.cfaa.eus/broaching/NumeroDeCinematicaDeCanalKINID> }\n  VALUES ?p { <https://vocab.cfaa.eus/broaching/textoExtracto> <http://www.w3.org/2000/01/rdf-schema#label> <https://vocab.cfaa.eus/broaching/identificador> <https://vocab.cfaa.eus/broaching/valor> }\n  ?s ?p ?o .\n} LIMIT 22",
         "input_candidate_count": 1,
-        "raw_result_count": 7,
+        "raw_result_count": 3,
         "output_candidate_count": 1,
         "pruned_count": 0,
         "boundedness_status": "bounded",
@@ -3345,22 +6863,7 @@
           [
             "NumeroDeCinematicaDeCanalKINID",
             "label",
-            "Parámetro máquina KINID"
-          ],
-          [
-            "NumeroDeCinematicaDeCanalKINID",
-            "label",
             "Número de cinemática de canal (KINID)"
-          ],
-          [
-            "NumeroDeCinematicaDeCanalKINID",
-            "label",
-            "Parámetro KINID (identificador de cinemática)"
-          ],
-          [
-            "NumeroDeCinematicaDeCanalKINID",
-            "label",
-            "KINID"
           ],
           [
             "NumeroDeCinematicaDeCanalKINID",

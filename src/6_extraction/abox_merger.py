@@ -11,8 +11,35 @@ import json
 from rdflib import Graph, URIRef
 from rdflib.namespace import RDF, RDFS
 
-from artifact_contracts import ABOX_CHUNKS_DIR, ABOX_MINTED_ENTITY_REGISTRY_PATH, OPERATIONAL_TBOX_PATH, RAW_MERGED_ABOX_PATH
-from abox_graph_sanitizer import SanitizationResult, load_mint_registry, sanitize_abox_graph, save_mint_registry
+from artifact_contracts import (
+    ABOX_CHUNKS_DIR,
+    ABOX_MERGER_REJECTED_CHUNKS_PATH,
+    ABOX_MINTED_ENTITY_REGISTRY_PATH,
+    OPERATIONAL_TBOX_PATH,
+    RAW_MERGED_ABOX_PATH,
+)
+from abox_graph_sanitizer import (
+    SanitizationResult,
+    downgrade_invalid_hex_binary_literals,
+    drop_incidental_table_types,
+    drop_redundant_supertypes,
+    ensure_minimal_traceability,
+    infer_missing_types,
+    load_mint_registry,
+    prune_or_scope_texto_extracto,
+    sanitize_abox_graph,
+    save_mint_registry,
+)
+from abox_semantic_validator import SemanticVocabulary, load_semantic_vocabulary, validate_abox_graph
+
+
+CHUNK_REJECTION_FAILURES = {
+    "non_canonical_class",
+    "non_canonical_property",
+    "blank_node_entity",
+    "file_uri_entity",
+    "individual_used_as_class",
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -120,11 +147,105 @@ def validate_merged_uri_consistency(graph: Graph, *, tbox_graph: Graph, output_p
         report_path.unlink()
 
 
+def _collect_sanitization(aggregate_result: SanitizationResult, chunk_result: SanitizationResult) -> None:
+    aggregate_result.minted_nodes += chunk_result.minted_nodes
+    aggregate_result.reused_registry_iris += chunk_result.reused_registry_iris
+    aggregate_result.replaced_file_iris += chunk_result.replaced_file_iris
+    aggregate_result.purged_file_iris += chunk_result.purged_file_iris
+    aggregate_result.redundant_type_triples_removed += chunk_result.redundant_type_triples_removed
+    aggregate_result.inferred_missing_types += chunk_result.inferred_missing_types
+    aggregate_result.invalid_hex_binary_literals_downgraded += chunk_result.invalid_hex_binary_literals_downgraded
+    aggregate_result.texto_extracto_removed += chunk_result.texto_extracto_removed
+    aggregate_result.texto_extracto_trimmed += chunk_result.texto_extracto_trimmed
+    aggregate_result.texto_extracto_added_from_traceability += chunk_result.texto_extracto_added_from_traceability
+    aggregate_result.incidental_table_types_removed += chunk_result.incidental_table_types_removed
+    aggregate_result.type_object_minting_prevented += chunk_result.type_object_minting_prevented
+    aggregate_result.long_local_name_truncated += chunk_result.long_local_name_truncated
+    aggregate_result.hash_due_to_weak_identity += chunk_result.hash_due_to_weak_identity
+    aggregate_result.hash_due_to_collision += chunk_result.hash_due_to_collision
+    aggregate_result.minted_assignments.update(chunk_result.minted_assignments)
+    aggregate_result.purged_nodes.extend(chunk_result.purged_nodes)
+
+
+def _validate_merge_input(
+    graph: Graph,
+    *,
+    path: Path,
+    vocabulary: SemanticVocabulary,
+    rejected_inputs: list[dict[str, object]],
+    warned_inputs: list[dict[str, object]],
+) -> bool:
+    validation = validate_abox_graph(graph, vocabulary=vocabulary)
+    blocking_failures = {
+        key: value
+        for key, value in validation.error_categories.items()
+        if key in CHUNK_REJECTION_FAILURES
+    }
+    if blocking_failures:
+        rejected_inputs.append(
+            {
+                "path": str(path),
+                "failures": blocking_failures,
+                "sample_invalid_classes": validation.invalid_class_values[:5],
+                "sample_invalid_predicates": validation.invalid_predicate_values[:5],
+                "sample_individuals_used_as_class": validation.sample_individuals_used_as_class[:5],
+                "sample_blank_node_entities": validation.sample_blank_node_entities[:5],
+                "sample_file_uri_entities": validation.sample_file_uri_entities[:5],
+            }
+        )
+        return False
+
+    nonblocking_failures = {
+        key: value
+        for key, value in validation.error_categories.items()
+        if key not in CHUNK_REJECTION_FAILURES
+    }
+    if nonblocking_failures:
+        warned_inputs.append(
+            {
+                "path": str(path),
+                "warnings": nonblocking_failures,
+                "sample_subjects_without_type": validation.sample_subjects_without_type[:5],
+                "sample_subjects_without_traceability": validation.sample_subjects_without_traceability[:5],
+                "sample_long_local_name_entities": validation.sample_long_local_name_entities[:5],
+            }
+        )
+    return True
+
+
+def write_rejection_report(path: Path, rejected_inputs: list[dict[str, object]], warned_inputs: list[dict[str, object]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "summary": {
+            "rejected_count": len(rejected_inputs),
+            "warned_count": len(warned_inputs),
+            "hard_failure_keys": sorted(CHUNK_REJECTION_FAILURES),
+        },
+        "rejected": rejected_inputs,
+        "warned": warned_inputs,
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def sanitize_final_merged_graph(graph: Graph, *, tbox_graph: Graph) -> tuple[Graph, SanitizationResult]:
+    result = SanitizationResult()
+    graph = downgrade_invalid_hex_binary_literals(graph, result=result)
+    graph = infer_missing_types(graph, tbox_graph=tbox_graph, result=result)
+    graph = drop_redundant_supertypes(graph, tbox_graph=tbox_graph, result=result)
+    graph = drop_incidental_table_types(graph, result=result)
+    graph = ensure_minimal_traceability(graph, result=result)
+    graph = prune_or_scope_texto_extracto(graph, result=result)
+    return graph, result
+
+
 def merge_from_directory(
     input_dir: Path,
     *,
     tbox_graph: Graph,
     mint_registry: dict[str, str],
+    vocabulary: SemanticVocabulary | None = None,
+    rejected_inputs: list[dict[str, object]] | None = None,
+    warned_inputs: list[dict[str, object]] | None = None,
 ) -> tuple[Graph, int, int, SanitizationResult]:
     if not input_dir.exists():
         raise SystemExit(f"Error: Directorio no encontrado - {input_dir}")
@@ -137,6 +258,9 @@ def merge_from_directory(
     exitos = 0
     errores = 0
     aggregate_result = SanitizationResult()
+    vocabulary = vocabulary or load_semantic_vocabulary(OPERATIONAL_TBOX_PATH)
+    rejected_inputs = rejected_inputs if rejected_inputs is not None else []
+    warned_inputs = warned_inputs if warned_inputs is not None else []
 
     print(f"Iniciando consolidacion de {len(archivos_ttl)} fragmentos A-Box desde {input_dir}...")
     for archivo in archivos_ttl:
@@ -147,15 +271,16 @@ def merge_from_directory(
                 tbox_graph=tbox_graph,
                 mint_registry=mint_registry,
             )
-            aggregate_result.minted_nodes += chunk_result.minted_nodes
-            aggregate_result.reused_registry_iris += chunk_result.reused_registry_iris
-            aggregate_result.replaced_file_iris += chunk_result.replaced_file_iris
-            aggregate_result.purged_file_iris += chunk_result.purged_file_iris
-            aggregate_result.redundant_type_triples_removed += chunk_result.redundant_type_triples_removed
-            aggregate_result.invalid_hex_binary_literals_downgraded += chunk_result.invalid_hex_binary_literals_downgraded
-            aggregate_result.texto_extracto_removed += chunk_result.texto_extracto_removed
-            aggregate_result.texto_extracto_trimmed += chunk_result.texto_extracto_trimmed
-            aggregate_result.minted_assignments.update(chunk_result.minted_assignments)
+            _collect_sanitization(aggregate_result, chunk_result)
+            if not _validate_merge_input(
+                chunk_graph,
+                path=archivo,
+                vocabulary=vocabulary,
+                rejected_inputs=rejected_inputs,
+                warned_inputs=warned_inputs,
+            ):
+                errores += 1
+                continue
             grafo_unificado += chunk_graph
             exitos += 1
         except Exception as exc:
@@ -169,10 +294,16 @@ def merge_from_graphs(
     *,
     tbox_graph: Graph,
     mint_registry: dict[str, str],
+    vocabulary: SemanticVocabulary | None = None,
+    rejected_inputs: list[dict[str, object]] | None = None,
+    warned_inputs: list[dict[str, object]] | None = None,
 ) -> tuple[Graph, int, SanitizationResult]:
     grafo_unificado = Graph()
     exitos = 0
     aggregate_result = SanitizationResult()
+    vocabulary = vocabulary or load_semantic_vocabulary(OPERATIONAL_TBOX_PATH)
+    rejected_inputs = rejected_inputs if rejected_inputs is not None else []
+    warned_inputs = warned_inputs if warned_inputs is not None else []
     for path in paths:
         if not path.exists():
             raise SystemExit(f"Error: Grafo A-Box requerido no encontrado - {path}")
@@ -182,15 +313,19 @@ def merge_from_graphs(
             tbox_graph=tbox_graph,
             mint_registry=mint_registry,
         )
-        aggregate_result.minted_nodes += chunk_result.minted_nodes
-        aggregate_result.reused_registry_iris += chunk_result.reused_registry_iris
-        aggregate_result.replaced_file_iris += chunk_result.replaced_file_iris
-        aggregate_result.purged_file_iris += chunk_result.purged_file_iris
-        aggregate_result.redundant_type_triples_removed += chunk_result.redundant_type_triples_removed
-        aggregate_result.invalid_hex_binary_literals_downgraded += chunk_result.invalid_hex_binary_literals_downgraded
-        aggregate_result.texto_extracto_removed += chunk_result.texto_extracto_removed
-        aggregate_result.texto_extracto_trimmed += chunk_result.texto_extracto_trimmed
-        aggregate_result.minted_assignments.update(chunk_result.minted_assignments)
+        _collect_sanitization(aggregate_result, chunk_result)
+        validation = validate_abox_graph(chunk_graph, vocabulary=vocabulary)
+        if validation.error_categories:
+            warned_inputs.append(
+                {
+                    "path": str(path),
+                    "warnings": validation.error_categories,
+                    "sample_invalid_classes": validation.invalid_class_values[:5],
+                    "sample_invalid_predicates": validation.invalid_predicate_values[:5],
+                    "sample_individuals_used_as_class": validation.sample_individuals_used_as_class[:5],
+                    "sample_long_local_name_entities": validation.sample_long_local_name_entities[:5],
+                }
+            )
         grafo_unificado += chunk_graph
         exitos += 1
     return grafo_unificado, exitos, aggregate_result
@@ -209,15 +344,21 @@ def main() -> None:
     fuentes = []
 
     tbox_graph = load_ttl_graph(OPERATIONAL_TBOX_PATH)
+    vocabulary = load_semantic_vocabulary(OPERATIONAL_TBOX_PATH)
     mint_registry = load_mint_registry(ABOX_MINTED_ENTITY_REGISTRY_PATH)
     directory_sanitization = SanitizationResult()
     input_graph_sanitization = SanitizationResult()
+    rejected_inputs: list[dict[str, object]] = []
+    warned_inputs: list[dict[str, object]] = []
 
     if args.input_dir is not None:
         grafo_directorio, exitos, errores, directory_sanitization = merge_from_directory(
             args.input_dir,
             tbox_graph=tbox_graph,
             mint_registry=mint_registry,
+            vocabulary=vocabulary,
+            rejected_inputs=rejected_inputs,
+            warned_inputs=warned_inputs,
         )
         grafo_unificado += grafo_directorio
         fuentes.append(str(args.input_dir))
@@ -227,20 +368,20 @@ def main() -> None:
             input_graphs,
             tbox_graph=tbox_graph,
             mint_registry=mint_registry,
+            vocabulary=vocabulary,
+            rejected_inputs=rejected_inputs,
+            warned_inputs=warned_inputs,
         )
         grafo_unificado += grafo_extra
         exitos += exitos_extra
         fuentes.extend(str(path) for path in input_graphs)
 
-    grafo_unificado, _ = sanitize_abox_graph(
-        grafo_unificado,
-        tbox_graph=tbox_graph,
-        mint_registry=mint_registry,
-    )
+    grafo_unificado, final_sanitization = sanitize_final_merged_graph(grafo_unificado, tbox_graph=tbox_graph)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     grafo_unificado.serialize(destination=args.output, format="turtle")
     save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
+    write_rejection_report(ABOX_MERGER_REJECTED_CHUNKS_PATH, rejected_inputs, warned_inputs)
 
     serialized_graph = load_ttl_graph(args.output)
     validate_merged_uri_consistency(serialized_graph, tbox_graph=tbox_graph, output_path=args.output)
@@ -253,6 +394,9 @@ def main() -> None:
     print(f"Entradas corruptas   : {errores}")
     print(f"IRIs saneadas por chunk: {directory_sanitization.minted_nodes}")
     print(f"IRIs saneadas por grafo fusionado: {input_graph_sanitization.minted_nodes}")
+    print(f"Entradas rechazadas  : {len(rejected_inputs)}")
+    print(f"Advertencias semanticas: {len(warned_inputs)}")
+    print(f"Saneado final sin minting: {final_sanitization.to_manifest_summary()}")
     print(f"Tripletas totales    : {len(grafo_unificado)}")
     print(f"Archivo generado     : {args.output}")
 

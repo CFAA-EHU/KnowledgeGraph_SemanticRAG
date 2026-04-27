@@ -10,6 +10,7 @@ import json
 from typing import Any
 
 from rdflib import Graph, URIRef
+from rdflib.namespace import RDF
 
 from artifact_contracts import (
     ABOX_MINTED_ENTITY_REGISTRY_PATH,
@@ -38,6 +39,7 @@ from canonical_resolution_policy import (
     select_canonical_entity,
 )
 from abox_graph_sanitizer import load_mint_registry, sanitize_abox_graph, save_mint_registry
+from abox_semantic_validator import load_semantic_vocabulary, validate_abox_graph
 
 
 def parse_args() -> argparse.Namespace:
@@ -147,7 +149,7 @@ def rewrite_graph(raw_graph: Graph, selections) -> tuple[Graph, dict[str, Any], 
                 new_subject = URIRef(final_mapping[subject_uri])
                 if new_subject != subject:
                     rewritten_subjects += 1
-        if isinstance(obj, URIRef):
+        if predicate != RDF.type and isinstance(obj, URIRef):
             object_uri = str(obj)
             if object_uri in final_mapping:
                 new_object = URIRef(final_mapping[object_uri])
@@ -167,6 +169,8 @@ def rewrite_graph(raw_graph: Graph, selections) -> tuple[Graph, dict[str, Any], 
         source_ref = URIRef(source_uri)
         incoming_links = list(raw_graph.subject_predicates(source_ref))
         for incoming_subject, predicate in incoming_links:
+            if predicate == RDF.type:
+                continue
             resolved_subject_uri = final_mapping.get(str(incoming_subject), str(incoming_subject))
             resolved_subject_ref = URIRef(resolved_subject_uri)
             for target_uri in metadata['supplemental_targets']:
@@ -253,6 +257,10 @@ def main() -> None:
         tbox_graph=tbox_graph,
         mint_registry=mint_registry,
     )
+    semantic_validation = validate_abox_graph(
+        canonical_graph,
+        vocabulary=load_semantic_vocabulary(OPERATIONAL_TBOX_PATH),
+    )
     save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     canonical_graph.serialize(destination=args.output, format='turtle')
@@ -262,6 +270,7 @@ def main() -> None:
         'summary': {
             **rewrite_stats,
             'sanitization': sanitization_result.to_manifest_summary(),
+            'semantic_validation': semantic_validation.to_manifest_summary(),
             'input_path': str(args.input),
             'output_path': str(args.output),
             'resolution_candidates_path': str(args.resolution_candidates_path),

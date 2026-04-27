@@ -17,6 +17,7 @@ from artifact_contracts import ABOX_MINTED_ENTITY_REGISTRY_PATH
 EX = Namespace("https://vocab.cfaa.eus/broaching/")
 BASE_URI = str(EX)
 SURFACE_PREDICATES = (RDFS.label, EX.identificador, EX.textoExtracto)
+LOCAL_NAME_MAX_LENGTH = 80
 GENERIC_SURFACES = {
     "accion",
     "accionprohibida",
@@ -53,9 +54,16 @@ class SanitizationResult:
     replaced_file_iris: int = 0
     purged_file_iris: int = 0
     redundant_type_triples_removed: int = 0
+    inferred_missing_types: int = 0
     invalid_hex_binary_literals_downgraded: int = 0
     texto_extracto_removed: int = 0
     texto_extracto_trimmed: int = 0
+    texto_extracto_added_from_traceability: int = 0
+    incidental_table_types_removed: int = 0
+    type_object_minting_prevented: int = 0
+    long_local_name_truncated: int = 0
+    hash_due_to_weak_identity: int = 0
+    hash_due_to_collision: int = 0
     minted_assignments: dict[str, str] = field(default_factory=dict)
     purged_nodes: list[str] = field(default_factory=list)
 
@@ -155,9 +163,6 @@ def _preferred_surface(graph: Graph, node: BNode | URIRef) -> tuple[str | None, 
         return surfaces["labels"][0], "label"
     if surfaces["identifiers"]:
         return surfaces["identifiers"][0], "identificador"
-    if surfaces["texto_extractos"]:
-        extracts = sorted(surfaces["texto_extractos"], key=len)
-        return extracts[0], "textoExtracto"
     return None, None
 
 
@@ -245,22 +250,34 @@ def _best_context_value(graph: Graph, node: BNode | URIRef) -> str:
     return "|".join(sorted(triples))
 
 
-def _build_mint_key(graph: Graph, node: BNode | URIRef) -> tuple[str, str]:
-    preferred_type = _preferred_type_local_name(graph, node)
-    preferred_surface, _ = _preferred_surface(graph, node)
-    context_value = _best_context_value(graph, node)
-    surface_component = _normalize_surface_for_key(preferred_surface or preferred_type)
-    key_parts = [preferred_type.lower(), surface_component or preferred_type.lower()]
-    if _is_generic_surface(preferred_surface):
-        key_parts.append(_normalize_surface_for_key(context_value) or _short_hash(context_value))
-    elif context_value and context_value != (preferred_surface or ""):
-        key_parts.append(_normalize_surface_for_key(context_value)[:80] or _short_hash(context_value))
-    key = "|".join(part for part in key_parts if part)
+def _limit_local_name(local_name: str, key: str) -> tuple[str, bool]:
+    if len(local_name) <= LOCAL_NAME_MAX_LENGTH:
+        return local_name, False
+    hash_suffix = _short_hash(key)
+    prefix_length = LOCAL_NAME_MAX_LENGTH - len(hash_suffix) - 1
+    return f"{local_name[:prefix_length].rstrip('_')}_{hash_suffix}", True
 
-    base_local_name = _to_camel_case(preferred_surface or preferred_type) or _to_camel_case(preferred_type) or "Entidad"
-    if _is_generic_surface(preferred_surface) and context_value:
+
+def _build_mint_key(graph: Graph, node: BNode | URIRef) -> tuple[str, str, bool, bool]:
+    preferred_type = _preferred_type_local_name(graph, node)
+    preferred_surface, _source = _preferred_surface(graph, node)
+    context_value = _best_context_value(graph, node)
+    weak_identity = not preferred_surface or _is_generic_surface(preferred_surface)
+
+    if not weak_identity:
+        surface_component = _normalize_surface_for_key(preferred_surface or preferred_type)
+        key = f"{preferred_type.lower()}|{surface_component or preferred_type.lower()}"
+        if context_value and context_value != preferred_surface:
+            key = f"{key}|{_normalize_surface_for_key(context_value)[:80] or _short_hash(context_value)}"
+        base_local_name = _to_camel_case(preferred_surface or preferred_type) or _to_camel_case(preferred_type) or "Entidad"
+    else:
+        context_component = _normalize_surface_for_key(context_value) or _short_hash(context_value or preferred_type)
+        key = f"{preferred_type.lower()}|{context_component}"
+        base_local_name = _to_camel_case(preferred_type) or "Entidad"
         base_local_name = f"{base_local_name}_{_short_hash(key)}"
-    return key, base_local_name
+
+    base_local_name, truncated = _limit_local_name(base_local_name, key)
+    return key, base_local_name, weak_identity, truncated
 
 
 def _mint_uri_for_key(
@@ -269,21 +286,24 @@ def _mint_uri_for_key(
     *,
     registry: dict[str, str],
     occupied_uris: set[str],
-) -> tuple[str, bool]:
+) -> tuple[str, bool, bool]:
     existing = registry.get(key)
     if existing:
         occupied_uris.add(existing)
-        return existing, True
+        return existing, True, False
 
     candidate = f"{BASE_URI}{base_local_name}"
+    collision_hashed = False
     if candidate in occupied_uris:
         candidate = f"{BASE_URI}{base_local_name}_{_short_hash(key)}"
+        collision_hashed = True
     if candidate in occupied_uris:
         candidate = f"{BASE_URI}{base_local_name}_{_uuid_suffix(key)}"
+        collision_hashed = True
 
     registry[key] = candidate
     occupied_uris.add(candidate)
-    return candidate, False
+    return candidate, False, collision_hashed
 
 
 def downgrade_invalid_hex_binary_literals(graph: Graph, *, result: SanitizationResult | None = None) -> Graph:
@@ -324,13 +344,21 @@ def mint_domain_iris_for_anonymous_nodes(
     nodes_to_purge: set[BNode | URIRef] = set()
     candidate_nodes: set[BNode | URIRef] = set()
 
-    for subject, _, obj in graph:
+    for subject, predicate, obj in graph:
         if isinstance(subject, (BNode, URIRef)):
             if isinstance(subject, BNode) or (
                 isinstance(subject, URIRef)
                 and (str(subject).startswith("file:///") or _should_remint_existing_uri(graph, subject))
             ):
                 candidate_nodes.add(subject)
+        if predicate == RDF.type:
+            if isinstance(obj, (BNode, URIRef)) and (
+                isinstance(obj, BNode)
+                or str(obj).startswith("file:///")
+                or (isinstance(obj, URIRef) and _should_remint_existing_uri(graph, obj))
+            ):
+                result.type_object_minting_prevented += 1
+            continue
         if isinstance(obj, (BNode, URIRef)):
             if isinstance(obj, BNode) or (
                 isinstance(obj, URIRef)
@@ -340,8 +368,8 @@ def mint_domain_iris_for_anonymous_nodes(
 
     for node in sorted(candidate_nodes, key=str):
         if _domain_like(graph, node):
-            key, base_local_name = _build_mint_key(graph, node)
-            minted_uri, reused = _mint_uri_for_key(
+            key, base_local_name, weak_identity, truncated = _build_mint_key(graph, node)
+            minted_uri, reused, collision_hashed = _mint_uri_for_key(
                 key,
                 base_local_name,
                 registry=mint_registry,
@@ -352,6 +380,12 @@ def mint_domain_iris_for_anonymous_nodes(
                 result.reused_registry_iris += 1
             else:
                 result.minted_nodes += 1
+                if weak_identity:
+                    result.hash_due_to_weak_identity += 1
+                if truncated:
+                    result.long_local_name_truncated += 1
+                if collision_hashed:
+                    result.hash_due_to_collision += 1
             if isinstance(node, URIRef) and str(node).startswith("file:///"):
                 result.replaced_file_iris += 1
             result.minted_assignments[str(node)] = minted_uri
@@ -365,7 +399,7 @@ def mint_domain_iris_for_anonymous_nodes(
         if subject in nodes_to_purge or obj in nodes_to_purge:
             continue
         new_subject = mapping.get(subject, subject)
-        new_object = mapping.get(obj, obj)
+        new_object = obj if predicate == RDF.type else mapping.get(obj, obj)
         rewritten.add((new_subject, predicate, new_object))
     return rewritten
 
@@ -396,6 +430,70 @@ def _build_subclass_closure(tbox_graph: Graph) -> dict[str, set[str]]:
     return closure
 
 
+def _load_tbox_domains(tbox_graph: Graph) -> dict[URIRef, set[URIRef]]:
+    domains: dict[URIRef, set[URIRef]] = {}
+    for predicate, _, domain in tbox_graph.triples((None, RDFS.domain, None)):
+        if isinstance(predicate, URIRef) and isinstance(domain, URIRef) and str(domain) != str(URIRef("http://www.w3.org/2002/07/owl#Thing")):
+            domains.setdefault(predicate, set()).add(domain)
+    return domains
+
+
+def infer_missing_types(graph: Graph, *, tbox_graph: Graph, result: SanitizationResult | None = None) -> Graph:
+    result = result or SanitizationResult()
+    tbox_classes = {class_uri for class_uri in tbox_graph.subjects(RDF.type, URIRef("http://www.w3.org/2002/07/owl#Class")) if isinstance(class_uri, URIRef)}
+    domains = _load_tbox_domains(tbox_graph)
+    additions: list[tuple[URIRef, URIRef, URIRef]] = []
+
+    keyword_types = [
+        (re.compile(r"\baccion prohibida\b|^accionprohibida", re.IGNORECASE), EX.AccionProhibida),
+        (re.compile(r"\btarea mantenimiento\b|^tareamantenimiento", re.IGNORECASE), EX.TareaMantenimiento),
+        (re.compile(r"\bmodo operacion\b|^modooperacion", re.IGNORECASE), EX.ModoOperacion),
+        (re.compile(r"\btabla\b|^tabla", re.IGNORECASE), EX.Tabla),
+        (re.compile(r"\besquema\b|^esquema", re.IGNORECASE), EX.Esquema),
+        (re.compile(r"\bpanel\b|^panel", re.IGNORECASE), EX.InterfazUsuario),
+        (re.compile(r"\bcontactor\b|\binterruptor\b", re.IGNORECASE), EX.ComponenteElectrico),
+        (re.compile(r"\bdeposito\b|\bdep[oó]sito\b", re.IGNORECASE), EX.Sistema),
+    ]
+
+    candidate_subjects = {
+        subject
+        for subject in graph.subjects()
+        if isinstance(subject, URIRef)
+    } | {
+        subject
+        for subject in graph.subjects(RDFS.label, None)
+        if isinstance(subject, URIRef)
+    }
+
+    for subject in sorted(candidate_subjects, key=str):
+        if any(True for _ in graph.objects(subject, RDF.type)):
+            continue
+
+        inferred: URIRef | None = None
+        subject_domains: set[URIRef] = set()
+        for predicate, _obj in graph.predicate_objects(subject):
+            subject_domains |= {domain for domain in domains.get(predicate, set()) if domain in tbox_classes}
+        if len(subject_domains) == 1:
+            inferred = next(iter(subject_domains))
+
+        if inferred is None:
+            local_name = _local_name_to_surface(str(subject).rsplit("/", 1)[-1].rsplit("#", 1)[-1])
+            labels = " ".join(str(obj) for obj in graph.objects(subject, RDFS.label) if isinstance(obj, Literal))
+            surface = f"{local_name} {labels}".strip()
+            for pattern, class_uri in keyword_types:
+                if class_uri in tbox_classes and pattern.search(surface):
+                    inferred = class_uri
+                    break
+
+        if inferred is not None:
+            additions.append((subject, RDF.type, inferred))
+
+    for triple in additions:
+        graph.add(triple)
+    result.inferred_missing_types += len(additions)
+    return graph
+
+
 def drop_redundant_supertypes(graph: Graph, *, tbox_graph: Graph, result: SanitizationResult | None = None) -> Graph:
     result = result or SanitizationResult()
     subclass_closure = _build_subclass_closure(tbox_graph)
@@ -412,6 +510,67 @@ def drop_redundant_supertypes(graph: Graph, *, tbox_graph: Graph, result: Saniti
     for triple in redundant_triples:
         graph.remove(triple)
     result.redundant_type_triples_removed += len(redundant_triples)
+    return graph
+
+
+def drop_incidental_table_types(graph: Graph, *, result: SanitizationResult | None = None) -> Graph:
+    result = result or SanitizationResult()
+    removed = 0
+
+    for subject in {subject for subject in graph.subjects(RDF.type, EX.Tabla) if isinstance(subject, URIRef)}:
+        types = {obj for obj in graph.objects(subject, RDF.type) if isinstance(obj, URIRef)}
+        if len(types) <= 1:
+            continue
+
+        labels = [str(obj) for obj in graph.objects(subject, RDFS.label) if isinstance(obj, Literal)]
+        identifiers = [str(obj) for obj in graph.objects(subject, EX.identificador) if isinstance(obj, Literal)]
+        surfaces = " ".join([*labels, *identifiers])
+        normalized = _normalize_text(surfaces)
+        local_name = subject.rsplit("/", 1)[-1].rsplit("#", 1)[-1]
+        local_normalized = _normalize_text(_local_name_to_surface(local_name))
+
+        # The extractor often tags rows or entries from tables as ex:Tabla.
+        # Keep real tables, but remove the incidental table type from concrete
+        # functions, parameters, modes, or macros that already have domain type.
+        looks_like_real_table = normalized.startswith("tabla ") or local_normalized.startswith("tabla ")
+        looks_like_table_entry = bool(
+            re.search(
+                r"\b(funcion|macro|parametro|modo|comando|error|alarma|aviso|marca)\b",
+                normalized,
+            )
+        )
+        if looks_like_real_table or not looks_like_table_entry:
+            continue
+
+        graph.remove((subject, RDF.type, EX.Tabla))
+        removed += 1
+
+    result.incidental_table_types_removed += removed
+    return graph
+
+
+def ensure_minimal_traceability(graph: Graph, *, result: SanitizationResult | None = None) -> Graph:
+    result = result or SanitizationResult()
+    traceability_links = {EX.documentadoEn, EX.ilustradoEn, EX.detalladoEnEsquema}
+    added = 0
+
+    for subject in {subject for subject in graph.subjects(RDF.type, None) if isinstance(subject, URIRef)}:
+        if any(True for _ in graph.objects(subject, EX.textoExtracto)):
+            continue
+        labels = [str(obj) for obj in graph.objects(subject, RDFS.label) if isinstance(obj, Literal)]
+        identifiers = [str(obj) for obj in graph.objects(subject, EX.identificador) if isinstance(obj, Literal)]
+        has_traceability_link = any(True for predicate in traceability_links for _ in graph.objects(subject, predicate))
+        if labels:
+            graph.add((subject, EX.textoExtracto, Literal(labels[0])))
+            added += 1
+        elif identifiers:
+            graph.add((subject, EX.textoExtracto, Literal(identifiers[0])))
+            added += 1
+        elif has_traceability_link:
+            graph.add((subject, EX.textoExtracto, Literal("Entidad documentada por enlace de trazabilidad.")))
+            added += 1
+
+    result.texto_extracto_added_from_traceability += added
     return graph
 
 
@@ -555,7 +714,10 @@ def sanitize_abox_graph(
         result=result,
     )
     sanitized = downgrade_invalid_hex_binary_literals(sanitized, result=result)
+    sanitized = infer_missing_types(sanitized, tbox_graph=tbox_graph, result=result)
     sanitized = drop_redundant_supertypes(sanitized, tbox_graph=tbox_graph, result=result)
+    sanitized = drop_incidental_table_types(sanitized, result=result)
+    sanitized = ensure_minimal_traceability(sanitized, result=result)
     sanitized = prune_or_scope_texto_extracto(
         sanitized,
         source_chunk_text=source_chunk_text,

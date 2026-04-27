@@ -13,6 +13,7 @@ from collections import Counter
 from typing import Any
 
 from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import RDFS
 
 from artifact_contracts import (
     ABOX_MINTED_ENTITY_REGISTRY_PATH,
@@ -30,6 +31,7 @@ from artifact_contracts import (
     OPERATIONAL_TBOX_PATH,
 )
 from abox_graph_sanitizer import load_mint_registry, sanitize_abox_graph, save_mint_registry
+from abox_semantic_validator import load_semantic_vocabulary, validate_abox_graph
 
 EXTRACTION_DIR = Path(__file__).resolve().parent
 if str(EXTRACTION_DIR) not in sys.path:
@@ -85,11 +87,13 @@ def clone_graph(graph: Graph) -> Graph:
     return enriched
 
 
-def apply_enrichments(base_graph: Graph, links, surfaces) -> tuple[Graph, dict[str, Any]]:
+def apply_enrichments(base_graph: Graph, links, surfaces, *, allowed_surface_predicates: set[str]) -> tuple[Graph, dict[str, Any]]:
     enriched = clone_graph(base_graph)
     affected_entities: set[str] = set()
     added_link_count = 0
     added_surface_count = 0
+    skipped_noncanonical_surface_predicate = 0
+    skipped_long_surface_value = 0
     for item in links:
         triple = (URIRef(item.source_uri), URIRef(item.predicate_uri), URIRef(item.target_uri))
         if triple in enriched:
@@ -99,6 +103,12 @@ def apply_enrichments(base_graph: Graph, links, surfaces) -> tuple[Graph, dict[s
         affected_entities.add(item.target_uri)
         added_link_count += 1
     for item in surfaces:
+        if item.added_property_uri not in allowed_surface_predicates:
+            skipped_noncanonical_surface_predicate += 1
+            continue
+        if len(item.added_value) > 400:
+            skipped_long_surface_value += 1
+            continue
         triple = (URIRef(item.entity_uri), URIRef(item.added_property_uri), Literal(item.added_value))
         if triple in enriched:
             continue
@@ -110,6 +120,8 @@ def apply_enrichments(base_graph: Graph, links, surfaces) -> tuple[Graph, dict[s
         'output_triples': len(enriched),
         'added_link_count': added_link_count,
         'added_surface_count': added_surface_count,
+        'skipped_noncanonical_surface_predicate': skipped_noncanonical_surface_predicate,
+        'skipped_long_surface_value': skipped_long_surface_value,
         'affected_entities_count': len(affected_entities),
         'affected_entities': sorted(affected_entities),
     }
@@ -136,7 +148,14 @@ def main() -> None:
     discarded_candidates = corpus_diagnostics['discarded']
     links = detect_link_enrichments(canonical_graph, accepted_candidates)
     surfaces = detect_surface_enrichments(canonical_graph, accepted_candidates, links)
-    enriched_graph, stats = apply_enrichments(canonical_graph, links, surfaces)
+    vocabulary = load_semantic_vocabulary(OPERATIONAL_TBOX_PATH)
+    allowed_surface_predicates = {str(RDFS.label)} | vocabulary.datatype_properties
+    enriched_graph, stats = apply_enrichments(
+        canonical_graph,
+        links,
+        surfaces,
+        allowed_surface_predicates=allowed_surface_predicates,
+    )
     tbox_graph = load_graph(OPERATIONAL_TBOX_PATH)
     mint_registry = load_mint_registry(ABOX_MINTED_ENTITY_REGISTRY_PATH)
     enriched_graph, sanitization_result = sanitize_abox_graph(
@@ -144,6 +163,7 @@ def main() -> None:
         tbox_graph=tbox_graph,
         mint_registry=mint_registry,
     )
+    semantic_validation = validate_abox_graph(enriched_graph, vocabulary=vocabulary)
     save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -161,6 +181,7 @@ def main() -> None:
         'summary': {
             **stats,
             'sanitization': sanitization_result.to_manifest_summary(),
+            'semantic_validation': semantic_validation.to_manifest_summary(),
             'input_path': str(args.input),
             'output_path': str(args.output),
             'resolution_candidates_path': str(args.resolution_candidates_path),

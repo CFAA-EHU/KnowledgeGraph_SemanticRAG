@@ -60,36 +60,41 @@ ex:Tabla a owl:Class .
 ex:Esquema rdfs:subClassOf ex:Figura .
 ex:Maquina owl:disjointWith ex:Manual, ex:Directiva, ex:PiezaRecambio .
 ex:Empresa owl:disjointWith ex:Directiva .
+ex:Parametro owl:disjointWith ex:DiagnosticoFallo, ex:AvisoSeguridad, ex:Alarma, ex:Herramienta, ex:Manual .
+ex:ComponenteElectrico owl:disjointWith ex:DiagnosticoFallo .
+ex:DiagnosticoFallo owl:disjointWith ex:ModoOperacion, ex:Sistema, ex:TareaMantenimiento .
+ex:AvisoSeguridad owl:disjointWith ex:ModoOperacion .
+ex:TareaMantenimiento owl:disjointWith ex:ComponenteElectrico .
 
 # ==========================================
 # PROPIEDADES DE OBJETO (TOPOLOGÍA MULTISALTO)
 # ==========================================
-ex:compuestoPor a owl:ObjectProperty ; rdfs:domain ex:Maquina ; rdfs:range ex:Sistema .
-ex:tieneComponente a owl:ObjectProperty ; rdfs:domain ex:Sistema ; rdfs:range ex:Componente .
+ex:compuestoPor a owl:ObjectProperty .
+ex:tieneComponente a owl:ObjectProperty ; rdfs:domain owl:Thing ; rdfs:range owl:Thing .
 ex:controla a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:Componente .
 ex:alimenta a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:Componente .
-ex:requiereConsumible a owl:ObjectProperty ; rdfs:domain ex:Sistema ; rdfs:range ex:Consumible .
+ex:requiereConsumible a owl:ObjectProperty .
 
-ex:monitoreaParametro a owl:ObjectProperty ; rdfs:domain ex:Sensor ; rdfs:range ex:Parametro .
+ex:monitoreaParametro a owl:ObjectProperty ; rdfs:range ex:Parametro .
 ex:activaAlarma a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:Alarma .
-ex:habilitadoPor a owl:ObjectProperty ; rdfs:domain ex:ModoOperacion ; rdfs:range ex:InterfazUsuario .
+ex:habilitadoPor a owl:ObjectProperty .
 
-ex:mitigaRiesgo a owl:ObjectProperty ; rdfs:domain ex:ElementoSeguridad ; rdfs:range ex:AvisoSeguridad .
+ex:mitigaRiesgo a owl:ObjectProperty .
 ex:requiereEPI a owl:ObjectProperty ; rdfs:domain ex:TareaMantenimiento ; rdfs:range ex:EPI .
 ex:cumpleNormativa a owl:ObjectProperty ; rdfs:domain ex:Maquina ; rdfs:range ex:Directiva .
 
 ex:requiereMantenimiento a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:TareaMantenimiento .
 ex:tieneFrecuencia a owl:ObjectProperty ; rdfs:domain ex:TareaMantenimiento ; rdfs:range ex:Frecuencia .
 ex:ejecutadoPor a owl:ObjectProperty ; rdfs:domain ex:TareaMantenimiento ; rdfs:range ex:Personal .
-ex:solucionaFallo a owl:ObjectProperty ; rdfs:domain ex:TareaMantenimiento ; rdfs:range ex:DiagnosticoFallo .
+ex:solucionaFallo a owl:ObjectProperty .
 
-ex:documentadoEn a owl:ObjectProperty ; rdfs:domain owl:Thing ; rdfs:range ex:Capitulo .
+ex:documentadoEn a owl:ObjectProperty ; rdfs:domain owl:Thing ; rdfs:range owl:Thing .
 ex:ilustradoEn a owl:ObjectProperty ; rdfs:domain owl:Thing ; rdfs:range ex:Figura .
-ex:detalladoEnEsquema a owl:ObjectProperty ; rdfs:domain ex:Sistema ; rdfs:range ex:Esquema .
+ex:detalladoEnEsquema a owl:ObjectProperty .
 
 # ==========================================
 # PROPIEDADES DE DATOS (ANCLAJES LÉXICOS REGEX)
 # ==========================================
 ex:identificador a owl:DatatypeProperty ; rdfs:range xsd:string .
 ex:textoExtracto a owl:DatatypeProperty ; rdfs:range xsd:string .
-ex:valor a owl:DatatypeProperty ; rdfs:range xsd:string . # Para guardar "220V", "50 bar"
+ex:valor a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:range xsd:string . # Para guardar "220V", "50 bar"

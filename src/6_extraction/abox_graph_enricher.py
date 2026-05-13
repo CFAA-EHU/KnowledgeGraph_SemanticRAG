@@ -13,7 +13,7 @@ from collections import Counter
 from typing import Any
 
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import RDFS
+from rdflib.namespace import RDF, RDFS
 
 from artifact_contracts import (
     ABOX_MINTED_ENTITY_REGISTRY_PATH,
@@ -94,6 +94,8 @@ def apply_enrichments(base_graph: Graph, links, surfaces, *, allowed_surface_pre
     added_surface_count = 0
     skipped_noncanonical_surface_predicate = 0
     skipped_long_surface_value = 0
+    skipped_untyped_surface_entity = 0
+    typed_entities = {str(subject) for subject in base_graph.subjects(RDF.type, None) if isinstance(subject, URIRef)}
     for item in links:
         triple = (URIRef(item.source_uri), URIRef(item.predicate_uri), URIRef(item.target_uri))
         if triple in enriched:
@@ -103,6 +105,9 @@ def apply_enrichments(base_graph: Graph, links, surfaces, *, allowed_surface_pre
         affected_entities.add(item.target_uri)
         added_link_count += 1
     for item in surfaces:
+        if item.entity_uri not in typed_entities:
+            skipped_untyped_surface_entity += 1
+            continue
         if item.added_property_uri not in allowed_surface_predicates:
             skipped_noncanonical_surface_predicate += 1
             continue
@@ -122,6 +127,7 @@ def apply_enrichments(base_graph: Graph, links, surfaces, *, allowed_surface_pre
         'added_surface_count': added_surface_count,
         'skipped_noncanonical_surface_predicate': skipped_noncanonical_surface_predicate,
         'skipped_long_surface_value': skipped_long_surface_value,
+        'skipped_untyped_surface_entity': skipped_untyped_surface_entity,
         'affected_entities_count': len(affected_entities),
         'affected_entities': sorted(affected_entities),
     }

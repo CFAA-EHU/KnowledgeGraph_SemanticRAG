@@ -25,6 +25,7 @@ VOCABULARY = SemanticVocabulary(
     datatype_properties={
         "https://vocab.cfaa.eus/broaching/identificador",
         "https://vocab.cfaa.eus/broaching/textoExtracto",
+        "https://vocab.cfaa.eus/broaching/valor",
     },
 )
 
@@ -66,6 +67,24 @@ class AboxSemanticValidatorTests(unittest.TestCase):
         result = validate_abox_graph(graph, vocabulary=VOCABULARY)
         self.assertIn("long_local_name", result.error_categories)
         self.assertGreater(result.long_local_name_entities, 0)
+
+    def test_reports_valor_used_with_uri_object_as_diagnostic(self) -> None:
+        graph = load_graph(
+            """
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            ex:ParametroX a ex:Sistema ;
+                ex:textoExtracto "Parametro con valor enlazado." ;
+                ex:valor ex:OtroNodo .
+            ex:OtroNodo a ex:Sistema ;
+                ex:textoExtracto "Otro nodo." .
+            """
+        )
+
+        result = validate_abox_graph(graph, vocabulary=VOCABULARY)
+
+        self.assertIn("valor_used_as_object_property", result.error_categories)
+        self.assertEqual(result.valor_used_as_object_property_assertions, 1)
+        self.assertTrue(result.ok)
 
 
 if __name__ == "__main__":

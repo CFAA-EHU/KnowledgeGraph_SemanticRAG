@@ -28,6 +28,7 @@ class AboxEnrichmentGuardTests(unittest.TestCase):
 
         surfaces = [
             SimpleNamespace(entity_uri=str(EX.SistemaX), added_property_uri=str(RDFS.label), added_value="Sistema X"),
+            SimpleNamespace(entity_uri=str(EX.AbsorbedOldUri), added_property_uri=str(RDFS.label), added_value="No debe revivir"),
             SimpleNamespace(entity_uri=str(EX.SistemaX), added_property_uri=str(EX.tieneComponente), added_value="No debe entrar"),
             SimpleNamespace(entity_uri=str(EX.SistemaX), added_property_uri=str(EX.textoExtracto), added_value="x" * 401),
         ]
@@ -41,6 +42,8 @@ class AboxEnrichmentGuardTests(unittest.TestCase):
 
         self.assertIn((EX.SistemaX, RDFS.label, Literal("Sistema X")), enriched)
         self.assertEqual(stats["added_surface_count"], 1)
+        self.assertNotIn((EX.AbsorbedOldUri, RDFS.label, Literal("No debe revivir")), enriched)
+        self.assertEqual(stats["skipped_untyped_surface_entity"], 1)
         self.assertEqual(stats["skipped_noncanonical_surface_predicate"], 1)
         self.assertEqual(stats["skipped_long_surface_value"], 1)
 

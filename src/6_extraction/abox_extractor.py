@@ -14,10 +14,12 @@ import json
 import os
 import random
 import re
+from collections import defaultdict
 from dataclasses import dataclass
 
 from mistralai.client import Mistral
-from rdflib import Graph
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import RDF
 
 from artifact_contracts import (
     ABOX_CHUNKS_DIR,
@@ -62,7 +64,8 @@ DEBUG_DIR = ABOX_DEBUG_DIR
 MODEL_CHAIN = resolve_mistral_model_chain()
 PRIMARY_MODEL = MODEL_CHAIN[0]
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
-ABOX_PROMPT_VERSION = "semantic-guardrails-v3"
+EX_IDENTIFICADOR = URIRef(BASE_URI + "identificador")
+ABOX_PROMPT_VERSION = "semantic-guardrails-v4-identity-rules"
 EXTRACTION_MODE = "abox_from_text_chunk"
 DEFAULT_MODE = "resume-compatible"
 DEFAULT_RETRY_PROFILE = "standard"
@@ -184,6 +187,75 @@ def parse_ttl_graph(ttl_text: str) -> Graph:
     return graph
 
 
+def normalize_identifier(value: str) -> str:
+    return re.sub(r"[\s\-/]+", "", value or "").upper()
+
+
+def detect_intra_chunk_identifier_duplicates(graph: Graph) -> list[dict[str, object]]:
+    groups: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for subject in graph.subjects(RDF.type, None):
+        if not isinstance(subject, URIRef):
+            continue
+        local_types = [
+            str(obj).replace(BASE_URI, "")
+            for obj in graph.objects(subject, RDF.type)
+            if isinstance(obj, URIRef) and str(obj).startswith(BASE_URI)
+        ]
+        identifiers = [
+            normalize_identifier(str(obj))
+            for obj in graph.objects(subject, EX_IDENTIFICADOR)
+            if isinstance(obj, Literal) and str(obj).strip()
+        ]
+        for entity_type in local_types:
+            for identifier in identifiers:
+                if len(identifier) >= 2:
+                    groups[(entity_type, identifier)].append(str(subject))
+
+    conflicts: list[dict[str, object]] = []
+    for (entity_type, identifier), uris in groups.items():
+        unique_uris = list(dict.fromkeys(uris))
+        if len(unique_uris) > 1:
+            conflicts.append({"class": entity_type, "identifier": identifier, "uris": unique_uris})
+    return conflicts
+
+
+def merge_intra_chunk_duplicates(graph: Graph, conflicts: list[dict[str, object]]) -> tuple[Graph, int]:
+    mapping: dict[str, str] = {}
+    for conflict in conflicts:
+        uris = [str(uri) for uri in conflict.get("uris", [])]
+        degrees = {
+            uri: (
+                sum(1 for _ in graph.predicate_objects(URIRef(uri)))
+                + sum(1 for _ in graph.subject_predicates(URIRef(uri)))
+            )
+            for uri in uris
+        }
+        if not degrees:
+            continue
+        canonical = sorted(uris, key=lambda uri: (-degrees[uri], len(uri), uri))[0]
+        for uri in uris:
+            if uri != canonical:
+                mapping[uri] = canonical
+
+    if not mapping:
+        return graph, 0
+
+    merged = Graph()
+    for prefix, namespace in graph.namespaces():
+        merged.bind(prefix, namespace)
+    skipped_self_loops = 0
+    for subject, predicate, obj in graph:
+        new_subject = URIRef(mapping[str(subject)]) if isinstance(subject, URIRef) and str(subject) in mapping else subject
+        new_object = obj
+        if predicate != RDF.type and isinstance(obj, URIRef) and str(obj) in mapping:
+            new_object = URIRef(mapping[str(obj)])
+        if isinstance(new_object, URIRef) and new_subject == new_object and (new_subject != subject or new_object != obj):
+            skipped_self_loops += 1
+            continue
+        merged.add((new_subject, predicate, new_object))
+    return merged, len(mapping) + skipped_self_loops
+
+
 def sanitize_generated_ttl(
     ttl_text: str,
     *,
@@ -198,7 +270,43 @@ def sanitize_generated_ttl(
         source_chunk_text=source_chunk_text,
         mint_registry=mint_registry,
     )
-    return serialize_graph(sanitized_graph), sanitization_result.to_manifest_summary()
+    intra_duplicates = detect_intra_chunk_identifier_duplicates(sanitized_graph)
+    duplicate_resolution_count = 0
+    if intra_duplicates:
+        sanitized_graph, duplicate_resolution_count = merge_intra_chunk_duplicates(sanitized_graph, intra_duplicates)
+    manifest_summary = sanitization_result.to_manifest_summary()
+    manifest_summary["intra_chunk_identifier_duplicate_groups"] = len(intra_duplicates)
+    manifest_summary["intra_chunk_duplicates_resolved"] = duplicate_resolution_count
+    manifest_summary["sample_intra_chunk_identifier_duplicates"] = intra_duplicates[:5]
+    return serialize_graph(sanitized_graph), manifest_summary
+
+
+IDENTITY_RULES_SECTION = """
+REGLAS DE IDENTIDAD POR CLASE:
+
+Para ex:Parametro:
+  - Si el texto contiene un codigo tecnico del parametro (ejemplos: PP177, ABSOFF, ACCJERK, G54, M3), ex:identificador debe contener ese codigo exacto.
+  - Si no hay codigo tecnico, extrae el parametro solo cuando el rdfs:label sea especifico y el texto aporte evidencia clara. No extraigas parametros genericos de una sola palabra.
+  - rdfs:label debe contener el nombre legible del parametro en el idioma del texto.
+  - ex:valor debe contener solo valores literales explicitamente presentes, por ejemplo "400 V", "50 Hz" o "1".
+  - La URI debe preferir el codigo cuando exista, por ejemplo ex:ParametroABSOFF o ex:ParametroPP177. Nunca uses frases completas ni ex:textoExtracto como base de URI.
+
+Para ex:ComponenteElectrico, ex:ComponenteMecanico y ex:ComponenteHidraulico:
+  - Si aparece una referencia tecnica o de fabricante (ejemplos: 3RT2024-1BB40, KA04, 19A21), ese valor debe ir en ex:identificador.
+  - rdfs:label debe contener el nombre descriptivo observable.
+  - No crees dos entidades distintas para el mismo numero de referencia dentro del mismo chunk.
+  - Si el mismo componente aparece repetido en una tabla, crea una sola entidad y conserva la evidencia en ex:textoExtracto.
+
+Para ex:Manual:
+  - ex:identificador debe ser el codigo o titulo oficial si aparece.
+  - No crees una entidad Manual generica sin identificador. Si solo hay una mencion vaga, usa ex:documentadoEn hacia una entidad existente o omite la entidad Manual.
+  - "Manual de programacion", "manual de instalacion" y nombres equivalentes deben mantenerse consistentes entre chunks.
+
+Para ex:Sistema:
+  - Un sistema debe tener nombre propio, por ejemplo "Sistema Hidraulico", "Sistema PLC" o "CNC 8070".
+  - No extraigas sistemas genericos sin nombre.
+  - Si el sistema ya tiene nombre conocido en el contexto, reutiliza el mismo rdfs:label e identificador para favorecer la canonicalizacion.
+""".strip()
 
 
 def aislar_sintaxis_ttl(respuesta_llm: str) -> str:
@@ -649,6 +757,8 @@ REGLAS OBLIGATORIAS:
 11. textoExtracto debe ser breve y no puede ser el chunk completo.
 12. No extraigas entidades cuya unica evidencia sea una palabra generica.
 13. No generes comentarios, explicaciones, Markdown ni bloques vacios. Responde exclusivamente con Turtle valida.
+
+{IDENTITY_RULES_SECTION}
 
 CRITERIOS DE CALIDAD:
 - Prioriza precision semantica frente a cobertura agresiva.

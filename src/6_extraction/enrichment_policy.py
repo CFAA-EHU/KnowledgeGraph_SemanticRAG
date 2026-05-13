@@ -284,11 +284,12 @@ def _choose_target_candidate(graph: Graph, result_item: dict[str, Any], resoluti
         best = candidate_entities[0]
         if best.get("candidate_score", 0.0) >= max(chosen_score + 0.2, 0.95):
             return best
-    if not chosen_uri:
-        return None
-    chosen_description = describe_entity(graph, chosen_uri)
-    searched = search_graph_candidates(graph, result_item.get("expected_answer_text", ""), result_item.get("question", ""), chosen_uri, chosen_description)
-    return searched[0] if searched else None
+    # Avoid an exhaustive graph-wide search for every QA diagnostic item. On
+    # large A-Boxes this becomes quadratic and can stall the structural rebuild.
+    # Enrichment should be conservative: if the sandbox did not provide an
+    # explicit high-quality target, later canonicalization/link-completion gates
+    # are safer places to add broad graph-wide links.
+    return None
 
 
 def _candidate_rule_hint(question: str, source_desc: dict[str, Any], target_desc: dict[str, Any] | None) -> str | None:

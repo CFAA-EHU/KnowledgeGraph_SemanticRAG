@@ -64,6 +64,7 @@ class SanitizationResult:
     long_local_name_truncated: int = 0
     hash_due_to_weak_identity: int = 0
     hash_due_to_collision: int = 0
+    phrase_like_entities_purged: int = 0
     minted_assignments: dict[str, str] = field(default_factory=dict)
     purged_nodes: list[str] = field(default_factory=list)
 
@@ -200,6 +201,16 @@ def _local_name_to_surface(local_name: str) -> str:
     local_name = re.sub(r"_+", " ", local_name)
     local_name = re.sub(r"([a-z])([A-Z])", r"\1 \2", local_name)
     return local_name.strip()
+
+
+def _local_name_to_phrase_key(local_name: str) -> str:
+    """Normalize local names for phrase-entity detection.
+
+    This intentionally compares compact keys because LLM-generated IRIs often
+    collapse a leading article/preposition into the first token, e.g.
+    AContinuacion -> "a continuacion".
+    """
+    return _normalize_text(_local_name_to_surface(local_name)).replace(" ", "")
 
 
 def _surface_is_numeric_variant(surface: str | None) -> bool:
@@ -352,12 +363,15 @@ def mint_domain_iris_for_anonymous_nodes(
             ):
                 candidate_nodes.add(subject)
         if predicate == RDF.type:
+            result.type_object_minting_prevented += 1
             if isinstance(obj, (BNode, URIRef)) and (
                 isinstance(obj, BNode)
                 or str(obj).startswith("file:///")
                 or (isinstance(obj, URIRef) and _should_remint_existing_uri(graph, obj))
             ):
-                result.type_object_minting_prevented += 1
+                # The counter above tracks all protected rdf:type objects; this
+                # branch documents the cases that would otherwise be candidates.
+                pass
             continue
         if isinstance(obj, (BNode, URIRef)):
             if isinstance(obj, BNode) or (
@@ -400,6 +414,8 @@ def mint_domain_iris_for_anonymous_nodes(
             continue
         new_subject = mapping.get(subject, subject)
         new_object = obj if predicate == RDF.type else mapping.get(obj, obj)
+        if isinstance(new_object, URIRef) and new_subject == new_object and (new_subject != subject or new_object != obj):
+            continue
         rewritten.add((new_subject, predicate, new_object))
     return rewritten
 
@@ -700,6 +716,59 @@ def prune_or_scope_texto_extracto(
     return graph
 
 
+def purge_phrase_like_entities(graph: Graph, *, result: SanitizationResult | None = None) -> Graph:
+    """Remove obvious sentence-as-entity artifacts.
+
+    The extractor can occasionally turn a full narrative sentence into a
+    domain individual. We only purge when the node has no strong identity,
+    no incoming references, and its local name is effectively the same as its
+    textual extract. This keeps the rule safe for existing named assets.
+    """
+    result = result or SanitizationResult()
+    nodes_to_purge: set[URIRef] = set()
+
+    for subject in {s for s in graph.subjects(RDF.type, None) if isinstance(s, URIRef)}:
+        subject_str = str(subject)
+        if not subject_str.startswith(BASE_URI):
+            continue
+        if any(True for _ in graph.objects(subject, RDFS.label)):
+            continue
+        if any(True for _ in graph.objects(subject, EX.identificador)):
+            continue
+        if any(True for _ in graph.triples((None, None, subject))):
+            continue
+
+        local_name = subject_str.rsplit("/", 1)[-1].rsplit("#", 1)[-1]
+        local_words = _normalize_text(_local_name_to_surface(local_name)).split()
+        if len(local_words) < 8:
+            continue
+        if _looks_code_like_surface(local_name):
+            continue
+
+        local_key = _local_name_to_phrase_key(local_name)
+        extracts = [str(obj) for obj in graph.objects(subject, EX.textoExtracto) if isinstance(obj, Literal)]
+        if not extracts:
+            continue
+        for extract in extracts:
+            extract_key = _normalize_text(extract).replace(" ", "")
+            if local_key and extract_key and (local_key == extract_key or local_key in extract_key or extract_key in local_key):
+                nodes_to_purge.add(subject)
+                break
+
+    if not nodes_to_purge:
+        return graph
+
+    rewritten = Graph()
+    for subject, predicate, obj in graph:
+        if subject in nodes_to_purge or obj in nodes_to_purge:
+            continue
+        rewritten.add((subject, predicate, obj))
+
+    result.phrase_like_entities_purged += len(nodes_to_purge)
+    result.purged_nodes.extend(str(node) for node in sorted(nodes_to_purge, key=str))
+    return rewritten
+
+
 def sanitize_abox_graph(
     graph: Graph,
     *,
@@ -723,4 +792,5 @@ def sanitize_abox_graph(
         source_chunk_text=source_chunk_text,
         result=result,
     )
+    sanitized = purge_phrase_like_entities(sanitized, result=result)
     return sanitized, result

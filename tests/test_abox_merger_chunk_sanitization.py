@@ -3,9 +3,10 @@ from __future__ import annotations
 import sys
 import tempfile
 import unittest
+import json
 from pathlib import Path
 
-from rdflib import Graph, URIRef
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -16,7 +17,13 @@ if str(EXTRACTION_DIR) not in sys.path:
     sys.path.insert(0, str(EXTRACTION_DIR))
 
 from abox_graph_sanitizer import EX
-from abox_merger import merge_from_directory, merge_from_graphs, sanitize_final_merged_graph
+from abox_merger import (
+    merge_from_directory,
+    merge_from_graphs,
+    report_identifier_collisions,
+    sanitize_final_merged_graph,
+    write_marked_chunks_report,
+)
 from abox_semantic_validator import SemanticVocabulary
 
 
@@ -181,6 +188,30 @@ class AboxMergerChunkSanitizationTests(unittest.TestCase):
             self.assertNotEqual(str(interfaz_nodes[0]), str(parametro_nodes[0]))
             self.assertNotEqual(str(interfaz_nodes[0]), str(EX.MarcaGRTOSPDL))
             self.assertNotEqual(str(parametro_nodes[0]), str(EX.MarcaGRTOSPDL))
+
+    def test_identifier_collision_report_groups_same_type_and_identifier(self) -> None:
+        graph = Graph()
+        graph.add((EX.ParametroA, RDF.type, EX.Parametro))
+        graph.add((EX.ParametroA, EX.identificador, URIRef("https://example.org/not-a-literal")))
+        graph.add((EX.ParametroA, EX.identificador, Literal("PP177")))
+        graph.add((EX.ParametroB, RDF.type, EX.Parametro))
+        graph.add((EX.ParametroB, EX.identificador, Literal("PP-177")))
+
+        report = report_identifier_collisions(graph)
+
+        self.assertEqual(report["total_collision_groups"], 1)
+        self.assertEqual(report["collisions_by_class"]["Parametro"], 1)
+
+    def test_marked_chunks_report_is_written_for_nonblocking_warnings(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output = Path(tmpdir) / "abox_merger_marked_chunks.json"
+            warnings = [{"path": "chunk_001_abox.ttl", "warnings": {"long_local_name": 1}}]
+
+            write_marked_chunks_report(output, warnings)
+
+            payload = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(payload["summary"]["marked_count"], 1)
+            self.assertEqual(payload["chunks"][0]["warnings"]["long_local_name"], 1)
 
 
 if __name__ == "__main__":

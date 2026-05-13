@@ -7,12 +7,16 @@ if str(REPO_ROOT) not in sys.path:
 
 import argparse
 import json
+import re
+from collections import defaultdict
 
-from rdflib import Graph, URIRef
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, RDFS
 
 from artifact_contracts import (
     ABOX_CHUNKS_DIR,
+    ABOX_MERGER_IDENTIFIER_COLLISIONS_PATH,
+    ABOX_MERGER_MARKED_CHUNKS_PATH,
     ABOX_MERGER_REJECTED_CHUNKS_PATH,
     ABOX_MINTED_ENTITY_REGISTRY_PATH,
     OPERATIONAL_TBOX_PATH,
@@ -26,6 +30,7 @@ from abox_graph_sanitizer import (
     ensure_minimal_traceability,
     infer_missing_types,
     load_mint_registry,
+    purge_phrase_like_entities,
     prune_or_scope_texto_extracto,
     sanitize_abox_graph,
     save_mint_registry,
@@ -40,6 +45,8 @@ CHUNK_REJECTION_FAILURES = {
     "file_uri_entity",
     "individual_used_as_class",
 }
+EX_NS = "https://vocab.cfaa.eus/broaching/"
+EX_IDENTIFICADOR = URIRef(EX_NS + "identificador")
 
 
 def parse_args() -> argparse.Namespace:
@@ -147,6 +154,45 @@ def validate_merged_uri_consistency(graph: Graph, *, tbox_graph: Graph, output_p
         report_path.unlink()
 
 
+def normalize_identifier(value: str) -> str:
+    return re.sub(r"[\s\-/]+", "", value or "").upper()
+
+
+def report_identifier_collisions(graph: Graph) -> dict[str, object]:
+    groups: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for subject in graph.subjects(RDF.type, None):
+        if not isinstance(subject, URIRef):
+            continue
+        types = [
+            str(obj).replace(EX_NS, "")
+            for obj in graph.objects(subject, RDF.type)
+            if isinstance(obj, URIRef) and str(obj).startswith(EX_NS)
+        ]
+        identifiers = [
+            normalize_identifier(str(obj))
+            for obj in graph.objects(subject, EX_IDENTIFICADOR)
+            if isinstance(obj, Literal) and str(obj).strip()
+        ]
+        for entity_type in types:
+            for identifier in identifiers:
+                if len(identifier) >= 2:
+                    groups[(entity_type, identifier)].append(str(subject))
+
+    collisions = {
+        f"{entity_type}::{identifier}": list(dict.fromkeys(uris))
+        for (entity_type, identifier), uris in groups.items()
+        if len(set(uris)) > 1
+    }
+    by_class: dict[str, int] = defaultdict(int)
+    for key in collisions:
+        by_class[key.split("::", 1)[0]] += 1
+    return {
+        "total_collision_groups": len(collisions),
+        "collisions_by_class": dict(sorted(by_class.items())),
+        "sample_collisions": dict(list(sorted(collisions.items()))[:20]),
+    }
+
+
 def _collect_sanitization(aggregate_result: SanitizationResult, chunk_result: SanitizationResult) -> None:
     aggregate_result.minted_nodes += chunk_result.minted_nodes
     aggregate_result.reused_registry_iris += chunk_result.reused_registry_iris
@@ -163,6 +209,7 @@ def _collect_sanitization(aggregate_result: SanitizationResult, chunk_result: Sa
     aggregate_result.long_local_name_truncated += chunk_result.long_local_name_truncated
     aggregate_result.hash_due_to_weak_identity += chunk_result.hash_due_to_weak_identity
     aggregate_result.hash_due_to_collision += chunk_result.hash_due_to_collision
+    aggregate_result.phrase_like_entities_purged += chunk_result.phrase_like_entities_purged
     aggregate_result.minted_assignments.update(chunk_result.minted_assignments)
     aggregate_result.purged_nodes.extend(chunk_result.purged_nodes)
 
@@ -227,6 +274,18 @@ def write_rejection_report(path: Path, rejected_inputs: list[dict[str, object]],
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def write_marked_chunks_report(path: Path, warned_inputs: list[dict[str, object]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "summary": {
+            "marked_count": len(warned_inputs),
+            "note": "Chunks accepted into the merge with non-blocking semantic diagnostics.",
+        },
+        "chunks": warned_inputs,
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def sanitize_final_merged_graph(graph: Graph, *, tbox_graph: Graph) -> tuple[Graph, SanitizationResult]:
     result = SanitizationResult()
     graph = downgrade_invalid_hex_binary_literals(graph, result=result)
@@ -235,6 +294,7 @@ def sanitize_final_merged_graph(graph: Graph, *, tbox_graph: Graph) -> tuple[Gra
     graph = drop_incidental_table_types(graph, result=result)
     graph = ensure_minimal_traceability(graph, result=result)
     graph = prune_or_scope_texto_extracto(graph, result=result)
+    graph = purge_phrase_like_entities(graph, result=result)
     return graph, result
 
 
@@ -382,9 +442,15 @@ def main() -> None:
     grafo_unificado.serialize(destination=args.output, format="turtle")
     save_mint_registry(mint_registry, ABOX_MINTED_ENTITY_REGISTRY_PATH)
     write_rejection_report(ABOX_MERGER_REJECTED_CHUNKS_PATH, rejected_inputs, warned_inputs)
+    write_marked_chunks_report(ABOX_MERGER_MARKED_CHUNKS_PATH, warned_inputs)
 
     serialized_graph = load_ttl_graph(args.output)
     validate_merged_uri_consistency(serialized_graph, tbox_graph=tbox_graph, output_path=args.output)
+    identifier_collision_report = report_identifier_collisions(serialized_graph)
+    ABOX_MERGER_IDENTIFIER_COLLISIONS_PATH.write_text(
+        json.dumps(identifier_collision_report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
     print("-" * 40)
     print("RESUMEN DE CONSOLIDACION A-BOX")
@@ -396,6 +462,7 @@ def main() -> None:
     print(f"IRIs saneadas por grafo fusionado: {input_graph_sanitization.minted_nodes}")
     print(f"Entradas rechazadas  : {len(rejected_inputs)}")
     print(f"Advertencias semanticas: {len(warned_inputs)}")
+    print(f"Colisiones de identificador: {identifier_collision_report['total_collision_groups']}")
     print(f"Saneado final sin minting: {final_sanitization.to_manifest_summary()}")
     print(f"Tripletas totales    : {len(grafo_unificado)}")
     print(f"Archivo generado     : {args.output}")

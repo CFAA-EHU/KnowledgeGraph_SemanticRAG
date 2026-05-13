@@ -104,17 +104,13 @@ class AboxGraphSanitizerTests(unittest.TestCase):
         graph = load_graph_from_text(
             """
             @prefix ex: <https://vocab.cfaa.eus/broaching/> .
-            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-            ex:Maquina a ex:Componente ;
-                rdfs:label "Maquina como recurso descrito" ;
-                ex:identificador "M-1" ;
-                ex:textoExtracto "Recurso descrito para probar la proteccion de rdf:type." .
             ex:SistemaX a ex:Maquina .
             """
         )
 
         sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
         self.assertIn((EX.SistemaX, RDF.type, EX.Maquina), sanitized)
+        self.assertNotIn(str(EX.Maquina), report.minted_assignments)
         self.assertGreaterEqual(report.type_object_minting_prevented, 1)
 
     def test_texto_extracto_is_not_used_as_primary_uri_surface(self) -> None:
@@ -293,6 +289,27 @@ class AboxGraphSanitizerTests(unittest.TestCase):
         )
         extracts = [str(obj) for obj in sanitized.objects(EX.MotorPrincipal, EX.textoExtracto)]
         self.assertEqual(extracts, ["Motor principal del cabezal."])
+
+    def test_phrase_like_uri_without_identity_is_purged(self) -> None:
+        graph = load_graph_from_text(
+            """
+            @prefix ex: <https://vocab.cfaa.eus/broaching/> .
+            ex:AContinuacionSeMuestraUnaDescripcionDetalladaDeLasOperacionesValidasParaEsteAlmacen
+                a ex:Sistema ;
+                ex:tieneComponente ex:ComponenteReal ;
+                ex:textoExtracto "A continuación se muestra una descripción detallada de las operaciones válidas para este almacén." .
+
+            ex:ComponenteReal a ex:Componente ;
+                ex:textoExtracto "Componente real documentado." .
+            """
+        )
+
+        sanitized, report = sanitize_abox_graph(graph, tbox_graph=self.tbox_graph, mint_registry=self.registry)
+
+        phrase_uri = EX.AContinuacionSeMuestraUnaDescripcionDetalladaDeLasOperacionesValidasParaEsteAlmacen
+        self.assertNotIn((phrase_uri, RDF.type, EX.Sistema), sanitized)
+        self.assertIn((EX.ComponenteReal, RDF.type, EX.Componente), sanitized)
+        self.assertEqual(report.phrase_like_entities_purged, 1)
 
     def test_texto_extracto_chunk_like_is_scoped_when_possible(self) -> None:
         chunk_text = (

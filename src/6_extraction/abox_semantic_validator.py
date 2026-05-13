@@ -18,6 +18,7 @@ from artifact_contracts import ABOX_SEMANTIC_AUDIT_PATH, OPERATIONAL_ABOX_PATH, 
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 TEXTO_EXTRACTO = URIRef(BASE_URI + "textoExtracto")
 IDENTIFICADOR = URIRef(BASE_URI + "identificador")
+VALOR = URIRef(BASE_URI + "valor")
 LOCAL_NAME_MAX_LENGTH = 100
 LOCAL_NAME_HARD_FAILURE = False
 
@@ -48,6 +49,7 @@ class SemanticValidationResult:
     redundant_type_assertions: int
     individual_used_as_class_assertions: int
     long_local_name_entities: int
+    valor_used_as_object_property_assertions: int
     error_categories: dict[str, int]
     invalid_class_values: list[list[object]]
     invalid_predicate_values: list[list[object]]
@@ -59,6 +61,7 @@ class SemanticValidationResult:
     sample_redundant_type_entities: list[str]
     sample_individuals_used_as_class: list[str]
     sample_long_local_name_entities: list[str]
+    sample_valor_used_as_object_property: list[str]
 
     def to_manifest_summary(self) -> dict[str, object]:
         return {
@@ -75,6 +78,7 @@ class SemanticValidationResult:
             "redundant_type_assertions": self.redundant_type_assertions,
             "individual_used_as_class_assertions": self.individual_used_as_class_assertions,
             "long_local_name_entities": self.long_local_name_entities,
+            "valor_used_as_object_property_assertions": self.valor_used_as_object_property_assertions,
             "error_categories": self.error_categories,
             "invalid_class_values": self.invalid_class_values[:10],
             "invalid_predicate_values": self.invalid_predicate_values[:10],
@@ -86,6 +90,7 @@ class SemanticValidationResult:
             "sample_redundant_type_entities": self.sample_redundant_type_entities[:10],
             "sample_individuals_used_as_class": self.sample_individuals_used_as_class[:10],
             "sample_long_local_name_entities": self.sample_long_local_name_entities[:10],
+            "sample_valor_used_as_object_property": self.sample_valor_used_as_object_property[:10],
         }
 
 
@@ -186,6 +191,7 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
     redundant_type_entities: list[str] = []
     redundant_type_assertions = 0
     long_local_name_entities: list[str] = []
+    valor_used_as_object_property: list[str] = []
 
     surface_predicates = {RDFS.label, IDENTIFICADOR, TEXTO_EXTRACTO}
     individual_uris: set[str] = {str(subject) for subject in typed_subjects}
@@ -218,6 +224,8 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
             outgoing_object_links[subject] += 1
             incoming_object_links[obj] += 1
             total_object_links += 1
+        if predicate == VALOR and isinstance(obj, URIRef):
+            valor_used_as_object_property.append(str(subject))
 
     for subject in sorted(candidate_subjects, key=str):
         if subject not in typed_subjects:
@@ -263,6 +271,8 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         error_categories["individual_used_as_class"] = sum(individual_as_class.values())
     if long_local_name_entities:
         error_categories["long_local_name"] = len(long_local_name_entities)
+    if valor_used_as_object_property:
+        error_categories["valor_used_as_object_property"] = len(valor_used_as_object_property)
     if len(typed_subjects) > 1 and total_object_links == 0:
         error_categories["no_useful_links"] = len(typed_subjects)
 
@@ -294,6 +304,7 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         redundant_type_assertions=redundant_type_assertions,
         individual_used_as_class_assertions=sum(individual_as_class.values()),
         long_local_name_entities=len(long_local_name_entities),
+        valor_used_as_object_property_assertions=len(valor_used_as_object_property),
         error_categories=error_categories,
         invalid_class_values=[[ _local_name(uri), count ] for uri, count in invalid_classes.most_common(15)],
         invalid_predicate_values=[[ _local_name(uri), count ] for uri, count in invalid_predicates.most_common(15)],
@@ -305,6 +316,7 @@ def validate_abox_graph(graph: Graph, *, vocabulary: SemanticVocabulary | None =
         sample_redundant_type_entities=[_local_name(uri) for uri in redundant_type_entities[:15]],
         sample_individuals_used_as_class=[_local_name(uri) for uri, _count in individual_as_class.most_common(15)],
         sample_long_local_name_entities=[_local_name(uri) for uri in long_local_name_entities[:15]],
+        sample_valor_used_as_object_property=[_local_name(uri) for uri in valor_used_as_object_property[:15]],
     )
 
 
@@ -350,6 +362,8 @@ def summarize_semantic_result(result: SemanticValidationResult) -> str:
         fragments.append(f"individuos_usados_como_clase={result.individual_used_as_class_assertions}")
     if result.long_local_name_entities:
         fragments.append(f"local_names_largos={result.long_local_name_entities}")
+    if result.valor_used_as_object_property_assertions:
+        fragments.append(f"valor_como_object_property={result.valor_used_as_object_property_assertions}")
     return "A-Box semanticamente invalida: " + ", ".join(fragments)
 
 
@@ -378,6 +392,7 @@ def audit_graph_to_json(abox_path: Path = OPERATIONAL_ABOX_PATH, *, tbox_path: P
                 "weak_linkage",
                 "no_useful_links",
                 "long_local_name",
+                "valor_used_as_object_property",
             ],
         },
         "summary": result.to_manifest_summary(),

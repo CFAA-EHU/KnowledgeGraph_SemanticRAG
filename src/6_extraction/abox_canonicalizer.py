@@ -15,6 +15,7 @@ from rdflib.namespace import RDF
 from artifact_contracts import (
     ABOX_MINTED_ENTITY_REGISTRY_PATH,
     CANONICAL_ABOX_PATH,
+    CANONICAL_ANCHORS_PATH,
     CANONICAL_ENTITY_MAP_PATH,
     CANONICALIZATION_REPORT_PATH,
     CANONICALIZATION_RESOLUTION_CANDIDATES_PATH,
@@ -32,6 +33,7 @@ if str(EXTRACTION_DIR) not in sys.path:
 from canonical_resolution_policy import (
     candidates_to_jsonable,
     clusters_to_jsonable,
+    collect_identifier_based_candidates,
     collect_resolution_diagnostics,
     collect_surface_variant_diagnostics,
     group_resolution_candidates,
@@ -53,6 +55,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--sandbox-summary-path', type=Path, default=SANDBOX_STRUCTURAL_GAP_SUMMARY_PATH, help='T16 structural summary path.')
     parser.add_argument('--sandbox-decision-path', type=Path, default=SANDBOX_DECISION_REPORT_PATH, help='T16 decision report path.')
     parser.add_argument('--sandbox-report-path', type=Path, default=SANDBOX_DIAGNOSTIC_REPORT_PATH, help='Detailed T16 sandbox report path.')
+    parser.add_argument('--canonical-anchors-path', type=Path, default=CANONICAL_ANCHORS_PATH, help='Explicit canonical anchor declarations.')
     return parser.parse_args()
 
 
@@ -71,6 +74,107 @@ def load_graph(path: Path) -> Graph:
     graph = Graph()
     graph.parse(path, format='turtle')
     return graph
+
+
+def _uri_exists(graph: Graph, uri: str) -> bool:
+    ref = URIRef(uri)
+    return any(graph.triples((ref, None, None))) or any(graph.triples((None, None, ref)))
+
+
+def load_canonical_anchors(path: Path, graph: Graph | None = None) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    payload = json.loads(path.read_text(encoding='utf-8'))
+    anchors = payload.get('anchors', [])
+    if not isinstance(anchors, list):
+        raise ValueError(f'[canonical_anchors] "anchors" debe ser una lista en {path}')
+
+    canonical_uris = set()
+    absorbed_uris = set()
+    for anchor in anchors:
+        canonical_uri = anchor.get('canonical_uri')
+        absorbs = anchor.get('absorbs', [])
+        legacy_aliases = anchor.get('legacy_aliases', [])
+        if not canonical_uri or not isinstance(absorbs, list) or not isinstance(legacy_aliases, list):
+            raise ValueError(f'[canonical_anchors] Anchor invalido: {anchor}')
+        if canonical_uri in canonical_uris:
+            raise ValueError(f'[canonical_anchors] Canonical URI duplicada: {canonical_uri}')
+        canonical_uris.add(canonical_uri)
+        if graph is not None and not _uri_exists(graph, canonical_uri):
+            raise ValueError(f'[canonical_anchors] canonical_uri no existe en el grafo de entrada: {canonical_uri}')
+        for absorbed in absorbs:
+            if absorbed == canonical_uri:
+                raise ValueError(f'[canonical_anchors] Auto-absorcion: {absorbed}')
+            if absorbed in absorbed_uris:
+                raise ValueError(f'[canonical_anchors] URI absorbida duplicada en anchors: {absorbed}')
+            absorbed_uris.add(absorbed)
+            if graph is not None and not _uri_exists(graph, absorbed):
+                raise ValueError(f'[canonical_anchors] absorbed URI no existe en el grafo de entrada: {absorbed}')
+        for alias in legacy_aliases:
+            if alias == canonical_uri:
+                raise ValueError(f'[canonical_anchors] Alias legado apunta a si mismo: {alias}')
+            if alias in absorbed_uris:
+                raise ValueError(f'[canonical_anchors] Alias legado duplicado como absorbido: {alias}')
+
+    cycles = canonical_uris & absorbed_uris
+    if cycles:
+        raise ValueError(f'[canonical_anchors] Ciclo detectado en anchors: {sorted(cycles)}')
+    return anchors
+
+
+def build_anchor_mapping(anchors: list[dict[str, Any]]) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    for anchor in anchors:
+        canonical_uri = anchor['canonical_uri']
+        for absorbed in anchor.get('absorbs', []):
+            mapping[absorbed] = canonical_uri
+    return mapping
+
+
+def build_anchor_legacy_alias_mapping(anchors: list[dict[str, Any]]) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    for anchor in anchors:
+        canonical_uri = anchor['canonical_uri']
+        for alias in anchor.get('legacy_aliases', []):
+            mapping[alias] = canonical_uri
+    return mapping
+
+
+def apply_anchor_mapping(graph: Graph, anchor_mapping: dict[str, str]) -> tuple[Graph, dict[str, Any]]:
+    rewritten = Graph()
+    for prefix, namespace in graph.namespaces():
+        rewritten.bind(prefix, namespace)
+    rewritten_triples = 0
+    rewritten_subjects = 0
+    rewritten_objects = 0
+    skipped_self_loops = 0
+
+    for subject, predicate, obj in graph:
+        new_subject = subject
+        new_object = obj
+        if isinstance(subject, URIRef) and str(subject) in anchor_mapping:
+            new_subject = URIRef(anchor_mapping[str(subject)])
+            if new_subject != subject:
+                rewritten_subjects += 1
+        if predicate != RDF.type and isinstance(obj, URIRef) and str(obj) in anchor_mapping:
+            new_object = URIRef(anchor_mapping[str(obj)])
+            if new_object != obj:
+                rewritten_objects += 1
+        if isinstance(new_object, URIRef) and new_subject == new_object and (new_subject != subject or new_object != obj):
+            skipped_self_loops += 1
+            continue
+        if new_subject != subject or new_object != obj:
+            rewritten_triples += 1
+        rewritten.add((new_subject, predicate, new_object))
+
+    return rewritten, {
+        'anchor_absorbed_count': len(anchor_mapping),
+        'anchor_rewritten_triples': rewritten_triples,
+        'anchor_rewritten_subjects': rewritten_subjects,
+        'anchor_rewritten_objects': rewritten_objects,
+        'anchor_skipped_self_loops': skipped_self_loops,
+        'anchor_mapping_applied': bool(anchor_mapping),
+    }
 
 
 def resolve_mapping_chain(initial_mapping: dict[str, str]) -> dict[str, str]:
@@ -208,9 +312,20 @@ def rewrite_graph(raw_graph: Graph, selections) -> tuple[Graph, dict[str, Any], 
     return canonical_graph, rewrite_stats, entity_map
 
 
+def protect_declared_canonical_anchors(candidates: list, protected_uris: set[str]) -> tuple[list, int]:
+    if not protected_uris:
+        return candidates, 0
+    filtered = [candidate for candidate in candidates if candidate.source_uri not in protected_uris]
+    return filtered, len(candidates) - len(filtered)
+
+
 def main() -> None:
     args = parse_args()
     raw_graph = load_graph(args.input)
+    declared_anchors = load_canonical_anchors(args.canonical_anchors_path, graph=raw_graph)
+    anchor_mapping = build_anchor_mapping(declared_anchors)
+    legacy_alias_mapping = build_anchor_legacy_alias_mapping(declared_anchors)
+    raw_graph, anchor_stats = apply_anchor_mapping(raw_graph, anchor_mapping)
     sandbox_candidates = load_json(args.sandbox_candidates_path)
     sandbox_summary = load_json(args.sandbox_summary_path)
     sandbox_decision = load_json(args.sandbox_decision_path)
@@ -223,10 +338,17 @@ def main() -> None:
         sandbox_decision,
         sandbox_report,
     )
+    identifier_candidates = collect_identifier_based_candidates(raw_graph)
     surface_variant_diagnostics = collect_surface_variant_diagnostics(raw_graph)
     accepted_candidates = merge_resolution_candidates(
+        identifier_candidates,
         diagnostics['accepted'],
         surface_variant_diagnostics['accepted'],
+    )
+    protected_anchor_uris = {anchor['canonical_uri'] for anchor in declared_anchors}
+    accepted_candidates, protected_anchor_candidates_discarded = protect_declared_canonical_anchors(
+        accepted_candidates,
+        protected_anchor_uris,
     )
     clusters = group_resolution_candidates(accepted_candidates)
     selections = [select_canonical_entity(cluster, raw_graph) for cluster in clusters]
@@ -240,9 +362,11 @@ def main() -> None:
             'accepted_candidates': len(accepted_candidates),
             'discarded_candidates': len(diagnostics['discarded']) + len(surface_variant_diagnostics['discarded']),
             'candidate_origins': {
+                'identifier_exact_match': len(identifier_candidates),
                 'sandbox': diagnostics['summary'].get('candidate_origins', {}).get('sandbox', 0),
                 'surface_variant_scan': surface_variant_diagnostics['summary'].get('candidate_origins', {}).get('surface_variant_scan', 0),
             },
+            'protected_anchor_candidates_discarded': protected_anchor_candidates_discarded,
         },
         'results': candidates_to_jsonable(accepted_candidates),
         'discarded': diagnostics['discarded'] + surface_variant_diagnostics['discarded'],
@@ -250,6 +374,24 @@ def main() -> None:
     write_json(args.resolution_candidates_path, resolution_payload)
 
     canonical_graph, rewrite_stats, entity_map = rewrite_graph(raw_graph, selections)
+    for absorbed_uri, canonical_uri in anchor_mapping.items():
+        entity_map[absorbed_uri] = {
+            'canonical_uri': canonical_uri,
+            'resolution_reason': 'declared_canonical_anchor',
+            'entity_type': next((anchor.get('class', 'Unknown') for anchor in declared_anchors if absorbed_uri in anchor.get('absorbs', [])), 'Unknown'),
+            'rules_applied': ['declared_canonical_anchor'],
+            'support_question_ids': [],
+            'supplemental_targets': [],
+        }
+    for alias_uri, canonical_uri in legacy_alias_mapping.items():
+        entity_map[alias_uri] = {
+            'canonical_uri': canonical_uri,
+            'resolution_reason': 'declared_legacy_alias',
+            'entity_type': next((anchor.get('class', 'Unknown') for anchor in declared_anchors if alias_uri in anchor.get('legacy_aliases', [])), 'Unknown'),
+            'rules_applied': ['declared_legacy_alias'],
+            'support_question_ids': [],
+            'supplemental_targets': [],
+        }
     tbox_graph = load_graph(OPERATIONAL_TBOX_PATH)
     mint_registry = load_mint_registry(ABOX_MINTED_ENTITY_REGISTRY_PATH)
     canonical_graph, sanitization_result = sanitize_abox_graph(
@@ -269,6 +411,8 @@ def main() -> None:
     report_payload = {
         'summary': {
             **rewrite_stats,
+            **anchor_stats,
+            'anchor_legacy_alias_count': len(legacy_alias_mapping),
             'sanitization': sanitization_result.to_manifest_summary(),
             'semantic_validation': semantic_validation.to_manifest_summary(),
             'input_path': str(args.input),
@@ -278,6 +422,9 @@ def main() -> None:
             'surface_variant_groups_inspected': surface_variant_diagnostics['summary']['surface_variant_groups_inspected'],
             'surface_variant_candidates_accepted': surface_variant_diagnostics['summary']['accepted_candidates'],
             'surface_variant_candidates_discarded': surface_variant_diagnostics['summary']['discarded_candidates'],
+            'identifier_exact_match_candidates': len(identifier_candidates),
+            'protected_anchor_candidates_discarded': protected_anchor_candidates_discarded,
+            'canonical_anchors_path': str(args.canonical_anchors_path),
         },
         'clusters_processed': clusters_to_jsonable(clusters),
         'selections': selections_to_jsonable(selections),
@@ -288,6 +435,7 @@ def main() -> None:
     print(f'[canonicalizer] Raw merged A-Box: {args.input}')
     print(f'[canonicalizer] Canonical operational A-Box: {args.output}')
     print(f'[canonicalizer] Accepted resolution candidates: {len(accepted_candidates)}')
+    print(f'[canonicalizer] Declared anchor absorptions: {anchor_stats["anchor_absorbed_count"]}')
     print(f'[canonicalizer] Absorbed nodes: {rewrite_stats["absorbed_nodes_count"]}')
     print(f'[canonicalizer] Supplemental links added: {rewrite_stats["supplemental_links_added"]}')
     print(f'[canonicalizer] Canonical triples: {rewrite_stats["canonical_triples"]}')

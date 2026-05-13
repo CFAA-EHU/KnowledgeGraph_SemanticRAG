@@ -9,7 +9,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
 
-from rdflib import Graph, URIRef
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, OWL
 
 from artifact_contracts import OPERATIONAL_TBOX_PATH
@@ -34,14 +34,35 @@ SURFACE_VARIANT_CONTEXT_BLOCKERS = {
     'chapter',
 }
 SURFACE_VARIANT_MIN_KEY_LENGTH = 5
+IDENTIFIER_PRIORITY_CLASSES = {
+    'Parametro',
+    'ComponenteElectrico',
+    'ComponenteMecanico',
+    'ComponenteHidraulico',
+    'Directiva',
+    'Manual',
+}
+EX_IDENTIFICADOR = URIRef('https://vocab.cfaa.eus/broaching/identificador')
 MANUALLY_CONFLICTING_PAIRS: set[frozenset[str]] = {
     frozenset({"Maquina", "Directiva"}),
     frozenset({"Maquina", "Manual"}),
+    frozenset({"Maquina", "TareaMantenimiento"}),
     frozenset({"Maquina", "PiezaRecambio"}),
+    frozenset({"Maquina", "RepuestoPieza"}),
+    frozenset({"Maquina", "AvisoSeguridad"}),
     frozenset({"Empresa", "Directiva"}),
+    frozenset({"Empresa", "Maquina"}),
     frozenset({"TareaMantenimiento", "ComponenteElectrico"}),
+    frozenset({"TareaMantenimiento", "AvisoSeguridad"}),
     frozenset({"Alarma", "PlanMantenimiento"}),
     frozenset({"CodigoError", "Figura"}),
+    frozenset({"Manual", "ComponenteElectrico"}),
+    frozenset({"Manual", "Sistema"}),
+    frozenset({"Parametro", "Componente"}),
+    frozenset({"Parametro", "Sistema"}),
+    frozenset({"DiagnosticoFallo", "Componente"}),
+    frozenset({"AccionProhibida", "Componente"}),
+    frozenset({"InterfazUsuario", "Componente"}),
 }
 _TBOX_SUBCLASS_CLOSURE: dict[str, set[str]] | None = None
 _TBOX_DISJOINT_PAIRS: set[frozenset[str]] | None = None
@@ -207,6 +228,10 @@ def _identifier_heavy_penalty(value: str) -> float:
     if '_' in local or re.search(r'\d', local):
         return 0.2
     return 0.0
+
+
+def normalize_identifier(value: str) -> str:
+    return re.sub(r'[\s\-/]+', '', value or '').upper()
 
 
 def _load_json(payload_or_path: Any) -> Any:
@@ -608,6 +633,76 @@ def collect_surface_variant_diagnostics(graph: Graph) -> dict[str, Any]:
             'candidate_origins': {'surface_variant_scan': len(accepted)},
         },
     }
+
+
+def collect_identifier_based_candidates(graph: Graph) -> list[ResolutionCandidate]:
+    groups: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for subject in graph.subjects(RDF.type, None):
+        if not isinstance(subject, URIRef):
+            continue
+        local_types = [
+            normalize_uri(str(obj))
+            for obj in graph.objects(subject, RDF.type)
+            if isinstance(obj, URIRef)
+        ]
+        matching_types = [item for item in local_types if item in IDENTIFIER_PRIORITY_CLASSES]
+        if not matching_types:
+            continue
+        identifiers = [
+            normalize_identifier(str(obj))
+            for obj in graph.objects(subject, EX_IDENTIFICADOR)
+            if isinstance(obj, Literal) and str(obj).strip()
+        ]
+        for identifier in identifiers:
+            if len(identifier) < 2:
+                continue
+            for entity_type in matching_types:
+                groups[(entity_type, identifier)].append(str(subject))
+
+    candidates: list[ResolutionCandidate] = []
+    for (entity_type, identifier), uris in sorted(groups.items()):
+        unique_uris = list(dict.fromkeys(uris))
+        if len(unique_uris) < 2:
+            continue
+        degrees = {
+            uri: (
+                sum(1 for _ in graph.predicate_objects(URIRef(uri)))
+                + sum(1 for _ in graph.subject_predicates(URIRef(uri)))
+            )
+            for uri in unique_uris
+        }
+        canonical_uri = sorted(unique_uris, key=lambda uri: (-degrees[uri], len(normalize_uri(uri)), uri))[0]
+        canonical_desc = describe_entity(graph, canonical_uri)
+        for source_uri in unique_uris:
+            if source_uri == canonical_uri:
+                continue
+            source_desc = describe_entity(graph, source_uri)
+            candidates.append(
+                ResolutionCandidate(
+                    source_uri=source_uri,
+                    candidate_uri=canonical_uri,
+                    entity_type=entity_type,
+                    suggested_structural_issue='graph_canonicalization_gap',
+                    priority=0,
+                    support_count=1,
+                    question_ids=[],
+                    source_types=source_desc['types'],
+                    candidate_types=canonical_desc['types'],
+                    source_best_surface_literal=source_desc.get('best_surface'),
+                    candidate_best_surface_literal=canonical_desc.get('best_surface'),
+                    source_alignment_score=1.0,
+                    candidate_alignment_score=1.0,
+                    improvement_score=1.0,
+                    reason='identifier_exact_match',
+                    candidate_origin='identifier_exact_match',
+                    evidence={
+                        'identifier_norm': identifier,
+                        'degree_canonical': degrees[canonical_uri],
+                        'source_degree': degrees[source_uri],
+                    },
+                )
+            )
+    return candidates
 
 
 def build_resolution_corpus(

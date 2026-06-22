@@ -1,0 +1,37 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:DesactivarControlDePotenciaParaCambiarOAparcarCabezalMaster a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar control de potencia para cambiar o aparcar cabezal master" ;
+    ns1:solucionaFallo ns1:CambiarOAparcarElCabezalMasterConPWRCTRLActivo ;
+    ns1:textoExtracto "Para cambiar o aparcar el cabezal master, desactivar el control de potencia (#PWRCTRL)." .
+
+ns1:FOLLOWONConEjeEsclavoYaAsignado a ns1:AccionProhibida ;
+    rdfs:label "#FOLLOW ON con eje esclavo ya asignado" ;
+    ns1:textoExtracto "El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS." .
+
+ns1:OverrideMaximo a ns1:Parametro ;
+    rdfs:label "Override máximo" ;
+    ns1:textoExtracto "#PWRCTRL ON: OVRMIN debe ser menor que OVRMAX." .
+
+ns1:OverrideMinimo a ns1:Parametro ;
+    rdfs:label "Override mínimo" ;
+    ns1:textoExtracto "#PWRCTRL ON: OVRMIN debe ser menor que OVRMAX." .
+
+ns1:ProgramarTodosLosParametrosDePWRCTRL a ns1:TareaMantenimiento ;
+    rdfs:label "Programar todos los parámetros de #PWRCTRL" ;
+    ns1:solucionaFallo ns1:OverrideMinimoMayorQueOverrideMaximo ;
+    ns1:textoExtracto "La primera vez que se programa la función #PWRCTRL es obligatorio programar todos los parámetros." .
+
+ns1:TFOLLOWONMASTER a ns1:AccionProhibida ;
+    rdfs:label "#TFOLLOW ON [MASTER]" ;
+    ns1:textoExtracto "No se permite #TFOLLOW ON [MASTER]. Permitido: #FOLLOW ON [MASTER]." .
+
+ns1:CambiarOAparcarElCabezalMasterConPWRCTRLActivo a ns1:AccionProhibida ;
+    rdfs:label "Cambiar o aparcar el cabezal master con PWRCTRL activo" ;
+    ns1:textoExtracto "No se admite cambiar o aparcar el cabezal master con PWRCTRL activo." .
+
+ns1:OverrideMinimoMayorQueOverrideMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "Override mínimo mayor que override máximo" ;
+    ns1:textoExtracto "En la función #PWRCTRL, el override mínimo es mayor que el override máximo." .
+

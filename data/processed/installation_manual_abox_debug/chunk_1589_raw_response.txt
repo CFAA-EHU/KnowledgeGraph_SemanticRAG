@@ -1,0 +1,41 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:SensorGap a ex:Sensor ;
+rdfs:label "Sensor de gap" ;
+ex:identificador "GAP SENSOR" ;
+ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena “CNC – RIOR – CAN – GAP SENSOR”, mostrando alternativa de cableado cuando no se usa el regulador." .
+
+ex:EntradaAnaloga a ex:Entrada ;
+rdfs:label "Entrada analógica" ;
+ex:identificador "AI1+/AI1−" ;
+ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena “CNC – RIOR – CAN – GAP SENSOR”, mostrando alternativa de cableado cuando no se usa el regulador." .
+
+ex:Regulador a ex:Herramienta ;
+rdfs:label "Regulador" ;
+ex:identificador "Regulador" ;
+ex:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena “CNC – RIOR – CAN – GAP SENSOR”, mostrando alternativa de cableado cuando no se usa el regulador." .
+
+ex:LazoControl a ex:Sistema ;
+rdfs:label "Lazo de control del gap" ;
+ex:identificador "GAP SENSOR FEEDBACK" ;
+ex:textoExtracto "Diagrama de bloques del lazo de control del gap: “GAP SENSOR FEEDBACK” → filtro paso bajo (ORDER/FREQUENCY) → “POSITION LOOP” con “GAP P-GAIN”. Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER." .
+
+ex:FiltroPasoBajo a ex:ComponenteElectrico ;
+rdfs:label "Filtro paso bajo" ;
+ex:identificador "ORDER/FREQUENCY" ;
+ex:textoExtracto "Diagrama de bloques del lazo de control del gap: “GAP SENSOR FEEDBACK” → filtro paso bajo (ORDER/FREQUENCY) → “POSITION LOOP” con “GAP P-GAIN”. Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER." .
+
+ex:LoopPosicion a ex:Sistema ;
+rdfs:label "Lazo de posición del gap" ;
+ex:identificador "POSITION LOOP" ;
+ex:textoExtracto "Diagrama de bloques del lazo de control del gap: “GAP SENSOR FEEDBACK” → filtro paso bajo (ORDER/FREQUENCY) → “POSITION LOOP” con “GAP P-GAIN”. Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER." .
+
+ex:GananciaP a ex:Parametro ;
+rdfs:label "GAP P-GAIN" ;
+ex:identificador "GAP P-GAIN" ;
+ex:textoExtracto "Diagrama de bloques del lazo de control del gap: “GAP SENSOR FEEDBACK” → filtro paso bajo (ORDER/FREQUENCY) → “POSITION LOOP” con “GAP P-GAIN”. Representa la cadena de señal y dónde actúan los parámetros GAPGAIN y GAPSENSORFILTER." .
+
+ex:SensorGap controla ex:EntradaAnaloga .
+ex:LazoControl compuestoPor ex:FiltroPasoBajo, ex:LoopPosicion .
+ex:LoopPosicion tieneComponente ex:GananciaP .

@@ -1,0 +1,53 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:ANGAXLosEjesAngularYOrtogonalDebenPertenecerAlMismoCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "#ANGAX: Los ejes angular y ortogonal deben pertenecer al mismo canal" ;
+    ns1:textoExtracto "'#ANGAX: Los ejes angular y ortogonal deben pertenecer al mismo canal' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentando activar una transformación angular con dos ejes que no pertenecen al mismo canal." .
+
+ns1:CancelarLaSincronizacionDeCabezales a ns1:TareaMantenimiento ;
+    rdfs:label "Cancelar la sincronización de cabezales" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteLiberarUnCabezalSincronizado ;
+    ns1:textoExtracto "Para trabajar con el eje C o la función G63, cancelar la sincronización de cabezales." .
+
+ns1:DesactivarElEjeCOLaFuncionG63ParaSincronizarLosCabezales a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar el eje C o la función G63 para sincronizar los cabezales" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteLiberarUnCabezalSincronizado ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar el eje C o la función G63 para sincronizar los cabezales." .
+
+ns1:DetenerElCabezalAntesDeAparcarlo a ns1:TareaMantenimiento ;
+    rdfs:label "Detener el cabezal antes de aparcarlo" ;
+    ns1:solucionaFallo ns1:ParaAparcarUnCabezalDebeDeEstarParadoM5 ;
+    ns1:textoExtracto "SOLUCIÓN Detener el cabezal antes de aparcarlo." .
+
+ns1:ProgramarG02G03EnElBloqueDeG31 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar G02/G03 en el bloque de G31" ;
+    ns1:solucionaFallo ns1:G31RequiereG02G03Activa ;
+    ns1:textoExtracto "SOLUCIÓN Programar G02/G03 en el bloque de G31." .
+
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FOLLOWOFFProgramarEjeEsclavo,
+        ns1:G31RequiereProgramacionDeAnguloPolarYCentroDeInterpolacion ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:FOLLOWOFFProgramarEjeEsclavo a ns1:DiagnosticoFallo ;
+    rdfs:label "FOLLOW OFF: Programar eje esclavo" ;
+    ns1:textoExtracto "'FOLLOW OFF: Programar eje esclavo' DETECCIÓN Durante la ejecución. CAUSA El eje programado no es esclavo en ninguna sincronización." .
+
+ns1:G31RequiereG02G03Activa a ns1:DiagnosticoFallo ;
+    rdfs:label "G31 requiere G02/G03 activa" ;
+    ns1:textoExtracto "'G31 requiere G02/G03 activa' DETECCIÓN Durante la ejecución. CAUSA La función G31 sólo se puede programar si existe una interpolación circular activa." .
+
+ns1:G31RequiereProgramacionDeAnguloPolarYCentroDeInterpolacion a ns1:DiagnosticoFallo ;
+    rdfs:label "G31 requiere programación de ángulo polar y centro de interpolación" ;
+    ns1:textoExtracto "'G31 requiere programación de ángulo polar y centro de interpolación' DETECCIÓN Durante la ejecución. CAUSA En la función G31 falta programar el ángulo polar o alguna coordenadas del centro." .
+
+ns1:ParaAparcarUnCabezalDebeDeEstarParadoM5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Para aparcar un cabezal debe de estar parado (M5)" ;
+    ns1:textoExtracto "'Para aparcar un cabezal debe de estar parado (M5)' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado aparcar un cabezal que no está parado." .
+
+ns1:NoSeAdmiteLiberarUnCabezalSincronizado a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite liberar un cabezal sincronizado" ;
+    ns1:textoExtracto "'No se admite liberar un cabezal sincronizado' DETECCIÓN Durante la ejecución. CAUSA Las sentencias #SET SP y #FREE SP no pueden eliminar un cabezal si éste está sincronizado." .
+

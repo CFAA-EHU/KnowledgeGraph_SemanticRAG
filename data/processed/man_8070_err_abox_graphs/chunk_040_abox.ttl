@@ -1,0 +1,73 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AsignarMismoTipoDeRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar mismo tipo de regulador" ;
+    ns1:solucionaFallo ns1:FalloEjesGantry ;
+    ns1:textoExtracto "SOLUCIÓN Los ejes de una pareja gantry tienen que tener el mismo tipo de regulador (parámetro DRIVETYPE)." .
+
+ns1:AsignarMismosLimitesDelModulo a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar mismos límites del módulo" ;
+    ns1:solucionaFallo ns1:FalloCompensacionHusillo ;
+    ns1:textoExtracto "SOLUCIÓN Asignar los mismos límites del módulo (parámetros MODUPLIM y MODLOWLIM) en todos los sets de parámetros." .
+
+ns1:AumentarBandaDeMuerte a ns1:TareaMantenimiento ;
+    rdfs:label "Aumentar banda de muerte" ;
+    ns1:solucionaFallo ns1:FalloBandaMuerte ;
+    ns1:textoExtracto "SOLUCIÓN Aumentar la banda de muerte del eje (parámetro INPOSW)." .
+
+ns1:AvisoSeguridad_01df3f81c1 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de arranque del CNC" ;
+    ns1:mitigaRiesgo ns1:FalloArranqueCNC ;
+    ns1:textoExtracto "'no puede estar aparcado' DETECCIÓN Durante el arranque del CNC o la validación de los parámetros máquina." .
+
+ns1:AvisoSeguridad_3d60482fb1 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de ejes gantry" ;
+    ns1:mitigaRiesgo ns1:FalloEjesGantry ;
+    ns1:textoExtracto "'Los ejes maestro y esclavo deben ser del mismo tipo (DRIVETYPE)' DETECCIÓN Durante la validación de los parámetros máquina." .
+
+ns1:AvisoSeguridad_5966d13f8a a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de validación de parámetros" ;
+    ns1:mitigaRiesgo ns1:FalloValidacionParametros ;
+    ns1:textoExtracto "'Para validar el eje, hay que validar la tabla de PARAMETROS GENERALES' DETECCIÓN Durante la validación de los parámetros máquina." .
+
+ns1:AvisoSeguridad_79ed2bd27f a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de banda de muerte" ;
+    ns1:mitigaRiesgo ns1:FalloBandaMuerte ;
+    ns1:textoExtracto "'La banda de muerte no puede ser menor que la resolución del eje' DETECCIÓN Durante la validación de los parámetros máquina." .
+
+ns1:AvisoSeguridad_d638771fca a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de compensación de husillo o cruzada" ;
+    ns1:mitigaRiesgo ns1:FalloCompensacionHusillo ;
+    ns1:textoExtracto "'Compensación de husillo o cruzada imposible para todas las gamas del eje' DETECCIÓN Durante la validación de los parámetros máquina." .
+
+ns1:DesaparcarEjeOAnularEjeGantry a ns1:TareaMantenimiento ;
+    rdfs:label "Desaparcar eje o anular eje gantry" ;
+    ns1:solucionaFallo ns1:FalloArranqueCNC ;
+    ns1:textoExtracto "SOLUCIÓN Desaparcar el eje o anular el eje gantry." .
+
+ns1:ValidacionDeParametrosGenerales a ns1:TareaMantenimiento ;
+    rdfs:label "Validación de parámetros generales" ;
+    ns1:solucionaFallo ns1:FalloValidacionParametros ;
+    ns1:textoExtracto "SOLUCIÓN Validar la tabla de parámetros generales antes de validar la tabla de parámetros del eje." .
+
+ns1:FalloArranqueCNC a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo durante el arranque del CNC" ;
+    ns1:textoExtracto "CAUSA El CNC ha detectado que el eje esclavo de una pareja PARKED del eje esclavo está activa." .
+
+ns1:FalloBandaMuerte a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en la banda de muerte" ;
+    ns1:textoExtracto "CAUSA La banda de muerte es menor que la resolución del eje." .
+
+ns1:FalloCompensacionHusillo a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en compensación de husillo" ;
+    ns1:textoExtracto "CAUSA En una compensación, el eje que se mueve (parámetro MOVAXIS) es rotativo y no tiene los mismos límites de módulo en todos los sets de parámetros." .
+
+ns1:FalloEjesGantry a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en ejes gantry" ;
+    ns1:textoExtracto "CAUSA Ambos ejes de una pareja gantry no tienen el mismo tipo de regulador; analógico, Sercos o Mechatrolink." .
+
+ns1:FalloValidacionParametros a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo durante la validación de parámetros" ;
+    ns1:textoExtracto "CAUSA El usuario ha añadido algún eje al sistema (parámetro NAXIS), y sin validar la tabla de parámetros generales, ha intentado validar la tabla de parámetros de uno de los nuevos ejes." .
+

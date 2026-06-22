@@ -1,0 +1,79 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:TornoHorizontal
+  a ex:Maquina ;
+  rdfs:label "Torno horizontal" ;
+  ex:ilustradoEn ex:DiagramaTornoHorizontal .
+
+ex:DiagramaTornoHorizontal
+  a ex:Esquema ;
+  rdfs:label "Diagrama Torno horizontal" ;
+  ex:detalladoEnEsquema ex:TornoHorizontal .
+
+ex:TornoVertical
+  a ex:Maquina ;
+  rdfs:label "Torno vertical" ;
+  ex:ilustradoEn ex:DiagramaTornoVertical .
+
+ex:DiagramaTornoVertical
+  a ex:Esquema ;
+  rdfs:label "Diagrama Torno vertical" ;
+  ex:detalladoEnEsquema ex:TornoVertical .
+
+ex:Torreta
+  a ex:Maquina ;
+  rdfs:label "Torreta" ;
+  ex:ilustradoEn ex:EscenaTorreta .
+
+ex:EscenaTorreta
+  a ex:Esquema ;
+  rdfs:label "Escena Torreta" ;
+  ex:detalladoEnEsquema ex:Torreta .
+
+ex:NumeracionNumerosRemotos
+  a ex:Esquema ;
+  rdfs:label "Numeración según el orden de los grupos remotos" ;
+  ex:detalladoEnEsquema ex:NumeracionNumerosRemotos .
+
+ex:Husillo
+  a ex:ComponenteMecanico ;
+  rdfs:label "Husillo" ;
+  ex:tieneComponente ex:Torreta .
+
+ex:TorretaIndexable
+  a ex:Torreta ;
+  rdfs:label "Torreta indexable" ;
+  ex:tieneComponente ex:Husillo .
+
+ex:Herramienta
+  a ex:Consumible ;
+  rdfs:label "Herramienta" ;
+  ex:tieneComponente ex:TorretaIndexable .
+
+ex:PosicionTrabajo
+  a ex:ComponenteMecanico ;
+  rdfs:label "Posición de trabajo" ;
+  ex:tieneComponente ex:Herramienta .
+
+ex:Par_metrosM_quinaAlmac_n
+  a ex:Maquina ;
+  rdfs:label "Parámetros máquina del almacén" ;
+  ex:tieneComponente ex:Husillo .
+
+ex:Par_metrosM_quinaHMI
+  a ex:Maquina ;
+  rdfs:label "Parámetros máquina del HMI" ;
+  ex:tieneComponente ex:TorretaIndexable .
+
+ex:Configuraci_nGr_ficos
+  a ex:ComponenteElectrico ;
+  rdfs:label "Configuración de los gráficos" ;
+  ex:tieneComponente ex:Par_metrosM_quinaHMI .
+
+ex:Introducci_nPLC
+  a ex:Maquina ;
+  rdfs:label "Introducción al PLC" ;
+  ex:tieneComponente ex:NumeracionNumerosRemotos .

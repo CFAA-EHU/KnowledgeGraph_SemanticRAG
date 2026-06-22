@@ -1,0 +1,32 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CNC8070_923dabf7de a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" ;
+    ns1:tieneComponente ns1:ModuloEjecucionPeriodica,
+        ns1:ModuloPrimerCiclo,
+        ns1:ModuloPrincipal .
+
+ns1:FrecuenciaDeEjecucionDelModuloPrincipal a ns1:Parametro ;
+    rdfs:label "Frecuencia de ejecución del módulo principal" ;
+    ns1:identificador "PRGFREQ" ;
+    ns1:textoExtracto "El parámetro PRGFREQ indica con qué frecuencia (cada cuántos ciclos de CNC) el PLC ejecuta un ciclo completo del módulo principal." .
+
+ns1:TiempoDeLazo a ns1:Parametro ;
+    rdfs:label "Tiempo de lazo" ;
+    ns1:identificador "LOOPTIME" ;
+    ns1:textoExtracto "Este módulo se puede utilizar para tareas que no necesitan ser evaluadas en cada ciclo del PLC, con un periodo de muestreo de 4 ms (LOOPTIME=4)." .
+
+ns1:ModuloEjecucionPeriodica a ns1:Componente ;
+    rdfs:label "Módulo de ejecución periódica" ;
+    ns1:textoExtracto "El módulo periódico comienza con la proposición directiva PE y termina con la proposición directiva END. El PLC ejecuta el módulo periódico de forma periódica, con la frecuencia fijada en la directiva PE." .
+
+ns1:ModuloPrimerCiclo a ns1:Componente ;
+    rdfs:label "Módulo del primer ciclo" ;
+    ns1:textoExtracto "El módulo comienza con la proposición directiva CY1 y termina con la proposición directiva END. El PLC ejecuta el módulo de primer ciclo una única vez, cuando arranca el programa de PLC." .
+
+ns1:ModuloPrincipal a ns1:Componente ;
+    rdfs:label "Módulo principal" ;
+    ns1:textoExtracto "El módulo principal comienza con la proposición directiva PRG y termina con la proposición directiva END. El PLC ejecuta el módulo principal de forma cíclica, con la frecuencia fijada por el parámetro PRGFREQ." .
+

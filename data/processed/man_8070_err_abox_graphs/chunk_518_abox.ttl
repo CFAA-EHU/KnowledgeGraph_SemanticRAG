@@ -1,0 +1,35 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:DefinicionDeCabezalMasterOAsignacionAlRegistroSYNC a ns1:TareaMantenimiento ;
+    rdfs:label "Definición de cabezal master o asignación al registro SYNC" ;
+    ns1:solucionaFallo ns1:NoSeHaDefinidoCabezalParaG33G34G95 ;
+    ns1:textoExtracto "SOLUCIÓN Definir un cabezal master en el canal o asignar un cabezal al registro SYNC del PLC." .
+
+ns1:PosicionamientoCorrectoDelEjeHirth a ns1:TareaMantenimiento ;
+    rdfs:label "Posicionamiento correcto del eje hirth" ;
+    ns1:solucionaFallo ns1:EjeHirthNoPosicionadoEnMultiploDePaso ;
+    ns1:textoExtracto "SOLUCIÓN Posicionar correctamente el eje hirth en una posición válida o desactivarlo como eje hirth." .
+
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:parametroMonitoradoPor ns1:ValidacionDelRegistroSYNC ;
+    ns1:textoExtracto "Este cabezal es por defecto el cabezal master del canal, pero si el registro SYNC del PLC indica otro cabezal, el canal utilizará este último." .
+
+ns1:EjeHirthNoPosicionadoEnMultiploDePaso a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje hirth no posicionado en múltiplo de paso" ;
+    ns1:textoExtracto "El eje hirth no se encuentra posicionado en un número múltiplo de su paso." .
+
+ns1:ElCabezalIndicadoEnElRegistroSYNCNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "El cabezal indicado en el registro SYNC no existe" ;
+    ns1:textoExtracto "'El cabezal indicado en el registro SYNC no existe'" .
+
+ns1:NoSeHaDefinidoCabezalParaG33G34G95 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se ha definido cabezal para G33/G34/G95" ;
+    ns1:textoExtracto "'No se ha definido cabezal para G33/G34/G95'" .
+
+ns1:ValidacionDelRegistroSYNC a ns1:TareaMantenimiento ;
+    rdfs:label "Validación del registro SYNC" ;
+    ns1:solucionaFallo ns1:ElCabezalIndicadoEnElRegistroSYNCNoExiste ;
+    ns1:textoExtracto "CAUSA Hay una función G33, G34 o G95 activa y el valor del registro SYNC del PLC no es válido." .
+

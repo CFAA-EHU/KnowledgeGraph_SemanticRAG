@@ -1,0 +1,40 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:ComprobarValoresDeGananciaYFaseConSoftware a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar valores de ganancia y fase con software" ;
+    ns1:solucionaFallo ns1:FalloInductosynChecksumIncorrecto ;
+    ns1:textoExtracto "• Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste." .
+
+ns1:FalloInductosynErrorDesconocido a ns1:DiagnosticoFallo ;
+    rdfs:label "Módulo ABSIND ha generado un error desconocido" ;
+    ns1:textoExtracto "CAUSA El módulo ABSIND ha generado un error desconocido. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND." .
+
+ns1:ModuloABSIND a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo ABSIND" ;
+    ns1:controladoPor ns1:SistemaCNC ;
+    ns1:textoExtracto "El checksum leído durante la inicialización del módulo ABSIND es incorrecto." .
+
+ns1:SustituirModuloABSIND a ns1:TareaMantenimiento ;
+    rdfs:label "Sustituir módulo ABSIND" ;
+    ns1:solucionaFallo ns1:FalloInductosynChecksumIncorrecto ;
+    ns1:textoExtracto "• Si el error persiste y no se puede eliminar con las acciones anteriores, pruebe a sustituir el módulo ABSIND asociado a esa captación." .
+
+ns1:ChecksumEEPROMIncorrecto_597d69a0f9 a ns1:AccionProhibida ;
+    rdfs:label "Checksum EEPROM incorrecto" ;
+    ns1:textoExtracto "9529 INDUCTOSYN:Checksum EEPROM incorrecto. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." .
+
+ns1:ErrorDesconocido a ns1:AccionProhibida ;
+    rdfs:label "Error desconocido" ;
+    ns1:textoExtracto "9530 INDUCTOSYN:Error desconocido. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." .
+
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:activaAlarma ns1:ChecksumEEPROMIncorrecto_597d69a0f9,
+        ns1:ErrorDesconocido ;
+    ns1:textoExtracto "Durante el arranque o funcionamiento habitual del sistema." .
+
+ns1:FalloInductosynChecksumIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "Checksum leído durante la inicialización del módulo ABSIND es incorrecto" ;
+    ns1:textoExtracto "CAUSA El checksum leído durante la inicialización del módulo ABSIND es incorrecto." .
+

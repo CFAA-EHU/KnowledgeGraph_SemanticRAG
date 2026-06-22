@@ -1,0 +1,25 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CoordenadasDelCentroIgnoradasConG0G1G100G63Activas a ns1:DiagnosticoFallo ;
+    rdfs:label "Coordenadas del centro ignoradas con G0/G1/G100/G63 activas" ;
+    ns1:textoExtracto "'Coordenadas del centro ignoradas con G0/G1/G100/G63 activas' DETECCIÓN Durante la ejecución. CAUSA El CNC ha encontrado los parámetros I, J, K con la función G0, G1, G100 o G63 activa. El CNC ignora estos parámetros." .
+
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteCompensacionDeRadioActivaEnMedicion ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:UtilizarFuncionG102ParaAnularElOffsetDeMedicion a ns1:TareaMantenimiento ;
+    rdfs:label "Utilizar función G102 para anular el offset de medición" ;
+    ns1:solucionaFallo ns1:ExisteUnValorDeMedicionPrevioParaElEjeS ;
+    ns1:textoExtracto "SOLUCIÓN Utilizar la función G102 para anular el offset de medición incluido en el eje." .
+
+ns1:ExisteUnValorDeMedicionPrevioParaElEjeS a ns1:DiagnosticoFallo ;
+    rdfs:label "Existe un valor de medición previo para el eje(s)" ;
+    ns1:textoExtracto "'Existe un valor de medición previo para el eje(s)' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta realizar una medición (G100) en un eje que tiene un offset de medición anterior." .
+
+ns1:NoSeAdmiteCompensacionDeRadioActivaEnMedicion a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite compensación de radio activa en medición" ;
+    ns1:textoExtracto "'No se admite compensación de radio activa en medición' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar la función G100 con la compensación de radio activa (G41/G42)." .
+

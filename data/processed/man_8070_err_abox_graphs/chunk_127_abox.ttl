@@ -1,0 +1,77 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AvisoSeguridad_30c547639e a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de demasiadas subrutinas locales" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'Demasiadas subrutinas locales definidas en el programa'" .
+
+ns1:AvisoSeguridad_a0dd4d0811 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de subrutina global no encontrada" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'Subrutina global no encontrada'" .
+
+ns1:AvisoSeguridad_dddd0725c9 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de programa principal no encontrado" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'Programa principal no encontrado'" .
+
+ns1:AvisoSeguridad_f55ed3890b a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de no acceso al fichero" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'No se puede acceder al fichero.'" .
+
+ns1:AvisoSeguridad_f9e308fe30 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de nombre de fichero largo" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'Nombre de fichero demasiado largo'" .
+
+ns1:ComprobacionDeArchivo a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobación de archivo" ;
+    ns1:solucionaFallo ns1:NoEsPosibleAbrirElFicheroProgramadoEnLaInstruccion ;
+    ns1:textoExtracto "Comprobar que el archivo existe, es válido y no está corrupto. En el caso de las llamadas a subrutinas comprobar que el nombre y el path son correctos." .
+
+ns1:ComprobacionDeSubrutinaGlobal a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobación de subrutina global" ;
+    ns1:solucionaFallo ns1:ElCNCNoEncuentraLaSubrutinaGlobal ;
+    ns1:textoExtracto "Comprobar que el nombre y el path son correctos." .
+
+ns1:DefinicionDelProgramaPrincipal a ns1:TareaMantenimiento ;
+    rdfs:label "Definición del programa principal" ;
+    ns1:solucionaFallo ns1:ElCNCNoEncuentraElProgramaPrincipal ;
+    ns1:textoExtracto "En un programa con subrutinas locales, el programa principal debe tener un nombre (%nombre)." .
+
+ns1:ReduccionDeSubrutinasLocales a ns1:TareaMantenimiento ;
+    rdfs:label "Reducción de subrutinas locales" ;
+    ns1:solucionaFallo ns1:ProgramaTieneMasSubrutinasLocalesQueLasPermitidasPorElCNC ;
+    ns1:textoExtracto "Reducir el número de subrutinas locales; agrupar varias subrutinas en una o utilizar subrutinas globales." .
+
+ns1:ReduccionDelNombreDeFichero a ns1:TareaMantenimiento ;
+    rdfs:label "Reducción del nombre de fichero" ;
+    ns1:solucionaFallo ns1:NombreDelArchivoSuperaElNumeroDeCaracteresPermitido ;
+    ns1:textoExtracto "Reducir el número de caracteres en el nombre de programa o subrutina. Cambiar la ubicación del programa o subrutina para reducir el número de caracteres en el path." .
+
+ns1:ElCNCNoEncuentraElProgramaPrincipal a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC no encuentra el programa principal" ;
+    ns1:textoExtracto "El CNC no encuentra el programa principal." .
+
+ns1:ElCNCNoEncuentraLaSubrutinaGlobal a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC no encuentra la subrutina global" ;
+    ns1:textoExtracto "El CNC no encuentra la subrutina global." .
+
+ns1:NoEsPosibleAbrirElFicheroProgramadoEnLaInstruccion a ns1:DiagnosticoFallo ;
+    rdfs:label "No es posible abrir el fichero programado en la instrucción" ;
+    ns1:textoExtracto "La programación del fichero puede ser directa o estar asociado a un elemento del bloque (función G con subrutina asociada)." .
+
+ns1:NombreDelArchivoSuperaElNumeroDeCaracteresPermitido a ns1:DiagnosticoFallo ;
+    rdfs:label "Nombre del archivo supera el número de caracteres permitido" ;
+    ns1:textoExtracto "El nombre del archivo supera el número de caracteres permitido por el CNC." .
+
+ns1:ProgramaTieneMasSubrutinasLocalesQueLasPermitidasPorElCNC a ns1:DiagnosticoFallo ;
+    rdfs:label "Programa tiene más subrutinas locales que las permitidas por el CNC" ;
+    ns1:textoExtracto "El programa tiene más subrutinas locales que las permitidas por el CNC." .
+
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
+

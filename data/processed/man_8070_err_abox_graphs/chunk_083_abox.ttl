@@ -1,0 +1,36 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:G4SeHaProgramadoDosVecesElTiempoDeEspera a ns1:AvisoSeguridad ;
+    rdfs:label "G4: se ha programado dos veces el tiempo de espera" ;
+    ns1:mitigaRiesgo ns1:ProgramacionDuplicadaDelTiempoDeEsperaEnG4 ;
+    ns1:textoExtracto "'G4: se ha programado dos veces el tiempo de espera, directamente y mediante K'" .
+
+ns1:ProgramarUnaUnicaVezElTiempoDeEspera a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una única vez el tiempo de espera" ;
+    ns1:solucionaFallo ns1:ProgramacionDuplicadaDelTiempoDeEsperaEnG4 ;
+    ns1:textoExtracto "SOLUCIÓN Programar una única vez el tiempo de espera de la función" .
+
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:CoordenadasFueraDeRango ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:CoordenadasFueraDeRango a ns1:AvisoSeguridad ;
+    rdfs:label "Coordenadas fuera de rango" ;
+    ns1:mitigaRiesgo ns1:CotaProgramadaDemasiadoGrande,
+        ns1:OffsetDemasiadoGrandeEnG101 ;
+    ns1:textoExtracto "'Coordenadas fuera de rango' DETECCIÓN Durante la ejecución." .
+
+ns1:CotaProgramadaDemasiadoGrande a ns1:AccionProhibida ;
+    rdfs:label "Cota programada demasiado grande" ;
+    ns1:textoExtracto "La cota programada para el eje es demasiado grande." .
+
+ns1:OffsetDemasiadoGrandeEnG101 a ns1:AccionProhibida ;
+    rdfs:label "Offset demasiado grande en G101" ;
+    ns1:textoExtracto "La función G101 intenta incluir en el eje un offset demasiado grande." .
+
+ns1:ProgramacionDuplicadaDelTiempoDeEsperaEnG4 a ns1:AccionProhibida ;
+    rdfs:label "Programación duplicada del tiempo de espera en G4" ;
+    ns1:textoExtracto "En el mismo bloque, la función G4 tiene programado dos veces el tiempo de espera, directamente con un número y con el parámetro K." .
+

@@ -1,0 +1,42 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:EnModoDescargaT0NoAdmitida_1c59604197 a ns1:DiagnosticoFallo ;
+    rdfs:label "En modo descarga:T0 no admitida" ;
+    ns1:textoExtracto "'En modo descarga:T0 no admitida' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. No se permite programar T0." .
+
+ns1:M6SinT_ebaf235f39 a ns1:DiagnosticoFallo ;
+    rdfs:label "M6 sin T" ;
+    ns1:textoExtracto "'M6 sin T' DETECCIÓN Durante la ejecución. CAUSA Hay programada una M06 sin su correspondiente herramienta." .
+
+ns1:NoProgramarDosHerramientasConsecutivasSinM06 a ns1:AccionProhibida ;
+    rdfs:label "No programar dos herramientas consecutivas sin M06" ;
+    ns1:textoExtracto "'En modo descarga:M6 obligatoria' CAUSA Almacén en modo descarga. Hay programadas dos herramientas consecutivas sin M06." .
+
+ns1:NoProgramarM06SinSuCorrespondienteHerramienta a ns1:AccionProhibida ;
+    rdfs:label "No programar M06 sin su correspondiente herramienta" ;
+    ns1:textoExtracto "'M6 sin T' CAUSA Hay programada una M06 sin su correspondiente herramienta." .
+
+ns1:NoProgramarT0EnModoDescarga a ns1:AccionProhibida ;
+    rdfs:label "No programar T0 en modo descarga" ;
+    ns1:textoExtracto "'En modo descarga:T0 no admitida' CAUSA Almacén en modo descarga. No se permite programar T0." .
+
+ns1:ProgramarLaHerramientaADescargarEnElAlmacen a ns1:TareaMantenimiento ;
+    rdfs:label "Programar la herramienta a descargar en el almacén" ;
+    ns1:solucionaFallo ns1:EnModoDescargaEstaHerramientaYaEstaDescargada_ebcf6994cf ;
+    ns1:textoExtracto "SOLUCIÓN Programar la herramienta a descargar en el almacén." .
+
+ns1:ProgramarM06DetrasDeCadaHerramienta_3505283ed3 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar M06 detrás de cada herramienta" ;
+    ns1:solucionaFallo ns1:EnModoDescargaEstaHerramientaYaEstaDescargada_ebcf6994cf,
+        ns1:EnModoDescargaM6Obligatoria_c63ba8df24 ;
+    ns1:textoExtracto "SOLUCIÓN Programar M06 detrás de cada herramienta." .
+
+ns1:EnModoDescargaM6Obligatoria_c63ba8df24 a ns1:DiagnosticoFallo ;
+    rdfs:label "En modo descarga:M6 obligatoria" ;
+    ns1:textoExtracto "'En modo descarga:M6 obligatoria' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. Hay programadas dos herramientas consecutivas sin M06." .
+
+ns1:EnModoDescargaEstaHerramientaYaEstaDescargada_ebcf6994cf a ns1:DiagnosticoFallo ;
+    rdfs:label "En modo descarga:Esta herramienta ya está descargada" ;
+    ns1:textoExtracto "'En modo descarga:Esta herramienta ya está descargada' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. La herramienta no está en el almacén." .
+

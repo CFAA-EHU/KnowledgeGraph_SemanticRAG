@@ -1,0 +1,57 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AbortarSentenciasPendientesDesdeElPLCOEsperarEspacioParaAlmacenamiento a ns1:AvisoSeguridad ;
+    rdfs:label "Abortar sentencias pendientes desde el PLC o esperar espacio para almacenamiento" ;
+    ns1:mitigaRiesgo ns1:NoEjecutarFOLLOWOFFConOtraOperacionPendiente ;
+    ns1:textoExtracto "'No se admite #FOLLOW OFF con otra operación pendiente' SOLUCIÓN Desde el PLC abortar las sentencias pendientes (marca ABORT) o bien esperar a que haya espacio para almacenarla (marca FREE)." .
+
+ns1:AbortarSentenciasPendientesDesdeElPLCOEsperarFinalizacionDeSincronizacion a ns1:AvisoSeguridad ;
+    rdfs:label "Abortar sentencias pendientes desde el PLC o esperar finalización de sincronización" ;
+    ns1:mitigaRiesgo ns1:NoProgramarOperacionesDeEjeIndependienteConLevasActivasNiProgramarDos_dffa5f02a3 ;
+    ns1:textoExtracto "'No se admiten mas operaciones con ejes independientes. En sincronización' SOLUCIÓN No programar operaciones de eje independiente con levas activas ni programar dos sincronizaciones seguidas. Desde el PLC abortar las sentencias pendientes (marca ABORT) o bien esperar a que finalice la sincronización." .
+
+ns1:ComprobarQueLosLimitesDeSoftwareSonCorrectosYNoHanSidoModificados a ns1:AvisoSeguridad ;
+    rdfs:label "Comprobar que los límites de software son correctos y no han sido modificados" ;
+    ns1:mitigaRiesgo ns1:NoProgramarCotaInferiorAlLimiteNegativoParaEjeIndependiente ;
+    ns1:textoExtracto "'Cota programada para eje independiente inferior al límite negativo' DETECCIÓN Durante la ejecución." .
+
+ns1:ComprobarQueLosLimitesDeSoftwareSonCorrectosYNoHanSidoModificados_9fe5895752 a ns1:AvisoSeguridad ;
+    rdfs:label "Comprobar que los límites de software son correctos y no han sido modificados" ;
+    ns1:mitigaRiesgo ns1:NoProgramarCotaSuperiorAlLimitePositivoParaEjeIndependiente ;
+    ns1:textoExtracto "'Cota programada para eje independiente superior al límite positivo' SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC." .
+
+ns1:EliminarLimitesDeSoftwareOInterrumpirMovimientoAntesDelLimite a ns1:AvisoSeguridad ;
+    rdfs:label "Eliminar límites de software o interrumpir movimiento antes del límite" ;
+    ns1:mitigaRiesgo ns1:NoEjecutarMOVEINFParaUnEjeConLimites ;
+    ns1:textoExtracto "'No se admite #MOVE INF para un eje con límites' SOLUCIÓN Eliminar los límites de software o interrumpir el movimiento antes de que el eje alcance el límite." .
+
+ns1:ProgramarSincronizacionConVelocidadMenorORatioDeSincronizacionMenor a ns1:AvisoSeguridad ;
+    rdfs:label "Programar sincronización con velocidad menor o ratio de sincronización menor" ;
+    ns1:mitigaRiesgo ns1:NoProgramarSincronizacionConVelocidadSuperiorALaMaxima ;
+    ns1:textoExtracto "'La velocidad necesaria para sincronizar es superior a la máxima' SOLUCIÓN Programar la sincronización con el eje maestro moviéndose a un avance menor o programar un ratio de sincronización menor." .
+
+ns1:NoEjecutarFOLLOWOFFConOtraOperacionPendiente a ns1:AccionProhibida ;
+    rdfs:label "No ejecutar #FOLLOW OFF con otra operación pendiente" ;
+    ns1:textoExtracto "'No se admite #FOLLOW OFF con otra operación pendiente' SOLUCIÓN Desde el PLC abortar las sentencias pendientes (marca ABORT) o bien esperar a que haya espacio para almacenarla (marca FREE)." .
+
+ns1:NoEjecutarMOVEINFParaUnEjeConLimites a ns1:AccionProhibida ;
+    rdfs:label "No ejecutar #MOVE INF para un eje con límites" ;
+    ns1:textoExtracto "'No se admite #MOVE INF para un eje con límites' SOLUCIÓN Eliminar los límites de software o interrumpir el movimiento antes de que el eje alcance el límite." .
+
+ns1:NoProgramarCotaInferiorAlLimiteNegativoParaEjeIndependiente a ns1:AccionProhibida ;
+    rdfs:label "No programar cota inferior al límite negativo para eje independiente" ;
+    ns1:textoExtracto "'Cota programada para eje independiente inferior al límite negativo' DETECCIÓN Durante la ejecución." .
+
+ns1:NoProgramarCotaSuperiorAlLimitePositivoParaEjeIndependiente a ns1:AccionProhibida ;
+    rdfs:label "No programar cota superior al límite positivo para eje independiente" ;
+    ns1:textoExtracto "'Cota programada para eje independiente superior al límite positivo' SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC." .
+
+ns1:NoProgramarOperacionesDeEjeIndependienteConLevasActivasNiProgramarDos_dffa5f02a3 a ns1:AccionProhibida ;
+    rdfs:label "No programar operaciones de eje independiente con levas activas ni programar dos sincronizaciones seguidas" ;
+    ns1:textoExtracto "'No se admiten mas operaciones con ejes independientes. En sincronización' SOLUCIÓN No programar operaciones de eje independiente con levas activas ni programar dos sincronizaciones seguidas." .
+
+ns1:NoProgramarSincronizacionConVelocidadSuperiorALaMaxima a ns1:AccionProhibida ;
+    rdfs:label "No programar sincronización con velocidad superior a la máxima" ;
+    ns1:textoExtracto "'La velocidad necesaria para sincronizar es superior a la máxima' SOLUCIÓN Programar la sincronización con el eje maestro moviéndose a un avance menor o programar un ratio de sincronización menor." .
+

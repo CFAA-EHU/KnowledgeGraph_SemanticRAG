@@ -1,0 +1,34 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CNC8070_cc793eeae3 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:MarcaAUXEND,
+        ns1:MarcaMSTROBE,
+        ns1:MarcaSSTROBE ;
+    ns1:monitoreaParametro ns1:TiempoMinimoParaMantenerLaMarcaAUXEND,
+        ns1:VariablePLCTIMER ;
+    ns1:textoExtracto "STROBE AUXEND MINAENDW 1 El canal del CNC indica al PLC en los registros MFUN y SFUN del canal las funciones que debe ejecutar..." .
+
+ns1:MarcaAUXEND a ns1:ElementoSeguridad ;
+    rdfs:label "Marca AUXEND" ;
+    ns1:textoExtracto "El PLC, al detectar la activación de una de estas marcas, debe desactivar la marca AUXEND para indicar al CNC que comienza la ejecución." .
+
+ns1:MarcaMSTROBE a ns1:ElementoSeguridad ;
+    rdfs:label "Marca MSTROBE" ;
+    ns1:textoExtracto "El canal del CNC indica al PLC en los registros MFUN y SFUN del canal las funciones que debe ejecutar y activa la marca MSTROBE o SSTROBE para que comience la ejecución." .
+
+ns1:MarcaSSTROBE a ns1:ElementoSeguridad ;
+    rdfs:label "Marca SSTROBE" ;
+    ns1:textoExtracto "El canal del CNC indica al PLC en los registros MFUN y SFUN del canal las funciones que debe ejecutar y activa la marca MSTROBE o SSTROBE para que comience la ejecución." .
+
+ns1:TiempoMinimoParaMantenerLaMarcaAUXEND a ns1:Parametro ;
+    rdfs:label "Tiempo mínimo para mantener la marca AUXEND" ;
+    ns1:identificador "MINAENDW" ;
+    ns1:textoExtracto "La marca AUXEND debe mantenerse a (=1) un tiempo superior al definido en el parámetro máquina MINAENDW." .
+
+ns1:VariablePLCTIMER a ns1:Parametro ;
+    rdfs:label "Contador de tiempo del PLC" ;
+    ns1:identificador "PLC.TIMER" ;
+    ns1:textoExtracto "Para inicializar y/o conocer su cuenta se debe utilizar la variable (V.)PLC.TIMER." .
+

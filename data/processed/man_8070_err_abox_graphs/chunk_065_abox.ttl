@@ -1,0 +1,25 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:HandleDeFicheroEnUso a ns1:AvisoSeguridad ;
+    rdfs:label "handle de fichero en uso" ;
+    ns1:textoExtracto "0150 #OPEN: handle de fichero en uso. DETECCIÓN Durante la ejecución. CAUSA El handle de fichero indicado en la sentencia #OPEN está siendo usado por el #OPEN de otro fichero. SOLUCIÓN Utilizar un handle de fichero diferente." .
+
+ns1:NumeroMaximoDeFicherosAbiertosSobrepasado a ns1:AvisoSeguridad ;
+    rdfs:label "Número máximo de ficheros abiertos sobrepasado" ;
+    ns1:mitigaRiesgo ns1:ReducirElNumeroDeSubrutinasExternas ;
+    ns1:textoExtracto "0150 'Número máximo de ficheros abiertos sobrepasado' DETECCIÓN Durante la ejecución de un programa pieza con subrutinas globales. CAUSA El número de ficheros abiertos (programa principal más subrutinas externas) es superior a 20. SOLUCIÓN Reducir el número de subrutinas externas abiertas simultáneamente en el programa pieza." .
+
+ns1:TextoOFicheroCncWriteTxtNoEncontrado a ns1:AvisoSeguridad ;
+    rdfs:label "texto o fichero cncWrite.txt no encontrado" ;
+    ns1:textoExtracto "0151 #WRITE: texto o fichero cncWrite.txt no encontrado. DETECCIÓN Durante la ejecución. CAUSA No se encuentra el texto correspondiente al identificador programado. Es posible que no exista el archivo cncWrite.txt o que no esté definido el identificador. SOLUCIÓN Comprobar que existe el archivo cncWrite.txt y que contiene el identificador." .
+
+ns1:NumeroMaximoDeFicherosAbiertosSobrepasado_55091cfab9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Número máximo de ficheros abiertos sobrepasado" ;
+    ns1:textoExtracto "El número de ficheros abiertos (programa principal más subrutinas externas) es superior a 20." .
+
+ns1:ReducirElNumeroDeSubrutinasExternas a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir el número de subrutinas externas" ;
+    ns1:solucionaFallo ns1:NumeroMaximoDeFicherosAbiertosSobrepasado_55091cfab9 ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el número de subrutinas externas abiertas simultáneamente en el programa pieza." .
+

@@ -1,0 +1,59 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AjustarParametroROUNDPAR a ns1:TareaMantenimiento ;
+    rdfs:label "Ajustar parámetro ROUNDPAR" ;
+    ns1:solucionaFallo ns1:DiagnosticoFalloROUNDPAR ;
+    ns1:textoExtracto "Programar la sentencia con un error de contorno superior a 20 micras." .
+
+ns1:ComprobarYAjustarTrayectorias a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar y ajustar trayectorias" ;
+    ns1:solucionaFallo ns1:HSCDETECCIONDuranteLaEjecucion,
+        ns1:LimiteSoftwareNegativoSobrepasadoEnG5G60OHSC ;
+    ns1:textoExtracto "Comprobar que la trayectoria programada está dentro de los límites de software y ejecutarla en G7 ó G50 para evitar el sobrepasamiento. En caso necesario, desactivar el modo HSC (#HSC OFF)." .
+
+ns1:ConsultarFormatoDeSentenciaEnElManualDeProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar formato de sentencia en el manual de programación" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_0ae0c85e00 ;
+    ns1:textoExtracto "Consultar en el manual de programación el formato de esta sentencia." .
+
+ns1:Parametro_024d7f5691 a ns1:Parametro ;
+    rdfs:label "Parámetro HSC" ;
+    ns1:identificador "HSC" ;
+    ns1:textoExtracto "Las posibles causas son las siguientes: • El punto para iniciar el #HSC coincide con el punto anterior y la tangente queda indeterminada. • Se ha programado sólo un eje de la tangente." .
+
+ns1:Parametro_c3459ca50f a ns1:Parametro ;
+    rdfs:label "Parámetro de redondeo" ;
+    ns1:identificador "ROUNDPAR" ;
+    ns1:textoExtracto "El error de contorno programado es demasiado pequeño para ser tratado." .
+
+ns1:ProgramarPuntoPrevioDiferenteAlPuntoDeEntradaDelHSCYAmbosEjesDeLaTangente a ns1:TareaMantenimiento ;
+    rdfs:label "Programar punto previo diferente al punto de entrada del HSC y ambos ejes de la tangente" ;
+    ns1:solucionaFallo ns1:TangenteInicialIndeterminada ;
+    ns1:textoExtracto "Programar un punto previo diferente al punto de entrada del #HSC y ambos ejes de la tangente." .
+
+ns1:ProgramarPuntoPrevioDiferenteAlPuntoFinalDelHSCYAmbosEjesDeLaTangente a ns1:TareaMantenimiento ;
+    rdfs:label "Programar punto previo diferente al punto final del HSC y ambos ejes de la tangente" ;
+    ns1:solucionaFallo ns1:TangenteFinalIndeterminada ;
+    ns1:textoExtracto "Programar un punto previo diferente al punto de entrada del #HSC y ambos ejes de la tangente." .
+
+ns1:DiagnosticoFallo_0ae0c85e00 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro ROUNDPAR incorrecto" ;
+    ns1:textoExtracto "El tipo de redondeo programado no es válido." .
+
+ns1:HSCDETECCIONDuranteLaEjecucion a ns1:DiagnosticoFallo ;
+    rdfs:label "HSC DETECCIÓN Durante la ejecución" ;
+    ns1:textoExtracto "La trayectoria que genera el CNC en G05, G60 o HSC queda fuera de los límites de recorrido activos." .
+
+ns1:LimiteSoftwareNegativoSobrepasadoEnG5G60OHSC a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite software negativo sobrepasado en G5, G60 o HSC" ;
+    ns1:textoExtracto "La trayectoria que genera el CNC en G05, G60 o HSC queda fuera de los límites de recorrido activos." .
+
+ns1:TangenteFinalIndeterminada a ns1:DiagnosticoFallo ;
+    rdfs:label "Tangente final indeterminada" ;
+    ns1:textoExtracto "Las posibles causas son las siguientes: • El punto para finalizar el #HSC coincide con el punto anterior y la tangente queda indeterminada. •" .
+
+ns1:TangenteInicialIndeterminada a ns1:DiagnosticoFallo ;
+    rdfs:label "Tangente inicial indeterminada" ;
+    ns1:textoExtracto "Las posibles causas son las siguientes: • El punto para iniciar el #HSC coincide con el punto anterior y la tangente queda indeterminada. • Se ha programado sólo un eje de la tangente." .
+

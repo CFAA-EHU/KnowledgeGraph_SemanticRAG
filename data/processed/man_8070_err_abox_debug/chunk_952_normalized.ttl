@@ -1,0 +1,63 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:_9520 a ex:Captacion ;
+ex:detectadoPor ex:Sistema ;
+ex:causadoPor ex:VelocidadEje ;
+ex:mitigaRiesgo ex:SolucionVelocidad ;
+ex:textoExtracto "Durante el arranque o funcionamiento habitual del sistema, la velocidad del eje excede la capacidad de muestreo del hardware, para ese tipo de señal del encóder."@es .
+
+ex:SolucionVelocidad a ex:Solucion ;
+ex:tieneComponente ex:Eje ;
+ex:requiereMantenimiento ex:DisminuirVelocidad ;
+ex:textoExtracto "Disminuya la velocidad máxima de movimiento del eje."@es .
+
+ex:Eje a ex:ComponenteMecanico ;
+ex:tieneComponente ex:Velocidad ;
+ex:monitoreaParametro ex:Velocidad ;
+ex:textoExtracto "la velocidad del eje"@es .
+
+ex:Velocidad a ex:Parametro ;
+ex:valor "velocidad máxima de movimiento del eje"@es .
+
+ex:Sistema a ex:Sistema ;
+ex:tieneComponente ex:Encoder ;
+ex:tieneComponente ex:Captador ;
+ex:tieneComponente ex:Hardware ;
+ex:monitoreaParametro ex:VelocidadEje ;
+ex:textoExtracto "el sistema"@es .
+
+ex:Encoder a ex:Sensor ;
+ex:tieneComponente ex:Se_al ;
+ex:tieneComponente ex:VelocidadEje ;
+ex:monitoreaParametro ex:VelocidadEje ;
+ex:textoExtracto "el encóder"@es .
+
+ex:Captador a ex:ComponenteElectrico ;
+ex:tieneComponente ex:Se_al ;
+ex:tieneComponente ex:Captacion ;
+ex:monitoreaParametro ex:VelocidadEje ;
+ex:textoExtracto "el captador"@es .
+
+ex:Hardware a ex:ComponenteElectrico ;
+ex:tieneComponente ex:VelocidadEje ;
+ex:monitoreaParametro ex:VelocidadEje ;
+ex:textoExtracto "el hardware"@es .
+
+ex:VelocidadEje a ex:Parametro ;
+ex:valor "velocidad del eje"@es .
+
+ex:Captacion a ex:Alarma ;
+ex:activadoPor ex:Sistema ;
+ex:detectadoPor ex:Sistema ;
+ex:causadoPor ex:VelocidadEje ;
+ex:mitigaRiesgo ex:SolucionVelocidad ;
+ex:documentadoEn ex:Manual ;
+ex:textoExtracto "Captación:Frecuencia de contaje excesiva. Durante el arranque o funcionamiento habitual del sistema, la velocidad del eje excede la capacidad de muestreo del hardware, para ese tipo de señal del encóder."@es .
+
+ex:Manual a ex:Manual ;
+ex:documentadoEn ex:Sistema ;
+ex:textoExtracto "Manual"@es .

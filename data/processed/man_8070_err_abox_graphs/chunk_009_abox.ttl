@@ -1,0 +1,53 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CNC8070_eed72f55d9 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Durante el arranque del CNC." .
+
+ns1:DetectadoApagadoReinicioDuranteElArranqueDelSistemaOperativo a ns1:DiagnosticoFallo ;
+    rdfs:label "Detectado apagado/reinicio durante el arranque del sistema operativo" ;
+    ns1:textoExtracto "'Detectado apagado/reinicio durante el arranque del sistema operativo'." .
+
+ns1:PongaseEnContactoConFagorAutomation_4fdb3e53af a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation." .
+
+ns1:PongaseEnContactoConSuProveedor a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con su proveedor" ;
+    ns1:solucionaFallo ns1:ASSERTDELSISTEMA,
+        ns1:DetectadoApagadoReinicioDelEquipo,
+        ns1:DetectadoWatchdogEnLaUltimaSesion,
+        ns1:ErrorDeChecksumEnLosDatosDeBusquedaDeBloque,
+        ns1:ErrorEnTestDeRAMConBateria_5c59cef49c ;
+    ns1:textoExtracto "Si el error se repite en sucesivos arranques del CNC, póngase en contacto con su proveedor." .
+
+ns1:ReducirElNumeroDeBloquesAPrepararPorCiclo a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir el número de bloques a preparar por ciclo" ;
+    ns1:solucionaFallo ns1:NoHayTiempoDeCPUParaEjecutarTodosLosPREPFREQ ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el número de bloques a preparar por ciclo (parámetro PREPFREQ)." .
+
+ns1:ASSERTDELSISTEMA a ns1:DiagnosticoFallo ;
+    rdfs:label "ASSERT DEL SISTEMA" ;
+    ns1:textoExtracto "'ASSERT DEL SISTEMA' DETECCIÓN Durante el arranque del CNC. CAUSA El CNC ha generado un error sin determinar." .
+
+ns1:DetectadoApagadoReinicioDelEquipo a ns1:DiagnosticoFallo ;
+    rdfs:label "Detectado apagado/reinicio del equipo" ;
+    ns1:textoExtracto "'Detectado apagado/reinicio del equipo' DETECCIÓN Durante el arranque del CNC. CAUSA Una causa indeterminada ha provocado un apagado/reinicio del equipo." .
+
+ns1:DetectadoWatchdogEnLaUltimaSesion a ns1:DiagnosticoFallo ;
+    rdfs:label "Detectado Watchdog en la última sesión" ;
+    ns1:textoExtracto "'Detectado Watchdog en la última sesión' DETECCIÓN Durante el arranque del CNC. CAUSA El CNC se ha cerrado debido a un reset por watchdog." .
+
+ns1:ErrorDeChecksumEnLosDatosDeBusquedaDeBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de checksum en los datos de búsqueda de bloque" ;
+    ns1:textoExtracto "'Error de checksum en los datos de búsqueda de bloque' DETECCIÓN Durante el arranque del CNC. CAUSA Error de cheksum de los datos necesarios para ejecutar una búsqueda de bloque automática." .
+
+ns1:ErrorEnTestDeRAMConBateria_5c59cef49c a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en test de RAM con batería" ;
+    ns1:textoExtracto "'Error en test de RAM con batería' DETECCIÓN Durante el arranque del CNC. CAUSA El test de arranque ha detectado un error de checksum en los datos de la NVRAM y por lo tanto un fallo en la misma." .
+
+ns1:NoHayTiempoDeCPUParaEjecutarTodosLosPREPFREQ a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay tiempo de CPU para ejecutar todos los PREPFREQ" ;
+    ns1:textoExtracto "'No hay tiempo de CPU para ejecutar todos los PREPFREQ' DETECCIÓN Durante la ejecución. CAUSA El CNC necesita demasiado tiempo para analizar el programa." .
+

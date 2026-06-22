@@ -1,0 +1,26 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AvisoSeguridad_20423e4c9a a ns1:AvisoSeguridad ;
+    rdfs:label "Marca TCHANGEOK" ;
+    ns1:mitigaRiesgo ns1:ActivarMarcaTCHANGEOKSinHerramientaEnElBrazo ;
+    ns1:textoExtracto "La marca TCHANGEOK es opcional y sólo se debe utilizar cuando es posible." .
+
+ns1:OperacionDeLaHerramienta a ns1:Parametro ;
+    rdfs:label "Operación de la herramienta" ;
+    ns1:textoExtracto "TMOPERATION" .
+
+ns1:TablaOperacionesValidasPLC a ns1:Tabla ;
+    rdfs:label "Operaciones válidas y marcas que activa el PLC con cada una de ellas" ;
+    ns1:ilustra ns1:CambioDeHerramienta_000198c399 ;
+    ns1:textoExtracto "TM => PLC |  |  | PLC => TM | | --- | --- | --- | --- | | TMOPERATION | TAKEPOS | LEAVEPOS |  | 1 | -1 | 0 | CH1TOSPDL | 2 | 0 | # | SPDLTOCH2 + TCHANGEOK + CH2TOMZ |" .
+
+ns1:CambioDeHerramienta_000198c399 a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:solucionaFallo ns1:ActivarMarcaTCHANGEOKSinHerramientaEnElBrazo ;
+    ns1:textoExtracto "Una vez efectuado el cambio y la herramienta está en el brazo, activar la marca TCHANGEOK para continuar la ejecución del programa mientras se deja la herramienta en el almacén." .
+
+ns1:ActivarMarcaTCHANGEOKSinHerramientaEnElBrazo a ns1:AccionProhibida ;
+    rdfs:label "Activar marca TCHANGEOK sin herramienta en el brazo" ;
+    ns1:textoExtracto "activar la marca TCHANGEOK para continuar la ejecución del programa mientras se deja la herramienta en el almacén." .
+

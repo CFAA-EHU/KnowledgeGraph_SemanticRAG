@@ -1,0 +1,43 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AccionReiniciarCNC a ex:AccionProhibida ;
+    rdfs:label "Reiniciar el CNC" ;
+    ex:textoExtracto "SOLUCIÓN Reiniciar el CNC." .
+
+ex:FalloMaterialTabla a ex:DiagnosticoFallo ;
+    rdfs:label "Formato de tabla de material incorrecto" ;
+    ex:textoExtracto "CAUSA Se ha cambiado el formato de la tabla (unidades, nuevas variables, rango de tipo enumerado, etc)." .
+
+ex:AccionReiniciarCNC solucionaFallo ex:FalloMaterialTabla .
+
+ex:ParametroIdentificadorFichero a ex:Parametro ;
+    rdfs:label "Identificador de fichero" ;
+    ex:textoExtracto "El identificador de fichero (comando F) debe tener un valor entre 1 y 4." ;
+    ex:identificador "F" .
+
+ex:FalloIdentificadorFichero a ex:DiagnosticoFallo ;
+    rdfs:label "Identificador de fichero incorrecto" ;
+    ex:textoExtracto "CAUSA Identificador de fichero (comando F) es incorrecto." .
+
+ex:AccionCorregirIdentificadorFichero a ex:AccionProhibida ;
+    rdfs:label "Corregir identificador de fichero" ;
+    ex:textoExtracto "SOLUCIÓN El identificador de fichero (comando F) debe tener un valor entre 1 y 4." .
+
+ex:AccionCorregirIdentificadorFichero solucionaFallo ex:FalloIdentificadorFichero .
+
+ex:ParametroSentencia a ex:Parametro ;
+    rdfs:label "Parámetro de la sentencia" ;
+    ex:textoExtracto "Algún parámetro de la sentencia ha sido programado más de una vez." .
+
+ex:FalloDobleProgramacion a ex:DiagnosticoFallo ;
+    rdfs:label "Doble programación de parámetros" ;
+    ex:textoExtracto "CAUSA Algún parámetro de la sentencia ha sido programado más de una vez." .
+
+ex:AccionCorregirDobleProgramacion a ex:AccionProhibida ;
+    rdfs:label "Corregir doble programación" ;
+    ex:textoExtracto "SOLUCIÓN Programar una única vez cada parámetro de la sentencia." .
+
+ex:AccionCorregirDobleProgramacion solucionaFallo ex:FalloDobleProgramacion .

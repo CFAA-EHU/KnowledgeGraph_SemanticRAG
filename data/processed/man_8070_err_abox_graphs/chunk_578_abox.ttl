@@ -1,0 +1,31 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:PulsarResetParaDetenerElMovimientoDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Pulsar reset para detener el movimiento del cabezal" ;
+    ns1:solucionaFallo ns1:AparcandoUnCabezalDesdePLC ;
+    ns1:textoExtracto "'SOLUCIÓN El PLC no puede aparcar el eje en esa situación. Pulsar reset para detener el movimiento o desactivar la cinemática activa, el eje angular activo, el control tangencial activo o la transformación de coordenadas #CS o #ACS.'" .
+
+ns1:PulsarResetParaDetenerElMovimientoODesactivarLaCinematicaActiva a ns1:TareaMantenimiento ;
+    rdfs:label "Pulsar reset para detener el movimiento o desactivar la cinemática activa" ;
+    ns1:solucionaFallo ns1:AparcandoUnEjeDesdePLC ;
+    ns1:textoExtracto "'SOLUCIÓN El PLC no puede aparcar el eje en esa situación. Pulsar reset para detener el movimiento o desactivar la cinemática activa, el eje angular activo, el control tangencial activo o la transformación de coordenadas #CS o #ACS.'" .
+
+ns1:RESETParaAparcarCabezalesEnMovimientoOG33G34G63G95G96CAXSYNC_1f2a24c235 a ns1:AvisoSeguridad ;
+    rdfs:label "RESET para aparcar cabezales en movimiento o G33/G34/G63/G95/G96/#CAX/#SYNC" ;
+    ns1:mitigaRiesgo ns1:AparcandoUnCabezalDesdePLC ;
+    ns1:textoExtracto "'RESET para aparcar cabezales en movimiento o G33/G34/G63/G95/G96/#CAX/#SYNC'" .
+
+ns1:RESETParaAparcarEjesEnMovimientoODeLaTransformacionAcoploActivo_f5c97e600f a ns1:AvisoSeguridad ;
+    rdfs:label "RESET para aparcar ejes en movimiento o de la transformación/acoplo activo" ;
+    ns1:mitigaRiesgo ns1:AparcandoUnEjeDesdePLC ;
+    ns1:textoExtracto "'RESET para aparcar ejes en movimiento o de la transformación/acoplo activo'" .
+
+ns1:AparcandoUnCabezalDesdePLC a ns1:AccionProhibida ;
+    rdfs:label "Aparcando un cabezal desde PLC" ;
+    ns1:textoExtracto "'DETECCIÓN Aparcando un eje desde PLC. CAUSA El PLC intenta aparcar un cabezal en movimiento, sincronizado, activado como eje C o con algunas de las funciones G33, G34, G63, G95 o G96 activa.'" .
+
+ns1:AparcandoUnEjeDesdePLC a ns1:AccionProhibida ;
+    rdfs:label "Aparcando un eje desde PLC" ;
+    ns1:textoExtracto "'DETECCIÓN Aparcando un eje desde PLC. CAUSA El PLC intenta aparcar un eje en movimiento, que forma parte de la cinemática activa'" .
+

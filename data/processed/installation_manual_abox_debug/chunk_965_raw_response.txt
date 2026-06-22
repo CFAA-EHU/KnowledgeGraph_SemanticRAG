@@ -1,0 +1,28 @@
+ex:AlmacenHerramientas a a ex:Sistema ;
+    ex:textoExtracto "canal se quiere coger o dejar una herramienta en un almacén que ya está en un proceso de cambio, el gestor esperará a que acabe el proceso en curso antes de atender la nueva solicitud. En el cambio de herramienta pueden estar implicados dos almacenes. El almacén en el que se deja la herramienta y el almacén del que se coge la herramienta nueva pueden ser diferentes." ;
+    ex:tieneComponente ex:GestorHerramientas, ex:TablaHerramientas .
+
+ex:TablaHerramientas a ex:Tabla ;
+    ex:textoExtracto "La lista de herramientas disponibles se guarda en la tabla de herramientas, única para todo el sistema. En esta tabla se indica la posición y el almacén en el que se encuentra cada herramienta, si se trata de una herramienta de tierra o si la herramienta se encuentra activa en algún canal." .
+
+ex:Herramienta a ex:Herramienta ;
+    ex:identificador "número" ;
+    ex:textoExtracto "Cada herramienta se identifica mediante su número, que es único para todo el sistema; no podrá estar repetido ni en almacenes distintos ni en herramientas de tierra." .
+
+ex:HerramientaDeTierra a ex:Herramienta ;
+    ex:textoExtracto "Se denomina herramienta de tierra a aquella que no se guarda en ningún almacén y que se carga manualmente cuando es solicitada. Las herramientas de tierra también se definen en la tabla de herramientas pero no están asociadas a ninguna posición de almacén. La carga y descarga de herramientas de tierra es global al sistema; no está asociada a ningún almacén ni canal en particular." .
+
+ex:GestorHerramientas a ex:Sistema ;
+    ex:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas. Cuando se solicita un cambio o una búsqueda de herramienta el gestor de herramientas le comunica al PLC las operaciones que debe realizar." .
+
+ex:CNC a ex:Maquina ;
+    ex:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas." .
+
+ex:PLC a ex:Sistema ;
+    ex:textoExtracto "Cuando se solicita un cambio o una búsqueda de herramienta el gestor de herramientas le comunica al PLC las operaciones que debe realizar." .
+
+ex:Cabezal a ex:ComponenteMecanico ;
+    ex:textoExtracto "Coger una herramienta del almacén y ponerla en el cabezal." .
+
+ex:SistemaCambioHerramienta a ex:Sistema ;
+    ex:textoExtracto "• Coger una herramienta del almacén y ponerla en el cabezal. • Dejar la herramienta del cabezal en el almacén y coger otra. • Dejar la herramienta del cabezal en tierra. • Etc. Dependiendo del tipo de almacén y de la operación solicitada, a veces se deben efectuar varias acciones. Por ejemplo, en" .

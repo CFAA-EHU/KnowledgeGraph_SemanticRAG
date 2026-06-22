@@ -1,0 +1,131 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:LantekExpertInside
+  a ex:Aplicacion ;
+  rdfs:label "Lantek Expert Inside" ;
+  ex:detalladoEnEsquema ex:EsquemaControlGap ;
+  ex:documentadoEn ex:ManualLantek .
+
+ex:EsquemaControlGap
+  a ex:Esquema ;
+  rdfs:label "Esquema del control de gap" ;
+  ex:ilustradoEn ex:FiguraEsquemaControlGap ;
+  ex:tieneComponente ex:BoquillaLaser, ex:SuperficiePieza, ex:EjeAsociado .
+
+ex:BoquillaLaser
+  a ex:ComponenteElectrico ;
+  rdfs:label "Boquilla láser" ;
+  ex:tieneComponente ex:SensorGap .
+
+ex:SuperficiePieza
+  a ex:PiezaRecambio ;
+  rdfs:label "Superficie de pieza" .
+
+ex:EjeAsociado
+  a ex:ComponenteMecanico ;
+  rdfs:label "Eje asociado (X/Z según máquina)" .
+
+ex:SensorGap
+  a ex:Sensor ;
+  rdfs:label "Sensor de gap" ;
+  ex:controla ex:AplicacionLantekExpertInside ;
+  ex:monitoreaParametro ex:DistanciaFija ;
+  ex:tieneComponente ex:CompensacionEjeLongitudinal .
+
+ex:DistanciaFija
+  a ex:Parametro ;
+  rdfs:label "Distancia fija (gap)" .
+
+ex:CompensacionEjeLongitudinal
+  a ex:Actuador ;
+  rdfs:label "Compensación en el eje longitudinal" ;
+  ex:ejecutadoPor ex:AplicacionLantekExpertInside .
+
+ex:ManualLantek
+  a ex:Manual ;
+  rdfs:label "Manual de Lantek" ;
+  ex:documentadoEn ex:Paginas692693 .
+
+ex:Paginas692693
+  a ex:Pagina ;
+  rdfs:label "Páginas 692-693" ;
+  ex:tieneComponente ex:VentanaGeneralIdioma .
+
+ex:VentanaGeneralIdioma
+  a ex:InterfazUsuario ;
+  rdfs:label "Ventana de \"General/Idioma\" de Lantek" ;
+  ex:tieneComponente ex:MenuDesplegable, ex:BotonesSuperiores .
+
+ex:MenuDesplegable
+  a ex:ComponenteElectrico ;
+  rdfs:label "Menú desplegable para selección de idioma" ;
+  ex:tieneComponente ex:OpcionIdioma .
+
+ex:OpcionIdioma
+  a ex:Actuador ;
+  rdfs:label "Opción de idioma dentro del menú de ajustes" ;
+  ex:habilitadoPor ex:VentanaGeneralIdioma .
+
+ex:BotonesSuperiores
+  a ex:ComponenteElectrico ;
+  rdfs:label "Botones superiores grandes" ;
+  ex:tieneComponente ex:SelectorIdioma .
+
+ex:SelectorIdioma
+  a ex:Actuador ;
+  rdfs:label "Selector de idioma dentro del botón \"General\"" ;
+  ex:tieneComponente ex:DisponibilidadIdiomas, ex:EleccionIdiomaDirecta .
+
+ex:DisponibilidadIdiomas
+  a ex:Actuador ;
+  rdfs:label "Disponibilidad de dos idiomas instalados" ;
+  ex:tieneComponente ex:IdiomaEn, ex:IdiomaEs .
+
+ex:IdiomaEn
+  a ex:Idioma ;
+  rdfs:label "en" .
+
+ex:IdiomaEs
+  a ex:Idioma ;
+  rdfs:label "es" .
+
+ex:EleccionIdiomaDirecta
+  a ex:Actuador ;
+  rdfs:label "Elección directa desde la interfaz" ;
+  ex:tieneComponente ex:IdiomaFr .
+
+ex:IdiomaFr
+  a ex:Idioma ;
+  rdfs:label "fr" .
+
+ex:FiguraEsquemaControlGap
+  a ex:Figura ;
+  rdfs:label "Figura del esquema de control de gap" ;
+  ex:ilustradoEn ex:EsquemaControlGap .
+
+ex:DiagramaElectricoConexionSensorGap
+  a ex:Diagrama ;
+  rdfs:label "Diagrama eléctrico de conexión del sensor de gap" ;
+  ex:ilustradoEn ex:Paginas696 .
+
+ex:Paginas696
+  a ex:Pagina ;
+  rdfs:label "Páginas 696" ;
+  ex:tieneComponente ex:DiagramaElectricoConexionSensorGap, ex:DiagramaConexionSensorGapModulosRemotosCAN .
+
+ex:DiagramaConexionSensorGapModulosRemotosCAN
+  a ex:Diagrama ;
+  rdfs:label "Diagrama de conexión del sensor de gap a módulos remotos CAN (RIOR)" ;
+  ex:ilustradoEn ex:Paginas696 .
+
+ex:AplicacionLantekExpertInside
+  a ex:Aplicacion ;
+  rdfs:label "Aplicación Lantek Expert Inside" ;
+  ex:ejecutadoPor ex:SistemaLantek .
+
+ex:SistemaLantek
+  a ex:Sistema ;
+  rdfs:label "Sistema Lantek" .

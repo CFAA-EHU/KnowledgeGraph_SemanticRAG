@@ -1,0 +1,61 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CorreccionDeLaProgramacionConImagenEspejo a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de la programación con imagen espejo" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteProgramacionEnDiametrosConImagenEspejoEnElEjeFrontal ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:CorreccionDeLaProgramacionConK a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de la programación con K" ;
+    ns1:solucionaFallo ns1:G4NoEsPosibleProgramarElTiempoDeEsperaConK ;
+    ns1:textoExtracto "SOLUCIÓN Si no se desea tener tercer eje en el canal se puede programar el tiempo de espera directamente con un número." .
+
+ns1:CorreccionDeLasCoordenadasDelCentro a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de las coordenadas del centro" ;
+    ns1:solucionaFallo ns1:CoordenadasDelCentroFueraDeRango ;
+    ns1:textoExtracto "SOLUCIÓN Programar un valor menor." .
+
+ns1:CorreccionDelRangoDelTiempoDeEsperaEnG4 a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección del rango del tiempo de espera en G4" ;
+    ns1:solucionaFallo ns1:G4TiempoDeEsperaFueraDeRango ;
+    ns1:textoExtracto "SOLUCIÓN El máximo valor admisible para el tiempo de espera es 2147483646." .
+
+ns1:CorreccionDelTiempoDeEsperaEnG4 a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección del tiempo de espera en G4" ;
+    ns1:solucionaFallo ns1:ProgramarG4K ;
+    ns1:textoExtracto "SOLUCIÓN Programar una única vez el tiempo de espera de la función G4." .
+
+ns1:CorreccionDelTiempoDeEsperaNegativoEnG4 a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección del tiempo de espera negativo en G4" ;
+    ns1:solucionaFallo ns1:G4NoSeAdmiteTiempoDeEsperaNegativo ;
+    ns1:textoExtracto "SOLUCIÓN Programar un valor mayor o igual que cero." .
+
+ns1:TiempoDeEspera a ns1:Parametro ;
+    rdfs:label "tiempo de espera" ;
+    ns1:textoExtracto "donde el parámetro <time> será el tiempo de espera, en segundos." .
+
+ns1:CoordenadasDelCentroFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "Coordenadas del centro fuera de rango" ;
+    ns1:textoExtracto "'Coordenadas del centro fuera de rango' DETECCIÓN Durante la ejecución. CAUSA Uno de los valores I, J, K es demasiado alto como el centro de una interpolación circular o centro de un giro del sistema de coordenadas." .
+
+ns1:G4NoEsPosibleProgramarElTiempoDeEsperaConK a ns1:DiagnosticoFallo ;
+    rdfs:label "G4: no es posible programar el tiempo de espera con K" ;
+    ns1:textoExtracto "'G4: no es posible programar el tiempo de espera con K' DETECCIÓN Durante la ejecución. CAUSA La letra K va asociada al tercer eje del canal y en este caso no existe tercer eje." .
+
+ns1:G4NoSeAdmiteTiempoDeEsperaNegativo a ns1:DiagnosticoFallo ;
+    rdfs:label "G4: no se admite tiempo de espera negativo" ;
+    ns1:textoExtracto "'G4: no se admite tiempo de espera negativo' DETECCIÓN Durante la ejecución. CAUSA El tiempo de espera en la función G4 es negativo." .
+
+ns1:G4TiempoDeEsperaFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "G4: tiempo de espera fuera de rango" ;
+    ns1:textoExtracto "'G4: tiempo de espera fuera de rango' DETECCIÓN Durante la ejecución. CAUSA El tiempo de espera programado en la función G4 es demasiado grande." .
+
+ns1:NoSeAdmiteProgramacionEnDiametrosConImagenEspejoEnElEjeFrontal a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite programación en diámetros con imagen espejo en el eje frontal" ;
+    ns1:textoExtracto "'No se admite programación en diámetros con imagen espejo en el eje frontal' DETECCIÓN Durante la ejecución. CAUSA El eje frontal (parámetro FACEAXIS) no puede tener activa la imagen espejo y la programación en diámetros simultáneamente." .
+
+ns1:ProgramarG4K a ns1:DiagnosticoFallo ;
+    rdfs:label "Programar G4 K" ;
+    ns1:textoExtracto "'Programar G4 K' DETECCIÓN Durante la ejecución. CAUSA En la función G4 falta programar el tiempo de espera." .
+

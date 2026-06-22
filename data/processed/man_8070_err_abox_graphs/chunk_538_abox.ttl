@@ -1,0 +1,32 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:NumeroDeCanalesDeSalidaParaLaDeteccionDeErrores a ns1:Parametro ;
+    rdfs:label "Número de canales de salida para la detección de errores" ;
+    ns1:identificador "NLOCOUT" ;
+    ns1:textoExtracto "El parámetro NLOCOUT debe ser 8." .
+
+ns1:Parametro_e39c869f10 a ns1:Parametro ;
+    rdfs:label "Canal de salida PWM" ;
+    ns1:identificador "PWMOUTPUT" ;
+    ns1:textoExtracto "El parámetro PWMOUTPUT no puede ser superior a 2 (0, 1, 2)." .
+
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FalloCambioEjesPlanoActivo,
+        ns1:FalloPWMCanal,
+        ns1:FalloProgramacionMascaraLaser ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:FalloCambioEjesPlanoActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite cambio de ejes del plano activo en modo ejecución simulada" ;
+    ns1:textoExtracto "3086 No se admite cambio de ejes del plano activo en modo ejecución simulada: Plano Principal." .
+
+ns1:FalloPWMCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "'PWM activado en otro canal'" ;
+    ns1:textoExtracto "'PWM activado en otro canal' DETECCIÓN Durante la ejecución del corte por láser (PWM)." .
+
+ns1:FalloProgramacionMascaraLaser a ns1:DiagnosticoFallo ;
+    rdfs:label "'Error en la programación de la máscara del láser'" ;
+    ns1:textoExtracto "'Error en la programación de la máscara del láser' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada)." .
+

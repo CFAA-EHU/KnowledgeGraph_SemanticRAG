@@ -1,0 +1,54 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:ProgramacionONOFF a ns1:TareaMantenimiento ;
+    rdfs:label "Programación ON/OFF" ;
+    ns1:solucionaFallo ns1:EsObligatorioProgramarONOFF ;
+    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:RevisionDeCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de cabezal" ;
+    ns1:solucionaFallo ns1:ProgramacionNoPermitidaConCabezalAnalogico ;
+    ns1:textoExtracto "El DMC sólo se puede activar sobre cabezales digitales." .
+
+ns1:RevisionDeSintaxis a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de sintaxis" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_36540a5b32,
+        ns1:SintaxisIncorrectaDelComandoDMCOFF,
+        ns1:SintaxisIncorrectaDelComandoDMCON ;
+    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:RevisionDeValores a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de valores" ;
+    ns1:solucionaFallo ns1:FZMINDebeSerMenorQueFZMAX,
+        ns1:OVRMINDebeSerMenorQueOVRMAX ;
+    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
+
+ns1:DiagnosticoFallo_36540a5b32 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro DMC fuera de rango" ;
+    ns1:textoExtracto "Parámetro DMC fuera de rango DETECCIÓN Durante la edición y ejecución. CAUSA Algún comando de la sentencia #DMC tiene un valor no válido." .
+
+ns1:EsObligatorioProgramarONOFF a ns1:DiagnosticoFallo ;
+    rdfs:label "Es obligatorio programar ON/OFF" ;
+    ns1:textoExtracto "Es obligatorio programar ON/OFF. DETECCIÓN Durante la ejecución. CAUSA Falta programar el comando ON/OFF para activar o anular la función." .
+
+ns1:FZMINDebeSerMenorQueFZMAX a ns1:DiagnosticoFallo ;
+    rdfs:label "FZMIN debe ser menor que FZMAX" ;
+    ns1:textoExtracto "#DMC ON: FZMIN debe ser menor que FZMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el avance mínimo es mayor que el avance máximo." .
+
+ns1:OVRMINDebeSerMenorQueOVRMAX a ns1:DiagnosticoFallo ;
+    rdfs:label "OVRMIN debe ser menor que OVRMAX" ;
+    ns1:textoExtracto "#DMC ON: OVRMIN debe ser menor que OVRMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el override mínimo es mayor que el override máximo." .
+
+ns1:ProgramacionNoPermitidaConCabezalAnalogico a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación no permitida con cabezal analógico" ;
+    ns1:textoExtracto "#DMCON:Programación no permitida con cabezal analógico. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico." .
+
+ns1:SintaxisIncorrectaDelComandoDMCOFF a ns1:DiagnosticoFallo ;
+    rdfs:label "Sintaxis incorrecta del comando #DMC OFF" ;
+    ns1:textoExtracto "#DMC OFF DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:SintaxisIncorrectaDelComandoDMCON a ns1:DiagnosticoFallo ;
+    rdfs:label "Sintaxis incorrecta del comando #DMC ON" ;
+    ns1:textoExtracto "#DMC ON [<PWRSP value><,OVRMIN value><,FZMIN value><,FZMAX value>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+

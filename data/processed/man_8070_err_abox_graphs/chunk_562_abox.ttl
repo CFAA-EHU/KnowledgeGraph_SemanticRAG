@@ -1,0 +1,44 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AvisoSeguridad_946d8bee44 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para modo visualizador" ;
+    ns1:textoExtracto "Para desplazar el eje, desactivar el modo visualizador (marca DRO(axis) del PLC) y comprobar el estado de la marca SERVOON del cabezal." .
+
+ns1:CNC8070_aba0bd7d35 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:CabezalPrincipal ;
+    ns1:monitoreaParametro ns1:Parametro_91006e3cc5 ;
+    ns1:textoExtracto "El CNC intenta controlar un cabezal que se encuentra en modo visualizador." .
+
+ns1:LaPosicionDelCabezalComandadaExcedeElRangoDeModulo a ns1:AccionProhibida ;
+    rdfs:label "La posición del cabezal comandada excede el rango de módulo" ;
+    ns1:mitigaRiesgo ns1:CabezalPrincipal ;
+    ns1:textoExtracto "'La posición del cabezal comandada excede el rango de módulo'" .
+
+ns1:NoSePuedeMoverElCabezalEnModoVisualizador a ns1:AccionProhibida ;
+    rdfs:label "No se puede mover el cabezal en modo visualizador" ;
+    ns1:mitigaRiesgo ns1:CabezalPrincipal ;
+    ns1:textoExtracto "'No se puede mover el cabezal en modo visualizador'" .
+
+ns1:Parametro_91006e3cc5 a ns1:Parametro ;
+    rdfs:label "Parámetro G00FEED del cabezal" ;
+    ns1:identificador "G00FEED" ;
+    ns1:textoExtracto "Revisar el parámetro G00FEED del cabezal." .
+
+ns1:Parametro_db5d1f3e56 a ns1:Parametro ;
+    rdfs:label "Parámetro MODUPLIM" ;
+    ns1:identificador "MODUPLIM" ;
+    ns1:textoExtracto "Revisar los parámetros MODUPLIM y MODLOWLIM." .
+
+ns1:Parametro_fbaf899e32 a ns1:Parametro ;
+    rdfs:label "Parámetro MODLOWLIM" ;
+    ns1:identificador "MODLOWLIM" ;
+    ns1:textoExtracto "Revisar los parámetros MODUPLIM y MODLOWLIM." .
+
+ns1:CabezalPrincipal a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal principal" ;
+    ns1:parametroMonitoradoPor ns1:Parametro_db5d1f3e56,
+        ns1:Parametro_fbaf899e32 ;
+    ns1:textoExtracto "El CNC intenta controlar un cabezal que se encuentra en modo visualizador." .
+

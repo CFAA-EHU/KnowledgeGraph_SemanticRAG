@@ -1,0 +1,75 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:EvitarSolapamientoDeOrigenYDestinoEnMOV a ns1:TareaMantenimiento ;
+    rdfs:label "Evitar solapamiento de origen y destino en MOV" ;
+    ns1:solucionaFallo ns1:HaySolapamientoDeOrigenYDestinoEnElMOV ;
+    ns1:textoExtracto "SOLUCIÓN Los datos de origen y destino no deben solaparse. Disminuir el número de bits a mover o seleccionar un destino diferente." .
+
+ns1:FaltaOrigenYDestinoEnElMOV_d78a055046 a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta origen y destino en el MOV" ;
+    ns1:textoExtracto "Falta origen y destino en el MOV. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:ProgramarCALSubrutina a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'CAL subrutina'" ;
+    ns1:solucionaFallo ns1:FaltaNombreDeSubrutinaTrasCAL ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"CAL subrutina\"." .
+
+ns1:ProgramarCPLRecurso a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'CPL recurso'" ;
+    ns1:solucionaFallo ns1:FaltaOperandoEnCPL_445f2ea7db ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"CPL recurso\"." .
+
+ns1:ProgramarCodigosValidosParaMOV a ns1:TareaMantenimiento ;
+    rdfs:label "Programar códigos válidos para MOV" ;
+    ns1:solucionaFallo ns1:CodigoMOVNoValido ;
+    ns1:textoExtracto "SOLUCIÓN Los códigos de origen y destino indican el formato de la información (binario o BCD). Los códigos podrán ser 0 (binario) o 1 (BCD)." .
+
+ns1:ProgramarJMPEtiqueta a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'JMP etiqueta'" ;
+    ns1:solucionaFallo ns1:FaltaEtiquetaDeSaltoTrasJMP,
+        ns1:FaltaOrigenODestinoEnElMOV_5bc6e12203 ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"JMP etiqueta\"." .
+
+ns1:ProgramarNumeroDeBitsValidoParaMOV a ns1:TareaMantenimiento ;
+    rdfs:label "Programar número de bits válido para MOV" ;
+    ns1:solucionaFallo ns1:FalloDelParserAlBuscarElNumeroDeBitsATransmitirEnElMOV ;
+    ns1:textoExtracto "SOLUCIÓN El rango de bits a transmitir es 4, 8, 12, 16, 20, 24, 28 y 32." .
+
+ns1:ProgramarRESRecurso a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'RES recurso'" ;
+    ns1:solucionaFallo ns1:FaltaOperandoEnRES_4759ffa7ba ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"RES recurso\"." .
+
+ns1:CodigoMOVNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Código MOV no válido" ;
+    ns1:textoExtracto "Código MOV no válido. DETECCIÓN Durante la edición del programa PLC. CAUSA El código de origen o destino en el comando MOV no es válido." .
+
+ns1:FalloDelParserAlBuscarElNumeroDeBitsATransmitirEnElMOV a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo del parser al buscar el número de bits a transmitir en el MOV" ;
+    ns1:textoExtracto "Fallo del parser al buscar el número de bits a transmitir en el MOV. DETECCIÓN Durante la ejecución del programa PLC. CAUSA Falta programar el número de bits en el comando MOV." .
+
+ns1:FaltaEtiquetaDeSaltoTrasJMP a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta etiqueta de salto tras JMP" ;
+    ns1:textoExtracto "Falta etiqueta de salto tras JMP. DETECCIÓN Durante la edición del programa PLC. CAUSA Falta la etiqueta en el comando JMP." .
+
+ns1:FaltaNombreDeSubrutinaTrasCAL a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta nombre de subrutina tras CAL" ;
+    ns1:textoExtracto "Falta nombre de subrutina tras CAL. DETECCIÓN Durante la edición del programa PLC. CAUSA Falta la subrutina en el comando CAL." .
+
+ns1:FaltaOperandoEnCPL_445f2ea7db a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta operando en CPL" ;
+    ns1:textoExtracto "'Falta operando en CPL' DETECCIÓN Durante la edición. CAUSA Falta el recurso en el comando CPL." .
+
+ns1:FaltaOperandoEnRES_4759ffa7ba a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta operando en RES" ;
+    ns1:textoExtracto "'Falta operando en RES' DETECCIÓN Durante la edición. CAUSA Falta el recurso en el comando RES." .
+
+ns1:FaltaOrigenODestinoEnElMOV_5bc6e12203 a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta origen o destino en el MOV" ;
+    ns1:textoExtracto "Falta origen o destino en el MOV. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:HaySolapamientoDeOrigenYDestinoEnElMOV a ns1:DiagnosticoFallo ;
+    rdfs:label "Hay solapamiento de origen y destino en el MOV" ;
+    ns1:textoExtracto "Hay solapamiento de origen y destino en el MOV. DETECCIÓN Durante la edición del programa PLC. CAUSA Algunos bits a mover comparten origen y destino." .
+

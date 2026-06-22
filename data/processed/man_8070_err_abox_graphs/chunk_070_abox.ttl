@@ -1,0 +1,48 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AbrirArchivoAntesDeEscribir a ns1:TareaMantenimiento ;
+    rdfs:label "Abrir archivo antes de escribir" ;
+    ns1:solucionaFallo ns1:ErrorAlEscribirEnArchivoNoAbierto ;
+    ns1:textoExtracto "El CNC tiene que abrir un archivo (#OPEN) para poder escribir en él (#WRITE)." .
+
+ns1:AjustarComandoTYPEAlFormatoDelArchivo a ns1:TareaMantenimiento ;
+    rdfs:label "Ajustar comando TYPE al formato del archivo" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_7661b19efd ;
+    ns1:textoExtracto "Al abrir un archivo con el comando 'A' (APPEND), el comando TYPE debe coincidir con el formato del archivo." .
+
+ns1:CierreONoAbraElMismoCanal a ns1:TareaMantenimiento ;
+    rdfs:label "Cierre o no abra el mismo canal" ;
+    ns1:solucionaFallo ns1:FicheroYaAbiertoPorOtroCanal ;
+    ns1:textoExtracto "Las posibles soluciones son las siguientes: • Cierre el archivo (#CLOSE). • No hace falta abrir el mismo canal en todos los canales." .
+
+ns1:ConvertirArchivoAFormatoUnicode a ns1:TareaMantenimiento ;
+    rdfs:label "Convertir archivo a formato Unicode" ;
+    ns1:solucionaFallo ns1:ModoAPPENDNoPermitidoSobreUnFicheroNoUnicode ;
+    ns1:textoExtracto "Convertir el archivo a formato Unicode con un editor de terceros." .
+
+ns1:RevisarProgramacionYLiberarEje a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación y liberar eje" ;
+    ns1:solucionaFallo ns1:EjeSetNoDisponibleEnElSistema ;
+    ns1:textoExtracto "Si el eje está en otro canal, liberarlo mediante la sentencia #FREE AX." .
+
+ns1:DiagnosticoFallo_7661b19efd a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro TYPE no se corresponde con el formato del fichero" ;
+    ns1:textoExtracto "El formato del archivo no coincide con el formato seleccionado en TYPE." .
+
+ns1:EjeSetNoDisponibleEnElSistema a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje/Set no disponible en el sistema" ;
+    ns1:textoExtracto "Las sentencias #SET AX o #CALL AX están intentando añadir al canal un eje inexistente o que está en otro canal." .
+
+ns1:ErrorAlEscribirEnArchivoNoAbierto a ns1:DiagnosticoFallo ;
+    rdfs:label "Error al escribir en archivo no abierto" ;
+    ns1:textoExtracto "El CNC ha intentado escribir (#WRITE) en un archivo que no está abierto." .
+
+ns1:FicheroYaAbiertoPorOtroCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "Fichero ya abierto por otro canal" ;
+    ns1:textoExtracto "Un canal ha intentado abrir un archivo que está abierto por otro canal." .
+
+ns1:ModoAPPENDNoPermitidoSobreUnFicheroNoUnicode a ns1:DiagnosticoFallo ;
+    rdfs:label "Modo APPEND no permitido sobre un fichero no Unicode" ;
+    ns1:textoExtracto "Un canal ha intentado abrir un archivo no-Unicode con modo de acceso 'APPEND'." .
+

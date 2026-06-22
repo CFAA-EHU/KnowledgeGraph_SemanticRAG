@@ -1,0 +1,60 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:_9317
+  a ex:AvisoSeguridad ;
+  rdfs:label "Grupo de ejes con dif. captaciones: todos los ejes SERCOS deben ser velocidad"@es ;
+  ex:identificador "9317" ;
+  ex:textoExtracto "Durante la validación de los parámetros máquina. CAUSA Hay algún grupo multieje cuyos ejes tienen diferente parámetro COUNTERID y los ejes no son Sercos velocidad. SOLUCIÓN Revisar los parámetros máquina. Todos los ejes de un grupo multieje deben tener el parámetro COUNTERID igual; si el parámetro no es igual, los ejes deben ser ejes Sercos"@es .
+
+ex:Deteccion
+  a ex:Alarma ;
+  rdfs:label "Detección"@es ;
+  ex:activaAlarma ex:_9317 .
+
+ex:Validacion
+  a ex:TareaMantenimiento ;
+  rdfs:label "Validación"@es ;
+  ex:ejecutadoPor ex:Personal ;
+  ex:requiereMantenimiento ex:Maquina .
+
+ex:Maquina
+  a ex:Maquina ;
+  rdfs:label "Máquina"@es ;
+  ex:tieneComponente ex:Eje ;
+  ex:tieneComponente ex:GrupoMultieje .
+
+ex:Eje
+  a ex:ComponenteMecanico ;
+  rdfs:label "Eje"@es ;
+  ex:tieneFrecuencia ex:Velocidad ;
+  ex:requiereMantenimiento ex:Validacion .
+
+ex:GrupoMultieje
+  a ex:Sistema ;
+  rdfs:label "Grupo multieje"@es ;
+  ex:compuestoPor ex:Eje ;
+  ex:tieneComponente ex:Parametro .
+
+ex:Parametro
+  a ex:Parametro ;
+  rdfs:label "Parámetro"@es ;
+  ex:identificador "COUNTERID" ;
+  ex:monitoreaParametro ex:Eje .
+
+ex:Velocidad
+  a ex:Frecuencia ;
+  rdfs:label "Velocidad"@es ;
+  ex:mitigaRiesgo ex:Alarma .
+
+ex:Sercos
+  a ex:Sistema ;
+  rdfs:label "Sercos"@es ;
+  ex:tieneComponente ex:Eje .
+
+ex:Solucion
+  a ex:DiagnosticoFallo ;
+  rdfs:label "Solución"@es ;
+  ex:solucionaFallo ex:Alarma .

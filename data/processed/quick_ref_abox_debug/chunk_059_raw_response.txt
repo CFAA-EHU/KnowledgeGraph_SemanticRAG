@@ -1,0 +1,79 @@
+```turtle
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+### Interfaz de Usuario (Softkeys y Utilidades)
+ex:InterfazUsuario_Softkeys
+    a ex:InterfazUsuario ;
+    rdfs:label "Interfaz de softkeys para navegación jerárquica"@es ;
+    ex:textoExtracto "Las softkeys actúan como nodos de decisión; la jerarquía visual guía la recuperación del estado antes de reanudar."@es ;
+    ex:ilustradoEn ex:Esquema_IconosAccionesTablas .
+
+ex:InterfazUsuario_UtilidadesArchivo
+    a ex:InterfazUsuario ;
+    rdfs:label "Cuadro de operaciones de archivos con iconos (Cut, Copy, Paste, etc.)"@es ;
+    ex:textoExtracto "Cuadro de operaciones de archivos con iconos (Cut, Copy, Paste, Rename, atributos -M- y -H-, Encrypt, Delete). La codificación por icono + rótulo identifica rápidamente la acción y su condición."@es ;
+    ex:identificador "M-H" .  # Atributos de protección/modificación
+
+ex:Esquema_IconosAccionesTablas
+    a ex:Esquema ;
+    rdfs:label "Hoja de referencia con iconos de acciones sobre tablas (cambio unidades, inicializar, buscar, etc.)"@es ;
+    ex:textoExtracto "Hoja de referencia con iconos de acciones sobre tablas de orígenes y utillajes: cambio de unidades, inicializar, buscar, ver otros canales, filtrar ejes, guardar/restaurar y imprimir."@es .
+
+---
+
+### Ciclos de Taladrado (Canned Cycles)
+ex:TareaMantenimiento_G81
+    a ex:TareaMantenimiento ;
+    rdfs:label "Ciclo fijo de taladrado (G81) en modo M"@es ;
+    ex:identificador "G81" ;
+    ex:textoExtracto "Corte seccional del taladro con broca descendiendo desde un plano de referencia 'Z', mostrando viñetas (G90/G91) con flechas verticales que indican profundidad 'I' y permanencia 'K' al fondo."@es ;
+    ex:ilustradoEn ex:Esquema_G81 ;
+    ex:controla ex:Parametro_ProfundidadG81, ex:Parametro_PermanenciaG81 .
+
+ex:TareaMantenimiento_G82
+    a ex:TareaMantenimiento ;
+    rdfs:label "Ciclo de taladrado con peck variable (G82) en modo M"@es ;
+    ex:identificador "G82" ;
+    ex:textoExtracto "Dos esquemas de taladrado a pecks con pasos 'B/H', plano de referencia 'Z' y retorno rápido (G0). Flechas segmentadas representan pecks sucesivos; el texto lateral ancla parámetros (R, L, J)."@es ;
+    ex:ilustradoEn ex:Esquema_G82 ;
+    ex:controla ex:Parametro_PeckG82, ex:Parametro_RetiradaVirutaG82 .
+
+ex:Esquema_G81
+    a ex:Esquema ;
+    rdfs:label "Diagrama seccional del ciclo G81 (taladrado absoluto/incremental)"@es ;
+    ex:textoExtracto "El sombreado de la pieza y las cotas ayudan a entender el avance y el retorno del husillo según sistema absoluto o incremental (G90/G91)."@es .
+
+ex:Esquema_G82
+    a ex:Esquema ;
+    rdfs:label "Diagrama de taladrado a pecks (G82) con geometría de retirada de viruta"@es ;
+    ex:textoExtracto "Flechas segmentadas representan pecks sucesivos; la geometría ilustra la retirada periódica para evacuar viruta."@es .
+
+ex:Parametro_ProfundidadG81
+    a ex:Parametro ;
+    rdfs:label "Parámetro de profundidad (I) en ciclo G81"@es ;
+    ex:identificador "I" ;
+    ex:valor "Profundidad de taladro"@es ;
+    ex:textoExtracto "flechas verticales que indican profundidad 'I' al fondo."@es .
+
+ex:Parametro_PermanenciaG81
+    a ex:Parametro ;
+    rdfs:label "Parámetro de permanencia (K) en ciclo G81"@es ;
+    ex:identificador "K" ;
+    ex:valor "Tiempo de permanencia en fondo"@es ;
+    ex:textoExtracto "flechas verticales [...] permanencia 'K' al fondo."@es .
+
+ex:Parametro_PeckG82
+    a ex:Parametro ;
+    rdfs:label "Parámetro de pasos de peck (B/H) en ciclo G82"@es ;
+    ex:identificador "B/H" ;
+    ex:valor "Altura/incremento por peck"@es ;
+    ex:textoExtracto "pasos 'B/H' [...] flechas segmentadas representan pecks sucesivos."@es .
+
+ex:Parametro_RetiradaVirutaG82
+    a ex:Parametro ;
+    rdfs:label "Parámetros de retirada (R, L, J) en ciclo G82"@es ;
+    ex:identificador "R-L-J" ;
+    ex:valor "Retirada para evacuación de viruta"@es ;
+    ex:textoExtracto "el texto lateral ancla parámetros (R, L, J) [...] retirada periódica para evacuar viruta."@es .
+```

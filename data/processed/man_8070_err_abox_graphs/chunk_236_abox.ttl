@@ -1,0 +1,32 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CNC8070_09d4278832 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:FaltaAsociarSubrutina,
+        ns1:GenerarDeNuevoLaCajera_322c476ae4,
+        ns1:NumeroDeCanalNoValido ;
+    ns1:textoExtracto "CNC 8070" .
+
+ns1:Parametro_acbcd8edea a ns1:Parametro ;
+    rdfs:label "Parámetro para definir subrutina asociada" ;
+    ns1:textoExtracto "(parámetro REFPSUB)" .
+
+ns1:RevisarLaProgramacion_eb9e55a532 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FaltaAsociarSubrutina,
+        ns1:GenerarDeNuevoLaCajera_322c476ae4 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque." .
+
+ns1:NumeroDeCanalNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de canal no válido" ;
+    ns1:textoExtracto "'Número de canal no válido' CAUSA Número de canal no válido en la sentencia #EXEC, #MEET o #WAIT." .
+
+ns1:FaltaAsociarSubrutina a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta asociar subrutina" ;
+    ns1:textoExtracto "'G74: falta asociar subrutina' CAUSA Hay programada una función G74 sola en el bloque y no existe la subrutina asociada." .
+
+ns1:GenerarDeNuevoLaCajera_322c476ae4 a ns1:DiagnosticoFallo ;
+    rdfs:label "Generar de nuevo la cajera" ;
+    ns1:textoExtracto "'G74: falta asociar subrutina' SOLUCIÓN Programar junto a la función G74 los ejes a referenciar o definir la subrutina asociada (parámetro REFPSUB)." .
+

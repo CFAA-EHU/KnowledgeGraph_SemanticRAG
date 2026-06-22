@@ -1,0 +1,45 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:Tabla_MFunctions a ex:Tabla ;
+    rdfs:label "Tabla de funciones auxiliares M"@en ;
+    ex:textoExtracto "Function | Meaning --- M00 | Program stop. M01 | Conditional program stop. M02/M30 | End of program. M03 | Start the spindle clockwise. M04 | Start the spindle counteclockwise. M05 | Stop the spindle. M06 | Tool change. M17/M29 | End of a global or local subroutine. M19 | Spindle orientation. M41-M44 | Gear change."@en ;
+    ex:identificador "M-Functions" .
+
+ex:ModoOperacion_M03 a ex:ModoOperacion ;
+    rdfs:label "M03 - Start spindle clockwise"@en ;
+    ex:textoExtracto "M03 | Start the spindle clockwise."@en ;
+    ex:identificador "M03" ;
+    ex:documentadoEn ex:Tabla_MFunctions .
+
+ex:ModoOperacion_M04 a ex:ModoOperacion ;
+    rdfs:label "M04 - Start spindle counterclockwise"@en ;
+    ex:textoExtracto "M04 | Start the spindle counteclockwise."@en ;
+    ex:identificador "M04" ;
+    ex:documentadoEn ex:Tabla_MFunctions .
+
+ex:ModoOperacion_M05 a ex:ModoOperacion ;
+    rdfs:label "M05 - Stop spindle"@en ;
+    ex:textoExtracto "M05 | Stop the spindle."@en ;
+    ex:identificador "M05" ;
+    ex:documentadoEn ex:Tabla_MFunctions .
+
+ex:ModoOperacion_M41_M44 a ex:ModoOperacion ;
+    rdfs:label "M41-M44 - Gear change"@en ;
+    ex:textoExtracto "M41-M44 | Gear change."@en ;
+    ex:identificador "M41-M44" ;
+    ex:documentadoEn ex:Tabla_MFunctions .
+
+ex:ComponenteMecanico_Spindle a ex:ComponenteMecanico ;
+    rdfs:label "Spindle"@en ;
+    ex:textoExtracto "M03 | Start the spindle clockwise. M04 | Start the spindle counteclockwise. M05 | Stop the spindle."@en ;
+    ex:controla ex:ModoOperacion_M03 ;
+    ex:controla ex:ModoOperacion_M04 ;
+    ex:controla ex:ModoOperacion_M05 .
+
+ex:ComponenteMecanico_GearSystem a ex:ComponenteMecanico ;
+    rdfs:label "Gear system"@en ;
+    ex:textoExtracto "M41-M44 | Gear change."@en ;
+    ex:controla ex:ModoOperacion_M41_M44 .

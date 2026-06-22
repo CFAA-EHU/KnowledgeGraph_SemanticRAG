@@ -1,0 +1,29 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CNC8070_33fa2d06b9 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:documentadoEn ns1:ProgramaAuxiliarEnLenguajeC,
+        ns1:ProgramaPrincipalDelPLCEnLenguajeDeMnemonicos ;
+    ns1:textoExtracto "El programa de PLC puede combinar varios ficheros en lenguaje de mnemónicos (extensión \"plc\"), varios ficheros en lenguaje C (extensión \"c\") y un fichero en lenguaje de contactos (extensión \"ld\")." .
+
+ns1:ProgramaAuxiliarEnLenguajeC a ns1:Parametro ;
+    rdfs:label "Programa auxiliar en lenguaje C" ;
+    ns1:identificador "Lenguajec.c" ;
+    ns1:textoExtracto """#include "plclib.h"
+void SUMA (void)
+R203=R201+R202""" .
+
+ns1:ProgramaPrincipalDelPLCEnLenguajeDeMnemonicos a ns1:Parametro ;
+    rdfs:label "Programa principal del PLC en lenguaje de mnemónicos" ;
+    ns1:identificador "Mnemónicos.plc" ;
+    ns1:textoExtracto """Mnemónicos.plc
+PRG
+()= MOV 1234 R201 = MOV 2345 R202
+()= CAL SUMA
+···
+END
+SUB SUMA
+()= ADS R201 R202 R203
+END""" .
+

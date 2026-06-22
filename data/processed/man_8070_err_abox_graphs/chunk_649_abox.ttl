@@ -1,0 +1,40 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:ErrorEnComandoDePreparacionDelBus_8dc14d3ccf a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en comando de preparación del bus" ;
+    ns1:textoExtracto "4606 Error en comando de preparación del bus. DETECCIÓN Durante el arranque del CNC." .
+
+ns1:ErrorEnLaFaseDeConfiguracionDelBus_3507e562cf a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la fase de configuración del bus" ;
+    ns1:solucionaFallo ns1:PongaseEnContactoConFagorAutomation ;
+    ns1:textoExtracto "4603 Error en la fase de configuración del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la fase de configuración de esclavos conectados al bus." .
+
+ns1:ErrorEnLaFaseOperacionalDelBus a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la fase operacional del bus" ;
+    ns1:solucionaFallo ns1:RevisarErroresAdicionalesQuePuedaEstarReportandoElCNC,
+        ns1:SiElErrorSeRepitePongaseEnContactoConFagorAutomation,
+        ns1:VolverAGenerarElArchivoENIDeConfiguracionUtilizandoLaHerramientaKPA ;
+    ns1:textoExtracto "4605 Error en la fase operacional del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la transición a la fase operacional del bus." .
+
+ns1:ErrorEnLaFasePreoperacionalDelBus a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la fase preoperacional del bus" ;
+    ns1:solucionaFallo ns1:SiElErrorSeRepitePongaseEnContactoConFagorAutomation ;
+    ns1:textoExtracto "4604 Error en la fase preoperacional del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la transición a la fase preoperacional del bus." .
+
+ns1:PongaseEnContactoConFagorAutomation a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor Automation." .
+
+ns1:RevisarErroresAdicionalesQuePuedaEstarReportandoElCNC a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar errores adicionales que pueda estar reportando el CNC" ;
+    ns1:textoExtracto "Alguno de los esclavos conectados al bus puede estar en estado de error. Revisar errores adicionales que pueda estar reportando el CNC para diagnosticar que puede estar causando el error." .
+
+ns1:VolverAGenerarElArchivoENIDeConfiguracionUtilizandoLaHerramientaKPA a ns1:TareaMantenimiento ;
+    rdfs:label "Volver a generar el archivo ENI de configuración utilizando la herramienta KPA" ;
+    ns1:textoExtracto "Volver a generar el archivo ENI de configuración utilizando la herramienta KPA, siguiendo los pasos adecuados para generar el archivo. Realizar un 'Detach Master' en el configurador KPA antes de exportar el fichero ENI." .
+
+ns1:SiElErrorSeRepitePongaseEnContactoConFagorAutomation a ns1:AccionProhibida ;
+    rdfs:label "Si el error se repite, póngase en contacto con Fagor Automation" ;
+    ns1:textoExtracto "Si el error se repite, póngase en contacto con Fagor Automation." .
+

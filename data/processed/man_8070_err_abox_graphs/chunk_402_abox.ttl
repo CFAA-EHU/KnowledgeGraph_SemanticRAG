@@ -1,0 +1,35 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:BloqueDeMovimientoLinealDespuesDeG40 a ns1:TareaMantenimiento ;
+    rdfs:label "Bloque de movimiento lineal después de G40" ;
+    ns1:solucionaFallo ns1:LaCompensacionDeRadioNoPuedeAcabarEnUnBloqueCircular_c39f11ce47 ;
+    ns1:textoExtracto "La compensación de radio debe acabar en un bloque de movimiento lineal. Por tanto, el bloque de movimiento que vaya a continuación de G40 debe ser un bloque de movimiento lineal." .
+
+ns1:CambiarElTipoDeCompensacionSobreUnaTrayectoriaLineal a ns1:TareaMantenimiento ;
+    rdfs:label "Cambiar el tipo de compensación sobre una trayectoria lineal" ;
+    ns1:solucionaFallo ns1:ElCambioDeCompensacionG41G42DebeHacerseEnUnaTrayectoriaLineal ;
+    ns1:textoExtracto "No se permite cambiar el tipo de compensación de radio si el siguiente bloque de movimiento es un arco. Cambiar el tipo de compensación de radio sobre una trayectoria lineal." .
+
+ns1:ProgramarUnBloqueAdicionalDeMovimientoEnElPlano a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un bloque adicional de movimiento en el plano" ;
+    ns1:solucionaFallo ns1:ConG138NoSeAdmiteCambioG41G42TrasElPrimerBloqueDeCompensacion,
+        ns1:ConG138NoSeAdmiteG40TrasElPrimerBloqueDeCompensacion ;
+    ns1:textoExtracto "Para activar la compensación de radio con el modo directo (G138), el CNC necesita un bloque de movimiento adicional en el plano, además del bloque de activación. Después de este desplazamiento, el CNC permite cancelar la compensación de radio." .
+
+ns1:ConG138NoSeAdmiteCambioG41G42TrasElPrimerBloqueDeCompensacion a ns1:DiagnosticoFallo ;
+    rdfs:label "Con G138 no se admite cambio G41/G42 tras el primer bloque de compensación" ;
+    ns1:textoExtracto "Tras activar la compensación de radio con el modo directo (G138), hay programado un cambio del tipo de compensación (de G41 a G42 o viceversa) antes del primer bloque de desplazamiento." .
+
+ns1:ConG138NoSeAdmiteG40TrasElPrimerBloqueDeCompensacion a ns1:DiagnosticoFallo ;
+    rdfs:label "Con G138 no se admite G40 tras el primer bloque de compensación" ;
+    ns1:textoExtracto "Tras activar la compensación de radio con el modo directo (G138), hay programada una cancelación de la compensación antes del primer bloque de desplazamiento." .
+
+ns1:ElCambioDeCompensacionG41G42DebeHacerseEnUnaTrayectoriaLineal a ns1:DiagnosticoFallo ;
+    rdfs:label "El cambio de compensación (G41/G42) debe hacerse en una trayectoria lineal" ;
+    ns1:textoExtracto "El programa ha cambiado el tipo de compensación de radio (de G41 a G42 o viceversa) y el siguiente bloque de movimiento es un bloque circular." .
+
+ns1:LaCompensacionDeRadioNoPuedeAcabarEnUnBloqueCircular_c39f11ce47 a ns1:DiagnosticoFallo ;
+    rdfs:label "La compensación de radio no puede acabar en un bloque circular" ;
+    ns1:textoExtracto "La compensación de radio no puede acabar en un bloque circular." .
+

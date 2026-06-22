@@ -1,0 +1,51 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CaptadorE21B a ns1:Componente ;
+    rdfs:label "Captador E21B" ;
+    ns1:textoExtracto "Error en la lectura de la cota absoluta; no se recibió acknowledge. Compruebe el cable y el conexionado con el captador." .
+
+ns1:ComprobarCableYConexionConElCaptador a ns1:AccionProhibida ;
+    rdfs:label "Comprobar cable y conexión con el captador" ;
+    ns1:mitigaRiesgo ns1:SistemaRCS_S ;
+    ns1:textoExtracto "Compruebe el cable y el conexionado con la regla ó el encoder." .
+
+ns1:ContactarConFagorAutomation_52c3dd5fe8 a ns1:AccionProhibida ;
+    rdfs:label "Contactar con Fagor Automation" ;
+    ns1:mitigaRiesgo ns1:SistemaRCS_S ;
+    ns1:textoExtracto "Si el problema persiste, contacte con Fagor Automation." .
+
+ns1:VerificarConexionEntreModuloABSINDYContadoraSercos a ns1:AccionProhibida ;
+    rdfs:label "Verificar conexión entre módulo ABSIND y contadora Sercos" ;
+    ns1:mitigaRiesgo ns1:SistemaRCS_S ;
+    ns1:textoExtracto "Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y la contadora Sercos asociado a esa captación." .
+
+ns1:VerificarParametrizacionDelCaptador_537e34be58 a ns1:AccionProhibida ;
+    rdfs:label "Verificar parametrización del captador" ;
+    ns1:mitigaRiesgo ns1:SistemaRCS_S ;
+    ns1:textoExtracto "Verifique la correcta parametrización del captador." .
+
+ns1:VerificarSincronizacionEntreContadoraSercosYModuloABSIND a ns1:AccionProhibida ;
+    rdfs:label "Verificar sincronización entre contadora Sercos y módulo ABSIND" ;
+    ns1:mitigaRiesgo ns1:SistemaRCS_S ;
+    ns1:textoExtracto "Se ha perdido la sincronización entre la contadora Sercos y el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta." .
+
+ns1:ABSINDErrorDeSincronismoEnCaptacionE21B a ns1:Alarma ;
+    rdfs:label "ABSIND: Error de sincronismo en captación E21B" ;
+    ns1:textoExtracto "E245 ABSIND: Error de sincronismo en captación E21B." .
+
+ns1:CRCIncorrectoEnCaptacionE21B a ns1:Alarma ;
+    rdfs:label "CRC incorrecto en captación E21B" ;
+    ns1:textoExtracto "E243 Error de comunicación en captación E21B. CRC incorrecto." .
+
+ns1:NoSeRecibioAcknowledgeEnCaptacionE21B a ns1:Alarma ;
+    rdfs:label "No se recibió acknowledge en captación E21B" ;
+    ns1:textoExtracto "E244 Error de comunicación en captación E21B. No se recibió acknowledge." .
+
+ns1:SistemaRCS_S a ns1:Sistema ;
+    rdfs:label "Módulo RCS-S" ;
+    ns1:activaAlarma ns1:ABSINDErrorDeSincronismoEnCaptacionE21B,
+        ns1:CRCIncorrectoEnCaptacionE21B,
+        ns1:NoSeRecibioAcknowledgeEnCaptacionE21B ;
+    ns1:textoExtracto "Sección: MÓDULO RCS-S." .
+

@@ -1,0 +1,45 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:ControlDeDesplazamientosDeDispositivos a ns1:TareaMantenimiento ;
+    rdfs:label "Control de Desplazamientos de Dispositivos" ;
+    ns1:ejecutadoPor ns1:CNC8070_5ef3b83dee ;
+    ns1:textoExtracto "Utilizar funciones auxiliares para gobernar desde la rutina M06 los desplazamientos de los distintos dispositivos (giro almacén, desplazamiento almacén, brazo cambiador, etc.)." .
+
+ns1:EsperarCambioDeHerramienta a ns1:AccionProhibida ;
+    rdfs:label "Esperar Cambio de Herramienta" ;
+    ns1:textoExtracto "El CNC espera a que el gestor de por finalizada la operación para continuar con la ejecución del programa." .
+
+ns1:GestionDelCambioDeHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Gestión del Cambio de Herramienta" ;
+    ns1:ejecutadoPor ns1:CNC8070_5ef3b83dee ;
+    ns1:textoExtracto "Se aconseja incluir la gestión del cambio de herramienta en la rutina asociada a M06 y dejar como labor del PLC el control de los dispositivos externos." .
+
+ns1:NoEsperarCambioDeHerramienta a ns1:AccionProhibida ;
+    rdfs:label "No Esperar Cambio de Herramienta" ;
+    ns1:textoExtracto "El CNC continúa con la ejecución del programa, no espera a que el gestor de por finalizada la operación." .
+
+ns1:Parametro_78e25a06f2 a ns1:Parametro ;
+    rdfs:label "Función M06" ;
+    ns1:identificador "M06" ;
+    ns1:textoExtracto "Dentro de dicha rutina hay que volver a programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta." .
+
+ns1:Parametro_9eb0d1cf51 a ns1:Parametro ;
+    rdfs:label "Función T" ;
+    ns1:identificador "T" ;
+    ns1:textoExtracto "Cuando el CNC ejecuta la función T, se lo indica al gestor." .
+
+ns1:SistemaGestor a ns1:Sistema ;
+    rdfs:label "Sistema Gestor" ;
+    ns1:textoExtracto "El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén." .
+
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "El gestor envía una orden al PLC para efectuar el cambio." .
+
+ns1:CNC8070_5ef3b83dee a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controladoPor ns1:SistemaGestor,
+        ns1:SistemaPLC ;
+    ns1:textoExtracto "La comunicación entre el gestor y el PLC se realiza en 2 fases; la primera con la ejecución de la función T y la segunda con la ejecución de la función M06." .
+

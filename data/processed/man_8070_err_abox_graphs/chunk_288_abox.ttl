@@ -1,0 +1,43 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:AccionProhibida_1325bb823a a ns1:AccionProhibida ;
+    rdfs:label "Acción prohibida de cambiar el plano activo en un torno con configuración de ejes tipo plano" ;
+    ns1:textoExtracto "En un torno con configuración de ejes tipo plano, el plano activo siempre es G18" .
+
+ns1:AccionProhibida_86fda2b477 a ns1:AccionProhibida ;
+    rdfs:label "Acción prohibida de utilizar cabezal master SERCOS en posición para sincronización en lazo cerrado" ;
+    ns1:textoExtracto "Un cabezal configurado como Sercos posición no se puede sincronizar en lazo cerrado" .
+
+ns1:AvisoSeguridad_95c40ea801 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para ciclo de torno sin ejes" ;
+    ns1:mitigaRiesgo ns1:FalloConfiguracionCicloTorno ;
+    ns1:textoExtracto "'Para ejecutar un ciclo de torno son necesarios dos ejes en el canal'" .
+
+ns1:AvisoSeguridad_9b5980c3ba a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para cambio de plano activo en torno XZ" ;
+    ns1:mitigaRiesgo ns1:FalloCambioPlanoTrabajo ;
+    ns1:textoExtracto "'En el modelo TORNO XZ no hay cambio de plano activo'" .
+
+ns1:AvisoSeguridad_e808ca3d66 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para cabezal master SERCOS en posición" ;
+    ns1:mitigaRiesgo ns1:FalloSincronizacionCabezalMaster ;
+    ns1:textoExtracto "'Un cabezal master SERCOS en POSICIÓN no admite CLOOP'" .
+
+ns1:TareaMantenimiento_790f467cf5 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de mantenimiento para configurar los ejes necesarios para ejecutar ciclos de torno" ;
+    ns1:solucionaFallo ns1:FalloConfiguracionCicloTorno ;
+    ns1:textoExtracto "Para ejecutar los ciclos de torno hacen falta dos ejes en el canal" .
+
+ns1:FalloCambioPlanoTrabajo a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo al intentar cambiar el plano de trabajo en un torno con configuración de ejes tipo plano" ;
+    ns1:textoExtracto "El CNC ha intentado cambiar el plano de trabajo en un torno con configuración de ejes tipo plano" .
+
+ns1:FalloSincronizacionCabezalMaster a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo de sincronización del cabezal master SERCOS" ;
+    ns1:textoExtracto "Un cabezal configurado como Sercos posición no se puede sincronizar en lazo cerrado" .
+
+ns1:FalloConfiguracionCicloTorno a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo de configuración para ciclo de torno" ;
+    ns1:textoExtracto "Hay programado un ciclo de torno en un canal con menos de dos ejes o bien el primer eje no es longitudinal (parámetro LONGAXIS) o el segundo eje no es frontal (parámetro FACEAXIS)" .
+

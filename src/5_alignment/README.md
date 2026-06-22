@@ -1,21 +1,11 @@
-# src/5_alignment - Alineamiento experimental de A-Box
+# src/5_alignment
 
-Este directorio contiene utilidades experimentales de alineamiento semantico de instancias A-Box.
+Experimental semantic reduction for ontology alignment. Not part of the default operational runtime.
 
-## Estado actual
+## Files
 
-- `semantic_reduction.py` no forma parte del runtime operativo actual.
-- Se conserva solo para pruebas de deduplicacion y consolidacion fuera del carril oficial.
+- `semantic_reduction.py` — applies reduction rules to a merged ontology to eliminate redundant or conflicting declarations.
 
-## Inputs y outputs
+## Status
 
-Lee:
-- `data/processed/abox_linked.ttl`
-
-Genera:
-- `data/processed/abox_aligned.ttl`
-
-## Importante
-
-- El runtime operativo consume `ontology_aligned.ttl` y `abox_linked.ttl`.
-- `abox_aligned.ttl` es un artefacto experimental y no se usa en consulta, evaluacion ni GraphDB por defecto.
+Retained for experimental use. Operational T-Box alignment is performed on `data/processed/ontology_aligned.ttl`, which is maintained manually and published as the authoritative T-Box.

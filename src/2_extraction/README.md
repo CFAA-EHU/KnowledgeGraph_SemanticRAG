@@ -1,42 +1,12 @@
-# src/2_extraction - Carril experimental T-Box
+# src/2_extraction
 
-Este directorio se conserva como tooling experimental para generar prompts T-Box y extraer TTLs conceptuales con LLM.
+Experimental T-Box extractor using MistralAI. Not part of the default operational runtime.
 
-## Estado actual
+## Files
 
-No forma parte del runtime operativo actual.
+- `llm_extractor.py` — async extractor that sends chunk prompts to the Mistral API and parses Turtle responses. Requires `MISTRAL_API_KEY` environment variable.
+- `prompt_assembler.py` — assembles prompts for T-Box extraction from chunk data.
 
-El runtime vigente se construye con:
-- `run_operational_pipeline.py`
-- `src/6_extraction/`
-- `src/8_retrieval/`
-- `src/7_database/`
+## Status
 
-Este modulo sigue siendo util para:
-- regenerar prompts T-Box con vocabulario controlado
-- comparar salidas TTL exploratorias antes de integrarlas en el carril operativo
-- hacer pruebas aisladas sobre modelado conceptual
-
-## Scripts
-
-### `prompt_assembler.py`
-- lee `density_report.json` y `cache/terms_cache.json`
-- monta prompts T-Box con vocabulario controlado
-- genera `data/processed/tbox_prompts.json`
-
-### `llm_extractor.py`
-- consume `data/processed/tbox_prompts.json`
-- llama al modelo configurado
-- valida sintaxis Turtle con `rdflib`
-- guarda TTLs en `data/processed/graphs/`
-
-## Artefactos
-
-- `data/processed/tbox_prompts.json`
-- `data/processed/graphs/*.ttl`
-
-## Importante
-
-- Este carril es experimental y no define el runtime por defecto.
-- Los TTLs generados aqui no se publican automaticamente en GraphDB ni se usan en el evaluador formal.
-- Si se usa este modulo, debe tratarse como una exploracion separada del carril operativo A-Box.
+This lane is retained for experimental use only. The operational A-Box extraction pipeline is in `src/6_extraction/`. T-Box prompts and merged ontology outputs from this lane (`data/processed/tbox_prompts.json`, `data/processed/ontology_merged.ttl`) are classified as experimental artifacts and are not consumed by the runtime.

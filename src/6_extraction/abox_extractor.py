@@ -443,58 +443,58 @@ ex:mitigaRiesgo
 """.strip()
 
 
-def aislar_sintaxis_ttl(respuesta_llm: str) -> str:
-    patron = r"`{3}(?:turtle|ttl)?\n(.*?)`{3}"
-    match = re.search(patron, respuesta_llm, re.DOTALL | re.IGNORECASE)
-    return match.group(1).strip() if match else respuesta_llm.strip()
+def extract_ttl_syntax(llm_response: str) -> str:
+    pattern = r"`{3}(?:turtle|ttl)?\n(.*?)`{3}"
+    match = re.search(pattern, llm_response, re.DOTALL | re.IGNORECASE)
+    return match.group(1).strip() if match else llm_response.strip()
 
 
-def es_chunk_pagina_en_blanco(chunk_data: dict) -> bool:
-    texto = (chunk_data.get("texto_fuente") or "").strip().lower()
-    return texto in {"pagina en blanco", "página en blanco", "blank page"}
+def is_blank_page_chunk(chunk_data: dict) -> bool:
+    text = (chunk_data.get("texto_fuente") or "").strip().lower()
+    return text in {"pagina en blanco", "página en blanco", "blank page"}
 
 
-def es_chunk_no_informativo(chunk_data: dict) -> bool:
-    texto = " ".join((chunk_data.get("texto_fuente") or "").strip().split())
-    if not texto:
+def is_non_informative_chunk(chunk_data: dict) -> bool:
+    text = " ".join((chunk_data.get("texto_fuente") or "").strip().split())
+    if not text:
         return True
-    if es_chunk_pagina_en_blanco(chunk_data):
+    if is_blank_page_chunk(chunk_data):
         return False
-    if re.search(r"[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]", texto):
+    if re.search(r"[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]", text):
         return False
-    compact = re.sub(r"\s+", "", texto)
+    compact = re.sub(r"\s+", "", text)
     return len(compact) <= 12 and bool(re.fullmatch(r"[\d\W_]+", compact))
 
 
-def construir_ttl_pagina_en_blanco(chunk_data: dict) -> str:
-    paginas = (chunk_data.get("paginas") or "sin_pagina").strip("[]")
-    paginas_slug = re.sub(r"[^A-Za-z0-9_]+", "_", paginas).strip("_") or "sin_pagina"
-    label = f"Página en blanco {chunk_data.get('paginas', '')}".strip()
-    texto_extracto = chunk_data.get("texto_fuente", "PÁGINA EN BLANCO")
+def build_blank_page_ttl(chunk_data: dict) -> str:
+    pages = (chunk_data.get("paginas") or "no_page").strip("[]")
+    pages_slug = re.sub(r"[^A-Za-z0-9_]+", "_", pages).strip("_") or "no_page"
+    label = f"Blank page {chunk_data.get('paginas', '')}".strip()
+    text_extract = chunk_data.get("texto_fuente", "BLANK PAGE")
     return (
         f'@prefix ex: <{BASE_URI}> .\n'
         '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n'
-        f'ex:PaginaEnBlanco_{paginas_slug} a ex:Pagina ;\n'
+        f'ex:BlankPage_{pages_slug} a ex:Pagina ;\n'
         f'    rdfs:label "{label}" ;\n'
-        f'    ex:textoExtracto "{texto_extracto}" .\n'
+        f'    ex:textoExtracto "{text_extract}" .\n'
     )
 
 
-def construir_ttl_chunk_no_informativo(chunk_data: dict) -> str:
-    paginas = (chunk_data.get("paginas") or "sin_pagina").strip("[]")
-    paginas_slug = re.sub(r"[^A-Za-z0-9_]+", "_", paginas).strip("_") or "sin_pagina"
-    seccion = " ".join((chunk_data.get("seccion") or "").split())
-    label = f"Página {paginas} - fragmento no informativo".strip()
-    if seccion:
-        label = f"{label} ({seccion[:80]})"
-    texto_extracto = f"Fragmento no informativo detectado en la página {paginas or 'sin página'}."
+def build_non_informative_chunk_ttl(chunk_data: dict) -> str:
+    pages = (chunk_data.get("paginas") or "no_page").strip("[]")
+    pages_slug = re.sub(r"[^A-Za-z0-9_]+", "_", pages).strip("_") or "no_page"
+    section = " ".join((chunk_data.get("seccion") or "").split())
+    label = f"Page {pages} - non-informative fragment".strip()
+    if section:
+        label = f"{label} ({section[:80]})"
+    text_extract = f"Non-informative fragment detected on page {pages or 'unknown'}."
     return (
         f'@prefix ex: <{BASE_URI}> .\n'
         '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n'
-        f'ex:PaginaNoInformativa_{paginas_slug} a ex:Pagina ;\n'
+        f'ex:NonInformativePage_{pages_slug} a ex:Pagina ;\n'
         f'    rdfs:label "{label}" ;\n'
-        f'    ex:identificador "{paginas or "sin_pagina"}" ;\n'
-        f'    ex:textoExtracto "{texto_extracto}" .\n'
+        f'    ex:identificador "{pages or "no_page"}" ;\n'
+        f'    ex:textoExtracto "{text_extract}" .\n'
     )
 
 
@@ -1119,12 +1119,12 @@ async def procesar_chunk_abox(
         last_model_name = PRIMARY_MODEL
         attempted_models: tuple[str, ...] = tuple()
 
-        if es_chunk_pagina_en_blanco(chunk_data) or es_chunk_no_informativo(chunk_data):
-            if es_chunk_pagina_en_blanco(chunk_data):
-                ttl_puro = construir_ttl_pagina_en_blanco(chunk_data)
+        if is_blank_page_chunk(chunk_data) or is_non_informative_chunk(chunk_data):
+            if is_blank_page_chunk(chunk_data):
+                ttl_puro = build_blank_page_ttl(chunk_data)
                 placeholder_error = "pagina_en_blanco_placeholder_invalid"
             else:
-                ttl_puro = construir_ttl_chunk_no_informativo(chunk_data)
+                ttl_puro = build_non_informative_chunk_ttl(chunk_data)
                 placeholder_error = "chunk_no_informativo_placeholder_invalid"
             async with mint_registry_lock:
                 ttl_puro, sanitization_report = sanitize_generated_ttl(
@@ -1188,7 +1188,7 @@ async def procesar_chunk_abox(
                 if retry_profile.request_spacing_seconds > 0:
                     await asyncio.sleep(retry_profile.request_spacing_seconds)
                 last_raw_response = contenido
-                ttl_puro = aislar_sintaxis_ttl(contenido)
+                ttl_puro = extract_ttl_syntax(contenido)
                 if not ttl_puro.strip():
                     last_error_cause = "empty_response"
                     last_error_message = "La respuesta del modelo llego vacia tras aislar el TTL."

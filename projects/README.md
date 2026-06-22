@@ -1,14 +1,10 @@
-# Project Groupings
+# projects
 
-This area makes retained project-specific scopes visible without moving live runtime paths that the current rebuild still depends on.
+Contains project-specific scope declarations for reference projects retained within the reusable framework repository.
 
-The reusable core remains rooted in the main repository paths and operational entrypoints. Project groupings here are canonical boundary markers for future extraction into dedicated repositories.
+## broaching-cnc-8070
 
-Current grouping:
+Active reference project: broaching machine and Fagor CNC 8070 manuals. Retained for operational validation and rebuild compatibility.
 
-- `broaching-cnc-8070/`: retained reference project for the accepted broaching and CNC 8070 manual corpus, golden sets, project-tuned retrieval modules, and accepted manual-level processed artifacts.
-
-Compatibility notes:
-
-- Live project inputs still remain in `data/raw/`, `data/golden_set/`, `cache/terms_cache.json`, and accepted manual-specific `data/processed/*` paths.
-- Groupings here are documentary and contractual. They do not replace the current live operational paths.
+- `broaching-cnc-8070/project_scope_manifest.json` — canonical boundary declaration for this project
+- `broaching-cnc-8070/README.md` — project description and artifact inventory

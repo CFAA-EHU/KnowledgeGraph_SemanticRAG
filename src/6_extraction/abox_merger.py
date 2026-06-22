@@ -149,7 +149,7 @@ def validate_merged_uri_consistency(graph: Graph, *, tbox_graph: Graph, output_p
             + "\n",
             encoding="utf-8",
         )
-        print(f"Aviso: se detectaron colisiones de URI candidatas a resolución canónica. Ver {report_path}")
+        print(f"Warning: URI collisions detected as candidates for canonical resolution. See {report_path}")
     elif report_path.exists():
         report_path.unlink()
 
@@ -322,7 +322,7 @@ def merge_from_directory(
     rejected_inputs = rejected_inputs if rejected_inputs is not None else []
     warned_inputs = warned_inputs if warned_inputs is not None else []
 
-    print(f"Iniciando consolidacion de {len(archivos_ttl)} fragmentos A-Box desde {input_dir}...")
+    print(f"Merging {len(archivos_ttl)} A-Box fragments from {input_dir} ...")
     for archivo in archivos_ttl:
         try:
             chunk_graph = load_ttl_graph(archivo)

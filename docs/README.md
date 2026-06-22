@@ -1,53 +1,26 @@
 # docs
 
-Indice de la documentacion contractual y operativa del repositorio.
+Index of contractual and operational documentation for the repository.
 
-## Empieza por aqui
+## Start here
 
-- [README.md](..\README.md)
-  Vista general del framework, frontera entre core reusable y contenido project-specific, entrypoints oficiales y contrato vivo del runtime.
+- [../README.md](../README.md) — framework overview, core vs. project-specific boundary, entrypoints, runtime contract
+- [operational_pipeline_runbook.md](operational_pipeline_runbook.md) — stable operational path for rebuild, onboarding, evaluation, query, and GraphDB
+- [operational_artifact_contract.md](operational_artifact_contract.md) — artifact contract for the operational lane
 
-- [operational_pipeline_runbook.md](operational_pipeline_runbook.md)
-  Camino operativo estable para rebuild, onboarding puntual, evaluacion, consulta y GraphDB.
+## Module documentation
 
-- [operational_artifact_contract.md](operational_artifact_contract.md)
-  Contrato de artefactos del carril operativo.
+- [../src/6_extraction/README.md](../src/6_extraction/README.md) — A-Box build pipeline and structural snapshot semantics
+- [../src/7_database/README.md](../src/7_database/README.md) — local RDF backend, GraphDB mirror, publication and healthcheck
+- [../src/8_retrieval/README.md](../src/8_retrieval/README.md) — planner, retrieval, synthesis, evaluation, query workbench
 
-- [..\projects\broaching-cnc-8070\README.md](..\projects\broaching-cnc-8070\README.md)
-  Frontera canonica del proyecto de referencia retenido dentro del repo reusable.
+## Documentation contract
 
-## Documentacion modular
+The repository documentation must always communicate:
 
-- [src/6_extraction/README.md](..\src\6_extraction\README.md)
-  Construccion operativa del A-Box y significado de cada snapshot estructural.
-
-- [src/7_database/README.md](..\src\7_database\README.md)
-  Backend RDF local, mirror GraphDB y utilidades de publicacion y healthcheck.
-
-- [src/8_retrieval/README.md](..\src\8_retrieval\README.md)
-  Planner, retrieval, sintesis, evaluacion y workbench de consulta.
-
-## Contrato documental actual
-
-La documentacion del repositorio debe comunicar siempre estas reglas:
-
-- el repositorio es un framework reusable con un proyecto de referencia retenido dentro del mismo repo
-- `run_runtime_clean_rebuild.py` es el unico rebuild primario documentado
-- `run_operational_pipeline.py` es un entrypoint estable de soporte para build tactico y onboarding de un manual
-- `src/2_extraction/`, `src/3_merging/` y `src/5_alignment/` son carriles legacy o experimentales, no pasos del runtime por defecto
-- los scripts `run_t25*`, `run_t26*` y utilidades de recovery o smoke test quedan desclasificados del camino operativo primario
-- `data/processed` contiene artefactos con semantica distinta: runtime vivo, proyecto aceptado, historia de campanas y diagnostico
-- el perimetro project-specific retenido debe quedar visible en `projects/broaching-cnc-8070/` y no solo inferirse desde `data/raw/` o `data/golden_set/`
-
-## Fuera del camino operativo primario
-
-Estas piezas pueden seguir siendo utiles para trazabilidad, investigacion o contexto, pero no deben presentarse como contrato normal del runtime:
-
-- `history/tooling/campaigns/run_t25_sequential_integration.py`
-- `history/tooling/campaigns/run_t25_2_installation_recovery.py`
-- `history/tooling/campaigns/run_t26_error_manual_onboarding.py`
-- `history/tooling/diagnostics/check_mistral_api_usage.py`
-- `history/tooling/runtime_clean_rebuild_plan.md`
-- `misc/coding-team/repo-reusability-core-split/`
-
-Los wrappers y la utilidad de diagnostico mantienen shims en la raiz solo por compatibilidad historica; no deben documentarse ni consumirse como path operativo preferido.
+- The repository is a reusable framework with a retained reference project.
+- `run_runtime_clean_rebuild.py` is the only documented primary rebuild path.
+- `run_operational_pipeline.py` is a stable secondary entrypoint for tactical rebuilds and single-manual onboarding.
+- `src/2_extraction/`, `src/3_merging/`, and `src/5_alignment/` are legacy or experimental lanes, not default runtime steps.
+- `data/processed` contains artifacts with distinct status: live runtime, accepted project, historical campaign traceability, and diagnostics.
+- The project-specific boundary for the retained reference project is declared in `projects/broaching-cnc-8070/`.

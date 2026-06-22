@@ -1,22 +1,32 @@
-# Broaching CNC 8070 Reference Project
+# broaching-cnc-8070
 
-This directory is the canonical grouping area for the retained broaching/CNC 8070 reference scope that still lives inside the reusable core repository.
+Reference project retained within the SemanticRAG framework repository.
 
-It exists to make the project-specific boundary explicit while keeping the current runtime rebuildable from the existing paths.
+## Scope
 
-Use this area to understand what belongs to the reference project:
+This project covers the knowledge graph runtime built from the following manuals:
 
-- accepted source manuals under `data/raw/`
-- golden sets and current project gates under `data/golden_set/`
-- shared project-derived cache in `cache/terms_cache.json`
-- accepted manual-specific processed artifacts in `data/processed/a218_*`, `quick_ref_*`, `installation_manual_*`, `8070_installation_*`, and `man_8070_err_*`
-- project-tuned retrieval modules in `src/8_retrieval/`
+- A218 (broaching machine operating and maintenance manual)
+- Fagor CNC 8070 quick reference
+- Fagor CNC 8070 installation manual
+- Fagor CNC 8070 error manual
+- Fagor CNC 8070 variables manual
 
-Canonical manifest:
+## Canonical boundary
 
-- `project_scope_manifest.json`
+The authoritative boundary declaration for all project-specific artifacts is:
 
-Compatibility notes:
+- `projects/broaching-cnc-8070/project_scope_manifest.json`
 
-- The live files above remain in their original locations for rebuild and validation compatibility.
-- This grouping area is the canonical place to document the future split target for the broaching-specific repository.
+## Project-specific artifacts
+
+- `data/raw/` — source chunk text files
+- `cache/terms_cache.json` — terminology cache built from the corpus
+- `data/processed/a218_*`, `quick_ref_*`, `installation_manual_*`, `8070_installation_*`, `man_8070_err_*`, `variables_cnc_*`
+- Domain-tuned sections of `src/8_retrieval/text_to_sparql.py`, `multilingual_query_normalizer.py`, `synthesis_pipeline.py`
+
+## Runtime status
+
+CQ harness: 46/46 PASS, 6 SKIP (structural gaps in `ex:duracionEstimada`, `ex:requiereHerramienta`, `ex:requierePiezaRecambio`, `ex:tieneEsquema`, `ex:tieneUbicacion`, `ex:version`).
+
+GraphDB repository: `semanticrag_operational_mirror` at `http://localhost:7200`. Triple count after owl:inverseOf materialization: ~85,000.

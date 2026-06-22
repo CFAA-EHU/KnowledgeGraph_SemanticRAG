@@ -129,13 +129,13 @@ def _normalize_input_paths(filepath: str | None = None, filepaths: list[str] | N
         normalized_paths.append(path)
 
     if not normalized_paths:
-        print("Error crítico: Debes proporcionar al menos un archivo de entrada.")
+        print("Fatal error: at least one input file must be provided.")
         sys.exit(1)
 
     return normalized_paths
 
 
-def parsear_texto_crudo(filepath: str | None = None, filepaths: list[str] | None = None) -> list[str]:
+def parse_raw_text(filepath: str | None = None, filepaths: list[str] | None = None) -> list[str]:
     paths = _normalize_input_paths(filepath=filepath, filepaths=filepaths)
     parts: list[str] = []
     for path in paths:
@@ -148,67 +148,67 @@ def _extract_candidate_terms(textos: list[str]) -> list[str]:
     try:
         nlp = spacy.load("es_core_news_sm")
     except OSError:
-        print("Error crítico: Modelo es_core_news_sm no encontrado.")
+        print("Fatal error: spaCy model es_core_news_sm not found.")
         sys.exit(1)
 
-    sustantivos: list[str] = []
+    nouns: list[str] = []
     for doc in nlp.pipe(textos, batch_size=8):
-        sustantivos.extend(token.lemma_.lower() for token in doc if token.pos_ == "NOUN" and len(token.lemma_) > 3)
+        nouns.extend(token.lemma_.lower() for token in doc if token.pos_ == "NOUN" and len(token.lemma_) > 3)
 
-    conteo = Counter(sustantivos)
-    return [term for term, freq in conteo.most_common(100) if freq >= 2]
+    counts = Counter(nouns)
+    return [term for term, freq in counts.most_common(100) if freq >= 2]
 
 
-def descubrir_categorias_dinamicas(
+def discover_dynamic_categories(
     filepath: str | None = None,
     filepaths: list[str] | None = None,
 ) -> list[str]:
-    print("[Discovery] Analizando el texto para descubrir categorías en ESDBpedia...")
-    textos = parsear_texto_crudo(filepath=filepath, filepaths=filepaths)
-    terminos_frecuentes = _extract_candidate_terms(textos)
+    print("[Discovery] Analyzing text to discover categories in ESDBpedia ...")
+    textos = parse_raw_text(filepath=filepath, filepaths=filepaths)
+    frequent_terms = _extract_candidate_terms(textos)
 
     sparql = SPARQLWrapper(ESDBPEDIA_ENDPOINT)
     sparql.setReturnFormat(SPARQL_JSON)
-    categorias_encontradas: list[str] = []
+    categories_found: list[str] = []
 
-    lote_size = 20
-    for i in range(0, len(terminos_frecuentes), lote_size):
-        lote = terminos_frecuentes[i : i + lote_size]
-        valores_sparql = " ".join([f'"{term}"@es' for term in lote])
+    chunk_size = 20
+    for i in range(0, len(frequent_terms), chunk_size):
+        batch = frequent_terms[i : i + chunk_size]
+        sparql_values = " ".join([f'"{term}"@es' for term in batch])
 
         query = f"""
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX dct:  <http://purl.org/dc/terms/>
         SELECT ?category WHERE {{
-          VALUES ?label {{ {valores_sparql} }}
+          VALUES ?label {{ {sparql_values} }}
           ?concept rdfs:label ?label ;
                    dct:subject ?category .
         }}
         """
         sparql.setQuery(query)
         try:
-            resultados = sparql.query().convert()
-            for result in resultados["results"]["bindings"]:
-                uri_categoria = result["category"]["value"]
-                if "http://es.dbpedia.org/resource/" in uri_categoria:
-                    nombre_categoria = uri_categoria.replace("http://es.dbpedia.org/resource/", "")
-                    categorias_encontradas.append(nombre_categoria)
+            results = sparql.query().convert()
+            for result in results["results"]["bindings"]:
+                category_uri = result["category"]["value"]
+                if "http://es.dbpedia.org/resource/" in category_uri:
+                    category_name = category_uri.replace("http://es.dbpedia.org/resource/", "")
+                    categories_found.append(category_name)
         except Exception as exc:
-            print(f"  [WARN] Fallo en lote de descubrimiento SPARQL: {exc}")
+            print(f"  [WARN] SPARQL discovery batch failed: {exc}")
         time.sleep(0.5)
 
-    conteo_categorias = Counter(categorias_encontradas)
-    top_categorias = [categoria for categoria, _freq in conteo_categorias.most_common(TOP_N_CATEGORIES)]
-    print(f"  [OK] Categorías descubiertas: {top_categorias}")
-    return top_categorias
+    category_counts = Counter(categories_found)
+    top_categories = [cat for cat, _freq in category_counts.most_common(TOP_N_CATEGORIES)]
+    print(f"  [OK] Categories discovered: {top_categories}")
+    return top_categories
 
 
 def fetch_local_corpus_terms(
     filepath: str | None = None,
     filepaths: list[str] | None = None,
 ) -> list[dict[str, Any]]:
-    print("[Corpus] Extrayendo términos frecuentes directamente del corpus integrado...")
-    textos = parsear_texto_crudo(filepath=filepath, filepaths=filepaths)
+    print("[Corpus] Extracting frequent terms from the integrated corpus ...")
+    textos = parse_raw_text(filepath=filepath, filepaths=filepaths)
     local_terms = _extract_candidate_terms(textos)[:TOP_LOCAL_TERMS]
     return [
         enrich_term_entry(
@@ -224,14 +224,14 @@ def fetch_local_corpus_terms(
     ]
 
 
-def fetch_esdbpedia_terms(categorias: list[str]) -> list[dict]:
-    print("[ESDBpedia] Extrayendo términos técnicos de las categorías descubiertas...")
+def fetch_esdbpedia_terms(categories: list[str]) -> list[dict]:
+    print("[ESDBpedia] Extracting technical terms from discovered categories ...")
     terms_dict: dict[str, dict[str, Any]] = {}
     sparql = SPARQLWrapper(ESDBPEDIA_ENDPOINT)
     sparql.setTimeout(SPARQL_TIMEOUT)
     sparql.setReturnFormat(SPARQL_JSON)
 
-    for category in categorias:
+    for category in categories:
         category_uri = f"http://es.dbpedia.org/resource/{category}"
         query = f"""
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -262,7 +262,7 @@ def fetch_esdbpedia_terms(categorias: list[str]) -> list[dict]:
                             "aliases": [label],
                         }
                     )
-            print(f"  [OK] {category}: {len(results['results']['bindings'])} términos procesados")
+            print(f"  [OK] {category}: {len(results['results']['bindings'])} terms processed")
         except Exception as exc:
             print(f"  [WARN] {category}: error — {exc}")
         time.sleep(0.5)
@@ -271,7 +271,7 @@ def fetch_esdbpedia_terms(categorias: list[str]) -> list[dict]:
 
 
 def translate_terms_helsinki(terms_en: list[str]) -> list[dict]:
-    print(f"[Traducción] Traduciendo {len(terms_en)} términos AAS con Helsinki-NLP...")
+    print(f"[Translation] Translating {len(terms_en)} AAS terms with Helsinki-NLP ...")
     translated_terms: list[dict[str, Any]] = []
 
     try:
@@ -296,7 +296,7 @@ def translate_terms_helsinki(terms_en: list[str]) -> list[dict]:
                         }
                     )
                 )
-        print("  [OK] Traducción local completada")
+        print("  [OK] Local translation completed")
 
     except Exception as exc:
         print(f"  [INFO] Pipeline local no disponible ({exc}), usando HuggingFace API...")
@@ -367,7 +367,7 @@ def translate_terms_helsinki(terms_en: list[str]) -> list[dict]:
 
 
 def fetch_aas_terms() -> list[dict]:
-    print("[AAS] Procesando términos AAS / ECLASS...")
+    print("[AAS] Processing AAS / ECLASS terms ...")
     return translate_terms_helsinki(AAS_CONCEPT_DESCRIPTIONS)
 
 
@@ -409,7 +409,7 @@ def get_terms(
             return enrich_term_entries(cache["terms"])
 
     input_paths = _normalize_input_paths(filepath=filepath, filepaths=filepaths)
-    categorias_dinamicas = descubrir_categorias_dinamicas(filepaths=[str(path) for path in input_paths])
+    categorias_dinamicas = discover_dynamic_categories(filepaths=[str(path) for path in input_paths])
     esdbpedia_terms = fetch_esdbpedia_terms(categorias_dinamicas)
     local_corpus_terms = fetch_local_corpus_terms(filepaths=[str(path) for path in input_paths])
     aas_terms = fetch_aas_terms()
@@ -446,7 +446,7 @@ if __name__ == "__main__":
         type=str,
         action="append",
         required=True,
-        help="Ruta a un archivo de chunks para descubrir categorías; puede repetirse.",
+        help="Path to a chunk file for category discovery; may be repeated.",
     )
     args = parser.parse_args()
 

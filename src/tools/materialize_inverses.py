@@ -1,4 +1,4 @@
-"""Materializa tripletas owl:inverseOf faltantes en abox_linked.ttl y re-publica a GraphDB."""
+"""Materialize missing owl:inverseOf triples in abox_linked.ttl and republish to GraphDB."""
 from __future__ import annotations
 
 import sys
@@ -86,38 +86,38 @@ def republish(tbox_path: Path, abox_path: Path) -> int:
 
 
 def main() -> None:
-    print("Cargando T-Box …")
+    print("Loading T-Box ...")
     tbox = Graph()
     tbox.parse(TBOX_PATH, format="turtle")
 
-    print("Cargando A-Box …")
+    print("Loading A-Box ...")
     abox = Graph()
     abox.parse(ABOX_PATH, format="turtle")
     before = len(abox)
 
     pairs = get_inverse_pairs(tbox)
-    print(f"Pares owl:inverseOf únicos: {len(pairs)}")
+    print(f"Unique owl:inverseOf pairs: {len(pairs)}")
 
-    print("Materializando inversos …")
+    print("Materializing inverses ...")
     stats = materialize(abox, pairs)
     after = len(abox)
 
-    print(f"\nTripletas antes : {before}")
-    print(f"Tripletas después: {after}")
-    print(f"Añadidas         : {after - before}")
+    print(f"\nTriples before : {before}")
+    print(f"Triples after  : {after}")
+    print(f"Added          : {after - before}")
     for label, n in sorted(stats.items(), key=lambda x: -x[1]):
         print(f"  {label}: +{n}")
 
-    print("\nSerializando abox_linked.ttl …")
+    print("\nSerializing abox_linked.ttl ...")
     abox.serialize(destination=str(ABOX_PATH), format="turtle")
 
-    print("Re-publicando en GraphDB …")
+    print("Republishing to GraphDB ...")
     try:
         triple_count = republish(TBOX_PATH, ABOX_PATH)
-        print(f"GraphDB: {triple_count} tripletas totales")
+        print(f"GraphDB: {triple_count} total triples")
     except Exception as e:
-        print(f"[WARN] GraphDB re-publish falló: {e}")
-        print("       Ejecuta publish_to_graphdb.py manualmente.")
+        print(f"[WARN] GraphDB republish failed: {e}")
+        print("       Run publish_to_graphdb.py manually.")
 
     print("\nDONE")
 

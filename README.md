@@ -1,261 +1,149 @@
 # SemanticRAG
 
-![Python Version](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)
-![GraphDB](https://img.shields.io/badge/GraphDB-Semantic_Graph-orange?logo=databricks&logoColor=white)
-![Mistral AI](https://img.shields.io/badge/Mistral_AI-LLM_Engine-black?logo=mistral&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+A framework for constructing operational semantic runtimes from technical manuals. The repository covers ingestion, A-Box extraction, structural graph consolidation, multilingual support, GraphDB publication, and functional evaluation of the resulting runtime.
 
-SemanticRAG es un framework para construir runtimes semanticos operativos a partir de manuales tecnicos. El repositorio cubre la ingesta, la extraccion A-Box, la consolidacion estructural del grafo, el soporte multilingue, la publicacion en GraphDB y la evaluacion funcional del runtime resultante.
+The repository retains an active reference project based on a broaching machine and CNC 8070 manuals. That corpus and its project-specific tuning are adjuncts to the reusable core, not definitions of it.
 
-El repositorio conserva un proyecto activo de referencia basado en manuales de una brochadora y del CNC 8070. Ese corpus, sus golden sets y parte del ajuste de retrieval siguen viviendo aqui por compatibilidad y rebuildabilidad, pero deben entenderse como adjuntos `project-specific`, no como definicion del core reusable.
+## Reusable core
 
-## Que es reusable core
+- `src/1_ingestion/` — ingestion and density analysis
+- `src/6_extraction/` — operational A-Box construction pipeline
+- `src/7_database/` — local RDF backend and GraphDB mirror
+- `src/8_retrieval/` — retrieval, evaluation, query normalization
+- `artifact_contracts.py` — canonical artifact path registry
+- `docs/` — operational runbook and artifact contract
 
-El nucleo reusable del repositorio incluye:
+## Project-specific scope
 
-- ingesta y analisis de densidad en `src/1_ingestion/`
-- construccion operativa de A-Box en `src/6_extraction/`
-- backend RDF local y mirror GraphDB en `src/7_database/`
-- soporte general de retrieval, evaluacion y consulta en `src/8_retrieval/`
-- contratos de artefactos y runbooks operativos en `artifact_contracts.py` y `docs/`
+The broaching/CNC 8070 reference project occupies:
 
-Ese core permite reconstruir, publicar, consultar y validar un runtime semantico sin depender conceptualmente del dominio brochadora/8070.
+- `data/raw/` — source chunk files (A218, 8070 quick-ref, installation, error manual, variables CNC)
+- `cache/terms_cache.json` — terminology cache built from the reference corpus
+- `data/processed/a218_*`, `quick_ref_*`, `installation_manual_*`, `8070_installation_*`, `man_8070_err_*`, `variables_cnc_*` — per-manual pipeline artifacts
+- partial domain-tuning in `src/8_retrieval/text_to_sparql.py`, `multilingual_query_normalizer.py`, `synthesis_pipeline.py`
 
-## Que es project-specific
-
-En el estado actual del repositorio siguen siendo especificos del proyecto de referencia:
-
-- `data/raw/`
-- `data/golden_set/`
-- `cache/terms_cache.json`
-- los manuales aceptados A218, 8070 quick-ref, 8070 installation y `man_8070_err`
-- los artefactos manual-especificos en `data/processed/a218_*`, `quick_ref_*`, `installation_manual_*`, `8070_installation_*` y `man_8070_err_*`
-- parte del tuning del planner y la sintesis en:
-  - `src/8_retrieval/text_to_sparql.py`
-  - `src/8_retrieval/multilingual_query_normalizer.py`
-  - `src/8_retrieval/synthesis_pipeline.py`
-
-Estos elementos se mantienen para soportar el runtime actual y preparar una futura separacion del caso de uso a otro repositorio.
-
-## Area canonica del proyecto de referencia
-
-La frontera project-specific ya no queda solo implicita en `data/raw/`, `data/golden_set/` y los artefactos manual-especificos. El repositorio expone ahora un area canonica para el proyecto retenido:
-
-- `projects/broaching-cnc-8070/`
-
-Esa area no sustituye las rutas vivas actuales. Su funcion es:
-
-- hacer visible el perimetro del proyecto de referencia
-- apuntar al manifiesto contractual del caso de uso retenido
-- preparar el futuro split a un repositorio propio sin romper el rebuild actual
-
-Manifest principal del proyecto retenido:
+The canonical boundary declaration for the retained project is at:
 
 - `projects/broaching-cnc-8070/project_scope_manifest.json`
 
-## Entrypoints oficiales
+## Entrypoints
 
-El contrato operativo estable del repositorio queda asi:
-
-### Rebuild primario del runtime
+### Primary runtime rebuild
 
 ```bash
 python run_runtime_clean_rebuild.py --mode resume-compatible
 ```
 
-Este es el unico entrypoint documentado como camino primario para reconstruir el runtime aceptado de extremo a extremo.
+The only documented primary path for end-to-end reconstruction of the accepted runtime.
 
-### Entrypoint operativo de soporte
+### Tactical rebuild and manual onboarding
 
 ```bash
 python run_operational_pipeline.py --mode resume-compatible
+python run_operational_pipeline.py \
+    --source-chunks data/raw/chunks_8070_quick_ref.txt \
+    --manual-id 8070_quick_ref \
+    --mode resume-compatible
 ```
 
-`run_operational_pipeline.py` sigue siendo un script estable, pero su ambito es mas tactico: rebuild por defecto de menor alcance y onboarding de un manual cada vez.
-
-Ejemplo de onboarding manual:
-
-```bash
-python run_operational_pipeline.py --source-chunks data/raw/chunks_8070_quick_ref.txt --manual-id 8070_quick_ref --mode resume-compatible
-```
-
-### Publicacion y salud de GraphDB
+### GraphDB
 
 ```bash
 python src/7_database/publish_to_graphdb.py
 python src/7_database/graphdb_healthcheck.py
 ```
 
-### Evaluacion formal
+### Query workbench
 
 ```bash
-python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_canonical.json
-python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_multihop.json
-python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_8070_quick_ref_bilingual_v2.json
-python src/8_retrieval/qa_evaluator.py --qa-file data/golden_set/QA_cross.json
+python query_workbench.py "Which directive does the machine comply with?" --backend rdflib
+python query_workbench.py "Which directive does the machine comply with?" --backend graphdb
 ```
 
-### Consulta manual
+## Runtime artifact contract
 
-```bash
-python query_workbench.py "Que directiva cumple la maquina?" --backend rdflib
-```
+The operational runtime consumes:
 
-## Runtime contract vivo
+- `data/processed/ontology_aligned.ttl` — T-Box
+- `data/processed/abox_input.json` — A-Box extraction input
+- `data/processed/abox_merged.ttl` — raw post-merge A-Box
+- `data/processed/abox_canonical.ttl` — canonicalized A-Box
+- `data/processed/abox_enriched.ttl` — enriched A-Box
+- `data/processed/abox_linked.ttl` — final operational A-Box
+- `data/processed/multilingual_lexicon.json` — ES/EN bilingual lexicon
 
-El runtime operativo consume y publica estos artefactos vivos:
-
-- `data/processed/ontology_aligned.ttl`
-- `data/processed/abox_input.json`
-- `data/processed/abox_merged.ttl`
-- `data/processed/abox_canonical.ttl`
-- `data/processed/abox_enriched.ttl`
-- `data/processed/abox_linked.ttl`
-- `data/processed/multilingual_lexicon.json`
-
-Tambien forman parte del contrato operativo los reportes y mapas estructurales:
+Structural reports and maps (runtime contract):
 
 - `data/processed/canonical_entity_map.json`
-- `data/processed/canonicalization_report.json`
-- `data/processed/canonicalization_resolution_candidates.json`
-- `data/processed/enrichment_report.json`
-- `data/processed/enrichment_link_map.json`
-- `data/processed/enrichment_surface_map.json`
-- `data/processed/link_completion_report.json`
-- `data/processed/link_completion_map.json`
-- `data/processed/link_completion_candidates.json`
+- `data/processed/enrichment_report.json`, `enrichment_link_map.json`, `enrichment_surface_map.json`
+- `data/processed/link_completion_report.json`, `link_completion_map.json`, `link_completion_candidates.json`
 - `data/processed/abox_semantic_audit.json`
 - `data/processed/abox_minted_entity_registry.json`
-- `data/processed/abox_merger_rejected_chunks.json`
-- `data/processed/t_tbox_enrichment_evidence.json`
 - `data/processed/schema_condensed.txt`
 - `data/processed/graphdb_publication_report.json`
 
-Los gates operativos vigentes del proyecto actual siguen siendo:
+## Build sequence
 
-- `data/processed/generalization_eval_report.json`
-- `data/processed/multihop_eval_report.json`
-- `data/processed/quick_ref_v2_eval_report.json`
-- `data/processed/cross_eval_report.json`
+1. `src/1_ingestion/density_analyzer.py`
+2. `src/6_extraction/abox_input_builder.py`
+3. `src/6_extraction/abox_extractor.py`
+4. `src/6_extraction/abox_merger.py`
+5. `src/6_extraction/abox_canonicalizer.py`
+6. `src/6_extraction/abox_graph_enricher.py`
+7. `src/6_extraction/abox_link_completer.py`
+8. `src/8_retrieval/multilingual_lexicon_builder.py`
 
-## Politica de `data/processed`
+## data/processed artifact classification
 
-`data/processed` no debe interpretarse como un espacio plano donde todos los JSON tienen el mismo estatus. Operativamente existen cuatro grupos:
+| Class | Description |
+|---|---|
+| `runtime_contract` | Live runtime artifacts |
+| `accepted_project_operational_artifact` | Per-manual artifacts for the active reference project |
+| `historical_campaign_traceability` | Outputs of completed development campaigns, retained for traceability |
+| `debug_and_diagnostics` | Transient audit and diagnostic outputs |
 
-1. `runtime_contract`
-   artefactos vivos del runtime
-2. `accepted_project_operational_artifact`
-   artefactos manual-especificos aceptados que sirven como soporte del proyecto actual
-3. `historical_campaign_traceability`
-   salidas de campanas historicas preservadas por trazabilidad
-4. `debug_and_diagnostics`
-   artefactos transitorios de auditoria y depuracion
+A clean rebuild reconstructs `runtime_contract` artifacts. It preserves and may refresh `accepted_project_operational_artifact`. It does not consume `historical_campaign_traceability` as authoritative input. It may overwrite `debug_and_diagnostics`.
 
-Solo los artefactos de proyecto aceptado pueden usarse como input procesado autoritativo de un rebuild limpio. Los artefactos historicos y diagnosticos no deben definir el camino del runtime.
+## Semantic quality contract
 
-## Calidad semantica del runtime
+- `ontology_aligned.ttl` declares permitted classes, properties, and axioms.
+- `abox_linked.ttl` materializes individuals and inter-individual links.
+- `rdf:type` objects are never minted, canonicalized, or treated as A-Box entities.
+- GraphDB publishes the sanitized result; it does not deduplicate or merge by label.
 
-El runtime operativo actual incorpora una barrera explicita entre T-Box y A-Box:
+Semantic validation blocks: non-canonical classes or properties, individuals used as classes, domain blank nodes, `file:///` IRIs, redundant explicit types, subjects without type or traceability.
 
-- `ontology_aligned.ttl` declara clases, propiedades y axiomas permitidos
-- `abox_linked.ttl` materializa individuos y enlaces entre individuos
-- los objetos de `rdf:type` no se mintean, no se canonicalizan y no se tratan como entidades A-Box
-- GraphDB publica el resultado ya saneado, no corrige duplicados ni fusiona por labels
+## T-Box enrichment
 
-La validacion semantica bloquea:
+T-Box enrichment is restricted to axioms over existing vocabulary with runtime evidence. The auditor:
 
-- clases o propiedades no canonicas
-- individuos usados como clases
-- blank nodes de dominio
-- IRIs `file:///`
-- tipos redundantes explicitos
-- sujetos sin tipo o sin trazabilidad
+```bash
+python src/6_extraction/tbox_enrichment_auditor.py
+```
 
-La deuda historica de `long_local_name` se mantiene como diagnostico de fase 1, no como hard failure.
-
-## Enriquecimiento T-Box evidenciado
-
-La T-Box puede enriquecerse solo con axiomas sobre vocabulario existente y con evidencia del runtime. El auditor:
-
-- `src/6_extraction/tbox_enrichment_auditor.py`
-
-produce:
-
-- `data/processed/t_tbox_enrichment_evidence.json`
-
-Tras C13, la T-Box incluye axiomas seguros como:
-
-- `ex:Esquema rdfs:subClassOf ex:Figura`
-- `ex:Maquina owl:disjointWith ex:Manual, ex:Directiva, ex:PiezaRecambio`
-- `ex:Empresa owl:disjointWith ex:Directiva`
-
-Despues de cualquier cambio en la T-Box se debe regenerar:
-
-- `data/processed/schema_condensed.txt`
-
-con:
+produces `data/processed/t_tbox_enrichment_evidence.json`. After any T-Box change, regenerate the schema condenser:
 
 ```bash
 python src/8_retrieval/schema_condenser.py
 ```
 
-## Carriles del repositorio
+## Legacy and experimental lanes
 
-### Carril operativo
+Not part of the default runtime:
 
-Es el camino oficial de build, consulta, evaluacion y publicacion del runtime. Se apoya principalmente en:
+- `src/2_extraction/` — experimental T-Box extractor (MistralAI)
+- `src/3_merging/` — experimental graph merger
+- `src/5_alignment/` — experimental semantic reduction
 
-- `src/1_ingestion/`
-- `src/6_extraction/`
-- `src/7_database/`
-- `src/8_retrieval/`
-- `run_runtime_clean_rebuild.py`
-- `run_operational_pipeline.py`
+## Requirements
 
-### Carriles legacy o experimentales
+- Python 3.10 or higher
+- `pip install -r requirements.txt`
+- GraphDB instance if publishing or querying the remote mirror
+- Ollama running locally with Qwen model for A-Box extraction (`apply_ollama_parallel.sh`)
 
-Se conservan, pero no forman parte del runtime por defecto:
+## Documentation
 
-- `src/2_extraction/`
-- `src/3_merging/`
-- `src/5_alignment/`
-
-## Tooling historico
-
-Los siguientes scripts y areas se conservan por trazabilidad, pero estan fuera del camino operativo primario:
-
-- `history/tooling/campaigns/run_t25_sequential_integration.py`
-- `history/tooling/campaigns/run_t25_2_installation_recovery.py`
-- `history/tooling/campaigns/run_t26_error_manual_onboarding.py`
-- `history/tooling/diagnostics/check_mistral_api_usage.py`
-- `history/tooling/runtime_clean_rebuild_plan.md`
-- `misc/coding-team/repo-reusability-core-split/`
-
-Se conservan shims de compatibilidad en la raiz para los wrappers historicos y la utilidad de diagnostico, pero su ubicacion canonica ya no es la raiz del repositorio.
-
-Ninguno de ellos debe presentarse como entrypoint normal del runtime.
-
-## Preparacion para split futuro
-
-El siguiente split de repositorio no debe empezar desde cero. La referencia contractual actual para lo que pertenece al caso brochadora/CNC 8070 queda visible en:
-
-- `projects/broaching-cnc-8070/project_scope_manifest.json`
-- `data/processed/t27_project_specific_boundary_registry.json`
-
-Mientras ese split no exista, las rutas vivas siguen donde estan hoy por compatibilidad operativa.
-
-## Requisitos
-
-- Python 3.10 o superior
-- dependencias instaladas con `pip install -r requirements.txt`
-- GraphDB disponible si se quiere publicar o consultar el mirror remoto
-- `MISTRAL_API_KEY` para extraccion u operaciones que requieran LLM
-
-El extractor soporta una cadena de fallback entre modelos Mistral para que un `429` en un modelo no detenga todo el proceso si el siguiente sigue disponible.
-
-## Documentacion relacionada
-
-- [docs/README.md](docs/README.md)
 - [docs/operational_pipeline_runbook.md](docs/operational_pipeline_runbook.md)
 - [docs/operational_artifact_contract.md](docs/operational_artifact_contract.md)
 - [src/6_extraction/README.md](src/6_extraction/README.md)

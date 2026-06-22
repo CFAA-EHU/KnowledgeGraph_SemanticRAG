@@ -5,42 +5,42 @@ from rdflib import Graph
 INPUT_DIR = Path("data/processed/graphs/")
 OUTPUT_FILE = Path("data/processed/ontology_merged.ttl")
 
-def unificar_grafos():
+def merge_graphs():
     if not INPUT_DIR.exists():
-        print(f"Error: Directorio no encontrado - {INPUT_DIR}")
+        print(f"Error: directory not found — {INPUT_DIR}")
         sys.exit(1)
 
-    archivos_ttl = list(INPUT_DIR.glob("*.ttl"))
-    if not archivos_ttl:
-        print("Error: No hay archivos TTL para procesar.")
+    ttl_files = list(INPUT_DIR.glob("*.ttl"))
+    if not ttl_files:
+        print("Error: no TTL files to process.")
         sys.exit(1)
 
-    grafo_unificado = Graph()
-    exitos = 0
-    errores = 0
+    unified_graph = Graph()
+    successes = 0
+    errors = 0
 
-    print(f"Iniciando consolidación de {len(archivos_ttl)} fragmentos...")
+    print(f"Merging {len(ttl_files)} fragments ...")
 
-    for archivo in archivos_ttl:
+    for ttl_file in ttl_files:
         try:
-            grafo_temporal = Graph()
-            grafo_temporal.parse(archivo, format="turtle")
-            grafo_unificado += grafo_temporal
-            exitos += 1
+            temp_graph = Graph()
+            temp_graph.parse(ttl_file, format="turtle")
+            unified_graph += temp_graph
+            successes += 1
         except Exception as e:
-            print(f"Corrupción detectada en {archivo.name}: descartado. Detalles: {e}")
-            errores += 1
+            print(f"Corruption detected in {ttl_file.name}: discarded. Details: {e}")
+            errors += 1
 
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    grafo_unificado.serialize(destination=OUTPUT_FILE, format="turtle")
+    unified_graph.serialize(destination=OUTPUT_FILE, format="turtle")
 
     print("-" * 40)
-    print("RESUMEN DE CONSOLIDACIÓN")
+    print("MERGE SUMMARY")
     print("-" * 40)
-    print(f"Fragmentos fusionados : {exitos}")
-    print(f"Fragmentos corruptos  : {errores}")
-    print(f"Tripletas totales     : {len(grafo_unificado)}")
-    print(f"Archivo generado      : {OUTPUT_FILE}")
+    print(f"Fragments merged  : {successes}")
+    print(f"Fragments corrupt : {errors}")
+    print(f"Total triples     : {len(unified_graph)}")
+    print(f"Output file       : {OUTPUT_FILE}")
 
 if __name__ == "__main__":
-    unificar_grafos()
+    merge_graphs()

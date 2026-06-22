@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Valida la coherencia semántica de las relaciones en los TTL mergeados
-contra el T-Box operacional.
+Validate semantic coherence of relations in merged TTL files against the operational T-Box.
 
-Ejecutar:
-  mi-entorno/bin/python3 src/6_extraction/relation_validator.py \
+Usage:
+  python src/6_extraction/relation_validator.py \
     [--tbox data/processed/ontology_aligned.ttl] \
     [--abox data/processed/a218_merged.ttl data/processed/variables_cnc_merged.ttl ...]
 """
@@ -28,11 +27,11 @@ def local(uri) -> str:
 
 
 def load_tbox(path: Path):
-    """Devuelve (graph, domains, ranges, inverse_of, obj_props, data_props, classes, subclass_map).
+    """Return (graph, domains, ranges, inverse_of, obj_props, data_props, classes, subclass_map).
 
-    subclass_map[C] = conjunto transitivo de superclases de C (incluyendo C mismo).
-    Permite validación OWL-aware: si domain(p) = {EntidadFisica} y sujeto es Sistema,
-    la validación pasa porque Sistema ⊑ EntidadFisica.
+    subclass_map[C] is the transitive closure of superclasses of C (including C itself).
+    Enables OWL-aware validation: if domain(p) = {PhysicalEntity} and the subject is
+    System, validation passes because System subClassOf PhysicalEntity.
     """
     g = Graph()
     g.parse(path, format="turtle")
@@ -62,7 +61,7 @@ def load_tbox(path: Path):
         inverse_of[local(s)] = local(o)
         inverse_of[local(o)] = local(s)
 
-    # Construir cierre transitivo de superclases para cada clase
+    # Build transitive closure of superclasses for each class
     def ancestors(cls: str, visited: set | None = None) -> set[str]:
         if visited is None:
             visited = set()
@@ -76,7 +75,7 @@ def load_tbox(path: Path):
     subclass_map: dict[str, set[str]] = {}
     for cls in classes | {"owl#Thing", "Thing"}:
         subclass_map[cls] = ancestors(cls)
-        subclass_map[cls].add("owl#Thing")  # owl:Thing es superclase de todo
+        subclass_map[cls].add("owl#Thing")  # owl:Thing is the universal superclass
 
     return g, domains, ranges, inverse_of, obj_props, data_props, classes, subclass_map
 
@@ -92,10 +91,10 @@ def get_types(abox: Graph, node: URIRef) -> set[str]:
     return {local(o) for _, _, o in abox.triples((node, RDF.type, None))}
 
 
-# ── análisis ─────────────────────────────────────────────────────────────────
+# ── analysis ─────────────────────────────────────────────────────────────────
 
 def type_satisfies(node_types: set[str], allowed: set[str], subclass_map: dict) -> bool:
-    """True si algún tipo del nodo es subclase de alguna clase permitida (OWL reasoning)."""
+    """Return True if any node type is a subclass of any allowed class (OWL reasoning)."""
     if not allowed or "owl#Thing" in allowed or "Thing" in allowed:
         return True
     for t in node_types:
@@ -106,15 +105,15 @@ def type_satisfies(node_types: set[str], allowed: set[str], subclass_map: dict) 
 
 
 def analyse(tbox_path: Path, abox_paths: list[Path]) -> dict:
-    print(f"Cargando T-Box: {tbox_path.name}")
+    print(f"Loading T-Box: {tbox_path.name}")
     _, domains, ranges, inverse_of, obj_props, data_props, classes, subclass_map = load_tbox(tbox_path)
     tbox_props = obj_props | data_props
 
-    print(f"Cargando {len(abox_paths)} A-Box(es)...")
+    print(f"Loading {len(abox_paths)} A-Box file(s) ...")
     abox = load_abox(abox_paths)
-    print(f"  → {len(abox)} tripletas totales")
+    print(f"  -> {len(abox)} total triples")
 
-    # ── 1. Recuento de uso por predicado ────────────────────────────────────
+    # ── 1. Predicate usage counts ───────────────────────────────────────────
     pred_count: dict[str, int] = defaultdict(int)
     pred_subj_types: dict[str, defaultdict] = defaultdict(lambda: defaultdict(int))
     pred_obj_types: dict[str, defaultdict] = defaultdict(lambda: defaultdict(int))
@@ -132,11 +131,11 @@ def analyse(tbox_path: Path, abox_paths: list[Path]) -> dict:
         else:
             pred_obj_types[pred]["Literal"] += 1
 
-    # ── 2. Propiedades huérfanas (A-Box usa, T-Box no conoce) ──────────────
+    # ── 2. Orphan predicates (A-Box uses, T-Box does not declare) ──────────
     abox_only = {p for p in pred_count if p not in tbox_props and p not in ("type",)}
     tbox_only = {p for p in tbox_props if p not in pred_count}
 
-    # ── 3. Violaciones domain/range ─────────────────────────────────────────
+    # ── 3. Domain/range violations ──────────────────────────────────────────
     violations: dict[str, list[dict]] = defaultdict(list)
 
     for s, p, o in abox:
@@ -169,7 +168,7 @@ def analyse(tbox_path: Path, abox_paths: list[Path]) -> dict:
                 "range_ok": range_ok,
             })
 
-    # ── 4. Asimetría de inversas ─────────────────────────────────────────────
+    # ── 4. Inverse asymmetry ────────────────────────────────────────────────
     inverse_asymmetry: list[dict] = []
     for prop, inv_prop in inverse_of.items():
         c_prop = pred_count.get(prop, 0)
@@ -189,7 +188,7 @@ def analyse(tbox_path: Path, abox_paths: list[Path]) -> dict:
         "pred_obj_types": {k: dict(v) for k, v in pred_obj_types.items()},
         "abox_only_predicates": sorted(abox_only),
         "tbox_only_predicates": sorted(tbox_only),
-        "violations": {k: v[:10] for k, v in violations.items()},  # max 10 muestras
+        "violations": {k: v[:10] for k, v in violations.items()},  # max 10 samples per predicate
         "violation_counts": {k: len(v) for k, v in violations.items()},
         "inverse_asymmetry": inverse_asymmetry,
         "tbox_props": sorted(tbox_props),
@@ -197,7 +196,7 @@ def analyse(tbox_path: Path, abox_paths: list[Path]) -> dict:
     }
 
 
-# ── reporte ───────────────────────────────────────────────────────────────────
+# ── report ────────────────────────────────────────────────────────────────────
 
 def print_report(r: dict) -> None:
     SEP = "─" * 72
@@ -212,70 +211,70 @@ def print_report(r: dict) -> None:
         print(f"{marker}{pred:<30} {count:>5}   S:[{s_types}]  →  O:[{o_types}]")
 
     print(f"\n{SEP}")
-    print("2. PREDICADOS HUÉRFANOS (A-Box usa, T-Box NO declara)")
+    print("2. ORPHAN PREDICATES (A-Box uses, T-Box does NOT declare)")
     print(SEP)
     if r["abox_only_predicates"]:
         for p in r["abox_only_predicates"]:
-            print(f"  ✗ {p}  (usos: {r['pred_count'].get(p, 0)})")
+            print(f"  x {p}  (uses: {r['pred_count'].get(p, 0)})")
     else:
-        print("  Ninguno — todo predicado usado existe en el T-Box ✓")
+        print("  None — every predicate in use is declared in the T-Box")
 
     print(f"\n{SEP}")
-    print("3. PREDICADOS MUERTOS (T-Box declara, A-Box NUNCA usa)")
+    print("3. DEAD PREDICATES (T-Box declares, A-Box NEVER uses)")
     print(SEP)
     if r["tbox_only_predicates"]:
         for p in r["tbox_only_predicates"]:
-            print(f"  –  {p}")
+            print(f"  -  {p}")
     else:
-        print("  Ninguno")
+        print("  None")
 
     print(f"\n{SEP}")
-    print("4. VIOLACIONES DOMAIN / RANGE")
+    print("4. DOMAIN / RANGE VIOLATIONS")
     print(SEP)
     if not r["violation_counts"]:
-        print("  Sin violaciones ✓")
+        print("  No violations")
     else:
         for pred, count in sorted(r["violation_counts"].items(), key=lambda x: -x[1]):
-            print(f"\n  [{count} violaciones]  {pred}")
+            print(f"\n  [{count} violations]  {pred}")
             for v in r["violations"][pred][:5]:
-                d_ok = "✓" if v["domain_ok"] else "✗"
-                r_ok = "✓" if v["range_ok"] else "✗"
-                print(f"    dom{d_ok} rng{r_ok}  {v['s']} ({','.join(v['s_types'][:2])}) "
-                      f"→ {v['o']} ({','.join(v['o_types'][:2])})")
+                d_ok = "+" if v["domain_ok"] else "x"
+                r_ok = "+" if v["range_ok"] else "x"
+                print(f"    dom[{d_ok}] rng[{r_ok}]  {v['s']} ({','.join(v['s_types'][:2])}) "
+                      f"-> {v['o']} ({','.join(v['o_types'][:2])})")
                 if not v["domain_ok"]:
-                    print(f"         esperado domain: {v['expected_domain']}  "
-                          f"encontrado: {v['s_types']}")
+                    print(f"         expected domain: {v['expected_domain']}  "
+                          f"found: {v['s_types']}")
                 if not v["range_ok"]:
-                    print(f"         esperado range:  {v['expected_range']}  "
-                          f"encontrado: {v['o_types']}")
+                    print(f"         expected range:  {v['expected_range']}  "
+                          f"found: {v['o_types']}")
 
     print(f"\n{SEP}")
-    print("5. ASIMETRÍA DE INVERSAS")
+    print("5. INVERSE ASYMMETRY")
     print(SEP)
     if not r["inverse_asymmetry"]:
-        print("  Todas las inversas se usan simétricamente ✓")
+        print("  All inverse pairs used symmetrically")
     else:
         for a in sorted(r["inverse_asymmetry"], key=lambda x: -x["ratio"]):
             print(f"  {a['prop']} ({a['count']}) ↔ {a['inverse']} ({a['inv_count']})  "
                   f"ratio={a['ratio']}x")
 
     print(f"\n{SEP}")
-    print("RESUMEN")
+    print("SUMMARY")
     print(SEP)
-    print(f"  Predicados en A-Box:          {len(r['pred_count'])}")
-    print(f"  Predicados en T-Box:          {len(r['tbox_props'])}")
-    print(f"  Huérfanos (solo A-Box):       {len(r['abox_only_predicates'])}")
-    print(f"  Muertos   (solo T-Box):       {len(r['tbox_only_predicates'])}")
+    print(f"  Predicates in A-Box:          {len(r['pred_count'])}")
+    print(f"  Predicates in T-Box:          {len(r['tbox_props'])}")
+    print(f"  Orphans (A-Box only):         {len(r['abox_only_predicates'])}")
+    print(f"  Dead    (T-Box only):         {len(r['tbox_only_predicates'])}")
     total_viol = sum(r["violation_counts"].values())
-    print(f"  Violaciones domain/range:     {total_viol}")
-    print(f"  Pares de inversas asimétricos:{len(r['inverse_asymmetry'])}")
+    print(f"  Domain/range violations:      {total_viol}")
+    print(f"  Asymmetric inverse pairs:     {len(r['inverse_asymmetry'])}")
     print()
 
 
 # ── main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    parser = argparse.ArgumentParser(description="Valida relaciones A-Box contra T-Box")
+    parser = argparse.ArgumentParser(description="Validate A-Box relations against T-Box")
     parser.add_argument("--tbox", type=Path,
                         default=REPO_ROOT / "data/processed/ontology_aligned.ttl")
     parser.add_argument("--abox", type=Path, nargs="+",
@@ -284,12 +283,12 @@ def main():
                             REPO_ROOT / "data/processed/variables_cnc_merged.ttl",
                         ])
     parser.add_argument("--json-out", type=Path, default=None,
-                        help="Ruta opcional para guardar reporte JSON")
+                        help="Optional path to write a JSON report.")
     args = parser.parse_args()
 
     missing = [p for p in [args.tbox] + args.abox if not p.exists()]
     if missing:
-        print(f"ERROR: archivos no encontrados: {missing}", file=sys.stderr)
+        print(f"ERROR: files not found: {missing}", file=sys.stderr)
         sys.exit(1)
 
     result = analyse(args.tbox, args.abox)
@@ -297,7 +296,7 @@ def main():
 
     if args.json_out:
         args.json_out.write_text(json.dumps(result, indent=2, ensure_ascii=False))
-        print(f"Reporte JSON guardado en: {args.json_out}")
+        print(f"JSON report written to: {args.json_out}")
 
 
 if __name__ == "__main__":

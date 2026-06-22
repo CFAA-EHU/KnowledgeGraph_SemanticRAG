@@ -28,12 +28,12 @@ if not api_key:
 
 client = Mistral(api_key=api_key)
 
-def aislar_sintaxis_ttl(respuesta_llm: str) -> str:
-    patron = r"`{3}(?:turtle|ttl)?\n(.*?)`{3}"
-    match = re.search(patron, respuesta_llm, re.DOTALL | re.IGNORECASE)
+def extract_ttl_syntax(llm_response: str) -> str:
+    pattern = r"`{3}(?:turtle|ttl)?\n(.*?)`{3}"
+    match = re.search(pattern, llm_response, re.DOTALL | re.IGNORECASE)
     if match:
         return match.group(1).strip()
-    return respuesta_llm.strip()
+    return llm_response.strip()
 
 def validar_sintaxis_rdf(ttl_data: str) -> bool:
     try:
@@ -67,7 +67,7 @@ async def procesar_chunk(semaforo: asyncio.Semaphore, chunk_data: dict):
                     ],
                 )
 
-                ttl_puro = aislar_sintaxis_ttl(respuesta.choices[0].message.content)
+                ttl_puro = extract_ttl_syntax(respuesta.choices[0].message.content)
 
                 if not validar_sintaxis_rdf(ttl_puro):
                     if intento == 2:

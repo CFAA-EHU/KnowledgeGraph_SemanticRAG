@@ -212,14 +212,14 @@ def build_tbox_enrichment_evidence(
                 "axiom_type": "rdfs:subClassOf",
                 "subject": "DiagnosticoFallo",
                 "object": "AvisoSeguridad",
-                "reason": "Los diagnósticos de fallo son señales/avisos de condición anómala usados junto a errores y alarmas.",
+                "reason": "Fault diagnostics are anomalous-condition signals used alongside errors and alarms.",
                 "risk": "low",
             },
             {
                 "axiom_type": "rdfs:subClassOf",
                 "subject": "Esquema",
                 "object": "Figura",
-                "reason": "Un esquema es una representación documental gráfica; mejora compatibilidad con ilustradoEn/detalladoEnEsquema sin crear clases.",
+                "reason": "A schema is a graphical documentary representation; improves compatibility with ilustradoEn/detalladoEnEsquema without introducing new classes.",
                 "risk": "low",
             },
             {

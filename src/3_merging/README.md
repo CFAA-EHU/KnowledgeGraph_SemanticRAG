@@ -1,13 +1,11 @@
-# src/3_merging - Merge experimental de T-Box
+# src/3_merging
 
-Este directorio queda reservado al merge de TTLs del carril experimental T-Box.
+Experimental T-Box graph merger. Not part of the default operational runtime.
 
-## Estado actual
+## Files
 
-- `graph_merger.py` no forma parte del runtime operativo.
-- Su unica responsabilidad es fusionar `data/processed/graphs/*.ttl` en `data/processed/ontology_merged.ttl`.
-- Ese artefacto es exploratorio y no debe confundirse con `ontology_aligned.ttl`, que sigue siendo la T-Box operativa.
+- `graph_merger.py` — merges per-chunk TTL fragments from `data/processed/graphs/` into a single `data/processed/ontology_merged.ttl`. Run with `python src/3_merging/graph_merger.py`.
 
-## Uso
+## Status
 
-Solo tiene sentido despues de ejecutar el carril experimental de `src/2_extraction/`.
+Retained for experimental use. The operational merger for A-Box graphs is `src/6_extraction/abox_merger.py`.

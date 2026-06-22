@@ -1,28 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Solucion_EliminacionArchivo a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución de eliminación de archivo" ;
-    ns1:solucionaFallo ns1:Comando_DELETE ;
-    ns1:textoExtracto "Abrir un archivo con el comando \"D\" (DELETE)" .
+ns1:AvisoSeguridad_bb843c1644 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para acceso a archivos" ;
+    ns1:mitigaRiesgo ns1:AccesoDeEscrituraDenegado ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar que existe el archivo cncWrite.txt y que contiene el identificador." .
 
-ns1:Solucion_FormatoArchivo a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución de coincidencia de formato de archivo" ;
-    ns1:controla ns1:Comando_TYPE ;
-    ns1:solucionaFallo ns1:Comando_APPEND ;
-    ns1:textoExtracto "Al abrir un archivo con el comando \"A\" (APPEND), el comando TYPE debe coincidir con el formato del archivo. Si el archivo no existe, el CNC crea uno nuevo en el formato especificado en el comando TYPE" .
+ns1:DarAlFicheroPermisoDeEscritura a ns1:TareaMantenimiento ;
+    rdfs:label "Dar al fichero permiso de escritura" ;
+    ns1:solucionaFallo ns1:AccesoDeEscrituraDenegado_592ef7729a ;
+    ns1:textoExtracto "SOLUCIÓN Dar al fichero permiso de escritura." .
 
-ns1:Comando_APPEND a ns1:InterfazUsuario ;
-    rdfs:label "Comando APPEND" ;
-    ns1:identificador "A" ;
-    ns1:textoExtracto "comando \"A\" (APPEND)" .
+ns1:NoSePuedeAbrirElFichero a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede abrir el fichero" ;
+    ns1:textoExtracto "'No se puede abrir el fichero' DETECCIÓN Al acceder a un archivo." .
 
-ns1:Comando_DELETE a ns1:InterfazUsuario ;
-    rdfs:label "Comando DELETE" ;
-    ns1:identificador "D" ;
-    ns1:textoExtracto "comando \"D\" (DELETE)" .
+ns1:AccesoDeEscrituraDenegado a ns1:AccionProhibida ;
+    rdfs:label "Acceso de escritura denegado" ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar que existe el archivo cncWrite.txt y que contiene el identificador." .
 
-ns1:Comando_TYPE a ns1:Parametro ;
-    rdfs:label "Comando TYPE" ;
-    ns1:textoExtracto "el CNC crea uno nuevo en el formato especificado en el comando TYPE" .
+ns1:AccesoDeEscrituraDenegado_592ef7729a a ns1:DiagnosticoFallo ;
+    rdfs:label "Acceso de escritura denegado" ;
+    ns1:textoExtracto "'Acceso de escritura denegado' DETECCIÓN Al acceder a un archivo. CAUSA El CNC ha intentado escribir en un archivo que no tiene permiso de escritura." .
 

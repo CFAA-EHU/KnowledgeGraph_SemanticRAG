@@ -1,30 +1,53 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_6050 a ns1:Alarma ;
-    rdfs:label "Cortocircuito en las IOs locales (alarma de sobrecorriente)" ;
-    ns1:identificador "6050" ;
-    ns1:textoExtracto "'Cortocircuito en las IOs locales (alarma de sobrecorriente)' DETECCIÓN Durante el funcionamiento del CNC." .
+ns1:CNC8070_a19980ec5a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:ErrorDeHardwareEnLaCOMPCI,
+        ns1:ErrorDeHardwareEnNodoRemotoCAN,
+        ns1:ErrorEnAccesosALaRAMDelSERCON,
+        ns1:LimiteDeIncrementoDePosicionSuperadoEnElCNC,
+        ns1:LimiteDeIncrementoDePosicionSuperadoEnElNodoContadoraDeCAN_0b4a3777df ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Alarma_6048 a ns1:Alarma ;
-    rdfs:label "Alarma externa del captador" ;
-    ns1:identificador "6048" ;
-    ns1:mitigaRiesgo ns1:Diagnostico_6048 ;
-    ns1:textoExtracto "'Alarma externa del captador' DETECCIÓN El lazo ha detectado alarma externa en el contaje local. CAUSA El captador conectado al contaje local reporta alarma. SOLUCIÓN Revisar el captador conectado a la captación local del CNC." .
+ns1:Componente_0468260117 a ns1:Componente ;
+    rdfs:label "SERCON" ;
+    ns1:textoExtracto "Fallo en el test de la RAM común del SERCON (accesos R/W en modos Byte/Word)." .
 
-ns1:Alarma_6049 a ns1:Alarma ;
-    rdfs:label "Alarma de amplitud" ;
-    ns1:identificador "6049" ;
-    ns1:mitigaRiesgo ns1:Diagnostico_6049 ;
-    ns1:textoExtracto "'Alarma de amplitud' DETECCIÓN El lazo ha detectado alarma de amplitud Vpp en el contaje local. CAUSA La señal senoidal conectada al contaje local tiene una amplitud fuera de límites, demasiado pequeña o demasiado grande. SOLUCIÓN Revisar los niveles de la señal Vpp en la captación local del CNC." .
+ns1:Componente_601f1e4520 a ns1:Componente ;
+    rdfs:label "COMPCI" ;
+    ns1:textoExtracto "Error en el test de hardware de la COMPCI." .
 
-ns1:Diagnostico_6048 a ns1:DiagnosticoFallo ;
-    rdfs:label "Revisión de captador en contaje local" ;
-    ns1:solucionaFallo ns1:Alarma_6048 ;
-    ns1:textoExtracto "Revisar el captador conectado a la captación local del CNC." .
+ns1:ConsultarConElServicioDeAsistenciaTecnica_50421e216d a ns1:AccionProhibida ;
+    rdfs:label "Consultar con el servicio de asistencia técnica" ;
+    ns1:solucionaFallo ns1:ErrorDeHardwareEnLaCOMPCI,
+        ns1:ErrorDeHardwareEnNodoRemotoCAN,
+        ns1:ErrorEnAccesosALaRAMDelSERCON,
+        ns1:LimiteDeIncrementoDePosicionSuperadoEnElCNC,
+        ns1:LimiteDeIncrementoDePosicionSuperadoEnElNodoContadoraDeCAN_0b4a3777df ;
+    ns1:textoExtracto "SOLUCIÓN Consultar con el servicio de asistencia técnica." .
 
-ns1:Diagnostico_6049 a ns1:DiagnosticoFallo ;
-    rdfs:label "Revisión de niveles de señal Vpp" ;
-    ns1:solucionaFallo ns1:Alarma_6049 ;
-    ns1:textoExtracto "Revisar los niveles de la señal Vpp en la captación local del CNC." .
+ns1:NodoRemotoCAN a ns1:Componente ;
+    rdfs:label "nodo remoto CAN" ;
+    ns1:textoExtracto "Error en el test de hardware de los nodos remotos." .
+
+ns1:ErrorDeHardwareEnLaCOMPCI a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de hardware en la COMPCI" ;
+    ns1:textoExtracto "'Error de hardware en la COMPCI' DETECCIÓN Durante el arranque del sistema. CAUSA Error en el test de hardware de la COMPCI." .
+
+ns1:ErrorDeHardwareEnNodoRemotoCAN a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de hardware en nodo remoto CAN" ;
+    ns1:textoExtracto "'Error de hardware en nodo remoto CAN' DETECCIÓN Durante el arranque del sistema. CAUSA Error en el test de hardware de los nodos remotos." .
+
+ns1:ErrorEnAccesosALaRAMDelSERCON a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en accesos a la RAM del SERCON" ;
+    ns1:textoExtracto "'Error en accesos a la RAM del SERCON' DETECCIÓN Durante el arranque del sistema o durante la ejecución. CAUSA Fallo en el test de la RAM común del SERCON." .
+
+ns1:LimiteDeIncrementoDePosicionSuperadoEnElCNC a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de incremento de posición superado en el CNC" ;
+    ns1:textoExtracto "'Límite de incremento de posición superado en el CNC' DETECCIÓN Durante la ejecución. CAUSA Incremento de posición excesivo en un eje analógico." .
+
+ns1:LimiteDeIncrementoDePosicionSuperadoEnElNodoContadoraDeCAN_0b4a3777df a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de incremento de posición superado en el nodo contadora de CAN" ;
+    ns1:textoExtracto "'Límite de incremento de posición superado en el nodo contadora de CAN' DETECCIÓN Durante la ejecución. CAUSA Incremento de posición excesivo en un eje analógico." .
 

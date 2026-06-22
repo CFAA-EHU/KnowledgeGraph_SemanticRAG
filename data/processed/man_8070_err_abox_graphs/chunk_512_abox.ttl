@@ -1,38 +1,23 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_3038 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3038: Demasiados parámetros pendientes de reportar" ;
-    ns1:identificador "3038" ;
-    ns1:solucionaFallo ns1:Sistema_CNC ;
-    ns1:textoExtracto "3038 'Demasiados parámetros pendientes de reportar' DETECCIÓN Durante la ejecución. CAUSA El sistema está sobrecargado. SOLUCIÓN Cerrar las aplicaciones que no están relacionadas con el CNC. Si el error persiste, póngase en contacto con Fagor." .
+ns1:ComprobarLimitesDeSoftware a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar límites de software" ;
+    ns1:solucionaFallo ns1:LimiteNegativoDeSoftwareSobrepasado_896b2f1b94,
+        ns1:LimitePositivoDeSoftwareSobrepasado_fe3b85dbea ;
+    ns1:textoExtracto "Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC." .
 
-ns1:Error_3039 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3039: No se ha encontrado bloque de parada en búsqueda de bloque" ;
-    ns1:identificador "3039" ;
-    ns1:textoExtracto "3039 'No se ha encontrado bloque de parada en búsqueda de bloque' DETECCIÓN Durante la ejecución en vacío. CAUSA La búsqueda de bloque no pasa por el bloque de parada. SOLUCIÓN Cambiar el bloque de parada." .
+ns1:LimiteNegativoDeSoftwareSobrepasado_896b2f1b94 a ns1:AvisoSeguridad ;
+    rdfs:label "Límite negativo de software sobrepasado" ;
+    ns1:mitigaRiesgo ns1:CNC8070_c0492d9d4a ;
+    ns1:textoExtracto "'Límite negativo de software sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado desplazar un eje a un punto que se encuentra fuera de los limites de software." .
 
-ns1:Error_3040 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3040: Eje Hirth no posicionado correctamente" ;
-    ns1:identificador "3040" ;
-    ns1:solucionaFallo ns1:Eje_Hirth ;
-    ns1:textoExtracto "3040 'Eje Hirth no posicionado correctamente' DETECCIÓN Durante la ejecución. CAUSA El eje hirth no se encuentra posicionado en un número múltiplo de su paso." .
+ns1:LimitePositivoDeSoftwareSobrepasado_fe3b85dbea a ns1:AvisoSeguridad ;
+    rdfs:label "Límite positivo de software sobrepasado" ;
+    ns1:mitigaRiesgo ns1:CNC8070_c0492d9d4a ;
+    ns1:textoExtracto "'Límite positivo de software sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado desplazar un eje a un punto que se encuentra fuera de los limites de software." .
 
-ns1:Parametro_DWELL a ns1:Parametro ;
-    rdfs:label "Parámetro DWELL" ;
-    ns1:textoExtracto "aumentar el valor del parámetro DWELL del eje" ;
-    ns1:valor "DWELL" .
-
-ns1:Senal_SERVO_axis_ON a ns1:Parametro ;
-    rdfs:label "Señal SERVO(axis)ON" ;
-    ns1:textoExtracto "de la señal SERVO(axis)ON" ;
-    ns1:valor "SERVO(axis)ON" .
-
-ns1:Eje_Hirth a ns1:ComponenteMecanico ;
-    rdfs:label "Eje Hirth" ;
-    ns1:textoExtracto "El eje hirth no se encuentra posicionado en un número múltiplo de su paso." .
-
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "El CNC puede dar este error cuando trabaja con empalme de bloques (G50, G5 o HSC) y es necesario forzar la parada del eje (con una M ó G7) antes del movimiento del eje muerto." .
+ns1:CNC8070_c0492d9d4a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC ha intentado desplazar un eje a un punto que se encuentra fuera de los limites de software." .
 

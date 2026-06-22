@@ -1,47 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_7031 a ns1:DiagnosticoFallo ;
-    rdfs:label "T con dos M6" ;
-    ns1:identificador "7031" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay programadas dos M06 consecutivas para una misma herramienta. SOLUCIÓN Programar una M06 para cada herramienta." .
+ns1:AvisoSeguridad_66df62c8a2 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad 7006" ;
+    ns1:mitigaRiesgo ns1:ProgramarCorrectorNoValido ;
+    ns1:textoExtracto "'D no admitida para esta herramienta'" .
 
-ns1:Error_7032 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la operación de cambio de herramienta" ;
-    ns1:identificador "7032" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Error en la secuencia de cambio de herramienta, en el programa del PLC. SOLUCIÓN Comprobar el programa de PLC." .
+ns1:AvisoSeguridad_ffd913f826 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad 7007" ;
+    ns1:mitigaRiesgo ns1:ProgramarT0EnModoCarga ;
+    ns1:textoExtracto "'En modo carga:T0 no admitida'" .
 
-ns1:PLC_Maquina a ns1:ComponenteElectrico ;
-    rdfs:label "PLC de gestión de herramientas" ;
-    ns1:activaAlarma ns1:Error_7033 ;
-    ns1:controla ns1:AlmacenHerramientas ;
-    ns1:textoExtracto "Error en la secuencia de cambio de herramienta, en el programa del PLC." .
+ns1:Fallo7006 a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 7006" ;
+    ns1:solucionadoPor ns1:ProgramarCorrectorNoValido ;
+    ns1:textoExtracto "'D no admitida para esta herramienta'" .
 
-ns1:Parametro_ComportamientoM06 a ns1:Parametro ;
-    rdfs:label "Parámetro de comportamiento ante M06 sin herramienta" ;
-    ns1:monitoreaParametro ns1:Error_M06_SinHerramienta ;
-    ns1:textoExtracto "Hay un parámetro máquina que indica al CNC qué hacer en esta situación, mostrar un error, un warning o no hacer nada." .
+ns1:Fallo7007 a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo 7007" ;
+    ns1:solucionadoPor ns1:ProgramarT0EnModoCarga ;
+    ns1:textoExtracto "'En modo carga:T0 no admitida'" .
 
-ns1:SenalEmergencia a ns1:Alarma ;
-    rdfs:label "Señal de emergencia del PLC" ;
-    ns1:mitigaRiesgo ns1:Error_7033 ;
-    ns1:textoExtracto "El PLC activa la señal de emergencia en el gestor de herramientas." .
+ns1:ProgramarCorrectorNoValido a ns1:AccionProhibida ;
+    rdfs:label "Programar corrector no válido" ;
+    ns1:solucionaFallo ns1:Fallo7006 ;
+    ns1:textoExtracto "Corrector de herramienta no válido. La herramienta tiene menos correctores que el programado." .
 
-ns1:AlmacenHerramientas a ns1:ComponenteMecanico ;
-    rdfs:label "Almacén de herramientas" ;
-    ns1:textoExtracto "PLC generó emergencia en el almacén de herramientas" ;
-    ns1:tieneComponente ns1:Herramienta_Gestor .
-
-ns1:Error_M06_SinHerramienta a ns1:DiagnosticoFallo ;
-    rdfs:label "M06 sin herramienta programada" ;
-    ns1:textoExtracto "Durante la ejecución. CAUSA Hay programada una M06 sin su correspondiente herramienta. SOLUCIÓN Programar una herramienta y a continuación la función M6 o modificar el parámetro máquina para cambiar el comportamiento del CNC." .
-
-ns1:Herramienta_Gestor a ns1:Herramienta ;
-    rdfs:label "Herramienta gestionada por PLC" ;
-    ns1:textoExtracto "Gestor de herramientas: Error en la operación de cambio de herramienta" .
-
-ns1:Error_7033 a ns1:DiagnosticoFallo ;
-    rdfs:label "PLC generó emergencia en el almacén de herramientas" ;
-    ns1:identificador "7033" ;
-    ns1:textoExtracto "DETECCIÓN Siempre que esté funcionando el PLC. CAUSA El PLC activa la señal de emergencia en el gestor de herramientas." .
+ns1:ProgramarT0EnModoCarga a ns1:AccionProhibida ;
+    rdfs:label "Programar T0 en modo carga" ;
+    ns1:solucionaFallo ns1:Fallo7007 ;
+    ns1:textoExtracto "Almacén en modo carga. No se permite programar T0." .
 

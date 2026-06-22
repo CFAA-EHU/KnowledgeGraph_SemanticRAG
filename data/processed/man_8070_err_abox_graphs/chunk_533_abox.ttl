@@ -1,45 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AccionProhibida_CambioPlanoEjecucionSimulada a ns1:AccionProhibida ;
-    rdfs:label "Cambio de plano durante ejecución simulada" ;
-    ns1:mitigaRiesgo ns1:AvisoSeguridad_3086 ;
-    ns1:textoExtracto "No se admite cambio de ejes del plano activo en modo ejecución simulada: Plano Principal." .
+ns1:ActivarEjeParaPoderMoverlo a ns1:AccionProhibida ;
+    rdfs:label "Activar eje para poder moverlo" ;
+    ns1:solucionaFallo ns1:EjeMultipleDesactivado ;
+    ns1:textoExtracto "SOLUCIÓN Activar el eje para poder moverlo (marca SWITCH del PLC)." .
 
-ns1:DiagnosticoFallo_3087 a ns1:DiagnosticoFallo ;
-    rdfs:label "'PWM activado en otro canal'" ;
-    ns1:identificador "3087" ;
-    ns1:textoExtracto "'PWM activado en otro canal' DETECCIÓN Durante la ejecución del corte por láser (PWM). CAUSA La prestación PWM ya está activada en un canal diferente al que se desea. SOLUCIÓN Revisar la programación del PWM." .
+ns1:DesactivarBloqueABloqueDuranteElRetrace a ns1:AccionProhibida ;
+    rdfs:label "Desactivar Bloque a Bloque durante el retrace" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteBloqueABloqueEnEsteProcesoDeRETRACE ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar Bloque a Bloque antes de salir del modo MHFS." .
 
-ns1:DiagnosticoFallo_3088 a ns1:DiagnosticoFallo ;
-    rdfs:label "'Error en la programación de la máscara del láser'" ;
-    ns1:identificador "3088" ;
-    ns1:textoExtracto "'Error en la programación de la máscara del láser' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada). CAUSA No se cumplen las condiciones hardware o de parametrización necesarias para poder utilizar la prestación de corte por láser." .
+ns1:DesactivarMarcaRETRACEDelPLCAntesDeSalirDelModoMHFS a ns1:AccionProhibida ;
+    rdfs:label "Desactivar marca RETRACE del PLC antes de salir del modo MHFS" ;
+    ns1:solucionaFallo ns1:NoEsPosibleSalirDeMHFSConRetraceActivo ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar la marca RETRACE del PLC antes de salir del modo MHFS." .
 
-ns1:ModoOperacion_CorteLaserConmutacionSincronizada a ns1:ModoOperacion ;
-    rdfs:label "Corte por láser (conmutación sincronizada)" ;
-    ns1:textoExtracto "Durante la ejecución del corte por láser (conmutación sincronizada)." .
+ns1:DeshabilitarFuncionesDeMotionControlAntesDeCambiarElSistemaDeCoordena_44268cfe70 a ns1:AccionProhibida ;
+    rdfs:label "Deshabilitar funciones de motion control antes de cambiar el sistema de coordenadas o la transformación de coordenadas" ;
+    ns1:solucionaFallo ns1:EjeMultipleDesactivado ;
+    ns1:textoExtracto "SOLUCIÓN Deshabilitar las funciones de motion control antes de cambiar el sistema de coordenadas o la transformación de coordenadas." .
 
-ns1:ModoOperacion_CorteLaserPWM a ns1:ModoOperacion ;
-    rdfs:label "Corte por láser (PWM)" ;
-    ns1:textoExtracto "Durante la ejecución del corte por láser (PWM)." .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:textoExtracto "Durante la ejecución. multieje y está desactivado." .
 
-ns1:ModoOperacion_EjecucionSimulada a ns1:ModoOperacion ;
-    rdfs:label "Modo ejecución simulada" ;
-    ns1:textoExtracto "No se admite cambio de ejes del plano activo en modo ejecución simulada: Plano Principal." .
+ns1:NoEsPosibleSalirDeMHFSConRetraceActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "'No es posible salir de MHFS con Retrace activo'" ;
+    ns1:textoExtracto "3076 'No es posible salir de MHFS con Retrace activo. Desactivar' DETECCIÓN Durante la ejecución." .
 
-ns1:Parametro_NLOCOUT a ns1:Parametro ;
-    rdfs:label "NLOCOUT" ;
-    ns1:textoExtracto "El parámetro NLOCOUT debe ser 8." ;
-    ns1:valor "8" .
+ns1:NoSeAdmiteBloqueABloqueEnEsteProcesoDeRETRACE a ns1:DiagnosticoFallo ;
+    rdfs:label "'No se admite Bloque a Bloque en este proceso de RETRACE'" ;
+    ns1:textoExtracto "3077 'No se admite Bloque a Bloque en este proceso de RETRACE; desactivar Bloque a Bloque' DETECCIÓN Durante la ejecución." .
 
-ns1:Parametro_PWMOUTPUT a ns1:Parametro ;
-    rdfs:label "PWMOUTPUT" ;
-    ns1:textoExtracto "El parámetro PWMOUTPUT no puede ser superior a 2 (0, 1, 2)." ;
-    ns1:valor "0, 1, 2" .
-
-ns1:AvisoSeguridad_3086 a ns1:AvisoSeguridad ;
-    rdfs:label "Cambio de ejes del plano activo en modo ejecución simulada" ;
-    ns1:identificador "3086" ;
-    ns1:textoExtracto "No se admite cambio de ejes del plano activo en modo ejecución simulada: Plano Principal. DETECCIÓN Durante la ejecución simulada. CAUSA Se ha realizado un cambio de plano durante la ejecución simulada. SOLUCIÓN Revisar la programación." .
+ns1:EjeMultipleDesactivado a ns1:DiagnosticoFallo ;
+    rdfs:label "'Eje múltiple desactivado'" ;
+    ns1:textoExtracto "3075 'Eje múltiple desactivado' DETECCIÓN Durante la ejecución. multieje y está desactivado." .
 

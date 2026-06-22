@@ -1,43 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Almacen a ns1:Sistema ;
-    rdfs:label "almacén" ;
-    ns1:textoExtracto "Dejar la herramienta de la pinza ꞏ1ꞏ en el almacén" .
+ns1:CabezalHerramienta a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal de herramienta" ;
+    ns1:textoExtracto "RET %L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal." .
 
-ns1:CH1TOMZ_5f791bbb4d a ns1:Parametro ;
-    ns1:identificador "CH1TOMZ" ;
-    ns1:textoExtracto "activar la marca CH1TOMZ" .
+ns1:CambioDeHerramienta_5edeb7afd2 a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta. M0 ; Esperar a que finalice la operación." .
 
-ns1:CH1TOSPDL_cdab9646c8 a ns1:Parametro ;
-    ns1:identificador "CH1TOSPDL" ;
-    ns1:textoExtracto "activar la marca CH1TOSPDL" .
+ns1:EjecucionSimulada a ns1:TareaMantenimiento ;
+    rdfs:label "Ejecución simulada" ;
+    ns1:textoExtracto "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]] V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G." .
 
-ns1:Cabezal a ns1:Componente ;
-    rdfs:label "cabezal" ;
-    ns1:textoExtracto "Poner la herramienta de tierra en el cabezal" .
+ns1:EstadoCompletoDelCNC a ns1:Parametro ;
+    rdfs:label "Estado completo del CNC" ;
+    ns1:identificador "V.G.FULLSTATUS" ;
+    ns1:textoExtracto "$IF [[[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]]" .
 
-ns1:GRTOSPDL_c8dcfe1f69 a ns1:Parametro ;
-    ns1:identificador "GRTOSPDL" ;
-    ns1:textoExtracto "activar la marca GRTOSPDL" .
+ns1:EstadoDeEjecucion a ns1:Parametro ;
+    rdfs:label "Estado de ejecución" ;
+    ns1:identificador "V.S.EXECUTION" ;
+    ns1:textoExtracto "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]] V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G." .
 
-ns1:HerramientaDeTierra_2f2655e72f a ns1:PiezaRecambio ;
-    rdfs:label "herramienta de tierra" ;
-    ns1:textoExtracto "Dejar la herramienta del cabezal en tierra" .
+ns1:EstadoDelCNC_f0a95a15b0 a ns1:Parametro ;
+    rdfs:label "Estado del CNC" ;
+    ns1:identificador "V.G.CNCAUTSTATUS" ;
+    ns1:textoExtracto "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]] V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G." .
 
-ns1:MZTOCH1_fcbc0c8b30 a ns1:Parametro ;
-    ns1:identificador "MZTOCH1" ;
-    ns1:textoExtracto "activar la marca MZTOCH1" .
+ns1:LlevarElCabezalAlPuntoDeCambioAutomatico_8032217341 a ns1:TareaMantenimiento ;
+    rdfs:label "Llevar el cabezal al punto de cambio automático" ;
+    ns1:textoExtracto "RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. G1 Z_ F_ ; Desplazar el cabezal." .
 
-ns1:Pinza1_8f154c3c61 a ns1:Herramienta ;
-    rdfs:label "pinza 1" ;
-    ns1:textoExtracto "Coger la herramienta del cabezal con la pinza ꞏ1ꞏ" .
+ns1:LlevarElCabezalAlPuntoDeCambioManual_87f2e7a61c a ns1:TareaMantenimiento ;
+    rdfs:label "Llevar el cabezal al punto de cambio manual" ;
+    ns1:textoExtracto "RET %L SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal." .
 
-ns1:SPDLTOCH1_054c51a608 a ns1:Parametro ;
-    ns1:identificador "SPDLTOCH1" ;
-    ns1:textoExtracto "activar la marca SPDLTOCH1" .
+ns1:NumeroDeHerramientaSiguiente a ns1:Parametro ;
+    rdfs:label "Número de herramienta siguiente" ;
+    ns1:identificador "V.TM.NXTOOL" ;
+    ns1:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." .
 
-ns1:SPDLTOGR_d8669ee371 a ns1:Parametro ;
-    ns1:identificador "SPDLTOGR" ;
-    ns1:textoExtracto "activar la marca SPDLTOGR" .
+ns1:Parametro_7a1fb22386 a ns1:Parametro ;
+    rdfs:label "Marca GRTOSPDL al gestor" ;
+    ns1:identificador "V.PLC.M[1108]" ;
+    ns1:textoExtracto "V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor." .
 

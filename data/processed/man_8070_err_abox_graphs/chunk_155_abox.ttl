@@ -1,64 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AccionProhibida_ActivarCinematicaIncompatible a ns1:AccionProhibida ;
-    rdfs:label "Activar cinemática incompatible con CS/ACS" ;
-    ns1:mitigaRiesgo ns1:AvisoSeguridad_1264 ;
-    ns1:textoExtracto "No programar la sentencia #TOOL ORI o activar una cinemática que permita colocar la herramienta perpendicular al plano inclinado." .
+ns1:Parametro_224111ee47 a ns1:Parametro ;
+    rdfs:label "Función G33" ;
+    ns1:textoExtracto "En la función G33, el paso de la rosca está programado más de una vez." .
 
-ns1:AccionProhibida_ProgramarSentenciaToolOri a ns1:AccionProhibida ;
-    rdfs:label "Programar la sentencia #TOOL ORI" ;
-    ns1:mitigaRiesgo ns1:AvisoSeguridad_1264 ;
-    ns1:textoExtracto "SOLUCIÓN No programar la sentencia #TOOL ORI o activar una cinemática que permita colocar la herramienta perpendicular al plano inclinado." .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:DobleProgramacionDelPasoDeHusillo,
+        ns1:PasoDeHusilloIgualCero ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:AvisoSeguridad_1265 a ns1:AvisoSeguridad ;
-    rdfs:label "Programación no permitida (sin contexto adicional)" ;
-    ns1:identificador "1265" ;
-    ns1:textoExtracto "1265 'Programación" .
+ns1:DobleProgramacionDelPasoDeHusillo a ns1:DiagnosticoFallo ;
+    rdfs:label "Doble programación del paso de husillo" ;
+    ns1:textoExtracto "'Doble programación del paso de husillo' DETECCIÓN Durante la ejecución. CAUSA En la función G33, el paso de la rosca está programado más de una vez." .
 
-ns1:FuncionG198 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G198" ;
-    ns1:identificador "G198" ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:FuncionG199 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G199" ;
-    ns1:identificador "G199" ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:FuncionG74 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G74" ;
-    ns1:identificador "G74" ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:Parametro_CSACS a ns1:Parametro ;
-    rdfs:label "Transformación de coordenadas (CS/ACS)" ;
-    ns1:identificador "CS/ACS" ;
-    ns1:textoExtracto "El CNC no permite ejecutar la función programada si está activa la transformación de coordenadas." .
-
-ns1:Parametro_CiclosPalpado a ns1:Parametro ;
-    rdfs:label "Ciclos de palpado" ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:Parametro_LINK a ns1:Parametro ;
-    rdfs:label "Parámetro #LINK" ;
-    ns1:identificador "#LINK" ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:TareaMantenimiento_DesactivarCSACS a ns1:TareaMantenimiento ;
-    rdfs:label "Desactivar transformación de coordenadas" ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_1264 ;
-    ns1:textoExtracto "SOLUCIÓN Desactivar la transformación de coordenadas para poder ejecutar el resto de funciones." .
-
-ns1:Herramienta a ns1:Herramienta ;
-    rdfs:label "Herramienta (genérica)" ;
-    ns1:textoExtracto "colocar la herramienta perpendicular al plano inclinado" .
-
-ns1:AvisoSeguridad_1264 a ns1:AvisoSeguridad ;
-    rdfs:label "Programación no permitida con CS/ACS activo" ;
-    ns1:identificador "1264" ;
-    ns1:textoExtracto "1264 'Programación no permitida con CS/ACS activo' DETECCIÓN Durante la ejecución. CAUSA El CNC no permite ejecutar la función programada si está activa la transformación de coordenadas. Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
+ns1:PasoDeHusilloIgualCero a ns1:DiagnosticoFallo ;
+    rdfs:label "Paso de husillo igual cero" ;
+    ns1:textoExtracto "'Paso de husillo igual cero' DETECCIÓN Durante la ejecución. CAUSA En la función G33, el paso de la rosca tiene valor" .
 

@@ -1,56 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:textoExtracto "La posición de almacén de la herramienta que está en el cabezal no se corresponde con la guardada por el gestor de herramientas."@es .
+ns1:CNC8070_eed72f55d9 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:InconsistenciaEnLaRecuperacionDeLaHerramientaActiva ;
+    ns1:textoExtracto "Durante el arranque del CNC." .
 
-ns1:Error_0037 a ns1:DiagnosticoFallo ;
-    rdfs:label "Inconsistencia en la recuperación de la herramienta siguiente"@es ;
-    ns1:identificador "0037" ;
-    ns1:solucionaFallo ns1:HerramientaSiguiente ;
-    ns1:textoExtracto "Inconsistencia en la recuperación de la herramienta siguiente. DETECCIÓN Durante el arranque del CNC. CAUSA La información de la herramienta siguiente guardada en el disco no se corresponde con la guardada por el gestor de herramientas, por un mal apagado o por un fallo del sistema. El fichero que contiene estos datos no existe, no es accesible o está corrupto. SOLUCIÓN Comprobar cuál es la herramienta correcta antes de continuar. Definir en el CNC cuál es la herramienta siguiente (por ejemplo desde MDI), y en caso necesario, realizar un cambio de herramienta."@es .
+ns1:ComprobarHerramientaCorrecta a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar herramienta correcta" ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar cuál es la herramienta correcta antes de continuar." .
 
-ns1:Error_0038 a ns1:DiagnosticoFallo ;
-    rdfs:label "Inconsistencia en la recuperación de los correctores de herramienta"@es ;
-    ns1:identificador "0038" ;
-    ns1:solucionaFallo ns1:CorrectoresHerramienta ;
-    ns1:textoExtracto "Inconsistencia en la recuperación de los correctores de herramienta. DETECCIÓN Durante el arranque del CNC. CAUSA La información de los correctores guardada en el disco no se corresponde con la guardada por el gestor de herramientas, por un mal apagado o por un fallo del sistema. El fichero que contiene estos datos no existe, no es accesible o está corrupto. SOLUCIÓN Comprobar cuáles son los correctores correctos antes de continuar. Definir en la tabla de herramientas los correctores de herramienta, y en caso necesario, realizar un cambio de herramienta."@es .
+ns1:DefinirHerramientaActiva a ns1:TareaMantenimiento ;
+    rdfs:label "Definir herramienta activa" ;
+    ns1:textoExtracto "Definir en la tabla de herramientas cuál es la herramienta activa, y en caso necesario, realizar un cambio de herramienta." .
 
-ns1:Error_0039 a ns1:DiagnosticoFallo ;
-    rdfs:label "Inconsistencia en la recuperación de la posición en el almacén de la herramienta en el cabezal"@es ;
-    ns1:identificador "0039" ;
-    ns1:solucionaFallo ns1:AlmacenHerramientas ;
-    ns1:textoExtracto "Inconsistencia en la recuperación de la posición en el almacén de la herramienta en el cabezal. DETECCIÓN Durante el arranque del CNC. CAUSA La posición de almacén de la herramienta que está en el cabezal no se corresponde con la guardada por el gestor de herramientas, por un mal apagado o por una fallo del sistema."@es .
-
-ns1:HerramientaActiva a ns1:Herramienta ;
-    rdfs:label "Herramienta activa"@es ;
-    ns1:documentadoEn ns1:TablaHerramientas ;
-    ns1:textoExtracto "Definir en la tabla de herramientas cuál es la herramienta activa, y en caso necesario, realizar un cambio de herramienta."@es .
-
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:textoExtracto "Durante el arranque del CNC."@es ;
-    ns1:tieneComponente ns1:GestorHerramientas .
-
-ns1:AlmacenHerramientas a ns1:ComponenteMecanico ;
-    rdfs:label "Almacén de herramientas"@es ;
-    ns1:textoExtracto "La posición de almacén de la herramienta que está en el cabezal no se corresponde con la guardada por el gestor de herramientas."@es .
-
-ns1:CorrectoresHerramienta a ns1:Parametro ;
-    rdfs:label "Correctores de herramienta"@es ;
-    ns1:documentadoEn ns1:TablaHerramientas ;
-    ns1:textoExtracto "Definir en la tabla de herramientas los correctores de herramienta, y en caso necesario, realizar un cambio de herramienta."@es .
-
-ns1:GestorHerramientas a ns1:Sistema ;
-    rdfs:label "Gestor de herramientas"@es ;
-    ns1:textoExtracto "La información de la herramienta siguiente guardada en el disco no se corresponde con la guardada por el gestor de herramientas."@es .
-
-ns1:HerramientaSiguiente a ns1:Herramienta ;
-    rdfs:label "Herramienta siguiente"@es ;
-    ns1:textoExtracto "Definir en el CNC cuál es la herramienta siguiente (por ejemplo desde MDI), y en caso necesario, realizar un cambio de herramienta."@es .
-
-ns1:TablaHerramientas a ns1:Tabla ;
-    rdfs:label "Tabla de herramientas"@es ;
-    ns1:textoExtracto "Definir en la tabla de herramientas cuál es la herramienta activa, y en caso necesario, realizar un cambio de herramienta."@es .
+ns1:InconsistenciaEnLaRecuperacionDeLaHerramientaActiva a ns1:DiagnosticoFallo ;
+    rdfs:label "Inconsistencia en la recuperación de la herramienta activa" ;
+    ns1:solucionaFallo ns1:ComprobarHerramientaCorrecta,
+        ns1:DefinirHerramientaActiva ;
+    ns1:textoExtracto "Inconsistencia en la recuperación de la herramienta activa. DETECCIÓN Durante el arranque del CNC." .
 

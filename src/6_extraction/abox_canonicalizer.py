@@ -89,8 +89,10 @@ def load_canonical_anchors(path: Path, graph: Graph | None = None) -> list[dict[
     if not isinstance(anchors, list):
         raise ValueError(f'[canonical_anchors] "anchors" debe ser una lista en {path}')
 
-    canonical_uris = set()
-    absorbed_uris = set()
+    canonical_uris: set[str] = set()
+    absorbed_uris: set[str] = set()
+    valid_anchors: list[dict[str, Any]] = []
+
     for anchor in anchors:
         canonical_uri = anchor.get('canonical_uri')
         absorbs = anchor.get('absorbs', [])
@@ -100,8 +102,15 @@ def load_canonical_anchors(path: Path, graph: Graph | None = None) -> list[dict[
         if canonical_uri in canonical_uris:
             raise ValueError(f'[canonical_anchors] Canonical URI duplicada: {canonical_uri}')
         canonical_uris.add(canonical_uri)
+
+        # If the canonical URI is absent from this specific graph, skip the whole anchor.
+        # This allows partial manual rebuilds without failing on cross-manual anchors.
         if graph is not None and not _uri_exists(graph, canonical_uri):
-            raise ValueError(f'[canonical_anchors] canonical_uri no existe en el grafo de entrada: {canonical_uri}')
+            print(f'[canonical_anchors] SKIP ancla — canonical_uri ausente en este grafo: {canonical_uri}')
+            continue
+
+        # Filter absorbed URIs to those that actually exist in this graph.
+        active_absorbs: list[str] = []
         for absorbed in absorbs:
             if absorbed == canonical_uri:
                 raise ValueError(f'[canonical_anchors] Auto-absorcion: {absorbed}')
@@ -109,17 +118,24 @@ def load_canonical_anchors(path: Path, graph: Graph | None = None) -> list[dict[
                 raise ValueError(f'[canonical_anchors] URI absorbida duplicada en anchors: {absorbed}')
             absorbed_uris.add(absorbed)
             if graph is not None and not _uri_exists(graph, absorbed):
-                raise ValueError(f'[canonical_anchors] absorbed URI no existe en el grafo de entrada: {absorbed}')
+                print(f'[canonical_anchors] SKIP absorbed — URI ausente en este grafo: {absorbed}')
+                continue
+            active_absorbs.append(absorbed)
+
         for alias in legacy_aliases:
             if alias == canonical_uri:
                 raise ValueError(f'[canonical_anchors] Alias legado apunta a si mismo: {alias}')
             if alias in absorbed_uris:
                 raise ValueError(f'[canonical_anchors] Alias legado duplicado como absorbido: {alias}')
 
+        # Only include anchor if it has at least one active absorption or a legacy alias.
+        effective_anchor = {**anchor, 'absorbs': active_absorbs}
+        valid_anchors.append(effective_anchor)
+
     cycles = canonical_uris & absorbed_uris
     if cycles:
         raise ValueError(f'[canonical_anchors] Ciclo detectado en anchors: {sorted(cycles)}')
-    return anchors
+    return valid_anchors
 
 
 def build_anchor_mapping(anchors: list[dict[str, Any]]) -> dict[str, str]:

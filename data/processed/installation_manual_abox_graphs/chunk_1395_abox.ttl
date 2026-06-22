@@ -1,46 +1,32 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Modulo_RCS_S a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo RCS-S (contadora Sercos)"@es ;
-    ns1:monitoreaParametro ns1:Parametro_DRIVEVAR_33348 ;
-    ns1:textoExtracto "Las alarmas de las entradas de captación del módulo RCS-S (contadora Sercos) se pueden desactivar..."@es ;
-    ns1:tieneComponente ns1:EntradaCaptacion_1 .
+ns1:SistemaBrochadoraSercos a ns1:Sistema ;
+    rdfs:label "Sistema con nodos Sercos" ;
+    ns1:textoExtracto "El sistema dispone de 2 contadoras Sercos (nodos 3, 5) y de 3 reguladores Sercos AXD (nodos 1, 2, 4)." ;
+    ns1:tieneComponente ns1:Nodo1,
+        ns1:Nodo2,
+        ns1:Nodo3,
+        ns1:Nodo4,
+        ns1:Nodo5 .
 
-ns1:VariableDeshabilitacion_Alarmas a ns1:Parametro ;
-    rdfs:label "Variable DRV.{mnemónico}.{nodo} para deshabilitar alarmas"@es ;
-    ns1:documentadoEn ns1:Tabla_DRIVEVAR ;
-    ns1:solucionaFallo ns1:Alarma_EntradaCaptacion_1 ;
-    ns1:textoExtracto "El acceso a la variable será de la forma: (V.)DRV.{mnemónico}.{nodo}"@es .
+ns1:Nodo1 a ns1:Componente ;
+    rdfs:label "Nodo 1" ;
+    ns1:textoExtracto "NODO 1: Eje V Sercos." .
 
-ns1:AvisoSeguridad_MovimientoMultieje a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso de seguridad para movimiento en multiejes"@es ;
-    ns1:textoExtracto "evitar que el eje no activo reporte alarmas que sean consecuencia del movimiento del eje activo (ejes/cabezales compartiendo señal de entrada, pero con diferentes resoluciones)"@es .
+ns1:Nodo2 a ns1:Componente ;
+    rdfs:label "Nodo 2" ;
+    ns1:textoExtracto "NODO 2: Eje U Sercos. E21A / ANAOUT2" .
 
-ns1:EntradaCaptacion_1 a ns1:Sensor ;
-    rdfs:label "Entrada de captación 1"@es ;
-    ns1:activaAlarma ns1:Alarma_EntradaCaptacion_1 ;
-    ns1:monitoreaParametro ns1:Parametro_DRIVEVAR_33348 ;
-    ns1:textoExtracto "IDN Sercos 33348 para la entrada de captación 1"@es .
+ns1:Nodo3 a ns1:Componente ;
+    rdfs:label "Nodo 3" ;
+    ns1:textoExtracto "NODO 3: Eje X analógico. E21B Volante 1. ANAOUT1 Eje Y analógico." .
 
-ns1:Esquema_ParametrosOEM a ns1:Esquema ;
-    rdfs:label "Esquema de parámetros máquina OEM"@es ;
-    ns1:textoExtracto "En los parámetros máquina OEM, acceder a la tabla DRIVEVAR."@es .
+ns1:Nodo4 a ns1:Componente ;
+    rdfs:label "Nodo 4" ;
+    ns1:textoExtracto "NODO 4: Cabezal S Sercos E21B" .
 
-ns1:Alarma_EntradaCaptacion_1 a ns1:Alarma ;
-    rdfs:label "Alarma de entrada de captación 1 (IDN 33348)"@es ;
-    ns1:mitigaRiesgo ns1:AvisoSeguridad_MovimientoMultieje ;
-    ns1:textoExtracto "IDN Sercos 33348 para la entrada de captación 1"@es .
-
-ns1:Parametro_DRIVEVAR_33348 a ns1:Parametro ;
-    rdfs:label "Parámetro DRIVEVAR (IDN Sercos 33348)"@es ;
-    ns1:documentadoEn ns1:Tabla_DRIVEVAR ;
-    ns1:identificador "33348" ;
-    ns1:textoExtracto "IDN Sercos 33348 para la entrada de captación 1. Definir la variable en la tabla DRIVEVAR."@es .
-
-ns1:Tabla_DRIVEVAR a ns1:Tabla ;
-    rdfs:label "Tabla DRIVEVAR"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_ParametrosOEM ;
-    ns1:identificador "DRIVEVAR" ;
-    ns1:textoExtracto "En los parámetros máquina OEM, acceder a la tabla DRIVEVAR. [...] Definir la variable en la tabla DRIVEVAR."@es .
+ns1:Nodo5 a ns1:Componente ;
+    rdfs:label "Nodo 5" ;
+    ns1:textoExtracto "NODO 5: Eje U (segunda captación) E21C Eje Y analógico. E21A / ANAOUT4 Eje Z analógico." .
 

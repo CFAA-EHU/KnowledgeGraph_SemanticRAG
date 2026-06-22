@@ -1,20 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_PIERCING_CHN a ns1:Parametro ;
-    rdfs:label "PIERCING CHN" ;
-    ns1:identificador "PIERCING CHN" ;
-    ns1:monitoreaParametro ns1:Subrutina_Piercing ;
-    ns1:textoExtracto "PIERCING CHN | Subrutina asociada al comando #PIERCING. [CHN].......Parámetro máquina; general del canal. Nombre y ubicación de la subrutina." .
+ns1:EstadoDeLaOperacionDeCutting a ns1:Parametro ;
+    rdfs:label "Estado de la operación de cutting" ;
+    ns1:identificador "V.PLC.CUTTING" ;
+    ns1:textoExtracto "Esta marca refleja el estado de la variable V.PLC.CUTTING." .
 
-ns1:Manual_Seccion14_1 a ns1:Pagina ;
-    rdfs:label "14.1 Ejecutar subrutinas desde la memoria RAM" ;
-    ns1:identificador "14.1" ;
-    ns1:textoExtracto "Ver en la '14.1 Ejecutar subrutinas desde la memoria RAM (extensión *.fst).' página 637." .
+ns1:SentenciaPLC a ns1:Sistema ;
+    rdfs:label "Sentencia #PLC" ;
+    ns1:textoExtracto "La sentencia #PLC permite gestionar una marca de PLC desde el programa pieza o subrutina, sin detener la preparación de bloques. Escribir esta variable detiene la preparación de bloques." .
 
-ns1:Subrutina_Piercing a ns1:Componente ;
-    rdfs:label "Piercing.fst" ;
-    ns1:documentadoEn ns1:Manual_Seccion14_1 ;
-    ns1:identificador "Piercing.fst" ;
-    ns1:textoExtracto "Esta subrutina debe estar definida en el parámetro general PIERCING (por defecto Piercing.fst) y estará guardada en la carpeta ..\\Mtb\\Sub. Si hay varios canales, puede haber una subrutina diferente para cada canal." .
+ns1:SubrutinaCUTTINGOFF a ns1:Sistema ;
+    rdfs:label "Subrutina asociada al comando #CUTTING OFF" ;
+    ns1:documentadoEn ns1:ManualDeProgramacion ;
+    ns1:textoExtracto "Al final de la subrutina asociada a #CUTTING OFF (o cuando el OEM lo considere necesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing." .
+
+ns1:SubrutinaCUTTINGON a ns1:Sistema ;
+    rdfs:label "Subrutina asociada al comando #CUTTING ON" ;
+    ns1:textoExtracto "El OEM también puede utilizar esta variable en las subrutinas asociadas al cutting (por defecto, Cuttingon.fst / Cuttingoff.fst), para modificar el estado de esta marca." .
 

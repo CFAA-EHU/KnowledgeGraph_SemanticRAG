@@ -4,60 +4,180 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ==========================================
+# 0. SUPERCLASES ABSTRACTAS (organizativas)
+# ==========================================
+
+ex:EntidadFisica a owl:Class ;
+    rdfs:label "Entidad Física"@es, "Physical Entity"@en ;
+    rdfs:comment "Superclase abstracta para toda entidad física del dominio: máquinas, sistemas y componentes. No debe instanciarse directamente."@es .
+
+ex:DocumentoTecnico a owl:Class ;
+    rdfs:label "Documento Técnico"@es, "Technical Document"@en ;
+    rdfs:comment "Superclase abstracta para artefactos documentales: manuales, capítulos, figuras, esquemas y tablas."@es .
+
+# ==========================================
 # 1. ARQUITECTURA FÍSICA (HARDWARE)
 # ==========================================
-ex:Maquina a owl:Class .
-ex:Sistema a owl:Class . # Ej. Sistema Hidráulico, Neumático, Eléctrico
-ex:Componente a owl:Class .
-ex:ComponenteMecanico a owl:Class ; rdfs:subClassOf ex:Componente .
-ex:ComponenteElectrico a owl:Class ; rdfs:subClassOf ex:Componente .
-ex:ComponenteHidraulico a owl:Class ; rdfs:subClassOf ex:Componente .
-ex:Sensor a owl:Class ; rdfs:subClassOf ex:ComponenteElectrico .
-ex:Actuador a owl:Class ; rdfs:subClassOf ex:Componente .
-ex:Consumible a owl:Class . # Ej. Aceites, lubricantes, refrigerantes
-ex:PiezaRecambio a owl:Class ; rdfs:subClassOf ex:Componente .
+
+ex:Maquina a owl:Class ;
+    rdfs:subClassOf ex:EntidadFisica ;
+    rdfs:label "Máquina"@es, "Machine"@en ;
+    rdfs:comment "Unidad principal de trabajo: brochadora, centro de mecanizado, etc."@es .
+
+ex:Sistema a owl:Class ;
+    rdfs:subClassOf ex:EntidadFisica ;
+    rdfs:label "Sistema"@es, "System"@en ;
+    rdfs:comment "Agrupación funcional de componentes: sistema hidráulico, neumático, eléctrico, etc."@es .
+
+ex:Componente a owl:Class ;
+    rdfs:subClassOf ex:EntidadFisica ;
+    rdfs:label "Componente"@es, "Component"@en ;
+    rdfs:comment "Parte física genérica de una máquina o sistema cuando no aplica una subclase más específica."@es .
+
+ex:ComponenteMecanico a owl:Class ;
+    rdfs:subClassOf ex:Componente ;
+    rdfs:label "Componente Mecánico"@es, "Mechanical Component"@en ;
+    rdfs:comment "Pieza mecánica: tornillo, eje, guía, rodamiento, cilindro, etc."@es .
+
+ex:ComponenteElectrico a owl:Class ;
+    rdfs:subClassOf ex:Componente ;
+    rdfs:label "Componente Eléctrico"@es, "Electrical Component"@en ;
+    rdfs:comment "Elemento eléctrico/electrónico: relé, contactor, interruptor, pulsador, variador, etc."@es .
+
+ex:ComponenteHidraulico a owl:Class ;
+    rdfs:subClassOf ex:Componente ;
+    rdfs:label "Componente Hidráulico"@es, "Hydraulic Component"@en ;
+    rdfs:comment "Elemento del circuito hidráulico: bomba, válvula, cilindro hidráulico, latiguillo, etc."@es .
+
+ex:Sensor a owl:Class ;
+    rdfs:subClassOf ex:ComponenteElectrico ;
+    rdfs:label "Sensor"@es, "Sensor"@en ;
+    rdfs:comment "Dispositivo de medida o detección: presostato, termostato, final de carrera, encoder, etc."@es .
+
+ex:Actuador a owl:Class ;
+    rdfs:subClassOf ex:Componente ;
+    rdfs:label "Actuador"@es, "Actuator"@en ;
+    rdfs:comment "Dispositivo que convierte señal en movimiento o acción: motor, electroválvula, etc."@es .
+
+ex:Consumible a owl:Class ;
+    rdfs:label "Consumible"@es, "Consumable"@en ;
+    rdfs:comment "Material fungible que se consume o reemplaza periódicamente: aceites, grasas, filtros, retenes, refrigerantes."@es .
+
+ex:PiezaRecambio a owl:Class ;
+    rdfs:subClassOf ex:Componente ;
+    rdfs:label "Pieza de Recambio"@es, "Spare Part"@en ;
+    rdfs:comment "Componente de repuesto catalogado para reemplazo planificado o correctivo."@es .
 
 # ==========================================
 # 2. OPERACIÓN Y CONTROL
 # ==========================================
-ex:ModoOperacion a owl:Class . # Ej. Manual, Automático, Semiautomático
-ex:InterfazUsuario a owl:Class . # Ej. Pantallas, botones, selectores
-ex:Parametro a owl:Class . # Ej. Velocidad, presión, voltaje
-ex:Alarma a owl:Class .
+
+ex:ModoOperacion a owl:Class ;
+    rdfs:label "Modo de Operación"@es, "Operation Mode"@en ;
+    rdfs:comment "Estado de funcionamiento de la máquina: manual, automático, semiautomático, JOG, etc."@es .
+
+ex:InterfazUsuario a owl:Class ;
+    rdfs:label "Interfaz de Usuario"@es, "User Interface"@en ;
+    rdfs:comment "Elemento de interacción persona-máquina: pantalla, panel de operador, teclado, selector, etc."@es .
+
+ex:Parametro a owl:Class ;
+    rdfs:label "Parámetro"@es, "Parameter"@en ;
+    rdfs:comment "Variable de configuración o estado de la máquina: velocidad, presión, voltaje, código CNC, etc."@es .
+
+ex:Alarma a owl:Class ;
+    rdfs:label "Alarma"@es, "Alarm"@en ;
+    rdfs:comment "Señal de aviso generada por la máquina ante una condición anómala: código de error, fallo de eje, etc."@es .
 
 # ==========================================
 # 3. SEGURIDAD Y NORMATIVA
 # ==========================================
-ex:AvisoSeguridad a owl:Class . # Peligro, Precaución, Medio Ambiente
-ex:ElementoSeguridad a owl:Class . # Relés de seguridad, barreras, candados
-ex:EPI a owl:Class . # Casco, guantes, gafas
-ex:AccionProhibida a owl:Class .
-ex:Directiva a owl:Class .
+
+ex:AvisoSeguridad a owl:Class ;
+    rdfs:label "Aviso de Seguridad"@es, "Safety Warning"@en ;
+    rdfs:comment "Instrucción de seguridad para el operario: peligro, precaución, advertencia medioambiental, etc."@es .
+
+ex:ElementoSeguridad a owl:Class ;
+    rdfs:label "Elemento de Seguridad"@es, "Safety Element"@en ;
+    rdfs:comment "Dispositivo cuya función primaria es garantizar la seguridad: enclavamiento, barrera, relé de seguridad, seta de emergencia, etc."@es .
+
+ex:EPI a owl:Class ;
+    rdfs:label "EPI"@es, "PPE"@en ;
+    rdfs:comment "Equipo de Protección Individual requerido durante operaciones o mantenimiento: casco, guantes, gafas, arnés, etc."@es .
+
+ex:AccionProhibida a owl:Class ;
+    rdfs:label "Acción Prohibida"@es, "Prohibited Action"@en ;
+    rdfs:comment "Operación explícitamente prohibida en el manual por razones de seguridad o integridad de la máquina."@es .
+
+ex:Directiva a owl:Class ;
+    rdfs:label "Directiva / Norma"@es, "Directive / Standard"@en ;
+    rdfs:comment "Regulación técnica o normativa aplicable: directivas CE, normas ISO/EN, reglamentos nacionales, etc."@es .
 
 # ==========================================
 # 4. MANTENIMIENTO Y CICLO DE VIDA
 # ==========================================
-ex:TareaMantenimiento a owl:Class .
-ex:DiagnosticoFallo a owl:Class .
-ex:Frecuencia a owl:Class . # Ej. Diario, 500 horas, Anual
-ex:Herramienta a owl:Class .
-ex:Personal a owl:Class . # Ej. Operario, Mantenimiento Eléctrico
-ex:Empresa a owl:Class .
+
+ex:TareaMantenimiento a owl:Class ;
+    rdfs:label "Tarea de Mantenimiento"@es, "Maintenance Task"@en ;
+    rdfs:comment "Acción de mantenimiento preventivo o correctivo: cambio de aceite, revisión de filtros, calibración, ajuste, etc."@es .
+
+ex:DiagnosticoFallo a owl:Class ;
+    rdfs:label "Diagnóstico de Fallo"@es, "Fault Diagnosis"@en ;
+    rdfs:comment "Síntoma o fallo identificado en la máquina junto con su causa probable y acciones correctoras."@es .
+
+ex:Frecuencia a owl:Class ;
+    rdfs:label "Frecuencia de Mantenimiento"@es, "Maintenance Frequency"@en ;
+    rdfs:comment "Periodicidad de una tarea de mantenimiento: diario, semanal, cada 500 horas, anual, etc."@es .
+
+ex:Herramienta a owl:Class ;
+    rdfs:label "Herramienta"@es, "Tool"@en ;
+    rdfs:comment "Utensilio o equipo necesario para realizar una tarea de mantenimiento o instalación."@es .
+
+ex:Personal a owl:Class ;
+    rdfs:label "Personal"@es, "Personnel"@en ;
+    rdfs:comment "Perfil de persona cualificada para realizar una tarea: operario, técnico de mantenimiento eléctrico, servicio autorizado, etc."@es .
+
+ex:Empresa a owl:Class ;
+    rdfs:label "Empresa"@es, "Company"@en ;
+    rdfs:comment "Organización referenciada en el manual: fabricante (EKIN), distribuidor, servicio técnico oficial, etc."@es .
 
 # ==========================================
 # 5. ESTRUCTURA DOCUMENTAL
 # ==========================================
-ex:Manual a owl:Class .
-ex:Capitulo a owl:Class .
-ex:Pagina a owl:Class .
-ex:Figura a owl:Class .
-ex:Esquema a owl:Class . # Esquemas eléctricos/hidráulicos
-ex:Tabla a owl:Class .
+
+ex:Manual a owl:Class ;
+    rdfs:subClassOf ex:DocumentoTecnico ;
+    rdfs:label "Manual"@es, "Manual"@en ;
+    rdfs:comment "Documento técnico de referencia: manual de instrucciones, manual de instalación, manual de programación, etc."@es .
+
+ex:Capitulo a owl:Class ;
+    rdfs:subClassOf ex:DocumentoTecnico ;
+    rdfs:label "Capítulo"@es, "Chapter"@en ;
+    rdfs:comment "Sección principal de un manual técnico."@es .
+
+ex:Pagina a owl:Class ;
+    rdfs:subClassOf ex:DocumentoTecnico ;
+    rdfs:label "Página"@es, "Page"@en ;
+    rdfs:comment "Página específica de un manual, especialmente cuando contiene una figura o tabla de referencia."@es .
+
+ex:Figura a owl:Class ;
+    rdfs:subClassOf ex:DocumentoTecnico ;
+    rdfs:label "Figura"@es, "Figure"@en ;
+    rdfs:comment "Imagen, fotografía o diagrama referenciado en el manual con número de figura."@es .
+
+ex:Esquema a owl:Class ;
+    rdfs:subClassOf ex:Figura ;
+    rdfs:label "Esquema"@es, "Diagram"@en ;
+    rdfs:comment "Diagrama técnico estructurado: esquema eléctrico, hidráulico, neumático, de bloques, etc."@es .
+
+ex:Tabla a owl:Class ;
+    rdfs:subClassOf ex:DocumentoTecnico ;
+    rdfs:label "Tabla"@es, "Table"@en ;
+    rdfs:comment "Tabla de datos del manual: lista de materiales, plan de mantenimiento, tabla de parámetros, etc."@es .
 
 # ==========================================
 # 6. REGLAS DE IDENTIDAD ENTRE FAMILIAS
 # ==========================================
-ex:Esquema rdfs:subClassOf ex:Figura .
+
 ex:Maquina owl:disjointWith ex:Manual, ex:Directiva, ex:PiezaRecambio .
 ex:Empresa owl:disjointWith ex:Directiva .
 ex:Parametro owl:disjointWith ex:DiagnosticoFallo, ex:AvisoSeguridad, ex:Alarma, ex:Herramienta, ex:Manual .
@@ -67,34 +187,267 @@ ex:AvisoSeguridad owl:disjointWith ex:ModoOperacion .
 ex:TareaMantenimiento owl:disjointWith ex:ComponenteElectrico .
 
 # ==========================================
-# PROPIEDADES DE OBJETO (TOPOLOGÍA MULTISALTO)
+# PROPIEDADES DE OBJETO — TOPOLOGÍA
 # ==========================================
-ex:compuestoPor a owl:ObjectProperty .
-ex:tieneComponente a owl:ObjectProperty ; rdfs:domain owl:Thing ; rdfs:range owl:Thing .
-ex:controla a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:Componente .
-ex:alimenta a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:Componente .
-ex:requiereConsumible a owl:ObjectProperty .
 
-ex:monitoreaParametro a owl:ObjectProperty ; rdfs:range ex:Parametro .
-ex:activaAlarma a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:Alarma .
-ex:habilitadoPor a owl:ObjectProperty .
+ex:tieneComponente a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range ex:Componente ;
+    owl:inverseOf ex:esComponenteDe ;
+    rdfs:label "tiene componente"@es, "has component"@en ;
+    rdfs:comment "Relaciona una entidad física (máquina o sistema) con uno de sus componentes constitutivos."@es .
 
-ex:mitigaRiesgo a owl:ObjectProperty .
-ex:requiereEPI a owl:ObjectProperty ; rdfs:domain ex:TareaMantenimiento ; rdfs:range ex:EPI .
-ex:cumpleNormativa a owl:ObjectProperty ; rdfs:domain ex:Maquina ; rdfs:range ex:Directiva .
+ex:esComponenteDe a owl:ObjectProperty ;
+    rdfs:domain ex:Componente ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:tieneComponente ;
+    rdfs:label "es componente de"@es, "is component of"@en ;
+    rdfs:comment "Inversa de ex:tieneComponente. Indica a qué entidad física pertenece este componente."@es .
 
-ex:requiereMantenimiento a owl:ObjectProperty ; rdfs:domain ex:Componente ; rdfs:range ex:TareaMantenimiento .
-ex:tieneFrecuencia a owl:ObjectProperty ; rdfs:domain ex:TareaMantenimiento ; rdfs:range ex:Frecuencia .
-ex:ejecutadoPor a owl:ObjectProperty ; rdfs:domain ex:TareaMantenimiento ; rdfs:range ex:Personal .
-ex:solucionaFallo a owl:ObjectProperty .
+ex:compuestoPor a owl:ObjectProperty ;
+    owl:equivalentProperty ex:tieneComponente ;
+    rdfs:label "compuesto por"@es, "composed of"@en ;
+    rdfs:comment "Sinónimo de ex:tieneComponente. Una entidad física consta de estos componentes."@es .
 
-ex:documentadoEn a owl:ObjectProperty ; rdfs:domain owl:Thing ; rdfs:range owl:Thing .
-ex:ilustradoEn a owl:ObjectProperty ; rdfs:domain owl:Thing ; rdfs:range ex:Figura .
-ex:detalladoEnEsquema a owl:ObjectProperty .
+ex:controla a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf ex:controladoPor ;
+    rdfs:label "controla"@es, "controls"@en ;
+    rdfs:comment "Una entidad física gestiona o gobierna otra entidad (componente, sistema, parámetro, interfaz)."@es .
+
+ex:controladoPor a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:controla ;
+    rdfs:label "controlado por"@es, "controlled by"@en ;
+    rdfs:comment "Inversa de ex:controla."@es .
+
+ex:alimenta a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:alimentadoPor ;
+    rdfs:label "alimenta"@es, "supplies"@en ;
+    rdfs:comment "Una entidad física suministra energía eléctrica, hidráulica o neumática a otra."@es .
+
+ex:alimentadoPor a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:alimenta ;
+    rdfs:label "alimentado por"@es, "supplied by"@en ;
+    rdfs:comment "Inversa de ex:alimenta."@es .
+
+ex:requiereConsumible a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range ex:Consumible ;
+    owl:inverseOf ex:esConsumibleDe ;
+    rdfs:label "requiere consumible"@es, "requires consumable"@en ;
+    rdfs:comment "Una entidad física o tarea de mantenimiento necesita un material fungible: aceite, grasa, filtro, retén, refrigerante. NUNCA usar para componentes montados (motores, bombas)."@es .
+
+ex:esConsumibleDe a owl:ObjectProperty ;
+    rdfs:domain ex:Consumible ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:requiereConsumible ;
+    rdfs:label "es consumible de"@es, "is consumable of"@en ;
+    rdfs:comment "Inversa de ex:requiereConsumible."@es .
+
+ex:monitoreaParametro a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range ex:Parametro ;
+    owl:inverseOf ex:parametroMonitoradoPor ;
+    rdfs:label "monitorea parámetro"@es, "monitors parameter"@en ;
+    rdfs:comment "Una entidad física (sensor, componente, sistema) lee o supervisa el valor de un parámetro."@es .
+
+ex:parametroMonitoradoPor a owl:ObjectProperty ;
+    rdfs:domain ex:Parametro ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:monitoreaParametro ;
+    rdfs:label "parámetro monitorado por"@es, "parameter monitored by"@en ;
+    rdfs:comment "Inversa de ex:monitoreaParametro."@es .
+
+ex:activaAlarma a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range ex:Alarma ;
+    owl:inverseOf ex:alarmaActivadaPor ;
+    rdfs:label "activa alarma"@es, "triggers alarm"@en ;
+    rdfs:comment "Una entidad física (componente, sistema) desencadena una alarma específica."@es .
+
+ex:alarmaActivadaPor a owl:ObjectProperty ;
+    rdfs:domain ex:Alarma ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:activaAlarma ;
+    rdfs:label "alarma activada por"@es, "alarm triggered by"@en ;
+    rdfs:comment "Inversa de ex:activaAlarma."@es .
+
+ex:habilitadoPor a owl:ObjectProperty ;
+    rdfs:domain ex:TareaMantenimiento ;
+    rdfs:range ex:Personal ;
+    owl:inverseOf ex:habilita ;
+    rdfs:label "habilitado por"@es, "authorized by"@en ;
+    rdfs:comment "Una tarea de mantenimiento requiere la autorización o cualificación de un perfil de personal específico. SOLO usar entre TareaMantenimiento y Personal. NUNCA usar para expresar que un parámetro o función está activado por un sistema CNC — para eso usar ex:controladoPor."@es .
+
+ex:habilita a owl:ObjectProperty ;
+    rdfs:domain ex:Personal ;
+    rdfs:range ex:TareaMantenimiento ;
+    owl:inverseOf ex:habilitadoPor ;
+    rdfs:label "habilita"@es, "authorizes"@en ;
+    rdfs:comment "Inversa de ex:habilitadoPor."@es .
+
+ex:mitigaRiesgo a owl:ObjectProperty ;
+    rdfs:domain ex:AvisoSeguridad ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf ex:riesgoMitigadoPor ;
+    rdfs:label "mitiga riesgo"@es, "mitigates risk"@en ;
+    rdfs:comment "Un aviso de seguridad mitiga un riesgo asociado a una acción prohibida, una máquina o un componente."@es .
+
+ex:riesgoMitigadoPor a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range ex:AvisoSeguridad ;
+    owl:inverseOf ex:mitigaRiesgo ;
+    rdfs:label "riesgo mitigado por"@es, "risk mitigated by"@en ;
+    rdfs:comment "Inversa de ex:mitigaRiesgo."@es .
+
+ex:requiereEPI a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range ex:EPI ;
+    owl:inverseOf ex:epiRequeridoEn ;
+    rdfs:label "requiere EPI"@es, "requires PPE"@en ;
+    rdfs:comment "Una tarea de mantenimiento o la operación de una entidad física exige el uso de un equipo de protección individual."@es .
+
+ex:epiRequeridoEn a owl:ObjectProperty ;
+    rdfs:domain ex:EPI ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:requiereEPI ;
+    rdfs:label "EPI requerido en"@es, "PPE required in"@en ;
+    rdfs:comment "Un EPI es necesario al operar o mantener esta entidad física."@es .
+
+ex:cumpleNormativa a owl:ObjectProperty ;
+    rdfs:domain ex:Maquina ;
+    rdfs:range ex:Directiva ;
+    owl:inverseOf ex:normativaCumplidaPor ;
+    rdfs:label "cumple normativa"@es, "complies with"@en ;
+    rdfs:comment "La máquina ha sido diseñada y fabricada conforme a esta directiva o norma técnica."@es .
+
+ex:normativaCumplidaPor a owl:ObjectProperty ;
+    rdfs:domain ex:Directiva ;
+    rdfs:range ex:Maquina ;
+    owl:inverseOf ex:cumpleNormativa ;
+    rdfs:label "normativa cumplida por"@es, "standard complied by"@en ;
+    rdfs:comment "Inversa de ex:cumpleNormativa."@es .
+
+ex:requiereMantenimiento a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range ex:TareaMantenimiento ;
+    owl:inverseOf ex:esMantenimientoDe ;
+    rdfs:label "requiere mantenimiento"@es, "requires maintenance"@en ;
+    rdfs:comment "Una entidad física (componente, sistema, máquina) es objeto de esta tarea de mantenimiento. DOMINIO: EntidadFisica (sujeto). RANGO: TareaMantenimiento (objeto). NUNCA usar con TareaMantenimiento como sujeto."@es .
+
+ex:esMantenimientoDe a owl:ObjectProperty ;
+    rdfs:domain ex:TareaMantenimiento ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:requiereMantenimiento ;
+    rdfs:label "es mantenimiento de"@es, "is maintenance of"@en ;
+    rdfs:comment "Inversa de ex:requiereMantenimiento. Una tarea de mantenimiento se aplica sobre esta entidad física."@es .
+
+ex:tieneFrecuencia a owl:ObjectProperty ;
+    rdfs:domain ex:TareaMantenimiento ;
+    rdfs:range ex:Frecuencia ;
+    owl:inverseOf ex:frecuenciaAplicableA ;
+    rdfs:label "tiene frecuencia"@es, "has frequency"@en ;
+    rdfs:comment "Periodicidad con la que debe realizarse una tarea de mantenimiento."@es .
+
+ex:frecuenciaAplicableA a owl:ObjectProperty ;
+    rdfs:domain ex:Frecuencia ;
+    rdfs:range ex:TareaMantenimiento ;
+    owl:inverseOf ex:tieneFrecuencia ;
+    rdfs:label "frecuencia aplicable a"@es, "frequency applicable to"@en ;
+    rdfs:comment "Inversa de ex:tieneFrecuencia."@es .
+
+ex:ejecutadoPor a owl:ObjectProperty ;
+    rdfs:domain ex:TareaMantenimiento ;
+    rdfs:range ex:Personal ;
+    owl:inverseOf ex:ejecuta ;
+    rdfs:label "ejecutado por"@es, "performed by"@en ;
+    rdfs:comment "Perfil de personal que debe realizar esta tarea de mantenimiento."@es .
+
+ex:ejecuta a owl:ObjectProperty ;
+    rdfs:domain ex:Personal ;
+    rdfs:range ex:TareaMantenimiento ;
+    owl:inverseOf ex:ejecutadoPor ;
+    rdfs:label "ejecuta"@es, "performs"@en ;
+    rdfs:comment "Inversa de ex:ejecutadoPor."@es .
+
+ex:solucionaFallo a owl:ObjectProperty ;
+    rdfs:domain ex:TareaMantenimiento ;
+    rdfs:range ex:DiagnosticoFallo ;
+    owl:inverseOf ex:solucionadoPor ;
+    rdfs:label "soluciona fallo"@es, "resolves fault"@en ;
+    rdfs:comment "Una tarea de mantenimiento correctivo resuelve un diagnóstico de fallo concreto. NUNCA usar entre AccionProhibida ni entre entidades que no sean TareaMantenimiento → DiagnosticoFallo."@es .
+
+ex:solucionadoPor a owl:ObjectProperty ;
+    rdfs:domain ex:DiagnosticoFallo ;
+    rdfs:range ex:TareaMantenimiento ;
+    owl:inverseOf ex:solucionaFallo ;
+    rdfs:label "solucionado por"@es, "resolved by"@en ;
+    rdfs:comment "Inversa de ex:solucionaFallo."@es .
+
+ex:documentadoEn a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf ex:documenta ;
+    rdfs:label "documentado en"@es, "documented in"@en ;
+    rdfs:comment "Una entidad del dominio está descrita o referenciada en un artefacto documental (manual, capítulo, tabla, esquema, interfaz, etc.)."@es .
+
+ex:documenta a owl:ObjectProperty ;
+    rdfs:domain ex:DocumentoTecnico ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf ex:documentadoEn ;
+    rdfs:label "documenta"@es, "documents"@en ;
+    rdfs:comment "Inversa de ex:documentadoEn."@es .
+
+ex:ilustradoEn a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf ex:ilustra ;
+    rdfs:label "ilustrado en"@es, "illustrated in"@en ;
+    rdfs:comment "Una entidad aparece representada en un artefacto (figura, esquema, tabla, interfaz). SUJETO: la entidad representada. OBJETO: el artefacto que la contiene. NUNCA poner la figura/esquema como sujeto de esta propiedad."@es .
+
+ex:ilustra a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing ;
+    owl:inverseOf ex:ilustradoEn ;
+    rdfs:label "ilustra"@es, "illustrates"@en ;
+    rdfs:comment "Un artefacto (figura, esquema, tabla, interfaz de usuario) muestra o representa una entidad. SUJETO: el artefacto. OBJETO: la entidad representada."@es .
+
+ex:detalladoEnEsquema a owl:ObjectProperty ;
+    rdfs:domain ex:EntidadFisica ;
+    rdfs:range ex:Esquema ;
+    owl:inverseOf ex:esEsquemaDe ;
+    rdfs:label "detallado en esquema"@es, "detailed in diagram"@en ;
+    rdfs:comment "Una entidad física (componente, sistema) está representada en un esquema. SUJETO: la entidad física. OBJETO: el esquema. NUNCA usar con ex:Esquema como sujeto."@es .
+
+ex:esEsquemaDe a owl:ObjectProperty ;
+    rdfs:domain ex:Esquema ;
+    rdfs:range ex:EntidadFisica ;
+    owl:inverseOf ex:detalladoEnEsquema ;
+    rdfs:label "es esquema de"@es, "is diagram of"@en ;
+    rdfs:comment "Inversa de ex:detalladoEnEsquema."@es .
 
 # ==========================================
-# PROPIEDADES DE DATOS (ANCLAJES LÉXICOS REGEX)
+# PROPIEDADES DE DATOS (ANCLAJES LÉXICOS)
 # ==========================================
-ex:identificador a owl:DatatypeProperty ; rdfs:range xsd:string .
-ex:textoExtracto a owl:DatatypeProperty ; rdfs:range xsd:string .
-ex:valor a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:range xsd:string . # Para guardar "220V", "50 bar"
+
+ex:identificador a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "identificador"@es, "identifier"@en ;
+    rdfs:comment "Código, referencia, número de modelo o designador técnico exactamente como aparece en el manual: '3RT2024-1BB40', 'A218/RASHEM', 'PP177', 'G54'."@es .
+
+ex:textoExtracto a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "texto extracto"@es, "source excerpt"@en ;
+    rdfs:comment "Cita literal o fragmento del texto fuente que justifica la existencia de la entidad en el grafo. Permite trazabilidad desde el manual."@es .
+
+ex:valor a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "valor"@es, "value"@en ;
+    rdfs:comment "Valor literal de un parámetro o medida observable en el manual: '220 V', '50 bar', '3000 rpm', '1'."@es .

@@ -1,23 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:EnAlmacenesRandomSePuedenOptimizarLasOrientacionesDelAlmacenSiElGestorConoceLaPosicionQueEstaSeleccionadaEnCadaMomento a ns1:Componente ;
-    ns1:textoExtracto "En almacenes random se pueden optimizar las orientaciones del almacén si el gestor conoce la posición que está seleccionada en cada momento." .
+ns1:CNC8070_a7e091e8d9 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:documentadoEn ns1:ManualOperacion ;
+    ns1:textoExtracto "Consultar el manual de operación." ;
+    ns1:tieneComponente ns1:TablaAlmacen .
 
-ns1:EnAlmacenesTorretaSePuedeSeleccionarUnaPosicionSentenciaROTATEMZ a ns1:Componente ;
-    ns1:textoExtracto "En almacenes torreta se puede seleccionar una posición (sentencia #ROTATEMZ)." .
+ns1:CargaDelAlmacen a ns1:TareaMantenimiento ;
+    rdfs:label "Carga del almacén" ;
+    ns1:textoExtracto "La carga del almacén se hace llevando las herramientas, una a una, desde tierra al almacén pasando por el cabezal." .
 
-ns1:PLC_Gestor_comunicacion a ns1:Sistema ;
-    ns1:compuestoPor ns1:Gestor_PLC,
-        ns1:MZPOS_50c19cebc6 ;
-    ns1:textoExtracto "El PLC debe poner esta marca a (=1) para indicar al gestor que debe continuar la ejecución del programa mientras se deja la herramienta en el almacén." ;
-    ns1:tieneComponente ns1:MZPOS_50c19cebc6 .
+ns1:DescargaDelAlmacen a ns1:TareaMantenimiento ;
+    rdfs:label "Descarga del almacén" ;
+    ns1:textoExtracto "La descarga del almacén se hace llevando las herramientas, una a una, desde el almacén a tierra pasando por el cabezal." .
 
-ns1:Gestor_PLC a ns1:Sistema ;
-    ns1:textoExtracto "gestor que debe continuar la ejecución del programa mientras se deja la herramienta en el almacén" .
+ns1:ModoDeCargaDeAlmacen a ns1:Parametro ;
+    rdfs:label "Modo de carga de almacén" ;
+    ns1:identificador "V.TM.MZMODE=1" ;
+    ns1:textoExtracto "Personalizar la variable V.TM.MZMODE=1, para indicar al gestor que se desea trabajar en modo de carga de almacén." .
 
-ns1:MZPOS_50c19cebc6 a ns1:Parametro ;
-    ns1:identificador "MZPOS" ;
-    ns1:textoExtracto "El PLC debe indicar en este registro la posición actual del almacén; si no se desea utilizar este registro, el PLC debe ponerlo a ꞏ0ꞏ." ;
-    ns1:valor "1",
-        "posición actual del almacén" .
+ns1:ModoDescargaDeAlmacen a ns1:Parametro ;
+    rdfs:label "Modo descarga de almacén" ;
+    ns1:identificador "V.TM.MZMODE=2" ;
+    ns1:textoExtracto "Personalizar la variable V.TM.MZMODE=2, para indicar al gestor que se desea trabajar en modo descarga de almacén." .
+
+ns1:TablaAlmacen a ns1:Tabla ;
+    rdfs:label "Tabla del almacén" ;
+    ns1:textoExtracto "En cada una de las tablas del almacén existen softkeys que permiten inicializar, cargar y descargar herramientas en el almacén de forma manual y automática." .
 

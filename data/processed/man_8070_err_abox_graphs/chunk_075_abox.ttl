@@ -1,41 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_0252 a ns1:Alarma ;
-    rdfs:label "Variable inexistente sin un material activo" ;
-    ns1:identificador "0252" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Se ha intentado leer el nombre del material activo y no hay ninguno. SOLUCIÓN Activar un material desde las tablas tecnológicas." .
+ns1:AlarmaOvertemp a ns1:Alarma ;
+    ns1:activaAlarma ns1:AvisoSobreTemperatura ;
+    ns1:textoExtracto "activa la marca OVERTEMP" .
 
-ns1:Alarma_0253 a ns1:Alarma ;
-    rdfs:label "COMPID no válido" ;
-    ns1:identificador "0253" ;
-    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El parámetro COMPID de la cinemática tiene que ser menor que 7 y no puede haber más de una cinemática con el mismo COMPID. SOLUCIÓN Revisar el parámetro COMPID." .
+ns1:TareaAjustarLooptime a ns1:TareaMantenimiento ;
+    ns1:solucionaFallo ns1:SobrepasamientoDelLOOPTIME ;
+    ns1:textoExtracto "ajustar el parámetro LOOPTIME." .
 
-ns1:Alarma_CompensacionVolumetricaInexistente a ns1:Alarma ;
-    rdfs:label "Compensación volumétrica inexistente" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El PLC ha intentado activar una compensación volumétrica que no existe. SOLUCIÓN Comprobar que está activa la opción de software asociada a la compensación volumétrica. Comprobar la lista de compensaciones volumétricas definidas (parámetro VOLCOMPn)." .
+ns1:TareaContactarSAT a ns1:TareaMantenimiento ;
+    ns1:solucionaFallo ns1:AvisoSobreTemperatura,
+        ns1:TensionDePilaBaja,
+        ns1:VentiladorDeCPUParado ;
+    ns1:textoExtracto "póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:AvisoSeguridad_ValidacionParametros a ns1:AvisoSeguridad ;
-    rdfs:label "Validación de parámetros máquina" ;
-    ns1:textoExtracto "DETECCIÓN Durante la **validación de los parámetros máquina**." .
+ns1:TiempoDeBucle a ns1:Parametro ;
+    rdfs:label "Tiempo de bucle" ;
+    ns1:identificador "LOOPTIME" ;
+    ns1:textoExtracto "ajustar el parámetro LOOPTIME." .
 
-ns1:InterfazUsuario_TablasTecnologicas a ns1:InterfazUsuario ;
-    rdfs:label "Tablas tecnológicas de materiales" ;
-    ns1:textoExtracto "Activar un material desde las **tablas tecnológicas**." .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Parametro_VOLCOMPn a ns1:Parametro ;
-    rdfs:label "Lista de compensaciones volumétricas definidas" ;
-    ns1:identificador "VOLCOMPn" ;
-    ns1:textoExtracto "Comprobar la lista de compensaciones volumétricas definidas (parámetro VOLCOMPn)." .
+ns1:SobrepasamientoDelLOOPTIME a ns1:AvisoSeguridad ;
+    rdfs:label "Sobrepasamiento del LOOPTIME" ;
+    ns1:textoExtracto "'Sobrepasamiento del LOOPTIME' DETECCIÓN En condiciones de CNCREADY." .
 
-ns1:Sistema_Cinematica a ns1:Sistema ;
-    rdfs:label "Sistema de cinemática de la máquina" ;
-    ns1:textoExtracto "El parámetro COMPID de la **cinemática** tiene que ser menor que 7 y no puede haber más de una cinemática con el mismo COMPID." ;
-    ns1:tieneComponente ns1:Parametro_COMPID .
+ns1:TensionDePilaBaja a ns1:AvisoSeguridad ;
+    rdfs:label "Tensión de pila baja" ;
+    ns1:textoExtracto "'Tensión de pila baja' DETECCIÓN Durante el arranque del CNC o tras un reset." .
 
-ns1:Parametro_COMPID a ns1:Parametro ;
-    rdfs:label "Identificador de cinemática" ;
-    ns1:identificador "COMPID" ;
-    ns1:textoExtracto "El parámetro COMPID de la cinemática tiene que ser menor que 7 y no puede haber más de una cinemática con el mismo COMPID." ;
-    ns1:valor "Menor que 7" .
+ns1:VentiladorDeCPUParado a ns1:AvisoSeguridad ;
+    rdfs:label "Ventilador de CPU parado" ;
+    ns1:textoExtracto "Ventilador de la cpu parado. Riesgo de sobretemperatura. Contactar con el SAT." .
+
+ns1:AvisoSobreTemperatura a ns1:AvisoSeguridad ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "El CNC muestra este aviso y activa la marca OVERTEMP." .
 

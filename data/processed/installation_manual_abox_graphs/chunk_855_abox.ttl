@@ -1,31 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ControlAparcado a ns1:Sistema ;
-    rdfs:label "Sistema de control de aparcado/desaparcado" ;
-    ns1:controla ns1:Senal_PARK,
-        ns1:Senal_UNPARK ;
-    ns1:textoExtracto "El CNC utiliza las señales PARK y UNPARK para informar al PLC que se ha desencadenado el proceso correspondiente de aparcar o desaparcar." ;
-    ns1:tieneComponente ns1:Senal_PARK,
-        ns1:Senal_UNPARK .
+ns1:CNC8070_859d5070d4 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC pone esta marca a (=0) cuando se suspende (congela) o anula el control tangencial del eje." .
 
-ns1:Parametro_Aparcado a ns1:Parametro ;
-    rdfs:label "Estado aparcado" ;
-    ns1:textoExtracto "Para poder aparcar un eje o cabezal, sus señales de habilitación tienen que estar (=0)." ;
-    ns1:valor "0" .
+ns1:LOPENAxis_f695ca6982 a ns1:Parametro ;
+    rdfs:label "Marca que indica si el lazo de posición del eje está abierto" ;
+    ns1:identificador "LOPEN(axis)" ;
+    ns1:textoExtracto "LOPEN(axis) El CNC activa esta marca para indicar al PLC que el lazo de posición del eje está abierto." .
 
-ns1:Parametro_Desaparcado a ns1:Parametro ;
-    rdfs:label "Estado desaparcado" ;
-    ns1:textoExtracto "tras desaparcar el eje las señales de habilitación del eje se deben poner a (=1)." ;
-    ns1:valor "1" .
-
-ns1:Senal_PARK a ns1:Sensor ;
-    rdfs:label "Señal PARK" ;
-    ns1:monitoreaParametro ns1:Parametro_Aparcado ;
-    ns1:textoExtracto "El CNC utiliza las señales PARK y UNPARK para informar al PLC que se ha desencadenado el proceso correspondiente de aparcar o desaparcar." .
-
-ns1:Senal_UNPARK a ns1:Sensor ;
-    rdfs:label "Señal UNPARK" ;
-    ns1:monitoreaParametro ns1:Parametro_Desaparcado ;
-    ns1:textoExtracto "El CNC utiliza las señales PARK y UNPARK para informar al PLC que se ha desencadenado el proceso correspondiente de aparcar o desaparcar." .
+ns1:MAXDIFFAxis a ns1:Parametro ;
+    rdfs:label "Marca que indica si no se puede corregir la diferencia de cota entre el eje maestro y esclavo" ;
+    ns1:identificador "MAXDIFF(axis)" ;
+    ns1:textoExtracto "MAXDIFF(axis) Esta marca se utiliza en los ejes gantry. El CNC activa (=1) esta marca cuando no puede corregir la diferencia de cota entre el eje maestro y esclavo, ya que la diferencia es superior a la indicada por el parámetro MAXDIFF(axis)." .
 

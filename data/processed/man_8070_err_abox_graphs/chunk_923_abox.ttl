@@ -1,28 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_9317 a ns1:DiagnosticoFallo ;
-    rdfs:label "Grupo de ejes con diferentes captaciones: todos los ejes SERCOS deben ser velocidad"@es ;
-    ns1:identificador "9317" ;
-    ns1:monitoreaParametro ns1:Parametro_COUNTERID ;
-    ns1:textoExtracto "9317 'Grupo de ejes con dif. captaciones: todos los ejes SERCOS deben ser velocidad' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay algún grupo multieje cuyos ejes tienen diferente parámetro COUNTER..."@es .
+ns1:AsegurarQueLosEjesSERCOSTenganIgualOPMODEP a ns1:TareaMantenimiento ;
+    rdfs:label "Asegurar que los ejes SERCOS tengan igual OPMODEP" ;
+    ns1:solucionaFallo ns1:TenerDiferenteParametroOPMODEPEnEjesGantry ;
+    ns1:textoExtracto "Los dos ejes SERCOS tienen que tener igual OPMODEP." .
 
-ns1:SistemaMultieje a ns1:Sistema ;
-    rdfs:label "Grupo multieje"@es ;
-    ns1:textoExtracto "grupo multieje cuyos ejes tienen diferente parámetro COUNTERID"@es ;
-    ns1:tieneComponente ns1:EjeNoSERCOS,
-        ns1:EjeSERCOS .
+ns1:AsignarEntradaDigitalDeModuloFagorOLogicaAlPalpador a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar entrada digital de módulo Fagor o lógica al palpador" ;
+    ns1:solucionaFallo ns1:AsociarPalpadorAEntradaDigitalNoValida ;
+    ns1:textoExtracto "SOLUCIÓN Asignar a los parámetros PRBDI1 y PRBDI2 una entrada digital de un módulo Fagor o una entrada lógica." .
 
-ns1:EjeNoSERCOS a ns1:ComponenteMecanico ;
-    rdfs:label "Eje no SERCOS"@es ;
-    ns1:textoExtracto "ejes no son Sercos velocidad"@es .
+ns1:ElPalpadorDebeAsociarseAEntradaDigitalDeNodoFagor a ns1:DiagnosticoFallo ;
+    rdfs:label "El palpador debe asociarse a entrada digital de nodo Fagor" ;
+    ns1:identificador "9303" ;
+    ns1:textoExtracto "'El palpador debe asociarse a entrada digital de nodo Fagor'" .
 
-ns1:EjeSERCOS a ns1:ComponenteMecanico ;
-    rdfs:label "Eje SERCOS velocidad"@es ;
-    ns1:textoExtracto "ejes Sercos velocidad"@es .
+ns1:LosDosEjesSERCOSTienenQueTenerIgualOPMODEP a ns1:DiagnosticoFallo ;
+    rdfs:label "Los dos ejes SERCOS tienen que tener igual OPMODEP" ;
+    ns1:identificador "9304" ;
+    ns1:textoExtracto "'Ejes gantry: Los dos ejes SERCOS tienen que tener igual OPMODEP'" .
 
-ns1:Parametro_COUNTERID a ns1:Parametro ;
-    rdfs:label "COUNTERID" ;
-    ns1:textoExtracto "parámetro COUNTERID"@es ;
-    ns1:valor "COUNTERID" .
+ns1:RearrancarWindows_fedafbdb48 a ns1:TareaMantenimiento ;
+    rdfs:label "Rearrancar Windows" ;
+    ns1:solucionaFallo ns1:CambiarParametrosMaquinaSinRearrancarWindows ;
+    ns1:textoExtracto "SOLUCIÓN Rearrancar windows." .
+
+ns1:AsociarPalpadorAEntradaDigitalNoValida a ns1:AccionProhibida ;
+    rdfs:label "Asociar palpador a entrada digital no válida" ;
+    ns1:textoExtracto "El parámetro PRBDI1 o PRBDI2 hace referencia a una entrada digital no válida." .
+
+ns1:CambiarParametrosMaquinaSinRearrancarWindows a ns1:AccionProhibida ;
+    rdfs:label "Cambiar parámetros máquina sin rearrancar Windows" ;
+    ns1:textoExtracto "Algún cambio en los parámetros máquina exige rearrancar windows para tener efecto." .
+
+ns1:TenerDiferenteParametroOPMODEPEnEjesGantry a ns1:AccionProhibida ;
+    rdfs:label "Tener diferente parámetro OPMODEP en ejes gantry" ;
+    ns1:textoExtracto "Hay una pareja gantry o tándem cuyos ejes maestro y esclavo tienen diferente parámetro OPMODEP." .
 

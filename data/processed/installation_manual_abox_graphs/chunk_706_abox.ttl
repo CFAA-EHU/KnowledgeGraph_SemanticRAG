@@ -1,37 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaNumeracionAutomatica a ns1:Sistema ;
-    rdfs:label "Sistema de numeración automática por orden de grupos remotos"@es ;
-    ns1:documentadoEn ns1:TablaNumeracionModulosE_S ;
-    ns1:textoExtracto "Si no se definen estos parámetros, el CNC numera los módulos automáticamente según el orden de los módulos remotos. Numeración según el orden de los grupos remotos (conmutador rotativo del elemento Power Supply)."@es .
+ns1:CNC8070_bdd7978271 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG4 hasta que transcurra el tiempo indicado mediante la constante de tiempo, o hasta que se produzca un flanco de bajada en la entrada TG4." .
 
-ns1:SistemaNumeracionPersonalizada a ns1:Sistema ;
-    rdfs:label "Sistema de numeración personalizada por parámetros máquina"@es ;
-    ns1:documentadoEn ns1:TablaNumeracionModulosPersonalizada ;
-    ns1:monitoreaParametro ns1:Parametro_IndiceBaseModulo ;
-    ns1:textoExtracto "Cuando se personaliza la numeración mediante los parámetros máquina, a cada módulo se le asigna un índice base a partir del cual se numeran las entradas o salidas de dicho módulo."@es .
+ns1:Temporizador a ns1:Sistema ;
+    rdfs:label "Temporizador" ;
+    ns1:monitoreaParametro ns1:EntradaTEN,
+        ns1:EntradaTG4_3418b2d9a8,
+        ns1:EntradaTRS ;
+    ns1:textoExtracto "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG4 hasta que transcurra el tiempo indicado mediante la constante de tiempo, o hasta que se produzca un flanco de bajada en la entrada TG4." .
 
-ns1:Parametro_IndiceBaseModulo a ns1:Parametro ;
-    rdfs:label "Índice base de módulo (múltiplo de 16 + 1)"@es ;
-    ns1:textoExtracto "Los valores del índice base deben ser múltiplos de 16, más 1 (es decir, 1, 17, 33...)."@es ;
-    ns1:valor "1, 17, 33, 49, 65, 81, 97, 113" .
+ns1:EntradaTEN a ns1:Parametro ;
+    rdfs:label "Entrada TEN" ;
+    ns1:textoExtracto "Si una vez activado el temporizador se selecciona TEN=0, el PLC detiene la temporización, siendo necesario asignar TEN=1 para que dicha temporización continúe." .
 
-ns1:TablaNumeracionModulosE_S a ns1:Tabla ;
-    rdfs:label "Tabla de numeración de entradas/salidas por grupos remotos"@es ;
-    ns1:textoExtracto """
-| Grupo ꞏ1ꞏ | Grupo ꞏ2ꞏ | Grupo ꞏ3ꞏ |
-| --- | --- | --- |
-| O1...O32 | O33...O48 | O49...O64 |
-| I1...I48 | I49...I64 | I65...I96
-"""@es .
+ns1:EntradaTG4_3418b2d9a8 a ns1:Parametro ;
+    rdfs:label "Entrada TG4" ;
+    ns1:textoExtracto "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG4 hasta que transcurra el tiempo indicado mediante la constante de tiempo, o hasta que se produzca un flanco de bajada en la entrada TG4." .
 
-ns1:TablaNumeracionModulosPersonalizada a ns1:Tabla ;
-    rdfs:label "Tabla de numeración personalizada mediante parámetros máquina"@es ;
-    ns1:textoExtracto """
-| Módulo 1. | 1 | I1...I16 | 33 | O33...O48 |
-| Módulo 2. | 33 | I33...I48 | 81 | O81...O96 |
-| Módulo 3. | 97 | I97...I112 | 49 | O49...O64 |
-| Módulo 4. | 113 | I113...I128 | - | - - - - - -
-"""@es .
+ns1:EntradaTRS a ns1:Parametro ;
+    rdfs:label "Entrada TRS" ;
+    ns1:textoExtracto "Si se produce un flanco de subida en la entrada TRS, durante la temporización o después de ella, el PLC inicializa el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta (la inicializa a 0)." .
 

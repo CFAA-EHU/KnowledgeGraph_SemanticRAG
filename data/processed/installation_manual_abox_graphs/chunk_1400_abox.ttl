@@ -1,35 +1,11 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaCANopen_1400 a ns1:Sistema ;
-    rdfs:label "Sistema de bus CANopen para I/O digitales"@es ;
-    ns1:monitoreaParametro ns1:ParametroMaquina_ConfigIO_1400 ;
-    ns1:textoExtracto "el CNC numera las entradas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus. Cuando el bus es CANopen, el CNC permite dividir los nodos de I/Os digitales en bloques lógicos (módulos virtuales), y a continuación, establecer la numeración de las I/Os de cada bloque lógico asignando un índice base a la primera de ellas."@es ;
-    ns1:tieneComponente ns1:NodoRIO5_1400,
-        ns1:NodoRIOR_1400,
-        ns1:NodoRIOW_1400,
-        ns1:NodoTerceros_1400 .
+ns1:ParametrosMaquinaParaConfiguracionDeEntradasYSalidasDigitales a ns1:Parametro ;
+    rdfs:label "Parámetros máquina para configuración de entradas y salidas digitales" ;
+    ns1:textoExtracto "La entradas y salidas digitales se configuran desde los parámetros máquina." .
 
-ns1:NodoRIO5_1400 a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo RIO5 (módulo físico = bloque lógico)"@es ;
-    ns1:identificador "RIO5" ;
-    ns1:textoExtracto "En los nodos RIO5 y RIOR, cada módulo es un bloque lógico, no se permite agrupar varios módulos en un bloque ni dividir un módulo en bloques. Los bloques lógicos deben coincidir en número y dimensión con los módulos detectados físicamente en el bus. En los nodos RIO5, cada módulo doble (módulo con dos placas) cuenta como dos; es decir, dos bloques lógicos."@es .
-
-ns1:NodoRIOR_1400 a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo RIOR (módulo físico = bloque lógico)"@es ;
-    ns1:identificador "RIOR" ;
-    ns1:textoExtracto "En los nodos RIO5 y RIOR, cada módulo es un bloque lógico, no se permite agrupar varios módulos en un bloque ni dividir un módulo en bloques."@es .
-
-ns1:NodoRIOW_1400 a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo RIOW (bloques lógicos virtualizables)"@es ;
-    ns1:identificador "RIOW" ;
-    ns1:textoExtracto "En los nodos RIOW y de terceros, se permite virtualizar los bloques lógicos que se desee, tanto en número como en dimensión."@es .
-
-ns1:NodoTerceros_1400 a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo de terceros (bloques lógicos virtualizables)"@es ;
-    ns1:textoExtracto "En los nodos RIOW y de terceros, se permite virtualizar los bloques lógicos que se desee, tanto en número como en dimensión."@es .
-
-ns1:ParametroMaquina_ConfigIO_1400 a ns1:Parametro ;
-    rdfs:label "Parámetro de configuración de entradas/salidas digitales"@es ;
-    ns1:textoExtracto "Las entradas y salidas digitales se configuran desde los parámetros máquina."@es .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "El PLC admite huecos, pero nunca solapamiento entre los diferentes bloques; es decir, una entrada o salida digital de PLC sólo puede pertenecer a un único nodo-módulo del bus." .
 

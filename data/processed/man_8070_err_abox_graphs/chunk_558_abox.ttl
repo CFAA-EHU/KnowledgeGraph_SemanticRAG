@@ -1,67 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_3605 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sentido del giro de cabezal contrario al de parámetro máquina" ;
-    ns1:identificador "3605" ;
-    ns1:solucionaFallo ns1:Componente_Cabezal ;
-    ns1:textoExtracto "3605 'Sentido del giro de cabezal contrario al de parámetro máquina' DETECCIÓN Durante la ejecución. CAUSA El giro programado requiere un movimiento del cabezal en sentido contrario al indicado por parámetro máquina con UNIDIR. SOLUCIÓN Revisar la programación y el parámetro máquina UNIDIR del cabezal." .
+ns1:ProgramarUnValorMenorQueElMaximoParaLaAceleracion a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un valor menor que el máximo para la aceleración" ;
+    ns1:solucionaFallo ns1:AceleracionLinealDelTramo2MayorQueLaMaxima_1d1b6c14a5 ;
+    ns1:textoExtracto "SOLUCIÓN Programar un valor menor que el máximo para la aceleración." .
 
-ns1:DiagnosticoFallo_3606 a ns1:DiagnosticoFallo ;
-    rdfs:label "El posicionamiento del cabezal requiere cota absoluta" ;
-    ns1:identificador "3606" ;
-    ns1:solucionaFallo ns1:Componente_Cabezal ;
-    ns1:textoExtracto "3606 'El posicionamiento del cabezal requiere cota absoluta' DETECCIÓN Durante la ejecución. CAUSA Tras un giro del cabezal en lazo abierto, el posicionamiento debe ser en cotas absolutas. SOLUCIÓN Programar el posicionamiento en cotas absolutas." .
+ns1:ProgramarUnValorPositivoParaLaAceleracion a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un valor positivo para la aceleración" ;
+    ns1:solucionaFallo ns1:AceleracionLinealDelTramo2MenorOIgualACero_ae97863ce0 ;
+    ns1:textoExtracto "SOLUCIÓN Programar un valor positivo para la aceleración." .
 
-ns1:DiagnosticoFallo_3607 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se puede sincronizar el cabezal teniendo activo PLCCNTL" ;
-    ns1:identificador "3607" ;
-    ns1:solucionaFallo ns1:Componente_Cabezal ;
-    ns1:textoExtracto "3607 'No se puede sincronizar el cabezal teniendo activo PLCCNTL' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado realizar una sincronización mientras la marca PLCCNTL está activa. SOLUCIÓN Desactivar la marca PLCCNTL del PLC." .
+ns1:AceleracionLinealDelTramo2MayorQueLaMaxima_1d1b6c14a5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Aceleración lineal del tramo 2 mayor que la máxima" ;
+    ns1:textoExtracto "'Aceleración lineal del tramo 2 mayor que la máxima' DETECCIÓN Durante el arranque o la ejecución. CAUSA La aceleración programada es mayor que la máxima." .
 
-ns1:DiagnosticoFallo_3608 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se admite PLCCNTL si el cabezal está sincronizado" ;
-    ns1:identificador "3608" ;
-    ns1:solucionaFallo ns1:Componente_Cabezal ;
-    ns1:textoExtracto "3608 'No se admite PLCCNTL si el cabezal está sincronizado'. DETECCIÓN Durante la ejecución. CAUSA El PLC ha activado la marca PLCCNTL en un cabezal que está sincronizado, ya sea como maestro o como esclavo. SOLUCIÓN Desactivar la marca PLCCNTL del PLC." .
-
-ns1:DiagnosticoFallo_3609 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se permite #SERVO ON si no se ha buscado el cero del cabezal previamente" ;
-    ns1:identificador "3609" ;
-    ns1:solucionaFallo ns1:Componente_Cabezal ;
-    ns1:textoExtracto "3609 'No se permite #SERVO ON si no se ha buscado el cero del cabezal previamente'. DETECCIÓN Durante la ejecución. CAUSA Hay programada una sentencia #SERVO ON para un cabezal que no está referenciado. SOLUCIÓN Hacer una búsqueda de referencia del cabezal, con M19 o G74, antes de utilizar la instrucción #SERVO ON." .
-
-ns1:DiagnosticoFallo_3610 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se puede abrir el lazo por estar en M19 o en sincronización" ;
-    ns1:identificador "3610" ;
-    ns1:solucionaFallo ns1:Componente_Cabezal ;
-    ns1:textoExtracto "3610 'No se puede abrir el lazo por estar en M19 o en sincronización' DETECCIÓN Durante la ejecución. CAUSA Hay programada una sentencia #SERVO OFF pero no se puede abrir el lazo porque el cabezal estaba en M19 antes de #SERVOON. SOLUCIÓN El cabezal se mantiene en lazo cerrado." .
-
-ns1:Parametro_PLCCNTL a ns1:Parametro ;
-    rdfs:label "Marca PLCCNTL" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal ;
-    ns1:textoExtracto "marca PLCCNTL" ;
-    ns1:valor "PLCCNTL" .
-
-ns1:Parametro_SERVO_OFF a ns1:Parametro ;
-    rdfs:label "Instrucción #SERVO OFF" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal ;
-    ns1:textoExtracto "sentencia #SERVO OFF" ;
-    ns1:valor "#SERVO OFF" .
-
-ns1:Parametro_SERVO_ON a ns1:Parametro ;
-    rdfs:label "Instrucción #SERVO ON" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal ;
-    ns1:textoExtracto "sentencia #SERVO ON" ;
-    ns1:valor "#SERVO ON" .
-
-ns1:Parametro_UNIDIR a ns1:Parametro ;
-    rdfs:label "Parámetro máquina UNIDIR" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal ;
-    ns1:textoExtracto "parámetro máquina UNIDIR del cabezal" ;
-    ns1:valor "UNIDIR" .
-
-ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "cabezal" .
+ns1:AceleracionLinealDelTramo2MenorOIgualACero_ae97863ce0 a ns1:DiagnosticoFallo ;
+    rdfs:label "Aceleración lineal del tramo 2 menor o igual a cero" ;
+    ns1:textoExtracto "'Aceleración lineal del tramo 2 menor o igual a cero' DETECCIÓN Durante el arranque o durante la ejecución. CAUSA La aceleración programada tiene valor cero." .
 

@@ -1,69 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Funcion_PWRCTRL a ns1:ModoOperacion ;
-    rdfs:label "Función #PWRCTRL" ;
-    ns1:textoExtracto "En la función #PWRCTRL, el avance mínimo es mayor que el avance máximo." ;
-    ns1:tieneComponente ns1:Parametro_FZMAX,
-        ns1:Parametro_FZMIN,
-        ns1:Parametro_OVRMAX,
-        ns1:Parametro_OVRMIN .
+ns1:RevisarEnElManualDeProgramacionLaSintaxisDeLaSentencia_e996812ce6 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar en el manual de programación la sintaxis de la sentencia" ;
+    ns1:solucionaFallo ns1:AccionProhibida_b9085bfe45,
+        ns1:LaSintaxisDeLaSentenciaNoEsCorrecta ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:Manual_Programacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:documentadoEn ns1:Fallo_Sintaxis ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:AccionProhibida_b9085bfe45 a ns1:AccionProhibida ;
+    rdfs:label "Parámetro PWRCTRL fuera de rango" ;
+    ns1:textoExtracto "2412 Parámetro PWRCTRL fuera de rango." .
 
-ns1:ConsultarManualDeProgramacion a ns1:TareaMantenimiento ;
-    rdfs:label "Consultar manual de programación" ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
-
-ns1:Fallo_Sintaxis a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de sintaxis en sentencia" ;
-    ns1:solucionaFallo ns1:ConsultarManualDeProgramacion ;
-    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
-
-ns1:Parametro_FZMAX a ns1:Parametro ;
-    rdfs:label "FZMAX (avance máximo)" ;
-    ns1:monitoreaParametro ns1:Fallo_2417 ;
-    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." ;
-    ns1:valor "avance máximo" .
-
-ns1:Parametro_FZMIN a ns1:Parametro ;
-    rdfs:label "FZMIN (avance mínimo)" ;
-    ns1:monitoreaParametro ns1:Fallo_2417 ;
-    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." ;
-    ns1:valor "avance mínimo" .
-
-ns1:Parametro_OVRMAX a ns1:Parametro ;
-    rdfs:label "OVRMAX (override máximo)" ;
-    ns1:monitoreaParametro ns1:Fallo_2418 ;
-    ns1:textoExtracto "El override mínimo debe ser menor que el override máximo." ;
-    ns1:valor "override máximo" .
-
-ns1:Parametro_OVRMIN a ns1:Parametro ;
-    rdfs:label "OVRMIN (override mínimo)" ;
-    ns1:monitoreaParametro ns1:Fallo_2418 ;
-    ns1:textoExtracto "El override mínimo debe ser menor que el override máximo." ;
-    ns1:valor "override mínimo" .
-
-ns1:RevisarParametrosFZMINYFZMAX a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar parámetros FZMIN y FZMAX" ;
-    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
-
-ns1:RevisarParametrosOVRMINYOVRMAX a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar parámetros OVRMIN y OVRMAX" ;
-    ns1:textoExtracto "El override mínimo debe ser menor que el override máximo." .
-
-ns1:Fallo_2417 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2417: #PWRCTRL ON - FZMIN > FZMAX" ;
-    ns1:identificador "2417" ;
-    ns1:solucionaFallo ns1:RevisarParametrosFZMINYFZMAX ;
-    ns1:textoExtracto "#PWRCTRL ON: FMIN debe ser menor que FMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #PWRCTRL, el avance mínimo es mayor que el avance máximo." .
-
-ns1:Fallo_2418 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2418: #PWRCTRL ON - OVRMIN > OVRMAX" ;
-    ns1:identificador "2418" ;
-    ns1:solucionaFallo ns1:RevisarParametrosOVRMINYOVRMAX ;
-    ns1:textoExtracto "#PWRCTRL ON: OVRMIN debe ser menor que OVRMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #PWRCTRL, el override mínimo es mayor que el override máximo." .
+ns1:LaSintaxisDeLaSentenciaNoEsCorrecta a ns1:AccionProhibida ;
+    rdfs:label "La sintaxis de la sentencia no es correcta" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta." .
 

@@ -1,52 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_3073 a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para límite de velocidad esquina (3073)" ;
-    ns1:solucionaFallo ns1:Alarma_3073 ;
-    ns1:textoExtracto "Póngase en contacto con Fagor." .
+ns1:CNC8070_733593772b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Si el CNC selecciona otro cabezal (marca SYNC)" .
 
-ns1:DiagnosticoFallo_AvanceMaximo a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para superación de avance máximo" ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadProgramada ;
-    ns1:solucionaFallo ns1:Parametro_AvanceMaximo ;
-    ns1:textoExtracto "Revisar la programación de la función G33/G34. Para mantener el paso programado, modificar la velocidad programada o, si es posible, aumentar desde el PLC el avance máximo del canal. En caso necesario, revisar los parámetros máquina relacionados con el avance máximo de los ejes implicados en la rosca." .
+ns1:RealizarUnaBusquedaDeReferenciaDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Realizar una búsqueda de referencia del cabezal" ;
+    ns1:solucionaFallo ns1:FalloSuperacionUmbral ;
+    ns1:textoExtracto "realizar una búsqueda de referencia del cabezal." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema de Control Numérico (CNC)" ;
-    ns1:activaAlarma ns1:Alarma_3073,
-        ns1:Alarma_3074 ;
-    ns1:textoExtracto "El CNC ha sobrepasado la dinámica de algún eje [...] El CNC ha intentado modificar el sistema de coordenadas o la transformación de coordenadas" ;
-    ns1:tieneComponente ns1:Parametro_AvanceMaximo,
-        ns1:Parametro_DinamicaEje,
-        ns1:Parametro_IMOVEMACH .
+ns1:SuperarElUmbralDeVelocidadDelEncoder a ns1:AccionProhibida ;
+    rdfs:label "Superar el umbral de velocidad del encóder" ;
+    ns1:mitigaRiesgo ns1:CabezalMaestro ;
+    ns1:textoExtracto "'Velocidad de giro de cabezal programada para G33/G34 supera el umbral del encóder'" .
 
-ns1:Alarma_3074 a ns1:Alarma ;
-    rdfs:label "Función no compatible con Motion Control activo" ;
-    ns1:identificador "3074" ;
-    ns1:monitoreaParametro ns1:Parametro_IMOVEMACH ;
-    ns1:textoExtracto "3074 'Función no compatible con Motion Control activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado modificar el sistema de coordenadas o la transformación de coordenadas teniendo alguna función de motion control activa y el parámetro IMOVEMACH deshabilitado." .
+ns1:CabezalMaestro a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal Maestro del Canal" ;
+    ns1:textoExtracto "Si el CNC utiliza el cabezal master del canal" .
 
-ns1:Parametro_VelocidadProgramada a ns1:Parametro ;
-    rdfs:label "Velocidad programada en rosca" ;
-    ns1:textoExtracto "Para mantener el paso programado, modificar la velocidad programada" .
-
-ns1:Alarma_3073 a ns1:Alarma ;
-    rdfs:label "Límite de velocidad esquina sobrepasada" ;
-    ns1:identificador "3073" ;
-    ns1:monitoreaParametro ns1:Parametro_DinamicaEje ;
-    ns1:textoExtracto "3073 'Límite de velocidad esquina sobrepasada' DETECCIÓN Durante la ejecución. CAUSA El CNC ha sobrepasado la dinámica de algún eje, durante la transición entre dos bloques." .
-
-ns1:Parametro_AvanceMaximo a ns1:Parametro ;
-    rdfs:label "Avance máximo programable" ;
-    ns1:textoExtracto "El avance máximo puede estar limitado por los parámetros máquina o por PLC. SOLUCIÓN [...] aumentar desde el PLC el avance máximo del canal." .
-
-ns1:Parametro_DinamicaEje a ns1:Parametro ;
-    rdfs:label "Dinámica de eje en transición entre bloques" ;
-    ns1:textoExtracto "El CNC ha sobrepasado la dinámica de algún eje, durante la transición entre dos bloques." .
-
-ns1:Parametro_IMOVEMACH a ns1:Parametro ;
-    rdfs:label "Parámetro IMOVEMACH" ;
-    ns1:identificador "IMOVEMACH" ;
-    ns1:textoExtracto "el parámetro IMOVEMACH deshabilitado" .
+ns1:FalloSuperacionUmbral a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la lectura del contaje del cabezal" ;
+    ns1:textoExtracto "Superar el umbral de velocidad del encóder supone un error en la lectura del contaje del cabezal." .
 

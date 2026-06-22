@@ -1,64 +1,49 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_8310 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 8310: Parámetro obligatorio faltante" ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "8310" ;
-    ns1:solucionaFallo ns1:Parametro_ACS,
-        ns1:Parametro_CS,
-        ns1:Parametro_POLY,
-        ns1:Parametro_PROBE ;
-    ns1:textoExtracto "'parámetro obligatorio' DETECCIÓN Durante la edición. CAUSA Falta algún parámetro obligatorio en la sentencia #POLY, #CS, #ACS o #PROBE SOLUCIÓN Revisar en el manual de programación la sintaxis de las sentencias." .
+ns1:EvitarLaRepeticionDeFuncionesG11G12OG13 a ns1:TareaMantenimiento ;
+    rdfs:label "Evitar la repetición de funciones G11, G12 o G13" ;
+    ns1:solucionaFallo ns1:ImagenEspejoRepetida_d62c867094 ;
+    ns1:textoExtracto "SOLUCIÓN La función G10 o G14 está programada junto a las funciones G11, G12 o G13 en el mismo bloque." .
 
-ns1:Error_8311 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 8311: Valor de parámetro no válido" ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "8311" ;
-    ns1:solucionaFallo ns1:Parametro_ACS,
-        ns1:Parametro_CS,
-        ns1:Parametro_HSC,
-        ns1:Parametro_POLY ;
-    ns1:textoExtracto "'Valor de parámetro no válido' DETECCIÓN Durante la edición. CAUSA Valor no válido en algún argumento de la sentencia #CS, #ACS, #HSC o #POLY. Valor no válido para el índice de un parámetro aritmético. SOLUCIÓN Revisar en el manual de programación la sintaxis de las sentencias. El índice de un parámetro aritmético debe ser siempre positivo o nulo." .
+ns1:LimitarElNumeroDeFuncionesHEnUnBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Limitar el número de funciones H en un bloque" ;
+    ns1:solucionaFallo ns1:LimiteDeFuncionesHEnUnMismoBloqueSobrepasado ;
+    ns1:textoExtracto "SOLUCIÓN El número máximo de funciones H permitidas en un mismo bloque es 7." .
 
-ns1:Error_8312 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 8312: #CS/#ACS modo no válido" ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "8312" ;
-    ns1:solucionaFallo ns1:ModoOperacion_CS_ACS ;
-    ns1:textoExtracto "'#CS/#ACS: modo no válido' DETECCIÓN Durante la edición. CAUSA Valor no válido para el comando MODE de la sentencia #CS o #ACS. SOLUCIÓN Revisar en el manual de programación la sintaxis de las sentencias." .
+ns1:LimitarElNumeroDeFuncionesMEnUnBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Limitar el número de funciones M en un bloque" ;
+    ns1:solucionaFallo ns1:LimiteDeFuncionesMEnUnMismoBloqueSobrepasado_a9ca294f51 ;
+    ns1:textoExtracto "SOLUCIÓN El número máximo de funciones M permitidas en un mismo bloque es 7." .
 
-ns1:ModoOperacion_CS_ACS a ns1:ModoOperacion ;
-    rdfs:label "Modo de operación #CS/#ACS" ;
-    ns1:identificador "MODE" ;
-    ns1:textoExtracto "Valor no válido para el comando MODE de la sentencia #CS o #ACS" .
+ns1:ProgramarUnArgumentoCorrectoEnLaFuncionMatematica a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un argumento correcto en la función matemática" ;
+    ns1:solucionaFallo ns1:PerdidaTotalEnFuncion_db194b3e4a,
+        ns1:RebasamientoPorDebajoEnFuncion,
+        ns1:TipoDeExcepcionDesconocido ;
+    ns1:textoExtracto "SOLUCIÓN Programar un argumento correcto en la función matemática (LN, LOG, SQRT, EXP, DEXP, SIN, COS, TAN, ASIN, ACOS, ATAN)." .
 
-ns1:Parametro_HSC a ns1:Parametro ;
-    rdfs:label "Parámetro #HSC" ;
-    ns1:identificador "#HSC" ;
-    ns1:textoExtracto "Valor no válido en algún argumento de la sentencia #HSC" .
+ns1:ImagenEspejoRepetida_d62c867094 a ns1:DiagnosticoFallo ;
+    rdfs:label "Imagen espejo repetida" ;
+    ns1:textoExtracto "'Imagen espejo repetida' DETECCIÓN Durante la edición. CAUSA Las funciones G11, G12 o G13 están programadas más de una vez en el mismo bloque." .
 
-ns1:Parametro_PROBE a ns1:Parametro ;
-    rdfs:label "Parámetro #PROBE" ;
-    ns1:identificador "#PROBE" ;
-    ns1:textoExtracto "parámetro obligatorio en la sentencia #PROBE" .
+ns1:LimiteDeFuncionesHEnUnMismoBloqueSobrepasado a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de funciones H en un mismo bloque sobrepasado" ;
+    ns1:textoExtracto "'Límite de funciones H en un mismo bloque sobrepasado' DETECCIÓN Durante la edición. CAUSA Superado el número máximo de funciones H permitidas en un mismo bloque." .
 
-ns1:Parametro_ACS a ns1:Parametro ;
-    rdfs:label "Parámetro #ACS" ;
-    ns1:identificador "#ACS" ;
-    ns1:textoExtracto "parámetro obligatorio en la sentencia #ACS" .
+ns1:LimiteDeFuncionesMEnUnMismoBloqueSobrepasado_a9ca294f51 a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de funciones M en un mismo bloque sobrepasado" ;
+    ns1:textoExtracto "'Límite de funciones M en un mismo bloque sobrepasado' DETECCIÓN Durante la edición. CAUSA Superado el número máximo de funciones M permitidas en un mismo bloque." .
 
-ns1:Parametro_CS a ns1:Parametro ;
-    rdfs:label "Parámetro #CS" ;
-    ns1:identificador "#CS" ;
-    ns1:textoExtracto "parámetro obligatorio en la sentencia #CS" .
+ns1:PerdidaTotalEnFuncion_db194b3e4a a ns1:DiagnosticoFallo ;
+    rdfs:label "Pérdida total en función" ;
+    ns1:textoExtracto "'Pérdida total en función' DETECCIÓN Durante la edición. CAUSA El argumento programado en la función matemática no es válido." .
 
-ns1:Parametro_POLY a ns1:Parametro ;
-    rdfs:label "Parámetro #POLY" ;
-    ns1:identificador "#POLY" ;
-    ns1:textoExtracto "parámetro obligatorio en la sentencia #POLY" .
+ns1:RebasamientoPorDebajoEnFuncion a ns1:DiagnosticoFallo ;
+    rdfs:label "Rebasamiento por debajo en función" ;
+    ns1:textoExtracto "'Rebasamiento por debajo en función' DETECCIÓN Durante la edición. CAUSA El argumento programado en la función matemática no es válido." .
 
-ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de las sentencias." .
+ns1:TipoDeExcepcionDesconocido a ns1:DiagnosticoFallo ;
+    rdfs:label "Tipo de excepción desconocido" ;
+    ns1:textoExtracto "'Tipo de excepción desconocido' DETECCIÓN Durante la edición. CAUSA El argumento programado en la función matemática no es válido." .
 

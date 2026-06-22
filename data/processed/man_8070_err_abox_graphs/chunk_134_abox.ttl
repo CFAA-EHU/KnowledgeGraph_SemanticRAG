@@ -1,23 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error1187 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1187: '#AXIS: nombre de eje repetido'" ;
-    ns1:identificador "1187" ;
-    ns1:textoExtracto "1187 '#AXIS: nombre de eje repetido' [...] DETECCIÓN Durante la ejecución. CAUSA El mismo eje se ha programado más de una vez en la sentencia. SOLUCIÓN Revisar la programación." .
+ns1:DesactivarElPrimerAcoploAntesDeActivarElSegundo a ns1:AccionProhibida ;
+    rdfs:label "Desactivar el primer acoplo antes de activar el segundo",
+        "Revisar la programación" ;
+    ns1:textoExtracto "Revisar la programación. Desactivar el primer acoplo antes de activar el segundo." .
 
-ns1:Error1188 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1188: 'No se espera \"[\"'" ;
-    ns1:identificador "1188" ;
-    ns1:textoExtracto "1188 'No se espera \"[\"' [...] DETECCIÓN Durante la ejecución. CAUSA Error en la sintaxis de la sentencia. SOLUCIÓN Revisar la programación." .
+ns1:LINKElEjeEsclavoNoPerteneceALaConfiguracionDeEjesActual a ns1:AccionProhibida ;
+    rdfs:label "#LINK: el eje esclavo no pertenece a la configuración de ejes actual" ;
+    ns1:textoExtracto "'#LINK: el eje esclavo no pertenece a la configuración de ejes actual' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes:" .
 
-ns1:Error1189 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1189: '#MPG: demasiados parámetros'" ;
-    ns1:identificador "1189" ;
-    ns1:textoExtracto "1189 '#MPG: demasiados parámetros' [...] DETECCIÓN Durante la ejecución. CAUSA La sentencia tiene más parámetros de los permitidos. SOLUCIÓN La sentencia #MPG admite un máximo de tres" .
+ns1:LINKElEjeEsclavoNoPuedeSerUnEjeDelPlanoPrincipal a ns1:AccionProhibida ;
+    rdfs:label "#LINK: el eje esclavo no puede ser un eje del plano principal" ;
+    ns1:textoExtracto "'#LINK: el eje esclavo no puede ser un eje del plano principal' DETECCIÓN Durante la ejecución. CAUSA El eje esclavo del acoplo es uno de los tres ejes principales." .
 
-ns1:ParametroMPG a ns1:Parametro ;
-    rdfs:label "Parámetro #MPG" ;
-    ns1:textoExtracto "La sentencia #MPG admite un máximo de tres [parámetros]" ;
-    ns1:valor "3" .
+ns1:LINKElEjeMaestroNoPerteneceALaConfiguracionDeEjesActual a ns1:AccionProhibida ;
+    rdfs:label "#LINK: el eje maestro no pertenece a la configuración de ejes actual" ;
+    ns1:textoExtracto "'#LINK: el eje maestro no pertenece a la configuración de ejes actual' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes:" .
+
+ns1:LINKLosEjesMaestroYEsclavoDebenSerDelMismoTipoAXISTYPE a ns1:AccionProhibida ;
+    rdfs:label "#LINK: los ejes maestro y esclavo deben ser del mismo tipo (AXISTYPE)" ;
+    ns1:textoExtracto "'#LINK: los ejes maestro y esclavo deben ser del mismo tipo (AXISTYPE)' DETECCIÓN Durante la ejecución. CAUSA Los ejes maestro y esclavo del acoplo no son del mismo tipo, lineal o rotativo." .
+
+ns1:ProgramarLosEjesMaestroYEsclavoEnLaSentenciaLINK a ns1:TareaMantenimiento ;
+    rdfs:label "Programar los ejes maestro y esclavo en la sentencia #LINK",
+        "Revisar la programación" ;
+    ns1:solucionaFallo ns1:LINKNoSeHaDefinidoAcoplo ;
+    ns1:textoExtracto "SOLUCIÓN Programar los ejes maestro y esclavo en la sentencia #LINK." .
+
+ns1:LINKNoSeHaDefinidoAcoplo a ns1:DiagnosticoFallo ;
+    rdfs:label "#LINK: no se ha definido acoplo" ;
+    ns1:textoExtracto "'#LINK: no se ha definido acoplo' DETECCIÓN Durante la ejecución. CAUSA No hay ningún acoplo de ejes definido en la sentencia #LINK." .
 

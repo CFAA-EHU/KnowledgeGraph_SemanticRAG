@@ -1,75 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_3802 a ns1:DiagnosticoFallo ;
-    rdfs:label "3802 'Velocidad en jog incremental demasiado pequeña'" ;
-    ns1:solucionaFallo ns1:Parametro_INCJOGFEED,
-        ns1:Parametro_LOOPTIME ;
-    ns1:textoExtracto "3802 'Velocidad en jog incremental demasiado pequeña' DETECCIÓN Durante la ejecución. CAUSA El incremento de posición calculado para un ciclo de PLC es demasiado pequeño. SOLUCIÓN Revisar los parámetros máquina de ejes INCJOGFEED y LOOPTIME." .
+ns1:CambiarLaPosicionDeAcercamientoALaPieza_9eb98bcc2d a ns1:TareaMantenimiento ;
+    rdfs:label "Cambiar la posición de acercamiento a la pieza" ;
+    ns1:textoExtracto "SOLUCIÓN Cambiar la posición de acercamiento a la pieza." .
 
-ns1:DiagnosticoFallo_3803 a ns1:DiagnosticoFallo ;
-    rdfs:label "3803 'No se admite resolución de volante cero'" ;
-    ns1:solucionaFallo ns1:Parametro_MPGRESOL ;
-    ns1:textoExtracto "3803 'No se admite resolución de volante cero' DETECCIÓN Durante un cambio en la resolución del volante desde el panel de mando. CAUSA La posición de volante seleccionada desde el conmutador o PLC tiene asociada una resolución de cero. SOLUCIÓN Revisar el parámetro máquina de ejes MPGRESOL." .
+ns1:DiferenciaDePosicionMayorQueMAXDIFREF_f986fb5097 a ns1:AvisoSeguridad ;
+    rdfs:label "Diferencia de posición mayor que MAXDIFREF" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque del CNC. CAUSA La cota absoluta del captador no se corresponde con la cota salvada en la última sesión del CNC." .
 
-ns1:DiagnosticoFallo_3804 a ns1:DiagnosticoFallo ;
-    rdfs:label "3804 'Indice de volante fuera de rango (posiciones del conmutador 1-3)'" ;
-    ns1:solucionaFallo ns1:Parametro_PLC_MPGIDX ;
-    ns1:textoExtracto "3804 'Indice de volante fuera de rango (posiciones del conmutador 1-3)' DETECCIÓN Durante un cambio en la resolución de volante. CAUSA El PLC ha intentado seleccionar una posición de volante que está fuera rango permitido. SOLUCIÓN Revisar en el programa de PLC la escritura de la variable (V.)PLC.MPGIDX." .
+ns1:DriveFeedbackNoValido_d9a2d86fab a ns1:DiagnosticoFallo ;
+    rdfs:label "Drive Feedback no válido" ;
+    ns1:solucionaFallo ns1:RevisarElConexionadoYParametrizacionDeLosFeedbacks ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque del CNC o tras un reset. CAUSA No se ha podido calcular correctamente el feedback de posición para el eje. El regulador no está inicializado correctamente." .
 
-ns1:DiagnosticoFallo_3805 a ns1:DiagnosticoFallo ;
-    rdfs:label "3805 'Velocidad o distancia cero en modo jog incremental'" ;
-    ns1:solucionaFallo ns1:Parametro_INCJOGDIST,
-        ns1:Parametro_INCJOGFEED ;
-    ns1:textoExtracto "3805 'Velocidad o distancia cero en modo jog incremental' DETECCIÓN Durante un cambio en el avance o en la distancia a recorrer en jog incremental. CAUSA La posición de jog incremental seleccionada desde el conmutador o PLC es cero. SOLUCIÓN Revisar los parámetros máquina de ejes INCJOGDIST e INCJOGFEED." .
+ns1:GapFueraDeRangoEnElLimiteDePosicion_d81550aea6 a ns1:AvisoSeguridad ;
+    rdfs:label "Gap fuera de rango en el límite de posición" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Durante #GAPCTRL o #LEAP, el eje ha alcanzado el punto de acercamiento sin recibir la señal de sonda." .
 
-ns1:DiagnosticoFallo_3806 a ns1:DiagnosticoFallo ;
-    rdfs:label "3806 'Velocidad de jog incremental mayor que valor máximo'" ;
-    ns1:solucionaFallo ns1:Parametro_G00FEED,
-        ns1:Parametro_INCJOGFEED,
-        ns1:Parametro_MAXMANFEED ;
-    ns1:textoExtracto "3806 'Velocidad de jog incremental mayor que valor máximo' DETECCIÓN Durante la ejecución. CAUSA La velocidad definida en parámetros máquina para jog incremental es mayor que la máxima permitida SOLUCIÓN Repasar los parámetros máquina MAXMANFEED, INCJOGFEED y G00FEED." .
+ns1:PulsarENTERRESETParaConfirmar a ns1:TareaMantenimiento ;
+    rdfs:label "Pulsar ENTER + RESET para confirmar" ;
+    ns1:textoExtracto "Pulsar ENTER + RESET para confirmar." .
 
-ns1:DiagnosticoFallo_3807 a ns1:DiagnosticoFallo ;
-    rdfs:label "3807 'Indice de jog incremental fuera de rango (posiciones del conmutador 1-5)'" ;
-    ns1:textoExtracto "3807 'Indice de jog incremental fuera de rango (posiciones del conmutador 1-5)' DETECCIÓN Durante la ejecución." .
+ns1:RevisarElBit0x80000000DeAXISOPTION a ns1:AvisoSeguridad ;
+    rdfs:label "Revisar el bit 0x80000000 de AXISOPTION" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "RCS-S. Revisar el bit 0x80000000 de AXISOPTION del eje involucrado en la maniobra de desactivación." .
 
-ns1:ModoOperacion_Manual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual" ;
-    ns1:textoExtracto "Definir un nuevo avance desde el modo manual." .
-
-ns1:Parametro_G00FEED a ns1:Parametro ;
-    rdfs:label "G00FEED" ;
-    ns1:identificador "G00FEED" ;
-    ns1:textoExtracto "parámetro máquina G00FEED" .
-
-ns1:Parametro_INCJOGDIST a ns1:Parametro ;
-    rdfs:label "INCJOGDIST" ;
-    ns1:identificador "INCJOGDIST" ;
-    ns1:textoExtracto "parámetro máquina INCJOGDIST" .
-
-ns1:Parametro_LOOPTIME a ns1:Parametro ;
-    rdfs:label "LOOPTIME" ;
-    ns1:identificador "LOOPTIME" ;
-    ns1:textoExtracto "parámetro máquina LOOPTIME" .
-
-ns1:Parametro_MAXMANFEED a ns1:Parametro ;
-    rdfs:label "MAXMANFEED" ;
-    ns1:identificador "MAXMANFEED" ;
-    ns1:textoExtracto "parámetro máquina MAXMANFEED" .
-
-ns1:Parametro_MPGRESOL a ns1:Parametro ;
-    rdfs:label "MPGRESOL" ;
-    ns1:identificador "MPGRESOL" ;
-    ns1:textoExtracto "parámetro máquina de ejes MPGRESOL" .
-
-ns1:Parametro_PLC_MPGIDX a ns1:Parametro ;
-    rdfs:label "PLC.MPGIDX" ;
-    ns1:identificador "PLC.MPGIDX" ;
-    ns1:textoExtracto "variable (V.)PLC.MPGIDX" .
-
-ns1:Parametro_INCJOGFEED a ns1:Parametro ;
-    rdfs:label "INCJOGFEED" ;
-    ns1:identificador "INCJOGFEED" ;
-    ns1:textoExtracto "parámetro máquina INCJOGFEED" .
+ns1:RevisarElConexionadoYParametrizacionDeLosFeedbacks a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado y parametrización de los feedbacks" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el conexionado y parametrización de los feedbacks, y reiniciar el sistema." .
 

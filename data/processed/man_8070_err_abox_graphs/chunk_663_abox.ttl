@@ -1,25 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_CNCEX a ns1:InterfazUsuario ;
-    rdfs:label "Instrucción CNCEX (PLC)"@es ;
-    ns1:activaAlarma ns1:AvisoSeguridad_5018,
-        ns1:AvisoSeguridad_5019,
-        ns1:AvisoSeguridad_5020 ;
-    ns1:textoExtracto "Instrucción CNCEX ejecutada en el programa de PLC, con lógica asociada a marcas de comunicación y canales de ejecución."@es .
+ns1:NoSeEncuentraUnaVariableDeBus a ns1:DiagnosticoFallo ;
+    rdfs:label "No se encuentra una variable de bus" ;
+    ns1:textoExtracto "CAUSA La variable de bus no se ha definido correctamente." .
 
-ns1:AvisoSeguridad_5018 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 5018: Marca de comunicación activa"@es ;
-    ns1:identificador "5018" ;
-    ns1:textoExtracto "'No se ha ejecutado CNCEX por estar la marca de comunicación a \"1\"'. DETECCIÓN: Al ejecutar una instrucción CNCEX. CAUSA: La marca programada en la instrucción CNCEX ya está activa al ejecutar la instrucción. Puede ser debido a una mala programación de la instrucción o porque el canal está ocupado con otra instrucción CNCEX. SOLUCIÓN: Revisar en el programa de PLC la lógica de la instrucción CNCEX y de las marcas utilizadas."@es .
+ns1:RevisarLaDefinicionDeLaReferenciaYElIdentificadorDelNodo a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la definición de la referencia y el identificador del nodo" ;
+    ns1:solucionaFallo ns1:NoSeEncuentraElFeedbackDelEje,
+        ns1:NoSeEncuentraLaReferenciaDelEje ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la definición de la referencia y el identificador del nodo." .
 
-ns1:AvisoSeguridad_5019 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 5019: Canal de ejecución no disponible"@es ;
-    ns1:identificador "5019" ;
-    ns1:textoExtracto "'CNCEX: Canal de ejecución no disponible'. DETECCIÓN: Al ejecutar una instrucción CNCEX. CAUSA: El canal programado en la instrucción CNCEX no está disponible. El canal está ejecutando otro bloque, otro programa o está en un estado inadecuado. SOLUCIÓN: Comprobar el estado del canal programado en la instrucción CNCEX."@es .
+ns1:ValidarTopologia a ns1:TareaMantenimiento ;
+    rdfs:label "Validar topología" ;
+    ns1:solucionaFallo ns1:NoCoincideConElTipoDeMotorConectado ;
+    ns1:textoExtracto "SOLUCIÓN Validar la topología." .
 
-ns1:AvisoSeguridad_5020 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 5020: Ejecución no finalizada"@es ;
-    ns1:identificador "5020" ;
-    ns1:textoExtracto "'CNCEX: Ejecución no finalizada'. DETECCIÓN: Al ejecutar una instrucción CNCEX."@es .
+ns1:NoCoincideConElTipoDeMotorConectado a ns1:DiagnosticoFallo ;
+    rdfs:label "No coincide con el tipo de motor conectado" ;
+    ns1:textoExtracto "El tipo motor conectado a la referencia no coincide con el tipo de control del regulador asociado." .
+
+ns1:NoSeEncuentraElFeedbackDelEje a ns1:DiagnosticoFallo ;
+    rdfs:label "No se encuentra el feedback del eje" ;
+    ns1:textoExtracto "CAUSA El feedback del eje no se ha definido correctamente (identificador del nodo)." .
+
+ns1:NoSeEncuentraLaReferenciaDelEje a ns1:DiagnosticoFallo ;
+    rdfs:label "No se encuentra la referencia del eje" ;
+    ns1:textoExtracto "CAUSA No se ha definido correctamente la referencia del eje (identificador del nodo)." .
 

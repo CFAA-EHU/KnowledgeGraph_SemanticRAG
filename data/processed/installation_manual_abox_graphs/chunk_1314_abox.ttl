@@ -1,18 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CanalCNC_1314 a ns1:InterfazUsuario ;
-    rdfs:label "Canal de ejecución CNC"@es ;
-    ns1:controla ns1:SubrutinaRAM_1314 ;
-    ns1:textoExtracto "si ningún otro canal está ejecutando las subrutinas"@es .
+ns1:CNC8070_647175bff1 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:ejecuta ns1:EjecucionSimulada_e7b2494d91 ;
+    ns1:textoExtracto "El CNC ejecuta la subrutina con la opción \"Funciones G\" del modo ejecución simulada." .
 
-ns1:ProgramaCNC_1314 a ns1:ModoOperacion ;
-    rdfs:label "Programa CNC (finalización M02/M30)"@es ;
-    ns1:habilitadoPor ns1:SubrutinaRAM_1314 ;
-    ns1:textoExtracto "Cuando finaliza el programa (M02/M30)"@es .
+ns1:CompensacionDeRadioDerecha a ns1:Parametro ;
+    rdfs:label "Compensación de radio derecha" ;
+    ns1:identificador "G42" ;
+    ns1:textoExtracto "La ejecucíón tiene en cuenta la compensación de radio (funciones G41, G42), por lo que efectúa la representación gráfica correspondiente al centro de herramienta." .
 
-ns1:SubrutinaRAM_1314 a ns1:Componente ;
-    rdfs:label "Subrutina en memoria RAM"@es ;
-    ns1:identificador "*.fst" ;
-    ns1:textoExtracto "Cuando finaliza el programa (M02/M30) o tras un reset, si ningún otro canal está ejecutando las subrutinas, el CNC las borra de la memoria RAM. De esta forma, los cambios que se realicen en la subrutina serán tenidos en cuenta la próxima vez que se ejecute el programa."@es .
+ns1:CompensacionDeRadioIzquierda a ns1:Parametro ;
+    rdfs:label "Compensación de radio izquierda" ;
+    ns1:identificador "G41" ;
+    ns1:textoExtracto "La ejecucíón tiene en cuenta la compensación de radio (funciones G41, G42), por lo que efectúa la representación gráfica correspondiente al centro de herramienta." .
+
+ns1:ComponenteMecanico_c530fcced1 a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal" ;
+    ns1:textoExtracto "La ejecucíón no desplaza los ejes de la máquina, ni pone en marcha el cabezal." .
+
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "La ejecucíón no envía las funciones M H S T al PLC." .
+
+ns1:EjecucionSimulada_e7b2494d91 a ns1:TareaMantenimiento ;
+    rdfs:label "Ejecución Simulada" ;
+    ns1:textoExtracto "La ejecucíón tiene en cuenta la compensación de radio (funciones G41, G42), por lo que efectúa la representación gráfica correspondiente al centro de herramienta." .
 

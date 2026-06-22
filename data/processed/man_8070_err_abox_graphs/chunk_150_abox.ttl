@@ -1,38 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1249 a ns1:Alarma ;
-    rdfs:label "Alarma 1249: 'No se admite cambio de gama con G96 activa'"@es ;
-    ns1:identificador "1249" ;
-    ns1:textoExtracto "1249 'No se admite cambio de gama con G96 activa' DETECCIÓN Durante"@es .
+ns1:DefinicionPreviaDeMacros a ns1:AvisoSeguridad ;
+    rdfs:label "Definición previa de macros" ;
+    ns1:mitigaRiesgo ns1:UtilizarMacroInexistente ;
+    ns1:textoExtracto "La macro puede estar definida en un programa. SOLUCIÓN Definir la macro antes de utilizarla." .
 
-ns1:DiagnosticoFallo_G63_G96 a ns1:DiagnosticoFallo ;
-    rdfs:label "Conflicto entre G63 (roscado rígido) y G96 (velocidad de corte constante)"@es ;
-    ns1:solucionaFallo ns1:Alarma_1248 ;
-    ns1:textoExtracto "CAUSA El CNC ha intentado ejecutar un roscado rígido (G63) teniendo activa la función G96 (velocidad de corte constante). SOLUCIÓN Activar el modo de velocidad de giro constante (G97)."@es .
+ns1:InicializacionDeTablaDeMacros a ns1:TareaMantenimiento ;
+    rdfs:label "Inicialización de tabla de macros" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:textoExtracto "El CNC inicializa la tabla de macros en el arranque o mediante la sentencia #INIT MACROTAB." .
 
-ns1:ModoOperacion_G192 a ns1:ModoOperacion ;
-    rdfs:label "G192: Limitación de la velocidad de giro"@es ;
-    ns1:identificador "G192" ;
-    ns1:textoExtracto "G192 (limitación de la velocidad de giro)"@es .
+ns1:MacroInexistente a ns1:Parametro ;
+    rdfs:label "Macro inexistente" ;
+    ns1:textoExtracto "'Macro inexistente' DETECCIÓN Durante la ejecución. CAUSA La macro no está definida en el programa." .
 
-ns1:ModoOperacion_G63 a ns1:ModoOperacion ;
-    rdfs:label "G63: Roscado rígido"@es ;
-    ns1:identificador "G63" ;
-    ns1:textoExtracto "G63 (roscado rígido)"@es .
+ns1:CNC8070_bf107857a2 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC almacena en una tabla las macros definidas desde un programa o desde el modo MDI/MDA, de manera que están disponibles para todos los programas ejecutados a continuación." .
 
-ns1:ModoOperacion_G96 a ns1:ModoOperacion ;
-    rdfs:label "G96: Velocidad de corte constante"@es ;
-    ns1:identificador "G96" ;
-    ns1:textoExtracto "G96 (velocidad de corte constante)"@es .
+ns1:PersonalTecnicoAutorizado a ns1:Personal ;
+    rdfs:label "Personal Técnico Autorizado" ;
+    ns1:textoExtracto "Personal Técnico Autorizado" .
 
-ns1:ModoOperacion_G97 a ns1:ModoOperacion ;
-    rdfs:label "G97: Velocidad de giro constante"@es ;
-    ns1:identificador "G97" ;
-    ns1:textoExtracto "modo de velocidad de giro constante (G97)"@es .
-
-ns1:Alarma_1248 a ns1:Alarma ;
-    rdfs:label "Alarma 1248: 'No se admite roscado y G192 en el mismo bloque'"@es ;
-    ns1:identificador "1248" ;
-    ns1:textoExtracto "1248 'No se admite roscado y G192 en el mismo bloque' DETECCIÓN Durante la ejecución. CAUSA El CNC no permite programar las funciones G63 (roscado rígido) y G192 (limitación de la velocidad de giro) en el mismo bloque. SOLUCIÓN Programar ambas instrucciones en bloques diferentes."@es .
+ns1:UtilizarMacroInexistente a ns1:AccionProhibida ;
+    rdfs:label "Utilizar macro inexistente" ;
+    ns1:mitigaRiesgo ns1:CNC8070_bf107857a2 ;
+    ns1:textoExtracto "La macro no está definida en el programa. SOLUCIÓN Definir la macro antes de utilizarla." .
 

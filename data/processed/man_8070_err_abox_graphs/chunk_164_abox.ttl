@@ -1,41 +1,79 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1293 a ns1:Alarma ;
-    rdfs:label "Función H doblemente programada" ;
-    ns1:identificador "1293" ;
-    ns1:textoExtracto "1293 'Función H doblemente programada' DETECCIÓN Durante la ejecución. CAUSA La misma función H está programada más de una vez en el bloque. SOLUCIÓN Programar ambas funciones en bloques diferentes." .
+ns1:ElMensajeDelComandoMSGEsDemasiadoLargo_af993b1f9a a ns1:DiagnosticoFallo ;
+    rdfs:label "El mensaje del comando #MSG es demasiado largo" ;
+    ns1:textoExtracto "'El mensaje del comando #MSG es demasiado largo'" .
 
-ns1:Alarma_1301 a ns1:Alarma ;
-    rdfs:label "La transformación de longitud de herramienta excede el formato numérico válido" ;
-    ns1:identificador "1301" ;
-    ns1:textoExtracto "1301 'La transformación de longitud de herramienta excede el formato numérico válido' DETECCIÓN Durante la ejecución. CAUSA La transformación de longitud de herramienta excede el formato numérico válido. SOLUCIÓN Modificar los valores de la transformación de longitud o los de la herramienta." .
+ns1:ProgramarElRadioDeLaHerramientaUnaSolaVezEnElBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Programar el radio de la herramienta una sola vez en el bloque" ;
+    ns1:solucionaFallo ns1:DobleEscrituraDelRadioDeHerramienta ;
+    ns1:textoExtracto "'SOLUCIÓN Programar el radio de la herramienta una sola vez en el bloque.'" .
 
-ns1:Alarma_1302 a ns1:Alarma ;
-    rdfs:label "Carácter no válido en el nombre" ;
-    ns1:identificador "1302" ;
-    ns1:textoExtracto "1302 'Carácter no válido en el nombre' DETECCIÓN Durante la ejecución. CAUSA Carácter no válido en el nombre de una etiqueta, subrutina o variable. SOLUCIÓN Revisar la programación." .
+ns1:ProgramarLaLongitudDeLaHerramientaUnaSolaVezEnElBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Programar la longitud de la herramienta una sola vez en el bloque" ;
+    ns1:solucionaFallo ns1:DobleEscrituraDeLaLongitudDeHerramienta ;
+    ns1:textoExtracto "'SOLUCIÓN Programar la longitud de la herramienta una sola vez en el bloque.'" .
 
-ns1:Alarma_1303 a ns1:Alarma ;
-    rdfs:label "Nombre de variable demasiado largo" ;
-    ns1:identificador "1303" ;
-    ns1:textoExtracto "1303 'Nombre de variable demasiado largo' DETECCIÓN Durante la ejecución. CAUSA Superado el máximo número de caracteres permitido para el nombre de la variable." .
+ns1:ReducirNumeroDeIdentificadoresDeDatos a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir número de identificadores de datos" ;
+    ns1:solucionaFallo ns1:LimiteDeEspecificadoresDeFormatoSobrepasado ;
+    ns1:textoExtracto "'SOLUCIÓN Reducir el número de identificadores de datos.'" .
 
-ns1:Alarma_Anonima a ns1:Alarma ;
-    rdfs:label "Función M doblemente programada" ;
-    ns1:textoExtracto "CAUSA La misma función M está programada más de una vez en el bloque. SOLUCIÓN Programar ambas funciones en bloques diferentes." .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:MensajeDeDatosNoCoincideConElNumeroDeParametros ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar la programación.'" .
 
-ns1:Herramienta_Anonima a ns1:Herramienta ;
-    ns1:monitoreaParametro ns1:Parametro_TransformacionLongitud ;
-    ns1:textoExtracto "La transformación de longitud de herramienta excede el formato numérico válido." .
+ns1:RevisarProgramacionParaCorcheteDeApertura a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación para corchete de apertura '['" ;
+    ns1:solucionaFallo ns1:SeEspera_a224cb175d ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar la programación.'" .
 
-ns1:Subrutina_Anonima a ns1:Parametro ;
-    ns1:textoExtracto "Carácter no válido en el nombre de una etiqueta, subrutina o variable." .
+ns1:RevisarProgramacionParaIdentificadoresDeDatosYParametros a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación para identificadores de datos y parámetros" ;
+    ns1:solucionaFallo ns1:SeEsperaExpresionAritmetica ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar la programación.'" .
 
-ns1:Variable_Anonima a ns1:Parametro ;
-    ns1:textoExtracto "Nombre de variable demasiado largo" .
+ns1:RevisarProgramacionParaMensajeDe69CaracteresMaximo a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación para mensaje de 69 caracteres máximo" ;
+    ns1:solucionaFallo ns1:MensajeDemasiadoLargo_a4f4a9f332 ;
+    ns1:textoExtracto "'SOLUCIÓN El máximo número de caracteres permitidos es 69, incluidos los caracteres que sustituyen a los identificadores de datos.'" .
 
-ns1:Parametro_TransformacionLongitud a ns1:Parametro ;
-    rdfs:label "Transformación de longitud de herramienta" ;
-    ns1:textoExtracto "La transformación de longitud de herramienta excede el formato numérico válido." .
+ns1:RevisarProgramacionParaSintaxisCorrecta a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación para sintaxis correcta" ;
+    ns1:solucionaFallo ns1:DemasiadosParametrosProgramadosEnLaSentencia_0208b93a09 ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar la programación.'" .
+
+ns1:DemasiadosParametrosProgramadosEnLaSentencia_0208b93a09 a ns1:DiagnosticoFallo ;
+    rdfs:label "Demasiados parámetros programados en la sentencia" ;
+    ns1:textoExtracto "'Demasiados parámetros programados en la sentencia'" .
+
+ns1:DobleEscrituraDeLaLongitudDeHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "Doble escritura de la longitud de herramienta" ;
+    ns1:textoExtracto "'Doble escritura de la longitud de herramienta'" .
+
+ns1:DobleEscrituraDelRadioDeHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "Doble escritura del radio de herramienta" ;
+    ns1:textoExtracto "'Doble escritura del radio de herramienta'" .
+
+ns1:LimiteDeEspecificadoresDeFormatoSobrepasado a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de especificadores de formato sobrepasado" ;
+    ns1:textoExtracto "'Límite de especificadores de formato sobrepasado'" .
+
+ns1:MensajeDeDatosNoCoincideConElNumeroDeParametros a ns1:DiagnosticoFallo ;
+    rdfs:label "Mensaje de datos no coincide con el número de parámetros" ;
+    ns1:textoExtracto "'de datos (%D ó %d) indicados en la sentencia #MSG, #ERROR ó #WARNING no coincide con el número de parámetros a visualizar'" .
+
+ns1:MensajeDemasiadoLargo_a4f4a9f332 a ns1:DiagnosticoFallo ;
+    rdfs:label "Mensaje demasiado largo" ;
+    ns1:textoExtracto "'Mensaje demasiado largo'" .
+
+ns1:SeEsperaExpresionAritmetica a ns1:DiagnosticoFallo ;
+    rdfs:label "Se espera expresión aritmética" ;
+    ns1:textoExtracto "'Se espera expresión aritmética'" .
+
+ns1:SeEspera_a224cb175d a ns1:DiagnosticoFallo ;
+    rdfs:label "Se espera '['" ;
+    ns1:textoExtracto "'Se espera '[''" .
 

@@ -1,25 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_CNC a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz CNC" ;
-    ns1:textoExtracto "Para pasar del CNC a la aplicación de nesting: • Si sólo está abierta la aplicación de nesting y el CNC, las teclas [CTRL]+[W] cambian alternativamente de una o otra." ;
-    ns1:tieneComponente ns1:Tecla_CTRL_W .
+ns1:CNC8070_f6c5182a8d a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:mitigaRiesgo ns1:ActivarControlDeGapDesdeOtroCanalCuandoYaEstaActivo,
+        ns1:TrabajarConLeapfrogControlDelGapYConmutacionSincronizadaSimultaneamente ;
+    ns1:monitoreaParametro ns1:OpcionDeSoftwareGAPCONTROL ;
+    ns1:textoExtracto "Si se intenta activar el control de gap desde un canal cuando ya está activo en otro, el CNC mostrará el error correspondiente." .
 
-ns1:ModoOperacion_Diagnosis a ns1:ModoOperacion ;
-    rdfs:label "Modo Diagnosis" ;
-    ns1:textoExtracto "En el modo Diagnosis, en el menú horizontal seleccionar Apps > Lantek (si lo OEM lo ha configurado así)." .
+ns1:SensorGap a ns1:Sensor ;
+    rdfs:label "Sensor Gap" ;
+    ns1:textoExtracto "Esta distancia la calcula un sensor conectado al CNC" .
 
-ns1:Tecla_CUSTOM a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla [CUSTOM]" ;
-    ns1:habilitadoPor ns1:InterfazUsuario_Nesting ;
-    ns1:textoExtracto "La tecla [CUSTOM] accede al software de nesting (si lo OEM lo ha configurado así)." .
+ns1:ActivarControlDeGapDesdeOtroCanalCuandoYaEstaActivo a ns1:AccionProhibida ;
+    rdfs:label "Activar control de gap desde otro canal cuando ya está activo" ;
+    ns1:textoExtracto "Si se intenta activar el control de gap desde un canal cuando ya está activo en otro, el CNC mostrará el error correspondiente." .
 
-ns1:InterfazUsuario_Nesting a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de Nesting" ;
-    ns1:textoExtracto "Para pasar del CNC a la aplicación de nesting: • Si sólo está abierta la aplicación de nesting y el CNC, las teclas [CTRL]+[W] cambian alternativamente de una o otra." .
+ns1:OpcionDeSoftwareGAPCONTROL a ns1:Parametro ;
+    rdfs:label "Opción de software GAP CONTROL" ;
+    ns1:textoExtracto "Para el control del gap es necesario disponer de la opción de software 'GAP CONTROL'." .
 
-ns1:Tecla_CTRL_W a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla [CTRL]+[W]" ;
-    ns1:textoExtracto "las teclas [CTRL]+[W] cambian alternativamente de una o otra." .
+ns1:TrabajarConLeapfrogControlDelGapYConmutacionSincronizadaSimultaneamente a ns1:AccionProhibida ;
+    rdfs:label "Trabajar con leapfrog, control del gap y conmutación sincronizada simultáneamente" ;
+    ns1:textoExtracto "El CNC no permite trabajar con las tres funcionalidades activas a la vez; leapfrog (#LEAP), control del gap (#GAPCTRL) y conmutación sincronizada (#SWTOUT)." .
 

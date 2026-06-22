@@ -1,26 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal sincronizado"@es ;
-    ns1:textoExtracto "cabezal sincronizado"@es .
+ns1:ErrorEnLaSentenciaROTATEMZ a ns1:AccionProhibida ;
+    rdfs:label "Error en la Sentencia ROTATEMZ" ;
+    ns1:solucionaFallo ns1:RevisarElAlmacenYDefinirUnNumeroDeHerramientas ;
+    ns1:textoExtracto "7048 Error en la Sentencia ROTATEMZ." .
 
-ns1:Tarea_DesincronizarCabezal a ns1:TareaMantenimiento ;
-    rdfs:label "Desincronizar cabezal"@es ;
-    ns1:solucionaFallo ns1:Fallo_SincronizacionCabezal ;
-    ns1:textoExtracto "Desincronizar el cabezal."@es .
+ns1:EsperarAQueElCNCTermineDeCargarLaLevaParaActivarla a ns1:TareaMantenimiento ;
+    rdfs:label "Esperar a que el CNC termine de cargar la leva para activarla" ;
+    ns1:textoExtracto "• Esperar a que el CNC termine de cargar la leva para activarla." .
 
-ns1:Tarea_DetenerProgramas a ns1:TareaMantenimiento ;
-    rdfs:label "Detener programas en ejecución"@es ;
-    ns1:solucionaFallo ns1:Fallo_8018 ;
-    ns1:textoExtracto "Detener los programas en ejecución."@es .
+ns1:EsperarAQueElCNCTermineDeCargarLaLevaParaLeerOEscribirLaVariableVGCAM a ns1:TareaMantenimiento ;
+    rdfs:label "Esperar a que el CNC termine de cargar la leva para leer o escribir la variable (V.)G.CAM" ;
+    ns1:textoExtracto "• Esperar a que el CNC termine de cargar la leva para leer o escribir la variable (V.)G.CAM." .
 
-ns1:Fallo_8018 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se permite generar el PLC mientras se encuentre en ejecución o interrumpido"@es ;
-    ns1:identificador "8018" ;
-    ns1:textoExtracto "8018 'No se permite generar el plc mientras se encuentre en ejecución o interrumpido' DETECCIÓN Al intentar compilar el PLC. CAUSA No se permite compilar el PLC si el CNC se encuentra en ejecución o interrumpido. SOLUCIÓN Detener los programas en ejecución."@es .
+ns1:EsperarAQueTermineLaValidacionDeLaTablaQueDefineLaLevaParaLeerLaVariableVGCAM a ns1:TareaMantenimiento ;
+    rdfs:label "Esperar a que termine la validación de la tabla que define la leva para leer la variable (V.)G.CAM" ;
+    ns1:textoExtracto "• Esperar a que termine la validación de la tabla que define la leva para leer la variable (V.)G.CAM." .
 
-ns1:Fallo_SincronizacionCabezal a ns1:DiagnosticoFallo ;
-    rdfs:label "Intento de apagado del CNC con cabezal sincronizado"@es ;
-    ns1:textoExtracto "CAUSA El usuario ha intentado apagar el CNC mientras hay algún cabezal sincronizado. SOLUCIÓN Desincronizar el cabezal."@es .
+ns1:MemoriaInsuficienteParaElNumeroTotalDeHerramientasDefinidoEnLosAlmacenes a ns1:AccionProhibida ;
+    rdfs:label "Memoria insuficiente para el número total de herramientas definido en los almacenes" ;
+    ns1:solucionaFallo ns1:RevisarElAlmacenYDefinirUnNumeroDeHerramientas ;
+    ns1:textoExtracto "7047 Memoria insuficiente para el número total de herramientas definido en los almacenes." .
+
+ns1:RevisarElAlmacenYDefinirUnNumeroDeHerramientas a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el almacén y definir un número de herramientas" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el almacén y definir un número de herramientas." .
 

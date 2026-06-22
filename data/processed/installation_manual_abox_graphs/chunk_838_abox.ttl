@@ -1,61 +1,19 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Marca_DINDISTYPEC1 a ns1:InterfazUsuario ;
-    rdfs:label "DINDISTYPEC1" ;
-    ns1:identificador "DINDISTYPEC1" ;
-    ns1:monitoreaParametro ns1:Parametro_DistribucionMecanizado ;
-    ns1:textoExtracto "marca para cada canal. Los mnemónicos para cada canal son los siguientes. DINDISTYPEC1 [...] Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
+ns1:CompensacionAsociada a ns1:Parametro ;
+    rdfs:label "compensación asociada" ;
+    ns1:textoExtracto "Cada cinemática tiene una compensación asociada (parámetro COMPID)." .
 
-ns1:Marca_DINDISTYPEC2 a ns1:InterfazUsuario ;
-    rdfs:label "DINDISTYPEC2" ;
-    ns1:identificador "DINDISTYPEC2" ;
-    ns1:monitoreaParametro ns1:Parametro_DistribucionMecanizado ;
-    ns1:textoExtracto "DINDISTYPEC2" .
+ns1:CompensacionKINCOMP1 a ns1:Parametro ;
+    rdfs:label "compensación KINCOMP1" ;
+    ns1:textoExtracto "KINCOMP1 está asociado a COMPID 1" .
 
-ns1:Marca_DINDISTYPEC3 a ns1:InterfazUsuario ;
-    rdfs:label "DINDISTYPEC3" ;
-    ns1:identificador "DINDISTYPEC3" ;
-    ns1:monitoreaParametro ns1:Parametro_DistribucionMecanizado ;
-    ns1:textoExtracto "DINDISTYPEC3" .
+ns1:CompensacionKINCOMP2 a ns1:Parametro ;
+    rdfs:label "compensación KINCOMP2" ;
+    ns1:textoExtracto "KINCOMP2 a COMPID2 y así sucesivamente." .
 
-ns1:Marca_DINDISTYPEC4 a ns1:InterfazUsuario ;
-    rdfs:label "DINDISTYPEC4" ;
-    ns1:identificador "DINDISTYPEC4" ;
-    ns1:monitoreaParametro ns1:Parametro_DistribucionMecanizado ;
-    ns1:textoExtracto "DINDISTYPEC4 [...] Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
-
-ns1:Marca_SERPLCAC a ns1:InterfazUsuario ;
-    rdfs:label "SERPLCAC" ;
-    ns1:identificador "SERPLCAC" ;
-    ns1:monitoreaParametro ns1:Parametro_ReguladorSercos ;
-    ns1:textoExtracto "Esta marca está asociada al cambio de la gama de trabajo o del set de parámetros de un regulador Sercos (variable (V.)[ch].A.SETGE.xn). El CNC activa esta marca para indicar que está realizando el cambio solicitado." .
-
-ns1:Parametro_TemperaturaAmbiente a ns1:Parametro ;
-    rdfs:label "Temperatura ambiente del CNC" ;
-    ns1:monitoreaParametro ns1:Marca_OVERTEMP ;
-    ns1:textoExtracto "El CNC realiza cada minuto un chequeo de la temperatura ambiente del equipo; si en tres muestras seguidas la temperatura supera los 60 ºC (140 ºF) [...] no sobrepase los 65ºC (149ºF)" ;
-    ns1:valor "60°C (límite warning), 65°C (límite error)" .
-
-ns1:Alarma_Sobretemperatura a ns1:Alarma ;
-    rdfs:label "Alarma por sobretemperatura (W169 / E173)" ;
-    ns1:identificador "W169 (warning), E173 (error)" ;
-    ns1:textoExtracto "warning W169 avisando de esta circunstancia [...] error E173. El CNC permitirá finalizar la ejecución en marcha, pero no permitirá reanudarla tras una interrupción" .
-
-ns1:Marca_OVERTEMP a ns1:AvisoSeguridad,
-        ns1:InterfazUsuario ;
-    rdfs:label "OVERTEMP" ;
-    ns1:activaAlarma ns1:Alarma_Sobretemperatura ;
-    ns1:identificador "OVERTEMP" ;
-    ns1:textoExtracto "Esta marca indica el estado de la temperatura del CNC. [...] si en tres muestras seguidas la temperatura supera los 60 ºC (140 ºF), el CNC activa esta marca y muestra el warning W169 avisando de esta circunstancia. [...] Cada vez que se pulsa [START], el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF), y en caso de superar dicho valor, invalida el [START] y muestra el error E173." .
-
-ns1:Parametro_ReguladorSercos a ns1:Parametro ;
-    rdfs:label "Gama de trabajo / Set de parámetros (Sercos)" ;
-    ns1:identificador "V.[ch].A.SETGE.xn" ;
-    ns1:textoExtracto "cambio de la gama de trabajo o del set de parámetros de un regulador Sercos (variable (V.)[ch].A.SETGE.xn)" .
-
-ns1:Parametro_DistribucionMecanizado a ns1:Parametro ;
-    rdfs:label "Distribución dinámica del mecanizado (#DINDIST)" ;
-    ns1:textoExtracto "distribución dinámica del mecanizado entre canales (sentencia #DINDIST)" ;
-    ns1:valor "Pasadas iguales sincronizadas (#DINDIST[1]) / Reparto de pasadas (#DINDIST[0])" .
+ns1:MarcaFWAITLIM a ns1:ElementoSeguridad ;
+    rdfs:label "marca FWAITLIM" ;
+    ns1:textoExtracto "El PLC activa esta marca cuando detiene la ejecución del programa por un #FOLLOW[WAITINLIMIT], para que la cota programada entre dentro de los límites (modelo láser)." .
 

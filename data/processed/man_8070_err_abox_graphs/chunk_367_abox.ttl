@@ -1,47 +1,44 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Fallo_1873 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cajera con islas: Demasía lateral no válida" ;
-    ns1:identificador "1873" ;
-    ns1:monitoreaParametro ns1:Parametro_Delta_1873 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA La demasía lateral para el acabado (parámetro δ) es mayor que el diámetro de la herramienta." .
+ns1:ActivarPlanoPrincipalParaCalibracion a ns1:AccionProhibida ;
+    rdfs:label "Activar plano principal para calibración" ;
+    ns1:textoExtracto "Activar un plano principal G17, G18 o G19 para ejecutar el ciclo." .
 
-ns1:TareaMantenimiento_CorreccionPaso a ns1:TareaMantenimiento ;
-    rdfs:label "Corregir paso de mecanizado" ;
-    ns1:solucionaFallo ns1:Fallo_1872 ;
-    ns1:textoExtracto "SOLUCIÓN Corregir el paso de mecanizado." .
+ns1:CalibracionDobleI1 a ns1:AccionProhibida ;
+    rdfs:label "Calibración doble (I = 1)" ;
+    ns1:textoExtracto "El parámetro I sólo admite los valores 0 (calibración simple) ó 1 (calibración doble)." .
 
-ns1:TareaMantenimiento_SeleccionHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Seleccionar otra herramienta" ;
-    ns1:requiereConsumible ns1:Herramienta_Mecanizado ;
-    ns1:solucionaFallo ns1:Fallo_1872 ;
-    ns1:textoExtracto "SOLUCIÓN Corregir el paso de mecanizado o seleccionar otra herramienta." .
+ns1:CalibracionIncorrecta a ns1:AccionProhibida ;
+    rdfs:label "Calibración incorrecta" ;
+    ns1:textoExtracto "'Programar I = 0/1'" .
 
-ns1:Herramienta_Mecanizado a ns1:Herramienta ;
-    rdfs:label "Herramienta de mecanizado" ;
-    ns1:textoExtracto "seleccionar otra herramienta" .
+ns1:CalibracionSimpleI0 a ns1:AccionProhibida ;
+    rdfs:label "Calibración simple (I = 0)" ;
+    ns1:textoExtracto "El parámetro I sólo admite los valores 0 (calibración simple) ó 1 (calibración doble)." .
 
-ns1:Parametro_Delta a ns1:Parametro ;
-    rdfs:label "Paso de mecanizado para acabado (Δ)" ;
-    ns1:textoExtracto "parámetro Δ" ;
-    ns1:valor "mayor que el diámetro de la herramienta"^^xsd:string .
+ns1:CicloDePalpadorPROBE2_feeddd9e2a a ns1:TareaMantenimiento ;
+    rdfs:label "Ciclo de palpador #PROBE 2" ;
+    ns1:textoExtracto "Durante la ejecución del ciclo de palpador #PROBE 2." .
 
-ns1:Parametro_Delta_1873 a ns1:Parametro ;
-    rdfs:label "Demasía lateral para acabado (δ)" ;
-    ns1:textoExtracto "parámetro δ" ;
-    ns1:valor "mayor que el diámetro de la herramienta"^^xsd:string .
+ns1:CicloPalpador a ns1:TareaMantenimiento ;
+    rdfs:label "Ciclo de palpador" ;
+    ns1:textoExtracto "Durante la ejecución del ciclo de palpador #PROBE 2." .
 
-ns1:Parametro_Epsilon a ns1:Parametro ;
-    rdfs:label "Paso de mecanizado para acabado (ε)" ;
-    ns1:textoExtracto "parámetro ε" ;
-    ns1:valor "cero"^^xsd:string .
+ns1:CicloPalpador1 a ns1:TareaMantenimiento ;
+    rdfs:label "Ciclo de palpador #PROBE" ;
+    ns1:textoExtracto "Durante la ejecución de un ciclo de palpador #PROBE." .
 
-ns1:Fallo_1872 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cajera con islas: Paso de acabado no válido" ;
-    ns1:identificador "1872" ;
-    ns1:monitoreaParametro ns1:Parametro_Delta,
-        ns1:Parametro_Epsilon ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA En una cajera 2D, el paso de mecanizado para el acabado (parámetro Δ) es mayor que el diámetro de la herramienta. En una cajera 3D, el paso de mecanizado para el acabado (parámetro ε) es cero." .
+ns1:PlanoDeTrabajoIncorrecto a ns1:AccionProhibida ;
+    rdfs:label "Plano de trabajo incorrecto" ;
+    ns1:textoExtracto "'El plano activo para calibrado de palpador debe ser G17, G18 o G19'" .
+
+ns1:ProgramarI01_382f895b83 a ns1:AccionProhibida ;
+    rdfs:label "Programar I = 0/1" ;
+    ns1:textoExtracto "'Programar I = 0/1'" .
+
+ns1:TipoDeCalibracion a ns1:Parametro ;
+    rdfs:label "Tipo de calibración" ;
+    ns1:identificador "I" ;
+    ns1:textoExtracto "El parámetro I (tipo de calibración) tiene un valor incorrecto." .
 

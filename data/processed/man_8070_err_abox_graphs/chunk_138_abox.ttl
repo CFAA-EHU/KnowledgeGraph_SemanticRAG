@@ -1,18 +1,61 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_1202 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1202: Demasiados parámetros en #SET IPOPOS"@es ;
-    ns1:identificador "1202" ;
-    ns1:textoExtracto "#SET IPOPOS: demasiados parámetros. DETECCIÓN Durante la ejecución. CAUSA La sentencia tiene demasiados parámetros. SOLUCIÓN Revisar la programación."@es .
+ns1:CorreccionDeDistanciaEnINCJOG a ns1:TareaMantenimiento ;
+    rdfs:label "corrección de distancia en #INCJOG" ;
+    ns1:solucionaFallo ns1:DistanciaDeJogIncrementalNegativaONulaEnINCJOG ;
+    ns1:textoExtracto "SOLUCIÓN El desplazamiento incremental del eje en cada posición del conmutador debe ser un valor positivo y no nulo." .
 
-ns1:Error_1203 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1203: Sentencia #SET IPOPOS no programada sola en el bloque"@es ;
-    ns1:identificador "1203" ;
-    ns1:textoExtracto "'La sentencia #SET IPOPOS se programa sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:CorreccionDeParametrosEnINCJOG a ns1:TareaMantenimiento ;
+    rdfs:label "corrección de parámetros en #INCJOG" ;
+    ns1:solucionaFallo ns1:DemasiadosParametrosEnINCJOG ;
+    ns1:textoExtracto "SOLUCIÓN La sentencia #INCJOG admite un máximo de cinco grupos de parámetros. Cada uno de ellos representa el avance y el desplazamiento del eje para cada posición del conmutador en jog incremental." .
 
-ns1:Error_1204 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1204: Sentencia mal programada o inexistente"@es ;
-    ns1:identificador "1204" ;
-    ns1:textoExtracto "'Sentencia mal programada o inexistente' DETECCIÓN Durante la ejecución. CAUSA La sentencia no existe o está mal programada. SOLUCIÓN Revisar la"@es .
+ns1:CorreccionDeParametrosEnMPG a ns1:TareaMantenimiento ;
+    rdfs:label "corrección de parámetros en #MPG" ;
+    ns1:solucionaFallo ns1:DemasiadosParametrosEnMPG ;
+    ns1:textoExtracto "SOLUCIÓN La sentencia #MPG admite un máximo de tres parámetros. Cada uno de ellos representa el desplazamiento por impulso del volante en cada posición del conmutador." .
+
+ns1:CorreccionDeResolucionDeVolanteEnMPG a ns1:TareaMantenimiento ;
+    rdfs:label "corrección de resolución de volante en #MPG" ;
+    ns1:solucionaFallo ns1:ResolucionDeVolanteNegativaONulaEnMPG ;
+    ns1:textoExtracto "SOLUCIÓN El desplazamiento por impulso del volante debe ser un valor positivo y no nulo." .
+
+ns1:CorreccionDeVelocidadEnINCJOG a ns1:TareaMantenimiento ;
+    rdfs:label "corrección de velocidad en #INCJOG" ;
+    ns1:solucionaFallo ns1:VelocidadDeJogIncrementalNegativaONulaEnINCJOG ;
+    ns1:textoExtracto "SOLUCIÓN El avance del eje en cada posición del conmutador debe ser un valor positivo y no nulo." .
+
+ns1:CorreccionDelAvanceProgramadoEnCONTJOGINCJOG a ns1:TareaMantenimiento ;
+    rdfs:label "corrección del avance programado en #CONTJOG/#INCJOG" ;
+    ns1:solucionaFallo ns1:AvanceProgramadoFueraDeRangoEnCONTJOGINCJOG ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:DemasiadosParametrosEnCONTJOG a ns1:DiagnosticoFallo ;
+    rdfs:label "demasiados parámetros en #CONTJOG" ;
+    ns1:textoExtracto "'#CONTJOG: demasiados parámetros' DETECCIÓN Durante la ejecución." .
+
+ns1:AvanceProgramadoFueraDeRangoEnCONTJOGINCJOG a ns1:DiagnosticoFallo ;
+    rdfs:label "avance programado fuera de rango en #CONTJOG/#INCJOG" ;
+    ns1:textoExtracto "'#CONTJOG/#INCJOG: avance programado fuera de rango' DETECCIÓN Durante la ejecución. CAUSA El avance programado es demasiado alto." .
+
+ns1:DemasiadosParametrosEnINCJOG a ns1:DiagnosticoFallo ;
+    rdfs:label "demasiados parámetros en #INCJOG" ;
+    ns1:textoExtracto "'#INCJOG: demasiados parámetros' DETECCIÓN Durante la ejecución. CAUSA La sentencia tiene más parámetros de los permitidos." .
+
+ns1:DemasiadosParametrosEnMPG a ns1:DiagnosticoFallo ;
+    rdfs:label "demasiados parámetros en #MPG" ;
+    ns1:textoExtracto "'#MPG: demasiados parámetros' DETECCIÓN Durante la ejecución. CAUSA La sentencia tiene más parámetros de los permitidos." .
+
+ns1:DistanciaDeJogIncrementalNegativaONulaEnINCJOG a ns1:DiagnosticoFallo ;
+    rdfs:label "distancia de jog incremental negativa o nula en #INCJOG" ;
+    ns1:textoExtracto "'#INCJOG: no se permiten distancias de jog incremental negativas o cero' DETECCIÓN Durante la ejecución. CAUSA La sentencia #INCJOG intenta definir una distancia negativa o nula." .
+
+ns1:ResolucionDeVolanteNegativaONulaEnMPG a ns1:DiagnosticoFallo ;
+    rdfs:label "resolución de volante negativa o nula en #MPG" ;
+    ns1:textoExtracto "'#MPG: no se permiten resoluciones de volante negativas o cero' DETECCIÓN Durante la ejecución. CAUSA La sentencia #MPG intenta definir una resolución de volante negativa o nula." .
+
+ns1:VelocidadDeJogIncrementalNegativaONulaEnINCJOG a ns1:DiagnosticoFallo ;
+    rdfs:label "velocidad de jog incremental negativa o nula en #INCJOG" ;
+    ns1:textoExtracto "'#INCJOG: no se permiten velocidades de jog incremental negativas o cero' DETECCIÓN Durante la ejecución. CAUSA La sentencia #INCJOG intenta definir un avance negativo o nulo." .
 

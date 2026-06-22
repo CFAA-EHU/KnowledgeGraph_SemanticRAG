@@ -1,67 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1466 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de programación G8 como segundo bloque de movimiento"@es ;
-    ns1:identificador "1466" ;
-    ns1:solucionaFallo ns1:Parametro_G36_G37_G38_G39 ;
-    ns1:textoExtracto "'No se puede programar G8 como segundo bloque de movimiento para G36/G37/G38/G39' [...] SOLUCIÓN El segundo bloque de movimiento de una función G36/G37/G38/G39 debe ser G0/G1/G2/G3."@es .
+ns1:Parametro_4e7cc7b543 a ns1:Parametro ;
+    rdfs:label "Parámetro final de interpolación",
+        "Parámetro inicial de interpolación" ;
+    ns1:textoExtracto "el parámetro inicial de la interpolación (SP) debe ser menor que el parámetro final (EP)" .
 
-ns1:Fallo_1467 a ns1:DiagnosticoFallo ;
-    rdfs:label "Límite POSLIMIT/NEGLIMIT excede parámetro máquina"@es ;
-    ns1:identificador "1467" ;
-    ns1:monitoreaParametro ns1:Parametro_POSLIMIT_NEGLIMIT ;
-    ns1:textoExtracto "'POSLIMIT/NEGLIMIT no puede superar el valor del parámetro máquina' [...] SOLUCIÓN Revisar la programación."@es .
+ns1:PuntoInicialNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Punto inicial no válido" ;
+    ns1:textoExtracto "'#POLY: Punto inicial no válido' DETECCIÓN Durante" .
 
-ns1:Fallo_1468 a ns1:DiagnosticoFallo ;
-    rdfs:label "Origen polar incompleto en G30"@es ;
-    ns1:identificador "1468" ;
-    ns1:solucionaFallo ns1:Parametro_G30 ;
-    ns1:textoExtracto "'G30: Programación incorrecta del origen polar' [...] SOLUCIÓN Es necesario programar las coordenadas del origen polar en los dos ejes principales."@es .
+ns1:SolucionParaDemasiadosEjesProgramados a ns1:TareaMantenimiento ;
+    rdfs:label "Solución para demasiados ejes programados" ;
+    ns1:solucionaFallo ns1:DemasiadosEjesProgramados ;
+    ns1:textoExtracto "En la interpolación polinómica sólo pueden intervenir tres ejes." .
 
-ns1:Fallo_1469 a ns1:DiagnosticoFallo ;
-    rdfs:label "Radio polar nulo o negativo"@es ;
-    ns1:identificador "1469" ;
-    ns1:monitoreaParametro ns1:Parametro_RadioPolar ;
-    ns1:textoExtracto "'Radio negativo o nulo no permitido' [...] SOLUCIÓN El radio polar ha de ser siempre mayor que cero."@es .
+ns1:SolucionParaParametroInvalido a ns1:TareaMantenimiento ;
+    rdfs:label "Solución para parámetro inválido" ;
+    ns1:solucionaFallo ns1:ValorDeParametroNoValido_ddd4d64e2f ;
+    ns1:textoExtracto "Los parámetros de interpolación del polinomio deben ser positivos, el parámetro inicial de la interpolación (SP) debe ser menor que el parámetro final (EP) y el radio de curvatura debe ser mayor que cero." .
 
-ns1:Fallo_1470 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cota incremental inválida en eje UNIDIR"@es ;
-    ns1:identificador "1470" ;
-    ns1:monitoreaParametro ns1:Parametro_UNIDIR ;
-    ns1:textoExtracto "'Eje rotativo UNIDIR con programación incremental incorrecta' [...] SOLUCIÓN La cota incremental programada para el eje rotativo unidireccional (parámetro UNIDIR) no es válida."@es .
+ns1:DemasiadosEjesProgramados a ns1:DiagnosticoFallo ;
+    rdfs:label "Demasiados ejes programados" ;
+    ns1:textoExtracto "'#POLY: Demasiados ejes programados' DETECCIÓN Durante la ejecución." .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC con parámetros de movimiento"@es ;
-    ns1:textoExtracto "parámetro máquina POSLIMIT y NEGLIMIT de ese eje [...] funciones G36/G37/G38/G39"@es ;
-    ns1:tieneComponente ns1:Parametro_G30,
-        ns1:Parametro_G36_G37_G38_G39,
-        ns1:Parametro_POSLIMIT_NEGLIMIT,
-        ns1:Parametro_RadioPolar,
-        ns1:Parametro_UNIDIR .
-
-ns1:Parametro_G30 a ns1:Parametro ;
-    rdfs:label "Parámetro G30 (origen polar)"@es ;
-    ns1:identificador "G30" ;
-    ns1:textoExtracto "función G30 falta programar una de las dos coordenadas del origen polar"@es .
-
-ns1:Parametro_G36_G37_G38_G39 a ns1:Parametro ;
-    rdfs:label "Parámetro de funciones G36/G37/G38/G39 (bloques de movimiento)"@es ;
-    ns1:identificador "G36/G37/G38/G39" ;
-    ns1:textoExtracto "funciones G36/G37/G38/G39 [...] no disponen de un bloque intermedio para realizar la trayectoria de empalme entre dos bloques"@es .
-
-ns1:Parametro_POSLIMIT_NEGLIMIT a ns1:Parametro ;
-    rdfs:label "Límites POSLIMIT y NEGLIMIT por eje"@es ;
-    ns1:identificador "POSLIMIT/NEGLIMIT" ;
-    ns1:textoExtracto "valor del parámetro máquina POSLIMIT y NEGLIMIT de ese eje"@es .
-
-ns1:Parametro_RadioPolar a ns1:Parametro ;
-    rdfs:label "Radio polar en coordenadas polares"@es ;
-    ns1:identificador "RadioPolar" ;
-    ns1:textoExtracto "radio polar es negativo o nulo [...] radio polar absoluto"@es .
-
-ns1:Parametro_UNIDIR a ns1:Parametro ;
-    rdfs:label "Parámetro UNIDIR (eje rotativo unidireccional)"@es ;
-    ns1:identificador "UNIDIR" ;
-    ns1:textoExtracto "eje rotativo unidireccional (parámetro UNIDIR)"@es .
+ns1:ValorDeParametroNoValido_ddd4d64e2f a ns1:DiagnosticoFallo ;
+    rdfs:label "Valor de parámetro no válido" ;
+    ns1:textoExtracto "'#POLY: Valor de parámetro no válido' DETECCIÓN Durante la ejecución." .
 

@@ -1,29 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:PantallaDiagnosis a ns1:InterfazUsuario ;
-    rdfs:label "Pantalla de diagnosis" ;
-    ns1:ilustradoEn ns1:ModoDiagnosis ;
-    ns1:monitoreaParametro ns1:FalloBus_24500,
-        ns1:FalloTensionUM_24501 ;
-    ns1:textoExtracto "DETECCIÓN En la pantalla de diagnosis, durante la ejecución." .
+ns1:CNC8070_45ab01fb8d a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:FalloCompensacionVolumetricaDesactivada ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:ErrorNodo_CNC a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en nodo CNC" ;
-    ns1:textoExtracto "DETECCIÓN Durante el funcionamiento del CNC. CAUSA Error en un nodo. SOLUCIÓN Consultar el modo diagnosis para obtener más información." .
+ns1:FalloCompensacionVolumetrica a ns1:DiagnosticoFallo ;
+    rdfs:label "Error del sistema de compensación volumétrica: compensación desactivada" ;
+    ns1:textoExtracto "'Error del sistema de compensación volumétrica: compensación desactivada'" .
 
-ns1:FalloBus_24500 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo del bus (24500)" ;
-    ns1:identificador "24500" ;
-    ns1:textoExtracto "24500 Se ha quitado el fallo del bus. DETECCIÓN En la pantalla de diagnosis, durante la ejecución. CAUSA Condición de fallo del bus corregida. SOLUCIÓN No requiere ninguna acción." .
+ns1:PongaseEnContactoConFagorAutomation a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:solucionaFallo ns1:FalloCompensacionVolumetricaDesactivada ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor Automation." .
 
-ns1:FalloTensionUM_24501 a ns1:DiagnosticoFallo ;
-    rdfs:label "Tensión de alimentación UM defectuosa (24501)" ;
-    ns1:identificador "24501" ;
-    ns1:textoExtracto "24501 Tensión de alimentación UM defectuosa. DETECCIÓN En la pantalla de diagnosis, durante la ejecución. CAUSA Un nodo EtherCAT" .
+ns1:SeleccionarUnFicheroAdecuado a ns1:TareaMantenimiento ;
+    rdfs:label "Seleccionar un fichero adecuado" ;
+    ns1:textoExtracto "SOLUCIÓN Seleccionar un fichero adecuado." .
 
-ns1:ModoDiagnosis a ns1:ModoOperacion ;
-    rdfs:label "Modo diagnosis" ;
-    ns1:mitigaRiesgo ns1:ErrorNodo_CNC ;
-    ns1:textoExtracto "SOLUCIÓN Consultar el modo diagnosis para obtener más información." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "PLC" ;
+    ns1:activaAlarma ns1:NoSePuedeActivarLaMarcaVOLCOMPSinUnaTablaValidada_60abfba4f7 ;
+    ns1:textoExtracto "PLC" .
+
+ns1:NoSePuedeActivarLaMarcaVOLCOMPSinUnaTablaValidada_60abfba4f7 a ns1:AccionProhibida ;
+    rdfs:label "No se puede activar la marca VOLCOMP sin una tabla validada" ;
+    ns1:textoExtracto "'No se puede activar la marca VOLCOMP sin una tabla validada'" .
+
+ns1:FalloCompensacionVolumetricaDesactivada a ns1:DiagnosticoFallo ;
+    rdfs:label "'Error del sistema de compensación volumétrica: compensación desactivada'" ;
+    ns1:textoExtracto "'Error del sistema de compensación volumétrica: compensación desactivada'" .
 

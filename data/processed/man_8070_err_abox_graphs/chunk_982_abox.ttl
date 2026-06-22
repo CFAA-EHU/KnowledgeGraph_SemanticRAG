@@ -1,40 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_9638 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 9638: INDUCTOSYN - Error desconocido" ;
-    ns1:solucionaFallo ns1:Solucion_9638 ;
-    ns1:textoExtracto "9638 INDUCTOSYN: Error desconocido. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El módulo ABSIND ha generado un error desconocido. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND." .
+ns1:ComprobacionDelCableYConexionConElCaptador a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobación del cable y conexión con el captador" ;
+    ns1:solucionaFallo ns1:ErrorDeComunicacionEnCaptacionCRCIncorrecto_3e6b88d185 ;
+    ns1:textoExtracto "• Compruebe el cable y el conexionado con el captador." .
 
-ns1:Error_9639 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 9639: INDUCTOSYN - Inconsistencia parámetro SSITYPE" ;
-    ns1:monitoreaParametro ns1:Parametro_SSITYPE ;
-    ns1:solucionaFallo ns1:Solucion_9639 ;
-    ns1:textoExtracto "9639 INDUCTOSYN: Inconsistencia parámetro SSITYPE con captador conectado. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El valor del parámetro SSITYPE del CNC no coincide con el valor seleccionado en el dipswitch S50 del módulo ABSIND." .
+ns1:DisminucionDeLaVelocidadMaxima a ns1:TareaMantenimiento ;
+    rdfs:label "Disminución de la velocidad máxima" ;
+    ns1:solucionaFallo ns1:FrecuenciaDeContajeExcesiva ;
+    ns1:textoExtracto "SOLUCIÓN Disminuya la velocidad máxima de movimiento del eje." .
 
-ns1:Modulo_ABSIND a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo ABSIND" ;
-    ns1:activaAlarma ns1:Error_9638,
-        ns1:Error_9639 ;
-    ns1:textoExtracto "El módulo ABSIND ha generado un error desconocido. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND." ;
-    ns1:tieneComponente ns1:Dipswitch_S50 .
+ns1:ErrorDeComunicacionEnCaptacionNoSeRecibioAcknowledge_901dab9131 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de comunicación en captación. No se recibió acknowledge" ;
+    ns1:textoExtracto "9630 Error de comunicación en captación. No se recibió acknowledge." .
 
-ns1:Parametro_SSITYPE a ns1:Parametro ;
-    rdfs:label "Parámetro SSITYPE" ;
-    ns1:textoExtracto "El valor del parámetro SSITYPE del CNC no coincide con el valor seleccionado en el dipswitch S50 del módulo ABSIND." ;
-    ns1:valor "Inconsistencia con dipswitch S50" .
+ns1:PongaseEnContactoConFagorAutomation_111f9d7cba a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:textoExtracto "Póngase en contacto con Fagor Automation." .
 
-ns1:Solucion_9638 a ns1:TareaMantenimiento ;
-    rdfs:label "Sustitución del módulo ABSIND (Error 9638)" ;
-    ns1:requiereMantenimiento ns1:Modulo_ABSIND ;
-    ns1:textoExtracto "Si el error es repetitivo y persiste pruebe a sustituir el módulo ABSIND asociado a esa captación." .
+ns1:ReemplazoDelEncoderOCabezaDeLaRegla_911ef5eee1 a ns1:TareaMantenimiento ;
+    rdfs:label "Reemplazo del encóder o cabeza de la regla" ;
+    ns1:solucionaFallo ns1:ErrorDeComunicacionEnCaptacionCRCIncorrecto_3e6b88d185 ;
+    ns1:textoExtracto "• Si todo es correcto y sigue produciéndose el error, reemplazar el encóder o la cabeza de la regla." .
 
-ns1:Solucion_9639 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión del dipswitch S50 (Error 9639)" ;
-    ns1:requiereMantenimiento ns1:Dipswitch_S50 ;
-    ns1:textoExtracto "Revise el estado del dipswitch S50 del módulo ABSIND." .
+ns1:VerificacionDeLaParametrizacionDelCaptador a ns1:TareaMantenimiento ;
+    rdfs:label "Verificación de la parametrización del captador" ;
+    ns1:solucionaFallo ns1:ErrorDeComunicacionEnCaptacionCRCIncorrecto_3e6b88d185 ;
+    ns1:textoExtracto "• Verifique la correcta parametrización del captador." .
 
-ns1:Dipswitch_S50 a ns1:ComponenteElectrico ;
-    rdfs:label "Dipswitch S50" ;
-    ns1:textoExtracto "El valor del parámetro SSITYPE del CNC no coincide con el valor seleccionado en el dipswitch S50 del módulo ABSIND. Revise el estado del dipswitch S50 del módulo ABSIND." .
+ns1:FrecuenciaDeContajeExcesiva a ns1:DiagnosticoFallo ;
+    rdfs:label "Frecuencia de contaje excesiva" ;
+    ns1:textoExtracto "Frecuencia de contaje excesiva. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." .
+
+ns1:ErrorDeComunicacionEnCaptacionCRCIncorrecto_3e6b88d185 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de comunicación en captación. CRC incorrecto" ;
+    ns1:textoExtracto "9629 Error de comunicación en captación. CRC incorrecto. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." .
 

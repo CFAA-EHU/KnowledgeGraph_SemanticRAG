@@ -1,94 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_5041 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de rango excedido en entrada analógica remota" ;
-    ns1:identificador "5041" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarCircuitoEntradaAnalogica_5041 ;
-    ns1:textoExtracto "Una entrada analógica remota ha detectado un error de rango excedido. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La tensión aplicada a la entrada analógica es mayor que el rango permitido. SOLUCIÓN Revisar el circuito conectado a la entrada analógica remota." .
+ns1:ComprobarEstadoDelCanal a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar estado del canal" ;
+    ns1:solucionaFallo ns1:CNCEXEjecucionNoFinalizada_76f28e9b59 ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar el estado del canal programado en la instrucción CNCEX." .
 
-ns1:Error_5042 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de rango mínimo excedido en entrada analógica remota" ;
-    ns1:identificador "5042" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarCircuitoEntradaAnalogica_5042 ;
-    ns1:textoExtracto "Una entrada analógica remota ha detectado un error de rango mínimo excedido. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La tensión aplicada a la entrada analógica es menor que el rango permitido. SOLUCIÓN Revisar el circuito conectado a la entrada analógica remota." .
+ns1:ComprobarSintaxisDeLaInstruccion a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar sintaxis de la instrucción" ;
+    ns1:solucionaFallo ns1:CNCEXElCanalIndicadoNoEsDePLC_f7c783ae5a ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar la sintaxis de la instrucción. Revisar en los parámetros máquina el tipo de canal (parámetro CHTYPE)." .
 
-ns1:Error_5043 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de conversión en entrada analógica remota" ;
-    ns1:identificador "5043" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarModuloRemoto_5043 ;
-    ns1:textoExtracto "Una entrada analógica remota ha detectado un error conversión. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La entrada analógica indica que no puede realizar la lectura correctamente. SOLUCIÓN Revisar módulo remoto." .
+ns1:TipoDeCanal a ns1:Parametro ;
+    rdfs:label "Tipo de Canal" ;
+    ns1:identificador "CHTYPE" ;
+    ns1:textoExtracto "Revisar en los parámetros máquina el tipo de canal (parámetro CHTYPE)." .
 
-ns1:Error_5044 a ns1:DiagnosticoFallo ;
-    rdfs:label "Configuración incorrecta en entrada analógica remota" ;
-    ns1:identificador "5044" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarConfiguracionEntradaAnalogica_5044 ;
-    ns1:textoExtracto "Una entrada analógica remota esta configurada incorrectamente. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La configuración de una entrada analógica remota no es correcta. SOLUCIÓN Revisar configuración de la entrada analógica remota." .
+ns1:CNCEXEjecucionNoFinalizada_76f28e9b59 a ns1:DiagnosticoFallo ;
+    rdfs:label "CNCEX: Ejecución no finalizada" ;
+    ns1:textoExtracto "'CNCEX: Ejecución no finalizada' DETECCIÓN Al ejecutar una instrucción CNCEX. CAUSA La instrucción CNCEX no puede ejecutar el bloque en el canal indicado." .
 
-ns1:Error_5045 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de alimentación en entrada analógica remota" ;
-    ns1:identificador "5045" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarAlimentacionEntradaAnalogica_5045 ;
-    ns1:textoExtracto "Una entrada analógica remota ha detectado un error de alimentación. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La alimentación de la entrada analógica remota no es correcta. SOLUCIÓN Revisar la alimentación de la entrada analógica remota." .
-
-ns1:Error_5046 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en módulo de entradas analógicas remotas" ;
-    ns1:identificador "5046" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarModuloRemoto_5046 ;
-    ns1:textoExtracto "Una entrada analógica remota ha detectado un error en el módulo. DETECCIÓN Durante el funcionamiento del PLC. CAUSA El módulo remoto de entradas analógicas no funciona correctamente. SOLUCIÓN Revisar módulo remoto." .
-
-ns1:Error_5047 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error desconocido en módulo de entradas analógicas remotas" ;
-    ns1:identificador "5047" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarModuloRemoto_5047 ;
-    ns1:textoExtracto "Una entrada analógica remota ha detectado un error desconocido. DETECCIÓN Durante el funcionamiento del PLC. CAUSA El módulo remoto de entradas analógicas tiene un error. SOLUCIÓN Revisar módulo remoto." .
-
-ns1:Error_ModuloSalidasAnalogicas a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en módulo remoto de salidas analógicas" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarModuloRemoto_SalidasAnalogicas ;
-    ns1:textoExtracto "el funcionamiento del PLC. CAUSA El módulo remoto de salidas analógicas tiene un error. SOLUCIÓN Revisar módulo remoto." .
-
-ns1:ModuloEntradasAnalogicasRemotas a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto de entradas analógicas" ;
-    ns1:requiereMantenimiento ns1:TareaMantenimiento_RevisarModuloRemoto_5043,
-        ns1:TareaMantenimiento_RevisarModuloRemoto_5046,
-        ns1:TareaMantenimiento_RevisarModuloRemoto_5047 ;
-    ns1:textoExtracto "módulo remoto de entradas analógicas" .
-
-ns1:ModuloSalidasAnalogicasRemotas a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto de salidas analógicas" ;
-    ns1:requiereMantenimiento ns1:TareaMantenimiento_RevisarModuloRemoto_SalidasAnalogicas ;
-    ns1:textoExtracto "módulo remoto de salidas analógicas" .
-
-ns1:TareaMantenimiento_RevisarAlimentacionEntradaAnalogica_5045 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar alimentación de entrada analógica remota (Error 5045)" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la alimentación de la entrada analógica remota." .
-
-ns1:TareaMantenimiento_RevisarCircuitoEntradaAnalogica_5041 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar circuito conectado a entrada analógica remota (Error 5041)" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar el circuito conectado a la entrada analógica remota." .
-
-ns1:TareaMantenimiento_RevisarCircuitoEntradaAnalogica_5042 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar circuito conectado a entrada analógica remota (Error 5042)" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar el circuito conectado a la entrada analógica remota." .
-
-ns1:TareaMantenimiento_RevisarConfiguracionEntradaAnalogica_5044 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar configuración de entrada analógica remota (Error 5044)" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar configuración de la entrada analógica remota." .
-
-ns1:TareaMantenimiento_RevisarModuloRemoto_5043 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar módulo remoto (Error 5043)" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar módulo remoto." .
-
-ns1:TareaMantenimiento_RevisarModuloRemoto_5046 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar módulo remoto (Error 5046)" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar módulo remoto." .
-
-ns1:TareaMantenimiento_RevisarModuloRemoto_5047 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar módulo remoto (Error 5047)" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar módulo remoto." .
-
-ns1:TareaMantenimiento_RevisarModuloRemoto_SalidasAnalogicas a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar módulo remoto de salidas analógicas" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar módulo remoto." .
+ns1:CNCEXElCanalIndicadoNoEsDePLC_f7c783ae5a a ns1:DiagnosticoFallo ;
+    rdfs:label "CNCEX: El canal indicado no es de PLC" ;
+    ns1:textoExtracto "'CNCEX: El canal indicado no es de PLC' DETECCIÓN Al ejecutar una instrucción CNCEX. CAUSA El canal programado en la instrucción CNCEX no es de PLC." .
 

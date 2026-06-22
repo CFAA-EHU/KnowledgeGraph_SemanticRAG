@@ -1,19 +1,44 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_2394 a ns1:AvisoSeguridad ;
-    rdfs:label "Estado de la zona de trabajo no programado" ;
-    ns1:identificador "2394" ;
-    ns1:textoExtracto "2394 Estado de la zona de trabajo no programado. DETECCIÓN Durante la preparación de bloques. CAUSA No se ha programado el estado de la zona de trabajo en" .
+ns1:CorregirVigilanciaDeHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir vigilancia de herramienta" ;
+    ns1:solucionaFallo ns1:VigilanciaDeHerramientaIncorrecta ;
+    ns1:textoExtracto "Programar un valor correcto para la vigilancia de herramienta; de 0 a 2." .
 
-ns1:Parametro_E a ns1:Parametro ;
-    rdfs:label "Parámetro E" ;
-    ns1:monitoreaParametro ns1:AvisoSeguridad_2393 ;
-    ns1:textoExtracto "El parámetro \"E\" está programado más de una vez en el bloque." ;
-    ns1:valor "E" .
+ns1:EstadoDeZonaDeTrabajoNoValido_d22a207170 a ns1:DiagnosticoFallo ;
+    rdfs:label "Estado de zona de trabajo no válido" ;
+    ns1:textoExtracto "Estado de zona de trabajo no válido." .
 
-ns1:AvisoSeguridad_2393 a ns1:AvisoSeguridad ;
-    rdfs:label "Función E doblemente programada" ;
-    ns1:identificador "2393" ;
-    ns1:textoExtracto "2393 'Función E doblemente programada' DETECCIÓN Durante la preparación de bloques. CAUSA El parámetro \"E\" está programado más de una vez en el bloque. SOLUCIÓN Programar el parámetro \"E\" una sola vez en el bloque." .
+ns1:NumeroDeZonaProgramadoEnG120G121G122G123 a ns1:Parametro ;
+    rdfs:label "Número de zona programado en G120/G121/G122/G123" ;
+    ns1:identificador "K" ;
+    ns1:textoExtracto "Programar el número de zona en el parámetro \"K\"; de 1 a 5." .
+
+ns1:ProgramarNumeroDeZonaEnParametroK a ns1:TareaMantenimiento ;
+    rdfs:label "Programar número de zona en parámetro K" ;
+    ns1:solucionaFallo ns1:NumeroDeZonaIncorrecto ;
+    ns1:textoExtracto "Programar el número de zona en el parámetro \"K\"; de 1 a 5." .
+
+ns1:VigilanciaDeHerramientaEnLaFuncionG122 a ns1:Parametro ;
+    rdfs:label "Vigilancia de herramienta en la función G122" ;
+    ns1:identificador "I" ;
+    ns1:textoExtracto "Programar un valor correcto en el parámetro \"I\" de la función G122." .
+
+ns1:VigilanciaDeHerramientaEnZonaDeTrabajo a ns1:Parametro ;
+    rdfs:label "Vigilancia de herramienta en zona de trabajo" ;
+    ns1:identificador "G.ZONETOOLWATCH" ;
+    ns1:textoExtracto "Escribir desde el PLC el valor correcto en la variable \"G.ZONETOOLWATCH[zone]\"." .
+
+ns1:VigilanciaDeHerramientaNoValidaEnZonaDeTrabajo a ns1:DiagnosticoFallo ;
+    rdfs:label "Vigilancia de herramienta no válida en zona de trabajo" ;
+    ns1:textoExtracto "Vigilancia de herramienta no válida en zona de trabajo." .
+
+ns1:NumeroDeZonaIncorrecto a ns1:AccionProhibida ;
+    rdfs:label "Número de zona incorrecto" ;
+    ns1:textoExtracto "El número de zona programado en G120/G121/G122/G123 no tiene un valor correcto." .
+
+ns1:VigilanciaDeHerramientaIncorrecta a ns1:AccionProhibida ;
+    rdfs:label "Vigilancia de herramienta incorrecta" ;
+    ns1:textoExtracto "La vigilancia de herramienta en la zona de trabajo no tiene un valor correcto." .
 

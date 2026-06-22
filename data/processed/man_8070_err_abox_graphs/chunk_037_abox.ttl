@@ -1,97 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Maquina_ParametrosValidacion a ns1:Maquina ;
-    ns1:requiereMantenimiento ns1:DiagnosticoFallo_0074,
-        ns1:DiagnosticoFallo_0075,
-        ns1:DiagnosticoFallo_0076,
-        ns1:DiagnosticoFallo_0077,
-        ns1:DiagnosticoFallo_0078 ;
-    ns1:textoExtracto "Durante la validación de los parámetros máquina." ;
-    ns1:tieneComponente ns1:Parametro_CHAXISNAME,
-        ns1:Parametro_CHNAXIS,
-        ns1:Parametro_CHNSPDL,
-        ns1:Parametro_CHSPDLNAME,
-        ns1:Parametro_LIMIT,
-        ns1:Parametro_NAXIS,
-        ns1:Parametro_NDIMOD,
-        ns1:Parametro_NDOMOD,
-        ns1:Parametro_NSPDL,
-        ns1:Parametro_TENDENCY .
+ns1:Alarma_af2e3777fb a ns1:Alarma ;
+    rdfs:label "Alarma de captación" ;
+    ns1:textoExtracto "activar la alarma de captación en todos los sets (parámetro FBACKAL)" .
 
-ns1:DiagnosticoFallo_0074 a ns1:DiagnosticoFallo ;
-    rdfs:label "Test de tendencia sin activar" ;
-    ns1:identificador "0074" ;
-    ns1:solucionaFallo ns1:Parametro_TENDENCY ;
-    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En algún eje o cabezal, el test de tendencia está desactivado." .
+ns1:DefinirLimitesDeSoftware a ns1:TareaMantenimiento ;
+    rdfs:label "Definir límites de software" ;
+    ns1:monitoreaParametro ns1:LimiteInferiorDeSoftware_e707e2f419,
+        ns1:LimiteSuperiorDeSoftware_02cbbaf917 ;
+    ns1:solucionaFallo ns1:FalloLimitesSinActivar ;
+    ns1:textoExtracto "Definir los límites de software de todos los ejes (parámetros LIMIT+ y LIMIT-)" .
 
-ns1:DiagnosticoFallo_0075 a ns1:DiagnosticoFallo ;
-    rdfs:label "Tabla de configuración de IOs no válida" ;
-    ns1:identificador "0075" ;
-    ns1:solucionaFallo ns1:Parametro_NDIMOD,
-        ns1:Parametro_NDOMOD ;
-    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Los parámetros NDIMOD y NDOMOD deben ser iguales al número de módulos de entradas y salidas detectados por hardware." .
+ns1:Parametro_9fe8c4cf48 a ns1:Parametro ;
+    rdfs:label "Parámetro de activación de alarma de captación" ;
+    ns1:identificador "FBACKAL" ;
+    ns1:textoExtracto "(parámetro FBACKAL)" .
 
-ns1:DiagnosticoFallo_0076 a ns1:DiagnosticoFallo ;
-    rdfs:label "La suma de ejes o cabezales por canal supera el número total de ejes o cabezales" ;
-    ns1:identificador "0076" ;
-    ns1:solucionaFallo ns1:Parametro_CHNAXIS,
-        ns1:Parametro_CHNSPDL,
-        ns1:Parametro_NAXIS,
-        ns1:Parametro_NSPDL ;
-    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El valor del parámetro CHNAXIS es mayor que el valor del parámetro NAXIS o el valor del parámetro CHNSPDL es mayor que el valor del parámetro NSPDL." .
+ns1:FalloLimitesSinActivar a ns1:DiagnosticoFallo ;
+    rdfs:label "Límites de software no activados" ;
+    ns1:textoExtracto "Los parámetros LIMIT+ y LIMIT- del eje tienen ambos valor 0." .
 
-ns1:DiagnosticoFallo_0077 a ns1:DiagnosticoFallo ;
-    rdfs:label "Eje o cabezal asignado a más de un canal" ;
-    ns1:identificador "0077" ;
-    ns1:solucionaFallo ns1:Parametro_CHAXISNAME,
-        ns1:Parametro_CHSPDLNAME ;
-    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay un eje o cabezal asignado a varios canales." .
+ns1:LimiteInferiorDeSoftware_e707e2f419 a ns1:Parametro ;
+    rdfs:label "Límite inferior de software" ;
+    ns1:identificador "LIMIT-" ;
+    ns1:textoExtracto "(parámetros LIMIT+ y LIMIT-)" .
 
-ns1:DiagnosticoFallo_0078 a ns1:DiagnosticoFallo ;
-    rdfs:label "Los ejes maestro y esclavo deben pertenecer al mismo canal" ;
-    ns1:identificador "0078" ;
-    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Algún eje gantry está formado por ejes de canales distintos." .
-
-ns1:Parametro_LIMIT a ns1:Parametro ;
-    rdfs:label "LIMIT+",
-        "LIMIT-" ;
-    ns1:textoExtracto "Los parámetros LIMIT+ y LIMIT- del eje tienen ambos valor 0." ;
-    ns1:valor "0" .
-
-ns1:Parametro_CHAXISNAME a ns1:Parametro ;
-    rdfs:label "CHAXISNAME" ;
-    ns1:textoExtracto "Corregir los parámetros máquina CHAXISNAME y CHSPDLNAME en todos los canales." .
-
-ns1:Parametro_CHNAXIS a ns1:Parametro ;
-    rdfs:label "CHNAXIS" ;
-    ns1:textoExtracto "El valor del parámetro CHNAXIS es mayor que el valor del parámetro NAXIS." .
-
-ns1:Parametro_CHNSPDL a ns1:Parametro ;
-    rdfs:label "CHNSPDL" ;
-    ns1:textoExtracto "El valor del parámetro CHNSPDL es mayor que el valor del parámetro NSPDL." .
-
-ns1:Parametro_CHSPDLNAME a ns1:Parametro ;
-    rdfs:label "CHSPDLNAME" ;
-    ns1:textoExtracto "Corregir los parámetros máquina CHAXISNAME y CHSPDLNAME en todos los canales." .
-
-ns1:Parametro_NAXIS a ns1:Parametro ;
-    rdfs:label "NAXIS" ;
-    ns1:textoExtracto "El valor del parámetro CHNAXIS es mayor que el valor del parámetro NAXIS." .
-
-ns1:Parametro_NDIMOD a ns1:Parametro ;
-    rdfs:label "NDIMOD" ;
-    ns1:textoExtracto "Los parámetros NDIMOD y NDOMOD deben ser iguales al número de módulos de entradas y salidas detectados por hardware." .
-
-ns1:Parametro_NDOMOD a ns1:Parametro ;
-    rdfs:label "NDOMOD" ;
-    ns1:textoExtracto "Los parámetros NDIMOD y NDOMOD deben ser iguales al número de módulos de entradas y salidas detectados por hardware." .
-
-ns1:Parametro_NSPDL a ns1:Parametro ;
-    rdfs:label "NSPDL" ;
-    ns1:textoExtracto "El valor del parámetro CHNSPDL es mayor que el valor del parámetro NSPDL." .
-
-ns1:Parametro_TENDENCY a ns1:Parametro ;
-    rdfs:label "TENDENCY" ;
-    ns1:textoExtracto "En los ejes y cabezales, activar el test de tendencia (parámetro TENDENCY)." .
+ns1:LimiteSuperiorDeSoftware_02cbbaf917 a ns1:Parametro ;
+    rdfs:label "Límite superior de software" ;
+    ns1:identificador "LIMIT+" ;
+    ns1:textoExtracto "(parámetros LIMIT+ y LIMIT-)" .
 

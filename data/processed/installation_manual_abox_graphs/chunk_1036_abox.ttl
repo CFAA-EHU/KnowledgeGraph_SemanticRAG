@@ -1,108 +1,47 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:EsquemaTMOPERATION a ns1:Esquema ;
-    ns1:textoExtracto """| TM => PLC |  |  | PLC => TM |
-| --- | --- | --- | --- |
-| TMOPERATION | TAKEPOS | LEAVEPOS |  |
-| 1 | # | 0 | MZTOCH1 + CH1TOSPDL |
-| 2 | 0 | # | SPDLTOCH1 + CH1TOMZ |
-| 3 | 0 | 0 | GRTOSPDL |
-| 4 | 0 | 0 | SPDLTOGR |
-| 5 | # | # | SPDLTOCH1 + CH1TOMZ +
-MZTOCH1 + CH1TOSPDL |
-| 6 | -4 | # | SPDLTOCH1 +
-(CH1TOMZ & GRTOSPDL) |
-| 7 | # | -4 | (SPDLTOGR & MZTOCH1) +
-CH1TOSPDL |
-| 8 | 0 | 0 | SPDLTOGR + GRTOSPDL |
-| 9 | -4 | # | GRTOSPDL + SPDLTOCH1 +
-CH1TOMZ |
-| 10 | # | -4 | MZTOCH1 + CH1TOSPDL +
-SPDLTOGR |
-| 11 | 0 | 0 | MZROT |
-| 13 | # | 0 | MZROT + MZROT |
-| 14 | # | # | SPDLTOCH1 + CH1TOMZ +
-MZTOCH1 + CH1TOSPDL |
+ns1:Cabezal a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal" ;
+    ns1:textoExtracto "Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL." .
 
-Ejemplo de funcionamiento. El siguiente ejemplo muestra, suponiendo que no hay herramienta en el cabezal, las funciones que ejecuta el CNC, los valores que envía el gestor al PLC en cada una de las operaciones y las marcas que debe activar el PLC en cada caso. El almacén es no-random, cada herramienta ocupa la posición de su mismo número y las herramientas T7, T8 y T9 son de tierra.""" ;
-    ns1:tieneComponente ns1:HerramientaT7,
-        ns1:HerramientaT8,
-        ns1:HerramientaT9,
-        ns1:TMOPERATION1,
-        ns1:TMOPERATION10,
-        ns1:TMOPERATION11,
-        ns1:TMOPERATION13,
-        ns1:TMOPERATION14,
-        ns1:TMOPERATION2,
-        ns1:TMOPERATION3,
-        ns1:TMOPERATION4,
-        ns1:TMOPERATION5,
-        ns1:TMOPERATION6,
-        ns1:TMOPERATION7,
-        ns1:TMOPERATION8,
-        ns1:TMOPERATION9 .
+ns1:CogerHerramientaDelAlmacen a ns1:AccionProhibida ;
+    rdfs:label "Coger herramienta del almacén" ;
+    ns1:textoExtracto "1 Coger la herramienta del almacén con la pinza ꞏ1ꞏ y activar la marca MZTOCH1." .
 
-ns1:HerramientaT7 a ns1:ComponenteElectrico ;
-    ns1:identificador "T7" ;
-    ns1:textoExtracto "las herramientas T7, T8 y T9 son de tierra" .
+ns1:DejarHerramientaEnAlmacen a ns1:AccionProhibida ;
+    rdfs:label "Dejar herramienta en almacén" ;
+    ns1:textoExtracto "Dejar la herramienta de la pinza ꞏ1ꞏ en el almacén y activar la marca CH1TOMZ." .
 
-ns1:HerramientaT8 a ns1:ComponenteElectrico ;
-    ns1:identificador "T8" ;
-    ns1:textoExtracto "las herramientas T7, T8 y T9 son de tierra" .
+ns1:Herramienta_6e230a99de a ns1:Herramienta ;
+    rdfs:label "Herramienta de tierra" ;
+    ns1:textoExtracto "Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL." .
 
-ns1:HerramientaT9 a ns1:ComponenteElectrico ;
-    ns1:identificador "T9" ;
-    ns1:textoExtracto "las herramientas T7, T8 y T9 son de tierra" .
+ns1:OperacionDeAlmacen a ns1:AccionProhibida ;
+    rdfs:label "Operación de almacén" ;
+    ns1:textoExtracto "La secuencia de esta operación es la siguiente. 1 Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL." .
 
-ns1:TMOPERATION1 a ns1:ModoOperacion ;
-    ns1:identificador "1" ;
-    ns1:textoExtracto "1 | # | 0 | MZTOCH1 + CH1TOSPDL" .
+ns1:Parametro_7959033478 a ns1:Parametro ;
+    rdfs:label "Marca GRTOSPDL" ;
+    ns1:identificador "GRTOSPDL" ;
+    ns1:textoExtracto "activar la marca GRTOSPDL." .
 
-ns1:TMOPERATION10 a ns1:ModoOperacion ;
-    ns1:identificador "10" ;
-    ns1:textoExtracto "10 | # | -4 | MZTOCH1 + CH1TOSPDL + SPDLTOGR" .
+ns1:Parametro_92b7e6b9ba a ns1:Parametro ;
+    rdfs:label "Marca MZTOCH1" ;
+    ns1:identificador "MZTOCH1" ;
+    ns1:textoExtracto "activar la marca MZTOCH1." .
 
-ns1:TMOPERATION11 a ns1:ModoOperacion ;
-    ns1:identificador "11" ;
-    ns1:textoExtracto "11 | 0 | 0 | MZROT" .
+ns1:Parametro_a3ed774051 a ns1:Parametro ;
+    rdfs:label "Marca SPDLTOCH1" ;
+    ns1:identificador "SPDLTOCH1" ;
+    ns1:textoExtracto "activar la marca SPDLTOCH1." .
 
-ns1:TMOPERATION13 a ns1:ModoOperacion ;
-    ns1:identificador "13" ;
-    ns1:textoExtracto "13 | # | 0 | MZROT + MZROT" .
+ns1:Parametro_fa5bf031fb a ns1:Parametro ;
+    rdfs:label "Marca CH1TOMZ" ;
+    ns1:identificador "CH1TOMZ" ;
+    ns1:textoExtracto "activar la marca CH1TOMZ." .
 
-ns1:TMOPERATION14 a ns1:ModoOperacion ;
-    ns1:identificador "14" ;
-    ns1:textoExtracto "14 | # | # | SPDLTOCH1 + CH1TOMZ + MZTOCH1 + CH1TOSPDL" .
-
-ns1:TMOPERATION2 a ns1:ModoOperacion ;
-    ns1:identificador "2" ;
-    ns1:textoExtracto "2 | 0 | # | SPDLTOCH1 + CH1TOMZ" .
-
-ns1:TMOPERATION3 a ns1:ModoOperacion ;
-    ns1:identificador "3" ;
-    ns1:textoExtracto "3 | 0 | 0 | GRTOSPDL" .
-
-ns1:TMOPERATION4 a ns1:ModoOperacion ;
-    ns1:identificador "4" ;
-    ns1:textoExtracto "4 | 0 | 0 | SPDLTOGR" .
-
-ns1:TMOPERATION5 a ns1:ModoOperacion ;
-    ns1:identificador "5" ;
-    ns1:textoExtracto "5 | # | # | SPDLTOCH1 + CH1TOMZ + MZTOCH1 + CH1TOSPDL" .
-
-ns1:TMOPERATION6 a ns1:ModoOperacion ;
-    ns1:identificador "6" ;
-    ns1:textoExtracto "6 | -4 | # | SPDLTOCH1 + (CH1TOMZ & GRTOSPDL)" .
-
-ns1:TMOPERATION7 a ns1:ModoOperacion ;
-    ns1:identificador "7" ;
-    ns1:textoExtracto "7 | # | -4 | (SPDLTOGR & MZTOCH1) + CH1TOSPDL" .
-
-ns1:TMOPERATION8 a ns1:ModoOperacion ;
-    ns1:identificador "8" ;
-    ns1:textoExtracto "8 | 0 | 0 | SPDLTOGR + GRTOSPDL" .
-
-ns1:TMOPERATION9 a ns1:ModoOperacion ;
-    ns1:identificador "9" ;
-    ns1:textoExtracto "9 | -4 | # | GRTOSPDL + SPDLTOCH1 + CH1TOMZ" .
+ns1:Sistema_49b3ea280a a ns1:Sistema ;
+    rdfs:label "Almacén de herramientas" ;
+    ns1:textoExtracto "Coger una herramienta del almacén y dejarla en tierra pasando por el cabezal." .
 

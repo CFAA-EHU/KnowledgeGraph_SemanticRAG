@@ -1,37 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_3736 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 3736: Parámetro máquina PWMOUTPUT = 0" ;
-    ns1:monitoreaParametro ns1:Parametro_PWMOUTPUT ;
-    ns1:textoExtracto "3736 'El parámetro máquina PWMOUTPUT es 0' [...] DETECCIÓN Durante la ejecución del corte por láser (PWM). CAUSA El parámetro PWMOUTPUT no puede tomar valor 0. SOLUCIÓN Asignar al parámetro PWMOUTPUT un valor dentro de rango (1-2)." .
+ns1:AparcarCabezalEnSituacionNoPermitida a ns1:AccionProhibida ;
+    rdfs:label "Aparcar cabezal en situacion no permitida" ;
+    ns1:textoExtracto "El PLC no puede aparcar el cabezal en esa situación." .
 
-ns1:AvisoSeguridad_3737 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 3737: Placa de expansión incompatible con PWM" ;
-    ns1:identificador "3737" ;
-    ns1:textoExtracto "3737 'Placa de expansión no compatible con PWM' [...] DETECCIÓN Durante la ejecución del corte por láser (PWM). CAUSA El hardware no está preparado para la prestación PWM. SOLUCIÓN Verificar que existe una placa de expansión tipo Sercos, con las 2 primeras salidas locales preparadas para conmutación rápida. El ID software de la FPGA expansión debe ser igual o superior a 1.3, y su ID hardware igual o superior a 1.2." .
+ns1:DefinirLimitesDeVentanaDePalpadoDesdePLCIncorrectamente a ns1:AccionProhibida ;
+    rdfs:label "Definir límites de ventana de palpado desde PLC incorrectamente" ;
+    ns1:textoExtracto "Error en los límites de la ventana de palpado desde PLC." .
 
-ns1:AvisoSeguridad_3738 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 3738: Movimiento de eje con CNC apagado" ;
-    ns1:identificador "3738" ;
-    ns1:textoExtracto "3738 'El eje se ha movido con el CNC apagado' [...] DETECCIÓN Durante el arranque del CNC." .
+ns1:DiagnosticoFallo_28515c4749 a ns1:DiagnosticoFallo ;
+    rdfs:label "Palpador no disponible. Ocupado por otro proceso" ;
+    ns1:identificador "3720" ;
+    ns1:textoExtracto "'Palpador no disponible. Ocupado por otro proceso'" .
 
-ns1:ComponenteElectrico_PlacaExpansionSercos a ns1:ComponenteElectrico ;
-    rdfs:label "Placa de expansión tipo Sercos" ;
-    ns1:identificador "Sercos (FPGA ≥1.3, HW ≥1.2)" ;
-    ns1:textoExtracto "Verificar que existe una placa de expansión tipo Sercos, con las 2 primeras salidas locales preparadas para conmutación rápida. El ID software de la FPGA expansión debe ser igual o superior a 1.3, y su ID hardware igual o superior a 1.2." .
+ns1:EjecutarPalpacionMientrasOtroProcesoEstaEnCurso a ns1:AccionProhibida ;
+    rdfs:label "Ejecutar palpación mientras otro proceso está en curso" ;
+    ns1:textoExtracto "El CNC ha intentado ejecutar una palpación pero el palpador está siendo utilizado por un proceso previo (G100 o comando TOUCHPROBE)." .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC" ;
-    ns1:textoExtracto "Durante el arranque del CNC." .
+ns1:ErrorEnLosLimitesDeLaVentanaDePalpadoDesdePLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en los límites de la ventana de palpado desde PLC" ;
+    ns1:identificador "3722" ;
+    ns1:textoExtracto "Error en los límites de la ventana de palpado desde PLC." .
 
-ns1:ModoOperacion_CorteLaserPWM a ns1:ModoOperacion ;
-    rdfs:label "Corte por láser (modo PWM)" ;
-    ns1:monitoreaParametro ns1:Parametro_PWMOUTPUT ;
-    ns1:textoExtracto "Durante la ejecución del corte por láser (PWM)." .
+ns1:InicializarPalpadorConParametrosNoCoherentes a ns1:AccionProhibida ;
+    rdfs:label "Inicializar palpador con parámetros no coherentes" ;
+    ns1:textoExtracto "Los parámetros del palpador no son coherentes." .
 
-ns1:Parametro_PWMOUTPUT a ns1:Parametro ;
-    rdfs:label "Parámetro PWMOUTPUT" ;
-    ns1:textoExtracto "El parámetro PWMOUTPUT no puede ser superior a 2 (1, 2). [...] El parámetro PWMOUTPUT no puede tomar valor 0. [...] Asignar al parámetro PWMOUTPUT un valor dentro de rango (1-2)." ;
-    ns1:valor "1-2" .
+ns1:RevisarParametrosDelPalpador a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar parámetros del palpador" ;
+    ns1:solucionaFallo ns1:ErrorEnLaInicializacionDelPalpador ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros del palpador (PROBETYPE, PRBDI, PRBPULSE)." .
+
+ns1:ErrorEnLaInicializacionDelPalpador a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la inicialización del palpador" ;
+    ns1:identificador "3721" ;
+    ns1:textoExtracto "Error en la inicialización del palpador." .
 

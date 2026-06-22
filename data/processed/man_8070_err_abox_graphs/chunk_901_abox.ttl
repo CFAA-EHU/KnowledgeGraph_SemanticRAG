@@ -1,31 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_8895 a ns1:DiagnosticoFallo ;
-    rdfs:label "Instrucción incorrecta en programa PLC" ;
-    ns1:identificador "8895" ;
-    ns1:textoExtracto "DETECCIÓN: Al compilar el programa PLC. CAUSA: El análisis del programa de PLC que realiza el compilador, antes de su conversión a C, ha detectado una instrucción incorrecta. La salida de errores señala la instrucción incorrecta. SOLUCIÓN: Corregir, eliminar o comentar la instrucción incorrecta." .
+ns1:ComprobarFichero a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar Fichero" ;
+    ns1:solucionaFallo ns1:NoSeHaPodidoAbrirElFicheroDeEjes ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar que el fichero existe y que se puede abrir con un editor habitual. Si está corrupto, póngase en contacto con Fagor Automation." .
 
-ns1:Error_8896 a ns1:DiagnosticoFallo ;
-    rdfs:label "Módulo vacío no permitido en CY1" ;
-    ns1:identificador "8896" ;
-    ns1:textoExtracto "DETECCIÓN: Al compilar el programa PLC. CAUSA: En el programa PLC hay programado un módulo PRG, PE o SUB vacío. SOLUCIÓN: Ante un módulo vacío hay dos alternativas; eliminarlo o poner una única instrucción que sea ';'." .
+ns1:ProgramarSimboloValido a ns1:TareaMantenimiento ;
+    rdfs:label "Programar Símbolo Válido" ;
+    ns1:solucionaFallo ns1:RegistroNoDefinido ;
+    ns1:textoExtracto "SOLUCIÓN Programar un símbolo válido, donde \"Símbolo\" puede ser una variable del sistema o un símbolo definido con DEF/PDEF." .
 
-ns1:Error_8897 a ns1:DiagnosticoFallo ;
-    rdfs:label "Marca del sistema sin permiso de escritura para el PLC" ;
-    ns1:identificador "8897" ;
-    ns1:textoExtracto "DETECCIÓN: Durante la edición del programa PLC. CAUSA: La señal (marca) no es modificable; es una señal de consulta. SOLUCIÓN: Utilizar la señal en instrucciones de consulta." .
+ns1:RevisarNombreDeSubrutinas a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar Nombre de Subrutinas" ;
+    ns1:solucionaFallo ns1:SubrutinaIndefinida ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el nombre de las subrutinas y las llamadas a subrutinas." .
 
-ns1:SenalMarcaSistema a ns1:Sensor ;
-    rdfs:label "Señal/marca del sistema PLC" ;
-    ns1:textoExtracto "La señal (marca) no es modificable; es una señal de consulta." .
+ns1:RevisarSintaxis_fbd769150c a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar Sintaxis" ;
+    ns1:solucionaFallo ns1:AlgunCaracterProgramadoNoEsCorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
 
-ns1:SistemaPLC a ns1:Sistema ;
-    rdfs:label "Sistema de control PLC" ;
-    ns1:textoExtracto "El análisis del programa de PLC que realiza el compilador, antes de su conversión a C, ha detectado una instrucción incorrecta." ;
-    ns1:tieneComponente ns1:ModuloPRG_PE_SUB .
+ns1:AlgunCaracterProgramadoNoEsCorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "Algún carácter programado no es correcto" ;
+    ns1:textoExtracto "Algún carácter programado no es correcto. SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
 
-ns1:ModuloPRG_PE_SUB a ns1:Componente ;
-    rdfs:label "Módulo PRG, PE o SUB en programa PLC" ;
-    ns1:textoExtracto "En el programa PLC hay programado un módulo PRG, PE o SUB vacío." .
+ns1:NoSeHaPodidoAbrirElFicheroDeEjes a ns1:DiagnosticoFallo ;
+    rdfs:label "No se ha podido abrir el fichero de ejes" ;
+    ns1:textoExtracto "8876 No se ha podido abrir el fichero de ejes DETECCIÓN Durante la compilación del programa PLC." .
+
+ns1:RegistroNoDefinido a ns1:DiagnosticoFallo ;
+    rdfs:label "Registro no definido" ;
+    ns1:textoExtracto "8875 Registro no definido. DETECCIÓN Durante la edición o compilación del programa PLC." .
+
+ns1:SubrutinaIndefinida a ns1:DiagnosticoFallo ;
+    rdfs:label "Subrutina indefinida" ;
+    ns1:textoExtracto "8874 Subrutina indefinida. DETECCIÓN Durante la compilación del programa PLC." .
 

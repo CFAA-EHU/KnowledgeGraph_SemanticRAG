@@ -1,58 +1,52 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_9332 a ns1:Alarma ;
-    rdfs:label "Alarma 9332: COUNTERTYPE remoto y COUNTERID 0 incompatibles" ;
-    ns1:identificador "9332" ;
-    ns1:textoExtracto "'COUNTERTYPE remoto y COUNTERID 0 incompatibles' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA En los ejes analógicos con captación remota (parámetro COUNTERTYPE), el parámetro COUNTERID no puede valor 0 (cero). SOLUCIÓN Revisar los parámetros máquina. Comprobar el tipo de captación asignado al eje (parámetro COUNTERTYPE). En los ejes analógicos con captación remota, el parámetro COUNTERID indica la dirección lógica del regulador, que no puede ser cero." .
+ns1:AbsFeedback a ns1:Parametro ;
+    rdfs:label "Abs Feedback" ;
+    ns1:textoExtracto "Todos los ejes de un grupo MULTIAXIS deben tener el parámetro ABSFEEDBACK igual." .
 
-ns1:Alarma_9333 a ns1:Alarma ;
-    rdfs:label "Alarma 9333: Hardware Sercos no es compatible con ejes Mechatrolink" ;
-    ns1:identificador "9333" ;
-    ns1:textoExtracto "'Hardware Sercos no es compatible con ejes Mechatrolink' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El hardware de la unidad central es para el bus Sercos y los reguladores son Mechatrolink. SOLUCIÓN Utilizar reguladores Sercos. Comprobar el tipo de regulador definido en los parámetros máquina (parámetro DRIVETYPE)." .
+ns1:AnaoutID a ns1:Parametro ;
+    rdfs:label "Anaout ID" ;
+    ns1:textoExtracto "Hay ejes en diferentes grupos MULTIAXIS que comparten la misma salida analógica." .
 
-ns1:Alarma_9334 a ns1:Alarma ;
-    rdfs:label "Alarma 9334: Hardware Mechatrolink no es compatible con ejes Sercos" ;
-    ns1:identificador "9334" ;
-    ns1:textoExtracto "'Hardware Mechatrolink no es compatible con ejes Sercos' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El hardware de la unidad central es para el bus Mechatrolink y los reguladores son Sercos. SOLUCIÓN Utilizar reguladores Mechatrolink. Comprobar el tipo de regulador definido en los parámetros máquina (parámetro DRIVETYPE)." .
+ns1:CambiarElParametroANAOUTIDDeLosEjesImplicados a ns1:TareaMantenimiento ;
+    rdfs:label "Cambiar el parámetro ANAOUTID de los ejes implicados" ;
+    ns1:solucionaFallo ns1:DosEjesEnDiferentesGruposMultiejeConElMismoANAOUTIDEnAlgunoDeSusSETs ;
+    ns1:textoExtracto "SOLUCIÓN Cambiar el parámetro ANAOUTID de los ejes implicados para que no compartan la misma salida analógica." .
 
-ns1:Alarma_9335 a ns1:Alarma ;
-    rdfs:label "Alarma 9335: El eje debe tener el mismo tipo de captación en todas las gamas" ;
-    ns1:identificador "9335" ;
-    ns1:textoExtracto "El eje debe tener el mismo tipo de captación en todas las gamas. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En eje múltiple (multieje) todos los sets de parámetros deben tener el mismo tipo de captación. SOLUCIÓN Cambiar el tipo de captación en los sets diferentes." .
+ns1:CambiarElParametroCOUNTERIDDeLosEjesImplicados a ns1:TareaMantenimiento ;
+    rdfs:label "Cambiar el parámetro COUNTERID de los ejes implicados" ;
+    ns1:solucionaFallo ns1:DosEjesEnDiferentesGruposMultiejeConElMismoCOUNTERIDEnAlgunoDeSusSETs ;
+    ns1:textoExtracto "SOLUCIÓN Cambiar el parámetro CONTERID de los ejes implicados para que no compartan la misma entrada de captación." .
 
-ns1:Alarma_9336 a ns1:Alarma ;
-    rdfs:label "Alarma 9336: Parámetros máquina incompatibles" ;
-    ns1:identificador "9336" ;
-    ns1:textoExtracto "'Parámetros máquina incompatibles' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC." .
+ns1:CounterID a ns1:Parametro ;
+    rdfs:label "Counter ID" ;
+    ns1:textoExtracto "Todos los ejes de un grupo multieje deben tener el parámetro COUNTERID igual." .
 
-ns1:Parametro_COUNTERID a ns1:Parametro ;
-    rdfs:label "Parámetro COUNTERID (dirección lógica del regulador)" ;
-    ns1:textoExtracto "el parámetro COUNTERID no puede valor 0 (cero) [...] el parámetro COUNTERID indica la dirección lógica del regulador, que no puede ser cero." .
+ns1:DriveType a ns1:Parametro ;
+    rdfs:label "Drive Type" ;
+    ns1:textoExtracto "Todos los ejes de un grupo MULTIAXIS deben tener el parámetro DRIVETYPE igual; todos los ejes deben analógicos o todos Sercos." .
 
-ns1:Parametro_COUNTERTYPE a ns1:Parametro ;
-    rdfs:label "Parámetro COUNTERTYPE (tipo de captación)" ;
-    ns1:textoExtracto "parámetro COUNTERTYPE [...] En los ejes analógicos con captación remota (parámetro COUNTERTYPE), el parámetro COUNTERID no puede valor 0 (cero)." .
+ns1:RevisarLosParametrosMaquina_3df3aee219 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros máquina" ;
+    ns1:solucionaFallo ns1:DosEjesEnDiferentesGruposMultiejeConElMismoCOUNTERIDEnAlgunoDeSusSETs,
+        ns1:LosEjesDelGrupoMultiaxisTienenQueTenerElMismoDRIVETYPE,
+        ns1:LosEjesMaestroYEsclavoDebenTenerElMismoABSFEEDBACK ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina." .
 
-ns1:Parametro_DRIVETYPE a ns1:Parametro ;
-    rdfs:label "Parámetro DRIVETYPE (tipo de regulador)" ;
-    ns1:textoExtracto "Comprobar el tipo de regulador definido en los parámetros máquina (parámetro DRIVETYPE)." .
+ns1:DosEjesEnDiferentesGruposMultiejeConElMismoANAOUTIDEnAlgunoDeSusSETs a ns1:DiagnosticoFallo ;
+    rdfs:label "Dos ejes en diferentes grupos multieje con el mismo ANAOUTID en alguno de sus SETs" ;
+    ns1:textoExtracto "'Dos ejes en diferentes grupos multieje con el mismo ANAOUTID en alguno de sus SETs'" .
 
-ns1:Sistema_BusMechatrolink a ns1:Sistema ;
-    rdfs:label "Sistema de bus Mechatrolink II" ;
-    ns1:textoExtracto "el bus como Mechatrolink II a 32 bytes (parámetros MLINK y DATASIZE)." ;
-    ns1:tieneComponente ns1:Parametro_DATASIZE,
-        ns1:Parametro_MLINK .
+ns1:LosEjesDelGrupoMultiaxisTienenQueTenerElMismoDRIVETYPE a ns1:DiagnosticoFallo ;
+    rdfs:label "Los ejes del grupo multiaxis tienen que tener el mismo DRIVETYPE" ;
+    ns1:textoExtracto "'Los ejes del grupo multiaxis tienen que tener el mismo DRIVETYPE'" .
 
-ns1:Sistema_BusSercos a ns1:Sistema ;
-    rdfs:label "Sistema de bus Sercos" ;
-    ns1:textoExtracto "El hardware de la unidad central es para el bus Sercos y los reguladores son Mechatrolink." .
+ns1:LosEjesMaestroYEsclavoDebenTenerElMismoABSFEEDBACK a ns1:DiagnosticoFallo ;
+    rdfs:label "Los ejes maestro y esclavo deben tener el mismo ABSFEEDBACK" ;
+    ns1:textoExtracto "'Los ejes maestro y esclavo deben tener el mismo ABSFEEDBACK'" .
 
-ns1:Parametro_DATASIZE a ns1:Parametro ;
-    rdfs:label "Parámetro DATASIZE (tamaño de datos del bus)" ;
-    ns1:textoExtracto "el bus como Mechatrolink II a 32 bytes (parámetros MLINK y DATASIZE)." .
-
-ns1:Parametro_MLINK a ns1:Parametro ;
-    rdfs:label "Parámetro MLINK (configuración bus Mechatrolink)" ;
-    ns1:textoExtracto "el bus como Mechatrolink II a 32 bytes (parámetros MLINK y DATASIZE)." .
+ns1:DosEjesEnDiferentesGruposMultiejeConElMismoCOUNTERIDEnAlgunoDeSusSETs a ns1:DiagnosticoFallo ;
+    rdfs:label "Dos ejes en diferentes grupos multieje con el mismo COUNTERID en alguno de sus SETs" ;
+    ns1:textoExtracto "'Dos ejes en diferentes grupos multieje con el mismo COUNTERID en alguno de sus SETs'" .
 

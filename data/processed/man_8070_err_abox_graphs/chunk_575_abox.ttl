@@ -1,49 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaControlTandem a ns1:Sistema ;
-    rdfs:label "Sistema de control de ejes en tandem (PLC/CNC)"@es ;
-    ns1:controla ns1:Fallo_3727,
-        ns1:Fallo_3728 ;
-    ns1:textoExtracto "maniobra del PLC [...] ambos ejes del tandem [...] CNC ha intentado desactivar un eje de un grupo múltiple"@es ;
-    ns1:tieneComponente ns1:MarcaSWITCHDeEje,
-        ns1:ReguladorDeEjeMultiple .
+ns1:AparcarEjeGantryOTandem a ns1:AccionProhibida ;
+    rdfs:label "Aparcar eje gantry o tándem" ;
+    ns1:textoExtracto "Los ejes gantry y tándem no se pueden aparcar, ni desde el PLC ni desde el CNC." .
 
-ns1:CondicionarDesactivacionDeEjeAPosicionAlcanzada a ns1:AvisoSeguridad ;
-    rdfs:label "Condicionar desactivación de eje a posición alcanzada"@es ;
-    ns1:textoExtracto "En la maniobra del PLC, condicionar la desactivación del eje a que éste se encuentre en posición; es decir, que no esté en movimiento."@es .
+ns1:AparcarEjeHabilitadoDRENASPENA a ns1:AccionProhibida ;
+    rdfs:label "Aparcar eje habilitado (DRENA/SPENA)" ;
+    ns1:textoExtracto "Deshabilitar el eje antes de aparcarlo (señales DRENA/SPENA)." .
 
-ns1:CondicionarPermisoDeMovimientoAEjesHabilitadosEnTandem a ns1:AvisoSeguridad ;
-    rdfs:label "Condicionar permiso de movimiento a ejes habilitados en tandem"@es ;
-    ns1:textoExtracto "En la maniobra del PLC, condicionar el permiso del movimiento a que ambos ejes del tandem estén habilitados."@es .
+ns1:BusquedaDeReferenciaMaquina a ns1:TareaMantenimiento ;
+    rdfs:label "Búsqueda de referencia máquina" ;
+    ns1:solucionaFallo ns1:FalloSobrepasamientoCompensacionModulo ;
+    ns1:textoExtracto "Realizar una búsqueda de referencia máquina." .
 
-ns1:DesactivarEjeConMovimientoPendiente a ns1:AccionProhibida ;
-    rdfs:label "Desactivar eje con movimiento pendiente"@es ;
-    ns1:textoExtracto "El CNC ha intentado desactivar un eje de un grupo múltiple, antes de que el eje esté en posición, es decir, con movimiento pendiente."@es .
+ns1:CNC8070_41c5511041 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:EjeRotativo ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:DesactivarMarcaSWITCHDelEjeSinPosicionAlcanzada a ns1:AccionProhibida ;
-    rdfs:label "Desactivar marca SWITCH del eje sin posición alcanzada"@es ;
-    ns1:textoExtracto "Al desactivar la marca SWITCH del eje. [...] antes de que el eje esté en posición, es decir, con movimiento pendiente."@es .
+ns1:EjeRotativo a ns1:ComponenteMecanico ;
+    rdfs:label "Eje rotativo o cabezal" ;
+    ns1:textoExtracto "Durante el movimiento de un eje rotativo o cabezal." .
 
-ns1:Fallo_3727 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se permite desactivar un eje múltiple sin entrar en posición"@es ;
-    ns1:identificador "3727" ;
-    ns1:mitigaRiesgo ns1:CondicionarPermisoDeMovimientoAEjesHabilitadosEnTandem ;
-    ns1:solucionaFallo ns1:DesactivarMarcaSWITCHDelEjeSinPosicionAlcanzada ;
-    ns1:textoExtracto "3727 'No se permite desactivar un eje múltiple sin entrar en posición'"@es .
-
-ns1:Fallo_3728 a ns1:DiagnosticoFallo ;
-    rdfs:label "Eje múltiple con comando en ejecución y SWITCH no permitido"@es ;
-    ns1:identificador "3728" ;
-    ns1:mitigaRiesgo ns1:CondicionarDesactivacionDeEjeAPosicionAlcanzada ;
-    ns1:solucionaFallo ns1:DesactivarEjeConMovimientoPendiente ;
-    ns1:textoExtracto "3728 'Eje múltiple con un comando en el regulador en ejecución, SWITCH no permitido'"@es .
-
-ns1:MarcaSWITCHDeEje a ns1:ComponenteElectrico ;
-    rdfs:label "Marca SWITCH de eje"@es ;
-    ns1:textoExtracto "marca SWITCH del eje"@es .
-
-ns1:ReguladorDeEjeMultiple a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador de eje múltiple"@es ;
-    ns1:textoExtracto "comando en el regulador en ejecución"@es .
+ns1:FalloSobrepasamientoCompensacionModulo a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobrepasamiento en la compensación de módulo" ;
+    ns1:textoExtracto "'Sobrepasamiento en la compensación de módulo'" .
 

@@ -1,32 +1,53 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_9381 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error: Múltiples volantes HBH no admitidos"@es ;
-    ns1:identificador "9381" ;
-    ns1:solucionaFallo ns1:Accion_ValidacionParametros ;
-    ns1:textoExtracto "No se admite más de 1 volante tipo HBH. [...] SOLUCIÓN El CNC sólo permite un volante HBH."@es .
+ns1:CorreccionDeLaCompensacionDelHusillo a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de la compensación del husillo" ;
+    ns1:solucionaFallo ns1:Error9356 ;
+    ns1:textoExtracto "Asignar al eje una única compensación de husillo." .
 
-ns1:Fallo_9382 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error: Configuración de buses requiere reinicio"@es ;
-    ns1:identificador "9382" ;
-    ns1:solucionaFallo ns1:Accion_ReinicioCNC ;
-    ns1:textoExtracto "configuración de buses, necesita reiniciar CNC. [...] DETECCIÓN Durante el arranque."@es .
+ns1:CorreccionDelEjeCOMPAXIS a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección del eje COMPAXIS" ;
+    ns1:solucionaFallo ns1:Error9357,
+        ns1:Error9358 ;
+    ns1:textoExtracto "Asignar a COMPTABLEID un valor adecuado." .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "CNC"@es ;
-    ns1:textoExtracto "El CNC sólo permite un volante HBH. [...] El CNC necesita reiniciar."@es .
+ns1:CorreccionDelParametroOPMODE a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección del parámetro OPMODE" ;
+    ns1:solucionaFallo ns1:Error9355 ;
+    ns1:textoExtracto "El parámetro OPMODE debe ser igual en ambos ejes." .
 
-ns1:Tabla_Compensacion a ns1:Tabla ;
-    rdfs:label "Tablas de compensación"@es ;
-    ns1:documentadoEn ns1:Manual_Tecnico ;
-    ns1:textoExtracto "SOLUCIÓN Revisar las tablas de compensación."@es .
+ns1:CorreccionDelValorDEFAULTSET a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección del valor DEFAULTSET" ;
+    ns1:solucionaFallo ns1:Error9352,
+        ns1:Error9353 ;
+    ns1:textoExtracto "El valor de DEFAULTSET debe coincidir con uno de los valores definidos en M41SET a M44SET." .
 
-ns1:Accion_ReinicioCNC a ns1:TareaMantenimiento ;
-    rdfs:label "Reinicio del CNC"@es ;
-    ns1:textoExtracto "necesita reiniciar CNC. [...] DETECCIÓN Durante el arranque."@es .
+ns1:ParametroDEFAULTSET a ns1:Parametro ;
+    rdfs:label "Parámetro DEFAULTSET" ;
+    ns1:textoExtracto "El parámetro DEFAULTSET tiene un valor incorrecto." .
 
-ns1:Accion_ValidacionParametros a ns1:TareaMantenimiento ;
-    rdfs:label "Validación de parámetros máquina"@es ;
-    ns1:textoExtracto "Durante la validación de los parámetros máquina."@es .
+ns1:Error9352 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 9352" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El parámetro DEFAULTSET tiene un valor incorrecto." .
+
+ns1:Error9353 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 9353" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El parámetro DEFAULTSET tiene un valor incorrecto." .
+
+ns1:Error9355 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 9355" ;
+    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En un eje gantry, el eje maestro y esclavo no tiene el parámetro OPMODE igual." .
+
+ns1:Error9356 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 9356" ;
+    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay asignadas dos compensaciones de husillo iguales (parámetros MOVAXIS y COMPAXIS iguales) a un mismo eje." .
+
+ns1:Error9357 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 9357" ;
+    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El eje tiene asignada una compensación cuyo eje compensado no coincide con el eje." .
+
+ns1:Error9358 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 9358" ;
+    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El parámetro COMPTABLEID tiene un valor que ya no existe." .
 

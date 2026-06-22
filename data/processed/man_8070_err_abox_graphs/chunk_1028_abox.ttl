@@ -1,48 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error23040 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el fichero de compensación volumétrica: no se puede abrir el fichero de volumetría"@es ;
-    ns1:identificador "23040" ;
-    ns1:solucionaFallo ns1:FicheroCompensacionVolumetrica ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: no se puede abrir el fichero de volumetría. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El archivo de definición de la compensación volumétrica no se puede abrir. SOLUCIÓN Modificar el archivo de la compensación volumétrica."@es .
+ns1:CompensacionVolumetricaINTERVALTYPE a ns1:Parametro ;
+    rdfs:label "Compensación volumétrica INTERVAL_TYPE" ;
+    ns1:identificador "INTERVAL_TYPE" ;
+    ns1:textoExtracto "el valor del parámetro del fichero \"INTERVAL_TYPE\" es incorrecto." .
 
-ns1:Error23041 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el fichero de compensación volumétrica: no hay memoria suficiente para cargar la volumetría"@es ;
-    ns1:identificador "23041" ;
-    ns1:solucionaFallo ns1:FicheroCompensacionVolumetrica ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: no hay memoria suficiente para cargar la volumetría. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El archivo de definición de la compensación volumétrica no se puede cargar por falta de memoria. SOLUCIÓN Modificar el archivo de la compensación volumétrica."@es .
+ns1:CompensacionVolumetricaSQUARENESSISPOSITIVE a ns1:Parametro ;
+    rdfs:label "Compensación volumétrica SQUARENESS_IS_POSITIVE" ;
+    ns1:identificador "SQUARENESS_IS_POSITIVE" ;
+    ns1:textoExtracto "el valor del parámetro del fichero \"SQUARENESS_IS_POSITIVE\" es incorrecto." .
 
-ns1:Error23042 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el fichero de compensación volumétrica: la compensación está desactivada"@es ;
-    ns1:identificador "23042" ;
-    ns1:solucionaFallo ns1:FicheroCompensacionVolumetrica ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: la compensación está desactivada. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA No se ha calculado el vector de compensación; la compensación está desactivada. SOLUCIÓN Activar la compensación volumétrica."@es .
+ns1:CompensacionVolumetricaVALUETYPE a ns1:Parametro ;
+    rdfs:label "Compensación volumétrica VALUE_TYPE" ;
+    ns1:identificador "VALUE_TYPE" ;
+    ns1:textoExtracto "el valor del parámetro del fichero \"VALUE_TYPE\" es incorrecto." .
 
-ns1:Error23043 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el fichero de compensación volumétrica: fichero de volumetría incompleto"@es ;
-    ns1:identificador "23043" ;
-    ns1:solucionaFallo ns1:FicheroCompensacionVolumetrica ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: fichero de volumetría incompleto. [...] DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El archivo de definición de la compensación volumétrica no está completo, le falta un elemento. SOLUCIÓN Modificar el archivo de la compensación volumétrica."@es .
+ns1:FalloCoordenadaFueraLimiteInferior a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el fichero de compensación volumétrica: coordenada fuera del límite inferior" ;
+    ns1:solucionaFallo ns1:ModificarArchivoDeCompensacionVolumetrica_3b082828d0 ;
+    ns1:textoExtracto "la coordenada del primer eje está fuera del límite inferior del volumen." .
 
-ns1:Error23101 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el análisis del fichero de definición de la compensación volumétrica"@es ;
-    ns1:identificador "23101" ;
-    ns1:solucionaFallo ns1:FicheroCompensacionVolumetrica ;
-    ns1:textoExtracto "Error en el análisis del fichero de definición de la compensación volumétrica. [...] DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El fichero de definición de la compensación volumétrica no contiene los datos adecuados. Compensación volumétrica básica: • El fichero no es del tipo csv. • El formato del fichero definido en VCOMPFILE no es correcto. • El fichero definido en VCOMPFILE no tiene definidos todos los puntos."@es .
+ns1:FalloCoordenadaFueraLimiteSuperior a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el fichero de compensación volumétrica: coordenada fuera del límite superior" ;
+    ns1:solucionaFallo ns1:ModificarArchivoDeCompensacionVolumetrica_3b082828d0 ;
+    ns1:textoExtracto "la coordenada del primer eje está fuera del límite superior del volumen." .
 
-ns1:ParametrosMaquina a ns1:Parametro ;
-    rdfs:label "Parámetros máquina"@es ;
-    ns1:monitoreaParametro ns1:SistemaCNC ;
-    ns1:textoExtracto "validación de los parámetros máquina"@es .
+ns1:FalloParametroIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el fichero de compensación volumétrica: parámetro incorrecto" ;
+    ns1:solucionaFallo ns1:ModificarArchivoDeCompensacionVolumetrica_3b082828d0 ;
+    ns1:textoExtracto "el valor del parámetro del fichero es incorrecto." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:textoExtracto "arranque del sistema [...] validación de los parámetros máquina [...] arranque del CNC"@es .
-
-ns1:FicheroCompensacionVolumetrica a ns1:Parametro ;
-    rdfs:label "Fichero de compensación volumétrica"@es ;
-    ns1:identificador "VCOMPFILE" ;
-    ns1:monitoreaParametro ns1:SistemaCNC ;
-    ns1:textoExtracto "archivo de definición de la compensación volumétrica [...] fichero de definición de la compensación volumétrica [...] fichero definido en VCOMPFILE"@es .
+ns1:ModificarArchivoDeCompensacionVolumetrica_3b082828d0 a ns1:AccionProhibida ;
+    rdfs:label "Modificar archivo de compensación volumétrica" ;
+    ns1:textoExtracto "SOLUCIÓN Modificar el archivo de la compensación volumétrica." .
 

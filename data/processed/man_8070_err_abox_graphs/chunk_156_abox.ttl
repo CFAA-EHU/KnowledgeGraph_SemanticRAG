@@ -1,52 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error1265 a ns1:AccionProhibida ;
-    ns1:identificador "1265" ;
-    ns1:textoExtracto "'Programación no permitida con RTCP/TLC activo' DETECCIÓN Durante la ejecución. CAUSA El CNC no permite ejecutar la función programada si está activa la función RTCP o TLC. SOLUCIÓN Desactivar la función RTCP o TLC para poder ejecutar el resto de funciones." .
+ns1:AvisoSeguridad_7888d7a5fb a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para tipo de cinemática desconocida" ;
+    ns1:mitigaRiesgo ns1:AccionProhibida_592632d4e2 ;
+    ns1:textoExtracto "'Tipo de cinemática desconocida' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar una cinemática no definida en parámetros máquina. SOLUCIÓN Revisar la sintaxis. Activar primero la cinemática y a continuación la función deseada." .
 
-ns1:Error1266 a ns1:AccionProhibida ;
-    ns1:identificador "1266" ;
-    ns1:textoExtracto "'La funcionalidad TLC se desactiva con la sentencia #TLC OFF' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado modificar la función TLC mientras estaba activa. SOLUCIÓN El CNC no permite modificar la función TLC mientras está activa. Para modificar la función TLC, hay que desactivarla y volverla a activar." .
+ns1:AvisoSeguridad_998cdb6c2e a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para el paso de husillo fuera de rango" ;
+    ns1:mitigaRiesgo ns1:AccionProhibida_cbc0f81169 ;
+    ns1:textoExtracto "'Paso de husillo fuera de rango' DETECCIÓN Durante la ejecución. CAUSA En la función G33, el paso de la rosca programado es demasiado alto. SOLUCIÓN Revisar la programación." .
 
-ns1:Error1267 a ns1:AccionProhibida ;
-    ns1:identificador "1267" ;
-    ns1:textoExtracto "'La funcionalidad RTCP se desactiva con la sentencia #RTCP OFF' DETECCIÓN Durante la ejecución. CAUSA Con el RTCP activo, hay programada una sentencia #RTCP diferente a #RTCPOFF. SOLUCIÓN Para desactivar la función RTCP programar #RTCPOFF. Si se desea modificar los valores del RTCP, hay que desactivarla primero." .
+ns1:AvisoSeguridad_dd261e3cc9 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para el paso de husillo igual a cero" ;
+    ns1:mitigaRiesgo ns1:AccionProhibida_7d015db2ca ;
+    ns1:textoExtracto "'Paso de husillo igual cero' DETECCIÓN Durante la ejecución. CAUSA En la función G33, el paso de la rosca tiene valor 0. SOLUCIÓN Revisar la programación. Programar el paso de la rosca con los parámetros I J K." .
 
-ns1:Error1268 a ns1:AccionProhibida ;
-    ns1:identificador "1268" ;
-    ns1:textoExtracto "'#CS ON/#ACS ON: error de sintaxis' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar la programación." .
+ns1:Parametro_82e7605da8 a ns1:Parametro ;
+    rdfs:label "Función G33" ;
+    ns1:textoExtracto "En la función G33, el paso de la rosca tiene valor 0. En la función G33, el paso de la rosca programado es demasiado alto." .
 
-ns1:Error1269 a ns1:AccionProhibida ;
-    ns1:identificador "1269" ;
-    ns1:textoExtracto "'#CS ON/#ACS ON: el ángulo programado no es válido' DETECCIÓN Durante la ejecución. CAUSA El ángulo programado no es válido. SOLUCIÓN Programar un ángulo entre ±360º." .
+ns1:AccionProhibida_592632d4e2 a ns1:AccionProhibida ;
+    rdfs:label "Accion prohibida para tipo de cinemática desconocida" ;
+    ns1:textoExtracto "El CNC ha intentado activar una cinemática no definida en parámetros máquina." .
 
-ns1:Error1270 a ns1:AccionProhibida ;
-    ns1:identificador "1270" ;
-    ns1:textoExtracto "'Cálculo de la transformación de coordenadas imposible' DETECCIÓN Durante la ejecución. CAUSA El CNC no ha podido resolver una transformación de coordenadas pieza a coordenadas máquina o al revés. SOLUCIÓN Desactivar la transformación, cambiar la posición de los ejes y volver a activar la transformación." .
+ns1:AccionProhibida_7d015db2ca a ns1:AccionProhibida ;
+    rdfs:label "Accion prohibida para paso de husillo igual a cero" ;
+    ns1:textoExtracto "En la función G33, el paso de la rosca tiene valor 0." .
 
-ns1:G198 a ns1:ModoOperacion ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:G199 a ns1:ModoOperacion ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:G74 a ns1:ModoOperacion ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:LINK a ns1:ModoOperacion ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc." .
-
-ns1:RTCP a ns1:ModoOperacion ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc. SOLUCIÓN Desactivar la transformación de coordenadas para poder ejecutar el resto de funciones. 1265 'Programación no permitida con RTCP/TLC activo' DETECCIÓN Durante la ejecución. CAUSA El CNC no permite ejecutar la función programada si está activa la función RTCP o TLC. Algunas funciones incompatibles son G74, G198, G199, #KIN ID. LINK. SOLUCIÓN Desactivar la función RTCP o TLC para poder ejecutar el resto de funciones. 1266 'La funcionalidad TLC se desactiva con la sentencia #TLC OFF' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado modificar la función TLC mientras estaba activa. SOLUCIÓN El CNC no permite modificar la función TLC mientras está activa. Para modificar la función TLC, hay que desactivarla y volverla a activar. 1267 'La funcionalidad RTCP se desactiva con la sentencia #RTCP OFF' DETECCIÓN Durante la ejecución. CAUSA Con el RTCP activo, hay programada una sentencia #RTCP diferente a #RTCPOFF. SOLUCIÓN Para desactivar la función RTCP programar #RTCPOFF. Si se desea modificar los valores del RTCP, hay que desactivarla primero. 1270 'Cálculo de la transformación de coordenadas imposible' DETECCIÓN Durante la ejecución. CAUSA El CNC no ha podido resolver una transformación de coordenadas pieza a coordenadas máquina o al revés. SOLUCIÓN Desactivar la transformación, cambiar la posición de los ejes y volver a activar la transformación." .
-
-ns1:SentenciaRTCPOFF a ns1:ModoOperacion ;
-    ns1:identificador "#RTCPOFF" ;
-    ns1:textoExtracto "'La funcionalidad RTCP se desactiva con la sentencia #RTCP OFF' DETECCIÓN Durante la ejecución. CAUSA Con el RTCP activo, hay programada una sentencia #RTCP diferente a #RTCPOFF. SOLUCIÓN Para desactivar la función RTCP programar #RTCPOFF. Si se desea modificar los valores del RTCP, hay que desactivarla primero." .
-
-ns1:SentenciaTLC_OFF a ns1:ModoOperacion ;
-    ns1:identificador "#TLC OFF" ;
-    ns1:textoExtracto "'La funcionalidad TLC se desactiva con la sentencia #TLC OFF' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado modificar la función TLC mientras estaba activa. SOLUCIÓN El CNC no permite modificar la función TLC mientras está activa. Para modificar la función TLC, hay que desactivarla y volverla a activar." .
-
-ns1:TLC a ns1:ModoOperacion ;
-    ns1:textoExtracto "Algunas funciones incompatibles son G74, G198, G199, #LINK, ciclos de palpado, etc. SOLUCIÓN Desactivar la transformación de coordenadas para poder ejecutar el resto de funciones. 1265 'Programación no permitida con RTCP/TLC activo' DETECCIÓN Durante la ejecución. CAUSA El CNC no permite ejecutar la función programada si está activa la función RTCP o TLC. Algunas funciones incompatibles son G74, G198, G199, #KIN ID. LINK. SOLUCIÓN Desactivar la función RTCP o TLC para poder ejecutar el resto de funciones. 1266 'La funcionalidad TLC se desactiva con la sentencia #TLC OFF' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado modificar la función TLC mientras estaba activa. SOLUCIÓN El CNC no permite modificar la función TLC mientras está activa. Para modificar la función TLC, hay que desactivarla y volverla a activar. 1267 'La funcionalidad RTCP se desactiva con la sentencia #RTCP OFF' DETECCIÓN Durante la ejecución. CAUSA Con el RTCP activo, hay programada una sentencia #RTCP diferente a #RTCPOFF. SOLUCIÓN Para desactivar la función RTCP programar #RTCPOFF. Si se desea modificar los valores del RTCP, hay que desactivarla primero." .
+ns1:AccionProhibida_cbc0f81169 a ns1:AccionProhibida ;
+    rdfs:label "Accion prohibida para paso de husillo fuera de rango" ;
+    ns1:textoExtracto "En la función G33, el paso de la rosca programado es demasiado alto." .
 

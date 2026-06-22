@@ -1,73 +1,28 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ControlTeclasPLC a ns1:Sistema ;
-    rdfs:label "Sistema de control de inhibición de teclas y LEDs mediante PLC"@es ;
-    ns1:controla ns1:InterfazUsuario_PanelesMando ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:textoExtracto "Gestionar los leds (lámparas) de las teclas. [...] En caso de seleccionar una de las posiciones inhibidas del Feed Override, el CNC tomará el valor de la posición inferior permitida. Si se inhiben todas, se tomará 0%."@es ;
-    ns1:tieneComponente ns1:Parametro_KEYDIS1,
-        ns1:Parametro_KEYDIS1_1,
-        ns1:Parametro_KEYDIS2,
-        ns1:Parametro_KEYDIS3,
-        ns1:Parametro_KEYLED1,
-        ns1:Parametro_KEYLED1_1,
-        ns1:Parametro_KEYLED2 .
+ns1:Parametro_8bf596bbbf a ns1:Parametro ;
+    rdfs:label "Marca para deshabilitar el octavo panel de jog" ;
+    ns1:identificador "PANELOFF8" ;
+    ns1:textoExtracto "Si el PLC pone una de estas marcas a (=1) se deshabilita el panel de jog correspondiente." .
 
-ns1:InterfazUsuario_PanelesMando a ns1:InterfazUsuario ;
-    rdfs:label "Paneles de mando (teclas, conmutadores y LEDs)"@es ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:textoExtracto "teclas y los conmutadores en todos los paneles de mando [...] led (lámparas) de las teclas de todos los paneles de mando"@es .
+ns1:Parametro_d2b7d9fd99 a ns1:Parametro ;
+    rdfs:label "Marca para deshabilitar el panel de jog" ;
+    ns1:identificador "PANELOFF" ;
+    ns1:textoExtracto "Si el PLC pone una de estas marcas a (=1) se deshabilita el panel de jog correspondiente." .
 
-ns1:Parametro_KEYDIS1 a ns1:Parametro ;
-    rdfs:label "KEYDIS1" ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:identificador "KEYDIS1" ;
-    ns1:textoExtracto "Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente."@es .
+ns1:Parametro_de9a76597c a ns1:Parametro ;
+    rdfs:label "Marca para deshabilitar el primer panel de jog" ;
+    ns1:identificador "PANELOFF1" ;
+    ns1:textoExtracto "Si el PLC pone una de estas marcas a (=1) se deshabilita el panel de jog correspondiente." .
 
-ns1:Parametro_KEYDIS1_1 a ns1:Parametro ;
-    rdfs:label "KEYDIS1_1" ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:identificador "KEYDIS1_1" ;
-    ns1:textoExtracto "Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. KEYDIS1_1 [...] corresponde al primer panel de jog"@es .
+ns1:RegistrosParaModificarElComportamientoDeLosTecladosRespectoALosCanales a ns1:Parametro ;
+    rdfs:label "Registros para modificar el comportamiento de los teclados respecto a los canales" ;
+    ns1:identificador "KEYBD1CH" ;
+    ns1:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." .
 
-ns1:Parametro_KEYDIS2 a ns1:Parametro ;
-    rdfs:label "KEYDIS2" ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:identificador "KEYDIS2" ;
-    ns1:textoExtracto "Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente."@es .
-
-ns1:Parametro_KEYDIS3 a ns1:Parametro ;
-    rdfs:label "KEYDIS3" ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:identificador "KEYDIS3" ;
-    ns1:textoExtracto "Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente."@es .
-
-ns1:Parametro_KEYLED1 a ns1:Parametro ;
-    rdfs:label "KEYLED1" ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:identificador "KEYLED1" ;
-    ns1:textoExtracto "Estos registros controlan los led (lámparas) de las teclas de todos los paneles de mando simultáneamente."@es .
-
-ns1:Parametro_KEYLED1_1 a ns1:Parametro ;
-    rdfs:label "KEYLED1_1" ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:identificador "KEYLED1_1" ;
-    ns1:textoExtracto "Estos registros controlan los led (lámparas) de las teclas de cada panel de mando. KEYLED1_1 [...] corresponde al primer panel"@es .
-
-ns1:Parametro_KEYLED2 a ns1:Parametro ;
-    rdfs:label "KEYLED2" ;
-    ns1:documentadoEn ns1:Tabla_ConfiguracionPLC_15_1_1 ;
-    ns1:identificador "KEYLED2" ;
-    ns1:textoExtracto "Estos registros controlan los led (lámparas) de las teclas de todos los paneles de mando simultáneamente."@es .
-
-ns1:Tabla_ConfiguracionPLC_15_1_1 a ns1:Tabla ;
-    rdfs:label "Tabla de marcas y registros de PLC para configuración de teclas y LEDs"@es ;
-    ns1:textoExtracto """
-| Marca y registros de PLC. | Significado. |
-| --- | --- |
-| KEYDIS1 a KEYDIS3 | Estos registros inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente. |
-| KEYDIS1_1 a KEYDIS3_1 ꞏꞏ KEYDIS1_8 a KEYDIS3_8 | Estos registros inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. |
-| KEYLED1 / KEYLED2 | Estos registros controlan los led (lámparas) de las teclas de todos los paneles de mando simultáneamente. |
-| KEYLED1_1 / KEYLED2_1 ꞏꞏ KEYLED1_8 / KEYLED2_8 | Estos registros controlan los led (lámparas) de las teclas de cada panel de mando."""@es .
+ns1:RegistrosParaModificarElComportamientoDeLosTecladosRespectoALosCanales_96e33a53dd a ns1:Parametro ;
+    rdfs:label "Registros para modificar el comportamiento de los teclados respecto a los canales" ;
+    ns1:identificador "KEYBD8CH" ;
+    ns1:textoExtracto "Estos registros permiten modificar el comportamiento por defecto de los teclados respecto a los canales, definido en los parámetros máquina." .
 

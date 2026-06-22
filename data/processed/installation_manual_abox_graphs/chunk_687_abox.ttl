@@ -1,29 +1,32 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Pagina_331_332 a ns1:Pagina ;
-    ns1:identificador "331-332" ;
-    ns1:textoExtracto "Los valores de la tabla pueden ser modificados en cualquier momento... Los valores de la tabla de simulación sólo pueden ser leídos o modificados a través de su variable." .
+ns1:CNC8070_923dabf7de a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" ;
+    ns1:tieneComponente ns1:ModuloEjecucionPeriodica,
+        ns1:ModuloPrimerCiclo,
+        ns1:ModuloPrincipal .
 
-ns1:Parametro_DATA_MTBPAR a ns1:Parametro ;
-    rdfs:label "DATA (Lista de parámetros del fabricante)" ;
-    ns1:identificador "MTB.DATA" ;
-    ns1:monitoreaParametro ns1:TablaParametrosFabricante_MTBPAR ;
-    ns1:textoExtracto "DATA Lista de parámetros del fabricante. Este parámetro muestra la tabla de parámetros del fabricante. Para cada parámetro hay que definir los siguientes campos." .
+ns1:FrecuenciaDeEjecucionDelModuloPrincipal a ns1:Parametro ;
+    rdfs:label "Frecuencia de ejecución del módulo principal" ;
+    ns1:identificador "PRGFREQ" ;
+    ns1:textoExtracto "El parámetro PRGFREQ indica con qué frecuencia (cada cuántos ciclos de CNC) el PLC ejecuta un ciclo completo del módulo principal." .
 
-ns1:Parametro_SIZE_MTBPAR a ns1:Parametro ;
-    rdfs:label "SIZE (Número de parámetros del fabricante)" ;
-    ns1:identificador "MTB.SIZE" ;
-    ns1:monitoreaParametro ns1:TablaParametrosFabricante_MTBPAR ;
-    ns1:textoExtracto "SIZE Número de parámetros del fabricante. Valores posibles: De 0 a 1000. Valor por defecto: 0. Variable asociada: (V.)MTB.SIZE Este parámetro establece el número de parámetros de fabricante que se van a utilizar." ;
-    ns1:valor 0 .
+ns1:TiempoDeLazo a ns1:Parametro ;
+    rdfs:label "Tiempo de lazo" ;
+    ns1:identificador "LOOPTIME" ;
+    ns1:textoExtracto "Este módulo se puede utilizar para tareas que no necesitan ser evaluadas en cada ciclo del PLC, con un periodo de muestreo de 4 ms (LOOPTIME=4)." .
 
-ns1:TablaParametrosFabricante_MTBPAR a ns1:Tabla ;
-    rdfs:label "MTBPAR" ;
-    ns1:documentadoEn ns1:Pagina_331_332 ;
-    ns1:identificador "MTBPAR" ;
-    ns1:textoExtracto "MTBPAR Tabla de parámetros del fabricante. Esta tabla ofrece 1000 parámetros genéricos para que el fabricante los pueda utilizar a modo de parámetros máquina." ;
-    ns1:tieneComponente ns1:Parametro_DATA_MTBPAR,
-        ns1:Parametro_SIZE_MTBPAR .
+ns1:ModuloEjecucionPeriodica a ns1:Componente ;
+    rdfs:label "Módulo de ejecución periódica" ;
+    ns1:textoExtracto "El módulo periódico comienza con la proposición directiva PE y termina con la proposición directiva END. El PLC ejecuta el módulo periódico de forma periódica, con la frecuencia fijada en la directiva PE." .
+
+ns1:ModuloPrimerCiclo a ns1:Componente ;
+    rdfs:label "Módulo del primer ciclo" ;
+    ns1:textoExtracto "El módulo comienza con la proposición directiva CY1 y termina con la proposición directiva END. El PLC ejecuta el módulo de primer ciclo una única vez, cuando arranca el programa de PLC." .
+
+ns1:ModuloPrincipal a ns1:Componente ;
+    rdfs:label "Módulo principal" ;
+    ns1:textoExtracto "El módulo principal comienza con la proposición directiva PRG y termina con la proposición directiva END. El PLC ejecuta el módulo principal de forma cíclica, con la frecuencia fijada por el parámetro PRGFREQ." .
 

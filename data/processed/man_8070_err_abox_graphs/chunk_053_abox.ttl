@@ -1,23 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_0115 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 0115: Incoherencia en código de validación de CPU"@es ;
-    ns1:identificador "0115" ;
-    ns1:textoExtracto "Código de validación -tipo de CPU-, NO coherente con el"@es .
+ns1:CNC8070_ca60df02b7 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:ModificarParametroLOOPTIMESinValidarTraza,
+        ns1:ValidarParametrosConCabezalEnSincronizacion ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:ErrorValidacion_0114 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 0114: Validación de parámetros durante simulación"@es ;
-    ns1:identificador "0114" ;
-    ns1:solucionaFallo ns1:AccionProhibida_ValidarEnSimulacion ;
-    ns1:textoExtracto "No es posible validar parámetros durante la simulación de un programa en el canal. [...] SOLUCIÓN Detener la simulación del programa para validar los parámetros."@es .
+ns1:TiempoDeMuestreoDependienteDelParametroLOOPTIME a ns1:Parametro ;
+    rdfs:label "Tiempo de muestreo dependiente del parámetro LOOPTIME" ;
+    ns1:textoExtracto "El ajuste del tiempo de muestreo de una traza del osciloscopio depende del parámetro LOOPTIME." .
 
-ns1:ParametroMaquina_ValidacionCPU a ns1:Parametro ;
-    rdfs:label "Código de validación (tipo de CPU)"@es ;
-    ns1:identificador "0115" ;
-    ns1:textoExtracto "Código de validación -tipo de CPU-, NO coherente con el"@es .
+ns1:ModificarParametroLOOPTIMESinValidarTraza a ns1:AccionProhibida ;
+    rdfs:label "Modificar parámetro LOOPTIME sin validar traza" ;
+    ns1:solucionaFallo ns1:OsciloNoEsPosibleReajustarTiempoDeMuestreoConElNuevoLOOPTIME ;
+    ns1:textoExtracto "El usuario ha utilizado el osciloscopio sin validar una traza, ha modificado el parámetro LOOPTIME y ha validado los parámetros máquina." .
 
-ns1:AccionProhibida_ValidarEnSimulacion a ns1:AccionProhibida ;
-    rdfs:label "Validar parámetros máquina durante simulación de programa"@es ;
-    ns1:textoExtracto "El usuario ha intentado validar los parámetros durante la simulación de un programa."@es .
+ns1:NoEsPosibleValidarParametrosCabezalEnSincronizacion a ns1:DiagnosticoFallo ;
+    rdfs:label "No es posible validar parámetros: cabezal en sincronización" ;
+    ns1:textoExtracto "'No es posible validar parámetros: cabezal en sincronización'" .
+
+ns1:OsciloNoEsPosibleReajustarTiempoDeMuestreoConElNuevoLOOPTIME a ns1:DiagnosticoFallo ;
+    rdfs:label "Oscilo: No es posible reajustar tiempo de muestreo con el nuevo LOOPTIME" ;
+    ns1:textoExtracto "'Oscilo: No es posible reajustar tiempo de muestreo con el nuevo LOOPTIME'" .
+
+ns1:ValidarParametrosConCabezalEnSincronizacion a ns1:AccionProhibida ;
+    rdfs:label "Validar parámetros con cabezal en sincronización" ;
+    ns1:solucionaFallo ns1:NoEsPosibleValidarParametrosCabezalEnSincronizacion ;
+    ns1:textoExtracto "No es posible validar parámetros: cabezal en sincronización." .
 

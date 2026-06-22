@@ -1,81 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_0080 a ns1:Alarma ;
-    rdfs:label "Alarma 0080: Validación de parámetros generales"@es ;
-    ns1:identificador "0080" ;
-    ns1:textoExtracto "'Para validar el eje, hay que validar la tabla de PARAMETROS GENERALES' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El usuario ha añadido algún eje al sistema (parámetro NAXIS), y sin validar la tabla de parámetros generales, ha intentado validar la tabla de parámetros de uno de los nuevos ejes."@es .
+ns1:CNC8070_e3122ae069 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:LosEjesMaestroYEsclavoDebenPertenecerAlMismoCanal_788811bea0,
+        ns1:UnEjeEsclavoGantryNoPuedeEstarAparcado ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Alarma_0081 a ns1:Alarma ;
-    rdfs:label "Alarma 0081: Banda de muerte inferior a resolución del eje"@es ;
-    ns1:identificador "0081" ;
-    ns1:textoExtracto "'La banda de muerte no puede ser menor que la resolución del eje' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA La banda de muerte es menor que la resolución del eje."@es .
+ns1:LosEjesMaestroYEsclavoDebenPertenecerAlMismoCanal_788811bea0 a ns1:DiagnosticoFallo ;
+    rdfs:label "Los ejes maestro y esclavo deben pertenecer al mismo canal" ;
+    ns1:textoExtracto "'Los ejes maestro y esclavo deben pertenecer al mismo canal' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Algún eje gantry está formado por ejes de canales distintos." .
 
-ns1:Alarma_0082 a ns1:Alarma ;
-    rdfs:label "Alarma 0082: Compensación de husillo o cruzada imposible"@es ;
-    ns1:identificador "0082" ;
-    ns1:textoExtracto "'Compensación de husillo o cruzada imposible para todas las gamas del eje' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En una compensación, el eje que se mueve (parámetro MOVAXIS) es rotativo y no tiene los mismos límites de módulo en todos los sets de parámetros."@es .
-
-ns1:Alarma_0083 a ns1:Alarma ;
-    rdfs:label "Alarma 0083: Tipos de regulador incompatibles en pareja gantry"@es ;
-    ns1:identificador "0083" ;
-    ns1:textoExtracto "'Los ejes maestro y esclavo deben ser del mismo tipo (DRIVETYPE)' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Ambos ejes de una pareja gantry no tienen el mismo tipo de regulador; analógico, Sercos o Mechatrolink."@es .
-
-ns1:AvisoSeguridad_0080_no_aparcado a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso: Desaparcar eje o anular gantry (Código 0080)"@es ;
-    ns1:mitigaRiesgo ns1:Alarma_0080_no_aparcado ;
-    ns1:textoExtracto "SOLUCIÓN Desaparcar el eje o anular el eje gantry."@es .
-
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC"@es ;
-    ns1:textoExtracto "arranque del CNC"@es ;
-    ns1:tieneComponente ns1:Sistema_Gantry .
-
-ns1:Parametro_INPOSW a ns1:Parametro ;
-    rdfs:label "Parámetro INPOSW (banda de muerte)"@es ;
-    ns1:identificador "INPOSW" ;
-    ns1:textoExtracto "parámetro INPOSW"@es .
-
-ns1:Parametro_MODLOWLIM a ns1:Parametro ;
-    rdfs:label "Parámetro MODLOWLIM (límite inferior de módulo)"@es ;
-    ns1:identificador "MODLOWLIM" ;
-    ns1:textoExtracto "parámetros MODLOWLIM"@es .
-
-ns1:Parametro_MODUPLIM a ns1:Parametro ;
-    rdfs:label "Parámetro MODUPLIM (límite superior de módulo)"@es ;
-    ns1:identificador "MODUPLIM" ;
-    ns1:textoExtracto "parámetros MODUPLIM"@es .
-
-ns1:Parametro_MOVAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro MOVAXIS (eje en movimiento)"@es ;
-    ns1:identificador "MOVAXIS" ;
-    ns1:textoExtracto "parámetro MOVAXIS"@es .
-
-ns1:Parametro_NAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro NAXIS"@es ;
-    ns1:identificador "NAXIS" ;
-    ns1:textoExtracto "parámetro NAXIS"@es .
-
-ns1:Tabla_ParametrosEje a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros de eje"@es ;
-    ns1:textoExtracto "tabla de parámetros de uno de los nuevos ejes"@es .
-
-ns1:Tabla_ParametrosGenerales a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros generales de máquina"@es ;
-    ns1:textoExtracto "tabla de parámetros generales"@es .
-
-ns1:Alarma_0080_no_aparcado a ns1:Alarma ;
-    rdfs:label "Alarma 0080: Eje gantry aparcado"@es ;
-    ns1:identificador "0080" ;
-    ns1:textoExtracto "'no puede estar aparcado' DETECCIÓN Durante el arranque del CNC o la validación de los parámetros máquina. gantry está aparcado; la señal CAUSA El CNC ha detectado que el eje esclavo de una pareja PARKED del eje esclavo está activa."@es .
-
-ns1:Parametro_DRIVETYPE a ns1:Parametro ;
-    rdfs:label "Parámetro DRIVETYPE (tipo de regulador)"@es ;
-    ns1:identificador "DRIVETYPE" ;
-    ns1:textoExtracto "parámetro DRIVETYPE"@es .
-
-ns1:Sistema_Gantry a ns1:Sistema ;
-    rdfs:label "Sistema de pareja gantry (eje maestro-esclavo)"@es ;
-    ns1:textoExtracto "pareja gantry"@es ;
-    ns1:tieneComponente ns1:Parametro_DRIVETYPE .
+ns1:UnEjeEsclavoGantryNoPuedeEstarAparcado a ns1:DiagnosticoFallo ;
+    rdfs:label "Un eje esclavo Gantry no puede estar aparcado" ;
+    ns1:textoExtracto "'Un eje esclavo Gantry no puede estar aparcado' DETECCIÓN Durante el arranque del CNC o la validación de los parámetros máquina. gantry está aparcado; la señal CAUSA El CNC ha detectado que el eje esclavo de una pareja" .
 

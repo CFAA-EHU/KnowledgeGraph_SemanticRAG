@@ -1,32 +1,41 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error3032 a ns1:AvisoSeguridad ;
-    rdfs:label "No se admite búsqueda de cero en modo"@es ;
-    ns1:identificador "3032" ;
-    ns1:textoExtracto "3032 'No se admite búsqueda de cero en modo"@es .
+ns1:CNC8070_e7fbe13c36 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:ActivarModoManualDuranteBusquedaDeBloque ;
+    ns1:solucionaFallo ns1:FalloBusquedaBloqueYaActivada,
+        ns1:FalloReferenciaIgnoradaDuranteBusquedaBloque ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Palpador a ns1:Componente ;
-    rdfs:label "palpador"@es ;
-    ns1:textoExtracto "Todos los ejes que intervienen en un proceso de medición con palpador deben ser del mismo tipo"@es .
+ns1:DisminuirElAvance a ns1:TareaMantenimiento ;
+    rdfs:label "Disminuir el avance" ;
+    ns1:solucionaFallo ns1:FalloNoAlcanzadaVelocidadCorte ;
+    ns1:textoExtracto "SOLUCIÓN Disminuir el avance, disminuir la velocidad del cabezal o programar la velocidad antes para darle tiempo al cabezal a alcanzar su velocidad." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "CNC"@es ;
-    ns1:activaAlarma ns1:Error3031 ;
-    ns1:controla ns1:ModoRTCP,
-        ns1:ModoTLC ;
-    ns1:textoExtracto "El CNC ha intentado activar una de las compensaciones RTCP o TLC"@es .
+ns1:DisminuirLaVelocidadDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Disminuir la velocidad del cabezal" ;
+    ns1:solucionaFallo ns1:FalloNoAlcanzadaVelocidadCorte ;
+    ns1:textoExtracto "SOLUCIÓN Disminuir el avance, disminuir la velocidad del cabezal o programar la velocidad antes para darle tiempo al cabezal a alcanzar su velocidad." .
 
-ns1:Error3031 a ns1:AvisoSeguridad ;
-    rdfs:label "Compensación (RTCP/TLC) no permitida en el estado actual"@es ;
-    ns1:identificador "3031" ;
-    ns1:textoExtracto "3031 'Compensación (RTCP/TLC) no permitida en el estado actual' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar una de las compensaciones RTCP o TLC estando la otra activa."@es .
+ns1:ProgramarLaVelocidadAntes a ns1:TareaMantenimiento ;
+    rdfs:label "Programar la velocidad antes" ;
+    ns1:solucionaFallo ns1:FalloNoAlcanzadaVelocidadCorte ;
+    ns1:textoExtracto "SOLUCIÓN Disminuir el avance, disminuir la velocidad del cabezal o programar la velocidad antes para darle tiempo al cabezal a alcanzar su velocidad." .
 
-ns1:ModoRTCP a ns1:ModoOperacion ;
-    rdfs:label "RTCP"@es ;
-    ns1:textoExtracto "compensaciones RTCP"@es .
+ns1:ActivarModoManualDuranteBusquedaDeBloque a ns1:AccionProhibida ;
+    rdfs:label "Activar modo manual durante búsqueda de bloque" ;
+    ns1:textoExtracto "El usuario ha intentado activar el modo manual durante una búsqueda de bloque y el CNC lo ha ignorado." .
 
-ns1:ModoTLC a ns1:ModoOperacion ;
-    rdfs:label "TLC"@es ;
-    ns1:textoExtracto "compensaciones TLC"@es .
+ns1:FalloBusquedaBloqueYaActivada a ns1:DiagnosticoFallo ;
+    rdfs:label "Búsqueda de bloque ya activada" ;
+    ns1:textoExtracto "CAUSA El CNC ha intentado activar una búsqueda de bloque estando con otra activa." .
+
+ns1:FalloReferenciaIgnoradaDuranteBusquedaBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Búsqueda de referencia ignorada durante búsqueda de bloque" ;
+    ns1:textoExtracto "CAUSA Durante una búsqueda de bloque, el CNC ha encontrado una búsqueda de referencia y la ha ignorado." .
+
+ns1:FalloNoAlcanzadaVelocidadCorte a ns1:DiagnosticoFallo ;
+    rdfs:label "No se ha alcanzado la velocidad de corte constante" ;
+    ns1:textoExtracto "CAUSA El cabezal no ha tenido tiempo para alcanzar la velocidad programada." .
 

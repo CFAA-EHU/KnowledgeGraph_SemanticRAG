@@ -1,29 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_CicloDesbaste a ns1:ModoOperacion ;
-    rdfs:label "Ciclo de desbaste"@es ;
-    ns1:activaAlarma ns1:Fallo_1910,
-        ns1:Fallo_1911 ;
-    ns1:textoExtracto "ejecución del ciclo... ciclo de desbaste"@es .
+ns1:AnguloDeProfundizacionParaElAcabado a ns1:Parametro ;
+    rdfs:label "Ángulo de profundización para el acabado" ;
+    ns1:parametroMonitoradoPor ns1:SistemaCNC ;
+    ns1:textoExtracto "El ángulo de profundización para el acabado (parámetro ) no está comprendido entre 0º y 90º." .
 
-ns1:Parametro_FactorForma a ns1:Parametro ;
-    rdfs:label "Factor de forma"@es ;
-    ns1:monitoreaParametro ns1:Fallo_1911 ;
-    ns1:textoExtracto "factor de forma no válido en ciclo de desbaste"@es .
+ns1:AnguloDeProfundizacionParaElDesbaste_d1286ec477 a ns1:Parametro ;
+    rdfs:label "Ángulo de profundización para el desbaste" ;
+    ns1:parametroMonitoradoPor ns1:SistemaCNC ;
+    ns1:textoExtracto "El ángulo de profundización para el desbaste (parámetro ) no está comprendido entre 0º y 90º." .
 
-ns1:Parametro_PasoDesbaste a ns1:Parametro ;
-    rdfs:label "Paso de desbaste"@es ;
-    ns1:monitoreaParametro ns1:Fallo_1910 ;
-    ns1:textoExtracto "paso de desbaste mayor que la anchura de la cuchilla"@es .
+ns1:CorregirElAnguloDeProfundizacion a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir el ángulo de profundización" ;
+    ns1:solucionaFallo ns1:CajeraConIslasAnguloDeProfundizacionDeLaHerramientaDeDesbasteNoValido_efc0120917,
+        ns1:CajeraConIslasAnguloDeProfundizacionDeLaHerramientaDeSemiacabadoNoValido_6dd9e6aaf3 ;
+    ns1:textoExtracto "SOLUCIÓN Corregir el ángulo de profundización; programar un valor entre 0º y 90º." .
 
-ns1:Fallo_1910 a ns1:DiagnosticoFallo ;
-    rdfs:label "Paso de desbaste mayor que la anchura de la cuchilla"@es ;
-    ns1:identificador "1910" ;
-    ns1:textoExtracto "1910 'Paso de desbaste mayor que la anchura de la cuchilla' DETECCIÓN Durante la ejecución del ciclo. CAUSA El paso de desbaste es mayor que la anchura de la cuchilla. SOLUCIÓN Programar un paso de desbaste menor o igual que la anchura de la cuchilla."@es .
+ns1:CorregirLaGeometriaDelPerfil a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir la geometría del perfil" ;
+    ns1:solucionaFallo ns1:CajeraConIslasAnguloDeProfundizacionDeLaHerramientaDeDesbasteNoValido_efc0120917,
+        ns1:CajeraConIslasAnguloDeProfundizacionDeLaHerramientaDeSemiacabadoNoValido_6dd9e6aaf3 ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la geometría del perfil desde el editor de perfiles." .
 
-ns1:Fallo_1911 a ns1:DiagnosticoFallo ;
-    rdfs:label "Factor de forma no válido en ciclo de desbaste"@es ;
-    ns1:identificador "1911" ;
-    ns1:textoExtracto "1911 'Factor de forma no válido en ciclo de desbaste' DETECCIÓN Durante la ejecución del ciclo. CAUSA El factor de forma no es válido para el ciclo programado. SOLUCIÓN Corregir"@es .
+ns1:CajeraConIslasAnguloDeProfundizacionDeLaHerramientaDeDesbasteNoValido_efc0120917 a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Angulo de profundización de la herramienta de desbaste no válido" ;
+    ns1:textoExtracto "'Cajera con islas: Angulo de profundización de la herramienta de desbaste no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA El ángulo de profundización para el desbaste (parámetro ) no está comprendido entre 0º y 90º." .
+
+ns1:CajeraConIslasAnguloDeProfundizacionDeLaHerramientaDeSemiacabadoNoValido_6dd9e6aaf3 a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Angulo de profundización de la herramienta de semiacabado no válido" ;
+    ns1:textoExtracto "'Cajera con islas: Angulo de profundización de la herramienta de semiacabado no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA El ángulo de profundización para el acabado (parámetro ) no está comprendido entre 0º y 90º." .
 

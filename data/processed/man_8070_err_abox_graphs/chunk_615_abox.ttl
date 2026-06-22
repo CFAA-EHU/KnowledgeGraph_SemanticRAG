@@ -1,37 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_SERBRATE a ns1:Parametro ;
-    rdfs:label "Frecuencia SERBRATE" ;
-    ns1:monitoreaParametro ns1:Modulo_RCS_S ;
-    ns1:textoExtracto "subir la frecuencia SERBRATE" .
+ns1:CNC8070_8cd36c09d5 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "'Parámetro G00FEED mayor en CNC que en Regulador'" .
 
-ns1:Solucion4022 a ns1:AccionProhibida ;
-    rdfs:label "Contactar con Fagor para error 4022" ;
-    ns1:solucionaFallo ns1:Error4022 ;
-    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor." .
+ns1:ConsignaAdicionalDelRegulador a ns1:Parametro ;
+    rdfs:label "Consigna adicional del regulador" ;
+    ns1:identificador "SP100" ;
+    ns1:textoExtracto "'Parámetro SP100 del regulador debe ser 0'" .
 
-ns1:Solucion4023 a ns1:TareaMantenimiento ;
-    rdfs:label "Ajuste de parámetros para traza Sercos (Error 4023)" ;
-    ns1:solucionaFallo ns1:Error4023 ;
-    ns1:textoExtracto "SOLUCIÓN Reducir el número de variables en el telegrama. Si el ancho de banda está limitado, subir la frecuencia SERBRATE o eliminar reguladores del anillo." .
+ns1:DefinirLaKVDelReguladorConUnValorDistintoDe0 a ns1:AccionProhibida ;
+    rdfs:label "Definir la KV del regulador con un valor distinto de 0" ;
+    ns1:textoExtracto "Cabezal Sercos necesita una ganancia distinta de 0" .
 
-ns1:Telegrama_AT_MDT a ns1:ComponenteElectrico ;
-    rdfs:label "Telegrama AT-MDT" ;
-    ns1:controla ns1:Modulo_RCS_S ;
-    ns1:textoExtracto "Error durante la configuración de los telegramas AT-MDT para capturar la traza programada." .
+ns1:ParametroG00FEED a ns1:Parametro ;
+    rdfs:label "Parámetro G00FEED" ;
+    ns1:textoExtracto "'Parámetro G00FEED mayor en CNC que en Regulador'" .
 
-ns1:Error4022 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 4022: Reset de contadora por Watchdog en anillo Sercos" ;
-    ns1:identificador "4022" ;
-    ns1:textoExtracto "Error en el anillo Sercos debido a un Reset de contadora por Watchdog. DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset. CAUSA Se ha producido un reset por watchdog en el módulo RCS-S, por una causa interna del software del nodo." .
+ns1:PongaseEnContactoConElServicioDeAsistenciaTecnica a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con el servicio de asistencia técnica" ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:Error4023 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 4023: Configuración fallida de traza programada en Sercos" ;
-    ns1:identificador "4023" ;
-    ns1:textoExtracto "No puede configurarse la traza programada en Sercos. DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset. CAUSA Error durante la configuración de los telegramas AT-MDT para capturar la traza programada. La traza programada no puede hacerse efectiva, bien porque se trata de un regulador no-Fagor o bien porque no hay hueco disponible para ella." .
+ns1:ReguladorHidraulico a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador Hidráulico" ;
+    ns1:textoExtracto "'Vigilancia de error de seguimiento no activa en el regulador'" .
 
-ns1:Modulo_RCS_S a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo RCS-S" ;
-    ns1:textoExtracto "Se ha producido un reset por watchdog en el módulo RCS-S, por una causa interna del software del nodo." .
+ns1:RevisarYAjustarParametrosDelRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar y ajustar parámetros del regulador" ;
+    ns1:solucionaFallo ns1:FalloErrorSercosReset ;
+    ns1:textoExtracto "Descartar reset voluntarios del regulador desde botón de reset, WinDDS (grabación de versión, soft reset) o problemas hardware en el regulador." .
+
+ns1:VigilanciaDeErrorDeSeguimiento a ns1:Parametro ;
+    rdfs:label "Vigilancia de error de seguimiento" ;
+    ns1:identificador "PP159" ;
+    ns1:textoExtracto "'Vigilancia de error de seguimiento no activa en el regulador'" .
+
+ns1:FalloErrorSercosReset a ns1:DiagnosticoFallo ;
+    rdfs:label "Error+ en el anillo Sercos debido a un reset del regulador" ;
+    ns1:textoExtracto "'Error+ en el anillo Sercos debido a un reset del regulador'" .
 

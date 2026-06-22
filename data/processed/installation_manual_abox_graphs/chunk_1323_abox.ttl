@@ -1,19 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:sistema_subrutinas_kinematicas a ns1:Sistema ;
-    rdfs:label "Sistema de subrutinas cinemáticas" ;
-    ns1:compuestoPor ns1:subrutina_KinCal_Begin,
-        ns1:subrutina_KinCal_End ;
-    ns1:textoExtracto "Todos los canales utilizan las mismas subrutinas." .
+ns1:ItActivatesPROBE1InSAFEMode a ns1:Parametro ;
+    rdfs:label "It activates PROBE1 in SAFE mode" ;
+    ns1:identificador "V.PLC.PROBE1MONIT" ;
+    ns1:textoExtracto "$IF [V.PLC.PROBE1MONIT==0] #MSG[\"PROBE NOT IN SAFE MODE\"] $ENDIF" .
 
-ns1:subrutina_KinCal_Begin a ns1:Componente ;
-    rdfs:label "Subrutina KinCal_Begin" ;
-    ns1:identificador "KinCal_Begin.nc" ;
-    ns1:textoExtracto "El nombre de las subrutinas es KinCal_Begin.nc [...] Ambas subrutinas deben estar guardadas en la carpeta ..\\Mtb\\Sub." .
+ns1:PROBE1IsEnabledConfirmationSignalToCNC a ns1:Parametro ;
+    rdfs:label "PROBE1 is enabled confirmation signal to CNC" ;
+    ns1:identificador "V.PLC.PROBE1ENA" ;
+    ns1:textoExtracto "#WAIT FOR[V.PLC.PROBE1ENA==1]" .
 
-ns1:subrutina_KinCal_End a ns1:Componente ;
-    rdfs:label "Subrutina KinCal_End" ;
-    ns1:identificador "KinCal_End.nc" ;
-    ns1:textoExtracto "El nombre de las subrutinas es [...] KinCal_End.nc. Ambas subrutinas deben estar guardadas en la carpeta ..\\Mtb\\Sub." .
+ns1:SubrutinaSubProbeToolBegin a ns1:Sistema ;
+    rdfs:label "Sub_Probe_Tool_Begin.fst" ;
+    ns1:textoExtracto "Ejemplo de subrutina Sub_Probe_Tool_Begin.fst suministrada por Fagor (a adaptar por el OEM)." .
+
+ns1:SubrutinaSubProbeToolEnd a ns1:Sistema ;
+    rdfs:label "Sub_Probe_Tool_End.fst" ;
+    ns1:textoExtracto "Ejemplo de subrutina Sub_Probe_Tool_End.fst suministrada por Fagor (a adaptar por el OEM)." .
 

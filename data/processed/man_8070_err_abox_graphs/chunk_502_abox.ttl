@@ -1,43 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_3010 a ns1:AvisoSeguridad ;
-    rdfs:label "El eje no se ha definido como palpador (PROBEAXIS)"@es ;
-    ns1:identificador "3010" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_3010 ;
-    ns1:textoExtracto "3010 'El eje no se ha definido como palpador (PROBEAXIS)' DETECCIÓN Durante la ejecución. CAUSA Hay programado un movimiento de palpado en un eje que no está definido como eje participante en un movimiento con palpador. SOLUCIÓN El parámetro PROBEAXIS establece si el eje puede participar en movimientos con palpador."@es .
+ns1:DesactivarORBITParaModificarAlgunParametroDeLaSentencia a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar #ORBIT para modificar algún parámetro de la sentencia" ;
+    ns1:solucionaFallo ns1:SeHaIntentadoActivarORBITONEstandoYaActiva ;
+    ns1:textoExtracto "SOLUCIÓN Para modificar algún parámetro de la sentencia #ORBIT, es necesario desactivarla primero." .
 
-ns1:AvisoSeguridad_3011 a ns1:AvisoSeguridad ;
-    rdfs:label "Demasiados ejes programados como palpador"@es ;
-    ns1:identificador "3011" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_3011 ;
-    ns1:textoExtracto "3011 'Demasiados ejes programados como palpador' DETECCIÓN Durante la ejecución. CAUSA El número de ejes programados en el movimiento de palpación supera el máximo de ejes del canal. SOLUCIÓN Corregir la programación del bloque de palpado."@es .
+ns1:EliminarElBloqueEnG0ODesactivarORBIT a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar el bloque en G0 o desactivar #ORBIT" ;
+    ns1:solucionaFallo ns1:SeHaProgramadoUnMovimientoEnG0ConORBITActivo ;
+    ns1:textoExtracto "SOLUCIÓN Eliminar el bloque en G0 o desactivar #ORBIT." .
 
-ns1:AvisoSeguridad_3013 a ns1:AvisoSeguridad ;
-    rdfs:label "Distancia de frenado mayor que el parámetro PROBERANGE"@es ;
-    ns1:identificador "3013" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_3013 ;
-    ns1:textoExtracto "3013 'Distancia de frenado mayor que el parámetro PROBERANGE' DETECCIÓN Durante la ejecución. CAUSA La distancia necesaria para frenar con el avance activo es mayor que la distancia máxima admisible (parámetro PROBERANGE), probablemente debido al error de seguimiento. SOLUCIÓN Disminuir el avance de palpado o disminuir el error de seguimiento."@es .
+ns1:ProgramarUnaAnchuraMayorQueElRadioDeLaHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una anchura mayor que el radio de la herramienta" ;
+    ns1:solucionaFallo ns1:LaAnchuraDeLaRanuraREsMenorOIgualQueElDiametroDeLaHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Programar una anchura mayor que el radio de la herramienta." .
 
-ns1:Parametro_PROBEAXIS a ns1:Parametro ;
-    rdfs:label "PROBEAXIS" ;
-    ns1:identificador "PROBEAXIS" ;
-    ns1:textoExtracto "El parámetro PROBEAXIS establece si el eje puede participar en movimientos con palpador."@es .
+ns1:LaAnchuraDeLaRanuraREsMenorOIgualQueElDiametroDeLaHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "La anchura de la ranura (R) es menor o igual que el diámetro de la herramienta" ;
+    ns1:textoExtracto "La anchura de la ranura (R) es menor o igual que el diámetro de la herramienta." .
 
-ns1:Parametro_PROBERANGE a ns1:Parametro ;
-    rdfs:label "PROBERANGE" ;
-    ns1:identificador "PROBERANGE" ;
-    ns1:textoExtracto "parámetro PROBERANGE [...] distancia máxima admisible"@es .
+ns1:SeHaIntentadoActivarORBITONEstandoYaActiva a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha intentado activar #ORBITON estando ya activa" ;
+    ns1:textoExtracto "CAUSA Se ha intentado activar #ORBITON estando ya activa." .
 
-ns1:DiagnosticoFallo_3010 a ns1:DiagnosticoFallo ;
-    rdfs:label "Eje no configurado como palpador"@es ;
-    ns1:textoExtracto "Hay programado un movimiento de palpado en un eje que no está definido como eje participante en un movimiento con palpador."@es .
-
-ns1:DiagnosticoFallo_3011 a ns1:DiagnosticoFallo ;
-    rdfs:label "Exceso de ejes en palpado"@es ;
-    ns1:textoExtracto "El número de ejes programados en el movimiento de palpación supera el máximo de ejes del canal."@es .
-
-ns1:DiagnosticoFallo_3013 a ns1:DiagnosticoFallo ;
-    rdfs:label "Distancia de frenado excesiva en palpado"@es ;
-    ns1:textoExtracto "La distancia necesaria para frenar con el avance activo es mayor que la distancia máxima admisible (parámetro PROBERANGE), probablemente debido al error de seguimiento."@es .
+ns1:SeHaProgramadoUnMovimientoEnG0ConORBITActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha programado un movimiento en G0 con #ORBIT activo" ;
+    ns1:textoExtracto "CAUSA Se ha programado un movimiento en G0 con #ORBIT activo." .
 

@@ -1,38 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ComponenteElectrico_IndicadoresRUN_TX_RX a ns1:ComponenteElectrico ;
-    rdfs:label "Indicadores RUN/TX/RX del módulo RIOW (Nodo 1)"@es ;
-    ns1:compuestoPor ns1:Sistema_RIOW_Nodo1 ;
-    ns1:textoExtracto "tarjetas con indicadores RUN/TX/RX"@es .
+ns1:EsquemaConexionSensorGap a ns1:Esquema ;
+    rdfs:label "Diagrama de conexión del sensor de gap" ;
+    ns1:ilustra ns1:Componente_15b899c2b3 ;
+    ns1:textoExtracto "Diagrama de conexión del sensor de gap a una entrada analógica en módulos remotos CAN (RIOR). Se identifican pines AI1+/AI1− y la cadena 'CNC – RIOR – CAN – GAP SENSOR', mostrando alternativa de cableado cuando no se usa el regulador." .
 
-ns1:ComponenteElectrico_RegletasConexion_RIO5 a ns1:ComponenteElectrico ;
-    rdfs:label "Regletas de conexión del bastidor RIO5"@es ;
-    ns1:compuestoPor ns1:Sistema_RIOR_Nodo1,
-        ns1:Sistema_RIOW_Nodo1,
-        ns1:Sistema_RIOW_Nodo2 ;
-    ns1:textoExtracto "las regletas de conexión"@es .
+ns1:EsquemaControlGap a ns1:Esquema ;
+    rdfs:label "Esquema del control de gap con boquilla láser" ;
+    ns1:textoExtracto "Esquema del control de gap con boquilla láser, superficie de pieza y eje asociado (X/Z según máquina). Muestra el sensor manteniendo una distancia fija (gap) y la compensación en el eje longitudinal para seguir irregularidades; incluye rótulos 'LASER', 'GAP' y 'Workpiece surface'." .
 
-ns1:Sistema_RIOR_Nodo1 a ns1:Sistema ;
-    rdfs:label "Tarjeta RIOR (Nodo 1) con 48 entradas y 32 salidas digitales"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_RIO5_24DI_16DO ;
-    ns1:identificador "Nodo 1 (RIOR)" ;
-    ns1:textoExtracto "tarjeta RIOR con 48 entradas y 32 salidas digitales. Se aprecia el formato de placa y conectividad, representando un único bloque lógico de 48 DI y uno de 32 DO, con mapeo desde las primeras direcciones (I1/O1)."@es .
+ns1:BloqueCNC a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque CNC" ;
+    ns1:textoExtracto "Diagrama eléctrico de conexión del sensor de gap a una entrada analógica del regulador Sercos. Representa bornes X7 (AI1+/AI1−), señal analógica ± y bloques 'CNC', 'DRIVE' y 'SERCOS', con flechas de señal entre módulos." .
 
-ns1:Sistema_RIOW_Nodo2 a ns1:Sistema ;
-    rdfs:label "Módulo RIOW (Nodo 2) con 8 entradas y 8 salidas"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_RIO5_24DI_16DO ;
-    ns1:identificador "Nodo 2 (RIOW)" ;
-    ns1:textoExtracto "módulo RIOW con 8 entradas y 8 salidas. El gráfico muestra bastidores más compactos 8DI y 8DO, con conectores y rotulación de canales, evidenciando su asignación a direcciones base no consecutivas para evitar solapamientos."@es .
+ns1:BloqueDrive a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque DRIVE" ;
+    ns1:textoExtracto "Diagrama eléctrico de conexión del sensor de gap a una entrada analógica del regulador Sercos. Representa bornes X7 (AI1+/AI1−), señal analógica ± y bloques 'CNC', 'DRIVE' y 'SERCOS', con flechas de señal entre módulos." .
 
-ns1:Sistema_RIOW_Nodo1 a ns1:Sistema ;
-    rdfs:label "Módulo RIOW (Nodo 1) con 16 entradas y 8 salidas"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_RIO5_24DI_16DO ;
-    ns1:identificador "Nodo 1 (RIOW)" ;
-    ns1:textoExtracto "módulo RIOW con 16 entradas y 8 salidas. Se representan tarjetas con indicadores RUN/TX/RX y bloques 8DI/8DO, destacando la segmentación en bloques lógicos independientes (entradas/salidas) y su indexación inicial (I1/O81 en el ejemplo)."@es .
+ns1:BloqueSercos a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque SERCOS" ;
+    ns1:textoExtracto "Diagrama eléctrico de conexión del sensor de gap a una entrada analógica del regulador Sercos. Representa bornes X7 (AI1+/AI1−), señal analógica ± y bloques 'CNC', 'DRIVE' y 'SERCOS', con flechas de señal entre módulos." .
 
-ns1:Esquema_RIO5_24DI_16DO a ns1:Esquema ;
-    rdfs:label "Esquema de bastidor RIO5 con 24+24 entradas y 16+16 salidas digitales"@es ;
-    ns1:identificador "Grupo 3" ;
-    ns1:textoExtracto "bastidor RIO5 con 24+24 entradas y 16+16 salidas digitales. El esquema visual refuerza la partición en dos bloques lógicos de entradas, mostrando la continuidad del cableado y las regletas de conexión."@es .
+ns1:Componente_15b899c2b3 a ns1:Componente ;
+    rdfs:label "Sensor de gap" ;
+    ns1:compuestoPor ns1:BloqueCNC,
+        ns1:BloqueDrive,
+        ns1:BloqueSercos ;
+    ns1:textoExtracto "Diagrama eléctrico de conexión del sensor de gap a una entrada analógica del regulador Sercos. Representa bornes X7 (AI1+/AI1−), señal analógica ± y bloques 'CNC', 'DRIVE' y 'SERCOS', con flechas de señal entre módulos." .
 

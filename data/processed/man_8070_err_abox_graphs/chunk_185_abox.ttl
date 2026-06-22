@@ -1,58 +1,63 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1365 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1365: Velocidad del cabezal negativa" ;
-    ns1:identificador "1365" ;
-    ns1:solucionaFallo ns1:Funcion_G63,
-        ns1:Parametro_VelocidadCabezal ;
-    ns1:textoExtracto "1365 'No se admite velocidad del cabezal negativa' [...] CAUSA Velocidad de cabezal negativa. SOLUCIÓN La velocidad de cabezal debe ser positiva; sólo se permite un valor negativo si se programa en el mismo bloque que la función G63." .
+ns1:CNC8070_3eb2f56db2 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:DemasiadosValoresParaInicializarElArray,
+        ns1:DetectadoUnCaracterNoValidoEnElBloque,
+        ns1:ErrorEnLaLecturaDeLaVariable,
+        ns1:LaVariableDeUsuarioNoExiste,
+        ns1:LaVariableDefinidaYaExiste,
+        ns1:NoSePuedeBorrarLaVariable ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Fallo_1367 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1367: Cambio de gama y movimiento del cabezal simultáneos" ;
-    ns1:identificador "1367" ;
-    ns1:solucionaFallo ns1:Funcion_G112,
-        ns1:Funcion_M_MovimientoCabezal ;
-    ns1:textoExtracto "1367 'No se permite un cambio de gama y movimiento del cabezal simultáneos' [...] CAUSA En el mismo bloque hay programada una función M de movimiento de cabezal y la función G112 de cambio del set de parámetros." .
+ns1:ElCNCSoloPuedeBorrarVariablesDeUsuarioPrefijosPYS a ns1:AccionProhibida ;
+    rdfs:label "El CNC sólo puede borrar variables de usuario (prefijos P y S)" ;
+    ns1:textoExtracto "SOLUCIÓN El CNC sólo puede borrar variables de usuario (prefijos P y S)." .
 
-ns1:Fallo_1368 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1368: Centro y radio del círculo programados simultáneamente" ;
-    ns1:identificador "1368" ;
-    ns1:solucionaFallo ns1:Parametro_CentroCirculo,
-        ns1:Parametro_RadioCirculo ;
-    ns1:textoExtracto "1368 'No se permite programar centro y radio del círculo simultáneamente' [...] CAUSA La interpolación circular está definida con el radio y el centro. SOLUCIÓN En una interpolación circular hay que programar las cotas del punto final y además el radio o el centro del círculo." .
+ns1:LosComandosVARENDVARDELETENoPermitenEsteTipoDeVariable a ns1:AccionProhibida ;
+    rdfs:label "Los comandos #VAR/#ENDVAR/#DELETE no permiten este tipo de variable" ;
+    ns1:textoExtracto "Los comandos #VAR/#ENDVAR/#DELETE no permiten este tipo de variable. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado borrar una variable del CNC o se ha intentado crear una nueva variable con uno de los prefijos predefinidos por el CNC." .
 
-ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "velocidad del cabezal negativa [...] velocidad de cabezal debe ser positiva [...] movimiento de cabezal" .
+ns1:RevisarLaSintaxisDelBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la sintaxis del bloque" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la sintaxis del bloque. La sentencia se debe programar sola en el bloque o junto a la etiqueta del bloque. Este sentencia sólo permite variables de usuario." .
 
-ns1:Funcion_G112 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G112 (cambio de set de parámetros)" ;
-    ns1:identificador "G112" ;
-    ns1:textoExtracto "función G112 de cambio del set de parámetros" .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:DemasiadosValoresParaInicializarElArray,
+        ns1:DetectadoUnCaracterNoValidoEnElBloque,
+        ns1:ErrorEnLaLecturaDeLaVariable,
+        ns1:LaVariableDeUsuarioNoExiste,
+        ns1:LaVariableDefinidaYaExiste,
+        ns1:NoSePuedeBorrarLaVariable ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Funcion_G63 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G63" ;
-    ns1:identificador "G63" ;
-    ns1:textoExtracto "función G63" .
+ns1:SeEsperaVariableOParametro a ns1:DiagnosticoFallo ;
+    rdfs:label "Se espera variable o parámetro" ;
+    ns1:textoExtracto "'Se espera variable o parámetro' DETECCIÓN Durante la ejecución. CAUSA Programación incorrecta de la sentencia $IF EXIST." .
 
-ns1:Funcion_M_MovimientoCabezal a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M (movimiento de cabezal)" ;
-    ns1:textoExtracto "función M de movimiento de cabezal" .
+ns1:DemasiadosValoresParaInicializarElArray a ns1:DiagnosticoFallo ;
+    rdfs:label "Demasiados valores para inicializar el array" ;
+    ns1:textoExtracto "'Demasiados valores para inicializar el array' DETECCIÓN Durante la ejecución. CAUSA En la inicialización de una variable de array de usuario, el CNC inicializa más posiciones de las que tiene." .
 
-ns1:Parametro_CentroCirculo a ns1:Parametro ;
-    rdfs:label "Centro del círculo" ;
-    ns1:textoExtracto "centro del círculo" .
+ns1:DetectadoUnCaracterNoValidoEnElBloque a ns1:AccionProhibida ;
+    rdfs:label "Detectado un carácter no válido en el bloque" ;
+    ns1:textoExtracto "'#DELETE: carácter no válido' DETECCIÓN Durante la ejecución. CAUSA Detectado un carácter no válido en el bloque." .
 
-ns1:Parametro_RadioCirculo a ns1:Parametro ;
-    rdfs:label "Radio del círculo" ;
-    ns1:textoExtracto "radio del círculo" .
+ns1:ErrorEnLaLecturaDeLaVariable a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la lectura de la variable" ;
+    ns1:textoExtracto "'Error en la lectura de la variable' DETECCIÓN Durante la ejecución. CAUSA El CNC no puede leer la variable." .
 
-ns1:Parametro_VelocidadCabezal a ns1:Parametro ;
-    rdfs:label "Velocidad del cabezal" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal ;
-    ns1:textoExtracto "velocidad de cabezal negativa [...] velocidad de cabezal debe ser positiva" .
+ns1:LaVariableDeUsuarioNoExiste a ns1:AccionProhibida ;
+    rdfs:label "La variable de usuario no existe" ;
+    ns1:textoExtracto "'#DELETE: la variable a borrar no existe' DETECCIÓN Durante la ejecución. CAUSA La variable de usuario no existe." .
+
+ns1:LaVariableDefinidaYaExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "La variable definida ya existe" ;
+    ns1:textoExtracto "'#VAR/#ENDVAR: la variable definida ya existe' DETECCIÓN Durante la ejecución. CAUSA La variable de usuario ya existe." .
+
+ns1:NoSePuedeBorrarLaVariable a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede borrar la variable" ;
+    ns1:textoExtracto "'No se puede borrar la variable' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado borrar una variable del sistema." .
 

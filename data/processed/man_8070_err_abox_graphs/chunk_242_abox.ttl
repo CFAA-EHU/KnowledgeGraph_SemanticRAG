@@ -1,57 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_RPT a ns1:Parametro ;
-    rdfs:label "Comando #RPT (repetición de bloques)"@es ;
-    ns1:solucionaFallo ns1:Error_1501,
-        ns1:Error_1506,
-        ns1:Error_1507 ;
-    ns1:textoExtracto "repetición de bloques (#RPT)"@es .
+ns1:OperadorIncorrectoParaElTipoDeVariable a ns1:DiagnosticoFallo ;
+    rdfs:label "Operador incorrecto para el tipo de variable" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución." .
 
-ns1:Variable_Array a ns1:Parametro ;
-    rdfs:label "Variable de tipo array"@es ;
-    ns1:solucionaFallo ns1:Error_1502,
-        ns1:Error_1504 ;
-    ns1:textoExtracto "La variable no permite programación de índice de array"@es .
+ns1:ProgramarTOOLAXAntesDeEjecutarElCicloPROBE1 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar #TOOL AX[+] antes de ejecutar el ciclo PROBE1" ;
+    ns1:solucionaFallo ns1:PROBE1ProgramacionNoPermitidaConTOOLAXActivo ;
+    ns1:textoExtracto "SOLUCIÓN Programar #TOOL AX[+] antes de ejecutar el ciclo PROBE1 para orientar la herramienta en el sentido positivo del eje." .
 
-ns1:Variable_Eje a ns1:Parametro ;
-    rdfs:label "Variable de tipo eje"@es ;
-    ns1:solucionaFallo ns1:Error_1503,
-        ns1:Error_1505 ;
-    ns1:textoExtracto "La variable es de eje y no se ha indicado el nombre del eje" .
+ns1:RestaurarConfiguracionInicial a ns1:TareaMantenimiento ;
+    rdfs:label "Restaurar configuración inicial" ;
+    ns1:solucionaFallo ns1:PROBE1EjeNoValidoParaCicloDePalpador ;
+    ns1:textoExtracto "SOLUCIÓN Restaurar la configuración inicial de los tres primeros ejes del canal." .
 
-ns1:Error_1501 a ns1:DiagnosticoFallo ;
-    rdfs:label "Etiquetas repetidas en #RPT"@es ;
-    ns1:identificador "1501" ;
-    ns1:textoExtracto "'Etiquetas repetidas en #RPT' DETECCIÓN Durante la ejecución. CAUSA En la sentencia #RPT la etiqueta inicial y final es la misma. SOLUCIÓN Definir etiquetas inicial y final diferentes."@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:ElNumeroDeErrorIndicadoEnLaSentenciaERROROWARNINGNoExiste ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Error_1502 a ns1:DiagnosticoFallo ;
-    rdfs:label "La variable requiere programación de índice de array"@es ;
-    ns1:identificador "1502" ;
-    ns1:textoExtracto "'La variable requiere programación de índice de array' DETECCIÓN Durante la ejecución. CAUSA La variable es de array y no se ha indicado el índice. SOLUCIÓN Consultar en los manuales la lista de variables."@es .
+ns1:ElNumeroDeErrorIndicadoEnLaSentenciaERROROWARNINGNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "El número de error indicado en la sentencia #ERROR o #WARNING no existe" ;
+    ns1:textoExtracto "CAUSA El número de error indicado en la sentencia #ERROR o #WARNING no existe." .
 
-ns1:Error_1503 a ns1:DiagnosticoFallo ;
-    rdfs:label "La variable requiere programación de eje"@es ;
-    ns1:identificador "1503" ;
-    ns1:textoExtracto "'La variable requiere programación de eje' DETECCIÓN Durante la ejecución. CAUSA La variable es de eje y no se ha indicado el nombre del eje. SOLUCIÓN Consultar en los manuales la lista de variables."@es .
+ns1:PROBE1EjeNoValidoParaCicloDePalpador a ns1:DiagnosticoFallo ;
+    rdfs:label "#PROBE1: eje no válido para ciclo de palpador" ;
+    ns1:textoExtracto "CAUSA El ciclo PROBE1 da error porque los tres primeros ejes de la configuración actual no coinciden con los tres primeros ejes de la configuración inicial." .
 
-ns1:Error_1504 a ns1:DiagnosticoFallo ;
-    rdfs:label "La variable no permite programación de índice de array"@es ;
-    ns1:identificador "1504" ;
-    ns1:textoExtracto "'La variable no permite programación de índice de array' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la variable es incorrecta. SOLUCIÓN Consultar en los manuales la lista de variables."@es .
-
-ns1:Error_1505 a ns1:DiagnosticoFallo ;
-    rdfs:label "La variable no permite programación de eje"@es ;
-    ns1:identificador "1505" ;
-    ns1:textoExtracto "'La variable no permite programación de eje' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la variable es incorrecta. SOLUCIÓN Consultar en los manuales la lista de variables."@es .
-
-ns1:Error_1506 a ns1:DiagnosticoFallo ;
-    rdfs:label "Etiqueta no definida o etiquetas del comando #RPT intercambiadas"@es ;
-    ns1:identificador "1506" ;
-    ns1:textoExtracto "'Etiqueta no definida o etiquetas del comando #RPT intercambiadas' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • Falta definir la segunda etiqueta. • Se ha programado M30 entre la primera y la segunda etiqueta. • En la sentencia #RPT se ha programado primero la segunda etiqueta y luego la primera. SOLUCIÓN Revisar la programación."@es .
-
-ns1:Error_1507 a ns1:DiagnosticoFallo ;
-    rdfs:label "La segunda etiqueta del #RPT debe programarse sola en el bloque"@es ;
-    ns1:identificador "1507" ;
-    ns1:textoExtracto "'La segunda etiqueta del #RPT debe programarse sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA En una repetición de bloques (#RPT), la segunda etiqueta debe programarse sola en el bloque, sin ningún otro tipo de información. SOLUCIÓN La etiqueta final se debe programar sola en el bloque. Programar el comando en la línea anterior si se desea que se ejecute con el #RPT o en la línea inferior si no se desea que se ejecute con el #RPT."@es .
+ns1:PROBE1ProgramacionNoPermitidaConTOOLAXActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "#PROBE1: programación no permitida con #TOOL AX[-] activo" ;
+    ns1:textoExtracto "CAUSA El CNC ha intentado ejecutar el ciclo PROBE1 teniendo la herramienta orientada en el sentido negativo del eje." .
 

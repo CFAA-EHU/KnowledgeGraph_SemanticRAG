@@ -1,32 +1,16 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_DeteccionTemperatura a ns1:Sistema ;
-    rdfs:label "Sistema de detección de sobretemperatura del CNC"@es ;
-    ns1:controla ns1:Parametro_TemperaturaLimite ;
-    ns1:textoExtracto "DETECCIÓN Durante el funcionamiento del CNC. [...] chequeo de la temperatura ambiente del equipo"@es ;
-    ns1:tieneComponente ns1:Sensor_TemperaturaAmbiente .
+ns1:CNC8070_2b732906b9 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC ha intentado escribir (#WRITE) en un archivo que no está abierto." .
 
-ns1:Sensor_TemperaturaAmbiente a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura ambiente del CNC"@es ;
-    ns1:monitoreaParametro ns1:Parametro_TemperaturaLimite ;
-    ns1:textoExtracto "El CNC realiza cada minuto un chequeo de la temperatura ambiente del equipo; si en tres muestras seguidas la temperatura supera los 60ºC (140ºF)"@es .
+ns1:SolucionParaEscrituraEnArchivoNoAbierto a ns1:TareaMantenimiento ;
+    rdfs:label "Solución para escritura en archivo no abierto" ;
+    ns1:solucionaFallo ns1:EscribirEnArchivoNoAbierto ;
+    ns1:textoExtracto "SOLUCIÓN" .
 
-ns1:Solucion_LoopTime a ns1:Parametro ;
-    rdfs:label "Parámetro LOOPTIME"@es ;
-    ns1:identificador "LOOPTIME" ;
-    ns1:solucionaFallo ns1:Fallo_0169 ;
-    ns1:textoExtracto "Ajustar el parámetro LOOPTIME"@es .
-
-ns1:Fallo_0169 a ns1:AvisoSeguridad ;
-    rdfs:label "Sobrepasada temperatura de seguridad (Código 0169)"@es ;
-    ns1:identificador "0169" ;
-    ns1:mitigaRiesgo ns1:Solucion_LoopTime ;
-    ns1:textoExtracto "Sobrepasada temperatura de seguridad. En riesgo la integridad del equipo. Contactar con el SAT."@es .
-
-ns1:Parametro_TemperaturaLimite a ns1:Parametro ;
-    rdfs:label "Umbral de temperatura crítica (60ºC / 140ºF)"@es ;
-    ns1:activaAlarma ns1:Fallo_0169 ;
-    ns1:textoExtracto "si en tres muestras seguidas la temperatura supera los 60ºC (140ºF)"@es ;
-    ns1:valor "60" .
+ns1:EscribirEnArchivoNoAbierto a ns1:AccionProhibida ;
+    rdfs:label "Escribir en archivo no abierto" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado escribir (#WRITE) en un archivo que no está abierto." .
 

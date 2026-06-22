@@ -1,42 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_2150 a ns1:Alarma ;
-    rdfs:label "Bloque adicional entre dos polinomios"@es ;
-    ns1:identificador "2150 #TANGCTRL" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_2150 ;
-    ns1:textoExtracto "2150 #TANGCTRL: Bloque adicional entre dos polinomios. DETECCIÓN Durante la ejecución. CAUSA El CNC introduce un bloque adicional de posicionamiento para el eje tangencial, entre dos polinomios."@es .
+ns1:ConfigurarCanalConAlMenosDosEjes a ns1:TareaMantenimiento ;
+    rdfs:label "Configurar canal con al menos dos ejes" ;
+    ns1:solucionaFallo ns1:TrayectoriaCircularNoPermitidaSinDosEjesEnElPlanoPrincipal ;
+    ns1:textoExtracto "SOLUCIÓN Configurar el canal con al menos dos ejes." .
 
-ns1:Alarma_2151 a ns1:Alarma ;
-    rdfs:label "Programación de splines y control tangencial incompatibles"@es ;
-    ns1:identificador "2151" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_2151 ;
-    ns1:textoExtracto "2151 'Programación de splines y control tangencial incompatibles' DETECCIÓN Durante la ejecución. CAUSA No se permite activar el control tangencial con el modo splines activo ni viceversa."@es .
+ns1:ConsultarEnElManualDeProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar en el manual de programación" ;
+    ns1:solucionaFallo ns1:ParametroSLOPE ;
+    ns1:textoExtracto "SOLUCIÓN Consultar en el manual de programación el formato correcto." .
 
-ns1:Alarma_2152 a ns1:Alarma ;
-    rdfs:label "Posición teórica inalcanzable en el FACE por desalineamiento de herramienta"@es ;
-    ns1:identificador "2152" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_2152 ;
-    ns1:textoExtracto "2152 'Posición teórica inalcanzable en el FACE, por desalineamiento de herramienta' DETECCIÓN Durante la ejecución. CAUSA El eje C no puede alcanzar la posición debido al desalineamiento de la herramienta respecto al eje de giro."@es .
+ns1:ProgramarElRoscadoConLosEjesDisponiblesOConfigurarLosEjesDelCanal a ns1:TareaMantenimiento ;
+    rdfs:label "Programar el roscado con los ejes disponibles o configurar los ejes del canal" ;
+    ns1:solucionaFallo ns1:EjeDeRoscadoNoEnElCanal ;
+    ns1:textoExtracto "SOLUCIÓN Programar el roscado con los ejes disponibles o configurar los ejes del canal para poder realizar la rosca." .
 
-ns1:Empresa_FagorAutomation a ns1:Empresa ;
-    rdfs:label "Fagor Automation"@es ;
-    ns1:textoExtracto "Póngase en contacto con Fagor Automation."@es .
+ns1:ProgramarMovimientoParaElEjeDeRoscado a ns1:TareaMantenimiento ;
+    rdfs:label "Programar movimiento para el eje de roscado" ;
+    ns1:solucionaFallo ns1:MovimientoNuloEnRoscado ;
+    ns1:textoExtracto "SOLUCIÓN Programar el movimiento para el eje de roscado." .
 
-ns1:DiagnosticoFallo_2150 a ns1:DiagnosticoFallo ;
-    rdfs:label "Bloque adicional de posicionamiento en eje tangencial"@es ;
-    ns1:textoExtracto "El CNC introduce un bloque adicional de posicionamiento para el eje tangencial, entre dos polinomios."@es .
+ns1:EjeDeRoscadoNoEnElCanal a ns1:AccionProhibida ;
+    rdfs:label "Eje de roscado no en el canal" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El eje de roscado no se encuentra en el canal." .
 
-ns1:DiagnosticoFallo_2151 a ns1:DiagnosticoFallo ;
-    rdfs:label "Incompatibilidad entre splines y control tangencial"@es ;
-    ns1:textoExtracto "No se permite activar el control tangencial con el modo splines activo ni viceversa."@es .
+ns1:MovimientoNuloEnRoscado a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento nulo en roscado" ;
+    ns1:textoExtracto "'Movimiento nulo en roscado' DETECCIÓN Durante la ejecución. CAUSA No hay movimiento programado para el eje de roscado." .
 
-ns1:DiagnosticoFallo_2152 a ns1:DiagnosticoFallo ;
-    rdfs:label "Desalineamiento de herramienta en eje C"@es ;
-    ns1:requiereConsumible ns1:Herramienta_Desalineada ;
-    ns1:textoExtracto "El eje C no puede alcanzar la posición debido al desalineamiento de la herramienta respecto al eje de giro."@es .
+ns1:ParametroSLOPE a ns1:Parametro ;
+    rdfs:label "Parámetro SLOPE" ;
+    ns1:textoExtracto "2140 SLOPE:Parámetro no válido. DETECCIÓN Durante la ejecución. CAUSA Algún parámetro de la sentencia de programación #SLOPE es incorrecto." .
 
-ns1:Herramienta_Desalineada a ns1:Herramienta ;
-    rdfs:label "Herramienta desalineada en eje C"@es ;
-    ns1:textoExtracto "desalineamiento de la herramienta respecto al eje de giro"@es .
+ns1:TrayectoriaCircularNoPermitidaSinDosEjesEnElPlanoPrincipal a ns1:DiagnosticoFallo ;
+    rdfs:label "Trayectoria circular no permitida sin dos ejes en el plano principal" ;
+    ns1:textoExtracto "2141 Trayectoria circular no permitida sin dos ejes en el plano principal. DETECCIÓN Durante la ejecución." .
 

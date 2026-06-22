@@ -1,11 +1,36 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Deteccion1677 a ns1:AvisoSeguridad ;
-    ns1:textoExtracto "Se ha desactivado #RTCP/TLC' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer una búsqueda de referencia con la función #RTCP ó #TLC activa. SOLUCIÓN Para ejecutar un búsqueda de referencia hay que desactivar las funciones #RTCP/TLC." .
+ns1:InicializarCotaMaquinaSinDesactivarLaCinematicaOTransformacionActiva a ns1:AccionProhibida ;
+    rdfs:label "Inicializar cota máquina sin desactivar la cinemática o transformación activa" ;
+    ns1:solucionaFallo ns1:Entity1668GrupoMultiejeFueraDeRango ;
+    ns1:textoExtracto "'Para inicializar la cota máquina en dicho eje, desactivar la cinemática o transformación activa.'" .
 
-ns1:Deteccion1678 a ns1:AvisoSeguridad ;
-    ns1:textoExtracto "'Variable existente sólo para captación externa analógica' DETECCIÓN Durante la ejecución. CAUSA La variable programada sólo existe para ejes con captación externa analógica y el eje indicado no cumple esa condición. SOLUCIÓN Revisar la programación. Consultar en los manuales las variables accesibles según el tipo de eje." .
+ns1:ProgramarROTATEMZ14ConPosicionIncorrecta a ns1:AccionProhibida ;
+    rdfs:label "Programar #ROTATEMZ1-4 con posición incorrecta" ;
+    ns1:solucionaFallo ns1:Entity1668GrupoMultiejeFueraDeRango ;
+    ns1:textoExtracto "'Revisar la programación. Programar la posición a seleccionar en la torreta o el número de posiciones a girar.'" .
 
-ns1:Deteccion1679 a ns1:AvisoSeguridad ;
-    ns1:textoExtracto "'No se admite #CAM SELECT con la leva en ejecución o en proceso de carga' DETECCIÓN Durante la ejecución. CAUSA El CNC ha solicitado la carga de una leva que está en ejecución o en un proceso previo de carga. SOLUCIÓN Esperar a que finalice la ejecución o la carga de la leva." .
+ns1:ProgramarSentenciaROTATEMZ14ConSintaxisIncorrecta a ns1:AccionProhibida ;
+    rdfs:label "Programar sentencia #ROTATEMZ1-4 con sintaxis incorrecta" ;
+    ns1:textoExtracto "'La sintaxis de la sentencia no es correcta o hay más información en el bloque.'" .
+
+ns1:RevisarProgramacionYCorregirErrores a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación y corregir errores" ;
+    ns1:solucionaFallo ns1:Entity1668GrupoMultiejeFueraDeRango ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar la programación. Programar adecuadamente el número del grupo multieje.'" .
+
+ns1:VariableQueDefineElNombreDelGrupoMultieje a ns1:Parametro ;
+    rdfs:label "Variable que define el nombre del grupo multieje" ;
+    ns1:identificador "V.MPG.MULAXISNAMExn[grupo]" ;
+    ns1:textoExtracto "'Variable (V.)MPG.MULAXISNAMExn[grupo] o (V.)MPG.KEEPPOSxn[grupo].'" .
+
+ns1:VariableQueMantieneLaPosicionDelGrupoMultieje a ns1:Parametro ;
+    rdfs:label "Variable que mantiene la posición del grupo multieje" ;
+    ns1:identificador "V.MPG.KEEPPOSxn[grupo]" ;
+    ns1:textoExtracto "'Variable (V.)MPG.MULAXISNAMExn[grupo] o (V.)MPG.KEEPPOSxn[grupo].'" .
+
+ns1:Entity1668GrupoMultiejeFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "1668 Grupo multieje fuera de rango" ;
+    ns1:textoExtracto "'1668 'Grupo multieje fuera de rango''" .
 

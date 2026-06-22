@@ -1,21 +1,19 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Entrada_I12 a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada I12"@es ;
-    ns1:documentadoEn ns1:InterfazUsuario_EntradasSalidas ;
-    ns1:identificador "I12" ;
-    ns1:textoExtracto "Devuelve un 1 si la entrada I12 se encuentra activa y un 0 en caso contrario."@es .
+ns1:EjecucionDeSubrutina a ns1:TareaMantenimiento ;
+    rdfs:label "Ejecución de subrutina" ;
+    ns1:textoExtracto "Si el resultado obtenido en la evaluación de la expresión lógica es un \"1\" esta acción será tratada por el PLC como la proposición directiva END." .
 
-ns1:Tecla_START a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla START"@es ;
-    ns1:documentadoEn ns1:InterfazUsuario_EntradasSalidas ;
-    ns1:identificador "START" ;
-    ns1:textoExtracto "Devuelve un 1 cuando la tecla start del panel frontal está pulsada y un 0 en caso contrario."@es .
+ns1:FinalizacionDeSubrutina a ns1:AccionProhibida ;
+    rdfs:label "Finalización de subrutina" ;
+    ns1:textoExtracto "Si durante la ejecución de una subrutina el PLC detecta un RET validado dará por finalizada la subrutina." .
 
-ns1:InterfazUsuario_EntradasSalidas a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de entradas/salidas y recursos lógicos"@es ;
-    ns1:textoExtracto "Testean el estado de los recursos y devuelven su estado lógico. • Entradas (I1-I1024) • Salidas (O1-O1024) • Entradas locales (LI1-LI16) • Salidas locales (LO1-LO8) • Marcas (M1-M8192) • Mensajes (MSG1-MSG1024) • Errores (ERR1-ERR1024) • Relojes (CLK) • Registros (R1-R1024) • Bit de registros (B0-B31 R1-R1024) • Estado de los temporizadores (T1-T512) • Estado de los contadores (C1-C256) • Marcas de comunicación CNC-PLC."@es ;
-    ns1:tieneComponente ns1:Entrada_I12,
-        ns1:Tecla_START .
+ns1:IgnorarRET a ns1:AccionProhibida ;
+    rdfs:label "Ignorar RET" ;
+    ns1:textoExtracto "Si el resultado es \"0\", será ignorada por el PLC." .
+
+ns1:NoEjecucionDeSubrutina a ns1:AccionProhibida ;
+    rdfs:label "No ejecución de subrutina" ;
+    ns1:textoExtracto "Con I2=0 no se ejecuta la subrutina y el PLC asigna a la salida O2 el valor de la entrada I2 (0)." .
 

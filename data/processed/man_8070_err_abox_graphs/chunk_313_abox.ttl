@@ -1,48 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1681 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1681: Demasiados canales programados en sentencia" ;
-    ns1:identificador "1681" ;
-    ns1:textoExtracto "1681 'Demasiados canales programados en sentencia' DETECCIÓN Durante la ejecución. CAUSA En la sentencia #DGWZ hay programado más de un número de canal. SOLUCIÓN Programar un único número de canal C1-C4." .
+ns1:ConsultarPermisosDeAccesoDeLasVariables a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar permisos de acceso de las variables" ;
+    ns1:solucionaFallo ns1:FalloCabezalSincronizado ;
+    ns1:textoExtracto "Consultar en los manuales los permisos de acceso de las variables." .
 
-ns1:AvisoSeguridad_1682 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1682: Solo se permite programar un número de pieza" ;
-    ns1:identificador "1682" ;
-    ns1:textoExtracto "1682 'Sólo se permite programar un número de pieza' DETECCIÓN Durante la ejecución. CAUSA En la sentencia #DGWZ hay programado más de un número de pieza. SOLUCIÓN Programar un único número de pieza P1-P4." .
+ns1:ReferenciarCabezalesAntesDeSincronizarlos a ns1:TareaMantenimiento ;
+    rdfs:label "Referenciar cabezales antes de sincronizarlos" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteG74G174ParaCabezalesSincronizados ;
+    ns1:textoExtracto "El CNC referencia los cabezales antes de sincronizarlos." .
 
-ns1:AvisoSeguridad_1683 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1683: Sentencia #REPOS solo en subrutinas de interrupción" ;
-    ns1:identificador "1683" ;
-    ns1:textoExtracto "1683 'La sentencia #REPOS solo se admite en subrutinas de interrupción' DETECCIÓN Durante la ejecución. CAUSA La instrucción #REPOS no está programada en una subrutina de interrupción. SOLUCIÓN Sólo se permite programar la sentencia #REPOS en las subrutinas de interrupción." .
+ns1:CNC8070_b6bc634e48 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:NoSeAdmiteG74G174ParaCabezalesSincronizados ;
+    ns1:textoExtracto "el CNC no permite programar una búsqueda de cero ni forzar cota en ninguno de ellos." .
 
-ns1:AvisoSeguridad_1684 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1684: Subrutina local y M, T, o G con subrutina en el mismo bloque" ;
-    ns1:identificador "1684" ;
-    ns1:textoExtracto "1684 'Subrutina local y M, T, o G con subrutina en el mismo bloque' DETECCIÓN Durante la ejecución. CAUSA Un mismo bloque de programa está ejecutando una llamada a una subrutina local y una función M, T o G que tienen una subrutina asociada. SOLUCIÓN Programar la llamada a la subrutina local en otro bloque de programa." .
+ns1:FalloCabezalSincronizado a ns1:DiagnosticoFallo ;
+    rdfs:label "Variable no accesible por programa o MDI" ;
+    ns1:textoExtracto "'Variable no accesible por programa o MDI'" .
 
-ns1:AvisoSeguridad_1685 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1685: $GOTO no permitido a bloques anidados" ;
-    ns1:identificador "1685" ;
-    ns1:textoExtracto "1685 '$GOTO:Salto a bloques anidados dentro de $IF, $FOR, $WHILE... no permitido' DETECCIÓN Durante la ejecución. CAUSA La instrucción $GOTO no está dentro de un bucle pero está saltando a una etiqueta definida dentro de un bucle $IF, $FOR, etc. SOLUCIÓN Revisar la programación. No se permite realizar saltos al interior de un bucle." .
-
-ns1:AvisoSeguridad_1686 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1686: Path del fichero demasiado largo" ;
-    ns1:identificador "1686" ;
-    ns1:textoExtracto "1686 El path del fichero es demasiado largo. DETECCIÓN Durante la ejecución. CAUSA El path definido es demasiado largo. SOLUCIÓN La longitud máxima permitida para el path es de 120 caracteres." .
-
-ns1:Parametro_C1_C4 a ns1:Parametro ;
-    rdfs:label "Rango de número de canal válido" ;
-    ns1:textoExtracto "Programar un único número de canal C1-C4." ;
-    ns1:valor "C1-C4" .
-
-ns1:Parametro_P1_P4 a ns1:Parametro ;
-    rdfs:label "Rango de número de pieza válido" ;
-    ns1:textoExtracto "Programar el número de pieza dentro del rango P1-P4." ;
-    ns1:valor "P1-P4" .
-
-ns1:Parametro_PathMaxLength a ns1:Parametro ;
-    rdfs:label "Longitud máxima permitida para path" ;
-    ns1:textoExtracto "La longitud máxima permitida para el path es de 120 caracteres." ;
-    ns1:valor "120" .
+ns1:NoSeAdmiteG74G174ParaCabezalesSincronizados a ns1:AccionProhibida ;
+    rdfs:label "No se admite G74-G174 para cabezales sincronizados" ;
+    ns1:mitigaRiesgo ns1:CNC8070_b6bc634e48 ;
+    ns1:textoExtracto "'No se admite G74-G174 para cabezales sincronizados'" .
 

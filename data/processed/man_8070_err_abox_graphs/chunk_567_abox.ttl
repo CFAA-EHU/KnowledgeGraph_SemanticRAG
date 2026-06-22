@@ -1,50 +1,60 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_AparcamientoEjesGantryTandem a ns1:DiagnosticoFallo ;
-    rdfs:label "Imposibilidad de aparcar ejes gantry/tándem o habilitados (DRENA/SPENA)"@es ;
-    ns1:identificador "3714" ;
-    ns1:textoExtracto "3714 No se pueden aparcar ejes gantry o tándem ni ejes habilitados con DRENA o SPENA. DETECCIÓN Aparcando un eje o cabezal desde PLC. CAUSA El PLC intenta aparcar un eje que forma parte de una pareja gantry, un eje o cabezal que forma parte de una pareja tándem o un eje habilitado (DRENA/SPENA)."@es .
+ns1:DesactivarLaMarcaSPDLEREVDelPLC_a9a8db5e7a a ns1:AccionProhibida ;
+    rdfs:label "Desactivar la marca SPDLEREV del PLC" ;
+    ns1:solucionaFallo ns1:LimiteDeRecorridoDelEjeSobrepasadoPLC_d17c5c1e15 ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar la marca SPDLEREV del PLC." .
 
-ns1:Fallo_InicializacionParametroTandem a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo en inicialización de control de par adicional (eje tándem)"@es ;
-    ns1:solucionaFallo ns1:Accion_DefinirParametrosTandem,
-        ns1:Accion_HabilitarEjeEsclavo,
-        ns1:Accion_ResetCNC ;
-    ns1:textoExtracto "El CNC no ha podido inicializar el control de par adicional porque la información de algún parámetro no está disponible. SOLUCIÓN Definir y validar los parámetros máquina del eje tándem o habilitar el eje esclavo y reseatear el CNC."@es .
+ns1:Parametro_1bbc2d34fc a ns1:Parametro ;
+    rdfs:label "Parámetro FEDYNFAC" ;
+    ns1:identificador "FEDYNFAC" ;
+    ns1:textoExtracto "definido en los parámetros máquina (MAXFLWE, MINFLWE, FEDYNFAC, ESTDELAY)." .
 
-ns1:Modo_DRENA a ns1:ModoOperacion ;
-    rdfs:label "Modo DRENA"@es ;
-    ns1:identificador "DRENA" ;
-    ns1:textoExtracto "ejes habilitados con DRENA"@es .
+ns1:Parametro_46820a0ea2 a ns1:Parametro ;
+    rdfs:label "Parámetro REFVALUE" ;
+    ns1:identificador "REFVALUE" ;
+    ns1:textoExtracto "El valor del parámetro REFVALUE sobrepasa los límites de software del eje." .
 
-ns1:Modo_SPENA a ns1:ModoOperacion ;
-    rdfs:label "Modo SPENA"@es ;
-    ns1:identificador "SPENA" ;
-    ns1:textoExtracto "ejes habilitados con SPENA"@es .
+ns1:Parametro_5509b51296 a ns1:Parametro ;
+    rdfs:label "Parámetro MINFLWE" ;
+    ns1:identificador "MINFLWE" ;
+    ns1:textoExtracto "definido en los parámetros máquina (MAXFLWE, MINFLWE, FEDYNFAC, ESTDELAY)." .
 
-ns1:Parametro_ControlParAdicional a ns1:Parametro ;
-    rdfs:label "Parámetro de control de par adicional (eje tándem)"@es ;
-    ns1:monitoreaParametro ns1:Sistema_EjesTandem ;
-    ns1:textoExtracto "información de algún parámetro no está disponible"@es .
+ns1:Parametro_9306dd427d a ns1:Parametro ;
+    rdfs:label "Parámetro MAXFLWE" ;
+    ns1:identificador "MAXFLWE" ;
+    ns1:textoExtracto "definido en los parámetros máquina (MAXFLWE, MINFLWE, FEDYNFAC, ESTDELAY)." .
 
-ns1:Sistema_EjesGantry a ns1:Sistema ;
-    rdfs:label "Sistema de ejes gantry"@es ;
-    ns1:textoExtracto "eje que forma parte de una pareja gantry"@es .
+ns1:Parametro_baaaeb5e63 a ns1:Parametro ;
+    rdfs:label "Parámetro ESTDELAY" ;
+    ns1:identificador "ESTDELAY" ;
+    ns1:textoExtracto "definido en los parámetros máquina (MAXFLWE, MINFLWE, FEDYNFAC, ESTDELAY)." .
 
-ns1:Accion_DefinirParametrosTandem a ns1:TareaMantenimiento ;
-    rdfs:label "Definir y validar parámetros máquina del eje tándem"@es ;
-    ns1:textoExtracto "Definir y validar los parámetros máquina del eje tándem"@es .
+ns1:RevisarElParametroREFVALUEYLosLimitesDeSoftware a ns1:AccionProhibida ;
+    rdfs:label "Revisar el parámetro REFVALUE y los límites de software" ;
+    ns1:solucionaFallo ns1:LaPosicionDeReferenciaSobrepasaLosLimitesDeSoftware ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el parámetro REFVALUE y los límites de software." .
 
-ns1:Accion_HabilitarEjeEsclavo a ns1:TareaMantenimiento ;
-    rdfs:label "Habilitar eje esclavo"@es ;
-    ns1:textoExtracto "habilitar el eje esclavo"@es .
+ns1:RevisarLaProgramacion_17e9d559bb a ns1:AccionProhibida ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:LimiteDeRecorridoDelEjeSobrepasadoPLC_d17c5c1e15 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Accion_ResetCNC a ns1:TareaMantenimiento ;
-    rdfs:label "Reseatear el CNC"@es ;
-    ns1:textoExtracto "reseatear el CNC"@es .
+ns1:RevisarLosParametrosDeLaMaquina a ns1:AccionProhibida ;
+    rdfs:label "Revisar los parámetros de la máquina" ;
+    ns1:solucionaFallo ns1:ErrorDeSeguimientoDelEjeFueraDeLimite_033dfe059f ;
+    ns1:textoExtracto "definido en los parámetros máquina (MAXFLWE, MINFLWE, FEDYNFAC, ESTDELAY)." .
 
-ns1:Sistema_EjesTandem a ns1:Sistema ;
-    rdfs:label "Sistema de ejes tándem"@es ;
-    ns1:textoExtracto "eje o cabezal que forma parte de una pareja tándem"@es .
+ns1:ErrorDeSeguimientoDelEjeFueraDeLimite_033dfe059f a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de seguimiento del eje fuera de límite" ;
+    ns1:textoExtracto "'Error de seguimiento del eje fuera de límite'" .
+
+ns1:LaPosicionDeReferenciaSobrepasaLosLimitesDeSoftware a ns1:DiagnosticoFallo ;
+    rdfs:label "La posición de referencia sobrepasa los límites de software" ;
+    ns1:textoExtracto "'La posición de referencia sobrepasa los límites de software'" .
+
+ns1:LimiteDeRecorridoDelEjeSobrepasadoPLC_d17c5c1e15 a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de recorrido del eje sobrepasado (PLC)" ;
+    ns1:textoExtracto "'Límite de recorrido del eje sobrepasado (PLC)'" .
 

@@ -1,63 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_3031_CompensacionesActivas a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de compensaciones activas simultáneas (RTCP/TLC)" ;
-    ns1:identificador "3031" ;
-    ns1:textoExtracto "otra activa. SOLUCIÓN Ambas compensaciones no pueden estar activas simultáneamente; desactivar una de ellas (#RTCP OFF / TLC OFF) antes de activar la otra." .
+ns1:AumentarElAvanceOAumentarLasRevolucionesDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Aumentar el avance o aumentar las revoluciones del cabezal" ;
+    ns1:solucionaFallo ns1:AvanceProgramadoEnG95DemasiadoPequeno_33aca58fb5 ;
+    ns1:textoExtracto "SOLUCIÓN Aumentar el avance o aumentar las revoluciones del cabezal." .
 
-ns1:Error_3032 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3032: No se admite búsqueda de cero en modo visualizador" ;
-    ns1:identificador "3032" ;
-    ns1:textoExtracto "'No se admite búsqueda de cero en modo visualizador' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer una búsqueda de referencia de un eje visualizador. SOLUCIÓN El CNC no permite realizar una búsqueda de referencia de un eje visualizador." .
+ns1:FaltaEjeSEnElNuevoSistemaDeCoordenadas_9a81d5c048 a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta eje(s) en el nuevo sistema de coordenadas" ;
+    ns1:textoExtracto "'Falta eje(s) en el nuevo sistema de coordenadas' DETECCIÓN Durante la ejecución." .
 
-ns1:Error_3033 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3033: No se admite el paso a modo manual si el eje está en el centro de giro" ;
-    ns1:identificador "3033" ;
-    ns1:textoExtracto "'No se admite el paso a modo manual si el eje esta en el centro de giro' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta activar el modo manual con la transformación de eje C frontal activa y los ejes en el centro de giro. SOLUCIÓN Activar el modo manual con los ejes en una posición distinta a la del centro de giro." .
+ns1:PongaseEnContactoConFAGOR a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor" ;
+    ns1:solucionaFallo ns1:ErrorAlInicializarLasCotasDeLosEjes_6792452feb ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor." .
 
-ns1:Error_3034 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3034: Número de gama no válido" ;
-    ns1:identificador "3034" ;
-    ns1:textoExtracto "'Número de gama no válido' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta acceder a un set de parámetros que no existe. SOLUCIÓN El número de set debe estar comprendido entre 1 y el parámetro NPARSET." .
+ns1:ProgramarUnaVelocidad a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una velocidad" ;
+    ns1:solucionaFallo ns1:MaximaVelocidadDeCorteConstanteIgualACero_374f187666,
+        ns1:NoSeHaProgramadoSEnG96_d656d80d85 ;
+    ns1:textoExtracto "SOLUCIÓN Programar una velocidad." .
 
-ns1:Error_3035 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3035: Diferencia de errores de seguimiento de ejes acoplados demasiado grande" ;
-    ns1:identificador "3035" ;
-    ns1:textoExtracto "'Diferencia de errores de seguimiento de ejes acoplados demasiado grande' DETECCIÓN Durante la ejecución. CAUSA En un eje gantry, la diferencia entre el error de seguimiento del eje maestro y del esclavo es superior a la definida en el parámetro MAXCOUPE; en un acoplo de ejes, la diferencia es superior al valor definido. SOLUCIÓN Ajustar de forma similar el comportamiento dinámico ambos ejes o aumentar error permitido." .
+ns1:AvanceProgramadoEnG95DemasiadoPequeno_33aca58fb5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Avance programado en G95 demasiado pequeño" ;
+    ns1:textoExtracto "'Avance programado en G95 demasiado pequeño' DETECCIÓN Durante la ejecución. CAUSA El avance resultante es muy pequeño para la velocidad programada." .
 
-ns1:Error_3036 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3036: Proceso de cambio de gama incorrecto" ;
-    ns1:identificador "3036" ;
-    ns1:textoExtracto "'Proceso de cambio de gama incorrecto' DETECCIÓN Durante la ejecución. CAUSA No coincide la gama de cabezal que está en la historia del CNC y la gama que marca el PLC como gama activa. SOLUCIÓN Comprobar el programa de PLC." .
+ns1:ErrorAlInicializarLasCotasDeLosEjes_6792452feb a ns1:DiagnosticoFallo ;
+    rdfs:label "Error al inicializar las cotas de los ejes" ;
+    ns1:textoExtracto "'Error al inicializar las cotas de los ejes' DETECCIÓN Durante la ejecución. CAUSA No coinciden las cotas de algún eje." .
 
-ns1:Error_3037 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3037: Eje bloqueado" ;
-    ns1:identificador "3037" ;
-    ns1:textoExtracto "'Eje bloqueado' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta mover un eje, pero el PLC no ha puesto la señal SERVO(axis)ON." .
+ns1:MaximaVelocidadDeCorteConstanteIgualACero_374f187666 a ns1:DiagnosticoFallo ;
+    rdfs:label "Máxima velocidad de corte constante igual a cero" ;
+    ns1:textoExtracto "'Máxima velocidad de corte constante igual a cero' DETECCIÓN Durante la ejecución. CAUSA La velocidad máxima del cabezal es igual a cero." .
 
-ns1:Parametro_MAXCOUPE a ns1:Parametro ;
-    rdfs:label "Parámetro MAXCOUPE (límite de error de seguimiento en ejes acoplados)" ;
-    ns1:identificador "MAXCOUPE" ;
-    ns1:textoExtracto "la diferencia entre el error de seguimiento del eje maestro y del esclavo es superior a la definida en el parámetro MAXCOUPE" .
-
-ns1:Parametro_NPARSET a ns1:Parametro ;
-    rdfs:label "Parámetro NPARSET (límite superior de sets de parámetros)" ;
-    ns1:identificador "NPARSET" ;
-    ns1:textoExtracto "El número de set debe estar comprendido entre 1 y el parámetro NPARSET." .
-
-ns1:Parametro_RTCP a ns1:Parametro ;
-    rdfs:label "Parámetro RTCP (compensación de herramienta)" ;
-    ns1:identificador "RTCP" ;
-    ns1:textoExtracto "#RTCP OFF" .
-
-ns1:Parametro_TLC a ns1:Parametro ;
-    rdfs:label "Parámetro TLC (compensación de longitud de herramienta)" ;
-    ns1:identificador "TLC" ;
-    ns1:textoExtracto "TLC OFF" .
-
-ns1:Senal_SERVO_ON a ns1:Sensor ;
-    rdfs:label "Señal SERVO(axis)ON (activación de servo-eje)" ;
-    ns1:identificador "SERVO_ON" ;
-    ns1:textoExtracto "el PLC no ha puesto la señal SERVO(axis)ON" .
+ns1:NoSeHaProgramadoSEnG96_d656d80d85 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se ha programado S en G96" ;
+    ns1:textoExtracto "'No se ha programado S en G96' DETECCIÓN Durante la ejecución. CAUSA La velocidad del cabezal es igual a cero." .
 

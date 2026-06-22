@@ -1,19 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:FaltaConsultaNOT a ns1:Alarma ;
-    rdfs:label "Falta la consulta del comando NOT" ;
-    ns1:identificador 8716 ;
-    ns1:textoExtracto "CAUSA Falta la consulta del comando NOT. SOLUCIÓN Programar \"NOT consulta\" 8716 'Falta paréntesis de cierre' DETECCIÓN Durante la edición." .
+ns1:RevisarEnElManualDeProgramacion a ns1:AvisoSeguridad ;
+    rdfs:label "Revisar en el manual de programación" ;
+    ns1:mitigaRiesgo ns1:AccionProhibida_08e254dd4a,
+        ns1:AccionProhibida_1563df7754,
+        ns1:AccionProhibida_258ada3633,
+        ns1:AccionProhibida_4074a654c0,
+        ns1:AccionProhibida_42b1b1e512,
+        ns1:AccionProhibida_c336a84f79,
+        ns1:AccionProhibida_c763b50367 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:FaltaParentesisCierre a ns1:Alarma ;
-    rdfs:label "Falta paréntesis de cierre" ;
-    ns1:identificador 8717 ;
-    ns1:textoExtracto "CAUSA Hay un paréntesis de apertura pero falta el paréntesis de cierre. SOLUCIÓN Programar \"(consulta)\" 8717 'Falta paréntesis de apertura'" .
+ns1:AccionProhibida_08e254dd4a a ns1:AccionProhibida ;
+    rdfs:label "Comando #PARALAX MOV/VIS con sintaxis incorrecta" ;
+    ns1:textoExtracto "#PARALAX MOV/VIS[númeroTransforEjesParalelos] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 
-ns1:FaltaSegundaConsultaXOR a ns1:Alarma ;
-    rdfs:label "Falta la segunda consulta del comando XOR" ;
-    ns1:identificador 8715 ;
-    ns1:textoExtracto "CAUSA Falta la segunda consulta del comando XOR. SOLUCIÓN Programar \"consulta XOR consulta\" 8715 'Falta operando de la consulta NOT' DETECCIÓN Durante la edición." .
+ns1:AccionProhibida_1563df7754 a ns1:AccionProhibida ;
+    rdfs:label "Comando #GAPPOS con sintaxis incorrecta" ;
+    ns1:textoExtracto "#GAPPOS[<nombreEje cotaEje> <nombreEje cotaEje> <nombreEje cotaEje>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:AccionProhibida_258ada3633 a ns1:AccionProhibida ;
+    rdfs:label "Comando #CUTTING ON/OFF con sintaxis incorrecta" ;
+    ns1:textoExtracto "#CUTTING ON/OFF <[param]> DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:AccionProhibida_4074a654c0 a ns1:AccionProhibida ;
+    rdfs:label "Comando #CLOSE con sintaxis incorrecta" ;
+    ns1:textoExtracto "#CLOSE<[FhandleFichero]> DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:AccionProhibida_42b1b1e512 a ns1:AccionProhibida ;
+    rdfs:label "Comando NR con sintaxis incorrecta" ;
+    ns1:textoExtracto "comando NR con un valor igual o superior a 2. 8569 #OPEN[\"fichero\" <, A/D> <, KEEPLINE> <, FhandleFichero>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:AccionProhibida_c336a84f79 a ns1:AccionProhibida ;
+    rdfs:label "Comando #WRITE con sintaxis incorrecta" ;
+    ns1:textoExtracto "#WRITE[<FhandleFichero,> \"Texto <%d>/nºentero <,valor>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:AccionProhibida_c763b50367 a ns1:AccionProhibida ;
+    rdfs:label "Comando #PREVIEW BEGIN/#PREVIEW END con sintaxis incorrecta" ;
+    ns1:textoExtracto "#PREVIEW BEGIN/#PREVIEW END DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 

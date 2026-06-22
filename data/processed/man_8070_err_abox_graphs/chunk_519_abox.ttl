@@ -1,140 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "funciones del cabezal no ha sido enviada al PLC" ;
-    ns1:tieneComponente ns1:FuncionM19,
-        ns1:FuncionM3,
-        ns1:FuncionM4,
-        ns1:FuncionM41,
-        ns1:FuncionM42,
-        ns1:FuncionM43,
-        ns1:FuncionM44,
-        ns1:FuncionM5 .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:textoExtracto "CAUSA Hay una función G33, G34 o G95 activa y el valor del registro SYNC del PLC no es válido." .
 
-ns1:CabezalMaster a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal master" ;
-    ns1:requiereMantenimiento ns1:BusquedaReferencia ;
-    ns1:textoExtracto "sincronizar en lazo cerrado un cabezal master" .
+ns1:SolucionCabezalEnM5AlActivarRoscadoElectronico a ns1:TareaMantenimiento ;
+    rdfs:label "Solución cabezal en M5 al activar roscado electrónico" ;
+    ns1:solucionaFallo ns1:CabezalEnM5AlActivarRoscadoElectronico ;
+    ns1:textoExtracto "SOLUCIÓN El cabezal" .
 
-ns1:Error3061 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 3061: Cabezal master no referenciado en sincronización lazo cerrado" ;
-    ns1:identificador "3061" ;
-    ns1:mitigaRiesgo ns1:BusquedaReferencia ;
-    ns1:textoExtracto "Un cabezal master no referenciado no admite sincronización en lazo cerrado. DETECCIÓN Durante la ejecución. CAUSA El CNC no puede sincronizar en lazo cerrado un cabezal master, si éste no ha sido previamente referenciado. SOLUCIÓN Realizar una búsqueda de referencia del cabezal master antes de sincronizar los cabezales." .
+ns1:ValorDelRegistroSYNCDelPLC a ns1:Parametro ;
+    rdfs:label "Valor del registro SYNC del PLC" ;
+    ns1:identificador "SYNC" ;
+    ns1:textoExtracto "El valor del registro SYNC del PLC debe ser un valor comprendido entre 1 y el número de cabezales del sistema. También puede tener valor cero." .
 
-ns1:ModoMHFS a ns1:ModoOperacion ;
-    rdfs:label "Modo MHFS" ;
-    ns1:solucionaFallo ns1:Error3058,
-        ns1:Error3060 ;
-    ns1:textoExtracto "cambiar al modo MHFS y enviar las funciones necesarias al PLC" .
-
-ns1:ParametroS a ns1:Parametro ;
-    rdfs:label "Parámetro S (velocidad)" ;
-    ns1:documentadoEn ns1:Error3060 ;
-    ns1:identificador "S" ;
-    ns1:textoExtracto "una velocidad (S) superior a la gama programada" .
-
-ns1:SincronizacionLazoCerrado a ns1:ModoOperacion ;
-    rdfs:label "Sincronización en lazo cerrado" ;
-    ns1:textoExtracto "sincronización en lazo cerrado" .
-
-ns1:TransformacionAngular a ns1:Parametro ;
-    rdfs:label "Transformación angular (#ANGAX)" ;
-    ns1:documentadoEn ns1:Error3058 ;
-    ns1:identificador "#ANGAX" ;
-    ns1:textoExtracto "Anular la transformación angular (#ANGAX OFF)" .
-
-ns1:FuncionG74 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G74" ;
-    ns1:documentadoEn ns1:Error3059 ;
-    ns1:identificador "G74" ;
-    ns1:textoExtracto "ejecución de M19 o G74" .
-
-ns1:FuncionM19 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M19" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M19" ;
-    ns1:textoExtracto "funciones M3/M4/M5/M19 y M41-M44" .
-
-ns1:FuncionM3 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M3" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M3" ;
-    ns1:textoExtracto "funciones M3/M4/M5/M19 y M41-M44" .
-
-ns1:FuncionM4 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M4" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M4" ;
-    ns1:textoExtracto "funciones M3/M4/M5/M19 y M41-M44" .
-
-ns1:FuncionM41 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M41" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M41" ;
-    ns1:textoExtracto "funciones M3/M4/M5/M19 y M41-M44" .
-
-ns1:FuncionM42 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M42" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M42" ;
-    ns1:textoExtracto "M41-M44" .
-
-ns1:FuncionM43 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M43" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M43" ;
-    ns1:textoExtracto "M41-M44" .
-
-ns1:FuncionM44 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M44" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M44" ;
-    ns1:textoExtracto "M41-M44" .
-
-ns1:FuncionM5 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M5" ;
-    ns1:documentadoEn ns1:Error3058,
-        ns1:Error3059 ;
-    ns1:identificador "M5" ;
-    ns1:textoExtracto "funciones M3/M4/M5/M19 y M41-M44" .
-
-ns1:Error3060 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 3060: Velocidad (S) superior a la gama programada" ;
-    ns1:identificador "3060" ;
-    ns1:textoExtracto "'No se admite una S superior a la gama programada' DETECCIÓN Durante la ejecución. CAUSA Tras interrumpir un programa y cambiar al modo MHFS, el usuario ha programado una velocidad y una gama nueva, y la velocidad supera la máxima de la gama. SOLUCIÓN Cambiar la velocidad o la gama programada, o programar sólo uno de ellas para que no resulten contradictorias." .
-
-ns1:BusquedaReferencia a ns1:TareaMantenimiento ;
-    rdfs:label "Búsqueda de referencia" ;
-    ns1:textoExtracto "búsqueda de referencia del cabezal master" .
-
-ns1:Error3059 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 3059: Incompatibilidad de funciones M3/M4/M5/M19/M41-M44 con M19 o G74" ;
-    ns1:identificador "3059" ;
-    ns1:mitigaRiesgo ns1:FuncionG74 ;
-    ns1:textoExtracto "'No se admite M3/M4/M5/M19/M41-M44 con M19 o G74 activas' DETECCIÓN Durante la ejecución. CAUSA El usuario ha interrumpido el programa durante la ejecución de M19 o G74 en un cabezal. El CNC no puede enviar las funciones M3, M4, M5, M19 ó M41a M44 al cabezal. SOLUCIÓN Continuar la ejecución hasta que finalice la función M19 o G74. A continuación interrumpir el programa y enviar las funciones deseadas al cabezal." .
-
-ns1:Error3058 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 3058: Funciones M3/M4/M5/M19 y M41-M44 no enviadas al PLC" ;
-    ns1:identificador "3058" ;
-    ns1:mitigaRiesgo ns1:BusquedaReferencia ;
-    ns1:textoExtracto "'Las funciones M3/M4/M5/M19 y M41-M44 del cabezal deben ser enviadas al PLC' DETECCIÓN Durante la ejecución. CAUSA Tras una búsqueda de bloque y antes de continuar con la ejecución del programa, el CNC ha detectado que alguna función del cabezal no ha sido enviada al PLC. SOLUCIÓN Con el programa interrumpido, cambiar al modo MHFS y enviar las funciones necesarias al PLC." .
+ns1:CabezalEnM5AlActivarRoscadoElectronico a ns1:DiagnosticoFallo ;
+    rdfs:label "Cabezal en M5 al activar roscado electrónico" ;
+    ns1:textoExtracto "'Cabezal en M5 al activar roscado electrónico' DETECCIÓN Durante la ejecución. CAUSA El cabezal utilizado para un roscado electrónico (G33/G34) está parado o se ha programado una M5 en el mismo bloque que G33/G34." .
 

@@ -1,34 +1,45 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_2500 a ns1:DiagnosticoFallo ;
-    rdfs:label "Movimiento de eje rotativo no permitido con RTCP STATIC activo y compensación de radio activa (G41/G42)"@es ;
-    ns1:identificador "2500" ;
-    ns1:solucionaFallo ns1:Parametro_CompensacionRadio ;
-    ns1:textoExtracto "2500 Movimiento de eje rotativo no permitido con RTCP STATIC activo y compensación de radio activa (G41/G42). DETECCIÓN Durante la ejecución. CAUSA Se ha intentado mover un eje rotativo de la cinemática, con RTCP STATIC y compensación de radio activa. SOLUCIÓN Desactivar la compensación de radio para mover el eje rotativo."@es .
+ns1:ElCNCHaIntentadoActivarFACECYLConUnTipoDeCinematicaQueNoSeCorresponde a ns1:AccionProhibida ;
+    rdfs:label "El CNC ha intentado activar #FACE/#CYL con un tipo de cinemática que no se corresponde" ;
+    ns1:mitigaRiesgo ns1:ActivarFACECYLSinCinematicaOConUnaCinematicaDelTipo414243 ;
+    ns1:textoExtracto "2487 El CNC ha intentado activar #FACE/#CYL con un tipo de cinemática que no se corresponde. DETECCIÓN Durante la ejecución. CAUSA La cinemática programada en las sentencias #FACE/#CYL no es del tipo adecuado. SOLUCIÓN Activar #FACE/#CYL sin cinemática o con una cinemática del tipo 41/42/43." .
 
-ns1:Fallo_2501 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se permite programar en el mismo bloque eje lineal y rotativo, con RTCP STATIC activo"@es ;
-    ns1:identificador "2501" ;
-    ns1:solucionaFallo ns1:Componente_EjeLineal,
-        ns1:Componente_EjeRotativo ;
-    ns1:textoExtracto "2501 No se permite programar en el mismo bloque eje lineal y rotativo, con RTCP STATIC activo. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado mover un eje lineal junto a un eje rotativo de la cinemática, con RTCP STATIC activo. SOLUCIÓN Mover el eje rotativo y el eje lineal individualmente."@es .
+ns1:NoSeAdmiteRENAMEDelCabezalEnModoEjeC a ns1:AccionProhibida ;
+    rdfs:label "No se admite #RENAME del cabezal en modo eje C" ;
+    ns1:mitigaRiesgo ns1:NoSePermiteRenombrarElEjeActivoComoEjeC ;
+    ns1:textoExtracto "2486 No se admite #RENAME del cabezal en modo eje C. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado renombrar el cabezal que está trabajando como eje C. SOLUCIÓN No se permite renombrar el eje activo como eje C." .
 
-ns1:Componente_EjeLineal a ns1:ComponenteMecanico ;
-    rdfs:label "Eje lineal de la cinemática"@es ;
-    ns1:textoExtracto "eje lineal de la cinemática"@es .
+ns1:ProgramarLOADGAPTABLEAntesDeGAPCTRLONOLEAP a ns1:AccionProhibida ;
+    rdfs:label "Programar #LOAD GAPTABLE antes de #GAPCTRL ON o #LEAP" ;
+    ns1:mitigaRiesgo ns1:ProgramarLOADGAPTABLEAntesDeGAPCTRLONOLEAP_6fcb0d2c97 ;
+    ns1:textoExtracto "2488 Programar #LOAD GAPTABLE antes de #GAPCTRL ON o #LEAP. DETECCIÓN Durante la ejecución. CAUSA Por parámetro máquina." .
 
-ns1:Componente_EjeRotativo a ns1:ComponenteMecanico ;
-    rdfs:label "Eje rotativo de la cinemática"@es ;
-    ns1:controla ns1:Sistema_RTCP ;
-    ns1:textoExtracto "eje rotativo de la cinemática"@es .
+ns1:ActivarFACECYLSinCinematicaOConUnaCinematicaDelTipo414243 a ns1:TareaMantenimiento ;
+    rdfs:label "Activar #FACE/#CYL sin cinemática o con una cinemática del tipo 41/42/43" ;
+    ns1:solucionaFallo ns1:LaCinematicaProgramadaEnLasSentenciasFACECYLNoEsDelTipoAdecuado ;
+    ns1:textoExtracto "2487 El CNC ha intentado activar #FACE/#CYL con un tipo de cinemática que no se corresponde. DETECCIÓN Durante la ejecución. CAUSA La cinemática programada en las sentencias #FACE/#CYL no es del tipo adecuado. SOLUCIÓN Activar #FACE/#CYL sin cinemática o con una cinemática del tipo 41/42/43." .
 
-ns1:Parametro_CompensacionRadio a ns1:Parametro ;
-    rdfs:label "Compensación de radio (G41/G42)"@es ;
-    ns1:monitoreaParametro ns1:Sistema_RTCP ;
-    ns1:textoExtracto "compensación de radio activa (G41/G42)"@es .
+ns1:LaCinematicaProgramadaEnLasSentenciasFACECYLNoEsDelTipoAdecuado a ns1:DiagnosticoFallo ;
+    rdfs:label "La cinemática programada en las sentencias #FACE/#CYL no es del tipo adecuado" ;
+    ns1:textoExtracto "2487 El CNC ha intentado activar #FACE/#CYL con un tipo de cinemática que no se corresponde. DETECCIÓN Durante la ejecución. CAUSA La cinemática programada en las sentencias #FACE/#CYL no es del tipo adecuado." .
 
-ns1:Sistema_RTCP a ns1:Sistema ;
-    rdfs:label "RTCP (Rotary Tool Center Point)"@es ;
-    ns1:textoExtracto "RTCP STATIC activo y compensación de radio activa (G41/G42)"@es .
+ns1:NoSePermiteRenombrarElEjeActivoComoEjeC a ns1:TareaMantenimiento ;
+    rdfs:label "No se permite renombrar el eje activo como eje C" ;
+    ns1:solucionaFallo ns1:SeHaIntentadoRenombrarElCabezalQueEstaTrabajandoComoEjeC ;
+    ns1:textoExtracto "2486 No se admite #RENAME del cabezal en modo eje C. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado renombrar el cabezal que está trabajando como eje C. SOLUCIÓN No se permite renombrar el eje activo como eje C." .
+
+ns1:PorParametroMaquina a ns1:DiagnosticoFallo ;
+    rdfs:label "Por parámetro máquina" ;
+    ns1:textoExtracto "2488 Programar #LOAD GAPTABLE antes de #GAPCTRL ON o #LEAP. DETECCIÓN Durante la ejecución. CAUSA Por parámetro máquina." .
+
+ns1:ProgramarLOADGAPTABLEAntesDeGAPCTRLONOLEAP_6fcb0d2c97 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar #LOAD GAPTABLE antes de #GAPCTRL ON o #LEAP" ;
+    ns1:solucionaFallo ns1:PorParametroMaquina ;
+    ns1:textoExtracto "2488 Programar #LOAD GAPTABLE antes de #GAPCTRL ON o #LEAP. DETECCIÓN Durante la ejecución. CAUSA Por parámetro máquina." .
+
+ns1:SeHaIntentadoRenombrarElCabezalQueEstaTrabajandoComoEjeC a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha intentado renombrar el cabezal que está trabajando como eje C" ;
+    ns1:textoExtracto "2486 No se admite #RENAME del cabezal en modo eje C. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado renombrar el cabezal que está trabajando como eje C." .
 

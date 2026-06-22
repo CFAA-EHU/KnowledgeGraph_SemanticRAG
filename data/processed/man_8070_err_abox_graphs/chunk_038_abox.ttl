@@ -1,18 +1,78 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_0078 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de canal en eje gantry"@es ;
-    ns1:identificador "0078" ;
-    ns1:solucionaFallo ns1:Maquina_CNC ;
-    ns1:textoExtracto "Los ejes maestro y esclavo deben pertenecer al mismo canal. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Algún eje gantry está formado por ejes de canales distintos. SOLUCIÓN En un eje gantry, ambos ejes deben pertenecer al mismo canal."@es .
+ns1:EjeOCabezalAsignadoAMasDeUnCanal_d2e8dd1766 a ns1:AccionProhibida ;
+    rdfs:label "Eje o cabezal asignado a más de un canal" ;
+    ns1:textoExtracto "Hay un eje o cabezal asignado a varios canales." .
 
-ns1:Fallo_0079 a ns1:DiagnosticoFallo ;
-    rdfs:label "Eje esclavo Gantry aparcado"@es ;
-    ns1:identificador "0079" ;
-    ns1:solucionaFallo ns1:Maquina_CNC ;
-    ns1:textoExtracto "Un eje esclavo Gantry no puede estar aparcado. DETECCIÓN Durante el arranque del CNC o la validación de los parámetros máquina. CAUSA El CNC ha detectado que el eje esclavo de una pareja gantry está aparcado; la señal"@es .
+ns1:LaSumaDeEjesOCabezalesPorCanalSuperaElNumeroTotal a ns1:AccionProhibida ;
+    rdfs:label "La suma de ejes o cabezales por canal supera el número total" ;
+    ns1:textoExtracto "El valor del parámetro CHNAXIS es mayor que el valor del parámetro NAXIS o el valor del parámetro CHNSPDL es mayor que el valor del parámetro NSPDL." .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    ns1:textoExtracto "validación de los parámetros máquina... arranque del CNC"@es .
+ns1:LimiteInferiorDelEje a ns1:Parametro ;
+    rdfs:label "Límite inferior del eje" ;
+    ns1:identificador "LIMIT-" ;
+    ns1:textoExtracto "Los parámetros LIMIT+ y LIMIT- del eje tienen ambos valor 0." .
+
+ns1:LimiteSuperiorDelEje a ns1:Parametro ;
+    rdfs:label "Límite superior del eje" ;
+    ns1:identificador "LIMIT+" ;
+    ns1:textoExtracto "Los parámetros LIMIT+ y LIMIT- del eje tienen ambos valor 0." .
+
+ns1:LosEjesMaestroYEsclavoDebenPertenecerAlMismoCanal_963ee564e3 a ns1:AccionProhibida ;
+    rdfs:label "Los ejes maestro y esclavo deben pertenecer al mismo canal" ;
+    ns1:textoExtracto "Algún eje gantry está formado por ejes de canales distintos." .
+
+ns1:NombreDeCabezalPorCanal a ns1:Parametro ;
+    rdfs:label "Nombre de cabezal por canal" ;
+    ns1:identificador "CHSPDLNAME" ;
+    ns1:textoExtracto "Corregir los parámetros máquina CHAXISNAME y CHSPDLNAME en todos los canales." .
+
+ns1:NombreDeEjePorCanal a ns1:Parametro ;
+    rdfs:label "Nombre de eje por canal" ;
+    ns1:identificador "CHAXISNAME" ;
+    ns1:textoExtracto "Corregir los parámetros máquina CHAXISNAME y CHSPDLNAME en todos los canales." .
+
+ns1:NumeroDeModulosDeEntradaDetectadosPorHardware a ns1:Parametro ;
+    rdfs:label "Número de módulos de entrada detectados por hardware" ;
+    ns1:identificador "NDIMOD" ;
+    ns1:textoExtracto "Los parámetros NDIMOD y NDOMOD deben ser iguales al número de módulos de entradas y salidas detectados por hardware." .
+
+ns1:NumeroDeModulosDeSalidaDetectadosPorHardware a ns1:Parametro ;
+    rdfs:label "Número de módulos de salida detectados por hardware" ;
+    ns1:identificador "NDOMOD" ;
+    ns1:textoExtracto "Los parámetros NDIMOD y NDOMOD deben ser iguales al número de módulos de entradas y salidas detectados por hardware." .
+
+ns1:NumeroTotalDeCabezales a ns1:Parametro ;
+    rdfs:label "Número total de cabezales" ;
+    ns1:identificador "NSPDL" ;
+    ns1:textoExtracto "El valor del parámetro CHNSPDL es mayor que el valor del parámetro NSPDL." .
+
+ns1:NumeroTotalDeCabezalesPorCanal a ns1:Parametro ;
+    rdfs:label "Número total de cabezales por canal" ;
+    ns1:identificador "CHNSPDL" ;
+    ns1:textoExtracto "El valor del parámetro CHNSPDL es mayor que el valor del parámetro NSPDL." .
+
+ns1:NumeroTotalDeEjes a ns1:Parametro ;
+    rdfs:label "Número total de ejes" ;
+    ns1:identificador "NAXIS" ;
+    ns1:textoExtracto "El valor del parámetro CHNAXIS es mayor que el valor del parámetro NAXIS." .
+
+ns1:NumeroTotalDeEjesPorCanal a ns1:Parametro ;
+    rdfs:label "Número total de ejes por canal" ;
+    ns1:identificador "CHNAXIS" ;
+    ns1:textoExtracto "El valor del parámetro CHNAXIS es mayor que el valor del parámetro NAXIS." .
+
+ns1:TablaDeConfiguracionDeIOsNoValida_ecc9963d63 a ns1:AccionProhibida ;
+    rdfs:label "Tabla de configuración de IOs no válida" ;
+    ns1:textoExtracto "Los parámetros NDIMOD y NDOMOD deben ser iguales al número de módulos de entradas y salidas detectados por hardware." .
+
+ns1:TestDeTendencia a ns1:Parametro ;
+    rdfs:label "Test de tendencia" ;
+    ns1:identificador "TENDENCY" ;
+    ns1:textoExtracto "activar el test de tendencia (parámetro TENDENCY)." .
+
+ns1:TestDeTendenciaDesactivado a ns1:AccionProhibida ;
+    rdfs:label "Test de tendencia desactivado" ;
+    ns1:textoExtracto "Esta situación únicamente debería permitirse durante la puesta a punto; una vez finalizada la puesta a punto, el test de tendencia debe estar habilitado." .
 

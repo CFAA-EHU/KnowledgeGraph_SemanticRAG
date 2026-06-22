@@ -1,37 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1526 a ns1:Alarma ;
-    rdfs:label "Alarma 1526: '#EXEC: el canal indicado no es de CNC'"@es ;
-    ns1:identificador "1526" ;
-    ns1:textoExtracto "1526 '#EXEC: el canal indicado no es de CNC' DETECCIÓN Durante la ejecución."@es .
+ns1:ProgramacionDeUnValorNuloEnUnaSentenciaOFuncionG a ns1:AccionProhibida ;
+    rdfs:label "programación de un valor nulo en una sentencia o función G" ;
+    ns1:textoExtracto "Se ha programado un valor nulo en una sentencia o función G." .
 
-ns1:DiagnosticoFallo_1525 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para alarma 1525"@es ;
-    ns1:solucionaFallo ns1:Alarma_1525 ;
-    ns1:textoExtracto "CAUSA El CNC ha intentado cambiar un eje de canal (#CALL, #SET o #FREE) y el eje no tiene permiso de cambio (parámetro AXISEXCH). SOLUCIÓN Para que el CNC pueda cambiar los ejes y cabezales de canal, estos deben tener permiso."@es .
+ns1:RevisarLaProgramacionDeNR a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación de NR" ;
+    ns1:solucionaFallo ns1:RepeticionDeBloquesNREnUnBloqueQueNoImplicaMovimiento ;
+    ns1:textoExtracto "La programación de la repetición de bloques con NR solo es válida con bloques que implican movimiento." .
 
-ns1:DiagnosticoFallo_ProgramacionHerramienta a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico: Programación incorrecta de POS/MZ sin herramienta"@es ;
-    ns1:textoExtracto "CAUSA Se ha programado POS y/o MZ en un bloque sin programar la herramienta. SOLUCIÓN Los comandos POS y MZ se deben programar en el mismo bloque que la herramienta."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:NRExigeProgramarMovimientoEnElBloque_7b8d7d4f3c ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_AXISEXCH a ns1:Parametro ;
-    rdfs:label "Parámetro AXISEXCH"@es ;
-    ns1:identificador "AXISEXCH" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal,
-        ns1:Componente_Eje ;
-    ns1:textoExtracto "El parámetro AXISEXCH establece si el eje o cabezal tiene permiso para cambiar de canal, y en caso afirmativo, si el cambio es temporal o permanente; es decir, si el cambio se mantiene al reiniciar el programa pieza, tras un reset o tras reiniciar el CNC."@es .
+ns1:NRExigeProgramarMovimientoEnElBloque_7b8d7d4f3c a ns1:DiagnosticoFallo ;
+    rdfs:label "NR exige programar movimiento en el bloque" ;
+    ns1:textoExtracto "'NR exige programar movimiento en el bloque'" .
 
-ns1:Alarma_1525 a ns1:Alarma ;
-    rdfs:label "Alarma 1525: 'No está permitido intercambiar el eje'"@es ;
-    ns1:identificador "1525" ;
-    ns1:textoExtracto "1525 'No está permitido intercambiar el eje' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado cambiar un eje de canal (#CALL, #SET o #FREE) y el eje no tiene permiso de cambio (parámetro AXISEXCH)."@es .
-
-ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal de canal"@es ;
-    ns1:textoExtracto "El parámetro AXISEXCH establece si el eje o cabezal tiene permiso para cambiar de canal"@es .
-
-ns1:Componente_Eje a ns1:ComponenteMecanico ;
-    rdfs:label "Eje de canal"@es ;
-    ns1:textoExtracto "El CNC ha intentado cambiar un eje de canal (#CALL, #SET o #FREE)"@es .
+ns1:RepeticionDeBloquesNREnUnBloqueQueNoImplicaMovimiento a ns1:AccionProhibida ;
+    rdfs:label "repetición de bloques (NR) en un bloque que no implica movimiento" ;
+    ns1:textoExtracto "Hay programada una repetición de bloques (NR) en un bloque que no implica movimiento." .
 

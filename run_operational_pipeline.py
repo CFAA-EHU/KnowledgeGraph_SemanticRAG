@@ -68,10 +68,6 @@ def ensure_runtime_prerequisites() -> None:
         raise SystemExit(f"Falta el esquema condensado operativo: {SCHEMA_CONDENSED_PATH}")
 
 
-def ensure_extraction_credentials() -> None:
-    if not os.environ.get("MISTRAL_API_KEY"):
-        raise SystemExit("Falta MISTRAL_API_KEY. El build operativo necesita credenciales antes de lanzar la extraccion A-Box.")
-
 
 def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -108,7 +104,7 @@ def build_blocked_onboarding_result(
             "source_path": str(source_chunks),
             "baseline_raw_merged_exists": baseline_raw_merged_exists,
             "published_to_operational_runtime": False,
-            "blocked_before_extraction": blocking_issue == "missing_mistral_api_key",
+            "blocked_before_extraction": False,
             "blocked_during_stage": stage_records[-1]["label"] if stage_records else None,
             "blocking_issue": blocking_issue,
             "failure_detail": failure_detail,
@@ -163,7 +159,6 @@ def resolve_manual_id(source_chunks: Path, manual_id: str) -> str:
 def build_default_runtime(stages: list[Path], mode: str, retry_profile: str) -> dict:
     stage_records: list[dict] = []
     stage_records.append(run_stage(stages[0], None, label="abox_input_builder"))
-    ensure_extraction_credentials()
     run_stage_args = [
         (stages[1], ["--mode", mode, "--retry-profile", retry_profile], "abox_extractor"),
         (stages[2], None, "abox_merger"),
@@ -225,16 +220,6 @@ def build_quick_ref_pilot(stages: list[Path], mode: str, source_chunks: Path, ma
     )
     ensure_file_exists(profile.abox_input_path, f"No se genero el A-Box input piloto: {profile.abox_input_path}")
     language_summary = json.loads(profile.language_detection_report_path.read_text(encoding="utf-8"))
-
-    if not os.environ.get("MISTRAL_API_KEY"):
-        return build_blocked_onboarding_result(
-            profile=profile,
-            source_chunks=source_chunks,
-            baseline_raw_merged_exists=baseline_raw_merged_exists,
-            stage_records=stage_records,
-            blocking_issue="missing_mistral_api_key",
-            language_summary=language_summary,
-        )
 
     try:
         stage_records.append(
@@ -481,7 +466,7 @@ def finalize_blocked_quick_ref_decision(profile, onboarding_result: dict) -> Non
         "remaining_blockers": blockers,
         "recommended_next_change": (
             "fix_extraction_credentials_then_rerun_pilot"
-            if blocking_issue in {"missing_mistral_api_key", "extractor_failed"}
+            if blocking_issue in {"extractor_failed"}
             else "rerun_pilot"
         ),
     }

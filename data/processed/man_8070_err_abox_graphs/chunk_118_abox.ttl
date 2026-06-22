@@ -1,29 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1141 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo de programación: $CONTINUE sin bucle abierto"@es ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_1141 ;
-    ns1:textoExtracto "CAUSA El CNC ha detectado una instrucción $CONTINUE pero no hay ningún bucle de control abierto; $FOR, $WHILE o $DO. SOLUCIÓN Revisar la programación."@es .
+ns1:CNC8070_82be8023ba a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:NoSeEsperaELSE,
+        ns1:NoSeEsperaELSEIF ;
+    ns1:solucionaFallo ns1:RevisarProgramacion ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:DiagnosticoFallo_1142 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo de programación: #TIME no programada en bloque individual"@es ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_1142 ;
-    ns1:textoExtracto "CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:NoSeEsperaELSE a ns1:DiagnosticoFallo ;
+    rdfs:label "No se espera $ELSE" ;
+    ns1:textoExtracto "'No se espera $ELSE' DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $ELSE sin una instrucción $IF previa." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:activaAlarma ns1:AvisoSeguridad_1141,
-        ns1:AvisoSeguridad_1142 ;
-    ns1:textoExtracto "El CNC utiliza la instrucción $CONTINUE para volver al punto inicial de un bucle $FOR, $WHILE o $DO."@es .
+ns1:NoSeEsperaELSEIF a ns1:DiagnosticoFallo ;
+    rdfs:label "No se espera $ELSEIF" ;
+    ns1:textoExtracto "'No se espera $ELSEIF' DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $ELSEIF sin" .
 
-ns1:AvisoSeguridad_1141 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1141: Sentencia $CONTINUE mal programada"@es ;
-    ns1:identificador "1141" ;
-    ns1:textoExtracto "'La sentencia $CONTINUE se programa sola en el bloque'"@es .
-
-ns1:AvisoSeguridad_1142 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1142: Sentencia #TIME mal programada"@es ;
-    ns1:identificador "1142" ;
-    ns1:textoExtracto "'La sentencia #TIME se programa sola en el bloque'"@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 

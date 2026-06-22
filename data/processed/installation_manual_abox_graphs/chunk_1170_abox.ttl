@@ -1,72 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_SercosVelocidad_1170 a ns1:ModoOperacion ;
-    rdfs:label "Modo Sercos velocidad" ;
-    ns1:identificador "Sercos velocidad" ;
-    ns1:requiereMantenimiento ns1:SistemaTandem_1170 ;
-    ns1:textoExtracto "Los ejes o cabezales del tándem deben ser Sercos velocidad; si no los son, ambos ejes se moverán pero no será un sistema tándem."@es .
+ns1:FiguraEfectoPrecargaAceleracion a ns1:Figura ;
+    rdfs:label "Precarga con aceleración" ;
+    ns1:textoExtracto "Los siguientes diagramas muestran el efecto de la precarga en diferentes situaciones. Precarga con aceleración." .
 
-ns1:Parametro_AXISNAME_1170 a ns1:Parametro ;
-    rdfs:label "AXISNAME" ;
-    ns1:identificador "AXISNAME" ;
-    ns1:textoExtracto "Los ejes deberán estar previamente definidos en el parámetro AXISNAME [...]"@es .
+ns1:FiguraEfectoPrecargaDeceleracion a ns1:Figura ;
+    rdfs:label "Precarga con deceleración" ;
+    ns1:textoExtracto "Los siguientes diagramas muestran el efecto de la precarga en diferentes situaciones. Precarga con deceleración." .
 
-ns1:Parametro_SPDLNAME_1170 a ns1:Parametro ;
-    rdfs:label "SPDLNAME" ;
-    ns1:identificador "SPDLNAME" ;
-    ns1:textoExtracto "[...] y los cabezales en el parámetro SPDLNAME."@es .
+ns1:FiguraEfectoPrecargaFriccionMayor a ns1:Figura ;
+    rdfs:label "Par de fricción > Precarga" ;
+    ns1:textoExtracto "Los siguientes diagramas muestran el efecto de la precarga en diferentes situaciones. Par de fricción > Precarga." .
 
-ns1:EjeMaestro_1170 a ns1:ComponenteMecanico ;
-    rdfs:label "Eje/cabezal maestro del tándem"@es ;
-    ns1:controla ns1:EjeEsclavo_1170 ;
-    ns1:monitoreaParametro ns1:Parametro_Posicion_1170,
-        ns1:Parametro_VelocidadMaestro_1170 ;
-    ns1:textoExtracto "El motor maestro del tándem, además de generar par, es el responsable del posicionamiento. [...] La consigna de velocidad del eje/cabezal maestro del tándem se envía también al eje/cabezal esclavo."@es .
+ns1:FiguraEfectoPrecargaFriccionMenor a ns1:Figura ;
+    rdfs:label "Par de fricción < Precarga" ;
+    ns1:textoExtracto "Los siguientes diagramas muestran el efecto de la precarga en diferentes situaciones. Par de fricción < Precarga." .
 
-ns1:ManualMaquina_1170 a ns1:Manual ;
-    rdfs:label "Manual de configuración del sistema tándem (pág. 573-574)"@es ;
-    ns1:textoExtracto "Sección 11.2.1 Configuración del eje tándem. Parámetros máquina."@es .
+ns1:FiguraEfectoPrecargaReposo a ns1:Figura ;
+    rdfs:label "Precarga en reposo" ;
+    ns1:textoExtracto "Los siguientes diagramas muestran el efecto de la precarga en diferentes situaciones. Precarga en reposo." .
 
-ns1:Parametro_MASTERAXIS_1170 a ns1:Parametro ;
-    rdfs:label "MASTERAXIS" ;
-    ns1:identificador "MASTERAXIS" ;
-    ns1:textoExtracto "La pareja de ejes o cabezales que forman el sistema tándem se definen en los parámetros máquina MASTERAXIS y SLAVEAXIS, dentro de la tabla TANDEM."@es .
+ns1:FiguraEfectoPrecargaVelocidadConstante1 a ns1:Figura ;
+    rdfs:label "Precarga a velocidad constante" ;
+    ns1:textoExtracto "Los siguientes diagramas muestran el efecto de la precarga en diferentes situaciones. Precarga a velocidad constante." .
 
-ns1:Parametro_Posicion_1170 a ns1:Parametro ;
-    rdfs:label "Posición del eje maestro"@es ;
-    ns1:textoExtracto "El CNC cierra el lazo de posición únicamente con la posición del eje maestro del tándem."@es .
-
-ns1:Parametro_SLAVEAXIS_1170 a ns1:Parametro ;
-    rdfs:label "SLAVEAXIS" ;
-    ns1:identificador "SLAVEAXIS" ;
-    ns1:textoExtracto "La pareja de ejes o cabezales que forman el sistema tándem se definen en los parámetros máquina MASTERAXIS y SLAVEAXIS, dentro de la tabla TANDEM."@es .
-
-ns1:Parametro_VelocidadEsclavo_1170 a ns1:Parametro ;
-    rdfs:label "Consigna de velocidad del eje/cabezal esclavo"@es ;
-    ns1:textoExtracto "El control del tándem modifica la consigna de velocidad del eje/cabezal maestro y del eje/cabezal esclavo en función de la distribución de par y la precarga seleccionada."@es .
-
-ns1:Parametro_VelocidadMaestro_1170 a ns1:Parametro ;
-    rdfs:label "Consigna de velocidad del eje/cabezal maestro"@es ;
-    ns1:textoExtracto "La consigna de velocidad del eje/cabezal maestro del tándem se envía también al eje/cabezal esclavo del tándem cerrando el lazo de velocidad."@es .
-
-ns1:SistemaTandem_1170 a ns1:Sistema ;
-    rdfs:label "Sistema tándem de ejes/cabezales"@es ;
-    ns1:detalladoEnEsquema ns1:Tabla_TANDEM_1170 ;
-    ns1:monitoreaParametro ns1:Parametro_MASTERAXIS_1170,
-        ns1:Parametro_SLAVEAXIS_1170 ;
-    ns1:textoExtracto "Ejes o cabezales del sistema tándem. Un sistema tándem podrá estar formado por una pareja de ejes lineales, de ejes rotativos o de cabezales."@es ;
-    ns1:tieneComponente ns1:EjeEsclavo_1170,
-        ns1:EjeMaestro_1170 .
-
-ns1:Tabla_TANDEM_1170 a ns1:Tabla ;
-    rdfs:label "Tabla TANDEM" ;
-    ns1:documentadoEn ns1:ManualMaquina_1170 ;
-    ns1:identificador "TANDEM" ;
-    ns1:textoExtracto "Los parámetros máquina MASTERAXIS y SLAVEAXIS se definen dentro de la tabla TANDEM."@es .
-
-ns1:EjeEsclavo_1170 a ns1:ComponenteMecanico ;
-    rdfs:label "Eje/cabezal esclavo del tándem"@es ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadEsclavo_1170 ;
-    ns1:textoExtracto "El motor esclavo únicamente suministra par. [...] El eje o cabezal esclavo habitualmente utilizará captación interna."@es .
+ns1:FiguraEfectoPrecargaVelocidadConstante2 a ns1:Figura ;
+    rdfs:label "Precarga a velocidad constante" ;
+    ns1:textoExtracto "Los siguientes diagramas muestran el efecto de la precarga en diferentes situaciones. Precarga a velocidad constante." .
 

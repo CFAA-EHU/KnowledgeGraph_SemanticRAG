@@ -1,43 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1101 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sintaxis incorrecta en sentencia #SET IPOPOS" ;
-    ns1:solucionaFallo ns1:Alarma_1101 ;
-    ns1:textoExtracto "La sintaxis de la sentencia no es correcta o hay más información en el bloque. SOLUCIÓN Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque." .
+ns1:DefinirElPlanoDeTrabajo a ns1:AvisoSeguridad ;
+    rdfs:label "Definir el plano de trabajo" ;
+    ns1:mitigaRiesgo ns1:SeEspera ;
+    ns1:textoExtracto "SOLUCIÓN Definir el plano de trabajo. Si el canal ha cedido sus ejes a otro canales, recuperar el eje que falta mediante las sentencias #CALLAX o #SETAX." .
 
-ns1:DiagnosticoFallo_1102 a ns1:DiagnosticoFallo ;
-    rdfs:label "Índice R no permitido" ;
-    ns1:solucionaFallo ns1:Alarma_1102 ;
-    ns1:textoExtracto "Sólo se permite programar el radio con R o R1." .
+ns1:ProgramarLasFuncionesMDelMismoCabezalEnBloquesDiferentes a ns1:AvisoSeguridad ;
+    rdfs:label "Programar las funciones M del mismo cabezal en bloques diferentes" ;
+    ns1:mitigaRiesgo ns1:FuncionesMIncompatibles ;
+    ns1:textoExtracto "SOLUCIÓN Programar las funciones M del mismo cabezal en bloques diferentes." .
 
-ns1:DiagnosticoFallo_1103 a ns1:DiagnosticoFallo ;
-    rdfs:label "Función O no implementada" ;
-    ns1:solucionaFallo ns1:Alarma_1103 ;
-    ns1:textoExtracto "La función O no existe." .
+ns1:RevisarLaProgramacion_2a64761237 a ns1:AvisoSeguridad ;
+    rdfs:label "Revisar la programación" ;
+    ns1:mitigaRiesgo ns1:G159NumeroDeOffsetNoValido ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. 1088 'G159: número de offset no válido'" .
 
-ns1:DiagnosticoFallo_1104 a ns1:DiagnosticoFallo ;
-    rdfs:label "Uso incorrecto del carácter '%'" ;
-    ns1:solucionaFallo ns1:Alarma_1104 ;
-    ns1:textoExtracto "Sólo se permite usar el carácter \"%\" como primer carácter en la definición del nombre del programa principal o de una subrutina local." .
+ns1:RevisarLaProgramacion_c653df7db8 a ns1:AvisoSeguridad ;
+    rdfs:label "Revisar la programación" ;
+    ns1:mitigaRiesgo ns1:SeEspera ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. 1087 'Se espera \"=\"'" .
 
-ns1:Alarma_1101 a ns1:Alarma ;
-    rdfs:label "Sentencia #SET IPOPOS mal programada" ;
-    ns1:identificador "1101" ;
-    ns1:textoExtracto "1101 'Sentencia #SET IPOPOS mal programada' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque. SOLUCIÓN Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque." .
+ns1:FuncionesMIncompatibles a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones M incompatibles" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas para el mismo cabezal dos o más funciones M incompatibles entre sí." .
 
-ns1:Alarma_1102 a ns1:Alarma ;
-    rdfs:label "No se admite índice para R distinto de 1" ;
-    ns1:identificador "1102" ;
-    ns1:textoExtracto "1102 'No se admite índice para R distinto de 1' DETECCIÓN Durante la ejecución. CAUSA Sólo se permite programar el radio con R o R1. SOLUCIÓN Revisar la programación." .
+ns1:G159NumeroDeOffsetNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "'G159: número de offset no válido'" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En la función G159, el traslado de origen programado no existe." .
 
-ns1:Alarma_1103 a ns1:Alarma ;
-    rdfs:label "Función O inexistente" ;
-    ns1:identificador "1103" ;
-    ns1:textoExtracto "1103 'Función O inexistente' DETECCIÓN Durante la ejecución. CAUSA La función O no existe. SOLUCIÓN Revisar la programación." .
-
-ns1:Alarma_1104 a ns1:Alarma ;
-    rdfs:label "No se admite el carácter '%' dentro del programa principal" ;
-    ns1:identificador "1104" ;
-    ns1:textoExtracto "1104 'No se admite el carácter \"%\" dentro del programa principal' DETECCIÓN Durante la ejecución. CAUSA Sólo se permite usar el carácter \"%\" como primer carácter en la definición del nombre del programa principal o de una subrutina local. SOLUCIÓN Eliminar este carácter del programa." .
+ns1:SeEspera a ns1:DiagnosticoFallo ;
+    rdfs:label "'Se espera \"=\"'" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia o la función programada no es correcta." .
 

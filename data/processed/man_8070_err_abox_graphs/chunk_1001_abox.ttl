@@ -1,29 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:alarma_9733 a ns1:Alarma ;
-    rdfs:label "Fallo en la comunicación double AT Miss"@es ;
-    ns1:activaAlarma ns1:fallo_comunicacion_9733 ;
-    ns1:identificador "9733" ;
-    ns1:textoExtracto "9733 Fallo en la comunicación double AT Miss. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema."@es .
+ns1:ErrorDeSeguimientoPermitido_0bfc36aebb a ns1:Parametro ;
+    rdfs:label "Error de seguimiento permitido" ;
+    ns1:identificador "MAXFLWE" ;
+    ns1:textoExtracto "(parámetro MAXFLWE)" .
 
-ns1:alarma_9731 a ns1:Alarma ;
-    rdfs:label "Alarma de captación en volante"@es ;
-    ns1:identificador "9731" ;
-    ns1:mitigaRiesgo ns1:aviso_9731 ;
-    ns1:textoExtracto "Alarma de captación en volante. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Alarma de captación en el volante de la entrada de captación del regulador."@es .
+ns1:ErrorEnCalculoDeI0sCodificados a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en cálculo de I0s codificados" ;
+    ns1:textoExtracto "9715 Error en cálculo de I0s codificados. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Los I0s latcheados no son coherentes." .
 
-ns1:aviso_9731 a ns1:AvisoSeguridad ;
-    rdfs:label "Revisión de conexionado y alimentación del volante"@es ;
-    ns1:solucionaFallo ns1:fallo_captacion_volante ;
-    ns1:textoExtracto "SOLUCIÓN Revisar el conexionado y la alimentación del volante."@es .
+ns1:RevisarLosLimitesDeCarrera a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los límites de carrera" ;
+    ns1:solucionaFallo ns1:LimiteDeCarreraNegativoAlcanzado,
+        ns1:LimiteDeCarreraPositivoAlcanzado ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los límites de carrera." .
 
-ns1:fallo_captacion_volante a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo en captación del volante (regulador)"@es ;
-    ns1:activaAlarma ns1:alarma_9731 ;
-    ns1:textoExtracto "CAUSA Alarma de captación en el volante de la entrada de captación del regulador."@es .
+ns1:RevisarLosParametrosAjusteConexionadoEstadoDelReguladorSistemaDeCapta_16406fd8ff a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros, ajuste, conexionado, estado del regulador, sistema de captación, motor, etc." ;
+    ns1:solucionaFallo ns1:ElEjeHaSuperadoElErrorDeSeguimientoPermitido ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros, ajuste, conexionado, estado del regulador, sistema de captación, motor, etc." .
 
-ns1:fallo_comunicacion_9733 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de comunicación double AT Miss"@es ;
-    ns1:textoExtracto "9733 Fallo en la comunicación double AT Miss. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Error de"@es .
+ns1:ElEjeHaSuperadoElErrorDeSeguimientoPermitido a ns1:DiagnosticoFallo ;
+    rdfs:label "El eje ha superado el error de seguimiento permitido" ;
+    ns1:textoExtracto "del sistema. CAUSA El eje ha superado el error de seguimiento permitido (parámetro MAXFLWE). Posible ajuste inadecuado del eje, falta alguna habilitación, fallo en el motor o regulador, sistema de captación y/o mecánica." .
+
+ns1:LimiteDeCarreraNegativoAlcanzado a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de carrera negativo alcanzado" ;
+    ns1:textoExtracto "9712 Límite de carrera negativo alcanzado. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El eje ha alcanzado el límite de recorrido negativo." .
+
+ns1:LimiteDeCarreraPositivoAlcanzado a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de carrera positivo alcanzado" ;
+    ns1:textoExtracto "9711 Límite de carrera positivo alcanzado. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El eje ha alcanzado el límite de recorrido positivo." .
 

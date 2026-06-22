@@ -1,29 +1,47 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "CNC"@es ;
-    ns1:activaAlarma ns1:Fallo_8055,
-        ns1:Fallo_8056 ;
-    ns1:textoExtracto "El CNC ha sido bloqueado debido a una violación de los términos de uso"@es .
+ns1:CNC8070_d8893a5d6a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:LaCarpetaDRIVERSNoExiste,
+        ns1:LaCarpetaUSERSNoExiste,
+        ns1:LosSiguientesPasswordsDeAccesoEstanAunPorDefinir,
+        ns1:PuestaAPuntoIncompletaNoSeHaEncontradoNingunaCopiaDeSeguridad ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:TareaMantenimiento_ContactarOEM_8055 a ns1:TareaMantenimiento ;
-    rdfs:label "Contactar con el OEM para desbloqueo del CNC"@es ;
-    ns1:solucionaFallo ns1:Fallo_8055 ;
-    ns1:textoExtracto "Contacte con el OEM" .
+ns1:CrearCarpetaDrivers a ns1:TareaMantenimiento ;
+    rdfs:label "Crear Carpeta Drivers" ;
+    ns1:solucionaFallo ns1:LaCarpetaDRIVERSNoExiste ;
+    ns1:textoExtracto "SOLUCIÓN Desde el modo utilidades, usar la opción \"Nuevo directorio\" del menú de softkeys para crear la carpeta." .
 
-ns1:TareaMantenimiento_ContactarOEM_8056 a ns1:TareaMantenimiento ;
-    rdfs:label "Contactar con el OEM para inconsistencias en recuperación de herramientas"@es ;
-    ns1:solucionaFallo ns1:Fallo_8056 ;
-    ns1:textoExtracto "El CNC no ha podido recuperar la información de"@es .
+ns1:CrearCarpetaUsers a ns1:TareaMantenimiento ;
+    rdfs:label "Crear Carpeta Users" ;
+    ns1:solucionaFallo ns1:LaCarpetaUSERSNoExiste ;
+    ns1:textoExtracto "SOLUCIÓN Desde el modo utilidades, usar la opción \"Nuevo directorio\" del menú de softkeys para crear la carpeta." .
 
-ns1:Fallo_8055 a ns1:DiagnosticoFallo ;
-    rdfs:label "Bloqueo del CNC por violación de términos de uso"@es ;
-    ns1:identificador "8055" ;
-    ns1:textoExtracto "El CNC ha sido bloqueado debido a una violación de los términos de uso. Contacte con el OEM. DETECCIÓN Durante el arranque del CNC. CAUSA El CNC está bloqueado porque ha detectado un cambio de fecha no permitido. SOLUCIÓN Póngase en contacto con el OEM."@es .
+ns1:DefinirPasswordsDeAcceso a ns1:TareaMantenimiento ;
+    rdfs:label "Definir Passwords de Acceso" ;
+    ns1:solucionaFallo ns1:LosSiguientesPasswordsDeAccesoEstanAunPorDefinir ;
+    ns1:textoExtracto "SOLUCIÓN Con el CNC arrancado, acceder al modo utilidades y desde la opción \"Códigos de acceso\" del menú de softkeys introducir los passwords indicados." .
 
-ns1:Fallo_8056 a ns1:DiagnosticoFallo ;
-    rdfs:label "Inconsistencia en recuperación de posiciones de herramientas en almacén"@es ;
-    ns1:identificador "8056" ;
-    ns1:textoExtracto "Inconsistencia en la recuperación de las posiciones de las herramientas en el almacén. DETECCIÓN Durante el arranque del CNC. CAUSA El CNC no ha podido recuperar la información de"@es .
+ns1:HacerCopiaDeSeguridadDePuestaAPunto a ns1:TareaMantenimiento ;
+    rdfs:label "Hacer Copia de Seguridad de Puesta a Punto" ;
+    ns1:solucionaFallo ns1:PuestaAPuntoIncompletaNoSeHaEncontradoNingunaCopiaDeSeguridad ;
+    ns1:textoExtracto "SOLUCIÓN Al apagar el CNC, seleccionar la opción \"Cerrar y hacer copia de seguridad\", para que el CNC haga una copia de seguridad de la puesta a punto." .
+
+ns1:LaCarpetaDRIVERSNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "La carpeta DRIVERS no existe" ;
+    ns1:textoExtracto "'La carpeta DRIVERS no existe' DETECCIÓN Durante el arranque del sistema. CAUSA El CNC no ha encontrado la carpeta en la que se ubicará el PLC una vez generado (C:\\CNC8070\\Drivers)." .
+
+ns1:LaCarpetaUSERSNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "La carpeta USERS no existe" ;
+    ns1:textoExtracto "'La carpeta USERS no existe' DETECCIÓN Durante el arranque del sistema. CAUSA El CNC no ha encontrado la carpeta de trabajo del usuario (C:\\CNC8070\\Users)." .
+
+ns1:LosSiguientesPasswordsDeAccesoEstanAunPorDefinir a ns1:DiagnosticoFallo ;
+    rdfs:label "Los siguientes passwords de acceso están aún por definir" ;
+    ns1:textoExtracto "'Los siguientes passwords de acceso están aún por definir' DETECCIÓN Durante el arranque de un CNC abierto, en modo puesta a punto. CAUSA Los passwords de acceso indicados en el aviso no están definidos." .
+
+ns1:PuestaAPuntoIncompletaNoSeHaEncontradoNingunaCopiaDeSeguridad a ns1:DiagnosticoFallo ;
+    rdfs:label "Puesta a punto incompleta: No se ha encontrado ninguna copia de seguridad" ;
+    ns1:textoExtracto "'Puesta a punto incompleta:No se ha encontrado ninguna copia de seguridad' DETECCIÓN Durante el arranque del sistema, en modo puesta a punto. CAUSA El CNC no ha encontrado ninguna copia de seguridad de la puesta a punto." .
 

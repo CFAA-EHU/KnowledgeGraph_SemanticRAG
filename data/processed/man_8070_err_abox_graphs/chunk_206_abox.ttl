@@ -1,53 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1412 a ns1:AvisoSeguridad ;
-    rdfs:label "Zona de visualización para gráficos mal definida (Error 1412)"@es ;
-    ns1:identificador "1412" ;
-    ns1:textoExtracto "#DGWZ: zona de visualización para gráficos mal definida. DETECCIÓN Durante la ejecución. CAUSA En la sentencia se han definido mal los límites de los ejes. SOLUCIÓN Ambos límites pueden ser positivos o negativos pero siempre los límites inferiores de un eje deberán ser menores que los límites superiores de ese mismo eje."@es .
+ns1:CambioDeGamaAutomatico_327042cb09 a ns1:Parametro ;
+    rdfs:label "cambio de gama automático" ;
+    ns1:identificador "AUTOGEAR" ;
+    ns1:textoExtracto "El cabezal tiene cambio de gama automático (parámetro AUTOGEAR)" .
 
-ns1:AvisoSeguridad_1413 a ns1:AvisoSeguridad ;
-    rdfs:label "Velocidad cero no admitida para posicionamiento de cabezal (Error 1413)"@es ;
-    ns1:identificador "1413" ;
-    ns1:mitigaRiesgo ns1:ComponenteMecanico_Cabezal ;
-    ns1:textoExtracto "'No se admite velocidad cero para posicionamiento de cabezal'. DETECCIÓN Durante la ejecución. CAUSA La velocidad de posicionamiento programada para la función M19 es cero. SOLUCIÓN Programar una velocidad de posicionamiento mayor que cero mediante el comando \"S.POS\"."@es .
+ns1:ErrorEnLaLecturaDeDatosDeLaCajera a ns1:AccionProhibida ;
+    rdfs:label "error en la lectura de datos de la cajera" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "Error en la lectura de datos de la cajera." .
 
-ns1:AvisoSeguridad_1414 a ns1:AvisoSeguridad ;
-    rdfs:label "Sentencia #PARK con múltiples ejes (Error 1414)"@es ;
-    ns1:identificador "1414" ;
-    ns1:textoExtracto "'#PARK: la sentencia sólo admite un eje'. DETECCIÓN Durante la ejecución. CAUSA La sentencia #PARK solo permite aparcar un eje. SOLUCIÓN Programar un bloque #PARK por cada eje que se desea aparcar."@es .
+ns1:ErrorEnLaLecturaDeDatosDeLaCajera_f1fce3373f a ns1:DiagnosticoFallo ;
+    rdfs:label "error en la lectura de datos de la cajera" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "Error en la lectura de datos de la cajera." .
 
-ns1:AvisoSeguridad_1417 a ns1:AvisoSeguridad ;
-    rdfs:label "Path de fichero demasiado largo (Error 1417)"@es ;
-    ns1:identificador "1417" ;
-    ns1:textoExtracto "'Path de fichero demasiado largo'. DETECCIÓN Durante la ejecución. CAUSA Se ha superado el máximo número de caracteres permitido para el path de un programa o subrutina. SOLUCIÓN El path de un programa o subrutina puede tener un máximo de 120 caracteres."@es .
+ns1:ProgramacionDeParametrosEnCALL a ns1:AccionProhibida ;
+    rdfs:label "programación de parámetros en #CALL" ;
+    ns1:mitigaRiesgo ns1:CALLNoAdmiteProgramacionDeParametros ;
+    ns1:textoExtracto "La sentencia #CALL no admite programación de parámetros." .
 
-ns1:AvisoSeguridad_1418 a ns1:AvisoSeguridad ;
-    rdfs:label "Aparcado de ejes en cinemática activa (Error 1418)"@es ;
-    ns1:identificador "1418" ;
-    ns1:mitigaRiesgo ns1:Sistema_CinematicaActiva ;
-    ns1:textoExtracto "'No se permite aparcar ejes de la cinemática o tranformadas activas'. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado aparcar un eje que forma parte de la cinemática activa o de las transformadas #CS, #ACS, #ANGAX, #TANGCTRL."@es .
+ns1:ProgramarVelocidadDeCabezalSuperiorALaMaxima a ns1:AccionProhibida ;
+    rdfs:label "programar velocidad de cabezal superior a la máxima" ;
+    ns1:textoExtracto "Programar una velocidad de cabezal menor, que sea alcanzable con alguna de las gamas existentes para ese cabezal." .
 
-ns1:AvisoSeguridad_1419 a ns1:AvisoSeguridad ;
-    rdfs:label "Aparcado de ejes acoplados (Error 1419)"@es ;
-    ns1:identificador "1419" ;
-    ns1:mitigaRiesgo ns1:Sistema_EjesAcoplados ;
-    ns1:textoExtracto "'No se permite aparcar ejes acoplados, Gantry o Tandem'. DETECCIÓN Durante la ejecución."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "revisar la programación" ;
+    ns1:solucionaFallo ns1:CALLNoAdmiteProgramacionDeParametros ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_PathMaxLength a ns1:Parametro ;
-    rdfs:label "Límite máximo de caracteres en path de programa/subrutina"@es ;
-    ns1:textoExtracto "El path de un programa o subrutina puede tener un máximo de 120 caracteres."@es ;
-    ns1:valor "120" .
+ns1:CALLNoAdmiteProgramacionDeParametros a ns1:DiagnosticoFallo ;
+    rdfs:label "#CALL: no admite programación de parámetros" ;
+    ns1:textoExtracto "La sentencia #CALL no admite programación de parámetros. SOLUCIÓN Revisar la programación." .
 
-ns1:ComponenteMecanico_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal de posicionamiento"@es ;
-    ns1:textoExtracto "velocidad de posicionamiento programada para la función M19 es cero"@es .
-
-ns1:Sistema_CinematicaActiva a ns1:Sistema ;
-    rdfs:label "Cinemática activa o transformadas (#CS, #ACS, #ANGAX, #TANGCTRL)"@es ;
-    ns1:textoExtracto "cinemática activa o de las transformadas #CS, #ACS, #ANGAX, #TANGCTRL"@es .
-
-ns1:Sistema_EjesAcoplados a ns1:Sistema ;
-    rdfs:label "Ejes acoplados (Gantry o Tandem)"@es ;
-    ns1:textoExtracto "ejes acoplados, Gantry o Tandem"@es .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 

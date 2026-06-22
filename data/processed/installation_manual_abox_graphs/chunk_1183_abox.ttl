@@ -1,57 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_ANAOUTID a ns1:Parametro ;
-    rdfs:label "ANAOUTID" ;
-    ns1:monitoreaParametro ns1:SalidaAnalogica_Eje ;
-    ns1:textoExtracto "Número de la salida analógica asociada al eje." ;
-    ns1:valor "1 - 16" .
+ns1:FactorMultiplicadorDeLaSenalSinusoidal a ns1:Parametro ;
+    rdfs:label "Factor multiplicador de la señal sinusoidal" ;
+    ns1:identificador "SINMAGNI" ;
+    ns1:textoExtracto "SINMAGNI | Factor multiplicador de la señal sinusoidal." .
 
-ns1:Parametro_COUNTERID a ns1:Parametro ;
-    rdfs:label "COUNTERID" ;
-    ns1:monitoreaParametro ns1:EntradaCaptacion_Eje ;
-    ns1:textoExtracto "Número de la entrada de captación del eje." .
+ns1:FactorMultiplicadorExterno a ns1:Parametro ;
+    rdfs:label "Factor multiplicador externo" ;
+    ns1:identificador "EXTMULT" ;
+    ns1:textoExtracto "EXTMULT | Factor multiplicador externo." .
 
-ns1:Parametro_COUNTERTYPE a ns1:Parametro ;
-    rdfs:label "COUNTERTYPE" ;
-    ns1:textoExtracto "Tipo de entrada de captación del eje." .
+ns1:FlancoDeLaSenalDeI0 a ns1:Parametro ;
+    rdfs:label "Flanco de la señal de I0" ;
+    ns1:identificador "REFPULSE" ;
+    ns1:textoExtracto "REFPULSE | Flanco de la señal de I0." .
 
-ns1:Regulador_Sercos a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Sercos" ;
-    ns1:controla ns1:SalidaAnalogica_Eje ;
-    ns1:textoExtracto "Gestión de la consigna analógica desde los reguladores Sercos." .
+ns1:OffsetDelCaptadorRespectoAI0 a ns1:Parametro ;
+    rdfs:label "Offset del captador respecto a I0" ;
+    ns1:identificador "ABSOFF" ;
+    ns1:textoExtracto "ABSOFF | Offset del captador respecto a I0." .
 
-ns1:Tabla_ParametrosEjeAnalogico a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros de configuración del eje analógico" ;
-    ns1:detalladoEnEsquema ns1:EjeAnalogico ;
-    ns1:documentadoEn ns1:Manual_Maquina ;
-    ns1:textoExtracto "Parámetro | Significado | ANAOUTID | Número de la salida analógica asociada al eje. | COUNTERTYPE | Tipo de entrada de captación del eje. | COUNTERID | Número de la entrada de captación del eje." .
+ns1:PasoEntreSenalesDeI0Fijas a ns1:Parametro ;
+    rdfs:label "Paso entre señales de I0 fijas" ;
+    ns1:identificador "I0CODDI1" ;
+    ns1:textoExtracto "I0CODDI1 | Paso entre señales de I0 fijas." .
 
-ns1:Tabla_ValoresANAOUTID a ns1:Tabla ;
-    rdfs:label "Tabla de valores para ANAOUTID" ;
-    ns1:detalladoEnEsquema ns1:ModuloRemoto_CANfagor ;
-    ns1:documentadoEn ns1:Manual_Maquina ;
-    ns1:textoExtracto "Parámetro | Valor | ANAOUTID | 1 - 16" .
+ns1:PasoEntreSenalesDeI0Variables a ns1:Parametro ;
+    rdfs:label "Paso entre señales de I0 variables" ;
+    ns1:identificador "I0CODDI2" ;
+    ns1:textoExtracto "I0CODDI2 | Paso entre señales de I0 variables." .
 
-ns1:ModuloRemoto_CANfagor a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto CANfagor" ;
-    ns1:alimenta ns1:SalidaAnalogica_Eje ;
-    ns1:textoExtracto "Gestión de la consigna analógica desde los módulos remotos CANfagor." ;
-    ns1:tieneComponente ns1:SalidaAnalogica_Eje .
+ns1:TipoDeCaptacion_846ab96f70 a ns1:Parametro ;
+    rdfs:label "Tipo de captación" ;
+    ns1:identificador "ABSFEEDBACK" ;
+    ns1:textoExtracto "ABSFEEDBACK | Tipo de captación." .
 
-ns1:EntradaCaptacion_Eje a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de captación del eje" ;
-    ns1:monitoreaParametro ns1:EjeAnalogico ;
-    ns1:textoExtracto "Tanto la entrada de captación como la salida para la consigna se configuran desde los parámetros máquina." .
-
-ns1:EjeAnalogico a ns1:ComponenteMecanico ;
-    rdfs:label "Eje analógico" ;
-    ns1:textoExtracto "Cada eje dispone de los siguientes parámetros máquina para su configuración." ;
-    ns1:tieneComponente ns1:EntradaCaptacion_Eje,
-        ns1:SalidaAnalogica_Eje .
-
-ns1:SalidaAnalogica_Eje a ns1:ComponenteElectrico ;
-    rdfs:label "Salida analógica del eje" ;
-    ns1:controla ns1:EjeAnalogico ;
-    ns1:textoExtracto "La consigna para un eje analógico se puede tomar desde una salida analógica de los módulos remotos o de un regulador Sercos." .
+ns1:TipoDeI0 a ns1:Parametro ;
+    rdfs:label "Tipo de I0" ;
+    ns1:identificador "I0TYPE" ;
+    ns1:textoExtracto "I0TYPE | Tipo de I0." .
 

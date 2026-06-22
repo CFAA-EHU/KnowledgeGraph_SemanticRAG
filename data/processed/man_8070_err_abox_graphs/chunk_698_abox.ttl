@@ -1,63 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:BusPCI a ns1:ComponenteElectrico ;
-    rdfs:label "Bus PCI" ;
-    ns1:textoExtracto "Problema de hardware de la chepa Sercos o conexionado al Bus PCI." .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:COMPCI a ns1:ComponenteElectrico ;
-    rdfs:label "COMPCI" ;
-    ns1:textoExtracto "Error en el test de hardware de la COMPCI. En el arranque se realizan los siguientes test; Flash, RAM común, RAM externa, RAM interna y controlador CAN." .
+ns1:ComprobacionesYAccionesParaGarantizarLaIntegridadDelBusCAN a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobaciones y acciones para garantizar la integridad del bus CAN" ;
+    ns1:solucionaFallo ns1:TimeoutEnLaInicializacionDeCAN ;
+    ns1:textoExtracto "Realizar las siguientes comprobaciones y acciones para garantizar la integridad del bus CAN:" .
 
-ns1:Error_6026 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de hardware en la COMPCI" ;
-    ns1:detalladoEnEsquema ns1:ModoDiagnosis ;
-    ns1:identificador "6026" ;
-    ns1:solucionaFallo ns1:ServicioAsistenciaTecnica ;
-    ns1:textoExtracto "Error de hardware en la COMPCI. DETECCIÓN Durante el arranque del sistema. CAUSA Error en el test de hardware de la COMPCI. En el arranque se realizan los siguientes test; Flash, RAM común, RAM externa, RAM interna y controlador CAN." .
-
-ns1:Error_6027 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de hardware en nodo remoto CAN" ;
-    ns1:detalladoEnEsquema ns1:ModoDiagnosis ;
-    ns1:identificador "6027" ;
-    ns1:solucionaFallo ns1:ServicioAsistenciaTecnica ;
-    ns1:textoExtracto "Error de hardware en nodo remoto CAN. DETECCIÓN Durante el arranque del sistema. CAUSA Error en el test de hardware de los nodos remotos. En el arranque se realizan los siguientes test; Flash, RAM y controlador CAN." .
-
-ns1:Error_6028 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en accesos a la RAM del SERCON" ;
-    ns1:identificador "6028" ;
-    ns1:solucionaFallo ns1:ServicioAsistenciaTecnica ;
-    ns1:textoExtracto "Error en accesos a la RAM del SERCON. DETECCIÓN Durante el arranque del sistema o durante la ejecución. CAUSA Fallo en el test de la RAM común del SERCON (accesos R/W en modos Byte/Word)." .
-
-ns1:Error_6029 a ns1:DiagnosticoFallo ;
-    rdfs:label "Límite de incremento de posición superado en el CNC" ;
-    ns1:identificador "6029" ;
-    ns1:solucionaFallo ns1:ServicioAsistenciaTecnica ;
-    ns1:textoExtracto "Límite de incremento de posición superado en el CNC. DETECCIÓN Durante la ejecución. CAUSA Incremento de posición excesivo en un eje analógico. Fallo de hardware del nodo contadora, accesos a la COMPCI (conexionado), etc." .
-
-ns1:Error_6030 a ns1:DiagnosticoFallo ;
-    rdfs:label "Límite de incremento de posición superado en el nodo contadora de CAN" ;
-    ns1:identificador "6030" ;
-    ns1:solucionaFallo ns1:ServicioAsistenciaTecnica ;
-    ns1:textoExtracto "Límite de incremento de posición superado en el nodo contadora de CAN. DETECCIÓN Durante la ejecución. CAUSA Incremento de posición excesivo en un eje analógico. Fallo de hardware del nodo contadora." .
-
-ns1:NodoContadora_CAN a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo contadora de CAN" ;
-    ns1:textoExtracto "Fallo de hardware del nodo contadora de CAN. Incremento de posición excesivo en un eje analógico." .
-
-ns1:NodoRemoto_CAN a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo remoto CAN" ;
-    ns1:textoExtracto "Error en el test de hardware de los nodos remotos. En el arranque se realizan los siguientes test; Flash, RAM y controlador CAN." .
-
-ns1:SERCON a ns1:ComponenteElectrico ;
-    rdfs:label "SERCON" ;
-    ns1:textoExtracto "Fallo en el test de la RAM común del SERCON (accesos R/W en modos Byte/Word)." .
-
-ns1:ModoDiagnosis a ns1:ModoOperacion ;
-    rdfs:label "Modo diagnosis" ;
-    ns1:textoExtracto "En el modo diagnosis se presenta información detallada sobre el tipo de error." .
-
-ns1:ServicioAsistenciaTecnica a ns1:Personal ;
-    rdfs:label "Servicio de asistencia técnica" ;
+ns1:ConsultarConElServicioDeAsistenciaTecnica a ns1:AccionProhibida ;
+    rdfs:label "Consultar con el servicio de asistencia técnica" ;
+    ns1:solucionaFallo ns1:FalloEnAccesosADPRAMDeLaCOMPCI ;
     ns1:textoExtracto "Consultar con el servicio de asistencia técnica." .
+
+ns1:PongaseEnContactoConElServicioDeAsistenciaTecnica a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con el servicio de asistencia técnica." ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ns1:RealizarLasComprobacionesOportunasParaGarantizarLaIntegridadDelBusCAN a ns1:TareaMantenimiento ;
+    rdfs:label "Realizar las comprobaciones oportunas para garantizar la integridad del bus CAN" ;
+    ns1:solucionaFallo ns1:ContadorDeErroresCANSobrepasoNivel1_895a5e75e9 ;
+    ns1:textoExtracto "Realizar las comprobaciones oportunas para garantizar la integridad del bus CAN." .
+
+ns1:ContadorDeErroresCANSobrepasoNivel1_895a5e75e9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Contador de errores CAN sobrepaso nivel 1" ;
+    ns1:textoExtracto "'Contador de errores CAN sobrepaso nivel 1' DETECCIÓN Durante la ejecución." .
+
+ns1:FalloEnAccesosADPRAMDeLaCOMPCI a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en accesos a DPRAM de la COMPCI" ;
+    ns1:textoExtracto "'Fallo en accesos a DPRAM de la COMPCI' DETECCIÓN Durante la ejecución." .
+
+ns1:TimeoutEnLaInicializacionDeCAN a ns1:DiagnosticoFallo ;
+    rdfs:label "Timeout en la inicialización de CAN" ;
+    ns1:textoExtracto "'Timeout en la inicialización de CAN' DETECCIÓN Durante el arranque del sistema." .
 

@@ -1,77 +1,23 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Funcion_M101 a ns1:Parametro ;
-    rdfs:label "Función M101 (selección en almacén + pinza 1)"@es ;
-    ns1:identificador "M101" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M101: Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1."@es .
+ns1:CabezalHerramientas a ns1:Componente ;
+    rdfs:label "Cabezal de herramientas" ;
+    ns1:requiereMantenimiento ns1:CambioDeHerramientaAutomatico_2bddb72182,
+        ns1:CambioDeHerramientaManual_05b3760b6b ;
+    ns1:textoExtracto "Llevar el cabezal al punto de cambio automático." .
 
-ns1:Funcion_M102 a ns1:Parametro ;
-    rdfs:label "Función M102 (pinza 1 → cabezal)"@es ;
-    ns1:identificador "M102" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M102: Llevar la herramienta de la pinza 1 al cabezal."@es .
+ns1:Componente_2469f375a8 a ns1:Componente ;
+    rdfs:label "Almacén de herramientas" ;
+    ns1:textoExtracto "Coger la herramienta del almacén con la pinza 1." .
 
-ns1:Funcion_M104 a ns1:Parametro ;
-    rdfs:label "Función M104 (cabezal → pinza 2)"@es ;
-    ns1:identificador "M104" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M104: Coger la herramienta del cabezal con la pinza 2."@es .
+ns1:CambioDeHerramientaAutomatico_2bddb72182 a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta automático" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
 
-ns1:Funcion_M106 a ns1:Parametro ;
-    rdfs:label "Función M106 (pinza 2 → almacén)"@es ;
-    ns1:identificador "M106" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M106: Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta de la pinza 2."@es .
-
-ns1:Marca_M1101 a ns1:Parametro ;
-    rdfs:label "Marca M1101 (MZTOCH1: almacén → pinza 1)"@es ;
-    ns1:identificador "M1101" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M1101 | MZTOCH1: La herramienta se ha llevado del almacén a la pinza 1."@es .
-
-ns1:Marca_M1102 a ns1:Parametro ;
-    rdfs:label "Marca M1102 (CH1TOSPDL: pinza 1 → cabezal)"@es ;
-    ns1:identificador "M1102" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M1102 | CH1TOSPDL: La herramienta se ha llevado de la pinza 1 al cabezal."@es .
-
-ns1:Marca_M1104 a ns1:Parametro ;
-    rdfs:label "Marca M1104 (SPDLTOCH2: cabezal → pinza 2)"@es ;
-    ns1:identificador "M1104" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M1104 | SPDLTOCH2: La herramienta se ha llevado del cabezal a la pinza 2."@es .
-
-ns1:Marca_M1106 a ns1:Parametro ;
-    rdfs:label "Marca M1106 (CH2TOMZ: pinza 2 → almacén)"@es ;
-    ns1:identificador "M1106" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M1106 | CH2TOMZ: La herramienta se ha llevado de la pinza 2 al almacén."@es .
-
-ns1:Marca_M1107 a ns1:Parametro ;
-    rdfs:label "Marca M1107 (SPDLTOGR: cabezal → tierra)"@es ;
-    ns1:identificador "M1107" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M1107 | SPDLTOGR: La herramienta se ha llevado del cabezal a tierra."@es .
-
-ns1:Marca_M1108 a ns1:Parametro ;
-    rdfs:label "Marca M1108 (GRTOSPDL: tierra → cabezal)"@es ;
-    ns1:identificador "M1108" ;
-    ns1:monitoreaParametro ns1:ComunicacionPLC_M06 ;
-    ns1:textoExtracto "M1108 | GRTOSPDL: La herramienta se ha llevado de tierra al cabezal."@es .
-
-ns1:ComunicacionPLC_M06 a ns1:Sistema ;
-    rdfs:label "Sistema de comunicación PLC-M06"@es ;
-    ns1:textoExtracto "La comunicación entre el PLC y la rutina M06 se realiza mediante una serie de marcas y registros genéricos."@es ;
-    ns1:tieneComponente ns1:Funcion_M101,
-        ns1:Funcion_M102,
-        ns1:Funcion_M104,
-        ns1:Funcion_M106,
-        ns1:Marca_M1101,
-        ns1:Marca_M1102,
-        ns1:Marca_M1104,
-        ns1:Marca_M1106,
-        ns1:Marca_M1107,
-        ns1:Marca_M1108 .
+ns1:CambioDeHerramientaManual_05b3760b6b a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta manual" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:textoExtracto "LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
 

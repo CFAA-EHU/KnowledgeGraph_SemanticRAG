@@ -1,50 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_9372 a ns1:DiagnosticoFallo ;
-    rdfs:label "Nuevo motor detectado" ;
-    ns1:identificador "9372" ;
-    ns1:monitoreaParametro ns1:Param_MOT_NAME ;
-    ns1:textoExtracto "Nuevo motor detectado. DETECCIÓN Durante el arranque o validación de los parámetros máquina. CAUSA Se ha cambiado el motor asociado a un eje. SOLUCIÓN Confirmar que el motor es correcto." .
+ns1:CNC8070_93f6a8a259 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Durante el arranque del sistema o validación de los parámetros máquina." .
 
-ns1:Fallo_9373 a ns1:DiagnosticoFallo ;
-    rdfs:label "Mal función en el comando de Autophasing" ;
-    ns1:controla ns1:Sistema_Autophasing ;
-    ns1:identificador "9373" ;
-    ns1:textoExtracto "Mal función en el comando de Autophasing. DETECCIÓN Durante la ejecución. CAUSA El Autophasing se ha deshabilitado durante el proceso o devuelve un resultado incoherente. SOLUCIÓN Revisar la habilitación del sistema y chequear el motor seleccionado." .
+ns1:CorregirParametrosMaquina a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir parámetros máquina" ;
+    ns1:solucionaFallo ns1:EjeRepetidoEnVOLCOMP_02170c05b1 ;
+    ns1:textoExtracto "SOLUCIÓN Corregir los parámetros máquina." .
 
-ns1:Fallo_9375 a ns1:DiagnosticoFallo ;
-    rdfs:label "Parametrización ABSFEEDBACK y M19SPDLEREV incompatible" ;
-    ns1:identificador "9375" ;
-    ns1:monitoreaParametro ns1:Param_ABSFEEDBACK,
-        ns1:Param_M19SPDLEREV,
-        ns1:Param_SDPLEREV ;
-    ns1:textoExtracto "Parametrización ABSFEEDBACK y M19SPDLEREV incompatible, posible pérdida de posición. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Los valores ABSFEEDBACK = YES y M19SPDLEREV = YES pueden llevar a una pérdida de cota si se aplica un cambio de SDPLEREV." .
+ns1:ParametroDEFAULTSET a ns1:Parametro ;
+    rdfs:label "Parámetro DEFAULTSET" ;
+    ns1:textoExtracto "El parámetro DEFAULTSET debe coincidir con M41SET..M44SET en cabezales." .
 
-ns1:Param_ABSFEEDBACK a ns1:Parametro ;
-    rdfs:label "ABSFEEDBACK" ;
-    ns1:identificador "ABSFEEDBACK" ;
-    ns1:textoExtracto "ABSFEEDBACK = YES" ;
-    ns1:valor "YES" .
+ns1:ParametroVCOMPAXIS a ns1:Parametro ;
+    rdfs:label "Parámetro VCOMPAXIS" ;
+    ns1:textoExtracto "En los parámetros VMOVAXIS o VCOMPAXIS de la compensación volumétrica está definido el mismo eje dos veces." .
 
-ns1:Param_M19SPDLEREV a ns1:Parametro ;
-    rdfs:label "M19SPDLEREV" ;
-    ns1:identificador "M19SPDLEREV" ;
-    ns1:textoExtracto "M19SPDLEREV = YES" ;
-    ns1:valor "YES" .
+ns1:ParametroVMOVAXIS a ns1:Parametro ;
+    rdfs:label "Parámetro VMOVAXIS" ;
+    ns1:textoExtracto "En los parámetros VMOVAXIS o VCOMPAXIS de la compensación volumétrica está definido el mismo eje dos veces." .
 
-ns1:Param_MOT_NAME a ns1:Parametro ;
-    rdfs:label "MOT_NAME" ;
-    ns1:identificador "MOT_NAME" ;
-    ns1:textoExtracto "Definir el motor indicando en MOT_NAME su matrícula." ;
-    ns1:valor "matrícula del motor" .
+ns1:RevisarConexiones_3f2bf94a9f a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar conexiones" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_0f2aa6f747,
+        ns1:FeedbackDelSETActivoDelEjeNoEstaConectado ;
+    ns1:textoExtracto "SOLUCIÓN Revisar las conexiones." .
 
-ns1:Param_SDPLEREV a ns1:Parametro ;
-    rdfs:label "SDPLEREV" ;
-    ns1:identificador "SDPLEREV" ;
-    ns1:textoExtracto "cambio de SDPLEREV" .
+ns1:DiagnosticoFallo_0f2aa6f747 a ns1:DiagnosticoFallo ;
+    rdfs:label "Motor del SET activo del eje no está conectado" ;
+    ns1:textoExtracto "El motor definido en el set activo del eje no está conectado." .
 
-ns1:Sistema_Autophasing a ns1:Sistema ;
-    rdfs:label "Autophasing" ;
-    ns1:textoExtracto "El Autophasing se ha deshabilitado durante el proceso o devuelve un resultado incoherente." .
+ns1:EjeRepetidoEnVOLCOMP_02170c05b1 a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje repetido en VOLCOMP" ;
+    ns1:textoExtracto "'Eje repetido en VOLCOMP' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC." .
+
+ns1:FeedbackDelSETActivoDelEjeNoEstaConectado a ns1:DiagnosticoFallo ;
+    rdfs:label "Feedback del SET activo del eje no está conectado" ;
+    ns1:textoExtracto "El feedback definido en el set activo del eje no está conectado." .
 

@@ -1,31 +1,82 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_2146 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para alarma 2146: Bloques insuficientes para desactivar spline" ;
-    ns1:solucionaFallo ns1:Alarma_2146 ;
-    ns1:textoExtracto "CAUSA Número insuficiente de bloques para desactivar el spline. SOLUCIÓN No programar el spline para ejecutar un solo bloque." .
+ns1:ConfigurarCanalConLosEjesNecesariosAntesDeActivarElPlanoInclinado a ns1:TareaMantenimiento ;
+    rdfs:label "Configurar canal con los ejes necesarios antes de activar el plano inclinado" ;
+    ns1:solucionaFallo ns1:ErrorEnLaTransformacionDePlanoInclinado_bfcd1c3bf9 ;
+    ns1:textoExtracto "Antes de activar el plano inclinado, configurar el canal con los ejes necesarios." .
 
-ns1:DiagnosticoFallo_2147 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para alarma 2147: Spline no permitido en modo HSC" ;
-    ns1:solucionaFallo ns1:Alarma_2147 ;
-    ns1:textoExtracto "CAUSA No se permite activar el spline con el" .
+ns1:ConfigurarCanalConLosEjesNecesariosAntesDeActivarLaTransformacionRTCP a ns1:TareaMantenimiento ;
+    rdfs:label "Configurar canal con los ejes necesarios antes de activar la transformación RTCP" ;
+    ns1:solucionaFallo ns1:ErrorEnLaTransformacionRTCP ;
+    ns1:textoExtracto "Antes de activar la transformación RTCP, configurar el canal con los ejes necesarios." .
 
-ns1:DiagnosticoFallo_ModoSplineActivo a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico: Spline activo al final del programa" ;
-    ns1:textoExtracto "CAUSA El CNC ha alcanzado el final del programa con el modo spline activo. SOLUCIÓN Anular el spline antes de finalizar el programa." .
+ns1:DefinirElParametroPROBERANGE a ns1:TareaMantenimiento ;
+    rdfs:label "Definir el parámetro PROBERANGE" ;
+    ns1:solucionaFallo ns1:DiagnosticoFalloParametroPROBERANGE ;
+    ns1:textoExtracto "Definir el parámetro PROBERANGE." .
 
-ns1:ModoOperacion_HSC a ns1:ModoOperacion ;
-    rdfs:label "Modo de operación HSC" ;
-    ns1:textoExtracto "modo HSC" .
+ns1:DefinirUnEjeFrontal a ns1:TareaMantenimiento ;
+    rdfs:label "Definir un eje frontal" ;
+    ns1:solucionaFallo ns1:DiagnosticoFalloParametroFACEAXIS ;
+    ns1:textoExtracto "Programar las revoluciones máximas del cabezal." .
 
-ns1:Alarma_2146 a ns1:Alarma ;
-    rdfs:label "Alarma 2146: No es posible la desactivación del spline" ;
-    ns1:identificador "2146" ;
-    ns1:textoExtracto "2146 'No es posible la desactivación del spline' DETECCIÓN Durante la ejecución. CAUSA Número insuficiente de bloques para desactivar el spline. SOLUCIÓN No programar el spline para ejecutar un solo bloque." .
+ns1:EliminarBloqueOBloquesQueProvocanElErrorYPonerseEnContactoConFagorAutomation a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar bloque o bloques que provocan el error y ponerse en contacto con Fagor Automation" ;
+    ns1:solucionaFallo ns1:ErrorInternoEnModoEjeC ;
+    ns1:textoExtracto "Eliminar el bloque o bloques que provocan el error. Póngase en contacto con Fagor Automation." .
 
-ns1:Alarma_2147 a ns1:Alarma ;
-    rdfs:label "Alarma 2147: Programación de splines no permitida en modo HSC" ;
-    ns1:identificador "2147" ;
-    ns1:textoExtracto "2147 'Programación de splines no permitida en modo HSC' DETECCIÓN Durante la ejecución. CAUSA No se permite activar el spline con el" .
+ns1:Parametro_11ba1f559f a ns1:Parametro ;
+    rdfs:label "Parámetro PROBERANGE" ;
+    ns1:identificador "PROBERANGE" ;
+    ns1:textoExtracto "Parámetro máquina PROBERANGE no programado." .
+
+ns1:Parametro_c7af37e70e a ns1:Parametro ;
+    rdfs:label "Parámetro FACEAXIS" ;
+    ns1:identificador "FACEAXIS" ;
+    ns1:textoExtracto "No se ha definido el parámetro FACEAXIS." .
+
+ns1:ProgramarLaVelocidadDeCorte_c4296b49e5 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar la velocidad de corte" ;
+    ns1:solucionaFallo ns1:ProgramadaVelocidadMaximaDeCorteNula ;
+    ns1:textoExtracto "Programar la velocidad de corte." .
+
+ns1:ProgramarLasRevolucionesMaximasDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Programar las revoluciones máximas del cabezal" ;
+    ns1:solucionaFallo ns1:ProgramadaVelocidadMaximaDeCabezalNula ;
+    ns1:textoExtracto "Programar las revoluciones máximas del cabezal." .
+
+ns1:ProgramarLosAcoplosConEjesDelCanal a ns1:TareaMantenimiento ;
+    rdfs:label "Programar los acoplos con ejes del canal" ;
+    ns1:solucionaFallo ns1:ElEjeEsclavoNoExiste,
+        ns1:ElEjeMaestroNoExiste ;
+    ns1:textoExtracto "Programar los acoplos con ejes del canal." .
+
+ns1:ElEjeEsclavoNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "El eje esclavo no existe" ;
+    ns1:textoExtracto "El eje esclavo del acoplo no está disponible en el canal." .
+
+ns1:ElEjeMaestroNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "El eje maestro no existe" ;
+    ns1:textoExtracto "El eje maestro del acoplo no está disponible en el canal." .
+
+ns1:ErrorEnLaTransformacionDePlanoInclinado_bfcd1c3bf9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la transformación de plano inclinado" ;
+    ns1:textoExtracto "'Error en la transformación de plano inclinado'" .
+
+ns1:ErrorEnLaTransformacionRTCP a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la transformación RTCP" ;
+    ns1:textoExtracto "'Error en la transformación de plano inclinado'" .
+
+ns1:ErrorInternoEnModoEjeC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error interno en modo eje C" ;
+    ns1:textoExtracto "'Error interno en modo eje C'" .
+
+ns1:ProgramadaVelocidadMaximaDeCabezalNula a ns1:DiagnosticoFallo ;
+    rdfs:label "Programada velocidad máxima de cabezal nula" ;
+    ns1:textoExtracto "'Programada velocidad máxima de cabezal nula'" .
+
+ns1:ProgramadaVelocidadMaximaDeCorteNula a ns1:DiagnosticoFallo ;
+    rdfs:label "Programada velocidad máxima de corte nula" ;
+    ns1:textoExtracto "'Programada velocidad máxima de corte nula'" .
 

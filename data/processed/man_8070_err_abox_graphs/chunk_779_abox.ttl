@@ -1,56 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_8316 a ns1:Alarma ;
-    rdfs:label "Alarma 8316: Parámetro no permitido" ;
-    ns1:identificador "8316" ;
-    ns1:mitigaRiesgo ns1:DiagnosticoParametroInvalidoEnCicloSentencia ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "'Parámetro no permitido' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA Algún parámetro del ciclo o la sentencia no es válido. SOLUCIÓN Revisar en el manual de programación los parámetros válidos para cada ciclo y sentencia." .
+ns1:AsegurarQueLaVelocidadDePosicionamientoSeaPositiva a ns1:TareaMantenimiento ;
+    rdfs:label "Asegurar que la velocidad de posicionamiento sea positiva" ;
+    ns1:solucionaFallo ns1:VelocidadDePosicionamientoDelCabezalNegativa_01623e42b5 ;
+    ns1:textoExtracto "SOLUCIÓN La velocidad de posicionamiento 'Sn. POS' debe ser positiva." .
 
-ns1:Alarma_8317 a ns1:Alarma ;
-    rdfs:label "Alarma 8317: Función D negativa" ;
-    ns1:identificador "8317" ;
-    ns1:mitigaRiesgo ns1:DiagnosticoCorrectorDeHerramientaNegativo ;
-    ns1:textoExtracto "'Función D negativa' DETECCIÓN Durante la edición. CAUSA Corrector de herramienta negativo. SOLUCIÓN El corrector de herramienta debe ser positivo." .
+ns1:NoProgramarG10YG14ConG11G12OG13EnElMismoBloque a ns1:AccionProhibida ;
+    rdfs:label "No programar G10 y G14 con G11, G12 o G13 en el mismo bloque" ;
+    ns1:textoExtracto "G10 y G14 no se pueden programar en el mismo bloque que la G11, G12 o G13." .
 
-ns1:Alarma_8318 a ns1:Alarma ;
-    rdfs:label "Alarma 8318: Eje activo duplicado en bloque" ;
-    ns1:identificador "8318" ;
-    ns1:mitigaRiesgo ns1:DiagnosticoProgramacionRedundanteDelEje1 ;
-    ns1:textoExtracto "'Sólo se permite un eje activo 1 por bloque' DETECCIÓN Durante la edición. CAUSA El eje @1 está programado más de una vez en el bloque." .
+ns1:ProgramarCadaParametroDelCicloFijoSoloUnaVez a ns1:TareaMantenimiento ;
+    rdfs:label "Programar cada parámetro del ciclo fijo solo una vez" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_9cb841d8a5 ;
+    ns1:textoExtracto "SOLUCIÓN Cada parámetro del ciclo fijo sólo se puede programar una vez en el bloque." .
 
-ns1:Eje_1 a ns1:Componente ;
-    rdfs:label "Eje @1" ;
-    ns1:textoExtracto "El eje @1 está programado más de una vez en el bloque." .
+ns1:ProgramarUnaUnicaVezLaVelocidadDePosicionamientoDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una única vez la velocidad de posicionamiento del cabezal" ;
+    ns1:solucionaFallo ns1:VelocidadDePosicionamientoDelCabezalDoblementeProgramada ;
+    ns1:textoExtracto "SOLUCIÓN Programar una única vez la velocidad de posicionamiento del cabezal 'Sn. POS'." .
 
-ns1:Herramienta_CorrectorD a ns1:Herramienta ;
-    rdfs:label "Corrector de herramienta (parámetro D)" ;
-    ns1:monitoreaParametro ns1:ParametroDCorrectorDeHerramienta ;
-    ns1:textoExtracto "Corrector de herramienta negativo. El corrector de herramienta debe ser positivo." .
+ns1:DiagnosticoFallo_9cb841d8a5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro de ciclo fijo repetido" ;
+    ns1:textoExtracto "'Parámetro de ciclo fijo repetido' DETECCIÓN Durante la edición. CAUSA Algún parámetro del ciclo fijo está programado más de una vez en el bloque." .
 
-ns1:ParametroCiclo a ns1:Parametro ;
-    rdfs:label "Parámetro de ciclo/sentencia" ;
-    ns1:textoExtracto "parámetros válidos para cada ciclo y sentencia" .
+ns1:VelocidadDePosicionamientoDelCabezalDoblementeProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "Velocidad de posicionamiento del cabezal doblemente programada" ;
+    ns1:textoExtracto "'Velocidad de posicionamiento del cabezal doblemente programada' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA En un mismo bloque hay programado más de una vez la velocidad de posicionamiento del cabezal en M19." .
 
-ns1:DiagnosticoCorrectorDeHerramientaNegativo a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico: Corrector de herramienta negativo" ;
-    ns1:textoExtracto "Corrector de herramienta negativo. El corrector de herramienta debe ser positivo." .
-
-ns1:DiagnosticoParametroInvalidoEnCicloSentencia a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico: Parámetro inválido en ciclo/sentencia" ;
-    ns1:textoExtracto "Algún parámetro del ciclo o la sentencia no es válido. Revisar en el manual de programación los parámetros válidos para cada ciclo y sentencia." .
-
-ns1:DiagnosticoProgramacionRedundanteDelEje1 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico: Programación redundante del eje @1" ;
-    ns1:textoExtracto "El eje @1 está programado más de una vez en el bloque." .
-
-ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:textoExtracto "Revisar en el manual de programación los parámetros válidos para cada ciclo y sentencia." .
-
-ns1:ParametroDCorrectorDeHerramienta a ns1:Parametro ;
-    rdfs:label "Parámetro D (corrector de herramienta)" ;
-    ns1:textoExtracto "El corrector de herramienta debe ser positivo." ;
-    ns1:valor "positivo" .
+ns1:VelocidadDePosicionamientoDelCabezalNegativa_01623e42b5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Velocidad de posicionamiento del cabezal negativa" ;
+    ns1:textoExtracto "'Velocidad de posicionamiento del cabezal negativa' DETECCIÓN Durante la edición. CAUSA Programada una velocidad de posicionamiento negativa en M19." .
 

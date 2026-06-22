@@ -1,43 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_ABSOFF a ns1:Parametro ;
-    rdfs:label "ABSOFF" ;
-    ns1:monitoreaParametro ns1:SistemaCNC ;
-    ns1:textoExtracto "el valor del parámetro ABSOFF"@es .
-
-ns1:SistemaCaptacionAbsoluta a ns1:Sistema ;
-    rdfs:label "Sistema de captación absoluta" ;
-    ns1:compuestoPor ns1:Regulador,
-        ns1:SistemaCNC ;
-    ns1:textoExtracto "sistema dispone de captación absoluta"@es .
-
-ns1:VersionSoftware_V3_15 a ns1:Manual ;
-    rdfs:label "Versión de software V3.15" ;
-    ns1:documentadoEn ns1:SistemaCNC ;
-    ns1:identificador "V3.15" ;
-    ns1:textoExtracto "A partir de la versión V3.15, al actualizar una versión anterior en máquinas con captación absoluta"@es .
-
-ns1:Parametro_PP177 a ns1:Parametro ;
-    rdfs:label "PP177" ;
-    ns1:identificador "PP177" ;
-    ns1:monitoreaParametro ns1:Regulador ;
-    ns1:textoExtracto "el regulador en PP177"@es .
-
-ns1:Parametro_PP178 a ns1:Parametro ;
-    rdfs:label "PP178" ;
-    ns1:identificador "PP178" ;
-    ns1:monitoreaParametro ns1:Regulador ;
-    ns1:textoExtracto "(PP177/PP178)"@es .
-
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:controla ns1:Regulador ;
-    ns1:textoExtracto "el CNC enviaba al regulador el valor del parámetro ABSOFF"@es .
+ns1:CNC8070_d898f9e6cd a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:ValorDelParametroABSOFF,
+        ns1:ValorDelParametroPP177,
+        ns1:ValorDelParametroPP178 ;
+    ns1:textoExtracto "A partir de esta versión, el CNC también envía el valor del parámetro ABSOFF al regulador (PP177/PP178) cuando el sistema dispone de captación absoluta." .
 
 ns1:Regulador a ns1:ComponenteElectrico ;
     rdfs:label "Regulador" ;
-    ns1:textoExtracto "el regulador (PP177/PP178)"@es ;
-    ns1:tieneComponente ns1:Parametro_PP177,
-        ns1:Parametro_PP178 .
+    ns1:textoExtracto "En versiones anteriores, el CNC enviaba al regulador el valor del parámetro ABSOFF sólo cuando el sistema disponía de I0s codificados." .
+
+ns1:ValorDelParametroABSOFF a ns1:Parametro ;
+    rdfs:label "Valor del parámetro ABSOFF" ;
+    ns1:textoExtracto "En versiones anteriores, el CNC enviaba al regulador el valor del parámetro ABSOFF sólo cuando el sistema disponía de I0s codificados." .
+
+ns1:ValorDelParametroPP177 a ns1:Parametro ;
+    rdfs:label "Valor del parámetro PP177" ;
+    ns1:textoExtracto "A partir de esta versión, el CNC también envía el valor del parámetro ABSOFF al regulador (PP177/PP178) cuando el sistema dispone de captación absoluta." .
+
+ns1:ValorDelParametroPP178 a ns1:Parametro ;
+    rdfs:label "Valor del parámetro PP178" ;
+    ns1:textoExtracto "A partir de esta versión, el CNC también envía el valor del parámetro ABSOFF al regulador (PP177/PP178) cuando el sistema dispone de captación absoluta." .
 

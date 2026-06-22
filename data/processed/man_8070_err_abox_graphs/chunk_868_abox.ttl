@@ -1,19 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:TareaMantenimiento_EdicionPLC a ns1:TareaMantenimiento ;
-    rdfs:label "Edición de programa PLC (corrección RR1)" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_8777,
-        ns1:DiagnosticoFallo_8778 ;
-    ns1:textoExtracto "Edición del programa PLC para corregir argumentos en operación RR1." .
+ns1:FaltaOperandoEnCPL_387acb9797 a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta operando en CPL" ;
+    ns1:textoExtracto "'Falta operando en CPL' DETECCIÓN Durante la edición." .
 
-ns1:DiagnosticoFallo_8777 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 8777: Argumentos faltantes en operación RR1" ;
-    ns1:identificador "8777" ;
-    ns1:textoExtracto "Faltan dos argumentos en la operación RR1. DETECCIÓN Durante la edición del programa PLC. SOLUCIÓN Programar 'RR1 origen rotaciones destino'." .
+ns1:ProgramarCPRContadorPreseleccion a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'CPR contador preselección'" ;
+    ns1:solucionaFallo ns1:OrdenDeOperandosInvertidosEnCPR_95978b6ec5 ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"CPR contador preselección\". El valor de preselección podrá ser un registro, un símbolo o un número." .
 
-ns1:DiagnosticoFallo_8778 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 8778: Todos los argumentos faltantes en operación RR1" ;
-    ns1:identificador "8778" ;
-    ns1:textoExtracto "Faltan todos los argumentos en la operación RR1. DETECCIÓN Durante la edición del programa PLC." .
+ns1:ProgramarRESRecurso a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'RES recurso'" ;
+    ns1:solucionaFallo ns1:FaltaOperandoEnRES_4759ffa7ba ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"RES recurso\"." .
+
+ns1:ProgramarSETRecurso a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'SET recurso'" ;
+    ns1:solucionaFallo ns1:FaltaOperandoEnSET_c6f1c4097c ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"SET recurso\"." .
+
+ns1:FaltaOperandoEnRES_4759ffa7ba a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta operando en RES" ;
+    ns1:textoExtracto "'Falta operando en RES' DETECCIÓN Durante la edición. CAUSA Falta el recurso en el comando RES." .
+
+ns1:FaltaOperandoEnSET_c6f1c4097c a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta operando en SET" ;
+    ns1:textoExtracto "'Falta operando en SET' DETECCIÓN Durante la edición. CAUSA Falta el recurso en el comando SET." .
+
+ns1:OrdenDeOperandosInvertidosEnCPR_95978b6ec5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Orden de operandos invertidos en CPR" ;
+    ns1:textoExtracto "'Orden de operandos invertidos en CPR' DETECCIÓN Durante la edición. CAUSA Programación incorrecta del comando CPR." .
 

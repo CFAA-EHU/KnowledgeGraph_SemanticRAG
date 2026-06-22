@@ -1,59 +1,51 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error23035 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en fichero de compensación volumétrica (AXIS_END)"@es ;
-    ns1:identificador "23035" ;
-    ns1:monitoreaParametro ns1:Parametro_AXIS_END ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: el valor del parámetro del fichero \"AXIS_END\" es incorrecto. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El parámetro \"AXIS_END\" es incorrecto. SOLUCIÓN Modificar el archivo de la compensación volumétrica."@es .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Error23036 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en fichero de compensación volumétrica (AXIS_LENGTH)"@es ;
-    ns1:identificador "23036" ;
-    ns1:monitoreaParametro ns1:Parametro_AXIS_LENGTH ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: el valor del parámetro del fichero \"AXIS_LENGTH\" es incorrecto. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El parámetro \"AXIS_LENGTH\" es incorrecto. SOLUCIÓN Modificar el archivo de la compensación volumétrica."@es .
+ns1:ErrorEnElArchivoDeCompensacionVolumetricaValorMinimoMayorQueMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el archivo de compensación volumétrica: valor mínimo mayor que máximo" ;
+    ns1:textoExtracto "23013 Error en el fichero de compensación volumétrica: los puntos del fichero están en orden inverso. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina." .
 
-ns1:Error23037 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en fichero de compensación volumétrica (valor mínimo sobrepasado)"@es ;
-    ns1:identificador "23037" ;
-    ns1:solucionaFallo ns1:Tabla_ValoresCompensacion ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: Valor mínimo sobrepasado. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El fichero de definición de la compensación volumétrica no contiene los datos adecuados. SOLUCIÓN Poner como valor máximo en el fichero, el valor máximo de la tabla."@es .
+ns1:ModificarArchivoDeCompensacionVolumetrica a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar archivo de compensación volumétrica" ;
+    ns1:solucionaFallo ns1:ErrorEnElAnalisisDelFicheroDeDefinicionDeLaCompensacionVolumetrica_1ad1fdf844 ;
+    ns1:textoExtracto "SOLUCIÓN Modificar el valor mínimo o máximo del archivo de compensación volumétrica." .
 
-ns1:Error23038 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en fichero de compensación volumétrica (valor máximo sobrepasado)"@es ;
-    ns1:identificador "23038" ;
-    ns1:solucionaFallo ns1:Tabla_ValoresCompensacion ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: Valor máximo sobrepasado. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El fichero de definición de la compensación volumétrica no contiene los datos adecuados. SOLUCIÓN Poner como valor máximo en el fichero, el valor máximo de la tabla."@es .
+ns1:ModificarArchivoDeCompensacionVolumetricaParaQueEsteEnElSistemaDeCoor_7ac4de05da a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar archivo de compensación volumétrica para que esté en el sistema de coordenadas KINEMATIC" ;
+    ns1:solucionaFallo ns1:ErrorEnElFicheroDeCompensacionVolumetricaSistemaDeCoordenadasIncorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Modificar el archivo de la compensación volumétrica para que esté en el sistema de coordenadas KINEMATIC." .
 
-ns1:Error23039 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en fichero de compensación volumétrica (rango inválido)"@es ;
-    ns1:identificador "23039" ;
-    ns1:solucionaFallo ns1:Tabla_ValoresCompensacion ;
-    ns1:textoExtracto "Error en el fichero de compensación volumétrica: Valor del rango inválido. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El fichero de definición de la compensación volumétrica no contiene los datos adecuados. SOLUCIÓN Cambiar el valor del rango a la diferencia entre el valor máximo y el mínimo."@es .
+ns1:ModificarArchivoDeCompensacionVolumetrica_578f48a6f6 a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar archivo de compensación volumétrica" ;
+    ns1:textoExtracto "SOLUCIÓN Modificar el archivo de la compensación volumétrica." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:monitoreaParametro ns1:Parametro_AXIS_BEGIN,
-        ns1:Parametro_AXIS_END,
-        ns1:Parametro_AXIS_LENGTH ;
-    ns1:textoExtracto "Durante el arranque del sistema o validación de los parámetros máquina."@es .
+ns1:ModificarCoordenadasOArchivoDeCompensacionVolumetrica a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar coordenadas o archivo de compensación volumétrica" ;
+    ns1:solucionaFallo ns1:ErrorEnElFicheroDeCompensacionVolumetricaCoordenadaFueraDeLosBordes ;
+    ns1:textoExtracto "SOLUCIÓN Modificar las coordenadas o el archivo de la compensación volumétrica." .
 
-ns1:Parametro_AXIS_BEGIN a ns1:Parametro ;
-    rdfs:label "AXIS_BEGIN" ;
-    ns1:identificador "AXIS_BEGIN" ;
-    ns1:textoExtracto "El parámetro \"AXIS_BEGIN\" es incorrecto."@es .
+ns1:ModificarPuntosDelArchivoDeCompensacionVolumetrica a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar puntos del archivo de compensación volumétrica" ;
+    ns1:solucionaFallo ns1:ErrorEnElFicheroDeCompensacionVolumetricaPuntosEnOrdenInverso ;
+    ns1:textoExtracto "SOLUCIÓN Modificar los puntos del archivo de la compensación volumétrica." .
 
-ns1:Parametro_AXIS_END a ns1:Parametro ;
-    rdfs:label "AXIS_END" ;
-    ns1:identificador "AXIS_END" ;
-    ns1:textoExtracto "El parámetro \"AXIS_END\" es incorrecto."@es .
+ns1:ErrorEnElAnalisisDelFicheroDeDefinicionDeLaCompensacionVolumetrica_1ad1fdf844 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el análisis del fichero de definición de la compensación volumétrica" ;
+    ns1:textoExtracto "23015 Error en el análisis del fichero de definición de la compensación volumétrica. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina." .
 
-ns1:Parametro_AXIS_LENGTH a ns1:Parametro ;
-    rdfs:label "AXIS_LENGTH" ;
-    ns1:identificador "AXIS_LENGTH" ;
-    ns1:textoExtracto "El parámetro \"AXIS_LENGTH\" es incorrecto."@es .
+ns1:ErrorEnElFicheroDeCompensacionVolumetricaCoordenadaFueraDeLosBordes a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el fichero de compensación volumétrica: coordenada fuera de los bordes" ;
+    ns1:textoExtracto "23014 Error en el fichero de compensación volumétrica: la coordenada está fuera de los bordes de interpolación. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina." .
 
-ns1:Tabla_ValoresCompensacion a ns1:Tabla ;
-    rdfs:label "Tabla de valores de compensación volumétrica"@es ;
-    ns1:textoExtracto "Poner como valor máximo en el fichero, el valor máximo de la tabla."@es .
+ns1:ErrorEnElFicheroDeCompensacionVolumetricaPuntosEnOrdenInverso a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el fichero de compensación volumétrica: puntos en orden inverso" ;
+    ns1:textoExtracto "23013 Error en el fichero de compensación volumétrica: los puntos del fichero están en orden inverso. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina." .
+
+ns1:ErrorEnElFicheroDeCompensacionVolumetricaSistemaDeCoordenadasIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el fichero de compensación volumétrica: sistema de coordenadas incorrecto" ;
+    ns1:textoExtracto "23017 Error en el fichero de compensación volumétrica: el sistema de coordenadas es incorrecto. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina." .
 

@@ -1,37 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_M19 a ns1:Parametro ;
-    rdfs:label "Comando M19"@es ;
-    ns1:activaAlarma ns1:Alarma_1580 ;
-    ns1:identificador "M19" ;
-    ns1:textoExtracto "programación previa de M19 en Sercos de posición."@es .
+ns1:AvisoSeguridad_5d470e10db a ns1:AvisoSeguridad ;
+    rdfs:label "Parámetro no modificable desde el oscilo" ;
+    ns1:textoExtracto "'Parámetro no modificable desde el oscilo' DETECCIÓN Durante la ejecución." .
 
-ns1:Funcion_G74 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G74"@es ;
-    ns1:activaAlarma ns1:Alarma_1579 ;
-    ns1:identificador "G74" ;
-    ns1:textoExtracto "función G74 (búsqueda de cero en eje maestro)."@es .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Parametro_UNIDIR a ns1:Parametro ;
-    rdfs:label "Parámetro UNIDIR"@es ;
-    ns1:identificador "UNIDIR" ;
-    ns1:monitoreaParametro ns1:Alarma_1578 ;
-    ns1:textoExtracto "parámetro UNIDIR (sentido de giro predeterminado para ejes unidireccionales)."@es .
+ns1:ResetearElControlYVolverACapturarLaTraza a ns1:TareaMantenimiento ;
+    rdfs:label "Resetear el control y volver a capturar la traza" ;
+    ns1:solucionaFallo ns1:ErrorCapturandoMuestrasDeLaVariable ;
+    ns1:textoExtracto "SOLUCIÓN Resetear el control y volver a capturar la traza." .
 
-ns1:Alarma_1578 a ns1:Alarma ;
-    rdfs:label "Alarma #LINK: Eje esclavo UNIDIR incompatible"@es ;
-    ns1:identificador "#LINK" ;
-    ns1:textoExtracto "Un eje esclavo UNIDIR debe ser del mismo tipo que el maestro (UNIDIR). DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar un acoplo (#LINK) con dos ejes rotativos unidireccionales que no son iguales. SOLUCIÓN Cuando los ejes son unidireccionales, ambos ejes deben tener el mismo sentido de giro predeterminado (parámetro UNIDIR)."@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteElCaracterDentroDeSubrutinaGlobal ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1579 a ns1:Alarma ;
-    rdfs:label "Alarma: Búsqueda de cero no permitida en eje maestro con esclavos"@es ;
-    ns1:identificador "1579" ;
-    ns1:textoExtracto "No se permite búsqueda de cero en eje maestro con varios esclavos. DETECCIÓN Durante la ejecución. CAUSA El CNC ha ejecutado una función G74 sobre el eje maestro de un acoplo con varios esclavos. SOLUCIÓN Deshacer el acoplo de ejes y realizar la búsqueda de referencia de los ejes por separado."@es .
+ns1:VariableSoloAccesibleParaSuCanal a ns1:AvisoSeguridad ;
+    rdfs:label "Variable sólo accesible para su canal" ;
+    ns1:textoExtracto "'Variable sólo accesible para su canal' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acceder a una variable de preparación de herramienta de otro canal (prefijo \"G\" o \"A\"). SOLUCIÓN Las únicas variables de herramientas accesibles desde otro canal son las asociadas al gestor (prefijo \"TM\")." .
 
-ns1:Alarma_1580 a ns1:Alarma ;
-    rdfs:label "Alarma #CAX: Programación previa M19 requerida"@es ;
-    ns1:identificador "#CAX" ;
-    ns1:textoExtracto "Necesita programación previa de M19 en Sercos de posición. DETECCIÓN Durante la ejecución."@es .
+ns1:ErrorCapturandoMuestrasDeLaVariable a ns1:AvisoSeguridad ;
+    rdfs:label "Error capturando muestras de la variable" ;
+    ns1:textoExtracto "'Error capturando muestras de la variable' DETECCIÓN Durante la ejecución. CAUSA Se ha producido un error mientras el osciloscopio intentaba leer el valor de la variable asignada a uno de sus canales." .
+
+ns1:NoSeAdmiteElCaracterDentroDeSubrutinaGlobal a ns1:AvisoSeguridad ;
+    rdfs:label "No se admite el carácter '%' dentro de subrutina global" ;
+    ns1:textoExtracto "'No se admite el carácter \"%\" dentro de subrutina global' DETECCIÓN Durante la ejecución. CAUSA Hay programado el carácter \"%\" dentro de una subrutina global, en una línea diferente a la de la definición del nombre de la subrutina." .
 

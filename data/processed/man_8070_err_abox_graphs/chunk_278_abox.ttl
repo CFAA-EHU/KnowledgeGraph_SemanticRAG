@@ -1,48 +1,20 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Sistema_SincronizacionCabezales a ns1:Sistema ;
-    rdfs:label "Sistema de sincronización de cabezales maestro/esclavo" ;
-    ns1:textoExtracto "sincronización de cabezales [...] #SYNC[Sm,Ss,Nx,Dx,Ox,CLOOP/OLOOP,CANCEL/NOCANCEL]" ;
-    ns1:tieneComponente ns1:Parametro_DenominadorRelacionTransmision,
-        ns1:Parametro_NumeradorRelacionTransmision .
+ns1:DefinirLosEjesComoDeIntercambioMantenidoOUtilizarOtrosEjesParaLaTransformada a ns1:TareaMantenimiento ;
+    rdfs:label "Definir los ejes como de intercambio mantenido o utilizar otros ejes para la transformada" ;
+    ns1:solucionaFallo ns1:LosEjesDeLaTransformacionActivaNoPuedenSerEjesDeIntercambioTemporal ;
+    ns1:textoExtracto "Si es posible, definir los ejes como de intercambio mantenido; si no, utilizar otros ejes para la transformada." .
 
-ns1:TareaMantenimiento_RevisarProgramacionSync a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de programación de sincronización de cabezales" ;
-    ns1:solucionaFallo ns1:FalloSync_CabezalesIguales,
-        ns1:FalloSync_DenominadorInvalido,
-        ns1:FalloSync_NumeradorInvalido,
-        ns1:FalloSync_SintaxisIncorrecta ;
-    ns1:textoExtracto "SOLUCIÓN: Revisar la programación" .
+ns1:FaltaProgramarElNumeroDeAlmacenMZ a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta programar el número de almacén (MZ)" ;
+    ns1:textoExtracto "'Falta programar el número de almacén (MZ)' DETECCIÓN Durante la ejecución." .
 
-ns1:FalloSync_CabezalesIguales a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1590: Cabezal esclavo igual al maestro" ;
-    ns1:identificador "1590" ;
-    ns1:textoExtracto "CAUSA: En la sincronización, el cabezal esclavo es el mismo que el maestro. SOLUCIÓN: Revisar la programación. 1590 'Programar #SYNC[Sm,Ss,Nx,Dx,Ox,CLOOP/OLOOP,CANCEL/NOCANCEL]'" .
+ns1:NumeroDeAlmacenMZ_068382a137 a ns1:Parametro ;
+    rdfs:label "Número de almacén (MZ)" ;
+    ns1:textoExtracto "'Falta programar el número de almacén (MZ)'" .
 
-ns1:FalloSync_DenominadorInvalido a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1592: Denominador inválido en relación de transmisión" ;
-    ns1:identificador "1592" ;
-    ns1:textoExtracto "CAUSA: En la sincronización de cabezales, el valor del denominador de la relación de transmisión no es válido; por ejemplo, es cero." .
-
-ns1:FalloSync_NumeradorInvalido a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1591: Numerador inválido en relación de transmisión" ;
-    ns1:identificador "1591" ;
-    ns1:textoExtracto "CAUSA: En la sincronización de cabezales, el valor del numerador de la relación de transmisión no es válido; por ejemplo, es cero. SOLUCIÓN: El valor puede ser positivo o negativo, no necesariamente entero, pero distinto de cero." .
-
-ns1:FalloSync_SintaxisIncorrecta a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1591: Sintaxis incorrecta en bloque de sincronización" ;
-    ns1:identificador "1591" ;
-    ns1:textoExtracto "CAUSA: La sintaxis de la sentencia no es correcta o hay más información en el bloque. SOLUCIÓN: Revisar la programación. 1591 'Numerador no válido'" .
-
-ns1:Parametro_DenominadorRelacionTransmision a ns1:Parametro ;
-    rdfs:label "Denominador de relación de transmisión (Dx)" ;
-    ns1:textoExtracto "valor del denominador de la relación de transmisión" ;
-    ns1:valor "distinto_de_cero"^^xsd:string .
-
-ns1:Parametro_NumeradorRelacionTransmision a ns1:Parametro ;
-    rdfs:label "Numerador de relación de transmisión (Nx)" ;
-    ns1:textoExtracto "valor del numerador de la relación de transmisión" ;
-    ns1:valor "distinto_de_cero"^^xsd:string .
+ns1:LosEjesDeLaTransformacionActivaNoPuedenSerEjesDeIntercambioTemporal a ns1:DiagnosticoFallo ;
+    rdfs:label "Los ejes de la transformación activa no pueden ser ejes de intercambio temporal" ;
+    ns1:textoExtracto "'Los ejes de la transformación activa no pueden ser ejes de intercambio temporal'" .
 

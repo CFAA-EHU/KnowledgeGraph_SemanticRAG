@@ -1,52 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_G90 a ns1:ModoOperacion ;
-    rdfs:label "Modo absoluto (G90)"@es ;
-    ns1:textoExtracto "en G90 el eje siempre toma el sentido predeterminado [...] en G90, el eje elige el arco mínimo hasta la posición objetivo"@es .
+ns1:AjusteApropiadoACForward a ns1:Figura ;
+    rdfs:label "panel Ajuste apropiado para AC-Forward" ;
+    ns1:textoExtracto "panel 'Ajuste apropiado' (icono de verificación) para AC-Forward: respuesta del sistema sin ganancia AC-forward (10 µm por cuadro) frente a respuesta con AC-forward (1 µm por cuadro)." .
 
-ns1:ModoOperacion_G91 a ns1:ModoOperacion ;
-    rdfs:label "Modo incremental (G91)"@es ;
-    ns1:textoExtracto "en G90/G91, el recorrido efectivo es inferior a una vuelta, y cómo el signo fija el sentido"@es .
+ns1:AjusteCorrectoFeedForward a ns1:Figura ;
+    rdfs:label "oscilograma Ajuste correcto con feed forward" ;
+    ns1:textoExtracto "oscilograma 'Ajuste correcto con feed forward'. Se representan 'Actual Feed' y 'Following Error (E)' con icono de verificación. El avance alcanza el valor objetivo con sobreimpulso mínimo y el error de seguimiento permanece acotado sin invertir signo; la escala indicada es 10 µm por cuadro." .
 
-ns1:Parametro_SHORTESTWAY a ns1:Parametro ;
-    rdfs:label "SHORTESTWAY"@es ;
-    ns1:monitoreaParametro ns1:SistemaEjesRotativos ;
-    ns1:textoExtracto "Posicionamiento por el camino más corto (SHORTESTWAY = Sí)"@es ;
-    ns1:valor "Sí/No"@es .
+ns1:AjusteIncorrectoFeedForward a ns1:Figura ;
+    rdfs:label "oscilograma Ajuste incorrecto con feed forward" ;
+    ns1:textoExtracto "oscilograma 'Ajuste incorrecto con feed forward' con icono de equis. El 'Following Error (E)' presenta picos que invierten signo y oscilaciones amortiguadas, evidenciando exceso de feed-forward o ganancias mal calibradas. Misma escala (10 µm por cuadro)." .
 
-ns1:Parametro_UNIDIR a ns1:Parametro ;
-    rdfs:label "UNIDIR"@es ;
-    ns1:monitoreaParametro ns1:SistemaEjesRotativos ;
-    ns1:textoExtracto "Sentido de giro único (UNIDIR = Positivo)"@es ;
-    ns1:valor "Positivo/Negativo"@es .
+ns1:SistemaFeedForward a ns1:Sistema ;
+    rdfs:label "esquema de bloques de feed-forward" ;
+    ns1:textoExtracto "esquema de bloques de feed-forward: 'Programmed Feedrate' alimenta un bloque 'FFGAIN'; 'Nominal Position' entra en un sumador con 'PROGAIN' y la señal de error 'ε'; la salida conjunta genera la 'Analog output' que actúa sobre la 'Actual position'." ;
+    ns1:tieneComponente ns1:GananciaProporcional_47c9b4d3ac .
 
-ns1:Esquema_CaminoCorto_SHORTESTWAY a ns1:Esquema ;
-    rdfs:label "Esquema de posicionamiento por camino más corto (SHORTESTWAY = Sí)"@es ;
-    ns1:identificador "2.5.8_SHORTESTWAY" ;
-    ns1:textoExtracto "Esquema circular con arcos y flechas que ilustra 'Posicionamiento por el camino más corto (SHORTESTWAY = Sí)'. Se visualiza cómo, en G90, el eje elige el arco mínimo hasta la posición objetivo (ejemplo a 90° y 30°), con anotaciones B90/B–300/B300."@es .
-
-ns1:Esquema_ComportamientoModuloRotativo a ns1:Esquema ;
-    rdfs:label "Esquema de comportamiento del módulo rotativo (G90/G91)"@es ;
-    ns1:identificador "2.5.8_ModuloRotativo" ;
-    ns1:textoExtracto "Tres esquemas circulares comparan el comportamiento 'Módulo': posiciones programadas a 90° y 330° y desplazamientos relativos (B300/B–300) con flechas de sentido y arcos trazados. Ilustran cómo, en G90/G91, el recorrido efectivo es inferior a una vuelta, y cómo el signo fija el sentido cuando no hay SHORTESTWAY ni UNIDIR."@es .
-
-ns1:Esquema_PlanoTrabajoXC a ns1:Esquema ;
-    rdfs:label "Render 3D del plano de trabajo XC (eje C activado)"@es ;
-    ns1:identificador "2.5.11_PlanoXC" ;
-    ns1:textoExtracto "Render 3D del torno mostrando el eje C activado y el plano de trabajo XC (ejes X–C con Z visible al fondo). El gráfico contextualiza el mecanizado con eje C, destacando la orientación de la herramienta respecto al plato y el sistema de coordenadas."@es .
-
-ns1:Esquema_SentidoGiroUnico_UNIDIR a ns1:Esquema ;
-    rdfs:label "Esquema de sentido de giro único (UNIDIR = Positivo)"@es ;
-    ns1:identificador "2.5.8_UNIDIR" ;
-    ns1:textoExtracto "Esquema circular con arcos que muestran el 'Sentido de giro único (UNIDIR = Positivo)'. Se representan posiciones a 90°, 300° y –300° y la imposibilidad de girar en el sentido contrario, enfatizando que en G90 el eje siempre toma el sentido predeterminado."@es .
-
-ns1:SistemaEjesRotativos a ns1:Sistema ;
-    rdfs:label "Sistema de ejes rotativos (torno/fresadora)"@es ;
-    ns1:identificador "SistemaEjesRotativos_TornoFresadora" ;
-    ns1:ilustradoEn ns1:Esquema_CaminoCorto_SHORTESTWAY,
-        ns1:Esquema_ComportamientoModuloRotativo,
-        ns1:Esquema_PlanoTrabajoXC,
-        ns1:Esquema_SentidoGiroUnico_UNIDIR ;
-    ns1:textoExtracto "Las etiquetas aparecen situadas sobre el sólido 3D, indicando orientación y asociación funcional de cada eje para la personalización típica de torno y fresadora."@es .
+ns1:GananciaProporcional_47c9b4d3ac a ns1:Parametro ;
+    rdfs:label "ganancia proporcional" ;
+    ns1:textoExtracto "el error positivo durante la aceleración y su retorno a cero tras la parada, útil para visualizar el ajuste de la ganancia proporcional (PROGAIN)." .
 

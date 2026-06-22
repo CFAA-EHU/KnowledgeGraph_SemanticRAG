@@ -1,55 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_8272 a ns1:DiagnosticoFallo ;
-    rdfs:label "Pérdida total en función" ;
-    ns1:identificador "8272" ;
-    ns1:solucionaFallo ns1:FuncionesMatematicas ;
-    ns1:textoExtracto "8272 'Pérdida total en función' DETECCIÓN Durante la edición. CAUSA El argumento programado en la función matemática no es válido. SOLUCIÓN Programar un argumento correcto en la función matemática (LN, LOG, SQRT, EXP, DEXP, SIN, COS, TAN, ASIN, ACOS, ATAN)." .
+ns1:AccionProhibidaFaltaCorchete a ns1:AccionProhibida ;
+    rdfs:label "Acción prohibida: falta corchete" ;
+    ns1:textoExtracto "'Falta corchete' CAUSA La sentencia programada exige que sus parámetros vayan programados entre corchetes. La variable requiere programación de algún índice entre corchetes." .
 
-ns1:Error_8273 a ns1:DiagnosticoFallo ;
-    rdfs:label "Rebasamiento por debajo en función" ;
-    ns1:identificador "8273" ;
-    ns1:solucionaFallo ns1:FuncionesMatematicas ;
-    ns1:textoExtracto "8273 'Rebasamiento por debajo en función' DETECCIÓN Durante la edición. CAUSA El argumento programado en la función matemática no es válido. SOLUCIÓN Programar un argumento correcto en la función matemática (LN, LOG, SQRT, EXP, DEXP, SIN, COS, TAN, ASIN, ACOS, ATAN)." .
+ns1:AccionProhibidaParametroDoblementeProgramado a ns1:AccionProhibida ;
+    rdfs:label "Acción prohibida: parámetro doblemente programado" ;
+    ns1:textoExtracto "'I doblemente programada' CAUSA El parámetro I está programado más de una vez en el bloque." .
 
-ns1:Error_8274 a ns1:DiagnosticoFallo ;
-    rdfs:label "Tipo de excepción desconocido" ;
-    ns1:identificador "8274" ;
-    ns1:solucionaFallo ns1:FuncionesMatematicas ;
-    ns1:textoExtracto "8274 'Tipo de excepción desconocido' DETECCIÓN Durante la edición. CAUSA El argumento programado en la función matemática no es válido. SOLUCIÓN Programar un argumento correcto en la función matemática (LN, LOG, SQRT, EXP, DEXP, SIN, COS, TAN, ASIN, ACOS, ATAN)." .
+ns1:AvisoSeguridad_4602612cfc a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de parámetro fuera de rango" ;
+    ns1:textoExtracto "'Parámetro fuera de rango' DETECCIÓN Durante la ejecución. CAUSA Programado un valor demasiado alto para algún parámetro de la sentencia. SOLUCIÓN Programar un valor menor para el parámetro en la sentencia." .
 
-ns1:Error_8275 a ns1:DiagnosticoFallo ;
-    rdfs:label "Límite de funciones M en un mismo bloque sobrepasado" ;
-    ns1:identificador "8275" ;
-    ns1:solucionaFallo ns1:BloqueProgramacion ;
-    ns1:textoExtracto "8275 'Límite de funciones M en un mismo bloque sobrepasado' DETECCIÓN Durante la edición. CAUSA Superado el número máximo de funciones M permitidas en un mismo bloque. SOLUCIÓN El número máximo de funciones M permitidas en un mismo bloque es 7." .
+ns1:AvisoSeguridad_af925400a5 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de falta de corchete" ;
+    ns1:textoExtracto "'Falta corchete' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA La sentencia programada exige que sus parámetros vayan programados entre corchetes. La variable requiere programación de algún índice entre corchetes. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia o variable." .
 
-ns1:Error_8276 a ns1:DiagnosticoFallo ;
-    rdfs:label "Límite de funciones H en un mismo bloque sobrepasado" ;
-    ns1:identificador "8276" ;
-    ns1:solucionaFallo ns1:BloqueProgramacion ;
-    ns1:textoExtracto "8276 'Límite de funciones H en un mismo bloque sobrepasado' DETECCIÓN Durante la edición. CAUSA Superado el número máximo de funciones H permitidas en un mismo bloque. SOLUCIÓN El número máximo de funciones H permitidas en un mismo bloque es 7." .
+ns1:AvisoSeguridad_cd97d0e83c a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de eje doblemente programado" ;
+    ns1:mitigaRiesgo ns1:EjeDoblementeProgramado_541a492681 ;
+    ns1:textoExtracto "'X doblemente programada' DETECCIÓN Durante la edición. CAUSA Programado el eje X más de una vez en el bloque. SOLUCIÓN Programar el eje X una sola vez en el bloque." .
 
-ns1:Error_8279 a ns1:DiagnosticoFallo ;
-    rdfs:label "Imagen espejo repetida" ;
-    ns1:identificador "8279" ;
-    ns1:solucionaFallo ns1:FuncionesG10_G14 ;
-    ns1:textoExtracto "8279 'Imagen espejo repetida' DETECCIÓN Durante la edición. CAUSA Las funciones G11, G12 o G13 están programadas más de una vez en el mismo bloque. La función G10 o G14 está programada junto a las funciones G11, G12 o G13 en el mismo bloque." .
+ns1:AvisoSeguridad_db5648cec4 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de parámetro doblemente programado" ;
+    ns1:textoExtracto "'I doblemente programada' DETECCIÓN Durante la edición. CAUSA El parámetro I está programado más de una vez en el bloque. SOLUCIÓN Programar el parámetro I una sola vez en el bloque." .
 
-ns1:BloqueProgramacion a ns1:Sistema ;
-    rdfs:label "Bloque de programación" ;
-    ns1:textoExtracto "Límite de funciones M en un mismo bloque... Límite de funciones H en un mismo bloque... Las funciones G11, G12 o G13 están programadas más de una vez en el mismo bloque." ;
-    ns1:tieneComponente ns1:FuncionesG10_G14,
-        ns1:FuncionesMatematicas .
+ns1:CorreccionDeParametroFueraDeRango a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de parámetro fuera de rango" ;
+    ns1:solucionaFallo ns1:EjeDoblementeProgramado_541a492681 ;
+    ns1:textoExtracto "'Parámetro fuera de rango' SOLUCIÓN Programar un valor menor para el parámetro en la sentencia." .
 
-ns1:FuncionesG10_G14 a ns1:InterfazUsuario,
-        ns1:Tabla ;
-    rdfs:label "Funciones de imagen espejo (G10, G11, G12, G13, G14)" ;
-    ns1:textoExtracto "Las funciones G11, G12 o G13 están programadas más de una vez en el mismo bloque. La función G10 o G14 está programada junto a las funciones G11, G12 o G13 en el mismo bloque." .
-
-ns1:FuncionesMatematicas a ns1:InterfazUsuario,
-        ns1:Tabla ;
-    rdfs:label "Funciones matemáticas (LN, LOG, SQRT, EXP, DEXP, SIN, COS, TAN, ASIN, ACOS, ATAN)" ;
-    ns1:textoExtracto "Programar un argumento correcto en la función matemática (LN, LOG, SQRT, EXP, DEXP, SIN, COS, TAN, ASIN, ACOS, ATAN)." .
+ns1:EjeDoblementeProgramado_541a492681 a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje doblemente programado" ;
+    ns1:textoExtracto "'X doblemente programada' DETECCIÓN Durante la edición. CAUSA Programado el eje X más de una vez en el bloque." .
 

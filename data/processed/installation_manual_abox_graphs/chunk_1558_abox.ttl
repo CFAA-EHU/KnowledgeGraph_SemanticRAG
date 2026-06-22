@@ -1,89 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:FuenteAlimentacion_PLC a ns1:ComponenteElectrico ;
-    rdfs:label "POWER SUPPLY (fuente de alimentación PLC)"@es ;
-    ns1:alimenta ns1:GrupoRemoto_1,
-        ns1:GrupoRemoto_2,
-        ns1:GrupoRemoto_3 ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:textoExtracto "módulos encestados bajo un 'POWER SUPPLY'."@es .
+ns1:ControlDePausa a ns1:Parametro ;
+    rdfs:label "Control de pausa" ;
+    ns1:textoExtracto "con el retardo en marcha, poner TEN=0 pausa la rampa de t; al devolver TEN=1, la temporización se reanuda." .
 
-ns1:Husillo_Torno a ns1:ComponenteMecanico ;
-    rdfs:label "Husillo/plato (torno)"@es ;
-    ns1:ilustradoEn ns1:Diagrama_TornoVertical ;
-    ns1:textoExtracto "Diagrama 'Torno vertical': disposición vertical del husillo/plato con flechas de ejes X y Z en distintas combinaciones de signo."@es .
+ns1:EstadoDelTemporizador a ns1:Parametro ;
+    rdfs:label "Estado del temporizador" ;
+    ns1:textoExtracto "al agotarse el tiempo, T pasa a 0." .
 
-ns1:TorretaIndexable a ns1:ComponenteMecanico ;
-    rdfs:label "Torreta indexable"@es ;
-    ns1:ilustradoEn ns1:Diagrama_TornoHorizontal,
-        ns1:Diagrama_TornoVertical ;
-    ns1:textoExtracto "Escena 'Torreta': vista típica de torno con torreta indexable; flechas indican alejamiento, giro de la torreta y posicionamiento de la nueva herramienta en la posición de trabajo. Se resalta el cambio por indexado, no por carrusel."@es ;
-    ns1:tieneComponente ns1:Herramienta_Husillo .
+ns1:InicializadorDelTemporizador a ns1:Parametro ;
+    rdfs:label "Inicializador del temporizador" ;
+    ns1:textoExtracto "un flanco de subida en TRS inicializa el temporizador (T=0, t=0) y exige una nueva activación por TG3 para reiniciar la secuencia." .
 
-ns1:GrupoRemoto_1 a ns1:ComponenteElectrico ;
-    rdfs:label "Remote Group 1 (PLC)"@es ;
-    ns1:compuestoPor ns1:Modulo_E_S_1 ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:identificador "1" ;
-    ns1:textoExtracto "tres bloques 'Remote Group (1–3)' con módulos encestados bajo un 'POWER SUPPLY'."@es .
+ns1:ModoRetardoALaConexion a ns1:Parametro ;
+    rdfs:label "Modo retardo a la conexión" ;
+    ns1:textoExtracto "Si TG2 baja antes de completar el tiempo, la temporización se cancela y t mantiene el valor alcanzado." .
 
-ns1:GrupoRemoto_2 a ns1:ComponenteElectrico ;
-    rdfs:label "Remote Group 2 (PLC)"@es ;
-    ns1:compuestoPor ns1:Modulo_E_S_2 ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:identificador "2" ;
-    ns1:textoExtracto "tres bloques 'Remote Group (1–3)' con módulos encestados bajo un 'POWER SUPPLY'."@es .
+ns1:ModoRetardoALaDesconexion a ns1:Parametro ;
+    rdfs:label "Modo retardo a la desconexión" ;
+    ns1:textoExtracto "tras un flanco de subida en TG3, T=1; el retardo comienza con el flanco de bajada de TG3 (t sube desde 0) y, al agotarse el tiempo, T pasa a 0." .
 
-ns1:GrupoRemoto_3 a ns1:ComponenteElectrico ;
-    rdfs:label "Remote Group 3 (PLC)"@es ;
-    ns1:compuestoPor ns1:Modulo_E_S_3 ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:identificador "3" ;
-    ns1:textoExtracto "tres bloques 'Remote Group (1–3)' con módulos encestados bajo un 'POWER SUPPLY'."@es .
-
-ns1:Herramienta_Husillo a ns1:Herramienta ;
-    rdfs:label "Herramienta para husillo"@es ;
-    ns1:textoExtracto "Se aprecia la colocación directa de la nueva herramienta en el husillo."@es .
-
-ns1:Modulo_E_S_1 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo E/S del Remote Group 1"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:textoExtracto "módulos encestados bajo un 'POWER SUPPLY'; flechas negras indican el orden de numeración (arriba-abajo, izquierda-derecha)."@es .
-
-ns1:Modulo_E_S_2 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo E/S del Remote Group 2"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:textoExtracto "módulos encestados bajo un 'POWER SUPPLY'; flechas negras indican el orden de numeración (arriba-abajo, izquierda-derecha)."@es .
-
-ns1:Modulo_E_S_3 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo E/S del Remote Group 3"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:textoExtracto "módulos encestados bajo un 'POWER SUPPLY'; flechas negras indican el orden de numeración (arriba-abajo, izquierda-derecha)."@es .
-
-ns1:PLC_Introduccion a ns1:Sistema ;
-    rdfs:label "Introducción al PLC (Numeración de entradas/salidas)"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_NumeracionEntradasSalidas ;
-    ns1:textoExtracto "Introducción al PLC – Numeración de las entradas y salidas físicas (3.4.1)."@es .
-
-ns1:Diagrama_TornoHorizontal a ns1:Esquema ;
-    rdfs:label "Diagrama 'Torno horizontal'"@es ;
-    ns1:detalladoEnEsquema ns1:HMI_ConfiguracionGraficos ;
-    ns1:textoExtracto "Diagrama 'Torno horizontal': representación esquemática del eje pieza con variantes de signo para X y Z (X±/Z±). Se muestran piezas y portaherramientas con las flechas de los ejes y sus sentidos, para seleccionar la proyección gráfica correcta por canal."@es .
-
-ns1:HMI_ConfiguracionGraficos a ns1:InterfazUsuario ;
-    rdfs:label "Configuración gráfica del HMI para parámetros máquina"@es ;
-    ns1:ilustradoEn ns1:Diagrama_TornoHorizontal,
-        ns1:Diagrama_TornoVertical ;
-    ns1:textoExtracto "Parámetros máquina del HMI (interface) – Configuración de los gráficos (2.11.9)"@es .
-
-ns1:Diagrama_TornoVertical a ns1:Esquema ;
-    rdfs:label "Diagrama 'Torno vertical'"@es ;
-    ns1:detalladoEnEsquema ns1:HMI_ConfiguracionGraficos ;
-    ns1:textoExtracto "Diagrama 'Torno vertical': disposición vertical del husillo/plato con flechas de ejes X y Z en distintas combinaciones de signo; ayuda a elegir la vista del gráfico en máquinas verticales o doble torreta."@es .
-
-ns1:Esquema_NumeracionEntradasSalidas a ns1:Esquema ;
-    rdfs:label "Esquema de numeración de entradas/salidas físicas (PLC)"@es ;
-    ns1:documentadoEn ns1:PLC_Introduccion ;
-    ns1:textoExtracto "Esquema de 'Numeración según el orden de los grupos remotos': tres bloques 'Remote Group (1–3)' con módulos encestados bajo un 'POWER SUPPLY'; flechas negras indican el orden de numeración (arriba-abajo, izquierda-derecha). Bajo cada grupo se anotan rangos resultantes de O e I (p. ej., O1…O32, I1…I48)."@es .
+ns1:TiempoTranscurrido a ns1:Parametro ;
+    rdfs:label "Tiempo transcurrido" ;
+    ns1:textoExtracto "t sube desde 0" .
 

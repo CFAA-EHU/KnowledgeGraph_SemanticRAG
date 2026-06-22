@@ -1,46 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_LogicaConsultas a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de lógica de consultas" ;
-    ns1:textoExtracto "Permiten agrupar y efectuar operaciones entre las distintas instrucciones de consulta. Los operadores disponibles son NOT, AND, OR, XOR. La asociatividad de los operadores es de izquierda a derecha y las prioridades, ordenadas de mayor a menor son NOT AND XOR OR." ;
-    ns1:tieneComponente ns1:OperadorLogico_AND,
-        ns1:OperadorLogico_NOT,
-        ns1:OperadorLogico_OR,
-        ns1:OperadorLogico_XOR,
-        ns1:SimboloParentesis,
-        ns1:SimboloSaltoLinea .
+ns1:CambioDeSignoDelRegistroR89 a ns1:Parametro ;
+    rdfs:label "Cambio de signo del registro R89" ;
+    ns1:identificador "NGS R89" ;
+    ns1:textoExtracto "I16 = NGS R89 Si la entrada I16 vale \"1\" el PLC cambia de signo el contenido del registro R89." .
 
-ns1:Parametro_ValorLogico1 a ns1:Parametro ;
-    rdfs:label "Valor lógico constante '1'" ;
-    ns1:textoExtracto "Una instrucción de consulta formada únicamente por los operadores \"(\" y \")\" siempre tiene valor \"1\". La salida O2 mostrará siempre el valor lógico \"1\"." ;
-    ns1:valor "1" .
+ns1:ComplementaLosBitsDeUnRegistroR152 a ns1:Parametro ;
+    rdfs:label "Complementa los bits de un registro R152" ;
+    ns1:identificador "NGU R152" ;
+    ns1:textoExtracto "I15 = NGU R152 Si la entrada I15 vale \"1\" el PLC complementa los 32 bits del registro R152." .
 
-ns1:OperadorLogico_AND a ns1:Componente,
-        ns1:Tabla ;
-    rdfs:label "Operador AND" ;
-    ns1:textoExtracto "AND Función lógica \"Y\". I4 AND I5 = O6 La salida O6 estará activa cuando ambas entradas (I4, I5) estén activas." .
+ns1:EstadoAnteriorDelRegistroR152 a ns1:Parametro ;
+    rdfs:label "Estado anterior del registro R152" ;
+    ns1:identificador "R152 antes" ;
+    ns1:textoExtracto "R152 antes: 0001 0001 0001 0001 0001 0001 0001 0001" ;
+    ns1:valor "0001 0001 0001 0001 0001 0001 0001 0001" .
 
-ns1:OperadorLogico_NOT a ns1:Componente,
-        ns1:Tabla ;
-    rdfs:label "Operador NOT" ;
-    ns1:textoExtracto "NOT Invierte el resultado de la consulta. NOT I2 = O3 La salida O3 estará activa cuando no lo esté la entrada I2." .
+ns1:EstadoAnteriorDelRegistroR89 a ns1:Parametro ;
+    rdfs:label "Estado anterior del registro R89" ;
+    ns1:identificador "R89 antes" ;
+    ns1:textoExtracto "R89 antes: 0001 0001 0001 0001 0001 0001 0001 0001" ;
+    ns1:valor "0001 0001 0001 0001 0001 0001 0001 0001" .
 
-ns1:OperadorLogico_OR a ns1:Componente,
-        ns1:Tabla ;
-    rdfs:label "Operador OR" ;
-    ns1:textoExtracto "OR Función lógica \"O\". I7 OR I8 = O9 La salida O9 estará activa cuando una de las entradas (o ambas) estén activas." .
+ns1:EstadoPosteriorDelRegistroR152 a ns1:Parametro ;
+    rdfs:label "Estado posterior del registro R152" ;
+    ns1:identificador "R152 después" ;
+    ns1:textoExtracto "R152 después: 1110 1110 1110 1110 1110 1110 1110 1110" ;
+    ns1:valor "1110 1110 1110 1110 1110 1110 1110 1110" .
 
-ns1:OperadorLogico_XOR a ns1:Componente,
-        ns1:Tabla ;
-    rdfs:label "Operador XOR" ;
-    ns1:textoExtracto "XOR Función lógica \"O Exclusivo\". I10 XOR I11 = O12 La salida O12 estará activa cuando las entradas I10 y I11 tengan niveles lógicos distintos." .
-
-ns1:SimboloParentesis a ns1:Componente ;
-    rdfs:label "Símbolos paréntesis ( )" ;
-    ns1:textoExtracto "Abrir y cerrar paréntesis. Permiten clarificar y seleccionar el orden en que se produce la evaluación de la expresión lógica. ( I2 OR I3) AND (I4 OR (NOT I5 AND I6)) = O7" .
-
-ns1:SimboloSaltoLinea a ns1:Componente ;
-    rdfs:label "Símbolo salto de línea (\\)" ;
-    ns1:textoExtracto "Salto de línea. Permite escribir una expresión lógica en 2 o más líneas diferentes. Se puede programar: DFU MSTROBE AND CPS MFUN* EQ 3 = M1003 o también se puede programar: DFU MSTROBE \\ AND CPS MFUN* EQ 3 = M1003" .
+ns1:EstadoPosteriorDelRegistroR89 a ns1:Parametro ;
+    rdfs:label "Estado posterior del registro R89" ;
+    ns1:identificador "R89 después" ;
+    ns1:textoExtracto "R89 después: 1110 1110 1110 1110 1110 1110 1110 1111" ;
+    ns1:valor "1110 1110 1110 1110 1110 1110 1110 1111" .
 

@@ -1,38 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_Start a ns1:InterfazUsuario ;
-    rdfs:label "Botón [START]"@es ;
-    ns1:documentadoEn ns1:Error_2480 ;
-    ns1:textoExtracto "pulsar [START]"@es .
+ns1:DefinirDosSubrutinasLocalesConElMismoNombre a ns1:AccionProhibida ;
+    rdfs:label "Definir dos subrutinas locales con el mismo nombre" ;
+    ns1:mitigaRiesgo ns1:SubrutinaLocalYaExistente ;
+    ns1:textoExtracto "En un programa no puede haber dos subrutinas locales con el mismo nombre." .
 
-ns1:ModoContinuacionParcial a ns1:ModoOperacion ;
-    rdfs:label "Modo de continuación parcial del mecanizado"@es ;
-    ns1:documentadoEn ns1:Error_2480 ;
-    ns1:textoExtracto "\"Punto de reinicio\", \"Restart PP\", \"PP interrumpido\" o \"BreakPP\""@es .
+ns1:DefinirElInicioDeLaSubrutinaLocal a ns1:TareaMantenimiento ;
+    rdfs:label "Definir el inicio de la subrutina local" ;
+    ns1:solucionaFallo ns1:SeEsperaNombreDeSubrutina_90d32f42d8 ;
+    ns1:textoExtracto "Definir el inicio de la subrutina local con \"%L nombre\"." .
 
-ns1:TablaCutting a ns1:Tabla ;
-    rdfs:label "Tabla CUTTING"@es ;
-    ns1:documentadoEn ns1:Error_2479 ;
-    ns1:textoExtracto "tabla de Cutting"@es .
+ns1:ProgramacionHEADNoPermitidaEnCinematicasSinCabezal_6f5752c5f4 a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación HEAD no permitida en cinemáticas sin cabezal" ;
+    ns1:textoExtracto "Programación HEAD no permitida en cinemáticas sin cabezal." .
 
-ns1:TablaPiercing a ns1:Tabla ;
-    rdfs:label "Tabla PIERCING"@es ;
-    ns1:documentadoEn ns1:Error_2478 ;
-    ns1:textoExtracto "tabla de Piercing"@es .
+ns1:ProgramarRTCPSinGiroDelSistemaDeCoordenadasEnCinematicasCabezalMesa a ns1:AccionProhibida ;
+    rdfs:label "Programar RTCP sin giro del sistema de coordenadas en cinemáticas cabezal-mesa" ;
+    ns1:mitigaRiesgo ns1:ProgramacionCOROTFIXNoPermitidaEnCinematicasCabezalMesaTYPE1316 ;
+    ns1:textoExtracto "Este tipo de cinemática no admite esa programación. Programar el RTCP con giro del sistema de coordenadas o redefinir la cinemática como vectorial (TYPE 52)." .
 
-ns1:Error_2478 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sentencia #PIERCING no permitida sin tabla PIERCING"@es ;
-    ns1:identificador "2478" ;
-    ns1:textoExtracto "2478 Sentencia no permitida sin tabla PIERCING en el fichero de material activo. DETECCIÓN Durante la ejecución. CAUSA Se ha programado la sentencia #PIERCING pero el fichero de material activo no tiene tabla de Piercing. SOLUCIÓN Cargar un fichero de material con tabla de Piercing."@es .
+ns1:ProgramacionCOROTFIXNoPermitidaEnCinematicasCabezalMesaTYPE1316 a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación COROT=FIX no permitida en cinemáticas cabezal-mesa, TYPE=13..16" ;
+    ns1:textoExtracto "Se ha programado un RTCP sin giro del sistema de coordenadas para una cinemática cabezal+mesa (TYPE=13..16)." .
 
-ns1:Error_2479 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sentencia #CUTTING no permitida sin tabla CUTTING"@es ;
-    ns1:identificador "2479" ;
-    ns1:textoExtracto "2479 Sentencia no permitida sin tabla CUTTING en el fichero de material activo. DETECCIÓN Durante la ejecución. CAUSA Se ha programado la sentencia #CUTTING pero el fichero de material activo no tiene tabla de Cutting. SOLUCIÓN Cargar un fichero de material con tabla de Cutting."@es .
+ns1:SeEsperaNombreDeSubrutina_90d32f42d8 a ns1:DiagnosticoFallo ;
+    rdfs:label "Se espera nombre de subrutina" ;
+    ns1:textoExtracto "Se ha programado una subrutina local (%L) sin definir su nombre." .
 
-ns1:Error_2480 a ns1:DiagnosticoFallo ;
-    rdfs:label "START no admitido por datos no válidos en continuación de perfil"@es ;
-    ns1:identificador "2480" ;
-    ns1:textoExtracto "2480 No se admite START para continuar perfil por datos no válidos. DETECCIÓN Al pulsar [START] después de seleccionar un modo de continuación parcial del mecanizado anterior; \"Punto de reinicio\", \"Restart PP\", \"PP interrumpido\" o \"BreakPP\". CAUSA Error en el fichero que guardan los datos para continuar. SOLUCIÓN Repetir el proceso (interrupción del programa y seleccionar tipo de continuación)."@es .
+ns1:SubrutinaLocalYaExistente a ns1:DiagnosticoFallo ;
+    rdfs:label "Subrutina local ya existente" ;
+    ns1:textoExtracto "Hay definidas más de una subrutina local (%L) con el mismo nombre." .
 

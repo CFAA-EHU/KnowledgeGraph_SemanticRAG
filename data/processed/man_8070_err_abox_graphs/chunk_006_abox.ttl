@@ -1,44 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error0006 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 0006: Preparación sobrepasa tiempo de ciclo"@es ;
-    ns1:solucionaFallo ns1:Parametro_PREPFREQ ;
-    ns1:textoExtracto "0006 'La preparación sobrepasa la mitad del tiempo de ciclo' [...] SOLUCIÓN Disminuir el valor del parámetro PREPFREQ del canal."@es .
+ns1:CNC8070_6cf7f82cb8 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:RepetirArranquesDelCNC ;
+    ns1:solucionaFallo ns1:ReiniciarCNC_48db6379dc ;
+    ns1:textoExtracto "'Los datos del CNC relativos a las cotas, traslados de orígenes, contador de piezas, cinemáticas, etc se han perdido. SOLUCIÓN Si el error se repite en sucesivos arranques del CNC, póngase en contacto con su proveedor.'" .
 
-ns1:Error0007 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 0007: Reinicio necesario tras reset"@es ;
-    ns1:textoExtracto "0007 'Para finalizar el reset es necesario reiniciar el CNC' [...] SOLUCIÓN Reiniciar el CNC."@es .
+ns1:EjecutarDosResetsDelCNCConsecutivos a ns1:AccionProhibida ;
+    rdfs:label "Ejecutar dos resets del CNC consecutivos" ;
+    ns1:textoExtracto "'Para finalizar el reset es necesario reiniciar el CNC'... CAUSA El usuario ha ejecutado dos reset del CNC consecutivos y ninguno de ellos ha finalizado correctamente." .
 
-ns1:Error0008 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 0008: Tecla rechazada"@es ;
-    ns1:textoExtracto "0008 'La tecla ha sido rechazada' [...] SOLUCIÓN Si ha sido un acto involuntario del usuario, ignorar el error."@es .
+ns1:FrecuenciaDePreparacion a ns1:Parametro ;
+    rdfs:label "Frecuencia de preparación" ;
+    ns1:textoExtracto "'0006 'La preparación sobrepasa la mitad del tiempo de ciclo'... CONSECUENCIA El parámetro PREPFREQ no tiene el efecto deseado. SOLUCIÓN Disminuir el valor del parámetro PREPFREQ del canal." .
 
-ns1:Error0009 a ns1:DiagnosticoFallo ;
-    rdfs:label "Aviso de sistema: fallo en gestión de FIFO de AEP"@es ;
-    ns1:textoExtracto "0009 Aviso de sistema: fallo en la gestión de la fifo de aep. [...] CAUSA El programa tiene un gran número de funciones G o parámetros aritméticos."@es .
+ns1:LaPreparacionSobrepasaLaMitadDelTiempoDeCiclo a ns1:DiagnosticoFallo ;
+    rdfs:label "La preparación sobrepasa la mitad del tiempo de ciclo" ;
+    ns1:textoExtracto "'0006 'La preparación sobrepasa la mitad del tiempo de ciclo' DETECCIÓN Durante el arranque del CNC o durante la ejecución. CAUSA La preparación de datos en el CNC por ciclo de PLC tiene una duración excesiva." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:textoExtracto "Los datos del CNC relativos a las cotas, traslados de orígenes, contador de piezas, cinemáticas, etc se han perdido."@es ;
-    ns1:tieneComponente ns1:Tecla_ArranqueCabezal,
-        ns1:Tecla_ParadaOrientadaCabezal,
-        ns1:Tecla_START .
+ns1:ParaFinalizarElResetEsNecesarioReiniciarElCNC a ns1:DiagnosticoFallo ;
+    rdfs:label "Para finalizar el reset es necesario reiniciar el CNC" ;
+    ns1:textoExtracto "'0007 'Para finalizar el reset es necesario reiniciar el CNC' DETECCIÓN Tras un reset del CNC. CAUSA El usuario ha ejecutado dos reset del CNC consecutivos y ninguno de ellos ha finalizado correctamente." .
 
-ns1:Parametro_PREPFREQ a ns1:Parametro ;
-    rdfs:label "PREPFREQ"@es ;
-    ns1:textoExtracto "parámetro PREPFREQ"@es ;
-    ns1:valor "disminuir"@es .
+ns1:ReiniciarCNCMasDeDosVeces a ns1:AccionProhibida ;
+    rdfs:label "Reiniciar CNC más de dos veces" ;
+    ns1:textoExtracto "'Para finalizar el reset es necesario reiniciar el CNC'... Si el usuario pulsa la tecla [RESET] por tercera vez, la aplicación CNC se cierra." .
 
-ns1:Tecla_ArranqueCabezal a ns1:InterfazUsuario ;
-    rdfs:label "Tecla de arranque del cabezal"@es ;
-    ns1:textoExtracto "las teclas de arranque del cabezal [...] siempre se deben pulsar solas"@es .
+ns1:ReiniciarCNC_48db6379dc a ns1:TareaMantenimiento ;
+    rdfs:label "Reiniciar CNC" ;
+    ns1:textoExtracto "'0007 'Para finalizar el reset es necesario reiniciar el CNC'... SOLUCIÓN Reiniciar el CNC." .
 
-ns1:Tecla_ParadaOrientadaCabezal a ns1:InterfazUsuario ;
-    rdfs:label "Tecla de parada orientada del cabezal"@es ;
-    ns1:textoExtracto "la tecla de parada orientada del cabezal [...] siempre se deben pulsar solas"@es .
-
-ns1:Tecla_START a ns1:InterfazUsuario ;
-    rdfs:label "[START]"@es ;
-    ns1:textoExtracto "La tecla [START] [...] siempre se deben pulsar solas"@es .
+ns1:RepetirArranquesDelCNC a ns1:AccionProhibida ;
+    rdfs:label "Repetir arranques del CNC" ;
+    ns1:textoExtracto "'Los datos del CNC relativos a las cotas, traslados de orígenes, contador de piezas, cinemáticas, etc se han perdido. SOLUCIÓN Si el error se repite en sucesivos arranques del CNC, póngase en contacto con su proveedor.'" .
 

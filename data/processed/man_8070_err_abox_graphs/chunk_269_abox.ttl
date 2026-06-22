@@ -1,50 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Herramienta_Osciloscopio a ns1:Herramienta ;
-    rdfs:label "Osciloscopio de diagnóstico"@es ;
-    ns1:activaAlarma ns1:Alarma_1573,
-        ns1:Alarma_1574 ;
-    ns1:textoExtracto "Osciloscopio que intenta leer valores de variables durante la ejecución"@es .
+ns1:CambiarElTipoDeEjeONoProgramarLaImagenEspejo a ns1:TareaMantenimiento ;
+    rdfs:label "Cambiar el tipo de eje o no programar la imagen espejo" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteImagenEspejoConEjesUNIDIR ;
+    ns1:textoExtracto "SOLUCIÓN Cambiar el tipo de eje o no programar la imagen espejo." .
 
-ns1:Parametro_1574 a ns1:Parametro ;
-    rdfs:label "Parámetro bloqueado en osciloscopio"@es ;
-    ns1:monitoreaParametro ns1:Alarma_1574 ;
-    ns1:textoExtracto "Parámetro no modificable desde el osciloscopio durante la ejecución"@es .
+ns1:ElRadioPolarSoloSePuedeProgramarConR a ns1:DiagnosticoFallo ;
+    rdfs:label "El radio polar sólo se puede programar con R" ;
+    ns1:identificador "1567" ;
+    ns1:textoExtracto "'El radio polar sólo se puede programar con R'" .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:activaAlarma ns1:Alarma_1571,
-        ns1:Alarma_1572 ;
-    ns1:textoExtracto "CNC (control numérico) que gestiona acceso a variables y ejecución de subrutinas"@es .
+ns1:Parametro_7729406c0f a ns1:Parametro ;
+    rdfs:label "parámetro UNIDIR" ;
+    ns1:identificador "UNIDIR" ;
+    ns1:textoExtracto "(parámetro UNIDIR)" .
 
-ns1:Variable_1572 a ns1:Parametro ;
-    rdfs:label "Variable de preparación de herramienta (prefijos G/A)"@es ;
-    ns1:monitoreaParametro ns1:Alarma_1572 ;
-    ns1:textoExtracto "Variable de preparación de herramienta de otro canal (prefijo \"G\" o \"A\")"@es .
+ns1:RevisarLaProgramacionDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación del cabezal" ;
+    ns1:solucionaFallo ns1:ElCabezalNoPuedeFuncionarComoEjeCCAXISNo ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Variable_1573 a ns1:Parametro ;
-    rdfs:label "Variable asignada a canal de osciloscopio"@es ;
-    ns1:monitoreaParametro ns1:Alarma_1573 ;
-    ns1:textoExtracto "Variable asignada a uno de los canales del osciloscopio para captura de muestras"@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:LaInstruccionProgramadaNoSePuedeEjecutarSobreUnEjeAparcado ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1571 a ns1:Alarma ;
-    rdfs:label "Error 1571: Carácter '%' no admitido en subrutina global"@es ;
-    ns1:identificador "1571" ;
-    ns1:textoExtracto "'No se admite el carácter \"%\" dentro de subrutina global' DETECCIÓN Durante la ejecución. CAUSA Hay programado el carácter \"%\" dentro de una subrutina global, en una línea diferente a la de la definición del nombre de la subrutina. SOLUCIÓN Revisar la programación."@es .
+ns1:ElCabezalNoPuedeFuncionarComoEjeCCAXISNo a ns1:DiagnosticoFallo ;
+    rdfs:label "El cabezal no puede funcionar como eje C, CAXIS = No" ;
+    ns1:identificador "1565" ;
+    ns1:textoExtracto "'El cabezal no puede funcionar como eje C, CAXIS = No'" .
 
-ns1:Alarma_1572 a ns1:Alarma ;
-    rdfs:label "Error 1572: Variable accesible solo para su canal"@es ;
-    ns1:identificador "1572" ;
-    ns1:textoExtracto "'Variable sólo accesible para su canal' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acceder a una variable de preparación de herramienta de otro canal (prefijo \"G\" o \"A\"). SOLUCIÓN Las únicas variables de herramientas accesibles desde otro canal son las asociadas al gestor (prefijo \"TM\")."@es .
+ns1:LaInstruccionProgramadaNoSePuedeEjecutarSobreUnEjeAparcado a ns1:DiagnosticoFallo ;
+    rdfs:label "La instrucción programada no se puede ejecutar sobre un eje aparcado" ;
+    ns1:textoExtracto "CAUSA La instrucción programada no se puede ejecutar sobre un eje aparcado. SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1573 a ns1:Alarma ;
-    rdfs:label "Error 1573: Fallo al capturar muestras de variable"@es ;
-    ns1:identificador "1573" ;
-    ns1:textoExtracto "'Error capturando muestras de la variable' DETECCIÓN Durante la ejecución. CAUSA Se ha producido un error mientras el osciloscopio intentaba leer el valor de la variable asignada a uno de sus canales. SOLUCIÓN Resetear el control y volver a capturar la traza."@es .
-
-ns1:Alarma_1574 a ns1:Alarma ;
-    rdfs:label "Error 1574: Parámetro no modificable desde osciloscopio"@es ;
-    ns1:identificador "1574" ;
-    ns1:textoExtracto "'Parámetro no modificable desde el oscilo' DETECCIÓN Durante la ejecución."@es .
+ns1:NoSeAdmiteImagenEspejoConEjesUNIDIR a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite imagen espejo con ejes UNIDIR" ;
+    ns1:identificador "1566" ;
+    ns1:textoExtracto "'No se admite imagen espejo con ejes UNIDIR'" .
 

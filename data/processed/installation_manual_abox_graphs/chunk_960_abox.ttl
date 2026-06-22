@@ -1,53 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Tecla_SpindleAntihorario a ns1:Componente ;
-    rdfs:label "Tecla Spindle counterclockwise"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "Spindle counterclockwise"@en .
+ns1:CambioDeHerramienta_be17129d85 a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:textoExtracto "Dependiendo del tipo de almacén y de la operación solicitada, a veces se deben efectuar varias acciones." .
 
-ns1:Tecla_SpindleHorario a ns1:Componente ;
-    rdfs:label "Tecla Spindle clockwise"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "Spindle clockwise"@en .
+ns1:SistemaPLC960 a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:BrazoCambiador,
+        ns1:Herramienta_8cb260dda3,
+        ns1:Sistema_5f7275da9c ;
+    ns1:textoExtracto "El PLC, que es el encargado de controlar dichos movimientos, debe informar al gestor de las acciones efectuadas para que actualice su información." .
 
-ns1:Tecla_SpindleOverrideNegativo a ns1:Componente ;
-    rdfs:label "Tecla Spindle override -"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "Spindle override - "@es .
+ns1:SubrutinaCambioHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Subrutina de cambio de herramienta" ;
+    ns1:textoExtracto "Hay dos subrutinas asociadas al cambio de herramienta." .
 
-ns1:Tecla_SpindleOverridePositivo a ns1:Componente ;
-    rdfs:label "Tecla Spindle override +"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "Spindle override +"@es .
+ns1:SubrutinaFuncionT a ns1:TareaMantenimiento ;
+    rdfs:label "Rutina asociada a la función T" ;
+    ns1:textoExtracto "La rutina asociada a la herramienta se ejecuta automáticamente cada vez que se ejecuta una función T (selección de herramienta)." .
 
-ns1:Tecla_SpindleParada a ns1:Componente ;
-    rdfs:label "Tecla Spindle stop"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "Spindle stop"@en .
+ns1:BrazoCambiador a ns1:ComponenteMecanico ;
+    rdfs:label "Brazo cambiador" ;
+    ns1:textoExtracto "en algunos almacenes para llevar una herramienta del cabezal al almacén primero hay que llevar la herramienta del cabezal al brazo cambiador y luego del brazo cambiador al almacén." .
 
-ns1:Tecla_SpindlePosicionamiento a ns1:Componente ;
-    rdfs:label "Tecla Spindle positioning"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "Spindle positioning"@en .
+ns1:Herramienta_8cb260dda3 a ns1:Herramienta ;
+    rdfs:label "Herramienta del cabezal" ;
+    ns1:textoExtracto "Dejar la herramienta del cabezal en tierra." .
 
-ns1:Tecla_Start a ns1:Componente ;
-    rdfs:label "Tecla START"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "START"@en .
-
-ns1:Tecla_Stop a ns1:Componente ;
-    rdfs:label "Tecla STOP"@es ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "STOP"@en .
-
-ns1:InterfazUsuario_Se_alesTeclas a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de señales modificables de teclas (KEYDIS1-KEYDIS4)"@es ;
-    ns1:identificador "KEYDIS1-KEYDIS4" ;
-    ns1:textoExtracto "Teclas de usuario. Registros KEYDIS1 / KEYDIS1_1 a KEYDIS1_8. Teclas de jog. Registros KEYDIS2 / KEYDIS2_1 a KEYDIS2_8. [...] Registros KEYDIS3 / KEYDIS3_1 a KEYDIS3_8. Selector del feed override y selector de movimiento (volante, jog incremental o jog continuo). Registros KEYDIS4 / KEYDIS4_1 a KEYDIS4_8. Selector del speed override."@es .
-
-ns1:Tabla_AsignacionBitsTeclas a ns1:Tabla ;
-    rdfs:label "Tabla de asignación de bits a teclas (KEYDIS1/KEYDIS2)"@es ;
-    ns1:documentadoEn ns1:InterfazUsuario_Se_alesTeclas ;
-    ns1:textoExtracto "| Bit. | Tecla. | --- | --- | 0 | Spindle override + | 1 | Spindle clockwise | 2 | Spindle positioning | 3 | Spindle stop | 4 | Spindle override - | 5 | Spindle counterclockwise | 6 | START | 7 | STOP |"@es .
+ns1:Sistema_5f7275da9c a ns1:Sistema ;
+    rdfs:label "Almacén de herramientas" ;
+    ns1:textoExtracto "en algunos almacenes para llevar una herramienta del cabezal al almacén primero hay que llevar la herramienta del cabezal al brazo cambiador y luego del brazo cambiador al almacén." .
 

@@ -1,61 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModuloJogLocal a ns1:ComponenteElectrico ;
-    rdfs:label "módulo local de jog" ;
-    ns1:textoExtracto "Error reiterativo en la lectura del módulo local de jog de la unidad central ICU MCU." .
+ns1:ErrorDeChecksumEnLaCOMPCI a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de checksum en la COMPCI" ;
+    ns1:textoExtracto "'Error de checksum en la COMPCI'" .
 
-ns1:ParametroNPT100 a ns1:Parametro ;
-    rdfs:label "NPT100" ;
-    ns1:textoExtracto "Revisar los parámetros máquina generales NPT100 y PT100." .
+ns1:PonerseEnContactoConAsistenciaTecnica a ns1:AccionProhibida ;
+    rdfs:label "Ponerse en contacto con asistencia técnica" ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:ParametroPT100 a ns1:Parametro ;
-    rdfs:label "PT100" ;
-    ns1:textoExtracto "Revisar los parámetros máquina generales NPT100 y PT100." .
+ns1:RevisionDeParametrosMaquina a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de parámetros máquina" ;
+    ns1:solucionaFallo ns1:ErrorDeVolanteNoExistente ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina. Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "CNC" ;
-    ns1:activaAlarma ns1:Error6039,
-        ns1:Error6040,
-        ns1:Error6041 ;
-    ns1:textoExtracto "SOLUCIÓN Apagar el CNC y quitar elementos del bus hasta entrar en los límites." .
+ns1:RevisionDelChecksumDeLosDatos a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión del checksum de los datos" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Error en el cheksum de los datos." .
 
-ns1:Teclado8065_Jog a ns1:InterfazUsuario ;
-    rdfs:label "teclado 8065 (jog)" ;
-    ns1:textoExtracto "El CNC ha detectado un teclado 8065 (qwerty o jog) configurado para comunicarse con versiones anteriores a la V04.10." .
-
-ns1:Teclado8065_QWERTY a ns1:InterfazUsuario ;
-    rdfs:label "teclado 8065 (qwerty)" ;
-    ns1:textoExtracto "El CNC ha detectado un teclado 8065 (qwerty o jog) configurado para comunicarse con versiones anteriores a la V04.10." .
-
-ns1:UnidadCentralICU_MCU a ns1:ComponenteElectrico ;
-    rdfs:label "unidad central ICU MCU" ;
-    ns1:textoExtracto "Error reiterativo en la lectura del módulo local de jog de la unidad central ICU MCU." .
-
-ns1:Diagnostico6039 a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "Revisar los parámetros máquina generales NPT100 y PT100." .
-
-ns1:Diagnostico6040 a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "Revisar el hardware y la comunicación entre jog local y unidad central." .
-
-ns1:Diagnostico6041 a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "Identificar los teclados 8065 (qwerty y jog) y configurarlos correctamente." .
-
-ns1:Error6039 a ns1:AvisoSeguridad ;
-    rdfs:label "Error en la habilitación de entrada PT100" ;
-    ns1:identificador "6039" ;
-    ns1:solucionaFallo ns1:Diagnostico6039 ;
-    ns1:textoExtracto "6039 'Error en la habilitación de entrada PT100' DETECCIÓN Durante el arranque del sistema. CAUSA Parametrización incorrecta de alguna de las entradas PT100. SOLUCIÓN Revisar los parámetros máquina generales NPT100 y PT100." .
-
-ns1:Error6040 a ns1:AvisoSeguridad ;
-    rdfs:label "Error en la lectura del jog local" ;
-    ns1:identificador "6040" ;
-    ns1:solucionaFallo ns1:Diagnostico6040 ;
-    ns1:textoExtracto "6040 'Error en la lectura del jog local' DETECCIÓN Durante la ejecución del CNC. CAUSA Error reiterativo en la lectura del módulo local de jog de la unidad central ICU MCU. SOLUCIÓN Revisar el hardware y la comunicación entre jog local y unidad central." .
-
-ns1:Error6041 a ns1:AvisoSeguridad ;
-    rdfs:label "Detectado teclado configurado en modo 15" ;
-    ns1:identificador "6041" ;
-    ns1:solucionaFallo ns1:Diagnostico6041 ;
-    ns1:textoExtracto "6041 'Detectado teclado configurado en modo 15' DETECCIÓN Tras un reset del CNC. CAUSA El CNC ha detectado un teclado 8065 (qwerty o jog) configurado para comunicarse con versiones anteriores a la V04.10. SOLUCIÓN Identificar los teclados 8065 (qwerty y jog) y configurarlos correctamente. Póngase en contacto con el servicio de asistencia técnica." .
+ns1:ErrorDeVolanteNoExistente a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de volante no existente" ;
+    ns1:textoExtracto "La entrada de volante no existe. La ventana de error indica cuál es el volante que provoca el error." .
 

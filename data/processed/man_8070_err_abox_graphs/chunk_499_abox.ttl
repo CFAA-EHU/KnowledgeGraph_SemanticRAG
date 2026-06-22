@@ -1,52 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_3000 a ns1:AvisoSeguridad ;
-    rdfs:label "No se puede programar una trayectoria circular con un eje esclavo"@es ;
-    ns1:identificador "3000" ;
-    ns1:textoExtracto """
-    DETECCIÓN Durante la ejecución.
-    CAUSA El CNC intenta mover individualmente el eje esclavo de un acoplo o de un eje gantry.
-    SOLUCIÓN Un eje esclavo no se puede desplazar individualmente. Para desplazar un eje esclavo, hay que desplazar el eje maestro al que se encuentra asociado.
-    """@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación"@es ;
+    ns1:solucionaFallo ns1:FaltaProgramarElPrimerPuntoIJK,
+        ns1:FaltaProgramarElSegundoPuntoXYZ,
+        ns1:G107IncompatibleConG106YSPLINEON ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:AvisoSeguridad_3001 a ns1:AvisoSeguridad ;
-    rdfs:label "No se puede mover un eje en modo visualizador"@es ;
-    ns1:identificador "3001" ;
-    ns1:textoExtracto """
-    DETECCIÓN Durante la ejecución.
-    CAUSA El CNC intenta desplazar un eje que se encuentra en modo visualizador.
-    SOLUCIÓN El CNC no puede desplazar los ejes activos en modo visualizador. Para desplazar el eje, desactivar el modo visualizador (marca DRO(axis) del PLC).
-    """@es .
+ns1:FaltaProgramarElPrimerPuntoIJK a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta programar el primer punto (IJK)"@es ;
+    ns1:textoExtracto "2505 G107: Falta programar el primer punto (IJK). CAUSA Falta programar una o varias de las coordenadas IJK para definir el primer punto de G107." .
 
-ns1:AvisoSeguridad_3002 a ns1:AvisoSeguridad ;
-    rdfs:label "Límite positivo de software sobrepasado"@es ;
-    ns1:identificador "3002" ;
-    ns1:textoExtracto """
-    DETECCIÓN Durante la reposición de un eje.
-    CAUSA Durante el movimiento de reposicionamiento, el eje ha alcanzado los límites de software. Si el punto de reposición está fuera de los límites de software, el eje no puede alcanzar dicho punto.
-    SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC.
-    """@es .
+ns1:FaltaProgramarElSegundoPuntoXYZ a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta programar el segundo punto (XYZ)"@es ;
+    ns1:textoExtracto "2504 G107: Falta programar el segundo punto (XYZ). CAUSA Falta programar una o varias de las coordenadas XYZ para definir el segundo punto de G107." .
 
-ns1:AvisoSeguridad_3003 a ns1:AvisoSeguridad ;
-    rdfs:label "Límite negativo de software sobrepasado"@es ;
-    ns1:identificador "3003" ;
-    ns1:textoExtracto """
-    DETECCIÓN Durante la reposición de un eje.
-    CAUSA Durante el movimiento de reposicionamiento, el eje ha alcanzado los límites de software. Si el punto de reposición está fuera de los límites de software, el eje no puede alcanzar dicho punto.
-    SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC.
-    """@es .
-
-ns1:AvisoSeguridad_3005 a ns1:AvisoSeguridad ;
-    rdfs:label "Error del control de posición en la inicialización del proceso de palpador"@es ;
-    ns1:identificador "3005" ;
-    ns1:mitigaRiesgo ns1:Sensor_Palpador ;
-    ns1:textoExtracto """
-    DETECCIÓN En la inicialización del proceso de palpado.
-    CAUSA Es una seguridad de habilitación del proceso de palpado. Algún eje programado no es válido o no está disponible.
-    """@es .
-
-ns1:Sensor_Palpador a ns1:Sensor ;
-    rdfs:label "Palpador"@es ;
-    ns1:textoExtracto "proceso de palpado"@es .
+ns1:G107IncompatibleConG106YSPLINEON a ns1:DiagnosticoFallo ;
+    rdfs:label "G107 incompatible con G106 y #SPLINE ON"@es ;
+    ns1:textoExtracto "2506 G107 incompatible con G106 y #SPLINE ON. CAUSA No es posible programar splines con G107 activa." .
 

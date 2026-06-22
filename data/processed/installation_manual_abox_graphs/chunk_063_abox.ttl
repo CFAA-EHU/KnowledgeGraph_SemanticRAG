@@ -1,35 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_NCHANNEL a ns1:Parametro ;
-    rdfs:label "NCHANNEL" ;
-    ns1:identificador "NCHANNEL" ;
-    ns1:monitoreaParametro ns1:Sistema_CNC ;
-    ns1:textoExtracto "NCHANNEL Número de canales del CNC. Valores posibles: De 1 a 4. Valor por defecto: 1." ;
-    ns1:valor "1" .
+ns1:CNC8070_febf81e945 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Los ejes y cabezales de un canal. Un canal puede disponer de un grupo de ejes y cabezales que actúen de forma independiente o en paralelo al resto de canales." ;
+    ns1:tieneComponente ns1:CabezalCanal,
+        ns1:EjeCanal .
 
-ns1:Variable_MPG_NCHANNEL a ns1:Parametro ;
-    rdfs:label "Variable MPG.NCHANNEL" ;
-    ns1:identificador "MPG.NCHANNEL" ;
-    ns1:monitoreaParametro ns1:Sistema_CNC ;
-    ns1:textoExtracto "Variable asociada: (V.)MPG.NCHANNEL" .
+ns1:ConfiguracionDeCanales a ns1:Parametro ;
+    rdfs:label "Configuración de canales" ;
+    ns1:textoExtracto "Un canal puede disponer de un grupo de ejes y cabezales que actúen de forma independiente o en paralelo al resto de canales." .
 
-ns1:Cabezal_CNC a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal CNC" ;
-    ns1:textoExtracto "Los ejes y cabezales de un canal." .
+ns1:CabezalCanal a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal del Canal" ;
+    ns1:textoExtracto "Para poder mover un eje o cabezal, éste debe estar asignado a un canal." .
 
-ns1:Canal_CNC a ns1:Componente ;
-    rdfs:label "Canal CNC" ;
-    ns1:compuestoPor ns1:Cabezal_CNC,
-        ns1:Eje_CNC ;
-    ns1:textoExtracto "Cada canal constituye un entorno de trabajo diferente que puede actuar sobre una parte o sobre la totalidad del sistema CNC. Los ejes y cabezales de un canal." .
-
-ns1:Eje_CNC a ns1:ComponenteMecanico ;
-    rdfs:label "Eje CNC" ;
-    ns1:textoExtracto "Los ejes y cabezales de un canal." .
-
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "El CNC puede disponer de un único canal de ejecución (sistema monocanal) o de varios (sistema multicanal). Cada canal constituye un entorno de trabajo diferente que puede actuar sobre una parte o sobre la totalidad del sistema CNC." ;
-    ns1:tieneComponente ns1:Canal_CNC .
+ns1:EjeCanal a ns1:ComponenteMecanico ;
+    rdfs:label "Eje del Canal" ;
+    ns1:textoExtracto "Para poder mover un eje o cabezal, éste debe estar asignado a un canal." .
 

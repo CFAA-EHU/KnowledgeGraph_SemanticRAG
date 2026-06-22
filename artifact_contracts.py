@@ -190,7 +190,7 @@ ABOX_RETRY_BACKOFF_SECONDS = (5, 15, 30)
 ABOX_RETRYABLE_ERROR_CAUSES = {"rate_limit", "timeout", "network_error", "api_error"}
 ABOX_CONTENT_ERROR_CAUSES = {"ttl_invalid", "empty_response", "semantic_invalid"}
 ABOX_SEMANTIC_WARNING_CATEGORIES = {"weak_linkage", "missing_traceability"}
-ABOX_STANDARD_MAX_CONCURRENCY = 2
+ABOX_STANDARD_MAX_CONCURRENCY = 4
 ABOX_RATE_LIMIT_DRAIN_MAX_CONCURRENCY = 1
 ABOX_RATE_LIMIT_DRAIN_MAX_RETRIES = 6
 ABOX_RATE_LIMIT_DRAIN_BACKOFF_SECONDS = (15, 30, 60, 120, 240, 480)
@@ -201,13 +201,16 @@ ABOX_MICRO_BATCH_RECOVERY_MAX_RETRIES = 6
 ABOX_MICRO_BATCH_RECOVERY_BACKOFF_SECONDS = (30, 60, 120, 240, 480, 900)
 ABOX_MICRO_BATCH_RECOVERY_JITTER_RANGE = (0.9, 1.1)
 ABOX_MICRO_BATCH_RECOVERY_REQUEST_SPACING_SECONDS = 3.0
+# Perfil de alta densidad para Ollama local con OLLAMA_NUM_PARALLEL=4
+ABOX_LOCAL_HIGH_THROUGHPUT_MAX_CONCURRENCY = 4
+ABOX_LOCAL_HIGH_THROUGHPUT_MAX_RETRIES = 4
+ABOX_LOCAL_HIGH_THROUGHPUT_BACKOFF_SECONDS = (5, 15, 30, 60)
+ABOX_LOCAL_HIGH_THROUGHPUT_JITTER_RANGE = (0.8, 1.2)
+ABOX_LOCAL_HIGH_THROUGHPUT_REQUEST_SPACING_SECONDS = 0.0
 
-DEFAULT_MISTRAL_MODEL = "mistral-small-latest"
-DEFAULT_MISTRAL_MODEL_CHAIN = (
-    DEFAULT_MISTRAL_MODEL,
-    "mistral-medium-latest",
-    "open-mistral-nemo",
-)
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+DEFAULT_OLLAMA_MODEL = "qwen2.5:32b"
+DEFAULT_OLLAMA_MODEL_CHAIN = (DEFAULT_OLLAMA_MODEL,)
 
 OPERATIONAL_RUNTIME_CONTRACT = {
     "tbox": OPERATIONAL_TBOX_PATH,
@@ -497,7 +500,7 @@ def hash_text_content(text: str) -> str:
     return sha256(text.encode("utf-8")).hexdigest()
 
 
-def resolve_mistral_model_chain(
+def resolve_ollama_model_chain(
     *,
     primary_model: str | None = None,
     fallback_models: str | Sequence[str] | None = None,
@@ -509,10 +512,10 @@ def resolve_mistral_model_chain(
         if normalized and normalized not in ordered_models:
             ordered_models.append(normalized)
 
-    register(primary_model or os.environ.get("MISTRAL_MODEL") or DEFAULT_MISTRAL_MODEL)
+    register(primary_model or os.environ.get("OLLAMA_MODEL") or DEFAULT_OLLAMA_MODEL)
 
     if fallback_models is None:
-        fallback_models = os.environ.get("MISTRAL_MODEL_FALLBACKS", "")
+        fallback_models = os.environ.get("OLLAMA_MODEL_FALLBACKS", "")
 
     if isinstance(fallback_models, str):
         for item in fallback_models.split(","):
@@ -521,7 +524,7 @@ def resolve_mistral_model_chain(
         for item in fallback_models:
             register(item)
 
-    for default_model in DEFAULT_MISTRAL_MODEL_CHAIN:
+    for default_model in DEFAULT_OLLAMA_MODEL_CHAIN:
         register(default_model)
 
     return tuple(ordered_models)

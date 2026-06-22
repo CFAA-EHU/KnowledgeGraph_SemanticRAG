@@ -1,0 +1,48 @@
+@prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns1:CNC8070_d2d98fab83 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controladoPor ns1:ActivacionDeLaLevaDesdeCNC,
+        ns1:DeseleccionDeLaLevaDesdeCNC ;
+    ns1:textoExtracto "Si la leva se activa desde el CNC, el canal se quedará en ejecución hasta que la leva alcance el estado CAM_READY." .
+
+ns1:CambioDelEstadoDeLaLeva a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio del estado de la leva" ;
+    ns1:textoExtracto "Para cambiar el estado de CAM_READY a CAM_NULL, hay que deseleccionar la leva de archivo y además la leva no debe existir en los parámetros máquina." .
+
+ns1:EstadoDeLaLevaCAMNULL a ns1:Parametro ;
+    rdfs:label "Estado de la leva CAM_NULL" ;
+    ns1:textoExtracto "Para seleccionar una leva de archivo, el estado de la leva debe ser CAM_NULL o CAM_READY." .
+
+ns1:EstadoDeLaLevaCAMREADY_a34bc71cab a ns1:Parametro ;
+    rdfs:label "Estado de la leva CAM_READY" ;
+    ns1:solucionaFallo ns1:ErrorDeEjecucionEnPLC ;
+    ns1:textoExtracto "Para poder activar una leva desde el PLC, evitando errores de ejecución, el estado de la leva debe ser CAM_READY." .
+
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controladoPor ns1:ActivacionDeLaLevaDesdePLC,
+        ns1:DeseleccionDeLaLevaDesdePLC ;
+    ns1:textoExtracto "Para poder activar una leva desde el PLC, evitando errores de ejecución, el estado de la leva debe ser CAM_READY." .
+
+ns1:ActivacionDeLaLevaDesdeCNC a ns1:TareaMantenimiento ;
+    rdfs:label "Activación de la leva desde CNC" ;
+    ns1:textoExtracto "Si la leva se activa desde el CNC, el canal se quedará en ejecución hasta que la leva alcance el estado CAM_READY." .
+
+ns1:ActivacionDeLaLevaDesdePLC a ns1:TareaMantenimiento ;
+    rdfs:label "Activación de la leva desde PLC" ;
+    ns1:textoExtracto "Para poder activar una leva desde el PLC, evitando errores de ejecución, el estado de la leva debe ser CAM_READY." .
+
+ns1:DeseleccionDeLaLevaDesdeCNC a ns1:TareaMantenimiento ;
+    rdfs:label "Deselección de la leva desde CNC" ;
+    ns1:textoExtracto "Si la leva se deselecciona desde el CNC, el canal se quedará en ejecución hasta que la leva alcance el estado CAM_READY." .
+
+ns1:DeseleccionDeLaLevaDesdePLC a ns1:TareaMantenimiento ;
+    rdfs:label "Deselección de la leva desde PLC" ;
+    ns1:textoExtracto "Para poder deseleccionar una leva de archivo desde el PLC, asegurando que no va a dar error, el estado de la leva debe ser CAM_READY." .
+
+ns1:ErrorDeEjecucionEnPLC a ns1:AccionProhibida ;
+    rdfs:label "Error de ejecución en PLC" ;
+    ns1:textoExtracto "Para poder activar una leva desde el PLC, evitando errores de ejecución, el estado de la leva debe ser CAM_READY." .
+

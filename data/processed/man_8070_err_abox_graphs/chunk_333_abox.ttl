@@ -1,60 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1758_HerramientaObligatoria a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso: Herramienta obligatoria para ejecución del ciclo"@es ;
-    ns1:mitigaRiesgo ns1:ModoOperacion_Acabado,
-        ns1:ModoOperacion_Desbaste ;
-    ns1:textoExtracto "Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta."@es .
+ns1:AsignarValorAlParametro a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar valor al parámetro" ;
+    ns1:solucionaFallo ns1:CajeraPrevacidaP0 ;
+    ns1:textoExtracto "SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
 
-ns1:DiagnosticoFallo_1758_S a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1758: MOYU CIRCULAR (S = 0)"@es ;
-    ns1:identificador "1758" ;
-    ns1:solucionaFallo ns1:Parametro_S_1758 ;
-    ns1:textoExtracto "CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado. SOLUCIÓN Asignar al parámetro un valor mayor que 0."@es .
+ns1:CajeraPrevacidaDiametroDeHerramientaMenorQueDELTA a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera prevacida: Diámetro de herramienta menor que DELTA" ;
+    ns1:textoExtracto "'CAJERA PREVACIADA: Diámetro de herramienta menor que DELTA' DETECCIÓN Durante la ejecución del ciclo." .
 
-ns1:DiagnosticoFallo_1758_T a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1758: MOYU CIRCULAR (T = 0)"@es ;
-    ns1:identificador "1758" ;
-    ns1:requiereConsumible ns1:Herramienta_DesbasteAcabado ;
-    ns1:solucionaFallo ns1:Parametro_T_1758 ;
-    ns1:textoExtracto "CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada. SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado."@es .
+ns1:NoProgramarHerramienta_7b080bfc54 a ns1:AccionProhibida ;
+    rdfs:label "No programar herramienta" ;
+    ns1:textoExtracto "No hay herramienta programada. SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado." .
 
-ns1:DiagnosticoFallo_1759_P a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1759: MOYU CIRCULAR (P = 0)"@es ;
-    ns1:identificador "1759" ;
-    ns1:solucionaFallo ns1:Parametro_P_1759 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P"@es .
-
-ns1:ModoOperacion_Acabado a ns1:ModoOperacion ;
-    rdfs:label "Operación de acabado"@es ;
-    ns1:requiereConsumible ns1:Herramienta_DesbasteAcabado ;
-    ns1:textoExtracto "operación de acabado"@es .
-
-ns1:ModoOperacion_Desbaste a ns1:ModoOperacion ;
-    rdfs:label "Operación de desbaste"@es ;
-    ns1:requiereConsumible ns1:Herramienta_DesbasteAcabado ;
-    ns1:textoExtracto "operación de desbaste"@es .
-
-ns1:Parametro_P_1759 a ns1:Parametro ;
-    rdfs:label "Parámetro P (ciclo de moyu circular)"@es ;
-    ns1:identificador "P" ;
-    ns1:textoExtracto "El parámetro P"@es ;
+ns1:ParametroP a ns1:Parametro ;
+    rdfs:label "Parámetro P" ;
+    ns1:textoExtracto "El parámetro P tiene valor 0." ;
     ns1:valor "0" .
 
-ns1:Parametro_S_1758 a ns1:Parametro ;
-    rdfs:label "Parámetro S (velocidad para desbaste/acabado)"@es ;
-    ns1:identificador "S" ;
-    ns1:textoExtracto "Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado."@es ;
-    ns1:valor "0" .
-
-ns1:Parametro_T_1758 a ns1:Parametro ;
-    rdfs:label "Parámetro T (operaciones de desbaste/acabado)"@es ;
-    ns1:identificador "T" ;
-    ns1:textoExtracto "El parámetro T de las operaciones de desbaste y acabado tiene valor 0."@es ;
-    ns1:valor "0" .
-
-ns1:Herramienta_DesbasteAcabado a ns1:Herramienta ;
-    rdfs:label "Herramienta para desbaste/acabado"@es ;
-    ns1:textoExtracto "Programar una herramienta para la operación de desbaste o acabado. Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta."@es .
+ns1:CajeraPrevacidaP0 a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera prevacida: P = 0" ;
+    ns1:textoExtracto "'CAJERA PREVACIADA: P = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P tiene valor 0. No hay profundidad programada." .
 

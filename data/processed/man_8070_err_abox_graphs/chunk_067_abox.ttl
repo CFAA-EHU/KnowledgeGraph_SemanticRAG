@@ -1,23 +1,49 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_D a ns1:Parametro ;
-    ns1:textoExtracto "Abrir un archivo con el comando \"D\" (DELETE). El CNC borra el archivo y crea uno nuevo en el formato especificado en el comando TYPE." .
+ns1:AccesoDeLecturaDenegado a ns1:AccionProhibida ;
+    rdfs:label "Acceso de lectura denegado" ;
+    ns1:textoExtracto "El CNC ha intentado leer un archivo que no tiene permiso de lectura." .
 
-ns1:Comando_MUTED a ns1:Parametro ;
-    ns1:textoExtracto "Para continuar con la ejecución sin dar error, utilizar el comando \"MUTED\"." .
+ns1:CNC8070_5702db4c8d a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC ha intentado escribir en un archivo que no tiene permiso de escritura." .
 
-ns1:Comando_OPEN a ns1:Parametro ;
-    ns1:textoExtracto "La sentencia #OPEN está programada para mostrar este error." .
+ns1:EscribirArchivoSinPermisoDeEscritura a ns1:AccionProhibida ;
+    rdfs:label "Escribir archivo sin permiso de escritura" ;
+    ns1:textoExtracto "El CNC ha intentado escribir en un archivo que no tiene permiso de escritura." .
 
-ns1:Comando_TYPE a ns1:Parametro ;
-    ns1:textoExtracto "TYPE debe coincidir con el formato del archivo. Si el archivo no existe, el CNC crea uno nuevo en el formato especificado en el comando TYPE." .
+ns1:ProgramaORutinaProtegida a ns1:AccionProhibida ;
+    rdfs:label "Programa o rutina protegida" ;
+    ns1:textoExtracto "El CNC ha intentado leer un archivo encriptado, sin tener permiso de acceso." .
 
-ns1:Error_0163 a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "0163 #OPEN:El fichero o path indicado no existe. DETECCIÓN Durante la ejecución. CAUSA La sentencia #OPEN ha comprobado que el archivo no existe (comando \"R\"). SOLUCIÓN La sentencia #OPEN está programada para mostrar este error. Para continuar con la ejecución sin dar error, utilizar el comando \"MUTED\"." .
+ns1:AccesoDeLecturaDenegado_52f27f6566 a ns1:DiagnosticoFallo ;
+    rdfs:label "Acceso de lectura denegado" ;
+    ns1:solucionadoPor ns1:DarPermisoDeLectura ;
+    ns1:textoExtracto "'Acceso de lectura denegado'" .
 
-ns1:Error_RT_IT_Overflow a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "0165 'RT IT Overflow' DETECCIÓN Durante el funcionamiento del CNC. CAUSA Las interrupciones de tiempo real superan el tiempo permitido. Algunas posibles causas pueden ser la instalación de algún dispositivo, driver o aplicación incompatible con el CNC. SOLUCIÓN Si el error se repite con frecuencia, puede ser necesario ajustar el parámetro LOOPTIME." .
+ns1:ComprobarPermisosDeArchivo a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar permisos de archivo" ;
+    ns1:solucionaFallo ns1:NoSePuedeAbrirElFichero_f4db23b5a6 ;
+    ns1:textoExtracto "Comprobar que el fichero existe y que tiene los permisos adecuados." .
 
-ns1:Parametro_LOOPTIME a ns1:Parametro ;
-    ns1:textoExtracto "Si el error se repite con frecuencia, puede ser necesario ajustar el parámetro LOOPTIME." .
+ns1:DarPermisoDeLectura a ns1:TareaMantenimiento ;
+    rdfs:label "Dar permiso de lectura" ;
+    ns1:solucionaFallo ns1:AccesoDeLecturaDenegado_52f27f6566 ;
+    ns1:textoExtracto "Dar al fichero permiso de lectura." .
+
+ns1:NoSePuedeAbrirElFichero_f4db23b5a6 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede abrir el fichero" ;
+    ns1:solucionadoPor ns1:ComprobarPermisosDeArchivo ;
+    ns1:textoExtracto "'No se puede abrir el fichero'" .
+
+ns1:PongaseEnContactoConElFabricante a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con el fabricante" ;
+    ns1:solucionaFallo ns1:ProgramaORutinaProtegida_706e89c6cd ;
+    ns1:textoExtracto "Póngase en contacto con el fabricante de la máquina para obtener los códigos de encriptación del fichero." .
+
+ns1:ProgramaORutinaProtegida_706e89c6cd a ns1:DiagnosticoFallo ;
+    rdfs:label "Programa o rutina protegida" ;
+    ns1:solucionadoPor ns1:PongaseEnContactoConElFabricante ;
+    ns1:textoExtracto "'Programa o rutina protegida'" .
 

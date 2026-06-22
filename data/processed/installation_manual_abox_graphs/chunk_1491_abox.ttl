@@ -1,35 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_OverrideControl a ns1:InterfazUsuario ;
-    rdfs:label "Control del override para optimizar la potencia"@es ;
-    ns1:monitoreaParametro ns1:Parametro_MaxDMCovr ;
-    ns1:textoExtracto "Control del override para optimizar la potencia"@es .
+ns1:ParaActivarElDMCSobreUnCabezalEsteDebeTenerSuParametroMaquinaDMCSPDLSi a ns1:TareaMantenimiento ;
+    rdfs:label "Para activar el DMC sobre un cabezal, éste debe tener su parámetro máquina DMCSPDL=Sí" ;
+    ns1:solucionaFallo ns1:SeHaIntentadoActivarElDMCEnUnCabezalQueNoTienePermisoParaEllo ;
+    ns1:textoExtracto "SOLUCIÓN Para activar el DMC sobre un cabezal, éste debe tener su parámetro máquina DMCSPDL=Sí." .
 
-ns1:ModoOperacion_AvanceMaximoPorDiente a ns1:ModoOperacion ;
-    rdfs:label "Mecanizado al avance máximo por diente"@es ;
-    ns1:textoExtracto "Mecanizado al avance máximo por diente"@es .
+ns1:Parametro_609f33a725 a ns1:Parametro ;
+    rdfs:label "Parámetro DMCSPDL" ;
+    ns1:identificador "DMCSPDL" ;
+    ns1:textoExtracto "#DMC ON:El cabezal master debe tener el parámetro DMCSPDL = Sí" .
 
-ns1:ModoOperacion_AvanceMinimoPorDiente a ns1:ModoOperacion ;
-    rdfs:label "Mecanizado al avance mínimo por diente"@es ;
-    ns1:textoExtracto "Mecanizado al avance mínimo por diente"@es .
+ns1:RevisarEnElManualDeProgramacionLaSintaxisDeLaSentencia_c44db7fdf3 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar en el manual de programación la sintaxis de la sentencia" ;
+    ns1:solucionaFallo ns1:FaltaProgramarElComandoONOFFParaActivarOAnularLaFuncion ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. Incluir el comando ON para activar la función (por ejemplo, #DMCON [...]) o el comando OFF para anularla (por ejemplo, #DMC OFF)." .
 
-ns1:ModoOperacion_G00 a ns1:ModoOperacion ;
-    rdfs:label "Mecanizado en G00"@es ;
-    ns1:identificador "G00" ;
-    ns1:textoExtracto "Mecanizado en G00"@es .
+ns1:FaltaProgramarElComandoONOFFParaActivarOAnularLaFuncion a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta programar el comando ON/OFF para activar o anular la función" ;
+    ns1:textoExtracto "2433 Es obligatorio programar ON/OFF. DETECCIÓN Durante la ejecución. CAUSA Falta programar el comando ON/OFF para activar o anular la función." .
 
-ns1:TareaMantenimiento_EntradaPieza a ns1:TareaMantenimiento ;
-    rdfs:label "Entrada a la pieza"@es ;
-    ns1:textoExtracto "Entrada a la pieza"@es .
-
-ns1:TareaMantenimiento_MovimientoVacio a ns1:TareaMantenimiento ;
-    rdfs:label "Movimiento en vacío"@es ;
-    ns1:habilitadoPor ns1:Parametro_MaxDMCovr ;
-    ns1:textoExtracto "Movimiento en vacío"@es .
-
-ns1:Parametro_MaxDMCovr a ns1:Parametro ;
-    rdfs:label "Parámetro máquina MAXDMCOVR"@es ;
-    ns1:identificador "MAXDMCOVR" ;
-    ns1:textoExtracto "override máximo (parámetro máquina MAXDMCOVR)"@es .
+ns1:SeHaIntentadoActivarElDMCEnUnCabezalQueNoTienePermisoParaEllo a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha intentado activar el DMC en un cabezal que no tiene permiso para ello" ;
+    ns1:textoExtracto "#DMC ON:El cabezal master debe tener el parámetro DMCSPDL = Sí DETECCIÓN Durante la ejecución. CAUSA Se ha intentado activar el DMC en un cabezal que no tiene permiso para ello." .
 

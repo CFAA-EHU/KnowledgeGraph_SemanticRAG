@@ -1,66 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Herramienta_RelojComparador a ns1:Herramienta ;
-    rdfs:label "Reloj comparador" ;
-    ns1:requiereMantenimiento ns1:ComponenteMecanico_CabezalAngular ;
-    ns1:textoExtracto "desplazar la mesa en el eje X hasta que el reloj y el cilindro se toquen en el punto 1." .
+ns1:CNC8070_8438047ee2 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC puede tener configurados dos palpadores." ;
+    ns1:tieneComponente ns1:ComponenteElectrico_93ac2dff2a .
 
-ns1:Parametro_DeltaX a ns1:Parametro ;
-    rdfs:label "ΔX" ;
-    ns1:identificador "ΔX" ;
-    ns1:textoExtracto "ΔX | Cota que indica el CNC." .
-
-ns1:Parametro_TDATA1 a ns1:Parametro ;
-    rdfs:label "TDATA1" ;
-    ns1:identificador "TDATA1" ;
-    ns1:textoExtracto "TDATA1 | Dimensión a calcular." .
-
-ns1:Parametro_TDATA5 a ns1:Parametro ;
-    rdfs:label "TDATA5" ;
+ns1:DistanciaEntreElEjeRotativoSecundarioYElPrincipal a ns1:Parametro ;
+    rdfs:label "Distancia entre el eje rotativo secundario y el principal" ;
     ns1:identificador "TDATA5" ;
-    ns1:textoExtracto "TDATA5 | Dimensión a calcular." .
+    ns1:textoExtracto "TDATA5 Indica la distancia entre el eje rotativo secundario y el principal." .
 
-ns1:Parametro_TDATA6 a ns1:Parametro ;
-    rdfs:label "TDATA6" ;
-    ns1:identificador "TDATA6" ;
-    ns1:monitoreaParametro ns1:ComponenteMecanico_CabezalAngular ;
-    ns1:textoExtracto "Cálculo del parámetro TDATA6." .
+ns1:PosicionDelEjeRotativoSecundarioSegunElEjeX a ns1:Parametro ;
+    rdfs:label "Posición del eje rotativo secundario según el eje X" ;
+    ns1:identificador "TDATA2" ;
+    ns1:textoExtracto "TDATA2 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje X." .
 
-ns1:Parametro_Xa a ns1:Parametro ;
-    rdfs:label "Xa" ;
-    ns1:identificador "Xa" ;
-    ns1:monitoreaParametro ns1:ComponenteMecanico_Cilindro ;
-    ns1:textoExtracto "Apuntar la cota que aparece en el CNC (Xa)." .
+ns1:PosicionDelEjeRotativoSecundarioSegunElEjeY a ns1:Parametro ;
+    rdfs:label "Posición del eje rotativo secundario según el eje Y" ;
+    ns1:identificador "TDATA3" ;
+    ns1:textoExtracto "TDATA3 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje Y." .
 
-ns1:Parametro_Xb a ns1:Parametro ;
-    rdfs:label "Xb" ;
-    ns1:identificador "Xb" ;
-    ns1:monitoreaParametro ns1:ComponenteMecanico_Cilindro ;
-    ns1:textoExtracto "Apuntar la cota que aparece en el CNC (Xb)." .
+ns1:PosicionDelEjeRotativoSecundarioSegunElEjeZ a ns1:Parametro ;
+    rdfs:label "Posición del eje rotativo secundario según el eje Z" ;
+    ns1:identificador "TDATA4" ;
+    ns1:textoExtracto "TDATA4 Indica la posición del eje rotativo secundario o la intersección con el eje primario según el eje Z." .
 
-ns1:Parametro_Xm a ns1:Parametro ;
-    rdfs:label "Xm" ;
-    ns1:identificador "Xm" ;
-    ns1:monitoreaParametro ns1:ComponenteMecanico_CabezalAngular ;
-    ns1:textoExtracto "X = 0,5·(Xa + Xb)" .
+ns1:TipoDeCinematica_be1d346f12 a ns1:Parametro ;
+    rdfs:label "Tipo de cinemática" ;
+    ns1:identificador "TYPE" ;
+    ns1:textoExtracto "parámetro TYPE con valor ꞏ9ꞏ." ;
+    ns1:valor "9"^^xsd:string .
 
-ns1:Tabla_ParametrosCalculoCabezal a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros para cálculo del cabezal angular" ;
-    ns1:ilustradoEn ns1:ComponenteMecanico_CabezalAngular ;
-    ns1:textoExtracto "TDATA2 = 0,5·ΔX – TDATA5 [...] TDATA6 = 2·(Xm – TDATA1)" .
-
-ns1:Sistema_EjesRotativos a ns1:Sistema ;
-    rdfs:label "Ejes rotativos B y C" ;
-    ns1:textoExtracto "Posicionar los ejes rotativos B y C en 0º." .
-
-ns1:ComponenteMecanico_Cilindro a ns1:ComponenteMecanico ;
-    rdfs:label "Cilindro" ;
-    ns1:textoExtracto "el reloj y el cilindro se toquen en el punto 1." .
-
-ns1:ComponenteMecanico_CabezalAngular a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal angular" ;
-    ns1:textoExtracto "Cálculo de las dimensiones con ayuda de un reloj [...] cabezal." ;
-    ns1:tieneComponente ns1:ComponenteMecanico_Cilindro,
-        ns1:Sistema_EjesRotativos .
+ns1:ComponenteElectrico_93ac2dff2a a ns1:ComponenteElectrico ;
+    rdfs:label "Palpador 1",
+        "Palpador 2" ;
+    ns1:textoExtracto "El CNC puede tener configurados dos palpadores." .
 

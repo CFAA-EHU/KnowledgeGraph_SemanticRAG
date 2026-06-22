@@ -1,42 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Funcion_G101 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G101 (offset de eje)" ;
-    ns1:identificador "G101" ;
-    ns1:monitoreaParametro ns1:Alarma_1008 ;
-    ns1:textoExtracto "La función G101 intenta incluir en el eje un offset demasiado grande." .
+ns1:CNC8070_81006e6c03 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:monitoreaParametro ns1:EstadoDeLaBateria ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Funcion_G4 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G4 (tiempo de espera)" ;
-    ns1:identificador "G4" ;
-    ns1:monitoreaParametro ns1:Alarma_1009 ;
-    ns1:textoExtracto "la función G4 tiene programado dos veces el tiempo de espera" .
+ns1:CorteEnLaRedPCAlimentadoConBateria_0e0c05230a a ns1:DiagnosticoFallo ;
+    rdfs:label "Corte en la red. PC alimentado con batería" ;
+    ns1:textoExtracto "'Corte en la red. PC alimentado con batería'" .
 
-ns1:Parametro_K a ns1:Parametro ;
-    rdfs:label "Parámetro K (tiempo de espera en G4)" ;
-    ns1:monitoreaParametro ns1:Alarma_1009 ;
-    ns1:textoExtracto "el parámetro K" .
+ns1:DejarQueElCNC a ns1:AccionProhibida ;
+    rdfs:label "Dejar que el CNC" ;
+    ns1:textoExtracto "Tanto si el corte es fortuito como provocado por el usuario, dejar que el CNC" .
 
-ns1:AccionProhibida_DuplicacionTiempoEspera a ns1:AccionProhibida ;
-    rdfs:label "Programar dos veces el tiempo de espera en G4" ;
-    ns1:textoExtracto "En el mismo bloque, la función G4 tiene programado dos veces el tiempo de espera, directamente con un número y con el parámetro K." .
+ns1:PongaseEnContactoConSuProveedor_e9bef4328b a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con su proveedor." ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con su proveedor." .
 
-ns1:AccionProhibida_ProgramacionIncorrecta a ns1:AccionProhibida ;
-    rdfs:label "Programar cotas u offsets excesivos en ejes" ;
-    ns1:textoExtracto "La cota programada para el eje es demasiado grande. La función G101 intenta incluir en el eje un offset demasiado grande." .
-
-ns1:Alarma_1008 a ns1:Alarma ;
-    rdfs:label "Alarma 1008: Coordenadas fuera de rango" ;
-    ns1:identificador "1008" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_ProgramacionIncorrecta ;
-    ns1:textoExtracto "1008 'Coordenadas fuera de rango' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • La cota programada para el eje es demasiado grande. • La función G101 intenta incluir en el eje un offset demasiado grande. SOLUCIÓN Revisar la programación." .
-
-ns1:Alarma_1009 a ns1:Alarma ;
-    rdfs:label "Alarma 1009: Tiempo de espera duplicado en G4" ;
-    ns1:identificador "1009" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_DuplicacionTiempoEspera ;
-    ns1:textoExtracto "1009 'G4: se ha programado dos veces el tiempo de espera, directamente y mediante K' DETECCIÓN Durante la ejecución. CAUSA En el mismo bloque, la función G4 tiene programado dos veces el tiempo de espera, directamente con un número y con el parámetro K. SOLUCIÓN Programar una única vez el tiempo de espera de la función" .
+ns1:EstadoDeLaBateria a ns1:Parametro ;
+    rdfs:label "estado de la batería" ;
+    ns1:textoExtracto "DETECCIÓN Al leer el estado de la batería." .
 

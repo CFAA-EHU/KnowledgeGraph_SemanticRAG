@@ -1,25 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaTandem_573_574 a ns1:Sistema ;
-    rdfs:label "Sistema de cabezales tándem" ;
-    ns1:controla ns1:ParametroDistribucionPar_573 ;
-    ns1:textoExtracto "Consideraciones para cabezales tándem. [...] La distribución del par establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem." ;
-    ns1:tieneComponente ns1:MotorEsclavo_573,
-        ns1:MotorMaestro_573 .
+ns1:SistemaControlTandem a ns1:Sistema ;
+    rdfs:label "Sistema de control del tándem" ;
+    ns1:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo." ;
+    ns1:tieneComponente ns1:ControlTandem,
+        ns1:EjeTandemEsclavo,
+        ns1:EjeTandemMaestro,
+        ns1:LazoPosicion,
+        ns1:LazoVelocidad,
+        ns1:SistemaControlNumerico .
 
-ns1:MotorEsclavo_573 a ns1:ComponenteElectrico ;
-    rdfs:label "Motor del cabezal esclavo (tándem)" ;
-    ns1:monitoreaParametro ns1:ParametroDistribucionPar_573 ;
-    ns1:textoExtracto "El PLC deba habilitar y deshabilitar las señales SPENA(axis) y DRENA(axis) de los cabezales maestro y esclavo simultáneamente." .
+ns1:ControlTandem a ns1:Sistema ;
+    rdfs:label "Control de Tándem" ;
+    ns1:textoExtracto "El control de tándem modifica la consigna de velocidad del eje maestro y del eje esclavo en función de la distribución de par y la precarga seleccionada." .
 
-ns1:MotorMaestro_573 a ns1:ComponenteElectrico ;
-    rdfs:label "Motor del cabezal maestro (tándem)" ;
-    ns1:monitoreaParametro ns1:ParametroDistribucionPar_573 ;
-    ns1:textoExtracto "El PLC deba habilitar y deshabilitar las señales SPENA(axis) y DRENA(axis) de los cabezales maestro y esclavo simultáneamente." .
+ns1:EjeTandemEsclavo a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Tándem Esclavo" ;
+    ns1:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo." .
 
-ns1:ParametroDistribucionPar_573 a ns1:Parametro ;
-    rdfs:label "Distribución del par en tándem" ;
-    ns1:textoExtracto "La distribución del par establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem." ;
-    ns1:valor "Porcentaje de par por motor (ejemplo: 50%-50%)" .
+ns1:EjeTandemMaestro a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Tándem Maestro" ;
+    ns1:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo." .
+
+ns1:LazoPosicion a ns1:Sistema ;
+    rdfs:label "Lazo de Posición" ;
+    ns1:textoExtracto "El lazo de posición se cierra únicamente con la posición del eje maestro del tándem." .
+
+ns1:LazoVelocidad a ns1:Sistema ;
+    rdfs:label "Lazo de Velocidad" ;
+    ns1:textoExtracto "La consigna de velocidad del eje tándem maestro se envía también al eje esclavo del tándem cerrando el lazo de velocidad." .
+
+ns1:SistemaControlNumerico a ns1:Sistema ;
+    rdfs:label "Sistema Control Numérico" ;
+    ns1:textoExtracto "En el diagrama de bloques aparece una zona correspondiente al regulador y otra al control numérico, que engloba el lazo de posición y el control del tándem." .
 

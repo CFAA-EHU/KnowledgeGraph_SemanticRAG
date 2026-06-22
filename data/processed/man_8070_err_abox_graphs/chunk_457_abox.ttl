@@ -1,66 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Aviso_ConflictoEjeEsclavo_2409 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 2409: Conflicto en eje esclavo LASER FOLLOW AXIS"@es ;
-    ns1:identificador "2409" ;
-    ns1:mitigaRiesgo ns1:Parametro_LASERFOLLOWAXIS ;
-    ns1:textoExtracto "2409 No se puede programar el eje esclavo \"LASER FOLLOW AXIS\". DETECCIÓN Durante la preparación de bloques. CAUSA El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS. SOLUCIÓN No programar el eje esclavo de #FOLLOW [MASTER]."@es .
+ns1:ModificacionDelIndiceConGAPCTRLActivo a ns1:AccionProhibida ;
+    rdfs:label "Modificación del índice con #GAPCTRL activo" ;
+    ns1:textoExtracto "No es posible modificar la posición de los ejes en el canal con el control de gap activo." .
 
-ns1:Aviso_Incompatibilidad_2408 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 2408: Incompatibilidad de comandos #LEAP, #GAPCTRL y #SWTOUT"@es ;
-    ns1:identificador "2408" ;
-    ns1:mitigaRiesgo ns1:Comando_GAPCTRL,
-        ns1:Comando_LEAP,
-        ns1:Comando_SWTOUT ;
-    ns1:textoExtracto "2408 #LEAP, #GAPCTRL ON #SWTOUT ON: Los tres comandos no pueden estar activos. DETECCIÓN Durante la preparación de bloques. CAUSA Los comandos #LEAP, #GAPCTRL ON y #SWTOUT ON no pueden estar activos simultáneamente. SOLUCIÓN Desactivar uno de los otros dos comandos activos."@es .
+ns1:MovimientoDeEjeConGAPCTRLActivo a ns1:AccionProhibida ;
+    rdfs:label "Movimiento de eje con #GAPCTRL activo" ;
+    ns1:textoExtracto "Se ha intentado mover en MDI un eje que está siendo controlado mediante el comando #GAPCTRL." .
 
-ns1:Parametro_FMAX a ns1:Parametro ;
-    rdfs:label "Parámetro FMAX (frecuencia máxima)"@es ;
-    ns1:identificador "FMAX" ;
-    ns1:monitoreaParametro ns1:Comando_PWRCTRL ;
-    ns1:textoExtracto "<,FMAXvalue>"@es .
+ns1:Parametro_bcc326b219 a ns1:Parametro ;
+    rdfs:label "Parámetro máquina GAPCTRLCANCEL" ;
+    ns1:identificador "GAPCTRLCANCEL" ;
+    ns1:textoExtracto "Si el parámetro máquina GAPCTRLCANCEL tiene valor \"NO\", el eje sigue controlado después de acabar el programa o tras un reset." .
 
-ns1:Parametro_FMIN a ns1:Parametro ;
-    rdfs:label "Parámetro FMIN (frecuencia mínima)"@es ;
-    ns1:identificador "FMIN" ;
-    ns1:monitoreaParametro ns1:Comando_PWRCTRL ;
-    ns1:textoExtracto "<,FMINvalue>"@es .
+ns1:SolucionDelError2404 a ns1:TareaMantenimiento ;
+    rdfs:label "Solución del error 2404" ;
+    ns1:solucionaFallo ns1:FalloError2404 ;
+    ns1:textoExtracto "No es posible modificar la posición de los ejes en el canal con el control de gap activo." .
 
-ns1:Parametro_OVRMAX a ns1:Parametro ;
-    rdfs:label "Parámetro OVRMAX (valor máximo de override)"@es ;
-    ns1:identificador "OVRMAX" ;
-    ns1:monitoreaParametro ns1:Comando_PWRCTRL ;
-    ns1:textoExtracto "<,OVRMAXvalue>"@es .
+ns1:SolucionDelError2405 a ns1:TareaMantenimiento ;
+    rdfs:label "Solución del error 2405" ;
+    ns1:solucionaFallo ns1:FalloError2405 ;
+    ns1:textoExtracto "Programar #GAPCTRL OFF." .
 
-ns1:Parametro_OVRMIN a ns1:Parametro ;
-    rdfs:label "Parámetro OVRMIN (valor mínimo de override)"@es ;
-    ns1:identificador "OVRMIN" ;
-    ns1:monitoreaParametro ns1:Comando_PWRCTRL ;
-    ns1:textoExtracto "<,OVRMINvalue>"@es .
+ns1:FalloError2404 a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha alterado el índice en el canal del eje controlado" ;
+    ns1:textoExtracto "DETECCIÓN Durante la preparación de bloques." .
 
-ns1:Comando_GAPCTRL a ns1:Parametro ;
-    rdfs:label "Control del gap (#GAPCTRL)"@es ;
-    ns1:identificador "#GAPCTRL" ;
-    ns1:textoExtracto "Anular el control del gap (#GAPCTRL OFF). [...] Los comandos #LEAP, #GAPCTRL ON y #SWTOUT ON no pueden estar activos simultáneamente."@es .
-
-ns1:Comando_LEAP a ns1:Parametro ;
-    rdfs:label "Comando #LEAP"@es ;
-    ns1:identificador "#LEAP" ;
-    ns1:textoExtracto "Los comandos #LEAP, #GAPCTRL ON y #SWTOUT ON no pueden estar activos simultáneamente."@es .
-
-ns1:Comando_SWTOUT a ns1:Parametro ;
-    rdfs:label "Comando #SWTOUT"@es ;
-    ns1:identificador "#SWTOUT" ;
-    ns1:textoExtracto "Los comandos #LEAP, #GAPCTRL ON y #SWTOUT ON no pueden estar activos simultáneamente."@es .
-
-ns1:Parametro_LASERFOLLOWAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro máquina LASERFOLLOWAXIS"@es ;
-    ns1:identificador "LASERFOLLOWAXIS" ;
-    ns1:textoExtracto "El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS."@es .
-
-ns1:Comando_PWRCTRL a ns1:Parametro ;
-    rdfs:label "Comando #PWRCTRL"@es ;
-    ns1:identificador "#PWRCTRL" ;
-    ns1:textoExtracto "#PWRCTRL ON/OFF [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>]. DETECCIÓN Durante la edición y ejecución."@es .
+ns1:FalloError2405 a ns1:DiagnosticoFallo ;
+    rdfs:label "Bloque de movimiento anulado por tener un eje con #GAPCTRL" ;
+    ns1:textoExtracto "DETECCIÓN Durante la inspección de herramienta o modo MDI." .
 

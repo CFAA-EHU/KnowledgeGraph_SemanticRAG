@@ -1,30 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1880 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cajera con islas: No existe T de semiacabado" ;
-    ns1:documentadoEn ns1:Tabla_Herramientas ;
-    ns1:identificador "1880" ;
-    ns1:solucionaFallo ns1:Herramienta_Semiacabado ;
-    ns1:textoExtracto "1880 'Cajera con islas: No existe T de semiacabado' DETECCIÓN Durante la ejecución del ciclo. CAUSA La herramienta programada no existe en la tabla de herramientas. SOLUCIÓN Definir la herramienta en la tabla o seleccionar otra herramienta." .
+ns1:CotasMaximasDelPalpador a ns1:Parametro ;
+    rdfs:label "Cotas máximas del palpador" ;
+    ns1:textoExtracto "Los parámetros U V W hacen referencia a las cotas máximas." .
 
-ns1:Fallo_1881 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cajera con islas: F de semiacabado no válida" ;
-    ns1:documentadoEn ns1:Tabla_Herramientas ;
-    ns1:identificador "1881" ;
-    ns1:textoExtracto "1881 'Cajera con islas: F de semiacabado no válida' DETECCIÓN" .
+ns1:CotasMinimasDelPalpador a ns1:Parametro ;
+    rdfs:label "Cotas mínimas del palpador" ;
+    ns1:textoExtracto "Alguno de los parámetros X Y Z es mayor que su correspondiente parámetro U V W. Los parámetros X Y Z hacen referencia a las cotas mínimas del palpador." .
 
-ns1:Parametro_RadioHerramienta a ns1:Parametro ;
-    rdfs:label "Radio de la herramienta de semiacabado" ;
-    ns1:monitoreaParametro ns1:Herramienta_Semiacabado ;
-    ns1:textoExtracto "El radio de la herramienta de semiacabado tiene valor 0 o es demasiado grande para la geometría de la cajera." ;
-    ns1:valor "0" .
+ns1:DefinirLaHerramientaEnLaTablaOSeleccionarOtraHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Definir la herramienta en la tabla o seleccionar otra herramienta" ;
+    ns1:solucionaFallo ns1:NoExisteTDeDesbasteEnCajeraConIslas ;
+    ns1:textoExtracto "SOLUCIÓN Definir la herramienta en la tabla o seleccionar otra herramienta." .
 
-ns1:Herramienta_Semiacabado a ns1:Herramienta ;
-    rdfs:label "Herramienta de semiacabado" ;
-    ns1:textoExtracto "El radio de la herramienta de semiacabado tiene valor 0 o es demasiado grande para la geometría de la cajera." .
+ns1:DefinirLaPosicionDelPalpadorCorrectamente a ns1:TareaMantenimiento ;
+    rdfs:label "Definir la posición del palpador correctamente" ;
+    ns1:solucionaFallo ns1:DefinirLaPosicionDelPalpadorIncorrectamente ;
+    ns1:textoExtracto "SOLUCIÓN Definir la posición del palpador de manera que U > X, V > Y, W > Z." .
 
-ns1:Tabla_Herramientas a ns1:Tabla ;
-    rdfs:label "Tabla de herramientas" ;
-    ns1:textoExtracto "La herramienta programada no existe en la tabla de herramientas. SOLUCIÓN Definir la herramienta en la tabla o seleccionar otra herramienta." .
+ns1:DefinirLaPosicionDelPalpadorIncorrectamente a ns1:AccionProhibida ;
+    rdfs:label "Definir la posición del palpador incorrectamente" ;
+    ns1:textoExtracto "Alguno de los parámetros X Y Z es mayor que su correspondiente parámetro U V W." .
+
+ns1:NoExisteTDeDesbasteEnCajeraConIslas a ns1:DiagnosticoFallo ;
+    rdfs:label "No existe T de desbaste en cajera con islas" ;
+    ns1:textoExtracto "'Cajera con islas: No existe T de desbaste'" .
 

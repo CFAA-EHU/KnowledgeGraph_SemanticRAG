@@ -1,44 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Alarma_1457 a ns1:Alarma ;
-    rdfs:label "Alarma #POLY: Valor de parámetro no válido" ;
-    ns1:identificador "#POLY" ;
-    ns1:monitoreaParametro ns1:Parametro_InterpolacionPolinomio_1457,
-        ns1:Parametro_RadioCurvatura_1457 ;
-    ns1:textoExtracto "'#POLY: Valor de parámetro no válido' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • Los parámetros de interpolación del polinomio no son correctos. • El radio de curvatura es menor o igual que cero. SOLUCIÓN Los parámetros de interpolación del polinomio deben ser positivos, el parámetro inicial de la interpolación (SP) debe ser menor que el parámetro final (EP) y el radio de curvatura debe ser mayor que cero." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:SentenciaPATHMalProgramada_7e325127e3 ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar la programación.'" .
 
-ns1:Alarma_1458 a ns1:Alarma ;
-    rdfs:label "Alarma #POLY: Demasiados ejes programados" ;
-    ns1:identificador "#POLY" ;
-    ns1:monitoreaParametro ns1:Parametro_EjesPolinomio_1458 ;
-    ns1:textoExtracto "'#POLY: Demasiados ejes programados' DETECCIÓN Durante la ejecución. CAUSA Hay más de tres ejes en el polinomio. SOLUCIÓN En la interpolación polinómica sólo pueden intervenir tres ejes." .
+ns1:SobrepasarLimites a ns1:AccionProhibida ;
+    rdfs:label "Sobrepasar límites" ;
+    ns1:mitigaRiesgo ns1:CNC8070_13bc2a2ad2 ;
+    ns1:textoExtracto "'Colocar la herramienta perpendicular al plano activo implica sobrepasar los límites.'" .
 
-ns1:Alarma_1459 a ns1:Alarma ;
-    rdfs:label "Alarma #POLY: Punto inicial no válido" ;
-    ns1:identificador "#POLY" ;
-    ns1:textoExtracto "'#POLY: Punto inicial no válido' DETECCIÓN Durante la ejecución." .
+ns1:UtilizarCabezalAngular a ns1:AccionProhibida ;
+    rdfs:label "Utilizar cabezal angular" ;
+    ns1:mitigaRiesgo ns1:CNC8070_13bc2a2ad2 ;
+    ns1:textoExtracto "'El tipo de cabezal no permite colocar la herramienta perpendicular al plano, como puede ser el caso de los cabezales angulares.'" .
 
-ns1:Parametro_EP_1457 a ns1:Parametro ;
-    rdfs:label "Parámetro final de interpolación (EP)" ;
-    ns1:textoExtracto "el parámetro inicial de la interpolación (SP) debe ser menor que el parámetro final (EP)" .
+ns1:ValorDeVariableVGTOOLORIF1 a ns1:Parametro ;
+    rdfs:label "Valor de variable V.G.TOOLORIF1" ;
+    ns1:textoExtracto "'El valor de la variable V.G.TOOLORIF1 o V.G.TOOLORIF2 no es válido porque el CNC no puede colocar la herramienta perpendicular al plano activo.'" .
 
-ns1:Parametro_SP_1457 a ns1:Parametro ;
-    rdfs:label "Parámetro inicial de interpolación (SP)" ;
-    ns1:textoExtracto "el parámetro inicial de la interpolación (SP) debe ser menor que el parámetro final (EP)" .
+ns1:ValorDeVariableVGTOOLORIF2 a ns1:Parametro ;
+    rdfs:label "Valor de variable V.G.TOOLORIF2" ;
+    ns1:textoExtracto "'El valor de la variable V.G.TOOLORIF1 o V.G.TOOLORIF2 no es válido porque el CNC no puede colocar la herramienta perpendicular al plano activo.'" .
 
-ns1:Parametro_EjesPolinomio_1458 a ns1:Parametro ;
-    rdfs:label "Número de ejes en interpolación polinómica" ;
-    ns1:textoExtracto "Hay más de tres ejes en el polinomio. [...] sólo pueden intervenir tres ejes." ;
-    ns1:valor 3 .
+ns1:VariableInexistenteParaElTipoDeEje_0d61aa8836 a ns1:AccionProhibida ;
+    rdfs:label "Variable inexistente para el tipo de eje" ;
+    ns1:textoExtracto "'1451 'Variable inexistente para el tipo de eje''" .
 
-ns1:Parametro_InterpolacionPolinomio_1457 a ns1:Parametro ;
-    rdfs:label "Parámetro de interpolación polinómica" ;
-    ns1:textoExtracto "Los parámetros de interpolación del polinomio no son correctos. [...] Los parámetros de interpolación del polinomio deben ser positivos, el parámetro inicial de la interpolación (SP) debe ser menor que el parámetro final (EP)" .
+ns1:SentenciaPATHMalProgramada_7e325127e3 a ns1:DiagnosticoFallo ;
+    rdfs:label "Sentencia #PATH mal programada" ;
+    ns1:textoExtracto "'1449 'Sentencia #PATH mal programada''" .
 
-ns1:Parametro_RadioCurvatura_1457 a ns1:Parametro ;
-    rdfs:label "Radio de curvatura" ;
-    ns1:textoExtracto "El radio de curvatura es menor o igual que cero. [...] el radio de curvatura debe ser mayor que cero." ;
-    ns1:valor "0.0"^^xsd:float .
+ns1:CNC8070_13bc2a2ad2 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "'el CNC no puede colocar la herramienta perpendicular al plano activo.'" .
 

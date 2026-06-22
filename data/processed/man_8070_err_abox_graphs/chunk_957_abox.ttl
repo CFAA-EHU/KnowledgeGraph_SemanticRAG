@@ -1,68 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comprobacion_Conexion_Tierra a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobación de conexiones de tierra en el armario" ;
-    ns1:solucionaFallo ns1:Error_9528 ;
-    ns1:textoExtracto "Comprobar las conexiones de tierra en el armario (ruido eléctrico sobre las señales)" .
+ns1:CaptacionRecibidaSenalDeAlarma a ns1:AvisoSeguridad ;
+    rdfs:label "Captación:Recibida señal de alarma" ;
+    ns1:textoExtracto "9519 Captación:Recibida señal de alarma." .
 
-ns1:Comprobacion_Eje_Inmovil a ns1:TareaMantenimiento ;
-    rdfs:label "Verificación de inmovilidad del eje durante arranque" ;
-    ns1:solucionaFallo ns1:Error_9528 ;
-    ns1:textoExtracto "Comprobar que el eje no se mueve durante el arranque o inicialización del módulo ABSIND" .
+ns1:CaptacionSobrecorrienteOCortocircuito a ns1:AvisoSeguridad ;
+    rdfs:label "Captación:Sobrecorriente o cortocircuito" ;
+    ns1:mitigaRiesgo ns1:RevisarElConexionadoYElNivelDeLasSenalesProporcionadasPorElCaptador ;
+    ns1:textoExtracto "9518 Captación:Sobrecorriente o cortocircuito." .
 
-ns1:Empresa_FagorAutomation a ns1:Empresa ;
-    rdfs:label "Fagor Automation" ;
-    ns1:textoExtracto "póngase en contacto con Fagor Automation" .
+ns1:RevisarElNivelDeLasSenalesProporcionadasPorElCaptador a ns1:AccionProhibida ;
+    rdfs:label "Revisar el nivel de las señales proporcionadas por el captador" ;
+    ns1:solucionaFallo ns1:SeHaProducidoUnCortocircuitoOSeEstaSobrealimentandoElCaptador ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el nivel de las señales proporcionadas por el captador." .
 
-ns1:Software_Ajuste_ABSIND a ns1:InterfazUsuario ;
-    rdfs:label "Software de ajuste del módulo ABSIND" ;
-    ns1:controla ns1:Parametro_Ganancia_Fase ;
-    ns1:textoExtracto "software de ajuste" .
+ns1:RevisarElConexionadoYElNivelDeLasSenalesProporcionadasPorElCaptador a ns1:AccionProhibida ;
+    rdfs:label "Revisar el conexionado y el nivel de las señales proporcionadas por el captador" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el conexionado y el nivel de las señales proporcionadas por el captador." .
 
-ns1:Solucion_Sustitucion_Modulo_Cable a ns1:TareaMantenimiento ;
-    rdfs:label "Sustitución del módulo ABSIND y/o cable asociado" ;
-    ns1:requiereMantenimiento ns1:Cable_Inductosyn,
-        ns1:Modulo_ABSIND ;
-    ns1:solucionaFallo ns1:Error_9527,
-        ns1:Error_9528,
-        ns1:Error_Inductosyn_Alto ;
-    ns1:textoExtracto "pruebe a sustituir el módulo ABSIND y/o el cable asociado a esa captación" .
-
-ns1:Transductor_Inductosyn a ns1:Sensor ;
-    rdfs:label "Transductor inductosyn/resolver" ;
-    ns1:monitoreaParametro ns1:Parametro_Posicion_Eje ;
-    ns1:textoExtracto "transductor inductosyn/resolver" .
-
-ns1:Error_9527 a ns1:DiagnosticoFallo ;
-    rdfs:label "INDUCTOSYN: Señal GRAY no presente" ;
-    ns1:identificador "9527" ;
-    ns1:textoExtracto "9527 INDUCTOSYN:Señal GRAY no presente. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Nivel de la señal GRAY del transductor inductosyn/resolver ausente." .
-
-ns1:Error_Inductosyn_Alto a ns1:DiagnosticoFallo ;
-    rdfs:label "Señal inductosyn/resolver demasiado alto" ;
-    ns1:textoExtracto "inductosyn/resolver demasiado alto. SOLUCIÓN Las posibles soluciones son las siguientes: • Comprobar los valores de la ganancia y de fase del módulo ABSIND con el software de ajuste. • Comprobar el cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver." .
-
-ns1:Modulo_ABSIND a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo ABSIND" ;
-    ns1:monitoreaParametro ns1:Parametro_Ganancia_Fase ;
-    ns1:textoExtracto "módulo ABSIND" ;
-    ns1:tieneComponente ns1:Cable_Inductosyn .
-
-ns1:Parametro_Posicion_Eje a ns1:Parametro ;
-    rdfs:label "Posición del eje" ;
-    ns1:textoExtracto "posición leída durante la inicialización del módulo ABSIND" .
-
-ns1:Cable_Inductosyn a ns1:ComponenteElectrico ;
-    rdfs:label "Cable de conexión inductosyn/resolver" ;
-    ns1:textoExtracto "cable y la conexión entre el módulo ABSIND y el transductor inductosyn/resolver" .
-
-ns1:Parametro_Ganancia_Fase a ns1:Parametro ;
-    rdfs:label "Ganancia y fase del módulo ABSIND" ;
-    ns1:textoExtracto "valores de la ganancia y de fase del módulo ABSIND" .
-
-ns1:Error_9528 a ns1:DiagnosticoFallo ;
-    rdfs:label "INDUCTOSYN: Transductor no estable en Power-ON" ;
-    ns1:identificador "9528" ;
-    ns1:textoExtracto "9528 INDUCTOSYN:Transductor no estable en Power-ON. DETECCIÓN Durante el arranque del sistema. CAUSA La posición leída durante la inicialización del módulo ABSIND no es estable." .
+ns1:SeHaProducidoUnCortocircuitoOSeEstaSobrealimentandoElCaptador a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha producido un cortocircuito o se está sobrealimentando el captador" ;
+    ns1:textoExtracto "CAUSA Se ha producido un cortocircuito o se está sobrealimentando el captador." .
 

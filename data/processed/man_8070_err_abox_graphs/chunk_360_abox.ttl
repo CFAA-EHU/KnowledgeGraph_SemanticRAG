@@ -1,79 +1,84 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Herramienta_CajeraRectangular a ns1:Herramienta ;
-    rdfs:label "Herramienta para cajera rectangular" ;
-    ns1:textoExtracto "el diámetro de la herramienta" .
+ns1:AsignarUnValorCorrectoAlParametro_5b263b2972 a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar un valor correcto al parámetro" ;
+    ns1:solucionaFallo ns1:CajeraConIslasZDeSeguridadNoValida ;
+    ns1:textoExtracto "'Cajera con islas: Z de seguridad no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El plano de seguridad (parámetro Zs) se encuentra dentro SOLUCIÓN Asignar un valor correcto al parámetro." .
 
-ns1:Parametro_Delta a ns1:Parametro ;
-    rdfs:label "Parámetro δ (demasía de acabado lateral)" ;
-    ns1:solucionaFallo ns1:Fallo_1849 ;
-    ns1:textoExtracto "dos veces el parámetro δ" .
+ns1:ComprobarQueLaInterseccionDePerfilesEnXYSeaValida a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar que la intersección de perfiles en XY sea válida" ;
+    ns1:solucionaFallo ns1:CajeraConIslasInterseccionDePerfilesEnXYNoValida_80ee12955d ;
+    ns1:textoExtracto "'Cajera con islas: Intersección de perfiles en XY no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA Dos perfiles de superficie tienen algún tramo, recto o curvo, en común." .
 
-ns1:Parametro_I a ns1:Parametro ;
-    rdfs:label "Parámetro I (longitud de la cuerda)" ;
-    ns1:solucionaFallo ns1:Fallo_1846 ;
-    ns1:textoExtracto "la cuerda (parámetro I) es mayor que el diámetro del círculo" .
+ns1:ComprobarQueLosPerfilesDeProfundidadSonCorrectos a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar que los perfiles de profundidad son correctos" ;
+    ns1:solucionaFallo ns1:CajeraConIslasPerfilEnZNoValido ;
+    ns1:textoExtracto "'Cajera con islas: Perfil en Z no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún perfil de profundidad es cerrado o el ciclo no puede mecanizar algún perfil de profundidad con la herramienta programada." .
 
-ns1:Parametro_Ix a ns1:Parametro ;
-    rdfs:label "Parámetro Ix (distancia entre mecanizados en eje X)" ;
-    ns1:solucionaFallo ns1:Fallo_1850 ;
-    ns1:textoExtracto "distancia entre mecanizados (parámetro Ix)" .
+ns1:ComprobarQueLosPerfilesDeSuperficieNoSeCortanASiMismos a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar que los perfiles de superficie no se cortan a sí mismos" ;
+    ns1:solucionaFallo ns1:CajeraConIslasPerfilEnXYSeCortaASiMismo ;
+    ns1:textoExtracto "'Cajera con islas: Perfil en XY se corta a si mismo' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún perfil de superficie forma más de un perfil cerrado." .
 
-ns1:Parametro_Iy a ns1:Parametro ;
-    rdfs:label "Parámetro Iy (distancia entre mecanizados en eje Y)" ;
-    ns1:solucionaFallo ns1:Fallo_1851 ;
-    ns1:textoExtracto "Ly ha de ser múltiplo de Iy" .
+ns1:ComprobarQueTodosLosPerfilesDeSuperficieSeanCerrados_4f9e72a620 a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar que todos los perfiles de superficie sean cerrados" ;
+    ns1:solucionaFallo ns1:CajeraConIslasPerfilEnXYNoEsCerrado ;
+    ns1:textoExtracto "'Cajera con islas: Perfil en XY no es cerrado' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún perfil de superficie no es un perfil cerrado, sus puntos inicial y final no son el mismo." .
 
-ns1:Parametro_Lx a ns1:Parametro ;
-    rdfs:label "Parámetro Lx (longitud del mecanizado)" ;
-    ns1:solucionaFallo ns1:Fallo_1850 ;
-    ns1:textoExtracto "La longitud del mecanizado (parámetro Lx)" .
+ns1:DefinirLaLongitudDeCorteEnLaTablaDeHerramientas a ns1:TareaMantenimiento ;
+    rdfs:label "Definir la longitud de corte en la tabla de herramientas" ;
+    ns1:solucionaFallo ns1:DeltaZMayorQueLongitudDeCorteDeHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Programar el número de pasadas de profundización (parámetro N) o definir la longitud de corte en la tabla de herramientas." .
 
-ns1:Parametro_Ly a ns1:Parametro ;
-    rdfs:label "Parámetro Ly (longitud del mecanizado en eje Y)" ;
-    ns1:solucionaFallo ns1:Fallo_1851 ;
-    ns1:textoExtracto "Ly ha de ser múltiplo de Iy" .
+ns1:DemasiaDeAcabado a ns1:Parametro ;
+    rdfs:label "Demasía de acabado" ;
+    ns1:textoExtracto "'ACABADO: Delta z mayor que longitud de corte de herramienta' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro z (demasía de acabado en el fondo) supera la longitud de corte de la herramienta de acabado." .
 
-ns1:Parametro_Q_MOYU_Circular a ns1:Parametro ;
-    rdfs:label "Parámetro Q (material a eliminar, MOYU circular)" ;
-    ns1:solucionaFallo ns1:Fallo_1848 ;
-    ns1:textoExtracto "El parámetro Q (material a eliminar) tiene valor 0." ;
-    ns1:valor "0" .
+ns1:NumeroDePasadasDeProfundizacion_2de0e78c7f a ns1:Parametro ;
+    rdfs:label "Número de pasadas de profundización" ;
+    ns1:textoExtracto "SOLUCIÓN Programar el número de pasadas de profundización (parámetro N) o definir la longitud de corte en la tabla de herramientas." .
 
-ns1:Parametro_Q_MOYU_Rectangular a ns1:Parametro ;
-    rdfs:label "Parámetro Q (material a eliminar, MOYU rectangular)" ;
-    ns1:solucionaFallo ns1:Fallo_1847 ;
-    ns1:textoExtracto "El parámetro Q (material a eliminar) tiene valor 0." ;
-    ns1:valor "0" .
+ns1:PlanoDeSeguridad a ns1:Parametro ;
+    rdfs:label "Plano de seguridad" ;
+    ns1:textoExtracto "'Cajera con islas: Z de seguridad no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El plano de seguridad (parámetro Zs) se encuentra dentro SOLUCIÓN Asignar un valor correcto al parámetro." .
 
-ns1:Fallo_1846 a ns1:DiagnosticoFallo ;
-    rdfs:label "Radio del arco nulo" ;
-    ns1:identificador "1846" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución de un ciclo de mecanizado múltiple. CAUSA Las posibles causas son las siguientes: • En el perfil hay un tramo curvo con radio cero. • En un mecanizado múltiple en arco o circunferencia, ambas coordenadas del centro coinciden con el punto inicial. SOLUCIÓN Revisar la programación." .
+ns1:ProgramarElNumeroDePasadasDeProfundizacion a ns1:TareaMantenimiento ;
+    rdfs:label "Programar el número de pasadas de profundización" ;
+    ns1:solucionaFallo ns1:DeltaZMayorQueLongitudDeCorteDeHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Programar el número de pasadas de profundización (parámetro N) o definir la longitud de corte en la tabla de herramientas." .
 
-ns1:Fallo_1847 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU RECTANGULAR: Q = 0" ;
-    ns1:identificador "1847" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro Q (material a eliminar) tiene valor 0. SOLUCIÓN Asignar al parámetro un valor distinto de cero." .
+ns1:ProgramarUnaDemasiaDeAcabadoMenor a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una demasía de acabado menor" ;
+    ns1:solucionaFallo ns1:DeltaZMayorQueLongitudDeCorteDeHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Programar una demasía de acabado menor (parámetro z) o utilizar otra herramienta." .
 
-ns1:Fallo_1848 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU CIRCULAR: Q = 0" ;
-    ns1:identificador "1848" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro Q (material a eliminar) tiene valor 0. SOLUCIÓN Asignar al parámetro un valor distinto de cero." .
+ns1:UtilizarOtraHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Utilizar otra herramienta" ;
+    ns1:solucionaFallo ns1:DeltaZMayorQueLongitudDeCorteDeHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Programar una demasía de acabado menor (parámetro z) o utilizar otra herramienta." .
 
-ns1:Fallo_1849 a ns1:DiagnosticoFallo ;
-    rdfs:label "CAJERA RECTANGULAR: Demasía de acabado DELTA mayor que cajera" ;
-    ns1:identificador "1849" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El tamaño de la cajera menos el diámetro de la herramienta es menor que las demasías de acabado laterales (dos veces el parámetro δ). SOLUCIÓN Asignar un valor correcto al parámetro." .
+ns1:CajeraConIslasInterseccionDePerfilesEnXYNoValida_80ee12955d a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Intersección de perfiles en XY no válida" ;
+    ns1:textoExtracto "'Cajera con islas: Intersección de perfiles en XY no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA Dos perfiles de superficie tienen algún tramo, recto o curvo, en común." .
 
-ns1:Fallo_1850 a ns1:DiagnosticoFallo ;
-    rdfs:label "Lx ha de ser múltiplo de Ix" ;
-    ns1:identificador "1850" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución de un ciclo de mecanizado múltiple. CAUSA La longitud del mecanizado (parámetro Lx) ha de ser múltiplo de la distancia entre mecanizados (parámetro Ix). SOLUCIÓN Asignar un valor correcto a los parámetros." .
+ns1:CajeraConIslasPerfilEnXYNoEsCerrado a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Perfil en XY no es cerrado" ;
+    ns1:textoExtracto "'Cajera con Islas: Perfil en XY no es cerrado' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún perfil de superficie no es un perfil cerrado, sus puntos inicial y final no son el mismo." .
 
-ns1:Fallo_1851 a ns1:DiagnosticoFallo ;
-    rdfs:label "Ly ha de ser múltiplo de Iy" ;
-    ns1:identificador "1851" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución de un ciclo de mecanizado múltiple." .
+ns1:CajeraConIslasPerfilEnXYSeCortaASiMismo a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Perfil en XY se corta a si mismo" ;
+    ns1:textoExtracto "'Cajera con islas: Perfil en XY se corta a si mismo' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún perfil de superficie forma más de un perfil cerrado." .
+
+ns1:CajeraConIslasPerfilEnZNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Perfil en Z no válido" ;
+    ns1:textoExtracto "'Cajera con islas: Perfil en Z no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún perfil de profundidad es cerrado o el ciclo no puede mecanizar algún perfil de profundidad con la herramienta programada." .
+
+ns1:CajeraConIslasZDeSeguridadNoValida a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Z de seguridad no válida" ;
+    ns1:textoExtracto "'Cajera con islas: Z de seguridad no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El plano de seguridad (parámetro Zs) se encuentra dentro SOLUCIÓN Asignar un valor correcto al parámetro." .
+
+ns1:DeltaZMayorQueLongitudDeCorteDeHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "Delta z mayor que longitud de corte de herramienta" ;
+    ns1:textoExtracto "'ACABADO: Delta z mayor que longitud de corte de herramienta' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro z (demasía de acabado en el fondo) supera la longitud de corte de la herramienta de acabado." .
 

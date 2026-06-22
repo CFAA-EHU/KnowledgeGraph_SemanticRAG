@@ -1,75 +1,57 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_3745_Sensor a ns1:Sensor ;
-    rdfs:label "Sensor de sonda (Error 3745)" ;
-    ns1:monitoreaParametro ns1:Parametro_GAPAANAINID,
-        ns1:Parametro_GAPANAINTYPE ;
-    ns1:textoExtracto "No hay señal del sensor, a partir de la cual el CNC calcula la distancia." .
+ns1:AvisoSeguridad_1d1916af68 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para eje múltiple con comando en ejecución" ;
+    ns1:mitigaRiesgo ns1:FalloEjeMultipleConComandoEnEjecucion ;
+    ns1:textoExtracto "'Eje múltiple con un comando en el regulador en ejecución, SWITCH no permitido'" .
 
-ns1:Error_3747 a ns1:DiagnosticoFallo ;
-    rdfs:label "Hardware no compatible con SWT (Error 3747)" ;
-    ns1:identificador "3747" ;
-    ns1:textoExtracto "3747 Hardware no compatible con SWT. DETECCIÓN Durante la ejecución del corte en rejilla." .
+ns1:AvisoSeguridad_7f4e3b8140 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para TOUCHPROBE con flanco diferente" ;
+    ns1:mitigaRiesgo ns1:FalloTouchProbeFlancoDiferente ;
+    ns1:textoExtracto "'TOUCHPROBE: El flanco seleccionado se va a ignorar al ser diferente del activo'" .
 
-ns1:Parametro_ABSOFF a ns1:Parametro ;
-    rdfs:label "ABSOFF" ;
-    ns1:identificador "ABSOFF" ;
-    ns1:solucionaFallo ns1:Error_3746 ;
-    ns1:textoExtracto "Revisar los parámetros ABSOFF" .
+ns1:AvisoSeguridad_cb6473493a a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para refresco de contajes locales" ;
+    ns1:mitigaRiesgo ns1:FalloRefrescoContajesLocales ;
+    ns1:textoExtracto "Error en el refresco de contajes locales." .
 
-ns1:Parametro_GAPCOLLISION a ns1:Parametro ;
-    rdfs:label "GAPCOLLISION" ;
-    ns1:identificador "GAPCOLLISION" ;
-    ns1:textoExtracto "El PLC ha indicado mediante la marca GAPCOLLISION que se ha producido una colisión en el sensor." .
+ns1:AvisoSeguridad_f678b683cf a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para más de un eje del grupo múltiple activo" ;
+    ns1:mitigaRiesgo ns1:FalloMultiplesEjesActivos ;
+    ns1:textoExtracto "'No se permite más de un eje del grupo múltiple activo'" .
 
-ns1:Parametro_GAPCOLLISIONMODE a ns1:Parametro ;
-    rdfs:label "GAPCOLLISIONMODE" ;
-    ns1:identificador "GAPCOLLISIONMODE" ;
-    ns1:solucionaFallo ns1:Error_3745 ;
-    ns1:textoExtracto "el OEM tendrá que modificar el parámetro máquina GAPCOLLISIONMODE." .
+ns1:AvisoSeguridad_fe9813bb8c a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para desplazamiento no válido" ;
+    ns1:mitigaRiesgo ns1:FalloDesplazamientoNoValido ;
+    ns1:textoExtracto "'G174: Desplazamiento no válido, valor demasiado grande'" .
 
-ns1:Parametro_INPUTREV a ns1:Parametro ;
-    rdfs:label "INPUTREV" ;
-    ns1:identificador "INPUTREV" ;
-    ns1:solucionaFallo ns1:Error_3746 ;
-    ns1:textoExtracto "Revisar los parámetros INPUTREV" .
+ns1:TareaMantenimiento_ee2cf707a2 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de condición para desactivación del eje" ;
+    ns1:solucionaFallo ns1:FalloDesplazamientoNoValido,
+        ns1:FalloEjeMultipleConComandoEnEjecucion,
+        ns1:FalloMultiplesEjesActivos,
+        ns1:FalloRefrescoContajesLocales,
+        ns1:FalloTouchProbeFlancoDiferente ;
+    ns1:textoExtracto "condicionar la desactivación del eje a que éste se encuentre en posición; es decir, que no esté en movimiento." .
 
-ns1:Parametro_NPULSES a ns1:Parametro ;
-    rdfs:label "NPULSES" ;
-    ns1:identificador "NPULSES" ;
-    ns1:solucionaFallo ns1:Error_3746 ;
-    ns1:textoExtracto "Revisar los parámetros NPULSES" .
+ns1:FalloDesplazamientoNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de desplazamiento no válido" ;
+    ns1:textoExtracto "'G174: Desplazamiento no válido, valor demasiado grande'" .
 
-ns1:Parametro_OUTPUTREV a ns1:Parametro ;
-    rdfs:label "OUTPUTREV" ;
-    ns1:identificador "OUTPUTREV" ;
-    ns1:solucionaFallo ns1:Error_3746 ;
-    ns1:textoExtracto "Revisar los parámetros OUTPUTREV" .
+ns1:FalloEjeMultipleConComandoEnEjecucion a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de eje múltiple con comando en ejecución" ;
+    ns1:textoExtracto "'Eje múltiple con un comando en el regulador en ejecución, SWITCH no permitido'" .
 
-ns1:Parametro_PITCH a ns1:Parametro ;
-    rdfs:label "PITCH" ;
-    ns1:identificador "PITCH" ;
-    ns1:solucionaFallo ns1:Error_3746 ;
-    ns1:textoExtracto "Revisar los parámetros PITCH" .
+ns1:FalloMultiplesEjesActivos a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de más de un eje del grupo múltiple activo" ;
+    ns1:textoExtracto "'No se permite más de un eje del grupo múltiple activo'" .
 
-ns1:Error_3745 a ns1:DiagnosticoFallo ;
-    rdfs:label "Colisión de sonda (Error 3745)" ;
-    ns1:identificador "3745" ;
-    ns1:textoExtracto "3745 La sonda ha colisionado. DETECCIÓN Durante la ejecución. CAUSA El PLC ha indicado mediante la marca GAPCOLLISION que se ha producido una colisión en el sensor. SOLUCIÓN Para evitar la colisión con la chapa, disminuir el avance. Si el error continua, el OEM tendrá que modificar el parámetro máquina GAPCOLLISIONMODE." .
+ns1:FalloRefrescoContajesLocales a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el refresco de contajes locales" ;
+    ns1:textoExtracto "Error en el refresco de contajes locales." .
 
-ns1:Parametro_GAPAANAINID a ns1:Parametro ;
-    rdfs:label "GAPAANAINID" ;
-    ns1:identificador "GAPAANAINID" ;
-    ns1:textoExtracto "parámetros máquina relacionados con la sonda (GAPAANAINID)" .
-
-ns1:Parametro_GAPANAINTYPE a ns1:Parametro ;
-    rdfs:label "GAPANAINTYPE" ;
-    ns1:identificador "GAPANAINTYPE" ;
-    ns1:textoExtracto "parámetros máquina relacionados con la sonda (GAPANAINTYPE)" .
-
-ns1:Error_3746 a ns1:DiagnosticoFallo ;
-    rdfs:label "Posición inicial fuera de rango (Error 3746)" ;
-    ns1:identificador "3746" ;
-    ns1:textoExtracto "3746 Posición inicial fuera de rango. DETECCIÓN En el arranque o recuperación de la fase operativa del bus. CAUSA El CNC ha calculado una posición que excede el rango permitido. SOLUCIÓN Revisar los parámetros PITCH, NPULSES, INPUTREV, OUTPUTREV y ABSOFF." .
+ns1:FalloTouchProbeFlancoDiferente a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de TOUCHPROBE con flanco diferente" ;
+    ns1:textoExtracto "'TOUCHPROBE: El flanco seleccionado se va a ignorar al ser diferente del activo'" .
 

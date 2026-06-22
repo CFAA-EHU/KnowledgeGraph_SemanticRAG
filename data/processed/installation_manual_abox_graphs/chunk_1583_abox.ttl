@@ -1,83 +1,23 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Esquema_BusOpenPCS a ns1:Esquema ;
-    rdfs:label "Esquema lineal del bus OpenPCS"@es ;
-    ns1:ilustradoEn ns1:Interfaz_OpenPCS ;
-    ns1:textoExtracto "Se muestran iconos del CNC (Address=0), módulos de E/S remotas (Address=1,3,4) y dos 'Jog-Panel' (Address=2 y 5), dispuestos en un esquema lineal del bus. Incluye una relación 'Address → Elemento → Número de orden' que clarifica la jerarquía y la asociación física en el bus."@es .
+ns1:BastidorRIOW a ns1:ComponenteElectrico ;
+    rdfs:label "bastidor RIOW" ;
+    ns1:textoExtracto "Imagen 'Nodo 2 (RIOW)': bastidor RIOW con 64 entradas digitales, representado como dos bloques (24 y 40 entradas) iniciados en direcciones altas (I104 e I200)." .
 
-ns1:Entrada_Contaje_E21A a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de contaje E21A (TTL/SSI/EnDat)"@es ;
-    ns1:identificador "E21A" ;
-    ns1:textoExtracto "cuatro entradas de contaje (E21A–E21D) compatibles con TTL/TTL diferencial/Vpp y protocolos SSI/FeeDat/EnDat 2.1/2.2"@es .
+ns1:ChasisRIO5 a ns1:ComponenteElectrico ;
+    rdfs:label "chasis RIO5" ;
+    ns1:textoExtracto "Imagen 'Nodo 1 (RIO5)': chasis RIO5 con tres módulos de 24 entradas (24+48)." .
 
-ns1:Entrada_Contaje_E21B a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de contaje E21B (TTL/SSI/EnDat)"@es ;
-    ns1:identificador "E21B" ;
-    ns1:textoExtracto "cuatro entradas de contaje (E21A–E21D) compatibles con TTL/TTL diferencial/Vpp y protocolos SSI/FeeDat/EnDat 2.1/2.2"@es .
+ns1:InterfazUsuarioLantekExpertInside a ns1:InterfazUsuario ;
+    rdfs:label "Interfaz de Lantek Expert Inside" ;
+    ns1:textoExtracto "Captura de interfaz de Lantek Expert Inside mostrando el área principal de trabajo con lista de piezas y opciones de importación (DXF/DWG/paramétricas). Se aprecian botones de acceso rápido y una disposición orientada a uso táctil para cargar figuras y configurar material, espesor y dimensiones de chapa." .
 
-ns1:Entrada_Contaje_E21C a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de contaje E21C (TTL/SSI/EnDat)"@es ;
-    ns1:identificador "E21C" ;
-    ns1:textoExtracto "cuatro entradas de contaje (E21A–E21D) compatibles con TTL/TTL diferencial/Vpp y protocolos SSI/FeeDat/EnDat 2.1/2.2"@es .
+ns1:SistemaOPENPCSRemoto a ns1:Sistema ;
+    rdfs:label "Sistema OPENPCS Remoto" ;
+    ns1:textoExtracto "Se aprecia el formato de placa y conectividad, representando un único bloque lógico de 48 DI y uno de 32 DO, con mapeo desde las primeras direcciones (I1/O1)." .
 
-ns1:Entrada_Contaje_E21D a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de contaje E21D (TTL/SSI/EnDat)"@es ;
-    ns1:identificador "E21D" ;
-    ns1:textoExtracto "cuatro entradas de contaje (E21A–E21D) compatibles con TTL/TTL diferencial/Vpp y protocolos SSI/FeeDat/EnDat 2.1/2.2"@es .
-
-ns1:Esquema_JogKeys a ns1:Esquema ;
-    rdfs:label "Esquema de Teclas de Usuario (JOGKEYS)"@es ;
-    ns1:textoExtracto "Esquema compacto de 'Teclas de usuario' tratadas como teclas de jog. Se representa una banda de teclas numeradas (1, 2, …, 15, 16) bajo la leyenda 'JOGKEYS', indicando la posibilidad de asignarlas a ejes, sentidos (+/−) y función de rápido (R)."@es .
-
-ns1:Interfaz_JogPanel a ns1:InterfazUsuario ;
-    rdfs:label "Jog-Panel con teclas numeradas (1–15)"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_JogKeys ;
-    ns1:textoExtracto "Ilustración del teclado de jog con distribución de teclas numeradas (1–15) y ejemplo de mapeo de funciones para ejes y sentidos de desplazamiento (p. ej., X+, 7+)."@es ;
-    ns1:tieneComponente ns1:Tecla_Jog_1_15 .
-
-ns1:Interfaz_OpenPCS a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz OpenPCS Remoto con módulos y Jog-Panels"@es ;
-    ns1:textoExtracto "Se muestran iconos del CNC (Address=0), módulos de E/S remotas (Address=1,3,4) y dos 'Jog-Panel' (Address=2 y 5)."@es ;
-    ns1:tieneComponente ns1:JogPanel_Address2,
-        ns1:JogPanel_Address5,
-        ns1:Modulo_RCS_S_4F4AO .
-
-ns1:JogPanel_Address2 a ns1:InterfazUsuario ;
-    rdfs:label "Jog-Panel (Address=2)"@es ;
-    ns1:identificador "Address=2" ;
-    ns1:textoExtracto "dos 'Jog-Panel' (Address=2 y 5)."@es .
-
-ns1:JogPanel_Address5 a ns1:InterfazUsuario ;
-    rdfs:label "Jog-Panel (Address=5)"@es ;
-    ns1:identificador "Address=5" ;
-    ns1:textoExtracto "dos 'Jog-Panel' (Address=2 y 5)."@es .
-
-ns1:Modulo_RCS_S_4F4AO a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo RCS-S-4F4AO (4 entradas de contaje, 4 salidas analógicas)"@es ;
-    ns1:compuestoPor ns1:Entrada_Contaje_E21A,
-        ns1:Entrada_Contaje_E21B,
-        ns1:Entrada_Contaje_E21C,
-        ns1:Entrada_Contaje_E21D,
-        ns1:Salida_Analogica_I37A,
-        ns1:Salida_Analogica_I37B ;
-    ns1:identificador "RCS-S-4F4AO" ;
-    ns1:textoExtracto "Vista frontal del módulo RCS-S-4F4AO con llamadas a conectores y recursos: cuatro entradas de contaje (E21A–E21D) compatibles con TTL/TTL diferencial/Vpp y protocolos SSI/FeeDat/EnDat 2.1/2.2, y cuatro salidas analógicas ±10 V de 16 bits (I37A/I37B)."@es .
-
-ns1:Salida_Analogica_I37A a ns1:ComponenteElectrico ;
-    rdfs:label "Salida analógica I37A (±10V, 16 bits)"@es ;
-    ns1:identificador "I37A" ;
-    ns1:textoExtracto "cuatro salidas analógicas ±10 V de 16 bits (I37A/I37B)."@es ;
-    ns1:valor "±10 V / 16 bits" .
-
-ns1:Salida_Analogica_I37B a ns1:ComponenteElectrico ;
-    rdfs:label "Salida analógica I37B (±10V, 16 bits)"@es ;
-    ns1:identificador "I37B" ;
-    ns1:textoExtracto "cuatro salidas analógicas ±10 V de 16 bits (I37A/I37B)."@es ;
-    ns1:valor "±10 V / 16 bits" .
-
-ns1:Tecla_Jog_1_15 a ns1:ComponenteElectrico ;
-    rdfs:label "Teclas de Jog numeradas (1–15) con mapeo de ejes/sentidos"@es ;
-    ns1:documentadoEn ns1:Interfaz_JogPanel ;
-    ns1:textoExtracto "Ilustración del teclado de jog con distribución de teclas numeradas (1–15) y ejemplo de mapeo de funciones para ejes y sentidos de desplazamiento (p. ej., X+, 7+)."@es .
+ns1:TarjetaRIOR a ns1:ComponenteElectrico ;
+    rdfs:label "tarjeta RIOR" ;
+    ns1:textoExtracto "Imagen 'Nodo 2 (RIOR)': tarjeta RIOR similar a la anterior, configurada como bloque de 48 entradas y 32 salidas con inicio en I97 y O81." .
 

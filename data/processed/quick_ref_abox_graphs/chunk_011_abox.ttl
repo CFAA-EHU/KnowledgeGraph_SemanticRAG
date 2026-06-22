@@ -1,75 +1,23 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CicloSondaPROBE a ns1:Parametro ;
-    rdfs:label "#PROBE" ;
-    ns1:identificador "#PROBE" ;
-    ns1:textoExtracto "The CNC executes all the movements using the calibration canned cycle #PROBE." .
-
-ns1:HerramientaActiva a ns1:ComponenteMecanico ;
-    rdfs:label "Active tool" ;
-    ns1:textoExtracto "In this mode, only the active tool can be calibrated." .
-
-ns1:InstruccionSELECT_PROBE a ns1:Parametro ;
-    rdfs:label "#SELECT PROBE" ;
-    ns1:identificador "#SELECT PROBE" ;
-    ns1:textoExtracto "The active probe may be changed via part-program or MDI using the instruction #SELECT PROBE." .
-
-ns1:ModeloFresado a ns1:ModoOperacion ;
-    rdfs:label "Milling model" ;
-    ns1:textoExtracto "Milling model. Calibrate the length of the endmills and the offsets of the lathe tools." .
-
-ns1:ModeloTornoPlano a ns1:ModoOperacion ;
-    rdfs:label "Lathe model (plane)" ;
-    ns1:textoExtracto "Lathe model (plane). Calibrate the offset of any tool." .
-
-ns1:ModeloTornoTriedro a ns1:ModoOperacion ;
-    rdfs:label "Lathe model (trihedron)" ;
-    ns1:textoExtracto "Lathe model (trihedron). Calibrate the length or offsets of the endmills and the offsets of the lathe tools." .
-
-ns1:ModoCalibracionAutomatica a ns1:ModoOperacion ;
+ns1:AutomaticCalibration a ns1:TareaMantenimiento ;
     rdfs:label "Automatic calibration" ;
     ns1:textoExtracto "Automatic calibration. The CNC executes all the movements using the calibration canned cycle #PROBE." .
 
-ns1:ModoCalibracionManual a ns1:ModoOperacion ;
-    rdfs:label "Manual calibration" ;
-    ns1:requiereConsumible ns1:PiezaReferencia ;
-    ns1:requiereMantenimiento ns1:PasoCalibrarHerramienta,
-        ns1:PasoDefinirDimensionPieza,
-        ns1:PasoGuardarValores,
-        ns1:PasoSeleccionarHerramienta ;
-    ns1:textoExtracto "Manual calibration. In this mode, only the active tool can be calibrated. Since there is no probe, a reference part is required to calibrate the tool. All the movements are carried out manually." .
+ns1:CNC8070_a25ad6c46a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "The CNC executes all the movements using the calibration canned cycle #PROBE." .
 
-ns1:ModoCalibracionSemiAutomatica a ns1:ModoOperacion ;
-    rdfs:label "Semi-automatic calibration" ;
-    ns1:textoExtracto "Semi-automatic calibration. The positioning movements are carried out manually and the CNC executes the probing movements." .
-
-ns1:SondaActiva a ns1:Sensor ;
-    rdfs:label "Active probe" ;
-    ns1:textoExtracto "The CNC uses the active probe for calibration. The active probe may be changed via part-program or MDI using the instruction #SELECT PROBE." .
-
-ns1:PasoCalibrarHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Calibrate tool" ;
-    ns1:documentadoEn ns1:TablaHerramientas ;
-    ns1:textoExtracto "3 Calibrate the tool. Approach the tool manually until touching the part and then validate the calibration using the softkey menu." .
-
-ns1:PasoDefinirDimensionPieza a ns1:TareaMantenimiento ;
-    rdfs:label "Define reference part dimensions" ;
-    ns1:textoExtracto "1 Define the dimensions of the reference part being used in the calibration." .
-
-ns1:PasoGuardarValores a ns1:TareaMantenimiento ;
-    rdfs:label "Save new offset values" ;
-    ns1:textoExtracto "4 Press [START] for the CNC to assume the new values of the offset." .
-
-ns1:PasoSeleccionarHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Define tool and offset" ;
-    ns1:textoExtracto "2 Define the tool and the offset to be calibrated and press [START] to execute the tool change (if [ENTER] is pressed, the CNC will only show the tool data)." .
-
-ns1:PiezaReferencia a ns1:Consumible ;
-    rdfs:label "Reference part" ;
+ns1:CalibrationWithoutProbe a ns1:AccionProhibida ;
+    rdfs:label "Calibration without probe" ;
     ns1:textoExtracto "Since there is no probe, a reference part is required to calibrate the tool." .
 
-ns1:TablaHerramientas a ns1:Tabla ;
-    rdfs:label "Tool table" ;
-    ns1:textoExtracto "the new values are saved in the tool table." .
+ns1:ManualCalibration a ns1:TareaMantenimiento ;
+    rdfs:label "Manual calibration" ;
+    ns1:textoExtracto "Manual calibration. In this mode, only the active tool can be calibrated. Since there is no probe, a reference part is required to calibrate the tool. All the movements are carried out manually." .
+
+ns1:SemiAutomaticCalibration a ns1:TareaMantenimiento ;
+    rdfs:label "Semi-automatic calibration" ;
+    ns1:textoExtracto "Semi-automatic calibration. The positioning movements are carried out manually and the CNC executes the probing movements." .
 

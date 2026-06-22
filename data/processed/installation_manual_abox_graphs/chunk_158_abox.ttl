@@ -1,25 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Maquina_TerminalRemoto_HBH3_HBH4 a ns1:Maquina ;
-    rdfs:label "Terminal remoto HBH3/HBH4" ;
-    ns1:requiereMantenimiento ns1:RequisitoDeMemoriaParaHBH3HBH4 ;
-    ns1:textoExtracto "necesita un tamaño de memoria de 4096 bytes" .
+ns1:CNC8070_b0a2aa4420 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Se denomina conmutación sincronizada al proceso de controlar el estado de una salida digital local del CNC en función del tipo de movimiento programado en los ejes." ;
+    ns1:tieneComponente ns1:SalidaLocal1,
+        ns1:SalidaLocal2 .
 
-ns1:Sistema_MemoriaCompartidaPLC a ns1:Sistema ;
-    rdfs:label "Memoria compartida del PLC" ;
-    ns1:monitoreaParametro ns1:Parametro_PLCDATASIZE ;
-    ns1:textoExtracto "área de memoria para intercambiar datos entre un programa PLC escrito en lenguaje C y una aplicación externa" .
+ns1:NumeroDeSalidasDigitalesLocales_cd86af1b2f a ns1:Parametro ;
+    rdfs:label "Número de salidas digitales locales" ;
+    ns1:identificador "NLOCOUT" ;
+    ns1:textoExtracto "Para ello será necesario parametrizar el parámetro NLOCOUT con valor 8." .
 
-ns1:Parametro_PLCDATASIZE a ns1:Parametro ;
-    rdfs:label "PLCDATASIZE" ;
-    ns1:identificador "V.MPG.PLCDATASIZE" ;
-    ns1:textoExtracto "PLCDATASIZE Tamaño de la zona de datos compartida del PLC. Valores posibles: De 0 a 500.000 bytes. Valor por defecto: 0." ;
-    ns1:valor 0 .
+ns1:SalidaDigitalLocalAsociadaALaConmutacionSincronizada a ns1:Parametro ;
+    rdfs:label "Salida digital local asociada a la conmutación sincronizada" ;
+    ns1:identificador "MPG.SWTOUTPUT" ;
+    ns1:textoExtracto "Variable asociada: (V.)MPG.SWTOUTPUT Salida digital local asociada a la conmutación sincronizada." .
 
-ns1:RequisitoDeMemoriaParaHBH3HBH4 a ns1:Parametro ;
-    rdfs:label "Requisito de memoria para HBH3/HBH4" ;
-    ns1:textoExtracto "4096 bytes" ;
-    ns1:valor 4096 .
+ns1:SalidaLocal1 a ns1:ComponenteElectrico ;
+    rdfs:label "Salida Local 1" ;
+    ns1:textoExtracto "Para la conmutación sincronizada sólo se podrán utilizar las salidas locales asociadas a los pines LI/O1 (salida local 1)" .
+
+ns1:SalidaLocal2 a ns1:ComponenteElectrico ;
+    rdfs:label "Salida Local 2" ;
+    ns1:textoExtracto "Para la conmutación sincronizada sólo se podrán utilizar las salidas locales asociadas a los pines LI/O2 (salida local 2)" .
 

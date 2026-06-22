@@ -1,42 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1204 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sentencia mal programada o inexistente"@es ;
-    ns1:identificador "1204" ;
-    ns1:textoExtracto "1204 'Sentencia mal programada o inexistente' DETECCIÓN Durante la ejecución. CAUSA La sentencia no existe o está mal programada. SOLUCIÓN Revisar la programación."@es .
+ns1:CONTJOGDemasiadosParametros a ns1:AvisoSeguridad ;
+    rdfs:label "#CONTJOG: demasiados parámetros" ;
+    ns1:mitigaRiesgo ns1:AvanceYDesplazamientoDelEjeParaCadaPosicionDelConmutadorEnJogIncremental ;
+    ns1:textoExtracto "La sentencia tiene más parámetros de los permitidos." .
 
-ns1:Fallo_1205 a ns1:DiagnosticoFallo ;
-    rdfs:label "#CALL AX/#SET AX: tipo de offset desconocido"@es ;
-    ns1:identificador "1205" ;
-    ns1:textoExtracto "1205 '#CALL AX/#SET AX: tipo de offset desconocido' DETECCIÓN Durante la ejecución. CAUSA El tipo de offset programado en la sentencia no existe. SOLUCIÓN Los tipos de offset válidos son ALL, LOCOF, FIXOF, TOOLOF, ORGOF, MEASOF, MANOF."@es .
+ns1:CONTJOGNoSePermitenVelocidadesDeJogContinuoNegativas a ns1:AvisoSeguridad ;
+    rdfs:label "#CONTJOG: no se permiten velocidades de jog continuo negativas" ;
+    ns1:mitigaRiesgo ns1:AvanceDelEjeCuandoElConmutadorEstaEnJogContinuo ;
+    ns1:textoExtracto "La sentencia #CONTJOG sólo admite un parámetro, que representa el avance del eje cuando el conmutador está en jog continuo." .
 
-ns1:Fallo_1206 a ns1:DiagnosticoFallo ;
-    rdfs:label "Se espera ','"@es ;
-    ns1:identificador "1206" ;
-    ns1:textoExtracto "1206 'Se espera \",\"' DETECCIÓN Durante la ejecución. CAUSA Falta programar \",\" en la sentencia o función. SOLUCIÓN Revisar la programación."@es .
+ns1:AvanceDelEjeCuandoElConmutadorEstaEnJogContinuo a ns1:Parametro ;
+    rdfs:label "avance del eje cuando el conmutador está en jog continuo" ;
+    ns1:textoExtracto "La sentencia #CONTJOG sólo admite un parámetro, que representa el avance del eje cuando el conmutador está en jog continuo." .
 
-ns1:Fallo_1209 a ns1:DiagnosticoFallo ;
-    rdfs:label "Índice de eje fuera de rango"@es ;
-    ns1:identificador "1209" ;
-    ns1:textoExtracto "1209 'Indice de eje fuera de rango' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • En las sentencias #CALL AX/#SET AX la posición para algún eje no es correcta; la posición está ocupada, la posición supera el máximo permitido o no hay hueco para el eje. • Programación del nombre del eje con un comodín incorrecto. SOLUCIÓN Las posibles soluciones son las siguientes: • La sentencia puede colocar los ejes en cualquier posición libre comprendida entre 1 y un número igual al total de ejes más cabezales del sistema. • Los posibles comodines son de @1 a @6 y @SM."@es .
-
-ns1:Fallo_1210 a ns1:DiagnosticoFallo ;
-    rdfs:label "#CALL AX/#SET AX: nombre de eje repetido"@es ;
-    ns1:identificador "1210" ;
-    ns1:textoExtracto "1210 '#CALL AX/#SET AX: nombre de eje repetido' DETECCIÓN Durante la ejecución. CAUSA El mismo eje se ha programado más de una vez en la sentencia. SOLUCIÓN Revisar la programación."@es .
-
-ns1:Fallo_1211 a ns1:DiagnosticoFallo ;
-    rdfs:label "#CALL AX/#SET AX: índice de eje repetido"@es ;
-    ns1:identificador "1211" ;
-    ns1:textoExtracto "1211 '#CALL AX/#SET AX: índice de eje repetido' DETECCIÓN Durante la ejecución. CAUSA Dos ejes intentan ocupar la mismo posición en el canal. SOLUCIÓN Revisar la programación."@es .
-
-ns1:Fallo_1212 a ns1:DiagnosticoFallo ;
-    rdfs:label "#CALL AX/#SET AX: número de eje repetido"@es ;
-    ns1:identificador "1212" ;
-    ns1:textoExtracto "1212 '#CALL AX/#SET AX: número de eje repetido' DETECCIÓN Durante la ejecución. CAUSA Dos ejes intentan ocupar la mismo posición en el canal. SOLUCIÓN Revisar la programación."@es .
-
-ns1:SistemaEjes a ns1:Sistema ;
-    rdfs:label "Sistema de ejes y cabezales"@es ;
-    ns1:textoExtracto "La sentencia puede colocar los ejes en cualquier posición libre comprendida entre 1 y un número igual al total de ejes más cabezales del sistema."@es .
+ns1:AvanceYDesplazamientoDelEjeParaCadaPosicionDelConmutadorEnJogIncremental a ns1:Parametro ;
+    rdfs:label "avance y desplazamiento del eje para cada posición del conmutador en jog incremental" ;
+    ns1:textoExtracto "La sentencia #INCJOG admite un máximo de cinco grupos de parámetros. Cada uno de ellos representa el avance y el desplazamiento del eje para cada posición del conmutador en jog incremental." .
 

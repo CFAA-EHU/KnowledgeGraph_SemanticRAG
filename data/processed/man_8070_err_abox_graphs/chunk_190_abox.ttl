@@ -1,66 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1378 a ns1:AvisoSeguridad ;
-    rdfs:label "Lectura de parámetro con índice no válido" ;
-    ns1:identificador "1378" ;
-    ns1:mitigaRiesgo ns1:Parametro_MAXCOMP,
-        ns1:Parametro_MAXGLBP,
-        ns1:Parametro_MAXLOCP,
-        ns1:Parametro_MINCOMP,
-        ns1:Parametro_MINGLBP,
-        ns1:Parametro_MINLOCP ;
-    ns1:textoExtracto "1378 'Lectura de parámetro con índice no válido' DETECCIÓN Durante la ejecución. CAUSA El parámetro aritmético no existe; no está dentro del rango permitido por los parámetros máquina. SOLUCIÓN Revisar la programación. Revisar en los parámetros máquina el rango de parámetros aritméticos valido." .
+ns1:RevisionDeProgramacion_2f5a95c092 a ns1:TareaMantenimiento ;
+    rdfs:label "revisión de programación" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_3bb7d27e4a,
+        ns1:ModoNoValidoHSC,
+        ns1:SeEsperaM02M30 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Tabla_ParametrosMaquina_1000_1999 a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros máquina (1000-1999)" ;
-    ns1:detalladoEnEsquema ns1:Parametro_MAXCOMP,
-        ns1:Parametro_MAXGLBP,
-        ns1:Parametro_MAXLOCP,
-        ns1:Parametro_MINCOMP,
-        ns1:Parametro_MINGLBP,
-        ns1:Parametro_MINLOCP,
-        ns1:Parametro_ROPARMAX,
-        ns1:Parametro_ROPARMIN ;
-    ns1:textoExtracto "Parámetros máquina. | Rango válido. | --- | --- | MINLOCP - MAXLOCP | Parámetros aritméticos locales. | MINGLBP - MAXGLBP | Parámetros aritméticos globales. | MINCOMP - MAXCOMP | Parámetros aritméticos comunes." .
+ns1:RevisionDelManualDeProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "revisión del manual de programación" ;
+    ns1:solucionaFallo ns1:DobleProgramacionHSC_0d05180f6d ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de las sentencias." .
 
-ns1:Parametro_ROPARMAX a ns1:Parametro ;
-    rdfs:label "ROPARMAX" ;
-    ns1:textoExtracto "Los parámetros globales protegidos contra escritura son aquellos definidos por los parámetros máquina ROPARMIN - ROPARMAX." ;
-    ns1:valor "Límite superior de protección de escritura para parámetros globales" .
+ns1:DiagnosticoFallo_3bb7d27e4a a ns1:DiagnosticoFallo ;
+    rdfs:label "parámetro incorrecto HSC" ;
+    ns1:textoExtracto "'#HSC: parámetro incorrecto' DETECCIÓN Durante la ejecución. CAUSA El parámetro FAST o el parámetro CORNER de la sentencia #HSC tienen un valor incorrecto." .
 
-ns1:Parametro_ROPARMIN a ns1:Parametro ;
-    rdfs:label "ROPARMIN" ;
-    ns1:textoExtracto "Los parámetros globales protegidos contra escritura son aquellos definidos por los parámetros máquina ROPARMIN - ROPARMAX." ;
-    ns1:valor "Límite inferior de protección de escritura para parámetros globales" .
+ns1:DobleProgramacionHSC_0d05180f6d a ns1:DiagnosticoFallo ;
+    rdfs:label "doble programación HSC" ;
+    ns1:textoExtracto "'#HSC: doble programación' DETECCIÓN Durante la ejecución. CAUSA En un mismo bloque está programada la activación y desactivación del modo HSC." .
 
-ns1:Parametro_MAXCOMP a ns1:Parametro ;
-    rdfs:label "MAXCOMP" ;
-    ns1:textoExtracto "MINCOMP - MAXCOMP | Parámetros aritméticos comunes." ;
-    ns1:valor "Rango máximo de parámetros aritméticos comunes" .
+ns1:ModoNoValidoHSC a ns1:DiagnosticoFallo ;
+    rdfs:label "modo no válido HSC" ;
+    ns1:textoExtracto "'#HSC: modo no válido' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el modo HSC con un parámetro desconocido o ha intentado cambiar el modo de trabajo sin desactivarlo previamente." .
 
-ns1:Parametro_MAXGLBP a ns1:Parametro ;
-    rdfs:label "MAXGLBP" ;
-    ns1:textoExtracto "MINGLBP - MAXGLBP | Parámetros aritméticos globales." ;
-    ns1:valor "Rango máximo de parámetros aritméticos globales" .
-
-ns1:Parametro_MAXLOCP a ns1:Parametro ;
-    rdfs:label "MAXLOCP" ;
-    ns1:textoExtracto "MINLOCP - MAXLOCP | Parámetros aritméticos locales." ;
-    ns1:valor "Rango máximo de parámetros aritméticos locales" .
-
-ns1:Parametro_MINCOMP a ns1:Parametro ;
-    rdfs:label "MINCOMP" ;
-    ns1:textoExtracto "MINCOMP - MAXCOMP | Parámetros aritméticos comunes." ;
-    ns1:valor "Rango mínimo de parámetros aritméticos comunes" .
-
-ns1:Parametro_MINGLBP a ns1:Parametro ;
-    rdfs:label "MINGLBP" ;
-    ns1:textoExtracto "MINGLBP - MAXGLBP | Parámetros aritméticos globales." ;
-    ns1:valor "Rango mínimo de parámetros aritméticos globales" .
-
-ns1:Parametro_MINLOCP a ns1:Parametro ;
-    rdfs:label "MINLOCP" ;
-    ns1:textoExtracto "MINLOCP - MAXLOCP | Parámetros aritméticos locales." ;
-    ns1:valor "Rango mínimo de parámetros aritméticos locales" .
+ns1:SeEsperaM02M30 a ns1:DiagnosticoFallo ;
+    rdfs:label "se espera M02/M30" ;
+    ns1:textoExtracto "'Se espera M02/M30' DETECCIÓN Durante la ejecución. CAUSA Falta programar M02 o M30 al final del programa principal." .
 

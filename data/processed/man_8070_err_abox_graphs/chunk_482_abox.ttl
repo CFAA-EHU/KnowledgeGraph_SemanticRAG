@@ -1,57 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_2476 a ns1:AvisoSeguridad ;
-    rdfs:label "Tabla inexistente en el fichero de material activo"@es ;
-    ns1:identificador "2476" ;
-    ns1:solucionaFallo ns1:Solucion_2476 ;
-    ns1:textoExtracto "Tabla inexistente en el fichero de material activo. DETECCIÓN Durante la ejecución. CAUSA Se ha programado una tabla tecnológica que no existe en el fichero de material activo. SOLUCIÓN Revisar la programación y qué tablas existen."@es .
+ns1:ElValorDeLaEtiquetaNYElNumeroDeRepeticionesDebenSerNumerosEnteros a ns1:TareaMantenimiento ;
+    rdfs:label "El valor de la etiqueta N y el número de repeticiones deben ser números enteros" ;
+    ns1:textoExtracto "SOLUCIÓN El valor de la etiqueta N y el número de repeticiones deben ser números enteros." .
 
-ns1:Error_2477 a ns1:AvisoSeguridad ;
-    rdfs:label "Nombre de tabla no permitido"@es ;
-    ns1:identificador "2477" ;
-    ns1:solucionaFallo ns1:Solucion_2477 ;
-    ns1:textoExtracto "Nombre de tabla no permitido. DETECCIÓN Durante la ejecución. CAUSA La sentencia #TECHTABLE ha intentado activar las tablas de Piercing y Cutting. SOLUCIÓN La sentencia #TECHTABLE permite activar una tabla tecnológica genérica. Esta sentencia no permite cargar las tablas de Piercing y Cutting, las cuales se gestionan con las sentencias #PIERCING y #CUTTING."@es .
+ns1:ProgramarParaLaEtiquetaNOParaElNumeroDeRepeticionesUnValorNoEntero a ns1:AccionProhibida ;
+    rdfs:label "Programar para la etiqueta N o para el número de repeticiones un valor no entero" ;
+    ns1:solucionaFallo ns1:RPTLaEtiquetaNYElNumeroDeRepeticionesDebenSerNumerosEnteros_beba24cfea ;
+    ns1:textoExtracto "En la sentencia #RPT se ha programado para la etiqueta N o para el número de repeticiones un valor no entero." .
 
-ns1:Error_2478 a ns1:AvisoSeguridad ;
-    rdfs:label "Sentencia no permitida sin tabla PIERCING en el fichero de material activo"@es ;
-    ns1:identificador "2478" ;
-    ns1:textoExtracto "Sentencia no permitida sin tabla PIERCING en el fichero de material activo. DETECCIÓN Durante la ejecución."@es .
+ns1:RealizarOtraSeleccionDePiercingOSustituirElMovimientoPorUnMovimientoI_270531f438 a ns1:TareaMantenimiento ;
+    rdfs:label "Realizar otra selección de piercing o sustituir el movimiento por un movimiento independiente (#MOVE)" ;
+    ns1:textoExtracto "SOLUCIÓN Realizar otra selección de piercing o sustituir el movimiento por un movimiento independiente (#MOVE)." .
 
-ns1:FicheroMaterialActivo a ns1:InterfazUsuario ;
-    rdfs:label "Fichero de material activo"@es ;
-    ns1:textoExtracto "fichero de material activo"@es ;
-    ns1:tieneComponente ns1:TablaCutting .
+ns1:RepetirProgramaEnElMismoPuntoQueLaEjecucionAnteriorConPreseleccionG92 a ns1:AccionProhibida ;
+    rdfs:label "Repetir programa en el mismo punto que la ejecución anterior con preselección (G92)" ;
+    ns1:solucionaFallo ns1:MovimientoNoPermitidoEnSeleccionDePiercingConG92_3c1d349cc9 ;
+    ns1:textoExtracto "En la selección de piercing, se ha elegido la opción de repetir el programa en el mismo punto que la ejecución anterior, y el programa realiza una preselección (G92) en los bloques iniciales." .
 
-ns1:Sentencia_CUTTING a ns1:Parametro ;
-    rdfs:label "Sentencia #CUTTING"@es ;
-    ns1:textoExtracto "las cuales se gestionan con las sentencias [...] #CUTTING"@es .
+ns1:MovimientoNoPermitidoEnSeleccionDePiercingConG92_3c1d349cc9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento no permitido en selección de piercing con G92" ;
+    ns1:textoExtracto "Movimiento no permitido en selección de piercing con G92. Programar #MOVE." .
 
-ns1:Sentencia_PIERCING a ns1:Parametro ;
-    rdfs:label "Sentencia #PIERCING"@es ;
-    ns1:textoExtracto "las cuales se gestionan con las sentencias #PIERCING"@es .
-
-ns1:Sentencia_TECHTABLE a ns1:Parametro ;
-    rdfs:label "Sentencia #TECHTABLE"@es ;
-    ns1:textoExtracto "La sentencia #TECHTABLE ha intentado activar las tablas de Piercing y Cutting. [...] Esta sentencia no permite cargar las tablas de Piercing y Cutting"@es .
-
-ns1:TablaPiercing a ns1:Tabla ;
-    rdfs:label "Tabla de Piercing"@es ;
-    ns1:textoExtracto "tablas de Piercing"@es .
-
-ns1:TablaTecnologica a ns1:Tabla ;
-    rdfs:label "Tabla tecnológica"@es ;
-    ns1:textoExtracto "tabla tecnológica"@es .
-
-ns1:Solucion_2476 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de programación de tablas tecnológicas"@es ;
-    ns1:textoExtracto "Revisar la programación y qué tablas existen."@es .
-
-ns1:Solucion_2477 a ns1:TareaMantenimiento ;
-    rdfs:label "Uso correcto de sentencias #PIERCING y #CUTTING"@es ;
-    ns1:textoExtracto "La sentencia #TECHTABLE permite activar una tabla tecnológica genérica. Esta sentencia no permite cargar las tablas de Piercing y Cutting, las cuales se gestionan con las sentencias #PIERCING y #CUTTING."@es .
-
-ns1:TablaCutting a ns1:Tabla ;
-    rdfs:label "Tabla de Cutting"@es ;
-    ns1:textoExtracto "tabla de Cutting"@es .
+ns1:RPTLaEtiquetaNYElNumeroDeRepeticionesDebenSerNumerosEnteros_beba24cfea a ns1:DiagnosticoFallo ;
+    rdfs:label "#RPT: la etiqueta N y el número de repeticiones deben ser números enteros" ;
+    ns1:textoExtracto "2465 #RPT: la etiqueta N y el número de repeticiones deben ser números enteros." .
 

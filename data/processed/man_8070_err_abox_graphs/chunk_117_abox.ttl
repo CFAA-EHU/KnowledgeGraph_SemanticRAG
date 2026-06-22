@@ -1,86 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ErrorCNC_1134 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1134: Sentencia $ENDWHILE mal programada"@es ;
-    ns1:identificador "1134" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionDelBloqueConENDWHILE ;
-    ns1:textoExtracto "'La sentencia $ENDWHILE se programa sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:AlgunaSentenciaNoEstaProgramadaSolaEnElBloque,
+        ns1:AlgunoDeLosParametrosIJKEstaProgramadoMasDeUnaVezEnElMismoBloque,
+        ns1:LaSentenciaIFCondicionSoloPuedeIrSeguidaDeGOTO ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:ErrorCNC_1135 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1135: Sentencia $DO mal programada"@es ;
-    ns1:identificador "1135" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionDelBloqueConDO ;
-    ns1:textoExtracto "'La sentencia $DO se programa sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:AlgunaSentenciaNoEstaProgramadaSolaEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Alguna sentencia no está programada sola en el bloque" ;
+    ns1:textoExtracto "CAUSA Alguna sentencia no está programada sola en el bloque." .
 
-ns1:ErrorCNC_1136 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1136: Instrucción $ENDDO sin $DO previa"@es ;
-    ns1:identificador "1136" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionParaEmparejarDOYENDDO ;
-    ns1:textoExtracto "'No se espera $ENDDO' DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $ENDDO sin una instrucción $DO previa. SOLUCIÓN Revisar la programación."@es .
+ns1:AlgunoDeLosParametrosIJKEstaProgramadoMasDeUnaVezEnElMismoBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Alguno de los parámetros I, J, K está programado más de una vez en el mismo bloque" ;
+    ns1:textoExtracto "CAUSA Alguno de los parámetros I, J, K está programado más de una vez en el mismo bloque." .
 
-ns1:ErrorCNC_1137 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1137: Sentencia $ENDDO con expresión mal programada"@es ;
-    ns1:identificador "1137" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionDelBloqueConENDDOExpresion ;
-    ns1:textoExtracto "'La sentencia $ENDDO <expresión> se programa sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
-
-ns1:ErrorCNC_1138 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1138: Sentencia $BREAK mal programada"@es ;
-    ns1:identificador "1138" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionDelBloqueConBREAK ;
-    ns1:textoExtracto "'La sentencia $BREAK se programa sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
-
-ns1:ErrorCNC_1139 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1139: Instrucción $BREAK sin bucle abierto"@es ;
-    ns1:identificador "1139" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionParaAsegurarContextoDeBREAK ;
-    ns1:textoExtracto "'No se espera $BREAK' DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $BREAK pero no hay ningún bucle de control abierto; $IF, $ELSE, $FOR, $WHILE, $DO o $CASE. SOLUCIÓN Revisar la programación."@es .
-
-ns1:ErrorCNC_1140 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1140: Instrucción $CONTINUE sin bucle iterativo"@es ;
-    ns1:identificador "1140" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionParaAsegurarContextoDeCONTINUE ;
-    ns1:textoExtracto "'No se espera $CONTINUE' DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $CONTINUE pero no hay ningún bucle de control abierto; $FOR, $WHILE o $DO. SOLUCIÓN Revisar la programación."@es .
-
-ns1:FalloProgramacion_General a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo de programación: Instrucción $ENDWHILE sin $WHILE previa"@es ;
-    ns1:solucionaFallo ns1:RevisarProgramacionParaEmparejarWHILEYENDWHILE ;
-    ns1:textoExtracto "El CNC ha detectado una instrucción $ENDWHILE sin una instrucción $WHILE previa. SOLUCIÓN Revisar la programación."@es .
-
-ns1:SistemaCNC_InterpreteInstrucciones a ns1:Sistema ;
-    rdfs:label "Sistema de control CNC (intérprete de instrucciones de programación)"@es ;
-    ns1:textoExtracto "El CNC utiliza la instrucción $BREAK para finalizar un $CASE o para salir de un bucle $IF, $ELSE, $WHILE, $FOR o $DO antes de que finalice."@es .
-
-ns1:RevisarProgramacionDelBloqueConBREAK a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación del bloque con $BREAK"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionDelBloqueConDO a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación del bloque con $DO"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionDelBloqueConENDDOExpresion a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación del bloque con $ENDDO <expresión>"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionDelBloqueConENDWHILE a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación del bloque con $ENDWHILE"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionParaAsegurarContextoDeBREAK a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación para asegurar contexto de $BREAK"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionParaAsegurarContextoDeCONTINUE a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación para asegurar contexto de $CONTINUE"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionParaEmparejarDOYENDDO a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación para emparejar $DO y $ENDDO"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionParaEmparejarWHILEYENDWHILE a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación para emparejar $WHILE y $ENDWHILE"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
+ns1:LaSentenciaIFCondicionSoloPuedeIrSeguidaDeGOTO a ns1:DiagnosticoFallo ;
+    rdfs:label "La sentencia $IF <condición> sólo puede ir seguida de $GOTO" ;
+    ns1:textoExtracto "CAUSA La sentencia no está programada sola en el bloque y la información adicional no es un $GOTO." .
 

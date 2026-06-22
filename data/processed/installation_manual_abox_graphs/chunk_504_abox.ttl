@@ -1,33 +1,15 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_CNC_Lubricacion a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz CNC para lubricación (LUBR, LUBRENA, LUBROK)" ;
-    ns1:controla ns1:TareaMantenimiento_LubricacionEjes ;
-    ns1:textoExtracto "Las entradas y salidas lógicas del CNC LUBR(axis), LUBRENA(axis) y LUBROK(axis) se utilizan para coordinar la lubricación: LUBRENA(axis) indica si se desea la prestación; LUBR(axis) activa el engrase; LUBROK(axis) confirma la finalización."@es .
+ns1:CompensacionDelOffset a ns1:Parametro ;
+    rdfs:label "Compensación del offset" ;
+    ns1:identificador "SERVOOFF" ;
+    ns1:textoExtracto "SERVOOFF Compensación del offset. Parámetro válido para ejes lineales, rotativos y cabezales." ;
+    ns1:valor "-32767 a 32767" .
 
-ns1:Parametro_DISTLUBRI a ns1:Parametro ;
-    rdfs:label "DISTLUBRI" ;
-    ns1:identificador "DISTLUBRI" ;
-    ns1:monitoreaParametro ns1:Sensor_DISTLUBRI ;
-    ns1:textoExtracto "DISTLUBRI Distancia a recorrer para lubricar el eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles (1): De 0 a 2000000000 mm. Valores posibles (2): De 0 a 78739920 inch. Valores posibles (3): De 0 a 2000000000 grados. Valor por defecto: 0 (no hay lubricación)."@es ;
-    ns1:valor "0" .
-
-ns1:AvisoSeguridad_LubricacionEje a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso de lubricación de eje (LUBR)" ;
-    ns1:textoExtracto "Cuando el eje ha recorrido la distancia fijada en el parámetro DISTLUBRI, el CNC activa la marca LUBR(axis) para indicar al PLC que debe engrasar el eje."@es .
-
-ns1:ComponenteMecanico_Ejes a ns1:ComponenteMecanico ;
-    rdfs:label "Ejes lineales/rotativos" ;
-    ns1:textoExtracto "DISTLUBRI Distancia a recorrer para lubricar el eje. Parámetro válido para ejes lineales, rotativos y cabezales."@es .
-
-ns1:Sensor_DISTLUBRI a ns1:Sensor ;
-    rdfs:label "Sensor de distancia para lubricación (DISTLUBRI)" ;
-    ns1:activaAlarma ns1:AvisoSeguridad_LubricacionEje ;
-    ns1:textoExtracto "La señal de engrase se activa tras recorrer la distancia indicada en este parámetro."@es .
-
-ns1:TareaMantenimiento_LubricacionEjes a ns1:TareaMantenimiento ;
-    rdfs:label "Lubricación de ejes y engranajes" ;
-    ns1:requiereMantenimiento ns1:ComponenteMecanico_Ejes ;
-    ns1:textoExtracto "Para que el PLC efectúe la lubricación de ejes y engranajes se deben utilizar las entradas y salidas lógicas del CNC LUBR(axis), LUBRENA(axis) y LUBROK(axis)."@es .
+ns1:ConsignaMinima a ns1:Parametro ;
+    rdfs:label "Consigna mínima" ;
+    ns1:identificador "MINANOUT" ;
+    ns1:textoExtracto "MINANOUT Consigna mínima. Parámetro válido para ejes lineales, rotativos y cabezales." ;
+    ns1:valor "0 a 32767" .
 

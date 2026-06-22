@@ -1,46 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:FuncionesCambioEngranajes_410 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Funciones M41 a M44"@es ;
-    ns1:documentadoEn ns1:TablaParametrosMaquina_410 ;
-    ns1:identificador "M41-M44" ;
-    ns1:textoExtracto "usar las funciones M41 a M44"@es .
+ns1:SetDeParametrosParaLaDinamicaDelEje a ns1:Parametro ;
+    rdfs:label "Set de parámetros para la dinámica del eje" ;
+    ns1:textoExtracto "Se pueden definir hasta 4 sets de parámetros distintos para indicar la dinámica del eje en cada una de ellas (avances, ganancias, aceleraciones, etc)." .
 
-ns1:CNC_410 a ns1:ComponenteElectrico ;
-    rdfs:label "CNC"@es ;
-    ns1:controla ns1:Cabezal_410 ;
-    ns1:textoExtracto "el CNC pone la gama que indica el PLC; si no indica ninguna, el CNC arranca sin gama"@es .
+ns1:SistemaLaser a ns1:Sistema ;
+    rdfs:label "Sistema Láser" ;
+    ns1:textoExtracto "En el modelo láser, los parámetros relacionados con la velocidad del cabezal (definida en rpm), definen la potencia (definida en watios)." ;
+    ns1:tieneComponente ns1:Parametro_1655a4a6b6,
+        ns1:VelocidadDelCabezal_7ae2626d27 .
 
-ns1:GamasTrabajo_410 a ns1:Parametro ;
-    rdfs:label "Gamas de trabajo"@es ;
-    ns1:identificador "SET n" ;
-    ns1:monitoreaParametro ns1:SistemaControl_410 ;
-    ns1:textoExtracto "SET n Gamas de trabajo. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado."@es .
+ns1:Parametro_1655a4a6b6 a ns1:Parametro ;
+    rdfs:label "Potencia" ;
+    ns1:textoExtracto "En el modelo láser, los parámetros relacionados con la velocidad del cabezal (definida en rpm), definen la potencia (definida en watios)." .
 
-ns1:Maquina_410 a ns1:Maquina ;
-    rdfs:label "Máquina"@es ;
-    ns1:textoExtracto "Gamas de trabajo [...] Parámetro válido para ejes lineales, rotativos y cabezales"@es ;
-    ns1:tieneComponente ns1:Cabezal_410 .
-
-ns1:PLC_410 a ns1:ComponenteElectrico ;
-    rdfs:label "PLC"@es ;
-    ns1:textoExtracto "maniobra del PLC [...] el CNC pone la gama que indica el PLC"@es .
-
-ns1:SistemaControl_410 a ns1:Sistema ;
-    rdfs:label "Sistema de control CNC/PLC"@es ;
-    ns1:controla ns1:Maquina_410 ;
-    ns1:textoExtracto "ambas situaciones se gestionan desde la maniobra del PLC. En el encendido, el CNC pone la gama que indica el PLC; si no indica ninguna, el CNC arranca sin gama. Tras un reset, el CNC pone la gama que indica el PLC; si no indica ninguna, el CNC se queda como está."@es ;
-    ns1:tieneComponente ns1:CNC_410,
-        ns1:PLC_410 .
-
-ns1:TablaParametrosMaquina_410 a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros máquina"@es ;
-    ns1:textoExtracto "Muestra la tabla de parámetros máquina del set."@es .
-
-ns1:Cabezal_410 a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:monitoreaParametro ns1:GamasTrabajo_410 ;
-    ns1:textoExtracto "seleccionar desde el programa pieza un set de parámetros en el cabezal y efectuar el cambio de engranajes, usar las funciones M41 a M44"@es .
+ns1:VelocidadDelCabezal_7ae2626d27 a ns1:Parametro ;
+    rdfs:label "Velocidad del cabezal" ;
+    ns1:textoExtracto "En el modelo láser, los parámetros relacionados con la velocidad del cabezal (definida en rpm), definen la potencia (definida en watios)." .
 

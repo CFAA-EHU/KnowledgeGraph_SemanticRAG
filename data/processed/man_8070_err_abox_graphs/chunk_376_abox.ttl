@@ -1,119 +1,70 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1919 a ns1:Alarma ;
-    rdfs:label "Perfil programado se corta a sí mismo"@es ;
-    ns1:identificador "1919" ;
-    ns1:textoExtracto "1919 'Perfil programado se corta a si mismo' DETECCIÓN Durante la ejecución del ciclo."@es .
+ns1:AsignarUnValorCorrectoALosParametros a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar un valor correcto a los parámetros" ;
+    ns1:solucionaFallo ns1:CajeraConIslasTipoDeAcabadoNoValido ;
+    ns1:textoExtracto "SOLUCIÓN Asignar un valor correcto a los parámetros." .
 
-ns1:Herramienta_SeleccionAlternativa_1911 a ns1:Herramienta ;
-    ns1:textoExtracto "seleccionar otra herramienta"@es .
+ns1:CorregirElAnguloDeProfundizacion_5c3b4f75e5 a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir el ángulo de profundización" ;
+    ns1:solucionaFallo ns1:CajeraConIslasTipoDeAcabadoNoValido ;
+    ns1:textoExtracto "CAUSA El ángulo de profundización para el acabado (parámetro ) no está comprendido entre 0º y 90º. SOLUCIÓN Corregir el ángulo de profundización; programar un valor entre 0º y 90º." .
 
-ns1:Parametro_AnguloCorte a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1913 ;
-    ns1:textoExtracto "ángulo de corte"@es .
+ns1:CorregirLaProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir la programación" ;
+    ns1:solucionaFallo ns1:DatoNoValido ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la programación." .
 
-ns1:Parametro_AnguloCuchilla a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1912 ;
-    ns1:textoExtracto "ángulo de la cuchilla"@es .
+ns1:ProgramarTodosLosParametrosObligatoriosDelCiclo a ns1:TareaMantenimiento ;
+    rdfs:label "Programar todos los parámetros obligatorios del ciclo" ;
+    ns1:solucionaFallo ns1:DatoObligatorioNoProgramado ;
+    ns1:textoExtracto "SOLUCIÓN Programar todos los parámetros obligatorios del ciclo." .
 
-ns1:Parametro_AvanceAcabado a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1915 ;
-    ns1:textoExtracto "avance para la operación de acabado"@es ;
-    ns1:valor "0" .
+ns1:ProgramarUnaDistanciaMayor a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una distancia mayor" ;
+    ns1:solucionaFallo ns1:MovimientoDeVaivenDistanciaRecorridaDemasiadoPequena ;
+    ns1:textoExtracto "SOLUCIÓN Programar una distancia mayor." .
 
-ns1:Parametro_AvanceDesbaste a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1914 ;
-    ns1:textoExtracto "avance para la operación de desbaste"@es ;
-    ns1:valor "0" .
+ns1:ProgramarUnaDistanciaMenor a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una distancia menor" ;
+    ns1:solucionaFallo ns1:MovimientoDeVaivenDistanciaRecorridaDemasiadoGrande ;
+    ns1:textoExtracto "SOLUCIÓN Programar una distancia menor." .
 
-ns1:Parametro_FactorForma a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1911 ;
-    ns1:textoExtracto "factor de forma"@es .
+ns1:RepararLaHerramientaOUtilizarUnaHerramientaEquivalente a ns1:TareaMantenimiento ;
+    rdfs:label "Reparar la herramienta o utilizar una herramienta equivalente" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_82c14ffced ;
+    ns1:textoExtracto "SOLUCIÓN Reparar la herramienta o utilizar una herramienta equivalente." .
 
-ns1:Parametro_PerfilCiclo a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1918 ;
-    ns1:textoExtracto "perfil definido en el ciclo fijo"@es .
+ns1:TipoDeAcabado_f4a9feaec5 a ns1:Parametro ;
+    rdfs:label "Tipo de acabado" ;
+    ns1:textoExtracto "El tipo de acabado (parámetro Q) no es válido." .
 
-ns1:Parametro_VelocidadAcabado a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1917 ;
-    ns1:textoExtracto "velocidad para la operación de acabado"@es ;
-    ns1:valor "0" .
+ns1:ToleranciaPermitida a ns1:Parametro ;
+    rdfs:label "Tolerancia permitida" ;
+    ns1:textoExtracto "El desgaste medido es mayor que la tolerancia permitida (parámetro M)." .
 
-ns1:Parametro_VelocidadDesbaste a ns1:Parametro ;
-    ns1:monitoreaParametro ns1:Alarma_1916 ;
-    ns1:textoExtracto "velocidad para la operación de desbaste"@es ;
-    ns1:valor "0" .
+ns1:DatoNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Dato no válido" ;
+    ns1:textoExtracto "'Dato no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún parámetro del ciclo tiene un valor incorrecto." .
 
-ns1:AccionProhibida_1911 a ns1:AccionProhibida ;
-    ns1:textoExtracto "factor de forma no válido para el ciclo programado"@es .
+ns1:DatoObligatorioNoProgramado a ns1:DiagnosticoFallo ;
+    rdfs:label "Dato obligatorio no programado" ;
+    ns1:textoExtracto "'Dato obligatorio no programado' DETECCIÓN Durante la ejecución del ciclo. CAUSA Falta programar uno o más parámetros obligatorios." .
 
-ns1:AccionProhibida_1912 a ns1:AccionProhibida ;
-    ns1:textoExtracto "ángulo de la cuchilla no válido para el ciclo programado"@es .
+ns1:DiagnosticoFallo_82c14ffced a ns1:DiagnosticoFallo ;
+    rdfs:label "Herramienta gastada por desgaste de longitud" ;
+    ns1:textoExtracto "Herramienta gastada por desgaste de longitud. DETECCIÓN Durante la ejecución. CAUSA El ciclo ha detectado que la herramienta está gastada." .
 
-ns1:AccionProhibida_1913 a ns1:AccionProhibida ;
-    ns1:textoExtracto "ángulo de corte no válido para el ciclo programado"@es .
+ns1:MovimientoDeVaivenDistanciaRecorridaDemasiadoGrande a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento de vaivén: Distancia recorrida demasiado grande" ;
+    ns1:textoExtracto "'Movimiento de vaivén: Distancia recorrida demasiado grande' DETECCIÓN Ejecución del movimiento de vaivén para el ajuste del momento de inercia. CAUSA La distancia programada en el movimiento de vaivén es demasiado grande." .
 
-ns1:AccionProhibida_1914 a ns1:AccionProhibida ;
-    ns1:textoExtracto "avance para la operación de desbaste con valor 0"@es .
+ns1:MovimientoDeVaivenDistanciaRecorridaDemasiadoPequena a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento de vaivén: Distancia recorrida demasiado pequeña" ;
+    ns1:textoExtracto "'Movimiento de vaivén: Distancia recorrida demasiado pequeña' DETECCIÓN Ejecución del movimiento de vaivén para el ajuste del momento de inercia. CAUSA La distancia programada en el movimiento de vaivén es insuficiente." .
 
-ns1:AccionProhibida_1915 a ns1:AccionProhibida ;
-    ns1:textoExtracto "avance para la operación de acabado con valor 0"@es .
-
-ns1:AccionProhibida_1916 a ns1:AccionProhibida ;
-    ns1:textoExtracto "velocidad para la operación de desbaste con valor 0"@es .
-
-ns1:AccionProhibida_1917 a ns1:AccionProhibida ;
-    ns1:textoExtracto "velocidad para la operación de acabado con valor 0"@es .
-
-ns1:AccionProhibida_1918 a ns1:AccionProhibida ;
-    ns1:textoExtracto "perfil cerrado en ciclo fijo"@es .
-
-ns1:Alarma_1911 a ns1:Alarma ;
-    rdfs:label "Factor de forma no válido en ciclo de desbaste"@es ;
-    ns1:identificador "1911" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1911 ;
-    ns1:textoExtracto "1911 'Factor de forma no válido en ciclo de desbaste' DETECCIÓN Durante la ejecución del ciclo. CAUSA El factor de forma no es válido para el ciclo programado. SOLUCIÓN Corregir el factor de forma o seleccionar otra herramienta."@es .
-
-ns1:Alarma_1912 a ns1:Alarma ;
-    rdfs:label "Ángulo de la cuchilla no válido"@es ;
-    ns1:identificador "1912" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1912 ;
-    ns1:textoExtracto "1912 'Angulo de la cuchilla no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA El ángulo de la cuchilla no es válido para el ciclo programado. SOLUCIÓN Corregir el ángulo de la cuchilla o seleccionar otra herramienta."@es .
-
-ns1:Alarma_1913 a ns1:Alarma ;
-    rdfs:label "Ángulo de corte de la cuchilla no válido"@es ;
-    ns1:identificador "1913" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1913 ;
-    ns1:textoExtracto "1913 'Angulo de corte de la cuchilla no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA El ángulo de corte no es válido para el ciclo programado. SOLUCIÓN Corregir el ángulo de corte o seleccionar otra herramienta."@es .
-
-ns1:Alarma_1914 a ns1:Alarma ;
-    rdfs:label "F de desbaste no válida"@es ;
-    ns1:identificador "1914" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1914 ;
-    ns1:textoExtracto "1914 'F de desbaste no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El avance para la operación de desbaste tiene valor 0. SOLUCIÓN Definir un avance mayor que 0."@es .
-
-ns1:Alarma_1915 a ns1:Alarma ;
-    rdfs:label "F de acabado no válida"@es ;
-    ns1:identificador "1915" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1915 ;
-    ns1:textoExtracto "1915 'F de acabado no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El avance para la operación de acabado tiene valor 0. SOLUCIÓN Definir un avance mayor que 0."@es .
-
-ns1:Alarma_1916 a ns1:Alarma ;
-    rdfs:label "S de desbaste no válida"@es ;
-    ns1:identificador "1916" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1916 ;
-    ns1:textoExtracto "1916 'S de desbaste no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA La velocidad para la operación de desbaste tiene valor 0. SOLUCIÓN Definir una velocidad mayor que 0."@es .
-
-ns1:Alarma_1917 a ns1:Alarma ;
-    rdfs:label "S de acabado no válida"@es ;
-    ns1:identificador "1917" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1917 ;
-    ns1:textoExtracto "1917 'S de acabado no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA La velocidad para la operación de acabado tiene valor 0. SOLUCIÓN Definir una velocidad mayor que 0."@es .
-
-ns1:Alarma_1918 a ns1:Alarma ;
-    rdfs:label "Perfil programado es cerrado"@es ;
-    ns1:identificador "1918" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1918 ;
-    ns1:textoExtracto "1918 'Perfil programado es cerrado' DETECCIÓN Durante la ejecución del ciclo. CAUSA El perfil definido en el ciclo fijo no es válido porque es un perfil cerrado. SOLUCIÓN Programar un perfil que no sea cerrado."@es .
+ns1:CajeraConIslasTipoDeAcabadoNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Cajera con islas: Tipo de acabado no válido" ;
+    ns1:textoExtracto "'Cajera con islas: Tipo de acabado no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA El tipo de acabado (parámetro Q) no es válido." .
 

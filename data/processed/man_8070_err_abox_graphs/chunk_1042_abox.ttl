@@ -1,46 +1,49 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_24518 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de bus en dispositivo EtherCAT" ;
-    ns1:documentadoEn ns1:InterfazDiagnostico_EtherCAT ;
-    ns1:identificador "24518" ;
-    ns1:solucionaFallo ns1:ManualEspecifico_NodoEtherCAT ;
-    ns1:textoExtracto "24518 Error de bus en el dispositivo %u. DETECCIÓN En la pantalla de diagnosis, durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+ns1:ConectarElCableDeEtherCAT a ns1:TareaMantenimiento ;
+    rdfs:label "Conectar el cable de EtherCAT" ;
+    ns1:solucionaFallo ns1:EtherCATDatalinkNoPresente ;
+    ns1:textoExtracto "SOLUCIÓN Conectar el cable de EtherCAT." .
 
-ns1:DiagnosticoFallo_24519 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de configuración en módulo EtherCAT" ;
-    ns1:documentadoEn ns1:InterfazDiagnostico_EtherCAT ;
-    ns1:identificador "24519" ;
-    ns1:solucionaFallo ns1:ManualEspecifico_NodoEtherCAT ;
-    ns1:textoExtracto "24519 Error de configuración en el módulo %u. DETECCIÓN En la pantalla de diagnosis, durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+ns1:CopiarEnMtbDataElFicheroENIDeConfiguracionDeLaRedEtherCAT a ns1:TareaMantenimiento ;
+    rdfs:label "Copiar en Mtb/Data el fichero ENI de configuración de la red EtherCAT" ;
+    ns1:solucionaFallo ns1:EtherCATFicheroENIDeConfiguracionNoExiste ;
+    ns1:textoExtracto "SOLUCIÓN Copiar en Mtb/Data el fichero ENI de configuración de la red EtherCAT. El archivo se debe llamar fagor_ethercatConfFile.xml." .
 
-ns1:DiagnosticoFallo_24520 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de hardware en módulo EtherCAT" ;
-    ns1:documentadoEn ns1:InterfazDiagnostico_EtherCAT ;
-    ns1:identificador "24520" ;
-    ns1:solucionaFallo ns1:ManualEspecifico_NodoEtherCAT ;
-    ns1:textoExtracto "24520 Error de hardware en el módulo %u. DETECCIÓN En la pantalla de diagnosis, durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+ns1:EtherCATCRCIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "EtherCAT: CRC Incorrecto" ;
+    ns1:solucionaFallo ns1:RevisarElConexionadoYElEstadoDeLosEsclavos ;
+    ns1:textoExtracto "24003 EtherCAT: CRC Incorrecto. DETECCIÓN Durante el funcionamiento del CNC. CAUSA El cable EtherCAT está desconectado o hay interferancias en el bus. SOLUCIÓN Revisar el conexionado y el estado de los esclavos." .
 
-ns1:DiagnosticoFallo_24521 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de firmware en módulo EtherCAT" ;
-    ns1:documentadoEn ns1:InterfazDiagnostico_EtherCAT ;
-    ns1:identificador "24521" ;
-    ns1:solucionaFallo ns1:ManualEspecifico_NodoEtherCAT ;
-    ns1:textoExtracto "24521 Error de firmware en el módulo %u. DETECCIÓN En la pantalla de diagnosis, durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+ns1:EtherCATFicheroDeRutadoNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "EtherCAT: Fichero de rutado no existe" ;
+    ns1:textoExtracto "24020 EtherCAT: Fichero de rutado no existe. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA No existe el fichero para acceder a los recursos del bus EtherCAT desde el sistema CNC-PLC Fagor." .
 
-ns1:DiagnosticoFallo_24522 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error periférico en módulo EtherCAT" ;
-    ns1:documentadoEn ns1:InterfazDiagnostico_EtherCAT ;
-    ns1:identificador "24522" ;
-    ns1:solucionaFallo ns1:ManualEspecifico_NodoEtherCAT ;
-    ns1:textoExtracto "24522 Error periférico en el módulo %u. DETECCIÓN En la pantalla de diagnosis, durante la ejecución. CAUSA Un nodo EtherCAT ha enviado una emergencia indicando esta condición de error." .
+ns1:EtherCATFormatoDeFicheroENIDeConfiguracionIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "EtherCAT: Formato de fichero ENI de configuración incorrecto" ;
+    ns1:solucionaFallo ns1:RevisarElConexionadoYElEstadoDeLosEsclavos ;
+    ns1:textoExtracto "24011 EtherCAT: Formato de fichero ENI de configuración incorrecto. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El fichero ENI de configuración de la red EtherCAT tiene un formato ilegible para el CNC." .
 
-ns1:InterfazDiagnostico_EtherCAT a ns1:InterfazUsuario ;
-    rdfs:label "Pantalla de diagnosis EtherCAT" ;
-    ns1:textoExtracto "En la pantalla de diagnosis, durante la ejecución." .
+ns1:EtherCATWorkingCounterError a ns1:DiagnosticoFallo ;
+    rdfs:label "EtherCAT: Working Counter error" ;
+    ns1:solucionaFallo ns1:RevisarElConexionadoYElEstadoDeLosEsclavos ;
+    ns1:textoExtracto "24004 EtherCAT: Working Counter error. DETECCIÓN Durante el funcionamiento del CNC. CAUSA Funcionamiento incorrecto de alguno de los esclavos de EtherCAT. SOLUCIÓN Revisar el conexionado y el estado de los esclavos." .
 
-ns1:ManualEspecifico_NodoEtherCAT a ns1:Manual ;
-    rdfs:label "Manual específico del nodo EtherCAT" ;
-    ns1:textoExtracto "Se recomienda consultar en el manual específico del nodo, la información de diagnosis o el valor adicional que acompaña al error (código hexadecimal de la emergencia)." .
+ns1:EtherCATDatalinkNoPresente a ns1:DiagnosticoFallo ;
+    rdfs:label "EtherCAT: Datalink no presente" ;
+    ns1:textoExtracto "24001 EtherCAT: Datalink no presente. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El cable EtherCAT está desconectado. SOLUCIÓN Conectar el cable de EtherCAT." .
+
+ns1:EtherCATFicheroENIDeConfiguracionNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "EtherCAT: Fichero ENI de configuración no existe" ;
+    ns1:textoExtracto "24010 EtherCAT: Fichero ENI de configuración no existe. DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA No existe el fichero ENI de configuración de la red EtherCAT. SOLUCIÓN Copiar en Mtb/Data el fichero ENI de configuración de la red EtherCAT." .
+
+ns1:EtherCATPaquetePerdido a ns1:DiagnosticoFallo ;
+    rdfs:label "EtherCAT: Paquete perdido" ;
+    ns1:textoExtracto "24002 EtherCAT: Paquete perdido. DETECCIÓN Durante el funcionamiento del CNC. CAUSA El cable EtherCAT está desconectado o algún esclavo no funciona correctamente. SOLUCIÓN Revisar el conexionado y el estado de los esclavos." .
+
+ns1:RevisarElConexionadoYElEstadoDeLosEsclavos a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado y el estado de los esclavos" ;
+    ns1:solucionaFallo ns1:EtherCATPaquetePerdido ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el conexionado y el estado de los esclavos." .
 

@@ -1,32 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Param_DataLength a ns1:Parametro ;
-    rdfs:label "Longitud de datos de transmisión (DATALENGTH)"@es ;
-    ns1:documentadoEn ns1:Encoder_Parametros ;
-    ns1:identificador "DATALENGTH" ;
-    ns1:textoExtracto "DATALENGTH • Número de bits que constituyen el dato en la transmisión."@es ;
-    ns1:valor "(V.)[ch].MPA.DE_DATALENGTH[set].xn"^^xsd:string .
+ns1:BitsDeAlarmaAcknowledge a ns1:Parametro ;
+    rdfs:label "Bits de alarma/acknowledge" ;
+    ns1:identificador "SSIALARMBITS" ;
+    ns1:textoExtracto "SSIALARMBITS = 1 | 1 bit de alarma/acknowledge." .
 
-ns1:Param_ResolucionAngular a ns1:Parametro ;
-    rdfs:label "Resolución del encóder angular (impulsos/vuelta)"@es ;
-    ns1:documentadoEn ns1:Encoder_Parametros ;
-    ns1:textoExtracto "Si el encóder es angular, número de impulsos por vuelta."@es .
+ns1:BitsDeCRC a ns1:Parametro ;
+    rdfs:label "Bits de CRC" ;
+    ns1:identificador "SSICRCBITS" ;
+    ns1:textoExtracto "SSICRCBITS = 0 | No hay bits de CRC." .
 
-ns1:Param_ResolucionLinear a ns1:Parametro ;
-    rdfs:label "Resolución del encóder lineal (nanómetros)"@es ;
-    ns1:documentadoEn ns1:Encoder_Parametros ;
-    ns1:textoExtracto "Si el encóder es lineal, resolución en nanómetros."@es .
+ns1:BitsDeStart a ns1:Parametro ;
+    rdfs:label "Bits de start" ;
+    ns1:identificador "SSISTARTBITS" ;
+    ns1:textoExtracto "SSISTARTBITS = 0 | No hay bits de start." .
 
-ns1:Param_SerialNumber a ns1:Parametro ;
-    rdfs:label "Número de serie del encóder (SERIALNUMBER)"@es ;
-    ns1:documentadoEn ns1:Encoder_Parametros ;
-    ns1:identificador "SERIALNUMBER" ;
-    ns1:textoExtracto "SERIALNUMBER • Número de serie del encóder. [...] Parámetro no modificable; el CNC lee este parámetro del encóder."@es ;
-    ns1:valor "(V.)[ch].MPA.DE_SERIALNUMBER[set].xn"^^xsd:string .
+ns1:FormatoDelPaquete a ns1:Parametro ;
+    rdfs:label "Formato del paquete" ;
+    ns1:identificador "SSIPACKFORMAT" ;
+    ns1:textoExtracto "SSIPACKFORMAT = 3 | Data + Alarm." .
 
-ns1:Encoder_Parametros a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros del encóder"@es ;
-    ns1:textoExtracto "Variable asociada (valor guardado en la tabla): (V.)[ch].MPA.DE_SERIALNUMBER[set].xn [...] (V.)[ch].MPA.DE_DATALENGTH[set].xn"@es .
+ns1:FrecuenciaParaLaComunicacionSSI_3889cd4023 a ns1:Parametro ;
+    rdfs:label "Frecuencia para la comunicación SSI" ;
+    ns1:identificador "SSICLKFREQ" ;
+    ns1:textoExtracto "SSICLKFREQ = 1 / T = 400. | 400 kHz." .
+
+ns1:LongitudDeBitsDeLaCota a ns1:Parametro ;
+    rdfs:label "Longitud de bits de la cota" ;
+    ns1:identificador "SSIDATALENGTH" ;
+    ns1:textoExtracto "SSIDATALENGTH = n | Longitud de bits de la cota." .
+
+ns1:ModoDeDatos a ns1:Parametro ;
+    rdfs:label "Modo de datos" ;
+    ns1:identificador "SSIDATAMODE" ;
+    ns1:textoExtracto "SSIDATAMODE = 1 | MSB Primero." .
+
+ns1:NivelDeAlarma a ns1:Parametro ;
+    rdfs:label "Nivel de alarma" ;
+    ns1:identificador "SSIALARMLEVEL" ;
+    ns1:textoExtracto "SSIALARMLEVEL = 1 | El acknowledge se indica con data a 0; por tanto, se produce una señal de alarma cuando el bit es un 1." .
 

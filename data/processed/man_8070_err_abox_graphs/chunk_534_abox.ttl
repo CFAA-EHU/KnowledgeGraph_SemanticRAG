@@ -1,31 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_3089 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el cálculo de la transformada inversa del eje virtual de la herramienta, #VIRTAX"@es ;
-    ns1:identificador "3089" ;
-    ns1:solucionaFallo ns1:Solucion_ParametrizacionCorteLaser ;
-    ns1:textoExtracto "3089 'Error en el cálculo de la transformada inversa del eje virtual de la herramienta, #VIRTAX'"@es .
+ns1:ElCabezalMasterDeLaSincronizacionNoPasaALazoAbierto_07ae769382 a ns1:DiagnosticoFallo ;
+    rdfs:label "El cabezal master de la sincronización no pasa a lazo abierto" ;
+    ns1:textoExtracto "'El cabezal master de la sincronización no pasa a lazo abierto'" .
 
-ns1:Parametro_NLOCOUT a ns1:Parametro ;
-    rdfs:label "NLOCOUT" ;
-    ns1:textoExtracto "El parámetro NLOCOUT debe ser 8."@es ;
-    ns1:valor "8" .
+ns1:EvitarSaturarLosRecursosDelSistema a ns1:AvisoSeguridad ;
+    rdfs:label "Evitar saturar los recursos del sistema" ;
+    ns1:mitigaRiesgo ns1:ActivarModoBloqueABloqueDuranteElRetrace ;
+    ns1:textoExtracto "Para evitar saturar los recursos del sistema, el CNC no permite la función bloque a bloque en este tipo de programas." .
 
-ns1:Parametro_PWMOUTPUT a ns1:Parametro ;
-    rdfs:label "PWMOUTPUT" ;
-    ns1:textoExtracto "El parámetro PWMOUTPUT no puede ser superior a 2 (0, 1, 2)."@es ;
-    ns1:valor "0, 1, 2" .
+ns1:ActivarModoBloqueABloqueDuranteElRetrace a ns1:AccionProhibida ;
+    rdfs:label "Activar modo bloque a bloque durante el retrace" ;
+    ns1:mitigaRiesgo ns1:CNC8070_165a09f487 ;
+    ns1:textoExtracto "Se ha intentado activar el modo bloque a bloque durante el retrace, en un programa con muchos bloques con movimientos muy cortos." .
 
-ns1:PlacaExpansion_Sercos a ns1:ComponenteElectrico ;
-    rdfs:label "Placa de expansión tipo Sercos"@es ;
-    ns1:identificador "ID software >= 1.2" ;
-    ns1:textoExtracto "Debe existir una placa de expansión tipo Sercos, con ID software igual o superior a 1.2."@es .
-
-ns1:Solucion_ParametrizacionCorteLaser a ns1:TareaMantenimiento ;
-    rdfs:label "Verificación de condiciones para corte por láser"@es ;
-    ns1:monitoreaParametro ns1:Parametro_NLOCOUT,
-        ns1:Parametro_PWMOUTPUT ;
-    ns1:requiereMantenimiento ns1:PlacaExpansion_Sercos ;
-    ns1:textoExtracto "Verificar las siguientes condiciones: • Debe existir una placa de expansión tipo Sercos, con ID software igual o superior a 1.2. • El parámetro NLOCOUT debe ser 8. • El parámetro PWMOUTPUT no puede ser superior a 2 (0, 1, 2)."@es .
+ns1:CNC8070_165a09f487 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "el CNC no permite la función bloque a bloque en este tipo de programas." .
 

@@ -1,33 +1,12 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaCANopen_ConfiguracionSalidasDigitales a ns1:Sistema ;
-    rdfs:label "Sistema de configuración de salidas digitales (bus CANopen)" ;
-    ns1:cumpleNormativa ns1:Requisito_ConfiguracionCANopen ;
-    ns1:textoExtracto "La configuración debe cumplir los siguientes requisitos. Si la parametrización no se ajusta a estos requisitos, el CNC la ignora y numera las salidas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus." ;
-    ns1:tieneComponente ns1:Parametro_BLOQUE,
-        ns1:Parametro_DIRECCION,
-        ns1:Parametro_NODO .
+ns1:NumeroDeSalidasDigitalesDelBloqueLogico a ns1:Parametro ;
+    rdfs:label "Número de salidas digitales del bloque lógico" ;
+    ns1:identificador "MPG.DOMODNDO" ;
+    ns1:textoExtracto "Variable asociada: (V.)MPG.DOMODNDO[nb] Número de salidas digitales del bloque lógico; no puede ser cero y debe ser un múltiplo de 8 (8, 16, 24, ...1024)." .
 
-ns1:Parametro_BLOQUE a ns1:Parametro ;
-    rdfs:label "BLOCK (Número de bloque lógico)" ;
-    ns1:identificador "MPG.DOMODBLOCK[nb]" ;
-    ns1:textoExtracto "BLOCK: Número de bloque lógico. Valores posibles: De 1 a 64. Valor por defecto: 0. El máximo número de bloques lógicos en el sistema será 64, tanto para entradas como para salidas digitales." ;
-    ns1:valor "1-64" .
-
-ns1:Parametro_DIRECCION a ns1:Parametro ;
-    rdfs:label "ADDRESS (Dirección base del bloque lógico)" ;
-    ns1:identificador "MPG.DOMODBLOCK.ADDRESS" ;
-    ns1:textoExtracto "ADDRESS: Dirección base del bloque lógico. Valores posibles: De 1 a 1017. Valor por defecto: El primer valor válido." ;
-    ns1:valor "1-1017" .
-
-ns1:Parametro_NODO a ns1:Parametro ;
-    rdfs:label "NODO (Número de nodo de la cabecera)" ;
-    ns1:identificador "MPG.DOMODNODE[nb]" ;
-    ns1:textoExtracto "NODE: Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os. Valores posibles: De 1 a 125. Valor por defecto: 0." ;
-    ns1:valor "1-125" .
-
-ns1:Requisito_ConfiguracionCANopen a ns1:Tabla ;
-    rdfs:label "Requisitos de configuración del bus CANopen" ;
-    ns1:textoExtracto "• Se deben parametrizar todos los nodos de I/Os del bus; no se pueden dejar nodos sin definir. • Se deben parametrizar todos los recursos de un nodo; no se pueden dejar I/Os sin numerar. • El máximo número de bloques lógicos en el sistema será 64, tanto para entradas como para salidas digitales. • El número de I/Os de un bloque lógico no puede ser cero, y debe ser un múltiplo de 8. • Los valores del índice base deben cumplir con la fórmula '8n + 1' (es decir, 1, 9, 17, 25 ...). • Los bloques se pueden distribuir como se desee dentro del rango de recursos gestionados por PLC (1...1024)." .
+ns1:SistemaHidraulico a ns1:Sistema ;
+    rdfs:label "Sistema Hidraulico" ;
+    ns1:textoExtracto "Se deben parametrizar todos los recursos de un nodo; no se pueden dejar I/Os sin numerar." .
 

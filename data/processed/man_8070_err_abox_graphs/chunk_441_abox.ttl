@@ -1,13 +1,49 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:TareaMantenimiento_CalibracionCinematicas a ns1:TareaMantenimiento ;
-    rdfs:label "Calibración de cinemáticas" ;
-    ns1:solucionaFallo ns1:Error_2376_LSFIT ;
-    ns1:textoExtracto "CAUSA Calibración de cinemáticas. El ciclo no puede finalizar el ajuste con las palpaciones realizadas o los datos de entrada." .
+ns1:G34IncrementoDecrementoDelPasoDeHusilloDemasiadoGrande a ns1:DiagnosticoFallo ;
+    rdfs:label "G34: Incremento/decremento del paso de husillo demasiado grande" ;
+    ns1:textoExtracto "2368 G34: Incremento/decremento del paso de husillo demasiado grande. DETECCIÓN Durante la ejecución. CAUSA Se ha programado un incremento del paso de husillo superior a dos veces el paso de rosca." .
 
-ns1:Error_2376_LSFIT a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2376 #LSFIT (SVBK)" ;
-    ns1:identificador "2376 #LSFIT" ;
-    ns1:textoExtracto "2376 #LSFIT, error de cálculo (SVBK), compruebe los datos de entrada." .
+ns1:ProgramarCorrectamenteElPasoYElDecrementoDePasoDeHusilloEnG34 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar correctamente el paso y el decremento de paso de husillo en G34" ;
+    ns1:solucionaFallo ns1:G34PasoFinalDeHusilloNegativoONulo ;
+    ns1:textoExtracto "SOLUCIÓN Programar correctamente el paso y el decremento de paso de husillo en G34." .
+
+ns1:ProgramarElIncrementoDecrementoDelPasoDeHusilloUnaUnicaVezEnElBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Programar el incremento/decremento del paso de husillo una única vez en el bloque" ;
+    ns1:solucionaFallo ns1:G34DobleProgramacionDelIncrementoDecrementoDelPasoDeHusillo ;
+    ns1:textoExtracto "SOLUCIÓN Programar el incremento/decremento del paso de husillo una única vez en el bloque." .
+
+ns1:ProgramarElPuntoFinalDelArco a ns1:TareaMantenimiento ;
+    rdfs:label "Programar el punto final del arco" ;
+    ns1:solucionaFallo ns1:PuntoFinalDeMovimientoInexistente_5c49791a67 ;
+    ns1:textoExtracto "SOLUCIÓN Programar el punto final del arco." .
+
+ns1:ProgramarUnValorCorrectoDelIncrementoDecrementoDelPasoDeHusilloK1 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un valor correcto del incremento/decremento del paso de husillo (K1)" ;
+    ns1:solucionaFallo ns1:G34IncrementoDecrementoDelPasoDeHusilloFueraDeRango,
+        ns1:G34IncrementoDecrementoDelPasoDeHusilloIgualACero,
+        ns1:PuntoFinalDeMovimientoInexistente_5c49791a67 ;
+    ns1:textoExtracto "SOLUCIÓN Programar un valor correcto del incremento/decremento del paso de husillo (K1)." .
+
+ns1:G34DobleProgramacionDelIncrementoDecrementoDelPasoDeHusillo a ns1:DiagnosticoFallo ;
+    rdfs:label "G34: Doble programación del incremento/decremento del paso de husillo" ;
+    ns1:textoExtracto "2365 G34: Doble programación del incremento/decremento del paso de husillo. DETECCIÓN Durante la ejecución. CAUSA Se ha programado más de una vez el incremento/decremento del paso de husillo (K1)" .
+
+ns1:G34IncrementoDecrementoDelPasoDeHusilloFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "G34: Incremento/decremento del paso de husillo fuera de rango" ;
+    ns1:textoExtracto "2367 G34: Incremento/decremento del paso de husillo fuera de rango. DETECCIÓN Durante la ejecución. CAUSA El valor del incremento/decremento del paso de husillo en G34 es incorrecto." .
+
+ns1:G34IncrementoDecrementoDelPasoDeHusilloIgualACero a ns1:DiagnosticoFallo ;
+    rdfs:label "G34: Incremento/decremento del paso de husillo igual a cero" ;
+    ns1:textoExtracto "2366 G34: Incremento/decremento del paso de husillo igual a cero. DETECCIÓN Durante la ejecución. CAUSA El incremento/decremento del paso de husillo (K1) para G34 es cero." .
+
+ns1:G34PasoFinalDeHusilloNegativoONulo a ns1:DiagnosticoFallo ;
+    rdfs:label "G34: Paso final de husillo negativo o nulo" ;
+    ns1:textoExtracto "2369 G34: Paso final de husillo negativo o nulo. DETECCIÓN Durante la ejecución. CAUSA Con el paso de husillo y el decremento de paso de husillo programados en G34, el paso final de rosca calculado por el control es negativo o cero." .
+
+ns1:PuntoFinalDeMovimientoInexistente_5c49791a67 a ns1:DiagnosticoFallo ;
+    rdfs:label "Punto final de movimiento inexistente" ;
+    ns1:textoExtracto "2364 Punto final de movimiento inexistente. DETECCIÓN Durante la ejecución. CAUSA La cota programada mediante una coordenada cartesiana y un ángulo es incorrecta. La trayectoria que parte del punto anterior no puede alcanzar el punto programado." .
 

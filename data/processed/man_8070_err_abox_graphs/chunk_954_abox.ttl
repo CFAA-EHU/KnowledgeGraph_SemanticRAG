@@ -1,34 +1,97 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Captador_Sistema a ns1:Sensor ;
-    rdfs:label "Captador" ;
-    ns1:textoExtracto "Compruebe el cable y el conexionado con el captador. El error puede deberse a un problema en el captador." .
+ns1:CNC8070_9c1c448eec a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:ElCNCNoPuedeActualizarLaVersionDelDSPEnAlgunReguladorORPS ;
+    ns1:textoExtracto "El CNC no puede actualizar la versión del DSP en algún regulador o RPS." .
 
-ns1:Empresa_FagorAutomation a ns1:Empresa ;
-    rdfs:label "Fagor Automation" ;
-    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation." .
+ns1:CompruebeElConexionado_5497933257 a ns1:TareaMantenimiento ;
+    rdfs:label "Compruebe el conexionado" ;
+    ns1:solucionaFallo ns1:ElCNCNoPuedeActualizarLaVersionDeLaFPGAEnAlgunReguladorORPS ;
+    ns1:textoExtracto "9512 Error en la actualización de versión FPGA. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El CNC no puede actualizar la versión de la FPGA en algún regulador o RPS. SOLUCIÓN Compruebe el conexionado." .
 
-ns1:Modulo_ABSIND a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo ABSIND" ;
-    ns1:textoExtracto "El regulador ha perdido la sincronización con el módulo ABSIND" .
+ns1:ContacteConFagorAutomation_7833cd6ee1 a ns1:TareaMantenimiento ;
+    rdfs:label "Contacte con Fagor Automation" ;
+    ns1:solucionaFallo ns1:ErrorInternoDelRegulador ;
+    ns1:textoExtracto "9506 Error de comprobación de CRC de PM. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Error interno del regulador. SOLUCIÓN Contacte con Fagor Automation." .
 
-ns1:Regulador_Sistema a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador del sistema" ;
-    ns1:monitoreaParametro ns1:Parametro_Cota ;
-    ns1:textoExtracto "El regulador ha perdido la sincronización con el módulo ABSIND" .
+ns1:ElReguladorNoRespondePosibleMalFuncionamientoConexionadoEtc a ns1:DiagnosticoFallo ;
+    rdfs:label "El regulador no responde; posible mal funcionamiento, conexionado, etc." ;
+    ns1:textoExtracto "9508 Watchdog de regulador. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador no responde; posible mal funcionamiento, conexionado, etc. SOLUCIÓN Contacte con Fagor Automation." .
 
-ns1:TareaMantenimiento_RevisionCableadoCaptador a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de cableado y conexionado del captador" ;
-    ns1:solucionaFallo ns1:Error_ABSIND_9523 ;
-    ns1:textoExtracto "Compruebe el cable y el conexionado con el captador" .
+ns1:ErrorDeComprobacionDeCRCDePM_732427f576 a ns1:Alarma ;
+    rdfs:label "Error de comprobación de CRC de PM" ;
+    ns1:textoExtracto "9506 Error de comprobación de CRC de PM. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Error interno del regulador. SOLUCIÓN Contacte con Fagor Automation." .
 
-ns1:Error_ABSIND_9523 a ns1:AvisoSeguridad ;
-    rdfs:label "Error de sincronismo ABSIND 9523" ;
-    ns1:identificador "9523" ;
-    ns1:textoExtracto "9523 ABSIND: Error de sincronismo. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador ha perdido la sincronización con el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta." .
+ns1:ErrorEnLaActualizacionDeVersionDSP_a0fa6450d2 a ns1:Alarma ;
+    rdfs:label "Error en la actualización de versión DSP" ;
+    ns1:textoExtracto "9511 Error en la actualización de versión DSP. DETECCIÓN Durante el arranque del sistema. CAUSA El CNC no puede actualizar la versión del DSP en algún regulador o RPS. SOLUCIÓN Compruebe el conexionado. Si el error persiste, póngase en contacto con Fagor Automation." .
 
-ns1:Parametro_Cota a ns1:Parametro ;
-    rdfs:label "Cota" ;
-    ns1:textoExtracto "una lectura de cota incorrecta" .
+ns1:ErrorEnLaActualizacionDeVersionFPGA_70a18b60ee a ns1:Alarma ;
+    rdfs:label "Error en la actualización de versión FPGA" ;
+    ns1:textoExtracto "9512 Error en la actualización de versión FPGA. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El CNC no puede actualizar la versión de la FPGA en algún regulador o RPS. SOLUCIÓN Compruebe el conexionado." .
+
+ns1:ErrorEnLaDeteccionDePM_94fa9b1c93 a ns1:Alarma ;
+    rdfs:label "Error en la detección de PM" ;
+    ns1:textoExtracto "9507 Error en la detección de PM. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Error interno del regulador. SOLUCIÓN Contacte con Fagor Automation." .
+
+ns1:ErrorInternoDelRegulador_5ef53b20f4 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error interno del regulador" ;
+    ns1:textoExtracto "9507 Error en la detección de PM. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Error interno del regulador. SOLUCIÓN Contacte con Fagor Automation." .
+
+ns1:Fallo24VdcInesperado_657b16b67e a ns1:Alarma ;
+    rdfs:label "Fallo 24 Vdc inesperado" ;
+    ns1:textoExtracto "9509 Fallo 24 Vdc inesperado. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador ha detectado una caída en la tensión de control. SOLUCIÓN Revisar el conexionado y la alimentación de control de 24 Vdc." .
+
+ns1:LazosDeCorrienteEnMismoNodoIncompatibles_b21c3a3be3 a ns1:Alarma ;
+    rdfs:label "Lazos de corriente en mismo nodo incompatibles" ;
+    ns1:textoExtracto "9510 Lazos de corriente en mismo nodo incompatibles. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Un regulador doble tiene configurados modos incompatibles de control para cada motor. SOLUCIÓN En un regulador doble, parametrizar el mismo tipo de control en ambos motores." .
+
+ns1:Regulador a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador" ;
+    ns1:activaAlarma ns1:Alarma_ca54dbf78b ;
+    ns1:textoExtracto "El regulador ha detectado un error en la correlación del pulsos entre dos señales de I0 del encoder." .
+
+ns1:RevisarElConexionadoYLaAlimentacionDeControlDe24Vdc a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado y la alimentación de control de 24 Vdc" ;
+    ns1:solucionaFallo ns1:ElReguladorHaDetectadoUnaCaidaEnLaTensionDeControl ;
+    ns1:textoExtracto "9509 Fallo 24 Vdc inesperado. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador ha detectado una caída en la tensión de control. SOLUCIÓN Revisar el conexionado y la alimentación de control de 24 Vdc." .
+
+ns1:RevisarLaParametrizacionYElConexionadoDelEncoder a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la parametrización y el conexionado del encoder" ;
+    ns1:solucionaFallo ns1:ErrorEnLaCorrelacionDelPulsosEntreDosSenalesDeI0DelEncoder ;
+    ns1:textoExtracto "del encoder. 9505 Alarma de pulsos entre I0s. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El regulador ha detectado un error en la correlación del pulsos entre dos señales de I0 del encoder. SOLUCIÓN Revisar la parametrización y el conexionado del encoder." .
+
+ns1:UnReguladorDobleTieneConfiguradosModosIncompatiblesDeControlParaCadaMotor a ns1:DiagnosticoFallo ;
+    rdfs:label "Un regulador doble tiene configurados modos incompatibles de control para cada motor" ;
+    ns1:textoExtracto "9510 Lazos de corriente en mismo nodo incompatibles. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Un regulador doble tiene configurados modos incompatibles de control para cada motor. SOLUCIÓN En un regulador doble, parametrizar el mismo tipo de control en ambos motores." .
+
+ns1:WatchdogDeRegulador_5467c1fdc7 a ns1:Alarma ;
+    rdfs:label "Watchdog de regulador" ;
+    ns1:textoExtracto "9508 Watchdog de regulador. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador no responde; posible mal funcionamiento, conexionado, etc. SOLUCIÓN Contacte con Fagor Automation." .
+
+ns1:Alarma_ca54dbf78b a ns1:Alarma ;
+    rdfs:label "Alarma de pulsos entre I0s" ;
+    ns1:textoExtracto "del encoder. 9505 Alarma de pulsos entre I0s. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El regulador ha detectado un error en la correlación del pulsos entre dos señales de I0 del encoder. SOLUCIÓN Revisar la parametrización y el conexionado del encoder." .
+
+ns1:ElCNCNoPuedeActualizarLaVersionDeLaFPGAEnAlgunReguladorORPS a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC no puede actualizar la versión de la FPGA en algún regulador o RPS" ;
+    ns1:textoExtracto "9512 Error en la actualización de versión FPGA. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El CNC no puede actualizar la versión de la FPGA en algún regulador o RPS. SOLUCIÓN Compruebe el conexionado." .
+
+ns1:ElCNCNoPuedeActualizarLaVersionDelDSPEnAlgunReguladorORPS a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC no puede actualizar la versión del DSP en algún regulador o RPS" ;
+    ns1:textoExtracto "9511 Error en la actualización de versión DSP. DETECCIÓN Durante el arranque del sistema. CAUSA El CNC no puede actualizar la versión del DSP en algún regulador o RPS. SOLUCIÓN Compruebe el conexionado. Si el error persiste, póngase en contacto con Fagor Automation." .
+
+ns1:ElReguladorHaDetectadoUnaCaidaEnLaTensionDeControl a ns1:DiagnosticoFallo ;
+    rdfs:label "El regulador ha detectado una caída en la tensión de control" ;
+    ns1:textoExtracto "9509 Fallo 24 Vdc inesperado. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador ha detectado una caída en la tensión de control. SOLUCIÓN Revisar el conexionado y la alimentación de control de 24 Vdc." .
+
+ns1:ErrorEnLaCorrelacionDelPulsosEntreDosSenalesDeI0DelEncoder a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la correlación del pulsos entre dos señales de I0 del encoder" ;
+    ns1:textoExtracto "del encoder. 9505 Alarma de pulsos entre I0s. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El regulador ha detectado un error en la correlación del pulsos entre dos señales de I0 del encoder. SOLUCIÓN Revisar la parametrización y el conexionado del encoder." .
+
+ns1:ErrorInternoDelRegulador a ns1:DiagnosticoFallo ;
+    rdfs:label "Error interno del regulador" ;
+    ns1:textoExtracto "9506 Error de comprobación de CRC de PM. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Error interno del regulador. SOLUCIÓN Contacte con Fagor Automation." .
 

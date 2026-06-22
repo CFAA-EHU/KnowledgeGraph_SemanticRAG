@@ -1,128 +1,28 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaControlCNC_DMC a ns1:Sistema ;
-    rdfs:label "Sistema de control CNC-DMC" ;
-    ns1:textoExtracto "Con el DMC activo, el canal del CNC activa (=1) esta marca [...]" ;
-    ns1:tieneComponente ns1:ADVCUTOFF,
-        ns1:DMCPWRHOLD,
-        ns1:DMCPWRHOLDC1,
-        ns1:DMCPWRHOLDC2,
-        ns1:DMCPWRHOLDC3,
-        ns1:DMCPWRHOLDC4,
-        ns1:DMCPWRPEAK,
-        ns1:DMCPWRPEAKC1,
-        ns1:DMCPWRPEAKC2,
-        ns1:DMCPWRPEAKC3,
-        ns1:DMCPWRPEAKC4,
-        ns1:KINCOMP1,
-        ns1:KINCOMP2,
-        ns1:KINCOMP6 .
+ns1:CNC8070_0cc93c26bc a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:monitoreaParametro ns1:Parametro_759776d7c3,
+        ns1:Parametro_e53a04dc42 ;
+    ns1:textoExtracto "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador." .
 
-ns1:ADVCUTOFF a ns1:Sensor ;
-    rdfs:label "ADVCUTOFF" ;
-    ns1:monitoreaParametro ns1:G_ADVCUTOFFT,
-        ns1:G_ADVCUTOFFW ;
-    ns1:textoExtracto "ADVCUTOFF [...] el CNC activa esta marca (cambio de 0 a 1) durante la ejecución de microjoints, cuando el láser alcanza la distancia G.ADVCUTOFFW o el tiempo G.ADVCUTOFFT" .
+ns1:ComponenteElectrico_87317a9ba9 a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador" ;
+    ns1:activaAlarma ns1:AvisoSeguridad_52528c9d82 ;
+    ns1:textoExtracto "Tras accionar el interruptor general del armario eléctrico se le proporcionan 24 V DC al regulador." .
 
-ns1:DMCPWRHOLD a ns1:Sensor ;
-    rdfs:label "DMCPWRHOLD" ;
-    ns1:monitoreaParametro ns1:DMCPOWERFACTOR ;
-    ns1:textoExtracto "DMCPWRHOLD [...] el canal del CNC activa (=1) esta marca si todos los valores de potencia leídos a lo largo de 2 segundos exceden la potencia a alcanzar" .
+ns1:AvisoSeguridad_52528c9d82 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de captación fallida" ;
+    ns1:textoExtracto "En caso de error, ambas marcas se mantienen a (=1) si el eje se encuentra en movimiento." .
 
-ns1:DMCPWRHOLDC1 a ns1:Sensor ;
-    rdfs:label "DMCPWRHOLDC1" ;
-    ns1:identificador "DMCPWRHOLDC1" ;
-    ns1:monitoreaParametro ns1:DMCPOWERFACTOR ;
-    ns1:textoExtracto "DMCPWRHOLDC1" .
+ns1:Parametro_759776d7c3 a ns1:Parametro ;
+    rdfs:label "Marca de estado del regulador" ;
+    ns1:identificador "DRSTAF(axis)" ;
+    ns1:textoExtracto "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador." .
 
-ns1:DMCPWRHOLDC2 a ns1:Sensor ;
-    rdfs:label "DMCPWRHOLDC2" ;
-    ns1:identificador "DMCPWRHOLDC2" ;
-    ns1:monitoreaParametro ns1:DMCPOWERFACTOR ;
-    ns1:textoExtracto "DMCPWRHOLDC2" .
-
-ns1:DMCPWRHOLDC3 a ns1:Sensor ;
-    rdfs:label "DMCPWRHOLDC3" ;
-    ns1:identificador "DMCPWRHOLDC3" ;
-    ns1:monitoreaParametro ns1:DMCPOWERFACTOR ;
-    ns1:textoExtracto "DMCPWRHOLDC3" .
-
-ns1:DMCPWRHOLDC4 a ns1:Sensor ;
-    rdfs:label "DMCPWRHOLDC4" ;
-    ns1:identificador "DMCPWRHOLDC4" ;
-    ns1:monitoreaParametro ns1:DMCPOWERFACTOR ;
-    ns1:textoExtracto "DMCPWRHOLDC4" .
-
-ns1:DMCPWRPEAK a ns1:Sensor ;
-    rdfs:label "DMCPWRPEAK" ;
-    ns1:monitoreaParametro ns1:DMCPEAKSIZE ;
-    ns1:textoExtracto "DMCPWRPEAK [...] el canal del CNC activa (=1) esta marca si la potencia leída supera a la potencia a alcanzar" .
-
-ns1:DMCPWRPEAKC1 a ns1:Sensor ;
-    rdfs:label "DMCPWRPEAKC1" ;
-    ns1:identificador "DMCPWRPEAKC1" ;
-    ns1:monitoreaParametro ns1:DMCPEAKSIZE ;
-    ns1:textoExtracto "DMCPWRPEAKC1" .
-
-ns1:DMCPWRPEAKC2 a ns1:Sensor ;
-    rdfs:label "DMCPWRPEAKC2" ;
-    ns1:identificador "DMCPWRPEAKC2" ;
-    ns1:monitoreaParametro ns1:DMCPEAKSIZE ;
-    ns1:textoExtracto "DMCPWRPEAKC2" .
-
-ns1:DMCPWRPEAKC3 a ns1:Sensor ;
-    rdfs:label "DMCPWRPEAKC3" ;
-    ns1:identificador "DMCPWRPEAKC3" ;
-    ns1:monitoreaParametro ns1:DMCPEAKSIZE ;
-    ns1:textoExtracto "DMCPWRPEAKC3" .
-
-ns1:DMCPWRPEAKC4 a ns1:Sensor ;
-    rdfs:label "DMCPWRPEAKC4" ;
-    ns1:identificador "DMCPWRPEAKC4" ;
-    ns1:monitoreaParametro ns1:DMCPEAKSIZE ;
-    ns1:textoExtracto "DMCPWRPEAKC4" .
-
-ns1:G_ADVCUTOFFT a ns1:Parametro ;
-    rdfs:label "G.ADVCUTOFFT" ;
-    ns1:textoExtracto "tiempo G.ADVCUTOFFT" ;
-    ns1:valor "tiempo" .
-
-ns1:G_ADVCUTOFFW a ns1:Parametro ;
-    rdfs:label "G.ADVCUTOFFW" ;
-    ns1:textoExtracto "distancia G.ADVCUTOFFW" ;
-    ns1:valor "distancia" .
-
-ns1:KINCOMP1 a ns1:Sensor ;
-    rdfs:label "KINCOMP1" ;
-    ns1:identificador "KINCOMP1" ;
-    ns1:monitoreaParametro ns1:COMPID ;
-    ns1:textoExtracto "KINCOMP1 [...] asociado a COMPID 1" .
-
-ns1:KINCOMP2 a ns1:Sensor ;
-    rdfs:label "KINCOMP2" ;
-    ns1:identificador "KINCOMP2" ;
-    ns1:monitoreaParametro ns1:COMPID ;
-    ns1:textoExtracto "KINCOMP2 [...] asociado a COMPID2" .
-
-ns1:KINCOMP6 a ns1:Sensor ;
-    rdfs:label "KINCOMP6" ;
-    ns1:identificador "KINCOMP6" ;
-    ns1:monitoreaParametro ns1:COMPID ;
-    ns1:textoExtracto "KINCOMP6" .
-
-ns1:COMPID a ns1:Parametro ;
-    rdfs:label "COMPID" ;
-    ns1:textoExtracto "parámetro COMPID [...] Cada cinemática tiene una compensación asociada (parámetro COMPID)" ;
-    ns1:valor "identificador de compensación cinemática" .
-
-ns1:DMCPEAKSIZE a ns1:Parametro ;
-    rdfs:label "DMCPEAKSIZE" ;
-    ns1:textoExtracto "porcentaje definido en el parámetro DMCPEAKSIZE" ;
-    ns1:valor "porcentaje" .
-
-ns1:DMCPOWERFACTOR a ns1:Parametro ;
-    rdfs:label "DMCPOWERFACTOR" ;
-    ns1:textoExtracto "potencia a alcanzar multiplicada por el parámetro DMCPOWERFACTOR" ;
-    ns1:valor "factor multiplicativo" .
+ns1:Parametro_e53a04dc42 a ns1:Parametro ;
+    rdfs:label "Marca de estado del regulador" ;
+    ns1:identificador "DRSTAS(axis)" ;
+    ns1:textoExtracto "El CNC utiliza estas marcas cuando la comunicación con el regulador es vía Sercos® e indican el estado del regulador." .
 

@@ -1,21 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Herramienta_3000_3999 a ns1:Herramienta ;
-    ns1:textoExtracto "Si la herramienta está dentro de la zona prohibida"@es .
+ns1:DisminuirElTiempoDeCicloOElValorDeLosParametrosDeAnticipacion a ns1:TareaMantenimiento ;
+    rdfs:label "Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación" ;
+    ns1:textoExtracto "SOLUCIÓN Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación." .
 
-ns1:SistemaControl_3000_3999 a ns1:Sistema ;
-    rdfs:label "Sistema de control por programa/PLC"@es ;
-    ns1:controla ns1:ZonaProhibida_3000_3999 ;
-    ns1:textoExtracto "La zona puede estar definida por programa ó por PLC (mediante las variables relativas a zonas de trabajo)"@es .
+ns1:ParametroNLOCOUT a ns1:Parametro ;
+    rdfs:label "Parámetro NLOCOUT" ;
+    ns1:textoExtracto "El parámetro NLOCOUT debe ser 8." .
 
-ns1:Solucion_DesactivarZonaProhibida a ns1:AvisoSeguridad ;
-    rdfs:label "Solución: Desactivar zona prohibida temporalmente"@es ;
-    ns1:mitigaRiesgo ns1:ZonaProhibida_3000_3999 ;
-    ns1:textoExtracto "desactivar temporalmente dicha zona, mover el eje en el sentido adecuado"@es .
+ns1:ParametroTOF a ns1:Parametro ;
+    rdfs:label "Parámetro TOF" ;
+    ns1:textoExtracto "Revisar el valor de los parámetros de anticipación TON / TOF." .
 
-ns1:ZonaProhibida_3000_3999 a ns1:AccionProhibida ;
-    rdfs:label "Zona de no entrada"@es ;
-    ns1:identificador "3000-3999" ;
-    ns1:textoExtracto "zona de trabajo de no entrada"@es .
+ns1:ParametroTON a ns1:Parametro ;
+    rdfs:label "Parámetro TON" ;
+    ns1:textoExtracto "Revisar el valor de los parámetros de anticipación TON / TOF." .
+
+ns1:RevisarElValorDeLosParametrosDeAnticipacionTONTOF a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el valor de los parámetros de anticipación TON / TOF" ;
+    ns1:solucionaFallo ns1:NoEsPosibleTantoRetardoParaActivarLaSalidaDigital ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el valor de los parámetros de anticipación TON / TOF." .
+
+ns1:VerificarLasCondicionesParaLaActivacionDesactivacionDelLaser a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar las condiciones para la activación/desactivación del láser" ;
+    ns1:solucionaFallo ns1:ErrorDelDriverEnLaActivacionDesactivacionDelLaser ;
+    ns1:textoExtracto "SOLUCIÓN Verificar las siguientes condiciones: • Debe existir una placa de expansión tipo Sercos, con ID software igual o superior a 1.2. • El parámetro NLOCOUT debe ser 8." .
+
+ns1:ErrorDelDriverEnLaActivacionDesactivacionDelLaser a ns1:DiagnosticoFallo ;
+    rdfs:label "Error del driver en la activación/desactivación del láser" ;
+    ns1:textoExtracto "'Error del driver en la activación/desactivación del láser' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada). CAUSA No se cumplen las condiciones hardware o de parametrización necesarias para poder utilizar la prestación de corte por láser." .
+
+ns1:NoEsPosibleTantoRetardoParaActivarLaSalidaDigital a ns1:DiagnosticoFallo ;
+    rdfs:label "No es posible tanto retardo para activar la salida digital" ;
+    ns1:textoExtracto "'No es posible tanto retardo para activar la salida digital' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada). CAUSA El retardo programado para el láser es excesivo." .
 

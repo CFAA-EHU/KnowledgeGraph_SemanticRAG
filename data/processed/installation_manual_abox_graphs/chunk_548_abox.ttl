@@ -1,27 +1,54 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_TecladoJog a ns1:InterfazUsuario ;
-    rdfs:label "Teclado de jog"@es ;
-    ns1:habilitadoPor ns1:ModoOperacion_ManualVolantes ;
-    ns1:textoExtracto "seleccionar desde el teclado de jog el eje a desplazar"@es .
+ns1:CNC8070_5bc0a7ca66 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Personalización de los volantes. En una máquina con ejes X, Y, Z, A se desea disponer de un volante individual para el eje X, un volante individual para el eje Y e un volante general para los ejes Z, A." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "CNC"@es ;
-    ns1:controla ns1:ModoOperacion_ManualVolantes ;
-    ns1:textoExtracto "el CNC sumará o restará los impulsos de ambos volantes"@es ;
-    ns1:tieneComponente ns1:Componente_VolanteGeneral,
-        ns1:Componente_VolanteIndividual .
+ns1:EjeAsociadoParaElVolanteDelEjeX a ns1:Parametro ;
+    rdfs:label "Eje asociado para el volante del eje X" ;
+    ns1:identificador "MPGAXIS" ;
+    ns1:textoExtracto "Volante asociado al eje X (MANPG 1). MPGAXIS | X | Eje asociado." ;
+    ns1:valor "X" .
 
-ns1:Componente_VolanteGeneral a ns1:ComponenteMecanico ;
-    rdfs:label "Volante general"@es ;
-    ns1:textoExtracto "este eje se podrá mover con el volante general"@es .
+ns1:IdentificadorDeContadorParaElEjeX a ns1:Parametro ;
+    rdfs:label "Identificador de contador para el eje X",
+        "Identificador de contador para el eje Y" ;
+    ns1:identificador "COUNTERID" ;
+    ns1:textoExtracto "Volante asociado al eje X (MANPG 1). COUNTERID | -1 | Conector MPG1.",
+        "Volante asociado al eje Y (MANPG 2). COUNTERID | -2 | Conector MPG2." ;
+    ns1:valor "-1",
+        "-2" .
 
-ns1:Componente_VolanteIndividual a ns1:ComponenteMecanico ;
-    rdfs:label "Volante individual"@es ;
-    ns1:textoExtracto "con su volante individual"@es .
+ns1:NumeroDeVolantes a ns1:Parametro ;
+    rdfs:label "Número de volantes" ;
+    ns1:identificador "NMPG" ;
+    ns1:textoExtracto "Parámetro máquina. NMPG | 3 | Sistema con 3 volantes." ;
+    ns1:valor "3" .
 
-ns1:ModoOperacion_ManualVolantes a ns1:ModoOperacion ;
-    rdfs:label "Modo manual con volantes"@es ;
-    ns1:textoExtracto "2.7 Parámetros máquina del modo manual. - 2.7.1 Configuración de los volantes."@es .
+ns1:Resolucion0001ParaElVolanteDelEjeX a ns1:Parametro ;
+    rdfs:label "Resolución 0.001 para el volante del eje X" ;
+    ns1:identificador "MPGRESOL 1" ;
+    ns1:textoExtracto "Volante asociado al eje X (MANPG 1). MPGRESOL 1 | 0.001 | Resolución 0.001." ;
+    ns1:valor "0.001" .
+
+ns1:Resolucion001ParaElVolanteDelEjeX a ns1:Parametro ;
+    rdfs:label "Resolución 0.01 para el volante del eje X" ;
+    ns1:identificador "MPGRESOL 10" ;
+    ns1:textoExtracto "Volante asociado al eje X (MANPG 1). MPGRESOL 10 | 0.01 | Resolución 0.01." ;
+    ns1:valor "0.01" .
+
+ns1:Resolucion01ParaElVolanteDelEjeX a ns1:Parametro ;
+    rdfs:label "Resolución 0.1 para el volante del eje X" ;
+    ns1:identificador "MPGRESOL 100" ;
+    ns1:textoExtracto "Volante asociado al eje X (MANPG 1). MPGRESOL 100 | 0.1 | Resolución 0.1." ;
+    ns1:valor "0.1" .
+
+ns1:TipoDeContadorParaElEjeX a ns1:Parametro ;
+    rdfs:label "Tipo de contador para el eje X",
+        "Tipo de contador para el eje Y" ;
+    ns1:identificador "COUNTERTYPE" ;
+    ns1:textoExtracto "Volante asociado al eje X (MANPG 1). COUNTERTYPE | Teclado. | Volante conectado al teclado.",
+        "Volante asociado al eje Y (MANPG 2). COUNTERTYPE | Teclado. | Volante conectado al teclado." ;
+    ns1:valor "Teclado" .
 

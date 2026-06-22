@@ -1,50 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_3734 a ns1:DiagnosticoFallo ;
-    rdfs:label "'Opción de software PWM no permitida'" ;
-    ns1:identificador "3734" ;
-    ns1:solucionaFallo ns1:ContratacionDeOpcionDeSoftwarePWM ;
-    ns1:textoExtracto "'Opción de software PWM no permitida' DETECCIÓN Durante el arranque del CNC. CAUSA El CNC no tiene activa la opción de software para la prestación PWM. SOLUCIÓN Contratar la correspondiente opción." .
+ns1:PulsarResetParaDetenerElMovimientoDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Pulsar reset para detener el movimiento del cabezal" ;
+    ns1:solucionaFallo ns1:AparcandoUnCabezalDesdePLC ;
+    ns1:textoExtracto "'SOLUCIÓN El PLC no puede aparcar el eje en esa situación. Pulsar reset para detener el movimiento o desactivar la cinemática activa, el eje angular activo, el control tangencial activo o la transformación de coordenadas #CS o #ACS.'" .
 
-ns1:Parametro_NLOCOUT a ns1:Parametro ;
-    rdfs:label "Parámetro NLOCOUT" ;
-    ns1:monitoreaParametro ns1:Error_3735 ;
-    ns1:textoExtracto "El parámetro NLOCOUT debe ser 8." ;
-    ns1:valor "8" .
+ns1:PulsarResetParaDetenerElMovimientoODesactivarLaCinematicaActiva a ns1:TareaMantenimiento ;
+    rdfs:label "Pulsar reset para detener el movimiento o desactivar la cinemática activa" ;
+    ns1:solucionaFallo ns1:AparcandoUnEjeDesdePLC ;
+    ns1:textoExtracto "'SOLUCIÓN El PLC no puede aparcar el eje en esa situación. Pulsar reset para detener el movimiento o desactivar la cinemática activa, el eje angular activo, el control tangencial activo o la transformación de coordenadas #CS o #ACS.'" .
 
-ns1:Parametro_PWMOUTPUT a ns1:Parametro ;
-    rdfs:label "Parámetro PWMOUTPUT" ;
-    ns1:monitoreaParametro ns1:Error_3735 ;
-    ns1:textoExtracto "El parámetro PWMOUTPUT no puede ser superior a 2 (1, 2)." ;
-    ns1:valor "1, 2" .
+ns1:RESETParaAparcarCabezalesEnMovimientoOG33G34G63G95G96CAXSYNC_1f2a24c235 a ns1:AvisoSeguridad ;
+    rdfs:label "RESET para aparcar cabezales en movimiento o G33/G34/G63/G95/G96/#CAX/#SYNC" ;
+    ns1:mitigaRiesgo ns1:AparcandoUnCabezalDesdePLC ;
+    ns1:textoExtracto "'RESET para aparcar cabezales en movimiento o G33/G34/G63/G95/G96/#CAX/#SYNC'" .
 
-ns1:Sonda_EntradaAnalogica a ns1:Sensor ;
-    rdfs:label "Sonda de entrada analógica local" ;
-    ns1:activaAlarma ns1:Error_3733 ;
-    ns1:textoExtracto "Revisar el conexionado de las entradas y la sonda conectada." .
+ns1:RESETParaAparcarEjesEnMovimientoODeLaTransformacionAcoploActivo_f5c97e600f a ns1:AvisoSeguridad ;
+    rdfs:label "RESET para aparcar ejes en movimiento o de la transformación/acoplo activo" ;
+    ns1:mitigaRiesgo ns1:AparcandoUnEjeDesdePLC ;
+    ns1:textoExtracto "'RESET para aparcar ejes en movimiento o de la transformación/acoplo activo'" .
 
-ns1:ContratacionDeOpcionDeSoftwarePWM a ns1:TareaMantenimiento ;
-    rdfs:label "Contratación de opción de software PWM" ;
-    ns1:textoExtracto "Contratar la correspondiente opción." .
+ns1:AparcandoUnCabezalDesdePLC a ns1:AccionProhibida ;
+    rdfs:label "Aparcando un cabezal desde PLC" ;
+    ns1:textoExtracto "'DETECCIÓN Aparcando un eje desde PLC. CAUSA El PLC intenta aparcar un cabezal en movimiento, sincronizado, activado como eje C o con algunas de las funciones G33, G34, G63, G95 o G96 activa.'" .
 
-ns1:Error_3733 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el refresco de entradas analógicas locales" ;
-    ns1:identificador "3733" ;
-    ns1:solucionaFallo ns1:RevisionDeConexionadoDeEntradasAnalogicasYSonda ;
-    ns1:textoExtracto "Error en el refresco de entradas analógicas locales. DETECCIÓN En la lectura de las entradas analógicas locales desde el lazo de posición. CAUSA Alarma en una entrada analógica local. SOLUCIÓN Revisar el conexionado de las entradas y la sonda conectada." .
-
-ns1:RevisionDeConexionadoDeEntradasAnalogicasYSonda a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de conexionado de entradas analógicas y sonda" ;
-    ns1:textoExtracto "Revisar el conexionado de las entradas y la sonda conectada." .
-
-ns1:VerificacionDeParametrosPWM a ns1:TareaMantenimiento ;
-    rdfs:label "Verificación de parámetros PWM" ;
-    ns1:textoExtracto "Verificar las siguientes condiciones: • El parámetro NLOCOUT debe ser 8. • El parámetro PWMOUTPUT no puede ser superior a 2 (1, 2)." .
-
-ns1:Error_3735 a ns1:DiagnosticoFallo ;
-    rdfs:label "'Error en la activación/desactivación del PWM'" ;
-    ns1:identificador "3735" ;
-    ns1:solucionaFallo ns1:VerificacionDeParametrosPWM ;
-    ns1:textoExtracto "'Error en la activación/desactivación del PWM' DETECCIÓN Durante la ejecución del corte por láser (PWM). CAUSA La parametrización del PWM es incorrecta. SOLUCIÓN Verificar las siguientes condiciones: • El parámetro NLOCOUT debe ser 8. • El parámetro PWMOUTPUT no puede ser superior a 2 (1, 2)." .
+ns1:AparcandoUnEjeDesdePLC a ns1:AccionProhibida ;
+    rdfs:label "Aparcando un eje desde PLC" ;
+    ns1:textoExtracto "'DETECCIÓN Aparcando un eje desde PLC. CAUSA El PLC intenta aparcar un eje en movimiento, que forma parte de la cinemática activa'" .
 

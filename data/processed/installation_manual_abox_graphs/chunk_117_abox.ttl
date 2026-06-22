@@ -1,25 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:FicheroImportacion_117 a ns1:InterfazUsuario ;
-    rdfs:label "Fichero de texto para importación de tablas"@es ;
-    ns1:textoExtracto "adaptar el formato de un fichero de texto en el que esté guardado el resultado de la medición y posteriormente importarlo."@es .
-
-ns1:ManualOperacion_117 a ns1:Manual ;
-    rdfs:label "Manual de operación"@es ;
-    ns1:identificador "Manual de operación"@es ;
-    ns1:textoExtracto "Para obtener más información sobre cómo importar las tablas de compensación cruzada, consultar en el manual de operación."@es .
-
-ns1:ParametroMaquina_CROSSCOMP_117 a ns1:Parametro ;
-    rdfs:label "CROSSCOMP (Configuración de tablas de compensación cruzada)"@es ;
-    ns1:identificador "CROSSCOMP" ;
-    ns1:monitoreaParametro ns1:TablasCompensacionCruzada_117 ;
-    ns1:textoExtracto "CROSSCOMP n Configuración de las tablas de compensación cruzada."@es .
-
-ns1:TablasCompensacionCruzada_117 a ns1:Sistema,
-        ns1:Tabla ;
+ns1:TablaCompensacionCruzada a ns1:Tabla ;
     rdfs:label "Tablas de compensación cruzada"@es ;
-    ns1:documentadoEn ns1:ManualOperacion_117 ;
-    ns1:textoExtracto "Importar tablas de compensación cruzada. [...] El CNC mostrará las tablas posibles en función del número de ejes definidos."@es ;
-    ns1:tieneComponente ns1:ParametroMaquina_CROSSCOMP_117 .
+    ns1:ilustra ns1:BusquedaDeReferenciaNecesariaParaCompensar,
+        ns1:CompensacionBidireccional,
+        ns1:EjeQueAlMoverseGeneraVariacionesMaestro,
+        ns1:EjeQueSufreVariacionesCompensado,
+        ns1:MetodoDeCompensacion,
+        ns1:NumeroDePuntosDeLaTabla ;
+    ns1:textoExtracto "Sección 2.3.16 Tablas de compensación cruzada." .
+
+ns1:BusquedaDeReferenciaNecesariaParaCompensar a ns1:Parametro ;
+    rdfs:label "Búsqueda de referencia necesaria para compensar"@es ;
+    ns1:identificador "REFNEED" ;
+    ns1:textoExtracto "REFNEED | Búsqueda de referencia necesaria para compensar." .
+
+ns1:CompensacionBidireccional a ns1:Parametro ;
+    rdfs:label "Compensación bidireccional"@es ;
+    ns1:identificador "BIDIR" ;
+    ns1:textoExtracto "BIDIR | Compensación bidireccional." .
+
+ns1:EjeQueAlMoverseGeneraVariacionesMaestro a ns1:Parametro ;
+    rdfs:label "Eje que al moverse genera variaciones (maestro)"@es ;
+    ns1:identificador "MOVAXIS" ;
+    ns1:textoExtracto "MOVAXIS | Eje que al moverse genera variaciones (maestro)." .
+
+ns1:EjeQueSufreVariacionesCompensado a ns1:Parametro ;
+    rdfs:label "Eje que sufre variaciones (compensado)"@es ;
+    ns1:identificador "COMPAXIS" ;
+    ns1:textoExtracto "COMPAXIS | Eje que sufre variaciones (compensado)." .
+
+ns1:MetodoDeCompensacion a ns1:Parametro ;
+    rdfs:label "Método de compensación"@es ;
+    ns1:identificador "TYPCROSS" ;
+    ns1:textoExtracto "TYPCROSS | Método de compensación." .
+
+ns1:NumeroDePuntosDeLaTabla a ns1:Parametro ;
+    rdfs:label "Número de puntos de la tabla"@es ;
+    ns1:identificador "NPCROSS" ;
+    ns1:textoExtracto "NPCROSS | Número de puntos de la tabla." .
 

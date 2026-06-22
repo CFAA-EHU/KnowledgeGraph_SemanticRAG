@@ -1,43 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ConfiguracionEjesTandem a ns1:Sistema ;
-    rdfs:label "Configuración de ejes en tándem"@es ;
-    ns1:textoExtracto "Configurar dos ejes como un eje tándem."@es ;
-    ns1:tieneComponente ns1:Parametro_AXISEXCH,
-        ns1:Parametro_AXISMODE,
-        ns1:Parametro_LIMIT,
-        ns1:Parametro_SHORTESTWAY,
-        ns1:Parametro_VelocidadLentaBusquedaReferencia,
-        ns1:Parametro_VelocidadRapidaBusquedaReferencia .
+ns1:ControlAnalogico a ns1:Parametro ;
+    rdfs:label "Control Analógico" ;
+    ns1:identificador "SANALOG" ;
+    ns1:textoExtracto "Para controlar el cabezal tándem desde el PLC, por ejemplo en un cambio de gama, sólo es necesario activar las marcas PLCCNTL, SPDLEREV y SANALOG del cabezal maestro." .
 
-ns1:Parametro_AXISEXCH a ns1:Parametro ;
-    rdfs:label "Permiso de cambio de canal (AXISEXCH)"@es ;
-    ns1:identificador "AXISEXCH" ;
-    ns1:textoExtracto "El permiso de cambio de canal (parámetro AXISEXCH) deberá ser igual en ambos ejes."@es .
+ns1:ControlDelPLC a ns1:Parametro ;
+    rdfs:label "Control del PLC" ;
+    ns1:identificador "PLCCNTL" ;
+    ns1:textoExtracto "Para controlar el cabezal tándem desde el PLC, por ejemplo en un cambio de gama, sólo es necesario activar las marcas PLCCNTL, SPDLEREV y SANALOG del cabezal maestro." .
 
-ns1:Parametro_AXISMODE a ns1:Parametro ;
-    rdfs:label "Modo de eje (AXISMODE)"@es ;
-    ns1:identificador "AXISMODE" ;
-    ns1:textoExtracto "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)."@es .
+ns1:ReversoDeVelocidad a ns1:Parametro ;
+    rdfs:label "Reverso de velocidad" ;
+    ns1:identificador "SPDLEREV" ;
+    ns1:textoExtracto "Para controlar el cabezal tándem desde el PLC, por ejemplo en un cambio de gama, sólo es necesario activar las marcas PLCCNTL, SPDLEREV y SANALOG del cabezal maestro." .
 
-ns1:Parametro_LIMIT a ns1:Parametro ;
-    rdfs:label "Límite inferior de software (LIMIT-)"@es,
-        "Límite superior de software (LIMIT+)"@es ;
-    ns1:identificador "LIMIT+",
-        "LIMIT-" ;
-    ns1:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)."@es .
+ns1:SenalDeDeshabilitacion a ns1:Parametro ;
+    rdfs:label "Señal de deshabilitación" ;
+    ns1:identificador "DRENA(axis)" ;
+    ns1:textoExtracto "El PLC deba habilitar y deshabilitar las señales SPENA(axis) y DRENA(axis) de los cabezales maestro y esclavo simultáneamente." .
 
-ns1:Parametro_SHORTESTWAY a ns1:Parametro ;
-    rdfs:label "Trayectoria más corta (SHORTESTWAY)"@es ;
-    ns1:identificador "SHORTESTWAY" ;
-    ns1:textoExtracto "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)."@es .
+ns1:SenalDeHabilitacion a ns1:Parametro ;
+    rdfs:label "Señal de habilitación" ;
+    ns1:identificador "SPENA(axis)" ;
+    ns1:textoExtracto "El PLC deba habilitar y deshabilitar las señales SPENA(axis) y DRENA(axis) de los cabezales maestro y esclavo simultáneamente." .
 
-ns1:Parametro_VelocidadLentaBusquedaReferencia a ns1:Parametro ;
-    rdfs:label "Velocidad lenta de búsqueda de referencia máquina"@es ;
-    ns1:textoExtracto "La velocidad rápida y lenta de búsqueda de referencia máquina"@es .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:CabezalEsclavo,
+        ns1:CabezalMaestro ;
+    ns1:textoExtracto "El PLC deba habilitar y deshabilitar las señales SPENA(axis) y DRENA(axis) de los cabezales maestro y esclavo simultáneamente." .
 
-ns1:Parametro_VelocidadRapidaBusquedaReferencia a ns1:Parametro ;
-    rdfs:label "Velocidad rápida de búsqueda de referencia máquina"@es ;
-    ns1:textoExtracto "La velocidad rápida y lenta de búsqueda de referencia máquina"@es .
+ns1:CabezalEsclavo a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal Esclavo" ;
+    ns1:textoExtracto "El PLC deba habilitar y deshabilitar las señales SPENA(axis) y DRENA(axis) de los cabezales maestro y esclavo simultáneamente." .
+
+ns1:CabezalMaestro a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal Maestro" ;
+    ns1:textoExtracto "Para controlar el cabezal tándem desde el PLC, por ejemplo en un cambio de gama, sólo es necesario activar las marcas PLCCNTL, SPDLEREV y SANALOG del cabezal maestro." .
 

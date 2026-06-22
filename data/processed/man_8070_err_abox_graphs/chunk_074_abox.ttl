@@ -1,42 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_0250_DYNOVR a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 0250: DYNOVR fuera del rango permitido"@es ;
-    ns1:identificador "0250" ;
-    ns1:monitoreaParametro ns1:Parametro_DYNOVR,
-        ns1:Parametro_MAXDYNOVR,
-        ns1:Parametro_MINDYNOVR ;
-    ns1:textoExtracto "0250 DYNOVR fuera del rango permitido por MINDYNOVR y MAXDYNOVR. DETECCIÓN Durante la ejecución. CAUSA La variable V.G.DYNOVR tiene un valor fuera de los límites fijados por los parámetros MINDYNOVR y MAXDYNOVR. SOLUCIÓN Definir la variable con un valor adecuado o modificar la dinámica con ayuda de la barra-override ([CTRL][H])."@es .
+ns1:AjustarElParametroLOOPTIME a ns1:TareaMantenimiento ;
+    rdfs:label "Ajustar el parámetro LOOPTIME" ;
+    ns1:solucionaFallo ns1:SobrepasadaTemperaturaDeSeguridad ;
+    ns1:textoExtracto "SOLUCIÓN Ajustar el parámetro LOOPTIME." .
 
-ns1:Fallo_0251_CompensacionVolumetrica a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 0251: Compensación volumétrica inexistente"@es ;
-    ns1:identificador "0251" ;
-    ns1:textoExtracto "0251 Compensación volumétrica inexistente. DETECCIÓN Durante la ejecución. CAUSA El PLC ha intentado activar una compensación volumétrica que no existe."@es .
+ns1:AvisoSeguridad_cf4029911f a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de integridad del equipo" ;
+    ns1:mitigaRiesgo ns1:CNC8070_fd08d84dd8 ;
+    ns1:textoExtracto "En riesgo la integridad del equipo." .
 
-ns1:Fallo_CorteAlimentacionCNC a ns1:DiagnosticoFallo ;
-    rdfs:label "Corte de alimentación del CNC con batería de emergencia"@es ;
-    ns1:textoExtracto "Hay un corte en la alimentación del CNC y la batería de emergencia está alimentado el CNC. SOLUCIÓN Tanto si el corte es fortuito como provocado por el usuario, dejar que el CNC termine la secuencia automática de apagado. Si el corte en la alimentación ha sido fortuito, comprobar las posibles causas."@es .
+ns1:ContactarConElSAT a ns1:AccionProhibida ;
+    rdfs:label "Contactar con el SAT" ;
+    ns1:textoExtracto "Contactar con el SAT." .
 
-ns1:BateriaEmergencia a ns1:ComponenteElectrico ;
-    rdfs:label "Batería de emergencia del CNC"@es ;
-    ns1:alimenta ns1:Sistema_CNC ;
-    ns1:textoExtracto "la batería de emergencia está alimentado el CNC"@es .
+ns1:FrecuenciaChequeoTemperatura a ns1:Frecuencia ;
+    rdfs:label "Cada minuto" ;
+    ns1:textoExtracto "El CNC realiza cada minuto un chequeo de la temperatura ambiente del equipo;" .
 
-ns1:Parametro_DYNOVR a ns1:Parametro ;
-    rdfs:label "Variable V.G.DYNOVR"@es ;
-    ns1:textoExtracto "La variable V.G.DYNOVR tiene un valor fuera de los límites fijados por los parámetros MINDYNOVR y MAXDYNOVR."@es .
+ns1:TiempoDeBucle a ns1:Parametro ;
+    rdfs:label "Tiempo de bucle" ;
+    ns1:identificador "LOOPTIME" ;
+    ns1:textoExtracto "Ajustar el parámetro LOOPTIME." .
 
-ns1:Parametro_MAXDYNOVR a ns1:Parametro ;
-    rdfs:label "Parámetro MAXDYNOVR"@es ;
-    ns1:textoExtracto "límite fijado por el parámetro MAXDYNOVR"@es .
+ns1:CNC8070_fd08d84dd8 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:SobrepasadaTemperaturaDeSeguridad ;
+    ns1:textoExtracto "DETECCIÓN Durante el funcionamiento del CNC." .
 
-ns1:Parametro_MINDYNOVR a ns1:Parametro ;
-    rdfs:label "Parámetro MINDYNOVR"@es ;
-    ns1:textoExtracto "límite fijado por el parámetro MINDYNOVR"@es .
-
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:textoExtracto "alimentación del CNC"@es ;
-    ns1:tieneComponente ns1:BateriaEmergencia .
+ns1:SobrepasadaTemperaturaDeSeguridad a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobrepasada temperatura de seguridad" ;
+    ns1:textoExtracto "0169 Sobrepasada temperatura de seguridad. En riesgo la integridad del equipo." .
 

@@ -1,52 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_5026 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5026: Variable CNCWR con valor no permitido"@es ;
-    ns1:identificador "5026" ;
-    ns1:textoExtracto "'CNCWR:La variable únicamente admite el valor '0'' DETECCIÓN Durante la ejecución de comandos CNCWR. CAUSA El PLC ha intentado escribir un valor diferente de 0 en una variable que sólo admite valor 0 (cero). SOLUCIÓN Revisar el programa de PLC. Escribir el valor 0 en la variable o eliminar el comando CNCWR."@es .
+ns1:DivisionPorCeroEnElPLC a ns1:DiagnosticoFallo ;
+    rdfs:label "División por cero en el PLC" ;
+    ns1:solucionaFallo ns1:RevisarProgramaPLCYEvitarDivisionesPor0 ;
+    ns1:textoExtracto "'División por cero en el PLC'" .
 
-ns1:Error_5027 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5027: Cortocircuito en salida analógica local"@es ;
-    ns1:activaAlarma ns1:Alarma_5027_Sobrecorriente ;
-    ns1:identificador "5027" ;
-    ns1:textoExtracto "'Cortocircuito en salida analógica local (report desde PLC)' DETECCIÓN El PLC ha detectado una alarma de sobrecorriente a la hora de escribir la salida analógica local. CAUSA Cortocircuito en la salida analógica local del CNC. SOLUCIÓN Revisar el conexionado de la salida analógica del CNC."@es .
+ns1:ErrorEnLaEscrituraDeSalidasDigitalesDelPLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la escritura de salidas digitales del PLC" ;
+    ns1:solucionaFallo ns1:RevisarTablaDeConfiguracionDeIOsDigitalesComprobarIntegridadDelBusOAu_4723b7a52e ;
+    ns1:textoExtracto "'Error en la escritura de salidas digitales del PLC'" .
 
-ns1:Error_5028 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5028: Fallo en recurso remoto (lectura)"@es ;
-    ns1:identificador "5028" ;
-    ns1:textoExtracto "Error en un recurso remoto. DETECCIÓN Al acceder a los recursos del módulo remoto. CAUSA Alarma en un módulo remoto a la hora de leer datos. SOLUCIÓN Revisar el conexionado de los módulos remotos."@es .
+ns1:ErrorEnLaLecturaDeEntradasDigitalesDelPLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la lectura de entradas digitales del PLC" ;
+    ns1:solucionaFallo ns1:RevisarTablaDeConfiguracionDeIOsDigitalesYComprobarIntegridadDelBus ;
+    ns1:textoExtracto "'Error en la lectura de entradas digitales del PLC'" .
 
-ns1:Error_5029 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5029: Fallo en recurso remoto (escritura)"@es ;
-    ns1:identificador "5029" ;
-    ns1:textoExtracto "Error en un recurso remoto. DETECCIÓN Al acceder a los recursos del módulo remoto. CAUSA Alarma en un módulo remoto a la hora de escribir datos. SOLUCIÓN Revisar el conexionado de los módulos remotos."@es .
+ns1:ErrorSintacticoEnLaLecturaDeVariableDesdePLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error sintáctico en la lectura de variable desde PLC" ;
+    ns1:solucionaFallo ns1:VerificarSintaxisYPermisosDeLaVariable ;
+    ns1:textoExtracto "'Error sintáctico en la lectura de variable desde PLC'" .
 
-ns1:Error_5030 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5030: Configuración incorrecta de recursos remotos"@es ;
-    ns1:identificador "5030" ;
-    ns1:textoExtracto "Error al configurar los recursos remotos. DETECCIÓN Durante el arranque del sistema. CAUSA Error al configurar los módulos remotos. SOLUCIÓN Revisar la configuración de los módulos remotos."@es .
+ns1:LaEscrituraDeLaVariableDesdePLCNoPudoRealizarse a ns1:DiagnosticoFallo ;
+    rdfs:label "La escritura de la variable desde PLC no pudo realizarse" ;
+    ns1:solucionaFallo ns1:VerificarParametrizacionYProgramaPLC ;
+    ns1:textoExtracto "'La escritura de la variable desde PLC no pudo realizarse'" .
 
-ns1:Error_5031 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5031: Error interno en configuración de recursos remotos"@es ;
-    ns1:identificador "5031" ;
-    ns1:textoExtracto "Error interno al configurar los recursos remotos. DETECCIÓN Durante el arranque del sistema. CAUSA Error al configurar los módulos remotos. SOLUCIÓN Revisar la configuración de los módulos remotos."@es .
+ns1:RevisarProgramaPLCYEvitarDivisionesPor0 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programa PLC y evitar divisiones por 0" ;
+    ns1:textoExtracto "Revisar el programa PLC. No realizar divisiones por 0." .
 
-ns1:Error_5032 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5032: Orden incorrecto en comandos de router de recursos"@es ;
-    ns1:identificador "5032" ;
-    ns1:textoExtracto "Error en el orden de los comandos de configuración del router de recursos remotos. DETECCIÓN Durante el arranque del sistema. CAUSA Error a la hora de configurar los módulos remotos. El orden de los comandos de inicialización del router de recursos no es correcto. SOLUCIÓN Revisar la configuración de los módulos remotos."@es .
+ns1:RevisarTablaDeConfiguracionDeIOsDigitalesComprobarIntegridadDelBusOAu_4723b7a52e a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar tabla de configuración de I/Os digitales, comprobar integridad del bus o aumentar tiempo de ciclo" ;
+    ns1:textoExtracto "Revisar tabla de configuración de I/Os digitales (parámetro NDOMOD), comprobar la integridad del bus o aumentar el tiempo de ciclo en el parámetro PLCFREQ." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC con módulos remotos"@es ;
-    ns1:textoExtracto "Durante el arranque del sistema... Error al configurar los módulos remotos."@es ;
-    ns1:tieneComponente ns1:ModuloRemoto_Generico .
+ns1:RevisarTablaDeConfiguracionDeIOsDigitalesYComprobarIntegridadDelBus a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar tabla de configuración de I/Os digitales y comprobar integridad del bus" ;
+    ns1:textoExtracto "Revisar tabla de configuración de I/Os digitales (parámetro NDIMOD) y comprobar la integridad del bus." .
 
-ns1:Alarma_5027_Sobrecorriente a ns1:Alarma ;
-    rdfs:label "Alarma de sobrecorriente en salida analógica local"@es ;
-    ns1:textoExtracto "El PLC ha detectado una alarma de sobrecorriente a la hora de escribir la salida analógica local."@es .
+ns1:VerificarParametrizacionYProgramaPLC a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar parametrización y programa PLC" ;
+    ns1:textoExtracto "Comprobar la parametrización de los parámetros globales y locales, así como el programa de PLC." .
 
-ns1:ModuloRemoto_Generico a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto (genérico)"@es ;
-    ns1:textoExtracto "Alarma en un módulo remoto a la hora de leer/escribir datos... Revisar el conexionado de los módulos remotos."@es .
+ns1:VerificarSintaxisYPermisosDeLaVariable a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar sintaxis y permisos de la variable" ;
+    ns1:textoExtracto "Verificar la sintaxis y los permisos de la variable." .
 

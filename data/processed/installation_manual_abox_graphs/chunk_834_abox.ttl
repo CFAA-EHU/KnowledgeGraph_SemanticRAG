@@ -1,112 +1,19 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Marca_MMCWDG a ns1:Parametro ;
-    rdfs:label "MMCWDG" ;
-    ns1:monitoreaParametro ns1:SistemaOperativoCNC ;
-    ns1:textoExtracto "MMCWDG. Esta marca indica el estado del sistema operativo. Tiene el valor (=0) cuando el sistema operativo CNC funciona correctamente y valor (=1) en caso de bloqueo del sistema operativo." ;
-    ns1:valor "0",
-        "1" .
+ns1:ApagarEquipo a ns1:AccionProhibida ;
+    rdfs:label "Apagar equipo" ;
+    ns1:textoExtracto "Apagar el aquipo para evitar" .
 
-ns1:Marca_RETRACE a ns1:Parametro ;
-    rdfs:label "RETRACE" ;
-    ns1:textoExtracto "marca RETRACE. Si el PLC quita automáticamente la marca RETRACE con la marca RETRAEND, el CNC continua con la ejecución normal del programa. En caso contrario, si la marca RETRACE continua activa, el CNC mostrará un aviso indicando que se debe desactivar esta marca para continuar con la ejecución del programa." ;
-    ns1:valor "0",
-        "1" .
+ns1:AvisoSeguridad_fc464737e3 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso sobre temperatura" ;
+    ns1:textoExtracto "Incluir esta marca en la maniobra del PLC para restringir la operativa del CNC en caso de sobretemperatura." .
 
-ns1:Marca_RETRAENDC1 a ns1:Parametro ;
-    rdfs:label "RETRAENDC1" ;
-    ns1:monitoreaParametro ns1:FuncionRetrace_Canal1 ;
-    ns1:textoExtracto "RETRAENDC1. El canal del CNC pone esta marca a (=1) para cancelar la función retrace." ;
-    ns1:valor "0",
-        "1" .
+ns1:CNC8070_008ce2a8da a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC permitirá finalizar la ejecución en marcha, pero no permitirá reanudarla tras una interrupción, una inspección de herramienta, etc." .
 
-ns1:Marca_RETRAENDC2 a ns1:Parametro ;
-    rdfs:label "RETRAENDC2" ;
-    ns1:monitoreaParametro ns1:FuncionRetrace_Canal2 ;
-    ns1:textoExtracto "RETRAENDC2. El canal del CNC pone esta marca a (=1) para cancelar la función retrace." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Marca_RETRAENDC3 a ns1:Parametro ;
-    rdfs:label "RETRAENDC3" ;
-    ns1:monitoreaParametro ns1:FuncionRetrace_Canal3 ;
-    ns1:textoExtracto "RETRAENDC3. El canal del CNC pone esta marca a (=1) para cancelar la función retrace." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Marca_RETRAENDC4 a ns1:Parametro ;
-    rdfs:label "RETRAENDC4" ;
-    ns1:monitoreaParametro ns1:FuncionRetrace_Canal4 ;
-    ns1:textoExtracto "RETRAENDC4. El canal del CNC pone esta marca a (=1) para cancelar la función retrace." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Marca_TANGACTIVC1 a ns1:Parametro ;
-    rdfs:label "TANGACTIVC1" ;
-    ns1:monitoreaParametro ns1:ControlTangencial_Canal1 ;
-    ns1:textoExtracto "TANGACTIVC1. El canal del CNC pone esta marca a (=1) para indicar que hay algún control tangencial activo en el canal." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Marca_TANGACTIVC2 a ns1:Parametro ;
-    rdfs:label "TANGACTIVC2" ;
-    ns1:monitoreaParametro ns1:ControlTangencial_Canal2 ;
-    ns1:textoExtracto "TANGACTIVC2. El canal del CNC pone esta marca a (=1) para indicar que hay algún control tangencial activo en el canal." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Marca_TANGACTIVC3 a ns1:Parametro ;
-    rdfs:label "TANGACTIVC3" ;
-    ns1:monitoreaParametro ns1:ControlTangencial_Canal3 ;
-    ns1:textoExtracto "TANGACTIVC3. El canal del CNC pone esta marca a (=1) para indicar que hay algún control tangencial activo en el canal." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Marca_TANGACTIVC4 a ns1:Parametro ;
-    rdfs:label "TANGACTIVC4" ;
-    ns1:monitoreaParametro ns1:ControlTangencial_Canal4 ;
-    ns1:textoExtracto "TANGACTIVC4. El canal del CNC pone esta marca a (=1) para indicar que hay algún control tangencial activo en el canal." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:ControlTangencial_Canal1 a ns1:ModoOperacion ;
-    rdfs:label "Control tangencial - Canal 1" ;
-    ns1:textoExtracto "control tangencial activo en el canal" .
-
-ns1:ControlTangencial_Canal2 a ns1:ModoOperacion ;
-    rdfs:label "Control tangencial - Canal 2" ;
-    ns1:textoExtracto "control tangencial activo en el canal" .
-
-ns1:ControlTangencial_Canal3 a ns1:ModoOperacion ;
-    rdfs:label "Control tangencial - Canal 3" ;
-    ns1:textoExtracto "control tangencial activo en el canal" .
-
-ns1:ControlTangencial_Canal4 a ns1:ModoOperacion ;
-    rdfs:label "Control tangencial - Canal 4" ;
-    ns1:textoExtracto "control tangencial activo en el canal" .
-
-ns1:FuncionRetrace_Canal1 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función retrace - Canal 1" ;
-    ns1:textoExtracto "función retrace. El canal del CNC cancela la función retrace en los siguientes casos: El canal del CNC ha ejecutado todos bloques memorizados para la función retrace. El canal del CNC ha alcanzado el principio del programa. El canal del CNC ha alcanzado un bloque que no se puede ejecutar con la función retrace." .
-
-ns1:FuncionRetrace_Canal2 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función retrace - Canal 2" ;
-    ns1:textoExtracto "función retrace" .
-
-ns1:FuncionRetrace_Canal3 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función retrace - Canal 3" ;
-    ns1:textoExtracto "función retrace" .
-
-ns1:FuncionRetrace_Canal4 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función retrace - Canal 4" ;
-    ns1:textoExtracto "función retrace" .
-
-ns1:SistemaOperativoCNC a ns1:Sistema ;
-    rdfs:label "Sistema operativo CNC" ;
-    ns1:textoExtracto "sistema operativo CNC" .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "Si el PLC activa esta marca, existe riesgo de sobretemperatura y está en peligro la integridad del equipo." .
 

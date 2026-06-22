@@ -1,63 +1,11 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Comando_CNCEX a ns1:InterfazUsuario ;
-    rdfs:label "Comando CNCEX (ejecución de bloques CNC)" ;
-    ns1:controla ns1:Canal_CNC_Principal ;
-    ns1:habilitadoPor ns1:Marca_FREE ;
-    ns1:monitoreaParametro ns1:Marca_M99 ;
-    ns1:textoExtracto "= CNCEX Ejecución de un bloque de CNC. Permite ejecutar un bloque de CNC en el canal indicado, incluidas llamadas a subrutinas o a programas completos. Su formato de programación es el siguiente. CNCEX (bloque, marca, canal) La marca se pone a \"1\" cuando comienza la operación y se mantiene a dicho valor hasta que finaliza la misma." .
+ns1:NombreYDireccionPathDelArchivoConLosDatosDeLaLeva a ns1:Parametro ;
+    rdfs:label "Nombre y dirección (path) del archivo con los datos de la leva" ;
+    ns1:textoExtracto "file | Nombre y dirección (path) del archivo con los datos de la leva." .
 
-ns1:Comando_CNCRD a ns1:InterfazUsuario ;
-    rdfs:label "Comando CNCRD (lectura de variables síncronas)" ;
-    ns1:monitoreaParametro ns1:Registro_R12 ;
-    ns1:textoExtracto "<condición> = CNCRD (G.FREAL, R12, M12) CPS R12 GT 2000 = ... no hace falta esperar para consultar los datos porque las variables síncronas se resuelven inmediatamente." .
-
-ns1:Comando_CNCWR a ns1:InterfazUsuario ;
-    rdfs:label "Comando CNCWR (escritura de variables síncronas)" ;
-    ns1:controla ns1:Parametro_PLC_TIMER ;
-    ns1:monitoreaParametro ns1:Registro_R13 ;
-    ns1:textoExtracto "<condición> = CNCWR (R13, PLC.TIMER, M13) Inicializa el reloj habilitado por el PLC con el valor que contiene el registro R13." .
-
-ns1:Comando_MOVEABS a ns1:InterfazUsuario ;
-    rdfs:label "Comando MOVEABS (movimiento absoluto)" ;
-    ns1:textoExtracto "Comandos MOVEABS, MOVEADD y MOVEINF. Los movimientos de ejes independientes se pueden programar directamente o mediante el comando CNCEX; sin embargo, no es recomendable utilizar ambos métodos en el mismo programa de PLC o subrutina." .
-
-ns1:Comando_MOVEADD a ns1:InterfazUsuario ;
-    rdfs:label "Comando MOVEADD (movimiento incremental)" ;
-    ns1:textoExtracto "Comandos MOVEABS, MOVEADD y MOVEINF. Los movimientos de ejes independientes se pueden programar directamente o mediante el comando CNCEX; sin embargo, no es recomendable utilizar ambos métodos en el mismo programa de PLC o subrutina." .
-
-ns1:Comando_MOVEINF a ns1:InterfazUsuario ;
-    rdfs:label "Comando MOVEINF (movimiento infinito)" ;
-    ns1:textoExtracto "Comandos MOVEABS, MOVEADD y MOVEINF. Los movimientos de ejes independientes se pueden programar directamente o mediante el comando CNCEX; sin embargo, no es recomendable utilizar ambos métodos en el mismo programa de PLC o subrutina." .
-
-ns1:Subrutina_sub3_nc a ns1:ModoOperacion ;
-    rdfs:label "Subrutina sub3.nc" ;
-    ns1:textoExtracto "= CNCEX (#CALL sub3.nc, M34)" .
-
-ns1:Canal_CNC_Principal a ns1:Componente ;
-    rdfs:label "Canal principal del CNC" ;
-    ns1:textoExtracto "Si no se indica el canal, el bloque se ejecuta en el primer canal o canal principal." .
-
-ns1:Marca_FREE a ns1:Parametro ;
-    rdfs:label "Marca FREE" ;
-    ns1:textoExtracto "el canal del CNC activa la marca FREE para indicar al PLC que está listo para aceptar un nuevo bloque." .
-
-ns1:Marca_M99 a ns1:Parametro ;
-    rdfs:label "Marca M99" ;
-    ns1:textoExtracto "= CNCEX (G00 X0 Y0, M99, 2)" .
-
-ns1:Parametro_PLC_TIMER a ns1:Parametro ;
-    rdfs:label "PLC.TIMER" ;
-    ns1:textoExtracto "Inicializa el reloj habilitado por el PLC con el valor que contiene el registro R13." .
-
-ns1:Registro_R12 a ns1:Parametro ;
-    rdfs:label "Registro R12" ;
-    ns1:textoExtracto "CPS R12 GT 2000" ;
-    ns1:valor 2000 .
-
-ns1:Registro_R13 a ns1:Parametro ;
-    rdfs:label "Registro R13" ;
-    ns1:textoExtracto "<condición> = CNCWR (R13, PLC.TIMER, M13)" .
+ns1:NumeroDeLeva_eea20fa732 a ns1:Parametro ;
+    rdfs:label "Número de leva" ;
+    ns1:textoExtracto "cam | Número de leva." .
 

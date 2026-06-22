@@ -1,38 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoProgramacionDiametros a ns1:ModoOperacion ;
-    rdfs:label "Modo de programación en diámetros (G90)" ;
-    ns1:activaAlarma ns1:Alarma_1016 ;
-    ns1:textoExtracto "programación en diámetros" .
+ns1:ActivacionDeMaterialDesdeTablasTecnologicas a ns1:AvisoSeguridad ;
+    rdfs:label "Activación de material desde tablas tecnológicas" ;
+    ns1:mitigaRiesgo ns1:LecturaDelNombreDeMaterialInactivo ;
+    ns1:textoExtracto "Activar un material desde las tablas tecnológicas." .
 
-ns1:SistemaCoordenadas a ns1:Sistema ;
-    rdfs:label "Sistema de coordenadas de la máquina" ;
-    ns1:activaAlarma ns1:Alarma_1015 ;
-    ns1:monitoreaParametro ns1:Parametro_I,
-        ns1:Parametro_J,
-        ns1:Parametro_K ;
-    ns1:textoExtracto "centro de un giro del sistema de coordenadas" .
+ns1:ComprobacionDeOpcionDeSoftwareAsociada a ns1:AvisoSeguridad ;
+    rdfs:label "Comprobación de opción de software asociada" ;
+    ns1:mitigaRiesgo ns1:ActivacionDeCompensacionVolumetricaInexistente ;
+    ns1:textoExtracto "Comprobar que está activa la opción de software asociada a la compensación volumétrica." .
 
-ns1:Alarma_1015 a ns1:Alarma ;
-    rdfs:label "Alarma 1015: Coordenadas del centro fuera de rango" ;
-    ns1:identificador "1015" ;
-    ns1:textoExtracto "'Coordenadas del centro fuera de rango' DETECCIÓN Durante la ejecución. CAUSA Uno de los valores I, J, K es demasiado alto como el centro de una interpolación circular o centro de un giro del sistema de coordenadas. SOLUCIÓN Programar un valor menor." .
+ns1:ListaDeCompensacionesVolumetricasDefinidas_e26279aa11 a ns1:Parametro ;
+    rdfs:label "Lista de compensaciones volumétricas definidas" ;
+    ns1:textoExtracto "Comprobar la lista de compensaciones volumétricas definidas (parámetro VOLCOMPn)." .
 
-ns1:Alarma_1016 a ns1:Alarma ;
-    rdfs:label "Alarma 1016: No se admiten valores negativos en la programación de un eje en diámetros" ;
-    ns1:identificador "1016" ;
-    ns1:textoExtracto "'No se admiten valores negativos en la programación de un eje en diámetros' DETECCIÓN Durante la ejecución. CAUSA No es posible programar cotas negativas en coordenadas absolutas (G90) y la programación en diámetros" .
+ns1:Parametro_58870954d3 a ns1:Parametro ;
+    rdfs:label "Parámetro COMPID de la cinemática" ;
+    ns1:textoExtracto "El parámetro COMPID de la cinemática tiene que ser menor que 7 y no puede haber más de una cinemática con el mismo COMPID." .
 
-ns1:Parametro_I a ns1:Parametro ;
-    rdfs:label "Parámetro I (coordenada circular)" ;
-    ns1:textoExtracto "Uno de los valores I, J, K es demasiado alto como el centro de una interpolación circular" .
+ns1:RevisionDelParametroCOMPID a ns1:AvisoSeguridad ;
+    rdfs:label "Revisión del parámetro COMPID" ;
+    ns1:mitigaRiesgo ns1:UsoDeCOMPIDInvalidoEnLaCinematica ;
+    ns1:textoExtracto "Revisar el parámetro COMPID." .
 
-ns1:Parametro_J a ns1:Parametro ;
-    rdfs:label "Parámetro J (coordenada circular)" ;
-    ns1:textoExtracto "Uno de los valores I, J, K es demasiado alto como el centro de una interpolación circular" .
+ns1:ActivacionDeCompensacionVolumetricaInexistente a ns1:AccionProhibida ;
+    rdfs:label "Activación de compensación volumétrica inexistente" ;
+    ns1:textoExtracto "El PLC ha intentado activar una compensación volumétrica que no existe." .
 
-ns1:Parametro_K a ns1:Parametro ;
-    rdfs:label "Parámetro K (coordenada circular)" ;
-    ns1:textoExtracto "Uno de los valores I, J, K es demasiado alto como el centro de una interpolación circular" .
+ns1:LecturaDelNombreDeMaterialInactivo a ns1:AccionProhibida ;
+    rdfs:label "Lectura del nombre de material inactivo" ;
+    ns1:textoExtracto "Se ha intentado leer el nombre del material activo y no hay ninguno." .
+
+ns1:UsoDeCOMPIDInvalidoEnLaCinematica a ns1:AccionProhibida ;
+    rdfs:label "Uso de COMPID inválido en la cinemática" ;
+    ns1:textoExtracto "El parámetro COMPID de la cinemática tiene que ser menor que 7 y no puede haber más de una cinemática con el mismo COMPID." .
 

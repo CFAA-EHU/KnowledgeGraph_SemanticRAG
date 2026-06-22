@@ -1,13 +1,70 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Accion_ContactoAsistenciaTecnica a ns1:TareaMantenimiento ;
-    rdfs:label "Contactar con servicio de asistencia técnica"@es ;
-    ns1:solucionaFallo ns1:Error_8051_RestauracionSesionUsuario ;
-    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:AvisoSeguridad_57b76d14a7 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de includes del PLC no disponibles" ;
+    ns1:textoExtracto "'Includes del PLC no disponibles'" .
 
-ns1:Error_8051_RestauracionSesionUsuario a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 8051: Error restaurando sesión de Usuario"@es ;
-    ns1:identificador "8051" ;
-    ns1:textoExtracto "8051 'Error restaurando sesión de Usuario' DETECCIÓN Durante el arranque del CNC. CAUSA Uno de los archivos de la sesión de usuario no es accesible o está corrupto. Los datos del CNC relativos a las cotas, traslados de orígenes, contador de piezas, cinemáticas, etc pueden haberse perdido."@es .
+ns1:AvisoSeguridad_7aa8560eab a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de error en el kernel" ;
+    ns1:textoExtracto "'Error arrancando Kernel'" .
+
+ns1:AvisoSeguridad_8306652b06 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de restauración de fecha y hora" ;
+    ns1:textoExtracto "'Se ha detectado un cambio de fecha y ha sido necesaria su restauración'" .
+
+ns1:AvisoSeguridad_a2c578ca62 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de compilador no disponible" ;
+    ns1:textoExtracto "'Compilador no disponible'" .
+
+ns1:AvisoSeguridad_f519bde98e a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de protección OEM activada" ;
+    ns1:textoExtracto "'Protección de OEM activada:Los cambios tendrán carácter temporal'" .
+
+ns1:AvisoSeguridad_f7766a84f4 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de librerías del PLC no disponibles" ;
+    ns1:textoExtracto "'Librerias del PLC no disponibles'" .
+
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
+
+ns1:FalloCompiladorNoDisponible a ns1:DiagnosticoFallo ;
+    rdfs:label "Falla en la detección del compilador PLC" ;
+    ns1:textoExtracto "El CNC no ha encontrado la carpeta en la que se encuentra instalado el compilador de PLC." .
+
+ns1:FalloIncludesNoDisponibles a ns1:DiagnosticoFallo ;
+    rdfs:label "Falla en la detección de los includes necesarios para compilar el PLC" ;
+    ns1:textoExtracto "El CNC no ha encontrado la carpeta en la que se encuentran instalados los includes necesarios para compilar el PLC." .
+
+ns1:FalloLibreriasNoDisponibles a ns1:DiagnosticoFallo ;
+    rdfs:label "Falla en la detección de las librerías necesarias para compilar el PLC" ;
+    ns1:textoExtracto "El CNC no ha encontrado la carpeta en la que se encuentran instaladas las librerías necesarias para compilar el PLC." .
+
+ns1:TareaMantenimiento_26b337d3c4 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de comprobación de fecha y hora" ;
+    ns1:solucionaFallo ns1:FalloRestauracionFecha ;
+    ns1:textoExtracto "Compruebe si la fecha y hora son correctos. Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ns1:TareaMantenimiento_6d0f0cc149 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de cambiar al modo puesta a punto" ;
+    ns1:solucionaFallo ns1:FalloModoUsuario ;
+    ns1:textoExtracto "Apagar el CNC y utilizar la utilidad DiskMonitor para pasar a modo puesta a punto. Volver a arrancar el CNC." .
+
+ns1:TareaMantenimiento_c8d8f1f649 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de comprobación de arranque del CNC" ;
+    ns1:solucionaFallo ns1:FalloArranqueKernel ;
+    ns1:textoExtracto "Comprobar si el CNC ha arrancado correctamente. Apagar y encender el CNC. Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ns1:FalloArranqueKernel a ns1:DiagnosticoFallo ;
+    rdfs:label "Falla en el arranque del kernel" ;
+    ns1:textoExtracto "El kernel está arrancado pero no está activado." .
+
+ns1:FalloModoUsuario a ns1:DiagnosticoFallo ;
+    rdfs:label "Falla en modo usuario con protección OEM activada" ;
+    ns1:textoExtracto "El CNC está en modo usuario, con la protección de OEM activada, por lo que todo cambio tendrá carácter temporal y se perderá al apagar el CNC." .
+
+ns1:FalloRestauracionFecha a ns1:DiagnosticoFallo ;
+    rdfs:label "Falla en la detección de cambios de fecha o hora" ;
+    ns1:textoExtracto "El CNC ha detectado un cambio de fecha u hora y los ha restaurado a sus valores esperados." .
 

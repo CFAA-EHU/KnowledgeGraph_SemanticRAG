@@ -1,61 +1,53 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Componente_CableCaptacion a ns1:ComponenteElectrico ;
-    rdfs:label "Cable de captación"@es ;
-    ns1:controla ns1:Componente_Motor ;
-    ns1:textoExtracto "cable de captación no está deteriorado y que el conexionado entre pines es correcto"@es ;
-    ns1:tieneComponente ns1:Componente_CablePotencia .
+ns1:NivelDeTensionPorDebajoDel40_07079f1919 a ns1:DiagnosticoFallo ;
+    rdfs:label "Nivel de tensión por debajo del 40%" ;
+    ns1:textoExtracto "Nivel de tensión por debajo del 40%. CAUSA Bajada en la tensión de red." .
 
-ns1:Alarma_ParMotorElevado a ns1:Alarma ;
-    rdfs:label "Alarma por par motor elevado sin superación de GP8"@es ;
-    ns1:activaAlarma ns1:DiagnosticoFallo_9724 ;
-    ns1:mitigaRiesgo ns1:Componente_Accionamiento,
-        ns1:Componente_Motor ;
-    ns1:textoExtracto "Con par motor muy elevado la velocidad de giro no ha superado GP8 durante un tiempo superior a GP7"@es .
+ns1:PongaseEnContactoConFagorAutomation_4fdb3e53af a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation." .
 
-ns1:Componente_Accionamiento a ns1:ComponenteMecanico ;
-    rdfs:label "Accionamiento mecánico"@es ;
-    ns1:textoExtracto "Liberar el accionamiento"@es .
+ns1:RevisarElConexionadoEIntegridadDelEncoder_707f7a7836 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado e integridad del encoder" ;
+    ns1:solucionaFallo ns1:FalloPerdidaSincronizacionEncoder,
+        ns1:FalloSobretemperaturaEncoder ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el conexionado e integridad del encoder." .
 
-ns1:Componente_CablePotencia a ns1:ComponenteElectrico ;
-    rdfs:label "Cable de potencia"@es ;
-    ns1:textoExtracto "cables de potencia tienen un buen contacto en su amarre"@es .
+ns1:RevisarLaParametrizacionYElConexionadoDelEncoder_bef54e60b7 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la parametrización y el conexionado del encoder" ;
+    ns1:solucionaFallo ns1:FalloI0NoDetectado ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la parametrización y el conexionado del encoder." .
 
-ns1:DiagnosticoFallo_9724 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 9724: Fallo en rampa de emergencia durante frenada"@es ;
-    ns1:identificador "9724" ;
-    ns1:monitoreaParametro ns1:Parametro_GP7,
-        ns1:Parametro_GP8 ;
-    ns1:solucionaFallo ns1:Alarma_ParMotorElevado ;
-    ns1:textoExtracto "Error en el seguimiento de la rampa de emergencia en frenada. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema."@es .
+ns1:RevisarTensionesDeRedYCableadoHastaLaTarjetaSense a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar tensiones de red y cableado hasta la tarjeta sense" ;
+    ns1:solucionaFallo ns1:FalloFaltaFaseTarjetaSense,
+        ns1:NivelDeTensionPorDebajoDel70_6fcc014387,
+        ns1:NivelDeTensionPorDebajoDel80_b0f23a7ffb ;
+    ns1:textoExtracto "SOLUCIÓN Revisar tensiones de red y cableado hasta la tarjeta sense." .
 
-ns1:Parametro_GP7 a ns1:Parametro ;
-    rdfs:label "GP7 (tiempo límite para superación de velocidad)"@es ;
-    ns1:textoExtracto "parámetro GP7"@es ;
-    ns1:valor "0"^^xsd:string .
+ns1:FalloFaltaFaseTarjetaSense a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta fase en la tarjeta sense" ;
+    ns1:textoExtracto "Falta fase en la tarjeta sense. CAUSA Una fase de red no llega correctamente a la tarjeta sense." .
 
-ns1:Parametro_GP8 a ns1:Parametro ;
-    rdfs:label "GP8 (velocidad de giro límite)"@es ;
-    ns1:textoExtracto "velocidad de giro no ha superado GP8"@es .
+ns1:FalloI0NoDetectado a ns1:DiagnosticoFallo ;
+    rdfs:label "Pulso de I0 no detectado" ;
+    ns1:textoExtracto "Pulso de I0 no detectado. CAUSA El regulador no ha recibido la señal de I0." .
 
-ns1:Parametro_NP116 a ns1:Parametro ;
-    rdfs:label "NP116 (parámetro para motores no Fagor)"@es ;
-    ns1:textoExtracto "valor con el que se ha parametrizado NP116 (con motores no Fagor)"@es .
+ns1:FalloPerdidaSincronizacionEncoder a ns1:DiagnosticoFallo ;
+    rdfs:label "Pérdida de sincronización" ;
+    ns1:textoExtracto "Captación digital Fagor: Pérdida de sincronización. CAUSA Error de comunicación del encoder." .
 
-ns1:Parametro_RP5 a ns1:Parametro ;
-    rdfs:label "RP5 (parámetro alternativo con resolver)"@es ;
-    ns1:textoExtracto "RP5 si se dispone de resolver"@es .
+ns1:FalloSobretemperaturaEncoder a ns1:DiagnosticoFallo ;
+    rdfs:label "Temperatura interna fuera de rango" ;
+    ns1:textoExtracto "Captación digital Fagor: Temperatura interna fuera de rango. CAUSA Sobretemperatura en el encoder." .
 
-ns1:Parametro_RV3 a ns1:Parametro ;
-    rdfs:label "RV3 (parámetro de seguimiento)"@es ;
-    ns1:textoExtracto "valor de RV3 (o RP5 si se dispone de resolver) es correcto"@es .
+ns1:NivelDeTensionPorDebajoDel70_6fcc014387 a ns1:DiagnosticoFallo ;
+    rdfs:label "Nivel de tensión por debajo del 70%" ;
+    ns1:textoExtracto "Nivel de tensión por debajo del 70%. CAUSA Bajada en la tensión de red." .
 
-ns1:Componente_Motor a ns1:ComponenteMecanico ;
-    rdfs:label "Motor (no Fagor)"@es ;
-    ns1:monitoreaParametro ns1:Parametro_NP116,
-        ns1:Parametro_RP5,
-        ns1:Parametro_RV3 ;
-    ns1:textoExtracto "motores no Fagor"@es .
+ns1:NivelDeTensionPorDebajoDel80_b0f23a7ffb a ns1:DiagnosticoFallo ;
+    rdfs:label "Nivel de tensión por debajo del 80%" ;
+    ns1:textoExtracto "Nivel de tensión por debajo del 80%. CAUSA Bajada en la tensión de red." .
 

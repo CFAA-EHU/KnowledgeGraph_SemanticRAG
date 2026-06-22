@@ -1,18 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AbortExpresion a ns1:Alarma ;
-    ns1:detalladoEnEsquema ns1:Bloque ;
-    ns1:textoExtracto "#ABORT [expresión]/[\"file_name\"]/Nexpresión/OFF DETECCIÓN Durante la edición y ejecución."@es .
+ns1:RevisionDeSintaxisDeSentencias_682f57533e a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de sintaxis de sentencias" ;
+    ns1:solucionaFallo ns1:LaSintaxisDeLaSentenciaNoEsCorrecta_21fd4293f0 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:DobleProgramacionComodin a ns1:Alarma ;
-    ns1:detalladoEnEsquema ns1:Bloque ;
-    ns1:textoExtracto "8507 'Doble programación comodín' DETECCIÓN Durante la edición. CAUSA El comodín \"? n\" está programado más de una vez en el bloque. SOLUCIÓN Programar el comodín una sola vez en el bloque."@es .
+ns1:UsoDeBloqueVacio a ns1:AccionProhibida ;
+    rdfs:label "Uso de bloque vacío" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "8481 Bloque vacío. DETECCIÓN Durante la edición." .
 
-ns1:NoPermitidoTipoComodin a ns1:Alarma ;
-    ns1:detalladoEnEsquema ns1:Bloque ;
-    ns1:textoExtracto "8508 No se permite este tipo de comodín en sentencia. DETECCIÓN Durante la edición. CAUSA Se ha programado con un comodín el eje de una variable, y el eje está en otro canal. SOLUCIÓN No se admite un comodín como eje de un variable, cuando el eje está en otro canal"@es .
+ns1:UsoDeMinusculasEnPalabrasReservadas a ns1:AccionProhibida ;
+    rdfs:label "Uso de minúsculas en palabras reservadas" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "no permite el uso de minúsculas. SOLUCIÓN Programar las palabras reservadas en mayúsculas." .
 
-ns1:NumerodeComodinNoValido a ns1:Alarma ;
-    ns1:detalladoEnEsquema ns1:Bloque ;
-    ns1:textoExtracto "8509 'Número de comodín no válido' DETECCIÓN Durante la edición. CAUSA El número programado en el comodín \"? n\" es negativo o mayor que el número de ejes del canal. SOLUCIÓN El número programado en el comodín \"? n\" debe ser un número de eje válido."@es .
+ns1:LaSintaxisDeLaSentenciaNoEsCorrecta_21fd4293f0 a ns1:DiagnosticoFallo ;
+    rdfs:label "La sintaxis de la sentencia no es correcta" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:textoExtracto "Sistema CNC" .
 

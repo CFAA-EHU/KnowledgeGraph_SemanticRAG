@@ -1,73 +1,53 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Componente_EjeHirth a ns1:ComponenteMecanico ;
-    rdfs:label "Eje Hirth" ;
-    ns1:monitoreaParametro ns1:Parametro_MATCH_axis ;
-    ns1:textoExtracto "Se denomina eje Hirth al eje que debe posicionarse siempre en posiciones concretas." .
+ns1:CNC8070_1e7c9c4eb6 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:monitoreaParametro ns1:SenalDRENAB,
+        ns1:SenalPARK,
+        ns1:SenalPARKED,
+        ns1:SenalREFPOIN,
+        ns1:SenalSERVOBON,
+        ns1:SenalSPENAB,
+        ns1:SenalUNPARK ;
+    ns1:textoExtracto "El CNC utiliza las señales lógicas PARK y UNPARK para informar al PLC que los procesos correspondientes de aparcar o desaparcar se encuentran en ejecución." .
 
-ns1:Componente_EjeRotativoLineal a ns1:ComponenteMecanico ;
-    rdfs:label "Eje rotativo/lineal estándar" ;
-    ns1:textoExtracto "G171 indican si se desea que el eje trabaje como eje Hirth (G171, función por defecto) o como un eje rotativo o lineal normal (G170)." .
+ns1:Sensor_5583b88b57 a ns1:Sensor ;
+    rdfs:label "Sensor de presencia del eje" ;
+    ns1:textoExtracto "Esta marca normalmente está afectada por la entrada correspondiente al sensor de presencia del eje." .
 
-ns1:Parametro_DISTLUBRI a ns1:Parametro ;
-    rdfs:label "DISTLUBRI (distancia para engrasado)" ;
-    ns1:identificador "DISTLUBRI" ;
-    ns1:textoExtracto "El parámetro máquina DISTLUBRI indica la distancia que se debe mover antes de ser engrasado." .
+ns1:SenalDRENAB a ns1:Parametro ;
+    rdfs:label "Señal DRENAB" ;
+    ns1:identificador "DRENAB" ;
+    ns1:textoExtracto "NOT (PARKB OR UNPARKB OR PARKEDB) AND··· = DRENAB = SPENAB = SERVOBON Si el eje no está aparcado ni en proceso y se cumplen las condiciones de habilitación, se habilita el eje." .
 
-ns1:Parametro_LUBRENA_axis a ns1:Parametro ;
-    rdfs:label "LUBRENA(axis)" ;
-    ns1:identificador "LUBRENA(axis)" ;
-    ns1:textoExtracto "Ver en la página 449. \" LUBRENA(axis) LUBROK(axis)\"" .
+ns1:SenalPARK a ns1:Parametro ;
+    rdfs:label "Señal PARK" ;
+    ns1:identificador "PARK" ;
+    ns1:textoExtracto "El CNC utiliza las señales lógicas PARK y UNPARK para informar al PLC que los procesos correspondientes de aparcar o desaparcar se encuentran en ejecución." .
 
-ns1:Parametro_LUBROK_axis a ns1:Parametro ;
-    rdfs:label "LUBROK(axis)" ;
-    ns1:identificador "LUBROK(axis)" ;
-    ns1:textoExtracto "Ver en la página 449. \" LUBRENA(axis) LUBROK(axis)\"" .
+ns1:SenalPARKED a ns1:Parametro ;
+    rdfs:label "Señal PARKED" ;
+    ns1:identificador "PARKED" ;
+    ns1:textoExtracto "La maniobra de aparcar/desaparcar ejes gestionada desde el programa de PLC se controla mediante la señal PARKED." .
 
-ns1:Sistema_ControlEjesCNC a ns1:Sistema ;
-    rdfs:label "Sistema de control de ejes y cabezales (CNC)" ;
-    ns1:monitoreaParametro ns1:Parametro_G170,
-        ns1:Parametro_G171,
-        ns1:Parametro_LUBR_axis,
-        ns1:Parametro_MATCH_axis,
-        ns1:Parametro_PARKED_axis,
-        ns1:Parametro_PARK_axis,
-        ns1:Parametro_UNPARK_axis ;
-    ns1:textoExtracto "Cuando se aparca un eje o cabezal, el CNC no lo controlará (ignora las señales del regulador, sistemas de captación, etc.)." .
+ns1:SenalREFPOIN a ns1:Parametro ;
+    rdfs:label "Señal REFPOIN" ;
+    ns1:identificador "REFPOIN" ;
+    ns1:textoExtracto "Por seguridad, tras aparcar y desaparcar un eje, la señal REFPOIN del eje se pone a (=0)." .
 
-ns1:Parametro_G170 a ns1:Parametro ;
-    rdfs:label "G170 (función eje estándar)" ;
-    ns1:identificador "G170" ;
-    ns1:textoExtracto "G171 indican si se desea que el eje trabaje como eje Hirth (G171, función por defecto) o como un eje rotativo o lineal normal (G170)." .
+ns1:SenalSERVOBON a ns1:Parametro ;
+    rdfs:label "Señal SERVOBON" ;
+    ns1:identificador "SERVOBON" ;
+    ns1:textoExtracto "NOT (PARKB OR UNPARKB OR PARKEDB) AND··· = DRENAB = SPENAB = SERVOBON Si el eje no está aparcado ni en proceso y se cumplen las condiciones de habilitación, se habilita el eje." .
 
-ns1:Parametro_G171 a ns1:Parametro ;
-    rdfs:label "G171 (función eje Hirth)" ;
-    ns1:identificador "G171" ;
-    ns1:textoExtracto "G171 indican si se desea que el eje trabaje como eje Hirth (G171, función por defecto) o como un eje rotativo o lineal normal (G170)." .
+ns1:SenalSPENAB a ns1:Parametro ;
+    rdfs:label "Señal SPENAB" ;
+    ns1:identificador "SPENAB" ;
+    ns1:textoExtracto "NOT (PARKB OR UNPARKB OR PARKEDB) AND··· = DRENAB = SPENAB = SERVOBON Si el eje no está aparcado ni en proceso y se cumplen las condiciones de habilitación, se habilita el eje." .
 
-ns1:Parametro_LUBR_axis a ns1:Parametro ;
-    rdfs:label "LUBR(axis)" ;
-    ns1:identificador "LUBR(axis)" ;
-    ns1:textoExtracto "El CNC pone esta marca a (=1) cuando el eje o cabezal correspondiente debe ser engrasado." .
-
-ns1:Parametro_PARKED_axis a ns1:Parametro ;
-    rdfs:label "PARKED(axis)" ;
-    ns1:identificador "PARKED(axis)" ;
-    ns1:textoExtracto "También se emplea la marca PARKED(axis), que es modificable y está comentada más adelante." .
-
-ns1:Parametro_PARK_axis a ns1:Parametro ;
-    rdfs:label "PARK(axis)" ;
-    ns1:identificador "PARK(axis)" ;
-    ns1:textoExtracto "El CNC pone la marca PARK(axis) a (=1) para indicar que se está aparcando un eje o cabezal." .
-
-ns1:Parametro_UNPARK_axis a ns1:Parametro ;
-    rdfs:label "UNPARK(axis)" ;
-    ns1:identificador "UNPARK(axis)" ;
-    ns1:textoExtracto "El CNC pone la marca UNPARK(axis) a (=1) para indicar que se está desaparcando." .
-
-ns1:Parametro_MATCH_axis a ns1:Parametro ;
-    rdfs:label "MATCH(axis)" ;
-    ns1:identificador "MATCH(axis)" ;
-    ns1:textoExtracto "La marca MATCH(axis) indica si el eje Hirth está bien posicionado (=1) o no (=0)." .
+ns1:SenalUNPARK a ns1:Parametro ;
+    rdfs:label "Señal UNPARK" ;
+    ns1:identificador "UNPARK" ;
+    ns1:textoExtracto "El CNC utiliza las señales lógicas PARK y UNPARK para informar al PLC que los procesos correspondientes de aparcar o desaparcar se encuentran en ejecución." .
 

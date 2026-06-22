@@ -1,44 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_LACC1 a ns1:Parametro ;
-    rdfs:label "LACC1" ;
-    ns1:identificador "LACC1" ;
-    ns1:monitoreaParametro ns1:Sistema_ControlMovimiento ;
-    ns1:textoExtracto "Aceleración según el parámetro LACC1 hasta alcanzar el avance indicado en LFEED."@es .
+ns1:CNC8070_8e2b595217 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC aplica los parámetros ACCEL y DECEL a los movimientos en G1, G2 y G3; los movimientos en G0 dependen del parámetro G0ACDCJERK." ;
+    ns1:tieneComponente ns1:Parametro_602c4a5d6a,
+        ns1:Parametro_7a01575dc8 .
 
-ns1:Parametro_LACC2 a ns1:Parametro ;
-    rdfs:label "LACC2" ;
-    ns1:identificador "LACC2" ;
-    ns1:monitoreaParametro ns1:Sistema_ControlMovimiento ;
-    ns1:textoExtracto "Aceleración según el parámetro LACC2 hasta alcanzar el avance programado."@es .
+ns1:ControlDeAceleracionParaG0 a ns1:Parametro ;
+    rdfs:label "Control de aceleración para G0" ;
+    ns1:textoExtracto "Los movimientos en G0 utilizan los parámetros ACCEL y DECEL si el valor es 'No'." .
 
-ns1:Parametro_LFEED a ns1:Parametro ;
-    rdfs:label "LFEED" ;
-    ns1:identificador "LFEED" ;
-    ns1:monitoreaParametro ns1:Sistema_ControlMovimiento ;
-    ns1:textoExtracto "LFEED Velocidad de cambio de aceleración. Parámetro válido para ejes lineales, rotativos y cabezales."@es ;
-    ns1:valor "0 a 100000.0000 rpm",
-        "0 a 200000.0000 mm/min",
-        "0 a 36000000.0000 grados/min",
-        "0 a 7874.01575 inch/min" .
+ns1:Parametro_602c4a5d6a a ns1:Parametro ;
+    rdfs:label "Aceleración" ;
+    ns1:identificador "MPA.ACCEL" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ns1:valor "3000.0000 mm/s² / 118.12023 inch/s² / 3000.0000 grados/s²" .
 
-ns1:Componente_ReguladorAnalogico a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador analógico" ;
-    ns1:textoExtracto "Parámetro válido para regulador analógico"@es .
-
-ns1:Componente_Sercos a ns1:ComponenteElectrico ;
-    rdfs:label "Interfaz Sercos" ;
-    ns1:textoExtracto "Parámetro válido para [...] Sercos"@es .
-
-ns1:Componente_Simulado a ns1:ComponenteElectrico ;
-    rdfs:label "Sistema de control simulado" ;
-    ns1:textoExtracto "Parámetro válido para [...] simulado"@es .
-
-ns1:Sistema_ControlMovimiento a ns1:Sistema ;
-    rdfs:label "Sistema de control de movimiento" ;
-    ns1:textoExtracto "Parámetro válido para regulador analógico, Sercos y simulado."@es ;
-    ns1:tieneComponente ns1:Componente_ReguladorAnalogico,
-        ns1:Componente_Sercos,
-        ns1:Componente_Simulado .
+ns1:Parametro_7a01575dc8 a ns1:Parametro ;
+    rdfs:label "Deceleración" ;
+    ns1:identificador "MPA.DECEL" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ns1:valor "3000.0000 mm/s² / 118.12023 inch/s² / 3000.0000 grados/s²" .
 

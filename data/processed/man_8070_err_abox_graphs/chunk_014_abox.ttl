@@ -1,22 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_0026 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 0026: Variable no permitida en el entorno del osciloscopio" ;
-    ns1:identificador "0026" ;
-    ns1:solucionaFallo ns1:ConsultarDocumentacionDeVariablesPermitidas ;
-    ns1:textoExtracto "'Variable no permitida en el entorno del oscilo' DETECCIÓN Al definir variables en un canal del osciloscopio. CAUSA La variable definida en el osciloscopio es de simulación, binaria, string o está protegida por contraseña." .
+ns1:BorrarElArchivoPlcPrgSymYCompilarElProgramaPLCParaVolverACrearEsteArchivo a ns1:TareaMantenimiento ;
+    rdfs:label "Borrar el archivo plc_prg.sym y compilar el programa PLC para volver a crear este archivo" ;
+    ns1:solucionaFallo ns1:ElArchivoPlcPrgSymQueContieneLaInformacionNecesariaParaCrearLasVariab_6965964543 ;
+    ns1:textoExtracto "SOLUCIÓN Borrar el archivo plc_prg.sym y compilar el programa PLC para volver a crear este archivo." .
 
-ns1:Sistema_Osciloscopio a ns1:Sistema ;
-    rdfs:label "Sistema de osciloscopio (entorno de variables)" ;
-    ns1:textoExtracto "entorno del osciloscopio [...] variables en un canal del osciloscopio" ;
-    ns1:tieneComponente ns1:CanalDeOsciloscopio .
+ns1:ComprobarLasVariablesDefinidasEnLosCanalesDelOsciloscopio a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar las variables definidas en los canales del osciloscopio" ;
+    ns1:solucionaFallo ns1:NoHayNingunaVariableDefinidaEnLosCanalesDelOsciloscopioHayMasDeDosVar_8d059b9a83 ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar las variables definidas en los canales del osciloscopio." .
 
-ns1:CanalDeOsciloscopio a ns1:ComponenteElectrico ;
-    rdfs:label "Canal de osciloscopio" ;
-    ns1:textoExtracto "canal del osciloscopio" .
+ns1:ErrorAlRegistrarDefinesDePLC_a29c6df003 a ns1:AccionProhibida ;
+    rdfs:label "Error al registrar defines de PLC" ;
+    ns1:mitigaRiesgo ns1:ElArchivoPlcPrgSymQueContieneLaInformacionNecesariaParaCrearLasVariab_6965964543 ;
+    ns1:textoExtracto "'Error al registrar defines de PLC' DETECCIÓN Durante el registro de las variables asociadas a los símbolos externos PDEF definidos en el programa de PLC." .
 
-ns1:ConsultarDocumentacionDeVariablesPermitidas a ns1:AvisoSeguridad ;
-    rdfs:label "Consultar documentación de variables permitidas" ;
-    ns1:textoExtracto "Consultar en la documentación la lista de variables" .
+ns1:ErrorIniciandoLaTraza_55b2e8c641 a ns1:AccionProhibida ;
+    rdfs:label "Error iniciando la traza" ;
+    ns1:mitigaRiesgo ns1:NoHayNingunaVariableDefinidaEnLosCanalesDelOsciloscopioHayMasDeDosVar_8d059b9a83 ;
+    ns1:textoExtracto "'Error iniciando la traza' DETECCIÓN Al iniciar una traza en el osciloscopio." .
+
+ns1:ElArchivoPlcPrgSymQueContieneLaInformacionNecesariaParaCrearLasVariab_6965964543 a ns1:DiagnosticoFallo ;
+    rdfs:label "El archivo plc_prg.sym que contiene la información necesaria para crear las variables asociadas a los símbolos externos PDEF está corrupto." ;
+    ns1:textoExtracto "CAUSA El archivo plc_prg.sym que contiene la información necesaria para crear las variables asociadas a los símbolos externos PDEF está corrupto." .
+
+ns1:NoHayNingunaVariableDefinidaEnLosCanalesDelOsciloscopioHayMasDeDosVar_8d059b9a83 a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay ninguna variable definida en los canales del osciloscopio, hay más de dos variables Sercos del mismo regulador o la sintaxis de alguna de las variables no es correcta." ;
+    ns1:textoExtracto "CAUSA No hay ninguna variable definida en los canales del osciloscopio, hay más de dos variables Sercos del mismo regulador o la sintaxis de alguna de las variables no es correcta." .
 

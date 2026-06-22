@@ -1,43 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Tabla_ConfiguracionEntradasCaptacion a ns1:Tabla ;
-    rdfs:label "Tabla de configuración de entradas de captación" ;
-    ns1:detalladoEnEsquema ns1:Parametro_COUNTERID_Local,
-        ns1:Parametro_COUNTERID_ModuloRemoto,
-        ns1:Parametro_COUNTERID_Regulador,
-        ns1:Parametro_COUNTERTYPE,
-        ns1:Parametro_COUNTERTYPE_Local,
-        ns1:Parametro_COUNTERTYPE_Regulador ;
-    ns1:textoExtracto "Parámetro | Valor [...] Entrada de captación en los reguladores Sercos [...] Entrada de captación local."@es .
+ns1:DireccionSercos a ns1:Parametro ;
+    rdfs:label "Dirección Sercos" ;
+    ns1:identificador "DRIVEID" ;
+    ns1:textoExtracto "todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID)." .
 
-ns1:Parametro_COUNTERID_Local a ns1:Parametro ;
-    rdfs:label "COUNTERID (unidad central)" ;
-    ns1:textoExtracto "COUNTERID | Número de la entrada de captación. [...] La unidad central dispone de dos entradas de captación."@es ;
-    ns1:valor "1-2" .
+ns1:ModoDeOperacionSercos a ns1:Parametro ;
+    rdfs:label "Modo de operación Sercos" ;
+    ns1:identificador "OPMODEP" ;
+    ns1:textoExtracto "todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)." .
 
-ns1:Parametro_COUNTERID_ModuloRemoto a ns1:Parametro ;
-    rdfs:label "COUNTERID (módulo remoto)" ;
-    ns1:textoExtracto "COUNTERID | Número de la entrada de captación. [...] Los módulos de las contadoras se numeran según el orden lógico de los grupos remotos (conmutador rotativo de la fuente de alimentación)."@es ;
-    ns1:valor "1-32 (según orden lógico de grupos remotos)" .
+ns1:SistemaCaptacionExterna a ns1:Sistema ;
+    rdfs:label "Sistema de captación externa" ;
+    ns1:textoExtracto "la captación externa (directa) de cada eje podrá estar situada en los módulos remotos, en un regulador Sercos o de forma local en la propia unidad central." .
 
-ns1:Parametro_COUNTERID_Regulador a ns1:Parametro ;
-    rdfs:label "COUNTERID (regulador Sercos)" ;
-    ns1:textoExtracto "COUNTERID | Número de la entrada de captación. [...] El parámetro COUNTERID indica la dirección lógica del regulador (de 1 a 32)."@es ;
-    ns1:valor "1-32 (dirección lógica del regulador)" .
+ns1:SistemaCaptacionInternaMotor a ns1:Sistema ;
+    rdfs:label "Sistema de captación interna del motor" ;
+    ns1:textoExtracto "La captación interna (motor) de ambos ejes estará ubicada en el regulador." ;
+    ns1:tieneComponente ns1:EjeA1,
+        ns1:EjeA2 .
 
-ns1:Parametro_COUNTERTYPE a ns1:Parametro ;
-    rdfs:label "COUNTERTYPE" ;
-    ns1:textoExtracto "COUNTERTYPE | Remoto."@es ;
-    ns1:valor "Remoto" .
+ns1:SistemaCaptacionPropia a ns1:Sistema ;
+    rdfs:label "Sistema de captación propio" ;
+    ns1:textoExtracto "Cada eje puede disponer de un sistema de captación propio o ambos ejes pueden compartir el mismo sistema de captación." .
 
-ns1:Parametro_COUNTERTYPE_Local a ns1:Parametro ;
-    rdfs:label "COUNTERTYPE" ;
-    ns1:textoExtracto "COUNTERTYPE | Local."@es ;
-    ns1:valor "Local" .
+ns1:SistemaRegulador a ns1:Sistema ;
+    rdfs:label "Sistema Regulador" ;
+    ns1:textoExtracto "Los ejes asociados a un mismo regulador deben cumplir los siguientes requisitos." .
 
-ns1:Parametro_COUNTERTYPE_Regulador a ns1:Parametro ;
-    rdfs:label "COUNTERTYPE" ;
-    ns1:textoExtracto "COUNTERTYPE | Regulador."@es ;
-    ns1:valor "Regulador" .
+ns1:EjeA1 a ns1:ComponenteMecanico ;
+    rdfs:label "Eje A1" ;
+    ns1:textoExtracto "Axis A1 Axis A2 Grupo multieje compuesto por dos ejes controlados por un único motor." .
+
+ns1:EjeA2 a ns1:ComponenteMecanico ;
+    rdfs:label "Eje A2" ;
+    ns1:textoExtracto "Axis A1 Axis A2 Grupo multieje compuesto por dos ejes controlados por un único motor." .
 

@@ -1,67 +1,67 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Comando_SP1FUN a ns1:Parametro ;
-    rdfs:label "Comando SP1FUN*"@es ;
-    ns1:identificador "SP1FUN*" ;
-    ns1:monitoreaParametro ns1:Parametro_MFUN1C1 ;
-    ns1:textoExtracto "SP1FUN* Para el cabezal 1. [...] Ejemplo para saber si el primer cabezal ha recibido una función M5 desde cualquier canal: CPS SP1FUN* EQ 5 = ..."@es .
+ns1:CNC8070_4576c300d5 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC sólo utiliza los registros de los cabezales cuyo parámetro SPDLTIME tenga un valor distinto de cero." .
 
-ns1:Tabla_MFUN a ns1:Tabla ;
-    rdfs:label "Tabla de registros MFUN por canal"@es ;
-    ns1:ilustradoEn ns1:Interfaz_CNC ;
-    ns1:textoExtracto """
-| MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 |
-| --- | --- | --- |
-| 3 | 4 | $FFFFFFFF
-"""@es .
+ns1:IndicaLaVelocidadProgramadaEnElCabezal1 a ns1:Parametro ;
+    rdfs:label "Indica la velocidad programada en el cabezal 1" ;
+    ns1:identificador "SFUN1" ;
+    ns1:textoExtracto "Estos registro indican la velocidad programada en cada uno de los cabezales." .
 
-ns1:Tabla_SPN a ns1:Tabla ;
-    rdfs:label "Tabla de registros SPN por canal"@es ;
-    ns1:ilustradoEn ns1:Interfaz_CNC ;
-    ns1:textoExtracto """
-| SPN1C1 | SPN2C1 | SPN3C1 - SPN7C1 |
-| --- | --- | --- |
-| 1 | 2 | $FFFFFFFF
-"""@es .
+ns1:IndicaLaVelocidadProgramadaEnElCabezal2 a ns1:Parametro ;
+    rdfs:label "Indica la velocidad programada en el cabezal 2" ;
+    ns1:identificador "SFUN2" ;
+    ns1:textoExtracto "Estos registro indican la velocidad programada en cada uno de los cabezales." .
 
-ns1:Manual_6_1 a ns1:Manual ;
-    rdfs:label "Sección 6.1: Señales de consulta generales"@es ;
-    ns1:identificador "6.1" ;
-    ns1:textoExtracto "Sección 6.1 Señales de consulta generales. [...] Los mnemónicos para cada canal son los siguientes. Se muestra como ejemplo los mnemónicos de MFUN1; para el resto de registros es equivalente."@es .
+ns1:IndicaLaVelocidadProgramadaEnElCabezal3 a ns1:Parametro ;
+    rdfs:label "Indica la velocidad programada en el cabezal 3" ;
+    ns1:identificador "SFUN3" ;
+    ns1:textoExtracto "Estos registro indican la velocidad programada en cada uno de los cabezales." .
 
-ns1:Parametro_MFUN2C1 a ns1:Parametro ;
-    rdfs:label "MFUN2C1"@es ;
-    ns1:identificador "MFUN2C1" ;
-    ns1:textoExtracto "| MFUN1C1 | MFUN2C1 | MFUN3C1 - MFUN7C1 | [...] | 3 | 4 | $FFFFFFFF"@es ;
-    ns1:valor 4 .
+ns1:IndicaLaVelocidadProgramadaEnElCabezal4 a ns1:Parametro ;
+    rdfs:label "Indica la velocidad programada en el cabezal 4" ;
+    ns1:identificador "SFUN4" ;
+    ns1:textoExtracto "Estos registro indican la velocidad programada en cada uno de los cabezales." .
 
-ns1:Parametro_SPN1C1 a ns1:Parametro ;
-    rdfs:label "SPN1C1"@es ;
-    ns1:identificador "SPN1C1" ;
-    ns1:textoExtracto "| SPN1C1 | SPN2C1 | SPN3C1 - SPN7C1 | [...] | 1 | 2 | $FFFFFFFF"@es ;
-    ns1:valor 1 .
+ns1:Parametro_2cdf463309 a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H" ;
+    ns1:identificador "HSTROBEC1" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H que se le indican en los registros HFUN1 a HFUN7." .
 
-ns1:Parametro_SPN2C1 a ns1:Parametro ;
-    rdfs:label "SPN2C1"@es ;
-    ns1:identificador "SPN2C1" ;
-    ns1:textoExtracto "| SPN1C1 | SPN2C1 | SPN3C1 - SPN7C1 | [...] | 1 | 2 | $FFFFFFFF"@es ;
-    ns1:valor 2 .
+ns1:Parametro_2e76324cea a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M" ;
+    ns1:identificador "MSTROBEC1" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M que se le indican en los registros MFUN1 a MFUN7 del canal." .
 
-ns1:Interfaz_CNC a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de programación CNC para funciones M y SP"@es ;
-    ns1:documentadoEn ns1:Manual_6_1 ;
-    ns1:monitoreaParametro ns1:Parametro_MFUN1C1,
-        ns1:Parametro_MFUN2C1,
-        ns1:Parametro_SPN1C1,
-        ns1:Parametro_SPN2C1 ;
-    ns1:textoExtracto "Si en el bloque se programa una función sin hacer referencia al cabezal, se asume para el cabezal master del canal. Comandos SP1FUN* - SP4FUN*."@es .
+ns1:Parametro_761bc63942 a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H" ;
+    ns1:identificador "HSTROBEC2" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H que se le indican en los registros HFUN1 a HFUN7." .
 
-ns1:Parametro_MFUN1C1 a ns1:Parametro ;
-    rdfs:label "MFUN1C1"@es ;
-    ns1:identificador "MFUN1C1" ;
-    ns1:textoExtracto "MFUN1C1 (también se puede programar como MFUN1). [...] Si no se utilizan todos los registros, el CNC asigna el valor hexadecimal $FFFFFFFF a los que queden libres."@es ;
-    ns1:valor "ffffffff"^^xsd:hexBinary,
-        3 .
+ns1:Parametro_80d8426290 a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M" ;
+    ns1:identificador "MSTROBEC3" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M que se le indican en los registros MFUN1 a MFUN7 del canal." .
+
+ns1:Parametro_941252ff6d a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M" ;
+    ns1:identificador "MSTROBEC4" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M que se le indican en los registros MFUN1 a MFUN7 del canal." .
+
+ns1:Parametro_94953f18c3 a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M" ;
+    ns1:identificador "MSTROBEC2" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares M que se le indican en los registros MFUN1 a MFUN7 del canal." .
+
+ns1:Parametro_9f10a6ba30 a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H" ;
+    ns1:identificador "HSTROBEC3" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H que se le indican en los registros HFUN1 a HFUN7." .
+
+ns1:Parametro_c193dc579b a ns1:Parametro ;
+    rdfs:label "Marca para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H" ;
+    ns1:identificador "HSTROBEC4" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que debe ejecutar la(s) función(es) auxiliares H que se le indican en los registros HFUN1 a HFUN7." .
 

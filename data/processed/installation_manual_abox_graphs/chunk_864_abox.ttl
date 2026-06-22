@@ -1,83 +1,18 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_SincronizacionCabezales a ns1:Sistema ;
-    rdfs:label "Sistema de sincronización de cabezales" ;
-    ns1:compuestoPor ns1:Marca_GEAROK,
-        ns1:Marca_SYNCPOSI,
-        ns1:Marca_SYNCRONP,
-        ns1:Marca_SYNSPEED ;
-    ns1:monitoreaParametro ns1:Parametro_DSYNCPOSW,
-        ns1:Parametro_DSYNCVELW,
-        ns1:Parametro_SincronizacionActiva ;
-    ns1:textoExtracto "Cuando se activa una sincronización, se activa la señal ENABLE en los dos cabezales y se espera a la señal SERVOON" ;
-    ns1:tieneComponente ns1:Se_al_ENABLE,
-        ns1:Se_al_INHIBIT,
-        ns1:Se_al_PLCCNTL,
-        ns1:Se_al_SERVOON,
-        ns1:Se_al_SPDLEREV .
+ns1:Parametro_1ec893594e a ns1:Parametro ;
+    rdfs:label "Marca que indica el estado de la operación de piercing" ;
+    ns1:identificador "PIERCING" ;
+    ns1:textoExtracto "El OEM debe gestionar esta marca desde la subrutina asociada al piercing (por defecto, Piercing.fst), para indicar al PLC cuando empieza (valor 1) y acaba (valor 0) la operación de piercing." .
 
-ns1:Marca_GEAROK a ns1:ComponenteElectrico ;
-    rdfs:label "Marca GEAROK" ;
-    ns1:textoExtracto "GEAROK [...] Hay una marca para cada cabezal" .
+ns1:Parametro_9e727c2974 a ns1:Parametro ;
+    rdfs:label "Marca que indica el estado del corte activo" ;
+    ns1:identificador "CUTTING" ;
+    ns1:textoExtracto "CUTTING Cutting activo." .
 
-ns1:Marca_SYNCPOSI a ns1:ComponenteElectrico ;
-    rdfs:label "Marca SYNCPOSI" ;
-    ns1:monitoreaParametro ns1:Parametro_SincronizacionEnPosicion ;
-    ns1:textoExtracto "SYNCPOSI [...] Esta marca se activa en el cabezal esclavo cuando está sincronizado en posición" .
-
-ns1:Marca_SYNCRONP a ns1:ComponenteElectrico ;
-    rdfs:label "Marca SYNCRONP" ;
-    ns1:monitoreaParametro ns1:Parametro_SincronizacionEnPosicion ;
-    ns1:textoExtracto "SYNCRONP [...] Esta marca se activa en el cabezal esclavo e indica que ha comenzado una sincronización en posición" .
-
-ns1:Marca_SYNSPEED a ns1:ComponenteElectrico ;
-    rdfs:label "Marca SYNSPEED" ;
-    ns1:monitoreaParametro ns1:Parametro_SincronizacionEnVelocidad ;
-    ns1:textoExtracto "SYNSPEED [...] Esta marca se activa en el cabezal esclavo cuando está sincronizado en velocidad" .
-
-ns1:Parametro_DSYNCPOSW a ns1:Parametro ;
-    rdfs:label "DSYNCPOSW" ;
-    ns1:identificador "DSYNCPOSW" ;
-    ns1:textoExtracto "máximo error en posición permitido, cuyo valor por defecto se define en el parámetro máquina DSYNCPOSW" ;
-    ns1:valor "valor_por_defecto_maquina" .
-
-ns1:Parametro_DSYNCVELW a ns1:Parametro ;
-    rdfs:label "DSYNCVELW" ;
-    ns1:identificador "DSYNCVELW" ;
-    ns1:textoExtracto "máximo error en velocidad permitido, cuyo valor por defecto se define en el parámetro máquina DSYNCVELW" ;
-    ns1:valor "valor_por_defecto_maquina" .
-
-ns1:Parametro_SincronizacionEnVelocidad a ns1:Parametro ;
-    rdfs:label "Sincronización en velocidad" ;
-    ns1:textoExtracto "sincronización en velocidad" .
-
-ns1:Se_al_ENABLE a ns1:ComponenteElectrico ;
-    rdfs:label "Señal ENABLE" ;
-    ns1:monitoreaParametro ns1:Parametro_SincronizacionActiva ;
-    ns1:textoExtracto "se activa la señal ENABLE en los dos cabezales" .
-
-ns1:Se_al_INHIBIT a ns1:ComponenteElectrico ;
-    rdfs:label "Señal INHIBIT" ;
-    ns1:textoExtracto "no se tienen en cuenta las señales [...] INHIBIT [...] durante el roscado" .
-
-ns1:Se_al_PLCCNTL a ns1:ComponenteElectrico ;
-    rdfs:label "Señal PLCCNTL" ;
-    ns1:textoExtracto "no se tienen en cuenta las señales PLCCNTL [...] durante el roscado" .
-
-ns1:Se_al_SERVOON a ns1:ComponenteElectrico ;
-    rdfs:label "Señal SERVOON" ;
-    ns1:textoExtracto "se espera a la señal SERVOON (en el caso de tener DWELL)" .
-
-ns1:Se_al_SPDLEREV a ns1:ComponenteElectrico ;
-    rdfs:label "Señal SPDLEREV" ;
-    ns1:textoExtracto "no se tienen en cuenta las señales [...] SPDLEREV ni del cabezal maestro ni del esclavo" .
-
-ns1:Parametro_SincronizacionActiva a ns1:Parametro ;
-    rdfs:label "Sincronización activa" ;
-    ns1:textoExtracto "Cuando se activa una sincronización, se activa la señal ENABLE en los dos cabezales" .
-
-ns1:Parametro_SincronizacionEnPosicion a ns1:Parametro ;
-    rdfs:label "Sincronización en posición" ;
-    ns1:textoExtracto "sincronización en posición" .
+ns1:Parametro_d3fc1b74cc a ns1:Parametro ;
+    rdfs:label "Marca que indica la activación de un fichero de material" ;
+    ns1:identificador "ACTIVEMATERIALON" ;
+    ns1:textoExtracto "El CNC activa esta marca cuando hay un fichero de material activo (por la ejecución de #MATERIAL, #TECHTABLE, por activación desde HMI o por recuperación en el arranque)." .
 

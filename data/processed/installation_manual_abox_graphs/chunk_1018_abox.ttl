@@ -1,40 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Almacen_cfae1946ff a ns1:Sistema ;
-    rdfs:label "almacén"@es ;
-    ns1:textoExtracto "coger una herramienta del almacén. TAKEPOS=# Posición del almacén para coger la herramienta."@es .
+ns1:CNC8070_4e38dbf794 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "$IF [V.S.EXECUTION == 1] ; CNC en ejecución" .
 
-ns1:Cabezal_18ef840448 a ns1:ComponenteMecanico ;
-    rdfs:label "cabezal"@es ;
-    ns1:textoExtracto "Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL. Dejar la herramienta del cabezal en tierra y coger una herramienta del almacén."@es .
+ns1:CambioDeHerramienta_ad185fecc3 a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:textoExtracto "M6 ; Orden al gestor para comenzar el cambio de herramienta." .
 
-ns1:HerramientaDeTierra_f2fa6baa49 a ns1:Herramienta ;
-    rdfs:label "Herramienta de tierra"@es ;
-    ns1:textoExtracto "Poner la herramienta de tierra en el cabezal y activar la marca GRTOSPDL. TMOPERATION = 7 Dejar la herramienta del cabezal en tierra y coger una herramienta del almacén. TAKEPOS=# Posición del almacén para coger la herramienta. LEAVEPOS=-4 Herramienta de tierra."@es .
+ns1:EstadoAutomaticoDelCNC a ns1:Parametro ;
+    rdfs:label "Estado automático del CNC" ;
+    ns1:identificador "V.G.CNCAUTSTATUS" ;
+    ns1:textoExtracto "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]]" .
 
-ns1:MarcaGRTOSPDL1 a ns1:Parametro ;
-    rdfs:label "marca GRTOSPDL"@es ;
-    ns1:identificador "GRTOSPDL" ;
-    ns1:textoExtracto "activar la marca GRTOSPDL"@es .
+ns1:EstadoCompletoDelSistema a ns1:Parametro ;
+    rdfs:label "Estado completo del sistema" ;
+    ns1:identificador "V.G.FULLSTATUS" ;
+    ns1:textoExtracto "$IF [[[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]]" .
 
-ns1:MarcaSPDLTOGR1 a ns1:Parametro ;
-    rdfs:label "marca SPDLTOGR"@es ;
-    ns1:identificador "SPDLTOGR" ;
-    ns1:textoExtracto "activar la marca SPDLTOGR"@es .
-
-ns1:PosicionAlmacen1 a ns1:Parametro ;
-    rdfs:label "Posición del almacén"@es ;
-    ns1:identificador "TAKEPOS=#" ;
-    ns1:textoExtracto "TAKEPOS=# Posición del almacén para coger la herramienta."@es .
-
-ns1:PosicionLeave1 a ns1:Parametro ;
-    rdfs:label "Posición LEAVEPOS"@es ;
-    ns1:identificador "LEAVEPOS=-4" ;
-    ns1:textoExtracto "LEAVEPOS=-4 Herramienta de tierra."@es .
-
-ns1:TMOPERATION_dd6295c787 a ns1:Parametro ;
-    rdfs:label "TMOPERATION"@es ;
-    ns1:identificador "TMOPERATION = 7" ;
-    ns1:textoExtracto "TMOPERATION = 7"@es .
+ns1:EstadoDeEjecucion a ns1:Parametro ;
+    rdfs:label "Estado de ejecución" ;
+    ns1:identificador "V.S.EXECUTION" ;
+    ns1:textoExtracto "$SWITCH V.S.EXECUTION; Analiza el tipo de operación." .
 

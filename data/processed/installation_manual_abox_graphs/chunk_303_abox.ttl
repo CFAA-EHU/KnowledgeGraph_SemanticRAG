@@ -1,45 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_SercosPosicion a ns1:ModoOperacion ;
-    rdfs:label "Modo Sercos posición"@es ;
-    ns1:textoExtracto "Se recomienda que los ejes (excepto ejes tándem) operen en modo Sercos posición."@es .
+ns1:SERCOSDATA a ns1:Tabla ;
+    rdfs:label "SERCOSDATA" ;
+    ns1:textoExtracto "Parámetro incluido en la tabla SERCOSDATA." ;
+    ns1:tieneComponente ns1:DireccionDelReguladorSercos,
+        ns1:ModoDeOperacionPrincipalDelReguladorSercos .
 
-ns1:ModoOperacion_SercosVelocidad a ns1:ModoOperacion ;
-    rdfs:label "Modo Sercos velocidad"@es ;
-    ns1:textoExtracto "los cabezales lo hagan en modo Sercos velocidad. Sin embargo, los ejes tándem deberán operar obligatoriamente en modo Sercos velocidad."@es .
+ns1:DireccionDelReguladorSercos a ns1:Parametro ;
+    rdfs:label "Dirección del regulador Sercos" ;
+    ns1:identificador "DRIVEID" ;
+    ns1:textoExtracto "DRIVEID Dirección del regulador Sercos. Parámetro válido para ejes lineales, rotativos y cabezales." ;
+    ns1:valor "1" .
 
-ns1:Parametro_Se_alSANALOG a ns1:Parametro ;
-    rdfs:label "Señal SANALOG desde PLC"@es ;
-    ns1:textoExtracto "su valor también vendrá expresado en diezmilésimas de rpm del motor."@es ;
-    ns1:valor "diezmilésimas de rpm"@es .
-
-ns1:Sistema_BusquedaCero a ns1:Sistema ;
-    rdfs:label "Sistema de búsqueda de cero"@es ;
-    ns1:controla ns1:ComponenteElectrico_ReguladorSercos ;
-    ns1:textoExtracto "La búsqueda de cero la controla el CNC."@es .
-
-ns1:ComponenteElectrico_ReguladorSercos a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Sercos"@es ;
-    ns1:monitoreaParametro ns1:Parametro_ConsignaVelocidad,
-        ns1:Parametro_FeedbackCota,
-        ns1:Parametro_ModoOperacionSercos ;
-    ns1:textoExtracto "Este parámetro indica el modo de operación del regulador Sercos."@es .
-
-ns1:Parametro_ConsignaVelocidad a ns1:Parametro ;
-    rdfs:label "Consigna de velocidad en modo Sercos velocidad"@es ;
-    ns1:textoExtracto "La consigna se envía al regulador en diezmilésimas de rpm del motor."@es ;
-    ns1:valor "diezmilésimas de rpm"@es .
-
-ns1:Parametro_FeedbackCota a ns1:Parametro ;
-    rdfs:label "Feedback de cota en modo Sercos velocidad"@es ;
-    ns1:textoExtracto "El feedback del regulador al CNC llega como cota absoluta, en diezmilésimas de milímetro o milésimas de grado."@es ;
-    ns1:valor "diezmilésimas de milímetro"@es,
-        "milésimas de grado"@es .
-
-ns1:Parametro_ModoOperacionSercos a ns1:Parametro ;
-    rdfs:label "Modo de operación del regulador Sercos"@es ;
-    ns1:textoExtracto "Este parámetro indica el modo de operación del regulador Sercos; consigna de velocidad o de posición."@es ;
-    ns1:valor "Sercos posición"@es,
-        "Sercos velocidad"@es .
+ns1:ModoDeOperacionPrincipalDelReguladorSercos a ns1:Parametro ;
+    rdfs:label "Modo de operación principal del regulador Sercos" ;
+    ns1:identificador "OPMODEP" ;
+    ns1:textoExtracto "OPMODEP Modo de operación principal del regulador Sercos. Parámetro válido para ejes lineales, rotativos y cabezales." ;
+    ns1:valor "Posición" .
 

@@ -1,61 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ParametroDistribucionPar_1176 a ns1:Parametro ;
-    rdfs:label "Distribución de par en eje tándem"@es ;
-    ns1:textoExtracto "Ganancia de normalización de los pares generados por los motores cuyo fin es establecer un reparto de pares que no siga una relación 1:1."@es ;
-    ns1:valor "ganancia de normalización"@es .
+ns1:ConsignaDeVelocidadParaSercos a ns1:Parametro ;
+    rdfs:label "Consigna de velocidad para Sercos" ;
+    ns1:identificador "V[ch].A.FTEO.xn" ;
+    ns1:textoExtracto "(V.)[ch].A.FTEO.xn Consigna de velocidad para Sercos" .
 
-ns1:ParametroPrecarga_1176 a ns1:Parametro ;
-    rdfs:label "Precarga del eje tándem"@es ;
-    ns1:textoExtracto "Par previo aplicado a ambos ejes del tándem en sentidos opuestos."@es ;
-    ns1:valor "par previo (sentidos opuestos)"@es .
+ns1:EntradaDelPIDelEjeMaestroDelTandemEnRpm a ns1:Parametro ;
+    rdfs:label "Entrada del PI del eje maestro del tándem (en rpm)" ;
+    ns1:identificador "V[ch].A.TPIIN.xn" ;
+    ns1:textoExtracto "(V.)[ch].A.TPIIN.xn Entrada del PI del eje maestro del tándem (en rpm)" .
 
-ns1:SistemaControlTandem_1176 a ns1:Sistema ;
-    rdfs:label "Sistema de control del eje tándem"@es ;
-    ns1:compuestoPor ns1:ControlNumericoTandem_1176,
-        ns1:ReguladorTandem_1176 ;
-    ns1:detalladoEnEsquema ns1:DiagramaBloquesTandem_1176 ;
-    ns1:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo. [...] El control de tándem modifica la consigna de velocidad del eje maestro y del eje esclavo en función de la distribución de par y la precarga seleccionada."@es ;
-    ns1:tieneComponente ns1:MotorEsclavoTandem_1176,
-        ns1:MotorMaestroTandem_1176 .
+ns1:ParDeCorrienteEnSercos a ns1:Parametro ;
+    rdfs:label "Par de corriente en Sercos" ;
+    ns1:identificador "V[ch].A.TORQUE.xn" ;
+    ns1:textoExtracto "(V.)[ch].A.TORQUE.xn Par de corriente en Sercos" .
 
-ns1:ControlNumericoTandem_1176 a ns1:ComponenteElectrico ;
-    rdfs:label "Control numérico del eje tándem"@es ;
-    ns1:controla ns1:MotorEsclavoTandem_1176,
-        ns1:MotorMaestroTandem_1176 ;
-    ns1:textoExtracto "El diagrama de bloques [...] engloba el lazo de posición y el control del tándem. Lazo de posición y velocidad."@es .
+ns1:Parametro_11ea6d7ed7 a ns1:Parametro ;
+    rdfs:label "Precarga" ;
+    ns1:identificador "V[ch].A.PRELOAD.xn" ;
+    ns1:textoExtracto "(V.)[ch].A.PRELOAD.xn Precarga" .
 
-ns1:DiagramaBloquesTandem_1176 a ns1:Esquema ;
-    rdfs:label "Diagrama de bloques del sistema de control del eje tándem"@es ;
-    ns1:ilustradoEn ns1:Pagina_577_578 ;
-    ns1:textoExtracto "El diagrama de bloques del sistema de control del tándem muestra el eje tándem maestro con su eje tándem esclavo. [...] El diagrama de bloques representativo de la aplicación del control del eje tándem es el siguiente."@es .
+ns1:SalidaDelFiltroDePrecarga a ns1:Parametro ;
+    rdfs:label "Salida del filtro de precarga" ;
+    ns1:identificador "V[ch].A.TFILTOUT.xn" ;
+    ns1:textoExtracto "(V.)[ch].A.TFILTOUT.xn Salida del filtro de precarga" .
 
-ns1:ReguladorTandem_1176 a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador del eje tándem"@es ;
-    ns1:monitoreaParametro ns1:ParametroTV2_Esclavo_1176,
-        ns1:ParametroTV2_Maestro_1176 ;
-    ns1:textoExtracto "En el diagrama de bloques aparece una zona correspondiente al regulador y otra al control numérico, que engloba el lazo de posición y el control del tándem."@es .
-
-ns1:MotorEsclavoTandem_1176 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor esclavo del eje tándem"@es ;
-    ns1:monitoreaParametro ns1:ParametroTV2_Esclavo_1176 ;
-    ns1:textoExtracto "Par del motor esclavo del tándem. Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje esclavo del tándem."@es .
-
-ns1:MotorMaestroTandem_1176 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor maestro del eje tándem"@es ;
-    ns1:monitoreaParametro ns1:ParametroTV2_Maestro_1176 ;
-    ns1:textoExtracto "Par del motor maestro del tándem. Es el porcentaje de par nominal que refleja la variable sercos TV2 del regulador que gobierna el eje maestro del tándem."@es .
-
-ns1:ParametroTV2_Esclavo_1176 a ns1:Parametro ;
-    rdfs:label "Variable sercos TV2 (par nominal %) - Motor esclavo"@es ;
-    ns1:identificador "TV2" ;
-    ns1:textoExtracto "Par del motor esclavo del tándem. [...] La lectura se efectúa por el canal rápido de sercos en cada lazo."@es ;
-    ns1:valor "porcentaje de par nominal"@es .
-
-ns1:ParametroTV2_Maestro_1176 a ns1:Parametro ;
-    rdfs:label "Variable sercos TV2 (par nominal %) - Motor maestro"@es ;
-    ns1:identificador "TV2" ;
-    ns1:textoExtracto "Par del motor maestro del tándem. [...] La lectura se efectúa por el canal rápido de sercos en cada lazo."@es ;
-    ns1:valor "porcentaje de par nominal"@es .
+ns1:SalidaDelPIDelEjeMaestroDelTandemEnRpm_c57185505b a ns1:Parametro ;
+    rdfs:label "Salida del PI del eje maestro del tándem (en rpm)" ;
+    ns1:identificador "V[ch].A.TPIOUT.xn" ;
+    ns1:textoExtracto "(V.)[ch].A.TPIOUT.xn Salida del PI del eje maestro del tándem (en rpm)" .
 

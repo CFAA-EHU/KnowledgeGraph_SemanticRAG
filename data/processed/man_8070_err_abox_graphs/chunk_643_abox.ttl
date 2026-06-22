@@ -1,49 +1,49 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Empresa_FagorAutomation a ns1:Empresa ;
-    rdfs:label "Fagor Automation" ;
-    ns1:textoExtracto "Fagor Automation" .
+ns1:ComprobarSiElCNCArrancoCorrectamente a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar si el CNC arrancó correctamente" ;
+    ns1:solucionaFallo ns1:NoSePuedeAccederALasVariablesSercos,
+        ns1:VariableSercosNoIdentificada ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar si el CNC arrancó correctamente." .
 
-ns1:Error4606 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en comando de preparación del bus" ;
-    ns1:identificador "4606" ;
-    ns1:textoExtracto "Error en comando de preparación del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la preparación de los parámetros del bus. SOLUCIÓN Póngase en contacto con Fagor Automation." .
+ns1:ComprobarSiElNombreDeLaVariableSercosEsCorrecto a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar si el nombre de la variable Sercos es correcto" ;
+    ns1:solucionaFallo ns1:VariableSercosNoIdentificada ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar si el nombre de la variable Sercos es correcto." .
 
-ns1:Error4607 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en comando de actualización del bus" ;
-    ns1:identificador "4607" ;
-    ns1:textoExtracto "Error en comando de actualización del bus. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante la activación de los parámetros del bus. SOLUCIÓN Póngase en contacto con Fagor Automation." .
+ns1:EliminarDelNombreDeLaVariableElIndicativoDelSet a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar del nombre de la variable el indicativo del set" ;
+    ns1:solucionaFallo ns1:LaVariableSercosNoTieneSets ;
+    ns1:textoExtracto "SOLUCIÓN Eliminar del nombre de la variable el indicativo del set." .
 
-ns1:Error4608 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la inicialización de la captación" ;
-    ns1:identificador "4608" ;
-    ns1:textoExtracto "Error en la inicialización de la captación. DETECCIÓN Durante el arranque del CNC. CAUSA Se ha producido un error interno durante el reconocimiento de las captaciones. SOLUCIÓN Póngase en contacto con Fagor Automation." .
+ns1:IdentificarElComandoQueHaProducidoElErrorYElEsclavoRelacionado a ns1:TareaMantenimiento ;
+    rdfs:label "Identificar el comando que ha producido el error y el esclavo relacionado" ;
+    ns1:solucionaFallo ns1:ErrorEnComandoMechatrolink_607d23e238 ;
+    ns1:textoExtracto "SOLUCIÓN Identificar el comando que ha producido el error y el esclavo relacionado." .
 
-ns1:Error4609 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el reset del bus" ;
-    ns1:identificador "4609" ;
-    ns1:textoExtracto "Error en el reset del bus. DETECCIÓN Durante el arranque del CNC o tras un reset. CAUSA Se ha producido un error interno durante el proceso de reset del bus. SOLUCIÓN Póngase en contacto con Fagor Automation." .
+ns1:VerificarLaParametrizacionDeLaComunicacionYLaIntegridadFisicaDelBus a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la parametrización de la comunicación y la integridad física del bus" ;
+    ns1:solucionaFallo ns1:ErrorEnLaInicializacionDelHwDeMechatrolink ;
+    ns1:textoExtracto "SOLUCIÓN Verificar la parametrización de la comunicación (protocolo, tamaño de los datos, número de ejes Mechatrolink, etc) y la integridad física del bus (cableado, resistencias terminadoras, asignación de la numeración de cada estación, etc)." .
 
-ns1:Error4610 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error bus sin conexión" ;
-    ns1:identificador "4610" ;
-    ns1:solucionaFallo ns1:ComponenteElectrico_BusSercosIII ;
-    ns1:textoExtracto "Error bus sin conexión. DETECCIÓN Durante el arranque del CNC o la ejecución. CAUSA Se ha perdido la conexión física en el bus Sercos III; cable desconectado o esclavo apagado sin alimentación. SOLUCIÓN Revisar el cableado, conexionado y alimentación del CNC." .
+ns1:ErrorEnComandoMechatrolink_607d23e238 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en comando Mechatrolink" ;
+    ns1:textoExtracto "'Error en comando Mechatrolink' DETECCIÓN Durante la ejecución del CNC. CAUSA Fallo en la ejecución de un comando Mechatrolink desde el master a un esclavo determinado." .
 
-ns1:Error4611 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error Bus, mensaje de bus no válido en fase 0" ;
-    ns1:identificador "4611" ;
-    ns1:solucionaFallo ns1:ComponenteElectrico_BusSercosIII ;
-    ns1:textoExtracto "Error Bus, mensaje de bus no válido en fase 0. DETECCIÓN Durante el arranque del CNC o tras un reset. CAUSA Se ha producido un error durante la comunicación con los esclavos en el bus Sercos III. SOLUCIÓN Revisar el cableado, conexionado y alimentación de los esclavos. Si el error persiste, póngase en contacto con Fagor Automation." .
+ns1:ErrorEnLaInicializacionDelHwDeMechatrolink a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la inicialización del Hw de Mechatrolink" ;
+    ns1:textoExtracto "'Error en la inicialización del Hw de Mechatrolink' DETECCIÓN Durante el arranque del CNC. CAUSA No se pudo completar con éxito la fase de inicialización de la comunicación Mechatrolink." .
 
-ns1:Error4612 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error bus mensaje no recibido en fase 0" ;
-    ns1:identificador "4612" ;
-    ns1:solucionaFallo ns1:ComponenteElectrico_BusSercosIII ;
-    ns1:textoExtracto "Error bus mensaje no recibido en fase 0. DETECCIÓN Durante el arranque del CNC o tras un reset. CAUSA Se ha producido un error durante la detección de esclavos en el bus Sercos III. Alguno de los esclavos se encuentra en error o desconectado." .
+ns1:LaVariableSercosNoTieneSets a ns1:DiagnosticoFallo ;
+    rdfs:label "La variable Sercos no tiene sets" ;
+    ns1:textoExtracto "'La variable Sercos no tiene sets' DETECCIÓN En el osciloscopio. CAUSA En un canal del osciloscopio hay definida una variable Sercos, en cuya sintaxis se indica el set pero la variable no tiene sets." .
 
-ns1:ComponenteElectrico_BusSercosIII a ns1:ComponenteElectrico ;
-    rdfs:label "Bus Sercos III" ;
-    ns1:textoExtracto "bus Sercos III" .
+ns1:NoSePuedeAccederALasVariablesSercos a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede acceder a las variables Sercos" ;
+    ns1:textoExtracto "4301 No se puede acceder a las variables Sercos. DETECCIÓN Desde el interface. CAUSA Desde el interface se ha pedido una variable de regulador Sercos, pero el servidor de variables no ha sido inicializado correctamente y no puede acceder a la información de las variables Sercos." .
+
+ns1:VariableSercosNoIdentificada a ns1:DiagnosticoFallo ;
+    rdfs:label "Variable Sercos no identificada" ;
+    ns1:textoExtracto "4302 Variable Sercos no identificada. DETECCIÓN Desde el interface. CAUSA Desde el interface se ha pedido una variable de regulador Sercos, pero la variable es desconocida." .
 

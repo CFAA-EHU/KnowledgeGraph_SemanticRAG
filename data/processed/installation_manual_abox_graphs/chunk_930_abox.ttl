@@ -1,25 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaCaptacionMixta a ns1:Sistema ;
-    rdfs:label "Sistema de mezcla de captaciones (interna+externa)" ;
-    ns1:controla ns1:Parametro_FBMIXTIME ;
-    ns1:ilustradoEn ns1:Marca_ACTFBACK ;
-    ns1:textoExtracto "mezcla de captaciones [...] Cuando el tipo de captación es interna+externa, el CNC utiliza la captación interna (captación motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos" ;
-    ns1:tieneComponente ns1:ComponenteElectrico_CaptacionMotor .
+ns1:CabezalAnalogico a ns1:ComponenteElectrico ;
+    rdfs:label "Cabezal Analógico" ;
+    ns1:textoExtracto "A 10 V de consigna corresponde SANALOG = 32767. Es decir: Para 4 V se programará SANALOG = (4x32767)/10 = 13107 Para -4 V se programará SANALOG = (-4x32767)/10 = -13107" .
 
-ns1:ComponenteElectrico_CaptacionMotor a ns1:ComponenteElectrico ;
-    rdfs:label "Captación motor (interna)" ;
-    ns1:textoExtracto "captación interna (captación motor)" .
+ns1:CabezalSercosPosicion a ns1:ComponenteElectrico ;
+    rdfs:label "Cabezal Sercos en posición" ;
+    ns1:textoExtracto "La consigna en SANALOG vendrá expresada en diezmilésima de grado." .
 
-ns1:Marca_ACTFBACK a ns1:InterfazUsuario ;
-    rdfs:label "ACTFBACK(axis)" ;
-    ns1:identificador "ACTFBACK(axis)" ;
-    ns1:monitoreaParametro ns1:Parametro_FBMIXTIME ;
-    ns1:textoExtracto "La marca ACTFBACK(axis) indica cuál es la captación activa" .
+ns1:CabezalSercosVelocidad a ns1:ComponenteElectrico ;
+    rdfs:label "Cabezal Sercos en velocidad" ;
+    ns1:textoExtracto "La consigna en SANALOG vendrá expresada en diezmilésima de rpm." .
 
-ns1:Parametro_FBMIXTIME a ns1:Parametro ;
-    rdfs:label "FBMIXTIME" ;
-    ns1:identificador "FBMIXTIME" ;
-    ns1:textoExtracto "parámetro FBMIXTIME" .
+ns1:Parametro_3f0de34556 a ns1:Parametro ;
+    rdfs:label "Marca de control del PLC" ;
+    ns1:identificador "PLCCNTL" ;
+    ns1:textoExtracto "Cuando el PLC pone la marca PLCCNTL a (=1), el cabezal decelera con rampa hasta detenerse y pasa a estar controlado por el PLC." .
+
+ns1:RegistroDeConsignaDelCabezal a ns1:Parametro ;
+    rdfs:label "Registro de consigna del cabezal" ;
+    ns1:identificador "SANALOG" ;
+    ns1:textoExtracto "El registro SANALOG fija la consigna de cabezal que se desea aplicar." .
+
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "Cuando el PLC pone la marca PLCCNTL a (=1), el cabezal decelera con rampa hasta detenerse y pasa a estar controlado por el PLC." .
 

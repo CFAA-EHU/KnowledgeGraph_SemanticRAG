@@ -1,50 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comunicacion_966_1 a ns1:Sistema ;
-    rdfs:label "comunicación entre el gestor y el PLC" ;
-    ns1:compuestoPor ns1:Almacen_2edeb682ba,
-        ns1:Canal_012b0b0560 ;
-    ns1:textoExtracto "Para la comunicación entre el gestor de herramientas y el PLC" .
+ns1:ElGestorDeHerramientasDelCanalPoneEstaMarcaA1ParaIndicarAlPLCQueDebeE_19c2651fba a ns1:Parametro ;
+    rdfs:label "El gestor de herramientas del canal pone esta marca a (=1) para indicar al PLC que debe ejecutar la operación indicada en la marca TMOPERATION del canal."@es ;
+    ns1:identificador "TMOPSTROBE" ;
+    ns1:textoExtracto "TMOPSTROBE | El gestor de herramientas del canal pone esta marca a (=1) para indicar al PLC que debe ejecutar la operación indicada en la marca TMOPERATION del canal." .
 
-ns1:GestorHerramientas_966_1 a ns1:Sistema ;
-    rdfs:label "gestor de herramientas" ;
-    ns1:controla ns1:PLC_966_1 ;
-    ns1:textoExtracto "el gestor de las acciones efectuadas" .
+ns1:EsteRegistroIndicaElAlmacenEnElQueSeEncuentraLaHerramientaQueHaSolici_ca35d5884e a ns1:Parametro ;
+    rdfs:label "Este registro indica el almacén en el que se encuentra la herramienta que ha solicitado el canal. Cuando en el cambio de herramienta intervengan dos almacenes, en la parte baja de este registro se indica el almacén en el que hay que dejar la herramienta y en la parte alta el almacén del que hay que coger la herramienta."@es ;
+    ns1:identificador "MZID" ;
+    ns1:textoExtracto "MZID | Este registro indica el almacén en el que se encuentra la herramienta que ha solicitado el canal. Cuando en el cambio de herramienta intervengan dos almacenes, en la parte baja de este registro se indica el almacén en el que hay que dejar la herramienta y en la parte alta el almacén del que hay que coger la herramienta." .
 
-ns1:Herramienta_7946b2f1f1 a ns1:Herramienta ;
-    rdfs:label "herramienta" ;
-    ns1:textoExtracto "la herramienta del cabezal" .
+ns1:EsteRegistroIndicaElTipoDeOperacionQueDeseaRealizarElGestorDeHerramientas a ns1:Parametro ;
+    rdfs:label "Este registro indica el tipo de operación que desea realizar el gestor de herramientas."@es ;
+    ns1:identificador "TMOPERATION" ;
+    ns1:textoExtracto "TMOPERATION | Este registro indica el tipo de operación que desea realizar el gestor de herramientas." .
 
-ns1:SubrutinaCambioHerramienta_966_1 a ns1:TareaMantenimiento ;
-    rdfs:label "subrutinas asociadas al cambio de herramienta" ;
-    ns1:textoExtracto "Subrutinas asociadas al cambio de herramienta." .
+ns1:EsteRegistroIndicaLaPosicionDeAlmacenEnLaQueHayQueDejarLaHerramientaD_22b6af523c a ns1:Parametro ;
+    rdfs:label "Este registro indica la posición de almacén en la que hay que dejar la herramienta. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), este registro tomará valor ꞏ0ꞏ si es un posicionamiento relativo positivo y valor ꞏ1ꞏ si es un posicionamiento relativo negativo."@es ;
+    ns1:identificador "LEAVEPOS" ;
+    ns1:textoExtracto "LEAVEPOS | Este registro indica la posición de almacén en la que hay que dejar la herramienta. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), este registro tomará valor ꞏ0ꞏ si es un posicionamiento relativo positivo y valor ꞏ1ꞏ si es un posicionamiento relativo negativo." .
 
-ns1:SubrutinaHerramienta_966_1 a ns1:TareaMantenimiento ;
-    rdfs:label "subrutina asociada a la herramienta" ;
-    ns1:ejecutadoPor ns1:PLC_966_1 ;
-    ns1:textoExtracto "La rutina asociada a la herramienta se ejecuta automáticamente cada vez que se ejecuta una función T (selección de herramienta)." .
+ns1:EsteRegistroIndicaLaPosicionDeAlmacenQueOcupaLaHerramientaQueHayQueCo_fdc1c4e521 a ns1:Parametro ;
+    rdfs:label "Este registro indica la posición de almacén que ocupa la herramienta que hay que coger. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), este registro tomará valor ꞏ0ꞏ si es un posicionamiento absoluto y valor ꞏ1ꞏ si es un posicionamiento relativo."@es ;
+    ns1:identificador "TAKEPOS" ;
+    ns1:textoExtracto "TAKEPOS | Este registro indica la posición de almacén que ocupa la herramienta que hay que coger. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), este registro tomará valor ꞏ0ꞏ si es un posicionamiento absoluto y valor ꞏ1ꞏ si es un posicionamiento relativo." .
 
-ns1:BrazoCambiador_966_1 a ns1:ComponenteMecanico ;
-    rdfs:label "brazo cambiador" ;
-    ns1:textoExtracto "llevar la herramienta del cabezal al brazo cambiador" .
-
-ns1:Cabezal_966_1 a ns1:ComponenteMecanico ;
-    rdfs:label "cabezal" ;
-    ns1:textoExtracto "Dejar la herramienta del cabezal en tierra." .
-
-ns1:Canal_012b0b0560 a ns1:ComponenteElectrico ;
-    rdfs:label "canal" ;
-    ns1:textoExtracto "cada canal y almacén dispone de un grupo de marcas y registros" .
-
-ns1:Almacen_2edeb682ba a ns1:Sistema ;
-    rdfs:label "almacén" ;
-    ns1:compuestoPor ns1:BrazoCambiador_966_1,
-        ns1:Cabezal_966_1 ;
-    ns1:textoExtracto "el almacén y coger otra." .
-
-ns1:PLC_966_1 a ns1:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ns1:controla ns1:Almacen_2edeb682ba ;
-    ns1:textoExtracto "El PLC, que es el encargado de controlar dichos movimientos" .
+ns1:EsteRegistroIndicaLaPosicionDeAlmacenQueOcupaLaSiguienteHerramientaDu_c518797cff a ns1:Parametro ;
+    rdfs:label "Este registro indica la posición de almacén que ocupa la siguiente herramienta. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), en un posicionamiento absoluto este registro indica la posición a alcanzar y en un posicionamiento relativo indica el número de posiciones a girar."@es ;
+    ns1:identificador "NEXTPOS" ;
+    ns1:textoExtracto "NEXTPOS | Este registro indica la posición de almacén que ocupa la siguiente herramienta. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), en un posicionamiento absoluto este registro indica la posición a alcanzar y en un posicionamiento relativo indica el número de posiciones a girar." .
 

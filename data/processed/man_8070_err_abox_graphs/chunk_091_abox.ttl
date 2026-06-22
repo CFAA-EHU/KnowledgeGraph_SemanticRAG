@@ -1,52 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CabezalCNC a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal CNC (eje independiente)" ;
-    ns1:identificador "CABEZAL_C" ;
-    ns1:textoExtracto "El CNC ha intentado ejecutar un movimiento independiente en un cabezal. [...] Para poder interpolar el cabezal como eje independiente, éste debe estar activo como eje C." .
+ns1:CoordenadasDelCentroIgnoradasConG0G1G100G63Activas a ns1:DiagnosticoFallo ;
+    rdfs:label "Coordenadas del centro ignoradas con G0/G1/G100/G63 activas" ;
+    ns1:textoExtracto "'Coordenadas del centro ignoradas con G0/G1/G100/G63 activas' DETECCIÓN Durante la ejecución. CAUSA El CNC ha encontrado los parámetros I, J, K con la función G0, G1, G100 o G63 activa. El CNC ignora estos parámetros." .
 
-ns1:EjeC a ns1:Parametro ;
-    rdfs:label "Modo de eje C (interpolación de cabezal)" ;
-    ns1:identificador "EJE_C" ;
-    ns1:textoExtracto "éste debe estar activo como eje C" .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteCompensacionDeRadioActivaEnMedicion ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Error1050 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1050: Exceso de rango en offsets de herramientas" ;
-    ns1:identificador "1050" ;
-    ns1:textoExtracto "'Considerados los offsets de herramientas, se excede el rango de datos' [...] CAUSA Las dimensiones de la herramienta exceden los valores máximos. SOLUCIÓN Modificar las dimensiones de la herramienta." .
+ns1:UtilizarFuncionG102ParaAnularElOffsetDeMedicion a ns1:TareaMantenimiento ;
+    rdfs:label "Utilizar función G102 para anular el offset de medición" ;
+    ns1:solucionaFallo ns1:ExisteUnValorDeMedicionPrevioParaElEjeS ;
+    ns1:textoExtracto "SOLUCIÓN Utilizar la función G102 para anular el offset de medición incluido en el eje." .
 
-ns1:Error1051 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1051: Eje no existente o no disponible en el canal" ;
-    ns1:identificador "1051" ;
-    ns1:textoExtracto "'Eje no existente o no disponible en el canal' [...] CAUSA Las posibles causas son las siguientes: • El CNC ha intentado ejecutar un movimiento independiente en un cabezal. • El eje programado en una variable no está disponible. SOLUCIÓN Revisar la programación." .
+ns1:ExisteUnValorDeMedicionPrevioParaElEjeS a ns1:DiagnosticoFallo ;
+    rdfs:label "Existe un valor de medición previo para el eje(s)" ;
+    ns1:textoExtracto "'Existe un valor de medición previo para el eje(s)' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta realizar una medición (G100) en un eje que tiene un offset de medición anterior." .
 
-ns1:Error1052 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1052: Valores de medición fuera de rango" ;
-    ns1:identificador "1052" ;
-    ns1:textoExtracto "'Valores resultado de la medición fuera de rango' [...] DETECCIÓN Durante la ejecución." .
-
-ns1:Herramienta_CNC a ns1:Herramienta ;
-    rdfs:label "Herramienta CNC con offsets configurables" ;
-    ns1:textoExtracto "Las dimensiones de la herramienta exceden los valores máximos." .
-
-ns1:ParametroFACEAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro FACEAXIS (ejes frontales en plano principal)" ;
-    ns1:identificador "FACEAXIS" ;
-    ns1:textoExtracto "Los dos ejes del plano principal son ejes frontales (parámetro FACEAXIS)." .
-
-ns1:SolucionFACEAXIS a ns1:AccionProhibida ;
-    rdfs:label "Restricción: Un solo eje frontal por plano de trabajo" ;
-    ns1:solucionaFallo ns1:ErrorFACEAXIS ;
-    ns1:textoExtracto "En el plano de trabajo sólo puede haber un eje frontal." .
-
-ns1:VariableEjeProgramado a ns1:Parametro ;
-    rdfs:label "Variable de programación de eje" ;
-    ns1:identificador "EJE_VAR" ;
-    ns1:textoExtracto "El eje programado en una variable no está disponible." .
-
-ns1:ErrorFACEAXIS a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de configuración: Múltiples ejes frontales en plano principal" ;
-    ns1:identificador "FACEAXIS_CONFLICT" ;
-    ns1:textoExtracto "Los dos ejes del plano principal son ejes frontales (parámetro FACEAXIS)." .
+ns1:NoSeAdmiteCompensacionDeRadioActivaEnMedicion a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite compensación de radio activa en medición" ;
+    ns1:textoExtracto "'No se admite compensación de radio activa en medición' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar la función G100 con la compensación de radio activa (G41/G42)." .
 

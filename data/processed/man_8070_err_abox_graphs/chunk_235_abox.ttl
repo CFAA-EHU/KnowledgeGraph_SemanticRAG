@@ -1,25 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaControl a ns1:Sistema ;
-    rdfs:label "Sistema de control de sincronización por canales"@es ;
-    ns1:solucionaFallo ns1:Fallo_1486,
-        ns1:Fallo_1487 ;
-    ns1:textoExtracto "La marca de sincronización está programada para el mismo canal que las sentencias."@es .
+ns1:G74FaltaAsociarSubrutina a ns1:DiagnosticoFallo ;
+    rdfs:label "G74: falta asociar subrutina" ;
+    ns1:textoExtracto "'G74: falta asociar subrutina' DETECCIÓN Durante la ejecución." .
 
-ns1:Tarea_RevisionProgramacion a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de programación de sentencias de sincronización"@es ;
-    ns1:solucionaFallo ns1:Fallo_1486,
-        ns1:Fallo_1487 ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
+ns1:GenerarDeNuevoLaCajera a ns1:TareaMantenimiento ;
+    rdfs:label "Generar de nuevo la cajera" ;
+    ns1:solucionaFallo ns1:LaCajeraFueResueltaConDiferenteAnguloDeEntradaDeHerramienta,
+        ns1:LaCajeraFueResueltaConDiferenteLongitudDeCorteDeHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Generar de nuevo la cajera." .
 
-ns1:Fallo_1486 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en programación de #SIGNAL"@es ;
-    ns1:identificador "1486" ;
-    ns1:textoExtracto "1486 'Programar: #SIGNAL [señal, señal, señal, ...]' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque. SOLUCIÓN Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque."@es .
+ns1:LaCajeraFueResueltaConDiferenteAnguloDeEntradaDeHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "La cajera fue resuelta con diferente ángulo de entrada de herramienta" ;
+    ns1:textoExtracto "CAUSA El CNC generó la cajera con un ángulo de entrada de herramienta diferente al actual. SOLUCIÓN Generar de nuevo la cajera." .
 
-ns1:Fallo_1487 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en programación de #CLEAR"@es ;
-    ns1:identificador "1487" ;
-    ns1:textoExtracto "1487 'Programar: #CLEAR [señal, señal, señal, ...]' CAUSA La sentencia #WAIT o #MEET no va a generar ninguna espera, porque la marca de sincronización está programada para el mismo canal que las sentencias. SOLUCIÓN Revisar la programación."@es .
+ns1:LaCajeraFueResueltaConDiferenteLongitudDeCorteDeHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "La cajera fue resuelta con diferente longitud de corte de herramienta" ;
+    ns1:textoExtracto "CAUSA El CNC generó la cajera con una longitud de corte de herramienta diferente a la actual. SOLUCIÓN Generar de nuevo la cajera." .
 

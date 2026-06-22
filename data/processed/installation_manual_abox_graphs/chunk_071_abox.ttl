@@ -1,50 +1,10 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Sistema_Tandem a ns1:Sistema ;
-    rdfs:label "Sistema de configuración tándem" ;
-    ns1:compuestoPor ns1:Parametro_MASTERAXIS,
-        ns1:Parametro_SLAVEAXIS,
-        ns1:Parametro_TORQDIST ;
-    ns1:textoExtracto "El control del tándem modifica la consigna de velocidad del eje/cabezal maestro y del eje/cabezal esclavo en función de la distribución de par y la precarga seleccionada." ;
-    ns1:tieneComponente ns1:Motor_Esclavo_Tandem,
-        ns1:Motor_Maestro_Tandem .
-
-ns1:Parametro_MASTERAXIS a ns1:Parametro ;
-    rdfs:label "MASTERAXIS (Eje/cabezal maestro)" ;
-    ns1:documentadoEn ns1:Tabla_TANDEM ;
-    ns1:identificador "MPG.TMASTERAXIS[nb]" ;
-    ns1:monitoreaParametro ns1:Motor_Maestro_Tandem ;
-    ns1:textoExtracto "MASTERAXIS Pareja tándem. Eje/cabezal maestro o principal. Valores posibles: Cualquier eje definido en AXISNAME o cabezal definido en SPDLNAME. Variable asociada: (V.)MPG.TMASTERAXIS[nb] Parámetro incluido en la tabla TANDEM. Este parámetro establece cuál es el eje o cabezal maestro de la pareja tándem." .
-
-ns1:Parametro_SLAVEAXIS a ns1:Parametro ;
-    rdfs:label "SLAVEAXIS (Eje/cabezal esclavo)" ;
-    ns1:documentadoEn ns1:Tabla_TANDEM ;
-    ns1:identificador "MPG.TSLAVEAXIS[nb]" ;
-    ns1:monitoreaParametro ns1:Motor_Esclavo_Tandem ;
-    ns1:textoExtracto "SLAVEAXIS Pareja tándem. Eje/cabezal esclavo. Valores posibles: Cualquier eje definido en AXISNAME o cabezal definido en SPDLNAME. Variable asociada: (V.)MPG.TSLAVEAXIS[nb] Parámetro incluido en la tabla TANDEM. Este parámetro establece cuál es el eje o cabezal esclavo de la pareja tándem." .
-
-ns1:Parametro_TORQDIST a ns1:Parametro ;
-    rdfs:label "TORQDIST (Distribución del par)" ;
-    ns1:documentadoEn ns1:Tabla_TANDEM ;
-    ns1:identificador "MPG.TORQDIST[nb]" ;
-    ns1:monitoreaParametro ns1:Motor_Esclavo_Tandem,
-        ns1:Motor_Maestro_Tandem ;
-    ns1:textoExtracto "TORQDIST Pareja tándem. Distribución del par. Valores posibles: De 1 a 99%. Valor por defecto: 50 %. Variable asociada: (V.)MPG.TORQDIST[nb] Parámetro incluido en la tabla TANDEM. Este parámetro establece el porcentaje de par que realiza cada motor para conseguir el par total necesario en el tándem." ;
-    ns1:valor "50" .
-
-ns1:Motor_Esclavo_Tandem a ns1:ComponenteMecanico ;
-    rdfs:label "Motor esclavo del tándem" ;
-    ns1:textoExtracto "El motor esclavo únicamente suministra par. El CNC cierra el lazo de posición únicamente con la posición del eje maestro del tándem." .
-
-ns1:Motor_Maestro_Tandem a ns1:ComponenteMecanico ;
-    rdfs:label "Motor maestro del tándem" ;
-    ns1:textoExtracto "El motor maestro del tándem, además de generar par, es el responsable del posicionamiento. El CNC cierra el lazo de posición únicamente con la posición del eje maestro del tándem. La consigna de velocidad del eje/cabezal maestro del tándem se envía también al eje/cabezal esclavo del tándem cerrando el lazo de velocidad." .
-
-ns1:Tabla_TANDEM a ns1:Tabla ;
-    rdfs:label "Tabla TANDEM" ;
-    ns1:textoExtracto "Parámetro incluido en la tabla TANDEM." ;
-    ns1:tieneComponente ns1:Parametro_MASTERAXIS,
-        ns1:Parametro_SLAVEAXIS,
-        ns1:Parametro_TORQDIST .
+ns1:PrecargaEntreAmbosMotoresEnElSistemaTandem a ns1:Parametro ;
+    rdfs:label "Precarga entre ambos motores en el sistema tándem" ;
+    ns1:identificador "MPG.PRELOAD" ;
+    ns1:textoExtracto "PRELOAD Pareja tándem. Precarga entre ambos motores. Valores posibles: Entre ±100%. Valor por defecto: 0 (se deshabilita la precarga). Variable asociada: (V.)MPG.PRELOAD[nb]" ;
+    ns1:valor "0"^^xsd:string .
 

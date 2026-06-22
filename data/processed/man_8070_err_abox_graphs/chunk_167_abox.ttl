@@ -1,79 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC (Control Numérico Computarizado)" ;
-    ns1:activaAlarma ns1:Alerta_1306,
-        ns1:Alerta_1308 ;
-    ns1:textoExtracto "El CNC ha intentado cambiar la cinemática con la compensación de radio activa." ;
-    ns1:tieneComponente ns1:ModoFactorEscala,
-        ns1:ModoGiroSistema,
-        ns1:ModoOrigenPolar,
-        ns1:ModoProgramacionIncremental,
-        ns1:ModoProgramacionMilimetros,
-        ns1:ModoProgramacionPolar,
-        ns1:ModoProgramacionPulgadas,
-        ns1:SentenciaCYL,
-        ns1:SentenciaFACE,
-        ns1:SentenciaRTCP .
+ns1:ModificarLosValoresDeLaTransformacionDeLongitudOLosDeLaHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar los valores de la transformación de longitud o los de la herramienta" ;
+    ns1:solucionaFallo ns1:LaTransformacionDeLongitudDeHerramientaExcedeElFormatoNumericoValido_538150f619 ;
+    ns1:textoExtracto "SOLUCIÓN Modificar los valores de la transformación de longitud o los de la herramienta." .
 
-ns1:Alerta_1306 a ns1:AvisoSeguridad ;
-    rdfs:label "Alerta 1306: 'No se admite cambio de cinemática con compensación de radio activa'" ;
-    ns1:identificador "1306" ;
-    ns1:textoExtracto "1306 'No se admite cambio de cinemática con compensación de radio activa'" .
+ns1:NombreDeVariableDemasiadoLargo_58694dae21 a ns1:DiagnosticoFallo ;
+    rdfs:label "Nombre de variable demasiado largo" ;
+    ns1:textoExtracto "'Nombre de variable demasiado largo' DETECCIÓN Durante la ejecución. CAUSA Superado el máximo número de caracteres permitido para el nombre de la variable." .
 
-ns1:Alerta_1308 a ns1:AvisoSeguridad ;
-    rdfs:label "Alerta 1308: 'Un eje de la transformación cinemática activa no puede ser esclavo'" ;
-    ns1:identificador "1308" ;
-    ns1:textoExtracto "1308 'Un eje de la transformación cinemática activa no puede ser esclavo'" .
+ns1:ProgramarAmbasFuncionesEnBloquesDiferentes a ns1:TareaMantenimiento ;
+    rdfs:label "Programar ambas funciones en bloques diferentes" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_9112269df3 ;
+    ns1:textoExtracto "SOLUCIÓN Programar ambas funciones en bloques diferentes." .
 
-ns1:ModoFactorEscala a ns1:ModoOperacion ;
-    rdfs:label "Modo de factor de escala (G72)" ;
-    ns1:identificador "G72" ;
-    ns1:textoExtracto "Factor de escala (G72)." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:CaracterNoValidoEnElNombre_a1d19514fa ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:ModoGiroSistema a ns1:ModoOperacion ;
-    rdfs:label "Modo de giro del sistema (G73)" ;
-    ns1:identificador "G73" ;
-    ns1:textoExtracto "Giro del sistema (G73)." .
+ns1:CaracterNoValidoEnElNombre_a1d19514fa a ns1:DiagnosticoFallo ;
+    rdfs:label "Carácter no válido en el nombre" ;
+    ns1:textoExtracto "'Carácter no válido en el nombre' DETECCIÓN Durante la ejecución. CAUSA Carácter no válido en el nombre de una etiqueta, subrutina o variable." .
 
-ns1:ModoOrigenPolar a ns1:ModoOperacion ;
-    rdfs:label "Modo de origen polar (G30)" ;
-    ns1:identificador "G30" ;
-    ns1:textoExtracto "Origen polar (G30)." .
+ns1:DiagnosticoFallo_9112269df3 a ns1:DiagnosticoFallo ;
+    rdfs:label "Función H doblemente programada" ;
+    ns1:textoExtracto "'Función H doblemente programada' DETECCIÓN Durante la ejecución. CAUSA La misma función H está programada más de una vez en el bloque." .
 
-ns1:ModoProgramacionIncremental a ns1:ModoOperacion ;
-    rdfs:label "Modo de programación incremental (G91)" ;
-    ns1:identificador "G91" ;
-    ns1:textoExtracto "Activación de la programación incremental (G91)." .
-
-ns1:ModoProgramacionMilimetros a ns1:ModoOperacion ;
-    rdfs:label "Modo de programación en milímetros (G70)" ;
-    ns1:identificador "G70" ;
-    ns1:textoExtracto "Programación en milímetros/pulgadas (G70/G71)." .
-
-ns1:ModoProgramacionPolar a ns1:ModoOperacion ;
-    rdfs:label "Modo de programación en polares (G0, G1, G2, G3, G8, G9, G63, G33)" ;
-    ns1:identificador "G0-G33" ;
-    ns1:textoExtracto "Movimiento G0, G1, G2, G3, G8 ó G9 en polares. Roscado G63 ó G33 en polares." .
-
-ns1:ModoProgramacionPulgadas a ns1:ModoOperacion ;
-    rdfs:label "Modo de programación en pulgadas (G71)" ;
-    ns1:identificador "G71" ;
-    ns1:textoExtracto "Programación en milímetros/pulgadas (G70/G71)." .
-
-ns1:SentenciaCYL a ns1:Parametro ;
-    rdfs:label "Sentencia #CYL" ;
-    ns1:identificador "#CYL" ;
-    ns1:textoExtracto "Sentencias #FACE, #CYL y #RTCP." .
-
-ns1:SentenciaFACE a ns1:Parametro ;
-    rdfs:label "Sentencia #FACE" ;
-    ns1:identificador "#FACE" ;
-    ns1:textoExtracto "Sentencias #FACE, #CYL y #RTCP." .
-
-ns1:SentenciaRTCP a ns1:Parametro ;
-    rdfs:label "Sentencia #RTCP" ;
-    ns1:identificador "#RTCP" ;
-    ns1:textoExtracto "Sentencias #FACE, #CYL y #RTCP." .
+ns1:LaTransformacionDeLongitudDeHerramientaExcedeElFormatoNumericoValido_538150f619 a ns1:DiagnosticoFallo ;
+    rdfs:label "La transformación de longitud de herramienta excede el formato numérico válido" ;
+    ns1:textoExtracto "'La transformación de longitud de herramienta excede el formato numérico válido' DETECCIÓN Durante la ejecución. CAUSA La transformación de longitud de herramienta excede el formato numérico válido." .
 

@@ -1,57 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Tabla_ConfiguracionBusCAN_71 a ns1:Tabla ;
-    rdfs:label "Tabla de configuración del bus CAN (pág. 71)"@es ;
-    ns1:detalladoEnEsquema ns1:SistemaBusCAN_71 ;
-    ns1:textoExtracto """
-| Velocidad | Longitud del bus CAN. |
-| --- | --- |
-| Autoscan | El CNC ajusta la frecuencia del bus en cada arranque, en función de la velocidad del resto de los módulos. [...]"""@es .
+ns1:AceiteHidraulicoISO46 a ns1:Consumible ;
+    rdfs:label "Retardo de 8 ms" ;
+    ns1:requiereConsumible ns1:ConfiguracionDeRetardoEnRS485 ;
+    ns1:textoExtracto "Para asegurar una comunicación correcta, es necesario un retardo de 8 ms desde que el CNC deja de transmitir y está preparado para recibir datos." .
 
-ns1:Frecuencia_1000kHz_71 a ns1:Frecuencia ;
-    rdfs:label "Frecuencia de 1000 kHz (bus CAN)"@es ;
-    ns1:identificador "1000 kHz" ;
-    ns1:textoExtracto "Hasta 20 metros."@es ;
-    ns1:valor 1000 .
+ns1:CNC8070_62b1ba4301 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "En la RS485, el CNC controla la recepción y transmisión de datos con la misma señal, de manera que durante la transmisión está deshabilitada la recepción." .
 
-ns1:Frecuencia_1MHz_Laser_71 a ns1:Frecuencia ;
-    rdfs:label "Frecuencia de 1 MHz para modelo láser (bus CAN)"@es ;
-    ns1:identificador "1 MHz (modelo láser)" ;
-    ns1:textoExtracto "Para el modelo láser con módulos RIOR, se recomienda utilizar una frecuencia de comunicación de 1 MHz."@es ;
-    ns1:valor 1000 .
+ns1:TipoDeLineaSerie a ns1:Parametro ;
+    rdfs:label "Tipo de línea serie" ;
+    ns1:identificador "MPG.RSTYPE" ;
+    ns1:textoExtracto "RSTYPE Tipo de línea serie. Valores posibles: RS232 / RS485 / RS485. Valor por defecto: RS232." .
 
-ns1:Frecuencia_250kHz_71 a ns1:Frecuencia ;
-    rdfs:label "Frecuencia de 250 kHz (bus CAN)"@es ;
-    ns1:identificador "250 kHz" ;
-    ns1:textoExtracto "Entre 100 y 500 metros. Solo disponible para teclados y módulos remotos RIOW/RIOR (no compatible con RIO5)."@es ;
-    ns1:valor 250 .
+ns1:ConfiguracionDeRetardoEnRS485 a ns1:TareaMantenimiento ;
+    rdfs:label "Configuración de retardo en RS485" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:textoExtracto "Para asegurar una comunicación correcta, es necesario un retardo de 8 ms desde que el CNC deja de transmitir y está preparado para recibir datos." .
 
-ns1:Frecuencia_500kHz_71 a ns1:Frecuencia ;
-    rdfs:label "Frecuencia de 500 kHz (bus CAN)"@es ;
-    ns1:identificador "500 kHz" ;
-    ns1:textoExtracto "Entre 40 y 100 metros."@es ;
-    ns1:valor 500 .
-
-ns1:Frecuencia_800kHz_71 a ns1:Frecuencia ;
-    rdfs:label "Frecuencia de 800 kHz (bus CAN)"@es ;
-    ns1:identificador "800 kHz" ;
-    ns1:textoExtracto "Entre 20 y 40 metros."@es ;
-    ns1:valor 800 .
-
-ns1:ModoAutoscan_71 a ns1:ModoOperacion ;
-    rdfs:label "Modo Autoscan del bus CAN"@es ;
-    ns1:identificador "Autoscan" ;
-    ns1:textoExtracto "El CNC ajusta la frecuencia del bus en cada arranque, en función de la velocidad del resto de los módulos. Dependiendo de la configuración del bus, esta opción puede hacer que el arranque del CNC sea más lento que si hay una frecuencia definida."@es .
-
-ns1:SistemaBusCAN_71 a ns1:Sistema ;
-    rdfs:label "Sistema de bus CAN"@es ;
-    ns1:textoExtracto "Configuración del bus CAN según velocidad y longitud. Incluye modos Autoscan y frecuencias específicas para módulos remotos (RIOW, RIOR, RIO5)."@es ;
-    ns1:tieneComponente ns1:Frecuencia_1000kHz_71,
-        ns1:Frecuencia_1MHz_Laser_71,
-        ns1:Frecuencia_250kHz_71,
-        ns1:Frecuencia_500kHz_71,
-        ns1:Frecuencia_800kHz_71,
-        ns1:ModoAutoscan_71 .
+ns1:PersonalTecnicoAutorizado a ns1:Personal ;
+    rdfs:label "Personal Técnico Autorizado" ;
+    ns1:textoExtracto "Si no es posible parametrizar este retardo en el esclavo, se recomienda utilizar un adaptador externo RS232/RS485." .
 

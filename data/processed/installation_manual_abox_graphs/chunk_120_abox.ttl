@@ -1,40 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Parametro_CompAxis a ns1:Parametro ;
-    rdfs:label "Parámetro COMPAXIS" ;
-    ns1:documentadoEn ns1:Tabla_Data ;
-    ns1:identificador "COMPAXIS" ;
-    ns1:textoExtracto "El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS." .
+ns1:EjeDeCompensacion a ns1:Parametro ;
+    rdfs:label "Eje de compensación" ;
+    ns1:textoExtracto "Este parámetro muestra la lista de puntos y valores de compensación. El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS." .
 
-ns1:Parametro_MovAxis a ns1:Parametro ;
-    rdfs:label "Parámetro MOVAXIS" ;
-    ns1:documentadoEn ns1:Tabla_Data ;
-    ns1:identificador "MOVAXIS" ;
-    ns1:textoExtracto "El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS." .
+ns1:EjeQueSeMueve a ns1:Parametro ;
+    rdfs:label "Eje que se mueve" ;
+    ns1:textoExtracto "Este parámetro muestra la lista de puntos y valores de compensación. El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS." .
 
-ns1:Parametro_NpCross a ns1:Parametro ;
-    rdfs:label "Parámetro NPCROSS" ;
-    ns1:documentadoEn ns1:Tabla_Data ;
-    ns1:identificador "NPCROSS" ;
-    ns1:textoExtracto "El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS." .
+ns1:ErrorNegativoEnLaPosicion a ns1:Parametro ;
+    rdfs:label "Error negativo en la posición" ;
+    ns1:textoExtracto "El parámetro NEGERROR sólo se muestra si se ha definido la tabla con compensación bidireccional (BIDIR = Sí)." .
 
-ns1:Parametro_RefNeed a ns1:Parametro ;
-    rdfs:label "Parámetro REFNEED" ;
-    ns1:documentadoEn ns1:Tabla_CrossComp ;
-    ns1:identificador "MPG.REFNEED[tbl]" ;
-    ns1:textoExtracto "Variable asociada: (V.)MPG.REFNEED[tbl]. Este parámetro indica si es necesario referenciar ambos ejes para empezar a aplicar la compensación." ;
-    ns1:valor "No"^^xsd:string .
+ns1:ErrorPositivoEnLaPosicion a ns1:Parametro ;
+    rdfs:label "Error positivo en la posición" ;
+    ns1:textoExtracto "Para cada uno de los puntos se deben definir los parámetros POSITION, POSERROR y NEGERROR." .
 
-ns1:Tabla_CrossComp a ns1:Tabla ;
-    rdfs:label "Tabla CROSSCOMP" ;
-    ns1:identificador "CROSSCOMP" ;
-    ns1:monitoreaParametro ns1:Parametro_RefNeed ;
-    ns1:textoExtracto "Parámetro incluido en la tabla CROSSCOMP. DATA Tabla para definir los valores de compensación. Este parámetro muestra la lista de puntos y valores de compensación." .
+ns1:NumeroDePuntos a ns1:Parametro ;
+    rdfs:label "Número de puntos" ;
+    ns1:textoExtracto "El número de puntos viene definido por el parámetro NPCROSS." .
 
-ns1:Tabla_Data a ns1:Tabla ;
-    rdfs:label "Tabla DATA (valores de compensación)" ;
-    ns1:detalladoEnEsquema ns1:Tabla_CrossComp ;
-    ns1:textoExtracto "DATA Tabla para definir los valores de compensación. El CNC sólo permite acceder a esta tabla cuando están definidos los parámetros MOVAXIS, COMPAXIS y NPCROSS." .
+ns1:PosicionDelEjeQueSeMueve a ns1:Parametro ;
+    rdfs:label "Posición del eje que se mueve" ;
+    ns1:textoExtracto "Para cada uno de los puntos se deben definir los parámetros POSITION, POSERROR y NEGERROR." .
 

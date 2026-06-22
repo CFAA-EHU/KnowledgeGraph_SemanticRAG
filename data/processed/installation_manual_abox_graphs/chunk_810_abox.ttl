@@ -1,105 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Marcador_CNCREADY a ns1:Parametro ;
-    rdfs:label "CNCREADY" ;
-    ns1:identificador "CNCREADY" ;
-    ns1:monitoreaParametro ns1:SistemaCNC ;
-    ns1:textoExtracto "Esta marca indica el estado del CNC. Tiene el valor (=0) cuando el CNC se encuentra en estado de error (ventana de status en rojo) y el valor (=1) el resto de los casos." ;
-    ns1:valor "0",
-        "1" .
+ns1:CNC8070_caee43d0b4 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El canal del CNC pone esta marca a" ;
+    ns1:tieneComponente ns1:Parametro_3a7c13b1f6,
+        ns1:Parametro_5d02d0b0af,
+        ns1:Parametro_6b343f9488,
+        ns1:Parametro_73fcf5c827,
+        ns1:Parametro_9e5e392bdd .
 
-ns1:Marcador_CYSTART a ns1:Parametro ;
-    rdfs:label "CYSTART" ;
-    ns1:identificador "CYSTART" ;
-    ns1:textoExtracto "Si se cumplen el resto de condiciones (hidráulico, seguridades, etc), el PLC debe activar la marca CYSTART para que comience la ejecución del programa." ;
-    ns1:valor "0",
-        "1" .
+ns1:Parametro_3a7c13b1f6 a ns1:Parametro ;
+    rdfs:label "Marca para el canal 2" ;
+    ns1:identificador "INCYCLEC2" ;
+    ns1:textoExtracto "Los mnemónicos para cada canal son los siguientes. INCYCLEC2" .
 
-ns1:Marcador_READYC1 a ns1:Parametro ;
-    rdfs:label "READYC1" ;
-    ns1:identificador "READYC1" ;
-    ns1:monitoreaParametro ns1:CanalCNC_1 ;
-    ns1:textoExtracto "Esta marca indica el estado del canal del CNC. Tiene el valor (=0) cuando el CNC se encuentra en estado de error (ventana de status en rojo) y el valor (=1) el resto de los casos." ;
-    ns1:valor "0",
-        "1" .
+ns1:Parametro_5d02d0b0af a ns1:Parametro ;
+    rdfs:label "Marca para el canal 4" ;
+    ns1:identificador "INCYCLEC4" ;
+    ns1:textoExtracto "Los mnemónicos para cada canal son los siguientes. INCYCLEC4" .
 
-ns1:Marcador_READYC2 a ns1:Parametro ;
-    rdfs:label "READYC2" ;
-    ns1:identificador "READYC2" ;
-    ns1:monitoreaParametro ns1:CanalCNC_2 ;
-    ns1:textoExtracto "Esta marca indica el estado del canal del CNC. Tiene el valor (=0) cuando el CNC se encuentra en estado de error (ventana de status en rojo) y el valor (=1) el resto de los casos." ;
-    ns1:valor "0",
-        "1" .
+ns1:Parametro_6b343f9488 a ns1:Parametro ;
+    rdfs:label "Marca para el canal 3" ;
+    ns1:identificador "INCYCLEC3" ;
+    ns1:textoExtracto "Los mnemónicos para cada canal son los siguientes. INCYCLEC3" .
 
-ns1:Marcador_READYC3 a ns1:Parametro ;
-    rdfs:label "READYC3" ;
-    ns1:identificador "READYC3" ;
-    ns1:monitoreaParametro ns1:CanalCNC_3 ;
-    ns1:textoExtracto "Esta marca indica el estado del canal del CNC. Tiene el valor (=0) cuando el CNC se encuentra en estado de error (ventana de status en rojo) y el valor (=1) el resto de los casos." ;
-    ns1:valor "0",
-        "1" .
+ns1:Parametro_73fcf5c827 a ns1:Parametro ;
+    rdfs:label "Marca para cada canal (general)" ;
+    ns1:identificador "INCYCLE" ;
+    ns1:textoExtracto "Los mnemónicos para cada canal son los siguientes. INCYCLEC1 (también se puede programar como INCYCLE)" .
 
-ns1:Marcador_READYC4 a ns1:Parametro ;
-    rdfs:label "READYC4" ;
-    ns1:identificador "READYC4" ;
-    ns1:monitoreaParametro ns1:CanalCNC_4 ;
-    ns1:textoExtracto "Esta marca indica el estado del canal del CNC. Tiene el valor (=0) cuando el CNC se encuentra en estado de error (ventana de status en rojo) y el valor (=1) el resto de los casos." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Marcador_SERCOSRDY a ns1:Parametro ;
-    rdfs:label "SERCOSRDY" ;
-    ns1:identificador "SERCOSRDY" ;
-    ns1:monitoreaParametro ns1:AnilloSercos ;
-    ns1:textoExtracto "En las configuraciones Sercos, esta marca indica el estado del anillo. El CNC pone esta marca a (=1) para indicar que el anillo Sercos se encuentra inicializado correctamente." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Tecla_START a ns1:InterfazUsuario ;
-    rdfs:label "Tecla START" ;
-    ns1:activaAlarma ns1:Marcador_STARTC1 ;
-    ns1:identificador "START" ;
-    ns1:textoExtracto "Tecla del panel de mando que activa la marca STARTC1 (también programable como START)." .
-
-ns1:Marcador_STARTC1 a ns1:Parametro ;
-    rdfs:label "STARTC1" ;
-    ns1:identificador "STARTC1" ;
-    ns1:monitoreaParametro ns1:CanalCNC_1 ;
-    ns1:textoExtracto "El canal del CNC activa esta marca para indicar al PLC que se ha pulsado la tecla [START] del panel de mando." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "Sistema de control numérico computarizado (CNC) que gestiona los canales y reguladores." ;
-    ns1:tieneComponente ns1:AnilloSercos,
-        ns1:CanalCNC_1,
-        ns1:CanalCNC_2,
-        ns1:CanalCNC_3,
-        ns1:CanalCNC_4 .
-
-ns1:AnilloSercos a ns1:ComponenteElectrico ;
-    rdfs:label "Anillo Sercos" ;
-    ns1:textoExtracto "Anillo de comunicación Sercos para la interconexión de reguladores y drives." .
-
-ns1:CanalCNC_2 a ns1:Componente ;
-    rdfs:label "Canal 2 del CNC" ;
-    ns1:identificador "C2" ;
-    ns1:textoExtracto "Canal del CNC asociado a la marca READYC2." .
-
-ns1:CanalCNC_3 a ns1:Componente ;
-    rdfs:label "Canal 3 del CNC" ;
-    ns1:identificador "C3" ;
-    ns1:textoExtracto "Canal del CNC asociado a la marca READYC3." .
-
-ns1:CanalCNC_4 a ns1:Componente ;
-    rdfs:label "Canal 4 del CNC" ;
-    ns1:identificador "C4" ;
-    ns1:textoExtracto "Canal del CNC asociado a la marca READYC4." .
-
-ns1:CanalCNC_1 a ns1:Componente ;
-    rdfs:label "Canal 1 del CNC" ;
-    ns1:identificador "C1" ;
-    ns1:textoExtracto "Canal del CNC asociado a las marcas READYC1 y STARTC1." .
+ns1:Parametro_9e5e392bdd a ns1:Parametro ;
+    rdfs:label "Marca para el canal 1" ;
+    ns1:identificador "INCYCLEC1" ;
+    ns1:textoExtracto "Los mnemónicos para cada canal son los siguientes. INCYCLEC1 (también se puede programar como INCYCLE)" .
 

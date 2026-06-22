@@ -1,78 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_9328 a ns1:DiagnosticoFallo ;
-    rdfs:label "MECHATROLINK II: Máximo 2 variables DRV por eje" ;
-    ns1:identificador "9328" ;
-    ns1:solucionaFallo ns1:LimiteDeVariablesDRVPorEje ;
-    ns1:textoExtracto "9328 'MECHATROLINK II:Máximo 2 variables DRV por eje' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA En la tabla de parámetros OEM hay asignadas más de dos variables DRV a un mismo eje. SOLUCIÓN Asignar un máximo de dos variables DRV a cada eje." .
+ns1:AsignarUnDRIVEIDDentroDeLosGruposMULTIAXISQueEsteAsociadoAEjesDelSistema a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar un DRIVEID dentro de los grupos MULTIAXIS que esté asociado a ejes del sistema" ;
+    ns1:solucionaFallo ns1:DRIVEIDDelEjeDelGrupoMULTIAXISNoValidoEnElSistema_1178e200d7 ;
+    ns1:textoExtracto "SOLUCIÓN Asignar un DRIVEID dentro de los grupos MULTIAXIS que esté asociado a ejes del sistema." .
 
-ns1:DiagnosticoFallo_9329 a ns1:DiagnosticoFallo ;
-    rdfs:label "MECHATROLINK II: No se permiten variables y parámetros DRV en el mismo eje" ;
-    ns1:identificador "9329" ;
-    ns1:solucionaFallo ns1:ExclusividadParametrosVariablesDRV ;
-    ns1:textoExtracto "9329 'MECHATROLINK II:No se permiten variables y parámetros DRV en el mismo eje' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA En la tabla de variables del regulador (DRV) de los parámetros OEM, hay asignados parámetros y variables a un mismo eje. SOLUCIÓN La definición de parámetros y variables para un mismo eje es excluyente, o se definen parámetros o variables." .
+ns1:ReducirElNumeroDeEjesDelGrupoMULTIAXISOReducirElNumeroDeSetsDeParamet_48a58c3779 a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir el número de ejes del grupo MULTIAXIS o reducir el número de sets de parámetros de los ejes del grupo" ;
+    ns1:solucionaFallo ns1:ElNumeroDeSetsDelGrupoSuperaElNumeroDeSetsDelRegulador_3aba8dd1b0 ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el número de ejes del grupo MULTIAXIS o reducir el número de sets de parámetros de los ejes del grupo." .
 
-ns1:DiagnosticoFallo_9330 a ns1:DiagnosticoFallo ;
-    rdfs:label "Con ejes Mechatrolink no se admiten ejes Sercos" ;
-    ns1:identificador "9330" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_9330_ParametrosIncompatibles ;
-    ns1:textoExtracto "9330 'Con ejes Mechatrolink no se admiten ejes Sercos' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA Los buses digitales Sercos y Mechatrolink son incompatibles. SOLUCIÓN Revisar los parámetros máquina." .
+ns1:RevisarLosParametrosMaquina_1a64a3ca20 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros máquina" ;
+    ns1:solucionaFallo ns1:LosEjesDelGrupoNoTienenIgualOPMODEPTodosVelocidadOTodosPosicion_69ee76cb81 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina. Todos los ejes de un grupo multieje deben tener el parámetro OPMODEP igual." .
 
-ns1:DiagnosticoFallo_9331 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se admiten variables o parámetros DRV con Mechatrolink I ó Mechatrolink II a 17 bytes" ;
-    ns1:identificador "9331" ;
-    ns1:textoExtracto "9331 'No se admiten variables o parámetros DRV con Mechatrolink I ó Mechatrolink II a 17 bytes' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA Sólo es posible enviar los subcomandos que resuelven las variables y parámetros en Mechatrolink II a 32 bytes." .
+ns1:TodosLosEjesSERCOSDebenSerVelocidad a ns1:TareaMantenimiento ;
+    rdfs:label "Todos los ejes SERCOS deben ser velocidad" ;
+    ns1:solucionaFallo ns1:GrupoDeEjesConDifCaptacionesTodosLosEjesSERCOSDebenSerVelocidad_40b8ade8af ;
+    ns1:textoExtracto "SOLUCIÓN Todos los ejes SERCOS deben ser velocidad." .
 
-ns1:ModoOperacion_MlinkII a ns1:ModoOperacion ;
-    rdfs:label "Modo Mlink-II" ;
-    ns1:identificador "Mlink-II" ;
-    ns1:textoExtracto "Reducir el número de reguladores o utilizar el modo Mlink-II con un slot time de 60 microsegundos." ;
-    ns1:tieneFrecuencia ns1:SlotTimeDe60Microsegundos .
+ns1:TodosLosEjesSercosDeUnGrupoMULTIAXISDebenEstarAsociadosAlMismoRegulad_ab8f222787 a ns1:TareaMantenimiento ;
+    rdfs:label "Todos los ejes Sercos de un grupo MULTIAXIS deben estar asociados al mismo regulador y por lo tanto deben tener igual el parámetro DRIVEID" ;
+    ns1:solucionaFallo ns1:EjeSERCOSDelGrupoMultiaxisTieneDiferenteDRIVEID_8b84242ccd ;
+    ns1:textoExtracto "SOLUCIÓN Todos los ejes Sercos de un grupo MULTIAXIS deben estar asociados al mismo regulador y por lo tanto deben tener igual el parámetro DRIVEID." .
 
-ns1:Parametro_SlotTime a ns1:Parametro ;
-    rdfs:label "Parámetro Slot Time" ;
-    ns1:identificador "SlotTime" ;
-    ns1:textoExtracto "Utilizar una ranura de tiempo (Slot Time) de 90 microsegundos en vez de 60, también reduce el número máximo de reguladores." ;
-    ns1:valor "90 microsegundos" .
+ns1:DRIVEIDDelEjeDelGrupoMULTIAXISNoValidoEnElSistema_1178e200d7 a ns1:DiagnosticoFallo ;
+    rdfs:label "DRIVEID del eje del grupo MULTIAXIS no válido en el sistema" ;
+    ns1:textoExtracto "'DRIVEID del eje del grupo MULTIAXIS no válido en el sistema' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA No hay ningún eje en el sistema que tenga el mismo DRIVEID que el indicado al definir un grupo MULTIAXIS." .
 
-ns1:DiagnosticoFallo_9330_ParametrosIncompatibles a ns1:DiagnosticoFallo ;
-    rdfs:label "Incompatibilidad entre buses Sercos y Mechatrolink" ;
-    ns1:monitoreaParametro ns1:Parametro_DRIVETYPE,
-        ns1:Parametro_MLINK ;
-    ns1:textoExtracto "Los buses digitales Sercos y Mechatrolink son incompatibles." .
+ns1:EjeSERCOSDelGrupoMultiaxisTieneDiferenteDRIVEID_8b84242ccd a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje SERCOS del grupo multiaxis tiene diferente DRIVEID" ;
+    ns1:textoExtracto "'Eje SERCOS del grupo multiaxis tiene diferente DRIVEID' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA No todos los ejes de un grupo MULTIAXIS están asociados al mismo regulador (parámetro DRIVEID)." .
 
-ns1:ExclusividadParametrosVariablesDRV a ns1:Parametro ;
-    rdfs:label "Exclusividad parámetros/variables DRV" ;
-    ns1:documentadoEn ns1:Tabla_VariablesDRV ;
-    ns1:textoExtracto "La definición de parámetros y variables para un mismo eje es excluyente, o se definen parámetros o variables." .
+ns1:ElNumeroDeSetsDelGrupoSuperaElNumeroDeSetsDelRegulador_3aba8dd1b0 a ns1:DiagnosticoFallo ;
+    rdfs:label "El número de Sets del grupo supera el número de Sets del regulador" ;
+    ns1:textoExtracto "'El número de Sets del grupo supera el número de Sets del regulador' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA El regulador admite 8 gamas y el número total de sets de parámetros definidos en un grupo MULTIAXIS supera este valor." .
 
-ns1:LimiteDeVariablesDRVPorEje a ns1:Parametro ;
-    rdfs:label "Límite de variables DRV por eje" ;
-    ns1:documentadoEn ns1:Tabla_ParametrosOEM ;
-    ns1:textoExtracto "Asignar un máximo de dos variables DRV a cada eje." ;
-    ns1:valor "2 variables DRV" .
+ns1:GrupoDeEjesConDifCaptacionesTodosLosEjesSERCOSDebenSerVelocidad_40b8ade8af a ns1:DiagnosticoFallo ;
+    rdfs:label "Grupo de ejes con dif. captaciones: todos los ejes SERCOS deben ser velocidad" ;
+    ns1:textoExtracto "'Grupo de ejes con dif. captaciones: todos los ejes SERCOS deben ser velocidad' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay algún grupo multieje cuyos ejes tienen diferente parámetro COUNTERID y los ejes no son Sercos velocidad." .
 
-ns1:Parametro_DRIVETYPE a ns1:Parametro ;
-    rdfs:label "Parámetro DRIVETYPE" ;
-    ns1:identificador "DRIVETYPE" ;
-    ns1:textoExtracto "Con bus Sercos, definir en todos los ejes el parámetro MLINK = No y además DRIVETYPE no puede valer 'Mlink'. Con bus Mechatrolink, definir en todos los ejes el parámetro MLINK distinto de 'no' y además DRIVETYPE no puede valer 'Sercos'." .
-
-ns1:Parametro_MLINK a ns1:Parametro ;
-    rdfs:label "Parámetro MLINK" ;
-    ns1:identificador "MLINK" ;
-    ns1:textoExtracto "Con bus Sercos, definir en todos los ejes el parámetro MLINK = No y además DRIVETYPE no puede valer 'Mlink'. Con bus Mechatrolink, definir en todos los ejes el parámetro MLINK distinto de 'no'." .
-
-ns1:SlotTimeDe60Microsegundos a ns1:Frecuencia ;
-    rdfs:label "Slot Time de 60 microsegundos" ;
-    ns1:textoExtracto "utilizar el modo Mlink-II con un slot time de 60 microsegundos." ;
-    ns1:valor "60 microsegundos" .
-
-ns1:Tabla_ParametrosOEM a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros OEM" ;
-    ns1:textoExtracto "En la tabla de parámetros OEM hay asignadas más de dos variables DRV a un mismo eje." .
-
-ns1:Tabla_VariablesDRV a ns1:Tabla ;
-    rdfs:label "Tabla de variables del regulador (DRV)" ;
-    ns1:textoExtracto "En la tabla de variables del regulador (DRV) de los parámetros OEM, hay asignados parámetros y variables a un mismo eje." .
+ns1:LosEjesDelGrupoNoTienenIgualOPMODEPTodosVelocidadOTodosPosicion_69ee76cb81 a ns1:DiagnosticoFallo ;
+    rdfs:label "Los ejes del grupo no tienen igual OPMODEP: todos velocidad o todos posición" ;
+    ns1:textoExtracto "'Los ejes del grupo no tienen igual OPMODEP: todos velocidad o todos posición' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA Hay algún grupo multieje cuyos ejes tienen diferente parámetro OPMODEP." .
 

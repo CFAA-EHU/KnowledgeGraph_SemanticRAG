@@ -1,54 +1,47 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ParametroDelta a ns1:Parametro ;
-    rdfs:label "Parámetro Δ (paso de fresado)" ;
-    ns1:identificador "Δ" ;
-    ns1:monitoreaParametro ns1:OperacionAcabado,
-        ns1:OperacionDesbaste ;
-    ns1:textoExtracto "el diámetro de la herramienta es menor que el paso de fresado (parámetro Δ)." .
-
-ns1:ParametroP a ns1:Parametro ;
-    rdfs:label "Parámetro P (profundidad de fresado)" ;
-    ns1:identificador "P" ;
-    ns1:monitoreaParametro ns1:OperacionAcabado,
-        ns1:OperacionDesbaste ;
-    ns1:textoExtracto "El parámetro P tiene valor 0. No hay profundidad programada." ;
-    ns1:valor "0" .
-
-ns1:Error1738 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1738: CAJERA RECTANGULAR - Profundidad no programada" ;
-    ns1:identificador "1738" ;
-    ns1:mitigaRiesgo ns1:SolucionError1738 ;
-    ns1:textoExtracto "1738 'CAJERA RECTANGULAR: P = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P tiene valor 0. No hay profundidad programada." .
-
-ns1:Error1739 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1739: CAJERA RECTANGULAR - Diámetro de herramienta insuficiente" ;
-    ns1:identificador "1739" ;
-    ns1:mitigaRiesgo ns1:SolucionError1739 ;
-    ns1:textoExtracto "1739 'CAJERA RECTANGULAR: Diámetro de herramienta menor que DELTA' DETECCIÓN Durante la ejecución del ciclo. CAUSA En la operación de desbaste o acabado, el diámetro de la herramienta es menor que el paso de fresado (parámetro Δ)." .
-
-ns1:SolucionError1738 a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para Error 1738 (asignar profundidad > 0)" ;
-    ns1:solucionaFallo ns1:Error1738 ;
+ns1:AsignarAlParametroUnValorMayorQue0_56a30422b5 a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar al parámetro un valor mayor que 0" ;
+    ns1:solucionaFallo ns1:NoHayAvanceProgramado,
+        ns1:NoHayHerramientaProgramada,
+        ns1:NoHayProfundidadProgramada,
+        ns1:NoHayVelocidadProgramada ;
     ns1:textoExtracto "SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
 
-ns1:SolucionError1739 a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para Error 1739 (reducir paso de fresado o ajustar herramienta)" ;
-    ns1:solucionaFallo ns1:Error1739 ;
-    ns1:textoExtracto "SOLUCIÓN Reducir el paso de fresado o [ajustar herramienta]." .
+ns1:Parametro_04efeb2612 a ns1:Parametro ;
+    rdfs:label "Parámetro S" ;
+    ns1:identificador "S" ;
+    ns1:textoExtracto "El parámetro S tiene valor 0. No hay velocidad programada." .
 
-ns1:HerramientaFresado a ns1:Herramienta ;
-    rdfs:label "Herramienta de fresado (desbaste/acabado)" ;
-    ns1:textoExtracto "Programar una herramienta para la operación de desbaste o acabado. Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta." .
+ns1:Parametro_2ab95a10ab a ns1:Parametro ;
+    rdfs:label "Parámetro F" ;
+    ns1:identificador "F" ;
+    ns1:textoExtracto "El parámetro F tiene valor 0. No hay avance programado." .
 
-ns1:OperacionAcabado a ns1:ModoOperacion ;
-    rdfs:label "Operación de acabado" ;
-    ns1:requiereMantenimiento ns1:HerramientaFresado ;
-    ns1:textoExtracto "Programar una herramienta para la operación de desbaste o acabado. En la operación de desbaste o acabado, el diámetro de la herramienta es menor que el paso de fresado." .
+ns1:Parametro_4ab528adae a ns1:Parametro ;
+    rdfs:label "Parámetro P" ;
+    ns1:identificador "P" ;
+    ns1:textoExtracto "El parámetro P tiene valor 0. No hay profundidad programada." .
 
-ns1:OperacionDesbaste a ns1:ModoOperacion ;
-    rdfs:label "Operación de desbaste" ;
-    ns1:requiereMantenimiento ns1:HerramientaFresado ;
-    ns1:textoExtracto "Programar una herramienta para la operación de desbaste o acabado. En la operación de desbaste o acabado, el diámetro de la herramienta es menor que el paso de fresado." .
+ns1:Parametro_9eb0d1cf51 a ns1:Parametro ;
+    rdfs:label "Parámetro T" ;
+    ns1:identificador "T" ;
+    ns1:textoExtracto "El parámetro T tiene valor 0. No hay herramienta programada." .
+
+ns1:NoHayAvanceProgramado a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay avance programado" ;
+    ns1:textoExtracto "CAUSA El parámetro F tiene valor 0. No hay avance programado." .
+
+ns1:NoHayHerramientaProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay herramienta programada" ;
+    ns1:textoExtracto "CAUSA El parámetro T tiene valor 0. No hay herramienta programada." .
+
+ns1:NoHayProfundidadProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay profundidad programada" ;
+    ns1:textoExtracto "CAUSA El parámetro P tiene valor 0. No hay profundidad programada." .
+
+ns1:NoHayVelocidadProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay velocidad programada" ;
+    ns1:textoExtracto "CAUSA El parámetro S tiene valor 0. No hay velocidad programada." .
 

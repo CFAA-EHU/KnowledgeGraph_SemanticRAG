@@ -1,46 +1,16 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CASE1CogerUnaHerramientaDelAlmacenYPonerlaEnElCabezalPreviamenteDuranteElMecanizadoAlEjecutarTSePoneLaHerramientaDelAlmacenEnLaPinza1 a ns1:ModoOperacion ;
-    ns1:textoExtracto "$CASE 1 ; Coger una herramienta del almacén y ponerla en el cabezal. ; Previamente, durante el mecanizado (al ejecutar T), se pone la herramienta del almacén en la pinza 1." .
+ns1:CambioDeHerramienta_a3471b45df a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:ejecuta ns1:Componente_82165561b5 ;
+    ns1:textoExtracto "LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. LL SUB_ARM_BACK ; Retirar el brazo cambiador. LL SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal." .
 
-ns1:CASE2DejarLaHerramientaDelCabezalEnElAlmacen a ns1:ModoOperacion ;
-    ns1:textoExtracto "$CASE 2 ; Dejar la herramienta del cabezal en el almacén." .
+ns1:DesactivacionDeTeclaSTOP a ns1:AccionProhibida ;
+    rdfs:label "Desactivación de tecla STOP" ;
+    ns1:textoExtracto "# ESTOP ; Habilitar la tecla STOP." .
 
-ns1:IFVGCNCAUTSTATUS4096VGCNCAUTSTATUS8192 a ns1:Parametro ;
-    ns1:textoExtracto "$IF [[V.G.CNCAUTSTATUS & 4096] | [V.G.CNCAUTSTATUS & 8192]]" .
-
-ns1:IFVGFULLSTATUS2559VGFULLSTATUS25513 a ns1:Parametro ;
-    ns1:textoExtracto "$IF [[[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]]" .
-
-ns1:LLSUBCH1TOSPDLlevarLaHerramientaDeLaPinza1AlCabezal_f63234d82f a ns1:AccionProhibida ;
-    ns1:textoExtracto "LL SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal." .
-
-ns1:LLSUBSPDAUTCHGLlevarElCabezalAlPuntoDeCambioAutomatico a ns1:AccionProhibida ;
-    ns1:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
-
-ns1:LSUBARMBACKRetirarElBrazoCambiadorM123FuncionAuxiliarParaEjecutarAccionRET a ns1:AccionProhibida ;
-    ns1:textoExtracto "%L SUB_ARM_BACK ; Retirar el brazo cambiador. M123 ; Función auxiliar para ejecutar acción. # RET" .
-
-ns1:LSUBARMTOCHGLlevarElBrazoCambiadorAlPuntoDeCambioM121FuncionAuxiliarParaEjecutarAccionRET a ns1:AccionProhibida ;
-    ns1:textoExtracto "%L SUB_ARM_TO_CHG ; Llevar el brazo cambiador al punto de cambio. M121 ; Función auxiliar para ejecutar acción. # RET" .
-
-ns1:LSUBARMTOMZLlevarElBrazoCambiadorAlAlmacenM122FuncionAuxiliarParaEjecutarAccionRET a ns1:AccionProhibida ;
-    ns1:textoExtracto "%L SUB_ARM_TO_MZ ; Llevar el brazo cambiador al almacén. M122 ; Función auxiliar para ejecutar acción. # RET" .
-
-ns1:M6OrdenAlGestorParaComenzarElCambioDeHerramienta a ns1:AccionProhibida ;
-    ns1:textoExtracto "M6 ; Orden al gestor para comenzar el cambio de herramienta." .
-
-ns1:SUBM6NcESBLKActivarTratamientoDeBloqueUnicoDSTOPDeshabilitarTeclaSTOPM6OrdenAlGestorParaComenzarElCambioDeHerramienta_03d6b11ffa a ns1:Esquema ;
-    ns1:textoExtracto "#SUB_M6.nc #ESBLK ; Activar tratamiento de bloque único #DSTOP ; Deshabilitar tecla STOP M6 ; Orden al gestor para comenzar el cambio de herramienta." .
-
-ns1:V_PLC_TMOPERATION a ns1:Parametro ;
-    ns1:textoExtracto "$SWITCH V.PLC.TMOPERATION; Analiza el tipo de operación." .
-
-ns1:V_S_EXECUTION a ns1:Parametro ;
-    ns1:textoExtracto "V.S.EXECUTION = 0 ; Ejecución simulada; teórico o funciones G." ;
-    ns1:valor "0" .
-
-ns1:V_S_EXECUTION_1 a ns1:Parametro ;
-    ns1:textoExtracto "V.S.EXECUTION = 1 ; Ejecución" ;
-    ns1:valor "1" .
+ns1:Componente_82165561b5 a ns1:Componente ;
+    rdfs:label "Cabezal" ;
+    ns1:textoExtracto "Llevar la herramienta de la pinza 1 al cabezal. Llevar el cabezal al punto de cambio manual. Quitar la herramienta del cabezal." .
 

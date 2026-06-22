@@ -1,40 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_1331 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1331: '#TANGFEED RMIN: radio negativo no permitido'" ;
-    ns1:identificador "1331" ;
-    ns1:solucionaFallo ns1:Funcion_G14 ;
-    ns1:textoExtracto "1331 '#TANGFEED RMIN: radio negativo no permitido' [...] CAUSA El radio programado es menor o igual que cero. SOLUCIÓN Revisar la programación." .
+ns1:AnidamientoDeSentenciasCSONACSONSobrepasado_b9d53243be a ns1:DiagnosticoFallo ;
+    rdfs:label "Anidamiento de sentencias #CS ON/#ACS ON sobrepasado" ;
+    ns1:textoExtracto "'Anidamiento de sentencias #CS ON/#ACS ON sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha superado el límite de combinaciones de sistemas de coordenadas." .
 
-ns1:Error_1332 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1332: '#TOOL AX: se espera orientación +/- tras la designación del eje'" ;
-    ns1:identificador "1332" ;
-    ns1:solucionaFallo ns1:Herramienta_CNC ;
-    ns1:textoExtracto "1332 '#TOOL AX: se espera orientación +/- tras la designación del eje' [...] CAUSA Falta programar la orientación de la herramienta. SOLUCIÓN Revisar la programación." .
+ns1:EtiquetaDefinidaVariasVeces a ns1:DiagnosticoFallo ;
+    rdfs:label "Etiqueta definida varias veces" ;
+    ns1:textoExtracto "'Etiqueta definida varias veces' DETECCIÓN Durante la ejecución. CAUSA La etiqueta del bloque está repetida en el programa." .
 
-ns1:Error_1333 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1333: 'Cambio del primer y/o segundo eje del plano con compensación de radio activa'" ;
-    ns1:identificador "1333" ;
-    ns1:solucionaFallo ns1:CompensacionRadio ;
-    ns1:textoExtracto "1333 'Cambio del primer y/o segundo eje del plano con compensación de radio activa' [...] CAUSA Con la compensación de radio activa, el CNC ha intentado cambiar la configuración de ejes del canal y el cambio afecta a los dos primeros ejes del plano de trabajo. SOLUCIÓN Desactivar la compensación de radio para realizar cambios en la configuración de ejes del canal que afectan al plano de trabajo." .
+ns1:EtiquetaNoDefinidaEnLaMismaSubrutinaQueElGOTORPTOABORT a ns1:DiagnosticoFallo ;
+    rdfs:label "Etiqueta no definida en la misma subrutina que el $GOTO, #RPT ó #ABORT" ;
+    ns1:textoExtracto "Etiqueta no definida en la misma subrutina que el $GOTO, #RPT ó #ABORT. DETECCIÓN Durante la ejecución. CAUSA La etiqueta programada en $GOTO, #RPT o #ABORT no existe en la subrutina o programa." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "el CNC ha intentado cambiar la configuración de ejes del canal..." ;
-    ns1:tieneComponente ns1:CompensacionRadio .
+ns1:ModificarHardware a ns1:AccionProhibida ;
+    rdfs:label "Modificar hardware" ;
+    ns1:textoExtracto "SOLUCIÓN El CNC permite combinar diferentes sistemas de coordenadas entre sí para construir otros nuevos." .
 
-ns1:Funcion_G14 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G14 (imagen espejo)" ;
-    ns1:identificador "G14" ;
-    ns1:textoExtracto "CAUSA Programación incorrecta de la función G14 (imagen espejo)." .
+ns1:NombreDeEtiquetaDemasiadoLargo a ns1:DiagnosticoFallo ;
+    rdfs:label "Nombre de etiqueta demasiado largo" ;
+    ns1:textoExtracto "'Nombre de etiqueta demasiado largo' DETECCIÓN Durante la ejecución. CAUSA El nombre de la etiqueta supera el número de caracteres permitidos." .
 
-ns1:Herramienta_CNC a ns1:Herramienta ;
-    rdfs:label "Herramienta CNC" ;
-    ns1:textoExtracto "CAUSA Falta programar la orientación de la herramienta." .
+ns1:NumeroDeBloqueDefinidoVariasVeces a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de bloque definido varias veces" ;
+    ns1:textoExtracto "'Número de bloque definido varias veces' DETECCIÓN Durante la ejecución. CAUSA El número de bloque 'N' está repetido en el programa." .
 
-ns1:CompensacionRadio a ns1:Parametro ;
-    rdfs:label "Compensación de radio" ;
-    ns1:textoExtracto "Con la compensación de radio activa, el CNC ha intentado cambiar la configuración de ejes del canal..." .
+ns1:NumeroMaximoDeEtiquetasSobrepasado a ns1:DiagnosticoFallo ;
+    rdfs:label "Número máximo de etiquetas sobrepasado" ;
+    ns1:textoExtracto "'Número máximo de etiquetas sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El programa tiene más etiquetas de bloque que las permitidas." .
+
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:GOTOEtiquetaNoValida ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:GOTOEtiquetaNoValida a ns1:DiagnosticoFallo ;
+    rdfs:label "$GOTO: Etiqueta no válida" ;
+    ns1:textoExtracto "'$GOTO: Etiqueta no válida' DETECCIÓN Durante la ejecución. CAUSA Una etiqueta sólo se puede definir con una cadena de caracteres entre corchetes o con el carácter 'N' seguido de un número positivo y menor que 2147483646." .
 

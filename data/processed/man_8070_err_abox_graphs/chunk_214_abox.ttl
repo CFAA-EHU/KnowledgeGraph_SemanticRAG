@@ -1,48 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error1433 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1433: Configuración de eje aparcado" ;
-    ns1:identificador "1433" ;
-    ns1:solucionaFallo ns1:Parametro_UNPARK ;
-    ns1:textoExtracto "No se puede modificar la configuración de un eje aparcado. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado incluir (#CALL / #SET) entre los tres primeros ejes del canal un eje aparcado. SOLUCIÓN Un eje aparcado no puede formar parte de los tres primeros ejes del canal; desaparcar el eje (#UNPARK)." .
+ns1:GenerarDeNuevoLaCajera a ns1:TareaMantenimiento ;
+    rdfs:label "Generar de nuevo la cajera" ;
+    ns1:textoExtracto "SOLUCIÓN Generar de nuevo la cajera." .
 
-ns1:Error1434 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1434: Inclusión de eje esclavo asociado" ;
-    ns1:identificador "1434" ;
-    ns1:solucionaFallo ns1:Parametro_UNLINK ;
-    ns1:textoExtracto "'No se ha podido incluir en la configuración un eje esclavo asociado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado incluir en la configuración del canal (#CALL o #SET) el eje maestro de un acoplo activo o de una pareja Gantry. Al incluir el eje maestro, el CNC también incluye el eje esclavo, que nunca puede ocupar una de las tres posiciones principales del canal. El CNC da error porque no existe una posición libre para el eje esclavo distinta de las tres principales. SOLUCIÓN Para poder incluir únicamente el eje maestro hay que desactivar primero el acoplo activo (#UNLINK) o deshacer la pareja Gantry. Para poder incluir los ejes maestro y esclavo hay que eliminar del canal algún otro eje o bien aumentar el número de ejes del canal." .
+ns1:LimiteDeSubrutinasEnUnMismoBloqueSobrepasado a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de subrutinas en un mismo bloque sobrepasado" ;
+    ns1:textoExtracto "'Límite de subrutinas en un mismo bloque sobrepasado' DETECCIÓN Durante la ejecución. CAUSA Se ha superado el máximo número de subrutinas que se pueden ejecutar en un mismo bloque." .
 
-ns1:Error1435 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1435: Nombre de eje esclavo repetido" ;
-    ns1:identificador "1435" ;
-    ns1:textoExtracto "'No se ha podido asignar nombre a un eje esclavo asociado por estar repetido' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado incluir en la configuración del canal (#CALL o #SET) el eje maestro de un acoplo activo o de una pareja Gantry. Al incluir el eje maestro, el CNC también incluye el eje esclavo, que nunca puede ocupar una de las tres posiciones principales del canal. El CNC da error porque el nombre del eje esclavo ya está ocupado por otro eje en la configuración actual del canal. SOLUCIÓN Renombrar el eje esclavo a incluir o el ya existente en la configuración." .
+ns1:ProgramarLasCotasDeLosEjesAntesDeLaFuncionGDelCiclo a ns1:TareaMantenimiento ;
+    rdfs:label "Programar las cotas de los ejes antes de la función G del ciclo" ;
+    ns1:solucionaFallo ns1:ElMovimientoEnElPlanoPrincipalDebeProgramarseAntesDeLaGDelCiclo ;
+    ns1:textoExtracto "SOLUCIÓN Programar las cotas de los ejes antes de la función G del ciclo." .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC" ;
-    ns1:textoExtracto "El CNC ha intentado incluir en la configuración del canal (#CALL o #SET) el eje maestro de un acoplo activo o de una pareja Gantry." ;
-    ns1:tieneComponente ns1:Parametro_CALL,
-        ns1:Parametro_SET,
-        ns1:Parametro_UNLINK,
-        ns1:Parametro_UNPARK .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:EjeMalProgramado_62b50f262b ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_CALL a ns1:Parametro ;
-    rdfs:label "Parámetro #CALL (inclusión en configuración)" ;
-    ns1:identificador "#CALL" ;
-    ns1:textoExtracto "El CNC ha intentado incluir (#CALL / #SET) entre los tres primeros ejes del canal un eje aparcado." .
+ns1:EjeMalProgramado_62b50f262b a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje mal programado" ;
+    ns1:textoExtracto "'Eje mal programado' DETECCIÓN Durante la ejecución. CAUSA Error en la sintaxis de programación de la sentencia o función G; en un desplazamiento está repetido algún eje, en la función G74 falta programar el orden de la búsqueda de cero de los ejes o en la función G20 falta programar el orden de los ejes en el sistema." .
 
-ns1:Parametro_SET a ns1:Parametro ;
-    rdfs:label "Parámetro #SET (inclusión en configuración)" ;
-    ns1:identificador "#SET" ;
-    ns1:textoExtracto "El CNC ha intentado incluir (#CALL / #SET) entre los tres primeros ejes del canal un eje aparcado." .
-
-ns1:Parametro_UNLINK a ns1:Parametro ;
-    rdfs:label "Parámetro #UNLINK (desactivar acoplo activo)" ;
-    ns1:identificador "#UNLINK" ;
-    ns1:textoExtracto "desactivar el acoplo activo (#UNLINK) o deshacer la pareja Gantry (por parámetro máquina)." .
-
-ns1:Parametro_UNPARK a ns1:Parametro ;
-    rdfs:label "Parámetro #UNPARK (desaparcar eje)" ;
-    ns1:identificador "#UNPARK" ;
-    ns1:textoExtracto "Un eje aparcado no puede formar parte de los tres primeros ejes del canal; desaparcar el eje (#UNPARK)." .
+ns1:ElMovimientoEnElPlanoPrincipalDebeProgramarseAntesDeLaGDelCiclo a ns1:DiagnosticoFallo ;
+    rdfs:label "El movimiento en el plano principal debe programarse antes de la G del ciclo" ;
+    ns1:textoExtracto "'El movimiento en el plano principal debe programarse antes de la G del ciclo' DETECCIÓN Durante la ejecución. CAUSA Las coordenadas del punto inicial del ciclo están definidas después de la función G que define el ciclo." .
 

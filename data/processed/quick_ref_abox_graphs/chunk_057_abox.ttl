@@ -1,152 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazControlHusillo a ns1:InterfazUsuario ;
-    rdfs:label "Panel de Control del Husillo Maestro"@es ;
-    ns1:controla ns1:ParametroVelocidadHusillo ;
-    ns1:ilustradoEn ns1:EsquemaControlHusillo ;
-    ns1:textoExtracto "botonera del husillo maestro con iconos de giro horario/antihorario, parada, orientación y override de velocidad (teclas +/– y selector 0–200%)"@es ;
-    ns1:tieneComponente ns1:SelectorOverrideVelocidad,
-        ns1:TeclaGiroAntihorario,
-        ns1:TeclaGiroHorario,
-        ns1:TeclaParadaHusillo .
+ns1:CalibracionDeHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Calibración de Herramienta" ;
+    ns1:textoExtracto "panel comparativo de calibración de herramienta para fresado y torno con tarjetas que distinguen manual, semi-automática y automática (con sonda)." .
 
-ns1:InterfazJog a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de Jog (Continuo/Incremental)"@es ;
-    ns1:ilustradoEn ns1:EsquemaModosMovimiento ;
-    ns1:textoExtracto "Tres viñetas con diales del selector y leyendas para: jog continuo, jog incremental (pasos visibles en el dial) y volantes (general/individual) con su factor de multiplicación. Los pictogramas de X+/X– y teclas de dirección indican la direccionalidad"@es ;
-    ns1:tieneComponente ns1:SelectorJog,
-        ns1:TeclaDireccionX,
-        ns1:VolanteGeneral,
-        ns1:VolanteIndividual .
+ns1:Componente_604f2991aa a ns1:Componente ;
+    rdfs:label "Tecla" ;
+    ns1:textoExtracto "Las flechas de flujo y los símbolos numéricos refuerzan el orden de operación." .
 
-ns1:ModoCalibracionAutomatica a ns1:ModoOperacion ;
-    rdfs:label "Modo Calibración Automática"@es ;
-    ns1:ejecutadoPor ns1:InterfazCalibracionHerramienta ;
-    ns1:requiereEPI ns1:SondaCalibracion ;
-    ns1:textoExtracto "calibración [...] automática (con sonda)"@es .
+ns1:InterfazUsuarioJogContinuo a ns1:InterfazUsuario ;
+    rdfs:label "Jog Continuo" ;
+    ns1:textoExtracto "jog continuo, jog incremental (pasos visibles en el dial) y volantes (general/individual) con su factor de multiplicación." .
 
-ns1:ModoJogContinuo a ns1:ModoOperacion ;
-    rdfs:label "Modo Jog Continuo"@es ;
-    ns1:habilitadoPor ns1:SelectorJog ;
-    ns1:requiereMantenimiento ns1:ValidacionPosicionEje ;
-    ns1:textoExtracto "jog continuo"@es .
+ns1:InterfazUsuarioJogIncremental a ns1:InterfazUsuario ;
+    rdfs:label "Jog Incremental" ;
+    ns1:textoExtracto "jog continuo, jog incremental (pasos visibles en el dial) y volantes (general/individual) con su factor de multiplicación." .
 
-ns1:ModoJogIncremental a ns1:ModoOperacion ;
-    rdfs:label "Modo Jog Incremental"@es ;
-    ns1:habilitadoPor ns1:SelectorJog ;
-    ns1:textoExtracto "jog incremental (pasos visibles en el dial)"@es .
+ns1:InterfazUsuarioVolante a ns1:InterfazUsuario ;
+    rdfs:label "Volante" ;
+    ns1:textoExtracto "jog continuo, jog incremental (pasos visibles en el dial) y volantes (general/individual) con su factor de multiplicación." .
 
-ns1:ModoPreajusteCoordenadas a ns1:ModoOperacion ;
-    rdfs:label "Modo Preajuste de Coordenadas"@es ;
-    ns1:ejecutadoPor ns1:InterfazPreajusteCoordenadas ;
-    ns1:textoExtracto "secuencia para preajustar una coordenada o mover un eje a una posición concreta"@es .
+ns1:PosicionDelEje_73635e4264 a ns1:Parametro ;
+    rdfs:label "Posición del Eje" ;
+    ns1:textoExtracto "introducción del valor y validación con ENTER/START." .
 
-ns1:TeclaESC a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla ESC"@es ;
-    ns1:textoExtracto "teclas involucradas (ZERO, START, ESC)"@es .
-
-ns1:TeclaZERO a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla ZERO"@es ;
-    ns1:textoExtracto "teclas involucradas (ZERO, START, ESC)"@es .
-
-ns1:EsquemaCalibracionHerramienta a ns1:Esquema ;
-    rdfs:label "Esquema de Calibración de Herramienta"@es ;
-    ns1:identificador "Página 12 - TOOL CALIBRATION" ;
-    ns1:textoExtracto "panel comparativo de calibración de herramienta para fresado y torno con tarjetas que distinguen manual, semi-automática y automática"@es .
-
-ns1:EsquemaControlHusillo a ns1:Esquema ;
-    rdfs:label "Esquema de Control del Husillo Maestro"@es ;
-    ns1:identificador "Página 12 - MASTER SPINDLE CONTROL" ;
-    ns1:textoExtracto "botonera del husillo maestro con iconos de giro horario/antihorario, parada, orientación y override de velocidad"@es .
-
-ns1:EsquemaModosMovimiento a ns1:Esquema ;
-    rdfs:label "Esquema de Modos de Movimiento (Jog)"@es ;
-    ns1:identificador "Página 9 - MOVE THE AXES" ;
-    ns1:textoExtracto "Tres viñetas con diales del selector y leyendas para: jog continuo, jog incremental [...] mostrando la relación entre entrada física (tecla/volante) y movimiento del eje"@es .
-
-ns1:EsquemaPreajustePosicion a ns1:Esquema ;
-    rdfs:label "Esquema de Preajuste de Posición"@es ;
-    ns1:identificador "Página 10 - COORDINATE PRESET" ;
-    ns1:textoExtracto "Dos bloques procedimentales con marcos paralelos (teclado vs. menú de softkeys) [...] disposición en columnas y pasos numerados"@es .
-
-ns1:InterfazCalibracionHerramienta a ns1:InterfazUsuario ;
-    rdfs:label "Panel de Calibración de Herramienta"@es ;
-    ns1:ilustradoEn ns1:EsquemaCalibracionHerramienta ;
-    ns1:requiereEPI ns1:SondaCalibracion ;
-    ns1:textoExtracto "panel comparativo de calibración de herramienta para fresado y torno con tarjetas que distinguen manual, semi-automática y automática (con sonda)"@es ;
-    ns1:tieneComponente ns1:OpcionCalibracionAutomatica,
-        ns1:OpcionCalibracionManual,
-        ns1:OpcionCalibracionSemiAutomatica .
-
-ns1:InterfazPreajusteCoordenadas a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de Preajuste de Coordenadas"@es ;
-    ns1:ilustradoEn ns1:EsquemaPreajustePosicion ;
-    ns1:textoExtracto "Dos bloques procedimentales con marcos paralelos (teclado vs. menú de softkeys). Cada uno muestra la secuencia para preajustar una coordenada o mover un eje a una posición concreta: selección del eje (resaltado en pantalla), introducción del valor y validación con ENTER/START"@es ;
-    ns1:tieneComponente ns1:CampoValorCoordenada,
-        ns1:SoftkeyEjeSeleccion,
-        ns1:TeclaENTER,
-        ns1:TeclaSTART .
-
-ns1:OpcionCalibracionAutomatica a ns1:ComponenteElectrico ;
-    rdfs:label "Opción Calibración Automática"@es ;
-    ns1:textoExtracto "tarjetas que distinguen manual, semi-automática y automática (con sonda)"@es .
-
-ns1:OpcionCalibracionManual a ns1:ComponenteElectrico ;
-    rdfs:label "Opción Calibración Manual"@es ;
-    ns1:textoExtracto "tarjetas que distinguen manual, semi-automática y automática"@es .
-
-ns1:OpcionCalibracionSemiAutomatica a ns1:ComponenteElectrico ;
-    rdfs:label "Opción Calibración Semi-Automática"@es ;
-    ns1:textoExtracto "tarjetas que distinguen manual, semi-automática y automática"@es .
-
-ns1:ParametroVelocidadHusillo a ns1:Parametro ;
-    rdfs:label "Velocidad del Husillo (Override 0–200%)"@es ;
-    ns1:textoExtracto "override de velocidad (teclas +/– y selector 0–200%)"@es ;
-    ns1:valor "0–200%" .
-
-ns1:SelectorOverrideVelocidad a ns1:ComponenteElectrico ;
-    rdfs:label "Selector de Override de Velocidad (0–200%)"@es ;
-    ns1:textoExtracto "selector 0–200%"@es .
-
-ns1:TeclaDireccionX a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla Dirección X+"@es,
-        "Tecla Dirección X–"@es ;
-    ns1:textoExtracto "pictogramas de X+/X– y teclas de dirección"@es .
-
-ns1:TeclaENTER a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla ENTER"@es ;
-    ns1:textoExtracto "validación con ENTER/START"@es .
-
-ns1:TeclaGiroAntihorario a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla Giro Antihorario Husillo"@es ;
-    ns1:textoExtracto "iconos de giro horario/antihorario"@es .
-
-ns1:TeclaGiroHorario a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla Giro Horario Husillo"@es ;
-    ns1:textoExtracto "iconos de giro horario/antihorario"@es .
-
-ns1:TeclaParadaHusillo a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla Parada de Husillo"@es ;
-    ns1:textoExtracto "iconos de [...] parada"@es .
-
-ns1:TeclaSTART a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla START"@es ;
-    ns1:textoExtracto "teclas involucradas (ZERO, START, ESC) y validación con ENTER/START"@es .
-
-ns1:VolanteGeneral a ns1:ComponenteMecanico ;
-    rdfs:label "Volante de Control General"@es ;
-    ns1:textoExtracto "volantes (general/individual) con su factor de multiplicación"@es .
-
-ns1:VolanteIndividual a ns1:ComponenteMecanico ;
-    rdfs:label "Volante de Control Individual"@es ;
-    ns1:textoExtracto "volantes (general/individual) con su factor de multiplicación"@es .
-
-ns1:SondaCalibracion a ns1:Sensor ;
-    rdfs:label "Sonda de Calibración Automática"@es ;
-    ns1:textoExtracto "automática (con sonda)"@es .
-
-ns1:SelectorJog a ns1:ComponenteElectrico ;
-    rdfs:label "Selector de Modo Jog"@es ;
-    ns1:textoExtracto "diales del selector y leyendas para: jog continuo, jog incremental"@es .
+ns1:SistemaControlHusillo a ns1:Sistema ;
+    rdfs:label "Sistema Control Husillo" ;
+    ns1:textoExtracto "botonera del husillo maestro con iconos de giro horario/antihorario, parada, orientación y override de velocidad (teclas +/– y selector 0–200%)." .
 

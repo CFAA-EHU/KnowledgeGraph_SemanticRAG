@@ -1,50 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1409 a ns1:Alarma ;
-    rdfs:label "Alarma 1409: Anidamiento de funciones T con subrutina no permitido" ;
-    ns1:identificador "1409" ;
-    ns1:monitoreaParametro ns1:Parametro_TOOLSUB ;
-    ns1:textoExtracto "'Anidamiento de funciones T con subrutina no permitido' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar un cambio de herramienta y en la subrutina asociada a la función T (parámetro TOOLSUB) hay programado otro cambio de herramienta. SOLUCIÓN No es posible programar una función T dentro de la subrutina asociada al cambio de herramienta." .
+ns1:AvisoSeguridad_9cd6394a14 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso sobre velocidad superior a la máxima" ;
+    ns1:mitigaRiesgo ns1:ProgramarUnaVelocidadSuperiorALaMaxima ;
+    ns1:textoExtracto "'DETECCIÓN Durante la ejecución. CAUSA El cabezal tiene cambio de gama automático (parámetro AUTOGEAR) y hay programada una velocidad superior a la máxima de cualquiera de las gamas existentes para ese cabezal.'" .
 
-ns1:Alarma_1411 a ns1:Alarma ;
-    rdfs:label "Alarma 1411: Número de bloques no válido" ;
-    ns1:identificador "1411" ;
-    ns1:monitoreaParametro ns1:Parametro_CD ;
-    ns1:textoExtracto "'#CD: número de bloques no válido' DETECCIÓN Durante la ejecución. CAUSA El número de bloques programado en la sentencia es incorrecto. SOLUCIÓN El número máximo de bloques a analizar depende del modelo de CNC; 200 bloques (CNC 6065) o 40 (CNC 8060)." .
+ns1:CambioDeGamaAutomaticoDelCabezal a ns1:Parametro ;
+    rdfs:label "Cambio de gama automático del cabezal" ;
+    ns1:identificador "AUTOGEAR" ;
+    ns1:textoExtracto "'El cabezal tiene cambio de gama automático (parámetro AUTOGEAR) y hay programada una velocidad superior a la máxima de cualquiera de las gamas existentes para ese cabezal.'" .
 
-ns1:Alarma_1412 a ns1:Alarma ;
-    rdfs:label "Alarma 1412: Zona de visualización para gráficos mal definida" ;
-    ns1:identificador "1412" ;
-    ns1:monitoreaParametro ns1:Parametro_DGWZ ;
-    ns1:textoExtracto "'#DGWZ: zona de visualización para gráficos mal definida' DETECCIÓN Durante la ejecución." .
+ns1:NumeroDeGamasDisponiblesEnElCabezal a ns1:Parametro ;
+    rdfs:label "Número de gamas disponibles en el cabezal" ;
+    ns1:identificador "NPARSETS" ;
+    ns1:textoExtracto "'El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS).'" .
 
-ns1:Herramienta_CNC a ns1:Herramienta ;
-    rdfs:label "Herramienta de cambio automático (CNC)" ;
-    ns1:textoExtracto "cambio de herramienta" .
+ns1:ProgramarUnaVelocidadCorrecta a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una velocidad correcta" ;
+    ns1:solucionaFallo ns1:ProgramarUnaVelocidadSuperiorALaMaxima ;
+    ns1:textoExtracto "'SOLUCIÓN Programar una'" .
 
-ns1:Maquina_CNC_6065 a ns1:Maquina ;
-    rdfs:label "Máquina CNC 6065" ;
-    ns1:identificador "CNC 6065" ;
-    ns1:textoExtracto "CNC 6065" .
-
-ns1:Maquina_CNC_8060 a ns1:Maquina ;
-    rdfs:label "Máquina CNC 8060" ;
-    ns1:identificador "CNC 8060" ;
-    ns1:textoExtracto "CNC 8060" .
-
-ns1:Parametro_CD a ns1:Parametro ;
-    rdfs:label "Parámetro CD (número de bloques)" ;
-    ns1:textoExtracto "#CD: número de bloques" ;
-    ns1:valor "CD" .
-
-ns1:Parametro_DGWZ a ns1:Parametro ;
-    rdfs:label "Parámetro DGWZ (zona de visualización gráfica)" ;
-    ns1:textoExtracto "#DGWZ: zona de visualización para gráficos" ;
-    ns1:valor "DGWZ" .
-
-ns1:Parametro_TOOLSUB a ns1:Parametro ;
-    rdfs:label "Parámetro TOOLSUB" ;
-    ns1:textoExtracto "parámetro TOOLSUB" ;
-    ns1:valor "TOOLSUB" .
+ns1:ProgramarUnaVelocidadSuperiorALaMaxima a ns1:AccionProhibida ;
+    rdfs:label "Programar una velocidad superior a la máxima" ;
+    ns1:textoExtracto "'CAUSA El cabezal tiene cambio de gama automático (parámetro AUTOGEAR) y hay programada una velocidad superior a la máxima de cualquiera de las gamas existentes para ese cabezal.'" .
 

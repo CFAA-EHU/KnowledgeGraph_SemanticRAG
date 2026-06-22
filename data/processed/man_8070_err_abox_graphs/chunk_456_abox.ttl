@@ -1,65 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Instruccion_GAPCTRL a ns1:InterfazUsuario ;
-    rdfs:label "Instrucción #GAPCTRL (control de gap)"@es ;
-    ns1:controla ns1:Sistema_ControlEje ;
-    ns1:identificador "#GAPCTRL" ;
-    ns1:textoExtracto "instrucción #GAPCTRL ON/OFF"@es .
+ns1:AlterarIndiceEnCanalDelEjeControlado a ns1:AccionProhibida ;
+    rdfs:label "Alterar índice en canal del eje controlado" ;
+    ns1:textoExtracto "Se ha alterado el índice en el canal del eje controlado." .
 
-ns1:Instruccion_LEAP a ns1:InterfazUsuario ;
-    rdfs:label "Instrucción #LEAP (ejecución de salto)"@es ;
-    ns1:identificador "#LEAP" ;
-    ns1:requiereMantenimiento ns1:Fallo_2407_LeapGapCtrlPosLimitInferior,
-        ns1:Fallo_2407_LeapGapCtrlPosMismatch ;
-    ns1:textoExtracto "instrucción #LEAP para ejecutar un salto"@es .
+ns1:DesactivarZonaDeTrabajoAntesDeLiberarElEje a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar zona de trabajo antes de liberar el eje" ;
+    ns1:solucionaFallo ns1:AparcarEjeDeZonaDeTrabajoActiva,
+        ns1:QuitarEjeDeZonaDeTrabajoActiva ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar la zona de trabajo antes de liberar el eje." .
 
-ns1:Parametro_POS a ns1:Parametro ;
-    rdfs:label "Parámetro POS (cota inicial/final del salto #LEAP)"@es ;
-    ns1:monitoreaParametro ns1:Sistema_ControlEje ;
-    ns1:textoExtracto "parámetro POS de la instrucción #LEAP"@es .
+ns1:DesaparcarEjeAntesDeActivarLaZonaDeTrabajo a ns1:TareaMantenimiento ;
+    rdfs:label "Desaparcar eje antes de activar la zona de trabajo" ;
+    ns1:solucionaFallo ns1:ActivarZonaConEjeAparcado_cc46ef6297 ;
+    ns1:textoExtracto "SOLUCIÓN Desaparcar el eje antes de activar la zona de trabajo." .
 
-ns1:Parametro_POSLIMIT a ns1:Parametro ;
-    rdfs:label "Parámetro POSLIMIT (valor máximo del salto #LEAP)"@es ;
-    ns1:monitoreaParametro ns1:Sistema_ControlEje ;
-    ns1:textoExtracto "POSLIMIT (valor máximo del salto)"@es .
+ns1:ActivarZonaConEjeAparcado_cc46ef6297 a ns1:AccionProhibida ;
+    rdfs:label "Activar zona con eje aparcado" ;
+    ns1:textoExtracto "El CNC ha intentado activar una zona de trabajo, pero uno de los ejes que la definen está aparcado." .
 
-ns1:Actuador_Eje a ns1:Actuador ;
-    rdfs:label "Actuador de eje (controlado por #GAPCTRL)"@es ;
-    ns1:textoExtracto "eje controlado mediante la instrucción #GAPCTRL"@es .
+ns1:AparcarEjeDeZonaDeTrabajoActiva a ns1:AccionProhibida ;
+    rdfs:label "Aparcar eje de zona de trabajo activa" ;
+    ns1:textoExtracto "El CNC ha intentado aparcar un eje que forma parte de una zona de trabajo activa." .
 
-ns1:Solucion_2407_AjustarPosLimit a ns1:TareaMantenimiento ;
-    rdfs:label "Solución 2407: Ajustar POSLIMIT en #LEAP (superior a cota inicial)"@es ;
-    ns1:solucionaFallo ns1:Fallo_2407_LeapGapCtrlPosLimitInferior ;
-    ns1:textoExtracto "Programar POSLIMIT en el comando #LEAP con una cota superior a la posición inicial del salto."@es .
-
-ns1:Solucion_2407_OmitirPos a ns1:TareaMantenimiento ;
-    rdfs:label "Solución 2407: Omitir parámetro POS en #LEAP"@es ;
-    ns1:solucionaFallo ns1:Fallo_2407_LeapGapCtrlPosMismatch ;
-    ns1:textoExtracto "No programar POS en el comando #LEAP"@es .
-
-ns1:Solucion_2407_DesactivarGapCtrl a ns1:TareaMantenimiento ;
-    rdfs:label "Solución 2407: Desactivar control de gap (#GAPCTRL OFF)"@es ;
-    ns1:solucionaFallo ns1:Fallo_2407_LeapGapCtrlPosLimitInferior,
-        ns1:Fallo_2407_LeapGapCtrlPosMismatch ;
-    ns1:textoExtracto "Anular el control del gap (#GAPCTRL OFF)."@es .
-
-ns1:Fallo_2407_LeapGapCtrlPosLimitInferior a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 2407: #LEAP con #GAPCTRL ON (POSLIMIT inferior a cota inicial)"@es ;
-    ns1:identificador "2407" ;
-    ns1:solucionaFallo ns1:Solucion_2407_AjustarPosLimit,
-        ns1:Solucion_2407_DesactivarGapCtrl ;
-    ns1:textoExtracto "Hay un eje controlado mediante la instrucción #GAPCTRL ON. En esta situación, se ha programado la instrucción #LEAP con POSLIMIT (valor máximo del salto) inferior a las cotas inicial y final del salto."@es .
-
-ns1:Fallo_2407_LeapGapCtrlPosMismatch a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 2407: #LEAP con #GAPCTRL ON (inconsistencia en parámetro POS)"@es ;
-    ns1:identificador "2407" ;
-    ns1:solucionaFallo ns1:Solucion_2407_DesactivarGapCtrl,
-        ns1:Solucion_2407_OmitirPos ;
-    ns1:textoExtracto "Hay un eje controlado mediante la instrucción #GAPCTRL ON. En esta situación se ha programado la instrucción #LEAP para ejecutar un salto cuya cota inicial y final (parámetro POS de la instrucción #LEAP) no coinciden."@es .
-
-ns1:Sistema_ControlEje a ns1:Sistema ;
-    rdfs:label "Sistema de control de eje (#GAPCTRL)"@es ;
-    ns1:controla ns1:Actuador_Eje ;
-    ns1:textoExtracto "eje controlado mediante la instrucción #GAPCTRL ON"@es .
+ns1:QuitarEjeDeZonaDeTrabajoActiva a ns1:AccionProhibida ;
+    rdfs:label "Quitar eje de zona de trabajo activa" ;
+    ns1:textoExtracto "El CNC ha intentado quitar de la configuración un eje que forma parte de una zona de trabajo activa." .
 

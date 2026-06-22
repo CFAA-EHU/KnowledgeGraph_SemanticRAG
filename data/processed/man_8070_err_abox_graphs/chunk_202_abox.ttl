@@ -1,30 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "CNC" ;
-    ns1:textoExtracto "El CNC sólo aceptará las funciones M41 a M44 de las gamas de cabezal que existan." ;
-    ns1:tieneComponente ns1:Cabezal_Maquina .
+ns1:NoPuedeActivarseElEjeComoHirth a ns1:DiagnosticoFallo ;
+    rdfs:label "No puede activarse el eje como Hirth" ;
+    ns1:textoExtracto "'No puede activarse el eje como Hirth'" .
 
-ns1:Alarma_1405 a ns1:Alarma ;
-    rdfs:label "Alarma 1405" ;
-    ns1:identificador "1405" ;
-    ns1:textoExtracto "'El valor de la S supera la gama máxima' DETECCIÓN Durante la ejecución." .
+ns1:ParametroHIRTH a ns1:Parametro ;
+    rdfs:label "Parámetro HIRTH" ;
+    ns1:textoExtracto "'No se admite activar como Hirth un eje con el parámetro HIRTH = NO'" .
 
-ns1:Cabezal_Maquina a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:activaAlarma ns1:Alarma_1405 ;
-    ns1:monitoreaParametro ns1:Parametro_AUTOGEAR,
-        ns1:Parametro_NPARSETS ;
-    ns1:textoExtracto "El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS)." .
+ns1:RevisarLaProgramacionDelEjeHirth a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación del eje Hirth" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteActivarComoHirthUnEjeConElParametroHIRTHNO ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. El eje no se puede activar como eje hirth." .
 
-ns1:Parametro_AUTOGEAR a ns1:Parametro ;
-    rdfs:label "Parámetro AUTOGEAR" ;
-    ns1:identificador "AUTOGEAR" ;
-    ns1:textoExtracto "El cabezal tiene cambio de gama automático (parámetro AUTOGEAR)." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:ProgramacionNoPermitidaEnMDI_1d1b440461 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_NPARSETS a ns1:Parametro ;
-    rdfs:label "Parámetro NPARSETS" ;
-    ns1:identificador "NPARSETS" ;
-    ns1:textoExtracto "El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS)." .
+ns1:VerificarLaPosicionDelEjeHirth a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la posición del eje Hirth" ;
+    ns1:solucionaFallo ns1:LaPosicionProgramadaParaElEjeHirthEsIncorrecta ;
+    ns1:textoExtracto "SOLUCIÓN El eje hirth sólo admite cotas múltiplo de su paso." .
+
+ns1:LaPosicionProgramadaParaElEjeHirthEsIncorrecta a ns1:DiagnosticoFallo ;
+    rdfs:label "La posición programada para el eje Hirth es incorrecta" ;
+    ns1:textoExtracto "'La posición programada para el eje Hirth es incorrecta'" .
+
+ns1:NoSeAdmiteActivarComoHirthUnEjeConElParametroHIRTHNO a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite activar como Hirth un eje con el parámetro HIRTH = NO" ;
+    ns1:textoExtracto "'No se admite activar como Hirth un eje con el parámetro HIRTH = NO'" .
+
+ns1:ProgramacionNoPermitidaEnMDI_1d1b440461 a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación no permitida en MDI" ;
+    ns1:textoExtracto "'Programación no permitida en MDI'" .
 

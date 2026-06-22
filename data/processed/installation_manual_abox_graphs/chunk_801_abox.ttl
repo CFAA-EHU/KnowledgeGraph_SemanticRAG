@@ -1,70 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:EntradaLogica_AUXEND a ns1:ComponenteElectrico ;
-    rdfs:label "AUXEND (entrada general de fin de ejecución)"@es ;
-    ns1:identificador "AUXEND" ;
-    ns1:textoExtracto "Dependiendo del tipo de sincronización, el CNC esperará o no la activación de la entrada general AUXEND, indicativo de fin de ejecución del PLC."@es .
+ns1:ActivacionDeEmergencia a ns1:AvisoSeguridad ;
+    rdfs:label "Activación de emergencia" ;
+    ns1:textoExtracto "Si el error tiene seleccionado el campo \"Emergen\", el error abrirá el relé de emergencia del CNC." .
 
-ns1:FuncionH_Transferencia a ns1:Sistema,
-        ns1:Tabla ;
-    rdfs:label "Transferencia de funciones H"@es ;
-    ns1:controla ns1:SalidaLogica_HSTROBE ;
-    ns1:monitoreaParametro ns1:Parametro_MINAENDW ;
-    ns1:textoExtracto "Transferencia de funciones –H–. El CNC asigna a los registros HFUN1 a HFUN7 del canal los números de las funciones H programadas. EL CNC activa la salida lógica general HSTROBE para indicar al PLC que debe ejecutarlas."@es .
+ns1:ActivacionDeMarcasERR a ns1:AvisoSeguridad ;
+    rdfs:label "Activación de marcas ERR" ;
+    ns1:textoExtracto "Al activarse una de las marcas ERR se detiene la ejecución del programa pieza y se muestra en el centro de la pantalla una ventana con el número de error y su texto asociado." .
 
-ns1:FuncionM_Lista a ns1:Tabla ;
-    rdfs:label "Lista de funciones M transferibles (M00, M01, M02, M03, M04, M05, M06, M08, M09, M19, M30, M41-M44)"@es ;
-    ns1:documentadoEn ns1:FuncionM_Transferencia ;
-    ns1:textoExtracto "M00 M01 M02 M03 M04 M05 M06 M08 M09 M19 M30 M41 M42 M43 M44"@es .
+ns1:CNC8070_a74c301076 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:documentadoEn ns1:DocumentoTecnicoInformacionAdicional ;
+    ns1:textoExtracto "Errores de PLC. Al activarse una de las marcas ERR se detiene la ejecución del programa pieza y se muestra en el centro de la pantalla una ventana con el número de error y su texto asociado." .
 
-ns1:FuncionS_Transferencia a ns1:Sistema,
-        ns1:Tabla ;
-    rdfs:label "Transferencia de funciones S"@es ;
-    ns1:controla ns1:SalidaLogica_SSTROBE ;
-    ns1:textoExtracto "Transferencia de funciones –S–. El CNC asigna a los registros SFUN1 a SFUN4 los valores de la S programada en cada cabezal. El CNC activa la salida lógica general SSTROBE para indicar al PLC que debe ejecutarla."@es .
+ns1:ReleDeEmergencia_d01bc336bc a ns1:ComponenteElectrico ;
+    rdfs:label "Relé de emergencia" ;
+    ns1:textoExtracto "Si el error tiene seleccionado el campo \"Emergen\", el error abrirá el relé de emergencia del CNC." .
 
-ns1:Registro_HFUN1_a_HFUN7 a ns1:ComponenteElectrico ;
-    rdfs:label "Registros HFUN1 a HFUN7 (asignación de funciones H por canal)"@es ;
-    ns1:identificador "HFUN1-HFUN7" ;
-    ns1:textoExtracto "El CNC asigna a los registros HFUN1 a HFUN7 del canal los números de las funciones H programadas."@es .
-
-ns1:Registro_MFUN1_a_MFUN7 a ns1:ComponenteElectrico ;
-    rdfs:label "Registros MFUN1 a MFUN7 (asignación de funciones M por canal)"@es ;
-    ns1:identificador "MFUN1-MFUN7" ;
-    ns1:textoExtracto "El CNC asigna a los registros MFUN1 a MFUN7 del canal los números de las funciones M programadas en el bloque."@es .
-
-ns1:Registro_SFUN1_a_SFUN4 a ns1:ComponenteElectrico ;
-    rdfs:label "Registros SFUN1 a SFUN4 (asignación de funciones S por cabezal)"@es ;
-    ns1:identificador "SFUN1-SFUN4" ;
-    ns1:textoExtracto "El CNC asigna a los registros SFUN1 a SFUN4 los valores de la S programada en cada cabezal."@es .
-
-ns1:FuncionM_Transferencia a ns1:Sistema,
-        ns1:Tabla ;
-    rdfs:label "Transferencia de funciones M (M00-M44)"@es ;
-    ns1:controla ns1:SalidaLogica_MSTROBE ;
-    ns1:identificador "M00-M44" ;
-    ns1:monitoreaParametro ns1:Parametro_MINAENDW ;
-    ns1:textoExtracto "La transferencia de las funciones M [...] se pasa la siguiente información al PLC. Transferencia de funciones –M–. El CNC asigna a los registros MFUN1 a MFUN7 del canal los números de las funciones M programadas en el bloque. Algunas funciones M tienen una función asociada (DMxx) que se activa cuando se envía la M al PLC. M00 M01 M02 M03 M04 M05 M06 M08 M09 M19 M30 M41 M42 M43 M44."@es .
-
-ns1:SalidaLogica_HSTROBE a ns1:ComponenteElectrico ;
-    rdfs:label "HSTROBE (salida lógica general para funciones H)"@es ;
-    ns1:identificador "HSTROBE" ;
-    ns1:textoExtracto "El CNC activa la salida lógica general HSTROBE para indicar al PLC que debe ejecutarlas."@es .
-
-ns1:SalidaLogica_MSTROBE a ns1:ComponenteElectrico ;
-    rdfs:label "MSTROBE (salida lógica general para funciones M)"@es ;
-    ns1:identificador "MSTROBE" ;
-    ns1:textoExtracto "El CNC activa la salida lógica general MSTROBE para indicar al PLC que debe ejecutarlas. Esta marca se mantiene a (=1) durante el tiempo indicado en el parámetro MINAENDW."@es .
-
-ns1:SalidaLogica_SSTROBE a ns1:ComponenteElectrico ;
-    rdfs:label "SSTROBE (salida lógica general para funciones S)"@es ;
-    ns1:identificador "SSTROBE" ;
-    ns1:textoExtracto "El CNC activa la salida lógica general SSTROBE para indicar al PLC que debe ejecutarla."@es .
-
-ns1:Parametro_MINAENDW a ns1:Parametro ;
-    rdfs:label "MINAENDW (tiempo de activación de STROBE)"@es ;
-    ns1:identificador "MINAENDW" ;
-    ns1:textoExtracto "Esta marca se mantiene a (=1) durante el tiempo indicado en el parámetro MINAENDW."@es ;
-    ns1:valor "Tiempo de activación (parámetro máquina)"@es .
+ns1:DocumentoTecnicoInformacionAdicional a ns1:DocumentoTecnico ;
+    rdfs:label "Archivo de información adicional" ;
+    ns1:textoExtracto "El archivo deberá ser de texto (extensión txt) y podrá tener cualquier nombre. La información de cada mensaje y error debe estar estructurada de acuerdo al siguiente formato: <texto> El campo <id>, manteniendo los corchetes, será el código de identificación del texto de ayuda dentro del archivo." .
 

@@ -1,32 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:textoExtracto "fallo del sistema"@es ;
-    ns1:tieneComponente ns1:GestorHerramientas_CNC .
+ns1:LimitarElNumeroDeVariablesDelMismoReguladorEnElOsciloscopio a ns1:TareaMantenimiento ;
+    rdfs:label "Limitar el número de variables del mismo regulador en el osciloscopio" ;
+    ns1:solucionaFallo ns1:FalloInconsistenciaRecuperacionHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN El número máximo de variables del mismo regulador que se pueden tracear simultáneamente en el oscilo es dos." .
 
-ns1:TablaHerramientas_CNC a ns1:Tabla ;
-    rdfs:label "Tabla de herramientas del CNC"@es ;
-    ns1:documentadoEn ns1:Manual_CNC ;
-    ns1:textoExtracto "Definir en la tabla de herramientas cuál es la herramienta activa"@es .
+ns1:RevisarLaProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FalloNumeroMaximoVariablesOscilo ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Los parámetros y variables Mechatrolink tienen que estar asociadas a un eje." .
 
-ns1:TareaMantenimiento_0036_CorreccionHerramientaActiva a ns1:TareaMantenimiento ;
-    rdfs:label "Corrección de herramienta activa (Código 0036)"@es ;
-    ns1:identificador "0036" ;
-    ns1:solucionaFallo ns1:Fallo_0036_InconsistenciaRecuperacionHerramientaActiva ;
-    ns1:textoExtracto "Comprobar cuál es la herramienta correcta antes de continuar. Definir en la tabla de herramientas cuál es la herramienta activa, y en caso necesario, realizar un cambio de herramienta."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FalloParametroVariableMechatrolink ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Fallo_0036_InconsistenciaRecuperacionHerramientaActiva a ns1:DiagnosticoFallo ;
-    rdfs:label "Inconsistencia en la recuperación de la herramienta activa (0036)"@es ;
-    ns1:identificador "0036" ;
-    ns1:textoExtracto "Inconsistencia en la recuperación de la herramienta activa. DETECCIÓN Durante el arranque del CNC. CAUSA La información de la herramienta activa guardada en el disco no se corresponde con la guardada por el gestor de herramientas, por un mal apagado o por un fallo del sistema. El fichero que contiene estos datos no existe, no es accesible o está corrupto. SOLUCIÓN Comprobar cuál es la herramienta correcta antes de continuar. Definir en la tabla de herramientas cuál es la herramienta activa, y en caso necesario, realizar un cambio de herramienta."@es .
+ns1:VerificarLaRecuperacionDeLaHerramientaActiva a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la recuperación de la herramienta activa" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque del CNC." .
 
-ns1:GestorHerramientas_CNC a ns1:Sistema ;
-    rdfs:label "Gestor de herramientas del CNC"@es ;
-    ns1:controla ns1:Herramienta_Activa_CNC ;
-    ns1:textoExtracto "el gestor de herramientas"@es .
+ns1:FalloInconsistenciaRecuperacionHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "Inconsistencia en la recuperación de la herramienta activa" ;
+    ns1:textoExtracto "0036 Inconsistencia en la recuperación de la herramienta activa." .
 
-ns1:Herramienta_Activa_CNC a ns1:Herramienta ;
-    ns1:textoExtracto "la herramienta activa guardada en el disco no se corresponde con la guardada por el gestor de herramientas"@es .
+ns1:FalloNumeroMaximoVariablesOscilo a ns1:DiagnosticoFallo ;
+    rdfs:label "Número máximo de variables en oscilo sobrepasado" ;
+    ns1:textoExtracto "0035 Número máximo de variables en oscilo sobrepasado." .
+
+ns1:FalloParametroVariableMechatrolink a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta programar el eje en el parámetro o variable Mechatrolink" ;
+    ns1:textoExtracto "0034 Falta programar el eje en el parámetro o variable Mechatrolink." .
 

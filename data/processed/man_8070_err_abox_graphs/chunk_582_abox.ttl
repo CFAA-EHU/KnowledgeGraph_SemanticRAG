@@ -1,32 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_3743 a ns1:DiagnosticoFallo ;
-    rdfs:label "Colisión de palpador" ;
-    ns1:identificador "3743" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_3743 ;
-    ns1:textoExtracto "3743 Colisión de palpador. DETECCIÓN Durante la ejecución. CAUSA Ha llegado señal de la sonda de palpado cuando no se esperaba." .
+ns1:CondicionarElPermisoDelMovimientoAQueAmbosEjesDelTandemEstenHabilitados a ns1:TareaMantenimiento ;
+    rdfs:label "Condicionar el permiso del movimiento a que ambos ejes del tandem estén habilitados" ;
+    ns1:solucionaFallo ns1:FalloEjeMultipleConComandoEnEjecucion ;
+    ns1:textoExtracto "En la maniobra del PLC, condicionar el permiso del movimiento a que ambos ejes del tandem estén habilitados." .
 
-ns1:Fallo_3744 a ns1:DiagnosticoFallo ;
-    rdfs:label "#GAPCTRL: No hay señal de la sonda" ;
-    ns1:identificador "3744" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_3744 ;
-    ns1:textoExtracto "3744 #GAPCTRL: No hay señal de la sonda. DETECCIÓN Durante la ejecución. CAUSA No hay señal del sensor, a partir de la cual el CNC calcula la distancia." .
+ns1:CondicionarLaDesactivacionDelEjeAQueEsteSeEncuentreEnPosicion a ns1:TareaMantenimiento ;
+    rdfs:label "Condicionar la desactivación del eje a que éste se encuentre en posición" ;
+    ns1:textoExtracto "En la maniobra del PLC, condicionar la desactivación del eje a que éste se encuentre en posición; es decir, que no esté en movimiento." .
 
-ns1:Sensor_SondaPalpado a ns1:Sensor ;
-    rdfs:label "Sonda de palpado" ;
-    ns1:monitoreaParametro ns1:Parametro_Distancia ;
-    ns1:textoExtracto "señal de la sonda de palpado" .
+ns1:NoSePermiteDesactivarUnEjeMultipleSinEntrarEnPosicion a ns1:AccionProhibida ;
+    rdfs:label "No se permite desactivar un eje múltiple sin entrar en posición" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'No se permite desactivar un eje múltiple sin entrar en posición'" .
 
-ns1:Parametro_Distancia a ns1:Parametro ;
-    rdfs:label "Distancia calculada por CNC" ;
-    ns1:textoExtracto "la distancia. SOLUCIÓN Verificar que las conexiones de la sonda y los parámetros máquina relacionados con la sonda" .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:TareaMantenimiento_3743 a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobación de obstáculos en ejes" ;
-    ns1:textoExtracto "Comprobar que no hay ningún obstáculo en el recorrido de los ejes." .
-
-ns1:TareaMantenimiento_3744 a ns1:TareaMantenimiento ;
-    rdfs:label "Verificación de conexiones y parámetros de sonda" ;
-    ns1:textoExtracto "Verificar que las conexiones de la sonda y los parámetros máquina relacionados con la sonda" .
+ns1:FalloEjeMultipleConComandoEnEjecucion a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje múltiple con un comando en el regulador en ejecución, SWITCH no permitido" ;
+    ns1:textoExtracto "'Eje múltiple con un comando en el regulador en ejecución, SWITCH no permitido'" .
 

@@ -1,33 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1153 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 1153: Demasiadas subrutinas locales definidas en el programa" ;
-    ns1:identificador "1153" ;
-    ns1:textoExtracto "1153 'Demasiadas subrutinas locales definidas en el programa' DETECCIÓN Durante la ejecución. CAUSA El programa tiene más subrutinas locales que las permitidas por el CNC. SOLUCIÓN Reducir el número de subrutinas locales; agrupar varias subrutinas en una o utilizar subrutinas globales. El CNC permite 130 subrutinas locales por programa." .
+ns1:CNC8070_a178c1b461 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC ha detectado una instrucción $ENDSWITCH sin una instrucción $SWITCH previa." .
 
-ns1:AvisoSeguridad_1154 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 1154: Nombre de fichero demasiado largo" ;
-    ns1:identificador "1154" ;
-    ns1:textoExtracto "1154 'Nombre de fichero demasiado largo' DETECCIÓN Durante la ejecución. CAUSA El nombre del archivo supera el número de caracteres permitido por el CNC. El nombre de un programa o subrutina puede tener un máximo de 63 caracteres y el path 120 caracteres. Si se programa el nombre de un programa o subrutina con el path, el número máximo de caracteres será la suma de ambos valores. SOLUCIÓN Reducir el número de caracteres en el nombre de programa o subrutina." .
+ns1:RevisarLaProgramacionParaENDFOR a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para $ENDFOR" ;
+    ns1:solucionaFallo ns1:NoSeEsperaENDFOR ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_CaracteresMaximosNombre a ns1:Parametro ;
-    rdfs:label "Caracteres máximos en nombre de programa/subrutina" ;
-    ns1:textoExtracto "El nombre de un programa o subrutina puede tener un máximo de 63 caracteres" ;
-    ns1:valor "63" .
+ns1:RevisarLaProgramacionParaElContadorDeFOR a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para el contador de $FOR" ;
+    ns1:solucionaFallo ns1:FORVariableContadorNoValida ;
+    ns1:textoExtracto "SOLUCIÓN El contador de la instrucción $FOR podrá ser una variable o parámetro aritmético." .
 
-ns1:Parametro_CaracteresMaximosPath a ns1:Parametro ;
-    rdfs:label "Caracteres máximos en path" ;
-    ns1:textoExtracto "el path 120 caracteres" ;
-    ns1:valor "120" .
+ns1:RevisarLaProgramacionParaWHILE a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para $WHILE" ;
+    ns1:solucionaFallo ns1:WHILEDemasiadosCaracteresEnLaCondicion ;
+    ns1:textoExtracto "SOLUCIÓN El máximo número de caracteres permitidos es 5000." .
 
-ns1:Parametro_NivelesImbricacion a ns1:Parametro ;
-    rdfs:label "Niveles de imbricación permitidos por el CNC" ;
-    ns1:textoExtracto "El CNC permite 20 niveles de imbricación." ;
-    ns1:valor "20" .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:InstruccionENDSWITCHSinUnaInstruccionSWITCHPrevia ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_SubrutinasLocalesMaximas a ns1:Parametro ;
-    rdfs:label "Subrutinas locales máximas por programa" ;
-    ns1:textoExtracto "El CNC permite 130 subrutinas locales por programa." ;
-    ns1:valor "130" .
+ns1:FORVariableContadorNoValida a ns1:DiagnosticoFallo ;
+    rdfs:label "$FOR: variable contador no válida" ;
+    ns1:textoExtracto "'$FOR: variable contador no válida'" .
+
+ns1:InstruccionENDSWITCHSinUnaInstruccionSWITCHPrevia a ns1:DiagnosticoFallo ;
+    rdfs:label "Instrucción $ENDSWITCH sin una instrucción $SWITCH previa" ;
+    ns1:textoExtracto "'La sentencia $ENDSWITCH se programa sola en el bloque'" .
+
+ns1:NoSeEsperaENDFOR a ns1:DiagnosticoFallo ;
+    rdfs:label "No se espera $ENDFOR" ;
+    ns1:textoExtracto "'No se espera $ENDFOR'" .
+
+ns1:WHILEDemasiadosCaracteresEnLaCondicion a ns1:DiagnosticoFallo ;
+    rdfs:label "$WHILE: demasiados caracteres en la condición" ;
+    ns1:textoExtracto "'$WHILE: demasiados caracteres en la condición'" .
 

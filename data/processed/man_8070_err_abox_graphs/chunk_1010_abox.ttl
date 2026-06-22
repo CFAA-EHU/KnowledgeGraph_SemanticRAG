@@ -1,34 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_20020 a ns1:DiagnosticoFallo ;
-    rdfs:label "Espera de ejes en posición superada" ;
-    ns1:identificador "20020" ;
-    ns1:solucionaFallo ns1:PulsarRESETSinAnalisisPrevio ;
-    ns1:textoExtracto "Esperando ejes en posición. [...] La espera ha superado un tiempo determinado por causa" .
+ns1:CNC8070_6fe447fecc a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:FalloEnLaComunicacionAT,
+        ns1:FalloEnLaComunicacionDoubleATMiss_996f267050,
+        ns1:FalloEnLaComunicacionMDT,
+        ns1:FalloEnLaComunicacionMDTMiss,
+        ns1:FalloEnLaSincronizacion ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Fallo_20021 a ns1:DiagnosticoFallo ;
-    rdfs:label "Espera de inicialización de captaciones" ;
-    ns1:identificador "20021" ;
-    ns1:solucionaFallo ns1:PulsarRESETSinAnalisisPrevio ;
-    ns1:textoExtracto "Esperando inicialización de captaciones. DETECCIÓN Durante el funcionamiento" .
+ns1:RevisarLaConexionSercosIII a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la conexión Sercos III" ;
+    ns1:solucionaFallo ns1:FalloEnLaComunicacionAT,
+        ns1:FalloEnLaComunicacionDoubleATMiss_996f267050,
+        ns1:FalloEnLaComunicacionMDT,
+        ns1:FalloEnLaComunicacionMDTMiss ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la conexión Sercos III. Si el error persiste, póngase en contacto con Fagor Automation." .
 
-ns1:InterfazUsuario_Reset a ns1:InterfazUsuario ;
-    rdfs:label "Botón [RESET]" ;
-    ns1:identificador "RESET" ;
-    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso." .
+ns1:FalloEnLaSincronizacion a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en la sincronización" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El CNC envía un mensaje de sincronismo en cada ciclo (4 ms, normalmente) que hace que los reguladores se sincronicen." .
 
-ns1:Senal_XFERINH a ns1:Parametro ;
-    rdfs:label "Señal _XFERINH" ;
-    ns1:identificador "_XFERINH" ;
-    ns1:monitoreaParametro ns1:SensorDeTransferenciaImplicitoEnPLC ;
-    ns1:textoExtracto "El PLC debe activar la señal _XFERINH." .
+ns1:FalloEnLaComunicacionAT a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en la comunicación AT" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Error de inicialización del bus Sercos III. El CNC no ha recibido los datos cíclicos de un regulador." .
 
-ns1:SensorDeTransferenciaImplicitoEnPLC a ns1:Sensor ;
-    rdfs:label "Sensor de transferencia (implícito en PLC)" ;
-    ns1:textoExtracto "El PLC debe activar la señal _XFERINH." .
+ns1:FalloEnLaComunicacionDoubleATMiss_996f267050 a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en la comunicación double AT Miss" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Error de inicialización del bus Sercos III. El CNC no ha recibido los datos cíclicos de un regulador." .
 
-ns1:PulsarRESETSinAnalisisPrevio a ns1:AccionProhibida ;
-    rdfs:label "Pulsar [RESET] sin análisis previo" ;
-    ns1:textoExtracto "SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso." .
+ns1:FalloEnLaComunicacionMDT a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en la comunicación MDT" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Error de inicialización del bus Sercos III. Un regulador no ha respondido a los datos cíclicos enviados por el CNC." .
+
+ns1:FalloEnLaComunicacionMDTMiss a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo en la comunicación MDT Miss" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Error de inicialización del bus Sercos III. Un regulador no ha respondido a los datos cíclicos enviados por el CNC." .
 

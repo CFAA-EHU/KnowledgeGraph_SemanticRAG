@@ -1,32 +1,19 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:M101FuncionAuxiliarParaEjecutarAccion a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "M101 ; Función auxiliar para ejecutar acción." .
+ns1:AnalisisDelTipoDeOperacion a ns1:AccionProhibida ;
+    rdfs:label "Análisis del tipo de operación" ;
+    ns1:textoExtracto "$ENDSWITCH ; Fin análisis del tipo de operación." .
 
-ns1:M102FuncionAuxiliarParaEjecutarAccion a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "M102 ; Función auxiliar para ejecutar acción." .
+ns1:CambioManualDeHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio manual de herramienta" ;
+    ns1:textoExtracto "cambio manual. LL SUB_SPD_TO_GR ; Quitar la herramienta del cabezal." .
 
-ns1:M103FuncionAuxiliarParaEjecutarAccion a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "M103 ; Función auxiliar para ejecutar acción." .
+ns1:HabilitarLaTeclaSTOP a ns1:AccionProhibida ;
+    rdfs:label "Habilitar la tecla STOP" ;
+    ns1:textoExtracto "# ESTOP ; Habilitar la tecla STOP." .
 
-ns1:M105FuncionAuxiliarParaEjecutarAccion a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "M105 ; Función auxiliar para ejecutar acción." .
-
-ns1:SUBCH1TOMZLlevarLaHerramientaDeLaPinza1AlAlmacenM105FuncionAuxiliarParaEjecutarAccionVPLCM11051MarcaCH1TOMZAlGestor_db6f30de06 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "SUB_CH1_TO_MZ ; Llevar la herramienta de la pinza 1 al almacén. M105 ; Función auxiliar para ejecutar acción. V.PLC.M[1105]=1 ; Marca CH1TOMZ al gestor." .
-
-ns1:SUBCH1TOSPDLlevarLaHerramientaDeLaPinza1AlCabezalM102FuncionAuxiliarParaEjecutarAccionVPLCM11021MarcaCH1TOSPDLAlGestor_c2a4b3498e a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "SUB_CH1_TO_SPD ; Llevar la herramienta de la pinza 1 al cabezal. M102 ; Función auxiliar para ejecutar acción. V.PLC.M[1102]=1 ; Marca CH1TOSPDL al gestor." .
-
-ns1:SUBGRTOSPDColocarLaHerramientaDeTierraEnElCabezalMSGInsertarHerramientaTDYPulsarMARCHAVTMNXTOOLMensajeAlOperarioParaQuePongaLaHerramientaM0EsperarAQueFinaliceLaOperacionMSGQuitarMensaje_08be6389dc a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "SUB_GR_TO_SPD ; Colocar la herramienta de tierra en el cabezal. # MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje." .
-
-ns1:SUBMZTOCH1CogerLaHerramientaDelAlmacenConLaPinza1M101FuncionAuxiliarParaEjecutarAccionVPLCM11011MarcaMZTOCH1AlGestor_120bebe9bb a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "SUB_MZ_TO_CH1 ; Coger la herramienta del almacén con la pinza 1. M101 ; Función auxiliar para ejecutar acción. V.PLC.M[1101]=1 ; Marca MZTOCH1 al gestor." .
-
-ns1:SUBSPDTOCH1CogerLaHerramientaDelCabezalConLaPinza1M103FuncionAuxiliarParaEjecutarAccionVPLCM11031MarcaSPDLTOCH1AlGestor_04707e7a9e a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "SUB_SPD_TO_CH1 ; Coger la herramienta del cabezal con la pinza 1. M103 ; Función auxiliar para ejecutar acción. V.PLC.M[1103]=1 ; Marca SPDLTOCH1 al gestor." .
-
-ns1:SUBSPDTOGRQuitarLaHerramientaDelCabezalLlevarlaATierraMSGExtraerHerramientaTDYPulsarMARCHAVTMTOOLMensajeAlOperarioParaQueQuiteLaHerramientaM0EsperarAQueFinaliceLaOperacionMSGQuitarMensajeVPLCM11071MarcaSPDLTOGRAlGestor_37d200a0e0 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "SUB_SPD_TO_GR ; Quitar la herramienta del cabezal (llevarla a tierra). # MSG [\"Extraer herramienta T%D y pulsar MARCHA\", V.TM.TOOL] ; Mensaje al operario para que quite la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje. V.PLC.M[1107]=1 ; Marca SPDLTOGR al gestor." .
+ns1:SistemaGestorAlmacen a ns1:Sistema ;
+    rdfs:label "Sistema Gestor Almacén" ;
+    ns1:textoExtracto "$WHILE V.TM.MZWAIT == 1 $ENDWHILE ; Espera al gestor del almacén." .
 

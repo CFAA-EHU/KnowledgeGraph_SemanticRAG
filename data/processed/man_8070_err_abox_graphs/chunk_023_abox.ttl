@@ -1,40 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazValidacionParametros a ns1:InterfazUsuario ;
-    rdfs:label "Ventana de validación de parámetros máquina" ;
-    ns1:activaAlarma ns1:Error_0041,
-        ns1:Error_0042,
-        ns1:Error_0043 ;
-    ns1:textoExtracto "Durante la validación de los parámetros máquina. En la ventana de error aparece cuál es el parámetro erróneo y el valor máximo y mínimo permitido." .
+ns1:AntesAntesOAntesDespuesConSubrutinaNoAdmiteMovimientosEnElBloque a ns1:AccionProhibida ;
+    rdfs:label "Antes-Antes o Antes-Después con subrutina no admite movimientos en el bloque" ;
+    ns1:mitigaRiesgo ns1:CNC8070_ae61964ab4 ;
+    ns1:textoExtracto "'M Antes-Antes o Antes-Después con subrutina no admite movimientos en el bloque'" .
 
-ns1:ParametroMaquina_0042 a ns1:Parametro ;
-    rdfs:label "Parámetro máquina con valor no válido" ;
-    ns1:monitoreaParametro ns1:Error_0042 ;
-    ns1:textoExtracto "El parámetro máquina tiene un valor no válido. límites permitidos. En la ventana de error aparece cuál es el parámetro erróneo y el valor máximo y mínimo permitido." .
+ns1:DefinirLaFuncionMSinSincronizacionOBienConSincronizacionDespuesDespues a ns1:TareaMantenimiento ;
+    rdfs:label "Definir la función M sin sincronización o bien con sincronización Después-Después" ;
+    ns1:solucionaFallo ns1:ErrorDeSincronizacionAntesAntesOAntesDespuesConSubrutina ;
+    ns1:textoExtracto "SOLUCIÓN El CNC siempre ejecuta la subrutina asociada a una función M al finalizar el bloque en el que está programada la función. Definir la función M sin sincronización o bien con sincronización Después-Después." .
 
-ns1:ParametroMaquina_0043 a ns1:Parametro ;
-    rdfs:label "Parámetro máquina modificado" ;
-    ns1:monitoreaParametro ns1:Error_0043 ;
-    ns1:textoExtracto "El usuario ha modificado un parámetro máquina y es necesario reiniciar la aplicación CNC para que el parámetro asuma su nuevo valor." .
+ns1:CNC8070_ae61964ab4 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC siempre ejecuta la subrutina asociada a una función M al finalizar el bloque en el que está programada la función." .
 
-ns1:TablaFuncionesM a ns1:Tabla ;
-    rdfs:label "Tabla de funciones M" ;
-    ns1:documentadoEn ns1:Error_0041 ;
-    ns1:textoExtracto "En la tabla de funciones M, hay una función repetida. En la tabla no puede haber dos funciones M con el mismo número." .
-
-ns1:Error_0041 a ns1:DiagnosticoFallo ;
-    rdfs:label "M duplicada en la tabla" ;
-    ns1:identificador "0041" ;
-    ns1:textoExtracto "0041 'M duplicada en la tabla' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En la tabla de funciones M, hay una función repetida. SOLUCIÓN Corregir la definición de las funciones. En la tabla no puede haber dos funciones M con el mismo número." .
-
-ns1:Error_0042 a ns1:DiagnosticoFallo ;
-    rdfs:label "Valor de parámetro máquina no válido" ;
-    ns1:identificador "0042" ;
-    ns1:textoExtracto "0042 'Valor de parámetro máquina no válido' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El parámetro máquina tiene un valor no válido. límites permitidos. En la ventana SOLUCIÓN Asignar al parámetro máquina un valor dentro de los de error aparece cuál es el parámetro erróneo y el valor máximo y mínimo permitido." .
-
-ns1:Error_0043 a ns1:DiagnosticoFallo ;
-    rdfs:label "Para asumir nuevo valor es necesario rearrancar el CNC" ;
-    ns1:identificador "0043" ;
-    ns1:textoExtracto "0043 'Para asumir nuevo valor es necesario rearrancar el CNC' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El usuario ha modificado un parámetro máquina y es necesario reiniciar la aplicación CNC para que el parámetro asuma su nuevo valor." .
+ns1:ErrorDeSincronizacionAntesAntesOAntesDespuesConSubrutina a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de sincronización Antes-Antes o Antes-Después con subrutina" ;
+    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En la tabla de funciones M, hay una función con subrutina asociada y tipo de sincronización Antes-Antes o Antes-Después." .
 

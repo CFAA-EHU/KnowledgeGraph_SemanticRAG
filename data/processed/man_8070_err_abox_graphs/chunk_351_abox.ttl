@@ -1,48 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1819 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1819: 'K = 0'" ;
-    ns1:identificador "1819" ;
-    ns1:solucionaFallo ns1:Parametro_K ;
-    ns1:textoExtracto "1819 'K = 0' DETECCIÓN Durante la ejecución de un ciclo de mecanizado múltiple. CAUSA En un mecanizado múltiple, el parámetro K (número de mecanizados) tiene valor 0. SOLUCIÓN Asignar un valor correcto al parámetro." .
+ns1:CorregirLaProgramacionDeLosParametrosIZD a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir la programación de los parámetros I Z D" ;
+    ns1:solucionaFallo ns1:LaProfundidadResultanteDeLaCajeraEsCero ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la programación de los parámetros I Z D." .
 
-ns1:DiagnosticoFallo_1820 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1820: 'Dos de los parámetros X, I, K han de ser programados'" ;
-    ns1:identificador "1820" ;
-    ns1:solucionaFallo ns1:Parametro_I,
-        ns1:Parametro_K,
-        ns1:Parametro_X ;
-    ns1:textoExtracto "1820 'Dos de los parámetros X, I, K han de ser programados' DETECCIÓN Durante la ejecución de un ciclo de mecanizado múltiple. CAUSA Falta programar dos de los siguientes parámetros; X (longitud del" .
+ns1:ParametroD a ns1:Parametro ;
+    rdfs:label "parámetro D" ;
+    ns1:textoExtracto "la profundidad programada (parámetro I) coincide con el parámetro D." .
 
-ns1:DiagnosticoFallo_Parametro_J a ns1:DiagnosticoFallo ;
-    rdfs:label "Error: Parámetro J con valor 0" ;
-    ns1:solucionaFallo ns1:Parametro_J ;
-    ns1:textoExtracto "CAUSA En un mecanizado múltiple, el parámetro J (paso entre mecanizados en el eje de ordenadas) tiene valor 0. SOLUCIÓN Asignar un valor correcto al parámetro." .
+ns1:ParametroZ a ns1:Parametro ;
+    rdfs:label "parámetro Z" ;
+    ns1:textoExtracto "la suma de los parámetros Z y D" .
 
-ns1:ModoOperacion_CicloMecanizadoMultiple a ns1:ModoOperacion ;
-    rdfs:label "Ciclo de mecanizado múltiple" ;
-    ns1:monitoreaParametro ns1:Parametro_I,
-        ns1:Parametro_J,
-        ns1:Parametro_K,
-        ns1:Parametro_X ;
-    ns1:textoExtracto "Durante la ejecución de un ciclo de mecanizado múltiple" .
+ns1:ProfundidadProgramada_06290256ec a ns1:Parametro ;
+    rdfs:label "profundidad programada" ;
+    ns1:textoExtracto "La profundidad programada (parámetro I)" .
 
-ns1:Parametro_I a ns1:Parametro ;
-    rdfs:label "Parámetro I" ;
-    ns1:textoExtracto "Dos de los parámetros X, I, K han de ser programados" .
+ns1:SeleccionarUnaHerramientaDeDiametroMenor a ns1:TareaMantenimiento ;
+    rdfs:label "Seleccionar una herramienta de diámetro menor" ;
+    ns1:solucionaFallo ns1:G87DiametroDeHerramientaMayorQueCajera ;
+    ns1:textoExtracto "SOLUCIÓN Seleccionar una herramienta de diámetro menor." .
 
-ns1:Parametro_J a ns1:Parametro ;
-    rdfs:label "Parámetro J (paso entre mecanizados en el eje de ordenadas)" ;
-    ns1:textoExtracto "el parámetro J (paso entre mecanizados en el eje de ordenadas) tiene valor 0" ;
-    ns1:valor "0" .
+ns1:G87DiametroDeHerramientaMayorQueCajera a ns1:DiagnosticoFallo ;
+    rdfs:label "'G87: Diámetro de herramienta mayor que cajera'" ;
+    ns1:textoExtracto "1805 'G87: Diámetro de herramienta mayor que cajera' DETECCIÓN Durante la ejecución del ciclo. CAUSA El radio de la herramienta es mayor que las dimensiones de la cajera (parámetros)" .
 
-ns1:Parametro_X a ns1:Parametro ;
-    rdfs:label "Parámetro X (longitud del mecanizado)" ;
-    ns1:textoExtracto "X (longitud del" .
-
-ns1:Parametro_K a ns1:Parametro ;
-    rdfs:label "Parámetro K (número de mecanizados)" ;
-    ns1:textoExtracto "el parámetro K (número de mecanizados) tiene valor 0" ;
-    ns1:valor "0" .
+ns1:LaProfundidadResultanteDeLaCajeraEsCero a ns1:DiagnosticoFallo ;
+    rdfs:label "La profundidad resultante de la cajera es cero" ;
+    ns1:textoExtracto "CAUSA La profundidad resultante de la cajera es cero. La profundidad programada (parámetro I) coincide con la suma de los parámetros Z y D; si no se ha programado el parámetro Z, la profundidad programada (parámetro I) coincide con el parámetro D." .
 

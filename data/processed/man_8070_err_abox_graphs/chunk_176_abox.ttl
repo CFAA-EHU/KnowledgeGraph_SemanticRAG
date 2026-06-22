@@ -1,31 +1,52 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_CAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro CAXIS" ;
-    ns1:monitoreaParametro ns1:Fallo_1336,
-        ns1:Fallo_1337 ;
-    ns1:textoExtracto "parámetro CAXIS" .
+ns1:NoProgramarImagenEspejoIncorrectamente a ns1:AccionProhibida ;
+    rdfs:label "No programar imagen espejo incorrectamente" ;
+    ns1:mitigaRiesgo ns1:ProgramacionIncorrectaDeLaFuncionG14ImagenEspejo_8033b2de04 ;
+    ns1:textoExtracto "'Programación incorrecta de la función G14 (imagen espejo).'" .
 
-ns1:Sentencia_FACE_CYL a ns1:Parametro ;
-    rdfs:label "Sentencia #FACE/#CYL" ;
-    ns1:monitoreaParametro ns1:Fallo_1336,
-        ns1:Fallo_1337,
-        ns1:Fallo_1339 ;
-    ns1:textoExtracto "sentencia #FACE/#CYL" .
+ns1:NoProgramarLaVelocidadDePosicionamientoMasDeUnaVezEnElBloque a ns1:AccionProhibida ;
+    rdfs:label "No programar la velocidad de posicionamiento más de una vez en el bloque" ;
+    ns1:mitigaRiesgo ns1:PosicionDelCabezalDoblementeProgramada ;
+    ns1:textoExtracto "'La velocidad de posicionamiento del cabezal (M19) se ha programado más de una vez en el bloque.'" .
 
-ns1:Fallo_1339 a ns1:DiagnosticoFallo ;
-    rdfs:label "La selección no tiene efecto" ;
-    ns1:identificador "1339" ;
-    ns1:textoExtracto "1339 'La selección no tiene efecto' DETECCIÓN Durante la ejecución. CAUSA La sentencia programada no tiene efecto porque ya está activa, la misma sentencia con los mismos parámetros está programada en un bloque anterior. SOLUCIÓN Revisar la programación." .
+ns1:NoProgramarSentenciaFORSinENDFOR a ns1:AccionProhibida ;
+    rdfs:label "No programar sentencia $FOR sin $ENDFOR" ;
+    ns1:mitigaRiesgo ns1:HayProgramadaUnaInstruccionFORPeroFaltaSuENDFOR ;
+    ns1:textoExtracto "'Hay programada una instrucción $FOR pero falta su $ENDFOR.'" .
 
-ns1:Fallo_1336 a ns1:DiagnosticoFallo ;
-    rdfs:label "Configuración errónea: dos ejes CAXIS" ;
-    ns1:identificador "1336" ;
-    ns1:textoExtracto "1336 'Configuración errónea: dos ejes CAXIS' DETECCIÓN Durante la ejecución. CAUSA Los dos ejes programados en la sentencia #FACE/#CYL son eje C. SOLUCIÓN Sólo uno de los dos ejes programados puede ser eje C (parámetro CAXIS)." .
+ns1:NoRepetirElNumeroDeBloque_8b1e8aa3e7 a ns1:AccionProhibida ;
+    rdfs:label "No repetir el número de bloque" ;
+    ns1:mitigaRiesgo ns1:ElNumeroDeBloqueNEstaRepetidoEnElPrograma ;
+    ns1:textoExtracto "'No repetir el número de bloque.'" .
 
-ns1:Fallo_1337 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se ha definido eje CAXIS" ;
-    ns1:identificador "1337" ;
-    ns1:textoExtracto "1337 'No se ha definido eje CAXIS' DETECCIÓN Durante la ejecución. CAUSA Ninguno de los ejes programados en la sentencia #FACE/#CYL es eje C. SOLUCIÓN Uno de los dos ejes programados debe ser eje C (parámetro CAXIS)." .
+ns1:RevisarLaProgramacion_cfd5090cf7 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:ElNumeroDeBloqueNEstaRepetidoEnElPrograma,
+        ns1:HayProgramadaUnaInstruccionFORPeroFaltaSuENDFOR,
+        ns1:LaVariableTieneUnValorDemasiadoAlto,
+        ns1:PosicionDelCabezalDoblementeProgramada,
+        ns1:ProgramacionIncorrectaDeLaFuncionG14ImagenEspejo_8033b2de04 ;
+    ns1:textoExtracto "'Revisar la programación.'" .
+
+ns1:LaVariableTieneUnValorDemasiadoAlto a ns1:DiagnosticoFallo ;
+    rdfs:label "La variable tiene un valor demasiado alto" ;
+    ns1:textoExtracto "'La variable tiene un valor demasiado alto.'" .
+
+ns1:ElNumeroDeBloqueNEstaRepetidoEnElPrograma a ns1:DiagnosticoFallo ;
+    rdfs:label "El número de bloque 'N' está repetido en el programa" ;
+    ns1:textoExtracto "'El número de bloque \"N\" está repetido en el programa.'" .
+
+ns1:HayProgramadaUnaInstruccionFORPeroFaltaSuENDFOR a ns1:DiagnosticoFallo ;
+    rdfs:label "Hay programada una instrucción $FOR pero falta su $ENDFOR" ;
+    ns1:textoExtracto "'Hay programada una instrucción $FOR pero falta su $ENDFOR.'" .
+
+ns1:PosicionDelCabezalDoblementeProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "Posición del cabezal doblemente programada" ;
+    ns1:textoExtracto "'Posición del cabezal doblemente programada.'" .
+
+ns1:ProgramacionIncorrectaDeLaFuncionG14ImagenEspejo_8033b2de04 a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación incorrecta de la función G14 (imagen espejo)" ;
+    ns1:textoExtracto "'Programación incorrecta de la función G14 (imagen espejo).'" .
 

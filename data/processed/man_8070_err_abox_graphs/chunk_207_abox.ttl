@@ -1,42 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AcoploEjes a ns1:Sistema ;
-    rdfs:label "Acoplo activo (#LINK)"@es ;
-    ns1:textoExtracto "El CNC ha intentado aparcar un eje que forma parte de una pareja gantry, tándem o de un acoplo activo (#LINK)."@es ;
-    ns1:tieneComponente ns1:EjeGantryTandem .
+ns1:AnidamientoDeFuncionesTConSubrutinaNoPermitido a ns1:AccionProhibida ;
+    rdfs:label "'Anidamiento de funciones T con subrutina no permitido'" ;
+    ns1:textoExtracto "1409 'Anidamiento de funciones T con subrutina no permitido'" .
 
-ns1:SistemaCinematico a ns1:Sistema ;
-    rdfs:label "Cinemática o transformación activa"@es ;
-    ns1:textoExtracto "Si se desea aparcar dicho eje debe desactivarse la cinemática o transformación activa."@es .
+ns1:Cabezal a ns1:ComponenteMecanico ;
+    rdfs:label "cabezal" ;
+    ns1:textoExtracto "CAUSA El CNC no puede ejecutar la función o sentencia programada si el cabezal no está controlado en posición." .
 
-ns1:Tarea_DesactivarAcoplo a ns1:TareaMantenimiento ;
-    rdfs:label "Desactivar acoplo de eje"@es ;
-    ns1:solucionaFallo ns1:Fallo_1420 ;
-    ns1:textoExtracto "desactivar el acoplo."@es .
+ns1:EsNecesarioQueHayaEncoderEnElCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Es necesario que haya encoder en el cabezal" ;
+    ns1:solucionaFallo ns1:ProgramacionNoPermitidaSiNoHayEncoderEnElCabezal ;
+    ns1:textoExtracto "SOLUCIÓN Es necesario que haya encoder en el cabezal." .
 
-ns1:Tarea_DesactivarCinematica a ns1:TareaMantenimiento ;
-    rdfs:label "Desactivar cinemática/transformación activa"@es ;
-    ns1:solucionaFallo ns1:Fallo_1419 ;
-    ns1:textoExtracto "desactivarse la cinemática o transformación activa."@es .
+ns1:VolverAEditarLaCajeraConElEditorDeCiclos a ns1:TareaMantenimiento ;
+    rdfs:label "Volver a editar la cajera con el editor de ciclos" ;
+    ns1:solucionaFallo ns1:AlEjecutarUnaCajera2DO3DElCNCNoHaPodidoDecodificarAlgunoDeLosDatos ;
+    ns1:textoExtracto "SOLUCIÓN Volver a editar la cajera con el editor de ciclos." .
 
-ns1:Tarea_RevisarProgramacion a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación CNC"@es ;
-    ns1:solucionaFallo ns1:Fallo_1419,
-        ns1:Fallo_1420 ;
-    ns1:textoExtracto "Revisar la programación."@es .
+ns1:AlEjecutarUnaCajera2DO3DElCNCNoHaPodidoDecodificarAlgunoDeLosDatos a ns1:DiagnosticoFallo ;
+    rdfs:label "Al ejecutar una cajera 2D ó 3D, el CNC no ha podido decodificar alguno de los datos" ;
+    ns1:textoExtracto "CAUSA Al ejecutar una cajera 2D ó 3D, el CNC no ha podido decodificar alguno de los datos." .
 
-ns1:EjeGantryTandem a ns1:ComponenteMecanico ;
-    rdfs:label "Eje acoplado (Gantry/Tándem)"@es ;
-    ns1:textoExtracto "eje que forma parte de una pareja gantry, tándem o de un acoplo activo (#LINK)."@es .
-
-ns1:Fallo_1419 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se permite aparcar ejes acoplados, Gantry o Tandem"@es ;
-    ns1:identificador "1419" ;
-    ns1:textoExtracto "1419 'No se permite aparcar ejes acoplados, Gantry o Tandem' [...] SOLUCIÓN Revisar la programación. Si se desea aparcar dicho eje debe desactivarse la cinemática o transformación activa."@es .
-
-ns1:Fallo_1420 a ns1:DiagnosticoFallo ;
-    rdfs:label "Ejes gantry o tándem no pueden aparcarse"@es ;
-    ns1:identificador "1420" ;
-    ns1:textoExtracto "Los ejes que forman parte de una pareja gantry o tándem no se pueden aparcar. [...] Si se desea aparcar dicho eje se debe desactivar el acoplo."@es .
+ns1:ProgramacionNoPermitidaSiNoHayEncoderEnElCabezal a ns1:AccionProhibida ;
+    rdfs:label "Programación no permitida si no hay encoder en el cabezal" ;
+    ns1:textoExtracto "1408 G63/G74/M19/CAX: Programación no permitida si no hay encóder en el cabezal." .
 

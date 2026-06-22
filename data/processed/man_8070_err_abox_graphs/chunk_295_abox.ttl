@@ -1,32 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1636 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1636: Transformadas FACE y CYL activas simultáneamente" ;
-    ns1:identificador "1636" ;
-    ns1:monitoreaParametro ns1:Parametro_NKINAX ;
-    ns1:textoExtracto "'No se permiten tener activas las transformadas FACE y CYL al mismo tiempo' [...] DETECCIÓN Durante la ejecución. CAUSA El CNC intentado activar la sentencia #FACE o #CYL con una de ellas activa. SOLUCIÓN Desactivar una de ellas antes de activar la otra." .
+ns1:AsignarValoresCorrectosALosParametrosSYE a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar valores correctos a los parámetros S y E" ;
+    ns1:solucionaFallo ns1:ParametrosSYEIncorrectos ;
+    ns1:textoExtracto "SOLUCIÓN Asignar un valor correcto a los parámetros S y E." .
 
-ns1:DiagnosticoFallo_1637 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1637: Sentido de giro del cabezal incompatible con la herramienta" ;
-    ns1:identificador "1637" ;
-    ns1:textoExtracto "'Sentido de giro del cabezal incompatible con la herramienta' [...] DETECCIÓN Durante la ejecución." .
+ns1:AvisoSeguridad_77ffad83fc a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de programación de perfil no permitida" ;
+    ns1:mitigaRiesgo ns1:ParametrosSYEIncorrectos ;
+    ns1:textoExtracto "'Programación de perfil no permitida: [S,E,<Q>] o [P,<Q>]' DETECCIÓN Durante la ejecución." .
 
-ns1:Herramienta_Generica a ns1:Herramienta ;
-    rdfs:label "Herramienta" ;
-    ns1:textoExtracto "Sentido de giro del cabezal incompatible con la herramienta" .
+ns1:AvisoSeguridad_98e51b9441 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de programación de perfil incorrecta" ;
+    ns1:mitigaRiesgo ns1:ParametrosSYEIncorrectos ;
+    ns1:textoExtracto "'Programación de perfil mediante etiquetas incorrecta'" .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC" ;
-    ns1:textoExtracto "El CNC intentado activar la sentencia #FACE o #CYL" ;
-    ns1:tieneComponente ns1:ComponenteMecanico_Cabezal .
-
-ns1:ComponenteMecanico_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "Sentido de giro del cabezal incompatible con la herramienta" .
-
-ns1:Parametro_NKINAX a ns1:Parametro ;
-    rdfs:label "Parámetro máquina NKINAX" ;
-    ns1:identificador "NKINAX" ;
-    ns1:textoExtracto "Corregir el parámetro máquina NKINAX." .
+ns1:ParametrosSYEIncorrectos a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetros S y E incorrectos" ;
+    ns1:textoExtracto "En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E)." .
 

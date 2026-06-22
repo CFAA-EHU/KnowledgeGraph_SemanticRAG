@@ -1,31 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:SistemaSincronizacionPosicion a ns1:Sistema ;
-    rdfs:label "Sistema de sincronización en posición"@es ;
-    ns1:activaAlarma ns1:FalloSincronizacion_ModuloRatioNo1,
-        ns1:FalloSincronizacion_RatioCero ;
-    ns1:monitoreaParametro ns1:Parametro_ModuloEjeMaestro,
-        ns1:Parametro_RatioTransmision ;
-    ns1:textoExtracto "sincronización en posición"@es .
+ns1:AbortarLasSentenciasPendientesMarcaABORT a ns1:AccionProhibida ;
+    rdfs:label "abortar las sentencias pendientes (marca ABORT)" ;
+    ns1:textoExtracto "Desde el PLC abortar las sentencias pendientes (marca ABORT)" .
 
-ns1:FalloSincronizacion_ModuloRatioNo1 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo: Sincronización en posición con módulo y ratio ≠ 1"@es ;
-    ns1:identificador "3413-modulo-ratio-no1" ;
-    ns1:textoExtracto "3413 'No se puede sincronizar en posición con módulo y ratio diferente de 1' [...] CAUSA En la sincronización en posición, el eje maestro tiene módulo y el ratio de transmisión es diferente de 1."@es .
+ns1:AbortarLasSentenciasPendientesMarcaABORT_71a9715364 a ns1:TareaMantenimiento ;
+    rdfs:label "abortar las sentencias pendientes (marca ABORT)" ;
+    ns1:solucionaFallo ns1:ElCNCIntentaEjecutarUnaOperacionDeEjeIndependientePeroYaHayDosOperaci_01ca5aa869 ;
+    ns1:textoExtracto "Desde el PLC abortar las sentencias pendientes (marca ABORT)" .
 
-ns1:FalloSincronizacion_RatioCero a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo: Ratio de transmisión con denominador cero"@es ;
-    ns1:identificador "3413-ratio-cero" ;
-    ns1:textoExtracto "CAUSA En la sincronización, el denominador del ratio de transmisión tiene valor cero. SOLUCIÓN El denominador del ratio no puede valer cero."@es .
+ns1:CNC8070_83f0d61a80 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:NoSeAdmitenMasOperacionesConEjesIndependientesEnSincronizacion ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Parametro_ModuloEjeMaestro a ns1:Parametro ;
-    rdfs:label "Módulo del eje maestro"@es ;
-    ns1:textoExtracto "el eje maestro tiene módulo"@es .
+ns1:ConsultarLaMarcaBUSY a ns1:AccionProhibida ;
+    rdfs:label "consultar la marca BUSY" ;
+    ns1:textoExtracto "Para saber si el interpolador independiente ha terminado todas las operaciones, consultar la marca BUSY" .
 
-ns1:Parametro_RatioTransmision a ns1:Parametro ;
-    rdfs:label "Ratio de transmisión"@es ;
-    ns1:textoExtracto "denominador del ratio de transmisión"@es ;
-    ns1:valor "0.0"^^xsd:float .
+ns1:ConsultarLaMarcaBUSY_5998153e23 a ns1:TareaMantenimiento ;
+    rdfs:label "consultar la marca BUSY" ;
+    ns1:solucionaFallo ns1:ElCNCIntentaEjecutarUnaOperacionDeEjeIndependientePeroYaHayDosOperaci_01ca5aa869 ;
+    ns1:textoExtracto "Para saber si el interpolador independiente ha terminado todas las operaciones, consultar la marca BUSY" .
+
+ns1:EsperarAQueHayaEspacioParaAlmacenarlaMarcaFREE a ns1:AccionProhibida ;
+    rdfs:label "esperar a que haya espacio para almacenarla (marca FREE)" ;
+    ns1:textoExtracto "o bien esperar a que haya espacio para almacenarla (marca FREE)" .
+
+ns1:EsperarAQueHayaEspacioParaAlmacenarlaMarcaFREE_2221fafbbe a ns1:TareaMantenimiento ;
+    rdfs:label "esperar a que haya espacio para almacenarla (marca FREE)" ;
+    ns1:solucionaFallo ns1:ElCNCIntentaEjecutarUnaOperacionDeEjeIndependientePeroYaHayDosOperaci_01ca5aa869 ;
+    ns1:textoExtracto "o bien esperar a que haya espacio para almacenarla (marca FREE)" .
+
+ns1:NoSeAdmitenMasOperacionesConEjesIndependientesEnSincronizacion a ns1:AccionProhibida ;
+    rdfs:label "No se admiten más operaciones con ejes independientes. En sincronización" ;
+    ns1:textoExtracto "'No se admiten mas operaciones con ejes independientes. En sincronización'" .
+
+ns1:ElCNCIntentaEjecutarUnaOperacionDeEjeIndependientePeroYaHayDosOperaci_01ca5aa869 a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC intenta ejecutar una operación de eje independiente pero ya hay dos operaciones pendientes" ;
+    ns1:textoExtracto "CAUSA El CNC intenta ejecutar una operación de eje independiente pero ya hay dos operaciones pendientes" .
 

@@ -1,37 +1,71 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ParametroConfiguracionTandem a ns1:Parametro ;
-    rdfs:label "Parámetro de configuración tándem"@es ;
-    ns1:documentadoEn ns1:TablaEjesTandem ;
-    ns1:monitoreaParametro ns1:SistemaTandem ;
-    ns1:textoExtracto "Este parámetro muestra la tabla para definir las parejas tándem del sistema."@es .
+ns1:SistemaTandemConfiguracion a ns1:Sistema ;
+    rdfs:label "Sistema Tándem" ;
+    ns1:textoExtracto "Esta configuración permite resaltar los siguientes aspectos:" ;
+    ns1:tieneComponente ns1:EjeEsclavo,
+        ns1:EjeMaestro .
 
-ns1:ReguladorTandem a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador V6.14+"@es ;
-    ns1:controla ns1:MotorTandem1,
-        ns1:MotorTandem2 ;
-    ns1:identificador "V6.14" ;
-    ns1:textoExtracto "La gestión de cabezales y ejes tándem requiere una versión del regulador V6.14 o superior."@es .
+ns1:EjeEsclavo a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Esclavo" ;
+    ns1:textoExtracto "Cada eje (cabezal) tándem maestro admite un único eje (cabezal) tándem esclavo." ;
+    ns1:tieneComponente ns1:LimiteInferiorDeSoftware,
+        ns1:LimiteSuperiorDeSoftware,
+        ns1:ModoDeEje,
+        ns1:PermisoDeCambioDeCanal,
+        ns1:RutaMasCorta,
+        ns1:TipoDeControlador,
+        ns1:TipoDeEje_4a526239b6,
+        ns1:VelocidadLentaDeBusquedaDeReferencia,
+        ns1:VelocidadRapidaDeBusquedaDeReferencia .
 
-ns1:TablaEjesTandem a ns1:Tabla ;
-    rdfs:label "Tabla de ejes o cabezales tándem"@es ;
-    ns1:detalladoEnEsquema ns1:SistemaTandem ;
-    ns1:documentadoEn ns1:ManualBrochado ;
-    ns1:textoExtracto "TANDEM Tabla de ejes o cabezales tándem. Este parámetro muestra la tabla para definir las parejas tándem del sistema."@es .
+ns1:EjeMaestro a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Maestro" ;
+    ns1:textoExtracto "Cada eje (cabezal) tándem maestro admite un único eje (cabezal) tándem esclavo." ;
+    ns1:tieneComponente ns1:LimiteInferiorDeSoftware,
+        ns1:LimiteSuperiorDeSoftware,
+        ns1:ModoDeEje,
+        ns1:PermisoDeCambioDeCanal,
+        ns1:RutaMasCorta,
+        ns1:TipoDeControlador,
+        ns1:TipoDeEje_4a526239b6,
+        ns1:VelocidadLentaDeBusquedaDeReferencia,
+        ns1:VelocidadRapidaDeBusquedaDeReferencia .
 
-ns1:MotorTandem1 a ns1:ComponenteElectrico ;
-    rdfs:label "Motor eléctrico tándem 1"@es ;
-    ns1:textoExtracto "dos accionamientos eléctricos (motores) acoplados mecánicamente"@es .
+ns1:LimiteInferiorDeSoftware a ns1:Parametro ;
+    rdfs:label "Límite inferior de software" ;
+    ns1:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)." .
 
-ns1:MotorTandem2 a ns1:ComponenteElectrico ;
-    rdfs:label "Motor eléctrico tándem 2"@es ;
-    ns1:textoExtracto "dos accionamientos eléctricos (motores) acoplados mecánicamente"@es .
+ns1:LimiteSuperiorDeSoftware a ns1:Parametro ;
+    rdfs:label "Límite superior de software" ;
+    ns1:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)." .
 
-ns1:SistemaTandem a ns1:Sistema ;
-    rdfs:label "Sistema de transmisión tándem"@es ;
-    ns1:compuestoPor ns1:MotorTandem1,
-        ns1:MotorTandem2 ;
-    ns1:controla ns1:ReguladorTandem ;
-    ns1:textoExtracto "Un eje tándem consiste en dos accionamientos eléctricos (motores) acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal)."@es .
+ns1:ModoDeEje a ns1:Parametro ;
+    rdfs:label "Modo de eje" ;
+    ns1:textoExtracto "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)." .
+
+ns1:PermisoDeCambioDeCanal a ns1:Parametro ;
+    rdfs:label "Permiso de cambio de canal" ;
+    ns1:textoExtracto "El permiso de cambio de canal (parámetro AXISEXCH) deberá ser igual en ambos ejes." .
+
+ns1:RutaMasCorta a ns1:Parametro ;
+    rdfs:label "Ruta más corta" ;
+    ns1:textoExtracto "Cuando los ejes sean rotativos, ambos ejes deberán ser del mismo tipo (parámetros AXISMODE y SHORTESTWAY iguales para ambos ejes)." .
+
+ns1:TipoDeControlador a ns1:Parametro ;
+    rdfs:label "Tipo de controlador" ;
+    ns1:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)." .
+
+ns1:TipoDeEje_4a526239b6 a ns1:Parametro ;
+    rdfs:label "Tipo de eje" ;
+    ns1:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)." .
+
+ns1:VelocidadLentaDeBusquedaDeReferencia a ns1:Parametro ;
+    rdfs:label "Velocidad lenta de búsqueda de referencia" ;
+    ns1:textoExtracto "La velocidad rápida y lenta de búsqueda de referencia máquina (parámetros REFFEED1 y REFFEED2) deberá ser igual en ambos ejes." .
+
+ns1:VelocidadRapidaDeBusquedaDeReferencia a ns1:Parametro ;
+    rdfs:label "Velocidad rápida de búsqueda de referencia" ;
+    ns1:textoExtracto "La velocidad rápida y lenta de búsqueda de referencia máquina (parámetros REFFEED1 y REFFEED2) deberá ser igual en ambos ejes." .
 

@@ -1,44 +1,28 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC" ;
-    ns1:controla ns1:ModoOperacion_FAST ;
-    ns1:monitoreaParametro ns1:Parametro_FASTFACTOR,
-        ns1:Parametro_LACC1,
-        ns1:Parametro_LACC2,
-        ns1:Parametro_SLOPETYPE ;
-    ns1:textoExtracto "el máximo que es capaz de alcanzar el CNC en función de como se hayan parametrizado los parámetros LACC1 y LACC2." .
+ns1:FiltroAutomaticoParaSuavizarLaRespuestaDeLosEjesEnModoHSCSURFACE a ns1:Parametro ;
+    rdfs:label "Filtro automático para suavizar la respuesta de los ejes en modo HSC SURFACE" ;
+    ns1:identificador "SURFFILFREQ" ;
+    ns1:textoExtracto "Este parámetro activa un filtro automático para todos los ejes del canal durante la ejecución en modo HSC SURFACE, el cuál permite suavizar la respuesta de los ejes generando una trayectoria más suave." .
 
-ns1:ModoOperacion_FAST a ns1:ModoOperacion ;
-    rdfs:label "Modo FAST" ;
-    ns1:monitoreaParametro ns1:Parametro_FASTFACTOR,
-        ns1:Parametro_LACC1,
-        ns1:Parametro_LACC2,
-        ns1:Parametro_SLOPETYPE ;
-    ns1:textoExtracto "En el modo FAST se logra una superficie mecanizada más suave y una velocidad más continua." .
+ns1:FiltroPasoBajoAutomaticoParaSuavizarLaRespuestaDeLosEjesEnModoHSCFAST a ns1:Parametro ;
+    rdfs:label "Filtro paso bajo automático para suavizar la respuesta de los ejes en modo HSC FAST" ;
+    ns1:identificador "FASTFILTFREQ" ;
+    ns1:textoExtracto "Este parámetro activa un filtro \"paso bajo\" automático para todos los ejes del canal durante la ejecución en modo HSC FAST, el cuál permite suavizar la respuesta de los ejes generando una trayectoria más suave." .
 
-ns1:Parametro_FASTFACTOR a ns1:Parametro ;
-    rdfs:label "FASTFACTOR" ;
-    ns1:identificador "FASTFACTOR" ;
-    ns1:textoExtracto "si no se define, se asume el porcentaje definido en el parámetro FASTFACTOR." ;
-    ns1:valor "porcentaje de avance por defecto en modo FAST" .
+ns1:FrecuenciaDeResonanciaQueElCNCDebeEliminarEnLaGeneracionDeLaConsigna a ns1:Parametro ;
+    rdfs:label "Frecuencia de resonancia que el CNC debe eliminar en la generación de la consigna" ;
+    ns1:identificador "FREQRES" ;
+    ns1:textoExtracto "Frecuencia de resonancia que el CNC debe eliminar en la generación de la consigna. Este parámetro sólo es válido cuando el perfil de aceleración es trapezoidal o seno cuadrado (parámetro SLOPETYPE), que es el perfil de aceleración por defecto para el modo HSC CONTERROR." .
 
-ns1:Parametro_LACC1 a ns1:Parametro ;
-    rdfs:label "LACC1" ;
-    ns1:identificador "LACC1" ;
-    ns1:textoExtracto "el máximo que es capaz de alcanzar el CNC en función de como se hayan parametrizado los parámetros LACC1 y LACC2." ;
-    ns1:valor "parámetro de aceleración lineal" .
+ns1:FrecuenciaDelFiltroDeTrayectoriaParaPerfilesDeAceleracionLinealEnModoHSCFAST a ns1:Parametro ;
+    rdfs:label "Frecuencia del filtro de trayectoria para perfiles de aceleración lineal en modo HSC FAST" ;
+    ns1:identificador "SOFTFREQ" ;
+    ns1:textoExtracto "Este parámetro permite suavizar el perfil de velocidad en modo HSC FAST, lo que permite mejorar el tiempo y la calidad superficial del mecanizado." .
 
-ns1:Parametro_LACC2 a ns1:Parametro ;
-    rdfs:label "LACC2" ;
-    ns1:identificador "LACC2" ;
-    ns1:textoExtracto "el máximo que es capaz de alcanzar el CNC en función de como se hayan parametrizado los parámetros LACC1 y LACC2." ;
-    ns1:valor "parámetro de aceleración lineal" .
-
-ns1:Parametro_SLOPETYPE a ns1:Parametro ;
-    rdfs:label "SLOPETYPE" ;
-    ns1:identificador "SLOPETYPE" ;
-    ns1:textoExtracto "independientemente de lo definido en el parámetro SLOPETYPE." ;
-    ns1:valor "tipo de pendiente de aceleración (ignorado en modo FAST)" .
+ns1:ValorPorDefectoDelErrorMaximoDeLaTrayectoriaEnHSC_280a71c0cb a ns1:Parametro ;
+    rdfs:label "Valor por defecto del error máximo de la trayectoria en HSC" ;
+    ns1:identificador "HSCROUND" ;
+    ns1:textoExtracto "Valor por defecto del error máximo de la trayectoria en HSC." .
 

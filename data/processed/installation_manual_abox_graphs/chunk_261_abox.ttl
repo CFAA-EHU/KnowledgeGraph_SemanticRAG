@@ -1,26 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacionManual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual"@es ;
-    ns1:habilitadoPor ns1:SubrutinaBusquedaEjes ;
-    ns1:textoExtracto "búsqueda de referencia máquina en modo manual sin selección de eje"@es .
+ns1:CNC8070_ec779a1644 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Con el CNC en modo USER, las rutinas OEM cuya extensión sea .fst, se cargan en la memoria RAM en el arranque de la aplicación CNC." ;
+    ns1:tieneComponente ns1:TablaSubrutinasFabricante .
 
-ns1:ParametroINT1SUB a ns1:Parametro ;
-    rdfs:label "INT1SUB"@es ;
-    ns1:identificador "INT1SUB" ;
-    ns1:textoExtracto "Subrutinas de interrupción. Valores posibles: Cualquier texto de hasta 64 caracteres. Variable asociada: (V.)[ch].MPG.INT1SUB"@es ;
-    ns1:valor "Texto (hasta 64 caracteres)"@es .
+ns1:ModoSetup a ns1:ModoOperacion ;
+    rdfs:label "SETUP" ;
+    ns1:textoExtracto "Con el CNC en modo SETUP (puesta a punto), las rutinas OEM cuya extensión sea .fst se cargarán en la memoria RAM la primera vez que se ejecutan dentro del programa." .
 
-ns1:ParametroINT4SUB a ns1:Parametro ;
-    rdfs:label "INT4SUB"@es ;
-    ns1:identificador "INT4SUB" ;
-    ns1:textoExtracto "Subrutinas de interrupción. Valores posibles: Cualquier texto de hasta 64 caracteres. Variable asociada: (V.)[ch].MPG.INT4SUB"@es ;
-    ns1:valor "Texto (hasta 64 caracteres)"@es .
+ns1:ModoUser a ns1:ModoOperacion ;
+    rdfs:label "USER" ;
+    ns1:textoExtracto "Con el CNC en modo USER, las rutinas OEM cuya extensión sea .fst, se cargan en la memoria RAM en el arranque de la aplicación CNC." .
 
-ns1:SubrutinaBusquedaEjes a ns1:Sistema ;
-    rdfs:label "Subrutina de búsqueda de ejes"@es ;
-    ns1:textoExtracto "Dentro de esta subrutina deben programarse los ejes y el orden en que se efectúa la búsqueda. También se efectúa una llamada a esta subrutina cuando se realiza una búsqueda de referencia máquina en modo manual sin selección de eje."@es ;
-    ns1:tieneComponente ns1:ParametroINT1SUB,
-        ns1:ParametroINT4SUB .
+ns1:SubrutinaCambioHerramienta a ns1:Componente ;
+    rdfs:label "Subrutina de cambio de herramienta" ;
+    ns1:textoExtracto "Las subrutinas de fabricante son aquellas guardadas la carpeta ..\\MTB\\Sub. Estas subrutinas están asociadas a algunas funciones del CNC como el cambio de herramienta, G74, G180 a G189, G380 a G399, etc." .
+
+ns1:TablaSubrutinasFabricante a ns1:Tabla ;
+    rdfs:label "Tabla de subrutinas del fabricante" ;
+    ns1:textoExtracto "SUBTABLE Tabla de subrutinas del fabricante. Las subrutinas de fabricante son aquellas guardadas la carpeta ..\\MTB\\Sub." .
 

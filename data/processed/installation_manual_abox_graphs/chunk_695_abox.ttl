@@ -1,39 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:EstructuraModular_PLC a ns1:Sistema ;
-    rdfs:label "Estructura modular del programa de PLC"@es ;
-    ns1:compuestoPor ns1:ModuloEjecucionPeriodica_PLC,
-        ns1:ModuloPrimerCiclo_PLC,
-        ns1:ModuloPrincipal_PLC ;
-    ns1:textoExtracto "El programa PLC puede estar formado por los siguientes módulos. Cada módulo debe empezar con la proposición directiva que lo define (CY1, PRG, PE) y finalizar con la proposición directiva END."@es .
+ns1:CNC8070_d8b71bfbdb a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Reloj. | Periodo." ;
+    ns1:tieneComponente ns1:RelojDe16Ms,
+        ns1:RelojDe1Ms,
+        ns1:RelojDe2Ms,
+        ns1:RelojDe4Ms,
+        ns1:RelojDe8Ms .
 
-ns1:ParametroLOOPTIME a ns1:Parametro ;
-    rdfs:label "Tiempo de lazo (LOOPTIME)"@es ;
-    ns1:identificador "LOOPTIME" ;
-    ns1:textoExtracto "periodo de muestreo de 4 ms (LOOPTIME=4)"@es ;
-    ns1:valor 4 .
+ns1:RelojDe16Ms a ns1:Parametro ;
+    rdfs:label "Reloj de 16 ms" ;
+    ns1:identificador "CLK16" ;
+    ns1:textoExtracto "CLK16 | 16 ms" ;
+    ns1:valor "16 ms" .
 
-ns1:ModuloEjecucionPeriodica_PLC a ns1:Sistema ;
-    rdfs:label "Módulo de ejecución periódica (PE)"@es ;
-    ns1:identificador "PE" ;
-    ns1:textoExtracto "Módulo de ejecución periódica. [...] El módulo periódico comienza con la proposición directiva PE y termina con la proposición directiva END. El PLC ejecuta el módulo periódico de forma periódica, con la frecuencia fijada en la directiva PE."@es .
+ns1:RelojDe1Ms a ns1:Parametro ;
+    rdfs:label "Reloj de 1 ms" ;
+    ns1:identificador "CLK1" ;
+    ns1:textoExtracto "CLK1 | 1 ms" ;
+    ns1:valor "1 ms" .
 
-ns1:ModuloPrimerCiclo_PLC a ns1:Sistema ;
-    rdfs:label "Módulo del primer ciclo (CY1)"@es ;
-    ns1:identificador "CY1" ;
-    ns1:textoExtracto "Módulo del primer ciclo (CY1). [...] El PLC ejecuta el módulo de primer ciclo una única vez, cuando arranca el programa de PLC. Este módulo permite inicializar los diferentes recursos y variables antes de proceder a la ejecución del programa."@es .
+ns1:RelojDe2Ms a ns1:Parametro ;
+    rdfs:label "Reloj de 2 ms" ;
+    ns1:identificador "CLK2" ;
+    ns1:textoExtracto "CLK2 | 2 ms" ;
+    ns1:valor "2 ms" .
 
-ns1:ModuloPrincipal_PLC a ns1:Sistema ;
-    rdfs:label "Módulo principal (PRG)"@es ;
-    ns1:identificador "PRG" ;
-    ns1:monitoreaParametro ns1:ParametroPRGFREQ ;
-    ns1:textoExtracto "Módulo principal. [...] El módulo principal comienza con la proposición directiva PRG y termina con la proposición directiva END. El PLC ejecuta el módulo principal de forma cíclica, con la frecuencia fijada por el parámetro PRGFREQ."@es .
+ns1:RelojDe4Ms a ns1:Parametro ;
+    rdfs:label "Reloj de 4 ms" ;
+    ns1:identificador "CLK4" ;
+    ns1:textoExtracto "CLK4 | 4 ms" ;
+    ns1:valor "4 ms" .
 
-ns1:ParametroPRGFREQ a ns1:Parametro ;
-    rdfs:label "Frecuencia de ejecución del módulo principal (PRGFREQ)"@es ;
-    ns1:identificador "PRGFREQ" ;
-    ns1:textoExtracto "El parámetro PRGFREQ indica con qué frecuencia (cada cuántos ciclos de CNC) el PLC ejecuta un ciclo completo del módulo principal."@es ;
-    ns1:valor 2 .
+ns1:RelojDe8Ms a ns1:Parametro ;
+    rdfs:label "Reloj de 8 ms" ;
+    ns1:identificador "CLK8" ;
+    ns1:textoExtracto "CLK8 | 8 ms" ;
+    ns1:valor "8 ms" .
 

@@ -1,43 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:maquina_laser a ns1:Maquina ;
-    rdfs:label "Modelo láser" ;
-    ns1:textoExtracto "Modelo láser. Potencia máxima del generador." ;
-    ns1:tieneComponente ns1:param_G00FEED .
+ns1:AvanceMaximoDeMecanizado a ns1:Parametro ;
+    rdfs:label "Avance máximo de mecanizado" ;
+    ns1:identificador "MPA.MAXFEED" ;
+    ns1:textoExtracto "Este parámetro establece el avance máximo de mecanizado (movimientos en G01/G02/G03) del eje;" .
 
-ns1:maquina_torno_fresadora a ns1:Maquina ;
-    rdfs:label "Modelos torno y fresadora" ;
-    ns1:textoExtracto "Modelos torno y fresadora." ;
-    ns1:tieneComponente ns1:modo_G00 .
+ns1:AvanceRapidoG00 a ns1:Parametro ;
+    rdfs:label "Avance rápido G00" ;
+    ns1:identificador "G00FEED" ;
+    ns1:textoExtracto "Este parámetro no se podrá definir con un valor superior al del parámetro G00FEED." .
 
-ns1:param_MAXFEED a ns1:Parametro ;
-    rdfs:label "MAXFEED" ;
-    ns1:textoExtracto "MAXFEED Máximo avance de mecanizado del eje. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." .
-
-ns1:param_MAXVOLT a ns1:Parametro ;
-    rdfs:label "MAXVOLT" ;
-    ns1:textoExtracto "los watios definidos en el parámetro G00FEED como potencia del generador deben corresponder al nivel de voltios definidos en el parámetro MAXVOLT." .
-
-ns1:variable_V_PLC_G00FEED a ns1:Parametro ;
-    rdfs:label "(V.)[ch].PLC.G00FEED" ;
-    ns1:controla ns1:param_G00FEED ;
-    ns1:textoExtracto "El PLC dispone de la variable (V.)[ch].PLC.G00FEED que permite limitar el avance en el canal para cualquier tipo de movimiento (G00, G01, etc)." .
-
-ns1:modo_G00 a ns1:ModoOperacion ;
-    rdfs:label "G00 (Avance rápido)" ;
-    ns1:textoExtracto "Los posicionamientos rápidos (G00) se realizan siempre al máximo avance posible, el indicado por G00FEED." ;
-    ns1:tieneFrecuencia ns1:param_G00FEED .
-
-ns1:variable_V_MPA_G00FEED a ns1:Parametro ;
-    rdfs:label "(V.)[ch].MPA.G00FEED[set].xn" ;
-    ns1:monitoreaParametro ns1:param_G00FEED ;
-    ns1:textoExtracto "Variable asociada: (V.)[ch].MPA.G00FEED[set].xn" .
-
-ns1:param_G00FEED a ns1:Parametro ;
-    rdfs:label "G00FEED" ;
-    ns1:monitoreaParametro ns1:variable_V_MPA_G00FEED ;
-    ns1:textoExtracto "G00FEED Avance en G00. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
-    ns1:valor "20000.0000 mm/min / 787.40157 inch/min / 1080000 grados/min / 3000.0000 rpm"^^xsd:string .
+ns1:CNC8070_26c4f419df a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "el CNC limita el avance al valor definido en MAXFEED sin mostrar ningún error ni warning." .
 

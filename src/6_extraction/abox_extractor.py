@@ -14,10 +14,11 @@ import json
 import os
 import random
 import re
+import unicodedata
 from collections import defaultdict
 from dataclasses import dataclass
 
-from mistralai.client import Mistral
+from openai import AsyncOpenAI
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF
 
@@ -26,6 +27,11 @@ from artifact_contracts import (
     ABOX_DEBUG_DIR,
     ABOX_MINTED_ENTITY_REGISTRY_PATH,
     ABOX_MAX_LOCAL_RETRIES,
+    ABOX_LOCAL_HIGH_THROUGHPUT_BACKOFF_SECONDS,
+    ABOX_LOCAL_HIGH_THROUGHPUT_JITTER_RANGE,
+    ABOX_LOCAL_HIGH_THROUGHPUT_MAX_CONCURRENCY,
+    ABOX_LOCAL_HIGH_THROUGHPUT_MAX_RETRIES,
+    ABOX_LOCAL_HIGH_THROUGHPUT_REQUEST_SPACING_SECONDS,
     ABOX_MICRO_BATCH_RECOVERY_BACKOFF_SECONDS,
     ABOX_MICRO_BATCH_RECOVERY_JITTER_RANGE,
     ABOX_MICRO_BATCH_RECOVERY_MAX_CONCURRENCY,
@@ -39,11 +45,12 @@ from artifact_contracts import (
     ABOX_RETRYABLE_ERROR_CAUSES,
     ABOX_RETRY_BACKOFF_SECONDS,
     ABOX_STANDARD_MAX_CONCURRENCY,
+    OLLAMA_BASE_URL,
     OPERATIONAL_ABOX_INPUT_PATH,
     OPERATIONAL_ABOX_MANIFEST_PATH,
     OPERATIONAL_TBOX_PATH,
     hash_file_content,
-    resolve_mistral_model_chain,
+    resolve_ollama_model_chain,
 )
 from abox_resume_policy import build_manifest_entry, determine_chunk_action, load_manifest, save_manifest
 from abox_graph_sanitizer import load_mint_registry, sanitize_abox_graph, save_mint_registry, serialize_graph
@@ -61,16 +68,16 @@ MANIFEST_PATH = OPERATIONAL_ABOX_MANIFEST_PATH
 TBOX_PATH = OPERATIONAL_TBOX_PATH
 OUTPUT_DIR = ABOX_CHUNKS_DIR
 DEBUG_DIR = ABOX_DEBUG_DIR
-MODEL_CHAIN = resolve_mistral_model_chain()
+MODEL_CHAIN = resolve_ollama_model_chain()
 PRIMARY_MODEL = MODEL_CHAIN[0]
 BASE_URI = "https://vocab.cfaa.eus/broaching/"
 EX_IDENTIFICADOR = URIRef(BASE_URI + "identificador")
-ABOX_PROMPT_VERSION = "semantic-guardrails-v4-identity-rules"
+ABOX_PROMPT_VERSION = "semantic-guardrails-v5-predicate-rules"
 EXTRACTION_MODE = "abox_from_text_chunk"
 DEFAULT_MODE = "resume-compatible"
 DEFAULT_RETRY_PROFILE = "standard"
 
-client: Mistral | None = None
+client: AsyncOpenAI | None = None
 
 
 @dataclass(frozen=True)
@@ -130,7 +137,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--retry-profile",
-        choices=["standard", "rate-limit-drain", "micro-batch-recovery"],
+        choices=["standard", "rate-limit-drain", "micro-batch-recovery", "local-high-throughput"],
         default=DEFAULT_RETRY_PROFILE,
         help="Perfil de reintentos. micro-batch-recovery endurece el backoff para drenar pendientes residuales chunk a chunk.",
     )
@@ -149,13 +156,10 @@ def parse_chunk_ids(raw_value: str) -> set[int]:
     return chunk_ids
 
 
-def get_client() -> Mistral:
+def get_client() -> AsyncOpenAI:
     global client
     if client is None:
-        api_key = os.environ.get("MISTRAL_API_KEY")
-        if not api_key:
-            raise RuntimeError("Define la variable de entorno MISTRAL_API_KEY antes de ejecutar regeneraciones A-Box.")
-        client = Mistral(api_key=api_key)
+        client = AsyncOpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
     return client
 
 
@@ -291,6 +295,30 @@ Para ex:Parametro:
   - ex:valor debe contener solo valores literales explicitamente presentes, por ejemplo "400 V", "50 Hz" o "1".
   - La URI debe preferir el codigo cuando exista, por ejemplo ex:ParametroABSOFF o ex:ParametroPP177. Nunca uses frases completas ni ex:textoExtracto como base de URI.
 
+Para ex:Parametro extraido de manuales de variables CNC (mnemonicos tipo MPG.*, MPA.*, PLC.*, SP.*, A.*):
+
+  CRITERIO DE VALIDEZ — solo crea ex:Parametro si el chunk contiene un codigo tecnico explicito:
+    - Mnemonico en notacion de punto: "MPG.VMOVAXIS1", "MPA.CAXNAME", "V.PLC.MZTOCH1"
+    - Nombre de parametro maquina en MAYUSCULAS sin espacios: "INCJOGFEED", "LIMIT+", "GAPSENSORDELAY", "MODUPLIM"
+    - Si el texto NO contiene ningun codigo de este tipo, no extraigas ningun Parametro aunque aparezcan palabras tecnicas.
+
+  EXCEPCION CRITICA — tablas de sintaxis placeholder:
+    - Si el chunk contiene una tabla donde el mnemonico usa "variable" como comodin (V.MPA.variable.Z, V.A.variable.S), es explicacion de notacion, NO definicion concreta. No extraigas NADA de ese chunk relacionado con Parametro, incluyendo los valores de la columna Significado (Eje Z, Cabezal S, etc.).
+    - "Eje Z", "Cabezal S", "Eje o cabezal con numero logico 4" son contextos de uso, no parametros individuales.
+
+  EXCEPCION CRITICA — nombres de funciones o secciones en mayusculas con espacios:
+    - Frases como "SOFT TOOL RADIUS COMP", "HARD REAL TIME", "TOOL RADIUS COMP", "IEC 61131" son nombres de funciones o estandares, no variables CNC. No las extraigas como Parametro.
+    - Un identificador de parametro real NUNCA tiene espacios: VMOVAXIS1, INCJOGFEED, CAXNAME, RETRACTTHREAD son validos; "SOFT TOOL RADIUS" no lo es.
+
+  Formato correcto cuando hay un codigo valido:
+    - ex:identificador debe contener el codigo sin prefijo "(V.)" y sin indices "[n]": "MPG.VMOVAXIS1", "MPA.CAXNAME", "INCJOGFEED".
+    - rdfs:label debe ser la descripcion funcional de la variable, nunca el codigo en si.
+    - URI desde el codigo en CamelCase eliminando puntos y caracteres especiales: ex:ParametroMPGVMOVAXIS1, ex:ParametroINCJOGFEED, ex:ParametroGAPSENSORDELAY.
+    - Si el texto menciona "el parametro GAPSENSORDELAY ya no es funcional", el identificador es "GAPSENSORDELAY" y la URI es ex:ParametroGAPSENSORDELAY. NUNCA uses la frase descriptiva como base de URI.
+    - La URI debe tener menos de 50 caracteres en el local name. Si el codigo es largo, trunca: ex:ParametroMPGVMOVAXIS1 (20 chars) es correcto; ex:ControlDelGapElParametroMaquina... (40+ chars) es incorrecto.
+    - Si el chunk tiene mas de 5 variables concretas, extrae solo las 3-5 con descripcion mas completa.
+    - NO crees Tabla, Pagina ni Figura para chunks de definicion de variables CNC.
+
 Para ex:ComponenteElectrico, ex:ComponenteMecanico y ex:ComponenteHidraulico:
   - Si aparece una referencia tecnica o de fabricante (ejemplos: 3RT2024-1BB40, KA04, 19A21), ese valor debe ir en ex:identificador.
   - rdfs:label debe contener el nombre descriptivo observable.
@@ -306,6 +334,112 @@ Para ex:Sistema:
   - Un sistema debe tener nombre propio, por ejemplo "Sistema Hidraulico", "Sistema PLC" o "CNC 8070".
   - No extraigas sistemas genericos sin nombre.
   - Si el sistema ya tiene nombre conocido en el contexto, reutiliza el mismo rdfs:label e identificador para favorecer la canonicalizacion.
+
+REGLA CRITICA — URI DE CLASE NUNCA ES INDIVIDUO:
+  - Los URIs de las clases del vocabulario (ex:Maquina, ex:Sistema, ex:Componente, ex:Alarma, ex:Parametro, etc.) NUNCA pueden usarse como local name de un individuo.
+  - Incorrecto: ex:Maquina a ex:Maquina (el URI de la clase usado como sujeto individuo).
+  - Correcto: ex:MaquinaBrochadoraA218 a ex:Maquina (URI descriptivo del individuo + clase como tipo).
+  - Si el texto habla genericamente de "la maquina" sin nombre propio, crea ex:MaquinaPrincipal o ex:MaquinaBrochadora como individuo, nunca ex:Maquina.
+  - Esta regla aplica a todos los nombres de clase: ex:Sistema, ex:Componente, ex:Alarma, ex:TareaMantenimiento, etc.
+
+REGLA DE CONSISTENCIA — MISMO INDIVIDUO ENTRE CHUNKS:
+  - Para la entidad principal del manual (la maquina, el CNC, el sistema principal), usa el MISMO URI en todos los chunks del mismo documento.
+  - Elige el URI mas descriptivo posible (incluyendo modelo o numero de referencia si aparece en la portada) y mantenlo constante.
+  - Ejemplo para este manual: ex:MaquinaBrochadoraElectromecanicaExteriorA218 debe aparecer igual en el chunk 001 y en el chunk 193.
+
+REGLA DE CONSISTENCIA — SISTEMA CNC:
+  - Cuando el texto se refiere al control numerico CNC 8070 (Fagor CNC 8070, el CNC, el control numerico), usa siempre ex:SistemaCNC como URI canonica.
+  - ex:SistemaCNC a ex:Sistema ; rdfs:label "CNC 8070" .
+  - NUNCA uses ex:CNC8070, ex:CNCFagor, ex:ControlNumericoCNC, ex:SistemaCNCFagor ni variantes: todos deben ser ex:SistemaCNC para facilitar la canonicalizacion entre manuales.
+""".strip()
+
+
+PREDICATE_RULES_SECTION = """
+REGLAS DE USO DE PREDICADOS:
+
+ex:tieneComponente / ex:compuestoPor
+  - Usa solo para composicion estructural: una Maquina o Sistema apunta a su componente hijo.
+  - Correcto: ex:MaquinaBrochadora ex:tieneComponente ex:ComponenteMotorPrincipal .
+  - Incorrecto: usarlo entre dos TareaMantenimiento, o entre un Componente y un Parametro.
+
+ex:requiereConsumible
+  - Usa SOLO para materiales fungibles: aceites, grasas, lubricantes, filtros, retenes, juntas.
+  - Valido tanto desde EntidadFisica como desde TareaMantenimiento como sujeto.
+  - Correcto: ex:SistemaHidraulico ex:requiereConsumible ex:AceiteHidraulicoISO46 .
+  - Correcto: ex:TareasLubricacionMensual ex:requiereConsumible ex:GrasaLitio .
+  - NUNCA lo uses para componentes montados (motores, bombas, interruptores).
+
+ex:requiereMantenimiento
+  - Dominio: ex:EntidadFisica (Componente, Sistema o Maquina — el sujeto recibe el mantenimiento).
+  - Rango: ex:TareaMantenimiento (el objeto es la tarea que se le aplica).
+  - Correcto: ex:ComponenteBombaHidraulica ex:requiereMantenimiento ex:TareaRevisionBomba .
+  - Correcto: ex:SistemaHidraulico ex:requiereMantenimiento ex:TareaRevisionHidraulica .
+  - NUNCA con TareaMantenimiento como sujeto.
+
+ex:solucionaFallo
+  - Dominio ESTRICTO: ex:TareaMantenimiento (SOLO una tarea puede resolver un fallo).
+  - Rango ESTRICTO: ex:DiagnosticoFallo (el fallo que queda resuelto).
+  - Correcto: ex:TareaLimpiezaFiltro ex:solucionaFallo ex:FalloPresionHidraulicaBaja .
+  - NUNCA con ex:Parametro como sujeto — un parametro no resuelve fallos, lo hacen las tareas.
+  - NUNCA entre AccionProhibida ni entre entidades que no sean TareaMantenimiento -> DiagnosticoFallo.
+
+ex:ejecutadoPor
+  - Dominio: ex:TareaMantenimiento.
+  - Rango: ex:Personal (operario, tecnico, servicio autorizado).
+  - Correcto: ex:TareaRevisionAnual ex:ejecutadoPor ex:PersonalTecnicoAutorizado .
+  - NUNCA desde Componente, Sistema, ModoOperacion ni Maquina como sujeto.
+
+ex:habilitadoPor / ex:habilita
+  - EXCLUSIVO para autorizacion de tareas de mantenimiento por personal cualificado.
+  - Dominio ESTRICTO: ex:TareaMantenimiento. Rango ESTRICTO: ex:Personal.
+  - Correcto: ex:TareaRevisionElectrica ex:habilitadoPor ex:PersonalElectricoAutorizado .
+  - PROHIBIDO: usar para expresar que un parametro o funcion esta activado/gestionado por el CNC.
+    Para "el parametro es controlado por el CNC" usa ex:controladoPor.
+    Para "el sistema habilita la funcion" omite la relacion o usa ex:controla.
+
+ex:controla / ex:controladoPor
+  - Dominio y rango: ex:EntidadFisica (Sistema, Componente, Maquina).
+  - Correcto: ex:SistemaCNC ex:controla ex:EjeX .
+  - Correcto: ex:ComponentePLC ex:controladoPor ex:SistemaCNC .
+  - Usar en lugar de ex:habilitadoPor cuando el CNC o PLC gestiona un parametro o funcion.
+
+ex:activaAlarma
+  - Dominio: ex:EntidadFisica (sistema o componente que genera la alarma).
+  - Rango ESTRICTO: ex:Alarma (NUNCA ex:Parametro).
+  - Correcto: ex:SistemaCNC ex:activaAlarma ex:AlarmaError1234 .
+  - NUNCA apuntar a un Parametro; si el parametro describe la condicion de alarma, use ex:monitoreaParametro.
+
+ex:monitoreaParametro / ex:parametroMonitoradoPor
+  - Dominio: ex:EntidadFisica (Componente, Sistema, Sensor).
+  - Rango: ex:Parametro.
+  - Correcto: ex:SistemaRefrigeracion ex:monitoreaParametro ex:TemperaturaRefrigerante .
+  - NUNCA usar en direccion inversa (Parametro -> Sistema) salvo con ex:parametroMonitoradoPor.
+
+ex:ilustra / ex:ilustradoEn  [ATENCION — DIRECCION CRITICA]
+  - ex:ilustra: el SUJETO es la figura/tabla/esquema; el OBJETO es lo que muestra.
+    Correcto: ex:TablaMantenimiento ex:ilustra ex:TareaRevisionFiltros .
+    Correcto: ex:EsquemaHidraulico ex:ilustra ex:SistemaHidraulico .
+  - ex:ilustradoEn: el SUJETO es la entidad representada; el OBJETO es la figura que la contiene.
+    Correcto: ex:ComponenteMotor ex:ilustradoEn ex:EsquemaMotorPrincipal .
+    INCORRECTO: ex:EsquemaMotorPrincipal ex:ilustradoEn ex:ComponenteMotor .
+
+ex:detalladoEnEsquema  [ATENCION — DIRECCION CRITICA]
+  - El SUJETO es la entidad fisica (componente, sistema); el OBJETO es el esquema.
+  - Correcto: ex:BombaHidraulica ex:detalladoEnEsquema ex:EsquemaHidraulico .
+  - INCORRECTO: ex:EsquemaHidraulico ex:detalladoEnEsquema ex:BombaHidraulica .
+
+ex:tieneFrecuencia / ex:frecuenciaAplicableA
+  - USAR PREFERENTEMENTE ex:tieneFrecuencia: el SUJETO es la tarea, el OBJETO es la frecuencia.
+    Correcto: ex:TareaRevisionFiltros ex:tieneFrecuencia ex:Cada1000H .
+  - ex:frecuenciaAplicableA es la INVERSA: el SUJETO es la frecuencia, el OBJETO es la tarea.
+    Correcto: ex:Cada1000H ex:frecuenciaAplicableA ex:TareaRevisionFiltros .
+  - NUNCA usar ex:frecuenciaAplicableA con TareaMantenimiento como sujeto.
+
+ex:mitigaRiesgo
+  - Dominio: ex:AvisoSeguridad.
+  - Rango: cualquier entidad a la que aplica la advertencia (AccionProhibida, Maquina, Componente).
+  - Correcto: ex:AvisoElectrico ex:mitigaRiesgo ex:MaquinaPrincipal .
+  - Correcto: ex:AvisoManipulacion ex:mitigaRiesgo ex:AccionModificarHardware .
 """.strip()
 
 
@@ -542,6 +676,9 @@ def normalizar_curies_ex_invalidos(ttl_text: str) -> str:
     delimitadores = set(" \t\r\n;,.()[]{}<>\"'")
 
     def sanitizar_local_name(local_name: str) -> str:
+        # Transliterate accented characters first: á→a, é→e, ñ→n, etc.
+        nfkd = unicodedata.normalize("NFKD", local_name)
+        local_name = "".join(c for c in nfkd if not unicodedata.combining(c))
         local_name = re.sub(r"[^A-Za-z0-9_]", "_", local_name)
         local_name = re.sub(r"_+", "_", local_name).strip("_")
         if not local_name:
@@ -598,6 +735,9 @@ def normalizar_vocabulario_canonico(ttl_text: str) -> str:
     reemplazos_directos = {
         "ex:textoExtractor": "ex:textoExtracto",
         "ex:textExtracto": "ex:textoExtracto",
+        # Fix: resolve "a rdf:type X" before the general rdf:type → a replacement
+        # to avoid producing invalid "a a X" double-keyword sequences.
+        " a rdf:type ": " a ",
         " rdf:type ": " a ",
         "@xsd:string": "^^xsd:string",
         "@xsd:integer": "^^xsd:integer",
@@ -610,15 +750,165 @@ def normalizar_vocabulario_canonico(ttl_text: str) -> str:
         " a ex:Rel?": " a ex:ComponenteElectrico",
         " a ex:Latiguillo": " a ex:ComponenteElectrico",
         " a ex:ComponenteNeumatico": " a ex:Componente",
+        # Qwen2.5 sometimes uses ex:tieneSistema (non-canonical) for system composition.
+        "ex:tieneSistema": "ex:tieneComponente",
     }
     for origen, destino in reemplazos_directos.items():
         ttl_normalizado = ttl_normalizado.replace(origen, destino)
+    # Remove rdf:type from comma-separated type lists (e.g. "a rdf:type, ex:Class" → "a ex:Class")
+    ttl_normalizado = re.sub(r'\ba rdf:type,\s*', 'a ', ttl_normalizado)
+    # Remove trailing rdf:type in comma lists (e.g. "a ex:Class, rdf:type" → "a ex:Class")
+    ttl_normalizado = re.sub(r',\s*rdf:type(?=\s*[;.\n])', '', ttl_normalizado)
+    ttl_normalizado = normalizar_bloques_con_llaves(ttl_normalizado)
+    ttl_normalizado = normalizar_uri_propiedad_pegada(ttl_normalizado)
+    ttl_normalizado = inferir_tipos_desde_uri(ttl_normalizado)
+    # Fix trailing semicolon before ANY new subject (ex:S a ... OR ex:S ex:p ex:O)
+    ttl_normalizado = re.sub(r';\s*\n(\s*\n)(ex:\w+)', r'.\n\1\2', ttl_normalizado)
+    # Ensure TTL ends with "." if last meaningful token is ";" (truncated response)
+    stripped = ttl_normalizado.rstrip()
+    if stripped.endswith(';') or stripped.endswith(','):
+        ttl_normalizado = stripped[:-1] + ' .'
     ttl_normalizado = tipar_tablas_canonicas(ttl_normalizado)
     ttl_normalizado = normalizar_curies_ex_invalidos(ttl_normalizado)
     ttl_normalizado = normalizar_hex_binary_invalidos(ttl_normalizado)
     ttl_normalizado = escapar_barras_invertidas_en_literales(ttl_normalizado)
     ttl_normalizado = escapar_comillas_internas_en_literales(ttl_normalizado)
+    ttl_normalizado = destagear_literales_textoExtracto(ttl_normalizado)
     return ttl_normalizado
+
+
+def normalizar_uri_propiedad_pegada(ttl_text: str) -> str:
+    """Fix Qwen pattern: ex:SomeURIidentificador "value" → ex:SomeURI a ex:Class ; ex:identificador "value".
+
+    Qwen2.5 sometimes omits the predicate and instead appends the property name
+    directly to the subject URI, e.g.:
+        ex:ComponenteElectricoSelectorBlancoidentificador "3SU1052-2CF60-0AA0" ;
+    when it should generate:
+        ex:ComponenteElectricoSelectorBlanco a ex:ComponenteElectrico ;
+            ex:identificador "3SU1052-2CF60-0AA0" ;
+    """
+    # Match both lowercase and CamelCase variants of the known property suffixes.
+    _SUFFIX_TO_PROP = [
+        (r'[Ii]dentificador', 'identificador'),
+        (r'[Tt]extoExtracto', 'textoExtracto'),
+        (r'[Vv]alor', 'valor'),
+    ]
+
+    def _fix(m: re.Match) -> str:
+        # Groups: (1) local_prefix, (2) suffix, (3) literal, (4) ending
+        local_prefix = m.group(1)
+        prop_name = m.group(2)
+        literal = m.group(3)
+        ending = (m.group(4) or '').strip() or ';'
+        inferred_class = next(
+            (cls for cls in _CANONICAL_CLASSES_LONGEST_FIRST if local_prefix.startswith(cls)),
+            None,
+        )
+        if inferred_class is None:
+            return m.group(0)
+        prop_lower = prop_name[0].lower() + prop_name[1:]
+        return f"ex:{local_prefix} a ex:{inferred_class} ;\n    ex:{prop_lower} {literal} {ending}"
+
+    for suffix_pat, _ in _SUFFIX_TO_PROP:
+        pattern = r'ex:(\w+?)(' + suffix_pat + r')\b\s+("(?:[^"\\]|\\.)*"(?:@\w+(?:-\w+)*)?)\s*([;.,]?)'
+        ttl_text = re.sub(pattern, lambda m, f=_fix: f(m), ttl_text)
+
+    return ttl_text
+
+
+def normalizar_bloques_con_llaves(ttl_text: str) -> str:
+    """Fix Qwen's JSON-style brace blocks: 'ex:S a { a ex:C ; p o } .' → valid Turtle.
+
+    Qwen2.5 sometimes generates blocks like:
+        ex:Subject a {
+          a ex:Class ;
+          ex:prop "value" ;
+        } .
+    which is not valid Turtle syntax. This converts them to:
+        ex:Subject a ex:Class ;
+            ex:prop "value" .
+    """
+    def _reemplazar(match: re.Match) -> str:
+        sujeto = match.group(1).strip()
+        interior = match.group(2).strip()
+        tipo_match = re.search(r'\ba\s+(ex:\w+)\s*[;]?', interior)
+        if not tipo_match:
+            return match.group(0)
+        tipo = tipo_match.group(1)
+        resto = re.sub(r'\ba\s+ex:\w+\s*[;]?\s*', '', interior, count=1).strip()
+        resto = re.sub(r'^[;]\s*', '', resto).strip()
+        resto = re.sub(r'[;]\s*$', '', resto).strip()
+        if resto:
+            return f"{sujeto} a {tipo} ;\n    {resto} ."
+        return f"{sujeto} a {tipo} ."
+
+    return re.sub(
+        r'(ex:\w+)\s+a\s+\{([^}]*)\}\s*\.',
+        _reemplazar,
+        ttl_text,
+        flags=re.DOTALL,
+    )
+
+
+def destagear_literales_textoExtracto(ttl_text: str) -> str:
+    """Remove language tags from ex:textoExtracto literals (e.g. "text"@es → "text").
+    Qwen2.5 adds @es/@en language tags to traceability literals, which the
+    semantic validator does not accept as plain-string textoExtracto values."""
+    return re.sub(
+        r'(ex:textoExtracto\s+"[^"]*")\s*@[a-zA-Z]{2,5}(?:-[a-zA-Z0-9]+)?',
+        r'\1',
+        ttl_text,
+    )
+
+
+_CANONICAL_CLASSES_LONGEST_FIRST: list[str] = sorted(
+    [
+        "ComponenteElectrico", "ComponenteMecanico", "ComponenteHidraulico",
+        "TareaMantenimiento", "DiagnosticoFallo", "AvisoSeguridad", "AccionProhibida",
+        "ElementoSeguridad", "ModoOperacion", "InterfazUsuario", "PiezaRecambio",
+        "Maquina", "Sistema", "Componente", "Parametro", "Personal",
+        "Consumible", "Manual", "Capitulo", "Directiva", "Actuador",
+        "Tabla", "Esquema", "Sensor", "Alarma", "Figura", "Empresa",
+        "Herramienta", "Frecuencia", "Pagina", "EPI",
+    ],
+    key=len,
+    reverse=True,
+)
+
+
+def inferir_tipos_desde_uri(ttl_text: str) -> str:
+    """Inject missing type triples for entities whose URI prefix matches a canonical class.
+
+    Qwen2.5 sometimes omits 'a ex:ClassName' when the class is already encoded in the
+    URI (new CamelCase style). This recovery pass restores the type declaration when
+    the URI unambiguously identifies the class via its prefix.
+    """
+    # Collect entity URIs that already have a type declaration
+    typed_uris: set[str] = set(re.findall(r'(ex:\w+)\s+a\s+ex:\w+', ttl_text))
+
+    def _infer_class(local_name: str) -> str | None:
+        for cls in _CANONICAL_CLASSES_LONGEST_FIRST:
+            if local_name.startswith(cls):
+                return cls
+        return None
+
+    def _inject_type(match: re.Match) -> str:
+        uri = match.group(1)
+        rest = match.group(2)
+        if uri in typed_uris:
+            return match.group(0)
+        local = uri[3:]  # strip "ex:"
+        inferred = _infer_class(local)
+        if inferred is None:
+            return match.group(0)
+        typed_uris.add(uri)
+        return f"{uri} a ex:{inferred} ;\n    {rest}"
+
+    return re.sub(
+        r'(ex:\w+)\s+(rdfs:label|ex:textoExtracto|ex:identificador|ex:valor)\b',
+        _inject_type,
+        ttl_text,
+    )
 
 
 def persistir_debug_chunk_fallido(
@@ -664,7 +954,7 @@ async def llamada_llm_once(mensajes: list) -> tuple[str, str]:
         attempted_models.append(model_name)
         last_model_name = model_name
         try:
-            respuesta = await get_client().chat.complete_async(model=model_name, temperature=0.0, messages=mensajes)
+            respuesta = await get_client().chat.completions.create(model=model_name, temperature=0.0, messages=mensajes)
             return respuesta.choices[0].message.content, model_name
         except Exception as exc:
             last_error_cause, last_error_message = classify_exception(exc)
@@ -710,6 +1000,15 @@ def resolve_retry_profile(name: str) -> RetryProfile:
             jitter_range=ABOX_MICRO_BATCH_RECOVERY_JITTER_RANGE,
             request_spacing_seconds=ABOX_MICRO_BATCH_RECOVERY_REQUEST_SPACING_SECONDS,
         )
+    if name == "local-high-throughput":
+        return RetryProfile(
+            name=name,
+            max_concurrency=ABOX_LOCAL_HIGH_THROUGHPUT_MAX_CONCURRENCY,
+            max_retries=ABOX_LOCAL_HIGH_THROUGHPUT_MAX_RETRIES,
+            backoff_seconds=ABOX_LOCAL_HIGH_THROUGHPUT_BACKOFF_SECONDS,
+            jitter_range=ABOX_LOCAL_HIGH_THROUGHPUT_JITTER_RANGE,
+            request_spacing_seconds=ABOX_LOCAL_HIGH_THROUGHPUT_REQUEST_SPACING_SECONDS,
+        )
     return RetryProfile(
         name="standard",
         max_concurrency=int(os.environ.get("ABOX_MAX_CONCURRENCY", str(ABOX_STANDARD_MAX_CONCURRENCY))),
@@ -753,12 +1052,14 @@ REGLAS OBLIGATORIAS:
 7. Prefiere entidades enlazadas mediante propiedades de objeto canonicas cuando el texto describa composicion, control, mantenimiento, seguridad, documentacion, esquema o relacion funcional. Si la relacion no es segura, omite la relacion antes que inventarla.
 8. Si el fragmento es una tabla, esquema, lista de materiales o bloque de conexionado, crea una entidad ancla canonica (por ejemplo ex:Esquema, ex:Tabla, ex:Sistema o ex:InterfazUsuario, segun corresponda) y conecta a ella los componentes listados usando relaciones permitidas como ex:tieneComponente, ex:compuestoPor, ex:detalladoEnEsquema, ex:documentadoEn o ex:ilustradoEn.
 9. Si extraes mas de un individuo y el texto aporta una relacion clara entre ellos, debe aparecer al menos un enlace util entre esos individuos.
-10. No construyas IRIs desde frases largas ni desde ex:textoExtracto. El local name debe tener menos de 80 caracteres; si la evidencia es muy generica, usa una clase superior y conserva la especificidad en rdfs:label, ex:identificador, ex:valor o ex:textoExtracto.
+10. Construye la URI desde el nombre descriptivo de la entidad en CamelCase, preferiblemente precedido del nombre de clase para desambiguar. Ejemplos correctos: ex:ComponenteElectricoInterruptorPrincipal, ex:TareaMantenimientoCambioDeAceite, ex:SistemaHidraulicoRefrigeracion. NUNCA uses el identificador tecnico (referencia, codigo, modelo) como base de la URI — ese valor va exclusivamente en ex:identificador. Incorrecto: ex:BROCHADORA_A218_RASHEM, ex:3RT2926_1BB00, ex:IL_EC_BK_PAC. El local name debe tener menos de 80 caracteres.
 11. textoExtracto debe ser breve y no puede ser el chunk completo.
 12. No extraigas entidades cuya unica evidencia sea una palabra generica.
 13. No generes comentarios, explicaciones, Markdown ni bloques vacios. Responde exclusivamente con Turtle valida.
 
 {IDENTITY_RULES_SECTION}
+
+{PREDICATE_RULES_SECTION}
 
 CRITERIOS DE CALIDAD:
 - Prioriza precision semantica frente a cobertura agresiva.
@@ -1090,15 +1391,10 @@ async def orquestar_extraccion_abox(mode: str, chunk_ids: set[int] | None = None
     if chunk_ids:
         alcance = f" ({len(abox_input)} bloques filtrados: {sorted(chunk_ids)})"
     print(f"Iniciando extraccion A-Box en modo {mode}{alcance} con perfil {retry_profile.name}...")
-    print(f"Cadena de modelos Mistral: {', '.join(get_model_chain())}")
+    print(f"Cadena de modelos Ollama: {', '.join(get_model_chain())}")
 
     if chunks_to_run:
-        try:
-            get_client()
-        except RuntimeError as exc:
-            print(str(exc))
-            print("Se guardo el manifiesto con el estado planificado, pero no se lanzaron regeneraciones.")
-            return 1
+        get_client()
 
     tareas = [
         procesar_chunk_abox(

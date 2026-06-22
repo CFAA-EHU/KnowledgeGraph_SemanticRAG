@@ -1,29 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:FuncionM6 a ns1:ModoOperacion ;
-    ns1:textoExtracto "La función M6 no activará marcas de PLC (por ejemplo DM06) ni ejecutará nada relacionado con el cambio de herramienta (como la subrutina de cambio, etc)." ;
-    ns1:tieneComponente ns1:CNC,
-        ns1:PLC .
+ns1:CNC8070_0a41f896c6 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:SubrutinaT ;
+    ns1:textoExtracto "Se recomienda que la rutina asociada a T incluya la función M06. Cuando el CNC selecciona una herramienta, la rutina asociada a T ejecuta la función M06 (cambio de herramienta), detiene el mecanizado y el gestor envía al PLC el código correspondiente a la operación que debe efectuar." .
 
-ns1:FuncionT a ns1:ModoOperacion ;
-    ns1:textoExtracto "Cuando no hay almacén de herramientas, para realizar el cambio de herramienta sólo es necesario programar la función T, sin necesidad de M6." ;
-    ns1:tieneComponente ns1:CNC,
-        ns1:GestorCambioHerramienta .
+ns1:SistemaAlmacenTorreta a ns1:Sistema ;
+    rdfs:label "Almacén tipo torreta" ;
+    ns1:textoExtracto "Es el almacén típico de torno. Para efectuar el cambio, el almacén gira hasta colocar la nueva herramienta en la posición de trabajo." ;
+    ns1:tieneComponente ns1:CambioDeHerramienta_b307bc70fb .
 
-ns1:MarcaPLC_DM06 a ns1:Parametro ;
-    ns1:identificador "DM06" ;
-    ns1:textoExtracto "La función M6 no activará marcas de PLC (por ejemplo DM06) ni ejecutará nada relacionado con el cambio de herramienta." .
+ns1:CambioDeHerramienta_b307bc70fb a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:textoExtracto "No es posible efectuar el cambio de herramienta durante el mecanizado de la pieza. Cuando el CNC selecciona una herramienta, la rutina asociada a T ejecuta la función M06 (cambio de herramienta), detiene el mecanizado y el gestor envía al PLC el código correspondiente a la operación que debe efectuar." .
 
-ns1:SubrutinaCambioHerramienta a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "En la subrutina asociada a la función M6 (cuando la tenga), se ejecutarán ciclos fijos modales o subrutinas modales con los movimientos." .
+ns1:Parametro_aebfe9491e a ns1:Parametro ;
+    rdfs:label "Función M06" ;
+    ns1:textoExtracto "Se recomienda que la rutina asociada a T incluya la función M06. Cuando el CNC selecciona una herramienta, la rutina asociada a T ejecuta la función M06 (cambio de herramienta), detiene el mecanizado y el gestor envía al PLC el código correspondiente a la operación que debe efectuar." .
 
-ns1:GestorCambioHerramienta a ns1:Sistema ;
-    ns1:textoExtracto "El gestor envía una orden al PLC para que pueda efectuar el cambio." ;
-    ns1:tieneComponente ns1:PLC .
-
-ns1:CNC a ns1:Maquina ;
-    ns1:textoExtracto "Cuando el CNC ejecuta la función T, se lo indica al gestor." .
-
-ns1:PLC a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "El gestor envía una orden al PLC para que pueda efectuar el cambio." .
+ns1:SubrutinaT a ns1:Sistema ;
+    rdfs:label "Subrutina asociada a T" ;
+    ns1:solucionaFallo ns1:Parametro_aebfe9491e ;
+    ns1:textoExtracto "Se recomienda que la rutina asociada a T incluya la función M06. Cuando el CNC selecciona una herramienta, la rutina asociada a T ejecuta la función M06 (cambio de herramienta), detiene el mecanizado y el gestor envía al PLC el código correspondiente a la operación que debe efectuar." .
 

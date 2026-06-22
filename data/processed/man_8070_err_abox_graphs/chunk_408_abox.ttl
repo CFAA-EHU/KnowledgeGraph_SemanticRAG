@@ -1,92 +1,51 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_2124 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2124: SPLINE - Ejes insuficientes" ;
-    ns1:identificador "2124" ;
-    ns1:monitoreaParametro ns1:Parametro_EjesPrincipales ;
-    ns1:solucionaFallo ns1:ModoOperacion_Spline ;
-    ns1:textoExtracto "'SPLINE: Son necesarios al menos dos ejes principales' [...] CAUSA No se puede activar el modo spline con sólo un eje en el canal."@es .
+ns1:CNC8070_dd4f8bc992 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:ErrorDeContornoDemasiadoPequeno ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:DiagnosticoFallo_2125 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2125: SPLINE - Cálculo de tangente" ;
-    ns1:identificador "2125" ;
-    ns1:monitoreaParametro ns1:Parametro_PuntosSpline,
-        ns1:Parametro_TangenteSpline ;
-    ns1:solucionaFallo ns1:ModoOperacion_Spline ;
-    ns1:textoExtracto "'SPLINE: Error en el cálculo de la tangente' [...] CAUSA Hay programado puntos repetidos."@es .
+ns1:CambioDeModoNoPermitido a ns1:AccionProhibida ;
+    rdfs:label "Cambio de modo no permitido" ;
+    ns1:textoExtracto "'HSC: Cambio de modo no permitido' DETECCIÓN Durante la ejecución. CAUSA No se puede cambiar el modo HSC sin desactivar el modo anterior." .
 
-ns1:DiagnosticoFallo_2126 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2126: SPLINE - Límite software positivo" ;
-    ns1:identificador "2126" ;
-    ns1:monitoreaParametro ns1:Parametro_LimiteSoftwarePositivo ;
-    ns1:solucionaFallo ns1:ModoOperacion_Spline ;
-    ns1:textoExtracto "'Límite software positivo sobrepasado en el spline' [...] CAUSA La trayectoria que genera el CNC para trabajar en modo spline queda fuera de los límites de recorrido activos."@es .
+ns1:DesactivarElModoHSC a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar el modo HSC" ;
+    ns1:solucionaFallo ns1:ErrorInternoEnModoHSC,
+        ns1:LimiteSoftwareNegativoSobrepasadoEnModoHSC,
+        ns1:LimiteSoftwarePositivoSobrepasadoEnModoHSC ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar el modo HSC en el bloque o bloques que provocan el error." .
 
-ns1:DiagnosticoFallo_2127 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2127: SPLINE - Límite software negativo" ;
-    ns1:identificador "2127" ;
-    ns1:monitoreaParametro ns1:Parametro_LimiteSoftwareNegativo ;
-    ns1:solucionaFallo ns1:ModoOperacion_Spline ;
-    ns1:textoExtracto "'Límite software negativo sobrepasado en el spline' [...] CAUSA La trayectoria que genera el CNC para trabajar en modo spline queda fuera de los límites de recorrido activos."@es .
+ns1:ProgramarUnPuntoDeSalidaDiferenteAlPuntoFinalDelHSC a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un punto de salida diferente al punto final del #HSC" ;
+    ns1:textoExtracto "SOLUCIÓN Programar un punto de salida diferente al punto final del #HSC y ambos ejes de la tangente." .
 
-ns1:DiagnosticoFallo_2128 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2128: Trayectoria helicoidal" ;
-    ns1:identificador "2128" ;
-    ns1:monitoreaParametro ns1:Parametro_PasoHelicoidal,
-        ns1:Parametro_ProfundidadHelicoidal,
-        ns1:Parametro_PuntoFinalHelicoidal,
-        ns1:Parametro_TrayectoriaHelicoidal ;
-    ns1:textoExtracto "'Trayectoria helicoidal mal programada' [...] CAUSA Falta algún parámetro de la trayectoria helicoidal o bien es incorrecto."@es .
+ns1:ProgramarUnPuntoPrevioAlPuntoDeEntradaAlSpline a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un punto previo al punto de entrada al spline" ;
+    ns1:textoExtracto "SOLUCIÓN Programar un punto previo al punto de entrada al spline o ambos ejes de la tangente." .
 
-ns1:DiagnosticoFallo_2129 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2129: Transformación RTCP" ;
-    ns1:identificador "2129" ;
-    ns1:monitoreaParametro ns1:Parametro_RTCP ;
-    ns1:textoExtracto "'Error en la transformación de RTCP' [...] CAUSA Se ha programado una transformación RTCP y no están en el canal todos los ejes necesarios."@es .
+ns1:TangenteFinalIndeterminada_470f94ad8a a ns1:DiagnosticoFallo ;
+    rdfs:label "Tangente final indeterminada" ;
+    ns1:textoExtracto "SPLINE:Tangente final indeterminada. DETECCIÓN Durante la ejecución." .
 
-ns1:Parametro_EjesPrincipales a ns1:Parametro ;
-    rdfs:label "Ejes principales" ;
-    ns1:textoExtracto "Son necesarios al menos dos ejes principales."@es ;
-    ns1:valor "2" .
+ns1:TangenteInicialIndeterminada_131208d6b9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Tangente inicial indeterminada" ;
+    ns1:textoExtracto "SPLINE:Tangente inicial indeterminada. DETECCIÓN Durante la ejecución. CAUSA El punto inicial del spline coincide con el punto anterior y queda la tangente indeterminada o bien se ha programado sólo un eje de la tangente." .
 
-ns1:Parametro_LimiteSoftwareNegativo a ns1:Parametro ;
-    rdfs:label "Límite software negativo" ;
-    ns1:textoExtracto "Límite software negativo sobrepasado en el spline."@es .
+ns1:ErrorDeContornoDemasiadoPequeno a ns1:AccionProhibida ;
+    rdfs:label "Error de contorno demasiado pequeño" ;
+    ns1:textoExtracto "'HSC: Error de contorno demasiado pequeño' DETECCIÓN Durante la ejecución. CAUSA El error de contorno programado es demasiado pequeño para ser tratado." .
 
-ns1:Parametro_LimiteSoftwarePositivo a ns1:Parametro ;
-    rdfs:label "Límite software positivo" ;
-    ns1:textoExtracto "Límite software positivo sobrepasado en el spline."@es .
+ns1:ErrorInternoEnModoHSC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error interno en modo HSC" ;
+    ns1:textoExtracto "2106 HSC:Error interno en modo HSC. DETECCIÓN Durante la ejecución. CAUSA Error en el cálculo de la trayectoria para trabajar en modo HSC." .
 
-ns1:Parametro_PasoHelicoidal a ns1:Parametro ;
-    rdfs:label "Paso de trayectoria helicoidal" ;
-    ns1:textoExtracto "Está programado el paso y falta la profundidad."@es .
+ns1:LimiteSoftwareNegativoSobrepasadoEnModoHSC a ns1:AccionProhibida ;
+    rdfs:label "Límite software negativo sobrepasado en modo HSC" ;
+    ns1:textoExtracto "'Límite software negativo sobrepasado en modo HSC' DETECCIÓN Durante la ejecución. CAUSA La trayectoria que genera el CNC para trabajar en modo HSC queda fuera de los límites de recorrido activos." .
 
-ns1:Parametro_ProfundidadHelicoidal a ns1:Parametro ;
-    rdfs:label "Profundidad de trayectoria helicoidal" ;
-    ns1:textoExtracto "Falta la profundidad."@es .
-
-ns1:Parametro_PuntoFinalHelicoidal a ns1:Parametro ;
-    rdfs:label "Punto final de trayectoria helicoidal" ;
-    ns1:textoExtracto "Falta el paso y el punto final o bien no son compatibles la profundidad, el paso y el punto final."@es .
-
-ns1:Parametro_PuntosSpline a ns1:Parametro ;
-    rdfs:label "Puntos de trayectoria spline" ;
-    ns1:textoExtracto "Hay programado puntos repetidos."@es .
-
-ns1:Parametro_RTCP a ns1:Parametro ;
-    rdfs:label "Transformación RTCP" ;
-    ns1:textoExtracto "Se ha programado una transformación RTCP y no están en el canal todos los ejes necesarios."@es .
-
-ns1:Parametro_TangenteSpline a ns1:Parametro ;
-    rdfs:label "Cálculo de la tangente en spline" ;
-    ns1:textoExtracto "Error en el cálculo de la tangente."@es .
-
-ns1:Parametro_TrayectoriaHelicoidal a ns1:Parametro ;
-    rdfs:label "Trayectoria helicoidal" ;
-    ns1:textoExtracto "Trayectoria helicoidal mal programada."@es .
-
-ns1:ModoOperacion_Spline a ns1:ModoOperacion ;
-    rdfs:label "Modo spline" ;
-    ns1:textoExtracto "Desactivar el modo spline antes de cambiar el sistema de coordenadas o programar sentencias que detienen la preparación de bloques."@es .
+ns1:LimiteSoftwarePositivoSobrepasadoEnModoHSC a ns1:AccionProhibida ;
+    rdfs:label "Límite software positivo sobrepasado en modo HSC" ;
+    ns1:textoExtracto "'Límite software positivo sobrepasado en modo HSC' DETECCIÓN Durante la ejecución. CAUSA La trayectoria que genera el CNC para trabajar en modo HSC queda fuera de los límites de recorrido activos." .
 

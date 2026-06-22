@@ -1,43 +1,8 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ComandoCNCEX_GAP a ns1:InterfazUsuario ;
-    rdfs:label "Comando CNCEX para activación de gap"@es ;
-    ns1:controla ns1:ControlGap_16_2 ;
-    ns1:textoExtracto "El PLC puede activar el control del gap ejecutando con el comando CNCEX el bloque de CNC correspondiente. La sentencia ejecutada desde el PLC actualiza a la programada desde el CNC y viceversa."@es .
-
-ns1:ErrorGapActivo_16_2 a ns1:AvisoSeguridad ;
-    rdfs:label "Error: Control de gap ya activo en otro canal"@es ;
-    ns1:textoExtracto "Si se intenta activar el control de gap desde un canal cuando ya está activo en otro, el CNC mostrará el error correspondiente."@es .
-
-ns1:RestriccionFuncional_16_2 a ns1:AvisoSeguridad ;
-    rdfs:label "Restricción de funcionalidades simultáneas (leapfrog, gap control, conmutación sincronizada)"@es ;
-    ns1:textoExtracto "El CNC no permite trabajar con las tres funcionalidades activas a la vez; leapfrog (#LEAP), control del gap (#GAPCTRL) y conmutación sincronizada (#SWTOUT)."@es .
-
-ns1:SensorGap_16_2 a ns1:Sensor ;
-    rdfs:label "Sensor de control de gap"@es ;
-    ns1:monitoreaParametro ns1:DistanciaBoquillaChapa_16_2 ;
-    ns1:textoExtracto "un sensor conectado al CNC, de manera que éste compensará las variaciones del sensor sobre la distancia programada"@es .
-
-ns1:CalibracionSensorGap_16_2 a ns1:TareaMantenimiento ;
-    rdfs:label "Calibración del sensor de gap"@es ;
-    ns1:textoExtracto "Calibración del sensor."@es .
-
-ns1:ControlGap_16_2 a ns1:ModoOperacion ;
-    rdfs:label "Control del gap (Láser)"@es ;
-    ns1:habilitadoPor ns1:OpcionSoftware_GAPCONTROL ;
-    ns1:identificador "#GAPCTRL" ;
-    ns1:monitoreaParametro ns1:DistanciaBoquillaChapa_16_2 ;
-    ns1:requiereMantenimiento ns1:CalibracionSensorGap_16_2 ;
-    ns1:textoExtracto "El control del gap permite mantener una distancia fija entre la boquilla del láser y la superficie de la chapa. Esta distancia la calcula un sensor conectado al CNC, de manera que éste compensará las variaciones del sensor sobre la distancia programada con movimientos adicionales en el eje longitudinal. X"@es .
-
-ns1:OpcionSoftware_GAPCONTROL a ns1:Componente ;
-    rdfs:label "Opción de software \"GAP CONTROL\""@es ;
-    ns1:identificador "GAP CONTROL" ;
-    ns1:textoExtracto "Para el control del gap es necesario disponer de la opción de software \"GAP CONTROL\""@es .
-
-ns1:DistanciaBoquillaChapa_16_2 a ns1:Parametro ;
-    rdfs:label "Distancia boquilla-chapa (gap)"@es ;
-    ns1:textoExtracto "distancia fija entre la boquilla del láser y la superficie de la chapa"@es ;
-    ns1:valor "programada"@es .
+ns1:DistanciaGapAMantenerRespectoDeLaSuperficie a ns1:Parametro ;
+    rdfs:label "Distancia (gap) a mantener respecto de la superficie" ;
+    ns1:identificador "GAP" ;
+    ns1:textoExtracto "GAP{gap} Opcional (por defecto, el último valor programado). Distancia (gap) a mantener respecto de la superficie." .
 

@@ -1,30 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Funcion_G174 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "G174" ;
-    ns1:textoExtracto "tras fijar la cota máquina (G174)"@es .
+ns1:CNC8070_3fee386c73 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:EjeA,
+        ns1:EjeB ;
+    ns1:textoExtracto "El proceso de aparcar y desaparcar ejes se podrá realizar desde el CNC o desde el PLC." .
 
-ns1:SistemaCNC_ReferenciacionEjes a ns1:Sistema ;
-    rdfs:label "Sistema de referenciación de ejes y cabezales (CNC)" ;
-    ns1:controla ns1:Marca_REFPOIN_axis ;
-    ns1:monitoreaParametro ns1:Marca_REFPOIN_axis,
-        ns1:Parametro_ABSFEEDBACK,
-        ns1:Parametro_MAXDIFREF ;
-    ns1:textoExtracto "El CNC activa (=1) la marca REFPOIN(axis) en el arranque si en la sesión anterior el eje ha sido referenciado correctamente, el CNC ha recuperado la posición del eje guardada en el apagado y la posición del encóder es la misma que la del apagado."@es .
+ns1:MaquinaBrochadoraElectromecanicaExteriorA218 a ns1:Maquina ;
+    rdfs:label "Máquina Brochadora Electromecánica Exterior A218" ;
+    ns1:textoExtracto "una máquina que intercambia un cabezal normal con otro ortogonal puede tener las siguientes configuraciones: • Con el cabezal normal, configuración de ejes X Y Z." ;
+    ns1:tieneComponente ns1:CabezalNormal,
+        ns1:CabezalOrtogonal .
 
-ns1:Parametro_ABSFEEDBACK a ns1:Parametro ;
-    rdfs:label "ABSFEEDBACK" ;
-    ns1:textoExtracto "Sin captación absoluta (parámetro ABSFEEDBACK=No)"@es ;
-    ns1:valor "No" .
+ns1:SistemaCaptacion a ns1:Sistema ;
+    rdfs:label "Sistema de Captación" ;
+    ns1:textoExtracto "Cuando se trabaja con el cabezal normal los ejes A B no están presentes, y el CNC mostrará error porque los tiene en cuenta (reguladores, sistemas de captación, etc.). Para evitar esto, será necesario aparcar los ejes A B." .
 
-ns1:Parametro_MAXDIFREF a ns1:Parametro ;
-    rdfs:label "MAXDIFREF" ;
-    ns1:textoExtracto "diferencia de posiciones menor que el parámetro MAXDIFREF"@es .
+ns1:CabezalNormal a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal Normal" ;
+    ns1:textoExtracto "una máquina que intercambia un cabezal normal con otro ortogonal puede tener las siguientes configuraciones: • Con el cabezal normal, configuración de ejes X Y Z." .
 
-ns1:Marca_REFPOIN_axis a ns1:Parametro ;
-    rdfs:label "REFPOIN(axis)" ;
-    ns1:textoExtracto "La marca REFPOIN(axis) siempre está activa (=1). No es necesaria la búsqueda de referencia. Captación absoluta en una vuelta."@es ;
-    ns1:valor "1" .
+ns1:CabezalOrtogonal a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal Ortogonal" ;
+    ns1:textoExtracto "una máquina que intercambia un cabezal normal con otro ortogonal puede tener las siguientes configuraciones: • Con el cabezal ortogonal, configuración de ejes X Y Z A B." .
+
+ns1:EjeA a ns1:ComponenteMecanico ;
+    rdfs:label "Eje A" ;
+    ns1:textoExtracto "Cuando se trabaja con el cabezal normal los ejes A B no están presentes, y el CNC mostrará error porque los tiene en cuenta (reguladores, sistemas de captación, etc.). Para evitar esto, será necesario aparcar los ejes A B." .
+
+ns1:EjeB a ns1:ComponenteMecanico ;
+    rdfs:label "Eje B" ;
+    ns1:textoExtracto "Cuando se trabaja con el cabezal normal los ejes A B no están presentes, y el CNC mostrará error porque los tiene en cuenta (reguladores, sistemas de captación, etc.). Para evitar esto, será necesario aparcar los ejes A B." .
 

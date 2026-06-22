@@ -1,19 +1,20 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:activaAlarma ns1:Alarma_1161,
-        ns1:Alarma_1162 ;
-    ns1:textoExtracto "El CNC ha encontrado un bloque de control \"$\" que no tiene su correspondiente instrucción de cierre." .
+ns1:CorregirElProgramaReduciendoElNumeroDeLlamadasASubrutinasLocalesYGlob_c3f1979616 a ns1:AccionProhibida ;
+    rdfs:label "Corregir el programa reduciendo el número de llamadas a subrutinas (locales y globales) que implican un nuevo nivel de imbricación" ;
+    ns1:textoExtracto "SOLUCIÓN Corregir el programa reduciendo el número de llamadas a subrutinas (locales y globales) que implican un nuevo nivel de imbricación." .
 
-ns1:Alarma_1161 a ns1:Alarma ;
-    rdfs:label "Bloques de control $ abiertos" ;
-    ns1:identificador "1161" ;
-    ns1:textoExtracto "1161 'Bloques de control $ abiertos' DETECCIÓN Durante la ejecución. CAUSA El CNC ha encontrado un bloque de control \"$\" que no tiene su correspondiente instrucción de cierre. SOLUCIÓN Revisar la programación." .
+ns1:NoProgramarNingunBloqueEntreLaFuncionGQueDefineLaTrayectoriaDeEmpalme_272807f84a a ns1:AccionProhibida ;
+    rdfs:label "No programar ningún bloque entre la función G que define la trayectoria de empalme y el primer bloque de movimiento" ;
+    ns1:solucionaFallo ns1:AnidamientoDeSubrutinasSobrepasado_b1f4f2ee6e ;
+    ns1:textoExtracto "SOLUCIÓN No programar ningún bloque entre la función G que define la trayectoria de empalme y el primer bloque de movimiento." .
 
-ns1:Alarma_1162 a ns1:Alarma ;
-    rdfs:label "No se espera M17/M29/#RET" ;
-    ns1:identificador "1162" ;
-    ns1:textoExtracto "1162 'No se espera M17/M29/#RET' DETECCIÓN Durante la ejecución. CAUSA El CNC ha" .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "CNC" ;
+    ns1:textoExtracto "El CNC permite 20 niveles de imbricación." .
+
+ns1:AnidamientoDeSubrutinasSobrepasado_b1f4f2ee6e a ns1:DiagnosticoFallo ;
+    rdfs:label "'Anidamiento de subrutinas sobrepasado'" ;
+    ns1:textoExtracto "1152 'Anidamiento de subrutinas sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha superado el número de niveles de imbricación permitido." .
 

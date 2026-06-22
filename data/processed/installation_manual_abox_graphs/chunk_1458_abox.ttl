@@ -1,85 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:MesaRotativa_CalculoDimensiones a ns1:Sistema ;
-    rdfs:label "Cálculo de dimensiones de la mesa rotativa"@es ;
-    ns1:monitoreaParametro ns1:Parametro_E,
-        ns1:Parametro_F,
-        ns1:Parametro_TDATA2,
-        ns1:Parametro_TDATA4,
-        ns1:Parametro_TDATA5 ;
-    ns1:textoExtracto "Segunda posición. 1 Posicionar el eje rotativo A en 0º y el eje B en -90º. 2 Realizar un movimiento de palpación en la dirección del eje Z, sobre el punto 3. Anotar la cota que aparece en el CNC, denominada en el dibujo Z1."@es ;
-    ns1:tieneComponente ns1:EjeRotativo_A,
-        ns1:EjeRotativo_B,
-        ns1:Palpador_Bola .
+ns1:CNC8070_6a5b5c54fe a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR." .
 
-ns1:Parametro_DeltaX a ns1:Parametro ;
-    rdfs:label "ΔX (Cota del CNC en eje X)" ;
-    ns1:identificador "ΔX" ;
-    ns1:textoExtracto "ΔX, ΔX1 | Cotas que indica el CNC."@es .
+ns1:MaximoOverrideDMCDeTodosLosEjesDelCanal_b88571042a a ns1:Parametro ;
+    rdfs:label "Máximo override DMC de todos los ejes del canal" ;
+    ns1:identificador "MAXDMCOVR" ;
+    ns1:textoExtracto "MAXDMCOVR | Máximo override DMC de todos los ejes del canal." .
 
-ns1:Parametro_DeltaZ a ns1:Parametro ;
-    rdfs:label "ΔZ (Cota del CNC en eje Z)" ;
-    ns1:identificador "ΔZ" ;
-    ns1:textoExtracto "ΔZ, ΔZ1 | Cotas que indica el CNC."@es .
+ns1:MinimoOverrideDMCDeTodosLosEjesDelCanal_d4ab2d01cf a ns1:Parametro ;
+    rdfs:label "Mínimo override DMC de todos los ejes del canal" ;
+    ns1:identificador "MINDMCOVR" ;
+    ns1:textoExtracto "MINDMCOVR | Mínimo override DMC de todos los ejes del canal." .
 
-ns1:Parametro_Pz a ns1:Parametro ;
-    rdfs:label "Pz (Coordenada del eje A)"@es ;
-    ns1:identificador "Pz" ;
-    ns1:textoExtracto "Pz | Coordenada del eje A."@es .
+ns1:PorcentajeDeAvanceFijadoPorPLC a ns1:Parametro ;
+    rdfs:label "Porcentaje de avance fijado por PLC" ;
+    ns1:identificador "V.PLC.FRO" ;
+    ns1:textoExtracto "El porcentaje de avance fijado por PLC (variable V.PLC.FRO)" .
 
-ns1:Parametro_R a ns1:Parametro ;
-    rdfs:label "R (Radio del cilindro)"@es ;
-    ns1:identificador "R" ;
-    ns1:textoExtracto "R | Radio del cilindro."@es .
-
-ns1:EjeRotativo_A a ns1:ComponenteMecanico ;
-    rdfs:label "Eje rotativo A"@es ;
-    ns1:identificador "A" ;
-    ns1:textoExtracto "Posicionar el eje rotativo A en 0º"@es .
-
-ns1:EjeRotativo_B a ns1:ComponenteMecanico ;
-    rdfs:label "Eje rotativo B"@es ;
-    ns1:identificador "B" ;
-    ns1:textoExtracto "Posicionar el eje rotativo [...] B en -90º"@es .
-
-ns1:Palpador_Bola a ns1:Sensor ;
-    rdfs:label "Palpador con bola"@es ;
-    ns1:monitoreaParametro ns1:Parametro_r ;
-    ns1:textoExtracto "movimiento de palpación en la dirección del eje Z, sobre el punto 3 [...] Radio de la bola del palpador (r)"@es .
-
-ns1:Parametro_E a ns1:Parametro ;
-    rdfs:label "E (Distancia desde la superficie de la mesa hasta el eje B)"@es ;
-    ns1:identificador "E" ;
-    ns1:textoExtracto "E = 0,5·(ΔX + ΔZ + 2R + r)"@es ;
-    ns1:valor "0,5·(ΔX + ΔZ + 2R + r)"^^rdfs:Literal .
-
-ns1:Parametro_F a ns1:Parametro ;
-    rdfs:label "F (Distancia desde la superficie de la mesa hasta el eje A)"@es ;
-    ns1:identificador "F" ;
-    ns1:textoExtracto "F = ΔZ – Pz"@es ;
-    ns1:valor "ΔZ – Pz"^^rdfs:Literal .
-
-ns1:Parametro_TDATA2 a ns1:Parametro ;
-    rdfs:label "TDATA2" ;
-    ns1:identificador "TDATA2" ;
-    ns1:textoExtracto "TDATA2 = ΔX + r + E" ;
-    ns1:valor "ΔX + r + E"^^rdfs:Literal .
-
-ns1:Parametro_TDATA4 a ns1:Parametro ;
-    rdfs:label "TDATA4" ;
-    ns1:identificador "TDATA4" ;
-    ns1:textoExtracto "TDATA4 = TDATA4 – Pz" ;
-    ns1:valor "TDATA4 – Pz"^^rdfs:Literal .
-
-ns1:Parametro_TDATA5 a ns1:Parametro ;
-    rdfs:label "TDATA5" ;
-    ns1:identificador "TDATA5" ;
-    ns1:textoExtracto "TDATA5 = F – E" ;
-    ns1:valor "F – E"^^rdfs:Literal .
-
-ns1:Parametro_r a ns1:Parametro ;
-    rdfs:label "r (Radio de la bola del palpador)"@es ;
-    ns1:identificador "r" ;
-    ns1:textoExtracto "r | Radio de la bola del palpador."@es .
+ns1:PorcentajeDeAvanceFijadoPorPrograma a ns1:Parametro ;
+    rdfs:label "Porcentaje de avance fijado por programa" ;
+    ns1:identificador "V.G.PRGFRO" ;
+    ns1:textoExtracto "El porcentaje de avance fijado por programa (variable V.G.PRGFRO)" .
 

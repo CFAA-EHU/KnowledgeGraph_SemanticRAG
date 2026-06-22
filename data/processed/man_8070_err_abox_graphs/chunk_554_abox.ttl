@@ -1,83 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_3504 a ns1:Alarma ;
-    rdfs:label "Velocidad de cambio de aceleración mayor que la máxima" ;
-    ns1:identificador "3504" ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadCambioAceleracion ;
-    ns1:textoExtracto "3504 'Velocidad de cambio de aceleración mayor que la máxima' DETECCIÓN Durante el arranque o la ejecución. CAUSA La velocidad programada para el cambio de aceleración es mayor que la máxima. SOLUCIÓN Programar una velocidad menor que la máxima." .
+ns1:AvisoSeguridad_1033d8cf9d a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad sobre ejes acoplados" ;
+    ns1:mitigaRiesgo ns1:UsoDeEjesAcopladosEnOperacionesIndependientes ;
+    ns1:textoExtracto "Desactivar el acoplo o las transformaciones existentes." .
 
-ns1:Alarma_3505 a ns1:Alarma ;
-    rdfs:label "Límite de jerk sobrepasado" ;
-    ns1:identificador "3505" ;
-    ns1:monitoreaParametro ns1:Parametro_Jerk ;
-    ns1:textoExtracto "3505 'Límite de jerk sobrepasado' DETECCIÓN Durante la ejecución. CAUSA Sobrepasamiento de jerk en esa trayectoria. SOLUCIÓN Póngase en contacto con Fagor." .
+ns1:AvisoSeguridad_32aa31ba57 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad sobre límites de software" ;
+    ns1:mitigaRiesgo ns1:ModificacionDeLimitesDeSoftware ;
+    ns1:textoExtracto "Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC." .
 
-ns1:Alarma_3506 a ns1:Alarma ;
-    rdfs:label "El límite de jerk se va a sobrepasar" ;
-    ns1:identificador "3506" ;
-    ns1:monitoreaParametro ns1:Parametro_Amplitud,
-        ns1:Parametro_Frecuencia ;
-    ns1:textoExtracto "3506 'El límite de jerk se va a sobrepasar' DETECCIÓN Durante la ejecución del comando de análisis de frecuencias. CAUSA La frecuencia es demasiado grande para la amplitud programada. SOLUCIÓN Reducir la frecuencia máxima o reducir la amplitud." .
+ns1:ElEjeNoEsValidoComoEjeIndependiente a ns1:DiagnosticoFallo ;
+    rdfs:label "El eje no es válido como eje independiente" ;
+    ns1:textoExtracto "'El eje no es válido como eje independiente' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar una operación de eje independiente en la que interviene un eje que depende de otros o del que dependen otros (por ejemplo ejes gantry, acoplados o que forman parte de una transformación) o bien porque es un eje visualizador, o es módulo y el límite inferior del módulo es negativo." .
 
-ns1:Alarma_3507 a ns1:Alarma ;
-    rdfs:label "Límite de aceleración sobrepasada" ;
-    ns1:identificador "3507" ;
-    ns1:monitoreaParametro ns1:Parametro_Aceleracion ;
-    ns1:textoExtracto "3507 'Límite de aceleración sobrepasada' DETECCIÓN Durante la ejecución. CAUSA Sobrepasamiento de aceleración en esa trayectoria. SOLUCIÓN Póngase en contacto con Fagor." .
+ns1:ElValorEstaInferiorAlLimiteNegativo a ns1:DiagnosticoFallo ;
+    rdfs:label "El valor está inferior al límite negativo" ;
+    ns1:textoExtracto "'inferior al límite negativo' DETECCIÓN Durante la ejecución. CAUSA La cota programada en la sentencia #MOVE está fuera de los limites de software." .
 
-ns1:Alarma_3508 a ns1:Alarma ;
-    rdfs:label "Frecuencia demasiado grande para la velocidad programada" ;
-    ns1:identificador "3508" ;
-    ns1:monitoreaParametro ns1:Parametro_Frecuencia,
-        ns1:Parametro_VelocidadAditiva ;
-    ns1:textoExtracto "3508 'Frecuencia demasiado grande para la velocidad programada' DETECCIÓN Durante la ejecución del comando de análisis de frecuencias. CAUSA La velocidad aditiva es menor que la resultante para la frecuencia máxima. SOLUCIÓN Reducir la frecuencia máxima o bien programar una velocidad aditiva superior." .
+ns1:SeHaSuperadoElTiempoMaximoPermitidoParaSincronizar_2afda93146 a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha superado el tiempo máximo permitido para sincronizar" ;
+    ns1:textoExtracto "'Se ha superado el tiempo máximo permitido para sincronizar' DETECCIÓN Durante la ejecución." .
 
-ns1:Alarma_3509 a ns1:Alarma ;
-    rdfs:label "Límite de error sobrepasado en modo HSC" ;
-    ns1:identificador "3509" ;
-    ns1:monitoreaParametro ns1:Parametro_Tolerancia ;
-    ns1:textoExtracto "3509 Límite de error sobrepasado en modo HSC. DETECCIÓN Durante la ejecución. CAUSA La trayectoria teórica supera la tolerancia máxima programada. SOLUCIÓN La precisión de la pieza mecanizada puede ser inferior a la tolerancia programada. Modificar las condiciones de mecanizado." .
+ns1:ModificacionDeLimitesDeSoftware a ns1:AccionProhibida ;
+    rdfs:label "Modificación de límites de software" ;
+    ns1:textoExtracto "Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC." .
 
-ns1:Alarma_3510 a ns1:Alarma ;
-    rdfs:label "Movimiento programado va a colisionar con la sonda de palpado" ;
-    ns1:identificador "3510" ;
-    ns1:monitoreaParametro ns1:SondaPalpado ;
-    ns1:textoExtracto "3510 El movimiento programado va a colisionar con la sonda de palpado. DETECCIÓN Durante la ejecución. CAUSA El movimiento del eje va a superar los límites fijados por el movimiento de palpado anterior." .
-
-ns1:ModoOperacion_HSC a ns1:ModoOperacion ;
-    rdfs:label "Modo HSC" ;
-    ns1:textoExtracto "Límite de error sobrepasado en modo HSC." .
-
-ns1:Parametro_Aceleracion a ns1:Parametro ;
-    rdfs:label "Aceleración programada" ;
-    ns1:textoExtracto "La aceleración programada es mayor que la máxima." .
-
-ns1:Parametro_Amplitud a ns1:Parametro ;
-    rdfs:label "Amplitud" ;
-    ns1:textoExtracto "La frecuencia es demasiado grande para la amplitud programada." .
-
-ns1:Parametro_Jerk a ns1:Parametro ;
-    rdfs:label "Jerk" ;
-    ns1:textoExtracto "Sobrepasamiento de jerk en esa trayectoria." .
-
-ns1:Parametro_Tolerancia a ns1:Parametro ;
-    rdfs:label "Tolerancia máxima" ;
-    ns1:textoExtracto "La trayectoria teórica supera la tolerancia máxima programada." .
-
-ns1:Parametro_VelocidadAditiva a ns1:Parametro ;
-    rdfs:label "Velocidad aditiva" ;
-    ns1:textoExtracto "La velocidad aditiva es menor que la resultante para la frecuencia máxima." .
-
-ns1:Parametro_VelocidadCambioAceleracion a ns1:Parametro ;
-    rdfs:label "Velocidad de cambio de aceleración" ;
-    ns1:textoExtracto "La velocidad programada para el cambio de aceleración es mayor que la máxima." .
-
-ns1:SondaPalpado a ns1:Sensor ;
-    rdfs:label "Sonda de palpado" ;
-    ns1:textoExtracto "El movimiento programado va a colisionar con la sonda de palpado." .
-
-ns1:Parametro_Frecuencia a ns1:Parametro ;
-    rdfs:label "Frecuencia" ;
-    ns1:textoExtracto "La frecuencia es demasiado grande para la amplitud programada." .
+ns1:UsoDeEjesAcopladosEnOperacionesIndependientes a ns1:AccionProhibida ;
+    rdfs:label "Uso de ejes acoplados en operaciones independientes" ;
+    ns1:textoExtracto "Desactivar el acoplo o las transformaciones existentes." .
 

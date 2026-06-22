@@ -1,19 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_2422 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo #FOLLOW ON [MASTER]" ;
-    ns1:identificador "#FOLLOW ON [MASTER]" ;
-    ns1:textoExtracto "DETECCIÓN Durante la preparación de bloques. CAUSA Cuando un eje se programa para ser esclavo de la variable FLWMASTER, la sincronización solo puede ser sobre las cotas reales; no es posible sincronizar sobre las cotas teóricas. SOLUCIÓN Realizar la sincronización con las cotas reales." .
+ns1:ActivarControlDePotenciaSinCabezalMaster a ns1:AccionProhibida ;
+    rdfs:label "Activar control de potencia sin cabezal master" ;
+    ns1:textoExtracto "2415 PWCTRL OUT no permitido sin cabezal master en el canal." .
 
-ns1:Fallo_2423 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo #CUTTING o #PIERCING no definido" ;
-    ns1:identificador "#2423" ;
-    ns1:solucionaFallo ns1:Parametro_T ;
-    ns1:textoExtracto "2423 Tipo de #CUTTING o #PIERCING no definido. DETECCIÓN Durante la preparación de bloques. CAUSA El tipo de piercing o cutting es nulo. Falta el parámetro T en la sentencia y no se ha programado previamente un valor de T" .
+ns1:RevisarSintaxisEnElManualDeProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis en el manual de programación" ;
+    ns1:solucionaFallo ns1:SintaxisIncorrectaEnPWRCTRL ;
+    ns1:textoExtracto "2416 #PWRCTRL ON [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>] SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:Parametro_T a ns1:Parametro ;
-    rdfs:label "Parámetro T (tipo de cutting/piercing)" ;
-    ns1:textoExtracto "Falta el parámetro T en la sentencia y no se ha programado previamente un valor de T" ;
-    ns1:valor "T" .
+ns1:SeleccionarCabezalMasterAntesDeActivarControlDePotencia a ns1:TareaMantenimiento ;
+    rdfs:label "Seleccionar cabezal master antes de activar control de potencia" ;
+    ns1:solucionaFallo ns1:ControlDePotenciaSinCabezalMaster ;
+    ns1:textoExtracto "2415 PWCTRL OUT no permitido sin cabezal master en el canal. SOLUCIÓN Seleccionar un cabezal master (#MASTER) antes de activar el control de potencia." .
+
+ns1:UsoIncorrectoDeLaSintaxisPWRCTRL a ns1:AccionProhibida ;
+    rdfs:label "Uso incorrecto de la sintaxis #PWRCTRL" ;
+    ns1:textoExtracto "2416 #PWRCTRL ON [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:ControlDePotenciaSinCabezalMaster a ns1:DiagnosticoFallo ;
+    rdfs:label "Control de potencia sin cabezal master" ;
+    ns1:textoExtracto "2415 PWCTRL OUT no permitido sin cabezal master en el canal. DETECCIÓN Durante la ejecución. CAUSA El control de potencia se aplica al cabezal master. Se ha intentado activar el control de potencia y no hay un cabezal master activo." .
+
+ns1:SintaxisIncorrectaEnPWRCTRL a ns1:DiagnosticoFallo ;
+    rdfs:label "Sintaxis incorrecta en #PWRCTRL" ;
+    ns1:textoExtracto "2416 #PWRCTRL ON [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 

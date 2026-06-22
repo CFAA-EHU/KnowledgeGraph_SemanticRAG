@@ -1,39 +1,75 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_FINALSUB a ns1:AccionProhibida ;
-    rdfs:label "Comando #FINALSUB" ;
-    ns1:identificador "#FINALSUB" ;
-    ns1:solucionaFallo ns1:Fallo_2442 ;
-    ns1:textoExtracto "SOLUCIÓN Programar una única vez #FINALSUB." .
+ns1:ActivacionDeDMCSoloEnCabezalesDigitales a ns1:TareaMantenimiento ;
+    rdfs:label "Activación de DMC solo en cabezales digitales" ;
+    ns1:solucionaFallo ns1:ActivacionDeDMCSobreCabezalAnalogico ;
+    ns1:textoExtracto "SOLUCIÓN El DMC sólo se puede activar sobre cabezales digitales." .
 
-ns1:Comando_MATERIAL a ns1:Parametro ;
-    rdfs:label "Comando #MATERIAL" ;
-    ns1:identificador "#MATERIAL" ;
-    ns1:textoExtracto "Durante la ejecución del comando #MATERIAL o al activar/validar una tabla tecnológica." .
+ns1:AjustarAvanceMinimoYMaximo a ns1:TareaMantenimiento ;
+    rdfs:label "Ajustar avance mínimo y máximo" ;
+    ns1:solucionaFallo ns1:AvanceMinimoMayorQueElAvanceMaximo ;
+    ns1:textoExtracto "SOLUCIÓN El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
 
-ns1:Fallo_2443 a ns1:DiagnosticoFallo ;
-    rdfs:label "Reinicio necesario para cambios en fichero de material" ;
-    ns1:identificador "2443" ;
-    ns1:textoExtracto "Para asumir cambios en el fichero de material es necesario reiniciar el CNC. DETECCIÓN Durante la ejecución del comando #MATERIAL o al activar/validar una tabla tecnológica." .
+ns1:AjustarOverrideMinimoYMaximo a ns1:TareaMantenimiento ;
+    rdfs:label "Ajustar override mínimo y máximo" ;
+    ns1:solucionaFallo ns1:OverrideMinimoMayorQueElOverrideMaximo ;
+    ns1:textoExtracto "SOLUCIÓN El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." .
 
-ns1:Funcion_G8753 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G8753" ;
-    ns1:identificador "G8753" ;
-    ns1:textoExtracto "Las funciones G8753 se deben programar a continuación de la macro G8754." .
+ns1:AvanceMaximo a ns1:Parametro ;
+    rdfs:label "Avance máximo" ;
+    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
 
-ns1:Macro_G8754 a ns1:Parametro ;
-    rdfs:label "Macro G8754" ;
-    ns1:identificador "G8754" ;
-    ns1:textoExtracto "Programación no permitida fuera de una macro G8754." .
+ns1:AvanceMinimo a ns1:Parametro ;
+    rdfs:label "Avance mínimo" ;
+    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
 
-ns1:TablaTecnologica a ns1:Tabla ;
-    rdfs:label "Tabla tecnológica" ;
-    ns1:textoExtracto "al activar/validar una tabla tecnológica." .
+ns1:IncluirComandoONOFFEnLaProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Incluir comando ON/OFF en la programación" ;
+    ns1:solucionaFallo ns1:ProgramacionSinComandoONOFF ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. Incluir el comando ON para activar la función (por ejemplo, #DMCON [...]) o el comando OFF para anularla (por ejemplo, #DMC OFF)." .
 
-ns1:Fallo_2442 a ns1:DiagnosticoFallo ;
-    rdfs:label "Programación no permitida fuera de una macro G8754" ;
-    ns1:identificador "2442" ;
-    ns1:textoExtracto "Programación no permitida fuera de una macro G8754. DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8753 programada fuera de una macro G8754." .
+ns1:OverrideMaximo_d5174e882d a ns1:Parametro ;
+    rdfs:label "Override máximo" ;
+    ns1:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." .
+
+ns1:OverrideMinimo_03eb9b6ae4 a ns1:Parametro ;
+    rdfs:label "Override mínimo" ;
+    ns1:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." .
+
+ns1:RevisarYCorregirProgramacionDeFuncionesG8078 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar y corregir programación de funciones G8078" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_760dbc5c7d,
+        ns1:ProgramacionSinComandoONOFF ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Las funciones G8078 se deben programar a continuación de la macro G8079." .
+
+ns1:RevisarYCorregirProgramacionDeFuncionesG8778G8701OG8702 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar y corregir programación de funciones G8778, G8701 o G8702" ;
+    ns1:solucionaFallo ns1:FuncionesG8778G8701OG8702ProgramadasFueraDeMacroG8777 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:ActivacionDeDMCSobreCabezalAnalogico a ns1:DiagnosticoFallo ;
+    rdfs:label "Activación de DMC sobre cabezal analógico" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico." .
+
+ns1:AvanceMinimoMayorQueElAvanceMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "Avance mínimo mayor que el avance máximo" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el avance mínimo es mayor que el avance máximo." .
+
+ns1:DiagnosticoFallo_760dbc5c7d a ns1:DiagnosticoFallo ;
+    rdfs:label "Función G8078 programada fuera de macro G8077" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8078 programada fuera de una macro G8077." .
+
+ns1:FuncionesG8778G8701OG8702ProgramadasFueraDeMacroG8777 a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones G8778, G8701 o G8702 programadas fuera de macro G8777" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777." .
+
+ns1:OverrideMinimoMayorQueElOverrideMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "Override mínimo mayor que el override máximo" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el override mínimo es mayor que el override máximo." .
+
+ns1:ProgramacionSinComandoONOFF a ns1:AccionProhibida ;
+    rdfs:label "Función G8078 programada fuera de macro G8079",
+        "Programación sin comando ON/OFF" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8078 programada fuera de una macro G8079." .
 

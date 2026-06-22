@@ -1,61 +1,50 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_6031 a ns1:DiagnosticoFallo ;
-    rdfs:label "Versión de soft incompatible en COMPCI/Nodos remotos"@es ;
-    ns1:identificador "6031" ;
-    ns1:solucionaFallo ns1:UsoDeSoftwareIncompatibleEnCOMPCINodosRemotos ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema. CAUSA Versión de software incompatible en CNC y COMPCI o módulos remotos. SOLUCIÓN Actualizar el software de la COMPCI y módulos remotos."@es .
+ns1:AumentarTiemposDeCiclo a ns1:TareaMantenimiento ;
+    rdfs:label "Aumentar tiempos de ciclo" ;
+    ns1:solucionaFallo ns1:TimeoutEnLecturasDeCAN ;
+    ns1:textoExtracto "En caso necesario, aumentar los tiempos de ciclo (parámetros LOOPTIME y PLCFREQ)." .
 
-ns1:Error_6032 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la configuración del teclado CAN"@es ;
-    ns1:identificador "6032" ;
-    ns1:solucionaFallo ns1:OperacionConFallosEnComunicacionCANNodo165 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El 165 no responde o hay problemas en la comunicación CAN. SOLUCIÓN Revisar la conexión a través del bus CAN y la versión de la COMPCI."@es .
+ns1:ComprobacionIntegridadDelBusCAN a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobación integridad del bus CAN" ;
+    ns1:solucionaFallo ns1:ContadorDeErroresCANEnNivelCritico,
+        ns1:TimeoutEnLecturasDeCAN ;
+    ns1:textoExtracto "Realizar las comprobaciones oportunas para garantizar la integridad del bus CAN." .
 
-ns1:Error_6033 a ns1:DiagnosticoFallo ;
-    rdfs:label "Configuración hardware no coincide con fichero guardado"@es ;
-    ns1:identificador "6033" ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema o durante la ejecución. CAUSA La configuración hardware guardada en disco no coincide con la detectada en el arranque. Posibles cambios en la configuración CAN que no se han salvado, cambios no deseados en los parámetros máquina, etc. SOLUCIÓN En el modo diagnosis comprobar si la configuración CAN detectada coincide con la real; si es así, salvar la configuración. En caso contrario comprobar si es un error en la parametrización o hay algún error en la detección de los nodos."@es .
+ns1:ComprobarModulosYContadorDeErroresCAN_63085e1e92 a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar módulos y contador de errores CAN" ;
+    ns1:solucionaFallo ns1:TimeoutEnLecturasDeCAN ;
+    ns1:textoExtracto "Comprobar en el modo diagnosis que el CNC reconoce todos los módulos y el contador de errores CAN; si existen errores, realizar las comprobaciones oportunas para garantizar la integridad del bus CAN." .
 
-ns1:Error_6034 a ns1:DiagnosticoFallo ;
-    rdfs:label "Reset en nodo CAN"@es ;
-    ns1:identificador "6034" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Un nodo CAN se ha reseteado. La ventana de error indica el número de nodo. SOLUCIÓN Comprobar que la alimentación del nodo es correcta. Si no hay problemas en el bus, sustituir el nodo. Consultar con el servicio de asistencia técnica."@es .
+ns1:NoContinuarSiElErrorPersiste a ns1:AccionProhibida ;
+    rdfs:label "No continuar si el error persiste" ;
+    ns1:mitigaRiesgo ns1:ConsultarConElServicioDeAsistenciaTecnica_93fe2b7236 ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:Error_6035 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la inicialización de IOs locales"@es ;
-    ns1:identificador "6035" ;
-    ns1:solucionaFallo ns1:ConfiguracionDeMasDe8SalidasDigitalesLocalesEnCNC ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema. CAUSA En el CNC hay configuradas más salidas digitales locales que las que existentes. SOLUCIÓN Definir un máximo de 8 salidas digitales locales."@es .
+ns1:SolapamientoDelCicloDeCAN a ns1:DiagnosticoFallo ;
+    rdfs:label "Solapamiento del ciclo de CAN" ;
+    ns1:textoExtracto "'Solapamiento del ciclo de CAN' DETECCIÓN Durante la ejecución. CAUSA Fallo en los procesos cíclicos de lectura de las entradas digitales, analógicas, contadores y volantes de teclado." .
 
-ns1:Error_6036 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta alimentación de IOs locales"@es ;
-    ns1:identificador "6036" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Falta la alimentación en las I/Os locales (unidades centrales ICU y MCU)."@es .
+ns1:ConsultarConElServicioDeAsistenciaTecnica_93fe2b7236 a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar con el servicio de asistencia técnica" ;
+    ns1:solucionaFallo ns1:OverrunEnFIFOCANDeLaCOMPCI,
+        ns1:OverrunEnFIFODelControladorCAN ;
+    ns1:textoExtracto "Consultar con el servicio de asistencia técnica." .
 
-ns1:Fallo_Hardware_Contadora a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo de hardware del nodo contadora"@es ;
-    ns1:solucionaFallo ns1:OperacionConFalloDeHardwareEnNodoContadora ;
-    ns1:textoExtracto "CAUSA Incremento de posición excesivo en un eje analógico. Fallo de hardware del nodo contadora. SOLUCIÓN Consultar con el servicio de asistencia técnica."@es .
+ns1:ContadorDeErroresCANEnNivelCritico a ns1:DiagnosticoFallo ;
+    rdfs:label "Contador de errores CAN en nivel crítico" ;
+    ns1:textoExtracto "'Contador de errores CAN en nivel crítico' DETECCIÓN Durante la ejecución. CAUSA El contador de tramas de error (Rx/Tx) supera el nivel crítico (127). SOLUCIÓN Realizar las comprobaciones oportunas para garantizar la integridad del bus CAN." .
 
-ns1:Modo_Diagnosis a ns1:ModoOperacion ;
-    rdfs:label "Modo diagnosis"@es ;
-    ns1:textoExtracto "En el modo diagnosis comprobar si la configuración CAN detectada coincide con la real; si es así, salvar la configuración."@es .
+ns1:OverrunEnFIFOCANDeLaCOMPCI a ns1:DiagnosticoFallo ;
+    rdfs:label "Overrun en FIFO CAN de la COMPCI" ;
+    ns1:textoExtracto "'Overrun en FIFO CAN de la COMPCI' DETECCIÓN Durante la ejecución. CAUSA Overflow en la FIFO de recepción de la COMPCI." .
 
-ns1:ConfiguracionDeMasDe8SalidasDigitalesLocalesEnCNC a ns1:AccionProhibida ;
-    rdfs:label "Configuración de más de 8 salidas digitales locales en CNC"@es ;
-    ns1:textoExtracto "En el CNC hay configuradas más salidas digitales locales que las que existentes."@es .
+ns1:OverrunEnFIFODelControladorCAN a ns1:DiagnosticoFallo ;
+    rdfs:label "Overrun en FIFO del controlador CAN" ;
+    ns1:textoExtracto "'Overrun en FIFO del controlador CAN' DETECCIÓN Durante la ejecución. CAUSA Overflow en la FIFO de recepción del controlador de CAN." .
 
-ns1:OperacionConFalloDeHardwareEnNodoContadora a ns1:AccionProhibida ;
-    rdfs:label "Operación con fallo de hardware en nodo contadora"@es ;
-    ns1:textoExtracto "Fallo de hardware del nodo contadora."@es .
-
-ns1:OperacionConFallosEnComunicacionCANNodo165 a ns1:AccionProhibida ;
-    rdfs:label "Operación con fallos en comunicación CAN (nodo 165)"@es ;
-    ns1:textoExtracto "El 165 no responde o hay problemas en la comunicación CAN."@es .
-
-ns1:UsoDeSoftwareIncompatibleEnCOMPCINodosRemotos a ns1:AccionProhibida ;
-    rdfs:label "Uso de software incompatible en COMPCI/nodos remotos"@es ;
-    ns1:textoExtracto "Versión de software incompatible en CNC y COMPCI o módulos remotos."@es .
+ns1:TimeoutEnLecturasDeCAN a ns1:DiagnosticoFallo ;
+    rdfs:label "Timeout en lecturas de CAN" ;
+    ns1:textoExtracto "'Timeout en lecturas de CAN' DETECCIÓN Durante la ejecución. CAUSA Fallo en los procesos cíclicos de lectura de las entradas digitales, analógicas, contadores y volantes de teclado." .
 

@@ -1,72 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_9323 a ns1:DiagnosticoFallo ;
-    rdfs:label "Con ejes Mechatrolink no se admiten ejes Tandem"@es ;
-    ns1:identificador "9323" ;
-    ns1:solucionaFallo ns1:Parametro_ConfiguracionEjesTandem ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA: Hay un regulador Mechatrolink que forma parte de una pareja tandem. SOLUCIÓN: Un regulador Mechatrolink no puede formar parte de un eje tandem. Eliminar el eje Mechatrolink de la pareja tandem o usar reguladores Sercos."@es .
+ns1:AumentarElFeedforwardDelCabezal a ns1:AccionProhibida ;
+    rdfs:label "Aumentar el feedforward del cabezal" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo9310 ;
+    ns1:textoExtracto "SOLUCIÓN Aumentar el feedforward del cabezal." .
 
-ns1:DiagnosticoFallo_9324 a ns1:DiagnosticoFallo ;
-    rdfs:label "Con ejes Mechatrolink no se admiten grupos MULTIAXIS"@es ;
-    ns1:identificador "9324" ;
-    ns1:solucionaFallo ns1:Parametro_ConfiguracionMultiAxis ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA: Hay un regulador Mechatrolink que forma parte de un grupo MULTIAXIS. SOLUCIÓN: Un regulador Mechatrolink no puede formar parte de un grupo MULTIAXIS. Eliminar el eje Mechatrolink del grupo MULTIAXIS o usar reguladores Sercos."@es .
+ns1:CorregirLaTablaDeEjesTandemYMultieje a ns1:AccionProhibida ;
+    rdfs:label "Corregir la tabla de ejes tandem y multieje" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo9311 ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la tabla de ejes tandem y multieje." .
 
-ns1:DiagnosticoFallo_9325 a ns1:DiagnosticoFallo ;
-    rdfs:label "Ejes Mechatrolink: Los inverter tienen que ser cabezales"@es ;
-    ns1:identificador "9325" ;
-    ns1:solucionaFallo ns1:Parametro_TipoInverterMechatrolink ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA: En una configuración Mechatrolink, los inverters siempre deben ser cabezales. SOLUCIÓN: Revisar los parámetros máquina."@es .
+ns1:ParaPoderCambiarDeHerramientaEnUnaMaquinaSinAlmacenesLaMaquinaDebeAdm_2bcad10d19 a ns1:AccionProhibida ;
+    rdfs:label "Para poder cambiar de herramienta en una máquina sin almacenes, la máquina debe admitir herramientas de tierra" ;
+    ns1:solucionaFallo ns1:SiElNumeroDeAlmacenesEs0SeDebenPermitirHerramientaDeTierra ;
+    ns1:textoExtracto "SOLUCIÓN Para poder cambiar de herramienta en una máquina sin almacenes, la máquina debe admitir herramientas de tierra (parámetro GROUND)." .
 
-ns1:DiagnosticoFallo_9326 a ns1:DiagnosticoFallo ;
-    rdfs:label "Mechatrolink I: Looptime 2 ms"@es ;
-    ns1:identificador "9326" ;
-    ns1:solucionaFallo ns1:Parametro_LooptimeMlinkI ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA: El modo Mlink-I de Mechatrolink sólo admite un tiempo de ciclo de 2ms. SOLUCIÓN: Para el modo Mlink-I asignar un tiempo de ciclo de 2 ms (parámetro LOOPTIME) o utilizar el modo Mlink II (parámetro MLINK)."@es .
+ns1:RevisarLosParametrosMaquina_78d322fcc8 a ns1:AccionProhibida ;
+    rdfs:label "Revisar los parámetros máquina" ;
+    ns1:solucionaFallo ns1:NoSePermitenPosicionesDeCompensacionFueraDelRangoDelModulo_945258a173 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina." .
 
-ns1:DiagnosticoFallo_9327 a ns1:DiagnosticoFallo ;
-    rdfs:label "Mechatrolink: Número máximo de ejes y cabezales sobrepasado"@es ;
-    ns1:identificador "9327" ;
-    ns1:solucionaFallo ns1:Parametro_LimiteEjesCabezales ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA: La configuración Mechatrolink supera el máximo permitido de ejes y cabezales (servos e inverters)."@es .
+ns1:TipoDeCanal_5a19a6ab77 a ns1:Parametro ;
+    rdfs:label "Tipo de canal" ;
+    ns1:textoExtracto "parámetro CHTYPE" .
 
-ns1:Sistema_Mechatrolink a ns1:Sistema ;
-    rdfs:label "Sistema de control Mechatrolink"@es ;
-    ns1:textoExtracto "configuración Mechatrolink con reguladores, ejes, servos e inverters"@es ;
-    ns1:tieneComponente ns1:ComponenteElectrico_InverterCabezal,
-        ns1:ComponenteElectrico_ReguladorMechatrolink .
+ns1:NoSePermitenPosicionesDeCompensacionFueraDelRangoDelModulo_945258a173 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se permiten posiciones de compensación fuera del rango del módulo" ;
+    ns1:textoExtracto "'No se permiten posiciones de compensación fuera del rango del módulo'" .
 
-ns1:ComponenteElectrico_InverterCabezal a ns1:ComponenteElectrico ;
-    rdfs:label "Inverter cabezal para Mechatrolink"@es ;
-    ns1:textoExtracto "inverters siempre deben ser cabezales"@es .
-
-ns1:ComponenteElectrico_ReguladorMechatrolink a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Mechatrolink"@es ;
-    ns1:textoExtracto "regulador Mechatrolink"@es .
-
-ns1:Parametro_ConfiguracionEjesTandem a ns1:Parametro ;
-    rdfs:label "Configuración de ejes Tandem con reguladores Mechatrolink"@es ;
-    ns1:textoExtracto "parámetros máquina: regulador Mechatrolink en pareja tandem"@es ;
-    ns1:valor "No admitido"@es .
-
-ns1:Parametro_ConfiguracionMultiAxis a ns1:Parametro ;
-    rdfs:label "Configuración MULTIAXIS con reguladores Mechatrolink"@es ;
-    ns1:textoExtracto "parámetros máquina: regulador Mechatrolink en grupo MULTIAXIS"@es ;
-    ns1:valor "No admitido"@es .
-
-ns1:Parametro_LimiteEjesCabezales a ns1:Parametro ;
-    rdfs:label "Límite de ejes y cabezales en configuración Mechatrolink"@es ;
-    ns1:textoExtracto "máximo permitido de ejes y cabezales (servos e inverters)"@es ;
-    ns1:valor "Superado"@es .
-
-ns1:Parametro_LooptimeMlinkI a ns1:Parametro ;
-    rdfs:label "Tiempo de ciclo (Looptime) para modo Mlink-I"@es ;
-    ns1:textoExtracto "modo Mlink-I de Mechatrolink sólo admite un tiempo de ciclo de 2ms"@es ;
-    ns1:valor "2 ms" .
-
-ns1:Parametro_TipoInverterMechatrolink a ns1:Parametro ;
-    rdfs:label "Tipo de inverter en configuración Mechatrolink"@es ;
-    ns1:textoExtracto "los inverters siempre deben ser cabezales"@es ;
-    ns1:valor "Cabezales"@es .
+ns1:SiElNumeroDeAlmacenesEs0SeDebenPermitirHerramientaDeTierra a ns1:DiagnosticoFallo ;
+    rdfs:label "Si el número de almacenes es 0, se deben permitir herramienta de tierra" ;
+    ns1:textoExtracto "'Si el número de almacenes es 0, se deben permitir herramienta de tierra'" .
 

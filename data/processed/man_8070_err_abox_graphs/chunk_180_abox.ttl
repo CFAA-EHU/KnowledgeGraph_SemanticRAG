@@ -1,26 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:activaAlarma ns1:Alarma_1349,
-        ns1:Alarma_1350 ;
-    ns1:textoExtracto "El CNC no permite esta opción (parámetro ALINGC)." ;
-    ns1:tieneComponente ns1:Parametro_ALINGC .
+ns1:CAXOFF_b8b84cf725 a ns1:Parametro ;
+    rdfs:label "#CAX OFF" ;
+    ns1:textoExtracto "El CNC ha intentado ejecutar la sentencia #CAX OFF y no hay ningún cabezal trabajando como eje C." .
 
-ns1:Alarma_1350 a ns1:Alarma ;
-    rdfs:label "Alarma 1350: Carácter no válido entre las sentencias #VAR/#ENDVAR" ;
-    ns1:identificador "1350" ;
-    ns1:textoExtracto "1350 'Carácter no válido entre las sentencias #VAR/#ENDVAR' DETECCIÓN Durante la ejecución. CAUSA En alguno de los bloques comprendidos entre estas sentencias hay programado un carácter no válido. SOLUCIÓN Entre estas sentencias sólo se admite la declaración de variables de usuario (separadas por comas si son varias en una misma línea) o la programación del número de bloque." .
+ns1:CNC8070_68ca8309fa a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:LaDeseleccionNoTieneEfecto,
+        ns1:NoSeAdmiteCAXOFFSiAlgunaTransformacionEstaActiva,
+        ns1:NoSeAdmiteCambioDePlanoDuranteElMecanizadoEnSuperficieLateral,
+        ns1:NoSeAdmiteFACEOFFConElTipoDeCinematicaActiva ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Parametro_ALINGC a ns1:Parametro ;
-    rdfs:label "Parámetro ALINGC" ;
-    ns1:identificador "ALINGC" ;
-    ns1:monitoreaParametro ns1:Alarma_1349 ;
-    ns1:textoExtracto "El CNC no permite esta opción (parámetro ALINGC)." .
+ns1:FACEOFF a ns1:Parametro ;
+    rdfs:label "#FACE OFF" ;
+    ns1:textoExtracto "El CNC ha intentado ejecutar la sentencia #FACE OFF y no hay activo ningún mecanizado en la superficie frontal." .
 
-ns1:Alarma_1349 a ns1:Alarma ;
-    rdfs:label "Alarma 1349: Cota del eje negativa en la activación #FACE" ;
-    ns1:identificador "1349" ;
-    ns1:textoExtracto "1349 'Cota del eje negativa en la activación #FACE' DETECCIÓN Durante la ejecución. CAUSA El eje lineal que forma parte de la transformación de eje C frontal, se encuentra posicionado en la parte negativa respecto del centro de giro. El CNC no permite esta opción (parámetro ALINGC). SOLUCIÓN Posicionar el eje en la parte positiva respecto del centro de giro antes de activar el mecanizado en el eje frontal." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:LaDeseleccionNoTieneEfecto,
+        ns1:NoSeAdmiteCAXOFFSiAlgunaTransformacionEstaActiva,
+        ns1:NoSeAdmiteCambioDePlanoDuranteElMecanizadoEnSuperficieLateral,
+        ns1:NoSeAdmiteFACEOFFConElTipoDeCinematicaActiva ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:LaDeseleccionNoTieneEfecto a ns1:DiagnosticoFallo ;
+    rdfs:label "La deselección no tiene efecto" ;
+    ns1:textoExtracto "'La deselección no tiene efecto'" .
+
+ns1:NoSeAdmiteCAXOFFSiAlgunaTransformacionEstaActiva a ns1:DiagnosticoFallo ;
+    rdfs:label "'No se admite #CAX OFF si alguna transformación esta activa'" ;
+    ns1:textoExtracto "'No se admite #CAX OFF si alguna transformación esta activa'" .
+
+ns1:NoSeAdmiteCambioDePlanoDuranteElMecanizadoEnSuperficieLateral a ns1:DiagnosticoFallo ;
+    rdfs:label "'No se admite cambio de plano durante el mecanizado en superficie lateral'" ;
+    ns1:textoExtracto "'No se admite cambio de plano durante el mecanizado en superficie lateral'" .
+
+ns1:NoSeAdmiteFACEOFFConElTipoDeCinematicaActiva a ns1:DiagnosticoFallo ;
+    rdfs:label "'No se admite #FACE OFF con el tipo de cinemática activa'" ;
+    ns1:textoExtracto "'No se admite #FACE OFF con el tipo de cinemática activa'" .
 

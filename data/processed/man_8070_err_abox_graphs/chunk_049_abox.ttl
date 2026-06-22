@@ -1,45 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_0106 a ns1:DiagnosticoFallo ;
-    rdfs:label "Validación bloqueada por movimiento activo" ;
-    ns1:monitoreaParametro ns1:Parametro_TablaParametrosMaquina ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_0106 ;
-    ns1:textoExtracto "El usuario ha intentado validar una tabla de parámetros máquina mientras hay un cabezal o un eje en movimiento. Un eje puede estar en moviendo como consecuencia de un comando de eje independiente." .
+ns1:AsignarMismoValorAlParametroAXISEXCH a ns1:TareaMantenimiento ;
+    rdfs:label "asignar mismo valor al parámetro AXISEXCH" ;
+    ns1:solucionaFallo ns1:DiferenteValorDeAXISEXCH ;
+    ns1:textoExtracto "SOLUCIÓN Asignar el mismo valor al parámetro AXISEXCH de ambos ejes." .
 
-ns1:DiagnosticoFallo_0107 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de registro de variables DRV en CNC" ;
-    ns1:monitoreaParametro ns1:Parametro_VariablesDRV ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_0107 ;
-    ns1:textoExtracto "El CNC ha generado un error al intentar registrar las variables definidas en la tabla de parámetros OEM." .
+ns1:CNC8070_8dd73e6893 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:DiferenteValorDeAXISEXCH,
+        ns1:ValorDePROBEFEEDDemasiadoAlto ;
+    ns1:textoExtracto "el CNC anula las parejas definidas a continuación" .
 
-ns1:AvisoSeguridad_0106 a ns1:AvisoSeguridad ;
-    rdfs:label "No es posible validar parámetros: Cabezal o eje en movimiento o en sincronización" ;
-    ns1:documentadoEn ns1:Parametro_TablaParametrosMaquina ;
-    ns1:identificador "0106" ;
-    ns1:mitigaRiesgo ns1:ComponenteMecanico_Cabezal,
-        ns1:ComponenteMecanico_Eje ;
-    ns1:textoExtracto "0106 'No es posible validar parámetros: Cabezal o eje movimiento o en sincronización' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El usuario ha intentado validar una tabla de parámetros máquina mientras hay un cabezal o un eje en movimiento. Un eje puede estar en moviendo como consecuencia de un comando de eje independiente. SOLUCIÓN Detener el movimiento del eje o cabezal." .
+ns1:ParametroAXISEXCH a ns1:Parametro ;
+    rdfs:label "parámetro AXISEXCH" ;
+    ns1:textoExtracto "'El eje maestro y el esclavo tienen diferente parámetro AXISEXCH'" .
 
-ns1:AvisoSeguridad_0107 a ns1:AvisoSeguridad ;
-    rdfs:label "Error al registrar variables DRV" ;
-    ns1:documentadoEn ns1:Parametro_VariablesDRV ;
-    ns1:identificador "0107" ;
-    ns1:textoExtracto "0107 'Error al registrar variables DRV' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El CNC ha generado un error al intentar registrar las variables definidas en la tabla de parámetros OEM." .
+ns1:ParametroPROBEFEED a ns1:Parametro ;
+    rdfs:label "parámetro PROBEFEED" ;
+    ns1:textoExtracto "'EL valor del PROBEFEED es demasiado alto para frenar respetando DECEL y JERK'" .
 
-ns1:ComponenteMecanico_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "hay un cabezal o un eje en movimiento" .
+ns1:ValorDePROBEFEEDDemasiadoAlto a ns1:DiagnosticoFallo ;
+    rdfs:label "valor de PROBEFEED demasiado alto" ;
+    ns1:textoExtracto "El avance máximo de palpado (parámetro PROBEFEED) es superior al avance necesario para frenar en el espacio definido en PROBERANGE, respetando los valores de aceleración y de jerk del eje." .
 
-ns1:ComponenteMecanico_Eje a ns1:ComponenteMecanico ;
-    rdfs:label "Eje" ;
-    ns1:textoExtracto "hay un cabezal o un eje en movimiento" .
-
-ns1:Parametro_TablaParametrosMaquina a ns1:Parametro ;
-    rdfs:label "Tabla de parámetros máquina" ;
-    ns1:textoExtracto "validar una tabla de parámetros máquina" .
-
-ns1:Parametro_VariablesDRV a ns1:Parametro ;
-    rdfs:label "Variables DRV" ;
-    ns1:textoExtracto "variables definidas en la tabla de parámetros OEM" .
+ns1:DiferenteValorDeAXISEXCH a ns1:DiagnosticoFallo ;
+    rdfs:label "diferente valor de AXISEXCH" ;
+    ns1:textoExtracto "Hay una pareja gantry o tándem cuyos ejes maestro y esclavo tienen el parámetro AXISEXCH con diferente valor." .
 

@@ -1,35 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1657 a ns1:Alarma ;
-    rdfs:label "Variable no válida para cabezal que no es eje C"@es ;
-    ns1:identificador "1657" ;
-    ns1:textoExtracto "1657 'Variable no válida para cabezal que no es eje C' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado leer una variable de eje pero el cabezal no está activado como eje C. SOLUCIÓN La variable sólo existe para ejes y cabezales trabajando como eje C."@es .
+ns1:AcoplarLosEjesEnSuCanal a ns1:TareaMantenimiento ;
+    rdfs:label "Acoplar los ejes en su canal" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteLINKMantenidoConEjesTemporalesDeOtroCanal ;
+    ns1:textoExtracto "SOLUCIÓN Acoplar los ejes en su canal." .
 
-ns1:Alarma_1658 a ns1:Alarma ;
-    rdfs:label "Número de almacén no válido"@es ;
-    ns1:identificador "1658" ;
-    ns1:textoExtracto "1658 'Número de almacén no válido' DETECCIÓN Durante la ejecución. CAUSA El número de almacén no es válido. SOLUCIÓN Revisar la programación. El número de almacenes está definido en el parámetro NTOOLMZ."@es .
+ns1:ParametroAXISEXCH a ns1:Parametro ;
+    rdfs:label "Parámetro AXISEXCH" ;
+    ns1:textoExtracto "El CNC no puede acoplar ejes con permiso de intercambio temporal (parámetro AXISEXCH)" .
 
-ns1:Alarma_1659 a ns1:Alarma ;
-    rdfs:label "Macro previamente definida mediante #DEF FIX"@es ;
-    ns1:identificador "1659" ;
-    ns1:textoExtracto "1659 'Macro previamente definida mediante #DEF FIX' DETECCIÓN Durante la ejecución. CAUSA La macro ya existe; fue definida con el comando #DEF FIX. Recordar que la tabla de macros no se inicializa con el principio y final de programa, sólo con la sentencia #INIT MACROTAB. SOLUCIÓN Definir la macro con un nombre diferente. Las macros definidas mediante el comando #DEF FIX no se borran tras un reset."@es .
+ns1:ParametroLINKCANCEL a ns1:Parametro ;
+    rdfs:label "Parámetro LINKCANCEL" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC no puede acoplar ejes con permiso de intercambio temporal (parámetro AXISEXCH) si pertenecen a otro canal y los acoplos del canal están definidos como mantenidos (parámetro LINKCANCEL)." .
 
-ns1:Comando_DEF_FIX a ns1:Componente ;
-    rdfs:label "Comando #DEF FIX"@es ;
-    ns1:textoExtracto "La macro ya existe; fue definida con el comando #DEF FIX. Las macros definidas mediante el comando #DEF FIX no se borran tras un reset."@es .
+ns1:RevisarElProcesoDeIntegracionDeCinematicasDeUsuario a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el proceso de integración de cinemáticas de usuario" ;
+    ns1:solucionaFallo ns1:FaltaLaFuncionDeCoordenadasMcsToPcs ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el proceso de integración de cinemáticas de usuario." .
 
-ns1:Comando_INIT_MACROTAB a ns1:Componente ;
-    rdfs:label "Sentencia #INIT MACROTAB"@es ;
-    ns1:textoExtracto "sólo con la sentencia #INIT MACROTAB."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:SeEsperabaDEFMacroComandoMacroComando ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_NTOOLMZ a ns1:Parametro ;
-    rdfs:label "Número de almacenes"@es ;
-    ns1:identificador "NTOOLMZ" ;
-    ns1:textoExtracto "El número de almacenes está definido en el parámetro NTOOLMZ."@es .
+ns1:UnEjeDeLaTransformacionDePlanoInclinadoNoPuedeSerEsclavo a ns1:DiagnosticoFallo ;
+    rdfs:label "'Un eje de la transformación de plano inclinado no puede ser esclavo'" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución." .
 
-ns1:Tabla_Macros a ns1:Tabla ;
-    rdfs:label "Tabla de macros"@es ;
-    ns1:textoExtracto "Recordar que la tabla de macros no se inicializa con el principio y final de programa, sólo con la sentencia #INIT MACROTAB."@es .
+ns1:FaltaLaFuncionDeCoordenadasMcsToPcs a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta la función de coordenadas McsToPcs" ;
+    ns1:textoExtracto "CAUSA Falta la función de coordenadas McsToPcs al intentar realizar la transformación de coordenadas máquina a pieza en una cinemática de usuario." .
+
+ns1:NoSeAdmiteLINKMantenidoConEjesTemporalesDeOtroCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "'No se admite LINK mantenido con ejes temporales de otro canal'" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC no puede acoplar ejes con permiso de intercambio temporal (parámetro AXISEXCH) si pertenecen a otro canal y los acoplos del canal están definidos como mantenidos (parámetro LINKCANCEL)." .
+
+ns1:SeEsperabaDEFMacroComandoMacroComando a ns1:DiagnosticoFallo ;
+    rdfs:label "'Se esperaba #DEF \"macro\"=\"comando\" \"macro\"=\"comando\"...'" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Sentencia mal programada." .
 

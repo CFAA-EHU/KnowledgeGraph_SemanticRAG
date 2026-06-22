@@ -1,46 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Componente_ErroresPLC a ns1:AvisoSeguridad ;
-    rdfs:label "Errores (ERR1-ERR1024)"@es ;
-    ns1:activaAlarma ns1:Alarma_EmergenciaPLC ;
-    ns1:documentadoEn ns1:Tabla_MensajesYErroresPLC ;
-    ns1:identificador "ERR1-ERR1024" ;
-    ns1:textoExtracto "Errores (ERR1-ERR1024). Al activarlas (=1) producen un error, muestran el mensaje de error e interrumpen la ejecución del CNC. [...] Se representan mediante ERR seguido del número de error que se desea referenciar, desde ERR1 hasta ERR1024."@es .
+ns1:ConstanteDeTiempoTRS10 a ns1:Parametro ;
+    rdfs:label "Constante de tiempo TRS 10" ;
+    ns1:identificador "TRS10" ;
+    ns1:textoExtracto "I3 = TRS 10" .
 
-ns1:Componente_MarcasPLC a ns1:ComponenteElectrico ;
-    rdfs:label "Marcas (M1-M8192)"@es ;
-    ns1:documentadoEn ns1:Tabla_MensajesYErroresPLC ;
-    ns1:identificador "M1-M8192" ;
-    ns1:textoExtracto "Marcas (M1-M8192). Son elementos capaces de memorizar en un bit (como si fuera un relé interno) el valor definido por el usuario. [...] Se representan mediante la letra M seguida del número de marca que se desea referenciar, desde M1 hasta M8192."@es .
+ns1:ModoLimitadorDeSenalTG4 a ns1:Parametro ;
+    rdfs:label "Modo limitador de señal TG4" ;
+    ns1:identificador "TG4" ;
+    ns1:textoExtracto "TG4 activa el modo limitador de señal." .
 
-ns1:Componente_MensajesPLC a ns1:InterfazUsuario ;
-    rdfs:label "Mensajes (MSG1-MSG1024)"@es ;
-    ns1:documentadoEn ns1:Tabla_MensajesYErroresPLC ;
-    ns1:identificador "MSG1-MSG1024" ;
-    ns1:textoExtracto "Mensajes (MSG1-MSG1024). Al activarlas (=1) muestran un mensaje en la pantalla del CNC. [...] Se representan mediante MSG seguido del número de mensaje que se desea referenciar, desde MSG1 hasta MSG1024."@es .
+ns1:ModoMonoestableTG1 a ns1:Parametro ;
+    rdfs:label "Modo monoestable TG1" ;
+    ns1:identificador "TG1" ;
+    ns1:textoExtracto "TG1 activa el modo monoestable." .
 
-ns1:Componente_RelojesPLC a ns1:Parametro ;
-    rdfs:label "Relojes (CLK)"@es ;
-    ns1:identificador "CLK" ;
-    ns1:textoExtracto "Relojes (CLK). Son relojes internos de diferentes periodos de tiempo que pueden ser utilizados en el programa de PLC. [...] Se representan mediante CLK seguido del número de reloj que se desea referenciar."@es .
+ns1:ModoRetardoALaConexionTG2 a ns1:Parametro ;
+    rdfs:label "Modo retardo a la conexión TG2" ;
+    ns1:identificador "TG2" ;
+    ns1:textoExtracto "TG2 activa el modo retardo a la conexión." .
 
-ns1:SistemaIO_Local a ns1:Sistema ;
-    rdfs:label "Sistema de I/O locales del PLC"@es ;
-    ns1:identificador "LO1-LO8" ;
-    ns1:textoExtracto "Las I/O digitales locales no se tienen en cuenta a la hora de personalizar la numeración de los I/Os remotas ni cuando se salva la configuración del bus CAN. La referencia a las I/O locales será siempre la misma, independientemente de la configuración del sistema."@es ;
-    ns1:tieneComponente ns1:Modulo_PE .
+ns1:ModoRetardoALaDesconexionTG3 a ns1:Parametro ;
+    rdfs:label "Modo retardo a la desconexión TG3" ;
+    ns1:identificador "TG3" ;
+    ns1:textoExtracto "TG3 activa el modo retardo a la desconexión." .
 
-ns1:Alarma_EmergenciaPLC a ns1:Alarma ;
-    rdfs:label "Señal de emergencia del PLC (_EMERGEN)"@es ;
-    ns1:identificador "_EMERGEN" ;
-    ns1:textoExtracto "Los errores del PLC pueden configurarse para que activen la señal de emergencia del PLC (_EMERGEN)."@es .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "Por defecto y cada vez que se activa un temporizador el PLC pone esta entrada a (=0)." .
 
-ns1:Modulo_PE a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo PE"@es ;
-    ns1:textoExtracto "El refresco de las I/O locales se realizará con la misma frecuencia que el de las I/O remotas y además desde el módulo PE."@es .
+ns1:EntradaI3 a ns1:ComponenteElectrico ;
+    rdfs:label "Entrada I3" ;
+    ns1:controla ns1:SistemaTemporizadorT10 ;
+    ns1:textoExtracto "La entrada I3 controla la entrada de reset del temporizador T10." .
 
-ns1:Tabla_MensajesYErroresPLC a ns1:Tabla ;
-    rdfs:label "Tabla de mensajes y errores del PLC"@es ;
-    ns1:textoExtracto "Los textos asociados a los mensajes deben estar previamente definidos en la tabla de mensajes y errores del PLC. [...] Los textos asociados a los errores deben estar previamente definidos en la tabla de mensajes y errores del PLC."@es .
+ns1:SistemaTemporizadorT10 a ns1:Sistema ;
+    rdfs:label "Sistema Temporizador T10" ;
+    ns1:textoExtracto "La entrada I3 controla la entrada de reset del temporizador T10." ;
+    ns1:tieneComponente ns1:EntradaI3 .
 

@@ -1,64 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error1575 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1575: Sentencia inválida para extensión de programa"@es ;
-    ns1:documentadoEn ns1:TablaErrores1575_1578 ;
-    ns1:identificador "1575" ;
-    ns1:textoExtracto """
-    1575 'Sentencia sólo válida en programas con extensión FBS'
-    DETECCIÓN: Durante la ejecución.
-    CAUSA: Programación de las sentencias #SPLINE o #BSPLINE.
-    SOLUCIÓN: Estas sentencias sólo son válidas en programas con extensión fbs.
-    """@es .
+ns1:ConfiguracionDeCanalParaEjecucionManual a ns1:AvisoSeguridad ;
+    rdfs:label "Configuración de canal para ejecución manual" ;
+    ns1:mitigaRiesgo ns1:EjecucionManualEnCanalPLC ;
+    ns1:textoExtracto "Si se desea ejecutar dichas acciones en ese canal habrá que configurarlo como canal de CNC o de CNC+PLC (parámetro CHTYPE)." .
 
-ns1:Error1576 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1576: Sintaxis incorrecta (falta ']')"@es ;
-    ns1:documentadoEn ns1:TablaErrores1575_1578 ;
-    ns1:identificador "1576" ;
-    ns1:textoExtracto """
-    1576 'No se espera "]"
-    DETECCIÓN: Durante la ejecución.
-    CAUSA: Error en la sintaxis de la sentencia.
-    SOLUCIÓN: Revisar la programación.
-    """@es .
+ns1:NumeroDeAlmacenNoValido_f676adec39 a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de almacén no válido" ;
+    ns1:textoExtracto "El número de almacén debe ser un valor entre 1 y 4." .
 
-ns1:Error1577 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1577: Tipo de sincronización no programado"@es ;
-    ns1:documentadoEn ns1:TablaErrores1575_1578 ;
-    ns1:identificador "1577" ;
-    ns1:monitoreaParametro ns1:ParametroTipoSincronizacion ;
-    ns1:textoExtracto """
-    1577 'Programar tipo de sincronización: VEL o POS'
-    DETECCIÓN: Durante la ejecución.
-    CAUSA: El parámetro que define el tipo de sincronización en la sentencia #FOLLOW es incorrecto.
-    SOLUCIÓN: Revisar la programación. El parámetro puede tomar los valores VEL (velocidad) y POS (posición).
-    """@es .
+ns1:RevisarProgramacion_831cb0a56d a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:MovimientoDelCabezalConG74,
+        ns1:UsoDelCaracterEnSubrutinaGlobal ;
+    ns1:textoExtracto "Revisar la programación." .
 
-ns1:Error1578 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1578: Configuración incorrecta de eje esclavo (#LINK)"@es ;
-    ns1:documentadoEn ns1:TablaErrores1575_1578 ;
-    ns1:identificador "1578" ;
-    ns1:textoExtracto """
-    1578 '#LINK: Un eje esclavo UNIDIR debe ser del mismo tipo que el maestro (UNIDIR)'
-    DETECCIÓN: Durante la ejecución.
-    """@es .
+ns1:EjecucionManualEnCanalPLC a ns1:AccionProhibida ;
+    rdfs:label "Ejecución manual en canal PLC" ;
+    ns1:textoExtracto "el CNC no tiene permiso para ejecutar en él programas, bloques de MDI, movimientos de jog o cualquier otra acción desde el modo manual." .
 
-ns1:ParametroModificableDesdeTablaMaquina a ns1:Parametro ;
-    rdfs:label "Parámetro modificable desde tabla de parámetros máquina"@es ;
-    ns1:documentadoEn ns1:TablaErrores1575_1578 ;
-    ns1:textoExtracto "Ese parámetro sólo se puede modificar desde la tabla de parámetros máquina."@es .
+ns1:MovimientoDelCabezalConG74 a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento del cabezal con G74" ;
+    ns1:textoExtracto "En el mismo bloque hay programada una función M de movimiento de cabezal y la función G74 de búsqueda de cero." .
 
-ns1:ParametroTipoSincronizacion a ns1:Parametro ;
-    rdfs:label "Parámetro de tipo de sincronización (#FOLLOW)"@es ;
-    ns1:documentadoEn ns1:TablaErrores1575_1578 ;
-    ns1:textoExtracto "El parámetro que define el tipo de sincronización en la sentencia #FOLLOW es incorrecto. [...] El parámetro puede tomar los valores VEL (velocidad) y POS (posición)."@es ;
-    ns1:valor "VEL ; POS" .
-
-ns1:TablaErrores1575_1578 a ns1:Tabla ;
-    rdfs:label "Tabla de errores de programación (códigos 1575-1578)"@es ;
-    ns1:documentadoEn ns1:ManualBrochado ;
-    ns1:textoExtracto """
-    1575 'Sentencia sólo válida en programas con extensión FBS' [...] 1578 '#LINK: Un eje esclavo UNIDIR debe ser del mismo tipo que el maestro (UNIDIR)'
-    """@es .
+ns1:UsoDelCaracterEnSubrutinaGlobal a ns1:AccionProhibida ;
+    rdfs:label "Uso del carácter '%' en subrutina global" ;
+    ns1:textoExtracto "No se admite el carácter \"%\" dentro de subrutina global." .
 

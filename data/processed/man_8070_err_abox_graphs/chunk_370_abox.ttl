@@ -1,71 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_1881 a ns1:AvisoSeguridad ;
-    rdfs:label "Cajera con islas: F de semiacabado no válida"@es ;
-    ns1:identificador "1881" ;
-    ns1:mitigaRiesgo ns1:Solucion_1881 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El avance para la operación de semiacabado tiene valor 0. SOLUCIÓN Definir un avance mayor que 0."@es .
+ns1:DefinirUnAvanceMayorQue0 a ns1:TareaMantenimiento ;
+    rdfs:label "Definir un avance mayor que 0" ;
+    ns1:solucionaFallo ns1:ElAvanceParaLaOperacionDeDesbasteTieneValor0 ;
+    ns1:textoExtracto "SOLUCIÓN Definir un avance mayor que 0." .
 
-ns1:Error_1882 a ns1:AvisoSeguridad ;
-    rdfs:label "Cajera con islas: S de semiacabado no válida"@es ;
-    ns1:identificador "1882" ;
-    ns1:mitigaRiesgo ns1:Solucion_1882 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA La velocidad para la operación de semiacabado tiene valor 0. SOLUCIÓN Definir una velocidad mayor que 0."@es .
+ns1:DefinirUnaVelocidadMayorQue0 a ns1:TareaMantenimiento ;
+    rdfs:label "Definir una velocidad mayor que 0" ;
+    ns1:solucionaFallo ns1:LaVelocidadParaLaOperacionDeDesbasteTieneValor0 ;
+    ns1:textoExtracto "SOLUCIÓN Definir una velocidad mayor que 0." .
 
-ns1:Error_1883 a ns1:AvisoSeguridad ;
-    rdfs:label "Cajera con islas: Cajera ya en ejecución"@es ;
-    ns1:identificador "1883" ;
-    ns1:mitigaRiesgo ns1:Solucion_1883 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El CNC no puede simular o ejecutar la cajera porque ésta ya se encuentra en ejecución o simulación. SOLUCIÓN Esperar a que el CNC termine la simulación o ejecución."@es .
+ns1:SolucionCorregirPasoMecanizado a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir el paso de mecanizado o seleccionar otra herramienta" ;
+    ns1:solucionaFallo ns1:ElPasoDeMecanizadoParaElDesbasteParametroEsMayorQueElDiametroDeLaHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Corregir el paso de mecanizado o seleccionar otra herramienta." .
 
-ns1:Error_1884 a ns1:AvisoSeguridad ;
-    rdfs:label "Cajera con islas: Arco mal programado en perfil"@es ;
-    ns1:identificador "1884" ;
-    ns1:mitigaRiesgo ns1:Solucion_1884 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA En algún perfil de la cajera hay un arco mal definido o el perfil se ha modificado con otro programa diferente al editor de perfiles. SOLUCIÓN Corregir la geometría del perfil desde el editor de perfiles."@es .
+ns1:SolucionDefinirHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Definir la herramienta en la tabla o seleccionar otra herramienta" ;
+    ns1:solucionaFallo ns1:LaHerramientaProgramadaNoExisteEnLaTablaDeHerramientas ;
+    ns1:textoExtracto "SOLUCIÓN Definir la herramienta en la tabla o seleccionar otra herramienta." .
 
-ns1:Error_1885 a ns1:AvisoSeguridad ;
-    rdfs:label "Cajera con islas: Geometría de la cajera no válida"@es ;
-    ns1:identificador "1885" ;
-    ns1:mitigaRiesgo ns1:Solucion_1885 ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA En algún perfil de la cajera hay un tramo mal definido (redondeos, chaflanes, etc). SOLUCIÓN Corregir la geometría del perfil desde el editor de perfiles."@es .
+ns1:ElAvanceParaLaOperacionDeDesbasteTieneValor0 a ns1:DiagnosticoFallo ;
+    rdfs:label "El avance para la operación de desbaste tiene valor 0" ;
+    ns1:textoExtracto "CAUSA El avance para la operación de desbaste tiene valor 0." .
 
-ns1:Error_1886 a ns1:AvisoSeguridad ;
-    rdfs:label "Cajera con islas: Angulo de profundización de la herramienta de desbaste no válido"@es ;
-    ns1:identificador "1886" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo."@es .
+ns1:ElPasoDeMecanizadoParaElDesbasteParametroEsMayorQueElDiametroDeLaHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "El paso de mecanizado para el desbaste (parámetro Δ) es mayor que el diámetro de la herramienta" ;
+    ns1:textoExtracto "CAUSA El paso de mecanizado para el desbaste (parámetro ) es mayor que el diámetro de la herramienta." .
 
-ns1:Solucion_HerramientaNoDefinida a ns1:TareaMantenimiento ;
-    rdfs:label "Definir herramienta en tabla o seleccionar alternativa"@es ;
-    ns1:solucionaFallo ns1:Error_HerramientaNoDefinida ;
-    ns1:textoExtracto "Definir la herramienta en la tabla o seleccionar otra herramienta."@es .
+ns1:LaHerramientaProgramadaNoExisteEnLaTablaDeHerramientas a ns1:DiagnosticoFallo ;
+    rdfs:label "La herramienta programada no existe en la tabla de herramientas" ;
+    ns1:textoExtracto "CAUSA La herramienta programada no existe en la tabla de herramientas." .
 
-ns1:TablaHerramientas a ns1:Tabla ;
-    rdfs:label "Tabla de herramientas programadas"@es ;
-    ns1:textoExtracto "herramienta programada no existe en la tabla de herramientas. SOLUCIÓN Definir la herramienta en la tabla o seleccionar otra herramienta."@es .
-
-ns1:Error_HerramientaNoDefinida a ns1:AvisoSeguridad ;
-    rdfs:label "Herramienta programada no existe en tabla"@es ;
-    ns1:textoExtracto "herramienta programada no existe en la tabla de herramientas."@es .
-
-ns1:Solucion_1881 a ns1:TareaMantenimiento ;
-    rdfs:label "Definir avance > 0 para semiacabado"@es ;
-    ns1:textoExtracto "Definir un avance mayor que 0."@es .
-
-ns1:Solucion_1882 a ns1:TareaMantenimiento ;
-    rdfs:label "Definir velocidad > 0 para semiacabado"@es ;
-    ns1:textoExtracto "Definir una velocidad mayor que 0."@es .
-
-ns1:Solucion_1883 a ns1:TareaMantenimiento ;
-    rdfs:label "Esperar finalización de simulación/ejecución CNC"@es ;
-    ns1:textoExtracto "Esperar a que el CNC termine la simulación o ejecución."@es .
-
-ns1:Solucion_1884 a ns1:TareaMantenimiento ;
-    rdfs:label "Corregir geometría de perfil con editor"@es ;
-    ns1:textoExtracto "Corregir la geometría del perfil desde el editor de perfiles."@es .
-
-ns1:Solucion_1885 a ns1:TareaMantenimiento ;
-    rdfs:label "Corregir tramo mal definido en perfil"@es ;
-    ns1:textoExtracto "Corregir la geometría del perfil desde el editor de perfiles."@es .
+ns1:LaVelocidadParaLaOperacionDeDesbasteTieneValor0 a ns1:DiagnosticoFallo ;
+    rdfs:label "La velocidad para la operación de desbaste tiene valor 0" ;
+    ns1:textoExtracto "CAUSA La velocidad para la operación de desbaste tiene valor 0." .
 

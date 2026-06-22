@@ -1,21 +1,73 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1649 a ns1:DiagnosticoFallo ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_1649 ;
-    ns1:textoExtracto "Falta la función de coordenadas PcsToMcs al intentar realizar la transformación de coordenadas pieza a máquina en una cinemática de usuario."@es .
+ns1:CYLSeEsperaLaProgramacionDelRadioDeDesarrolloDelCilindro a ns1:AvisoSeguridad ;
+    rdfs:label "#CYL: Se espera la programación del radio de desarrollo del cilindro" ;
+    ns1:textoExtracto "'#CYL: Se espera la programación del radio de desarrollo del cilindro'" .
 
-ns1:DiagnosticoFallo_1650 a ns1:DiagnosticoFallo ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_1650 ;
-    ns1:textoExtracto "Falta la función de coordenadas McsToPcs al intentar realizar la transformación de coordenadas máquina a pieza en una cinemática de usuario."@es .
+ns1:CambiarSentidoDeGiroDelCabezalOCorregirElSentidoDeGiroDefinidoParaLaHerramienta a ns1:TareaMantenimiento ;
+    rdfs:label "Cambiar sentido de giro del cabezal o corregir el sentido de giro definido para la herramienta" ;
+    ns1:solucionaFallo ns1:ElSentidoDeGiroPredeterminadoDeLaHerramientaEsIncompatibleConElSentid_fbb54aad3e ;
+    ns1:textoExtracto "Cambiar sentido de giro del cabezal o corregir el sentido de giro definido para la herramienta." .
 
-ns1:AvisoSeguridad_1649 a ns1:AvisoSeguridad ;
-    rdfs:label "Función de transformación inversa de usuario no encontrada"@es ;
-    ns1:identificador "1649" ;
-    ns1:textoExtracto "1649 'Función de transformación inversa de usuario no encontrada' DETECCIÓN Durante la ejecución. CAUSA Falta la función de coordenadas PcsToMcs al intentar realizar la transformación de coordenadas pieza a máquina en una cinemática de usuario. SOLUCIÓN Revisar el proceso de integración de cinemáticas de usuario."@es .
+ns1:ElCabezalProgramadoNoPerteneceAlCanal a ns1:AvisoSeguridad ;
+    rdfs:label "El cabezal programado no pertenece al canal" ;
+    ns1:textoExtracto "'El cabezal programado no pertenece al canal'" .
 
-ns1:AvisoSeguridad_1650 a ns1:AvisoSeguridad ;
-    rdfs:label "Función de transformación directa de usuario no encontrada"@es ;
-    ns1:identificador "1650" ;
-    ns1:textoExtracto "1650 'Función de transformación directa de usuario no encontrada' DETECCIÓN Durante la ejecución. CAUSA Falta la función de coordenadas McsToPcs al intentar realizar la transformación de coordenadas máquina a pieza en una cinemática de usuario. SOLUCIÓN Revisar el proceso de"@es .
+ns1:LosEjesDeLaTransformacionAngularANGAXDebenSerLineales a ns1:AvisoSeguridad ;
+    rdfs:label "Los ejes de la transformación angular, #ANGAX, deben ser lineales" ;
+    ns1:textoExtracto "'Los ejes de la transformación angular, #ANGAX, deben ser lineales'" .
+
+ns1:LosEjesDeLaTransformacionAngularDebenSerLineales a ns1:TareaMantenimiento ;
+    rdfs:label "Los ejes de la transformación angular deben ser lineales" ;
+    ns1:solucionaFallo ns1:ElCNCHaIntentandoActivarUnaTransformacionAngularConUnEjeRotativo ;
+    ns1:textoExtracto "Los ejes de la transformación angular deben ser lineales." .
+
+ns1:NoSeAdmiteProgramarCabezalesEsclavosTANDEM a ns1:AccionProhibida ;
+    rdfs:label "No se admite programar cabezales esclavos TANDEM" ;
+    ns1:textoExtracto "'No se admite programar cabezales esclavos TANDEM'" .
+
+ns1:RevisarLaProgramacionParaUnRadioVariableDefinirValorCero a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para un radio variable, definir valor cero" ;
+    ns1:solucionaFallo ns1:FaltaElValorDelRadioDeDesarrolloEnLaSentenciaCYL ;
+    ns1:textoExtracto "Revisar la programación. para un radio variable, definir valor cero para que el CNC calcule el radio en función de donde se encuentre la herramienta." .
+
+ns1:SentidoDeGiroDelCabezalIncompatibleConLaHerramienta a ns1:AvisoSeguridad ;
+    rdfs:label "Sentido de giro del cabezal incompatible con la herramienta" ;
+    ns1:mitigaRiesgo ns1:NoSeAdmiteProgramarCabezalesAparcados ;
+    ns1:textoExtracto "'Sentido de giro del cabezal incompatible con la herramienta'" .
+
+ns1:UnCanalSoloPuedeControlarSusCabezalesUtilizarUnCabezalQuePertenezcaAl_4c107bfcbe a ns1:TareaMantenimiento ;
+    rdfs:label "Un canal sólo puede controlar sus cabezales. Utilizar un cabezal que pertenezca al canal o incluir en la configuración del canal el cabezal que da error" ;
+    ns1:solucionaFallo ns1:ElCNCHaIntentandoUtilizarUnCabezalDeOtroCanal ;
+    ns1:textoExtracto "Un canal sólo puede controlar sus cabezales. Utilizar un cabezal que pertenezca al canal o incluir en la configuración del canal el cabezal que da error." .
+
+ns1:UtilizarUnCabezalQueNoEsteAparcadoODesaparcarElCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Utilizar un cabezal que no esté aparcado o desaparcar el cabezal" ;
+    ns1:solucionaFallo ns1:ElCNCHaIntentandoUtilizarUnCabezalAparcado ;
+    ns1:textoExtracto "Utilizar un cabezal que no esté aparcado o desaparcar el cabezal." .
+
+ns1:ElCNCHaIntentandoActivarUnaTransformacionAngularConUnEjeRotativo a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC ha intentando activar una transformación angular con un eje rotativo" ;
+    ns1:textoExtracto "El CNC ha intentando activar una transformación angular con un eje rotativo." .
+
+ns1:ElCNCHaIntentandoUtilizarUnCabezalAparcado a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC ha intentando utilizar un cabezal aparcado" ;
+    ns1:textoExtracto "El CNC ha intentando utilizar un cabezal aparcado." .
+
+ns1:ElCNCHaIntentandoUtilizarUnCabezalDeOtroCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC ha intentando utilizar un cabezal de otro canal" ;
+    ns1:textoExtracto "El CNC ha intentando utilizar un cabezal de otro canal." .
+
+ns1:ElSentidoDeGiroPredeterminadoDeLaHerramientaEsIncompatibleConElSentid_fbb54aad3e a ns1:DiagnosticoFallo ;
+    rdfs:label "El sentido de giro predeterminado de la herramienta es incompatible con el sentido de giro actual del cabezal" ;
+    ns1:textoExtracto "El sentido de giro predeterminado de la herramienta es incompatible con el sentido de giro actual del cabezal." .
+
+ns1:FaltaElValorDelRadioDeDesarrolloEnLaSentenciaCYL a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta el valor del radio de desarrollo en la sentencia #CYL" ;
+    ns1:textoExtracto "Falta el valor del radio de desarrollo en la sentencia #CYL." .
+
+ns1:NoSeAdmiteProgramarCabezalesAparcados a ns1:AccionProhibida ;
+    rdfs:label "No se admite programar cabezales aparcados" ;
+    ns1:textoExtracto "'No se admite programar cabezales aparcados'" .
 

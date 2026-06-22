@@ -1,75 +1,54 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Esquema_Osciloscopio_DMC a ns1:Esquema ;
-    rdfs:label "Captura del osciloscopio del DMC"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "Captura del osciloscopio. Osciloscopio. A Control del override para optimizar la potencia. B Mecanizado en G00. C Entrada a la pieza."@es .
+ns1:ProgramacionONOFF a ns1:TareaMantenimiento ;
+    rdfs:label "Programación ON/OFF" ;
+    ns1:solucionaFallo ns1:EsObligatorioProgramarONOFF ;
+    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:ModoOperacion_DMC_Automatico a ns1:ModoOperacion ;
-    rdfs:label "Modo automático del DMC"@es ;
-    ns1:documentadoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:habilitadoPor ns1:Sistema_DMC ;
-    ns1:textoExtracto "Modo automático. Estado y progreso del DMC."@es .
+ns1:RevisionDeCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de cabezal" ;
+    ns1:solucionaFallo ns1:ProgramacionNoPermitidaConCabezalAnalogico ;
+    ns1:textoExtracto "El DMC sólo se puede activar sobre cabezales digitales." .
 
-ns1:Parametro_PotenciaObjetivoAprendida a ns1:Parametro ;
-    rdfs:label "PowerSetPoint (potencia objetivo aprendida)"@es ;
-    ns1:identificador "PowerSetPoint"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "PowerSetPoint (potencia objetivo aprendida). 34.73 %"@es ;
-    ns1:valor "34.73"^^xsd:string .
+ns1:RevisionDeSintaxis a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de sintaxis" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_36540a5b32,
+        ns1:SintaxisIncorrectaDelComandoDMCOFF,
+        ns1:SintaxisIncorrectaDelComandoDMCON ;
+    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:Parametro_ConsumoPotencia a ns1:Parametro ;
-    rdfs:label "Consumo de potencia instantáneo"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "Consumo de potencia; consumo instantáneo = 20,85 %"@es ;
-    ns1:valor "20.85"^^xsd:string .
+ns1:RevisionDeValores a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de valores" ;
+    ns1:solucionaFallo ns1:FZMINDebeSerMenorQueFZMAX,
+        ns1:OVRMINDebeSerMenorQueOVRMAX ;
+    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
 
-ns1:Parametro_PotenciaObjetivo a ns1:Parametro ;
-    rdfs:label "Potencia a alcanzar en condiciones idóneas"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "Potencia a alcanzar en condiciones idóneas; 37.69 % \"potencia objetivo\" + \"potencia en vacío\"."@es ;
-    ns1:valor "37.69"^^xsd:string .
+ns1:DiagnosticoFallo_36540a5b32 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro DMC fuera de rango" ;
+    ns1:textoExtracto "Parámetro DMC fuera de rango DETECCIÓN Durante la edición y ejecución. CAUSA Algún comando de la sentencia #DMC tiene un valor no válido." .
 
-ns1:Parametro_PotenciaVacio a ns1:Parametro ;
-    rdfs:label "No load power (potencia en vacío)"@es ;
-    ns1:identificador "No load power"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "No load power (potencia en vacío). 2.96 %"@es ;
-    ns1:valor "2.96"^^xsd:string .
+ns1:EsObligatorioProgramarONOFF a ns1:DiagnosticoFallo ;
+    rdfs:label "Es obligatorio programar ON/OFF" ;
+    ns1:textoExtracto "Es obligatorio programar ON/OFF. DETECCIÓN Durante la ejecución. CAUSA Falta programar el comando ON/OFF para activar o anular la función." .
 
-ns1:Parametro_TiempoAhorrado a ns1:Parametro ;
-    rdfs:label "Tiempo ahorrado por acción del DMC"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "Tiempo ahorrado por acción del DMC."@es .
+ns1:FZMINDebeSerMenorQueFZMAX a ns1:DiagnosticoFallo ;
+    rdfs:label "FZMIN debe ser menor que FZMAX" ;
+    ns1:textoExtracto "#DMC ON: FZMIN debe ser menor que FZMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el avance mínimo es mayor que el avance máximo." .
 
-ns1:Sistema_DMC a ns1:Sistema ;
-    rdfs:label "Sistema DMC (Dynamic Machining Control)"@es ;
-    ns1:controla ns1:Parametro_AvancePorDiente,
-        ns1:Parametro_Override_DMC ;
-    ns1:textoExtracto "Estado y progreso del DMC. [...] Control del override para optimizar la potencia. [...] Entrada a la pieza."@es ;
-    ns1:tieneComponente ns1:InterfazUsuario_DMC_ModoAutomatico .
+ns1:OVRMINDebeSerMenorQueOVRMAX a ns1:DiagnosticoFallo ;
+    rdfs:label "OVRMIN debe ser menor que OVRMAX" ;
+    ns1:textoExtracto "#DMC ON: OVRMIN debe ser menor que OVRMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el override mínimo es mayor que el override máximo." .
 
-ns1:Parametro_AvancePorDiente a ns1:Parametro ;
-    rdfs:label "Avance por diente"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "Avance por diente; mínimo 0.08, máximo 0.15, activo = 0.15 mm/diente."@es ;
-    ns1:valor "0.15"^^xsd:string .
+ns1:ProgramacionNoPermitidaConCabezalAnalogico a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación no permitida con cabezal analógico" ;
+    ns1:textoExtracto "#DMCON:Programación no permitida con cabezal analógico. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico." .
 
-ns1:Parametro_Override_DMC a ns1:Parametro ;
-    rdfs:label "Override del DMC"@es ;
-    ns1:ilustradoEn ns1:InterfazUsuario_DMC_ModoAutomatico ;
-    ns1:textoExtracto "Override del DMC; mínimo = 65 %, máximo = 135, override activo = 124 %."@es ;
-    ns1:valor "124"^^xsd:string .
+ns1:SintaxisIncorrectaDelComandoDMCOFF a ns1:DiagnosticoFallo ;
+    rdfs:label "Sintaxis incorrecta del comando #DMC OFF" ;
+    ns1:textoExtracto "#DMC OFF DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 
-ns1:InterfazUsuario_DMC_ModoAutomatico a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de usuario del modo automático del DMC"@es ;
-    ns1:monitoreaParametro ns1:Parametro_AvancePorDiente,
-        ns1:Parametro_ConsumoPotencia,
-        ns1:Parametro_Override_DMC,
-        ns1:Parametro_PotenciaObjetivo,
-        ns1:Parametro_PotenciaVacio,
-        ns1:Parametro_TiempoAhorrado ;
-    ns1:textoExtracto "Estado y progreso del DMC. A B C E D F G H A Estado del DMC; ON/OFF. B Override del DMC; mínimo = 65 %, máximo = 135, override activo = 124 %. C Avance por diente; mínimo 0.08, máximo 0.15, activo = 0.15 mm/diente. D Consumo de potencia; consumo instantáneo = 20,85 % E Potencia a alcanzar en condiciones idóneas; 37.69 % F Potencia objetivo aprendida; 34,73 %. G Potencia en vacío; 2.96 %. H Tiempo ahorrado por acción del DMC."@es .
+ns1:SintaxisIncorrectaDelComandoDMCON a ns1:DiagnosticoFallo ;
+    rdfs:label "Sintaxis incorrecta del comando #DMC ON" ;
+    ns1:textoExtracto "#DMC ON [<PWRSP value><,OVRMIN value><,FZMIN value><,FZMAX value>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 

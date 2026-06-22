@@ -1,36 +1,15 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Interfaz_CNC_PLC a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz CNC-PLC para gestión de herramientas" ;
-    ns1:controla ns1:Sistema_GestorHerramientas ;
-    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que [...]" .
+ns1:SenalSTOP a ns1:Parametro ;
+    rdfs:label "Señal STOP" ;
+    ns1:textoExtracto "Esta marca no detiene el giro del cabezal. Esta marca no afecta al movimiento independiente de un eje (interpolador independiente), al que tampoco afecta la tecla [STOP]. Esta marca no apaga el láser. Esta marca no desactiva el control del gap, excepto en el movimiento de aproximación." .
 
-ns1:Se_al_MZID a ns1:Parametro ;
-    rdfs:label "Señal MZID" ;
-    ns1:identificador "MZID" ;
-    ns1:textoExtracto "MZID Hay un registro para cada canal." .
+ns1:SenalXFERINH_5e57e68da0 a ns1:Parametro ;
+    rdfs:label "Señal XFERINH" ;
+    ns1:textoExtracto "Hay una marca para cada canal. Los mnemónicos para _XFERINH." .
 
-ns1:Se_al_ROTATEMZ a ns1:Parametro ;
-    rdfs:label "Señal ROTATEMZ" ;
-    ns1:identificador "ROTATEMZ" ;
-    ns1:textoExtracto "(sentencia #ROTATEMZ), en un posicionamiento absoluto este registro indica la posición a alcanzar y en un posicionamiento relativo indica el número de posiciones a girar." .
-
-ns1:Se_al_TMINEM a ns1:Parametro ;
-    rdfs:label "Señal TMINEM (emergencia en gestor de herramientas)" ;
-    ns1:identificador "TMINEM" ;
-    ns1:textoExtracto "TMINEM Hay un registro para cada almacén. Los mnemónicos para cada almacén son los siguientes. TMINEMZ1 (también se puede programar como TMINEM) TMINEMZ2 TMINEMZ3 TMINEMZ4 El CNC pone esta marca a (=1) para indicar al PLC que se ha producido una emergencia en el gestor de herramientas." .
-
-ns1:Se_al_TWORNOUT a ns1:Parametro ;
-    rdfs:label "Señal TWORNOUT (rechazo de herramienta por tiempo)" ;
-    ns1:identificador "TWORNOUT" ;
-    ns1:textoExtracto "TWORNOUT Hay una marca para cada canal. Los mnemónicos para cada canal son los siguientes. TWORNOUTC1 (también se puede programar como TWORNOUT) TWORNOUTC2 TWORNOUTC3 TWORNOUTC4 El canal del CNC pone esta marca a (=1) para indicar al PLC que la herramienta ha sido rechazada porque se ha usado más tiempo del previsto (vida real > vida máxima)." .
-
-ns1:Sistema_GestorHerramientas a ns1:Sistema ;
-    rdfs:label "Gestor de herramientas (CNC/PLC)" ;
-    ns1:monitoreaParametro ns1:Se_al_MZID,
-        ns1:Se_al_ROTATEMZ,
-        ns1:Se_al_TMINEM,
-        ns1:Se_al_TWORNOUT ;
-    ns1:textoExtracto "El canal del CNC pone esta marca a (=1) para indicar al PLC que la herramienta ha sido rechazada [...] se ha producido una emergencia en el gestor de herramientas." .
+ns1:TeclaSTOP a ns1:ComponenteElectrico ;
+    rdfs:label "Tecla STOP" ;
+    ns1:textoExtracto "Esta marca no afecta al movimiento independiente de un eje (interpolador independiente), al que tampoco afecta la tecla [STOP]." .
 

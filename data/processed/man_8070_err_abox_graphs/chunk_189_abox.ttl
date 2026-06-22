@@ -1,22 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ParametroAritmetico_InexistenteOProtegido a ns1:Parametro ;
-    rdfs:label "Parámetro aritmético no existente o protegido contra escritura"@es ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_ParametroAritmetico ;
-    ns1:textoExtracto "El parámetro aritmético no existe o está protegido contra escritura."@es .
+ns1:DobleProgramacion a ns1:AccionProhibida ;
+    rdfs:label "doble programación" ;
+    ns1:activaAlarma ns1:DobleProgramacion_0deeb34a69 ;
+    ns1:textoExtracto "'#HSC: doble programación'" .
 
-ns1:TareaMantenimiento_RevisionProgramacion a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de programación de parámetros máquina"@es ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_ParametroAritmetico ;
-    ns1:textoExtracto "Revisar la programación."@es .
+ns1:ProgramacionNoPermitida a ns1:AccionProhibida ;
+    rdfs:label "programación no permitida" ;
+    ns1:activaAlarma ns1:ProgramacionNoPermitida_6f25c3dfbc ;
+    ns1:textoExtracto "'#HSC: programación no permitida'" .
 
-ns1:TareaMantenimiento_RevisionRangoParametros a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de rango de parámetros aritméticos válidos"@es ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_ParametroAritmetico ;
-    ns1:textoExtracto "Revisar en los parámetros máquina el rango de parámetros aritméticos valido."@es .
+ns1:RevisarEnElManual a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar en el manual" ;
+    ns1:solucionaFallo ns1:DobleProgramacion_0deeb34a69 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de" .
 
-ns1:DiagnosticoFallo_ParametroAritmetico a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo: Parámetro aritmético inválido o protegido"@es ;
-    ns1:textoExtracto "CAUSA El parámetro aritmético no existe o está protegido contra escritura. SOLUCIÓN Revisar la programación. Revisar en los parámetros máquina el rango de parámetros aritméticos valido."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:ProgramacionNoPermitida_6f25c3dfbc ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:DobleProgramacion_0deeb34a69 a ns1:DiagnosticoFallo ;
+    rdfs:label "doble programación" ;
+    ns1:identificador "1370" ;
+    ns1:textoExtracto "En un mismo bloque está programada la activación y desactivación del modo HSC." .
+
+ns1:ProgramacionNoPermitida_6f25c3dfbc a ns1:DiagnosticoFallo ;
+    rdfs:label "programación no permitida" ;
+    ns1:identificador "1369" ;
+    ns1:textoExtracto "La sintaxis de la sentencia no es correcta." .
 

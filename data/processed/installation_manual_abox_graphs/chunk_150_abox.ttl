@@ -1,39 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:ComponenteElectrico_ModuloRIOR a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo RIOR"@es ;
-    ns1:textoExtracto "las entradas analógicas del módulo RIOR se pueden configurar en corriente"@es ;
-    ns1:tieneComponente ns1:Sistema_EntradasAnalogicasRIOR .
+ns1:CNC8070_1c3a01d90a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC puede tener configurados dos palpadores; habitualmente será un palpador de sobremesa para calibrar herramientas y un palpador de medida para realizar mediciones en la pieza." ;
+    ns1:tieneComponente ns1:ComponenteElectrico_687f0dbde1,
+        ns1:ComponenteElectrico_db89b909b9,
+        ns1:IndicaSiSeDisponeDeAlgunPalpadorEnLaMaquina .
 
-ns1:Parametro_NSAI a ns1:Parametro ;
-    rdfs:label "Número de entradas analógicas especiales (no en tensión)"@es ;
-    ns1:identificador "NSAI" ;
-    ns1:textoExtracto "NSAI Número de entradas analógicas especiales (no en tensión). Valores posibles: De 0 a 30. Valor por defecto: 0 (todas las entradas analógicas son en tensión). Variable asociada: (V.)MPG.NSAI"@es ;
-    ns1:valor 0 .
+ns1:TablaParametrosPalpador a ns1:Tabla ;
+    rdfs:label "Parámetros del palpador" ;
+    ns1:textoExtracto "Este parámetro muestra la tabla de parámetros necesarios para configurar el palpador." .
 
-ns1:Parametro_SAI_ADDRESS a ns1:Parametro ;
-    rdfs:label "Número de entrada analógica (ADDRESS)"@es ;
-    ns1:documentadoEn ns1:Tabla_SAI ;
-    ns1:identificador "ADDRESS" ;
-    ns1:textoExtracto "ADDRESS Número de entrada analógica. Valores posibles: De 0 a 60. Valor por defecto: 0. Variable asociada: (V.)MPG.ADDRESS[n]"@es ;
-    ns1:valor 0 .
+ns1:ComponenteElectrico_687f0dbde1 a ns1:ComponenteElectrico ;
+    rdfs:label "Palpador de sobremesa" ;
+    ns1:textoExtracto "Si el CNC dispone de un palpador de sobremesa, además de estos parámetros es necesario definir la posición del palpador." .
 
-ns1:Parametro_SAI_FACTOR a ns1:Parametro ;
-    rdfs:label "Factor de conversión (FACTOR)"@es ;
-    ns1:documentadoEn ns1:Tabla_SAI ;
-    ns1:identificador "FACTOR" ;
-    ns1:textoExtracto "FACTOR Factor de conversión. Valores posibles: Entre ±999999999.999999999. Valor por defecto: 0.0061035. Variable asociada: (V.)MPG.FACTOR[n] El factor indica la resolución del convertidor A/D de la entrada analógica; es decir, representa el incremento de valor analógico por cada unidad de convertidor."@es ;
-    ns1:valor 0.0061035 .
+ns1:ComponenteElectrico_db89b909b9 a ns1:ComponenteElectrico ;
+    rdfs:label "Palpador de medida" ;
+    ns1:textoExtracto "El CNC puede tener configurados dos palpadores; habitualmente será un palpador de sobremesa para calibrar herramientas y un palpador de medida para realizar mediciones en la pieza." .
 
-ns1:Sistema_EntradasAnalogicasRIOR a ns1:Sistema ;
-    rdfs:label "Entradas analógicas del módulo RIOR"@es ;
-    ns1:monitoreaParametro ns1:Parametro_SAI_FACTOR ;
-    ns1:textoExtracto "Ejemplo. Entradas analógicas del módulo RIOR. • Entradas analógicas de 16 bits (15 bits + signo); es decir, unos valores entre ±32767. • Rango de medida ±20 miliamperios."@es .
-
-ns1:Tabla_SAI a ns1:Tabla ;
-    rdfs:label "Tabla de entradas analógicas especiales"@es ;
-    ns1:identificador "SAI" ;
-    ns1:textoExtracto "SAI Tabla de entradas analógicas especiales. Este parámetro muestra la tabla para definir las entradas analógicas especiales del sistema."@es .
+ns1:IndicaSiSeDisponeDeAlgunPalpadorEnLaMaquina a ns1:Parametro ;
+    rdfs:label "Indica si se dispone de algún palpador en la máquina" ;
+    ns1:identificador "MPG.PROBE" ;
+    ns1:textoExtracto "Variable asociada: (V.)MPG.PROBE Este parámetro indica si se dispone de algún palpador en la máquina." .
 

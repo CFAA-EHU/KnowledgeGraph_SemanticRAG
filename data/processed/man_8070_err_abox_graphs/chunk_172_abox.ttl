@@ -1,18 +1,63 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1326 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1326: Valor erróneo para asignar a variable" ;
-    ns1:identificador "1326" ;
-    ns1:textoExtracto "1326 'Valor erróneo para asignar a variable' DETECCIÓN Durante la ejecución." .
+ns1:CSACSDEFFaltanParametros_a4e18bc119 a ns1:AccionProhibida ;
+    rdfs:label "#CS/#ACS DEF: faltan parámetros",
+        "Revisar la programación. Estas sentencias exigen programar el número del sistema de coordenadas, el modo de definición, las componentes del vector de traslación y los ángulos de rotación." ;
+    ns1:solucionaFallo ns1:CSACSDEFFaltanParametros_e7e788c5e0 ;
+    ns1:textoExtracto "'#CS/#ACS DEF: faltan parámetros' DETECCIÓN Durante la ejecución. CAUSA Falta programar uno o más parámetros obligatorios." .
 
-ns1:Solucion_1325 a ns1:TareaMantenimiento ;
-    rdfs:label "Solución para fallo 1325" ;
-    ns1:solucionaFallo ns1:Fallo_1325 ;
-    ns1:textoExtracto "No repetir el número de bloque." .
+ns1:CSONACSONIdentificadorNoValido_e6e47c3339 a ns1:AccionProhibida ;
+    rdfs:label "#CS ON/#ACS ON: identificador no válido",
+        "Programar un valor entre 1 y 5." ;
+    ns1:solucionaFallo ns1:CSONACSONIdentificadorNoValido_f8839f18d2 ;
+    ns1:textoExtracto "'#CS ON/#ACS ON: identificador no válido' DETECCIÓN Durante la ejecución. CAUSA En estas sentencias, el número del sistema de coordenadas no es válido." .
 
-ns1:Fallo_1325 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1325: Número de bloque definido varias veces" ;
-    ns1:identificador "1325" ;
-    ns1:textoExtracto "1325 'Número de bloque definido varias veces' DETECCIÓN Durante la ejecución. CAUSA El número de bloque \"N\" está repetido en el programa. SOLUCIÓN No repetir el número de bloque." .
+ns1:CSONACSONNoSeAdmitenCambiosConElSistemaDeCoordenadasActivo_5a93f68e86 a ns1:AccionProhibida ;
+    rdfs:label "#CS ON/#ACS ON: no se admiten cambios con el sistema de coordenadas activo",
+        "Revisar la programación. El CNC no permite modificar los parámetros de un sistema de coordenadas activo; si permite modificar los parámetros de un sistema de coordenadas ya definido pero no activo." ;
+    ns1:solucionaFallo ns1:CSONACSONNoSeAdmitenCambiosConElSistemaDeCoordenadasActivo_d93917f890 ;
+    ns1:textoExtracto "'#CS ON/#ACS ON: no se admiten cambios con el sistema de coordenadas activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado cambiar los parámetros de un sistema de coordenadas activo." .
+
+ns1:CSONACSONSistemaNoDefinido_c59c052dd5 a ns1:AccionProhibida ;
+    rdfs:label "#CS ON/#ACS ON: sistema no definido",
+        "Revisar la programación. Definir y almacenar algún sistema de coordenadas." ;
+    ns1:solucionaFallo ns1:CSONACSONSistemaNoDefinido_b588cc3a06 ;
+    ns1:textoExtracto "'#CS ON/#ACS ON: sistema no definido' DETECCIÓN Durante la ejecución. CAUSA Las sentencias no tienen parámetros y no hay almacenado ningún sistema de coordenadas." .
+
+ns1:LineaDeProgramaDemasiadoLarga_db22e51860 a ns1:AccionProhibida ;
+    rdfs:label "El máximo número de caracteres permitido es 128",
+        "Línea de programa demasiado larga" ;
+    ns1:solucionaFallo ns1:LineaDeProgramaDemasiadoLarga_06e7ebeff9 ;
+    ns1:textoExtracto "'Línea de programa demasiado larga' DETECCIÓN Durante la ejecución. CAUSA El número de caracteres en la sentencia #EXBLK supera el máximo permitido." .
+
+ns1:OffsetDeMedicionNoIncluidoEnEjeSProgramado_fc788e3862 a ns1:AccionProhibida ;
+    rdfs:label "La función G102 no tiene sentido para un eje sin offset de medición.",
+        "Offset de medición no incluido en eje(s) programado" ;
+    ns1:solucionaFallo ns1:OffsetDeMedicionNoIncluidoEnEjeSProgramado_2209a6177c ;
+    ns1:textoExtracto "'Offset de medición no incluido en eje(s) programado' DETECCIÓN Durante la ejecución. CAUSA La función G102 intenta excluir el offset de medición de un eje que no tiene incluido ningún offset de medición." .
+
+ns1:CSACSDEFFaltanParametros_e7e788c5e0 a ns1:DiagnosticoFallo ;
+    rdfs:label "#CS/#ACS DEF: faltan parámetros" ;
+    ns1:textoExtracto "'#CS/#ACS DEF: faltan parámetros' DETECCIÓN Durante la ejecución. CAUSA Falta programar uno o más parámetros obligatorios." .
+
+ns1:CSONACSONIdentificadorNoValido_f8839f18d2 a ns1:DiagnosticoFallo ;
+    rdfs:label "#CS ON/#ACS ON: identificador no válido" ;
+    ns1:textoExtracto "'#CS ON/#ACS ON: identificador no válido' DETECCIÓN Durante la ejecución. CAUSA En estas sentencias, el número del sistema de coordenadas no es válido." .
+
+ns1:CSONACSONNoSeAdmitenCambiosConElSistemaDeCoordenadasActivo_d93917f890 a ns1:DiagnosticoFallo ;
+    rdfs:label "#CS ON/#ACS ON: no se admiten cambios con el sistema de coordenadas activo" ;
+    ns1:textoExtracto "'#CS ON/#ACS ON: no se admiten cambios con el sistema de coordenadas activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado cambiar los parámetros de un sistema de coordenadas activo." .
+
+ns1:CSONACSONSistemaNoDefinido_b588cc3a06 a ns1:DiagnosticoFallo ;
+    rdfs:label "#CS ON/#ACS ON: sistema no definido" ;
+    ns1:textoExtracto "'#CS ON/#ACS ON: sistema no definido' DETECCIÓN Durante la ejecución. CAUSA Las sentencias no tienen parámetros y no hay almacenado ningún sistema de coordenadas." .
+
+ns1:LineaDeProgramaDemasiadoLarga_06e7ebeff9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Línea de programa demasiado larga" ;
+    ns1:textoExtracto "'Línea de programa demasiado larga' DETECCIÓN Durante la ejecución. CAUSA El número de caracteres en la sentencia #EXBLK supera el máximo permitido." .
+
+ns1:OffsetDeMedicionNoIncluidoEnEjeSProgramado_2209a6177c a ns1:DiagnosticoFallo ;
+    rdfs:label "Offset de medición no incluido en eje(s) programado" ;
+    ns1:textoExtracto "'Offset de medición no incluido en eje(s) programado' DETECCIÓN Durante la ejecución. CAUSA La función G102 intenta excluir el offset de medición de un eje que no tiene incluido ningún offset de medición." .
 

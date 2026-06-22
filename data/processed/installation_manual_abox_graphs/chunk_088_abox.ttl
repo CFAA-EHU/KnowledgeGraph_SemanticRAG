@@ -1,44 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CaptacionExterna a ns1:ComponenteElectrico ;
-    rdfs:label "Captación externa (directa)" ;
-    ns1:textoExtracto "Si la captación externa (captación directa) del eje está conectada a un regulador, el eje podrá operar en modo Sercos posición o Sercos velocidad." .
+ns1:CNC8070_8dbfb2dcaa a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:ComponenteElectrico_fb9dad688a ;
+    ns1:textoExtracto "el CNC ejecuta la búsqueda de referencia como si el eje fuera analógico" .
 
-ns1:EntradaContaje_Local a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de contaje local" ;
-    ns1:textoExtracto "Si la captación externa (captación directa) del eje está conectada a una entrada de contaje local o remota, el eje sólo podrá operar en modo Sercos velocidad." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:ComponenteElectrico_fb9dad688a ;
+    ns1:textoExtracto "La selección del eje que gobierna el regulador se realiza desde el PLC (marca SWITCH(axis)). El PLC debe aparcar o poner como visualizador los ejes que no gobierna el regulador." .
 
-ns1:EntradaContaje_Remota a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de contaje remota" ;
-    ns1:textoExtracto "Si la captación externa (captación directa) del eje está conectada a una entrada de contaje local o remota, el eje sólo podrá operar en modo Sercos velocidad." .
+ns1:TiempoDeEsperaAntesDeDarErrorPorNoTenerLaMarcaSWITCHActiva a ns1:Parametro ;
+    rdfs:label "Tiempo de espera antes de dar error por no tener la marca SWITCH activa" ;
+    ns1:identificador "DWELL" ;
+    ns1:textoExtracto "definir el parámetro DWELL>0. Los ejes utilizan el parámetro DWELL como tiempo de espera antes de dar error por no tener la marca SWITCH activa." .
 
-ns1:ModoOperacion_Posicion a ns1:ModoOperacion ;
-    rdfs:label "Modo Sercos posición" ;
-    ns1:textoExtracto "modo Sercos posición" .
-
-ns1:ModoOperacion_Velocidad a ns1:ModoOperacion ;
-    rdfs:label "Modo Sercos velocidad" ;
-    ns1:textoExtracto "modo Sercos velocidad" .
-
-ns1:Regulador_Sercos a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Sercos" ;
-    ns1:controla ns1:GrupoMultieje_Sercos ;
-    ns1:monitoreaParametro ns1:Parametro_DRIVEID,
-        ns1:Parametro_OPMODEP ;
-    ns1:textoExtracto "Los ejes asociados a un mismo regulador deben cumplir los siguientes requisitos." .
-
-ns1:GrupoMultieje_Sercos a ns1:Sistema ;
-    rdfs:label "Grupo multieje Sercos" ;
-    ns1:textoExtracto "Requisitos y limitaciones de un grupo multieje. Los ejes asociados a un mismo regulador deben cumplir los siguientes requisitos." .
-
-ns1:Parametro_DRIVEID a ns1:Parametro ;
-    rdfs:label "DRIVEID (dirección Sercos)" ;
-    ns1:textoExtracto "todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID)" ;
-    ns1:valor "DRIVEID" .
-
-ns1:Parametro_OPMODEP a ns1:Parametro ;
-    rdfs:label "OPMODEP (modo de operación Sercos)" ;
-    ns1:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)" ;
-    ns1:valor "OPMODEP" .
+ns1:ComponenteElectrico_fb9dad688a a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador" ;
+    ns1:textoExtracto "el regulador desconoce que hay una búsqueda de referencia en marcha y no actualiza su cota, sólo recibe consigna de velocidad." .
 

@@ -1,31 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Almacen_63e4f95a13 a ns1:Componente ;
-    rdfs:label "almacén" ;
-    ns1:textoExtracto "almacén" .
+ns1:Parametro_8a6e556782 a ns1:Parametro ;
+    rdfs:label "Función M06" ;
+    ns1:textoExtracto "Ejecución de la función M06. 1 Cuando el CNC ejecuta la función M06, realiza una llamada a la rutina asociada." .
 
-ns1:Cabezal_M06 a ns1:Componente ;
-    rdfs:label "cabezal" ;
-    ns1:textoExtracto "cabezal" .
+ns1:Parametro_e111630df5 a ns1:Parametro ;
+    rdfs:label "Función T" ;
+    ns1:textoExtracto "Ejecución de la función T. 1 Cuando el CNC ejecuta la función T, se lo indica al gestor." .
 
-ns1:HerramientaDeTierra_a4f289a80a a ns1:PiezaRecambio ;
-    rdfs:label "herramienta de tierra" ;
-    ns1:textoExtracto "herramienta de tierra" .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controladoPor ns1:CNC8070_f2da6608af ;
+    ns1:textoExtracto "La comunicación entre el gestor y el PLC se realiza en 2 fases; la primera con la ejecución de la función T y la segunda con la ejecución de la función M06." .
 
-ns1:Pinza1 a ns1:Herramienta ;
-    rdfs:label "pinza 1" ;
-    ns1:textoExtracto "pinza 1" .
+ns1:BrazoCambiador a ns1:Componente ;
+    rdfs:label "Brazo Cambiador" ;
+    ns1:textoExtracto "Los almacenes síncronos con brazo cambiador (1 o 2 pinzas) tienen el almacén próximo al cabezal y el cambio se realiza con ayuda del brazo cambiador." .
 
-ns1:ProgramaM06 a ns1:TareaMantenimiento ;
-    rdfs:label "Programa de la rutina M06" ;
-    ns1:textoExtracto "LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. LL SUB_SPD_TO_CH1 ; Coger la herramienta del cabezal con la pinza 1. LL SUB_CH1_TO_MZ ; Dejar la herramienta de la pinza 1 en el almacén. LL SUB_SPD_GM..." .
+ns1:CNC8070_f2da6608af a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:BrazoCambiador,
+        ns1:Componente_b39c0d477f ;
+    ns1:ejecuta ns1:CambioDeHerramienta_9ef2fc11dd ;
+    ns1:textoExtracto "Los almacenes síncronos con brazo cambiador (1 o 2 pinzas) tienen el almacén próximo al cabezal y el cambio se realiza con ayuda del brazo cambiador." .
 
-ns1:PuntoCambioAutomatico_M06 a ns1:ModoOperacion ;
-    rdfs:label "punto de cambio automático" ;
-    ns1:textoExtracto "punto de cambio automático" .
+ns1:CambioDeHerramienta_9ef2fc11dd a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de Herramienta" ;
+    ns1:textoExtracto "La comunicación entre el gestor y el PLC se realiza en 2 fases; la primera con la ejecución de la función T y la segunda con la ejecución de la función M06." .
 
-ns1:PuntoCambioManual_M06 a ns1:ModoOperacion ;
-    rdfs:label "punto de cambio manual" ;
-    ns1:textoExtracto "punto de cambio manual" .
+ns1:Componente_b39c0d477f a ns1:Componente ;
+    rdfs:label "Almacén Síncrono" ;
+    ns1:textoExtracto "Los almacenes síncronos con brazo cambiador (1 o 2 pinzas) tienen el almacén próximo al cabezal y el cambio se realiza con ayuda del brazo cambiador." .
 

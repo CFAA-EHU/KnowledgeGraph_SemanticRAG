@@ -1,39 +1,50 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error23001 a ns1:DiagnosticoFallo ;
-    ns1:identificador "23001" ;
-    ns1:textoExtracto "23001 Número máximo de tablas de compensación sobrepasado. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA Hay más tablas de compensación de las permitidas. SOLUCIÓN Reducir el número de tablas." .
+ns1:AnalisisDeCausasDeRetraso a ns1:TareaMantenimiento ;
+    rdfs:label "Análisis de causas de retraso" ;
+    ns1:solucionaFallo ns1:EsperandoCondicionWAITFOR_b544cf5541,
+        ns1:EsperandoConfirmacionDeGamaPorElPLC_af4f238c96,
+        ns1:EsperandoFinalDeBusquedaDeCeroDelCabezal,
+        ns1:EsperandoFinalizarPasoAModoMANUALDelCanal,
+        ns1:EsperandoFinalizarProcesoDeSincronizacionDeCabezales_93f68583a3,
+        ns1:EsperandoRespuestaDelGestorDeHerramientasEnElCanal,
+        ns1:EsperandoSenalINPOSDelCabezal ;
+    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar." .
 
-ns1:Error23002 a ns1:DiagnosticoFallo ;
-    ns1:identificador "23002" ;
-    ns1:textoExtracto "23002 Error en la compensación volumétrica: no se ha podido alocar la memoria de los datos de compensación. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA Error al alocar la memoria. SOLUCIÓN Si el error persiste, póngase en contacto con Fagor Automation." .
+ns1:EsperaBloqueadaPorTiempoDeterminado a ns1:AccionProhibida ;
+    rdfs:label "Espera bloqueada por tiempo determinado" ;
+    ns1:textoExtracto "La espera ha superado un tiempo determinado por causa justificada o bloqueo." .
 
-ns1:Error23003 a ns1:DiagnosticoFallo ;
-    ns1:identificador "23003" ;
-    ns1:textoExtracto "23003 Error en el fichero de compensación volumétrica: no se ha podido analizar la línea. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El archivo de la compensación volumétrica no está en el formato correcto. SOLUCIÓN Convertir el archivo de compensación volumétrica al formato correcto." .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:textoExtracto "El PLC debe confirmar la nueva gama." .
 
-ns1:Error23004 a ns1:DiagnosticoFallo ;
-    ns1:identificador "23004" ;
-    ns1:textoExtracto "23004 Error en el fichero de compensación volumétrica: el primer eje asignado es incorrecto. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El primer eje asignado a la compensación volumétrica no es correcto. SOLUCIÓN Corregir el eje." .
+ns1:EsperandoCondicionWAITFOR_b544cf5541 a ns1:DiagnosticoFallo ;
+    rdfs:label "Esperando condición #WAIT FOR" ;
+    ns1:textoExtracto "20008 Esperando condición #WAIT FOR. DETECCIÓN Durante la ejecución. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo." .
 
-ns1:Error23005 a ns1:DiagnosticoFallo ;
-    ns1:identificador "23005" ;
-    ns1:textoExtracto "23005 Error en el fichero de compensación volumétrica: el segundo eje asignado es incorrecto. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El segundo eje asignado a la compensación volumétrica no es correcto. SOLUCIÓN Corregir el eje." .
+ns1:EsperandoConfirmacionDeGamaPorElPLC_af4f238c96 a ns1:DiagnosticoFallo ;
+    rdfs:label "Esperando confirmación de gama por el PLC" ;
+    ns1:textoExtracto "20013 Esperando confirmación de gama por el PLC. DETECCIÓN Durante el funcionamiento habitual del sistema." .
 
-ns1:Error23006 a ns1:DiagnosticoFallo ;
-    ns1:identificador "23006" ;
-    ns1:textoExtracto "23006 Error en el fichero de compensación volumétrica: el tercer eje asignado es incorrecto. DETECCIÓN Durante el arranque del sistema o validación de los parámetros máquina. CAUSA El tercer eje asignado a la compensación volumétrica no es correcto. SOLUCIÓN Corregir el eje." .
+ns1:EsperandoFinalDeBusquedaDeCeroDelCabezal a ns1:DiagnosticoFallo ;
+    rdfs:label "Esperando final de búsqueda de cero del cabezal" ;
+    ns1:textoExtracto "20014 Esperando final de búsqueda de cero del cabezal %x. DETECCIÓN Durante el funcionamiento habitual del sistema." .
 
-ns1:Error23007 a ns1:DiagnosticoFallo ;
-    ns1:identificador "23007" ;
-    ns1:textoExtracto "23007 Error en el fichero de compensación volumétrica: elemento fuera del rango esperado." .
+ns1:EsperandoFinalizarPasoAModoMANUALDelCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "Esperando finalizar paso a modo MANUAL del canal" ;
+    ns1:textoExtracto "20012 Esperando finalizar paso a modo MANUAL del canal %c. DETECCIÓN Durante el funcionamiento habitual del sistema." .
 
-ns1:FagorAutomation a ns1:Empresa ;
-    ns1:textoExtracto "Fagor Automation" .
+ns1:EsperandoFinalizarProcesoDeSincronizacionDeCabezales_93f68583a3 a ns1:DiagnosticoFallo ;
+    rdfs:label "Esperando finalizar proceso de sincronización de cabezales" ;
+    ns1:textoExtracto "20010 Esperando finalizar proceso de sincronización de cabezales. DETECCIÓN Durante la ejecución." .
 
-ns1:ParametrosMaquina a ns1:Parametro ;
-    ns1:textoExtracto "validación de los parámetros máquina" .
+ns1:EsperandoRespuestaDelGestorDeHerramientasEnElCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "Esperando respuesta del gestor de herramientas en el canal" ;
+    ns1:textoExtracto "20011 Esperando respuesta del gestor de herramientas en el canal %c. DETECCIÓN Durante la ejecución." .
 
-ns1:SistemaArranque a ns1:Sistema ;
-    ns1:textoExtracto "Durante el arranque del sistema o validación de los parámetros máquina." .
+ns1:EsperandoSenalINPOSDelCabezal a ns1:DiagnosticoFallo ;
+    rdfs:label "Esperando señal INPOS del cabezal" ;
+    ns1:textoExtracto "20009 Esperando señal INPOS del cabezal %x. DETECCIÓN Durante el funcionamiento habitual del sistema." .
 

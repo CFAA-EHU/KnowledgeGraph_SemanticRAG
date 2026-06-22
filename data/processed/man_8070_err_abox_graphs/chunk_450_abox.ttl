@@ -1,37 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_2394 a ns1:Alarma ;
-    rdfs:label "Estado de la zona de trabajo no programado" ;
-    ns1:identificador "2394" ;
-    ns1:monitoreaParametro ns1:Parametro_E ;
-    ns1:textoExtracto "2394 Estado de la zona de trabajo no programado. DETECCIÓN Durante la preparación de bloques. CAUSA No se ha programado el estado de la zona de trabajo en G122. SOLUCIÓN Programar el estado de la zona de trabajo en el parámetro \"E\"; de 0 a 2." .
+ns1:EstadoDeLaZonaDeTrabajoProgramado a ns1:Parametro ;
+    rdfs:label "Estado de la zona de trabajo programado" ;
+    ns1:identificador "G122" ;
+    ns1:textoExtracto "El valor programado en G122 no es correcto." .
 
-ns1:Alarma_2395 a ns1:Alarma ;
-    rdfs:label "Centro con ejes rotativos tipo módulo no permitido" ;
-    ns1:identificador "2395" ;
-    ns1:textoExtracto "2395 'No se permite programar el centro con ejes rotativos tipo módulo' DETECCIÓN Durante la preparación de bloques. CAUSA No se permite programar el centro con ejes rotativos tipo módulo. SOLUCIÓN No se permite definir el centro con ejes rotativos tipo módulo. Revisar la programación." .
+ns1:EstadoDeZonaDeTrabajo a ns1:Parametro ;
+    rdfs:label "Estado de zona de trabajo" ;
+    ns1:identificador "G.ZONETOOLWATCH" ;
+    ns1:textoExtracto "escribir desde el PLC el valor correcto en la variable \"G.ZONETOOLWATCH[zone]\"." .
 
-ns1:Alarma_2396 a ns1:Alarma ;
-    rdfs:label "GAPCTRL programado en otro canal" ;
-    ns1:identificador "2396" ;
-    ns1:monitoreaParametro ns1:Parametro_GAPCTRL ;
-    ns1:textoExtracto "2396 #GAPCTRL programado en otro canal. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado activar el control del gap en un canal mientras está activo en otro canal. SOLUCIÓN Sólo puede haber activo un control de gap en el CNC." .
+ns1:ProgramarUnValorCorrectoParaElEstadoDeLaZona a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un valor correcto para el estado de la zona" ;
+    ns1:solucionaFallo ns1:EstadoDeZonaDeTrabajoNoValido_9c2b90bb0d ;
+    ns1:textoExtracto "SOLUCIÓN Programar un valor correcto para el estado de la zona; de 0" .
 
-ns1:Alarma_2397 a ns1:Alarma ;
-    rdfs:label "GAPCTRL ON activo (requiere OFF para cambiar parámetros)" ;
-    ns1:identificador "2397" ;
-    ns1:monitoreaParametro ns1:Parametro_GAPCTRL ;
-    ns1:textoExtracto "2397 #GAPCTRL ON activo.#GAPCTRL OFF necesario para cambiar parámetros." .
-
-ns1:Parametro_E a ns1:Parametro ;
-    rdfs:label "Parámetro E (Estado de zona de trabajo)" ;
-    ns1:identificador "E" ;
-    ns1:textoExtracto "el parámetro \"E\" una sola vez en el bloque. [...] Programar el estado de la zona de trabajo en el parámetro \"E\"; de 0 a 2." ;
-    ns1:valor "0-2" .
-
-ns1:Parametro_GAPCTRL a ns1:Parametro ;
-    rdfs:label "Parámetro GAPCTRL" ;
-    ns1:identificador "GAPCTRL" ;
-    ns1:textoExtracto "#GAPCTRL programado en otro canal. [...] Sólo puede haber activo un control de gap en el CNC." .
+ns1:EstadoDeZonaDeTrabajoNoValido_9c2b90bb0d a ns1:DiagnosticoFallo ;
+    rdfs:label "Estado de zona de trabajo no válido" ;
+    ns1:textoExtracto "2388 Estado de zona de trabajo no válido." .
 

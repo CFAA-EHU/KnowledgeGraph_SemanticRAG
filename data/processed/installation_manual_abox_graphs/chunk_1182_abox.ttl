@@ -1,50 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:ProcesoAjusteTandem_1182 a ns1:TareaMantenimiento ;
-    rdfs:label "Proceso de ajuste del tándem"@es ;
-    ns1:monitoreaParametro ns1:Parametro_ACFGAIN_1182,
-        ns1:Parametro_PRELOAD_1182,
-        ns1:Parametro_TORQDIST_1182 ;
-    ns1:requiereMantenimiento ns1:SistemaTandem_1182 ;
-    ns1:textoExtracto "En caso de que los motores sean diferentes, deben ajustarse los ejes de tal manera que la respuesta dinámica sea la misma o similar. [...] Para finalizar, reajustar el lazo de velocidad en ambos motores con el método utilizado normalmente."@es .
+ns1:CNC8070_1a35bacf03 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "En estos casos, ambos motores están controlados por el mismo regulador y para el CNC sólo hay una entrada de captación y una salida analógica." .
 
-ns1:Variable_SercosTV2_1182 a ns1:Parametro ;
-    rdfs:label "Par de motor (Variable Sercos TV2)"@es ;
-    ns1:identificador "Sercos TV2" ;
-    ns1:textoExtracto "monitorizar el par de cada motor (variable Sercos TV2)."@es .
+ns1:IdentificadorDeSalidaAnalogica a ns1:Parametro ;
+    rdfs:label "Identificador de salida analógica" ;
+    ns1:identificador "ANAOUTID" ;
+    ns1:textoExtracto "Para utilizar la misma salida analógica, el parámetro ANAOUTID de ambos ejes también debe ser igual." .
 
-ns1:MotorTandem_1_1182 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor 1 del sistema tándem"@es ;
-    ns1:textoExtracto "comprobar que cada motor hace el par que les corresponde, según el parámetro 'TORQDIST' (p.e para una distribución del 50%, la mitad del par)."@es .
+ns1:IdentificadorDelContador a ns1:Parametro ;
+    rdfs:label "Identificador del contador" ;
+    ns1:identificador "COUNTERID" ;
+    ns1:textoExtracto "Para utilizar la misma entrada de captación, los parámetros COUNTERTYPE y COUNTERID de ambos ejes debe ser iguales." .
 
-ns1:MotorTandem_2_1182 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor 2 del sistema tándem"@es ;
-    ns1:textoExtracto "comprobar que cada motor hace el par que les corresponde, según el parámetro 'TORQDIST' (p.e para una distribución del 50%, la mitad del par)."@es .
+ns1:TipoDeCaptacion_846ab96f70 a ns1:Parametro ;
+    rdfs:label "Tipo de captación" ;
+    ns1:identificador "ABSFEEDBACK" ;
+    ns1:textoExtracto "| ABSFEEDBACK | Tipo de captación.|" .
 
-ns1:Parametro_ACFGAIN_1182 a ns1:Parametro ;
-    rdfs:label "ACForward (ACFGAIN)" ;
-    ns1:identificador "ACFGAIN" ;
-    ns1:textoExtracto "Si se hace uso del ACForward ('ACFGAIN' = YES), recuérdese que cada motor contempla la mitad de la inercia para una distribución de par del 50%."@es ;
-    ns1:valor "YES"^^xsd:string .
-
-ns1:SistemaTandem_1182 a ns1:Sistema ;
-    rdfs:label "Sistema de tándem con dos motores"@es ;
-    ns1:controla ns1:Parametro_PRELOAD_1182,
-        ns1:Parametro_TORQDIST_1182 ;
-    ns1:textoExtracto "Habilitar el tándem con ambos motores. [...] Asegurarse de que no hay golpes y que cada motor realiza el par que le corresponde, según los parámetros 'TORQDIST' y 'PRELOAD'."@es ;
-    ns1:tieneComponente ns1:MotorTandem_1_1182,
-        ns1:MotorTandem_2_1182 .
-
-ns1:Parametro_PRELOAD_1182 a ns1:Parametro ;
-    rdfs:label "PRELOAD" ;
-    ns1:identificador "PRELOAD" ;
-    ns1:textoExtracto "ir aumentando la precarga hasta que los motores hagan par en sentido opuesto. [...] según los parámetros 'TORQDIST' y 'PRELOAD'."@es .
-
-ns1:Parametro_TORQDIST_1182 a ns1:Parametro ;
-    rdfs:label "TORQDIST" ;
-    ns1:identificador "TORQDIST" ;
-    ns1:textoExtracto "según el parámetro 'TORQDIST' (p.e para una distribución del 50%, la mitad del par)."@es ;
-    ns1:valor "50%"^^xsd:string .
+ns1:TipoDeContador a ns1:Parametro ;
+    rdfs:label "Tipo de contador" ;
+    ns1:identificador "COUNTERTYPE" ;
+    ns1:textoExtracto "Para utilizar la misma entrada de captación, los parámetros COUNTERTYPE y COUNTERID de ambos ejes debe ser iguales." .
 

@@ -1,23 +1,18 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:MarcaReset_CNC_6.8 a ns1:InterfazUsuario ;
-    rdfs:label "Marca RESETIN del CNC" ;
-    ns1:controla ns1:CanalCNC_6.8 ;
-    ns1:identificador "RESETIN" ;
-    ns1:textoExtracto "El tratamiento que recibe esta marca es similar al que recibe la tecla de [RESET]. Con un flanco de subida (cambio de 0 a 1) de esta marca, el canal del CNC se resetea. Una vez iniciado el reset, el PLC puede desactivar esta marca (RESETIN=0)" .
+ns1:ContadorActivoDuranteElMecanizado a ns1:Parametro ;
+    rdfs:label "Contador activo durante el mecanizado" ;
+    ns1:identificador "PLC.TIMER" ;
+    ns1:textoExtracto "PRG AUTOMAT AND INCYCLE = TIMERON Contador activo durante el mecanizado. ()= CNCRD (PLC.TIMER, R300, M12) El registro R300 muestra el valor del contador." .
 
-ns1:TeclaReset_Panel_6.8 a ns1:InterfazUsuario ;
-    rdfs:label "Tecla RESET del panel" ;
-    ns1:habilitadoPor ns1:ProcesoReset_6.8 ;
-    ns1:identificador "RESET" ;
-    ns1:textoExtracto "El usuario pulsa la tecla [RESET] del panel" .
+ns1:InicializaElContadorA0TrasElEncendido a ns1:Parametro ;
+    rdfs:label "Inicializa el contador a 0 tras el encendido" ;
+    ns1:identificador "CY1" ;
+    ns1:textoExtracto "CY1 ()= MOV 0 R100 ()= CNCWR (R100, PLC.TIMER, M11) Inicializa el contador a 0 tras el encendido." .
 
-ns1:CanalCNC_6.8 a ns1:Sistema ;
-    rdfs:label "Canal del CNC" ;
-    ns1:textoExtracto "el canal del CNC se resetea" .
-
-ns1:ProcesoReset_6.8 a ns1:ModoOperacion ;
-    rdfs:label "Proceso de reset del CNC" ;
-    ns1:textoExtracto "El proceso de reset es como sigue. 1 El usuario pulsa la tecla [RESET] del panel" .
+ns1:RegistroR300 a ns1:Parametro ;
+    rdfs:label "El registro R300 muestra el valor del contador" ;
+    ns1:identificador "R300" ;
+    ns1:textoExtracto "PRG AUTOMAT AND INCYCLE = TIMERON Contador activo durante el mecanizado. ()= CNCRD (PLC.TIMER, R300, M12) El registro R300 muestra el valor del contador." .
 

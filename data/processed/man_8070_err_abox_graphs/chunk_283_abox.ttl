@@ -1,19 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC (Control Numérico Computarizado)" ;
-    ns1:activaAlarma ns1:Error1606,
-        ns1:Error1607 ;
-    ns1:textoExtracto "El CNC ha intentado activar una transformación angular..." .
+ns1:DecidirQueSincronizacionDeLosDosEsLaQueSeQuiereActivar a ns1:TareaMantenimiento ;
+    rdfs:label "Decidir qué sincronización de los dos es la que se quiere activar" ;
+    ns1:solucionaFallo ns1:ElMismoCabezalEsclavoNoPuedeSerSincronizadoADosMaestrosSimultaneamente ;
+    ns1:textoExtracto "Decidir qué sincronización de las dos es la que se quiere activar." .
 
-ns1:Error1606 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1606: Transformación angular con ejes en canales distintos" ;
-    ns1:identificador "1606" ;
-    ns1:textoExtracto "El CNC ha intentado activar una transformación angular con dos ejes que no pertenecen al mismo canal." .
+ns1:EliminarEstaProgramacionODesincronizarElCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar esta programación o desincronizar el cabezal" ;
+    ns1:solucionaFallo ns1:NoSePermiteProgramarUnCabezalEsclavoDuranteLaSincronizacion ;
+    ns1:textoExtracto "Eliminar esta programación o desincronizar el cabezal." .
 
-ns1:Error1607 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1607: Ciclo de fresa con ejes insuficientes" ;
-    ns1:identificador "1607" ;
-    ns1:textoExtracto "'Para ejecutar un ciclo de fresa son necesarios tres ejes en el canal'" .
+ns1:RevisarLaProgramacionParaEvitarDesincronizarUnCabezalQueNoEstaSincronizado a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para evitar desincronizar un cabezal que no está sincronizado" ;
+    ns1:solucionaFallo ns1:ElCNCHaIntentadoDesincronizarUnCabezalEsclavoQueNoEstaActualmenteSincronizado ;
+    ns1:textoExtracto "Revisar la programación." .
+
+ns1:RevisarLaProgramacionParaEvitarQueUnCabezalSeaALaVezMaestroYEsclavo a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para evitar que un cabezal sea a la vez maestro y esclavo" ;
+    ns1:solucionaFallo ns1:UnCabezalNoPuedeSerALaVezMaestroYEsclavoDeUnaSincronizacion ;
+    ns1:textoExtracto "Revisar la programación." .
+
+ns1:RevisarLaProgramacionYDeshacerLaSincronizacionAnteriorOSincronizarOtr_872061ef5f a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación y deshacer la sincronización anterior o sincronizar otro cabezal que esté disponible" ;
+    ns1:solucionaFallo ns1:UnCanalNoPuedeCancelarLaSincronizacionDeUnCabezalEsclavoQuePerteneceAOtroCanal ;
+    ns1:textoExtracto "Deshacer la sincronización anterior o sincronizar otro cabezal que esté disponible." .
+
+ns1:ElCNCHaIntentadoDesincronizarUnCabezalEsclavoQueNoEstaActualmenteSincronizado a ns1:DiagnosticoFallo ;
+    rdfs:label "El CNC ha intentado desincronizar un cabezal esclavo que no está actualmente sincronizado" ;
+    ns1:textoExtracto "'El cabezal no está sincronizado'" .
+
+ns1:ElMismoCabezalEsclavoNoPuedeSerSincronizadoADosMaestrosSimultaneamente a ns1:DiagnosticoFallo ;
+    rdfs:label "El mismo cabezal esclavo no puede ser sincronizado a dos maestros simultáneamente" ;
+    ns1:textoExtracto "'No se puede sincronizar el mismo cabezal esclavo a dos maestros'" .
+
+ns1:NoSePermiteProgramarUnCabezalEsclavoDuranteLaSincronizacion a ns1:DiagnosticoFallo ;
+    rdfs:label "No se permite programar un cabezal esclavo durante la sincronización" ;
+    ns1:textoExtracto "'No se admite cambio de gama en cabezales sincronizados'" .
+
+ns1:UnCabezalNoPuedeSerALaVezMaestroYEsclavoDeUnaSincronizacion a ns1:DiagnosticoFallo ;
+    rdfs:label "Un cabezal no puede ser a la vez maestro y esclavo de una sincronización" ;
+    ns1:textoExtracto "'Un cabezal no puede ser a la vez maestro y esclavo de una sincronización'" .
+
+ns1:UnCanalNoPuedeCancelarLaSincronizacionDeUnCabezalEsclavoQuePerteneceAOtroCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "Un canal no puede cancelar la sincronización de un cabezal esclavo que pertenece a otro canal" ;
+    ns1:textoExtracto "'El cabezal esclavo ya está sincronizado a otro cabezal'" .
 

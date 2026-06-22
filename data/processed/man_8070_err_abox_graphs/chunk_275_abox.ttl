@@ -1,31 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AccionProhibida_1585 a ns1:AccionProhibida ;
-    rdfs:label "Prohibición: ejes de intercambio temporal en transformación activa" ;
-    ns1:textoExtracto "Los ejes de la transformación activa no pueden ser ejes de intercambio temporal" .
+ns1:AvisoSeguridad_47e6e3ae3a a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para búsqueda de cero en eje maestro" ;
+    ns1:textoExtracto "'No se permite búsqueda de cero en eje maestro con varios esclavos'" .
 
-ns1:AccionProhibida_1586 a ns1:AccionProhibida ;
-    rdfs:label "Prohibición: ejes de intercambio temporal en transformada mantenida" ;
-    ns1:textoExtracto "Los ejes de la transformada no pueden ser ejes de intercambio temporal, ya que la transformada definida se mantiene una vez activada." .
+ns1:AvisoSeguridad_4b366f382d a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para Sercos de posición" ;
+    ns1:textoExtracto "'#CAX: Necesita programación previa de M19 en Sercos de posición'" .
 
-ns1:Parametro_1585 a ns1:Parametro ;
-    rdfs:label "Parámetro de relación de transmisión" ;
-    ns1:textoExtracto "Programar números enteros en los parámetros que definen el numerador y denominador de la relación de transmisión." .
+ns1:AvisoSeguridad_f6327bf38d a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para eje esclavo UNIDIR" ;
+    ns1:textoExtracto "'#LINK: Un eje esclavo UNIDIR debe ser del mismo tipo que el maestro (UNIDIR)'" .
 
-ns1:Parametro_1586 a ns1:Parametro ;
-    rdfs:label "Número de almacén (MZ)" ;
-    ns1:textoExtracto "Falta programar el número de almacén (MZ)" .
+ns1:ParametroUNIDIR a ns1:Parametro ;
+    rdfs:label "Parámetro UNIDIR" ;
+    ns1:textoExtracto "(parámetro UNIDIR)" .
 
-ns1:Sistema_1585 a ns1:Sistema ;
-    rdfs:label "Sistema de transformadas #FACE y #CYL" ;
-    ns1:textoExtracto "En las transformadas #FACE y #CYL se pueden utilizar ejes de intercambio temporal, porque estas transformadas se anulan con M30 y tras un reset." .
+ns1:TareaMantenimiento_1f8dae0d66 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea para solucionar fallo de búsqueda de referencia en eje maestro con varios esclavos" ;
+    ns1:solucionaFallo ns1:FalloBusquedaReferenciaMaestro ;
+    ns1:textoExtracto "SOLUCIÓN Deshacer el acoplo de ejes y realizar la búsqueda de referencia de los ejes por separado." .
 
-ns1:TareaMantenimiento_1585 a ns1:TareaMantenimiento ;
-    rdfs:label "Ajuste de ejes para transformación" ;
-    ns1:textoExtracto "Si es posible, definir los ejes como de intercambio mantenido; si no, utilizar otros ejes para la transformada." .
+ns1:TareaMantenimiento_82722d2dd1 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea para solucionar fallo de acoplo con ejes unidireccionales" ;
+    ns1:solucionaFallo ns1:FalloEjeEsclavoUnidir ;
+    ns1:textoExtracto "SOLUCIÓN Cuando los ejes son unidireccionales, ambos ejes deben tener el mismo sentido de giro predeterminado (parámetro UNIDIR)." .
 
-ns1:TareaMantenimiento_1586 a ns1:TareaMantenimiento ;
-    rdfs:label "Configuración de ejes de intercambio temporal" ;
-    ns1:textoExtracto "Los ejes de intercambio temporal sólo se pueden utilizar en su canal, y cuando los ejes están en sus posiciones originales dentro del canal." .
+ns1:FalloBusquedaReferenciaMaestro a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo de búsqueda de referencia en eje maestro con varios esclavos" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha ejecutado una función G74 sobre el eje maestro de un acoplo con varios esclavos." .
+
+ns1:FalloEjeEsclavoUnidir a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo de acoplo con ejes unidireccionales" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar un acoplo (#LINK) con dos ejes rotativos unidireccionales que no son iguales." .
 

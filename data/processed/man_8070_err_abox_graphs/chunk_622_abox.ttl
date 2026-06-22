@@ -1,56 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_4033 a ns1:DiagnosticoFallo ;
-    rdfs:label "Parametrizado Gap Control en un regulador que no lo soporta" ;
-    ns1:identificador "4033" ;
-    ns1:solucionaFallo ns1:Parametro_GAPANAINID ;
-    ns1:textoExtracto "DETECCIÓN: Al inicializar el bus Sercos. CAUSA: El parámetro GAPANAINID indica un regulador Fagor cuya versión no soporta control de gap o el regulador no es Fagor. SOLUCIÓN: Utilizar un regulador Fagor con versión de software v9.03 o superior, o anular el control de gap interno del regulador." .
+ns1:CorreccionDeParametrizacion a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de parametrización" ;
+    ns1:solucionaFallo ns1:FalloError4019,
+        ns1:FalloError4020 ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la parametrización." .
 
-ns1:DiagnosticoFallo_4034 a ns1:DiagnosticoFallo ;
-    rdfs:label "Para Gap Control, el regulador debe ser Sercos Posición" ;
-    ns1:identificador "4034" ;
-    ns1:textoExtracto "DETECCIÓN: Al inicializar el bus Sercos. CAUSA: El regulador seleccionado para el control de gap no es Sercos posición. SOLUCIÓN: Parametrizar correctamente el regulador que debe hacer el control de gap." .
+ns1:CorregirLaParametrizacionIncorrectaDelModuloRCSS a ns1:AccionProhibida ;
+    rdfs:label "Corregir la parametrización incorrecta del módulo RCS-S" ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la parametrización." .
 
-ns1:DiagnosticoFallo_4035 a ns1:DiagnosticoFallo ;
-    rdfs:label "Para Gap Control, el regulador debe tener REFMODE = Regulador" ;
-    ns1:identificador "4035" ;
-    ns1:solucionaFallo ns1:Parametro_REFMODE ;
-    ns1:textoExtracto "DETECCIÓN: Al inicializar el bus Sercos. CAUSA: El eje seleccionado para el control de gap tiene su parámetro REFMODE definido como 'CNC', no como 'Regulador'. SOLUCIÓN: Definir el parámetro REFMODE del eje como 'Regulador'." .
+ns1:CorregirLaParametrizacionIncorrectaDelModuloRCSSOSusRecursos a ns1:AccionProhibida ;
+    rdfs:label "Corregir la parametrización incorrecta del módulo RCS-S o sus recursos" ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la parametrización." .
 
-ns1:DiagnosticoFallo_4036 a ns1:DiagnosticoFallo ;
-    rdfs:label "Para Gap Control, el regulador debe tener su captación externa libre" ;
-    ns1:identificador "4036" ;
-    ns1:solucionaFallo ns1:ComponenteElectrico_TarjetaGap_X3 ;
-    ns1:textoExtracto "DETECCIÓN: Al inicializar el bus Sercos. CAUSA: El regulador seleccionado para el control de gap no tiene tarjeta de control de gap instalada (conector X3). SOLUCIÓN: Instalar una tarjeta de control de gap en el regulador (conector X3)." .
+ns1:FalloError4022 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el anillo Sercos debido a un Reset de contadora por Watchdog" ;
+    ns1:textoExtracto "4022 Error en el anillo Sercos debido a un Reset de contadora por Watchdog." .
 
-ns1:DiagnosticoFallo_4037 a ns1:DiagnosticoFallo ;
-    rdfs:label "El regulador no soporta la escritura síncrona de la variable DRV FFGAIN" ;
-    ns1:identificador "4037" ;
-    ns1:solucionaFallo ns1:Parametro_IDN296_FFGAIN ;
-    ns1:textoExtracto "DETECCIÓN: Al inicializar el bus Sercos. CAUSA: En la tabla DRVVAR, se ha parametrizado el IDN296 (FFGAIN) como de escritura síncrona, y el regulador no es AXD o la versión de software es incompatible." .
+ns1:PongaseEnContactoConFagorSiElErrorPersiste a ns1:AvisoSeguridad ;
+    rdfs:label "Póngase en contacto con Fagor si el error persiste" ;
+    ns1:mitigaRiesgo ns1:FalloError4019 ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor." .
 
-ns1:DiagnosticoFallo_Setup a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagrama de tiempos de Sercos no óptimo" ;
-    ns1:textoExtracto "CAUSA: El diagrama de tiempos de Sercos no es bastante óptimo para garantizar el sincronismo del sistema. SOLUCIÓN: Desde la página de diagnosis Sercos, realizar el reajuste de tiempos y aceptar el nuevo diagrama propuesto." .
+ns1:SubsanarLaCausaDelResetEnElModuloRCSS a ns1:AccionProhibida ;
+    rdfs:label "Subsanar la causa del reset en el módulo RCS-S" ;
+    ns1:textoExtracto "SOLUCIÓN Subsanar la causa del problema. Si el error persiste, póngase en contacto con Fagor." .
 
-ns1:Tabla_DRVVAR a ns1:Tabla ;
-    ns1:identificador "DRVVAR" ;
-    ns1:textoExtracto "En la tabla DRVVAR, se ha parametrizado el IDN296 (FFGAIN) como de escritura síncrona." .
+ns1:TipoDeCaptacion_089d2606ff a ns1:Parametro ;
+    rdfs:label "Tipo de captación" ;
+    ns1:textoExtracto "el tipo de captación (parámetro FEEDBACKTYPE)" .
 
-ns1:ComponenteElectrico_TarjetaGap_X3 a ns1:ComponenteElectrico ;
-    ns1:identificador "X3" ;
-    ns1:textoExtracto "tarjeta de control de gap instalada (conector X3)." .
+ns1:FalloError4020 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parametrización inconsistente" ;
+    ns1:textoExtracto "4020 Parametrización inconsistente." .
 
-ns1:Parametro_GAPANAINID a ns1:Parametro ;
-    ns1:identificador "GAPANAINID" ;
-    ns1:textoExtracto "El parámetro GAPANAINID indica un regulador Fagor cuya versión no soporta control de gap o el regulador no es Fagor." .
-
-ns1:Parametro_IDN296_FFGAIN a ns1:Parametro ;
-    ns1:identificador "IDN296 (FFGAIN)" ;
-    ns1:textoExtracto "En la tabla DRVVAR, se ha parametrizado el IDN296 (FFGAIN) como de escritura síncrona." .
-
-ns1:Parametro_REFMODE a ns1:Parametro ;
-    ns1:identificador "REFMODE" ;
-    ns1:textoExtracto "El eje seleccionado para el control de gap tiene su parámetro REFMODE definido como 'CNC', no como 'Regulador'." .
+ns1:FalloError4019 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el anillo Sercos debido a un Reset de contadora" ;
+    ns1:textoExtracto "4019 Error en el anillo Sercos debido a un Reset de contadora." .
 

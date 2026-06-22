@@ -1,30 +1,12 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Fallo_3102 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sentencia no compatible con movimiento independiente activo"@es ;
-    ns1:identificador "3102" ;
-    ns1:textoExtracto "Sentencia no compatible con movimiento independiente activo. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado ejecutar la sentencia #HSC o #SWT en un eje con movimiento independiente. SOLUCIÓN No se pueden programar esas sentencias en un eje con movimiento independiente."@es .
+ns1:EntradaEnZonaProhibida a ns1:AccionProhibida ;
+    rdfs:label "entrada en zona prohibida" ;
+    ns1:mitigaRiesgo ns1:MantenerEjesFueraDeLosLimitesDeLaZonaDeTrabajo ;
+    ns1:textoExtracto "Si la herramienta está dentro de la zona prohibida, desactivar temporalmente dicha zona, mover el eje en el sentido adecuado mediante el" .
 
-ns1:Fallo_3103 a ns1:DiagnosticoFallo ;
-    rdfs:label "Potencia objetivo insuficiente para el funcionamiento correcto con DMC"@es ;
-    ns1:identificador "3103" ;
-    ns1:solucionaFallo ns1:Sistema_DMC ;
-    ns1:textoExtracto "Potencia objetivo insuficiente para el funcionamiento correcto con DMC. DETECCIÓN Durante la ejecución. CAUSA Los valores de la potencia en vacío y la potencia objetivo durante el mecanizado son similares. Es posible que el DMC no pueda distinguir con exactitud las entradas y salidas de la pieza. SOLUCIÓN La potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío. En este caso se recomienda desactivar la función DMC en este mecanizado."@es .
-
-ns1:Parametro_PotenciaObjetivo a ns1:Parametro ;
-    rdfs:label "Potencia objetivo (DMC)"@es ;
-    ns1:textoExtracto "La potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío."@es ;
-    ns1:valor "20%"^^xsd:string .
-
-ns1:Parametro_PotenciaVacio a ns1:Parametro ;
-    rdfs:label "Potencia en vacío"@es ;
-    ns1:textoExtracto "Los valores de la potencia en vacío y la potencia objetivo durante el mecanizado son similares."@es .
-
-ns1:Sistema_DMC a ns1:Sistema ;
-    rdfs:label "DMC (Dynamic Machining Control)"@es ;
-    ns1:monitoreaParametro ns1:Parametro_PotenciaObjetivo,
-        ns1:Parametro_PotenciaVacio ;
-    ns1:textoExtracto "Es posible que el DMC no pueda distinguir con exactitud las entradas y salidas de la pieza. [...] se recomienda desactivar la función DMC en este mecanizado."@es .
+ns1:MantenerEjesFueraDeLosLimitesDeLaZonaDeTrabajo a ns1:TareaMantenimiento ;
+    rdfs:label "mantener ejes fuera de los límites de la zona de trabajo" ;
+    ns1:textoExtracto "SOLUCIÓN Mantener los ejes fuera de los límites de la zona de trabajo de no entrada." .
 

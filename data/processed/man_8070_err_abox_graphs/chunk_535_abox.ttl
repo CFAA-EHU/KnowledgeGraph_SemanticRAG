@@ -1,44 +1,47 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_3089 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el cálculo de la transformada inversa del eje virtual de la herramienta, #VIRTAX" ;
-    ns1:identificador "3089" ;
-    ns1:solucionaFallo ns1:Empresa_Fagor ;
-    ns1:textoExtracto "3089 'Error en el cálculo de la transformada inversa del eje virtual de la herramienta, #VIRTAX' DETECCIÓN Durante la ejecución. CAUSA La transformación de coordenadas pieza a máquina es imposible de ejecutar. SOLUCIÓN Póngase en contacto con Fagor." .
+ns1:AccionProhibida_dae475ad31 a ns1:AccionProhibida ;
+    rdfs:label "función bloque a bloque" ;
+    ns1:textoExtracto "Para evitar saturar los recursos del sistema, el CNC no permite la función bloque a bloque en este tipo de programas." .
 
-ns1:Error_3090 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el cálculo de la transformada directa del eje virtual de la herramienta, #VIRTAX" ;
-    ns1:identificador "3090" ;
-    ns1:solucionaFallo ns1:Empresa_Fagor ;
-    ns1:textoExtracto "3090 'Error en el cálculo de la transformada directa del eje virtual de la herramienta, #VIRTAX' DETECCIÓN Durante la ejecución. CAUSA La transformación de coordenadas máquina a pieza es imposible de ejecutar. SOLUCIÓN Póngase en contacto con Fagor." .
+ns1:AnticipacionParaActivarLaSalidaDigital a ns1:AccionProhibida ;
+    rdfs:label "anticipación para activar la salida digital" ;
+    ns1:textoExtracto "'No es posible tanta anticipación para activar la salida digital' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada)." .
 
-ns1:Error_3091 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se ha detectado señal del sensor" ;
-    ns1:identificador "3091" ;
-    ns1:textoExtracto "3091 No se ha detectado señal del sensor. DETECCIÓN Durante la ejecución. CAUSA Durante el bloque de aproximación a la distancia (GAP) programada en la sentencia #GAPCTRL, el CNC no ha recibido la señal del sensor." .
+ns1:AsumirElOffsetDelEjeNoReposicionado a ns1:AccionProhibida ;
+    rdfs:label "asumir el offset del eje no reposicionado" ;
+    ns1:textoExtracto "'No es posible asumir el offset del eje no reposicionado' DETECCIÓN Durante la ejecución." .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "CNC" ;
-    ns1:textoExtracto "el CNC no ha recibido la señal del sensor." ;
-    ns1:tieneComponente ns1:Sensor_GAPCTRL .
+ns1:ElCabezalMasterDeLaSincronizacionNoPasaALazoAbierto_cbb06bf0d5 a ns1:DiagnosticoFallo ;
+    rdfs:label "El cabezal master de la sincronización no pasa a lazo abierto" ;
+    ns1:textoExtracto "'El cabezal master de la sincronización no pasa a lazo abierto' DETECCIÓN Durante la ejecución." .
 
-ns1:Parametro_PWMOUTPUT a ns1:Parametro ;
-    rdfs:label "PWMOUTPUT" ;
-    ns1:textoExtracto "El parámetro PWMOUTPUT no puede ser superior a 2 (0, 1, 2)." ;
-    ns1:valor "0, 1, 2" .
+ns1:ElCabezalMasterDeLaSincronizacionNoPasaALazoCerrado_a5c1a7c2df a ns1:DiagnosticoFallo ;
+    rdfs:label "El cabezal master de la sincronización no pasa a lazo cerrado" ;
+    ns1:textoExtracto "'El cabezal master de la sincronización no pasa a lazo cerrado' DETECCIÓN Durante la ejecución." .
 
-ns1:Parametro_NLOCOUT a ns1:Parametro ;
-    rdfs:label "NLOCOUT" ;
-    ns1:textoExtracto "parámetro NLOCOUT debe ser 8." ;
-    ns1:valor "8" .
+ns1:NoEsPosibleAsumirElOffsetDelEjeNoReposicionado_522d74c633 a ns1:DiagnosticoFallo ;
+    rdfs:label "No es posible asumir el offset del eje no reposicionado" ;
+    ns1:textoExtracto "'No es posible asumir el offset del eje no reposicionado' DETECCIÓN Durante la ejecución." .
 
-ns1:Sensor_GAPCTRL a ns1:Sensor ;
-    rdfs:label "Sensor de aproximación (GAPCTRL)" ;
-    ns1:monitoreaParametro ns1:Parametro_NLOCOUT ;
-    ns1:textoExtracto "Durante el bloque de aproximación a la distancia (GAP) programada en la sentencia #GAPCTRL, el CNC no ha recibido la señal del sensor." .
+ns1:NoEsPosibleTantaAnticipacionParaActivarLaSalidaDigital_e1e3f636e7 a ns1:DiagnosticoFallo ;
+    rdfs:label "No es posible tanta anticipación para activar la salida digital" ;
+    ns1:textoExtracto "'No es posible tanta anticipación para activar la salida digital' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada)." .
 
-ns1:Empresa_Fagor a ns1:Empresa ;
-    rdfs:label "Fagor" ;
-    ns1:textoExtracto "Póngase en contacto con Fagor." .
+ns1:ProgramarUnaSincronizacionEnLazoAbiertoParaElCabezalMaestro a ns1:AccionProhibida ;
+    rdfs:label "programar una sincronización en lazo abierto para el cabezal maestro" ;
+    ns1:textoExtracto "El usuario ha programado una sincronización (#SYNC) en lazo abierto (comando OLOOP) para el cabezal maestro, pero éste estaba trabajando en lazo cerrado para otra sincronización previa y seguirá en lazo cerrado." .
+
+ns1:ProgramarUnaSincronizacionEnLazoCerradoParaElCabezalMaestro a ns1:AccionProhibida ;
+    rdfs:label "programar una sincronización en lazo cerrado para el cabezal maestro" ;
+    ns1:textoExtracto "El usuario ha programado una sincronización (#SYNC) en lazo cerrado (comando CLOOP) para el cabezal maestro, pero éste estaba trabajando en lazo abierto para otra sincronización previa y seguirá en lazo abierto." .
+
+ns1:VelocidadDeCorteDemasiadoAlta a ns1:AccionProhibida ;
+    rdfs:label "velocidad de corte demasiado alta" ;
+    ns1:textoExtracto "'Velocidad demasiado alta' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada)." .
+
+ns1:VelocidadDemasiadoAlta_b68bbb227b a ns1:DiagnosticoFallo ;
+    rdfs:label "Velocidad demasiado alta" ;
+    ns1:textoExtracto "'Velocidad demasiado alta' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada)." .
 

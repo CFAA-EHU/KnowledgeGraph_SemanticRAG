@@ -1,33 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AlmacenDeHerramientas_6ddf1315dd a ns1:ComponenteMecanico ;
-    rdfs:label "Almacén de herramientas"@es ;
-    ns1:detalladoEnEsquema ns1:TablaHerramientas ;
-    ns1:textoExtracto "El almacén en el que se deja la herramienta y el almacén del que se coge la herramienta nueva pueden ser diferentes. [...] Las herramientas siempre se guardan en el mismo almacén."@es .
+ns1:TablaComunicacionGestorPLC a ns1:Tabla ;
+    rdfs:label "Tabla de comunicacion Gestor --> PLC" ;
+    ns1:ilustra ns1:Parametro_63a661861b,
+        ns1:RegistroDeIdentificacionDelCanal1,
+        ns1:RegistroParaDejarPosicionEnAlmacen,
+        ns1:RegistroParaInformarOperacionesAlPLC,
+        ns1:RegistroParaSiguientePosicionEnAlmacen,
+        ns1:RegistroParaTomarPosicionEnAlmacen ;
+    ns1:textoExtracto "En la siguiente tabla se muestran los mnemónicos de cada marca (M) o registro (R) en cada uno de los canales o almacenes." .
 
-ns1:HerramientaDeTierra_870daa71bd a ns1:Herramienta ;
-    rdfs:label "Herramienta de tierra"@es ;
-    ns1:documentadoEn ns1:TablaHerramientas ;
-    ns1:textoExtracto "Se denomina herramienta de tierra a aquella que no se guarda en ningún almacén y que se carga manualmente cuando es solicitada. Las herramientas de tierra también se definen en la tabla de herramientas pero no están asociadas a ninguna posición de almacén."@es .
+ns1:Parametro_63a661861b a ns1:Parametro ;
+    rdfs:label "Marca para informar operaciones al PLC" ;
+    ns1:identificador "TMOPSTROBE" ;
+    ns1:textoExtracto "M | TMOPSTROBE" .
 
-ns1:SistemaGestionHerramientas a ns1:Sistema ;
-    rdfs:label "Sistema de gestión de herramientas CNC"@es ;
-    ns1:documentadoEn ns1:TablaHerramientas ;
-    ns1:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas."@es ;
-    ns1:tieneComponente ns1:GestorHerramientas .
+ns1:RegistroDeIdentificacionDelCanal1 a ns1:Parametro ;
+    rdfs:label "Registro de identificación del canal 1" ;
+    ns1:identificador "MZIDC1" ;
+    ns1:textoExtracto "R | MZIDC1" .
 
-ns1:OperacionCambioHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Operación de cambio de herramienta"@es ;
-    ns1:ejecutadoPor ns1:GestorHerramientas ;
-    ns1:textoExtracto "En el cambio de herramienta pueden estar implicados dos almacenes. [...] Cuando se realiza un cambio de herramienta, ésta siempre se guarda en el almacén del que se cogió."@es .
+ns1:RegistroParaDejarPosicionEnAlmacen a ns1:Parametro ;
+    rdfs:label "Registro para dejar posición en almacén" ;
+    ns1:identificador "LEAVEPOS" ;
+    ns1:textoExtracto "R | LEAVEPOS" .
 
-ns1:GestorHerramientas a ns1:InterfazUsuario ;
-    rdfs:label "Gestor de herramientas"@es ;
-    ns1:controla ns1:OperacionCambioHerramienta ;
-    ns1:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas. Cuando se solicita un cambio o una búsqueda de herramienta el gestor de herramientas le comunica al PLC las operaciones que debe realizar."@es .
+ns1:RegistroParaInformarOperacionesAlPLC a ns1:Parametro ;
+    rdfs:label "Registro para informar operaciones al PLC" ;
+    ns1:identificador "TMOPERATION" ;
+    ns1:textoExtracto "R | TMOPERATION" .
 
-ns1:TablaHerramientas a ns1:Tabla ;
-    rdfs:label "Tabla de herramientas del sistema"@es ;
-    ns1:textoExtracto "La lista de herramientas disponibles se guarda en la tabla de herramientas, única para todo el sistema. En esta tabla se indica la posición y el almacén en el que se encuentra cada herramienta, si se trata de una herramienta de tierra o si la herramienta se encuentra activa en algún canal."@es .
+ns1:RegistroParaSiguientePosicionEnAlmacen a ns1:Parametro ;
+    rdfs:label "Registro para siguiente posición en almacén" ;
+    ns1:identificador "NEXTPOS" ;
+    ns1:textoExtracto "R | NEXTPOS" .
+
+ns1:RegistroParaTomarPosicionEnAlmacen a ns1:Parametro ;
+    rdfs:label "Registro para tomar posición en almacén" ;
+    ns1:identificador "TAKEPOS" ;
+    ns1:textoExtracto "R | TAKEPOS" .
 

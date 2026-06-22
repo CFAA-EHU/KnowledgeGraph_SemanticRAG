@@ -1,49 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CNC a ns1:Maquina ;
-    rdfs:label "CNC" ;
-    ns1:textoExtracto "Durante el arranque del CNC." ;
-    ns1:tieneComponente ns1:SoftwareControl .
+ns1:ActualizarTopologia a ns1:TareaMantenimiento ;
+    rdfs:label "Actualizar topología" ;
+    ns1:solucionaFallo ns1:NodoNoDetectado ;
+    ns1:textoExtracto "SOLUCIÓN Actualizar la topología de acuerdo con los nodos conectados (eliminar nodo de la topología) o revisar cableado, conexionado y alimentación de los esclavos del bus." .
 
-ns1:Fallo_4709 a ns1:DiagnosticoFallo ;
-    rdfs:label "Problemas de comunicación entre nodos" ;
-    ns1:identificador "4709" ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del CNC. CAUSA El nodo tiene problemas de comunicación con el nodo anterior." .
+ns1:PongaseEnContactoConFagorAutomation_96d21b5e90 a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor Automation. Si el error persiste, póngase en contacto con Fagor Automation." .
 
-ns1:TopologiaBus a ns1:Sistema ;
-    rdfs:label "Topología del bus" ;
-    ns1:detalladoEnEsquema ns1:ArchivoConfiguracionBus ;
-    ns1:textoExtracto "Comprobar topología bus y las conexiones." .
+ns1:RevisarCableado a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar cableado" ;
+    ns1:solucionaFallo ns1:NodoNoDetectado ;
+    ns1:textoExtracto "SOLUCIÓN Actualizar la topología de acuerdo con los nodos conectados (eliminar nodo de la topología) o revisar cableado, conexionado y alimentación de los esclavos del bus." .
 
-ns1:VariableBus a ns1:Parametro ;
-    rdfs:label "Variable de bus" ;
-    ns1:monitoreaParametro ns1:Fallo_4706 ;
-    ns1:textoExtracto "CAUSA La variable de bus no se ha definido correctamente. SOLUCIÓN Revisar la definición de la variable." .
-
-ns1:ArchivoConfiguracionBus a ns1:Parametro ;
-    rdfs:label "Archivo de configuración del bus" ;
-    ns1:identificador "configuración del bus" ;
-    ns1:monitoreaParametro ns1:Fallo_4708 ;
-    ns1:textoExtracto "La topología real del bus no coincide con el archivo de configuración." .
-
-ns1:Fallo_4706 a ns1:DiagnosticoFallo ;
-    rdfs:label "Tipo de nodo no permitido" ;
-    ns1:identificador "4706" ;
-    ns1:textoExtracto "DETECCIÓN Durante la detección nodos bus. CAUSA El control no dispone de la opción de software necesaria para inicializar ese tipo de nodo. SOLUCIÓN En diagnosis se puede comprobar las opciones de software activas." .
-
-ns1:Fallo_4707 a ns1:DiagnosticoFallo ;
-    rdfs:label "Superado máximo número de nodos" ;
-    ns1:identificador "4707" ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque o la validación de parámetros máquina. CAUSA Hay definidos más nodos que los permitidos. SOLUCIÓN Eliminar nodos en la parametrización." .
-
-ns1:Fallo_4708 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fichero de configuración del bus erróneo" ;
-    ns1:identificador "4708" ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del CNC. CAUSA La topología real del bus no coincide con el archivo de configuración. SOLUCIÓN Comprobar topología bus y las conexiones." .
-
-ns1:SoftwareControl a ns1:Sistema ;
-    rdfs:label "Software de control del CNC" ;
-    ns1:controla ns1:Fallo_4707 ;
-    ns1:textoExtracto "El control no dispone de la opción de software necesaria para inicializar ese tipo de nodo." .
+ns1:NodoNoDetectado a ns1:DiagnosticoFallo ;
+    rdfs:label "Nodo no detectado" ;
+    ns1:textoExtracto "4638 Nodo no detectado. DETECCIÓN Durante el arranque del CNC. CAUSA No se ha detectado un nodo de la topología durante el arranque del CNC." .
 

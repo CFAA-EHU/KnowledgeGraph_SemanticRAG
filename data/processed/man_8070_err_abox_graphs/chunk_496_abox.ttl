@@ -1,45 +1,45 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_2508 a ns1:AvisoSeguridad ;
-    rdfs:label "Error de escritura fuera de rango" ;
-    ns1:identificador "2508" ;
-    ns1:textoExtracto "de escritura fuera de rango. DETECCIÓN Durante la ejecución. CAUSA No es posible escribir ese valor en la variable. SOLUCIÓN Modificar el valor a escribir." .
+ns1:ActivacionDelGapSoloEnEjesConSIMMODETrue a ns1:TareaMantenimiento ;
+    rdfs:label "Activación del gap solo en ejes con SIMMODE=True" ;
+    ns1:textoExtracto "SOLUCIÓN El gap sólo se puede activar en ejes con SIMMODE=True." .
 
-ns1:AvisoSeguridad_2509 a ns1:AvisoSeguridad ;
-    rdfs:label "#ORBIT ON[Rvalor, Jvalor, Kvalor] - Error de sintaxis" ;
-    ns1:identificador "2509" ;
-    ns1:textoExtracto "2509 #ORBIT ON[Rvalor, Jvalor ,Kvalor]. DETECCIÓN Durante la edición o preparación de bloques. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar la programación." .
+ns1:GapProgramadoMenorQueGAPSMINLEVEL a ns1:DiagnosticoFallo ;
+    rdfs:label "Gap programado menor que GAPSMINLEVEL" ;
+    ns1:textoExtracto "El gap programado debe ser superior al parámetro máquina GAPSMINLEVEL. DETECCIÓN Durante la ejecución. CAUSA El valor programado del gap es inferior o igual al parámetro máquina GAPSMINLEVEL." .
 
-ns1:AvisoSeguridad_2510 a ns1:AvisoSeguridad ;
-    rdfs:label "#ORBIT OFF - Error de sintaxis" ;
-    ns1:identificador "2510" ;
-    ns1:textoExtracto "2510 #ORBIT OFF. DETECCIÓN Durante la edición o preparación de bloques. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar la programación." .
+ns1:LimiteMinimoDelGap a ns1:Parametro ;
+    rdfs:label "Límite mínimo del gap" ;
+    ns1:identificador "GAPSMINLEVEL" ;
+    ns1:textoExtracto "El gap programado debe ser superior al parámetro máquina GAPSMINLEVEL." .
 
-ns1:AvisoSeguridad_2511 a ns1:AvisoSeguridad ;
-    rdfs:label "Parámetro ORBIT fuera de rango" ;
-    ns1:identificador "2511" ;
-    ns1:mitigaRiesgo ns1:Parametro_ORBIT_J,
-        ns1:Parametro_ORBIT_K,
-        ns1:Parametro_ORBIT_R ;
-    ns1:textoExtracto "2511 Parámetro ORBIT fuera de rango. DETECCIÓN Durante la edición o preparación de bloques. CAUSA Alguno de los parámetros de la sentencia #ORBIT tiene un valor incorrecto. SOLUCIÓN El valor de R/J debe ser positivo y no nulo. El valor de R debe ser mayor que el diámetro de la herramienta. El valor de K debe ser 1 o 2." .
+ns1:ModoDeSimulacion a ns1:Parametro ;
+    rdfs:label "Modo de simulación" ;
+    ns1:identificador "SIMMODE" ;
+    ns1:textoExtracto "No es posible simulación de GAP con el parámetro SIMMODE = FALSE." .
 
-ns1:Herramienta_ORBIT a ns1:Herramienta ;
-    rdfs:label "Herramienta de orbitado" ;
-    ns1:textoExtracto "El valor de R debe ser mayor que el diámetro de la herramienta." .
+ns1:MovimientoDeEjeRotativoConRTCPSTATICYG41G42 a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento de eje rotativo con RTCP STATIC y G41/G42" ;
+    ns1:textoExtracto "Movimiento de eje rotativo no permitido con RTCP STATIC activo y compensación de radio activa (G41/G42)." .
 
-ns1:Parametro_ORBIT_J a ns1:Parametro ;
-    rdfs:label "Parámetro J (avance)" ;
-    ns1:textoExtracto "El valor de R/J debe ser positivo y no nulo." ;
-    ns1:valor "J > 0" .
+ns1:ProgramacionDeMultiplesComandosEnGRAPHCMD a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación de múltiples comandos en #GRAPHCMD" ;
+    ns1:textoExtracto "Sólo se permite programar un comando. DETECCIÓN Durante la ejecución. CAUSA Se han programado demasiados comandos en la sentencia #GRAPHCMD." .
 
-ns1:Parametro_ORBIT_K a ns1:Parametro ;
-    rdfs:label "Parámetro K (modo de órbita)" ;
-    ns1:textoExtracto "El valor de K debe ser 1 o 2." ;
-    ns1:valor "K ∈ {1, 2}" .
+ns1:RevisionDeGapProgramado a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de gap programado" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_ORBIT_R a ns1:Parametro ;
-    rdfs:label "Parámetro R (radio de órbita)" ;
-    ns1:textoExtracto "El valor de R debe ser mayor que el diámetro de la herramienta." ;
-    ns1:valor "R > diámetro_herramienta" .
+ns1:RevisionDeMovimientoDeEjeRotativoConRTCPSTATICYG41G42 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de movimiento de eje rotativo con RTCP STATIC y G41/G42" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:RevisionDeProgramacionEnGRAPHCMD a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de programación en #GRAPHCMD" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. La sentencia #GRAPHCMD sólo admite un comando." .
+
+ns1:SimulacionDeGAPConSIMMODEFalse a ns1:DiagnosticoFallo ;
+    rdfs:label "Simulación de GAP con SIMMODE=False" ;
+    ns1:textoExtracto "No es posible simulación de GAP con el parámetro SIMMODE = FALSE. DETECCIÓN Durante la ejecución. CAUSA Se ha programado el control de gap (#GRAPCTRL) en un eje que tiene el parámetro SIMMODE=False." .
 

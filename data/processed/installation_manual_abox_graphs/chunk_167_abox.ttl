@@ -1,29 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ComponenteElectrico_ModuloRemotoCAN a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto CAN" ;
-    ns1:textoExtracto "Entrada analógica de los módulos remotos CAN. En este caso, este parámetro indica el número de la salida analógica que se utiliza para la consigna." .
+ns1:DireccionLogicaDelReguladorSercos_25ac4f2c3f a ns1:Parametro ;
+    rdfs:label "Dirección lógica del regulador Sercos" ;
+    ns1:identificador "address" ;
+    ns1:textoExtracto "La dirección lógica la establece el conmutador rotativo \"address\"." .
 
-ns1:ComponenteElectrico_ReguladorSercos a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Sercos" ;
-    ns1:textoExtracto "El sensor puede estar conectado a [...] un regulador Sercos. Se recomienda utilizar una entrada del regulador." ;
-    ns1:tieneComponente ns1:Sensor_ControlGap .
+ns1:ModuloSalidaAnalogaCAN a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo Salida Analógica CAN" ;
+    ns1:textoExtracto "Entrada analógica de los módulos remotos CAN." .
 
-ns1:Parametro_GAPANAINTYPE a ns1:Parametro ;
-    rdfs:label "GAPANAINTYPE" ;
-    ns1:identificador "GAPANAINTYPE" ;
-    ns1:textoExtracto "GAPANAINTYPE=Remoto CAN, GAPANAINTYPE=Regulador, GAPANAINTYPE=Captación, GAPANAINTYPE=EtherCAT" ;
-    ns1:valor "Remoto CAN, Regulador, Captación, EtherCAT" .
-
-ns1:Parametro_GAPANAINID a ns1:Parametro ;
-    rdfs:label "GAPANAINID" ;
+ns1:NumeroDeEntradaAnalogicaConectadaAlSensor a ns1:Parametro ;
+    rdfs:label "Número de entrada analógica conectada al sensor" ;
     ns1:identificador "GAPANAINID" ;
-    ns1:textoExtracto "GAPANAINID Número de entrada analógica conectada al sensor. Valores posibles (1): Si GAPANAINTYPE=Remoto CAN, de 1 a 60. Valores posibles (2): Si GAPANAINTYPE=Regulador, de 101 a 132 o de 201 a 232. Valores posibles (3): Si GAPANAINTYPE=Captación, número de nodo del regulador. Valores posibles (4): Si GAPANAINTYPE=EtherCAT, de 1 a 1024. Valor por defecto: Ninguna (no hay control del gap). Variable asociada: (V.)MPG.GAPANAINID" ;
-    ns1:valor "1-60 (Remoto CAN), 101-132/201-232 (Regulador), nodo (Captación), 1-1024 (EtherCAT)" .
+    ns1:textoExtracto "GAPANAINID Número de entrada analógica conectada al sensor." .
 
-ns1:Sensor_ControlGap a ns1:Sensor ;
-    rdfs:label "Sensor de control del gap" ;
-    ns1:monitoreaParametro ns1:Parametro_GAPANAINID ;
-    ns1:textoExtracto "El sensor puede estar conectado a una salida analógica de los módulos remotos CAN o de un regulador Sercos. En ambos casos, este parámetro identifica la salida analógica que se está usando." .
+ns1:ReguladorSercos a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador Sercos" ;
+    ns1:textoExtracto "Gestión de la consigna analógica desde los reguladores Sercos." .
+
+ns1:SensorGap a ns1:Sensor ;
+    rdfs:label "Sensor Gap" ;
+    ns1:textoExtracto "El sensor puede estar conectado a una salida analógica de los módulos remotos CAN o de un regulador Sercos." .
+
+ns1:VariableAsociadaAlNumeroDeEntradaAnalogicaConectadaAlSensor a ns1:Parametro ;
+    rdfs:label "Variable asociada al número de entrada analógica conectada al sensor" ;
+    ns1:identificador "MPG.GAPANAINID" ;
+    ns1:textoExtracto "Variable asociada: (V.)MPG.GAPANAINID" .
 

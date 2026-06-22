@@ -1,27 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaCANopen_ConfiguracionEntradasDigitales a ns1:Sistema ;
-    rdfs:label "Sistema de configuración de entradas digitales (bus CANopen)" ;
-    ns1:textoExtracto "La configuración debe cumplir los siguientes requisitos. Si la parametrización no se ajusta a estos requisitos, el CNC la ignora y numera las entradas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus." ;
-    ns1:tieneComponente ns1:Parametro_BloqueLogico,
-        ns1:Parametro_DireccionBase,
-        ns1:Parametro_NodoCANopen .
+ns1:NumeroDeEntradasDigitalesDelBloqueLogico a ns1:Parametro ;
+    rdfs:label "Número de entradas digitales del bloque lógico" ;
+    ns1:identificador "MPG.DIMODNDI" ;
+    ns1:textoExtracto "Variable asociada: (V.)MPG.DIMODNDI[nb] Número de entradas digitales del bloque lógico; no puede ser cero y debe ser un múltiplo de 8 (8, 16, 24, ...1024)." .
 
-ns1:Parametro_BloqueLogico a ns1:Parametro ;
-    rdfs:label "Número de bloque lógico (BLOCK)" ;
-    ns1:identificador "MPG.DIMODBLOCK[nb]" ;
-    ns1:textoExtracto "BLOCK Número de bloque lógico. Valores posibles: De 1 a 64. Valor por defecto: 0. El máximo número de bloques lógicos en el sistema será 64, tanto para entradas como para salidas digitales." ;
-    ns1:valor "1...64" .
+ns1:SistemaRIO5 a ns1:Sistema ;
+    rdfs:label "Sistema RIO5" ;
+    ns1:textoExtracto "En los nodos RIO5, cada módulo doble (módulo con dos placas) cuenta como dos; es decir, dos bloques lógicos." ;
+    ns1:tieneComponente ns1:ModuloDoble .
 
-ns1:Parametro_DireccionBase a ns1:Parametro ;
-    rdfs:label "Dirección base del bloque lógico (ADDRESS)" ;
-    ns1:textoExtracto "ADDRESS Dirección base del bloque lógico. Valores posibles: De 1 a 1017. Valor por defecto: El primer valor válido." ;
-    ns1:valor "1...1017" .
-
-ns1:Parametro_NodoCANopen a ns1:Parametro ;
-    rdfs:label "Número de nodo (NODE)" ;
-    ns1:identificador "MPG.DIMODNODE[nb]" ;
-    ns1:textoExtracto "NODE Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os. Valores posibles: De 1 a 126. Valor por defecto: 0." ;
-    ns1:valor "1...126" .
+ns1:ModuloDoble a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo Doble" ;
+    ns1:textoExtracto "En los nodos RIO5, cada módulo doble (módulo con dos placas) cuenta como dos; es decir, dos bloques lógicos." .
 

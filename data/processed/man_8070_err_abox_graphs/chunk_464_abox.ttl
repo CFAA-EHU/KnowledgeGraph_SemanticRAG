@@ -1,62 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_CUTTING a ns1:Parametro ;
-    rdfs:label "Comando #CUTTING"@es ;
-    ns1:textoExtracto "programar el comando #CUTTING"@es .
+ns1:CorreccionDeFZMINMenorQueFZMAX a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de FZMIN menor que FZMAX" ;
+    ns1:solucionaFallo ns1:EnLaFuncionPWRCTRLElAvanceMinimoEsMayorQueElAvanceMaximo ;
+    ns1:textoExtracto "SOLUCIÓN El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)." .
 
-ns1:Comando_MATERIAL a ns1:Parametro ;
-    rdfs:label "Comando #MATERIAL"@es ;
-    ns1:textoExtracto "programar el comando #MATERIAL"@es .
+ns1:CorreccionDeOVRMINMenorQueOVRMAX a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de OVRMIN menor que OVRMAX" ;
+    ns1:solucionaFallo ns1:EnLaFuncionPWRCTRLElOverrideMinimoEsMayorQueElOverrideMaximo ;
+    ns1:textoExtracto "SOLUCIÓN El override mínimo debe ser menor que el override máximo." .
 
-ns1:Comando_PIERCING a ns1:Parametro ;
-    rdfs:label "Comando #PIERCING"@es ;
-    ns1:textoExtracto "programar el comando #PIERCING"@es .
+ns1:RevisionDeSintaxisEnManualDeProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de sintaxis en manual de programación" ;
+    ns1:solucionaFallo ns1:LaSintaxisDeLaSentenciaNoEsCorrecta_ad1679b76a ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:Error_2423 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error #PIERCING no definido"@es ;
-    ns1:solucionaFallo ns1:ComandoPIERCINGOCUTTING,
-        ns1:ParametroTTipoDePiercingCutting,
-        ns1:TablaTecnologica_3286e5ed7a ;
-    ns1:textoExtracto "#PIERCING no definido. DETECCIÓN Durante la preparación de bloques. CAUSA El tipo de piercing o cutting es nulo. Falta el parámetro T en la sentencia y no se ha programado previamente un valor de T (tipo)."@es .
+ns1:EnLaFuncionPWRCTRLElAvanceMinimoEsMayorQueElAvanceMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "En la función #PWRCTRL, el avance mínimo es mayor que el avance máximo" ;
+    ns1:textoExtracto "CAUSA En la función #PWRCTRL, el avance mínimo es mayor que el avance máximo." .
 
-ns1:Error_2424 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2424: No hay tabla tecnológica activa (#MATERIAL)"@es ;
-    ns1:solucionaFallo ns1:TablaTecnologicaMATERIAL ;
-    ns1:textoExtracto "2424 No hay tabla tecnológica activa (#MATERIAL). DETECCIÓN Durante la preparación de bloques. CAUSA Se ha programado el comando #PIERCING y #CUTTING, y no hay ninguna tabla tecnológica activa."@es .
+ns1:EnLaFuncionPWRCTRLElOverrideMinimoEsMayorQueElOverrideMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "En la función #PWRCTRL, el override mínimo es mayor que el override máximo" ;
+    ns1:textoExtracto "CAUSA En la función #PWRCTRL, el override mínimo es mayor que el override máximo." .
 
-ns1:Error_2425 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2425: Sintaxis incorrecta en PLC"@es ;
-    ns1:identificador "2425" ;
-    ns1:textoExtracto "2425 #PLC[PLCmark=0/1,PLCmark=0/1,...] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta."@es .
-
-ns1:InterfazHMI a ns1:InterfazUsuario ;
-    rdfs:label "HMI (Interfaz Humano-Máquina)"@es ;
-    ns1:textoExtracto "Activar una tabla tecnológica desde el HMI"@es .
-
-ns1:Parametro_T a ns1:Parametro ;
-    rdfs:label "Parámetro T (tipo de piercing/cutting)"@es ;
-    ns1:textoExtracto "parámetro T en la sentencia y no se ha programado previamente un valor de T (tipo)"@es ;
-    ns1:valor "1-10" .
-
-ns1:TablaTecnologica a ns1:Tabla ;
-    rdfs:label "Tabla tecnológica"@es ;
-    ns1:textoExtracto "Activar una tabla tecnológica"@es .
-
-ns1:ComandoPIERCINGOCUTTING a ns1:Parametro ;
-    rdfs:label "Comando #PIERCING o #CUTTING"@es ;
-    ns1:textoExtracto "programar el comando #PIERCING o #CUTTING que está dando el error con un parámetro T correcto"@es .
-
-ns1:ParametroTTipoDePiercingCutting a ns1:Parametro ;
-    rdfs:label "Parámetro T (tipo de piercing/cutting)"@es ;
-    ns1:textoExtracto "parámetro T correcto (valor entre 1 y 10)"@es ;
-    ns1:valor "1-10" .
-
-ns1:TablaTecnologicaMATERIAL a ns1:Tabla ;
-    rdfs:label "Tabla tecnológica (#MATERIAL)"@es ;
-    ns1:textoExtracto "Activar una tabla tecnológica desde el HMI o programar el comando #MATERIAL."@es .
-
-ns1:TablaTecnologica_3286e5ed7a a ns1:Tabla ;
-    rdfs:label "Tabla tecnológica"@es ;
-    ns1:textoExtracto "Activar una tabla tecnológica"@es .
+ns1:LaSintaxisDeLaSentenciaNoEsCorrecta_ad1679b76a a ns1:DiagnosticoFallo ;
+    rdfs:label "La sintaxis de la sentencia no es correcta" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta." .
 

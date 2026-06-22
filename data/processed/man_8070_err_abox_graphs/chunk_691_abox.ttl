@@ -1,12 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Aviso_6015_ContactoAsistencia a ns1:AvisoSeguridad ;
-    rdfs:label "Contactar con asistencia técnica si persiste el error CAN"@es ;
-    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:SistemaCANfagor a ns1:Sistema ;
+    rdfs:label "Sistema CANfagor" ;
+    ns1:activaAlarma ns1:Alarma_d11013199c,
+        ns1:ElNodoInformaQueLaCOMPCINoRespondeALosControlesDePresencia,
+        ns1:FalloEnLaTransmisionDeUnMensaje,
+        ns1:OverrunEnElControladorDeCAN,
+        ns1:OverrunEnLaFifoDeRecepcion,
+        ns1:ResetDelNodoProblemasDeAlimentacionCortosWatchdogEtc,
+        ns1:WarningContadorDeTramasDeErrorSuperaElNivel196 ;
+    ns1:textoExtracto "Tipo de módulo que genera el error para el bus CANfagor." .
 
-ns1:Fallo_6015 a ns1:DiagnosticoFallo ;
-    rdfs:label "Contador de errores CAN sobrepaso nivel 1"@es ;
-    ns1:identificador "6015" ;
-    ns1:textoExtracto "'Contador de errores CAN sobrepaso nivel 1' DETECCIÓN Durante la ejecución. CAUSA El contador de tramas de error (Rx/Tx) supera el nivel 1 (96). SOLUCIÓN Realizar las comprobaciones oportunas para garantizar la integridad del bus CAN. Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:Alarma_d11013199c a ns1:Alarma ;
+    rdfs:label "BusOFF" ;
+    ns1:textoExtracto "2 | BusOFF. El nodo detecta que cae el bus." .
+
+ns1:ElNodoInformaQueLaCOMPCINoRespondeALosControlesDePresencia a ns1:Alarma ;
+    rdfs:label "El nodo informa que la COMPCI no responde a los controles de presencia" ;
+    ns1:textoExtracto "11 | El nodo informa que la COMPCI no responde a los controles de presencia." .
+
+ns1:FalloEnLaTransmisionDeUnMensaje a ns1:Alarma ;
+    rdfs:label "Fallo en la transmisión de un mensaje" ;
+    ns1:textoExtracto "13 | Fallo en la transmisión de un mensaje." .
+
+ns1:OverrunEnElControladorDeCAN a ns1:Alarma ;
+    rdfs:label "Overrun en el controlador de CAN" ;
+    ns1:textoExtracto "1 | Overrun en el controlador de CAN. Posible pérdida de mensajes recibidos." .
+
+ns1:OverrunEnLaFifoDeRecepcion a ns1:Alarma ;
+    rdfs:label "Overrun en la fifo de recepción" ;
+    ns1:textoExtracto "3 | Overrun en la fifo de recepción. Posible pérdida de mensajes recibidos." .
+
+ns1:ResetDelNodoProblemasDeAlimentacionCortosWatchdogEtc a ns1:Alarma ;
+    rdfs:label "Reset del nodo (problemas de alimentación, cortos, watchdog, etc)" ;
+    ns1:textoExtracto "12 | Reset del nodo (problemas de alimentación, cortos, watchdog, etc)." .
+
+ns1:WarningContadorDeTramasDeErrorSuperaElNivel196 a ns1:Alarma ;
+    rdfs:label "Warning. Contador de tramas de error supera el nivel 1 (96)" ;
+    ns1:textoExtracto "4 | Warning. Contador de tramas de error supera el nivel 1 (96)." .
 

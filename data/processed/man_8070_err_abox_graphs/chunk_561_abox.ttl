@@ -1,63 +1,50 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_3701 a ns1:AvisoSeguridad ;
-    rdfs:label "Posición de referencia sobrepasa límites de software" ;
-    ns1:identificador "3701" ;
-    ns1:mitigaRiesgo ns1:ValidacionDeREFVALUEYLimitesDeSoftware ;
-    ns1:monitoreaParametro ns1:REFVALUE_94a2c4e7e3 ;
-    ns1:textoExtracto "3701 'La posición de referencia sobrepasa los límites de software' DETECCIÓN Durante la validación de parámetros máquina. CAUSA El valor del parámetro REFVALUE sobrepasa los límites de software del eje. SOLUCIÓN Revisar el parámetro REFVALUE y los límites de software." .
+ns1:CanceladaM3OM4DePLCEnG96SinSProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "Cancelada M3 o M4 de PLC en G96 sin S programada" ;
+    ns1:textoExtracto "3511 Cancelada M3 o M4 de PLC en G96 sin S programada." .
 
-ns1:AvisoSeguridad_3702 a ns1:AvisoSeguridad ;
-    rdfs:label "Error de seguimiento del eje fuera de límite" ;
-    ns1:identificador "3702" ;
-    ns1:monitoreaParametro ns1:Parametro_ESTDELAY,
-        ns1:Parametro_FEDYNFAC,
-        ns1:Parametro_MAXFLWE,
-        ns1:Parametro_MINFLWE ;
-    ns1:textoExtracto "3702 'Error de seguimiento del eje fuera de límite' DETECCIÓN Durante la ejecución. CAUSA El eje ha superado el error de seguimiento permitido, definido en los parámetros máquina (MAXFLWE, MINFLWE, FEDYNFAC, ESTDELAY)." .
+ns1:ParametroG00FEED a ns1:Parametro ;
+    rdfs:label "Parámetro G00FEED" ;
+    ns1:textoExtracto "parámetros REFFEED2 y G00FEED de la gama activa del cabezal sean distintos de cero." .
 
-ns1:DiagnosticoFallo_DesactivarSPDLEREV a ns1:DiagnosticoFallo ;
-    rdfs:label "Desactivar marca SPDLEREV del PLC" ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_3700 ;
-    ns1:textoExtracto "SOLUCIÓN Desactivar la marca SPDLEREV del PLC." .
+ns1:ParametroREFFEED2 a ns1:Parametro ;
+    rdfs:label "Parámetro REFFEED2" ;
+    ns1:textoExtracto "parámetros REFFEED2 y G00FEED de la gama activa del cabezal sean distintos de cero." .
 
-ns1:AvisoSeguridad_3700 a ns1:AvisoSeguridad ;
-    rdfs:label "Límite de recorrido del eje sobrepasado (PLC)" ;
-    ns1:identificador "3700" ;
-    ns1:mitigaRiesgo ns1:RevisionDeProgramacionPLCParaLimitesDeRecorrido ;
-    ns1:textoExtracto "3700 'Límite de recorrido del eje sobrepasado (PLC)' DETECCIÓN Durante el movimiento del eje. CAUSA El PLC ha intentado sobrepasar los límites de recorrido. SOLUCIÓN Revisar la programación." .
+ns1:TareaMantenimiento_af9a293ae3 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de revisión de parámetros del cabezal" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacionYQueLosParametrosREFFEED2YG00FEEDSeanDistintosDeCero ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación y que los parámetros REFFEED2 y G00FEED de la gama activa del cabezal sean distintos de cero." .
 
-ns1:Parametro_ESTDELAY a ns1:Parametro ;
-    rdfs:label "ESTDELAY" ;
-    ns1:identificador "ESTDELAY" ;
-    ns1:textoExtracto "parámetro máquina (..., ESTDELAY)" .
+ns1:TareaMantenimiento_b8e9c72fd5 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de revisión de programación G96 y S" ;
+    ns1:solucionaFallo ns1:RevisarProgramacionDeG96YS ;
+    ns1:textoExtracto "SOLUCIÓN Revisar programación de G96 y S." .
 
-ns1:Parametro_FEDYNFAC a ns1:Parametro ;
-    rdfs:label "FEDYNFAC" ;
-    ns1:identificador "FEDYNFAC" ;
-    ns1:textoExtracto "parámetro máquina (..., FEDYNFAC, ...)" .
+ns1:TareaMantenimiento_e6ccd62b8f a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de revisión del movimiento posterior a la palpación" ;
+    ns1:solucionaFallo ns1:RevisarElMovimientoPosteriorALaPalpacion ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el movimiento posterior a la palpación." .
 
-ns1:Parametro_MAXFLWE a ns1:Parametro ;
-    rdfs:label "MAXFLWE" ;
-    ns1:identificador "MAXFLWE" ;
-    ns1:textoExtracto "parámetro máquina (MAXFLWE, ...)" .
+ns1:VelocidadDeCabezalNula_8f1a7b072a a ns1:DiagnosticoFallo ;
+    rdfs:label "'Velocidad de cabezal nula'" ;
+    ns1:textoExtracto "3600 'Velocidad de cabezal nula' DETECCIÓN Durante la ejecución. CAUSA No existe una velocidad de posicionamiento de cabezal programada." .
 
-ns1:Parametro_MINFLWE a ns1:Parametro ;
-    rdfs:label "MINFLWE" ;
-    ns1:identificador "MINFLWE" ;
-    ns1:textoExtracto "parámetro máquina (..., MINFLWE, ...)" .
+ns1:VelocidadDeCabezalProgramadaSuperiorAlLimiteMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "'Velocidad de cabezal programada superior al límite máximo'" ;
+    ns1:textoExtracto "3601 'Velocidad de cabezal programada superior al límite máximo' DETECCIÓN Durante la ejecución. CAUSA La velocidad programada para el cabezal supera la velocidad máxima definida en los parámetros máquina para la gama activa." .
 
-ns1:REFVALUE_94a2c4e7e3 a ns1:Parametro ;
-    rdfs:label "REFVALUE" ;
-    ns1:identificador "REFVALUE" ;
-    ns1:textoExtracto "parámetro REFVALUE" .
+ns1:RevisarElMovimientoPosteriorALaPalpacion a ns1:AccionProhibida ;
+    rdfs:label "Revisar el movimiento posterior a la palpación" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el movimiento posterior a la palpación." .
 
-ns1:RevisionDeProgramacionPLCParaLimitesDeRecorrido a ns1:DiagnosticoFallo ;
-    rdfs:label "Revisión de programación PLC para límites de recorrido" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+ns1:RevisarLaProgramacionYQueLosParametrosREFFEED2YG00FEEDSeanDistintosDeCero a ns1:AccionProhibida ;
+    rdfs:label "Revisar la programación y que los parámetros REFFEED2 y G00FEED sean distintos de cero" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación y que los parámetros REFFEED2 y G00FEED de la gama activa del cabezal sean distintos de cero." .
 
-ns1:ValidacionDeREFVALUEYLimitesDeSoftware a ns1:DiagnosticoFallo ;
-    rdfs:label "Validación de REFVALUE y límites de software" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar el parámetro REFVALUE y los límites de software." .
+ns1:RevisarProgramacionDeG96YS a ns1:AccionProhibida ;
+    rdfs:label "Revisar programación de G96 y S" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar programación de G96 y S." .
 

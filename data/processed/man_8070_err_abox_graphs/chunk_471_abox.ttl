@@ -1,53 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_HandleFichero a ns1:Parametro ;
-    rdfs:label "Handle de fichero (comando F)" ;
-    ns1:textoExtracto "Identificador de fichero (comando F) debe tener un valor entre 1 y 4" ;
-    ns1:valor "1-4" .
+ns1:ElPerfilDeLaMacroG8077EsPoligonal a ns1:AccionProhibida ;
+    rdfs:label "El perfil de la macro G8077 es poligonal" ;
+    ns1:textoExtracto "2437 El perfil de la macro G8077 es poligonal." .
 
-ns1:Parametro_TransformacionPARALAX a ns1:Parametro ;
-    rdfs:label "Transformación de ejes paralelos (#PARALAX)" ;
-    ns1:identificador "#PARALAX" ;
-    ns1:textoExtracto "transformación #PARALAX activa" .
+ns1:ModificarElPerfil a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar el perfil" ;
+    ns1:solucionaFallo ns1:ElPerfilDebeEstarConstruidoConTramosRectos ;
+    ns1:textoExtracto "SOLUCIÓN Modificar el perfil." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:activaAlarma ns1:Error_2444,
-        ns1:Error_2445,
-        ns1:Error_2446,
-        ns1:Error_2447,
-        ns1:Error_2448,
-        ns1:Error_2449 ;
-    ns1:textoExtracto "Para asumir cambios en el fichero de material es necesario reiniciar el CNC. [...] Para que el CNC tenga en cuenta el nuevo formato es necesario reiniciar." .
+ns1:ProgramacionNoPermitidaFueraDeUnaMacroG8777 a ns1:AccionProhibida ;
+    rdfs:label "Programación no permitida fuera de una macro G8777" ;
+    ns1:textoExtracto "2436 Programación no permitida fuera de una macro G8777." .
 
-ns1:Error_2444 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2444: #OPEN/#CLOSE/#WRITE - Valor de handle de fichero fuera de rango" ;
-    ns1:identificador "2444" ;
-    ns1:textoExtracto "#OPEN/#CLOSE/#WRITE:valor de handle de fichero fuera de rango. DETECCIÓN Durante la preparación de bloques. CAUSA Identificador de fichero (comando F) es incorrecto. SOLUCIÓN El identificador de fichero (comando F) debe tener un valor entre 1 y 4." .
+ns1:RevisarLaProgramacion_0878e70f3f a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:HayAlgunaFuncionG8778G8701OG8702ProgramadaFueraDeUnaMacroG8777 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Las funciones G8778, G8701 o G8702 se deben programar a continuación de la macro G8777." .
 
-ns1:Error_2445 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2445: #OPEN/#CLOSE/#WRITE - Doble programación" ;
-    ns1:identificador "2445" ;
-    ns1:textoExtracto "#OPEN/#CLOSE/#WRITE:doble programación. DETECCIÓN Durante la preparación de bloques. CAUSA Algún parámetro de la sentencia ha sido programado más de una vez. SOLUCIÓN Programar una única vez cada parámetro de la sentencia." .
+ns1:ElPerfilDebeEstarConstruidoConTramosRectos a ns1:DiagnosticoFallo ;
+    rdfs:label "El perfil debe estar construido con tramos rectos" ;
+    ns1:textoExtracto "CAUSA El perfil debe estar construido con tramos rectos." .
 
-ns1:Error_2446 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2446: Prefijo de variable inexistente" ;
-    ns1:identificador "2446" ;
-    ns1:textoExtracto "Prefijo de variable inexistente. DETECCIÓN Durante la ejecución. CAUSA El prefijo de la variable no existe. SOLUCIÓN Consulte en la documentación la lista de variables permitidas." .
-
-ns1:Error_2447 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2447: #PARALAX - Ejes paralelos deben pertenecer al mismo canal" ;
-    ns1:identificador "2447" ;
-    ns1:textoExtracto "#PARALAX: Los ejes paralelos deben pertenecer al mismo canal. DETECCIÓN Durante la ejecución. CAUSA Los ejes programados no pertenecen al mismo canal. SOLUCIÓN Los ejes programados deben pertenecer al mismo canal." .
-
-ns1:Error_2448 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2448: Programación no permitida con transformación #PARALAX activa" ;
-    ns1:identificador "2448" ;
-    ns1:textoExtracto "Programación no permitida con la transformación #PARALAX activa. DETECCIÓN Durante la ejecución. CAUSA El CNC no permite ejecutar la función programada si está activa la transformación de ejes paralelos. SOLUCIÓN Desactivar la transformación de ejes paralelos para poder ejecutar el resto de funciones." .
-
-ns1:Error_2449 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2449: Eje Hirth no compatible con transformación #PARALAX" ;
-    ns1:identificador "2449" ;
-    ns1:textoExtracto "No se puede activar el eje como Hirth, por formar parte de la transformación #PARALAX. DETECCIÓN Durante la ejecución. CAUSA Alguno de los ejes programados es un eje Hirth. SOLUCIÓN Los ejes programados no pueden ser Hirth." .
+ns1:HayAlgunaFuncionG8778G8701OG8702ProgramadaFueraDeUnaMacroG8777 a ns1:DiagnosticoFallo ;
+    rdfs:label "Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777" ;
+    ns1:textoExtracto "CAUSA Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777." .
 

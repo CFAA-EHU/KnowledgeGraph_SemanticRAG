@@ -1,35 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Almacen_63e4f95a13 a ns1:Componente ;
-    ns1:textoExtracto "almacén" .
+ns1:CodigoDeOperacionDelPLC a ns1:Parametro ;
+    rdfs:label "Código de operación del PLC" ;
+    ns1:identificador "TMOPERATION" ;
+    ns1:textoExtracto "el gestor envía al PLC el código TMOPERATION=11." .
 
-ns1:Cabezal_473f61fb80 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "cabezal" .
+ns1:FuncionM06 a ns1:Sistema ;
+    rdfs:label "Función M06" ;
+    ns1:textoExtracto "Cada vez que la rutina M06 finaliza una acción se lo indica al PLC para que active la marca correspondiente del gestor." .
 
-ns1:CogerLaHerramientaDelAlmacenYPonerlaEnElCabezalM109FuncionAuxiliarParaEjecutarAccionVPLCM11091MarcaMZTOSPDLAlGestorWAITFORVPLCM11090RET a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Coger la herramienta del almacén y ponerla en el cabezal. M109 ; Función auxiliar para ejecutar acción. V.PLC.M[1109]=1 ; Marca MZTOSPDL al gestor. # WAIT FOR [V.PLC.M[1109]==0] #RET" .
+ns1:FuncionT a ns1:Sistema ;
+    rdfs:label "Función T" ;
+    ns1:textoExtracto "Cuando se ejecuta la función –T– Cuando se ejecuta la función T el gestor envía al PLC el código TMOPERATION=11." .
 
-ns1:ColocarLaHerramientaDeTierraEnElCabezalMSGInsertarHerramientaTDYPulsarMARCHAVTMNXTOOLMensajeAlOperarioParaQuePongaLaHerramientaM0EsperarAQueFinaliceLaOperacionMSGQuitarMensajeVPLCM11081MarcaGRTOSPDLAlGestorWAITFORVPLCM11080RET a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Colocar la herramienta de tierra en el cabezal. # MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje. V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor. # WAIT FOR [V.PLC.M[1108]==0] #RET" .
+ns1:Parametro_7959033478 a ns1:Parametro ;
+    rdfs:label "Marca para indicar herramienta en cabezal" ;
+    ns1:identificador "GRTOSPDL" ;
+    ns1:textoExtracto "DFU M1108 = SET GRTOSPDL DFD GRTOSPDL = RES M1108 La herramienta se ha llevado de tierra al cabezal." .
 
-ns1:DejarLaHerramientaDelCabezalEnElAlmacenM110FuncionAuxiliarParaEjecutarAccionVPLCM11101MarcaSPDLTOGRAlGestorWAITFORVPLCM11100RET a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Dejar la herramienta del cabezal en el almacén. M110 ; Función auxiliar para ejecutar acción. V.PLC.M[1110]=1 ; Marca SPDLTOGR al gestor. # WAIT FOR [V.PLC.M[1110]==0] #RET" .
+ns1:Parametro_94a80a9622 a ns1:Parametro ;
+    rdfs:label "Marca para indicar finalización de operación" ;
+    ns1:identificador "MZROT" ;
+    ns1:textoExtracto "activa la marca MZROT para indicar que ha finalizado la operación." .
 
-ns1:Herramienta_a382f60c4e a ns1:PiezaRecambio ;
-    ns1:textoExtracto "herramienta" .
-
-ns1:LlevarElCabezalAlPuntoDeCambioAutomaticoG1ZFDesplazarElCabezalRET a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Llevar el cabezal al punto de cambio automático. G1 Z_ F_ ; Desplazar el cabezal. # RET" .
-
-ns1:LlevarElCabezalAlPuntoDeCambioManualG1ZFDesplazarElCabezalRET a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Llevar el cabezal al punto de cambio manual. G1 Z_ F_ ; Desplazar el cabezal. # RET" .
-
-ns1:OrdenAlGestorParaComenzarElCambioDeHerramienta a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Orden al gestor para comenzar el cambio de herramienta." .
-
-ns1:QuitarLaHerramientaDelCabezalLlevarlaATierraMSGExtraerHerramientaTDYPulsarMARCHAVTMTOOLMensajeAlOperarioParaQueQuiteLaHerramientaM0EsperarAQueFinaliceLaOperacionMSGQuitarMensajeVPLCM11071MarcaSPDLTOGRAlGestorWAITFORVPLCM11070RET a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Quitar la herramienta del cabezal (llevarla a tierra). # MSG [\"Extraer herramienta T%D y pulsar MARCHA\", V.TM.TOOL] ; Mensaje al operario para que quite la herramienta. M0 ; Esperar a que finalice la operación. # MSG [\"\"] ; Quitar mensaje. V.PLC.M[1107]=1 ; Marca SPDLTOGR al gestor. # WAIT FOR [V.PLC.M[1107]==0] #RET" .
-
-ns1:tecla_STOP a ns1:InterfazUsuario ;
-    ns1:textoExtracto "tecla STOP" .
+ns1:Parametro_aed1a67bbe a ns1:Parametro ;
+    rdfs:label "Marca para indicar herramienta en tierra" ;
+    ns1:identificador "SPDLTOGR" ;
+    ns1:textoExtracto "DFU M1107 = SET SPDLTOGR DFD SPDLTOGR = RES M1107 La herramienta se ha llevado del cabezal a tierra." .
 

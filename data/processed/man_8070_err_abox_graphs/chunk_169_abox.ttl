@@ -1,47 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1310 a ns1:AvisoSeguridad ;
-    rdfs:label "Línea de programa demasiado larga" ;
-    ns1:identificador "1310" ;
-    ns1:textoExtracto "1310 'Línea de programa demasiado larga' DETECCIÓN Durante la ejecución. CAUSA El número de caracteres en la sentencia #EXBLK supera el máximo permitido. SOLUCIÓN El máximo número de caracteres permitido es 128." .
+ns1:ActivacionDeLaProgramacionIncremental a ns1:AccionProhibida ;
+    rdfs:label "Activación de la programación incremental" ;
+    ns1:textoExtracto "• Activación de la programación incremental (G91)." .
 
-ns1:AvisoSeguridad_1311 a ns1:AvisoSeguridad ;
-    rdfs:label "Offset de medición no incluido en eje(s) programado" ;
-    ns1:identificador "1311" ;
-    ns1:textoExtracto "1311 'Offset de medición no incluido en eje(s) programado' DETECCIÓN Durante la ejecución. CAUSA La función G102 intenta excluir el offset de medición de un eje que no tiene incluido ningún offset de medición. SOLUCIÓN La función G102 no tiene sentido para un eje sin offset de medición." .
+ns1:ActivacionDesactivacionDeGarras a ns1:AccionProhibida ;
+    rdfs:label "Activación/desactivación de garras" ;
+    ns1:textoExtracto "• Activación/desactivación de garras (variable \"V.G.FIX\")." .
 
-ns1:AvisoSeguridad_1314 a ns1:AvisoSeguridad ;
-    rdfs:label "#CS ON/#ACS ON: identificador no válido" ;
-    ns1:identificador "1314" ;
-    ns1:textoExtracto "1314 '#CS ON/#ACS ON: identificador no válido' DETECCIÓN Durante la ejecución. CAUSA En estas sentencias, el número del sistema de coordenadas no es válido. SOLUCIÓN Programar un valor entre 1 y 5." .
+ns1:ActivacionDesactivacionDeImagenEspejo a ns1:AccionProhibida ;
+    rdfs:label "Activación/desactivación de imagen espejo" ;
+    ns1:textoExtracto "• Activación/desactivación de imagen espejo (G11/G12/G13/G14)." .
 
-ns1:AvisoSeguridad_1315 a ns1:AvisoSeguridad ;
-    rdfs:label "#CS ON/#ACS ON: sistema no definido" ;
-    ns1:identificador "1315" ;
-    ns1:textoExtracto "1315 '#CS ON/#ACS ON: sistema no definido' DETECCIÓN Durante la ejecución. CAUSA Las sentencias no tienen parámetros y no hay almacenado ningún sistema de coordenadas. Al programar una de estas sentencias sin parámetros, el CNC intenta activar la última transformación almacenada. SOLUCIÓN Revisar la programación. Definir y almacenar algún sistema de coordenadas." .
+ns1:ActivacionDesactivacionDeTrasladosDeOrigen a ns1:AccionProhibida ;
+    rdfs:label "Activación/desactivación de traslados de origen" ;
+    ns1:textoExtracto "• Activación/desactivación de traslados de origen (G54-G59, G159, G92, G158, G53)." .
 
-ns1:AvisoSeguridad_1316 a ns1:AvisoSeguridad ;
-    rdfs:label "#CS/#ACS DEF: faltan parámetros" ;
-    ns1:identificador "1316" ;
-    ns1:textoExtracto "1316 '#CS/#ACS DEF: faltan parámetros' DETECCIÓN Durante la ejecución. CAUSA Falta programar uno o más parámetros obligatorios. SOLUCIÓN Revisar la programación. Estas sentencias exigen programar el número del sistema de coordenadas, el modo de definición, las componentes del vector de traslación y los ángulos de rotación." .
+ns1:ActivacionDesactivacionDelOffsetDeMedicion a ns1:AccionProhibida ;
+    rdfs:label "Activación/desactivación del offset de medición" ;
+    ns1:textoExtracto "• Activación/desactivación el offset de medición (G101, G102)." .
 
-ns1:AvisoSeguridad_1318 a ns1:AvisoSeguridad ;
-    rdfs:label "#CS ON/#ACS ON: no se admiten cambios con el sistema de coordenadas activo" ;
-    ns1:identificador "1318" ;
-    ns1:textoExtracto "1318 '#CS ON/#ACS ON: no se admiten cambios con el sistema de coordenadas activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado cambiar los parámetros de un sistema de coordenadas activo. SOLUCIÓN Revisar la programación. El CNC no permite modificar los parámetros de un sistema de coordenadas activo; si permite modificar los parámetros de un sistema de coordenadas ya definido pero no activo." .
+ns1:FalloProgramacionNoPermitidaConMCSActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "'Programación no permitida con #MCS activo'" ;
+    ns1:textoExtracto "Programación no permitida con #MCS activo DETECCIÓN Durante la ejecución. CAUSA El CNC no permite ejecutar la función programada si está activa la función MCS." .
 
-ns1:Parametro_128 a ns1:Parametro ;
-    rdfs:label "Máximo de caracteres en sentencia #EXBLK" ;
-    ns1:textoExtracto "El máximo número de caracteres permitido es 128." ;
-    ns1:valor "128" .
+ns1:ProgramacionConMCSActivo a ns1:AccionProhibida ;
+    rdfs:label "Programación con #MCS activo" ;
+    ns1:textoExtracto "Programación no permitida con #MCS activo" .
 
-ns1:Parametro_RangoSistemasCoordenadas a ns1:Parametro ;
-    rdfs:label "Rango válido para sistemas de coordenadas" ;
-    ns1:textoExtracto "Programar un valor entre 1 y 5." ;
-    ns1:valor "1-5" .
+ns1:ProgramacionEnRadiosDiametros a ns1:AccionProhibida ;
+    rdfs:label "Programación en radios/diámetros" ;
+    ns1:textoExtracto "• Programación en radios/diámetros (G151/G152)." .
 
-ns1:Sistema a ns1:Sistema ;
-    rdfs:label "Sistema de coordenadas CNC" ;
-    ns1:textoExtracto "El CNC intenta activar la última transformación almacenada. El CNC no permite modificar los parámetros de un sistema de coordenadas activo; si permite modificar los parámetros de un sistema de coordenadas ya definido pero no activo." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FalloVelocidadCabezalNoValida ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:VelocidadDeCabezal_2f7e403fa9 a ns1:Parametro ;
+    rdfs:label "Velocidad de cabezal" ;
+    ns1:textoExtracto "'Velocidad de cabezal no válida'" .
+
+ns1:FalloVelocidadCabezalNoValida a ns1:DiagnosticoFallo ;
+    rdfs:label "'Velocidad de cabezal no válida'" ;
+    ns1:textoExtracto "'Velocidad de cabezal no válida' DETECCIÓN Durante la ejecución. CAUSA La velocidad programada es demasiado pequeña." .
 

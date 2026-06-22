@@ -1,82 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ConexionSistema a ns1:Parametro ;
-    rdfs:label "Conexión del sistema" ;
-    ns1:textoExtracto "conexión del sistema" .
+ns1:CNC8070_11cbc9f046 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:SeHaIntentadoLeerLaVariableVGCAMDuranteLaValidacionDeLaTablaQueDefineLaLeva,
+        ns1:SeHaIntentadoLeerOEscribirLaVariableVGCAMAntesDeQueElCNCTermineDeCargarLaLeva ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:ConfiguracionCAN a ns1:Parametro ;
-    rdfs:label "Configuración CAN" ;
-    ns1:textoExtracto "configuración CAN" .
+ns1:RevisarLaTablaDeHerramientasYAlmacen a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la tabla de herramientas y almacén" ;
+    ns1:solucionaFallo ns1:LaHerramientaProgramadaNoEstaEnElAlmacen,
+        ns1:NoSePuedeAccederALaVariable ;
+    ns1:textoExtracto "Revisar la tabla de herramientas y almacén." .
 
-ns1:Error_8012 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error cargando software de las contadoras" ;
-    ns1:identificador "8012" ;
-    ns1:solucionaFallo ns1:NodoContadora ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema. CAUSA Error durante el proceso de carga de los nodos contadora. SOLUCIÓN Verificar la configuración CAN, la conexión del sistema y las versiones de boot de los nodos remotos." .
+ns1:SeHaIntentadoActivarLaLevaAntesDeQueElCNCTermineDeCargarla a ns1:AccionProhibida ;
+    rdfs:label "Se ha intentado activar la leva antes de que el CNC termine de cargarla." ;
+    ns1:textoExtracto "activar la leva antes de que el CNC termine de cargarla." .
 
-ns1:Error_8013 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error cargando software de teclados compactos" ;
-    ns1:identificador "8013" ;
-    ns1:solucionaFallo ns1:NodoTeclado10 ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema. CAUSA Error durante el proceso de carga del nodo del teclado de 10\". SOLUCIÓN Verificar la configuración CAN, la conexión del sistema y las versiones de boot de los nodos remotos." .
+ns1:VariableDeControlDeLaLeva a ns1:Parametro ;
+    rdfs:label "Variable de control de la leva" ;
+    ns1:identificador "G.CAM" ;
+    ns1:textoExtracto "(V.)G.CAM" .
 
-ns1:Error_8014 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error cargando software de RIOS" ;
-    ns1:identificador "8014" ;
-    ns1:solucionaFallo ns1:NodoRIOS ;
-    ns1:textoExtracto "DETECCIÓN Durante el arranque del sistema. CAUSA Error durante el proceso de carga de los nodos RIOS (I/Os CANopen). SOLUCIÓN Verificar la configuración CAN, la conexión del sistema y las versiones de boot de los nodos remotos." .
+ns1:LaHerramientaProgramadaNoEstaEnElAlmacen a ns1:DiagnosticoFallo ;
+    rdfs:label "La herramienta programada no está en el almacén" ;
+    ns1:textoExtracto "La herramienta programada no es accesible." .
 
-ns1:Error_8015 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cierre no permitido: Eje en movimiento o en sincronización" ;
-    ns1:identificador "8015" ;
-    ns1:solucionaFallo ns1:EjeCNC ;
-    ns1:textoExtracto "DETECCIÓN Al intentar cerrar el CNC. CAUSA El usuario ha intentado apagar el CNC mientras hay algún eje en movimiento o sincronizado. SOLUCIÓN Detener el movimiento de los ejes o desincronizar el eje." .
+ns1:NoSePuedeAccederALaVariable a ns1:AccionProhibida ;
+    rdfs:label "No se puede acceder a la variable" ;
+    ns1:textoExtracto "7046 No se puede acceder a la variable." .
 
-ns1:Error_8016 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cierre no permitido: Cabezal en marcha" ;
-    ns1:identificador "8016" ;
-    ns1:solucionaFallo ns1:CabezalCNC ;
-    ns1:textoExtracto "DETECCIÓN Al intentar cerrar el CNC. CAUSA El usuario ha intentado apagar el CNC mientras hay algún cabezal en movimiento. SOLUCIÓN Detener el movimiento del cabezal." .
+ns1:SeHaIntentadoLeerLaVariableVGCAMDuranteLaValidacionDeLaTablaQueDefineLaLeva a ns1:AccionProhibida ;
+    rdfs:label "Se ha intentado leer la variable (V.)G.CAM durante la validación de la tabla que define la leva." ;
+    ns1:textoExtracto "(V.)G.CAM durante la validación de la tabla que define la leva." .
 
-ns1:Error_8017 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cierre no permitido: Cabezal en sincronización" ;
-    ns1:identificador "8017" ;
-    ns1:solucionaFallo ns1:CabezalCNC ;
-    ns1:textoExtracto "DETECCIÓN Al intentar cerrar el CNC. CAUSA El usuario ha intentado apagar el CNC mientras hay algún cabezal sincronizado. SOLUCIÓN Desincronizar el cabezal." .
-
-ns1:Error_8018 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se permite generar el PLC mientras se encuentre en ejecución o interrumpido" ;
-    ns1:identificador "8018" ;
-    ns1:textoExtracto "DETECCIÓN Al intentar compilar el PLC." .
-
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "CNC" ;
-    ns1:tieneComponente ns1:CabezalCNC,
-        ns1:EjeCNC .
-
-ns1:VersionBoot a ns1:Parametro ;
-    rdfs:label "Versión de boot" ;
-    ns1:textoExtracto "versiones de boot de los nodos remotos" .
-
-ns1:NodoContadora a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo contadora" ;
-    ns1:textoExtracto "nodos contadora" .
-
-ns1:NodoRIOS a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo RIOS (I/Os CANopen)" ;
-    ns1:textoExtracto "nodos RIOS (I/Os CANopen)" .
-
-ns1:NodoTeclado10 a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo del teclado de 10\"" ;
-    ns1:textoExtracto "nodo del teclado de 10\"" .
-
-ns1:EjeCNC a ns1:ComponenteMecanico ;
-    rdfs:label "Eje del CNC" ;
-    ns1:textoExtracto "eje en movimiento o sincronizado" .
-
-ns1:CabezalCNC a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal del CNC" ;
-    ns1:textoExtracto "cabezal en movimiento" .
+ns1:SeHaIntentadoLeerOEscribirLaVariableVGCAMAntesDeQueElCNCTermineDeCargarLaLeva a ns1:AccionProhibida ;
+    rdfs:label "Se ha intentado leer o escribir la variable (V.)G.CAM antes de que el CNC termine de cargar la leva." ;
+    ns1:textoExtracto "(V.)G.CAM antes de que el CNC termine de cargarla." .
 

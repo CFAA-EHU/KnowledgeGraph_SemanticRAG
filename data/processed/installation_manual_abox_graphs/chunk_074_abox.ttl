@@ -1,30 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ParNominal_Tandem a ns1:Parametro ;
-    rdfs:label "Par nominal (T.nom)"@es ;
-    ns1:documentadoEn ns1:Tabla_Tandem ;
-    ns1:textoExtracto "T.nom Par nominal."@es .
+ns1:GananciaIntegralKiParaElTandem_682c4e0fac a ns1:Parametro ;
+    rdfs:label "Ganancia integral (Ki) para el tándem" ;
+    ns1:documentadoEn ns1:TablaTANDEM ;
+    ns1:identificador "MPG.TINTTIME" ;
+    ns1:textoExtracto "TINTTIME Pareja tándem. Ganancia integral (Ki) para el tándem." .
 
-ns1:Parametro_Kp_Tandem a ns1:Parametro ;
-    rdfs:label "Ganancia proporcional (Kp) para el tándem"@es ;
-    ns1:documentadoEn ns1:Tabla_Tandem ;
-    ns1:identificador "V.MPG.TPROGAIN[nb]" ;
-    ns1:monitoreaParametro ns1:ErrorPar_Tandem ;
-    ns1:textoExtracto "Ganancia proporcional (Kp) para el tándem. Valores posibles: De 0 a 100%. Valor por defecto: 0 (no se aplica ganancia proporcional). Variable asociada: (V.)MPG.TPROGAIN[nb]"@es .
+ns1:LimiteDeLaCompensacionDelEjeTandem a ns1:Parametro ;
+    rdfs:label "Límite de la compensación del eje tándem" ;
+    ns1:documentadoEn ns1:TablaTANDEM ;
+    ns1:identificador "MPG.TCOMPLIM" ;
+    ns1:textoExtracto "TCOMPLIM Pareja tándem. Límite de la compensación." .
 
-ns1:VelocidadMaxima_Tandem a ns1:Parametro ;
-    rdfs:label "Velocidad máxima (S.max)"@es ;
-    ns1:documentadoEn ns1:Tabla_Tandem ;
-    ns1:textoExtracto "S.max Velocidad máxima."@es ;
-    ns1:valor "T.nom"^^rdfs:Literal .
+ns1:SistemaTandem a ns1:Sistema ;
+    rdfs:label "Sistema Tándem" ;
+    ns1:textoExtracto "los dos motores. S Velocidad. S = KpT.err S.max Velocidad máxima. Kp Ganancia proporcional." ;
+    ns1:tieneComponente ns1:ComponenteElectrico_226a224b39,
+        ns1:ComponenteElectrico_661288eee4 .
 
-ns1:ErrorPar_Tandem a ns1:Parametro ;
-    rdfs:label "Error de par entre motores (T.err)"@es ;
-    ns1:documentadoEn ns1:Tabla_Tandem ;
-    ns1:textoExtracto "T.err Error de par entre motores. T.err = (–T.mst + T.slv + PRELOAD)"@es .
+ns1:ComponenteElectrico_226a224b39 a ns1:ComponenteElectrico ;
+    rdfs:label "Motor Esclavo" ;
+    ns1:textoExtracto "T.slv Par del motor esclavo." .
 
-ns1:Tabla_Tandem a ns1:Tabla ;
-    rdfs:label "Tabla TANDEM"@es ;
-    ns1:textoExtracto "Parámetro incluido en la tabla TANDEM."@es .
+ns1:ComponenteElectrico_661288eee4 a ns1:ComponenteElectrico ;
+    rdfs:label "Motor Maestro" ;
+    ns1:textoExtracto "T.mst Par del motor maestro." .
+
+ns1:TablaTANDEM a ns1:Tabla ;
+    rdfs:label "Tabla TANDEM" ;
+    ns1:textoExtracto "Parámetro incluido en la tabla TANDEM." .
 

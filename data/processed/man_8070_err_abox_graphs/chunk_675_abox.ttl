@@ -1,42 +1,23 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:PLC_SistemaControl a ns1:Sistema ;
-    rdfs:label "PLC (Sistema de control)" ;
-    ns1:activaAlarma ns1:Error5055,
-        ns1:Error5056,
-        ns1:Error5057 ;
-    ns1:textoExtracto "Durante el funcionamiento del PLC" .
+ns1:AvisoSeguridad_adb0de773d a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de variable únicamente admite valor '0'" ;
+    ns1:textoExtracto "'CNCWR:La variable únicamente admite el valor '0'' DETECCIÓN Durante la ejecución de comandos CNCWR. CAUSA El PLC ha intentado escribir un valor diferente de 0 en una variable" .
 
-ns1:SensorTemperaturaRemoto_5055 a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura remoto (Error 5055)" ;
-    ns1:activaAlarma ns1:Error5055 ;
-    ns1:monitoreaParametro ns1:ParametroTemperatura_5055 ;
-    ns1:textoExtracto "sensor de temperatura remoto" .
+ns1:ParametroCEN a ns1:Parametro ;
+    rdfs:label "Parámetro CEN" ;
+    ns1:parametroMonitoradoPor ns1:SistemaPLC ;
+    ns1:textoExtracto "(CEN = 1)" ;
+    ns1:valor "1" .
 
-ns1:Error5056 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 5056: Ejecución de salida analógica remota" ;
-    ns1:identificador "5056" ;
-    ns1:textoExtracto "5056 Error de ejecución en el tratamiento de una salida analógica remota. DETECCIÓN Durante el funcionamiento del PLC. CAUSA Error en el tratamiento de los datos. SOLUCIÓN Error interno. Si el error persiste, póngase en contacto con Fagor Automation." .
+ns1:AvisoSeguridad_1cc4ac6e13 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de contador deshabilitado" ;
+    ns1:mitigaRiesgo ns1:SistemaPLC ;
+    ns1:textoExtracto "CAUSA El contador está deshabilitado, desde el programa de PLC o desde monitorización. SOLUCIÓN Tras este aviso, el PLC fuerza la habilitación del contador (CEN = 1) de forma automática." .
 
-ns1:Error5057 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 5057: Ejecución de entrada analógica remota" ;
-    ns1:identificador "5057" ;
-    ns1:textoExtracto "5057 Error de ejecución en el tratamiento de una entrada analógica remota. DETECCIÓN Durante el funcionamiento del PLC. CAUSA Error en el tratamiento de los datos. SOLUCIÓN Error interno. Si el error persiste, póngase en contacto con Fagor Automation." .
-
-ns1:ParametroTemperatura_5055 a ns1:Parametro ;
-    rdfs:label "Temperatura fuera de rango (Error 5055)" ;
-    ns1:textoExtracto "La temperatura del sensor de temperatura es menor que el rango permitido" ;
-    ns1:valor "menor que el rango permitido" .
-
-ns1:Solucion5055 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de conexionado del sensor de temperatura (Error 5055)" ;
-    ns1:solucionaFallo ns1:Error5055 ;
-    ns1:textoExtracto "Revisar el conexionado del sensor de temperatura remoto" .
-
-ns1:Error5055 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 5055: Rango de temperatura excedido" ;
-    ns1:identificador "5055" ;
-    ns1:mitigaRiesgo ns1:Solucion5055 ;
-    ns1:textoExtracto "módulo remoto del sensor de temperatura. 5055 Un sensor de temperatura remoto ha detectado un error de rango excedido. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La temperatura del sensor de temperatura es menor que el rango permitido. SOLUCIÓN Revisar el conexionado del sensor de temperatura remoto." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:activaAlarma ns1:AvisoSeguridad_1cc4ac6e13 ;
+    ns1:textoExtracto "El PLC fuerza la habilitación del contador (CEN = 1) de forma automática." .
 

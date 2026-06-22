@@ -1,35 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_4200 a ns1:AvisoSeguridad ;
-    rdfs:label "Error en el canal cíclico de Sercos"@es ;
-    ns1:identificador "4200" ;
-    ns1:textoExtracto "'Error en el canal cíclico de Sercos' EJE Número lógico del eje. CAUSA Error en los procesos de lectura o escritura del canal cíclico"@es .
+ns1:CNC8070_2689bf2a4a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "arranque del CNC, validación de los parámetros máquina y reset." .
 
-ns1:Parametro_IDN296 a ns1:Parametro ;
-    rdfs:label "IDN296 (FFGAIN)"@es ;
-    ns1:documentadoEn ns1:Tabla_DRVVAR ;
-    ns1:identificador "IDN296" ;
-    ns1:textoExtracto "se ha parametrizado el IDN296 (FFGAIN) como de escritura síncrona"@es ;
-    ns1:valor "FFGAIN" .
+ns1:CorreccionDeParametrizacion a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de parametrización" ;
+    ns1:solucionaFallo ns1:Error4022ErrorEnElAnilloSercosDebidoAUnResetDeContadoraPorWatchdog ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la parametrización." .
 
-ns1:Variable_FFGAIN a ns1:Parametro ;
-    rdfs:label "Variable FFGAIN (síncrona)"@es ;
-    ns1:documentadoEn ns1:Tabla_DRVVAR ;
-    ns1:monitoreaParametro ns1:Regulador_AXD ;
-    ns1:textoExtracto "Eliminar la variable síncrona de la tabla DRVVAR"@es .
+ns1:CorregirLaParametrizacion a ns1:AccionProhibida ;
+    rdfs:label "Corregir la parametrización" ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la parametrización." .
 
-ns1:ActualizacionDeSoftwareDelReguladorAXD a ns1:TareaMantenimiento ;
-    rdfs:label "Actualización de software del regulador AXD"@es ;
-    ns1:textoExtracto "utilizar un regulador AXD con una versión de software v9.10 o superior"@es ;
-    ns1:valor "v9.10" .
+ns1:PongaseEnContactoConFAGOR a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor" ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor." .
 
-ns1:Regulador_AXD a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador AXD"@es ;
-    ns1:requiereMantenimiento ns1:ActualizacionDeSoftwareDelReguladorAXD ;
-    ns1:textoExtracto "el regulador no es AXD o la versión de software es incompatible"@es .
+ns1:PongaseEnContactoConFAGOR_0c45beda3f a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con Fagor" ;
+    ns1:solucionaFallo ns1:Error4022ErrorEnElAnilloSercosDebidoAUnResetDeContadoraPorWatchdog ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor." .
 
-ns1:Tabla_DRVVAR a ns1:Tabla ;
-    rdfs:label "Tabla DRVVAR"@es ;
-    ns1:textoExtracto "En la tabla DRVVAR, se ha parametrizado el IDN296 (FFGAIN) como de escritura síncrona"@es .
+ns1:ReduccionDelNumeroDeVariablesEnElTelegrama a ns1:TareaMantenimiento ;
+    rdfs:label "Reducción del número de variables en el telegrama" ;
+    ns1:solucionaFallo ns1:Error4023NoPuedeConfigurarseLaTrazaProgramadaEnSercos ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el número de variables en el telegrama." .
+
+ns1:ReducirElNumeroDeVariablesEnElTelegrama a ns1:AccionProhibida ;
+    rdfs:label "Reducir el número de variables en el telegrama" ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el número de variables en el telegrama." .
+
+ns1:Error4023NoPuedeConfigurarseLaTrazaProgramadaEnSercos a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 4023 - No puede configurarse la traza programada en Sercos" ;
+    ns1:textoExtracto "4023 No puede configurarse la traza programada en Sercos." .
+
+ns1:Error4022ErrorEnElAnilloSercosDebidoAUnResetDeContadoraPorWatchdog a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 4022 - Error en el anillo Sercos debido a un Reset de contadora por Watchdog" ;
+    ns1:textoExtracto "4022 Error en el anillo Sercos debido a un Reset de contadora por Watchdog." .
 

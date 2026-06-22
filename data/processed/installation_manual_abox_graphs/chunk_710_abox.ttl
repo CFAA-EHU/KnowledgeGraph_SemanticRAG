@@ -1,51 +1,46 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:EsquemaTemporizador a ns1:Esquema ;
-    rdfs:label "Esquema temporizador" ;
-    ns1:textoExtracto "Activa el temporizador. El temporizador se activa, dependiendo del número de entrada seleccionada, cuando se produce un flanco de subida, transición de (=0) a (=1), o un flanco de bajada, transición de" .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "El programa PLC puede estar formado por los siguientes módulos." ;
+    ns1:tieneComponente ns1:ModuloEjecucionPeriodica,
+        ns1:ModuloPrimerCiclo,
+        ns1:ModuloPrincipal .
 
-ns1:InstruccionAritmeticaT123 a ns1:AccionProhibida ;
-    rdfs:label "Instruccion aritmetica T123" ;
-    ns1:textoExtracto "En instrucciones de tipo aritmético y comparación hace referencia al tiempo transcurrido. I2 = MOV T123 R200 Transfiere el tiempo de T123 al registro R200. CPS T123 GT 1000 = M100 Compara si el tiempo de T123 es mayor que 1000, en cuyo caso activa la marca M100." .
+ns1:ModuloEjecucionPeriodica a ns1:Componente ;
+    rdfs:label "Módulo de ejecución periódica (PE)" ;
+    ns1:compuestoPor ns1:ProposicionDirectivaPE ;
+    ns1:textoExtracto "• Módulo de ejecución periódica (PE)." .
 
-ns1:InstruccionBinariaT123 a ns1:AccionProhibida ;
-    rdfs:label "Instruccion binaria T123" ;
-    ns1:textoExtracto "En instrucciones de tipo binario hace referencia al estado lógico del temporizador. T123 = M100 Asigna a M100 el estado (0/1) de T123." .
+ns1:ModuloPrimerCiclo a ns1:Componente ;
+    rdfs:label "Módulo del primer ciclo (CY1)" ;
+    ns1:compuestoPor ns1:ProposicionDirectivaCY1 ;
+    ns1:textoExtracto "• Módulo del primer ciclo (CY1)." .
 
-ns1:M100 a ns1:ComponenteElectrico ;
-    rdfs:label "M100" ;
-    ns1:textoExtracto "Asigna a M100 el estado (0/1) de T123. Compara si el tiempo de T123 es mayor que 1000, en cuyo caso activa la marca M100." .
+ns1:ModuloPrincipal a ns1:Componente ;
+    rdfs:label "Módulo principal (PRG)" ;
+    ns1:compuestoPor ns1:ProposicionDirectivaPRG ;
+    ns1:textoExtracto "• Módulo principal (PRG)." .
 
-ns1:R200 a ns1:ComponenteElectrico ;
-    rdfs:label "R200" ;
-    ns1:textoExtracto "con la constante de tiempo que fija el valor del registro R200, en ms." .
+ns1:ProposicionDirectivaCY1 a ns1:Componente,
+        ns1:Parametro ;
+    rdfs:label "Proposición directiva CY1",
+        "Proposición directiva para el primer ciclo" ;
+    ns1:identificador "CY1" ;
+    ns1:textoExtracto "Cada módulo debe empezar con la proposición directiva que lo define (CY1, PRG, PE)" .
 
-ns1:SalidaEstado a ns1:Parametro ;
-    rdfs:label "Salida de estado" ;
-    ns1:textoExtracto "Indica el estado lógico del temporizador. Se referencia mediante la letra T seguida del número de temporizador que se desea referenciar, por ejemplo T1, T25, T102, etc." .
+ns1:ProposicionDirectivaPE a ns1:Componente,
+        ns1:Parametro ;
+    rdfs:label "Proposición directiva PE",
+        "Proposición directiva para el módulo de ejecución periódica" ;
+    ns1:identificador "PE" ;
+    ns1:textoExtracto "Cada módulo debe empezar con la proposición directiva que lo define (CY1, PRG, PE)" .
 
-ns1:T123 a ns1:Sensor ;
-    rdfs:label "T123" ;
-    ns1:textoExtracto "Se referencia mediante la letra T seguida del número de temporizador que se desea referenciar, por ejemplo T1, T25, T102, etc." .
-
-ns1:T20 a ns1:Sensor ;
-    rdfs:label "T20" ;
-    ns1:textoExtracto "Activa el temporizador T20 en modo monoestable (TG1) con una constante de tiempo de 100 ms." .
-
-ns1:T22 a ns1:Sensor ;
-    rdfs:label "T22" ;
-    ns1:textoExtracto "Activa el temporizador T22 en modo de retardo a la conexión (TG2) con la constante de tiempo que fija el valor del registro R200, en ms." .
-
-ns1:TiempoTranscurrido a ns1:Parametro ;
-    rdfs:label "Tiempo transcurrido" ;
-    ns1:textoExtracto "Indica el tiempo transcurrido en el temporizador desde que se activó el mismo. Se referencia mediante la letra T seguida del número de temporizador que se desea referenciar, por ejemplo T1, T25, T102, etc." .
-
-ns1:TrabajoModoTG1 a ns1:ModoOperacion ;
-    rdfs:label "modo monoestable (TG1)" ;
-    ns1:textoExtracto "Activa el temporizador T20 en modo monoestable (TG1) con una constante de tiempo de 100 ms." .
-
-ns1:TrabajoModoTG2 a ns1:ModoOperacion ;
-    rdfs:label "modo de retardo a la conexión (TG2)" ;
-    ns1:textoExtracto "Activa el temporizador T22 en modo de retardo a la conexión (TG2) con la constante de tiempo que fija el valor del registro R200, en ms." .
+ns1:ProposicionDirectivaPRG a ns1:Componente,
+        ns1:Parametro ;
+    rdfs:label "Proposición directiva PRG",
+        "Proposición directiva para el módulo principal" ;
+    ns1:identificador "PRG" ;
+    ns1:textoExtracto "Cada módulo debe empezar con la proposición directiva que lo define (CY1, PRG, PE)" .
 

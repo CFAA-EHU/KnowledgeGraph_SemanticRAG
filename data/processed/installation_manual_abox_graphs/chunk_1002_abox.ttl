@@ -1,47 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaComunicacionPLC a ns1:Sistema ;
-    rdfs:label "Sistema de comunicación entre PLC y rutina M06" ;
-    ns1:compuestoPor ns1:M109,
-        ns1:M110,
-        ns1:M1107,
-        ns1:M1108,
-        ns1:M1109,
-        ns1:M1110,
-        ns1:M1111 ;
-    ns1:textoExtracto "La comunicación entre el PLC y la rutina M06 se realiza mediante una serie de marcas y registros genéricos." .
+ns1:IndicaLaPosicionDeAlmacenEnLaQueHayQueDejarLaHerramienta a ns1:Parametro ;
+    rdfs:label "Indica la posición de almacén en la que hay que dejar la herramienta" ;
+    ns1:identificador "LEAVEPOS" ;
+    ns1:textoExtracto "Este registro indica la posición de almacén en la que hay que dejar la herramienta." .
 
-ns1:M109 a ns1:ModoOperacion ;
-    rdfs:label "M109" ;
-    ns1:textoExtracto "Seleccionar en el almacén la posición que indica TAKEPOS y poner la herramienta en el cabezal." .
+ns1:IndicaLaPosicionDeAlmacenQueOcupaLaHerramientaQueHayQueCoger a ns1:Parametro ;
+    rdfs:label "Indica la posición de almacén que ocupa la herramienta que hay que coger" ;
+    ns1:identificador "TAKEPOS" ;
+    ns1:textoExtracto "Este registro indica la posición de almacén que ocupa la herramienta que hay que coger." .
 
-ns1:M110 a ns1:ModoOperacion ;
-    rdfs:label "M110" ;
-    ns1:textoExtracto "Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta del cabezal." .
+ns1:IndicaQueElAlmacenYaHaGirado a ns1:Parametro ;
+    rdfs:label "Indica que el almacén ya ha girado" ;
+    ns1:identificador "M1111" ;
+    ns1:textoExtracto "DFU M1111 = SET MZROT DFD MZROT = RES M1111 Ya ha girado el almacén." .
 
-ns1:M1107 a ns1:Sensor ;
-    rdfs:label "M1107" ;
-    ns1:textoExtracto "La herramienta se ha llevado del cabezal a tierra." ;
-    ns1:valor "SPDLTOGR" .
+ns1:IndicaQueLaHerramientaSeHaLlevadoDelCabezalAlAlmacen a ns1:Parametro ;
+    rdfs:label "Indica que la herramienta se ha llevado del cabezal al almacén" ;
+    ns1:identificador "M1110" ;
+    ns1:textoExtracto "DFU M1110 = SET SPDLTOGR DFD SPDLTOGR = RES M1110 La herramienta se ha llevado del cabezal al almacén." .
 
-ns1:M1108 a ns1:Sensor ;
-    rdfs:label "M1108" ;
-    ns1:textoExtracto "La herramienta se ha llevado de tierra al cabezal." ;
-    ns1:valor "GRTOSPDL" .
-
-ns1:M1109 a ns1:Sensor ;
-    rdfs:label "M1109" ;
-    ns1:textoExtracto "Asumir la herramienta actual como herramienta activa." ;
-    ns1:valor "MZTOSPDL" .
-
-ns1:M1110 a ns1:Sensor ;
-    rdfs:label "M1110" ;
-    ns1:textoExtracto "Asumir la herramienta actual como herramienta activa." ;
-    ns1:valor "SPDLTOGR" .
-
-ns1:M1111 a ns1:Sensor ;
-    rdfs:label "M1111" ;
-    ns1:textoExtracto "Marca que indica que ya ha girado el almacén." ;
-    ns1:valor "MZROT" .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "La rutina M06 utiliza las siguientes funciones auxiliares M para indicar al PLC qué movimientos debe realizar." .
 

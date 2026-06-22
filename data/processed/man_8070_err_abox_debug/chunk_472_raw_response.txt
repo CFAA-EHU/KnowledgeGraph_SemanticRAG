@@ -1,0 +1,35 @@
+```turtle
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:DiagnosticoFalloMacroG8777 a ex:DiagnosticoFallo ;
+    rdfs:label "Perfil de la macro G8777 debe estar construido con tramos rectos" ;
+    ex:textoExtracto "El perfil debe estar construido con tramos rectos." .
+
+ex:TareaMantenimientoModificarPerfil a ex:TareaMantenimiento ;
+    rdfs:label "Modificar el perfil" ;
+    ex:solucionaFallo ex:DiagnosticoFalloMacroG8777 ;
+    ex:textoExtracto "SOLUCIÓN Modificar el perfil." .
+
+ex:DiagnosticoFalloLEAPGap a ex:DiagnosticoFallo ;
+    rdfs:label "Comando #LEAP[GAP] XY sin programar previamente #GAPCTRL ON" ;
+    ex:textoExtracto "Se ha programado un salto con el comando #LEAP, que debe acabar a una determinada distancia sobre la chapa (parámetro GAP). Previamente no se ha programado el comando #GAPCTRL ON." .
+
+ex:ParametroGAP a ex:Parametro ;
+    rdfs:label "Distancia de salto GAP" ;
+    ex:textoExtracto "que debe acabar a una determinada distancia sobre la chapa (parámetro GAP)." .
+
+ex:TareaMantenimientoProgramarGapCtrlOn a ex:TareaMantenimiento ;
+    rdfs:label "Programar #GAPCTRL ON antes del #LEAP" ;
+    ex:solucionaFallo ex:DiagnosticoFalloLEAPGap ;
+    ex:textoExtracto "Programar #GAPCTRL ON antes del #LEAP donde se detecta el error." .
+
+ex:TareaMantenimientoEliminarParametroGap a ex:TareaMantenimiento ;
+    rdfs:label "Eliminar parámetro GAP de los comandos #LEAP" ;
+    ex:solucionaFallo ex:DiagnosticoFalloLEAPGap ;
+    ex:textoExtracto "Eliminar el parámetro GAP de los comandos #LEAP." .
+
+ex:DiagnosticoFalloNumeroNodo a ex:DiagnosticoFallo ;
+    rdfs:label "Programar número de nodo tras '.'" ;
+    ex:textoExtracto "Programar el número de nodo tras el "." .
+```

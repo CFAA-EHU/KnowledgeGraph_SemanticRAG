@@ -1,101 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Empresa_FagorAutomation a ns1:Empresa ;
-    rdfs:label "Fagor Automation S. Coop." ;
-    ns1:textoExtracto "Fagor Automation S. Coop." .
+ns1:CNC8070_a8882c41a1 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:MemoriaPorDebajoDelMinimoRecomendadoEsNecesarioReiniciar_e51765078d ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Error_8128 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se han podido recuperar los datos de FRAM" ;
-    ns1:identificador "8128" ;
-    ns1:textoExtracto "8128 No se han podido recuperar los datos de FRAM. DETECCIÓN Durante el arranque del CNC. CAUSA Error durante el proceso de recuperación de datos de FRAM." .
+ns1:ModoPuestaAPunto a ns1:ModoOperacion ;
+    rdfs:label "modo puesta a punto" ;
+    ns1:textoExtracto "Solo se permite trabajar con el CNC en los modos usuario y modo puesta a punto." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "CNC" ;
-    ns1:tieneComponente ns1:AlmacenHerramientas,
-        ns1:Disco,
-        ns1:FRAM,
-        ns1:Memoria,
-        ns1:SoftwareRIOR_ETHERCAT .
+ns1:ModoUsuario a ns1:ModoOperacion ;
+    rdfs:label "modo usuario" ;
+    ns1:textoExtracto "Solo se permite trabajar con el CNC en los modos usuario y modo puesta a punto." .
 
-ns1:Solucion_8056 a ns1:TareaMantenimiento ;
-    rdfs:label "Definir manualmente las herramientas en las posiciones del almacén" ;
-    ns1:solucionaFallo ns1:Error_8056 ;
-    ns1:textoExtracto "Definir manualmente las herramientas en las posiciones del almacén" .
+ns1:UtilizarLaUtilidadDiskMonitorParaPasarAModoUsuarioOModoPuestaAPuntoYV_8bb8f93bc4 a ns1:TareaMantenimiento ;
+    rdfs:label "Utilizar la utilidad DiskMonitor para pasar a modo usuario o modo puesta a punto y volver a arrancar el CNC" ;
+    ns1:solucionaFallo ns1:MemoriaPorDebajoDelMinimoRecomendadoEsNecesarioReiniciar_e51765078d ;
+    ns1:textoExtracto "Utilizar la utilidad DiskMonitor para pasar a modo usuario o modo puesta a punto y volver a arrancar el CNC." .
 
-ns1:Solucion_8057 a ns1:TareaMantenimiento ;
-    rdfs:label "Definir manualmente la herramienta activa" ;
-    ns1:solucionaFallo ns1:Error_8057 ;
-    ns1:textoExtracto "Definir manualmente cual es la herramientas activa" .
-
-ns1:Solucion_8058 a ns1:TareaMantenimiento ;
-    rdfs:label "Reiniciar el CNC" ;
-    ns1:solucionaFallo ns1:Error_8058 ;
-    ns1:textoExtracto "Reiniciar el CNC" .
-
-ns1:Solucion_8059 a ns1:TareaMantenimiento ;
-    rdfs:label "Contactar con Fagor Automation" ;
-    ns1:solucionaFallo ns1:Error_8059 ;
-    ns1:textoExtracto "Póngase en contacto con Fagor Automation" .
-
-ns1:Solucion_8060 a ns1:TareaMantenimiento ;
-    rdfs:label "Cerrar el CNC y contactar con Fagor Automation" ;
-    ns1:solucionaFallo ns1:Error_8060 ;
-    ns1:textoExtracto "Cierre el CNC y póngase en contacto con Fagor Automation S. Coop. para obtener asistencia técnica" .
-
-ns1:Solucion_8127 a ns1:TareaMantenimiento ;
-    rdfs:label "Verificar configuración EtherCAT, conexiones y versiones" ;
-    ns1:solucionaFallo ns1:Error_8127 ;
-    ns1:textoExtracto "Verificar la configuración EtherCAT, conexiones, versión de boot y aplicación de nodos remotos" .
-
-ns1:AlmacenHerramientas a ns1:Componente ;
-    rdfs:label "Almacén de herramientas" ;
-    ns1:textoExtracto "posiciones de las herramientas en el almacén" .
-
-ns1:Disco a ns1:Componente ;
-    rdfs:label "Disco del sistema CNC" ;
-    ns1:textoExtracto "El disco se acerca al fin de su vida útil" .
-
-ns1:Error_8056 a ns1:DiagnosticoFallo ;
-    rdfs:label "Inconsistencia en la recuperación de las posiciones de las herramientas en el almacén" ;
-    ns1:identificador "8056" ;
-    ns1:textoExtracto "8056 Inconsistencia en la recuperación de las posiciones de las herramientas en el almacén. DETECCIÓN Durante el arranque del CNC. CAUSA El CNC no ha podido recuperar la información de las posiciones de las herramientas en el almacén. SOLUCIÓN Definir manualmente las herramientas en las posiciones del almacén." .
-
-ns1:Error_8057 a ns1:DiagnosticoFallo ;
-    rdfs:label "Inconsistencia en la recuperación de la posición de la herramienta activa en el almacén" ;
-    ns1:identificador "8057" ;
-    ns1:textoExtracto "8057 Inconsistencia en la recuperación de la posición de la herramienta activa en el almacén. DETECCIÓN Durante el arranque del CNC. CAUSA El CNC no ha podido recuperar la información de la herramienta activa en el almacén. SOLUCIÓN Definir manualmente cual es la herramientas activa." .
-
-ns1:Error_8058 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de memoria. Es necesario reiniciar el CNC" ;
-    ns1:identificador "8058" ;
-    ns1:textoExtracto "8058 Error de memoria. Es necesario reiniciar el CNC. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La memoria se encuentra debajo del mínimo recomendado para el correcto funcionamiento del CNC. SOLUCIÓN Reiniciar el CNC. El CNC puede tener problemas para funcionar correctamente." .
-
-ns1:Error_8059 a ns1:DiagnosticoFallo ;
-    rdfs:label "Vida restante del disco por debajo del 25%" ;
-    ns1:identificador "8059" ;
-    ns1:textoExtracto "8059 Vida restante del disco por debajo del 25%. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El disco se acerca al fin de su vida útil. SOLUCIÓN Póngase en contacto con Fagor Automation. El CNC puede tener problemas para funcionar correctamente." .
-
-ns1:Error_8060 a ns1:DiagnosticoFallo ;
-    rdfs:label "Vida restante del disco por debajo del 10%" ;
-    ns1:identificador "8060" ;
-    ns1:textoExtracto "8060 Vida restante del disco por debajo del 10%. Cierre el CNC y póngase en contacto con Fagor Automation S. Coop. para obtener asistencia técnica. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El disco está a punto de terminar su vida útil. SOLUCIÓN Póngase en contacto con Fagor Automation. El CNC puede tener problemas para funcionar correctamente." .
-
-ns1:Error_8127 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error cargando software de RIOR-ETHERCAT" ;
-    ns1:identificador "8127" ;
-    ns1:textoExtracto "8127 Error cargando software de RIOR-ETHERCAT. DETECCIÓN Durante el arranque del CNC. CAUSA Error durante el proceso de carga de los nodos RIOR-ETHERCAT. SOLUCIÓN Verificar la configuración EtherCAT, conexiones, versión de boot y aplicación de nodos remotos." .
-
-ns1:FRAM a ns1:Componente ;
-    rdfs:label "FRAM" ;
-    ns1:textoExtracto "No se han podido recuperar los datos de FRAM" .
-
-ns1:Memoria a ns1:Componente ;
-    rdfs:label "Memoria del sistema CNC" ;
-    ns1:textoExtracto "La memoria se encuentra debajo del mínimo recomendado para el correcto funcionamiento del CNC" .
-
-ns1:SoftwareRIOR_ETHERCAT a ns1:Componente ;
-    rdfs:label "Software RIOR-ETHERCAT" ;
-    ns1:textoExtracto "Error cargando software de RIOR-ETHERCAT" .
+ns1:MemoriaPorDebajoDelMinimoRecomendadoEsNecesarioReiniciar_e51765078d a ns1:DiagnosticoFallo ;
+    rdfs:label "Memoria por debajo del mínimo recomendado. Es necesario reiniciar" ;
+    ns1:textoExtracto "'Memoria por debajo del mínimo recomendado. Es necesario reiniciar'" .
 

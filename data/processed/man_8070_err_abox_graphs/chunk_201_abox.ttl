@@ -1,64 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1400 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se admite cambio de longitud de herramienta con RTCP activo" ;
-    ns1:identificador "1400" ;
-    ns1:textoExtracto "1400 'No se admite cambio de longitud de herramienta con RTCP activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer un cambio de herramienta con la función RTCP activa. SOLUCIÓN Desactivar la función RTCP para hacer el cambio de herramienta." .
+ns1:CambiarHerramientaDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Cambiar herramienta del cabezal" ;
+    ns1:solucionaFallo ns1:CambioDeHerramientaIncorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Cambiar la herramienta del cabezal para que coincida con la programada." .
 
-ns1:DiagnosticoFallo_1401 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se admite #TLC ON sin deselección previa" ;
-    ns1:identificador "1401" ;
-    ns1:textoExtracto "1401 'No se admite #TLC ON sin deselección previa' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar la función TLC y ésta ya está activa. SOLUCIÓN Revisar la programación." .
+ns1:RevisarLaProgramacionDeFuncionesYSubrutinas a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación de funciones y subrutinas" ;
+    ns1:solucionaFallo ns1:LaFuncionG74ConSubrutinaAsociadaSeProgramaSolaEnElBloque,
+        ns1:NoExisteLaSubrutinaAsociadaALaFuncionG ;
+    ns1:textoExtracto "SOLUCIÓN Programar junto a la función G74 los ejes a referenciar o definir la subrutina asociada (parámetro REFPSUB). Para las funciones G180 a G189 definir la subrutina asociada (parámetro OEMSUB). Revisar la programación." .
 
-ns1:DiagnosticoFallo_1402 a ns1:DiagnosticoFallo ;
-    rdfs:label "#LINK: los ejes maestro y esclavo deben tener los mismos parámetros HIRTH y HPITCH" ;
-    ns1:identificador "1402" ;
-    ns1:textoExtracto "1402 '#LINK: los ejes maestro y esclavo deben tener los mismos parámetros HIRTH y HPITCH' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos no es hirth o ambos ejes tienen paso diferente. SOLUCIÓN Para poder incluir un eje hirth en un acoplo, ambos ejes deben ser hirth (parámetro HIRTH) y tener el mismo paso (parámetro HPITCH)." .
+ns1:SubrutinaDeReferenciaParaG74 a ns1:Parametro ;
+    rdfs:label "Subrutina de referencia para G74" ;
+    ns1:textoExtracto "(parámetro REFPSUB)" .
 
-ns1:DiagnosticoFallo_1403 a ns1:DiagnosticoFallo ;
-    rdfs:label "#LINK: no se puede definir un acoplo con un eje Hirth desactivado" ;
-    ns1:identificador "1403" ;
-    ns1:textoExtracto "1403 '#LINK: no se puede definir un acoplo con un eje Hirth desactivado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos está desactivado. SOLUCIÓN Para poder acoplar dos ejes hirth, ambos ejes deben estar activos (G171)." .
+ns1:SubrutinaOEMParaFuncionesG180G189 a ns1:Parametro ;
+    rdfs:label "Subrutina OEM para funciones G180-G189" ;
+    ns1:textoExtracto "(parámetro OEMSUB)" .
 
-ns1:DiagnosticoFallo_1404 a ns1:DiagnosticoFallo ;
-    rdfs:label "La gama asociada a la M programada no existe" ;
-    ns1:identificador "1404" ;
-    ns1:textoExtracto "1404 'La gama asociada a la M programada no existe' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado realizar un cambio de gama de cabezal mediante una función M41 a M44 y la gama no existe. SOLUCIÓN El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS). El CNC sólo aceptará las funciones M41 a M44 de las gamas de cabezal que existan." .
+ns1:CambioDeHerramientaIncorrecto a ns1:AccionProhibida ;
+    rdfs:label "Cambio de herramienta incorrecto" ;
+    ns1:textoExtracto "de la herramienta, el CNC va a mecanizar una pieza distinta." .
 
-ns1:EjeHirth_1402 a ns1:ComponenteMecanico ;
-    rdfs:label "eje hirth" ;
-    ns1:textoExtracto "El eje hirth forma parte de la transformación de coordenadas activa. • El eje hirth forma parte de la cinemática activa y además hay activa una sentencia #RTCP, #TLC ó #TOOL ORI. SOLUCIÓN Revisar la programación. 1402 '#LINK: los ejes maestro y esclavo deben tener los mismos parámetros HIRTH y HPITCH' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos no es hirth o ambos ejes tienen paso diferente. SOLUCIÓN Para poder incluir un eje hirth en un acoplo, ambos ejes deben ser hirth (parámetro HIRTH) y tener el mismo paso (parámetro HPITCH)." .
+ns1:LaFuncionG74ConSubrutinaAsociadaSeProgramaSolaEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "La función G74 con subrutina asociada se programa sola en el bloque" ;
+    ns1:textoExtracto "'La función G74 con subrutina asociada se programa sola en el bloque'" .
 
-ns1:EjeHirth_1403 a ns1:ComponenteMecanico ;
-    rdfs:label "eje hirth" ;
-    ns1:textoExtracto "1403 '#LINK: no se puede definir un acoplo con un eje Hirth desactivado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos está desactivado. SOLUCIÓN Para poder acoplar dos ejes hirth, ambos ejes deben estar activos (G171)." .
-
-ns1:FuncionRTCP a ns1:ModoOperacion ;
-    rdfs:label "RTCP" ;
-    ns1:textoExtracto "El eje hirth forma parte de la transformación de coordenadas activa. • El eje hirth forma parte de la cinemática activa y además hay activa una sentencia #RTCP, #TLC ó #TOOL ORI. SOLUCIÓN Revisar la programación. 1400 'No se admite cambio de longitud de herramienta con RTCP activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer un cambio de herramienta con la función RTCP activa. SOLUCIÓN Desactivar la función RTCP para hacer el cambio de herramienta." .
-
-ns1:FuncionTLC a ns1:ModoOperacion ;
-    rdfs:label "TLC" ;
-    ns1:textoExtracto "El eje hirth forma parte de la transformación de coordenadas activa. • El eje hirth forma parte de la cinemática activa y además hay activa una sentencia #RTCP, #TLC ó #TOOL ORI. SOLUCIÓN Revisar la programación. 1401 'No se admite #TLC ON sin deselección previa' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar la función TLC y ésta ya está activa. SOLUCIÓN Revisar la programación." .
-
-ns1:FuncionTOOLORI a ns1:ModoOperacion ;
-    rdfs:label "TOOL ORI" ;
-    ns1:textoExtracto "El eje hirth forma parte de la transformación de coordenadas activa. • El eje hirth forma parte de la cinemática activa y además hay activa una sentencia #RTCP, #TLC ó #TOOL ORI. SOLUCIÓN Revisar la programación." .
-
-ns1:GamaCabezal a ns1:ComponenteMecanico ;
-    rdfs:label "gama de cabezal" ;
-    ns1:textoExtracto "1404 'La gama asociada a la M programada no existe' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado realizar un cambio de gama de cabezal mediante una función M41 a M44 y la gama no existe. SOLUCIÓN El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS). El CNC sólo aceptará las funciones M41 a M44 de las gamas de cabezal que existan." .
-
-ns1:ParametroHIRTH a ns1:Parametro ;
-    rdfs:label "HIRTH" ;
-    ns1:textoExtracto "1402 '#LINK: los ejes maestro y esclavo deben tener los mismos parámetros HIRTH y HPITCH' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos no es hirth o ambos ejes tienen paso diferente. SOLUCIÓN Para poder incluir un eje hirth en un acoplo, ambos ejes deben ser hirth (parámetro HIRTH) y tener el mismo paso (parámetro HPITCH)." .
-
-ns1:ParametroHPITCH a ns1:Parametro ;
-    rdfs:label "HPITCH" ;
-    ns1:textoExtracto "1402 '#LINK: los ejes maestro y esclavo deben tener los mismos parámetros HIRTH y HPITCH' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado acoplar dos ejes hirth pero uno de ellos no es hirth o ambos ejes tienen paso diferente. SOLUCIÓN Para poder incluir un eje hirth en un acoplo, ambos ejes deben ser hirth (parámetro HIRTH) y tener el mismo paso (parámetro HPITCH)." .
-
-ns1:ParametroNPARSETS a ns1:Parametro ;
-    rdfs:label "NPARSETS" ;
-    ns1:textoExtracto "1404 'La gama asociada a la M programada no existe' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado realizar un cambio de gama de cabezal mediante una función M41 a M44 y la gama no existe. SOLUCIÓN El número de gamas disponibles en el cabezal viene definido en los parámetros máquina (parámetro NPARSETS). El CNC sólo aceptará las funciones M41 a M44 de las gamas de cabezal que existan." .
+ns1:NoExisteLaSubrutinaAsociadaALaFuncionG a ns1:DiagnosticoFallo ;
+    rdfs:label "No existe la subrutina asociada a la función G" ;
+    ns1:textoExtracto "'No existe la subrutina asociada a la función G'" .
 

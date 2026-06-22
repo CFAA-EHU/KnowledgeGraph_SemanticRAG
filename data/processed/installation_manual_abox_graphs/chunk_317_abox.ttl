@@ -1,38 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_Inverter a ns1:ModoOperacion ;
-    rdfs:label "Modo Inverter" ;
-    ns1:textoExtracto "control de inverters, esta última opción sólo disponible para cabezales. [...] La opción Inverter se debe utilizar cuando el cabezal está conectado a este tipo de dispositivo" .
+ns1:DireccionDelRegulador a ns1:Parametro ;
+    rdfs:label "Dirección del regulador" ;
+    ns1:identificador "DRIVEID" ;
+    ns1:textoExtracto "DRIVEID Dirección del regulador. Parámetro válido para ejes lineales, rotativos y cabezales." .
 
-ns1:ModoOperacion_Posicion a ns1:ModoOperacion ;
-    rdfs:label "Modo Posición" ;
-    ns1:textoExtracto "servo con consigna de posición. [...] Se recomienda que los servos de los ejes operen en modo posición" .
+ns1:ModoDeOperacionPrincipalDelRegulador a ns1:Parametro ;
+    rdfs:label "Modo de operación principal del regulador" ;
+    ns1:identificador "OPMODEP" ;
+    ns1:textoExtracto "OPMODEP Modo de operación principal del regulador. Parámetro válido para ejes lineales, rotativos y cabezales." .
 
-ns1:ModoOperacion_Velocidad a ns1:ModoOperacion ;
-    rdfs:label "Modo Velocidad" ;
-    ns1:textoExtracto "servo con consigna de velocidad. [...] Se recomienda que los servos de cabezales lo hagan en modo velocidad" .
-
-ns1:Regulador_Mechatrolink a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Mechatrolink" ;
-    ns1:monitoreaParametro ns1:Parametro_ModoOperacion_MPA.OPMODEP.xn,
-        ns1:Parametro_Option_Regulador ;
-    ns1:textoExtracto "Parámetro válido para regulador Mechatrolink. [...] Este parámetro indica el tipo de regulador y modo de operación" .
-
-ns1:Parametro_ModoOperacion_MPA.OPMODEP.xn a ns1:Parametro ;
-    rdfs:label "Modo de operación (MPA.OPMODEP.xn)" ;
-    ns1:documentadoEn ns1:Tabla_MLINKDATA ;
-    ns1:identificador "V.[ch].MPA.OPMODEP.xn" ;
-    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. [...] Este parámetro indica el tipo de regulador y modo de operación; servo con consigna de velocidad, servo con consigna de posición o control de inverters" ;
-    ns1:valor "Posición / Velocidad / Inverter" .
-
-ns1:Parametro_Option_Regulador a ns1:Parametro ;
-    rdfs:label "Opciones del regulador (OPTION)" ;
-    ns1:documentadoEn ns1:Tabla_MLINKDATA ;
-    ns1:textoExtracto "OPTION Activar las opciones del regulador. [...] Valores posibles: De $00000000 a $0000FFFF" ;
-    ns1:valor "$00000000 a $0000FFFF" .
-
-ns1:Tabla_MLINKDATA a ns1:Tabla ;
+ns1:TablaMLINKDATA a ns1:Tabla ;
     rdfs:label "Tabla MLINKDATA" ;
-    ns1:textoExtracto "Parámetro incluido en la tabla MLINKDATA" .
+    ns1:textoExtracto "Este parámetro indica la posición (nodo) que ocupa el regulador en el bus Mechatrolink. Los reguladores ocuparán posiciones correlativas comenzando por ꞏ1ꞏ." .
+
+ns1:VariableMPADRIVEIDXN a ns1:Parametro ;
+    rdfs:label "Variable asociada al parámetro DRIVEID" ;
+    ns1:identificador "MPA.DRIVEID.xn" ;
+    ns1:textoExtracto "Variable asociada: (V.)[ch].MPA.DRIVEID.xn Parámetro incluido en la tabla MLINKDATA." .
 

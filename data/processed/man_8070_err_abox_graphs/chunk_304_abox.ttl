@@ -1,26 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_CNCRD a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "CAUSA Comandos CNCRD o CNCWR." .
+ns1:BusDigitalSercosMechatrolinkNoPreparadoParaLaLecturaDeLaVariable a ns1:AvisoSeguridad ;
+    rdfs:label "'Bus digital (Sercos/Mechatrolink) no preparado para la lectura de la variable'" ;
+    ns1:mitigaRiesgo ns1:LecturaDeVariableEnBusDigitalNoPreparado ;
+    ns1:solucionadoPor ns1:CondicionarEscrituraDeVariableEnBusDigital ;
+    ns1:textoExtracto "'Bus digital (Sercos/Mechatrolink) no preparado para la lectura de la variable' DETECCIÓN Durante la ejecución. CAUSA Con bus Sercos, el anillo no está en fase 4. Con bus Mechatrolink, el bus no ha alcanzado la fase 3." .
 
-ns1:Comando_CNCWR a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "CAUSA Comandos CNCRD o CNCWR." .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Comando_DEF_FIX a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "Las macros definidas mediante el comando #DEF FIX no se borran tras un reset." .
+ns1:UnEjeDeLaTransformacionDePlanoInclinadoNoPuedeSerEsclavo_f8d565bf4a a ns1:AvisoSeguridad ;
+    rdfs:label "Un eje de la transformación de plano inclinado no puede ser esclavo" ;
+    ns1:mitigaRiesgo ns1:DefinirEjeEsclavoDeUnAcoploEnPlanoInclinado ;
+    ns1:solucionadoPor ns1:DesactivarPlanoInclinadoParaActivarAcoplo ;
+    ns1:textoExtracto "'Un eje de la transformación de plano inclinado no puede ser esclavo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado definir como eje esclavo de un acoplo, un eje que forma parte del plano inclinado." .
 
-ns1:Comando_INIT_MACROTAB a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "Utilizar el comando #INIT MACROTAB para reiniciar la tabla de macros" .
+ns1:CondicionarEscrituraDeVariableEnBusDigital a ns1:TareaMantenimiento ;
+    rdfs:label "Condicionar escritura de variable en bus digital" ;
+    ns1:textoExtracto "CONDICIONAR LA ESCRITURA DE LA VARIABLE A LA MARCA SERCOSRDY EN Sercos O A LA MARCA MLINKRDY EN Mechatrolink." .
 
-ns1:FaltaProgramarPunto a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "'Falta programar \".\" tras [númeroCanal]' DETECCIÓN Durante la ejecución. CAUSA Comandos CNCRD o CNCWR." .
+ns1:DefinirEjeEsclavoDeUnAcoploEnPlanoInclinado a ns1:AccionProhibida ;
+    rdfs:label "Definir eje esclavo de un acoplo en plano inclinado" ;
+    ns1:textoExtracto "El CNC ha intentado definir como eje esclavo de un acoplo, un eje que forma parte del plano inclinado." .
 
-ns1:IndiceArrayIncorrecto a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "'Indice de array incorrecto' DETECCIÓN Durante la ejecución. CAUSA Comandos CNCRD o CNCWR. Algún índice de array programado en la variable está fuera de rango." .
+ns1:DesactivarPlanoInclinadoParaActivarAcoplo a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar plano inclinado para activar acoplo" ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar el plano inclinado para poder activar el acoplo." .
 
-ns1:MacroTab a ns1:Tabla ;
-    ns1:textoExtracto "Utilizar el comando #INIT MACROTAB para reiniciar la tabla de macros, el cuál borra todas las macros definidas tanto con #DEF como con #DEF FIX." .
-
-ns1:Variable a ns1:Parametro ;
-    ns1:textoExtracto "Consultar la variable y su rango de valores." .
+ns1:LecturaDeVariableEnBusDigitalNoPreparado a ns1:AccionProhibida ;
+    rdfs:label "Lectura de variable en bus digital no preparado" ;
+    ns1:textoExtracto "Con bus Sercos, el anillo no está en fase 4. Con bus Mechatrolink, el bus no ha alcanzado la fase 3." .
 

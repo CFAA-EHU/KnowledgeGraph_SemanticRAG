@@ -1,19 +1,20 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Componente_CabezalConMicroIO a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal con micro de I/O" ;
-    ns1:monitoreaParametro ns1:Parametro_DECINPUT,
-        ns1:Parametro_REFFEED1 ;
-    ns1:textoExtracto "En los cabezales con micro de I0, el cabezal pasa dos veces sobre el micro" .
+ns1:BusquedaDeReferenciaConMicro a ns1:Parametro ;
+    rdfs:label "Búsqueda de referencia con micro" ;
+    ns1:identificador "MPA.DECINPUT.xn" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Valores posibles: Sí / No. Valor por defecto: Sí." .
 
-ns1:Parametro_DECINPUT a ns1:Parametro ;
-    rdfs:label "Parámetro DECINPUT" ;
-    ns1:textoExtracto "el parámetro DECINPUT debe tener valor" ;
-    ns1:valor "•" .
+ns1:RealizarBusquedaDeReferenciaConMicroEnModuloRotativo a ns1:AccionProhibida ;
+    rdfs:label "Realizar búsqueda de referencia con micro en módulo rotativo" ;
+    ns1:textoExtracto "Si el eje rotativo dispone de I0 codificados, y es de tipo \"módulo\", el parámetro DECINPUT debe tener valor \"No\"." .
 
-ns1:Parametro_REFFEED1 a ns1:Parametro ;
-    rdfs:label "Parámetro REFFEED1" ;
-    ns1:textoExtracto "La primera vuelta se da a la velocidad definida en REFFEED1" ;
-    ns1:valor "velocidad_de_referencia_primera_vuelta" .
+ns1:RealizarBusquedaDeReferenciaSinCodificacionEnEjeRotativo a ns1:AccionProhibida ;
+    rdfs:label "Realizar búsqueda de referencia sin codificación en eje rotativo" ;
+    ns1:textoExtracto "Si el eje rotativo no dispone de I0 codificados, el parámetro DECINPUT debe tener valor \"Sí\"." .
+
+ns1:RealizarBusquedaDeReferenciaSinMicro a ns1:AccionProhibida ;
+    rdfs:label "Realizar búsqueda de referencia sin micro" ;
+    ns1:textoExtracto "Si el eje lineal dispone de I0 codificados, el parámetro DECINPUT debe tener valor \"Sí\" si el eje dispone de un micro de seguridad para que el eje no se salga de los límites de recorrido al hacer la búsqueda." .
 

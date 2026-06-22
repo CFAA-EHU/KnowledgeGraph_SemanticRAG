@@ -1,51 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1245 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1245: No hay eje frontal (FACEAXIS) definido en el plano activo" ;
-    ns1:identificador "1245" ;
-    ns1:solucionaFallo ns1:Parametro_FACEAXIS ;
-    ns1:textoExtracto "'G96: no hay eje frontal (FACEAXIS) definido en el plano activo' DETECCIÓN Durante la ejecución. CAUSA Ningún eje del plano está definido como eje frontal." .
+ns1:BorrarTablaDeMacros a ns1:TareaMantenimiento ;
+    rdfs:label "Borrar tabla de macros" ;
+    ns1:solucionaFallo ns1:NumeroMaximoDeMacrosSobrepasado ;
+    ns1:textoExtracto "SOLUCIÓN El máximo es 50 macros. Puede borrar la tabla de macros mediante la sentencia #INIT MACROTAB." .
 
-ns1:AvisoSeguridad_1246 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1246: No se admite roscado con avance en G95" ;
-    ns1:identificador "1246" ;
-    ns1:solucionaFallo ns1:Parametro_G94 ;
-    ns1:textoExtracto "'No se admite roscado con avance en G95' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar un roscado rígido (G63) teniendo activa la función G95 (avance por vuelta del cabezal)." .
+ns1:DefinirMacroAntesDeUtilizarla a ns1:TareaMantenimiento ;
+    rdfs:label "Definir macro antes de utilizarla" ;
+    ns1:solucionaFallo ns1:MacroInexistente_e518833e63 ;
+    ns1:textoExtracto "SOLUCIÓN Definir la macro antes de utilizarla." .
 
-ns1:AvisoSeguridad_1247 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1247: No se admite roscado con G96 activa" ;
-    ns1:identificador "1247" ;
-    ns1:solucionaFallo ns1:Parametro_G94 ;
-    ns1:textoExtracto "'No se admite roscado con G96 activa' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar un roscado rígido (G63) teniendo activa la función G96 (velocidad de corte constante)." .
+ns1:NombreDeMacroDemasiadoLargo a ns1:DiagnosticoFallo ;
+    rdfs:label "Nombre de macro demasiado largo" ;
+    ns1:textoExtracto "'Nombre de macro demasiado largo' DETECCIÓN Durante la ejecución. CAUSA El nombre de la macro supera el máximo número de caracteres permitidos. SOLUCIÓN El máximo número de caracteres permitidos es 30." .
 
-ns1:Parametro_G192 a ns1:Parametro ;
-    rdfs:label "Límite de velocidad (G192)" ;
-    ns1:identificador "G192" ;
-    ns1:textoExtracto "Aumentar el límite de velocidad (G192) o aceptar la limitación." .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:AnidamientoDeSentenciasCondicionalesSobrepasado_1b5b51be3e,
+        ns1:ElTrasladoProgramadoExcedeElRangoDeDatos ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_G63 a ns1:Parametro ;
-    rdfs:label "Roscado rígido (G63)" ;
-    ns1:identificador "G63" ;
-    ns1:textoExtracto "El CNC ha intentado ejecutar un roscado rígido (G63) teniendo activa la función G95 (avance por vuelta del cabezal)." .
+ns1:TextoDeSustitucionDeLaMacroDemasiadoLargo a ns1:DiagnosticoFallo ;
+    rdfs:label "Texto de sustitución de la macro demasiado largo" ;
+    ns1:textoExtracto "'Texto de sustitución de la macro demasiado largo' DETECCIÓN Durante la ejecución. CAUSA El número de caracteres del texto de sustitución de la macro supera el máximo permitido. SOLUCIÓN El máximo número de caracteres permitidos es 140." .
 
-ns1:Parametro_G95 a ns1:Parametro ;
-    rdfs:label "Avance por vuelta del cabezal (G95)" ;
-    ns1:identificador "G95" ;
-    ns1:textoExtracto "El CNC ha intentado ejecutar un roscado rígido (G63) teniendo activa la función G95 (avance por vuelta del cabezal)." .
+ns1:AnidamientoDeSentenciasCondicionalesSobrepasado_1b5b51be3e a ns1:DiagnosticoFallo ;
+    rdfs:label "Anidamiento de sentencias condicionales sobrepasado" ;
+    ns1:textoExtracto "1229 Anidamiento de sentencias condicionales sobrepasado. DETECCIÓN Durante la ejecución. CAUSA Demasiados anidamientos de sentencias $IF, $SWITCH, $FOR, $WHILE y $DO. SOLUCIÓN Revisar la programación. El máximo número de anidamientos es 20." .
 
-ns1:Parametro_G96 a ns1:Parametro ;
-    rdfs:label "Velocidad de corte constante (G96)" ;
-    ns1:identificador "G96" ;
-    ns1:textoExtracto "El CNC ha intentado ejecutar un roscado rígido (G63) teniendo activa la función G96 (velocidad de corte constante)." .
+ns1:ElTrasladoProgramadoExcedeElRangoDeDatos a ns1:DiagnosticoFallo ;
+    rdfs:label "El traslado programado excede el rango de datos" ;
+    ns1:textoExtracto "'El traslado programado excede el rango de datos' DETECCIÓN Durante la ejecución. CAUSA El traslado de origen definido supera al máximo permitido. SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_FACEAXIS a ns1:Parametro ;
-    rdfs:label "Eje frontal (FACEAXIS)" ;
-    ns1:identificador "FACEAXIS" ;
-    ns1:textoExtracto "Definir uno de los ejes del plano como eje frontal (parámetro FACEAXIS)." .
+ns1:MacroInexistente_e518833e63 a ns1:DiagnosticoFallo ;
+    rdfs:label "Macro inexistente" ;
+    ns1:textoExtracto "'Macro inexistente' DETECCIÓN Durante la ejecución. CAUSA La macro no está definida en el programa. SOLUCIÓN Definir la macro antes de utilizarla." .
 
-ns1:Parametro_G94 a ns1:Parametro ;
-    rdfs:label "Avance en función del tiempo (G94)" ;
-    ns1:identificador "G94" ;
-    ns1:textoExtracto "Activar el avance en función del tiempo (G94)." .
+ns1:NumeroMaximoDeMacrosSobrepasado a ns1:DiagnosticoFallo ;
+    rdfs:label "Número máximo de macros sobrepasado" ;
+    ns1:textoExtracto "'Número máximo de macros sobrepasado' DETECCIÓN Durante la ejecución. CAUSA Superado el máximo número de macros en el CNC. SOLUCIÓN El máximo es 50 macros. Puede borrar la tabla de macros mediante la sentencia #INIT MACROTAB." .
 

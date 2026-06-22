@@ -1,69 +1,44 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_COMPAXIS a ns1:Parametro ;
-    rdfs:label "COMPAXIS" ;
-    ns1:solucionaFallo ns1:Error_0054,
-        ns1:Error_0055 ;
-    ns1:textoExtracto "parámetro COMPAXIS"@es .
+ns1:ComprobarResolucionDelEje a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar resolución del eje" ;
+    ns1:solucionaFallo ns1:DiferenciaDeModulosDemasiadoPequena_a803e5d01d ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar la resolución del eje; si es correcta, aumentar MODUPLIM o disminuir MODLOWLIM." .
 
-ns1:Parametro_MODLOWLIM a ns1:Parametro ;
-    rdfs:label "MODLOWLIM" ;
-    ns1:textoExtracto "disminuir MODLOWLIM"@es .
+ns1:EjeDeGiro a ns1:Parametro ;
+    rdfs:label "Eje de giro" ;
+    ns1:textoExtracto "Los ejes rotativos deben tener los parámetros AXISMODE, SHORTESTWAY y CAXIS iguales." .
 
-ns1:Parametro_MODUPLIM a ns1:Parametro ;
-    rdfs:label "MODUPLIM" ;
-    ns1:textoExtracto "aumentar MODUPLIM"@es .
+ns1:EjeFrontal_5142311d42 a ns1:Parametro ;
+    rdfs:label "Eje frontal" ;
+    ns1:textoExtracto "Los ejes lineales deben tener los parámetros AXISMODE, FACEAXIS y LONGAXIS iguales." .
 
-ns1:Parametro_MOVAXIS a ns1:Parametro ;
-    rdfs:label "MOVAXIS" ;
-    ns1:solucionaFallo ns1:Error_0054,
-        ns1:Error_0055 ;
-    ns1:textoExtracto "parámetro MOVAXIS"@es .
+ns1:EjeLongitudinal_d2218da3ce a ns1:Parametro ;
+    rdfs:label "Eje longitudinal" ;
+    ns1:textoExtracto "Los ejes lineales deben tener los parámetros AXISMODE, FACEAXIS y LONGAXIS iguales." .
 
-ns1:Parametro_MPGAXIS a ns1:Parametro ;
-    rdfs:label "MPGAXIS" ;
-    ns1:solucionaFallo ns1:Error_0053 ;
-    ns1:textoExtracto "parámetro MPGAXIS repetido en varios volantes"@es .
+ns1:ModoDelEje_9a7ca26fb8 a ns1:Parametro ;
+    rdfs:label "Modo del eje" ;
+    ns1:textoExtracto "Los ejes lineales deben tener los parámetros AXISMODE, FACEAXIS y LONGAXIS iguales." .
 
-ns1:Parametro_POSITION a ns1:Parametro ;
-    rdfs:label "POSITION" ;
-    ns1:solucionaFallo ns1:Error_0056 ;
-    ns1:textoExtracto "parámetro POSITION dentro de las tablas de compensación"@es .
+ns1:ModuloInferiorLimite a ns1:Parametro ;
+    rdfs:label "Módulo inferior límite" ;
+    ns1:textoExtracto "La diferencia entre los parámetros máquina MODUPLIM y MODLOWLIM es menor que la resolución del eje. SOLUCIÓN Comprobar la resolución del eje; si es correcta, aumentar MODUPLIM o disminuir MODLOWLIM." .
 
-ns1:Tabla_CompensacionCruzada a ns1:Tabla ;
-    rdfs:label "Tabla de compensación cruzada"@es ;
-    ns1:documentadoEn ns1:Error_0054,
-        ns1:Error_0055 ;
-    ns1:textoExtracto "tablas de compensación cruzada"@es .
+ns1:ModuloSuperiorLimite a ns1:Parametro ;
+    rdfs:label "Módulo superior límite" ;
+    ns1:textoExtracto "La diferencia entre los parámetros máquina MODUPLIM y MODLOWLIM es menor que la resolución del eje. SOLUCIÓN Comprobar la resolución del eje; si es correcta, aumentar MODUPLIM o disminuir MODLOWLIM." .
 
-ns1:Tabla_CompensacionHusillo a ns1:Tabla ;
-    rdfs:label "Tabla de compensación de husillo"@es ;
-    ns1:documentadoEn ns1:Error_0057 ;
-    ns1:textoExtracto "tabla de compensación de husillo"@es .
+ns1:Parametro_c25cb75e44 a ns1:Parametro ;
+    rdfs:label "Parámetro MPGAXIS repetido en varios volantes" ;
+    ns1:textoExtracto "0053 'Parámetro MPGAXIS repetido en varios volantes' DETECCIÓN Durante la validación de los parámetros." .
 
-ns1:Error_0053 a ns1:DiagnosticoFallo ;
-    rdfs:label "Parámetro MPGAXIS repetido en varios volantes"@es ;
-    ns1:identificador "0053" ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina. CAUSA: En la tabla de parámetros de manual, hay dos o más volantes asignados al mismo eje. SOLUCIÓN: Un eje sólo puede tener asignando un volante."@es .
+ns1:RutaMasCorta_23d89831b3 a ns1:Parametro ;
+    rdfs:label "Ruta más corta" ;
+    ns1:textoExtracto "Los ejes rotativos deben tener los parámetros AXISMODE, SHORTESTWAY y CAXIS iguales." .
 
-ns1:Error_0056 a ns1:DiagnosticoFallo ;
-    rdfs:label "Posiciones de la tabla de compensación no ascendentes"@es ;
-    ns1:identificador "0056" ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina. CAUSA: En las tablas de compensación, los puntos a compensar no están ordenados correctamente o el valor a compensar en todos los puntos tienen valor cero. SOLUCIÓN: El parámetro POSITION dentro de las tablas de compensación tiene que tomar valores ascendentes. El valor a compensar no puede ser cero en todos los puntos."@es .
-
-ns1:Error_0057 a ns1:DiagnosticoFallo ;
-    rdfs:label "Tabla de compensación con pendiente de error superior a 1"@es ;
-    ns1:identificador "0057" ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina (tabla de compensación de husillo)."@es .
-
-ns1:Error_0054 a ns1:DiagnosticoFallo ;
-    rdfs:label "Los ejes MOVAXIS y COMPAXIS deben ser distintos"@es ;
-    ns1:identificador "0054" ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina. CAUSA: En una de las tablas de compensación cruzada coinciden el eje compensado y el eje cuyo movimiento altera al eje que se compensa. SOLUCIÓN: En cada tabla de compensación cruzada, ambos ejes deben ser distintos (parámetros MOVAXIS y COMPAXIS)."@es .
-
-ns1:Error_0055 a ns1:DiagnosticoFallo ;
-    rdfs:label "Un mismo eje es a la vez causa y efecto de la compensación cruzada"@es ;
-    ns1:identificador "0055" ;
-    ns1:textoExtracto "DETECCIÓN: Durante la validación de los parámetros máquina. CAUSA: En las tablas de compensación cruzada, siguiendo las diferentes asociaciones de ejes compensados (parámetro COMPAXIS) y ejes cuyos movimientos alteran a los ejes que se compensan (parámetro MOVAXIS), hay un eje cuyo movimiento depende de sí mismo. SOLUCIÓN: Revisar la relación entre las compensaciones cruzadas definidas. Comprobar los parámetros MOVAXIS y COMPAXIS de las compensaciones cruzadas definidas."@es .
+ns1:DiferenciaDeModulosDemasiadoPequena_a803e5d01d a ns1:DiagnosticoFallo ;
+    rdfs:label "'Diferencia de módulos demasiado pequeña'" ;
+    ns1:textoExtracto "0052 'Diferencia de módulos demasiado pequeña' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA La diferencia entre los parámetros máquina MODUPLIM y MODLOWLIM es menor que la resolución del eje." .
 

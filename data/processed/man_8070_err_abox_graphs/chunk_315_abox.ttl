@@ -1,105 +1,23 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1688 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1688: Sentencias #REPOS de distinto tipo"@es ;
-    ns1:identificador "1688" ;
-    ns1:requiereMantenimiento ns1:RevisionDeConsistenciaDeParametrosREPOS ;
-    ns1:solucionaFallo ns1:Sentencia_REPOS ;
-    ns1:textoExtracto "1688 'No se admiten sentencias #REPOS de distinto tipo' [...] CAUSA Hay programadas sentencias #REPOS de distinto tipo (INT/INI) en la misma subrutina de interrupción. SOLUCIÓN Todas las sentencias #REPOS deben ser del mismo tipo."@es .
+ns1:CNC8070_24875dbd01 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC ha intentado hacer una búsqueda de referencia con la función #RTCP ó #TLC activa." .
 
-ns1:Fallo_1689 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1689: Bloques tras #REPOS no admitidos"@es ;
-    ns1:identificador "1689" ;
-    ns1:requiereMantenimiento ns1:ReubicacionDeSentenciasREPOSAlFinalDeSubrutina ;
-    ns1:solucionaFallo ns1:Sentencia_REPOS ;
-    ns1:textoExtracto "1689 'No se admiten bloques tras #REPOS' [...] CAUSA En una subrutina de interrupción hay programado algún bloque entre las sentencias #REPOS y el bloque de fin de subrutina. SOLUCIÓN Las sentencia #REPOS deben ser los últimos bloques de la subrutina de interrupción, excepto el bloque de fin de subrutina."@es .
+ns1:NoSeAdmiteCAMSELECTConLaLevaEnEjecucionOEnProcesoDeCarga a ns1:AvisoSeguridad ;
+    rdfs:label "No se admite #CAM SELECT con la leva en ejecución o en proceso de carga" ;
+    ns1:textoExtracto "'No se admite #CAM SELECT con la leva en ejecución o en proceso de carga' DETECCIÓN Durante la ejecución. CAUSA El CNC ha solicitado la carga de una leva que está en ejecución o en un proceso previo de carga. SOLUCIÓN Esperar a que finalice la ejecución o la carga de la leva." .
 
-ns1:Fallo_1690 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1690: Eje múltiple doblemente programado"@es ;
-    ns1:identificador "1690" ;
-    ns1:textoExtracto "1690 'Eje múltiple doblemente programado' [...] CAUSA No se permite programar en el mismo bloque más de un eje del mismo grupo multieje. SOLUCIÓN Revisar la programación. Programar únicamente el eje activo del grupo múltiple."@es .
+ns1:RevisarProgramacion_c2d7f2f326 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Consultar en los manuales las variables accesibles según el tipo de eje." .
 
-ns1:Fallo_1691 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1691: Subrutina de G anidada"@es ;
-    ns1:identificador "1691" ;
-    ns1:requiereMantenimiento ns1:RevisionDeAnidamientoDeFuncionesG ;
-    ns1:textoExtracto "1691 'Subrutina de G anidada' [...] CAUSA En una subrutina asociada a una función G no se puede programar la función G que llama a esa misma subrutina. SOLUCIÓN Revisar la programación. No programar la función G dentro de la subrutina. En el caso de G74, sí se permite programar la función dentro de la subrutina siempre que vaya seguida de los ejes a referenciar."@es .
+ns1:SeHaDesactivadoRTCPTLC a ns1:AvisoSeguridad ;
+    rdfs:label "Se ha desactivado #RTCP/TLC" ;
+    ns1:textoExtracto "'Se ha desactivado #RTCP/TLC' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer una búsqueda de referencia con la función #RTCP ó #TLC activa. SOLUCIÓN Para ejecutar un búsqueda de referencia hay que desactivar las funciones #RTCP/TLC." .
 
-ns1:Fallo_1692 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1692: Programación incorrecta de #VOLCOMP"@es ;
-    ns1:identificador "1692" ;
-    ns1:requiereMantenimiento ns1:RevisionDeSintaxisDeVOLCOMP ;
-    ns1:solucionaFallo ns1:Sentencia_VOLCOMP ;
-    ns1:textoExtracto "1692 'Programar #VOLCOMP ON/OFF [n]' [...] CAUSA La sentencia y/o alguno de sus parámetros están mal programados. SOLUCIÓN Revisar la programación."@es .
-
-ns1:Fallo_1693 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1693: Cinemática incompatible con #RTCP"@es ;
-    ns1:identificador "1693" ;
-    ns1:requiereMantenimiento ns1:SustitucionDeRTCPPorFACEOCYLSegunCinematica ;
-    ns1:solucionaFallo ns1:Sentencia_RTCP ;
-    ns1:textoExtracto "1693 'No se permite programar #RTCP con la actual cinemática. Programar #FACE o #CYL' [...] DETECCIÓN Durante la ejecución."@es .
-
-ns1:Funcion_G74 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G74"@es ;
-    ns1:identificador "G74" ;
-    ns1:textoExtracto "En el caso de G74, sí se permite programar la función dentro de la subrutina siempre que vaya seguida de los ejes a referenciar."@es .
-
-ns1:Sentencia_CYL a ns1:Componente ;
-    rdfs:label "Sentencia #CYL"@es ;
-    ns1:textoExtracto "Programar #CYL"@es .
-
-ns1:Sentencia_FACE a ns1:Componente ;
-    rdfs:label "Sentencia #FACE"@es ;
-    ns1:textoExtracto "Programar #FACE"@es .
-
-ns1:SubrutinaInterrupcion a ns1:Componente ;
-    rdfs:label "Subrutina de interrupción"@es ;
-    ns1:textoExtracto "subrutina de interrupción"@es ;
-    ns1:tieneComponente ns1:Sentencia_REPOS .
-
-ns1:Parametro_REPOS_INI a ns1:Parametro ;
-    rdfs:label "Parámetro INI de #REPOS"@es ;
-    ns1:textoExtracto "La sentencia #REPOS puede incluir un parámetro opcional INT o INI, seguido de una secuencia de ejes y/o cabezales del canal sin un orden determinado."@es ;
-    ns1:valor "INI" .
-
-ns1:Parametro_REPOS_INT a ns1:Parametro ;
-    rdfs:label "Parámetro INT de #REPOS"@es ;
-    ns1:textoExtracto "La sentencia #REPOS puede incluir un parámetro opcional INT o INI, seguido de una secuencia de ejes y/o cabezales del canal sin un orden determinado."@es ;
-    ns1:valor "INT" .
-
-ns1:ReubicacionDeSentenciasREPOSAlFinalDeSubrutina a ns1:TareaMantenimiento ;
-    rdfs:label "Reubicación de sentencias #REPOS al final de subrutina"@es ;
-    ns1:textoExtracto "Las sentencia #REPOS deben ser los últimos bloques de la subrutina de interrupción, excepto el bloque de fin de subrutina."@es .
-
-ns1:RevisionDeAnidamientoDeFuncionesG a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de anidamiento de funciones G"@es ;
-    ns1:textoExtracto "No programar la función G dentro de la subrutina. En el caso de G74, sí se permite programar la función dentro de la subrutina siempre que vaya seguida de los ejes a referenciar."@es .
-
-ns1:RevisionDeConsistenciaDeParametrosREPOS a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de consistencia de parámetros #REPOS"@es ;
-    ns1:textoExtracto "Todas las sentencias #REPOS deben ser del mismo tipo."@es .
-
-ns1:RevisionDeSintaxisDeVOLCOMP a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de sintaxis de #VOLCOMP"@es ;
-    ns1:textoExtracto "Revisar la programación."@es .
-
-ns1:Sentencia_RTCP a ns1:Componente ;
-    rdfs:label "Sentencia #RTCP"@es ;
-    ns1:textoExtracto "No se permite programar #RTCP con la actual cinemática. Programar #FACE o #CYL"@es .
-
-ns1:Sentencia_VOLCOMP a ns1:Componente ;
-    rdfs:label "Sentencia #VOLCOMP"@es ;
-    ns1:textoExtracto "Programar #VOLCOMP ON/OFF [n]"@es .
-
-ns1:SustitucionDeRTCPPorFACEOCYLSegunCinematica a ns1:TareaMantenimiento ;
-    rdfs:label "Sustitución de #RTCP por #FACE o #CYL según cinemática"@es ;
-    ns1:textoExtracto "Programar #FACE o #CYL"@es .
-
-ns1:Sentencia_REPOS a ns1:Componente ;
-    rdfs:label "Sentencia #REPOS"@es ;
-    ns1:monitoreaParametro ns1:Parametro_REPOS_INI,
-        ns1:Parametro_REPOS_INT ;
-    ns1:textoExtracto "La sentencia #REPOS puede incluir un parámetro opcional INT o INI, seguido de una secuencia de ejes y/o cabezales del canal sin un orden determinado."@es .
+ns1:VariableExistenteSoloParaCaptacionExternaAnalogica a ns1:AvisoSeguridad ;
+    rdfs:label "Variable existente sólo para captación externa analógica" ;
+    ns1:textoExtracto "'Variable existente sólo para captación externa analógica' DETECCIÓN Durante la ejecución. CAUSA La variable programada sólo existe para ejes con captación externa analógica y el eje indicado no cumple esa condición. SOLUCIÓN Revisar la programación. Consultar en los manuales las variables accesibles según el tipo de eje." .
 

@@ -1,53 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_PP5 a ns1:Parametro ;
-    rdfs:label "PP5" ;
-    ns1:identificador "PP5" ;
-    ns1:textoExtracto "parametrizar el parámetro PP5=-0,0001" ;
-    ns1:valor "-0,0001" .
+ns1:CNC8070_81ba0ecd44 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:ParametroCAXSET,
+        ns1:Parametro_e0c748760d ;
+    ns1:textoExtracto "El CNC activa el set definido en el parámetro CAXSET." .
 
-ns1:Sistema_EntradasCaptacion a ns1:Sistema ;
-    rdfs:label "Sistema de entradas de captación" ;
-    ns1:detalladoEnEsquema ns1:Tabla_ParametrosCaptacionEje ;
-    ns1:textoExtracto "La captación interna (motor) de ambos ejes está ubicada en el regulador. [...] entradas de captación locales de la unidad central." ;
-    ns1:tieneComponente ns1:ComponenteElectrico_EntradaCaptacionExterna,
-        ns1:ComponenteElectrico_EntradaCaptacionInterna,
-        ns1:ComponenteElectrico_EntradaCaptacionLocal,
-        ns1:ComponenteElectrico_ModuloRemoto .
+ns1:CambioDeSetYGama a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de Set y Gama" ;
+    ns1:textoExtracto "Un cambio de set activa todos los parámetros del mismo, incluidos los de la gama, mientras que un cambio de gama sólo activa los parámetros específicos de la reducción." .
 
-ns1:ComponenteElectrico_EntradaCaptacionExterna a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de captación externa (directa)" ;
-    ns1:monitoreaParametro ns1:Parametro_COUNTERID ;
-    ns1:textoExtracto "entrada para la captación externa (directa) del eje; en los módulos remotos (4 entradas por módulo, TTL diferencial y senoidal 1 Vpp), en la captación libre de un regulador Sercos o en las entradas de captación locales de la unidad central." .
+ns1:CambioDeSetYGamaEnMultieje a ns1:AccionProhibida ;
+    rdfs:label "Cambio de Set y Gama en Multieje" ;
+    ns1:textoExtracto "Si el eje o cabezal no forma parte de un grupo multieje, las funciones G112 y M41 a M44 actúan igual en el CNC pero en el regulador activan la gama programada, no la definida en el parámetro DRIVESET." .
 
-ns1:ComponenteElectrico_EntradaCaptacionInterna a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de captación interna (motor)" ;
-    ns1:monitoreaParametro ns1:Parametro_COUNTERTYPE ;
-    ns1:textoExtracto "La captación interna (motor) de ambos ejes está ubicada en el regulador." .
+ns1:ReguladorHidraulico a ns1:Sistema ;
+    rdfs:label "Regulador Hidraulico" ;
+    ns1:controla ns1:ParametroCAXSET,
+        ns1:Parametro_e0c748760d ;
+    ns1:textoExtracto "El regulador activa la gama definida en el parámetro CAXSET." .
 
-ns1:ComponenteElectrico_EntradaCaptacionLocal a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de captación local (unidad central)" ;
-    ns1:textoExtracto "entradas de captación locales de la unidad central" .
+ns1:ParametroCAXSET a ns1:Parametro ;
+    rdfs:label "Parámetro CAXSET" ;
+    ns1:textoExtracto "El CNC activa el set definido en el parámetro CAXSET." .
 
-ns1:ComponenteElectrico_ModuloRemoto a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto de entradas de captación" ;
-    ns1:identificador "4_entradas_por_módulo" ;
-    ns1:textoExtracto "módulos remotos (4 entradas por módulo, TTL diferencial y senoidal 1 Vpp)" .
-
-ns1:Parametro_COUNTERID a ns1:Parametro ;
-    rdfs:label "COUNTERID" ;
-    ns1:identificador "COUNTERID" ;
-    ns1:textoExtracto "Número de la entrada de captación del eje." .
-
-ns1:Parametro_COUNTERTYPE a ns1:Parametro ;
-    rdfs:label "COUNTERTYPE" ;
-    ns1:identificador "COUNTERTYPE" ;
-    ns1:textoExtracto "Tipo de entrada de captación del eje; regulador, local o remota." ;
-    ns1:valor "Regulador" .
-
-ns1:Tabla_ParametrosCaptacionEje a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros de captación del eje" ;
-    ns1:documentadoEn ns1:Pagina_586 ;
-    ns1:textoExtracto "| Parámetro. | Significado. | --- | --- | COUNTERTYPE | Tipo de entrada de captación del eje; regulador, local o remota. | COUNTERID | Número de la entrada de captación del eje." .
+ns1:Parametro_e0c748760d a ns1:Parametro ;
+    rdfs:label "Parámetro que define la gama en el set programado" ;
+    ns1:textoExtracto "El regulador activa la gama definida en el parámetro DRIVESET del set programado." .
 

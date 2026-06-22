@@ -1,39 +1,13 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ControlGap a ns1:Sistema ;
-    rdfs:label "Sistema de control del gap" ;
-    ns1:controla ns1:Parametro_GAPCOLLISIONMODE,
-        ns1:Parametro_GAPTOL,
-        ns1:Parametro_GAPTOLCANCEL,
-        ns1:Parametro_GAPTONEG ;
-    ns1:textoExtracto "El comportamiento del CNC depende del parámetro GAPTOLCANCEL. Si el eje sobrepasa la tolerancia definida en el parámetro GAPTOL, el PLC desactiva la marca INTOL." ;
-    ns1:tieneComponente ns1:Sensor_Gap .
+ns1:ControlDelGapInvertido a ns1:Parametro ;
+    rdfs:label "Control del gap invertido" ;
+    ns1:identificador "GAPSENSORDELAY_NO" ;
+    ns1:textoExtracto "El sentido positivo del eje Z es hacia abajo y el negativo hacia arriba (eje Z invertido). El eje se mueve en sentido positivo (hacia abajo) para alcanzar el gap." .
 
-ns1:Parametro_GAPCOLLISIONMODE a ns1:Parametro ;
-    rdfs:label "GAPCOLLISIONMODE" ;
-    ns1:identificador "MPG.GAPCOLLISIONMODE" ;
-    ns1:textoExtracto "GAPCOLLISIONMODE Comportamiento del CNC ante una colisión del sensor. Valores posibles: No mostrar error / Mostrar error. Valor por defecto: No dar error." ;
-    ns1:valor "No mostrar error" .
-
-ns1:Parametro_GAPTOLCANCEL a ns1:Parametro ;
-    rdfs:label "GAPTOLCANCEL" ;
-    ns1:textoExtracto "El comportamiento del CNC depende del parámetro GAPTOLCANCEL." .
-
-ns1:Parametro_GAPTONEG a ns1:Parametro ;
-    rdfs:label "GAPTONEG" ;
-    ns1:identificador "MPG.GAPTONEG" ;
-    ns1:textoExtracto "Este parámetro indica si el movimiento hacia abajo del eje Z para alcanzar el gap es en sentido negativo (condiciones normales) o positivo (eje Z invertido)." ;
-    ns1:valor "Sí" .
-
-ns1:Sensor_Gap a ns1:Sensor ;
-    rdfs:label "Sensor de control del gap" ;
-    ns1:monitoreaParametro ns1:Parametro_GAPTOL ;
-    ns1:textoExtracto "El sensor para el control del gap puede disponer de una señal de colisión que se conecta al CNC, y que el PLC la debe gestionar a través de la marca GAPCOLLISION." .
-
-ns1:Parametro_GAPTOL a ns1:Parametro ;
-    rdfs:label "GAPTOL" ;
-    ns1:identificador "MPG.GAPTOL" ;
-    ns1:textoExtracto "GAPTOL Margen de tolerancia del error. Valores posibles: De 0 a 99999.9999 mm / De 0 a 3937.00787 inch. Valor por defecto: 0.1000 mm / 0.00394 inch. Este parámetro define una ventana de posicionamiento, sobre el gap programado, para dar por finalizado el bloque de aproximación." ;
-    ns1:valor "0.1000 mm / 0.00394 inch" .
+ns1:ControlDelGap_9a1cae3533 a ns1:Parametro ;
+    rdfs:label "Control del gap" ;
+    ns1:identificador "GAPSENSORDELAY" ;
+    ns1:textoExtracto "El sentido positivo del eje Z es hacia arriba y el negativo hacia abajo (condiciones normales). El eje se mueve en sentido negativo (hacia abajo) para alcanzar el gap." .
 

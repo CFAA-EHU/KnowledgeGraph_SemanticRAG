@@ -1,51 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AnilloSercos a ns1:ComponenteElectrico ;
-    rdfs:label "Anillo Sercos" ;
-    ns1:controla ns1:SistemaControlEjes ;
-    ns1:textoExtracto "cuando se inicializa el anillo Sercos." .
+ns1:CNC8070_8be3a77c27 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:CabezalSercosVelocidad ;
+    ns1:textoExtracto "No es necesario realizar una nueva búsqueda de referencia cuando el cabezal pase a estar controlado por el CNC." .
 
-ns1:MotorEjeC a ns1:ComponenteElectrico ;
-    rdfs:label "Motor del eje C (tándem)" ;
-    ns1:textoExtracto "en un tándem de eje C donde es necesario engranar cada motor, para lo que hace falta generar un movimiento de oscilación en cada motor pero sin afectar al otro." ;
-    ns1:tieneComponente ns1:SistemaControlEjes .
+ns1:CabezalSercosPosicion a ns1:ComponenteElectrico ;
+    rdfs:label "Cabezal Sercos en posición" ;
+    ns1:textoExtracto "La consigna en SANALOG vendrá expresada en diezmilésima de grado." .
 
-ns1:Parametro_DWELL a ns1:Parametro ;
-    rdfs:label "DWELL" ;
-    ns1:identificador "DWELL" ;
-    ns1:textoExtracto "los movimientos en los que está implicado el eje muerto esperan el tiempo definido en el parámetro DWELL." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:CabezalMechatrolink ;
+    ns1:mitigaRiesgo ns1:AvisoSeguridad_71d7356d95 ;
+    ns1:textoExtracto "La consigna indicada en SANALOG no se aplica con rampa, por lo que será responsabilidad del programa de PLC aplicar de forma gradual la consigna cuando sea necesario." .
 
-ns1:ReguladorSistema a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador del sistema" ;
-    ns1:controla ns1:SistemaControlEjes ;
-    ns1:textoExtracto "cuando se resetea el regulador y cuando se inicializa el anillo Sercos." .
+ns1:AvisoSeguridad_71d7356d95 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de control sincronizado" ;
+    ns1:textoExtracto "Si se intenta controlar un cabezal sincronizado (tanto maestro como esclavo) mediante PLCCNTL, se mostrará un aviso indicando que no es posible." .
 
-ns1:Marca_ACTFBACK_axis a ns1:Parametro ;
-    rdfs:label "ACTFBACK(axis)" ;
-    ns1:identificador "ACTFBACK(axis)" ;
-    ns1:textoExtracto "La marca ACTFBACK(axis) indica cuál es la captación activa. Ver en \"ACTFBACK(axis)\" la página 423." .
+ns1:CabezalMechatrolink a ns1:ComponenteElectrico ;
+    rdfs:label "Cabezal Mechatrolink" ;
+    ns1:textoExtracto "La consigna en SANALOG vendrá expresada en centésimas de hercio." .
 
-ns1:Marca_DEAD_axis a ns1:Parametro ;
-    rdfs:label "DEAD(axis)" ;
-    ns1:identificador "DEAD(axis)" ;
-    ns1:textoExtracto "DEAD(axis) [...] indica como debe gestionar el CNC los empalmes entre bloques cuando está implicado el eje muerto." .
-
-ns1:Marca_SWITCH_axis a ns1:Parametro ;
-    rdfs:label "SWITCH(axis)" ;
-    ns1:identificador "SWITCH(axis)" ;
-    ns1:textoExtracto "SWITCH(axis) [...] permite conmutar entre los diferentes ejes o cabezales del grupo." .
-
-ns1:Marca_TANDEMOFF_axis a ns1:Parametro ;
-    rdfs:label "TANDEMOFF(axis)" ;
-    ns1:identificador "TANDEMOFF(axis)" ;
-    ns1:textoExtracto "TANDEMOFF(axis) [...] permite desacoplar temporalmente en el lazo los ejes o cabezales implicados en el tándem." .
-
-ns1:SistemaControlEjes a ns1:Sistema ;
-    rdfs:label "Sistema de control de ejes y cabezales" ;
-    ns1:monitoreaParametro ns1:Marca_ACTFBACK_axis,
-        ns1:Marca_DEAD_axis,
-        ns1:Marca_SWITCH_axis,
-        ns1:Marca_TANDEMOFF_axis ;
-    ns1:textoExtracto "motor) en el encendido, cuando se resetea el regulador y cuando se inicializa el anillo Sercos." .
+ns1:CabezalSercosVelocidad a ns1:ComponenteElectrico ;
+    rdfs:label "Cabezal Sercos en velocidad" ;
+    ns1:textoExtracto "La consigna en SANALOG vendrá expresada en diezmilésima de rpm." .
 

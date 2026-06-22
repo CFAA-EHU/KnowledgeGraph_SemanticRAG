@@ -1,40 +1,8 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ProteccionTendencia a ns1:Sistema ;
-    rdfs:label "Sistema de protección de tendencia y antiembalamiento" ;
-    ns1:activaAlarma ns1:Alarma_ProteccionAntiembalamiento ;
-    ns1:compuestoPor ns1:Parametro_ESTDELAY,
-        ns1:Parametro_TENDENCY,
-        ns1:Parametro_TENDTIME ;
-    ns1:textoExtracto "Este parámetro habilita dos testeos: • Vigilancia de la tendencia del eje. [...] • Protección frente al embalamiento." .
-
-ns1:Alarma_ProteccionAntiembalamiento a ns1:Alarma ;
-    rdfs:label "Protección antiembalamiento" ;
-    ns1:activaAlarma ns1:Parametro_TENDENCY ;
-    ns1:mitigaRiesgo ns1:DiagnosticoFallo_EmbalamientoEje ;
-    ns1:textoExtracto "Protección frente al embalamiento. Este test vigila el movimiento real del eje desde el arranque, para detectar su embalamiento, teniendo en cuenta el tiempo definido en el parámetro TENDTIME. [...] Si se desactiva esta alarma, el CNC muestra en el encendido un mensaje indicando que dicha seguridad está deshabilitada." .
-
-ns1:DiagnosticoFallo_EmbalamientoEje a ns1:DiagnosticoFallo ;
-    rdfs:label "Embalamiento de eje" ;
-    ns1:textoExtracto "Protección frente al embalamiento. Este test vigila el movimiento real del eje desde el arranque, para detectar su embalamiento." .
-
-ns1:Parametro_ESTDELAY a ns1:Parametro ;
-    rdfs:label "ESTDELAY" ;
-    ns1:identificador "ESTDELAY" ;
-    ns1:textoExtracto "Este test vigila que el sentido real de movimiento coincida con el teórico, a partir del tiempo parametrizado en el parámetro ESTDELAY. [...] Si el eje se mueve en un sentido durante más tiempo que el indicado en el parámetro ESTDELAY." .
-
-ns1:Parametro_TENDENCY a ns1:Parametro ;
-    rdfs:label "TENDENCY" ;
-    ns1:identificador "(V.)[ch].MPA.TENDENCY.xn" ;
-    ns1:monitoreaParametro ns1:Parametro_ESTDELAY,
-        ns1:Parametro_TENDTIME ;
-    ns1:textoExtracto "TENDENCY Activación del test de tendencia. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico y Sercos. Valores posibles: Sí / No. Valor por defecto: No. Variable asociada: (V.)[ch].MPA.TENDENCY.xn" ;
-    ns1:valor "No" .
-
-ns1:Parametro_TENDTIME a ns1:Parametro ;
-    rdfs:label "TENDTIME" ;
-    ns1:identificador "(V.)[ch].MPA.TENDTIME.xn" ;
-    ns1:textoExtracto "TENDTIME Tiempo para detectar el embalamiento del eje. [...] Cuando está activo el test antiembalamiento, este parámetro define el tiempo que debe esperar el CNC antes de dar error." ;
-    ns1:valor "0" .
+ns1:DistanciaDeSeguridadDeLosLimitesDeLasZonasDeTrabajo_633cef5336 a ns1:Parametro ;
+    rdfs:label "Distancia de seguridad de los límites de las zonas de trabajo" ;
+    ns1:identificador "ZONELIMITTOL.xn" ;
+    ns1:textoExtracto "La distancia de seguridad se puede modificar con la siguiente variable, que en el arranque tomará el valor de este parámetro. ( V.)[ch].A.ZONELIMITTOL.xn Distancia de seguridad de los límites de las zonas de trabajo." .
 

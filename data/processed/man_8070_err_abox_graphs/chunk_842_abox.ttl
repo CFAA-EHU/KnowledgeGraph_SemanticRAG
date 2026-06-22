@@ -1,22 +1,83 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:BloqueProgramacion a ns1:Componente ;
-    ns1:textoExtracto "programar varias cotas en el bloque" .
+ns1:ProgramarMasDeUnEjeConG174 a ns1:AccionProhibida ;
+    rdfs:label "programar más de un eje con G174" ;
+    ns1:textoExtracto "8521 G174 sólo permite programar un eje." .
 
-ns1:G820 a ns1:Maquina ;
-    ns1:textoExtracto "Sólo G820 permite programar varias cotas en el bloque." .
+ns1:RevisarSintaxisCAMDESELECT a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis #CAM DESELECT" ;
+    ns1:solucionaFallo ns1:CAMDESELECTLeva ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:ManualProgramacion a ns1:Manual ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:RevisarSintaxisCAMSELECT a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis #CAM SELECT" ;
+    ns1:solucionaFallo ns1:CAMSELECTLevaPathIchero ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:SentenciaGProgramada a ns1:Parametro ;
-    ns1:textoExtracto "La sentencia o función G programada en el bloque no permite la programación de cotas separadas por comas." .
+ns1:RevisarSintaxisG174 a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis G174" ;
+    ns1:solucionaFallo ns1:G174SoloPermiteProgramarUnEje ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:SentenciaISOOFF a ns1:Parametro ;
-    ns1:identificador "#ISO OFF" ;
-    ns1:textoExtracto "DETECCIÓN Durante" .
+ns1:RevisarSintaxisPOCKET2DBEGINEND a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis #POCKET2D BEGIN/END" ;
+    ns1:solucionaFallo ns1:POCKET2DBEGINEND ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:SentenciaISOON a ns1:Parametro ;
-    ns1:identificador "#ISO <ON><[NAME=\"fileName\"]>" ;
-    ns1:textoExtracto "La sintaxis de la sentencia no es correcta." .
+ns1:RevisarSintaxisPOCKET3DBEGINEND a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis #POCKET3D BEGIN/END" ;
+    ns1:solucionaFallo ns1:POCKET3DBEGINEND ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:RevisarSintaxisREPOS a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis #REPOS" ;
+    ns1:solucionaFallo ns1:REPOSINTININombreEjeNombreCabezal ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:RevisarSintaxisROTATEMZ14 a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis #ROTATEMZ1-4" ;
+    ns1:solucionaFallo ns1:ROTATEMZ14PiII ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:RevisarSintaxis_62084c771e a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis" ;
+    ns1:solucionaFallo ns1:DELETENombreVariableUsuarioNombreVariableUsuario_856ba34703 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:VariableBloqueada a ns1:AccionProhibida ;
+    rdfs:label "variable bloqueada" ;
+    ns1:textoExtracto "el CNC ha bloqueado la variable, esperar a que finalice sus operaciones." .
+
+ns1:CAMDESELECTLeva a ns1:AccionProhibida ;
+    rdfs:label "#CAM DESELECT[leva]" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución en MDI. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:CAMSELECTLevaPathIchero a ns1:AccionProhibida ;
+    rdfs:label "#CAM SELECT[<leva,>\"pathichero\"]" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución en MDI. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:DELETENombreVariableUsuarioNombreVariableUsuario_856ba34703 a ns1:DiagnosticoFallo ;
+    rdfs:label "#DELETE nombreVariableUsuario <, nombreVariableUsuario, ...>" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:G174SoloPermiteProgramarUnEje a ns1:DiagnosticoFallo ;
+    rdfs:label "G174 sólo permite programar un eje" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:POCKET2DBEGINEND a ns1:AccionProhibida ;
+    rdfs:label "#POCKET2D BEGIN/END" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:POCKET3DBEGINEND a ns1:AccionProhibida ;
+    rdfs:label "#POCKET3D BEGIN/END" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:REPOSINTININombreEjeNombreCabezal a ns1:AccionProhibida ;
+    rdfs:label "#REPOS <INT/INI> nombreEje/nombreCabezal" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición. CAUSA La sintaxis de la sentencia no es correcta." .
+
+ns1:ROTATEMZ14PiII a ns1:AccionProhibida ;
+    rdfs:label "#ROTATEMZ1-4 Pi/+i/-i" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 

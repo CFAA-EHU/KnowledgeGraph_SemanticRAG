@@ -1,32 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AccionProhibida_DesactivarCS_ACS a ns1:AccionProhibida ;
-    rdfs:label "Desactivación de funciones #CS/ACS durante búsqueda de referencia" ;
-    ns1:textoExtracto "Para ejecutar un búsqueda de referencia hay que desactivar las funciones #CS/ACS." .
+ns1:ComprobacionDeCinematica a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobación de cinemática" ;
+    ns1:solucionaFallo ns1:FalloCinematicaDesactivada,
+        ns1:FalloCinematicaNoActivada ;
+    ns1:textoExtracto "'Comprobar que el tipo de cinemática es correcto y que los ejes que intervienen en ella están bien definidos y forman parte del canal.'" .
 
-ns1:Alarma_1445 a ns1:Alarma ;
-    rdfs:label "Alarma 1445: Valor de parámetro no válido" ;
-    ns1:identificador "1445" ;
-    ns1:textoExtracto "1445 'Valor de parámetro no válido' DETECCIÓN Durante la ejecución. CAUSA En una sentencia o en un ciclo fijo, un parámetro tiene un valor no válido. SOLUCIÓN Revisar la programación." .
+ns1:RevisionDeProgramacion_fecd4a41c1 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de programación" ;
+    ns1:solucionaFallo ns1:AvisoSeguridad_011d381c67,
+        ns1:FalloCinematicaNoActivada ;
+    ns1:textoExtracto "'Revisar la programación. Consultar las herramientas y correctores existentes.'" .
 
-ns1:Alarma_1446 a ns1:Alarma ;
-    rdfs:label "Alarma 1446: Bloque de inicio no permitido en subrutina local" ;
-    ns1:identificador "1446" ;
-    ns1:textoExtracto "1446 'Bloque de inicio no permitido en subrutina local' DETECCIÓN Durante la ejecución. CAUSA El bloque de inicio no puede ser un bloque de una subrutina local. SOLUCIÓN Seleccionar otro bloque inicial." .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:textoExtracto "'Durante el arranque del CNC o la validación de los parámetros máquina.'" .
 
-ns1:Alarma_1447 a ns1:Alarma ;
-    rdfs:label "Alarma 1447: Opción de software no permitida" ;
-    ns1:identificador "1447" ;
-    ns1:textoExtracto "1447 'Opción de software no permitida' DETECCIÓN Durante la ejecución." .
+ns1:AvisoSeguridad_011d381c67 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de herramienta inexistente" ;
+    ns1:textoExtracto "'La herramienta y/o corrector indicado en la variable no existe. Revisar la programación.'" .
 
-ns1:Parametro_AXISTYPE a ns1:Parametro ;
-    rdfs:label "Parámetro AXISTYPE" ;
-    ns1:monitoreaParametro ns1:Alarma_1444 ;
-    ns1:textoExtracto "Los tres primeros ejes de la transformación o cinemática deben ser lineales (parámetro AXISTYPE)." .
+ns1:FalloCinematicaDesactivada a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha desactivado la cinemática" ;
+    ns1:identificador "1442" ;
+    ns1:textoExtracto "'Se ha desactivado la cinemática'" .
 
-ns1:Alarma_1444 a ns1:Alarma ;
-    rdfs:label "Alarma 1444: Ejes no lineales en transformación" ;
-    ns1:identificador "1444" ;
-    ns1:textoExtracto "1444 'Los tres ejes principales de la transformación deben ser lineales' DETECCIÓN Durante la ejecución. CAUSA Alguno de los tres primeros ejes participantes en la transformación o cinemática programada no es lineal. SOLUCIÓN Los tres primeros ejes de la transformación o cinemática deben ser lineales (parámetro AXISTYPE)." .
+ns1:FalloCinematicaNoActivada a ns1:DiagnosticoFallo ;
+    rdfs:label "No se ha activado la cinemática" ;
+    ns1:identificador "1441" ;
+    ns1:textoExtracto "'No se ha activado la cinemática'" .
 

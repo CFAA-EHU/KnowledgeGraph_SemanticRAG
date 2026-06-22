@@ -1,33 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_8871 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error interno: Línea demasiado larga"@es ;
-    ns1:identificador "8871" ;
-    ns1:textoExtracto "DETECCIÓN Durante la compilación del programa PLC. CAUSA La línea del programa es demasiado larga. SOLUCIÓN Dividir la línea en varias instrucciones."@es .
+ns1:CorreccionDeErrores a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de errores" ;
+    ns1:solucionaFallo ns1:DemasiadosErrores_4ac9b7248d ;
+    ns1:textoExtracto "SOLUCIÓN Corregir los errores y volver a analizar el programa." .
 
-ns1:Error_8872 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta módulo PRG"@es ;
-    ns1:identificador "8872" ;
-    ns1:textoExtracto "DETECCIÓN Durante la compilación del programa PLC. CAUSA No se ha programado el módulo PRG. SOLUCIÓN El módulo PRG debe existir en el programa."@es .
+ns1:ProgramacionDeENDAlFinalDelModulo a ns1:TareaMantenimiento ;
+    rdfs:label "Programación de END al final del módulo" ;
+    ns1:solucionaFallo ns1:SeEsperabaENDONuevaProposicion ;
+    ns1:textoExtracto "SOLUCIÓN Programar END al final de cada módulo o subrutina. Programar END sola en el bloque." .
 
-ns1:Error_8873 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo del lexer al reconocer módulos periódicos"@es ;
-    ns1:identificador "8873" ;
-    ns1:solucionaFallo ns1:ManualInstalacionPLC ;
-    ns1:textoExtracto "DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA Error al convertir una cadena de caracteres a un módulo periódico. Algún carácter programado no es correcto. SOLUCIÓN Revisar en el manual de instalación la sintaxis."@es .
+ns1:RevisionDeLaSintaxisDelPrograma a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de la sintaxis del programa" ;
+    ns1:solucionaFallo ns1:ErrorFatal ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la sintaxis del programa." .
 
-ns1:Error_8874 a ns1:DiagnosticoFallo ;
-    rdfs:label "Subrutina indefinida"@es ;
-    ns1:identificador "8874" ;
-    ns1:textoExtracto "Subrutina indefinida."@es .
+ns1:UnaMarcaNoEsValidaEnEsteContexto a ns1:DiagnosticoFallo ;
+    rdfs:label "Una marca no es válida en este contexto" ;
+    ns1:textoExtracto "8851 Una marca no es válida en este contexto." .
 
-ns1:Error_EtiquetaSinSalto a ns1:DiagnosticoFallo ;
-    rdfs:label "Etiqueta definida sin instrucción de salto"@es ;
-    ns1:solucionaFallo ns1:ManualInstalacionPLC ;
-    ns1:textoExtracto "CAUSA Hay definida una etiqueta en el programa pero no hay ninguna instrucción de salto a ella (=JMP etiqueta). SOLUCIÓN Revisar las instrucciones de salto o borrar la etiqueta si no se usa."@es .
+ns1:DemasiadosErrores_4ac9b7248d a ns1:DiagnosticoFallo ;
+    rdfs:label "Demasiados errores" ;
+    ns1:textoExtracto "8848 Demasiados errores. DETECCIÓN Durante la compilación del programa PLC. CAUSA El PLC ha detectado demasiados errores y sólo muestra los primeros." .
 
-ns1:ManualInstalacionPLC a ns1:Manual ;
-    rdfs:label "Manual de instalación (sintaxis PLC)"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de instalación la sintaxis."@es .
+ns1:ErrorFatal a ns1:DiagnosticoFallo ;
+    rdfs:label "Error fatal" ;
+    ns1:textoExtracto "8850 Error fatal. No se puede continuar." .
+
+ns1:SeEsperabaENDONuevaProposicion a ns1:DiagnosticoFallo ;
+    rdfs:label "Se esperaba END o nueva proposición" ;
+    ns1:textoExtracto "8849 Se esperaba END o nueva proposición. Puede que falte un salto de línea." .
 

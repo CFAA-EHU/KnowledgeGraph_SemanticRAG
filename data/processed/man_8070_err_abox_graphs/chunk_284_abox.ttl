@@ -1,23 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_1608 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1608: Variable no consultable"@es ;
-    ns1:identificador "1608" ;
-    ns1:mitigaRiesgo ns1:Parametro_1608_Pn ;
-    ns1:textoExtracto "'No se puede consultar esta variable. Asigne el valor de variable a Pn y consulte Pn' DETECCIÓN Durante la ejecución. CAUSA Determinados comandos e instrucciones de CNC no admiten leer variables que implican una sincronización entre la preparación y ejecución de bloques. SOLUCIÓN Para evitar este error, asignar el valor de la variable a un parámetro aritmético local y leer este parámetro cuando sea necesario."@es .
+ns1:AvisoSeguridad_49ee53c331 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de sincronización con eje C o G63 activo" ;
+    ns1:mitigaRiesgo ns1:SincronizacionConEjeCOG63Activo ;
+    ns1:textoExtracto "El CNC ha intentado sincronizar un cabezal y éste está trabajando como eje C o tiene la función G63 activa." .
 
-ns1:AvisoSeguridad_1608_EjesFresadora a ns1:AvisoSeguridad ;
-    rdfs:label "Error: Ejes insuficientes para ciclo de fresadora"@es ;
-    ns1:textoExtracto "de fresa son necesarios tres ejes en el canal' DETECCIÓN Durante la ejecución. CAUSA Hay programado un ciclo de fresadora en un canal con menos de tres ejes o no existe el eje longitudinal. SOLUCIÓN Para ejecutar los ciclos de fresadora hacen falta tres ejes en el canal."@es .
+ns1:CNC8070_672d06a8a8 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC ha intentado sincronizar un cabezal y éste está trabajando como eje C o tiene la función G63 activa." .
 
-ns1:AvisoSeguridad_1609 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1609: Ejes insuficientes para ciclo de torno"@es ;
-    ns1:identificador "1609" ;
-    ns1:textoExtracto "'Para ejecutar un ciclo de torno son necesarios dos ejes en el canal' DETECCIÓN Durante la ejecución."@es .
+ns1:CancelarSincronizacionParaCambiarGama a ns1:TareaMantenimiento ;
+    rdfs:label "Cancelar sincronización para cambiar gama" ;
+    ns1:solucionaFallo ns1:CambioDeGamaEnCabezalSincronizado ;
+    ns1:textoExtracto "Cancela la sincronización para poder cambiar la gama del cabezal." .
 
-ns1:Parametro_1608_Pn a ns1:Parametro ;
-    rdfs:label "Parámetro aritmético local (Pn)"@es ;
-    ns1:textoExtracto "asignar el valor de la variable a un parámetro aritmético local y leer este parámetro cuando sea necesario"@es ;
-    ns1:valor "variable_asignada_a_Pn" .
+ns1:CambioDeGamaEnCabezalSincronizado a ns1:AccionProhibida ;
+    rdfs:label "Cambio de gama en cabezal sincronizado" ;
+    ns1:textoExtracto "Durante la sincronización de dos cabezales, el CNC no permite el cambio de gama en ninguno de ellos." .
+
+ns1:SincronizacionConEjeCOG63Activo a ns1:AccionProhibida ;
+    rdfs:label "Sincronización con eje C o G63 activo" ;
+    ns1:textoExtracto "El CNC ha intentado sincronizar un cabezal y éste está trabajando como eje C o tiene la función G63 activa." .
 

@@ -1,46 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:controla ns1:Sistema_CNC,
-        ns1:Sistema_PLC ;
-    ns1:textoExtracto "detener el cabezal o la ejecución del programa pieza" .
+ns1:CNC8070_0ca17cdc69 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controladoPor ns1:SistemaPLC ;
+    ns1:textoExtracto "El CNC activa esta marca cuando el usuario valida los parámetros de cutting de la tabla activa. El PLC debe desactivar esta marca cuando termina su gestión con estas variables." .
 
-ns1:ProgramaPieza a ns1:ModoOperacion ;
-    rdfs:label "Ejecución del programa pieza" ;
-    ns1:habilitadoPor ns1:Sistema_CNC ;
-    ns1:textoExtracto "ejecución del programa pieza" .
+ns1:Parametro_e8a998290b a ns1:Parametro ;
+    rdfs:label "Marca CUTVARACT" ;
+    ns1:identificador "CUTVARACT" ;
+    ns1:textoExtracto "CUTVARACT El CNC activa esta marca cuando el usuario valida los parámetros de cutting de la tabla activa." .
 
-ns1:Funcion_M41 a ns1:Parametro ;
-    rdfs:label "M41" ;
-    ns1:identificador "M41" ;
-    ns1:textoExtracto "función M41 en el CNC" .
+ns1:SubrutinaCuttingonfst a ns1:Componente ;
+    rdfs:label "Subrutina Cuttingon.fst" ;
+    ns1:documentadoEn ns1:Tabla ;
+    ns1:textoExtracto "Cuando la subrutina Cuttingon.fst sólo cambia el tipo de cutting (#CUTTING ON), el CNC no activa esta marca ya que la sincronización con el PLC es a través" .
 
-ns1:Funcion_M42 a ns1:Parametro ;
-    rdfs:label "M42" ;
-    ns1:identificador "M42" ;
-    ns1:textoExtracto "M42 con GEAR2" .
-
-ns1:Marca_GEAR1 a ns1:Parametro ;
-    rdfs:label "GEAR1" ;
-    ns1:identificador "GEAR1" ;
-    ns1:textoExtracto "la marca GEAR1 en el PLC" .
-
-ns1:Marca_GEAR2 a ns1:Parametro ;
-    rdfs:label "GEAR2" ;
-    ns1:identificador "GEAR2" ;
-    ns1:textoExtracto "M42 con GEAR2" .
-
-ns1:Sistema_PLC a ns1:Sistema ;
+ns1:SistemaPLC a ns1:Sistema ;
     rdfs:label "Sistema PLC" ;
-    ns1:monitoreaParametro ns1:Marca_GEAR1,
-        ns1:Marca_GEAR2 ;
-    ns1:textoExtracto "el set de parámetros seleccionado en el PLC" .
-
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:monitoreaParametro ns1:Funcion_M41,
-        ns1:Funcion_M42 ;
-    ns1:textoExtracto "el set de parámetros seleccionado en el CNC" .
+    ns1:textoExtracto "El PLC debe desactivar esta marca cuando termina su gestión con estas variables." .
 

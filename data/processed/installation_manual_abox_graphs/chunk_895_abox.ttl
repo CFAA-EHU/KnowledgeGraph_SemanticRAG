@@ -1,91 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:MaquinaCNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC" ;
-    ns1:textoExtracto "CNC. Debe estar a (=1) para que el CNC permita el avance de los ejes y el giro del cabezal." ;
-    ns1:tieneComponente ns1:SistemaCompensacionCruzada,
-        ns1:SistemaSincronizacionCanales .
+ns1:PanelJog a ns1:ComponenteElectrico ;
+    rdfs:label "Panel de jog" ;
+    ns1:identificador "PANELOFF1" ;
+    ns1:textoExtracto "Address 2 Panel de jog" .
 
-ns1:PLCREADY a ns1:Sensor ;
-    rdfs:label "PLCREADY" ;
-    ns1:monitoreaParametro ns1:EstadoPLC ;
-    ns1:textoExtracto "PLCREADY. Esta marca indica si el PLC está en marcha (=1) o parado (=0). Debe estar a (=1) para que el CNC permita el avance de los ejes y el giro del cabezal. Si se le asigna el (=0) se detiene la ejecución del programa del PLC y muestra un error." .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "CNC" ;
+    ns1:textoExtracto "Address 0 CNC" .
 
-ns1:DISCROSS1 a ns1:Sensor ;
-    rdfs:label "DISCROSS1" ;
-    ns1:monitoreaParametro ns1:TablaCompensacionCruzada1 ;
-    ns1:textoExtracto "DISCROSS1. Se aplica a las tablas de compensación cruzada definidas en los parámetros máquina. Hay una marca para cada tabla." .
-
-ns1:DISCROSS17 a ns1:Sensor ;
-    rdfs:label "DISCROSS17" ;
-    ns1:monitoreaParametro ns1:TablaCompensacionCruzada17 ;
-    ns1:textoExtracto "DISCROSS17. Se aplica a las tablas de compensación cruzada definidas en los parámetros máquina. Hay una marca para cada tabla." .
-
-ns1:EstadoPLC a ns1:Parametro ;
-    rdfs:label "Estado del PLC (marcha/parada)" ;
-    ns1:textoExtracto "marca que indica si el PLC está en marcha (=1) o parado (=0)" ;
-    ns1:valor 0,
-        1 .
-
-ns1:NOWAITC1 a ns1:Sensor ;
-    rdfs:label "NOWAITC1" ;
-    ns1:monitoreaParametro ns1:SincronizacionCanal1 ;
-    ns1:textoExtracto "NOWAITC1. Hay una marca para cada canal. Se aplica a la sincronización de canales. El PLC pone esta marca a (=1) para anular todas las sincronizaciones con el canal del CNC." .
-
-ns1:NOWAITC2 a ns1:Sensor ;
-    rdfs:label "NOWAITC2" ;
-    ns1:monitoreaParametro ns1:SincronizacionCanal2 ;
-    ns1:textoExtracto "NOWAITC2. Hay una marca para cada canal. Se aplica a la sincronización de canales." .
-
-ns1:NOWAITC3 a ns1:Sensor ;
-    rdfs:label "NOWAITC3" ;
-    ns1:monitoreaParametro ns1:SincronizacionCanal3 ;
-    ns1:textoExtracto "NOWAITC3. Hay una marca para cada canal. Se aplica a la sincronización de canales." .
-
-ns1:NOWAITC4 a ns1:Sensor ;
-    rdfs:label "NOWAITC4" ;
-    ns1:monitoreaParametro ns1:SincronizacionCanal4 ;
-    ns1:textoExtracto "NOWAITC4. Hay una marca para cada canal. Se aplica a la sincronización de canales." .
-
-ns1:SincronizacionCanal1 a ns1:Parametro ;
-    rdfs:label "Sincronización del Canal 1" ;
-    ns1:textoExtracto "sincronizaciones con el canal del CNC (Canal 1). Las esperas programadas con sentencia #WAIT que hagan referencia a alguna marca del canal 1 acaban inmediatamente continuando la ejecución del programa." .
-
-ns1:SincronizacionCanal2 a ns1:Parametro ;
-    rdfs:label "Sincronización del Canal 2" ;
-    ns1:textoExtracto "sincronizaciones con el canal del CNC (Canal 2)." .
-
-ns1:SincronizacionCanal3 a ns1:Parametro ;
-    rdfs:label "Sincronización del Canal 3" ;
-    ns1:textoExtracto "sincronizaciones con el canal del CNC (Canal 3)." .
-
-ns1:SincronizacionCanal4 a ns1:Parametro ;
-    rdfs:label "Sincronización del Canal 4" ;
-    ns1:textoExtracto "sincronizaciones con el canal del CNC (Canal 4)." .
-
-ns1:SistemaCompensacionCruzada a ns1:Sistema ;
-    rdfs:label "Sistema de compensación cruzada" ;
-    ns1:detalladoEnEsquema ns1:TablaCompensacionCruzada1,
-        ns1:TablaCompensacionCruzada17 ;
-    ns1:textoExtracto "tablas de compensación cruzada definidas en los parámetros máquina." ;
-    ns1:tieneComponente ns1:DISCROSS1,
-        ns1:DISCROSS17 .
-
-ns1:SistemaSincronizacionCanales a ns1:Sistema ;
-    rdfs:label "Sistema de sincronización de canales CNC-PLC" ;
-    ns1:textoExtracto "sincronización de canales. El PLC pone esta marca a (=1) para anular todas las sincronizaciones con el canal del CNC." ;
-    ns1:tieneComponente ns1:NOWAITC1,
-        ns1:NOWAITC2,
-        ns1:NOWAITC3,
-        ns1:NOWAITC4 .
-
-ns1:TablaCompensacionCruzada1 a ns1:Tabla ;
-    rdfs:label "Tabla de compensación cruzada 1" ;
-    ns1:textoExtracto "tablas de compensación cruzada definidas en los parámetros máquina (Tabla 1)." .
-
-ns1:TablaCompensacionCruzada17 a ns1:Tabla ;
-    rdfs:label "Tabla de compensación cruzada 17" ;
-    ns1:textoExtracto "tablas de compensación cruzada definidas en los parámetros máquina (Tabla 17)." .
+ns1:TecladoConPanelJog a ns1:ComponenteElectrico ;
+    rdfs:label "Teclado + Panel de jog" ;
+    ns1:identificador "PANELOFF2" ;
+    ns1:textoExtracto "Address 5 Teclado + Panel de jog" .
 

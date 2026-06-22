@@ -1,23 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ElPLCDebeEfectuarUnaOVariasAccionesParaEjecutarLaOperacionSolicitadaPorElGestor a ns1:AccionProhibida ;
-    ns1:textoExtracto "el PLC debe efectuar una o varias acciones para ejecutar la operación solicitada por el gestor" .
+ns1:CNC8070_714ce331bc a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC pone esta marca a (=1) para indicar al PLC que se ha producido una emergencia en el gestor de herramientas." .
 
-ns1:Gestor_973 a ns1:InterfazUsuario ;
-    ns1:textoExtracto "El PLC utiliza las siguientes marcas para informar al gestor de las operaciones que ha realizado." .
+ns1:SistemaGestorHerramientas a ns1:Sistema ;
+    rdfs:label "Sistema Gestor de Herramientas" ;
+    ns1:textoExtracto "El gestor se puede poner en estado de emergencia si se produce una anomalía (el PLC ha ejecutado una acción equivocada, cambio no finalizado, etc) o si el PLC activa la emergencia." ;
+    ns1:tieneComponente ns1:Parametro_9566f911cd,
+        ns1:Parametro_b34662d52d,
+        ns1:Parametro_d0f8f07b92 .
 
-ns1:Marca_973_1 a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "Se dispone de un grupo de marcas para cada almacén." .
+ns1:Parametro_9566f911cd a ns1:Parametro ;
+    rdfs:label "Marca para activar la emergencia del gestor de herramientas" ;
+    ns1:identificador "SETTMEM" ;
+    ns1:textoExtracto "El PLC pone esta marca a (=1) para activar la emergencia del gestor de herramientas." .
 
-ns1:Marca_973_2 a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "Tras finalizar cada una de ellas debe informar al gestor, activando unas marcas, de que la acción ha finalizado." .
+ns1:Parametro_b34662d52d a ns1:Parametro ;
+    rdfs:label "Marca para indicar una emergencia en el gestor de herramientas" ;
+    ns1:identificador "TMINEM" ;
+    ns1:textoExtracto "El CNC pone esta marca a (=1) para indicar al PLC que se ha producido una emergencia en el gestor de herramientas." .
 
-ns1:PLC_973 a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "El PLC utiliza las siguientes marcas para informar al gestor de las operaciones que ha realizado." .
-
-ns1:SeDisponeDeUnGrupoDeMarcasParaCadaAlmacen a ns1:Componente ;
-    ns1:textoExtracto "Se dispone de un grupo de marcas para cada almacén." .
-
-ns1:Tabla_973_7_3_2 a ns1:Tabla ;
-    ns1:textoExtracto "En la siguiente tabla se muestran los mnemónicos de cada marca (M) o registro (R) en cada uno de los canales o almacenes." .
+ns1:Parametro_d0f8f07b92 a ns1:Parametro ;
+    rdfs:label "Marca para cancelar la emergencia del gestor de herramientas" ;
+    ns1:identificador "RESTMEM" ;
+    ns1:textoExtracto "El PLC pone esta marca a (=1) para cancelar la emergencia del gestor de herramientas." .
 

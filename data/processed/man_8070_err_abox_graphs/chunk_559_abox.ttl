@@ -1,53 +1,50 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CabezalMaster a ns1:Componente ;
-    rdfs:label "Cabezal master de sincronización"@es ;
-    ns1:identificador "Cabezal_Master_Sync" ;
-    ns1:textoExtracto "El cabezal master de la sincronización no está en la gama adecuada (SYNCSET)"@es .
+ns1:AceleracionProgramadaEsMayorQueLaMaxima a ns1:DiagnosticoFallo ;
+    rdfs:label "aceleración programada es mayor que la máxima" ;
+    ns1:textoExtracto "'Velocidad de cambio de aceleración mayor que la máxima' DETECCIÓN Durante el arranque o la ejecución. CAUSA La aceleración programada es mayor que la máxima." .
 
-ns1:Fallo_SyncSet a ns1:DiagnosticoFallo ;
-    rdfs:label "Cabezal fuera de gama SYNCSET"@es ;
-    ns1:identificador "3611" ;
-    ns1:textoExtracto "El cabezal master de la sincronización no está en la gama adecuada (SYNCSET"@es .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:ModoOperacion_M19 a ns1:ModoOperacion ;
-    rdfs:label "M19"@es ;
-    ns1:identificador "M19" ;
-    ns1:textoExtracto "el cabezal estaba en M19 antes de #SERVOON [...] Si el cabezal está en M19"@es .
+ns1:ElLimiteDeJerkSeVaASobrepasar_c041468619 a ns1:DiagnosticoFallo ;
+    rdfs:label "El límite de jerk se va a sobrepasar" ;
+    ns1:textoExtracto "'El límite de jerk se va a sobrepasar' DETECCIÓN Durante la ejecución del comando de análisis de frecuencias. CAUSA La frecuencia es demasiado grande para la amplitud programada." .
 
-ns1:ModoOperacion_M3 a ns1:ModoOperacion ;
-    rdfs:label "M3"@es ;
-    ns1:identificador "M3" ;
-    ns1:textoExtracto "programar M3, M4, M5"@es .
+ns1:ElMovimientoProgramadoVaAColisionarConLaSondaDePalpado a ns1:DiagnosticoFallo ;
+    rdfs:label "El movimiento programado va a colisionar con la sonda de palpado" ;
+    ns1:textoExtracto "'El movimiento programado va a colisionar con la sonda de palpado' DETECCIÓN Durante la ejecución. CAUSA El movimiento del eje va a superar los límites fijados por el movimiento de palpado anterior." .
 
-ns1:ModoOperacion_M4 a ns1:ModoOperacion ;
-    rdfs:label "M4"@es ;
-    ns1:identificador "M4" ;
-    ns1:textoExtracto "programar M3, M4, M5"@es .
+ns1:FrecuenciaDemasiadoGrandeParaLaVelocidadProgramada_31ff3472aa a ns1:DiagnosticoFallo ;
+    rdfs:label "Frecuencia demasiado grande para la velocidad programada" ;
+    ns1:textoExtracto "'Frecuencia demasiado grande para la velocidad programada' DETECCIÓN Durante la ejecución del comando de análisis de frecuencias. CAUSA La velocidad aditiva es menor que la resultante para la frecuencia máxima." .
 
-ns1:ModoOperacion_M5 a ns1:ModoOperacion ;
-    rdfs:label "M5"@es ;
-    ns1:identificador "M5" ;
-    ns1:textoExtracto "programar M3, M4, M5"@es .
+ns1:ModificarLasCondicionesDeMecanizado a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar las condiciones de mecanizado" ;
+    ns1:solucionaFallo ns1:LimiteDeErrorSobrepasadoEnModoHSC_77dd5368f9 ;
+    ns1:textoExtracto "La precisión de la pieza mecanizada puede ser inferior a la tolerancia programada. Modificar las condiciones de mecanizado." .
 
-ns1:Sentencia_SERVO_OFF a ns1:Parametro ;
-    rdfs:label "#SERVO OFF"@es ;
-    ns1:textoExtracto "sentencia #SERVO OFF"@es ;
-    ns1:valor "#SERVO OFF" .
+ns1:PongaseEnContactoConFAGOR_0c45beda3f a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con Fagor" ;
+    ns1:solucionaFallo ns1:LimiteDeAceleracionSobrepasada_d3ffcd42cc ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor." .
 
-ns1:Sentencia_SERVO_ON a ns1:Parametro ;
-    rdfs:label "#SERVO ON"@es ;
-    ns1:textoExtracto "sentencia #SERVO ON"@es ;
-    ns1:valor "#SERVO ON" .
+ns1:ReducirFrecuenciaMaximaOReducirLaAmplitud a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir frecuencia máxima o reducir la amplitud" ;
+    ns1:solucionaFallo ns1:LimiteDeJerkSobrepasado_6867f5f72a ;
+    ns1:textoExtracto "SOLUCIÓN Reducir la frecuencia máxima o reducir la amplitud." .
 
-ns1:Solucion_ResetLazo a ns1:TareaMantenimiento ;
-    rdfs:label "Reset para abrir lazo en cabezal"@es ;
-    ns1:solucionaFallo ns1:Fallo_ServoOff_M19 ;
-    ns1:textoExtracto "para abrir el lazo, programar M3, M4, M5 o hacer un reset"@es .
+ns1:LimiteDeAceleracionSobrepasada_d3ffcd42cc a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de aceleración sobrepasada" ;
+    ns1:textoExtracto "'Límite de aceleración sobrepasada' DETECCIÓN Durante la ejecución. CAUSA Sobrepasamiento de aceleración en esa trayectoria." .
 
-ns1:Fallo_ServoOff_M19 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo al abrir lazo con cabezal en M19 tras #SERVO OFF"@es ;
-    ns1:identificador "CAUSA_3611" ;
-    ns1:textoExtracto "Hay programada una sentencia #SERVO OFF pero no se puede abrir el lazo porque el cabezal estaba en M19 antes de #SERVOON. [...] Si el cabezal está en M19, la sentencia #SERVO OFF no puede abrir el lazo; para abrir el lazo, programar M3, M4, M5 o hacer un reset."@es .
+ns1:LimiteDeErrorSobrepasadoEnModoHSC_77dd5368f9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de error sobrepasado en modo HSC" ;
+    ns1:textoExtracto "'Límite de error sobrepasado en modo HSC' DETECCIÓN Durante la ejecución. CAUSA La trayectoria teórica supera la tolerancia máxima programada." .
+
+ns1:LimiteDeJerkSobrepasado_6867f5f72a a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de jerk sobrepasado" ;
+    ns1:textoExtracto "'Límite de jerk sobrepasado' DETECCIÓN Durante la ejecución. CAUSA Sobrepasamiento de jerk en esa trayectoria." .
 

@@ -1,42 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:TareaMantenimiento_ExtraccionHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Mover eje de roscado en modo manual para extraer herramienta" ;
-    ns1:requiereMantenimiento ns1:ModoOperacion_Manual ;
-    ns1:textoExtracto "SOLUCIÓN Entrar en modo manual y mover el eje de roscado hasta sacar la herramienta." .
+ns1:LEAPNoActivadoPorAlturaDeSaltoInferiorAUnMinimo_8982b472a8 a ns1:AvisoSeguridad ;
+    rdfs:label "LEAP no activado por altura de salto inferior a un mínimo" ;
+    ns1:mitigaRiesgo ns1:FalloAlturaSalto ;
+    ns1:textoExtracto "3099 LEAP no activado por altura de salto inferior a un mínimo. DETECCIÓN Durante la ejecución." .
 
-ns1:TareaMantenimiento_Solucion_3400 a ns1:TareaMantenimiento ;
-    rdfs:label "Asignar eje independiente a canal o esperar intercambio" ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_3400 ;
-    ns1:textoExtracto "SOLUCIÓN Asignar el eje independiente a cualquier canal o esperar a que el CNC finalice el intercambio de eje." .
+ns1:PotenciaExcesivaEnElCabezalDetectadaDuranteDMC_bb98b1d75a a ns1:AvisoSeguridad ;
+    rdfs:label "'Potencia excesiva en el cabezal detectada durante DMC'" ;
+    ns1:mitigaRiesgo ns1:FalloPotenciaExcesivaCabezal ;
+    ns1:textoExtracto "'Potencia excesiva en el cabezal detectada durante DMC' DETECCIÓN Durante la ejecución." .
 
-ns1:TareaMantenimiento_Solucion_3401 a ns1:TareaMantenimiento ;
-    rdfs:label "Programar leva correcta o definir en parámetros máquina" ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_3401 ;
-    ns1:textoExtracto "SOLUCIÓN Programar una leva correcta o definir la leva en los parámetros máquina." .
+ns1:FalloAlturaSalto a ns1:DiagnosticoFallo ;
+    rdfs:label "La altura máxima del salto es muy cercana a la posición inicial" ;
+    ns1:textoExtracto "CAUSA La altura máxima del salto es muy cercana a la posición inicial. SOLUCIÓN Revisar la programación." .
 
-ns1:TareaMantenimiento_Solucion_3402 a ns1:TareaMantenimiento ;
-    rdfs:label "Liberar tabla de operaciones de ejes independientes" ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_3402 ;
-    ns1:textoExtracto "3402 No se admiten mas operaciones con ejes independientes. Tabla llena." .
-
-ns1:AvisoSeguridad_3400 a ns1:AvisoSeguridad ;
-    rdfs:label "Eje independiente inexistente o no disponible" ;
-    ns1:identificador "3400" ;
-    ns1:textoExtracto "3400 'Eje independiente inexistente o no disponible' DETECCIÓN Durante la ejecución. CAUSA El usuario ha programado una operación de eje independiente para un eje que no está asignado a ningún canal o está cambiando de canal. SOLUCIÓN Asignar el eje independiente a cualquier canal o esperar a que el CNC finalice el intercambio de eje." .
-
-ns1:AvisoSeguridad_3401 a ns1:AvisoSeguridad ;
-    rdfs:label "Leva inexistente o no disponible" ;
-    ns1:identificador "3401" ;
-    ns1:textoExtracto "3401 'Leva inexistente o no disponible' DETECCIÓN Durante la ejecución. CAUSA El número de leva programado en la sentencia #CAM no existe. SOLUCIÓN Programar una leva correcta o definir la leva en los parámetros máquina." .
-
-ns1:AvisoSeguridad_3402 a ns1:AvisoSeguridad ;
-    rdfs:label "No se admiten más operaciones con ejes independientes. Tabla llena" ;
-    ns1:identificador "3402" ;
-    ns1:textoExtracto "3402 No se admiten mas operaciones con ejes independientes. Tabla llena. DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar una operación de eje independiente pero ya hay dos operaciones pendientes." .
-
-ns1:ModoOperacion_Manual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual" ;
-    ns1:textoExtracto "SOLUCIÓN Entrar en modo manual y mover el eje de roscado hasta sacar la herramienta." .
+ns1:FalloPotenciaExcesivaCabezal a ns1:DiagnosticoFallo ;
+    rdfs:label "El DMC ha detectado un consumo de potencia (variable TV51 del regulador) excesivo durante cierto tiempo" ;
+    ns1:textoExtracto "CAUSA El DMC ha detectado un consumo de potencia (variable TV51 del regulador) excesivo durante cierto tiempo." .
 

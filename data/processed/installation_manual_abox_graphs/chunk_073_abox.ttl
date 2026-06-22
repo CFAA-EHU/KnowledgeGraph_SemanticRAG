@@ -1,47 +1,13 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ns1:SistemaTandem a ns1:Sistema ;
-    rdfs:label "Sistema de configuración tándem"@es ;
-    ns1:monitoreaParametro ns1:Parametro_PRELFITI,
-        ns1:Parametro_PRELOAD,
-        ns1:Parametro_TPROGAIN ;
-    ns1:textoExtracto "Configuración de un sistema tándem. [...] La precarga es el par previo que se aplica, en sentidos opuestos, a ambos motores del tándem para establecer una tracción entre ellos con el fin de eliminar la holgura cuando el tándem se encuentra en reposo."@es ;
-    ns1:tieneComponente ns1:MotorEsclavo,
-        ns1:MotorMaestro .
+    rdfs:label "Sistema tándem" ;
+    ns1:textoExtracto "Configuración de un sistema tándem. Ganancia proporcional (Kp) para el tándem. Valores posibles: De 0 a 100%. Valor por defecto: 0 (no se aplica ganancia proporcional). Variable asociada: (V.)MPG.TPROGAIN[nb] Parámetro incluido en la tabla TANDEM." ;
+    ns1:tieneComponente ns1:GananciaProporcionalParaElTandem .
 
-ns1:MotorEsclavo a ns1:ComponenteMecanico ;
-    rdfs:label "Motor esclavo (tándem)"@es ;
-    ns1:textoExtracto "ambos motores del tándem [...] motor esclavo"@es .
-
-ns1:MotorMaestro a ns1:ComponenteMecanico ;
-    rdfs:label "Motor maestro (tándem)"@es ;
-    ns1:textoExtracto "ambos motores del tándem [...] motor maestro"@es .
-
-ns1:Parametro_PRELFITI a ns1:Parametro ;
-    rdfs:label "PRELFITI (Tiempo de filtro de precarga)"@es ;
-    ns1:documentadoEn ns1:TablaTANDEM ;
-    ns1:identificador "MPG.PRELFITI[nb]" ;
-    ns1:textoExtracto "PRELFITI Pareja tándem. Tiempo del filtro para aplicar la precarga. Valores posibles: De 0 a 65535 milisegundos (con valor 0, se deshabilita el filtro). Valor por defecto: 0 ms. Variable asociada: (V.)MPG.PRELFITI[nb]."@es ;
-    ns1:valor "0"^^xsd:string .
-
-ns1:Parametro_PRELOAD a ns1:Parametro ;
-    rdfs:label "PRELOAD (Precarga entre motores tándem)"@es ;
-    ns1:documentadoEn ns1:TablaTANDEM ;
-    ns1:identificador "MPG.PRELOAD[nb]" ;
-    ns1:textoExtracto "PRELOAD Pareja tándem. Precarga entre ambos motores. Valores posibles: Entre ±100%. Valor por defecto: 0 (se deshabilita la precarga). Variable asociada: (V.)MPG.PRELOAD[nb]."@es ;
-    ns1:valor "0"^^xsd:string .
-
-ns1:Parametro_TPROGAIN a ns1:Parametro ;
-    rdfs:label "TPROGAIN (Ganancia proporcional Kp para tándem)"@es ;
-    ns1:documentadoEn ns1:TablaTANDEM ;
+ns1:GananciaProporcionalParaElTandem a ns1:Parametro ;
+    rdfs:label "Ganancia proporcional para el tándem" ;
     ns1:identificador "MPG.TPROGAIN[nb]" ;
-    ns1:textoExtracto "TPROGAIN Pareja tándem. Ganancia proporcional (Kp) para el tándem. Valores posibles: De 0 a 100%. Valor por defecto: 0 (no se aplica ganancia proporcional). Variable asociada: (V.)MPG.TPROGAIN[nb]."@es ;
-    ns1:valor "0"^^xsd:string .
-
-ns1:TablaTANDEM a ns1:Tabla ;
-    rdfs:label "Tabla TANDEM"@es ;
-    ns1:identificador "TANDEM" ;
-    ns1:textoExtracto "Parámetro incluido en la tabla TANDEM."@es .
+    ns1:textoExtracto "Ganancia proporcional (Kp) para el tándem. Valores posibles: De 0 a 100%. Valor por defecto: 0 (no se aplica ganancia proporcional). Variable asociada: (V.)MPG.TPROGAIN[nb] Parámetro incluido en la tabla TANDEM." .
 

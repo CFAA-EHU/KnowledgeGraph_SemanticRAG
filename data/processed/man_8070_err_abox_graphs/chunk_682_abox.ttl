@@ -1,26 +1,65 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Accion_ContactoAsistenciaTecnica a ns1:AccionProhibida ;
-    rdfs:label "Contactar con asistencia técnica"@es ;
-    ns1:solucionaFallo ns1:Error_CAN_6011 ;
-    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:CircuitoAbiertoEnUnSensorDeTemperaturaRemoto a ns1:AccionProhibida ;
+    rdfs:label "Circuito abierto en un sensor de temperatura remoto" ;
+    ns1:textoExtracto "Error de circuito abierto en un sensor de temperatura remoto." .
 
-ns1:Modulo_Generico a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo (genérico)"@es ;
-    ns1:monitoreaParametro ns1:Error_CAN_6011 ;
-    ns1:textoExtracto "La ventana de error indica cuál es el módulo provoca el error."@es .
+ns1:RevisarElConexionadoDelSensorDeTemperaturaRemoto_f546c745aa a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado del sensor de temperatura remoto" ;
+    ns1:solucionaFallo ns1:AccionProhibida_49b31592e6,
+        ns1:ErrorDeAlimentacionEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorDeRangoExcedidoEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorDesconocidoEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorEnElModuloDelSensorDeTemperaturaRemoto ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el conexionado del sensor de temperatura remoto." .
 
-ns1:Sistema_CANfagor a ns1:Sistema ;
-    rdfs:label "Bus CANfagor"@es ;
-    ns1:textoExtracto "Los códigos de error son diferentes para los casos de bus CANfagor y del bus CANopen."@es .
+ns1:RevisarLaAlimentacionDelSensorDeTemperaturaRemoto a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la alimentación del sensor de temperatura remoto" ;
+    ns1:solucionaFallo ns1:ErrorDeAlimentacionEnElSensorDeTemperaturaRemoto ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la alimentación del sensor de temperatura remoto." .
 
-ns1:Sistema_CANopen a ns1:Sistema ;
-    rdfs:label "Bus CANopen"@es ;
-    ns1:textoExtracto "Los códigos de error son diferentes para los casos de bus CANfagor y del bus CANopen."@es .
+ns1:RevisarLaConfiguracionDelSensorDeTemperaturaRemoto a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la configuración del sensor de temperatura remoto" ;
+    ns1:solucionaFallo ns1:AccionProhibida_49b31592e6 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la configuración del sensor de temperatura remoto." .
 
-ns1:Error_CAN_6011 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de CAN en nodo remoto"@es ;
-    ns1:identificador "6011" ;
-    ns1:textoExtracto "6011 'Error de CAN en nodo remoto' [...] Error reportado por un nodo. Los códigos de error son diferentes para los casos de bus CANfagor y del bus CANopen. La ventana de error indica cuál es el módulo provoca el error."@es .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:activaAlarma ns1:AccionProhibida_49b31592e6,
+        ns1:ErrorDeAlimentacionEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorDeConversionEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorDeRangoExcedidoEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorDeRangoMinimoExcedidoEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorDesconocidoEnElSensorDeTemperaturaRemoto,
+        ns1:ErrorEnElModuloDelSensorDeTemperaturaRemoto ;
+    ns1:textoExtracto "Durante el funcionamiento del PLC." .
+
+ns1:ErrorDeConversionEnElSensorDeTemperaturaRemoto a ns1:AccionProhibida ;
+    rdfs:label "Error de conversión en el sensor de temperatura remoto" ;
+    ns1:textoExtracto "Un sensor de temperatura remoto ha detectado un error conversión." .
+
+ns1:ErrorDeRangoMinimoExcedidoEnElSensorDeTemperaturaRemoto a ns1:AccionProhibida ;
+    rdfs:label "Error de rango mínimo excedido en el sensor de temperatura remoto" ;
+    ns1:textoExtracto "Un sensor de temperatura remoto ha detectado un error de rango mínimo excedido." .
+
+ns1:ErrorDeRangoExcedidoEnElSensorDeTemperaturaRemoto a ns1:AccionProhibida ;
+    rdfs:label "Error de rango excedido en el sensor de temperatura remoto" ;
+    ns1:textoExtracto "Un sensor de temperatura remoto ha detectado un error de rango excedido." .
+
+ns1:ErrorDesconocidoEnElSensorDeTemperaturaRemoto a ns1:AccionProhibida ;
+    rdfs:label "Error desconocido en el sensor de temperatura remoto" ;
+    ns1:textoExtracto "Un sensor de temperatura remoto ha detectado un error desconocido." .
+
+ns1:ErrorEnElModuloDelSensorDeTemperaturaRemoto a ns1:AccionProhibida ;
+    rdfs:label "Error en el módulo del sensor de temperatura remoto" ;
+    ns1:textoExtracto "Un sensor de temperatura remoto ha detectado un error en el módulo." .
+
+ns1:AccionProhibida_49b31592e6 a ns1:AccionProhibida ;
+    rdfs:label "Sensor de temperatura remoto configurado incorrectamente" ;
+    ns1:textoExtracto "Un sensor de temperatura remoto esta configurado incorrectamente." .
+
+ns1:ErrorDeAlimentacionEnElSensorDeTemperaturaRemoto a ns1:AccionProhibida ;
+    rdfs:label "Error de alimentación en el sensor de temperatura remoto" ;
+    ns1:textoExtracto "Un sensor de temperatura remoto ha detectado un error de alimentación." .
 

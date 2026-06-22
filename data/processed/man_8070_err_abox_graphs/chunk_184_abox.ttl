@@ -1,39 +1,23 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Alarma_1361 a ns1:Alarma ;
-    rdfs:label "Alarma 1361: 'Función G no permitida con eje C activo'" ;
-    ns1:identificador "1361" ;
-    ns1:textoExtracto "'con eje C activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar una función G33/G63/G95/G96/G97 con el eje C activo. SOLUCIÓN Desactivar el eje C para ejecutar la función." .
+ns1:RevisionDeProgramacion_2f5a95c092 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de programación" ;
+    ns1:solucionaFallo ns1:AvisoSeguridad_0728ee11d7,
+        ns1:AvisoSeguridad_5c401391a4 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1362 a ns1:Alarma ;
-    rdfs:label "Alarma 1362: 'Dimensión de array incorrecta'" ;
-    ns1:identificador "1362" ;
-    ns1:textoExtracto "'Dimensión de array incorrecta' DETECCIÓN Durante la ejecución. CAUSA La variable es de array pero el número de arrays programados es incorrecto. SOLUCIÓN Verificar la sintaxis de la variable." .
+ns1:AvisoSeguridad_0728ee11d7 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de variable no permitida" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'#VAR/#ENDVAR/#DELETE: tipo de variable no permitida'" .
 
-ns1:Alarma_1363 a ns1:Alarma ;
-    rdfs:label "Alarma 1363: 'Declaración incorrecta de variables de array'" ;
-    ns1:identificador "1363" ;
-    ns1:textoExtracto "'Declaración incorrecta de variables de array' DETECCIÓN Durante la ejecución. CAUSA Las variables de usuario que son array deben declararse entre las sentencias #VAR y #ENDVAR. SOLUCIÓN Revisar la programación." .
+ns1:AvisoSeguridad_5c401391a4 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de variable existente" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "'#VAR/#ENDVAR: la variable definida ya existe'" .
 
-ns1:Alarma_1364 a ns1:Alarma ;
-    rdfs:label "Alarma 1364: 'Número de índices en variable de array sobrepasado'" ;
-    ns1:identificador "1364" ;
-    ns1:textoExtracto "'Número de índices en variable de array sobrepasado' DETECCIÓN Durante la ejecución. CAUSA La variable de usuario es un array multidimensional con más de 4 dimensiones. SOLUCIÓN Revisar la programación." .
-
-ns1:Alarma_1365 a ns1:Alarma ;
-    rdfs:label "Alarma 1365: 'No se admite velocidad del cabezal negativa'" ;
-    ns1:identificador "1365" ;
-    ns1:textoExtracto "'No se admite velocidad del cabezal negativa' DETECCIÓN Durante la ejecución." .
-
-ns1:ComponenteMecanico_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadCabezal ;
-    ns1:textoExtracto "velocidad del cabezal" .
-
-ns1:Parametro_VelocidadCabezal a ns1:Parametro ;
-    rdfs:label "Velocidad del cabezal" ;
-    ns1:textoExtracto "velocidad del cabezal" ;
-    ns1:valor "negativa"^^xsd:string .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 

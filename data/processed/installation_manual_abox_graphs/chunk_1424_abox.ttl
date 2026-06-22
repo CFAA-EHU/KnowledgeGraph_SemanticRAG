@@ -1,39 +1,36 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Argumento_CotaAproximacion_16_2 a ns1:Parametro ;
-    rdfs:label "Cota de aproximación (X..C{pos})"@es ;
-    ns1:textoExtracto "<X..C{pos}> Opcional (por defecto, el último valor programado). Eje asociado al sensor y cota de aproximación."@es ;
-    ns1:valor "X..C{pos}"@es .
+ns1:ActivacionDelControlDelGapDesdeElPLC a ns1:TareaMantenimiento ;
+    rdfs:label "Activación del control del gap desde el PLC" ;
+    ns1:textoExtracto "El PLC puede activar el control del gap ejecutando con el comando CNCEX el bloque de CNC correspondiente." .
 
-ns1:Argumento_EjeSensor_16_2 a ns1:Parametro ;
-    rdfs:label "Eje asociado al sensor (X..C)"@es ;
-    ns1:textoExtracto "<X..C> Opcional (por defecto, el último valor programado). Eje asociado al sensor."@es ;
-    ns1:valor "X..C"@es .
+ns1:CNC8070_d38e5796b1 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "programación desde el PLC. El PLC puede activar el control del gap ejecutando con el comando CNCEX el bloque de CNC correspondiente." ;
+    ns1:tieneComponente ns1:BloqueCNC,
+        ns1:ComponenteElectrico_50667d8fe7 .
 
-ns1:Sentencia_GAPCTRL_OFF a ns1:AccionProhibida ;
-    rdfs:label "#GAPCTRL OFF"@es ;
-    ns1:controla ns1:ControlGap_16_2 ;
-    ns1:textoExtracto "La sentencia #GAPCTRL OFF desactiva el control del gap."@es .
+ns1:ControlDelGapActivado a ns1:Parametro ;
+    rdfs:label "Control del gap activado" ;
+    ns1:identificador "GAPCTRL ON" ;
+    ns1:textoExtracto "#GAPCTRL ON [Z, GAP 1]" .
 
-ns1:Sentencia_GAPCTRL_ON a ns1:AccionProhibida ;
-    rdfs:label "#GAPCTRL ON"@es ;
-    ns1:controla ns1:ControlGap_16_2 ;
-    ns1:textoExtracto "La sentencia #GAPCTRL ON permite activar el control del gap."@es .
+ns1:ControlDelGapDesactivado a ns1:Parametro ;
+    rdfs:label "Control del gap desactivado" ;
+    ns1:identificador "GAPCTRL OFF" ;
+    ns1:textoExtracto "#GAPCTRL OFF" .
 
-ns1:SensorGap_16_2 a ns1:Sensor ;
-    rdfs:label "Sensor de gap (láser)"@es ;
-    ns1:monitoreaParametro ns1:Parametro_Gap_16_2 ;
-    ns1:textoExtracto "Para conseguir un seguimiento correcto del sensor, se recomienda que la señal del sensor esté calibrada con el máximo número de puntos posible."@es .
+ns1:Parametro_ad0ecc48c3 a ns1:Parametro ;
+    rdfs:label "Comando para ejecutar bloques de CNC" ;
+    ns1:identificador "CNCEX" ;
+    ns1:textoExtracto "{ condition} = CNCEX [{block}, {plc_mark}<,{channel}>]" .
 
-ns1:ControlGap_16_2 a ns1:Sistema ;
-    rdfs:label "Control del gap (láser)"@es ;
-    ns1:monitoreaParametro ns1:Parametro_Gap_16_2 ;
-    ns1:textoExtracto "La sentencia ejecutada desde el PLC actualiza a la programada desde el CNC y viceversa. [...] La sentencia #GAPCTRL ON permite activar el control del gap. La sentencia #GAPCTRL OFF desactiva el control del gap."@es ;
-    ns1:tieneComponente ns1:SensorGap_16_2 .
+ns1:BloqueCNC a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque de CNC" ;
+    ns1:textoExtracto "{ block} Bloque a ejecutar." .
 
-ns1:Parametro_Gap_16_2 a ns1:Parametro ;
-    rdfs:label "Gap (distancia a superficie)"@es ;
-    ns1:textoExtracto "Distancia (gap) a mantener respecto de la superficie. Unidades: Milímetros o pulgadas."@es ;
-    ns1:valor "GAP{gap}"@es .
+ns1:ComponenteElectrico_50667d8fe7 a ns1:ComponenteElectrico ;
+    rdfs:label "Marca de control del PLC" ;
+    ns1:textoExtracto "{ plc_mark} Marca de control. El PLC activa la marca cuando comienza la operación y la mantiene así hasta que finaliza la misma." .
 

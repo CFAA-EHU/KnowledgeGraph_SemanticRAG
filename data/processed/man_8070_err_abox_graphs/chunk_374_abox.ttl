@@ -1,75 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1903 a ns1:DiagnosticoFallo ;
-    rdfs:label "Arco mal programado" ;
-    ns1:identificador "1903" ;
-    ns1:textoExtracto "1903 'Arco mal programado' DETECCIÓN Durante la ejecución del ciclo. CAUSA Arco mal definido en la geometría del ciclo fijo. SOLUCIÓN Corregir la programación." .
+ns1:AccionProhibida_5e00cf8db4 a ns1:AccionProhibida ;
+    rdfs:label "herramienta programada no existe en la tabla de herramientas" ;
+    ns1:textoExtracto "herramienta programada no existe en la tabla de herramientas." .
 
-ns1:Fallo_1904 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se ha programado herramienta" ;
-    ns1:identificador "1904" ;
-    ns1:requiereConsumible ns1:Herramienta_Gen_rica ;
-    ns1:textoExtracto "1904 'No se ha programado herramienta' DETECCIÓN Durante la ejecución del ciclo. CAUSA No hay herramienta programada. SOLUCIÓN Programar una herramienta antes del ciclo o cargar una herramienta en el cabezal." .
+ns1:CorregirLaGeometriaDelPerfilDesdeElEditorDePerfiles a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir la geometría del perfil desde el editor de perfiles" ;
+    ns1:solucionaFallo ns1:CajeraConIslasArcoMalProgramadoEnPerfil,
+        ns1:CajeraConIslasGeometriaDeLaCajeraNoValida ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la geometría del perfil desde el editor de perfiles." .
 
-ns1:Fallo_1905 a ns1:DiagnosticoFallo ;
-    rdfs:label "RANURADO: Anchura de la cuchilla nula" ;
-    ns1:identificador "1905" ;
-    ns1:solucionaFallo ns1:Parametro_AnchuraCuchilla ;
-    ns1:textoExtracto "1905 'RANURADO: Anchura de la cuchilla nula' DETECCIÓN Durante la ejecución del ciclo. CAUSA La anchura de la herramienta tiene valor 0. SOLUCIÓN Corregir el valor de la anchura de la herramienta o seleccionar otra herramienta." .
+ns1:DefinirUnAvanceMayorQue0 a ns1:TareaMantenimiento ;
+    rdfs:label "Definir un avance mayor que 0" ;
+    ns1:solucionaFallo ns1:CajeraConIslasFDeSemiacabadoNoValida_a866ccc265 ;
+    ns1:textoExtracto "SOLUCIÓN Definir un avance mayor que 0." .
 
-ns1:Fallo_1906 a ns1:DiagnosticoFallo ;
-    rdfs:label "Factor de forma de la herramienta no válido" ;
-    ns1:identificador "1906" ;
-    ns1:textoExtracto "1906 'Factor de forma de la herramienta no válido' DETECCIÓN Durante la ejecución del ciclo. CAUSA El factor de forma no es válido para el ciclo programado. SOLUCIÓN Corregir el factor de forma o seleccionar otra herramienta." .
+ns1:DefinirUnaVelocidadMayorQue0 a ns1:TareaMantenimiento ;
+    rdfs:label "Definir una velocidad mayor que 0" ;
+    ns1:solucionaFallo ns1:CajeraConIslasSDeSemiacabadoNoValida ;
+    ns1:textoExtracto "SOLUCIÓN Definir una velocidad mayor que 0." .
 
-ns1:Fallo_1907 a ns1:DiagnosticoFallo ;
-    rdfs:label "Avance F nulo anterior al ciclo" ;
-    ns1:identificador "1907" ;
-    ns1:solucionaFallo ns1:Parametro_AvanceF ;
-    ns1:textoExtracto "1907 'Avance F nulo anterior al ciclo' DETECCIÓN Durante la ejecución del ciclo. CAUSA El avance de mecanizado tiene valor 0. SOLUCIÓN Definir un avance mayor que 0." .
+ns1:EsperarAQueElCNCTermineLaSimulacionOEjecucion a ns1:TareaMantenimiento ;
+    rdfs:label "Esperar a que el CNC termine la simulación o ejecución" ;
+    ns1:solucionaFallo ns1:CajeraConIslasCajeraYaEnEjecucion ;
+    ns1:textoExtracto "SOLUCIÓN Esperar a que el CNC termine la simulación o ejecución." .
 
-ns1:Fallo_1908 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se ha programado sobrante de material" ;
-    ns1:identificador "1908" ;
-    ns1:solucionaFallo ns1:Parametro_SobranteMaterial ;
-    ns1:textoExtracto "1908 'No se ha programado sobrante de material' DETECCIÓN Durante la ejecución del ciclo. CAUSA La demasía para el acabado tiene valor 0. SOLUCIÓN Definir una demasía para el acabado mayor que 0." .
+ns1:CajeraConIslasArcoMalProgramadoEnPerfil a ns1:DiagnosticoFallo ;
+    rdfs:label "'Cajera con islas: Arco mal programado en perfil'" ;
+    ns1:textoExtracto "'Cajera con islas: Arco mal programado en perfil' DETECCIÓN Durante la ejecución del ciclo. CAUSA En algún perfil de la cajera hay un arco mal definido o el perfil se ha modificado con otro programa diferente al editor de perfiles." .
 
-ns1:Fallo_1909 a ns1:DiagnosticoFallo ;
-    rdfs:label "Paso de desbaste nulo" ;
-    ns1:identificador "1909" ;
-    ns1:solucionaFallo ns1:Parametro_PasoDesbaste ;
-    ns1:textoExtracto "1909 'Paso de desbaste nulo' DETECCIÓN Durante la ejecución del ciclo. CAUSA El paso de mecanizado tiene valor 0. SOLUCIÓN Definir un paso de mecanizado mayor que 0." .
+ns1:CajeraConIslasCajeraYaEnEjecucion a ns1:DiagnosticoFallo ;
+    rdfs:label "'Cajera con islas: Cajera ya en ejecución'" ;
+    ns1:textoExtracto "'Cajera con islas: Cajera ya en ejecución' DETECCIÓN Durante la ejecución del ciclo. CAUSA El CNC no puede simular o ejecutar la cajera porque ésta ya se encuentra en ejecución o simulación." .
 
-ns1:Fallo_1910 a ns1:DiagnosticoFallo ;
-    rdfs:label "Paso de desbaste mayor que la anchura de la cuchilla" ;
-    ns1:identificador "1910" ;
-    ns1:textoExtracto "1910 'Paso de desbaste mayor que la anchura de la cuchilla' DETECCIÓN Durante la ejecución del ciclo. CAUSA El paso de desbaste es mayor que la anchura de la cuchilla." .
+ns1:CajeraConIslasFDeSemiacabadoNoValida_a866ccc265 a ns1:DiagnosticoFallo ;
+    rdfs:label "'Cajera con islas: F de semiacabado no válida'" ;
+    ns1:textoExtracto "'Cajera con islas: F de semiacabado no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA El avance para la operación de semiacabado tiene valor 0." .
 
-ns1:Parametro_FactorForma a ns1:Parametro ;
-    rdfs:label "Factor de forma de la herramienta" ;
-    ns1:textoExtracto "El factor de forma no es válido para el ciclo programado." .
+ns1:CajeraConIslasGeometriaDeLaCajeraNoValida a ns1:DiagnosticoFallo ;
+    rdfs:label "'Cajera con islas: Geometría de la cajera no válida'" ;
+    ns1:textoExtracto "'Cajera con islas: Geometría de la cajera no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA En algún perfil de la cajera hay un tramo mal definido (redondeos, chaflanes, etc)." .
 
-ns1:Herramienta_Gen_rica a ns1:Herramienta ;
-    rdfs:label "Herramienta de mecanizado" ;
-    ns1:textoExtracto "Posicionar la herramienta adecuadamente o cambiar de herramienta." .
-
-ns1:Parametro_AnchuraCuchilla a ns1:Parametro ;
-    rdfs:label "Anchura de la cuchilla" ;
-    ns1:textoExtracto "La anchura de la herramienta tiene valor 0." ;
-    ns1:valor "0" .
-
-ns1:Parametro_AvanceF a ns1:Parametro ;
-    rdfs:label "Avance de mecanizado (F)" ;
-    ns1:textoExtracto "El avance de mecanizado tiene valor 0." ;
-    ns1:valor "0" .
-
-ns1:Parametro_PasoDesbaste a ns1:Parametro ;
-    rdfs:label "Paso de desbaste" ;
-    ns1:textoExtracto "El paso de desbaste es mayor que la anchura de la cuchilla." .
-
-ns1:Parametro_SobranteMaterial a ns1:Parametro ;
-    rdfs:label "Demasía para el acabado" ;
-    ns1:textoExtracto "La demasía para el acabado tiene valor 0." ;
-    ns1:valor "0" .
+ns1:CajeraConIslasSDeSemiacabadoNoValida a ns1:DiagnosticoFallo ;
+    rdfs:label "'Cajera con islas: S de semiacabado no válida'" ;
+    ns1:textoExtracto "'Cajera con islas: S de semiacabado no válida' DETECCIÓN Durante la ejecución del ciclo. CAUSA La velocidad para la operación de semiacabado tiene valor 0." .
 

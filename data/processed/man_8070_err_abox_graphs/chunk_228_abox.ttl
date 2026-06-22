@@ -1,24 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1465 a ns1:DiagnosticoFallo ;
-    rdfs:label "Conflicto de activación simultánea RTCP/TLC"@es ;
-    ns1:solucionaFallo ns1:Alarma_1465 ;
-    ns1:textoExtracto "El CNC ha intentado activar una de las funciones estando la otra activa. No es posible tener ambas funciones activas simultáneamente."@es .
+ns1:IndicarElFicheroQueContieneElPerfil a ns1:TareaMantenimiento ;
+    rdfs:label "Indicar el fichero que contiene el perfil" ;
+    ns1:solucionaFallo ns1:PerfilNulo ;
+    ns1:textoExtracto "SOLUCIÓN En el ciclo de perfil del editor de ciclos hay que indicar el fichero que contiene el perfil." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:activaAlarma ns1:Alarma_1465,
-        ns1:Alarma_1466 ;
-    ns1:textoExtracto "El CNC ha intentado activar una de las funciones (RTCP/TLC)."@es .
+ns1:NombreDeEjeDemasiadoLargo a ns1:DiagnosticoFallo ;
+    rdfs:label "Nombre de eje demasiado largo" ;
+    ns1:textoExtracto "'Nombre de eje demasiado largo' DETECCIÓN Durante la ejecución. CAUSA El nombre del eje supera la longitud máxima permitida de dos caracteres. SOLUCIÓN El nombre del eje estará definido por 1 ó 2 caracteres." .
 
-ns1:Alarma_1466 a ns1:Alarma ;
-    rdfs:label "Alarma 1466: Restricción de programación G8 en bloques G36/G37/G38/G39"@es ;
-    ns1:identificador "1466" ;
-    ns1:textoExtracto "'No se puede programar G8 como segundo bloque de movimiento para G36/G37/G38/G39' DETECCIÓN Durante la ejecución."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:POLYFaltanParametros,
+        ns1:POLYValorDeParametroNoValido,
+        ns1:VariableInexistenteParaElTipoDeRegulador_ff53b52f5e ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1465 a ns1:Alarma ;
-    rdfs:label "Alarma 1465: Incompatibilidad RTCP/TLC"@es ;
-    ns1:identificador "1465" ;
-    ns1:textoExtracto "'Las funciones RTCP y TLC son incompatibles' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar una de las funciones estando la otra activa. SOLUCIÓN No es posible tener ambas funciones activas simultáneamente."@es .
+ns1:POLYFaltanParametros a ns1:DiagnosticoFallo ;
+    rdfs:label "#POLY: Faltan parámetros" ;
+    ns1:textoExtracto "'#POLY: Faltan parámetros' DETECCIÓN Durante la ejecución. CAUSA En la programación de la sentencia #POLY falta algún parámetro obligatorio." .
+
+ns1:POLYValorDeParametroNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "#POLY: Valor de parámetro no válido" ;
+    ns1:textoExtracto "'#POLY: Valor de parámetro no válido' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • Los parámetros de interpolación del polinomio no son correctos. • El radio de curvatura es menor o igual que cero." .
+
+ns1:PerfilNulo a ns1:DiagnosticoFallo ;
+    rdfs:label "Perfil nulo" ;
+    ns1:textoExtracto "'PERFIL: Perfil nulo' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • En el ciclo de perfil del editor de ciclos no se ha indicado el fichero que contiene el perfil. • El fichero indicado en el ciclo de perfil del editor de ciclos está vacío." .
+
+ns1:VariableInexistenteParaElTipoDeRegulador_ff53b52f5e a ns1:DiagnosticoFallo ;
+    rdfs:label "Variable inexistente para el tipo de regulador" ;
+    ns1:textoExtracto "'Variable inexistente para el tipo de regulador' DETECCIÓN Durante la ejecución. CAUSA La variable no existe para el tipo de regulador programado (analógico, simulado o Sercos). SOLUCIÓN Revisar la programación." .
 

@@ -1,41 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagramaComportamientoEjeRotativo a ns1:Esquema ;
-    rdfs:label "Comportamiento de eje rotativo de posicionamiento" ;
-    ns1:textoExtracto "Tres diagramas polares comparan el comportamiento de un eje rotativo 'de posicionamiento' (camino más corto), mostrando arcos de 60° y 300° con flechas que indican trayectorias mínima y alternativa; los rótulos B300/–B300 señalan límites de módulo y la cota visible." .
+ns1:SistemaHidraulicoMultieje a ns1:Sistema ;
+    rdfs:label "Sistema multieje compuesto por dos ejes controlados por un único motor" ;
+    ns1:textoExtracto "Grupo multieje compuesto por dos ejes controlados por un único motor." ;
+    ns1:tieneComponente ns1:ComponenteMecanico_9da0e03f3d,
+        ns1:ModuloAccionamiento,
+        ns1:ModuloRemotoCAN,
+        ns1:ReguladorSercos .
 
-ns1:InterfazOpenPCSRemoto a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de búsqueda OPENPCS Remoto" ;
-    ns1:ilustradoEn ns1:EsquemaNomenclaturaEjes ;
-    ns1:textoExtracto "Se ven campos de búsqueda, filtros y área de resultados, como referencia visual para acceder a la documentación de variables." .
+ns1:ComponenteMecanico_9da0e03f3d a ns1:ComponenteMecanico ;
+    rdfs:label "Motor principal del sistema multieje" ;
+    ns1:textoExtracto "un solo motor, mediante acoplamientos, gobierna alternativamente dos ejes (A1 y A2)" .
 
-ns1:SistemaEjeTandem a ns1:Sistema ;
-    rdfs:label "Ejemplo de eje tándem con piñones y cremallera" ;
-    ns1:compuestoPor ns1:CremalleraEjeTandem,
-        ns1:MotorEsclavoEjeTandem,
-        ns1:MotorMaestroEjeTandem ;
-    ns1:textoExtracto "Ejemplo de un eje tándem compuesto por dos piñones y una cremallera. Ilustración de arquitectura gantry con dos motores (maestro y esclavo) engranados sobre la misma cremallera." .
+ns1:ModuloAccionamiento a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo de accionamiento" ;
+    ns1:textoExtracto "la captación directa entra en la segunda entrada del regulador Sercos; se distinguen captación de motor y directa, y el lazo Sercos hacia el módulo de accionamiento." .
 
-ns1:CremalleraEjeTandem a ns1:ComponenteMecanico ;
-    rdfs:label "Cremallera del eje tándem" ;
-    ns1:textoExtracto "Ejemplo de un eje tándem compuesto por dos piñones y una cremallera." .
+ns1:ModuloRemotoCAN a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo remoto CANfagor" ;
+    ns1:textoExtracto "Diagrama de cableado con módulo remoto CANfagor de contadoras (X1…X5, CAN L/H, alimentación y terminaciones)." .
 
-ns1:EsquemaNomenclaturaEjes a ns1:Esquema ;
-    rdfs:label "Norma DIN 66217 para nomenclatura de ejes" ;
-    ns1:detalladoEnEsquema ns1:VisualizacionCotasEjesRotativos ;
-    ns1:identificador "DIN 66217" ;
-    ns1:textoExtracto "Ilustración conceptual de la norma DIN 66217 para nomenclatura de ejes: dibujos con triedro XYZ y flechas que indican ejes principales (X, Y, Z), auxiliares paralelos (U, V, W) y rotativos (A, B, C) alrededor de X, Y, Z respectivamente. La gráfica sitúa los ejes respecto al plano de trabajo y el eje perpendicular, ayudando a identificar la función de cada eje en la máquina." .
-
-ns1:MotorEsclavoEjeTandem a ns1:ComponenteMecanico ;
-    rdfs:label "Motor esclavo del eje tándem" ;
-    ns1:textoExtracto "Ilustración de arquitectura gantry con dos motores (maestro y esclavo) engranados sobre la misma cremallera." .
-
-ns1:MotorMaestroEjeTandem a ns1:ComponenteMecanico ;
-    rdfs:label "Motor maestro del eje tándem" ;
-    ns1:textoExtracto "Ilustración de arquitectura gantry con dos motores (maestro y esclavo) engranados sobre la misma cremallera." .
-
-ns1:VisualizacionCotasEjesRotativos a ns1:Esquema ;
-    rdfs:label "Visualización de cotas en ejes rotativos (modo módulo)" ;
-    ns1:textoExtracto "Conjunto de tres esquemas circulares que representan la visualización de cotas en ejes rotativos en modo 'módulo', con marcas de ±300° y flechas de sentido de giro. Se ilustran límites superior e inferior del módulo y cómo se mapea la posición angular alrededor de 0°, destacando sectores sombreados y anotaciones de 30° para indicar direccionalidad y rango visible." .
+ns1:ReguladorSercos a ns1:ComponenteElectrico ;
+    rdfs:label "Regulador Sercos" ;
+    ns1:textoExtracto "seleccionados por el regulador; se muestra la captura directa y la arquitectura CAN entre módulos." .
 

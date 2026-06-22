@@ -1,52 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_2310 a ns1:AccionProhibida ;
-    rdfs:label "#VIRTAX: El eje virtual de la herramienta"@es ;
-    ns1:identificador "2310" ;
-    ns1:textoExtracto "#VIRTAX: El eje virtual de la herramienta"@es .
+ns1:AumentarElValorDelAnguloDefinidoEnDEFROT a ns1:TareaMantenimiento ;
+    rdfs:label "Aumentar el valor del ángulo definido en #DEFROT" ;
+    ns1:solucionaFallo ns1:FalloCompatibilidadCinematica ;
+    ns1:textoExtracto "SOLUCIÓN Aumentar el valor del ángulo definido en #DEFROT." .
 
-ns1:Solucion_2309 a ns1:TareaMantenimiento ;
-    rdfs:label "Procedimiento para desactivar #VIRTAX antes de ejecutar funciones"@es ;
-    ns1:solucionaFallo ns1:Fallo_2309 ;
-    ns1:textoExtracto "Desactivar primero la transformación del eje virtual de la herramienta (#VIRTAX), a continuación ejecutar las funciones #OSC, G74 o G198-G199, y por último volver a activar la transformación #VIRTAX."@es .
+ns1:CorregirLaSintaxisDeLaSentenciaPWMOUT a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir la sintaxis de la sentencia #PWMOUT" ;
+    ns1:solucionaFallo ns1:FalloSintaxisSentencia ;
+    ns1:textoExtracto "Programar #PWMOUT ON<[FREQ/F valor, DUTY/D valor]>/OFF." .
 
-ns1:Fallo_2309 a ns1:AccionProhibida ;
-    rdfs:label "#VIRTAX: Programación no permitida con el eje virtual de la herramienta activo"@es ;
-    ns1:identificador "2309" ;
-    ns1:mitigaRiesgo ns1:Herramienta_Virtual ;
-    ns1:textoExtracto "Programación no permitida con el eje virtual de la herramienta activo. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar una de las siguientes funciones mientras la transformación del eje virtual de la herramienta está activa. • Búsqueda de cero; G74. • Modificar los límites de software; G198 - G199. • Sentencia #OSC."@es .
+ns1:DesactivarLaFuncionCSROT a ns1:AccionProhibida ;
+    rdfs:label "Desactivar la función #CSROT" ;
+    ns1:mitigaRiesgo ns1:FalloCompatibilidadCinematica ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar la función #CSROT." .
 
-ns1:Funcion_G198 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Modificar límites de software (G198)"@es ;
-    ns1:identificador "G198" ;
-    ns1:textoExtracto "Modificar los límites de software; G198"@es .
+ns1:ProgramarPWMOUTONFREQFValorDUTYDValorOFF a ns1:AccionProhibida ;
+    rdfs:label "Programar #PWMOUT ON<[FREQ/F valor, DUTY/D valor]>/OFF" ;
+    ns1:textoExtracto "2304 Programar #PWMOUT ON<[FREQ/F valor, DUTY/D valor]>/OFF." .
 
-ns1:Funcion_G199 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Modificar límites de software (G199)"@es ;
-    ns1:identificador "G199" ;
-    ns1:textoExtracto "Modificar los límites de software; G199"@es .
+ns1:FalloSintaxisSentencia a ns1:DiagnosticoFallo ;
+    rdfs:label "La sintaxis de la sentencia no es correcta o hay más información en el" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta o hay más información en el" .
 
-ns1:Funcion_G74 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Búsqueda de cero (G74)"@es ;
-    ns1:identificador "G74" ;
-    ns1:textoExtracto "Búsqueda de cero; G74"@es .
-
-ns1:Funcion_OSC a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Sentencia #OSC"@es ;
-    ns1:identificador "#OSC" ;
-    ns1:textoExtracto "Sentencia #OSC"@es .
-
-ns1:Herramienta_Virtual a ns1:Componente ;
-    rdfs:label "Eje virtual de la herramienta (#VIRTAX)"@es ;
-    ns1:controla ns1:Funcion_G198,
-        ns1:Funcion_G199,
-        ns1:Funcion_G74,
-        ns1:Funcion_OSC ;
-    ns1:identificador "#VIRTAX" ;
-    ns1:textoExtracto "transformación del eje virtual de la herramienta"@es .
+ns1:FalloCompatibilidadCinematica a ns1:DiagnosticoFallo ;
+    rdfs:label "El tipo de cinemática no es compatible con la función #CSROT" ;
+    ns1:textoExtracto "CAUSA El tipo de cinemática no es compatible con la función #CSROT." .
 

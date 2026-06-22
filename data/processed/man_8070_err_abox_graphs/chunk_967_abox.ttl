@@ -1,81 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_9550 a ns1:DiagnosticoFallo ;
-    rdfs:label "Nivel de tensión por debajo del 70%"@es ;
-    ns1:identificador "9550" ;
-    ns1:solucionaFallo ns1:RevisionDeTensionesDeRedYCableadoHastaLaTarjetaSense ;
-    ns1:textoExtracto "Durante el funcionamiento habitual del sistema. CAUSA: Bajada en la tensión de red. Durante un breve periodo, la tensión de red no ha alcanzado el 70 % del valor esperado. SOLUCIÓN: Revisar tensiones de red y cableado hasta la tarjeta sense."@es .
+ns1:ComprobarLaAlimentacionDelModuloABSIND_4b4cf53b9e a ns1:AccionProhibida ;
+    rdfs:label "Comprobar la alimentación del módulo ABSIND" ;
+    ns1:solucionaFallo ns1:FalloNivelTension24VDC15VDCBajo,
+        ns1:FalloNivelTension24VDC15VDCHalto ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar la alimentación del módulo ABSIND." .
 
-ns1:Fallo_9551 a ns1:DiagnosticoFallo ;
-    rdfs:label "Nivel de tensión por debajo del 40%"@es ;
-    ns1:identificador "9551" ;
-    ns1:solucionaFallo ns1:Fallo_9550_solucion ;
-    ns1:textoExtracto "Durante el funcionamiento habitual del sistema. CAUSA: Bajada en la tensión de red. Durante un breve periodo, la tensión de red no ha alcanzado el 40 % del valor esperado. SOLUCIÓN: Revisar tensiones de red y cableado hasta la tarjeta sense."@es .
+ns1:SistemaPrincipal a ns1:Sistema ;
+    rdfs:label "Sistema Principal" ;
+    ns1:textoExtracto "Durante el arranque o funcionamiento habitual del sistema." ;
+    ns1:tieneComponente ns1:ModuloABSIND .
 
-ns1:Fallo_9552 a ns1:DiagnosticoFallo ;
-    rdfs:label "Nivel de tensión cerca del 0%"@es ;
-    ns1:identificador "9552" ;
-    ns1:solucionaFallo ns1:Fallo_9550_solucion ;
-    ns1:textoExtracto "Durante el funcionamiento habitual del sistema. CAUSA: Bajada en la tensión de red. Durante un breve periodo, la tensión de red ha sido cercana a 0 V. SOLUCIÓN: Revisar tensiones de red y cableado hasta la tarjeta sense."@es .
+ns1:FalloNivelTension24VDC15VDCBajo a ns1:DiagnosticoFallo ;
+    rdfs:label "Nivel de tensión 24 V DC/15 V DC demasiado bajo" ;
+    ns1:textoExtracto "9532 INDUCTOSYN:Nivel de tensión 24 V DC/15 V DC demasiado bajo." .
 
-ns1:Fallo_9553 a ns1:DiagnosticoFallo ;
-    rdfs:label "Alcanzado límite de velocidad"@es ;
-    ns1:identificador "9553" ;
-    ns1:monitoreaParametro ns1:LimiteDeVelocidad550Hz ;
-    ns1:textoExtracto "Durante la ejecución. CAUSA: Un regulador incluido en la lista de productos doble uso (identificados con el texto -MDU) ha intentado superar los 550 Hz para alcanzar la velocidad programada. SOLUCIÓN: Los reguladores incluidos en la lista de productos doble uso (identificados con el texto -MDU) no pueden superar los 550 Hz. No es posible alcanzar esa velocidad."@es .
+ns1:FalloNivelTension24VDC15VDCHalto a ns1:DiagnosticoFallo ;
+    rdfs:label "Nivel de tensión 24 V DC/15 V DC demasiado alto" ;
+    ns1:textoExtracto "9533 INDUCTOSYN:Nivel de tensión 24 V DC/15 V DC demasiado alto." .
 
-ns1:Fallo_9555 a ns1:DiagnosticoFallo ;
-    rdfs:label "Apagado inesperado del regulador"@es ;
-    ns1:identificador "9555" ;
-    ns1:solucionaFallo ns1:RevisionDeAlimentacionDeReguladores ;
-    ns1:textoExtracto "Durante el arranque del sistema. CAUSA: Apagado inesperado del regulador. SOLUCIÓN: Revisar la alimentación de los reguladores."@es .
-
-ns1:Fallo_9557 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cortocircuito en la resistencia de Ballast"@es ;
-    ns1:identificador "9557" ;
-    ns1:solucionaFallo ns1:RevisionDeConexionadoEIntegridadDeLaResistenciaDeBallast ;
-    ns1:textoExtracto "Durante el funcionamiento habitual del sistema. CAUSA: Límite de corriente en la resistencia de Ballast. SOLUCIÓN: Revisar el conexionado e integridad de la resistencia de Ballast."@es .
-
-ns1:Fallo_9558 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sobrecarga de la resistencia de Ballast"@es ;
-    ns1:identificador "9558" ;
-    ns1:monitoreaParametro ns1:Resistencia_Ballast ;
-    ns1:textoExtracto "Durante el funcionamiento habitual del sistema."@es .
-
-ns1:Regulador_MDU a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador de productos doble uso (-MDU)"@es ;
-    ns1:identificador "-MDU" ;
-    ns1:monitoreaParametro ns1:Fallo_9553_parametro ;
-    ns1:textoExtracto "Un regulador incluido en la lista de productos doble uso (identificados con el texto -MDU) ha intentado superar los 550 Hz para alcanzar la velocidad programada."@es .
-
-ns1:Fallo_9553_parametro a ns1:Parametro ;
-    rdfs:label "Límite de velocidad (550 Hz)"@es ;
-    ns1:textoExtracto "Los reguladores incluidos en la lista de productos doble uso (identificados con el texto -MDU) no pueden superar los 550 Hz."@es ;
-    ns1:valor "550" .
-
-ns1:LimiteDeVelocidad550Hz a ns1:Parametro ;
-    rdfs:label "Límite de velocidad (550 Hz)"@es ;
-    ns1:textoExtracto "Los reguladores incluidos en la lista de productos doble uso (identificados con el texto -MDU) no pueden superar los 550 Hz."@es ;
-    ns1:valor "550" .
-
-ns1:Resistencia_Ballast a ns1:ComponenteElectrico ;
-    rdfs:label "Resistencia de Ballast"@es ;
-    ns1:textoExtracto "Límite de corriente en la resistencia de Ballast."@es .
-
-ns1:RevisionDeAlimentacionDeReguladores a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de alimentación de reguladores"@es ;
-    ns1:textoExtracto "Revisar la alimentación de los reguladores."@es .
-
-ns1:RevisionDeConexionadoEIntegridadDeLaResistenciaDeBallast a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de conexionado e integridad de la resistencia de Ballast"@es ;
-    ns1:textoExtracto "Revisar el conexionado e integridad de la resistencia de Ballast."@es .
-
-ns1:RevisionDeTensionesDeRedYCableadoHastaLaTarjetaSense a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de tensiones de red y cableado hasta la tarjeta sense"@es ;
-    ns1:textoExtracto "Revisar tensiones de red y cableado hasta la tarjeta sense."@es .
-
-ns1:Fallo_9550_solucion a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de tensiones de red y cableado hasta la tarjeta sense"@es ;
-    ns1:textoExtracto "Revisar tensiones de red y cableado hasta la tarjeta sense."@es .
+ns1:ModuloABSIND a ns1:ComponenteElectrico ;
+    rdfs:label "Módulo ABSIND" ;
+    ns1:textoExtracto "Comprobar la alimentación del módulo ABSIND." .
 

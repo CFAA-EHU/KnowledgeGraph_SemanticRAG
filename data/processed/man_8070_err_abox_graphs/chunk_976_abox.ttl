@@ -1,54 +1,66 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error9630 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 9630: Error de comunicación en captación"@es ;
-    ns1:identificador "9630" ;
-    ns1:solucionaFallo ns1:ComprobacionCableadoCaptador9630 ;
-    ns1:textoExtracto "9630 Error de comunicación en captación. No se recibió acknowledge. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Error en la lectura de la cota absoluta; no se recibió acknowledge."@es .
+ns1:ContacteConFagorAutomation_0ee6cc7548 a ns1:AccionProhibida ;
+    rdfs:label "Contacte con Fagor Automation" ;
+    ns1:textoExtracto "Contacte con Fagor Automation." .
 
-ns1:Error9631 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 9631: ABSIND - Error de sincronismo"@es ;
-    ns1:identificador "9631" ;
-    ns1:solucionaFallo ns1:ComprobacionConexionABSIND9631 ;
-    ns1:textoExtracto "9631 ABSIND: Error de sincronismo. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El regulador ha perdido la sincronización con el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND o a un problema de conexionado entre el módulo ABSIND y el regulador."@es .
+ns1:ContacteConFagorAutomation_9c510f761d a ns1:AccionProhibida ;
+    rdfs:label "Contacte con Fagor Automation" ;
+    ns1:solucionaFallo ns1:ElReguladorNoRespondePosibleMalFuncionamientoConexionadoEtc_a78e1ee023,
+        ns1:ErrorInternoDelRegulador_053d74213a ;
+    ns1:textoExtracto "SOLUCIÓN Contacte con Fagor Automation." .
 
-ns1:ReguladorSistema a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador del sistema"@es ;
-    ns1:controla ns1:ModuloABSIND ;
-    ns1:textoExtracto "El regulador ha perdido la sincronización con el módulo ABSIND"@es .
+ns1:EliminarLaCausaDelErrorYResetearElRegulador_7781110ce9 a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar la causa del error y resetear el regulador" ;
+    ns1:solucionaFallo ns1:ReguladorEnEstadoDeError ;
+    ns1:textoExtracto "SOLUCIÓN Eliminar la causa del error y resetear el regulador." .
 
-ns1:CableadoCaptacion a ns1:ComponenteElectrico ;
-    rdfs:label "Cableado del sistema de captación"@es ;
-    ns1:textoExtracto "Compruebe el cable y el conexionado con el captador."@es .
+ns1:RealizarUnResetDelError_aad517e1a7 a ns1:TareaMantenimiento ;
+    rdfs:label "Realizar un reset del error" ;
+    ns1:solucionaFallo ns1:DeteccionDeCortocircuitoEnElRegulador ;
+    ns1:textoExtracto "SOLUCIÓN Las posibles soluciones son las siguientes: • Realizar un reset del error." .
 
-ns1:CaptadorCota a ns1:Sensor ;
-    rdfs:label "Captador de cota absoluta"@es ;
-    ns1:monitoreaParametro ns1:ParametroCotaAbsoluta ;
-    ns1:textoExtracto "Error en la lectura de la cota absoluta; no se recibió acknowledge."@es .
+ns1:RevisarElConexionadoDelEncoder_9152b1ee54 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado del encoder" ;
+    ns1:solucionaFallo ns1:ElReguladorHaDetectadoUnErrorEnLasSenalesVppDelEncoder ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el conexionado del encoder." .
 
-ns1:ComprobacionCableadoCaptador9630 a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobación de cable y conexionado con el captador (Error 9630)"@es ;
-    ns1:requiereMantenimiento ns1:SistemaCaptacion ;
-    ns1:textoExtracto "Compruebe el cable y el conexionado con el captador."@es .
+ns1:RevisarLaParametrizacionYElConexionadoDelEncoder_bef54e60b7 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la parametrización y el conexionado del encoder" ;
+    ns1:solucionaFallo ns1:ElReguladorHaDetectadoUnErrorEnLaCorrelacionDeLosPulsosEntreDosSenale_d8b811e46b ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la parametrización y el conexionado del encoder." .
 
-ns1:ComprobacionConexionABSIND9631 a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobación de conexión y cableado del módulo ABSIND (Error 9631)"@es ;
-    ns1:requiereMantenimiento ns1:ModuloABSIND ;
-    ns1:textoExtracto "Comprobar que la conexión y el cableado son satisfactorios."@es .
+ns1:RevisarSeleccionDeLaResistenciaDeBallast a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar selección de la resistencia de Ballast" ;
+    ns1:solucionaFallo ns1:ElCicloDeTrabajoEsDemasiadoExigenteParaLaResistenciaDeBallast ;
+    ns1:textoExtracto "SOLUCIÓN Revisar selección de la resistencia de Ballast." .
 
-ns1:ParametroCotaAbsoluta a ns1:Parametro ;
-    rdfs:label "Cota absoluta"@es ;
-    ns1:textoExtracto "Error en la lectura de la cota absoluta"@es ;
-    ns1:valor "lectura incorrecta"@es .
+ns1:DeteccionDeCortocircuitoEnElRegulador a ns1:DiagnosticoFallo ;
+    rdfs:label "Detección de cortocircuito en el regulador" ;
+    ns1:textoExtracto "CAUSA Detección de cortocircuito en el regulador." .
 
-ns1:SistemaCaptacion a ns1:Sistema ;
-    rdfs:label "Sistema de captación de cota absoluta"@es ;
-    ns1:textoExtracto "Error en la lectura de la cota absoluta; no se recibió acknowledge."@es ;
-    ns1:tieneComponente ns1:CableadoCaptacion,
-        ns1:CaptadorCota .
+ns1:ElCicloDeTrabajoEsDemasiadoExigenteParaLaResistenciaDeBallast a ns1:DiagnosticoFallo ;
+    rdfs:label "El ciclo de trabajo es demasiado exigente para la resistencia de Ballast" ;
+    ns1:textoExtracto "CAUSA El ciclo de trabajo es demasiado exigente para la resistencia de Ballast." .
 
-ns1:ModuloABSIND a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo ABSIND"@es ;
-    ns1:textoExtracto "El regulador ha perdido la sincronización con el módulo ABSIND, lo que ha podido producir una lectura de cota incorrecta."@es .
+ns1:ElReguladorHaDetectadoUnErrorEnLaCorrelacionDeLosPulsosEntreDosSenale_d8b811e46b a ns1:DiagnosticoFallo ;
+    rdfs:label "El regulador ha detectado un error en la correlación de los pulsos entre dos señales de I0 del encoder" ;
+    ns1:textoExtracto "CAUSA El regulador ha detectado un error en la correlación del pulsos entre dos señales de I0 del encoder." .
+
+ns1:ElReguladorHaDetectadoUnErrorEnLasSenalesVppDelEncoder a ns1:DiagnosticoFallo ;
+    rdfs:label "El regulador ha detectado un error en las señales Vpp del encoder" ;
+    ns1:textoExtracto "CAUSA El regulador ha detectado un error en las señales Vpp del encoder." .
+
+ns1:ElReguladorNoRespondePosibleMalFuncionamientoConexionadoEtc_a78e1ee023 a ns1:DiagnosticoFallo ;
+    rdfs:label "El regulador no responde; posible mal funcionamiento, conexionado, etc." ;
+    ns1:textoExtracto "CAUSA El regulador no responde; posible mal funcionamiento, conexionado, etc." .
+
+ns1:ErrorInternoDelRegulador_053d74213a a ns1:DiagnosticoFallo ;
+    rdfs:label "Error interno del regulador" ;
+    ns1:textoExtracto "CAUSA Error interno del regulador." .
+
+ns1:ReguladorEnEstadoDeError a ns1:DiagnosticoFallo ;
+    rdfs:label "Regulador en estado de error" ;
+    ns1:textoExtracto "CAUSA Regulador en estado de error." .
 

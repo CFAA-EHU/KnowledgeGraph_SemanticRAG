@@ -1,108 +1,58 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Fallo_1754 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU RECTANGULAR: Diámetro de herramienta menor que DELTA" ;
-    ns1:identificador "1754" ;
-    ns1:requiereConsumible ns1:Herramienta_Desbaste ;
-    ns1:solucionaFallo ns1:AjustarPasoDeFresadoODiametroDeHerramienta ;
-    ns1:textoExtracto "1754 'MOYU RECTANGULAR: Diámetro de herramienta menor que DELTA' [...] CAUSA En la operación de desbaste o acabado, el diámetro de la herramienta es menor que el paso de fresado (parámetro Δ)." .
-
-ns1:Fallo_1755 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU RECTANGULAR: Diámetro de herramienta ACABADO menor que delta" ;
-    ns1:identificador "1755" ;
-    ns1:requiereConsumible ns1:Herramienta_Acabado ;
-    ns1:solucionaFallo ns1:SeleccionarHerramientaDeMayorDiametroParaAcabado ;
-    ns1:textoExtracto "1755 'MOYU RECTANGULAR: Diámetro de herramienta ACABADO menor que delta' [...] CAUSA El diámetro de la herramienta de acabado es menor que las demasías en las paredes laterales (parámetro δ)." .
-
-ns1:Parametro_DeltaAcabado a ns1:Parametro ;
-    rdfs:label "Demasía lateral (δ)" ;
-    ns1:textoExtracto "el diámetro de la herramienta de acabado es menor que las demasías en las paredes laterales (parámetro δ)." .
-
-ns1:Parametro_DeltaRectangular a ns1:Parametro ;
-    rdfs:label "Paso de fresado (Δ)" ;
-    ns1:textoExtracto "el diámetro de la herramienta es menor que el paso de fresado (parámetro Δ)." .
-
-ns1:Parametro_F a ns1:Parametro ;
-    rdfs:label "Avance (F)" ;
-    ns1:monitoreaParametro ns1:Fallo_1756 ;
-    ns1:textoExtracto "Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z." ;
-    ns1:valor "0.0"^^xsd:float .
-
-ns1:Parametro_P a ns1:Parametro ;
-    rdfs:label "Profundidad de pasada (P)" ;
-    ns1:monitoreaParametro ns1:Fallo_1753 ;
-    ns1:textoExtracto "El parámetro P tiene valor 0. No hay profundidad programada." ;
-    ns1:valor "0.0"^^xsd:float .
-
-ns1:Parametro_S a ns1:Parametro ;
-    rdfs:label "Velocidad (S)" ;
-    ns1:monitoreaParametro ns1:Fallo_1757 ;
-    ns1:textoExtracto "Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado." ;
-    ns1:valor "0.0"^^xsd:float .
-
-ns1:Parametro_T a ns1:Parametro ;
-    rdfs:label "Herramienta (T)" ;
-    ns1:monitoreaParametro ns1:Fallo_1758 ;
-    ns1:textoExtracto "T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada." ;
-    ns1:valor 0 .
-
-ns1:AjustarPasoDeFresadoODiametroDeHerramienta a ns1:AvisoSeguridad ;
-    rdfs:label "Ajustar paso de fresado o diámetro de herramienta" ;
-    ns1:textoExtracto "SOLUCIÓN Reducir el paso de fresado o utilizar una herramienta de diámetro mayor." .
-
-ns1:AsignarProfundidadP0 a ns1:AvisoSeguridad ;
-    rdfs:label "Asignar profundidad (P > 0)" ;
+ns1:AsignarAlParametroUnValorMayorQue0_56a30422b5 a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar al parámetro un valor mayor que 0" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_2658dc6d26,
+        ns1:DiagnosticoFallo_c0701278af ;
     ns1:textoExtracto "SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
 
-ns1:Fallo_1753 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU RECTANGULAR: P = 0" ;
-    ns1:identificador "1753" ;
-    ns1:solucionaFallo ns1:AsignarProfundidadP0 ;
-    ns1:textoExtracto "1753 'MOYU RECTANGULAR: P = 0' [...] CAUSA El parámetro P tiene valor 0. No hay profundidad programada." .
-
-ns1:Fallo_1756 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU CIRCULAR: F = 0" ;
-    ns1:identificador "1756" ;
-    ns1:solucionaFallo ns1:ProgramarAvanceF0 ;
-    ns1:textoExtracto "1756 'MOYU CIRCULAR: F = 0' [...] CAUSA Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z." .
-
-ns1:Fallo_1757 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU CIRCULAR: S = 0" ;
-    ns1:identificador "1757" ;
-    ns1:solucionaFallo ns1:ProgramarVelocidadS0 ;
-    ns1:textoExtracto "1757 'MOYU CIRCULAR: S = 0' [...] CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado." .
-
-ns1:Fallo_1758 a ns1:DiagnosticoFallo ;
-    rdfs:label "MOYU CIRCULAR: T = 0" ;
-    ns1:identificador "1758" ;
-    ns1:requiereConsumible ns1:Herramienta_Acabado,
-        ns1:Herramienta_Desbaste ;
-    ns1:solucionaFallo ns1:ProgramarHerramientaT0 ;
-    ns1:textoExtracto "1758 'MOYU CIRCULAR: T = 0' [...] CAUSA No hay herramienta programada." .
-
-ns1:ProgramarAvanceF0 a ns1:AvisoSeguridad ;
-    rdfs:label "Programar avance (F > 0)" ;
-    ns1:textoExtracto "SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
-
-ns1:ProgramarHerramientaT0 a ns1:AvisoSeguridad ;
-    rdfs:label "Programar herramienta (T ≠ 0)" ;
-    ns1:textoExtracto "SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado." .
-
-ns1:ProgramarVelocidadS0 a ns1:AvisoSeguridad ;
-    rdfs:label "Programar velocidad (S > 0)" ;
-    ns1:textoExtracto "SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
-
-ns1:SeleccionarHerramientaDeMayorDiametroParaAcabado a ns1:AvisoSeguridad ;
-    rdfs:label "Seleccionar herramienta de mayor diámetro para acabado" ;
-    ns1:textoExtracto "SOLUCIÓN Elegir una herramienta de mayor diámetro para la pasada de acabado." .
-
-ns1:Herramienta_Acabado a ns1:Herramienta ;
-    rdfs:label "Herramienta de acabado" ;
+ns1:Herramienta_50f5116ef9 a ns1:Herramienta ;
+    rdfs:label "Herramienta de mayor diámetro para la pasada de acabado" ;
+    ns1:solucionaFallo ns1:DiametroDeHerramientaDeAcabadoMenorQueDelta ;
     ns1:textoExtracto "Elegir una herramienta de mayor diámetro para la pasada de acabado." .
 
-ns1:Herramienta_Desbaste a ns1:Herramienta ;
-    rdfs:label "Herramienta de desbaste" ;
-    ns1:textoExtracto "Programar una herramienta para la operación de desbaste [...] utilizar una herramienta de diámetro mayor." .
+ns1:Herramienta_a71be7a4c6 a ns1:Herramienta ;
+    rdfs:label "Herramienta de menor diámetro" ;
+    ns1:solucionaFallo ns1:DiametroDeHerramientaMayorQueCajera ;
+    ns1:textoExtracto "Elegir una herramienta de menor diámetro." .
+
+ns1:Herramienta_fcdc2821bc a ns1:Herramienta ;
+    rdfs:label "Herramienta de diámetro mayor" ;
+    ns1:solucionaFallo ns1:DiametroDeHerramientaMenorQueElPasoDeFresado ;
+    ns1:textoExtracto "Utilizar una herramienta de diámetro mayor." .
+
+ns1:ProgramarUnaHerramientaParaLaOperacionDeDesbasteOAcabado_c1a32d9560 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una herramienta para la operación de desbaste o acabado" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_8697c74747 ;
+    ns1:textoExtracto "SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado." .
+
+ns1:ReducirElPasoDeFresado a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir el paso de fresado" ;
+    ns1:solucionaFallo ns1:DiametroDeHerramientaMenorQueElPasoDeFresado ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el paso de fresado o utilizar una herramienta de diámetro mayor." .
+
+ns1:DiagnosticoFallo_2658dc6d26 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro S tiene valor 0" ;
+    ns1:textoExtracto "Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado." .
+
+ns1:DiagnosticoFallo_8697c74747 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro T tiene valor 0" ;
+    ns1:textoExtracto "El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada." .
+
+ns1:DiagnosticoFallo_c0701278af a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro F tiene valor 0" ;
+    ns1:textoExtracto "Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z." .
+
+ns1:DiametroDeHerramientaDeAcabadoMenorQueDelta a ns1:DiagnosticoFallo ;
+    rdfs:label "Diámetro de herramienta de acabado menor que delta" ;
+    ns1:textoExtracto "El diámetro de la herramienta de acabado es menor que las demasías en las paredes laterales (parámetro )." .
+
+ns1:DiametroDeHerramientaMayorQueCajera a ns1:DiagnosticoFallo ;
+    rdfs:label "Diámetro de herramienta mayor que cajera" ;
+    ns1:textoExtracto "En la operación de desbaste o acabado, el diámetro de la herramienta es mayor que las dimensiones de la cajera (parámetros L ó H)." .
+
+ns1:DiametroDeHerramientaMenorQueElPasoDeFresado a ns1:DiagnosticoFallo ;
+    rdfs:label "Diámetro de herramienta menor que el paso de fresado" ;
+    ns1:textoExtracto "En la operación de desbaste o acabado, el diámetro de la herramienta es menor que el paso de fresado (parámetro )." .
 

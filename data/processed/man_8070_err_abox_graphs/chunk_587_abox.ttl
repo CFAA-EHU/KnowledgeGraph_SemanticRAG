@@ -1,45 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ErrorCotaCNC_3753 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de cota absoluta en CNC"@es ;
-    ns1:solucionaFallo ns1:SolucionCotaCNC_3753 ;
-    ns1:textoExtracto "CAUSA La cota absoluta del captador no se corresponde con la cota salvada en la última sesión del CNC."@es .
+ns1:ElEjeSeHaMovidoConElCNCApagado a ns1:AvisoSeguridad ;
+    rdfs:label "El eje se ha movido con el CNC apagado" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "'El eje se ha movido con el CNC apagado' DETECCIÓN Durante el arranque del CNC. CAUSA La cota absoluta del regulador no se corresponde con la cota salvada en la última sesión de CNC." .
 
-ns1:ErrorGapCNC_3754 a ns1:DiagnosticoFallo ;
-    rdfs:label "Incompatibilidad entre dirección del sensor y compensación del gap"@es ;
-    ns1:identificador "3754" ;
-    ns1:solucionaFallo ns1:SolucionGapCNC_3754 ;
-    ns1:textoExtracto "3754 Incompatibilidad entre la dirección del sensor y la de compensación del gap. DETECCIÓN Durante la ejecución. CAUSA Con el control de gap en n ejes activo (#GAPCTRL), el ángulo programado para la compensación del gap es incompatible con la dirección del sensor."@es .
+ns1:ErrorEnLaSenalDeLaSondaDuranteElProcesoDeGAPCTRL a ns1:AvisoSeguridad ;
+    rdfs:label "Error en la señal de la sonda durante el proceso de #GAPCTRL" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "3739 Error en la señal de la sonda durante el proceso de #GAPCTRL. DETECCIÓN Durante la ejecución. CAUSA Con el control de gap activo, el CNC lee una distancia mayor que el máximo posible." .
 
-ns1:ParametroCotaEsperada_3753 a ns1:Parametro ;
-    rdfs:label "Cota Esperada del eje"@es ;
-    ns1:textoExtracto "'Cota Esperada'"@es .
+ns1:ErrorEnLaSenalDeLaSondaDuranteElProcesoDeGAPCTRL_c622637fa4 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la señal de la sonda durante el proceso de #GAPCTRL" ;
+    ns1:textoExtracto "3739 Error en la señal de la sonda durante el proceso de #GAPCTRL. DETECCIÓN Durante la ejecución. CAUSA Con el control de gap activo, el CNC lee una distancia mayor que el máximo posible." .
 
-ns1:SensorGapCNC_3754 a ns1:Sensor ;
-    rdfs:label "Sensor de detección de gap en CNC"@es ;
-    ns1:monitoreaParametro ns1:ParametroGap_3754 ;
-    ns1:textoExtracto "la dirección del sensor [...] es incompatible con la dirección del sensor"@es .
+ns1:MaximaDiferenciaDeReferencia a ns1:Parametro ;
+    rdfs:label "Máxima diferencia de referencia" ;
+    ns1:identificador "MAXDIFREF" ;
+    ns1:textoExtracto "El eje se ha movido más de lo indicado en el parámetro MAXDIFREF." .
 
-ns1:ParametroCotaActual_3753 a ns1:Parametro ;
-    rdfs:label "Cota Actual del eje"@es ;
-    ns1:textoExtracto "'Cota Actual'"@es .
+ns1:VerificarPosicionDelEje a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar posición del eje" ;
+    ns1:solucionaFallo ns1:ElEjeSeHaMovidoConElCNCApagado_ce4fff5cc0 ;
+    ns1:textoExtracto "SOLUCIÓN Verificar que la posición del eje es correcta." .
 
-ns1:ParametroGap_3754 a ns1:Parametro ;
-    rdfs:label "Ángulo de compensación del gap (#GAPCTRL)"@es ;
-    ns1:textoExtracto "el ángulo programado para la compensación del gap"@es .
-
-ns1:SensorPosicionCNC_3753 a ns1:Sensor ;
-    rdfs:label "Captador de posición del eje CNC"@es ;
-    ns1:monitoreaParametro ns1:ParametroCotaActual_3753 ;
-    ns1:textoExtracto "La cota absoluta del captador no se corresponde con la cota salvada en la última sesión del CNC"@es .
-
-ns1:SolucionCotaCNC_3753 a ns1:TareaMantenimiento ;
-    rdfs:label "Verificación y reinicio de cota en CNC"@es ;
-    ns1:requiereMantenimiento ns1:SensorPosicionCNC_3753 ;
-    ns1:textoExtracto "SOLUCIÓN Las posibles soluciones son las siguientes: • Verificar que la posición del eje indicada en 'Cota Actual' es correcta. Si es así, pulsar [ENTER] y luego [RESET] para quitar el error y continuar. Si la posición del eje no es correcta, es posible que haya un error en el captador. • Si la posición que debería tener el eje no es 'Cota Actual' sino 'Cota Esperada', quitar el error pulsando [ENTER] y luego [RESET]. A continuación, ejecutar G174 con la posición indicada en 'Cota Esperada' y finalmente reiniciar el CNC para recuperar dicha posición."@es .
-
-ns1:SolucionGapCNC_3754 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de configuración de compensación de gap"@es ;
-    ns1:textoExtracto "Con el control de gap en n ejes activo (#GAPCTRL), el ángulo programado para la compensación del gap es incompatible con la dirección del sensor."@es .
+ns1:ElEjeSeHaMovidoConElCNCApagado_ce4fff5cc0 a ns1:DiagnosticoFallo ;
+    rdfs:label "El eje se ha movido con el CNC apagado" ;
+    ns1:textoExtracto "'El eje se ha movido con el CNC apagado' DETECCIÓN Durante el arranque del CNC. CAUSA La cota absoluta del regulador no se corresponde con la cota salvada en la última sesión de CNC." .
 

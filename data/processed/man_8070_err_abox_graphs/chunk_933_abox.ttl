@@ -1,43 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_933 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 933: Memoria insuficiente para NPOINTS" ;
-    ns1:solucionaFallo ns1:Parametro_NPOINTS ;
-    ns1:textoExtracto "CAUSA No se ha podido alocar la memoria para el número de puntos indicados por el parámetro NPOINTS de Fagor > Diagnosis. SOLUCIÓN Reducir el valor de parámetro máquina NPOINTS de Fagor > Diagnosis." .
+ns1:NumeroMaximoDeEjesYCabezalesSobrepasado a ns1:AvisoSeguridad ;
+    rdfs:label "Número máximo de ejes y cabezales sobrepasado" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "'Mechatrolink:Número máximo de ejes y cabezales sobrepasado' DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC." .
 
-ns1:DiagnosticoFallo_9340 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 9340: Inconsistencia en COUNTERID (Sercos)" ;
-    ns1:solucionaFallo ns1:Parametro_COUNTERID ;
-    ns1:textoExtracto "Contadora Sercos: sets con igual COUNTERID deben tener igual el\\los parámetro(s): DETECCIÓN Durante el arranque del CNC o la validación de los parámetros máquina." .
+ns1:ReducirNumeroDeReguladoresOUtilizarModoMlinkII a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir número de reguladores o utilizar modo Mlink-II" ;
+    ns1:solucionaFallo ns1:ConfiguracionMechatrolinkSuperaElMaximoPermitidoDeEjesYCabezales ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el número de reguladores o utilizar el modo Mlink-II." .
 
-ns1:Parametro_COUNTERID a ns1:Parametro ;
-    rdfs:label "COUNTERID (Sercos)" ;
-    ns1:identificador "COUNTERID" ;
-    ns1:monitoreaParametro ns1:DiagnosticoFallo_9340 ;
-    ns1:textoExtracto "sets con igual COUNTERID" .
-
-ns1:Parametro_LOOPTIME a ns1:Parametro ;
-    rdfs:label "LOOPTIME" ;
-    ns1:identificador "LOOPTIME" ;
-    ns1:monitoreaParametro ns1:DiagnosticoFallo_9339 ;
-    ns1:textoExtracto "tiempo de ciclo definido" .
-
-ns1:Parametro_NPOINTS a ns1:Parametro ;
-    rdfs:label "NPOINTS (Fagor Diagnosis)" ;
-    ns1:identificador "NPOINTS" ;
-    ns1:monitoreaParametro ns1:DiagnosticoFallo_933 ;
-    ns1:textoExtracto "parámetro NPOINTS de Fagor > Diagnosis" .
-
-ns1:Parametro_SWTDELAY a ns1:Parametro ;
-    rdfs:label "SWTDELAY" ;
-    ns1:identificador "SWTDELAY" ;
-    ns1:monitoreaParametro ns1:DiagnosticoFallo_9339 ;
-    ns1:textoExtracto "valor de SWTDELAY" .
-
-ns1:DiagnosticoFallo_9339 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 9339: SWTDELAY excesivo" ;
-    ns1:solucionaFallo ns1:Parametro_LOOPTIME,
-        ns1:Parametro_SWTDELAY ;
-    ns1:textoExtracto "No se admite un SWTDELAY tan grande con LOOPTIME actual. DETECCIÓN Durante la ejecución. CAUSA El valor de SWTDELAY es demasiado grande para el tiempo de ciclo definido. SOLUCIÓN Reducir el valor de parámetro SWTDELAY o aumentar el tiempo de ciclo." .
+ns1:ConfiguracionMechatrolinkSuperaElMaximoPermitidoDeEjesYCabezales a ns1:DiagnosticoFallo ;
+    rdfs:label "Configuración Mechatrolink supera el máximo permitido de ejes y cabezales" ;
+    ns1:textoExtracto "La configuración Mechatrolink supera el máximo permitido de ejes y cabezales (servos e inverters)." .
 

@@ -1,44 +1,36 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ComponenteElectrico_Regulador a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador del eje" ;
-    ns1:controla ns1:Sensor_FeedbackEje ;
-    ns1:textoExtracto "El regulador no está inicializado correctamente." .
+ns1:Alarma_07478dc24f a ns1:Alarma ;
+    rdfs:label "Alarma 3736 - El parámetro máquina PWMOUTPUT es 0",
+        "Alarma 3737 - Placa de expansión no compatible con PWM" ;
+    ns1:activaAlarma ns1:Parametro_e39c869f10 ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución del corte por láser (PWM)." .
 
-ns1:Parametro_MAXDIFREF a ns1:Parametro ;
-    rdfs:label "Límite máximo de diferencia de posición (MAXDIFREF)" ;
-    ns1:textoExtracto "Diferencia de posición mayor que MAXDIFREF" .
+ns1:Alarma_32a30a8965 a ns1:Alarma ;
+    rdfs:label "Alarma 3738 - El eje se ha movido con el CNC apagado" ;
+    ns1:textoExtracto "DETECCIÓN Durante el arranque del CNC." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:activaAlarma ns1:Alarma_3751,
-        ns1:Alarma_3752,
-        ns1:Alarma_3753 ;
-    ns1:textoExtracto "arranque del CNC" ;
-    ns1:tieneComponente ns1:Sensor_FeedbackEje .
+ns1:AsignarAlParametroPWMOUTPUTUnValorDentroDeRango12 a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar al parámetro PWMOUTPUT un valor dentro de rango (1-2)" ;
+    ns1:solucionaFallo ns1:ElParametroPWMOUTPUTNoPuedeTomarValor0 ;
+    ns1:textoExtracto "SOLUCIÓN Asignar al parámetro PWMOUTPUT un valor dentro de rango (1-2)." .
 
-ns1:Alarma_3751 a ns1:Alarma ;
-    rdfs:label "Drive Feedback no válido" ;
-    ns1:identificador "3751" ;
-    ns1:textoExtracto "3751 Drive Feedback no válido. DETECCIÓN Durante el arranque del CNC o tras un reset. CAUSA No se ha podido calcular correctamente el feedback de posición para el eje. El regulador no está inicializado correctamente. SOLUCIÓN Revisar el conexionado y parametrización de los feedbacks, y reiniciar el sistema." .
+ns1:VerificarQueExisteUnaPlacaDeExpansionTipoSercosConLas2PrimerasSalidas_e9acddd69e a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar que existe una placa de expansión tipo Sercos, con las 2 primeras salidas locales preparadas para conmutación rápida" ;
+    ns1:solucionaFallo ns1:ElHardwareNoEstaPreparadoParaLaPrestacionPWM ;
+    ns1:textoExtracto "SOLUCIÓN Verificar que existe una placa de expansión tipo Sercos, con las 2 primeras salidas locales preparadas para conmutación rápida." .
 
-ns1:Alarma_3752 a ns1:Alarma ;
-    rdfs:label "Gap fuera de rango en el límite de posición" ;
-    ns1:identificador "3752" ;
-    ns1:textoExtracto "3752 Gap fuera de rango en el límite de posición. DETECCIÓN Durante la ejecución. CAUSA Durante #GAPCTRL o #LEAP, el eje ha alcanzado el punto de acercamiento sin recibir la señal de sonda. SOLUCIÓN Cambiar la posición de acercamiento a la pieza." .
+ns1:ElHardwareNoEstaPreparadoParaLaPrestacionPWM a ns1:DiagnosticoFallo ;
+    rdfs:label "El hardware no está preparado para la prestación PWM" ;
+    ns1:textoExtracto "CAUSA El hardware no está preparado para la prestación PWM." .
 
-ns1:Alarma_3753 a ns1:Alarma ;
-    rdfs:label "Diferencia de posición mayor que MAXDIFREF" ;
-    ns1:identificador "3753" ;
-    ns1:textoExtracto "3753 Diferencia de posición mayor que MAXDIFREF. Pulsar ENTER + RESET para confirmar. DETECCIÓN Durante el arranque del CNC. CAUSA La cota absoluta del captador no se corresponde con la cota salvada en la última sesión del CNC." .
+ns1:ElParametroPWMOUTPUTNoPuedeTomarValor0 a ns1:DiagnosticoFallo ;
+    rdfs:label "El parámetro PWMOUTPUT no puede tomar valor 0" ;
+    ns1:textoExtracto "CAUSA El parámetro PWMOUTPUT no puede tomar valor 0." .
 
-ns1:Parametro_PosicionEje a ns1:Parametro ;
-    rdfs:label "Posición del eje" ;
-    ns1:textoExtracto "feedback de posición para el eje" .
-
-ns1:Sensor_FeedbackEje a ns1:Sensor ;
-    rdfs:label "Sensor de feedback de posición del eje" ;
-    ns1:monitoreaParametro ns1:Parametro_PosicionEje ;
-    ns1:textoExtracto "No se ha podido calcular correctamente el feedback de posición para el eje." .
+ns1:Parametro_e39c869f10 a ns1:Parametro ;
+    rdfs:label "Parámetro máquina PWMOUTPUT" ;
+    ns1:identificador "PWMOUTPUT" ;
+    ns1:textoExtracto "'El parámetro máquina PWMOUTPUT es 0'" .
 

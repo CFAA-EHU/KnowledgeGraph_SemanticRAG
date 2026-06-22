@@ -1,54 +1,61 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Nodo2_RIO5 a ns1:Sistema ;
-    rdfs:label "Nodo 2: Grupo remoto RIO5"@es ;
-    ns1:identificador "Nodo 2" ;
-    ns1:textoExtracto "Nodo 2: Grupo remoto RIO5 con 3 módulos de 24 entradas digitales cada uno."@es ;
-    ns1:tieneComponente ns1:ModuloEntradasDigitales_RIO5_Nodo2_1,
-        ns1:ModuloEntradasDigitales_RIO5_Nodo2_2,
-        ns1:ModuloEntradasDigitales_RIO5_Nodo2_3 .
+ns1:BloqueEntradaRIOW1_2 a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque Entrada RIOW 1 (I33-I40)" ;
+    ns1:textoExtracto "El primer nodo RIOW como 2 bloques, el resto a partir de I33" .
 
-ns1:Nodo3_RIO5 a ns1:Sistema ;
-    rdfs:label "Nodo 3: Grupo remoto RIO5"@es ;
-    ns1:identificador "Nodo 3" ;
-    ns1:textoExtracto "Nodo 3: Grupo remoto RIO5 con 2 módulos de 24 entradas digitales cada uno."@es ;
-    ns1:tieneComponente ns1:ModuloEntradasDigitales_RIO5_Nodo3_1,
-        ns1:ModuloEntradasDigitales_RIO5_Nodo3_2 .
+ns1:DireccionesDeLosBloquesParaEntradasDigitales a ns1:Parametro ;
+    rdfs:label "Direcciones de los bloques para entradas digitales" ;
+    ns1:identificador "DIMODADDR" ;
+    ns1:textoExtracto "DIMODADDR | - - - | Ver tabla inferior." .
 
-ns1:Esquema_ConexionRIO5 a ns1:Esquema ;
-    rdfs:label "Esquema de conexión RIO5 (24I/16O)"@es ;
-    ns1:detalladoEnEsquema ns1:Modulo_ER_24I16O ;
-    ns1:textoExtracto "POW X1 SP ADD 9AB 8 765 L C X2 X3 | ER 24I/16O CHS O+214V GND +24V X4 GON8D O+294V X5 EED10 GON16D 4 0 RESS CD 3 E 2F1 ERR I1 RUN X6 T 10 AN GLS ND SHH I 1 2 H I 1 3 GLS ND SHH H X7 I24" .
+ns1:DireccionesDeLosBloquesParaSalidasDigitales a ns1:Parametro ;
+    rdfs:label "Direcciones de los bloques para salidas digitales" ;
+    ns1:identificador "DOMODADDR" ;
+    ns1:textoExtracto "DOMODADDR | - - - | Ver tabla inferior." .
 
-ns1:ModuloEntradasDigitales_RIO5_Nodo2_1 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo de 24 entradas digitales (Nodo 2, Grupo 1)"@es ;
-    ns1:identificador "24I" ;
-    ns1:textoExtracto "3 módulos de 24 entradas digitales cada uno"@es .
+ns1:NodoRIOW1_cee689bb19 a ns1:ComponenteElectrico ;
+    rdfs:label "Nodo RIOW 1" ;
+    ns1:textoExtracto "Nodo 1: Grupo remoto RIOW con 16 entradas y 8 salidas digitales." ;
+    ns1:tieneComponente ns1:BloqueEntradaRIOW1_1,
+        ns1:BloqueSalidaRIOW1 .
 
-ns1:ModuloEntradasDigitales_RIO5_Nodo2_2 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo de 24 entradas digitales (Nodo 2, Grupo 2)"@es ;
-    ns1:identificador "24I" ;
-    ns1:textoExtracto "3 módulos de 24 entradas digitales cada uno"@es .
+ns1:NodoRIOW2_bd2735f523 a ns1:ComponenteElectrico ;
+    rdfs:label "Nodo RIOW 2" ;
+    ns1:textoExtracto "Nodo 2: Grupo remoto RIOW con 8 entradas y 8 salidas digitales." ;
+    ns1:tieneComponente ns1:BloqueEntradaRIOW2,
+        ns1:BloqueSalidaRIOW2 .
 
-ns1:ModuloEntradasDigitales_RIO5_Nodo2_3 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo de 24 entradas digitales (Nodo 2, Grupo 3)"@es ;
-    ns1:identificador "24I" ;
-    ns1:textoExtracto "3 módulos de 24 entradas digitales cada uno"@es .
+ns1:NumeroDeBloquesParaEntradasDigitales a ns1:Parametro ;
+    rdfs:label "Número de bloques para entradas digitales" ;
+    ns1:identificador "NDIMOD" ;
+    ns1:textoExtracto "NDIMOD | 3 | 3 bloques; 2 para el primer nodo y 1 para el segundo." ;
+    ns1:valor "3" .
 
-ns1:ModuloEntradasDigitales_RIO5_Nodo3_1 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo de 24 entradas digitales (Nodo 3, Grupo 1)"@es ;
-    ns1:identificador "24I" ;
-    ns1:textoExtracto "2 módulos de 24 entradas digitales cada uno"@es .
+ns1:NumeroDeBloquesParaSalidasDigitales a ns1:Parametro ;
+    rdfs:label "Número de bloques para salidas digitales" ;
+    ns1:identificador "NDOMOD" ;
+    ns1:textoExtracto "NDOMOD | 2 | 2 bloques, uno para cada nodo RIOW." ;
+    ns1:valor "2" .
 
-ns1:ModuloEntradasDigitales_RIO5_Nodo3_2 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo de 24 entradas digitales (Nodo 3, Grupo 2)"@es ;
-    ns1:identificador "24I" ;
-    ns1:textoExtracto "2 módulos de 24 entradas digitales cada uno"@es .
+ns1:SistemaCANopen a ns1:Sistema ;
+    rdfs:label "Sistema CANopen" ;
+    ns1:textoExtracto "Un bus CANopen dispone de los siguientes grupos remotos." .
 
-ns1:Modulo_ER_24I16O a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo ER 24I/16O" ;
-    ns1:identificador "ER 24I/16O" ;
-    ns1:ilustradoEn ns1:Esquema_ConexionRIO5 ;
-    ns1:textoExtracto "ER 24I/16O" .
+ns1:BloqueEntradaRIOW1_1 a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque Entrada RIOW 1 (I1-I8)" ;
+    ns1:textoExtracto "El primer nodo RIOW como 2 bloques, uno de 8 entradas a partir de la I1" .
+
+ns1:BloqueEntradaRIOW2 a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque Entrada RIOW 2 (I113-I120)" ;
+    ns1:textoExtracto "El segundo nodo RIOW como un bloque de 8 entradas a partir de la I113" .
+
+ns1:BloqueSalidaRIOW1 a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque Salida RIOW 1 (O81-O88)" ;
+    ns1:textoExtracto "El primer nodo RIOW como un bloque de 8 salidas a partir de la O81" .
+
+ns1:BloqueSalidaRIOW2 a ns1:ComponenteElectrico ;
+    rdfs:label "Bloque Salida RIOW 2 (O49-O56)" ;
+    ns1:textoExtracto "El segundo nodo RIOW como un bloque de 8 salidas a partir de O49" .
 

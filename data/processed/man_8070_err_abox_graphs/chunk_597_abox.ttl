@@ -1,42 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_IncrementoContajeVolante a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "CAUSA Incremento demasiado grande en el contaje de volante. SOLUCIÓN Revisar la captación conectada en la entrada de volante; niveles de señal, frecuencia, etc." .
+ns1:ConectorX12 a ns1:ComponenteElectrico ;
+    rdfs:label "Conector X12" ;
+    ns1:textoExtracto "Revisar el cableado del conector X12 y del contactor de potencia." .
 
-ns1:ModoOperacion_Manual a ns1:ModoOperacion ;
-    rdfs:label "modo manual" ;
-    ns1:activaAlarma ns1:Error_3812 ;
-    ns1:textoExtracto "En modo manual, durante la lectura del contaje de un volante." .
+ns1:ContactorPotencia a ns1:ComponenteElectrico ;
+    rdfs:label "Contactor de potencia" ;
+    ns1:textoExtracto "Revisar el cableado del conector X12 y del contactor de potencia." .
 
-ns1:Modulo_RCS_S a ns1:ComponenteElectrico ;
-    rdfs:label "módulo RCS-S" ;
-    ns1:textoExtracto "En función del tipo de volante (teclado CAN, contadora CAN, local, módulo RCS-S, etc)" .
+ns1:ReemplazarContactorEstropeado a ns1:AccionProhibida ;
+    rdfs:label "Reemplazar contactor estropeado" ;
+    ns1:textoExtracto "• Contactor estropeado." .
 
-ns1:Volante_ContadoraCAN a ns1:Componente ;
-    rdfs:label "volante (contadora CAN)" ;
-    ns1:textoExtracto "En función del tipo de volante (teclado CAN, contadora CAN, local, módulo RCS-S, etc)" .
+ns1:RevisarCableadoDelConectorX12YDelContactorDePotencia a ns1:AccionProhibida ;
+    rdfs:label "Revisar cableado del conector X12 y del contactor de potencia" ;
+    ns1:textoExtracto "• Revisar el cableado del conector X12 y del contactor de potencia." .
 
-ns1:Volante_Local a ns1:Componente ;
-    rdfs:label "volante (local)" ;
-    ns1:textoExtracto "En función del tipo de volante (teclado CAN, contadora CAN, local, módulo RCS-S, etc)" .
+ns1:TareaMantenimiento_7e9c283e47 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de revisión del cableado del conector X12 y del contactor de potencia" ;
+    ns1:solucionaFallo ns1:FalloSobrecorrienteRPS ;
+    ns1:textoExtracto "• Revisar el cableado del conector X12 y del contactor de potencia." .
 
-ns1:Volante_TecladoCAN a ns1:Componente ;
-    rdfs:label "volante (teclado CAN)" ;
-    ns1:textoExtracto "En función del tipo de volante (teclado CAN, contadora CAN, local, módulo RCS-S, etc)" .
+ns1:TareaMantenimiento_a88fdee0af a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de verificación de alimentación en el conector X12" ;
+    ns1:solucionaFallo ns1:FalloSobrecorrienteRPS ;
+    ns1:textoExtracto "• Falta la alimentación de 24 Vdc en el conector X12 o es superior a 26 Vdc." .
 
-ns1:BusComunicacion_CAN a ns1:Sistema ;
-    rdfs:label "bus CAN" ;
-    ns1:textoExtracto "revisar la coherencia y el nivel de comunicación del bus correspondiente" .
+ns1:TareaMantenimiento_ad226ba057 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de reemplazo del contactor estropeado" ;
+    ns1:solucionaFallo ns1:FalloSobrecorrienteRPS ;
+    ns1:textoExtracto "• Contactor estropeado." .
 
-ns1:EntradaVolante a ns1:ComponenteElectrico ;
-    rdfs:label "entrada de volante" ;
-    ns1:textoExtracto "Revisar la captación conectada en la entrada de volante; niveles de señal, frecuencia, etc." .
+ns1:VerificarAlimentacionDe24VdcEnElConectorX12 a ns1:AccionProhibida ;
+    rdfs:label "Verificar alimentación de 24 Vdc en el conector X12" ;
+    ns1:textoExtracto "• Falta la alimentación de 24 Vdc en el conector X12 o es superior a 26 Vdc." .
 
-ns1:Error_3812 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en refresco de volantes" ;
-    ns1:identificador "3812" ;
-    ns1:solucionaFallo ns1:BusComunicacion_CAN,
-        ns1:EntradaVolante ;
-    ns1:textoExtracto "3812 'Error en refresco de volantes' DETECCIÓN En modo manual, durante la lectura del contaje de un volante. CAUSA Lectura incorrecta del volante." .
+ns1:FalloSobrecorrienteRPS a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobrecorriente en la salida del freno-contactor de RPS" ;
+    ns1:textoExtracto "3759 RPS, fallo en el control del contactor, sobrecorriente en la salida X12 freno-contactor." .
 

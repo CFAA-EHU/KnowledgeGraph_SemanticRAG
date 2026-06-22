@@ -1,23 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ErrorVariableCNCWR a ns1:DiagnosticoFallo ;
-    rdfs:label "Error CNCWR: Variable con valor no permitido" ;
-    ns1:identificador "5026" ;
-    ns1:monitoreaParametro ns1:ParametroCNCWR_ValorCero ;
-    ns1:textoExtracto "5026 'CNCWR:La variable únicamente admite el valor '0'' DETECCIÓN Durante la ejecución de comandos CNCWR. CAUSA El PLC ha intentado escribir un valor diferente de 0 en una variable" .
+ns1:ComprobarLosPermisosDeLaVariable a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar los permisos de la variable" ;
+    ns1:solucionaFallo ns1:EscrituraDeVariableDesdePLCFueraDeRango ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar los permisos de la variable." .
 
-ns1:FalloContadorDeshabilitado a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo: Contador deshabilitado" ;
-    ns1:solucionaFallo ns1:AccionHabilitacionContador ;
-    ns1:textoExtracto "CAUSA El contador está deshabilitado, desde el programa de PLC o desde monitorización. SOLUCIÓN Tras este aviso, el PLC fuerza la habilitación del contador (CEN = 1) de forma automática." .
+ns1:VerificarLaSintaxisDeLaVariableYLosValoresValidos a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la sintaxis de la variable y los valores válidos" ;
+    ns1:solucionaFallo ns1:ErrorSintacticoEnLaEscrituraDeVariableDesdePLC ;
+    ns1:textoExtracto "SOLUCIÓN Verificar la sintaxis de la variable y los valores válidos." .
 
-ns1:AccionHabilitacionContador a ns1:AccionProhibida ;
-    rdfs:label "Habilitación forzada del contador (CEN = 1)" ;
-    ns1:textoExtracto "el PLC fuerza la habilitación del contador (CEN = 1) de forma automática" .
+ns1:VerificarLaSintaxisYLosPermisosDeLaVariable a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la sintaxis y los permisos de la variable" ;
+    ns1:textoExtracto "SOLUCIÓN Verificar la sintaxis y los permisos de la variable." .
 
-ns1:ParametroCNCWR_ValorCero a ns1:Parametro ;
-    rdfs:label "Parámetro CNCWR (valor permitido: 0)" ;
-    ns1:textoExtracto "La variable únicamente admite el valor '0'" ;
-    ns1:valor "0" .
+ns1:ErrorSintacticoEnLaEscrituraDeVariableDesdePLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error sintáctico en la escritura de variable desde PLC" ;
+    ns1:textoExtracto "'Error sintáctico en la escritura de variable desde PLC'" .
+
+ns1:EscrituraDeVariableDesdePLCFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "Escritura de variable desde PLC fuera de rango" ;
+    ns1:textoExtracto "'Escritura de variable desde PLC fuera de rango'" .
 

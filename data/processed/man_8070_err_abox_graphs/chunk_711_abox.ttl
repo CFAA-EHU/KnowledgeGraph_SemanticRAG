@@ -1,67 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ProcesoRearmeAnilloSercos a ns1:ModoOperacion ;
-    rdfs:label "rearme del anillo Sercos"@es ;
-    ns1:textoExtracto "ejecución de dicho proceso debido a un error durante el rearme del bus CAN o del anillo Sercos"@es .
+ns1:ApagarElCNCYQuitarElementosDelBusHastaEntrarEnLosLimites a ns1:AccionProhibida ;
+    rdfs:label "Apagar el CNC y quitar elementos del bus hasta entrar en los límites" ;
+    ns1:textoExtracto "SOLUCIÓN Apagar el CNC y quitar elementos del bus hasta entrar en los límites." .
 
-ns1:ProcesoRearmeBusCAN a ns1:ModoOperacion ;
-    rdfs:label "rearme del bus CAN"@es ;
-    ns1:textoExtracto "ejecución de dicho proceso debido a un error durante el rearme del bus CAN"@es .
+ns1:DetectadoTecladoConfiguradoEnModo15_449030542b a ns1:DiagnosticoFallo ;
+    rdfs:label "'Detectado teclado configurado en modo 15'" ;
+    ns1:textoExtracto "'Detectado teclado configurado en modo 15' DETECCIÓN Tras un reset del CNC. CAUSA El CNC ha detectado un teclado 8065 (qwerty o jog) configurado para comunicarse con versiones anteriores a la V04.10." .
 
-ns1:SistemaComunicacionMaquina a ns1:Sistema ;
-    rdfs:label "Sistema de comunicación máquina (CAN/Sercos)"@es ;
-    ns1:activaAlarma ns1:ErrorCANResetCNC,
-        ns1:ErrorCANValidacionParametros,
-        ns1:ErrorSercosCANResetCNC,
-        ns1:ErrorSercosCANValidacionParametros,
-        ns1:ErrorSercosResetCNC,
-        ns1:ErrorSercosValidacionParametros ;
-    ns1:textoExtracto "Error en Sercos y CAN durante un proceso de reset CNC"@es ;
-    ns1:tieneComponente ns1:ReleEmergencia .
+ns1:ErrorEnLaLecturaDelJogLocal_86c8cf9723 a ns1:DiagnosticoFallo ;
+    rdfs:label "'Error en la lectura del jog local'" ;
+    ns1:textoExtracto "'Error en la lectura del jog local' DETECCIÓN Durante la ejecución del CNC. CAUSA Error reiterativo en la lectura del módulo local de jog de la unidad central ICU MCU." .
 
-ns1:SolucionErrorCAN_Sercos a ns1:TareaMantenimiento ;
-    rdfs:label "Corregir el problema en CAN o Sercos que impide que se cierre el relé de emergencia"@es ;
-    ns1:controla ns1:ReleEmergencia ;
-    ns1:solucionaFallo ns1:ErrorCANResetCNC,
-        ns1:ErrorCANValidacionParametros,
-        ns1:ErrorSercosCANResetCNC,
-        ns1:ErrorSercosCANValidacionParametros,
-        ns1:ErrorSercosResetCNC,
-        ns1:ErrorSercosValidacionParametros ;
-    ns1:textoExtracto "SOLUCIÓN Corregir el problema en CAN o Sercos que impide que se cierre el relé de emergencia."@es .
+ns1:IdentificarLosTeclados8065QwertyYJogYConfigurarlosCorrectamente_85214770e8 a ns1:AccionProhibida ;
+    rdfs:label "Identificar los teclados 8065 (qwerty y jog) y configurarlos correctamente" ;
+    ns1:textoExtracto "SOLUCIÓN Identificar los teclados 8065 (qwerty y jog) y configurarlos correctamente." .
 
-ns1:ErrorCANResetCNC a ns1:AvisoSeguridad ;
-    rdfs:label "Error en CAN durante un proceso de reset CNC"@es ;
-    ns1:identificador "2" ;
-    ns1:textoExtracto "VALOR 2 Error en CAN durante un proceso de reset CNC."@es .
+ns1:PongaseEnContactoConElServicioDeAsistenciaTecnica_6bba71596e a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con el servicio de asistencia técnica" ;
+    ns1:textoExtracto "Póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:ErrorCANValidacionParametros a ns1:AvisoSeguridad ;
-    rdfs:label "Error en CAN durante un proceso de validación de parámetros máquina"@es ;
-    ns1:identificador "8" ;
-    ns1:textoExtracto "VALOR 8 Error en CAN durante un proceso de validación de parámetros máquina."@es .
+ns1:RevisarElHardwareYLaComunicacionEntreJogLocalYUnidadCentral_121ae3ade7 a ns1:AccionProhibida ;
+    rdfs:label "Revisar el hardware y la comunicación entre jog local y unidad central" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el hardware y la comunicación entre jog local y unidad central." .
 
-ns1:ErrorSercosCANResetCNC a ns1:AvisoSeguridad ;
-    rdfs:label "Error en Sercos y CAN durante un proceso de reset CNC"@es ;
-    ns1:identificador "3" ;
-    ns1:textoExtracto "VALOR 3 Error en Sercos y CAN durante un proceso de reset CNC."@es .
+ns1:RevisarLosParametrosMaquinaGeneralesNPT100YPT100_41fde86b6d a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros máquina generales NPT100 y PT100" ;
+    ns1:solucionaFallo ns1:ErrorEnLaHabilitacionDeEntradaPT100_5c7e0eddcf ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina generales NPT100 y PT100." .
 
-ns1:ErrorSercosCANValidacionParametros a ns1:AvisoSeguridad ;
-    rdfs:label "Error en Sercos y CAN durante un proceso de validación de parámetros máquina"@es ;
-    ns1:identificador "12" ;
-    ns1:textoExtracto "VALOR 12 Error en Sercos y CAN durante un proceso de validación de parámetros máquina."@es .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "CNC" ;
+    ns1:textoExtracto "Tras un reset del CNC." .
 
-ns1:ErrorSercosResetCNC a ns1:AvisoSeguridad ;
-    rdfs:label "Error en Sercos durante un proceso de reset CNC"@es ;
-    ns1:identificador "1" ;
-    ns1:textoExtracto "VALOR 1 Error en Sercos durante un proceso de reset CNC."@es .
-
-ns1:ErrorSercosValidacionParametros a ns1:AvisoSeguridad ;
-    rdfs:label "Error en Sercos durante un proceso de validación de parámetros máquina"@es ;
-    ns1:identificador "4" ;
-    ns1:textoExtracto "VALOR 4 Error en Sercos durante un proceso de validación de parámetros máquina."@es .
-
-ns1:ReleEmergencia a ns1:ComponenteElectrico ;
-    rdfs:label "relé de emergencia"@es ;
-    ns1:textoExtracto "el relé de emergencia ha quedado abierto"@es .
+ns1:ErrorEnLaHabilitacionDeEntradaPT100_5c7e0eddcf a ns1:DiagnosticoFallo ;
+    rdfs:label "'Error en la habilitación de entrada PT100'" ;
+    ns1:textoExtracto "'Error en la habilitación de entrada PT100' DETECCIÓN Durante el arranque del sistema. CAUSA Parametrización incorrecta de alguna de las entradas PT100." .
 

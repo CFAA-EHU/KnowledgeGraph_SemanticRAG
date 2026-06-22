@@ -1,42 +1,32 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ConfiguracionCNC a ns1:Parametro ;
-    rdfs:label "Configuración CNC (parámetros máquina, PLC, tablas)" ;
-    ns1:monitoreaParametro ns1:SoftwareCNC_Fagor_8070 ;
-    ns1:textoExtracto "se mantiene la configuración de los parámetros máquina, programa PLC, tablas de herramientas y datos del almacén." .
-
-ns1:CopiaSeguridadCNC a ns1:ElementoSeguridad ;
-    rdfs:label "Copia de seguridad CNC (ficheros ASCII)" ;
-    ns1:mitigaRiesgo ns1:ProcesoActualizacionSoftware ;
+ns1:AceiteHidraulicoISO46 a ns1:Consumible ;
+    rdfs:label "copias de seguridad de la configuración (ficheros ASCII)" ;
     ns1:textoExtracto "Se recomienda tener siempre una copia de seguridad de toda la configuración (ficheros ASCII), a saber las tablas de parámetros máquina, de herramientas, de herramientas activas y del almacén, así como el programa PLC." .
 
-ns1:ErrorIncoherenciaSoftware a ns1:AvisoSeguridad ;
-    rdfs:label "Error de incoherencia de software (bus CAN)" ;
-    ns1:activaAlarma ns1:BusCAN_CNC ;
-    ns1:textoExtracto "Si la carga no se completa con éxito, [...] se visualizará el error correspondiente en el CNC cada vez que se pulse." .
+ns1:ActualizarLaVersionDeSoftware a ns1:TareaMantenimiento ;
+    rdfs:label "Actualizar la versión de software" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:textoExtracto "Las actualizaciones se deben realizar con el software suministrado por Fagor Automation." .
 
-ns1:ModoSetup a ns1:ModoOperacion ;
-    rdfs:label "Modo setup (instalación)" ;
-    ns1:textoExtracto "En un sistema con disco protegido, la instalación del software se debe realizar desde el modo setup." .
+ns1:CNC8070_8b1a52752c a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Para actualizar el software, cerrar todos los programas que estén en marcha, incluido el CNC." .
 
-ns1:NodosRemotos_CAN a ns1:ComponenteElectrico ;
-    rdfs:label "Nodos remotos del bus CAN" ;
-    ns1:controla ns1:BusCAN_CNC ;
-    ns1:textoExtracto "actualizar todos estos dispositivos [nodos remotos del bus CAN] en caso de ser necesario." .
+ns1:ConfiguracionDeLosParametrosMaquina a ns1:Parametro ;
+    rdfs:label "Configuración de los parámetros máquina" ;
+    ns1:textoExtracto "se mantiene la configuración de los parámetros máquina, programa PLC, tablas de herramientas y datos del almacén." .
 
-ns1:ProcesoActualizacionSoftware a ns1:TareaMantenimiento ;
-    rdfs:label "Actualización de software CNC" ;
-    ns1:requiereMantenimiento ns1:SoftwareCNC_Fagor_8070 ;
-    ns1:textoExtracto "Para actualizar el software, cerrar todos los programas que estén en marcha, incluido el CNC. [...] siga las instrucciones indicadas en pantalla." .
+ns1:ProgramaPLC a ns1:Parametro ;
+    rdfs:label "programa PLC" ;
+    ns1:textoExtracto "programa PLC" .
 
-ns1:BusCAN_CNC a ns1:Sistema ;
-    rdfs:label "Bus CAN del CNC" ;
-    ns1:textoExtracto "En cada arranque del CNC se verifica la compatibilidad de las versiones de los nodos remotos detectados en el bus CAN." ;
-    ns1:tieneComponente ns1:NodosRemotos_CAN .
+ns1:TablaHerramientas a ns1:Tabla ;
+    rdfs:label "Tablas de herramientas" ;
+    ns1:textoExtracto "tablas de herramientas" .
 
-ns1:SoftwareCNC_Fagor_8070 a ns1:Sistema ;
-    rdfs:label "Software CNC Fagor 8070" ;
-    ns1:identificador "setup8070_Vxx_xx_xx.exe" ;
-    ns1:textoExtracto "Las actualizaciones se deben realizar con el software suministrado por Fagor Automation. [...] ejecute el programa setup8070_Vxx_xx_xx.exe (donde Vxx_xx_xx es el nombre de la versión)." .
+ns1:PersonalTecnicoAutorizado a ns1:Personal ;
+    rdfs:label "Personal Técnico Autorizado" ;
+    ns1:textoExtracto "Se recomienda tener siempre una copia de seguridad de toda la configuración (ficheros ASCII)" .
 

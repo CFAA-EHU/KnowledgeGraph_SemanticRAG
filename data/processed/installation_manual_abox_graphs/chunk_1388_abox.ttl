@@ -1,35 +1,13 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModuloContadoraSercos_1388 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo contadora Sercos" ;
-    ns1:monitoreaParametro ns1:Parametro_NSERCOUNT_1388,
-        ns1:Parametro_SERCOUNTID_1388 ;
-    ns1:textoExtracto "La contadora Sercos es, al igual que los reguladores, un tipo de nodo del anillo Sercos. Desde el punto de vista de parametrización, las contadoras Sercos tienen una doble identificación, física y lógica, como se explica a continuación. Identificación física del módulo dentro del bus. Cada contadora deberá identificarse físicamente por una numeración (Sercos ID), a través de la ruleta que incorpora en su frontal."^^rdfs:Literal ;
-    ns1:tieneComponente ns1:RuletaIdentificacion_1388 .
+ns1:IndicaElNumeroDeLaSalidaAnalogicaQueSeUtilizaParaLaConsigna a ns1:Parametro ;
+    rdfs:label "Indica el número de la salida analógica que se utiliza para la consigna" ;
+    ns1:identificador "ANAOUTID" ;
+    ns1:textoExtracto "el parámetro ANAOUTID indica el número de la salida analógica que se utiliza para la consigna." .
 
-ns1:Esquema_ConfiguracionSercos_1388 a ns1:Esquema ;
-    rdfs:label "Esquema de configuración de nodos Sercos" ;
-    ns1:textoExtracto "Aunque en el anillo Sercos puede haber hasta 32 nodos, las contadoras Sercos siempre ocupan posiciones entre la 1 y la 15."^^rdfs:Literal .
-
-ns1:Parametro_NSERCOUNT_1388 a ns1:Parametro ;
-    rdfs:label "NSERCOUNT" ;
-    ns1:identificador "NSERCOUNT" ;
-    ns1:textoExtracto "| Parámetro. | Significado. | --- | --- | NSERCOUNT | Número de nodos contadoras Sercos en el bus."^^rdfs:Literal ;
-    ns1:valor "1..8" .
-
-ns1:Parametro_SERCOUNTID_1388 a ns1:Parametro ;
-    rdfs:label "SERCOUNTID" ;
-    ns1:documentadoEn ns1:Tabla_SERCOUNTID_1388 ;
+ns1:IndicaElOrdenLogicoDeLasContadorasSercos a ns1:Parametro ;
+    rdfs:label "Indica el orden lógico de las contadoras Sercos" ;
     ns1:identificador "SERCOUNTID" ;
-    ns1:textoExtracto "| Parámetro. | Significado. | --- | --- | SERCOUNTID | Tabla de identificadores de la ruleta asociadas a las contadoras Sercos."^^rdfs:Literal .
-
-ns1:RuletaIdentificacion_1388 a ns1:ComponenteMecanico ;
-    rdfs:label "Ruleta de identificación física (Sercos ID)" ;
-    ns1:textoExtracto "Cada contadora deberá identificarse físicamente por una numeración (Sercos ID), a través de la ruleta que incorpora en su frontal. Dicho identificador deberá ser único en el anillo, siguiendo un criterio de numeración correlativo de 1 a n y sin huecos (siendo n el número total de nodos Sercos, considerando tanto reguladores como contadoras)."^^rdfs:Literal .
-
-ns1:Tabla_SERCOUNTID_1388 a ns1:Tabla ;
-    rdfs:label "Tabla SERCOUNTID" ;
-    ns1:detalladoEnEsquema ns1:Esquema_ConfiguracionSercos_1388 ;
-    ns1:textoExtracto "La tabla SERCOUNTID de los parámetros máquina generales, nos permite enlazar la numeración lógica de las contadoras Sercos (1..8) con la numeración física determinada por la ruleta de cada nodo (introducir en cada posición de la tabla el Sercos ID asociado a dicha posición lógica de contadora)."^^rdfs:Literal .
+    ns1:textoExtracto "Las contadoras Sercos se numeran según su orden lógico (parámetro SERCOUNTID)." .
 

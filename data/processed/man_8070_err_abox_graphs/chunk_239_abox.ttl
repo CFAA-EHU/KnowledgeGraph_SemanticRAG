@@ -1,33 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Ciclo_PROBE1 a ns1:ModoOperacion ;
-    rdfs:label "Ciclo PROBE1"@es ;
-    ns1:activaAlarma ns1:Error_1495,
-        ns1:Error_1496 ;
-    ns1:textoExtracto "ciclo PROBE1"@es .
+ns1:G63NecesitaProgramarPreviamenteM19 a ns1:DiagnosticoFallo ;
+    rdfs:label "G63 necesita programar previamente M19" ;
+    ns1:textoExtracto "'G63 necesita programar previamente M19' DETECCIÓN Durante la ejecución." .
 
-ns1:Herramienta_CNC a ns1:Herramienta ;
-    rdfs:label "Herramienta CNC con orientación de eje"@es ;
-    ns1:textoExtracto "la herramienta orientada en el sentido negativo del eje"@es .
+ns1:RenombrarEjes a ns1:TareaMantenimiento ;
+    rdfs:label "Renombrar ejes" ;
+    ns1:solucionaFallo ns1:NombreDeEjeRepetidoEnElGrupoResultante ;
+    ns1:textoExtracto "SOLUCIÓN Renombrar los ejes de forma que en el canal no haya dos con el mismo nombre." .
 
-ns1:VariableProgramacion a ns1:Parametro ;
-    rdfs:label "Variable de programación CNC"@es ;
-    ns1:activaAlarma ns1:Error_1497 ;
-    ns1:textoExtracto "tipo de variable"@es .
+ns1:RevisarProgramacion_a8bb4bbddd a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:SintaxisDeLaSentenciaNoEsCorrectaOHayMasInformacionEnElBloque ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque." .
 
-ns1:Error_1495 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1495: '#PROBE1: eje no válido para ciclo de palpador'"@es ;
-    ns1:identificador "1495" ;
-    ns1:textoExtracto "1495 '#PROBE1: eje no válido para ciclo de palpador' DETECCIÓN Durante la ejecución. CAUSA El ciclo PROBE1 da error porque los tres primeros ejes de la configuración actual no coinciden con los tres primeros ejes de la configuración inicial. SOLUCIÓN Restaurar la configuración inicial de los tres primeros ejes del canal."@es .
+ns1:NombreDeEjeRepetidoEnElGrupoResultante a ns1:DiagnosticoFallo ;
+    rdfs:label "Nombre de eje repetido en el grupo resultante" ;
+    ns1:textoExtracto "'Nombre de eje repetido en el grupo resultante' DETECCIÓN Durante la ejecución. CAUSA La sentencia #RENAME ha intentado renombrar más de un eje con el mismo nombre." .
 
-ns1:Error_1496 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1496: '#PROBE1: programación no permitida con #TOOL AX[-] activo'"@es ;
-    ns1:identificador "1496" ;
-    ns1:textoExtracto "1496 '#PROBE1: programación no permitida con #TOOL AX[-] activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar el ciclo PROBE1 teniendo la herramienta orientada en el sentido negativo del eje. SOLUCIÓN Programar #TOOL AX[+] antes de ejecutar el ciclo PROBE1 para orientar la herramienta en el sentido positivo del eje."@es .
-
-ns1:Error_1497 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1497: 'Operador incorrecto para el tipo de variable'"@es ;
-    ns1:identificador "1497" ;
-    ns1:textoExtracto "1497 'Operador incorrecto para el tipo de variable' DETECCIÓN Durante la ejecución."@es .
+ns1:SintaxisDeLaSentenciaNoEsCorrectaOHayMasInformacionEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Sintaxis de la sentencia no es correcta o hay más información en el bloque" ;
+    ns1:textoExtracto "'Programar: #CLEAR [señal, señal, señal, ...]' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque." .
 

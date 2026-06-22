@@ -1,23 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_8739 a ns1:DiagnosticoFallo ;
-    rdfs:label "Orden de operandos invertidos en CPR"@es ;
-    ns1:identificador "8739" ;
-    ns1:textoExtracto "'Orden de operandos invertidos en CPR' DETECCIÓN Durante la edición. CAUSA Programación incorrecta del comando CPR. SOLUCIÓN Programar \"CPR contador preselección\". El valor de preselección podrá ser un registro, un símbolo o un número."@es .
+ns1:DefinirSimboloRecurso a ns1:AccionProhibida ;
+    rdfs:label "Definir símbolo recurso" ;
+    ns1:textoExtracto "'Se esperaba recurso o número en lugar de símbolo'" .
 
-ns1:DiagnosticoFallo_8740 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta operando en SET"@es ;
-    ns1:identificador "8740" ;
-    ns1:textoExtracto "'Falta operando en SET' DETECCIÓN Durante la edición. CAUSA Falta el recurso en el comando SET. SOLUCIÓN Programar \"SET recurso\"."@es .
+ns1:ProgramarDEFPDEFSimboloRecursoODEFPDEFSimboloNumero a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'DEF/PDEF símbolo recurso' o 'DEF/PDEF símbolo número'" ;
+    ns1:solucionaFallo ns1:NoSePuedeRedefinirNumeros_6326d816bf,
+        ns1:NoSePuedeRedefinirRecursos,
+        ns1:SeEsperabaRecursoONumeroEnLugarDeSimbolo ;
+    ns1:textoExtracto "SOLUCIÓN Programar 'DEF/PDEF símbolo recurso' o 'DEF/PDEF símbolo número'." .
 
-ns1:DiagnosticoFallo_8741 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta operando en RES"@es ;
-    ns1:identificador "8741" ;
-    ns1:textoExtracto "'Falta operando en RES' DETECCIÓN Durante la edición. CAUSA Falta el recurso en el comando RES. SOLUCIÓN Programar \"RES recurso\"."@es .
+ns1:RedefinirNumeros a ns1:AccionProhibida ;
+    rdfs:label "Redefinir números" ;
+    ns1:textoExtracto "'No se puede redefinir números'" .
 
-ns1:DiagnosticoFallo_8742 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta operando en CPL"@es ;
-    ns1:identificador "8742" ;
-    ns1:textoExtracto "'Falta operando en CPL' DETECCIÓN Durante la edición."@es .
+ns1:RedefinirRecursos a ns1:AccionProhibida ;
+    rdfs:label "Redefinir recursos" ;
+    ns1:textoExtracto "'No se puede redefinir recursos'" .
+
+ns1:NoSePuedeRedefinirNumeros_6326d816bf a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede redefinir números" ;
+    ns1:textoExtracto "'No se puede redefinir números' DETECCIÓN Durante la edición. CAUSA Comando DEF o PDEF. Hay programados dos números." .
+
+ns1:NoSePuedeRedefinirRecursos a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede redefinir recursos" ;
+    ns1:textoExtracto "'No se puede redefinir recursos' DETECCIÓN Durante la edición. CAUSA Comando DEF o PDEF. Hay programados dos recursos." .
+
+ns1:SeEsperabaRecursoONumeroEnLugarDeSimbolo a ns1:DiagnosticoFallo ;
+    rdfs:label "Se esperaba recurso o número en lugar de símbolo" ;
+    ns1:textoExtracto "'Se esperaba recurso o número en lugar de símbolo' DETECCIÓN Durante la edición. CAUSA Comando DEF o PDEF. Hay programados dos símbolos." .
 

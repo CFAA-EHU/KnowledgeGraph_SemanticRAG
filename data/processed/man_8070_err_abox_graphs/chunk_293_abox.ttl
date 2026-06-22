@@ -1,52 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1632 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para alarma 1632: Módulo de eje no compatible con control tangencial" ;
-    ns1:solucionaFallo ns1:Alarma_1632 ;
-    ns1:textoExtracto "El control tangencial sólo se puede activar en ejes rotativos con módulo 360º." .
+ns1:AsignarAlParametroUnValorCorrecto a ns1:AccionProhibida ;
+    rdfs:label "Asignar al parámetro un valor correcto" ;
+    ns1:textoExtracto "SOLUCIÓN Asignar al parámetro un valor correcto." .
 
-ns1:DiagnosticoFallo_1633 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para alarma 1633: Cabezal no programado" ;
-    ns1:solucionaFallo ns1:Alarma_1633 ;
+ns1:ControlTangencial a ns1:Parametro ;
+    rdfs:label "Control tangencial" ;
+    ns1:controladoPor ns1:TareaMantenimiento_a8d5357981 ;
+    ns1:textoExtracto "'Programar #TANGCTRL ON/OFF/SUSP [ ]'" .
+
+ns1:RevisarLaProgramacion_17e9d559bb a ns1:AccionProhibida ;
+    rdfs:label "Revisar la programación" ;
     ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:DiagnosticoFallo_ParametrosPerfil a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para parámetros de perfil incorrectos (S, E, P, Q)" ;
-    ns1:solucionaFallo ns1:Alarma_1632 ;
-    ns1:textoExtracto "En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E), la subrutina que contiene el perfil (parámetro P) o el fichero que contiene el perfil (parámetro Q). SOLUCIÓN Revisar la programación." .
+ns1:FalloSintaxisSentencia a ns1:DiagnosticoFallo ;
+    rdfs:label "La sintaxis de la sentencia no es correcta o hay más información en el bloque" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque." .
 
-ns1:Parametro_E a ns1:Parametro ;
-    rdfs:label "Parámetro E (final del perfil)" ;
-    ns1:textoExtracto "los parámetros que definen el comienzo y el final del perfil (parámetros S y E)" .
-
-ns1:Parametro_MODLOWLIM a ns1:Parametro ;
-    rdfs:label "Parámetro MODLOWLIM (límite inferior del módulo)" ;
-    ns1:textoExtracto "el límite inferior el parámetro MODLOWLIM" .
-
-ns1:Parametro_MODUPLIM a ns1:Parametro ;
-    rdfs:label "Parámetro MODUPLIM (límite superior del módulo)" ;
-    ns1:textoExtracto "El límite superior del módulo lo define el parámetro MODUPLIM" .
-
-ns1:Parametro_P a ns1:Parametro ;
-    rdfs:label "Parámetro P (subrutina que contiene el perfil)" ;
-    ns1:textoExtracto "la subrutina que contiene el perfil (parámetro P)" .
-
-ns1:Parametro_Q a ns1:Parametro ;
-    rdfs:label "Parámetro Q (fichero que contiene el perfil)" ;
-    ns1:textoExtracto "el fichero que contiene el perfil (parámetro Q)" .
-
-ns1:Parametro_S a ns1:Parametro ;
-    rdfs:label "Parámetro S (comienzo del perfil)" ;
-    ns1:textoExtracto "los parámetros que definen el comienzo y el final del perfil (parámetros S y E)" .
-
-ns1:Alarma_1633 a ns1:Alarma ;
-    rdfs:label "Alarma 1633: Programación de cabezal no especificada" ;
-    ns1:identificador "1633" ;
-    ns1:textoExtracto "'Programar: #DGSPSL <nombre de cabezal>' DETECCIÓN Durante la ejecución." .
-
-ns1:Alarma_1632 a ns1:Alarma ;
-    rdfs:label "Alarma 1632: Eje en control tangencial activo debe ser rotativo con módulo 360°" ;
-    ns1:identificador "1632" ;
-    ns1:textoExtracto "'Un eje en control tangencial activo debe ser rotativo con módulo 360º' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el control tangencial en un eje rotativo de módulo distinto de 360º." .
+ns1:TareaMantenimiento_a8d5357981 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de revisión de programación" ;
+    ns1:solucionaFallo ns1:FalloSintaxisSentencia ;
+    ns1:textoExtracto "Junto a la sentencia hay que programar uno de los comandos ON/SUSP/OFF y a continuación los parámetros de llamada entre corchetes." .
 

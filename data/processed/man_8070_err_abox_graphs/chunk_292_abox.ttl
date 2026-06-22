@@ -1,35 +1,62 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_1630 a ns1:DiagnosticoFallo ;
-    rdfs:label "Asignación incorrecta de parámetros S/E en programación de perfil" ;
-    ns1:monitoreaParametro ns1:Parametro_E,
-        ns1:Parametro_S ;
-    ns1:solucionaFallo ns1:Alarma_1630 ;
-    ns1:textoExtracto "En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E). SOLUCIÓN Asignar un valor correcto a los parámetros S y E." .
+ns1:AsignarAlParametroUnValorCorrecto_b892bbb8d3 a ns1:TareaMantenimiento ;
+    rdfs:label "Asignar al parámetro un valor correcto" ;
+    ns1:solucionaFallo ns1:GamaParaSincronizacionSYNCSETNoValida_6491b70086 ;
+    ns1:textoExtracto "SOLUCIÓN Asignar al parámetro un valor correcto." .
 
-ns1:DiagnosticoFallo_1631 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sintaxis no permitida en programación de perfil ([S,E,<Q>] o [P,<Q>])" ;
-    ns1:monitoreaParametro ns1:Parametro_E,
-        ns1:Parametro_S ;
-    ns1:solucionaFallo ns1:Alarma_1631 ;
-    ns1:textoExtracto "En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E), la" .
+ns1:DefinirElCabezalComoDeIntercambioMantenido a ns1:TareaMantenimiento ;
+    rdfs:label "Definir el cabezal como de intercambio mantenido" ;
+    ns1:solucionaFallo ns1:UnCabezalDeIntercambioTemporalNoPuedeFuncionarComoEjeCMantenido_0d97339824 ;
+    ns1:textoExtracto "SOLUCIÓN Si es posible, definir el cabezal como de intercambio mantenido; si no, utilizar otro cabezal como eje C." .
 
-ns1:Alarma_1630 a ns1:Alarma ;
-    rdfs:label "Programación de perfil mediante etiquetas incorrecta" ;
-    ns1:identificador "1630" ;
-    ns1:textoExtracto "1630 'Programación de perfil mediante etiquetas incorrecta' DETECCIÓN Durante la ejecución. CAUSA En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E)." .
+ns1:GamaParaSincronizacionSYNCSETNoValida_0735a861e9 a ns1:Parametro ;
+    rdfs:label "Gama para sincronización SYNCSET no valida" ;
+    ns1:textoExtracto "'Gama para sincronización SYNCSET no valida' DETECCIÓN Durante la ejecución. CAUSA El parámetro SYNCSET tiene un valor no valido." .
 
-ns1:Alarma_1631 a ns1:Alarma ;
-    rdfs:label "Programación de perfil no permitida: [S,E,<Q>] o [P,<Q>]" ;
-    ns1:identificador "1631" ;
-    ns1:textoExtracto "1631 'Programación de perfil no permitida: [S,E,<Q>] o [P,<Q>]' DETECCIÓN Durante la ejecución. CAUSA En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E), la" .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteQ1SinG33EnElBloqueOG63Activa_ed72b67f3d,
+        ns1:NoSeAdmiteSERVOONParaEjeOCabezalSERCOSPOSICION_f14939f2ee,
+        ns1:ProgramarTANGCTRLONOFFSUSP_fade28e9df,
+        ns1:ValorQ1DoblementeProgramado_3838cc7db0,
+        ns1:ValorQDoblementeProgramado_f478b818ca ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_E a ns1:Parametro ;
-    rdfs:label "Parámetro E (final de perfil)" ;
-    ns1:textoExtracto "parámetros que definen el [...] final del perfil (parámetros S y E)" .
+ns1:ValorQ1DoblementeProgramado_18d77a4a70 a ns1:Parametro ;
+    rdfs:label "Valor Q1 doblemente programado" ;
+    ns1:textoExtracto "'Valor Q1 doblemente programado' DETECCIÓN Durante la ejecución. CAUSA El parámetro Q1 está programado más de una vez en el mismo bloque." .
 
-ns1:Parametro_S a ns1:Parametro ;
-    rdfs:label "Parámetro S (comienzo de perfil)" ;
-    ns1:textoExtracto "parámetros que definen el comienzo [...] del perfil (parámetros S y E)" .
+ns1:ValorQDoblementeProgramado_7298da016d a ns1:Parametro ;
+    rdfs:label "Valor Q doblemente programado" ;
+    ns1:textoExtracto "'Valor Q doblemente programado' DETECCIÓN Durante la ejecución. CAUSA El parámetro Q está programado más de una vez en el mismo bloque." .
+
+ns1:GamaParaSincronizacionSYNCSETNoValida_6491b70086 a ns1:DiagnosticoFallo ;
+    rdfs:label "Gama para sincronización SYNCSET no valida" ;
+    ns1:textoExtracto "'Gama para sincronización SYNCSET no valida' DETECCIÓN Durante la ejecución. CAUSA El parámetro SYNCSET tiene un valor no valido." .
+
+ns1:NoSeAdmiteQ1SinG33EnElBloqueOG63Activa_ed72b67f3d a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite Q1 sin G33 en el bloque o G63 activa" ;
+    ns1:textoExtracto "'No se admite Q1 sin G33 en el bloque o G63 activa' DETECCIÓN Durante la ejecución. CAUSA Hay programado un parámetro Q1 sin G33 en el bloque o sin la función G63 activa." .
+
+ns1:NoSeAdmiteSERVOONParaEjeOCabezalSERCOSPOSICION_f14939f2ee a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite #SERVO ON para eje o cabezal SERCOS POSICION" ;
+    ns1:textoExtracto "'No se admite #SERVO ON para eje o cabezal SERCOS POSICION' DETECCIÓN Durante la ejecución. CAUSA El eje o cabezal es Sercos posición." .
+
+ns1:ProgramarTANGCTRLONOFFSUSP_fade28e9df a ns1:DiagnosticoFallo ;
+    rdfs:label "Programar #TANGCTRL ON/OFF/SUSP [ ]" ;
+    ns1:textoExtracto "'Programar #TANGCTRL ON/OFF/SUSP [ ]' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque." .
+
+ns1:UnCabezalDeIntercambioTemporalNoPuedeFuncionarComoEjeCMantenido_0d97339824 a ns1:DiagnosticoFallo ;
+    rdfs:label "Un cabezal de intercambio temporal no puede funcionar como eje C mantenido" ;
+    ns1:textoExtracto "'Un cabezal de intercambio temporal no puede funcionar como eje C mantenido' DETECCIÓN Durante la ejecución. CAUSA El CNC puede activar como eje C mantenido (parámetro PERCAX) un cabezal de intercambio temporal." .
+
+ns1:ValorQ1DoblementeProgramado_3838cc7db0 a ns1:DiagnosticoFallo ;
+    rdfs:label "Valor Q1 doblemente programado" ;
+    ns1:textoExtracto "'Valor Q1 doblemente programado' DETECCIÓN Durante la ejecución. CAUSA El parámetro Q1 está programado más de una vez en el mismo bloque." .
+
+ns1:ValorQDoblementeProgramado_f478b818ca a ns1:DiagnosticoFallo ;
+    rdfs:label "Valor Q doblemente programado" ;
+    ns1:textoExtracto "'Valor Q doblemente programado' DETECCIÓN Durante la ejecución. CAUSA El parámetro Q está programado más de una vez en el mismo bloque." .
 

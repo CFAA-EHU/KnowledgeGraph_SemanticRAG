@@ -1,95 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Componente_ContadoresPLC a ns1:Componente ;
-    rdfs:label "Contadores del PLC (C1-C256)"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "C1-C256" ;
-    ns1:textoExtracto "Contadores (C1-C256). Son elementos capaces de contar o descontar una cantidad determinada de sucesos."@es .
+ns1:ModoRetardoConexion a ns1:ModoOperacion ;
+    rdfs:label "Modo retardo a la conexión" ;
+    ns1:textoExtracto "Este modo de funcionamiento permite realizar un retardo entre la activación de la entrada de arranque TG2 y la activación de la salida de estado T del temporizador." ;
+    ns1:tieneComponente ns1:ConstanteTiempo,
+        ns1:EntradaArranqueTG2,
+        ns1:EntradaTEN,
+        ns1:EntradaTRS,
+        ns1:SalidaEstadoT,
+        ns1:Temporizador .
 
-ns1:Componente_RegistrosPLC a ns1:Componente ;
-    rdfs:label "Registros del PLC (R1-R1024)"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "R1-R1024" ;
-    ns1:textoExtracto "Registros (R1-R1024). Son elementos que permiten almacenar en 32 bits una variable numérica. El valor almacenado en cada registro será considerado como un número entero con signo, entre ± 2.147.483.647. Puede ser tratado como número decimal o hexadecimal (precedido por el carácter \"$\"). Por ejemplo: 156 (Decimal) $9C (Hexadecimal)."@es .
+ns1:ConstanteTiempo a ns1:Parametro ;
+    rdfs:label "constante de tiempo" ;
+    ns1:identificador "TEN=1, TRS=0" ;
+    ns1:textoExtracto "La duración del retardo la fija la constante de tiempo." .
 
-ns1:Componente_TemporizadoresPLC a ns1:Componente ;
-    rdfs:label "Temporizadores del PLC (T1-T512)"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "T1-T512" ;
-    ns1:textoExtracto "Temporizadores (T1-T512). Son elementos capaces de mantener su salida al mismo nivel lógico durante un determinado tiempo (constante de tiempo), pasado el cual, su salida cambia de estado. Todos los temporizadores se inicializan a (=0) en el arranque del PLC."@es .
+ns1:EntradaArranqueTG2 a ns1:ComponenteElectrico ;
+    rdfs:label "Entrada de arranque TG2" ;
+    ns1:textoExtracto "la entrada de arranque TG2" .
 
-ns1:Parametro_CLK128 a ns1:Parametro ;
-    rdfs:label "CLK128"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK128" ;
-    ns1:textoExtracto "CLK128 | 128 ms"@es ;
-    ns1:valor "128 ms"^^xsd:string .
+ns1:EntradaTEN a ns1:ComponenteElectrico ;
+    rdfs:label "Entrada TEN" ;
+    ns1:textoExtracto "Funcionamiento de la entrada TEN en este modo." .
 
-ns1:Parametro_CLK12800 a ns1:Parametro ;
-    rdfs:label "CLK12800"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK12800" ;
-    ns1:textoExtracto "CLK12800 | 12.8 s"@es ;
-    ns1:valor "12.8 s"^^xsd:string .
+ns1:EntradaTRS a ns1:ComponenteElectrico ;
+    rdfs:label "Entrada TRS" ;
+    ns1:textoExtracto "Funcionamiento de la entrada TRS en este modo." .
 
-ns1:Parametro_CLK128000 a ns1:Parametro ;
-    rdfs:label "CLK128000"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK128000" ;
-    ns1:textoExtracto "CLK128000 | 128 s"@es ;
-    ns1:valor "128 s"^^xsd:string .
+ns1:SalidaEstadoT a ns1:ComponenteElectrico ;
+    rdfs:label "Salida de estado T del temporizador" ;
+    ns1:textoExtracto "activación de la salida de estado T del temporizador" .
 
-ns1:Parametro_CLK32 a ns1:Parametro ;
-    rdfs:label "CLK32"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK32" ;
-    ns1:textoExtracto "CLK32 | 32 ms"@es ;
-    ns1:valor "32 ms"^^xsd:string .
-
-ns1:Parametro_CLK3200 a ns1:Parametro ;
-    rdfs:label "CLK3200"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK3200" ;
-    ns1:textoExtracto "CLK3200 | 3.2 s"@es ;
-    ns1:valor "3.2 s"^^xsd:string .
-
-ns1:Parametro_CLK32000 a ns1:Parametro ;
-    rdfs:label "CLK32000"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK32000" ;
-    ns1:textoExtracto "CLK32000 | 32 s"@es ;
-    ns1:valor "32 s"^^xsd:string .
-
-ns1:Parametro_CLK64 a ns1:Parametro ;
-    rdfs:label "CLK64"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK64" ;
-    ns1:textoExtracto "CLK64 | 64 ms"@es ;
-    ns1:valor "64 ms"^^xsd:string .
-
-ns1:Parametro_CLK6400 a ns1:Parametro ;
-    rdfs:label "CLK6400"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK6400" ;
-    ns1:textoExtracto "CLK6400 | 6.4 s"@es ;
-    ns1:valor "6.4 s"^^xsd:string .
-
-ns1:Parametro_CLK64000 a ns1:Parametro ;
-    rdfs:label "CLK64000"@es ;
-    ns1:documentadoEn ns1:Tabla_RegistrosPLC ;
-    ns1:identificador "CLK64000" ;
-    ns1:textoExtracto "CLK64000 | 64 s"@es ;
-    ns1:valor "64 s"^^xsd:string .
-
-ns1:Tabla_RegistrosPLC a ns1:Tabla ;
-    rdfs:label "Tabla de recursos temporales del PLC (registros, temporizadores, contadores)"@es ;
-    ns1:textoExtracto """
-| CLK32 | 32 ms | CLK3200 | 3.2 s | CLK32000 | 32 s |
-| CLK64 | 64 ms | CLK6400 | 6.4 s | CLK64000 | 64 s |
-| CLK128 | 128 ms | CLK12800 | 12.8 s | CLK128000 | 128 s |
-Registros (R1-R1024). Son elementos que permiten almacenar en 32 bits una variable numérica. [...]
-Temporizadores (T1-T512). Son elementos capaces de mantener su salida al mismo nivel lógico durante un determinado tiempo [...]
-Contadores (C1-C256). Son elementos capaces de contar o descontar una cantidad determinada de sucesos.""" .
+ns1:Temporizador a ns1:Sistema ;
+    rdfs:label "temporizador" ;
+    ns1:textoExtracto "el temporizador se activa al producirse un flanco de subida en la entrada TG2" .
 

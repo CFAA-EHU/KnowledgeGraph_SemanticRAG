@@ -1,53 +1,36 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CH1TOSPDL_cdab9646c8 a ns1:Parametro ;
-    ns1:identificador "CH1TOSPDL" ;
-    ns1:textoExtracto "activar la marca CH1TOSPDL" .
+ns1:CambioDeHerramienta_79e03ae99e a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:textoExtracto "Dejar la herramienta del cabezal en el almacén. LL SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." ;
+    ns1:tieneComponente ns1:BrazoCambiador,
+        ns1:CabezalHerramienta,
+        ns1:ComponenteMecanico_2c93a93856,
+        ns1:PuntoCambioAutomatico .
 
-ns1:CH2TOMZ_fe1c2a051b a ns1:Parametro ;
-    ns1:identificador "CH2TOMZ" ;
-    ns1:textoExtracto "activar la marca CH2TOMZ" .
+ns1:Herramienta_414d337620 a ns1:Herramienta ;
+    rdfs:label "Herramienta de tierra" ;
+    ns1:textoExtracto "Colocar la herramienta de tierra en el cabezal." .
 
-ns1:MZTOCH1_fcbc0c8b30 a ns1:Parametro ;
-    ns1:identificador "MZTOCH1" ;
-    ns1:textoExtracto "activar la marca MZTOCH1" .
+ns1:BrazoCambiador a ns1:ComponenteMecanico ;
+    rdfs:label "Brazo cambiador" ;
+    ns1:textoExtracto "Llevar el brazo cambiador al punto de cambio." .
 
-ns1:SPDLTOCH2_95d3451f8b a ns1:Parametro ;
-    ns1:identificador "SPDLTOCH2" ;
-    ns1:textoExtracto "activar la marca SPDLTOCH2" .
+ns1:CabezalHerramienta a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal de herramienta" ;
+    ns1:textoExtracto "Dejar la herramienta del cabezal en el almacén." .
 
-ns1:TMOPERATION11_966902a001 a ns1:TareaMantenimiento ;
-    ns1:ejecutadoPor ns1:ElGestorEnviaElCodigoTMOPERATION11ParaCogerLaHerramientaDelAlmacenConLaPinza11CogerLaHerramientaDelCabezalConLaPinza2YActivarLaMarcaSPDLTOCH2 ;
-    ns1:identificador "TMOPERATION=11" ;
-    ns1:textoExtracto "el gestor envía el código TMOPERATION=11 para coger la herramienta del almacén con la pinza 1. 1 Coger la herramienta del cabezal con la pinza ꞏ2ꞏ y activar la marca SPDLTOCH2." ;
-    ns1:tieneComponente ns1:Almacen_97f205a2c1,
-        ns1:Cabezal_473f61fb80,
-        ns1:Pinza1_77ce94a31d,
-        ns1:Pinza2_78b2425d02 .
+ns1:ComponenteMecanico_2c93a93856 a ns1:ComponenteMecanico ;
+    rdfs:label "Almacén de herramientas" ;
+    ns1:textoExtracto "Dejar la herramienta del cabezal en el almacén." .
 
-ns1:TMOPERATION16_539168e523 a ns1:TareaMantenimiento ;
-    ns1:ejecutadoPor ns1:TMOPERATION16DejarLaHerramientaDelBrazoPinza2EnElAlmacenCogerUnaHerramientaDelAlmacenYPonerlaEnElBrazoPinza1_2f351c7e24 ;
-    ns1:identificador "TMOPERATION=16" ;
-    ns1:textoExtracto "TMOPERATION = 16 Dejar la herramienta del brazo (pinza ꞏ2ꞏ) en el almacén. Coger una herramienta del almacén y ponerla en el brazo (pinza ꞏ1ꞏ)." ;
-    ns1:tieneComponente ns1:Almacen_97f205a2c1,
-        ns1:Pinza1_77ce94a31d,
-        ns1:Pinza2_78b2425d02 .
+ns1:PersonalTecnicoAutorizado a ns1:Personal ;
+    rdfs:label "Personal Técnico Autorizado" ;
+    ns1:textoExtracto "Orden al PLC para que active la marca TCHANGEOK, indicando al gestor que puede continuar la ejecución." .
 
-ns1:Cabezal_473f61fb80 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "cabezal" .
-
-ns1:ElGestorEnviaElCodigoTMOPERATION11ParaCogerLaHerramientaDelAlmacenConLaPinza11CogerLaHerramientaDelCabezalConLaPinza2YActivarLaMarcaSPDLTOCH2 a ns1:AccionProhibida ;
-    ns1:textoExtracto "el gestor envía el código TMOPERATION=11 para coger la herramienta del almacén con la pinza 1. 1 Coger la herramienta del cabezal con la pinza ꞏ2ꞏ y activar la marca SPDLTOCH2." .
-
-ns1:TMOPERATION16DejarLaHerramientaDelBrazoPinza2EnElAlmacenCogerUnaHerramientaDelAlmacenYPonerlaEnElBrazoPinza1_2f351c7e24 a ns1:AccionProhibida ;
-    ns1:textoExtracto "TMOPERATION = 16 Dejar la herramienta del brazo (pinza ꞏ2ꞏ) en el almacén. Coger una herramienta del almacén y ponerla en el brazo (pinza ꞏ1ꞏ)." .
-
-ns1:Almacen_97f205a2c1 a ns1:Sistema ;
-    ns1:textoExtracto "almacén" .
-
-ns1:Pinza1_77ce94a31d a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "pinza ꞏ1ꞏ" .
-
-ns1:Pinza2_78b2425d02 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "pinza ꞏ2ꞏ" .
+ns1:PuntoCambioAutomatico a ns1:ElementoSeguridad ;
+    rdfs:label "Punto de cambio automático" ;
+    ns1:textoExtracto "Llevar el cabezal al punto de cambio automático." .
 

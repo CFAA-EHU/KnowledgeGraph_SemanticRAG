@@ -1,22 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1523 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta programar T en el bloque"@es ;
-    ns1:identificador "1523" ;
-    ns1:textoExtracto "1523 Falta programar T en el bloque. DETECCIÓN Durante la ejecución."@es .
+ns1:PermisosDeCambioTemporalDeEjes a ns1:Parametro ;
+    rdfs:label "Permisos de cambio temporal de ejes" ;
+    ns1:textoExtracto "(parámetro AXISEXCH)" .
 
-ns1:Fallo_1525 a ns1:DiagnosticoFallo ;
-    rdfs:label "Programación incorrecta de comandos POS/MZ sin herramienta"@es ;
-    ns1:identificador "1525" ;
-    ns1:solucionaFallo ns1:Herramienta_Programacion ;
-    ns1:textoExtracto "1525 'No está permitido... CAUSA Se ha programado POS y/o MZ en un bloque sin programar la herramienta. SOLUCIÓN Los comandos POS y MZ se deben programar en el mismo bloque que la herramienta."@es .
+ns1:RevisarProgramacionParaValorCero a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación para valor cero" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteValorCero ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Fallo_NR_Negativo a ns1:DiagnosticoFallo ;
-    rdfs:label "Número negativo de repeticiones de bloque (NR)"@es ;
-    ns1:textoExtracto "CAUSA Se ha programado un número negativo de repeticiones de bloque (NR). SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarProgramacionParaValorEsperado a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación para valor esperado" ;
+    ns1:solucionaFallo ns1:SeEsperabaValor ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Herramienta_Programacion a ns1:Herramienta ;
-    rdfs:label "Herramienta de programación CNC"@es ;
-    ns1:textoExtracto "Los comandos POS y MZ se deben programar en el mismo bloque que la herramienta."@es .
+ns1:SolucionParaEjeNoDisponible a ns1:TareaMantenimiento ;
+    rdfs:label "Solución para eje no disponible" ;
+    ns1:solucionaFallo ns1:UnoOVariosEjesDeLaConfiguracionOriginalNoEstanDisponibles ;
+    ns1:textoExtracto "El otro canal cederá el eje con reset o con el inicio de otro programa. También es posible programar explícitamente la liberación del eje con la sentencia #FREE AX." .
+
+ns1:NoSeAdmiteValorCero a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite valor cero" ;
+    ns1:textoExtracto "No se admite valor cero. DETECCIÓN Durante la ejecución. CAUSA Se ha programado un valor nulo en una sentencia o función G." .
+
+ns1:SeEsperabaValor a ns1:DiagnosticoFallo ;
+    rdfs:label "Se esperaba valor" ;
+    ns1:textoExtracto "'Se esperaba valor' DETECCIÓN Durante la ejecución. CAUSA Se ha programado incorrectamente la lista de parámetros de llamada a una subrutina con #PCALL o G180-189." .
+
+ns1:UnoOVariosEjesDeLaConfiguracionOriginalNoEstanDisponibles a ns1:DiagnosticoFallo ;
+    rdfs:label "Uno o varios ejes de la configuración original no están disponibles" ;
+    ns1:textoExtracto "'Uno o varios ejes de la configuración original no están disponibles' DETECCIÓN Durante la ejecución. CAUSA Un canal ha cedido algún eje con permiso de cambio temporal (parámetro AXISEXCH) y no se puede recuperarlo con el reset o al comienzo de programa porque el canal que lo cogió aún no lo ha liberado." .
 

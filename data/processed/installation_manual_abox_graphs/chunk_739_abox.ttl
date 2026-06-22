@@ -1,57 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Instruccion_MOV a ns1:AccionProhibida ;
-    rdfs:label "Instrucción MOV (Mover)" ;
-    ns1:documentadoEn ns1:Tabla_FormatosMOV ;
-    ns1:identificador "MOV" ;
-    ns1:ilustradoEn ns1:Ejemplo_MOV_12bits,
-        ns1:Ejemplo_MOV_32bits,
-        ns1:Ejemplo_MOV_BCD_20bits,
-        ns1:Ejemplo_MOV_BCD_8bits ;
-    ns1:textoExtracto "= MOV Mover. Permite mover información de un recurso a otro del PLC. [...] Si el número que se desea convertir de binario a BCD es mayor que el máximo permitido en BCD, se trunca el valor despreciando los dígitos de mayor peso." .
+ns1:CNC8070_1e51ebdc67 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:documentadoEn ns1:ConsultaDeVariablesSincronasYAsincronas ;
+    ns1:textoExtracto "CNCWR carga el contenido del registro en la variable." .
 
-ns1:Parametro_BitsTransmitir a ns1:Parametro ;
-    rdfs:label "Bits a transmitir" ;
-    ns1:textoExtracto "Se pueden transmitir 4, 8, 12, 16, 20, 24, 28 o 32 bits." ;
-    ns1:valor "4, 8, 12, 16, 20, 24, 28, 32" .
+ns1:VariableDeHerramienta a ns1:Parametro ;
+    rdfs:label "Variable de herramienta" ;
+    ns1:identificador "TM.TOOL" ;
+    ns1:textoExtracto "<condición> AND NOT M11 = CNCRD (TM.TOOL, R11, M11)" .
 
-ns1:Parametro_CodigoDestino a ns1:Parametro ;
-    rdfs:label "Código destino (formato)" ;
-    ns1:textoExtracto "Los códigos de origen y destino indican el formato (binario o BCD) en que se encuentra y se desea dejar la información." ;
-    ns1:valor "0(Bin), 1(BCD)" .
+ns1:VariableDePosicionDeEje a ns1:Parametro ;
+    rdfs:label "Variable de posición de eje" ;
+    ns1:identificador "G.GUP" ;
+    ns1:textoExtracto "DEF PARAM 153 CNCWR (G.GUP[PARAM], R10, M1000)" .
 
-ns1:Parametro_CodigoOrigen a ns1:Parametro ;
-    rdfs:label "Código origen (formato)" ;
-    ns1:textoExtracto "Los códigos de origen y destino indican el formato (binario o BCD) en que se encuentra y se desea dejar la información." ;
-    ns1:valor "0(Bin), 1(BCD)" .
-
-ns1:Parametro_ValorMaximoBCD a ns1:Parametro ;
-    rdfs:label "Valor máximo convertible en BCD" ;
-    ns1:textoExtracto "El máximo valor convertible en BCD es: 9 (con 4 bits), 99 (con 8), 999 (con 12), 9999 (con 16), 99999 (con 20), 999999 (con 24), 9999999 (con 28) y 99999999 (con 32)." ;
-    ns1:valor "9, 99, 999, 9999, 99999, 999999, 9999999, 99999999" .
-
-ns1:Ejemplo_MOV_12bits a ns1:AvisoSeguridad ;
-    rdfs:label "Ejemplo MOV (12 bits binario)" ;
-    ns1:identificador "MOV_O21_R100_0012" ;
-    ns1:textoExtracto "MOV O21 R100 0012 de binario a binario en 12 bits." .
-
-ns1:Ejemplo_MOV_32bits a ns1:AvisoSeguridad ;
-    rdfs:label "Ejemplo MOV (32 bits binario)" ;
-    ns1:identificador "MOV_I12_M100_0032" ;
-    ns1:textoExtracto "MOV I12 M100 0032 de binario a binario en 32 bits." .
-
-ns1:Ejemplo_MOV_BCD_20bits a ns1:AvisoSeguridad ;
-    rdfs:label "Ejemplo MOV (20 bits BCD)" ;
-    ns1:identificador "MOV_T10_M112_1020" ;
-    ns1:textoExtracto "MOV T10 M112 1020 de BCD a binario en 20 bits." .
-
-ns1:Ejemplo_MOV_BCD_8bits a ns1:AvisoSeguridad ;
-    rdfs:label "Ejemplo MOV (8 bits BCD)" ;
-    ns1:identificador "MOV_C22_O23_0108" ;
-    ns1:textoExtracto "MOV C22 O23 0108 de binario a BCD en 8 bits." .
-
-ns1:Tabla_FormatosMOV a ns1:Tabla ;
-    rdfs:label "Formatos y bits para instrucción MOV" ;
-    ns1:textoExtracto "Origen Destino Código origen Código destino Bits a transmitir 0(Bin) 0(Bin) 32 I1/1024 =MOV I1/1024 1(BCD) 1(BCD) 28 O1/1024 O1/1024 24 M1/8192 M1/8192 20 MSG1/1024 MSG1/1024 16 ERR1/1024 ERR1/1024 12 R1/1024 T1/512 8 R CNC-PLC C1/256 4 R1/1024 R CNC-PLC" .
+ns1:ConsultaDeVariablesSincronasYAsincronas a ns1:TareaMantenimiento ;
+    rdfs:label "Consulta de variables síncronas y asíncronas" ;
+    ns1:textoExtracto "Se denominan variables síncronas a las que se resuelven inmediatamente y variables asíncronas a las que necesitan varios ciclos para resolverse." .
 

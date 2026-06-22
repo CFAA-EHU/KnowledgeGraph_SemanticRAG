@@ -1,87 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AlmacenAsincrono a ns1:Sistema ;
-    rdfs:label "Almacén asíncrono con brazo cambiador" ;
-    ns1:textoExtracto "Almacén asíncrono o síncrono con brazo cambiador" .
+ns1:FaltaProgramarElCorrector a ns1:AccionProhibida ;
+    rdfs:label "Falta programar el corrector" ;
+    ns1:textoExtracto "Falta programar el corrector. SOLUCIÓN Programar el corrector." .
 
-ns1:AlmacenSincrono a ns1:Sistema ;
-    rdfs:label "Almacén síncrono con brazo cambiador" ;
-    ns1:textoExtracto "Almacén asíncrono o síncrono con brazo cambiador" .
+ns1:ProgramarCorrectorJuntoConLaHerramienta a ns1:AccionProhibida ;
+    rdfs:label "Programar corrector junto con la herramienta" ;
+    ns1:textoExtracto "No se permite programar el corrector junto a la herramienta. SOLUCIÓN No se admite esta programación." .
 
-ns1:CambioModoAlmacen a ns1:TareaMantenimiento ;
-    rdfs:label "Cambio de modo de almacén (carga/descarga)" ;
-    ns1:requiereMantenimiento ns1:ModoCarga,
-        ns1:ModoDescarga ;
-    ns1:textoExtracto "Para cambiar el modo del almacén a modo carga o descarga hay que tener el cabezal (y los brazos en los almacenes donde proceda) vacíos. SOLUCIÓN Vaciar el cabezal y los brazos." .
+ns1:ProgramarDosM06ConsecutivasParaUnaMismaHerramienta a ns1:AccionProhibida ;
+    rdfs:label "Programar dos M06 consecutivas para una misma herramienta" ;
+    ns1:textoExtracto "Hay programadas dos M06 consecutivas para una misma herramienta. SOLUCIÓN Programar la herramienta a descargar y a continuación la función M6." .
 
-ns1:Error7042 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 7042: Modo de almacén incompatible con programación" ;
-    ns1:identificador "7042" ;
-    ns1:textoExtracto "'Programada POS y el almacén no está en modo CARGA'" .
+ns1:ProgramarM06EnModoSetting a ns1:AccionProhibida ;
+    rdfs:label "Programar M06 en modo setting" ;
+    ns1:textoExtracto "No se permite programar M06. SOLUCIÓN No se admite esta programación." .
 
-ns1:Error7044 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 7044: Modificación de herramienta activa no permitida" ;
-    ns1:identificador "7044" ;
-    ns1:textoExtracto "'No se puede modificar el número de filos de la herramienta activa'" .
+ns1:ProgramarM6SinHerramienta a ns1:AccionProhibida ;
+    rdfs:label "Programar M6 sin herramienta" ;
+    ns1:textoExtracto "No se permite programar una M6 sin herramienta. SOLUCIÓN Programar la herramienta a descargar y a continuación la función M6." .
 
-ns1:HerramientaActiva a ns1:Herramienta ;
-    rdfs:label "Herramienta activa en cabezal" ;
-    ns1:textoExtracto "herramienta activa en el cabezal" .
+ns1:ProgramarSoloElCorrector a ns1:AccionProhibida ;
+    rdfs:label "Programar solo el corrector" ;
+    ns1:textoExtracto "No se permite programar solo el corrector. SOLUCIÓN No se admite esta programación." .
 
-ns1:HerramientaBrazo1 a ns1:Herramienta ;
-    rdfs:label "Herramienta en brazo 1" ;
-    ns1:textoExtracto "herramienta que está en el brazo 1" .
+ns1:ProgramarSoloElCorrectorEnModoSetting a ns1:AccionProhibida ;
+    rdfs:label "Programar solo el corrector en modo setting" ;
+    ns1:textoExtracto "No se permite programar solo el corrector. SOLUCIÓN No se admite esta programación." .
 
-ns1:HerramientaBrazo2 a ns1:Herramienta ;
-    rdfs:label "Herramienta en brazo 2" ;
-    ns1:textoExtracto "herramienta que está en el brazo 2" .
+ns1:ProgramarT0 a ns1:AccionProhibida ;
+    rdfs:label "Programar T0" ;
+    ns1:textoExtracto "No se permite programar T0. SOLUCIÓN Programar una herramienta diferente de 0." .
 
-ns1:Solucion7039 a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para error 7039" ;
-    ns1:solucionaFallo ns1:Error7039 ;
-    ns1:textoExtracto "Devolver la herramienta del brazo al almacén y proseguir normalmente con el cambio de herramienta." .
-
-ns1:Solucion7040 a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para error 7040" ;
-    ns1:solucionaFallo ns1:Error7040 ;
-    ns1:textoExtracto "Devolver la herramienta del brazo al almacén y proseguir normalmente con el cambio de herramienta." .
-
-ns1:Solucion7041 a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para error 7041" ;
-    ns1:solucionaFallo ns1:Error7041 ;
-    ns1:textoExtracto "Poner una herramienta en el cabezal." .
-
-ns1:Solucion7043 a ns1:DiagnosticoFallo ;
-    rdfs:label "Solución para error 7043" ;
-    ns1:solucionaFallo ns1:Error7043 ;
-    ns1:textoExtracto "Descargar la herramienta del otro canal." .
-
-ns1:Error7039 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 7039: Conflicto de herramienta en cabezal y brazo 2" ;
-    ns1:identificador "7039" ;
-    ns1:textoExtracto "'No puede haber una herramienta en el cabezal y en el brazo 2 simultáneamente'" .
-
-ns1:Error7040 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 7040: Conflicto de herramienta en brazo 1" ;
-    ns1:identificador "7040" ;
-    ns1:textoExtracto "'Error en operación: Vaciar primero el brazo 1'" .
-
-ns1:Error7041 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 7041: Herramienta activa no detectada" ;
-    ns1:identificador "7041" ;
-    ns1:textoExtracto "'No hay herramienta activa'" .
-
-ns1:Error7043 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 7043: Herramienta activa en otro canal" ;
-    ns1:identificador "7043" ;
-    ns1:textoExtracto "'La herramienta pedida es la herramienta activa de otro canal'" .
-
-ns1:ModoCarga a ns1:ModoOperacion ;
-    rdfs:label "Modo CARGA" ;
-    ns1:textoExtracto "modo carga" .
-
-ns1:ModoDescarga a ns1:ModoOperacion ;
-    rdfs:label "Modo DESCARGA" ;
-    ns1:textoExtracto "modo descarga" .
+ns1:ProgramarUnaHerramientaInvalida a ns1:AccionProhibida ;
+    rdfs:label "Programar una herramienta inválida" ;
+    ns1:textoExtracto "herramienta no está en el almacén. SOLUCIÓN Programar una herramienta válida." .
 

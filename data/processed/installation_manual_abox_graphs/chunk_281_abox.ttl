@@ -1,47 +1,16 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:ModoOperacion_Autom_tico a ns1:ModoOperacion ;
+ns1:ModoAutomatico a ns1:ModoOperacion ;
     rdfs:label "Modo automático" ;
-    ns1:textoExtracto "Al activar el avance rápido durante la ejecución de un programa, cada eje tomará como avance el definido en su parámetro FRAPIDEN, siempre que no esté activa G0 o un roscado."@es .
+    ns1:textoExtracto "El avance rápido no está disponible para el modo automático." .
 
-ns1:ModoOperacion_Manual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual" ;
-    ns1:textoExtracto "Si el canal activo está en modo manual y otro canal está ejecutando un programa, al pulsar la tecla de rápido en el canal activo (modo manual), el avance rápido también se aplicará en el canal que está en ejecución."@es .
+ns1:Parametro_0c4eae3f15 a ns1:Parametro ;
+    rdfs:label "Marca EXRAPID de PLC para activar avance rápido" ;
+    ns1:identificador "EXRAPID" ;
+    ns1:textoExtracto "Para activar el avance rápido sólo es necesario activar la marca EXRAPID de PLC o pulsar la tecla \"rápido\" del panel de jog." .
 
-ns1:Parametro_G00FEED a ns1:Parametro ;
-    rdfs:label "G00FEED" ;
-    ns1:identificador "G00FEED" ;
-    ns1:monitoreaParametro ns1:Sistema_CNC ;
-    ns1:textoExtracto "Los desplazamientos en G00 se ejecutan al avance definido en el parámetro G00FEED."@es .
-
-ns1:Parametro_RAPIDEN a ns1:Parametro ;
-    rdfs:label "RAPIDEN" ;
-    ns1:identificador "RAPIDEN" ;
-    ns1:monitoreaParametro ns1:Sistema_CNC ;
-    ns1:textoExtracto "Avance máximo en el canal para el programa en ejecución, cuando está activo el avance rápido para el modo automático (parámetro RAPIDEN)."@es .
-
-ns1:ComponenteElectrico_PLC a ns1:ComponenteElectrico ;
-    rdfs:label "PLC" ;
-    ns1:controla ns1:InterfazUsuario_TeclaR_pido ;
-    ns1:textoExtracto "gestionar desde el PLC el comportamiento de la tecla de rápido en función del canal activo y el modo de trabajo seleccionado (manual o automático)."@es .
-
-ns1:Parametro_FRAPIDEN a ns1:Parametro ;
-    rdfs:label "FRAPIDEN" ;
-    ns1:identificador "FRAPIDEN" ;
-    ns1:monitoreaParametro ns1:Sistema_CNC ;
-    ns1:textoExtracto "FRAPIDEN Avance rápido en el canal, para los desplazamientos en el modo automático. Valores posibles: De 0 a 500000.0000 mm/min / de 0 a 19685.03937 inch/min. Valor por defecto: 0."@es ;
-    ns1:valor "0-500000.0000"^^xsd:string .
-
-ns1:InterfazUsuario_TeclaR_pido a ns1:InterfazUsuario ;
-    rdfs:label "Tecla de rápido" ;
-    ns1:controla ns1:Parametro_FRAPIDEN ;
-    ns1:textoExtracto "La tecla de rápido, por el contrario, afecta simultáneamente a todos los canales que en ese momento se encuentren en situación de ser afectados."@es .
-
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "En un sistema donde la tecla rápido puede afectar a varios canales simultáneamente, se recomienda seleccionar la opción 'EXRAPID y tecla de rápido' o gestionar desde el PLC el comportamiento de la tecla de rápido en función del canal activo y el modo de trabajo seleccionado (manual o automático)."@es ;
-    ns1:tieneComponente ns1:ComponenteElectrico_PLC,
-        ns1:InterfazUsuario_TeclaR_pido .
+ns1:TeclaRapido a ns1:ComponenteElectrico ;
+    rdfs:label "Tecla rápida del panel de jog" ;
+    ns1:textoExtracto "Para activar el avance rápido sólo es necesario activar la marca EXRAPID de PLC o pulsar la tecla \"rápido\" del panel de jog." .
 

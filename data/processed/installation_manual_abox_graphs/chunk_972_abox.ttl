@@ -1,60 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ComunicacionGestorPLC a ns1:Sistema ;
-    rdfs:label "Sistema de comunicación Gestor->PLC (Sección 7.3.1)"@es ;
-    ns1:detalladoEnEsquema ns1:Tabla_ComunicacionGestorPLC_731 ;
-    ns1:textoExtracto "Comunicación entre el gestor de herramientas y el PLC mediante marcas y registros para operaciones de cambio de herramienta."@es ;
-    ns1:tieneComponente ns1:Parametro_LEAVEPOS,
-        ns1:Parametro_MZID,
-        ns1:Parametro_NEXTPOS,
-        ns1:Parametro_TAKEPOS,
-        ns1:Parametro_TMOPERATION,
-        ns1:Parametro_TMOPSTROBE .
+ns1:PosicionDelAlmacenTorreta a ns1:Parametro ;
+    rdfs:label "Posición del almacén torreta" ;
+    ns1:documentadoEn ns1:AsignacionDeValor0AlRegistroDePosicion ;
+    ns1:identificador "ROTATEMZ" ;
+    ns1:textoExtracto "En almacenes torreta se puede seleccionar una posición (sentencia #ROTATEMZ)." .
 
-ns1:Parametro_LEAVEPOS a ns1:Parametro ;
-    rdfs:label "LEAVEPOS" ;
-    ns1:documentadoEn ns1:Tabla_ComunicacionGestorPLC_731 ;
-    ns1:identificador "LEAVEPOS" ;
-    ns1:textoExtracto "Este registro indica la posición de almacén en la que hay que dejar la herramienta. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), este registro tomará valor ꞏ0ꞏ si es un posicionamiento relativo positivo y valor ꞏ1ꞏ si es un posicionamiento relativo negativo."@es ;
-    ns1:valor "0",
-        "1" .
+ns1:RegistroAlmacenTorreta a ns1:ComponenteElectrico ;
+    rdfs:label "Registro de posición del almacén torreta" ;
+    ns1:textoExtracto "El PLC debe indicar en este registro la posición actual del almacén." .
 
-ns1:Parametro_MZID a ns1:Parametro ;
-    rdfs:label "MZID" ;
-    ns1:documentadoEn ns1:Tabla_ComunicacionGestorPLC_731 ;
-    ns1:identificador "MZID" ;
-    ns1:textoExtracto "Este registro indica el almacén en el que se encuentra la herramienta que ha solicitado el canal. Cuando en el cambio de herramienta intervengan dos almacenes, en la parte baja de este registro se indica el almacén en el que hay que dejar la herramienta y en la parte alta el almacén del que hay que coger la herramienta."@es .
-
-ns1:Parametro_NEXTPOS a ns1:Parametro ;
-    rdfs:label "NEXTPOS" ;
-    ns1:documentadoEn ns1:Tabla_ComunicacionGestorPLC_731 ;
-    ns1:identificador "NEXTPOS" ;
-    ns1:textoExtracto "Este registro indica la posición de almacén que ocupa la siguiente herramienta. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), en un posicionamiento absoluto este registro indica la posición a alcanzar y en un posicionamiento relativo indica el número de posiciones a girar."@es .
-
-ns1:Parametro_TAKEPOS a ns1:Parametro ;
-    rdfs:label "TAKEPOS" ;
-    ns1:documentadoEn ns1:Tabla_ComunicacionGestorPLC_731 ;
-    ns1:identificador "TAKEPOS" ;
-    ns1:textoExtracto "Este registro indica la posición de almacén que ocupa la herramienta que hay que coger. Durante la selección de una posición de la torreta (sentencia #ROTATEMZ), este registro tomará valor ꞏ0ꞏ si es un posicionamiento absoluto y valor ꞏ1ꞏ si es un posicionamiento relativo."@es ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Parametro_TMOPERATION a ns1:Parametro ;
-    rdfs:label "TMOPERATION" ;
-    ns1:documentadoEn ns1:Tabla_ComunicacionGestorPLC_731 ;
-    ns1:identificador "TMOPERATION" ;
-    ns1:textoExtracto "Este registro indica el tipo de operación que desea realizar el gestor de herramientas."@es .
-
-ns1:Parametro_TMOPSTROBE a ns1:Parametro ;
-    rdfs:label "TMOPSTROBE" ;
-    ns1:documentadoEn ns1:Tabla_ComunicacionGestorPLC_731 ;
-    ns1:identificador "TMOPSTROBE" ;
-    ns1:textoExtracto "El gestor de herramientas del canal pone esta marca a (=1) para indicar al PLC que debe ejecutar la operación indicada en la marca TMOPERATION del canal."@es ;
-    ns1:valor "1" .
-
-ns1:Tabla_ComunicacionGestorPLC_731 a ns1:Tabla ;
-    rdfs:label "Tabla de marcas/registros para comunicación Gestor->PLC (Sección 7.3.1)"@es ;
-    ns1:documentadoEn ns1:Pagina_473 ;
-    ns1:textoExtracto "TMOPSTROBE | El gestor de herramientas del canal pone esta marca a (=1) para indicar al PLC que debe ejecutar la operación indicada en la marca TMOPERATION del canal."@es .
+ns1:AsignacionDeValor0AlRegistroDePosicion a ns1:AccionProhibida ;
+    rdfs:label "Asignación de valor 0 al registro de posición" ;
+    ns1:textoExtracto "si el registro tiene valor ꞏ0ꞏ, el PLC mostrará el error correspondiente." .
 

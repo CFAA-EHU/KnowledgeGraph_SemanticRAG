@@ -1,84 +1,19 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagramaEstados_SERVOON_ENABLE a ns1:Esquema ;
-    rdfs:label "Diagrama de estados para SERVOON/ENABLE"@es ;
-    ns1:ilustradoEn ns1:Pagina_448 ;
-    ns1:textoExtracto "Diagrama de estados para SERVOON/ENABLE con trazas 'Velocity Command', ventanas de DWELL y condición de ERROR. Expone la lógica de habilitación del regulador, la espera configurada por DWELL y el disparo de error si no se cumple la condición de servo activo antes del movimiento."@es .
+ns1:SistemaAlmacenamientoSincronoConBrazo1Pinza a ns1:Sistema ;
+    rdfs:label "Almacén síncrono con brazo cambiador de 1 pinza" ;
+    ns1:textoExtracto "Ilustración del carrusel cercano al cabezal con un brazo de una sola pinza. El brazo extrae la herramienta del carrusel y la entrega al husillo." .
 
-ns1:DiagramaOscilacionCabezal_PLC a ns1:Esquema ;
-    rdfs:label "Diagrama temporal de oscilación del cabezal controlada por PLC"@es ;
-    ns1:detalladoEnEsquema ns1:Senal_PLCCNTL,
-        ns1:Senal_SANALOG ;
-    ns1:ilustradoEn ns1:Pagina_453 ;
-    ns1:textoExtracto "Diagrama temporal de oscilación del cabezal controlada por PLC durante cambio de gama, con trazas MFUN, MSTROBE, AUXEND, GEAR1/GEAR4 y señales SANALOG/PLCCNTL. Representa conmutación de control al PLC, consigna analógica residual y devolución del control al CNC."@es .
+ns1:SistemaAlmacenamientoSincronoConBrazo2Pinzas a ns1:Sistema ;
+    rdfs:label "Almacén síncrono con brazo cambiador de 2 pinzas" ;
+    ns1:textoExtracto "Ilustración del carrusel con brazo de dos pinzas: se distinguen dos mordazas para operaciones de toma y entrega en secuencia cruzada (pinza 1 ↔ cabezal, pinza 2 ↔ carrusel)." .
 
-ns1:DiagramaTemporal_CambioGama_GEAR1_GEAR2 a ns1:Esquema ;
-    rdfs:label "Diagrama temporal de cambio de gama (GEAR1→GEAR2)"@es ;
-    ns1:detalladoEnEsquema ns1:Senal_AUXEND,
-        ns1:Senal_GEAR1,
-        ns1:Senal_GEAR2,
-        ns1:Senal_MFUN,
-        ns1:Senal_MSTROBE ;
-    ns1:ilustradoEn ns1:Pagina_451 ;
-    ns1:textoExtracto "Diagrama temporal de cambio de gama (GEAR1→GEAR2) con señales MFUN, MSTROBE, AUXEND, indicadores GEAR1/GEAR2, pista 'CHANGE' y referencia MINAENDW. Describe la secuencia: solicitud M4x, comienzo/fin de cambio (AUXEND), confirmación de gama y liberación del strobe."@es .
+ns1:SistemaAlmacenamientoSincronoSinBrazo a ns1:Sistema ;
+    rdfs:label "Almacén síncrono sin brazo cambiador" ;
+    ns1:textoExtracto "Ilustración del carrusel próximo al cabezal sin brazo: el plato de herramientas se orienta y acerca al husillo para transferir la herramienta directamente." .
 
-ns1:Modulo_OP_PANEL_H_E a ns1:InterfazUsuario ;
-    rdfs:label "Módulo OP-PANEL-H/E"@es ;
-    ns1:ilustradoEn ns1:Pagina_461 ;
-    ns1:textoExtracto "Imagen del módulo OP-PANEL-H/E con distribución completa de teclado: override de husillo, sentidos de giro, posicionamiento, START/STOP, ZERO, RESET y teclas de usuario con leds. Se ilustra qué grupos de teclas disponen de iluminación controlable mediante KEYLED2/KEYLEDHBLS."@es ;
-    ns1:tieneComponente ns1:Tecla_KEYLED2,
-        ns1:Tecla_KEYLEDHBLS .
-
-ns1:Pagina_448 a ns1:Pagina ;
-    ns1:identificador "448" ;
-    ns1:textoExtracto "Sección: Entradas y salidas lógicas del CNC · Señales modificables de los ejes y cabezales"@es .
-
-ns1:Pagina_451 a ns1:Pagina ;
-    ns1:identificador "451" ;
-    ns1:textoExtracto "Sección: Entradas y salidas lógicas del CNC · Señales modificables de los cabezales"@es .
-
-ns1:Pagina_453 a ns1:Pagina ;
-    ns1:identificador "453" ;
-    ns1:textoExtracto "Sección: Entradas y salidas lógicas del CNC · Señales modificables de los cabezales"@es .
-
-ns1:Pagina_461 a ns1:Pagina ;
-    ns1:identificador "461" ;
-    ns1:textoExtracto "Sección: Entradas y salidas lógicas del CNC · Señales modificables de las teclas"@es .
-
-ns1:Senal_AUXEND a ns1:ComponenteElectrico ;
-    rdfs:label "AUXEND" ;
-    ns1:textoExtracto "Señal AUXEND (comienzo/fin de cambio de gama)"@es .
-
-ns1:Senal_GEAR1 a ns1:ComponenteElectrico ;
-    rdfs:label "GEAR1" ;
-    ns1:textoExtracto "Indicador de gama GEAR1"@es .
-
-ns1:Senal_GEAR2 a ns1:ComponenteElectrico ;
-    rdfs:label "GEAR2" ;
-    ns1:textoExtracto "Indicador de gama GEAR2"@es .
-
-ns1:Senal_MFUN a ns1:ComponenteElectrico ;
-    rdfs:label "MFUN" ;
-    ns1:textoExtracto "Señal MFUN en cambio de gama (GEAR1→GEAR2)"@es .
-
-ns1:Senal_MSTROBE a ns1:ComponenteElectrico ;
-    rdfs:label "MSTROBE" ;
-    ns1:textoExtracto "Señal MSTROBE en cambio de gama (GEAR1→GEAR2)"@es .
-
-ns1:Senal_PLCCNTL a ns1:ComponenteElectrico ;
-    rdfs:label "PLCCNTL" ;
-    ns1:textoExtracto "Señal de control PLC (PLCCNTL) durante oscilación del cabezal"@es .
-
-ns1:Senal_SANALOG a ns1:ComponenteElectrico ;
-    rdfs:label "SANALOG" ;
-    ns1:textoExtracto "Señal analógica residual (SANALOG) en control por PLC"@es .
-
-ns1:Tecla_KEYLED2 a ns1:ComponenteElectrico ;
-    rdfs:label "KEYLED2" ;
-    ns1:textoExtracto "Tecla con led controlable KEYLED2 en módulo OP-PANEL-H/E"@es .
-
-ns1:Tecla_KEYLEDHBLS a ns1:ComponenteElectrico ;
-    rdfs:label "KEYLEDHBLS" ;
-    ns1:textoExtracto "Tecla con led de iluminación parpadeante (KEYLEDHBLS) en módulo OP-PANEL-H/E"@es .
+ns1:SistemaAlmacenamientoTorreta a ns1:Sistema ;
+    rdfs:label "Almacén tipo torreta" ;
+    ns1:textoExtracto "Ilustración de torreta de torno con varias estaciones y herramientas montadas; se destaca la herramienta activa alineada con el punto de trabajo." .
 

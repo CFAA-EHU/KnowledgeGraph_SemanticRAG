@@ -1,94 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:EjeControlGap a ns1:ComponenteMecanico ;
-    rdfs:label "Eje que controla el gap"@es ;
-    ns1:controla ns1:SensorGap ;
-    ns1:monitoreaParametro ns1:Parametro_ACFGAIN,
-        ns1:Parametro_A_FLWE_Z,
-        ns1:Parametro_DIFF_A_TPOS_Z,
-        ns1:Parametro_DIFF_DIFF_A_TPOS_Z,
-        ns1:Parametro_FFGAIN,
-        ns1:Parametro_GAPGAIN,
-        ns1:Parametro_G_GAP,
-        ns1:Parametro_PROGAIN ;
-    ns1:textoExtracto "El eje que controla el gap no debe ajustarse del modo estándar, sino que se hará con movimientos de aproximación con el control de gap activo."@es .
+ns1:CambioDeSignoDeLaSenalDelSensor a ns1:Parametro ;
+    rdfs:label "Cambio de signo de la señal del sensor" ;
+    ns1:identificador "GAPSENSORCH" ;
+    ns1:textoExtracto "Cambiar el signo de la señal del sensor." .
 
-ns1:ModoAjusteGap a ns1:ModoOperacion ;
-    rdfs:label "Modo de ajuste del gap con movimientos de aproximación"@es ;
-    ns1:habilitadoPor ns1:AplicacionFineTune ;
-    ns1:textoExtracto "El eje que controla el gap no debe ajustarse del modo estándar, sino que se hará con movimientos de aproximación con el control de gap activo."@es .
+ns1:DistanciaQueCorrespondeALaSenalAnalogicaLimiteDelSensor a ns1:Parametro ;
+    rdfs:label "Distancia que corresponde a la señal analógica límite del sensor" ;
+    ns1:identificador "GAPDISTLIMIT" ;
+    ns1:textoExtracto "Distancia que corresponde a señal analógica límite del sensor (parámetro GAPVOLTLIMIT)." .
 
-ns1:Parametro_LOOPTIME a ns1:Parametro ;
-    rdfs:label "LOOPTIME" ;
-    ns1:identificador "LOOPTIME" ;
-    ns1:textoExtracto "Se recomienda utilizar un tiempo de ciclo de 2 milisegundos (LOOPTIME=2)."@es ;
-    ns1:valor "2" .
+ns1:IdentificadorDeLaEntradaAnalogicaDondeEstaConectadoElSensor a ns1:Parametro ;
+    rdfs:label "Identificador de la entrada analógica donde está conectado el sensor" ;
+    ns1:identificador "GAPANAINID" ;
+    ns1:textoExtracto "Este parámetro identifica la entrada analógica donde está conectado el sensor; si remoto CAN, de 1 a 60; si regulador, de 101 a 132 o de 201 a 232." .
 
-ns1:Tabla_ParametrosSercosVelocidad a ns1:Tabla ;
-    rdfs:label "Parámetros para Sercos velocidad (analógico)"@es ;
-    ns1:documentadoEn ns1:Pagina_697 ;
-    ns1:textoExtracto "| Sercos velocidad Analógico. | Sercos posición. | --- | --- | • GAPGAIN = 0.20. • FFGAIN = 90 %. • ACFGAIN = 30 %. | • GAPGAIN = 0.20. • Se recomienda reducir los valores de FFGAIN entre un 0.5 y un 1 % respecto de los valores de un ajuste estándar. • Los valores de ACFGAIN pueden coincidir con los de un ajuste estándar. |"@es .
+ns1:IndicadorDeUbicacionDeLaEntradaAnalogicaConectadaAlSensor a ns1:Parametro ;
+    rdfs:label "Indicador de ubicación de la entrada analógica conectada al sensor" ;
+    ns1:identificador "GAPANAINTYPE" ;
+    ns1:textoExtracto "Este parámetro indica dónde está ubicada la entrada analógica conectada al sensor; en los módulos remotos CAN o en un regulador Sercos." .
 
-ns1:Tabla_VariablesPerfilVelocidad a ns1:Tabla ;
-    rdfs:label "Variables del perfil de velocidad y aceleración en el gap"@es ;
-    ns1:documentadoEn ns1:Pagina_697 ;
-    ns1:textoExtracto "| Perfil de velocidad y aceleración sin sobrepasamiento en el gap. A B C D | --- | (A) La variable G.GAP refleja el valor real del gap, detectado por el sensor. (B) La variable A.FLWE.Z refleja el error de seguimiento del eje Z (eje del sensor). (C) La señal DIFF(A.TPOS.Z) nos indica la velocidad en Z. (D) La señal DIFF(DIFF(A.TPOS.Z)) nos indica la aceleración en Z. |"@es .
+ns1:OffsetEnMilivoltiosAAplicarAlSensorDesdeElCNC a ns1:Parametro ;
+    rdfs:label "Offset (en milivoltios) a aplicar al sensor desde el CNC" ;
+    ns1:identificador "GAPSENSOROFFSET" ;
+    ns1:textoExtracto "Offset (en milivoltios) a aplicar al sensor desde el CNC. Si se utiliza una entrada analógica Fagor, no es necesario definir este parámetro." .
 
-ns1:AplicacionFineTune a ns1:InterfazUsuario ;
-    rdfs:label "FineTune"@es ;
-    ns1:textoExtracto "Cuando los ejes son Sercos, se puede hacer un ajuste previo utilizando la aplicación FineTune."@es .
-
-ns1:Parametro_ACFGAIN a ns1:Parametro ;
-    rdfs:label "ACFGAIN" ;
-    ns1:identificador "ACFGAIN" ;
-    ns1:textoExtracto "• ACFGAIN = 30 %."@es ;
-    ns1:valor "30%" .
-
-ns1:Parametro_A_FLWE_Z a ns1:Parametro ;
-    rdfs:label "A.FLWE.Z" ;
-    ns1:identificador "A.FLWE.Z" ;
-    ns1:textoExtracto "La variable A.FLWE.Z refleja el error de seguimiento del eje Z (eje del sensor)."@es .
-
-ns1:Parametro_DIFF_A_TPOS_Z a ns1:Parametro ;
-    rdfs:label "DIFF(A.TPOS.Z)" ;
-    ns1:identificador "DIFF(A.TPOS.Z)" ;
-    ns1:textoExtracto "La señal DIFF(A.TPOS.Z) nos indica la velocidad en Z."@es .
-
-ns1:Parametro_DIFF_DIFF_A_TPOS_Z a ns1:Parametro ;
-    rdfs:label "DIFF(DIFF(A.TPOS.Z))" ;
-    ns1:identificador "DIFF(DIFF(A.TPOS.Z))" ;
-    ns1:textoExtracto "La señal DIFF(DIFF(A.TPOS.Z)) nos indica la aceleración en Z."@es .
-
-ns1:Parametro_FFGAIN a ns1:Parametro ;
-    rdfs:label "FFGAIN" ;
-    ns1:identificador "FFGAIN" ;
-    ns1:textoExtracto "• FFGAIN = 90 %."@es ;
-    ns1:valor "90%" .
-
-ns1:Parametro_GAPGAIN a ns1:Parametro ;
-    rdfs:label "GAPGAIN" ;
-    ns1:identificador "GAPGAIN" ;
-    ns1:textoExtracto "• GAPGAIN = 0.20."@es ;
-    ns1:valor "0.20" .
-
-ns1:Parametro_PROGAIN a ns1:Parametro ;
-    rdfs:label "PROGAIN" ;
-    ns1:identificador "PROGAIN" ;
-    ns1:textoExtracto "De estos movimientos se obtendrán los parámetros GAPGAIN, PROGAIN, FFGAIN y ACFGAIN."@es .
-
-ns1:SensorGap a ns1:Sensor ;
-    rdfs:label "Sensor del gap"@es ;
-    ns1:monitoreaParametro ns1:Parametro_G_GAP ;
-    ns1:textoExtracto "La variable G.GAP refleja el valor real del gap, detectado por el sensor."@es .
-
-ns1:Pagina_697 a ns1:Pagina ;
-    rdfs:label "Página 697 - Ajuste del eje que controla el gap"@es ;
-    ns1:identificador "697" ;
-    ns1:textoExtracto "Sección 16.2.2 Ajustar el eje que controla el gap."@es .
-
-ns1:Parametro_G_GAP a ns1:Parametro ;
-    rdfs:label "G.GAP" ;
-    ns1:identificador "G.GAP" ;
-    ns1:textoExtracto "La variable G.GAP refleja el valor real del gap, detectado por el sensor."@es .
+ns1:VoltajeEnMilivoltiosQueCorrespondeAlRecorridoLimiteDelSensor a ns1:Parametro ;
+    rdfs:label "Voltaje (en milivoltios) que corresponde al recorrido límite del sensor" ;
+    ns1:identificador "GAPVOLTLIMIT" ;
+    ns1:textoExtracto "Voltaje (en milivoltios) que corresponde al recorrido límite del sensor (parámetro GAPDISTLIMIT)." .
 

@@ -1,11 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModuloPeriodicoPE a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo periódico (PE)" ;
-    ns1:textoExtracto "Módulo periódico (PE) El procesamiento del módulo periódico se desarrolla de la siguiente forma: 1 EL PLC tiene en cuenta los valores que disponen, al comienzo de la ejecución del módulo, las entradas físicas (módulos remotos). 2 El PLC ejecuta el módulo periódico. 3 EL PLC asigna a las salidas físicas (módulos remotos) los valores que disponen en este momento los recursos O del PLC. 4 El PLC da por finalizada la ejecución del módulo periódico." .
+ns1:CNC8070_4dca0551ff a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controladoPor ns1:SenalModificableEMERGEN,
+        ns1:SenalModificableSTOP ;
+    ns1:parametroMonitoradoPor ns1:SenalConsultaCNCREADY,
+        ns1:SenalConsultaSTART ;
+    ns1:textoExtracto "El PLC tiene acceso a determinada información interna del CNC." .
 
-ns1:ModuloPrincipalPRG a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo principal (PRG)" ;
-    ns1:textoExtracto "Módulo principal (PRG) El procesamiento del módulo principal se desarrolla de la siguiente forma: 1 El PLC asigna a los recursos I los valores que disponen en este momento las entradas físicas (módulos remotos). 2 El PLC asume los valores que disponen las variables internas del CNC (CNCREADY, START, FHOUT, ...). 3 El PLC ejecuta el módulo principal (PRG). 4 El PLC actualiza las variables internas del CNC (EMERGEN, STOP, FEEDHOL, ...) con los valores que disponen en este momento los recursos asociados del PLC. 5 EL PLC asigna a las salidas físicas (módulos remotos) los valores que disponen en este momento los recursos O del PLC. 6 El PLC da por finalizado el ciclo, encontrándose preparado para comenzar uno nuevo." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:SenalModificableEMERGEN,
+        ns1:SenalModificableSTOP ;
+    ns1:monitoreaParametro ns1:SenalConsultaCNCREADY,
+        ns1:SenalConsultaSTART ;
+    ns1:textoExtracto "El PLC tiene acceso a determinada información interna del CNC." .
+
+ns1:SenalConsultaCNCREADY a ns1:Parametro ;
+    rdfs:label "Señal de consulta CNCREADY" ;
+    ns1:identificador "CNCREADY" ;
+    ns1:textoExtracto "• Señales de consulta: CNCREADY, START, FHOUT, ..." .
+
+ns1:SenalConsultaSTART a ns1:Parametro ;
+    rdfs:label "Señal de consulta START" ;
+    ns1:identificador "START" ;
+    ns1:textoExtracto "• Señales de consulta: CNCREADY, START, FHOUT, ..." .
+
+ns1:SenalModificableEMERGEN a ns1:Parametro ;
+    rdfs:label "Señal modificable _EMERGEN" ;
+    ns1:identificador "_EMERGEN" ;
+    ns1:textoExtracto "• Señales modificables: _EMERGEN, _STOP, _FEEDHOL, ..." .
+
+ns1:SenalModificableSTOP a ns1:Parametro ;
+    rdfs:label "Señal modificable _STOP" ;
+    ns1:identificador "_STOP" ;
+    ns1:textoExtracto "• Señales modificables: _EMERGEN, _STOP, _FEEDHOL, ..." .
 

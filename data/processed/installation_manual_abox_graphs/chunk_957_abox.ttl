@@ -1,55 +1,34 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Se_alesGestorHerramientas_6_13 a ns1:Sistema ;
-    rdfs:label "Señales modificables del gestor de herramientas (Sección 6.13)" ;
-    ns1:textoExtracto "Señales modificables del gestor de herramientas: TCHANGEOKMZ1, TCHANGEOKMZ2, TCHANGEOKMZ3, TCHANGEOKMZ4 (cambio de herramienta), MZPOSMZ1, MZPOSMZ2, MZPOSMZ3, MZPOSMZ4 (posición del almacén)." ;
-    ns1:tieneComponente ns1:Marca_TCHANGEOKMZ1,
-        ns1:Marca_TCHANGEOKMZ2,
-        ns1:Marca_TCHANGEOKMZ3,
-        ns1:Marca_TCHANGEOKMZ4,
-        ns1:Registro_MZPOSMZ1,
-        ns1:Registro_MZPOSMZ2,
-        ns1:Registro_MZPOSMZ3,
-        ns1:Registro_MZPOSMZ4 .
+ns1:CNC8070_51ac509559 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:requiereMantenimiento ns1:ProgramarPLC ;
+    ns1:textoExtracto "El CNC puede disponer de hasta cuatro almacenes y cada uno de ellos podrá ser de un tipo diferente." ;
+    ns1:tieneComponente ns1:TablaHerramientas .
 
-ns1:Marca_TCHANGEOKMZ1 a ns1:ComponenteElectrico ;
-    rdfs:label "TCHANGEOKMZ1 (Marca de cambio de herramienta - Almacén 1)" ;
-    ns1:identificador "TCHANGEOKMZ1" ;
-    ns1:textoExtracto "TCHANGEOKMZ1 (equivalente a TCHANGEOK). El PLC debe poner esta marca a (=1) cuando se ha efectuado el cambio de herramienta (M06)." .
+ns1:NumeroDeAlmacenesDisponibles a ns1:Parametro ;
+    rdfs:label "Número de almacenes disponibles" ;
+    ns1:identificador "NUM_ALMACENES" ;
+    ns1:textoExtracto "En los parámetros máquina se define el número de almacenes disponibles y las características de cada uno." .
 
-ns1:Marca_TCHANGEOKMZ2 a ns1:ComponenteElectrico ;
-    rdfs:label "TCHANGEOKMZ2 (Marca de cambio de herramienta - Almacén 2)" ;
-    ns1:identificador "TCHANGEOKMZ2" ;
-    ns1:textoExtracto "TCHANGEOKMZ2. El PLC debe poner esta marca a (=1) cuando se ha efectuado el cambio de herramienta (M06)." .
+ns1:Sistema_a11e2c9c39 a ns1:Sistema ;
+    rdfs:label "Almacén Tipo 1",
+        "Almacén Tipo 2",
+        "Almacén Tipo 3",
+        "Almacén Tipo 4" ;
+    ns1:textoExtracto "Cada almacén tiene sus propios parámetros de configuración." .
 
-ns1:Marca_TCHANGEOKMZ3 a ns1:ComponenteElectrico ;
-    rdfs:label "TCHANGEOKMZ3 (Marca de cambio de herramienta - Almacén 3)" ;
-    ns1:identificador "TCHANGEOKMZ3" ;
-    ns1:textoExtracto "TCHANGEOKMZ3. El PLC debe poner esta marca a (=1) cuando se ha efectuado el cambio de herramienta (M06)." .
+ns1:PersonalTecnicoAutorizado a ns1:Personal ;
+    rdfs:label "Personal Técnico Autorizado" ;
+    ns1:textoExtracto "Elaborar el programa de PLC." .
 
-ns1:Marca_TCHANGEOKMZ4 a ns1:ComponenteElectrico ;
-    rdfs:label "TCHANGEOKMZ4 (Marca de cambio de herramienta - Almacén 4)" ;
-    ns1:identificador "TCHANGEOKMZ4" ;
-    ns1:textoExtracto "TCHANGEOKMZ4. El PLC debe poner esta marca a (=1) cuando se ha efectuado el cambio de herramienta (M06)." .
+ns1:ProgramarPLC a ns1:TareaMantenimiento ;
+    rdfs:label "Programar PLC" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:textoExtracto "Elaborar el programa de PLC." .
 
-ns1:Registro_MZPOSMZ1 a ns1:ComponenteElectrico ;
-    rdfs:label "MZPOSMZ1 (Registro de posición del almacén 1)" ;
-    ns1:identificador "MZPOSMZ1" ;
-    ns1:textoExtracto "MZPOSMZ1 (también se puede programar como MZPOS). El PLC debe indicar en este registro la posición actual del almacén." .
-
-ns1:Registro_MZPOSMZ2 a ns1:ComponenteElectrico ;
-    rdfs:label "MZPOSMZ2 (Registro de posición del almacén 2)" ;
-    ns1:identificador "MZPOSMZ2" ;
-    ns1:textoExtracto "MZPOSMZ2. El PLC debe indicar en este registro la posición actual del almacén." .
-
-ns1:Registro_MZPOSMZ3 a ns1:ComponenteElectrico ;
-    rdfs:label "MZPOSMZ3 (Registro de posición del almacén 3)" ;
-    ns1:identificador "MZPOSMZ3" ;
-    ns1:textoExtracto "MZPOSMZ3. El PLC debe indicar en este registro la posición actual del almacén." .
-
-ns1:Registro_MZPOSMZ4 a ns1:ComponenteElectrico ;
-    rdfs:label "MZPOSMZ4 (Registro de posición del almacén 4)" ;
-    ns1:identificador "MZPOSMZ4" ;
-    ns1:textoExtracto "MZPOSMZ4. El PLC debe indicar en este registro la posición actual del almacén." .
+ns1:TablaHerramientas a ns1:Tabla ;
+    rdfs:label "Tabla de herramientas y almacenes" ;
+    ns1:textoExtracto "Definir la tabla de herramientas y de los almacenes." .
 

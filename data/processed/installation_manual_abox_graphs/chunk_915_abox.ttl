@@ -1,22 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaMonitorizacionColisiones a ns1:Sistema ;
-    rdfs:label "sistema de monitorización de colisiones" ;
-    ns1:compuestoPor ns1:PROBE1MONIT_2d7169cedb,
-        ns1:PROBE2MONIT_5758d91c44 ;
-    ns1:controla ns1:ModoSeguroPalpador ;
-    ns1:textoExtracto "Monitorización a nivel de lazo, controlando todas las situaciones de colisión en cualquiera de los dos palpadores" .
+ns1:CNC8070_a2d19afb6d a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controladoPor ns1:SenalSincronizacion ;
+    ns1:documentadoEn ns1:ModoOperacionManual ;
+    ns1:mitigaRiesgo ns1:AvisoEstadoCabezal,
+        ns1:AvisoEstadoEje ;
+    ns1:textoExtracto "El CNC utiliza estas marcas cuando se encuentra trabajando en el modo de operación manual." .
 
-ns1:ModoSeguroPalpador a ns1:ModoOperacion ;
-    rdfs:label "modo seguro del palpador" ;
-    ns1:textoExtracto "estas marcas están asociadas al modo seguro del palpador" .
+ns1:AvisoEstadoCabezal a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso estado cabezal" ;
+    ns1:textoExtracto "Para los cabezales, el texto \"Sreal\" aparece en color rojo cuando esta marca está activa para el cabezal." .
 
-ns1:PROBE1MONIT_2d7169cedb a ns1:Sensor ;
-    rdfs:label "PROBE1MONIT" ;
-    ns1:textoExtracto "PROBE1MONIT" .
+ns1:AvisoEstadoEje a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso estado eje" ;
+    ns1:textoExtracto "Para los ejes, el nombre del eje que antecede a la cota aparece en color rojo cuando esta marca está activa para el eje." .
 
-ns1:PROBE2MONIT_5758d91c44 a ns1:Sensor ;
-    rdfs:label "PROBE2MONIT" ;
-    ns1:textoExtracto "PROBE2MONIT" .
+ns1:ModoOperacionManual a ns1:ModoOperacion ;
+    rdfs:label "Modo operación manual" ;
+    ns1:textoExtracto "El CNC utiliza estas marcas cuando se encuentra trabajando en el modo de operación manual." .
+
+ns1:SenalSincronizacion a ns1:AvisoSeguridad ;
+    rdfs:label "Señal de sincronización" ;
+    ns1:textoExtracto "si el PLC pone esta señal a (=1), se detiene el movimiento de sincronización, pasando a velocidad nula." .
 

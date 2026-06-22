@@ -1,53 +1,71 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Herramienta_Gen_rica a ns1:Herramienta ;
-    rdfs:label "Herramienta (orientación en plano inclinado)" ;
-    ns1:textoExtracto "colocar la herramienta perpendicular al plano inclinado" .
+ns1:CNC8070_8646535a68 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:ejecutadoPor ns1:PersonalTecnicoAutorizado ;
+    ns1:solucionaFallo ns1:DobleProgramacionDelPasoDeHusillo_a4d6a5fabc,
+        ns1:FREEAXNoSePermiteEliminarElEjeDeGiroFrontalConG96Activa,
+        ns1:NoSeAdmiteCambioDeGamaConG96Activa,
+        ns1:NoSeAdmiteG192YM19EnElMismoBloque,
+        ns1:NoSeAdmiteModoManualConG96Activa,
+        ns1:PorcentajeDeAceleracionFueraDeRango,
+        ns1:PorcentajeDeAceleracionNegativo ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Sistema_Cinematica a ns1:Sistema ;
-    rdfs:label "Sistema de cinemática (RTCP/TLC/transformación)" ;
-    ns1:textoExtracto "cinemática y a continuación la función deseada [...] activar la cinemática" ;
-    ns1:tieneComponente ns1:Parametro_ConfiguracionEjes,
-        ns1:Parametro_EjesRotativos .
+ns1:DesactivarLaFuncionG96ParaAccederAlModoManual a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar la función G96 para acceder al modo manual" ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar la función G96 para acceder al modo manual." .
 
-ns1:Alarma_1262 a ns1:Alarma ;
-    rdfs:label "Alarma 1262: Grupo de ejes insuficiente para transformación" ;
-    ns1:identificador "1262" ;
-    ns1:textoExtracto "'El grupo de ejes es insuficiente para la transformación' [...] SOLUCIÓN Corregir la configuración de ejes del canal (sentencia #SET AX) para poder activar la cinemática." .
+ns1:DesactivarLaFuncionG96ParaEliminarElEjeFrontalDeLaConfiguracionDelCanal a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar la función G96 para eliminar el eje frontal de la configuración del canal" ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar la función G96 para eliminar el eje frontal de la configuración del canal." .
 
-ns1:Alarma_1263 a ns1:Alarma ;
-    rdfs:label "Alarma 1263: Falta eje(s) rotativo para transformación" ;
-    ns1:identificador "1263" ;
-    ns1:textoExtracto "'Falta eje(s) rotativo para la transformación' [...] SOLUCIÓN No programar la sentencia #TOOL ORI o activar una cinemática que permita colocar la herramienta perpendicular al plano inclinado." .
+ns1:DesactivarLaFuncionG96ParaRealizarElCambioDeGamaDelCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar la función G96 para realizar el cambio de gama del cabezal" ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar la función G96 para realizar el cambio de gama del cabezal." .
 
-ns1:ConfiguracionIncorrectaDeEjesSentenciaSETAX a ns1:AccionProhibida ;
-    rdfs:label "Configuración incorrecta de ejes (sentencia #SET AX)" ;
-    ns1:textoExtracto "sentencia #SET AX" .
+ns1:ElPorcentajeDeAceleracionDebeSerMayorOIgualQueCero a ns1:TareaMantenimiento ;
+    rdfs:label "El porcentaje de aceleración debe ser mayor o igual que cero" ;
+    ns1:textoExtracto "SOLUCIÓN El porcentaje de aceleración debe ser mayor o igual que cero." .
 
-ns1:DiagnosticoFallo_1262 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para alarma 1262: Configuración de ejes insuficiente" ;
-    ns1:activaAlarma ns1:Alarma_1262 ;
-    ns1:solucionaFallo ns1:ConfiguracionIncorrectaDeEjesSentenciaSETAX ;
-    ns1:textoExtracto "CAUSA El canal no tiene ejes suficientes para activar la función RTCP, TLC o la transformación de coordenadas. SOLUCIÓN Corregir la configuración de ejes del canal (sentencia #SET AX) para poder activar la cinemática." .
+ns1:ProgramarAmbasInstruccionesEnBloquesDiferentes a ns1:TareaMantenimiento ;
+    rdfs:label "Programar ambas instrucciones en bloques diferentes" ;
+    ns1:textoExtracto "SOLUCIÓN Programar ambas instrucciones en bloques diferentes." .
 
-ns1:DiagnosticoFallo_1263 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para alarma 1263: Falta eje rotativo" ;
-    ns1:activaAlarma ns1:Alarma_1263 ;
-    ns1:solucionaFallo ns1:UsoDeSentenciaTOOLORISinEjeRotativo ;
-    ns1:textoExtracto "CAUSA Hay programada una sentencia #TOOL ORI, pero no hay ningún eje rotativo para poder colocar la herramienta perpendicular al plano inclinado definido." .
+ns1:RevisarLaProgramacionParaEvitarDobleProgramacionDelPasoDeHusillo a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para evitar doble programación del paso de husillo" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_ConfiguracionEjes a ns1:Parametro ;
-    rdfs:label "Configuración de ejes del canal (sentencia #SET AX)" ;
-    ns1:monitoreaParametro ns1:DiagnosticoFallo_1262 ;
-    ns1:textoExtracto "configuración de ejes del canal (sentencia #SET AX)" .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_EjesRotativos a ns1:Parametro ;
-    rdfs:label "Ejes rotativos (requeridos para transformación)" ;
-    ns1:monitoreaParametro ns1:DiagnosticoFallo_1263 ;
-    ns1:textoExtracto "eje(s) rotativo para la transformación" .
+ns1:DobleProgramacionDelPasoDeHusillo_a4d6a5fabc a ns1:DiagnosticoFallo ;
+    rdfs:label "Doble programación del paso de husillo" ;
+    ns1:textoExtracto "'Doble programación del paso de husillo'" .
 
-ns1:UsoDeSentenciaTOOLORISinEjeRotativo a ns1:AccionProhibida ;
-    rdfs:label "Uso de sentencia #TOOL ORI sin eje rotativo" ;
-    ns1:textoExtracto "sentencia #TOOL ORI" .
+ns1:FREEAXNoSePermiteEliminarElEjeDeGiroFrontalConG96Activa a ns1:DiagnosticoFallo ;
+    rdfs:label "#FREE AX: no se permite eliminar el eje de giro frontal con G96 activa" ;
+    ns1:textoExtracto "'#FREE AX: no se permite eliminar el eje de giro frontal con G96 activa'" .
+
+ns1:NoSeAdmiteCambioDeGamaConG96Activa a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite cambio de gama con G96 activa" ;
+    ns1:textoExtracto "'No se admite cambio de gama con G96 activa'" .
+
+ns1:NoSeAdmiteG192YM19EnElMismoBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite G192 y M19 en el mismo bloque" ;
+    ns1:textoExtracto "'No se admite G192 y M19 en el mismo bloque'" .
+
+ns1:NoSeAdmiteModoManualConG96Activa a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite modo manual con G96 activa" ;
+    ns1:textoExtracto "'No se admite modo manual con G96 activa'" .
+
+ns1:PorcentajeDeAceleracionFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "Porcentaje de aceleración fuera de rango" ;
+    ns1:textoExtracto "'Porcentaje de aceleración fuera de rango'" .
+
+ns1:PorcentajeDeAceleracionNegativo a ns1:DiagnosticoFallo ;
+    rdfs:label "Porcentaje de aceleración negativo" ;
+    ns1:textoExtracto "'Porcentaje de aceleración negativo'" .
 

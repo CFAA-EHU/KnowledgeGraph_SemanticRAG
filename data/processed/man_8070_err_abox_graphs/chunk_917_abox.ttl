@@ -1,57 +1,69 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:EntradaLogica a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada lógica (simulación de palpador)"@es ;
-    ns1:textoExtracto "las entradas lógicas si sólo se desea simular el palpador."@es .
+ns1:DiagnosticoFallo_be864e5fa9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Marca o registro de sistema pendiente de ser implementado" ;
+    ns1:textoExtracto "9039 Marca o registro de sistema pendiente de ser implementado. DETECCIÓN Durante la compilación del programa PLC. CAUSA La marca o registro todavía no ha sido implementada. SOLUCIÓN No se puede usar la marca o registro." .
 
-ns1:Fallo_9303 a ns1:DiagnosticoFallo ;
-    rdfs:label "El palpador debe asociarse a entrada digital de nodo Fagor"@es ;
-    ns1:identificador "9303" ;
-    ns1:monitoreaParametro ns1:Parametro_PRBDI1,
-        ns1:Parametro_PRBDI2 ;
-    ns1:textoExtracto "9303 'El palpador debe asociarse a entrada digital de nodo Fagor' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El parámetro PRBDI1 o PRBDI2 hace referencia a una entrada digital no válida. Sólo son válidas las entradas digitales que pertenecen a módulos Fagor o las entradas lógicas si sólo se desea simular el palpador. SOLUCIÓN Asignar a los parámetros PRBDI1 y PRBDI2 una entrada digital de un módulo Fagor o una entrada lógica."@es .
+ns1:EliminarMarcaORegistroDelProgramaPLC a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar marca o registro del programa PLC" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_627b5acd07 ;
+    ns1:textoExtracto "SOLUCIÓN Eliminar la marca o registro del programa PLC." .
 
-ns1:Fallo_9304 a ns1:DiagnosticoFallo ;
-    rdfs:label "Ejes gantry: Los dos ejes SERCOS tienen que tener igual OPMODEP"@es ;
-    ns1:identificador "9304" ;
-    ns1:monitoreaParametro ns1:Parametro_OPMODEP ;
-    ns1:textoExtracto "9304 'Ejes gantry: Los dos ejes SERCOS tienen que tener igual OPMODEP' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay una pareja gantry o tándem cuyos ejes maestro y esclavo tienen diferente parámetro OPMODEP."@es .
+ns1:EscribirUnComentarioMasCortoODividirElComentarioEnDos a ns1:TareaMantenimiento ;
+    rdfs:label "Escribir un comentario más corto o dividir el comentario en dos" ;
+    ns1:solucionaFallo ns1:LineaDeComentariosDemasiadoLarga ;
+    ns1:textoExtracto "SOLUCIÓN Escribir un comentario mas corto o dividir el comentario en dos." .
 
-ns1:ModuloFagor a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo Fagor (entrada digital válida)"@es ;
-    ns1:textoExtracto "Sólo son válidas las entradas digitales que pertenecen a módulos Fagor [...]"@es .
+ns1:NoSePuedeAbrirElFicheroDeRecursosConSimbolo_37e750cea5 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede abrir el fichero de recursos con símbolo" ;
+    ns1:textoExtracto "9034 No se puede abrir el fichero de recursos con símbolo. DETECCIÓN Durante la compilación del programa PLC. CAUSA El sistema no dispone de memoria para crear recursos nuevos. SOLUCIÓN Póngase en contacto con Fagor Automation." .
 
-ns1:Palpador a ns1:Sensor ;
-    rdfs:label "Palpador"@es ;
-    ns1:textoExtracto "El palpador debe asociarse a entrada digital de nodo Fagor"@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:NoHayEjeFisicoCorrespondienteAlEjeLogico ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:SistemaEjesGantry a ns1:Sistema ;
-    rdfs:label "Sistema de ejes gantry/tándem"@es ;
-    ns1:compuestoPor ns1:EjeEsclavo_SERCOS,
-        ns1:EjeMaestro_SERCOS ;
-    ns1:textoExtracto "Hay una pareja gantry o tándem cuyos ejes maestro y esclavo tienen diferente parámetro OPMODEP."@es .
+ns1:SustituidoPor a ns1:DiagnosticoFallo ;
+    rdfs:label "'/' sustituido por '_' " ;
+    ns1:textoExtracto "9042 '/' sustituido por '_'. DETECCIÓN Durante la compilación del programa PLC." .
 
-ns1:EjeEsclavo_SERCOS a ns1:ComponenteMecanico ;
-    rdfs:label "Eje esclavo SERCOS (gantry)"@es ;
-    ns1:textoExtracto "Los dos ejes SERCOS tienen que tener igual OPMODEP [...] pareja gantry o tándem cuyos ejes maestro y esclavo [...]"@es .
+ns1:SustituirLaMarcaORegistroPorElRecursoSugerido a ns1:TareaMantenimiento ;
+    rdfs:label "Sustituir la marca o registro por el recurso sugerido" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_3950b82492 ;
+    ns1:textoExtracto "SOLUCIÓN Sustituir la marca o registro por el recurso sugerido." .
 
-ns1:EjeMaestro_SERCOS a ns1:ComponenteMecanico ;
-    rdfs:label "Eje maestro SERCOS (gantry)"@es ;
-    ns1:textoExtracto "Los dos ejes SERCOS tienen que tener igual OPMODEP [...] pareja gantry o tándem cuyos ejes maestro y esclavo [...]"@es .
+ns1:UtilizarDirectivaDEFOPDEFParaDefinirLosSimbolos a ns1:TareaMantenimiento ;
+    rdfs:label "Utilizar directiva DEF o PDEF para definir los símbolos" ;
+    ns1:solucionaFallo ns1:SimboloDesconocido ;
+    ns1:textoExtracto "SOLUCIÓN Utilizar la directiva DEF o PDEF para definir los símbolos." .
 
-ns1:Parametro_OPMODEP a ns1:Parametro ;
-    rdfs:label "OPMODEP (modo de operación para ejes gantry)"@es ;
-    ns1:identificador "OPMODEP" ;
-    ns1:textoExtracto "Los dos ejes SERCOS tienen que tener igual OPMODEP [...] Hay una pareja gantry o tándem cuyos ejes maestro y esclavo tienen diferente parámetro OPMODEP."@es .
+ns1:UtilizarLaMarcaORegistroSugerido a ns1:TareaMantenimiento ;
+    rdfs:label "Utilizar la marca o registro sugerido" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_e63b118461 ;
+    ns1:textoExtracto "SOLUCIÓN Utilice la marca la marca o registro sugerida." .
 
-ns1:Parametro_PRBDI1 a ns1:Parametro ;
-    rdfs:label "PRBDI1 (entrada digital para palpador)"@es ;
-    ns1:identificador "PRBDI1" ;
-    ns1:textoExtracto "El parámetro PRBDI1 [...] hace referencia a una entrada digital no válida."@es .
+ns1:DiagnosticoFallo_3950b82492 a ns1:DiagnosticoFallo ;
+    rdfs:label "Marca o registro de sistema sustituido por %" ;
+    ns1:textoExtracto "9041 Marca o registro de sistema sustituido por %. DETECCIÓN Durante la compilación del programa PLC. CAUSA La marca o registro es incorrecto; el PLC lo ha sustituido en el programa compilado por el recurso sugerido. SOLUCIÓN Sustituir la marca o registro por el recurso sugerido." .
 
-ns1:Parametro_PRBDI2 a ns1:Parametro ;
-    rdfs:label "PRBDI2 (entrada digital para palpador)"@es ;
-    ns1:identificador "PRBDI2" ;
-    ns1:textoExtracto "El parámetro PRBDI2 [...] hace referencia a una entrada digital no válida."@es .
+ns1:DiagnosticoFallo_627b5acd07 a ns1:DiagnosticoFallo ;
+    rdfs:label "Marca o registro de sistema obsoleto" ;
+    ns1:textoExtracto "9037 Marca o registro de sistema obsoleto. DETECCIÓN Durante la compilación del programa PLC. CAUSA La marca o registro ya no existe. SOLUCIÓN Eliminar la marca o registro del programa PLC." .
+
+ns1:DiagnosticoFallo_e63b118461 a ns1:DiagnosticoFallo ;
+    rdfs:label "Marca o registro de sistema obsoleto" ;
+    ns1:textoExtracto "9038 Marca o registro de sistema obsoleto. En su lugar use %. DETECCIÓN Durante la compilación del programa PLC. CAUSA La marca o registro ya no existe. SOLUCIÓN Utilice la marca la marca o registro sugerida." .
+
+ns1:LineaDeComentariosDemasiadoLarga a ns1:DiagnosticoFallo ;
+    rdfs:label "Linea de comentarios demasiado larga" ;
+    ns1:textoExtracto "9040 Linea de comentarios demasiado larga. DETECCIÓN Durante la compilación del programa PLC. CAUSA El comentario es demasiado largo. SOLUCIÓN Escribir un comentario mas corto o dividir el comentario en dos." .
+
+ns1:NoHayEjeFisicoCorrespondienteAlEjeLogico a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay eje físico correspondiente al eje lógico" ;
+    ns1:textoExtracto "9035 No hay eje físico correspondiente al eje lógico. DETECCIÓN Durante la compilación del programa PLC. CAUSA El programa contiene una referencia a un eje que no existe. SOLUCIÓN Revisar la programación." .
+
+ns1:SimboloDesconocido a ns1:DiagnosticoFallo ;
+    rdfs:label "Símbolo desconocido" ;
+    ns1:textoExtracto "9036 Símbolo desconocido. DETECCIÓN Durante la compilación del programa PLC. CAUSA El programa utiliza un símbolo que está definido. SOLUCIÓN Utilizar la directiva DEF o PDEF para definir los símbolos." .
 

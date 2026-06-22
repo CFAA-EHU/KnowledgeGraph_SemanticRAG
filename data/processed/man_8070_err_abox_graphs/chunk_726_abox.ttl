@@ -1,53 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_7045 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 7045: Información insuficiente para operación"@es ;
-    ns1:identificador "7045" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarTablaHerramientasAlmacen_7045 ;
-    ns1:textoExtracto "No hay suficiente información para la operación, el almacén no esta determinado. DETECCIÓN Durante la ejecución. CAUSA La herramienta programada no está en el almacén. SOLUCIÓN Revisar la tabla de herramientas y almacén."@es .
+ns1:EnModoDescargaT0NoAdmitida_1c59604197 a ns1:DiagnosticoFallo ;
+    rdfs:label "En modo descarga:T0 no admitida" ;
+    ns1:textoExtracto "'En modo descarga:T0 no admitida' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. No se permite programar T0." .
 
-ns1:Fallo_7046 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 7046: Acceso denegado a variable"@es ;
-    ns1:identificador "7046" ;
-    ns1:solucionaFallo ns1:TareaMantenimiento_RevisarTablaHerramientasAlmacen_7046,
-        ns1:TareaMantenimiento_ValidarParametrosMaquina_7046 ;
-    ns1:textoExtracto "No se puede acceder a la variable. DETECCIÓN Durante la validación de los parámetros máquina o la ejecución. CAUSA Las posibles causas son: La herramienta programada no es accesible; lectura/escritura de (V.)G.CAM antes de carga de leva; activación prematura de leva. SOLUCIÓN Revisar la tabla de herramientas y almacén."@es .
+ns1:M6SinT_ebaf235f39 a ns1:DiagnosticoFallo ;
+    rdfs:label "M6 sin T" ;
+    ns1:textoExtracto "'M6 sin T' DETECCIÓN Durante la ejecución. CAUSA Hay programada una M06 sin su correspondiente herramienta." .
 
-ns1:HerramientaProgramada_7045 a ns1:Herramienta ;
-    rdfs:label "Herramienta programada (Fallo 7045)"@es ;
-    ns1:textoExtracto "La herramienta programada no está en el almacén."@es .
+ns1:NoProgramarDosHerramientasConsecutivasSinM06 a ns1:AccionProhibida ;
+    rdfs:label "No programar dos herramientas consecutivas sin M06" ;
+    ns1:textoExtracto "'En modo descarga:M6 obligatoria' CAUSA Almacén en modo descarga. Hay programadas dos herramientas consecutivas sin M06." .
 
-ns1:HerramientaProgramada_7046 a ns1:Herramienta ;
-    rdfs:label "Herramienta programada (Fallo 7046)"@es ;
-    ns1:textoExtracto "La herramienta programada no es accesible."@es .
+ns1:NoProgramarM06SinSuCorrespondienteHerramienta a ns1:AccionProhibida ;
+    rdfs:label "No programar M06 sin su correspondiente herramienta" ;
+    ns1:textoExtracto "'M6 sin T' CAUSA Hay programada una M06 sin su correspondiente herramienta." .
 
-ns1:Parametro_G_CAM a ns1:Parametro ;
-    rdfs:label "Variable (V.)G.CAM"@es ;
-    ns1:identificador "G.CAM" ;
-    ns1:monitoreaParametro ns1:Maquina_CNC ;
-    ns1:textoExtracto "Se ha intentado leer la variable (V.)G.CAM durante la validación de la tabla que define la leva. Se ha intentado leer o escribir la variable (V.)G.CAM antes de que el CNC termine de cargar la leva."@es .
+ns1:NoProgramarT0EnModoDescarga a ns1:AccionProhibida ;
+    rdfs:label "No programar T0 en modo descarga" ;
+    ns1:textoExtracto "'En modo descarga:T0 no admitida' CAUSA Almacén en modo descarga. No se permite programar T0." .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC"@es ;
-    ns1:textoExtracto "el CNC termine de cargar la leva"@es .
+ns1:ProgramarLaHerramientaADescargarEnElAlmacen a ns1:TareaMantenimiento ;
+    rdfs:label "Programar la herramienta a descargar en el almacén" ;
+    ns1:solucionaFallo ns1:EnModoDescargaEstaHerramientaYaEstaDescargada_ebcf6994cf ;
+    ns1:textoExtracto "SOLUCIÓN Programar la herramienta a descargar en el almacén." .
 
-ns1:TareaMantenimiento_RevisarTablaHerramientasAlmacen_7045 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar tabla de herramientas y almacén (Código 7045)"@es ;
-    ns1:requiereConsumible ns1:TablaHerramientasAlmacen ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la tabla de herramientas y almacén."@es .
+ns1:ProgramarM06DetrasDeCadaHerramienta_3505283ed3 a ns1:TareaMantenimiento ;
+    rdfs:label "Programar M06 detrás de cada herramienta" ;
+    ns1:solucionaFallo ns1:EnModoDescargaEstaHerramientaYaEstaDescargada_ebcf6994cf,
+        ns1:EnModoDescargaM6Obligatoria_c63ba8df24 ;
+    ns1:textoExtracto "SOLUCIÓN Programar M06 detrás de cada herramienta." .
 
-ns1:TareaMantenimiento_RevisarTablaHerramientasAlmacen_7046 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar tabla de herramientas y almacén (Código 7046)"@es ;
-    ns1:requiereConsumible ns1:TablaHerramientasAlmacen ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la tabla de herramientas y almacén."@es .
+ns1:EnModoDescargaM6Obligatoria_c63ba8df24 a ns1:DiagnosticoFallo ;
+    rdfs:label "En modo descarga:M6 obligatoria" ;
+    ns1:textoExtracto "'En modo descarga:M6 obligatoria' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. Hay programadas dos herramientas consecutivas sin M06." .
 
-ns1:TareaMantenimiento_ValidarParametrosMaquina_7046 a ns1:TareaMantenimiento ;
-    rdfs:label "Validar parámetros máquina para acceso a variables (Código 7046)"@es ;
-    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina o la ejecución."@es .
-
-ns1:TablaHerramientasAlmacen a ns1:Tabla ;
-    rdfs:label "Tabla de herramientas y almacén"@es ;
-    ns1:documentadoEn ns1:Manual_7000 ;
-    ns1:textoExtracto "Revisar la tabla de herramientas y almacén."@es .
+ns1:EnModoDescargaEstaHerramientaYaEstaDescargada_ebcf6994cf a ns1:DiagnosticoFallo ;
+    rdfs:label "En modo descarga:Esta herramienta ya está descargada" ;
+    ns1:textoExtracto "'En modo descarga:Esta herramienta ya está descargada' DETECCIÓN Durante la ejecución. CAUSA Almacén en modo descarga. La herramienta no está en el almacén." .
 

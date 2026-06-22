@@ -1,39 +1,41 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:EncoderEje a ns1:Sensor ;
-    rdfs:label "Encoder de eje/cabezal"@es ;
-    ns1:monitoreaParametro ns1:ParametroVelocidadGiro ;
-    ns1:textoExtracto "el encóder del eje o cabezal"@es .
+ns1:AjustarElParametroINPOMAX a ns1:TareaMantenimiento ;
+    rdfs:label "Ajustar el parámetro INPOMAX" ;
+    ns1:solucionaFallo ns1:TiempoMaximoParaEntrarEnBandaDeMuerteSuperado ;
+    ns1:textoExtracto "SOLUCIÓN Ajustar el parámetro INPOMAX." .
 
-ns1:FalloAparcamientoEjeActivo a ns1:DiagnosticoFallo ;
-    rdfs:label "Aparcamiento de eje en movimiento"@es ;
-    ns1:identificador "3718" ;
-    ns1:textoExtracto "DETECCIÓN Aparcando un eje desde PLC. CAUSA El PLC intenta aparcar un eje en movimiento, que forma parte de la cinemática"@es .
+ns1:ParametrizacionInadecuadaDelEjeFalloEnElModuloDeContajeOReguladorSercos a ns1:AccionProhibida ;
+    rdfs:label "Parametrización inadecuada del eje, fallo en el módulo de contaje o regulador Sercos" ;
+    ns1:textoExtracto "Puede ser debido a una parametrización inadecuada del eje, a un fallo en el módulo de contaje o en el regulador Sercos, en el sistema de captación o a un error en el conexionado." .
 
-ns1:FalloEncoderVelocidadMaxima a ns1:DiagnosticoFallo ;
-    rdfs:label "Encoder supera velocidad máxima"@es ;
-    ns1:solucionaFallo ns1:BusquedaReferenciaMaquina ;
-    ns1:textoExtracto "Durante la ejecución. CAUSA El encóder del eje o cabezal ha superado la velocidad de giro máxima permitida. Al superar este límite, el eje o cabezal ha perdido el punto de referencia, por lo que las cotas leídas no son correctas."@es .
+ns1:Parametro_384d14f58c a ns1:Parametro ;
+    rdfs:label "Parámetro de tiempo máximo para entrar en banda de muerte" ;
+    ns1:identificador "INPOMAX" ;
+    ns1:textoExtracto "El tiempo que necesita el eje para entrar en la banda de muerte, para que el CNC considere que está en posición, supera al definido en el parámetro INPOMAX." .
 
-ns1:PuntoReferencia a ns1:Parametro ;
-    rdfs:label "Punto de referencia"@es ;
-    ns1:textoExtracto "ha perdido el punto de referencia"@es .
+ns1:RevisarLosParametrosDelPalpador a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros del palpador" ;
+    ns1:solucionaFallo ns1:EntradaDigitalAsignadaAlPalpadorNoValida ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros del palpador." .
 
-ns1:SistemaCinematico a ns1:Sistema ;
-    rdfs:label "Cinemática de máquina"@es ;
-    ns1:textoExtracto "eje en movimiento, que forma parte de la cinemática"@es ;
-    ns1:tieneComponente ns1:EjeControlado .
+ns1:RevisarLosParametrosRelacionadosConLaBusquedaDeReferencia a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros relacionados con la búsqueda de referencia" ;
+    ns1:solucionaFallo ns1:ErrorEnLaBusquedaDeCero ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros relacionados con la búsqueda de referencia, el estado del módulo de contaje o del regulador Sercos, el sistema de captación o el conexionado." .
 
-ns1:BusquedaReferenciaMaquina a ns1:TareaMantenimiento ;
-    rdfs:label "Búsqueda de referencia máquina"@es ;
-    ns1:textoExtracto "SOLUCIÓN Realizar una búsqueda de referencia máquina para trabajar en lazo cerrado."@es .
+ns1:EntradaDigitalAsignadaAlPalpadorNoValida a ns1:AccionProhibida ;
+    rdfs:label "Entrada digital asignada al palpador no válida" ;
+    ns1:textoExtracto "La entrada digital asignada al palpador no es válida." .
 
-ns1:EjeControlado a ns1:ComponenteMecanico ;
-    rdfs:label "Eje con encoder"@es ;
-    ns1:textoExtracto "el encóder del eje o cabezal ha superado la velocidad de giro máxima permitida"@es .
+ns1:ErrorEnLaBusquedaDeCero a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la búsqueda de cero" ;
+    ns1:identificador "3707" ;
+    ns1:textoExtracto "'Error en la búsqueda de cero'" .
 
-ns1:ParametroVelocidadGiro a ns1:Parametro ;
-    rdfs:label "Velocidad de giro máxima"@es ;
-    ns1:textoExtracto "velocidad de giro máxima permitida"@es .
+ns1:TiempoMaximoParaEntrarEnBandaDeMuerteSuperado a ns1:AccionProhibida ;
+    rdfs:label "Tiempo máximo para entrar en banda de muerte superado" ;
+    ns1:identificador "3708" ;
+    ns1:textoExtracto "'Tiempo máximo para entrar en banda de muerte superado'" .
 

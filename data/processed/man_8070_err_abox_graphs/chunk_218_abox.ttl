@@ -1,23 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_EjesCanal a ns1:Parametro ;
-    rdfs:label "Ejes del canal cinemático"@es ;
-    ns1:monitoreaParametro ns1:ComponenteMecanico_Cinematica ;
-    ns1:textoExtracto "Los ejes deben [estar] bien definidos y formar parte del canal."@es .
+ns1:DefinirBloqueDeParadaParaBusquedaDeBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Definir bloque de parada para búsqueda de bloque" ;
+    ns1:solucionaFallo ns1:ErrorPorFaltaDeBloqueDeParadaEnBusquedaDeBloque ;
+    ns1:textoExtracto "SOLUCIÓN Una vez seleccionada la opción de búsqueda de bloque, en" .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:activaAlarma ns1:AvisoSeguridad_1442 ;
-    ns1:textoExtracto "Tras un reset del CNC o al iniciar la ejecución de un programa pieza."@es ;
-    ns1:tieneComponente ns1:ComponenteMecanico_Cinematica .
+ns1:RenombrarEjeEsclavo a ns1:TareaMantenimiento ;
+    rdfs:label "Renombrar eje esclavo" ;
+    ns1:solucionaFallo ns1:ErrorPorNombreDelEjeEsclavoOcupado ;
+    ns1:textoExtracto "SOLUCIÓN Renombrar el eje esclavo a incluir o el ya existente en la configuración." .
 
-ns1:AvisoSeguridad_1442 a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso 1442: Cinemática desactivada"@es ;
-    ns1:identificador "1442" ;
-    ns1:textoExtracto "'Se ha desactivado la cinemática' DETECCIÓN Tras un reset del CNC o al iniciar la ejecución de un programa pieza. CAUSA El CNC ha desactivado una cinemática, bien porque es una cinemática desconocida ó bien porque los ejes necesarios para esa cinemática no son los adecuados. SOLUCIÓN Comprobar que el tipo de cinemática es correcto y que los ejes que intervienen en ella están bien definidos y forman parte del canal."@es .
+ns1:ErrorPorFaltaDeBloqueDeParadaEnBusquedaDeBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Error por falta de bloque de parada en búsqueda de bloque" ;
+    ns1:textoExtracto "'No se ha programado bloque de parada en búsqueda de bloque'" .
 
-ns1:ComponenteMecanico_Cinematica a ns1:ComponenteMecanico ;
-    rdfs:label "Cinemática del sistema CNC"@es ;
-    ns1:textoExtracto "El CNC ha desactivado una cinemática, bien porque es una cinemática desconocida ó bien porque los ejes necesarios para esa cinemática no son los adecuados."@es .
+ns1:ErrorPorNombreDelEjeEsclavoOcupado a ns1:DiagnosticoFallo ;
+    rdfs:label "Error por nombre del eje esclavo ocupado" ;
+    ns1:textoExtracto "El CNC da error porque el nombre del eje esclavo ya está ocupado por otro eje en la configuración actual del canal." .
 

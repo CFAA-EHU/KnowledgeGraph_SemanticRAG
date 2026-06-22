@@ -1,41 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Error1497 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1497: Operador incorrecto para el tipo de variable" ;
-    ns1:identificador "1497" ;
-    ns1:textoExtracto "'Operador incorrecto para el tipo de variable' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado modificar mediante los operadores \"+=\", \"-=\", \"*=\" y \"/=\" alguna variable no numérica. SOLUCIÓN Revisar la programación." .
+ns1:AsociacionDeEntradaDigitalAlPalpador a ns1:TareaMantenimiento ;
+    rdfs:label "Asociación de entrada digital al palpador" ;
+    ns1:solucionaFallo ns1:NoExisteEntradaDigitalAsociadaAlPalpadorPRBDI12 ;
+    ns1:textoExtracto "SOLUCIÓN Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)." .
 
-ns1:ModoAutomatico a ns1:ModoOperacion ;
-    rdfs:label "Modo automático" ;
-    ns1:textoExtracto "modo automático" .
+ns1:EntradaDigitalAsociadaAlPalpador1 a ns1:Parametro ;
+    rdfs:label "Entrada digital asociada al palpador 1" ;
+    ns1:textoExtracto "SOLUCIÓN Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)." .
 
-ns1:SentenciaEXEC a ns1:Parametro ;
-    rdfs:label "Sentencia #EXEC" ;
-    ns1:activaAlarma ns1:Error1500 ;
-    ns1:identificador "#EXEC" ;
-    ns1:textoExtracto "sentencia #EXEC" .
+ns1:EntradaDigitalAsociadaAlPalpador2 a ns1:Parametro ;
+    rdfs:label "Entrada digital asociada al palpador 2" ;
+    ns1:textoExtracto "SOLUCIÓN Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)." .
 
-ns1:SentenciaRPT a ns1:Parametro ;
-    rdfs:label "Sentencia #RPT" ;
-    ns1:activaAlarma ns1:Error1499 ;
-    ns1:identificador "#RPT" ;
-    ns1:textoExtracto "sentencia #RPT" .
+ns1:ProgramacionDeM19AntesDelRoscado a ns1:TareaMantenimiento ;
+    rdfs:label "Programación de M19 antes del roscado" ;
+    ns1:solucionaFallo ns1:G63NecesitaProgramarPreviamenteM19_be23132abf ;
+    ns1:textoExtracto "SOLUCIÓN Programar M19 antes de realizar el roscado." .
 
-ns1:Error1499 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1499: Número de anidamientos de #RPT y subrutinas sobrepasado" ;
-    ns1:identificador "1499" ;
-    ns1:textoExtracto "'Número de anidamientos de #RPT y subrutinas sobrepasado' DETECCIÓN Durante la ejecución. CAUSA Se considera anidamiento cuando la sentencia #RPT se programa entre dos etiquetas que definen el radio de acción de otra sentencia #RPT. El CNC da error cuando sobrepasa el número de anidamientos de sentencias RPT y subrutinas, si las hay. SOLUCIÓN El máximo número de anidamientos permitido es 20." ;
-    ns1:valor 20 .
+ns1:VerificacionDelNumeroDePalpador a ns1:TareaMantenimiento ;
+    rdfs:label "Verificación del número de palpador" ;
+    ns1:solucionaFallo ns1:NumeroDePalpadorIncorrecto ;
+    ns1:textoExtracto "SOLUCIÓN El número de palpador seleccionado deber ser 1 ó 2." .
 
-ns1:Error1500 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1500: #EXEC: no se puede ejecutar el programa en el canal indicado" ;
-    ns1:identificador "1500" ;
-    ns1:mitigaRiesgo ns1:ModoManual ;
-    ns1:textoExtracto "'#EXEC: no se puede ejecutar el programa en el canal indicado' DETECCIÓN Durante la ejecución. CAUSA Mediante la sentencia #EXEC, el CNC ha intentado ejecutar un programa en un canal que está en error, que está ejecutando otro programa o que está en modo manual y no puede pasar a modo automático." .
+ns1:G63NecesitaProgramarPreviamenteM19_be23132abf a ns1:AccionProhibida ;
+    rdfs:label "G63 necesita programar previamente M19" ;
+    ns1:textoExtracto "'G63 necesita programar previamente M19' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer un roscado G63 con un cabezal Sercos sin posicionarlo previamente con M19." .
 
-ns1:ModoManual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual" ;
-    ns1:textoExtracto "modo manual" .
+ns1:NoExisteEntradaDigitalAsociadaAlPalpadorPRBDI12 a ns1:AccionProhibida ;
+    rdfs:label "No existe entrada digital asociada al palpador (PRBDI1/2)" ;
+    ns1:textoExtracto "'No existe entrada digital asociada al palpador (PRBDI1/2)' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado seleccionar un palpador (#SELECT PROBE) o realizar un movimiento de palpado (G100) y no existe ninguna entrada digital asociada al palpador." .
+
+ns1:NumeroDePalpadorIncorrecto a ns1:AccionProhibida ;
+    rdfs:label "Número de palpador incorrecto" ;
+    ns1:textoExtracto "'Número de palpador incorrecto' DETECCIÓN Durante la ejecución. CAUSA El número de palpador seleccionado con la sentencia #SELECT PROBE no es correcto." .
 

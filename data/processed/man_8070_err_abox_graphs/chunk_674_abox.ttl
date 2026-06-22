@@ -1,84 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error5048 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de circuito abierto en sensor de temperatura remoto"@es ;
-    ns1:identificador "5048" ;
-    ns1:solucionaFallo ns1:SensorTemperaturaRemoto_5048 ;
-    ns1:textoExtracto "5048 Error de circuito abierto en un sensor de temperatura remoto. DETECCIÓN Durante el funcionamiento del PLC. CAUSA Se ha abierto el circuito conectado a un sensor de temperatura remoto. SOLUCIÓN Revisar el conexionado del sensor de temperatura remoto."@es .
+ns1:PongaseEnContactoConFagorAutomation_4fdb3e53af a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation." .
 
-ns1:Error5049 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de rango mínimo excedido en sensor de temperatura remoto"@es ;
-    ns1:identificador "5049" ;
-    ns1:solucionaFallo ns1:SensorTemperaturaRemoto_5049 ;
-    ns1:textoExtracto "5049 Un sensor de temperatura remoto ha detectado un error de rango mínimo excedido. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La temperatura del sensor de temperatura es menor que el rango permitido. SOLUCIÓN Revisar el conexionado del sensor de temperatura remoto."@es .
+ns1:RevisionDeLaInstalacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de la instalación" ;
+    ns1:solucionaFallo ns1:ContadorDePLCDeshabilitado,
+        ns1:ErrorEnLaEscrituraDeSalidasDigitalesLocales,
+        ns1:ErrorEnLaLecturaDeEntradasDigitalesLocales ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la instalación de la aplicación y los drivers del CNC. Si el error persiste, póngase en contacto con Fagor Automation." .
 
-ns1:Error5050 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de conversión en sensor de temperatura remoto"@es ;
-    ns1:identificador "5050" ;
-    ns1:solucionaFallo ns1:SensorTemperaturaRemoto_5050 ;
-    ns1:textoExtracto "5050 Un sensor de temperatura remoto ha detectado un error conversión. DETECCIÓN Durante el funcionamiento del PLC. CAUSA El sensor de temperatura remoto no puede realizar la lectura correctamente. SOLUCIÓN Revisar el conexionado del sensor de temperatura remoto."@es .
+ns1:ContadorDePLCDeshabilitado a ns1:DiagnosticoFallo ;
+    rdfs:label "Contador de PLC deshabilitado" ;
+    ns1:textoExtracto "'Contador de PLC deshabilitado' DETECCIÓN Durante el arranque del CNC. CAUSA El contador está deshabilitado, desde el programa de PLC o desde monitorización." .
 
-ns1:Error5051 a ns1:DiagnosticoFallo ;
-    rdfs:label "Configuración incorrecta en sensor de temperatura remoto"@es ;
-    ns1:identificador "5051" ;
-    ns1:solucionaFallo ns1:SensorTemperaturaRemoto_5051 ;
-    ns1:textoExtracto "5051 Un sensor de temperatura remoto esta configurado incorrectamente. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La configuración de un sensor de temperatura remoto no es correcta. SOLUCIÓN Revisar la configuración del sensor de temperatura remoto."@es .
+ns1:ErrorEnLaEscrituraDeSalidasDigitalesLocales a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la escritura de salidas digitales locales" ;
+    ns1:textoExtracto "'Error en la escritura de salidas digitales locales' DETECCIÓN Error en la escritura de salidas digitales locales. CAUSA Fallo en la escritura de las salidas digitales locales de PLC." .
 
-ns1:Error5052 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de alimentación en sensor de temperatura remoto"@es ;
-    ns1:identificador "5052" ;
-    ns1:solucionaFallo ns1:SensorTemperaturaRemoto_5052 ;
-    ns1:textoExtracto "5052 Un sensor de temperatura remoto ha detectado un error de alimentación. DETECCIÓN Durante el funcionamiento del PLC. CAUSA La alimentación del sensor de temperatura remoto no es correcta. SOLUCIÓN Revisar la alimentación del sensor de temperatura remoto."@es .
-
-ns1:Error5053 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de módulo en sensor de temperatura remoto"@es ;
-    ns1:identificador "5053" ;
-    ns1:solucionaFallo ns1:ModuloRemoto_5053 ;
-    ns1:textoExtracto "5053 Un sensor de temperatura remoto ha detectado un error en el módulo. DETECCIÓN Durante el funcionamiento del PLC. CAUSA El módulo remoto del sensor de temperatura no funciona correctamente. SOLUCIÓN Revisar el módulo remoto del sensor de temperatura."@es .
-
-ns1:Error5054 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error desconocido en sensor de temperatura remoto"@es ;
-    ns1:identificador "5054" ;
-    ns1:solucionaFallo ns1:ModuloRemoto_5054 ;
-    ns1:textoExtracto "5054 Un sensor de temperatura remoto ha detectado un error desconocido. DETECCIÓN Durante el funcionamiento del PLC. CAUSA El módulo remoto del sensor de temperatura tiene un error. SOLUCIÓN Revisar el módulo remoto del sensor de temperatura."@es .
-
-ns1:PLC_SistemaControl a ns1:Sistema ;
-    rdfs:label "PLC (Sistema de control)"@es ;
-    ns1:monitoreaParametro ns1:SensorTemperaturaRemoto_5048,
-        ns1:SensorTemperaturaRemoto_5049,
-        ns1:SensorTemperaturaRemoto_5050,
-        ns1:SensorTemperaturaRemoto_5051,
-        ns1:SensorTemperaturaRemoto_5052 ;
-    ns1:textoExtracto "Durante el funcionamiento del PLC"@es ;
-    ns1:tieneComponente ns1:ModuloRemoto_5053,
-        ns1:ModuloRemoto_5054 .
-
-ns1:ModuloRemoto_5053 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto del sensor de temperatura (Error 5053)"@es ;
-    ns1:textoExtracto "módulo remoto del sensor de temperatura"@es .
-
-ns1:ModuloRemoto_5054 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto del sensor de temperatura (Error 5054)"@es ;
-    ns1:textoExtracto "módulo remoto del sensor de temperatura"@es .
-
-ns1:SensorTemperaturaRemoto_5048 a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura remoto (Error 5048)"@es ;
-    ns1:textoExtracto "sensor de temperatura remoto"@es .
-
-ns1:SensorTemperaturaRemoto_5049 a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura remoto (Error 5049)"@es ;
-    ns1:textoExtracto "sensor de temperatura remoto"@es .
-
-ns1:SensorTemperaturaRemoto_5050 a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura remoto (Error 5050)"@es ;
-    ns1:textoExtracto "sensor de temperatura remoto"@es .
-
-ns1:SensorTemperaturaRemoto_5051 a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura remoto (Error 5051)"@es ;
-    ns1:textoExtracto "sensor de temperatura remoto"@es .
-
-ns1:SensorTemperaturaRemoto_5052 a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura remoto (Error 5052)"@es ;
-    ns1:textoExtracto "sensor de temperatura remoto"@es .
+ns1:ErrorEnLaLecturaDeEntradasDigitalesLocales a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la lectura de entradas digitales locales" ;
+    ns1:textoExtracto "'Error en la lectura de entradas digitales locales' DETECCIÓN Error en la lectura de entradas digitales locales. CAUSA Fallo en la lectura de las entradas digitales locales de PLC." .
 

@@ -1,19 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_3511 a ns1:Alarma ;
-    rdfs:label "Cancelación M3/M4 en G96 sin S programada" ;
-    ns1:identificador "3511" ;
-    ns1:textoExtracto "Cancelada M3 o M4 de PLC en G96 sin S programada. DETECCIÓN Durante la ejecución." .
+ns1:AumentarElTiempoDeSincronizacionComenzarLaSincronizacionAVelocidadesM_60331ac874 a ns1:TareaMantenimiento ;
+    rdfs:label "Aumentar el tiempo de sincronización, comenzar la sincronización a velocidades más parecidas o aumentar la aceleración del esclavo" ;
+    ns1:solucionaFallo ns1:SeHaSuperadoElTiempoMaximoPermitidoParaSincronizar_2afda93146 ;
+    ns1:textoExtracto "SOLUCIÓN Aumentar el tiempo de sincronización, comenzar la sincronización a velocidades más parecidas o aumentar la aceleración del esclavo." .
 
-ns1:DiagnosticoFallo_3510 a ns1:DiagnosticoFallo ;
-    rdfs:label "Revisión de movimiento post-palpación" ;
-    ns1:identificador "3510_SOL" ;
-    ns1:solucionaFallo ns1:Alarma_3510 ;
-    ns1:textoExtracto "Revisar el movimiento posterior a la palpación." .
+ns1:ElDenominadorDelRatioNoPuedeValerCero a ns1:TareaMantenimiento ;
+    rdfs:label "El denominador del ratio no puede valer cero" ;
+    ns1:solucionaFallo ns1:NoSePuedeProgramarDenominador0EnSincronizacion_b3069c0c06 ;
+    ns1:textoExtracto "SOLUCIÓN El denominador del ratio no puede valer cero." .
 
-ns1:Alarma_3510 a ns1:Alarma ;
-    rdfs:label "Colisión con sonda de palpado" ;
-    ns1:identificador "3510" ;
-    ns1:textoExtracto "El movimiento programado va a colisionar con la sonda de palpado. DETECCIÓN Durante la ejecución. CAUSA El movimiento del eje va a superar los límites fijados por el movimiento de palpado anterior. El CNC detiene el movimiento antes de que haya una colisión." .
+ns1:SiLaVelocidadDelEjeMaestroEsAltaHayQueProgramarElMovimientoAdicionalC_bf041a0b80 a ns1:TareaMantenimiento ;
+    rdfs:label "Si la velocidad del eje maestro es alta, hay que programar el movimiento adicional con una velocidad más pequeña" ;
+    ns1:solucionaFallo ns1:SeIntentaSuperarLaVelocidadMaximaMAXFEED_615c29beff ;
+    ns1:textoExtracto "SOLUCIÓN Si la velocidad del eje maestro es alta, hay que programar el movimiento adicional con una velocidad más pequeña." .
+
+ns1:NoSePuedeProgramarDenominador0EnSincronizacion_b3069c0c06 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede programar denominador 0 en sincronización" ;
+    ns1:textoExtracto "'No se puede programar denominador 0 en sincronización' DETECCIÓN Durante la ejecución. CAUSA En la sincronización, el denominador del ratio de transmisión tiene valor cero." .
+
+ns1:SeHaSuperadoElTiempoMaximoPermitidoParaSincronizar_2afda93146 a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha superado el tiempo máximo permitido para sincronizar" ;
+    ns1:textoExtracto "'Se ha superado el tiempo máximo permitido para sincronizar' DETECCIÓN Durante la ejecución. CAUSA La sincronización no alcanza la posición deseada en el tiempo definido." .
+
+ns1:SeIntentaSuperarLaVelocidadMaximaMAXFEED_615c29beff a ns1:DiagnosticoFallo ;
+    rdfs:label "Se intenta superar la velocidad máxima MAXFEED" ;
+    ns1:textoExtracto "'Se intenta superar la velocidad máxima MAXFEED' DETECCIÓN Durante la ejecución. CAUSA Hay programado un movimiento de eje independiente con una sincronización activa y la suma de ambas componentes de velocidad supera la máxima permitida del eje." .
 

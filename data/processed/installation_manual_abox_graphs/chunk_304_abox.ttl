@@ -1,36 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:BusquedaCero_304 a ns1:TareaMantenimiento ;
-    rdfs:label "Búsqueda de cero"@es ;
-    ns1:controla ns1:Cabezal_304 ;
-    ns1:ejecutadoPor ns1:CNC_304 ;
-    ns1:textoExtracto "La búsqueda de cero la controla el CNC. La búsqueda de cero se realiza sin parar el cabezal, si previamente se encontraba girando."@es .
+ns1:CNC8070_4aaed3e951 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "La búsqueda de cero la controla el CNC." .
 
-ns1:Parametro_ACForward_304 a ns1:Parametro ;
-    rdfs:label "AC-Forward"@es ;
-    ns1:textoExtracto "El [...] AC-Forward lo aplica el CNC."@es .
+ns1:EjesTandem a ns1:ComponenteMecanico ;
+    rdfs:label "ejes tándem" ;
+    ns1:requiereMantenimiento ns1:ConfigurarModoDeOperacionDelReguladorSercos ;
+    ns1:textoExtracto "Sin embargo, los ejes tándem deberán operar obligatoriamente en modo Sercos velocidad." .
 
-ns1:Parametro_FeedForward_304 a ns1:Parametro ;
-    rdfs:label "Feed forward"@es ;
-    ns1:textoExtracto "El feed forward [...] lo aplica el CNC."@es .
+ns1:ModoSercosVelocidad a ns1:Parametro ;
+    rdfs:label "modo Sercos velocidad" ;
+    ns1:textoExtracto "Modo de operación del regulador en Sercos velocidad." .
 
-ns1:CNC_304 a ns1:Sistema ;
-    rdfs:label "CNC"@es ;
-    ns1:controla ns1:Cabezal_304 ;
-    ns1:monitoreaParametro ns1:Parametro_CompensacionHolgura_304,
-        ns1:Parametro_ErrorSeguimiento_304 ;
-    ns1:textoExtracto "La búsqueda de cero la controla el CNC. [...] El error de seguimiento y la compensación de holgura se calculan en el CNC. [...] El feed forward y AC-Forward lo aplica el CNC."@es .
+ns1:SistemaReguladorSercos a ns1:Sistema ;
+    rdfs:label "regulador Sercos" ;
+    ns1:textoExtracto "Consultar el manual del regulador para obtener más información." ;
+    ns1:tieneComponente ns1:ModoDeOperacionDelReguladorSercos .
 
-ns1:Parametro_CompensacionHolgura_304 a ns1:Parametro ;
-    rdfs:label "Compensación de holgura"@es ;
-    ns1:textoExtracto "la compensación de holgura se calculan en el CNC."@es .
+ns1:ConfigurarModoDeOperacionDelReguladorSercos a ns1:TareaMantenimiento ;
+    rdfs:label "configurar modo de operación del regulador Sercos" ;
+    ns1:solucionaFallo ns1:FalloConfiguracionIncorrecta ;
+    ns1:textoExtracto "Se recomienda que los ejes (excepto ejes tándem) operen en modo Sercos posición y que los cabezales lo hagan en modo Sercos velocidad." .
 
-ns1:Parametro_ErrorSeguimiento_304 a ns1:Parametro ;
-    rdfs:label "Error de seguimiento"@es ;
-    ns1:textoExtracto "El error de seguimiento [...] se calculan en el CNC."@es .
-
-ns1:Cabezal_304 a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:textoExtracto "La búsqueda de cero se realiza sin parar el cabezal, si previamente se encontraba girando. Si está girando en M03 ó M04 y se programa M19, el cabezal decelera hasta REFFEED1 y comienza el proceso de búsqueda de cero."@es .
+ns1:ModoDeOperacionDelReguladorSercos a ns1:Parametro ;
+    rdfs:label "modo de operación del regulador Sercos" ;
+    ns1:textoExtracto "Este parámetro indica el modo de operación del regulador Sercos; consigna de velocidad o de posición." .
 

@@ -1,42 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AlmacenTorreta a ns1:ComponenteMecanico ;
-    rdfs:label "Almacén torreta"@es ;
-    ns1:textoExtracto "La sentencia #ROTATEMZ sólo se puede ejecutar en un almacén torreta."@es .
+ns1:CNC8070_2441094eef a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:parametroMonitoradoPor ns1:Parametro_3ad1277941 ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Fallo_7049 a ns1:DiagnosticoFallo ;
-    rdfs:label "ROTATEMZ: registro MZPOS = 0"@es ;
-    ns1:identificador "7049" ;
-    ns1:solucionaFallo ns1:ForzarPosicion0EnAlmacenNoTorreta,
-        ns1:RevisarProgramacionDeROTATEMZ ;
-    ns1:textoExtracto "7049 ROTATEMZ: el registro MZPOS del PLC no puede ser 0. DETECCIÓN Durante la ejecución. CAUSA La sentencia #ROTATEMZ está forzando la posición 0 del almacén."@es .
+ns1:ManiobraInvalida a ns1:AccionProhibida ;
+    rdfs:label "Maniobra invalida" ;
+    ns1:solucionaFallo ns1:CorreccionDelProgramaDePLC ;
+    ns1:textoExtracto "El PLC ha activado una marca no válida de la maniobra, el PLC ha activado la marca SETTMEM o hay un error en la maniobra." .
 
-ns1:Fallo_7050 a ns1:DiagnosticoFallo ;
-    rdfs:label "ROTATEMZ: posición no válida"@es ;
-    ns1:identificador "7050" ;
-    ns1:solucionaFallo ns1:RevisarProgramacionDePosicionEnROTATEMZ ;
-    ns1:textoExtracto "7050 ROTATEMZ: Posición no válida. DETECCIÓN Durante la ejecución. CAUSA La posición programada en #ROTATEMZ no es válida."@es .
+ns1:CorreccionDelProgramaDePLC a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección del programa de PLC" ;
+    ns1:solucionaFallo ns1:ErrorM6SinT ;
+    ns1:textoExtracto "SOLUCIÓN Corregir en el programa de PLC la maniobra de cambio de herramienta. Si el PLC ha activado la marca SETTMEM, corregir la causa por la que el PLC ha puesto la señal de emergencia." .
 
-ns1:Sentencia_ROTATEMZ a ns1:Parametro ;
-    rdfs:label "Sentencia #ROTATEMZ"@es ;
-    ns1:monitoreaParametro ns1:RegistroMZPOS ;
-    ns1:textoExtracto "La sentencia #ROTATEMZ está forzando la posición 0 del almacén."@es .
+ns1:ErrorM6SinT a ns1:DiagnosticoFallo ;
+    rdfs:label "Error M6 sin T" ;
+    ns1:textoExtracto "'M6 sin T' DETECCIÓN Durante la ejecución. CAUSA Hay programada una M06 sin su correspondiente herramienta." .
 
-ns1:ForzarPosicion0EnAlmacenNoTorreta a ns1:AccionProhibida ;
-    rdfs:label "Forzar posición 0 en almacén no-torreta"@es ;
-    ns1:textoExtracto "La sentencia #ROTATEMZ sólo se puede ejecutar en un almacén torreta."@es .
-
-ns1:RegistroMZPOS a ns1:Parametro ;
-    rdfs:label "Registro MZPOS"@es ;
-    ns1:identificador "MZPOS" ;
-    ns1:textoExtracto "el registro MZPOS del PLC no puede ser 0"@es .
-
-ns1:RevisarProgramacionDePosicionEnROTATEMZ a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación de posición en #ROTATEMZ"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisarProgramacionDeROTATEMZ a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar programación de #ROTATEMZ"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
+ns1:Parametro_3ad1277941 a ns1:Parametro ;
+    rdfs:label "Parámetro máquina que indica al CNC qué hacer en esta situación" ;
+    ns1:textoExtracto "Hay un parámetro máquina que indica al CNC qué hacer en esta situación, mostrar un error, un warning o no." .
 

@@ -1,31 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoMDI_MDA a ns1:ModoOperacion ;
-    rdfs:label "Modo MDI/MDA" ;
-    ns1:habilitadoPor ns1:Canal ;
-    ns1:textoExtracto "posteriormente se le podrán añadir y quitar tanto ejes como cabezales desde el programa pieza o desde el modo MDI/MDA." .
+ns1:ListaDeEjesDelSistema a ns1:Parametro ;
+    rdfs:label "Lista de ejes del sistema" ;
+    ns1:documentadoEn ns1:TablaEjes ;
+    ns1:identificador "MPG.AXISNAMEn" ;
+    ns1:textoExtracto "AXISNAME Lista de ejes del sistema. Este parámetro muestra la tabla para definir los nombres de los ejes." .
 
-ns1:ProgramaPieza a ns1:ModoOperacion ;
-    rdfs:label "Modo programa pieza" ;
-    ns1:habilitadoPor ns1:Canal ;
-    ns1:textoExtracto "posteriormente se le podrán añadir y quitar tanto ejes como cabezales desde el programa pieza o desde el modo MDI/MDA. [...] Los canales pueden compartir información a través de variables y parámetros aritméticos, y en caso necesario, se pueden sincronizar desde el programa pieza." .
+ns1:NumeroDeEjesQueGobiernaElCNC a ns1:Parametro ;
+    rdfs:label "Número de ejes que gobierna el CNC" ;
+    ns1:documentadoEn ns1:TablaEjes ;
+    ns1:identificador "MPG.NAXIS" ;
+    ns1:textoExtracto "NAXIS Número de ejes que gobierna el CNC. Valores posibles: De 1 a 32. Valor por defecto: 3." .
 
-ns1:Canal a ns1:Sistema ;
-    rdfs:label "Canal de máquina" ;
-    ns1:controla ns1:Cabezal,
-        ns1:Eje ;
-    ns1:textoExtracto "Un canal puede disponer de un grupo de ejes y cabezales que actúen de forma independiente o en paralelo al resto de canales. [...] Cada canal sólo puede controlar sus ejes y cabezales, aunque desde el programa pieza o MDI/MDA podrá ordenar movimientos a ejes o cabezales de otros canales." ;
-    ns1:tieneComponente ns1:Cabezal,
-        ns1:Eje .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal de canal" ;
-    ns1:controla ns1:Eje ;
-    ns1:textoExtracto "Los ejes y cabezales de un canal. [...] Para poder mover un eje o cabezal, éste debe estar asignado a un canal." .
-
-ns1:Eje a ns1:ComponenteMecanico ;
-    rdfs:label "Eje de canal" ;
-    ns1:controla ns1:Cabezal ;
-    ns1:textoExtracto "Los ejes y cabezales de un canal. [...] Para poder mover un eje o cabezal, éste debe estar asignado a un canal." .
+ns1:TablaEjes a ns1:Tabla ;
+    rdfs:label "Tabla AXISNAME" ;
+    ns1:ilustradoEn ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "| AXISNAME n | Nombre de los ejes. |" .
 

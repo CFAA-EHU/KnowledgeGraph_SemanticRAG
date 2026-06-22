@@ -1,55 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:OpcionMABSYSTEM a ns1:Parametro ;
-    rdfs:label "Opción MABSYSTEM" ;
-    ns1:documentadoEn ns1:Fallo_4025 ;
-    ns1:textoExtracto "opción MABSYSTEM" .
+ns1:ActualizarVersionDeSoftwareDelRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Actualizar versión de software del regulador" ;
+    ns1:solucionaFallo ns1:NoExisteElParametroEnElRegulador ;
+    ns1:textoExtracto "SOLUCIÓN Actualizar versión de software del regulador." .
 
-ns1:SistemaSercos a ns1:Sistema ;
-    rdfs:label "Anillo Sercos con configuración Multi-Axis Box (MAB)" ;
-    ns1:controla ns1:EncoderFeeDat_EnDat ;
-    ns1:textoExtracto "anillo Sercos [...] Con la opción MABSYSTEM y más de un regulador en el anillo Sercos, es preciso que exista un regulador MAB." ;
-    ns1:tieneComponente ns1:ReguladorMAB .
+ns1:CorregirElValorDelParametroEnElCNC a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir el valor del parámetro en el CNC" ;
+    ns1:solucionaFallo ns1:ElValorDelParametroMaquinaEstaFueraDelRangoPermitido ;
+    ns1:textoExtracto "SOLUCIÓN Corregir el valor del parámetro en el CNC." .
 
-ns1:EliminarOpcionMABSYSTEMSinReguladorMAB a ns1:AccionProhibida ;
-    rdfs:label "Eliminar opción MABSYSTEM sin regulador MAB" ;
-    ns1:textoExtracto "Eliminar la opción MABSYSTEM" .
+ns1:RevisarElNumeroDeEjesSercosOTiemposDeSercos a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el número de ejes Sercos o tiempos de Sercos" ;
+    ns1:solucionaFallo ns1:ErrorEnLaInicializacionDelSERCON_4240efadda ;
+    ns1:textoExtracto "CAUSA Número de ejes Sercos o tiempos de Sercos erróneos." .
 
-ns1:EncoderFeeDat_EnDat a ns1:Sensor ;
-    rdfs:label "Encoder con interfaz FeeDat/EnDat" ;
-    ns1:documentadoEn ns1:Fallo_4026 ;
-    ns1:textoExtracto "datos de encoder FeeDat/EnDat" .
+ns1:RevisarEstadoDeLaComunicacionConElReguladorVersionDeSoftwareYOpciones_04a7965afe a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar estado de la comunicación con el regulador, versión de software y opciones de parametrización permitidas" ;
+    ns1:solucionaFallo ns1:NoSePuedeEscribirParametroEnElRegulador ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el estado de la comunicación con el regulador, versión de software y opciones de parametrización permitidas." .
 
-ns1:Fallo_4026 a ns1:DiagnosticoFallo ;
-    rdfs:label "Incoherencia en datos de encoder FeeDat/EnDat" ;
-    ns1:identificador "4026" ;
-    ns1:solucionaFallo ns1:ValidarNuevaConfiguracionDeEncoder ;
-    ns1:textoExtracto "4026 Incoherencia en datos de encoder FeeDat/EnDat. Es necesario validar la nueva configuración." .
+ns1:RevisarLosPermisosYElNivelDeAccesoEnElRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los permisos y el nivel de acceso en el regulador" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_6d1d831ce9 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los permisos y el nivel de acceso en el regulador." .
 
-ns1:IncluirReguladorMABEnConfiguracionSercos a ns1:TareaMantenimiento ;
-    rdfs:label "Incluir regulador MAB en configuración Sercos" ;
-    ns1:textoExtracto "incluir un regulador MAB en la configuración Sercos" .
+ns1:DiagnosticoFallo_6d1d831ce9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro protegido contra escritura" ;
+    ns1:textoExtracto "'No se puede escribir parámetro en el regulador:Protegido'" .
 
-ns1:ReguladorMAB a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Multi-Axis Box (MAB)" ;
-    ns1:textoExtracto "regulador MAB" ;
-    ns1:tieneFrecuencia ns1:VersionMinimaRequeridaV628OV808 .
+ns1:ElValorDelParametroMaquinaEstaFueraDelRangoPermitido a ns1:DiagnosticoFallo ;
+    rdfs:label "El valor del parámetro máquina está fuera del rango permitido" ;
+    ns1:textoExtracto "'No se puede escribir parámetro en el regulador:Fuera de rango'" .
 
-ns1:ValidarNuevaConfiguracionDeEncoder a ns1:TareaMantenimiento ;
-    rdfs:label "Validar nueva configuración de encoder" ;
-    ns1:textoExtracto "validar la nueva configuración" .
+ns1:ErrorEnLaInicializacionDelSERCON_4240efadda a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la inicialización del SERCON" ;
+    ns1:textoExtracto "'Error en la inicialización del SERCON'" .
 
-ns1:VersionMinimaRequeridaV628OV808 a ns1:Frecuencia ;
-    rdfs:label "Versión mínima requerida: v6.28 o v8.08" ;
-    ns1:documentadoEn ns1:Fallo_4025 ;
-    ns1:textoExtracto "versión posterior a la v6.28 u v8.08" ;
-    ns1:valor "v6.28/v8.08" .
+ns1:NoExisteElParametroEnElRegulador a ns1:DiagnosticoFallo ;
+    rdfs:label "No existe el parámetro en el regulador" ;
+    ns1:textoExtracto "'No se puede escribir parámetro en el regulador:No IDN'" .
 
-ns1:Fallo_4025 a ns1:DiagnosticoFallo ;
-    rdfs:label "No identificación de Multi-Axis Box (MAB) en anillo Sercos" ;
-    ns1:identificador "4025" ;
-    ns1:solucionaFallo ns1:EliminarOpcionMABSYSTEMSinReguladorMAB,
-        ns1:IncluirReguladorMABEnConfiguracionSercos ;
-    ns1:textoExtracto "4025 No se ha identificado Multi-Axis Box (MAB) en el anillo Sercos. DETECCIÓN Al inicializar el bus Sercos; arranque del CNC, validación de los parámetros máquina y reset. CAUSA No se ha detectado un regulador MAB en el sistema. SOLUCIÓN Con la opción MABSYSTEM y más de un regulador en el anillo Sercos, es preciso que exista un regulador MAB. Eliminar la opción MABSYSTEM o incluir un regulador MAB en la configuración Sercos." .
+ns1:NoSePuedeEscribirParametroEnElRegulador a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede escribir parámetro en el regulador" ;
+    ns1:textoExtracto "'No se puede escribir parámetro en el regulador'" .
 

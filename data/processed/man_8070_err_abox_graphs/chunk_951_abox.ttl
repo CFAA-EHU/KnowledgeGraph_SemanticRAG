@@ -1,37 +1,32 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_9519 a ns1:DiagnosticoFallo ;
-    rdfs:label "Recepción de señal de alarma en captación"@es ;
-    ns1:identificador "9519" ;
-    ns1:textoExtracto "9519 Captación:Recibida señal de alarma. DETECCIÓN"@es .
+ns1:CNC8070_3837c59ddf a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:ConfiguracionDeBusesNecesitaReiniciarCNC,
+        ns1:NoSeAdmiteMasDe1VolanteTipoHBH ;
+    ns1:textoExtracto "El CNC sólo permite un volante HBH." .
 
-ns1:Sistema_Principal a ns1:Sistema ;
-    rdfs:label "Sistema de arranque y funcionamiento"@es ;
-    ns1:textoExtracto "arranque o funcionamiento habitual del sistema"@es ;
-    ns1:tieneComponente ns1:Sensor_Captacion .
+ns1:ConfigurarBusesSinReiniciarCNC a ns1:AccionProhibida ;
+    rdfs:label "Configurar buses sin reiniciar CNC" ;
+    ns1:mitigaRiesgo ns1:ConfiguracionDeBusesNecesitaReiniciarCNC ;
+    ns1:textoExtracto "configuración de buses, necesita reiniciar CNC." .
 
-ns1:Tarea_RevisarConexionado a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de conexionado del captador"@es ;
-    ns1:solucionaFallo ns1:Fallo_9518 ;
-    ns1:textoExtracto "Revisar el conexionado y el nivel de las señales proporcionadas por el captador"@es .
+ns1:ParametrizarMasDe1VolanteHBH a ns1:AccionProhibida ;
+    rdfs:label "Parametrizar más de 1 volante HBH" ;
+    ns1:mitigaRiesgo ns1:NoSeAdmiteMasDe1VolanteTipoHBH ;
+    ns1:textoExtracto "Se ha parametrizado más de 1 volante HBH." .
 
-ns1:Tarea_RevisarSenales a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de señales del captador"@es ;
-    ns1:solucionaFallo ns1:Fallo_9518,
-        ns1:Fallo_CableAL_Roto ;
-    ns1:textoExtracto "Revisar el nivel de las señales proporcionadas por el captador"@es .
+ns1:ReiniciarCNC_e95f7c6ee8 a ns1:TareaMantenimiento ;
+    rdfs:label "Reiniciar CNC" ;
+    ns1:solucionaFallo ns1:ConfiguracionDeBusesNecesitaReiniciarCNC ;
+    ns1:textoExtracto "configuración de buses, necesita reiniciar CNC." .
 
-ns1:Fallo_CableAL_Roto a ns1:DiagnosticoFallo ;
-    rdfs:label "Cable de señal AL y/o /AL roto o desconectado"@es ;
-    ns1:textoExtracto "El cable de la señal AL y/o /AL puede estar roto o desconectado."@es .
+ns1:NoSeAdmiteMasDe1VolanteTipoHBH a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite más de 1 volante tipo HBH" ;
+    ns1:textoExtracto "9381 No se admite más de 1 volante tipo HBH." .
 
-ns1:Sensor_Captacion a ns1:Sensor ;
-    rdfs:label "Captador del sistema"@es ;
-    ns1:textoExtracto "señales proporcionadas por el captador"@es .
-
-ns1:Fallo_9518 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sobrecorriente o cortocircuito en captación"@es ;
-    ns1:identificador "9518" ;
-    ns1:textoExtracto "9518 Captación:Sobrecorriente o cortocircuito. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA Se ha producido un cortocircuito o se está sobrealimentando el captador."@es .
+ns1:ConfiguracionDeBusesNecesitaReiniciarCNC a ns1:DiagnosticoFallo ;
+    rdfs:label "Configuración de buses, necesita reiniciar CNC" ;
+    ns1:textoExtracto "9382 configuración de buses, necesita reiniciar CNC." .
 

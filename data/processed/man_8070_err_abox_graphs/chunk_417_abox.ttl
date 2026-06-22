@@ -1,35 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_2154 a ns1:DiagnosticoFallo ;
-    rdfs:label "Retardo del palpador mal configurado" ;
-    ns1:identificador "2154" ;
-    ns1:textoExtracto "2154 Retardo del palpador mal" .
+ns1:ConfigurarElCanalConAlMenosDosEjes a ns1:TareaMantenimiento ;
+    rdfs:label "Configurar el canal con al menos dos ejes" ;
+    ns1:solucionaFallo ns1:NoSePermitenTrayectoriasCircularesSiNoHayAlMenosDosEjesEnElCanal ;
+    ns1:textoExtracto "SOLUCIÓN Configurar el canal con al menos dos ejes." .
 
-ns1:Herramienta_Mecanizado a ns1:Herramienta ;
-    ns1:textoExtracto "trabajar sin desalineamiento de herramienta" .
+ns1:DeseleccionarElSplineEnOtroPuntoOProgramarOtraTangente a ns1:TareaMantenimiento ;
+    rdfs:label "Deseleccionar el spline en otro punto o programar otra tangente" ;
+    ns1:solucionaFallo ns1:NoSePuedeCalcularLaTangenteParaDeseleccionarElSpline ;
+    ns1:textoExtracto "SOLUCIÓN Deseleccionar el spline en otro punto o programar otra tangente." .
 
-ns1:Sensor_Palpador a ns1:Sensor ;
-    rdfs:label "Palpador" ;
-    ns1:monitoreaParametro ns1:Parametro_RetardoPalpador ;
-    ns1:textoExtracto "Retardo del palpador mal" .
+ns1:FinalDelProgramaSinDesactivarSplines a ns1:DiagnosticoFallo ;
+    rdfs:label "Final del programa sin desactivar splines" ;
+    ns1:textoExtracto "'Final del programa sin desactivar splines'" .
 
-ns1:TareaMantenimiento_CambiarTrayectoria a ns1:TareaMantenimiento ;
-    rdfs:label "Cambiar trayectoria de mecanizado" ;
-    ns1:solucionaFallo ns1:Fallo_2153 ;
-    ns1:textoExtracto "SOLUCIÓN Cambiar la trayectoria de mecanizado" .
+ns1:ProgramarUnMovimientoAntesDeActivarElSpline a ns1:TareaMantenimiento ;
+    rdfs:label "Programar un movimiento antes de activar el spline" ;
+    ns1:solucionaFallo ns1:ErrorEnLaGeneracionDelSpline ;
+    ns1:textoExtracto "SOLUCIÓN Programar un movimiento antes de activar el spline." .
 
-ns1:TareaMantenimiento_CorregirDesalineamiento a ns1:TareaMantenimiento ;
-    rdfs:label "Trabajar sin desalineamiento de herramienta" ;
-    ns1:solucionaFallo ns1:Fallo_2153 ;
-    ns1:textoExtracto "SOLUCIÓN [...] trabajar sin desalineamiento de herramienta" .
+ns1:RevisarProgramacion_3592ae1a5f a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:ProgramacionNoPermitidaConEjeSHirth ;
+    ns1:textoExtracto "SOLUCIÓN Revisar programación." .
 
-ns1:Parametro_RetardoPalpador a ns1:Parametro ;
-    rdfs:label "Retardo del palpador" ;
-    ns1:textoExtracto "Retardo del palpador mal" .
+ns1:ErrorEnLaGeneracionDelSpline a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la generación del spline" ;
+    ns1:textoExtracto "'Error en la generación del spline'" .
 
-ns1:Fallo_2153 a ns1:DiagnosticoFallo ;
-    rdfs:label "Trayectoria helicoidal cercana al centro de giro del FACE" ;
-    ns1:identificador "2153" ;
-    ns1:textoExtracto "2153 'Trayectoria helicoidal cercana al centro de giro del FACE' DETECCIÓN Durante la ejecución. CAUSA Se ha programado una trayectoria helicoidal de más de una vuelta, en una zona cercana al centro de giro del FACE. SOLUCIÓN Cambiar la trayectoria de mecanizado." .
+ns1:NoSePermitenTrayectoriasCircularesSiNoHayAlMenosDosEjesEnElCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "No se permiten trayectorias circulares si no hay al menos dos ejes en el canal" ;
+    ns1:textoExtracto "CAUSA No se permiten trayectorias circulares si no hay al menos dos ejes en el canal." .
+
+ns1:NoSePuedeCalcularLaTangenteParaDeseleccionarElSpline a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede calcular la tangente para deseleccionar el spline" ;
+    ns1:textoExtracto "'No se puede calcular la tangente al spline'" .
+
+ns1:ProgramacionNoPermitidaConEjeSHirth a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación no permitida con eje(s) Hirth" ;
+    ns1:textoExtracto "'Programación no permitida con eje(s) Hirth'" .
 

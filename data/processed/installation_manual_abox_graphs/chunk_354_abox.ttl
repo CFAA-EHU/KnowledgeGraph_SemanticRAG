@@ -1,35 +1,28 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Funcion_G151 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función G151 (Cambio a programación en radios/diámetros)"@es ;
-    ns1:habilitadoPor ns1:SistemaCNC ;
-    ns1:textoExtracto "Para cambiar el tipo de cotas desde el programa utilizar las funciones G151 ó G152."@es .
+ns1:ErrorDeEjeBloqueado a ns1:AccionProhibida ;
+    rdfs:label "Error de eje bloqueado" ;
+    ns1:textoExtracto "el CNC no temporizará pero podría dar error de eje bloqueado si como consecuencia de la lógica de desconexión, termina cayendo la señal SERVOON." .
 
-ns1:Funcion_G152 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función G152 (Cambio a programación en radios/diámetros)"@es ;
-    ns1:habilitadoPor ns1:SistemaCNC ;
-    ns1:textoExtracto "Para cambiar el tipo de cotas desde el programa utilizar las funciones G151 ó G152."@es .
+ns1:RetardoEnLaDesconexionDelEje a ns1:AccionProhibida ;
+    rdfs:label "Retardo en la desconexión del eje" ;
+    ns1:textoExtracto "Hay que tener especial atención al retardo de la desconexión del eje, cuando pasa a ser un eje 'muerto'." .
 
-ns1:Parametro_DIAMPROG a ns1:Parametro ;
-    rdfs:label "DIAMPROG (Programación en diámetros)"@es ;
-    ns1:monitoreaParametro ns1:SistemaCNC ;
-    ns1:textoExtracto "DIAMPROG Programación en diámetros. Parámetro válido para ejes lineales. Parámetro válido para regulador analógico, Sercos y simulado. Valores posibles: Sí / No. Valor por defecto: No."@es ;
-    ns1:valor "No" .
+ns1:TiempoDeEsperaAntesDelMovimiento a ns1:Parametro ;
+    rdfs:label "Tiempo de espera antes del movimiento" ;
+    ns1:identificador "DWELL" ;
+    ns1:textoExtracto "El CNC esperará el tiempo parametrizado en DWELL antes de generar movimiento en el eje 'muerto'." .
 
-ns1:Variable_MPA_DIAMPROG a ns1:Parametro ;
-    rdfs:label "Variable asociada (V.)[ch].MPA.DIAMPROG.xn"@es ;
-    ns1:monitoreaParametro ns1:SistemaCNC ;
-    ns1:textoExtracto "Variable asociada: (V.)[ch].MPA.DIAMPROG.xn"@es .
+ns1:senalDEADaxis a ns1:ComponenteElectrico ;
+    rdfs:label "Señal DEAD(axis)" ;
+    ns1:textoExtracto "será necesario habilitar el eje desde PLC como eje 'muerto' (señal DEAD(axis))." .
 
-ns1:MaquinaTorno a ns1:Maquina ;
-    rdfs:label "Máquina tipo torno"@es ;
-    ns1:textoExtracto "En máquinas tipo torno, las cotas del eje transversal se pueden programar en radios o diámetros."@es .
+ns1:senalENABLE a ns1:ComponenteElectrico ;
+    rdfs:label "Señal ENABLE" ;
+    ns1:textoExtracto "La señal ENABLE indica al PLC que permita el movimiento del eje y la señal SERVOON que el regulador está listo." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:controla ns1:MaquinaTorno ;
-    ns1:textoExtracto "El CNC sólo tiene en cuenta este parámetro cuando FACEAXIS = Sí. Los desplazamientos respecto al cero máquina (#MCS) siempre se realizan según este parámetro."@es .
+ns1:senalSERVOON a ns1:ComponenteElectrico ;
+    rdfs:label "Señal SERVOON" ;
+    ns1:textoExtracto "La señal SERVOON indica que el regulador está listo para permitir el movimiento del eje." .
 

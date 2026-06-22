@@ -1,30 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ReguladorDRV a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador (DRV)"@es ;
-    ns1:identificador "DRV" ;
-    ns1:monitoreaParametro ns1:ParametroDATASIZE,
-        ns1:ParametroMLINK ;
-    ns1:textoExtracto "acceder a las variables y parámetros del regulador (DRV)"@es .
+ns1:RevisionDeParametrosMaquina_e896de1158 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de parámetros máquina" ;
+    ns1:solucionaFallo ns1:GrupoDeEjesConDiferenciasEnCaptaciones ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina." .
 
-ns1:SolucionConfiguracionBus_9332 a ns1:TareaMantenimiento ;
-    rdfs:label "Configurar bus Mechatrolink II a 32 bytes para acceso a parámetros DRV"@es ;
-    ns1:solucionaFallo ns1:FalloComunicacionMechatrolinkII_9332 ;
-    ns1:textoExtracto "Para poder acceder a las variables y parámetros del regulador (DRV) hay que configurar el bus como Mechatrolink II a 32 bytes (parámetros MLINK y DATASIZE)"@es .
+ns1:GrupoDeEjesConDiferenciasEnCaptaciones a ns1:DiagnosticoFallo ;
+    rdfs:label "Grupo de ejes con diferencias en captaciones" ;
+    ns1:monitoreaParametro ns1:ParametroCOUNTERID ;
+    ns1:textoExtracto "'Grupo de ejes con dif. captaciones: todos los ejes SERCOS deben ser velocidad'" .
 
-ns1:FalloComunicacionMechatrolinkII_9332 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 9332: COUNTERTYPE remoto y COUNTERID 0 incompatibles"@es ;
-    ns1:identificador "9332" ;
-    ns1:textoExtracto "9332 'COUNTERTYPE remoto y COUNTERID 0 incompatibles' DETECCIÓN Durante la validación de los parámetros máquina o el arranque"@es .
-
-ns1:ParametroDATASIZE a ns1:Parametro ;
-    rdfs:label "Parámetro DATASIZE (tamaño datos Mechatrolink II)"@es ;
-    ns1:textoExtracto "configurar el bus como Mechatrolink II a 32 bytes (parámetros MLINK y DATASIZE)"@es ;
-    ns1:valor "32 bytes" .
-
-ns1:ParametroMLINK a ns1:Parametro ;
-    rdfs:label "Parámetro MLINK (configuración Mechatrolink II)"@es ;
-    ns1:textoExtracto "configurar el bus como Mechatrolink II a 32 bytes (parámetros MLINK y DATASIZE)"@es ;
-    ns1:valor "Mechatrolink II a 32 bytes"@es .
+ns1:ParametroCOUNTERID a ns1:Parametro ;
+    rdfs:label "Parámetro COUNTERID" ;
+    ns1:textoExtracto "Hay algún grupo multieje cuyos ejes tienen diferente parámetro COUNTERID y los ejes no son Sercos velocidad." .
 

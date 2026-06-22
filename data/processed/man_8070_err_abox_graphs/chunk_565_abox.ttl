@@ -1,30 +1,16 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:BusCAN a ns1:ComponenteElectrico ;
-    rdfs:label "Bus CAN"@es ;
-    ns1:activaAlarma ns1:Error_3709 ;
-    ns1:textoExtracto "Revisar el estado del bus CAN, de los módulos de entradas analógicas,"@es .
+ns1:ElCabezalEstaEnM19 a ns1:AccionProhibida ;
+    rdfs:label "El cabezal está en M19" ;
+    ns1:textoExtracto "Si el cabezal está en M19, la sentencia #SERVO OFF no puede abrir el lazo;" .
 
-ns1:ModuloEntradasAnalogicas a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo de entradas analógicas"@es ;
-    ns1:activaAlarma ns1:Error_3709 ;
-    ns1:textoExtracto "Fallo en el proceso cíclico de lectura de entradas analógicas. Puede ser debido a problemas en la COMPCI, el bus CAN, el módulo de entradas analógicas, etc."@es .
+ns1:ProgramarM3M4M5OHacerUnReset a ns1:TareaMantenimiento ;
+    rdfs:label "Programar M3, M4, M5 o hacer un reset" ;
+    ns1:solucionaFallo ns1:ElCabezalSeMantieneEnLazoCerrado ;
+    ns1:textoExtracto "para abrir el lazo, programar M3, M4, M5 o hacer un reset." .
 
-ns1:Parametro_INPOMAX a ns1:Parametro ;
-    rdfs:label "Parámetro INPOMAX"@es ;
-    ns1:identificador "INPOMAX" ;
-    ns1:monitoreaParametro ns1:Error_3709 ;
-    ns1:textoExtracto "SOLUCIÓN Ajustar el parámetro INPOMAX."@es .
-
-ns1:Diagnostico_3709 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para error 3709: Revisión de bus CAN y módulos de entradas analógicas"@es ;
-    ns1:mitigaRiesgo ns1:Error_3709 ;
-    ns1:textoExtracto "SOLUCIÓN Revisar el estado del bus CAN, de los módulos de entradas analógicas,"@es .
-
-ns1:Error_3709 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 3709: Error en el refresco de las entradas analógicas"@es ;
-    ns1:identificador "3709" ;
-    ns1:solucionaFallo ns1:Diagnostico_3709 ;
-    ns1:textoExtracto "3709 'Error en el refresco de las entradas analógicas' DETECCIÓN Durante la lectura de entradas analógicas. CAUSA Fallo en el proceso cíclico de lectura de entradas analógicas."@es .
+ns1:ElCabezalSeMantieneEnLazoCerrado a ns1:DiagnosticoFallo ;
+    rdfs:label "El cabezal se mantiene en lazo cerrado" ;
+    ns1:textoExtracto "La sentencia #SERVO OFF cancela la sentencia #SERVO ON y si puede abre el lazo." .
 

@@ -1,56 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_7047 a ns1:AvisoSeguridad ;
-    rdfs:label "Memoria insuficiente para herramientas"@es ;
-    ns1:identificador "7047" ;
-    ns1:solucionaFallo ns1:Solucion_7047 ;
-    ns1:textoExtracto "7047 Memoria insuficiente para el número total de herramientas definido en los almacenes. DETECCIÓN Durante la ejecución. CAUSA El número de herramientas definido en los almacenes excede el máximo permitido."@es .
+ns1:AvisoSeguridad_9d2b2e3d30 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de emergencia del almacén" ;
+    ns1:mitigaRiesgo ns1:CNC8070_156e144c9b ;
+    ns1:textoExtracto "Almacén en estado de emergencia. El PLC ha activado una marca no válida de la maniobra, el PLC ha activado la marca SETTMEM o hay un error en la maniobra." .
 
-ns1:Error_7048 a ns1:AvisoSeguridad ;
-    rdfs:label "Error en sentencia ROTATEMZ"@es ;
-    ns1:identificador "7048" ;
-    ns1:solucionaFallo ns1:Solucion_7048 ;
-    ns1:textoExtracto "7048 Error en la Sentencia ROTATEMZ. DETECCIÓN Durante la ejecución. CAUSA Se ha programado un cambio de herramienta en una torreta y la sentencia #ROTATEMZ ha dado error."@es .
+ns1:OperacionNoPudoEfectuarseGestorDeHerramientasEnEstadoDeError a ns1:DiagnosticoFallo ;
+    rdfs:label "Operación no pudo efectuarse: Gestor de herramientas en estado de error" ;
+    ns1:textoExtracto "'La operación no pudo efectuarse:Gestor de herramientas en estado de error' DETECCIÓN Durante la ejecución. CAUSA Almacén en estado de emergencia." .
 
-ns1:Sentencia_ROTATEMZ a ns1:Parametro ;
-    rdfs:label "Sentencia #ROTATEMZ"@es ;
-    ns1:documentadoEn ns1:Manual_7000 ;
-    ns1:identificador "ROTATEMZ" ;
-    ns1:textoExtracto "sentencia #ROTATEMZ ha dado error"@es .
+ns1:Parametro_4c324b254e a ns1:Parametro ;
+    rdfs:label "Parámetro de configuración para M6 sin T" ;
+    ns1:textoExtracto "Hay un parámetro máquina que indica al CNC qué hacer en esta situación, mostrar un error, un warning o no hacer nada." .
 
-ns1:Tabla_Herramientas a ns1:Tabla ;
-    rdfs:label "Tabla de herramientas"@es ;
-    ns1:documentadoEn ns1:Manual_7000 ;
-    ns1:textoExtracto "Revisar la tabla de herramientas y almacén."@es .
+ns1:PlcControlador a ns1:ComponenteElectrico ;
+    rdfs:label "PLC Controlador" ;
+    ns1:textoExtracto "El PLC ha activado una marca no válida de la maniobra, el PLC ha activado la marca SETTMEM o hay un error en la maniobra." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:controla ns1:Variable_G_CAM ;
-    ns1:textoExtracto "Esperar a que el CNC termine de cargar la leva"@es .
+ns1:SolucionParaM6SinT a ns1:TareaMantenimiento ;
+    rdfs:label "Solución para M6 sin T" ;
+    ns1:solucionaFallo ns1:M6SinT_ebaf235f39 ;
+    ns1:textoExtracto "SOLUCIÓN Programar una herramienta y a continuación la función M06 o modificar el parámetro máquina para cambiar el comportamiento del CNC." .
 
-ns1:Solucion_7047 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de herramientas en almacén"@es ;
-    ns1:requiereMantenimiento ns1:Herramienta_Almacen ;
-    ns1:textoExtracto "Revisar el almacén y definir un número de herramientas."@es .
+ns1:SolucionParaT0NoAdmitida a ns1:TareaMantenimiento ;
+    rdfs:label "Solución para T0 no admitida" ;
+    ns1:solucionaFallo ns1:T0NoAdmitida ;
+    ns1:textoExtracto "SOLUCIÓN No se admite esta programación." .
 
-ns1:Solucion_7048 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de almacén por error ROTATEMZ"@es ;
-    ns1:requiereMantenimiento ns1:Herramienta_Almacen ;
-    ns1:textoExtracto "Revisar el almacén."@es .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Variable_G_CAM a ns1:Parametro ;
-    rdfs:label "Variable (V.)G.CAM"@es ;
-    ns1:identificador "G.CAM" ;
-    ns1:monitoreaParametro ns1:Sistema_CNC ;
-    ns1:textoExtracto "leer la variable (V.)G.CAM"@es .
+ns1:M6SinT_ebaf235f39 a ns1:DiagnosticoFallo ;
+    rdfs:label "M6 sin T" ;
+    ns1:textoExtracto "'M6 sin T' DETECCIÓN Durante la ejecución. CAUSA Hay programada una M06 sin su correspondiente herramienta." .
 
-ns1:Herramienta_Almacen a ns1:Herramienta ;
-    rdfs:label "Almacén de herramientas"@es ;
-    ns1:textoExtracto "tabla de herramientas y almacén"@es .
-
-ns1:Manual_7000 a ns1:Manual ;
-    rdfs:label "Sección 7000-7999 del manual"@es ;
-    ns1:identificador "7000-7999" ;
-    ns1:textoExtracto "SOLUCIÓN Las posibles soluciones son las siguientes: [...]"@es .
+ns1:T0NoAdmitida a ns1:DiagnosticoFallo ;
+    rdfs:label "T0 no admitida" ;
+    ns1:textoExtracto "'T0 no admitida' DETECCIÓN Durante la ejecución. CAUSA El almacén de tipo torreta no admite T0." .
 

@@ -1,60 +1,68 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CNC a ns1:Maquina ;
-    rdfs:label "CNC (Control Numérico Computarizado)" ;
-    ns1:textoExtracto "Comprobar si el CNC arrancó correctamente" ;
-    ns1:tieneComponente ns1:Sistema_Mechatrolink,
-        ns1:Sistema_Sercos .
+ns1:AnalizarLosCodigosDeErrorParaIntentarDeterminarLaFuenteDelError a ns1:AccionProhibida ;
+    rdfs:label "Analizar los códigos de error para intentar determinar la fuente del error" ;
+    ns1:textoExtracto "SOLUCIÓN Analizar los códigos de error para intentar determinar la fuente del error. Póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:Fallo_4301 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se puede acceder a las variables Sercos" ;
-    ns1:identificador "4301" ;
-    ns1:textoExtracto "No se puede acceder a las variables Sercos. DETECCIÓN Desde el interface. CAUSA Desde el interface se ha pedido una variable de regulador Sercos, pero el servidor de variables no ha sido inicializado correctamente y no puede acceder a la información de las variables Sercos. SOLUCIÓN Comprobar si el CNC arranco correctamente." .
+ns1:ComprobarLaParametrizacionEnElCNCYReguladores a ns1:AccionProhibida ;
+    rdfs:label "Comprobar la parametrización en el CNC y reguladores" ;
+    ns1:textoExtracto "SOLUCIÓN Realizar las siguientes comprobaciones: • Garantizar el buen conexionado e integridad de la fibra óptica. • Comprobar la parametrización en el CNC y reguladores." .
 
-ns1:Fallo_4302 a ns1:DiagnosticoFallo ;
-    rdfs:label "Variable Sercos no identificada" ;
-    ns1:identificador "4302" ;
-    ns1:textoExtracto "Variable Sercos no identificada. DETECCIÓN Desde el interface. CAUSA Desde el interface se ha pedido una variable de regulador Sercos, pero la variable es desconocida. SOLUCIÓN Comprobar si el nombre de la variable Sercos es correcto." .
+ns1:ComprobarLasSenalesDeHabilitacionYElEstadoDelRegulador a ns1:AccionProhibida ;
+    rdfs:label "Comprobar las señales de habilitación y el estado del regulador" ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar las señales de habilitación y el estado del regulador." .
 
-ns1:Fallo_4303 a ns1:DiagnosticoFallo ;
-    rdfs:label "La variable Sercos no tiene sets" ;
-    ns1:identificador "4303" ;
-    ns1:textoExtracto "'La variable Sercos no tiene sets' DETECCIÓN En el osciloscopio. CAUSA En un canal del osciloscopio hay definida una variable Sercos, en cuya sintaxis se indica el set pero la variable no tiene sets. SOLUCIÓN Eliminar del nombre de la variable el indicativo del set." .
+ns1:ErrorEnElAnilloSercos a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el anillo Sercos" ;
+    ns1:textoExtracto "'Error en el anillo Sercos (fibra óptica)' VALOR Códigos de error que identifican la fuente o fuentes del problema." .
 
-ns1:Fallo_4500 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la inicialización del Hw de Mechatrolink" ;
-    ns1:identificador "4500" ;
-    ns1:textoExtracto "'Error en la inicialización del Hw de Mechatrolink' DETECCIÓN Durante el arranque del CNC. CAUSA No se pudo completar con éxito la fase de inicialización de la comunicación Mechatrolink. SOLUCIÓN Verificar la parametrización de la comunicación (protocolo, tamaño de los datos, número de ejes Mechatrolink, etc) y la integridad física del bus (cableado, resistencias terminadoras, asignación de la numeración de cada estación, etc)." .
+ns1:ErrorEnElAnilloSercosFibraOptica a ns1:AvisoSeguridad ;
+    rdfs:label "Error en el anillo Sercos (fibra óptica)" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC8070_0f2bbb8202 ;
+    ns1:textoExtracto "'Error en el anillo Sercos (fibra óptica)' VALOR Códigos de error que identifican la fuente o fuentes del problema." .
 
-ns1:Fallo_4501 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en comando Mechatrolink" ;
-    ns1:identificador "4501" ;
-    ns1:textoExtracto "'Error en comando Mechatrolink' DETECCIÓN Durante la ejecución del CNC. CAUSA Fallo en la ejecución de un comando Mechatrolink desde el master a un esclavo determinado. SOLUCIÓN Identificar el comando que ha producido el error y el esclavo relacionado." .
+ns1:ErrorEnElAnilloSercosMSTPerdido_3dea55cb2a a ns1:AvisoSeguridad ;
+    rdfs:label "Error en el anillo Sercos (MST perdido)" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC8070_0f2bbb8202 ;
+    ns1:textoExtracto "'Error en el anillo Sercos (MST perdido)' VALOR Códigos de error que identifican la fuente o fuentes del problema." .
 
-ns1:Interfaz_Usuario a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de usuario del CNC" ;
-    ns1:textoExtracto "Desde el interface se ha pedido una variable de regulador Sercos" .
+ns1:ErrorEnLaTransmisionDeATsFibraOpticaOReguladorReseteado a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la transmisión de ATs (Fibra óptica o regulador reseteado)" ;
+    ns1:textoExtracto "0x00008000 Error en la transmisión de ATs. ( Fibra óptica o regulador reseteado)" .
 
-ns1:Osciloscopio a ns1:Herramienta ;
-    rdfs:label "Osciloscopio de diagnóstico" ;
-    ns1:textoExtracto "En el osciloscopio. CAUSA En un canal del osciloscopio hay definida una variable Sercos" .
+ns1:ErrorEnReguladorSERCOS a ns1:AvisoSeguridad ;
+    rdfs:label "Error en regulador SERCOS" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC8070_0f2bbb8202 ;
+    ns1:textoExtracto "'Error en regulador SERCOS' EJE Número lógico del eje. CAUSA El regulador reporta error." .
 
-ns1:Bus_Mechatrolink a ns1:ComponenteElectrico ;
-    rdfs:label "Bus de comunicación Mechatrolink" ;
-    ns1:textoExtracto "integridad física del bus (cableado, resistencias terminadoras, asignación de la numeración de cada estación, etc)" .
+ns1:FalloEnAccesosALaRAMComunDelSERCON a ns1:AvisoSeguridad ;
+    rdfs:label "Fallo en accesos a la RAM común del SERCON" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC8070_0f2bbb8202 ;
+    ns1:textoExtracto "Fallo en accesos a la RAM común del SERCON. CAUSA Error en el bus Sercos que provoca pérdida de fase 4." .
 
-ns1:Sistema_Mechatrolink a ns1:Sistema ;
-    rdfs:label "Sistema de comunicación Mechatrolink" ;
-    ns1:textoExtracto "comunicación Mechatrolink" ;
-    ns1:tieneComponente ns1:Bus_Mechatrolink .
+ns1:FaltaDriveStatusReadyDRSTAFDRSTAS a ns1:AvisoSeguridad ;
+    rdfs:label "Falta Drive Status Ready (DRSTAF/DRSTAS)" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC8070_0f2bbb8202 ;
+    ns1:textoExtracto "'Falta Drive Status Ready (DRSTAF/DRSTAS)' DETECCIÓN Durante la ejecución. CAUSA Vigilancia DRSTAF, DRSTAS o del tandem, cuando el eje esta en movimiento." .
 
-ns1:Sistema_Sercos a ns1:Sistema ;
-    rdfs:label "Sistema de variables Sercos" ;
-    ns1:textoExtracto "variable Sercos, pero no hay ningún servidor de variables Sercos para responder a la petición." ;
-    ns1:tieneComponente ns1:Variable_Sercos .
+ns1:PerdidaDeATs a ns1:DiagnosticoFallo ;
+    rdfs:label "Pérdida de ATs" ;
+    ns1:textoExtracto "0x00000100 Pérdida de ATs." .
 
-ns1:Variable_Sercos a ns1:Parametro ;
-    rdfs:label "Variable de regulador Sercos" ;
-    ns1:textoExtracto "variable de regulador Sercos" .
+ns1:PerdidaDeMSTs_b89989b20d a ns1:DiagnosticoFallo ;
+    rdfs:label "Pérdida de MSTs" ;
+    ns1:textoExtracto "0x00000200 Pérdida de MSTs." .
+
+ns1:RealizarComprobacionesEnLaFibraOptica a ns1:AccionProhibida ;
+    rdfs:label "Realizar comprobaciones en la fibra óptica" ;
+    ns1:textoExtracto "SOLUCIÓN Realizar las siguientes comprobaciones: • Garantizar el buen conexionado e integridad de la fibra óptica. • Comprobar la parametrización en el CNC y reguladores." .
+
+ns1:RoturaDeFibraOptica a ns1:DiagnosticoFallo ;
+    rdfs:label "Rotura de fibra óptica" ;
+    ns1:textoExtracto "0x00000002 Rotura de fibra óptica." .
+
+ns1:SistemaCNC8070_0f2bbb8202 a ns1:Sistema ;
+    rdfs:label "Sistema CNC 8070" ;
+    ns1:textoExtracto "Sistema CNC 8070" .
 

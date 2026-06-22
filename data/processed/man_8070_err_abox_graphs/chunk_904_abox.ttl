@@ -1,63 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_CNCRD a ns1:Componente ;
-    rdfs:label "Comando CNCRD" ;
-    ns1:identificador "CNCRD" ;
-    ns1:textoExtracto "CNCRD(idVar, canal, ejeLog, idxArray1, idxArray2, registro, marca <,registroError>)" .
+ns1:LaSintaxisDeLaInstruccionNoEsCorrecta_081423a6a6 a ns1:AccionProhibida ;
+    rdfs:label "La sintaxis de la instrucción no es correcta" ;
+    ns1:solucionaFallo ns1:CNCEXBloqueMarcaCanal,
+        ns1:CNCRDVariableRegistroMarca,
+        ns1:CNCWRRegistroVariableMarca,
+        ns1:SobraParametroEnSentencia ;
+    ns1:textoExtracto "CAUSA La sintaxis de la instrucción no es correcta." .
 
-ns1:Error8902 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de sintaxis en sentencia #GAPCTRL" ;
-    ns1:identificador "8902" ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "#GAPCTRL ON/OFF[<INC> <nombreEje posiciónEje> <,GAPvalor> <,Fvalor> <,F3DPvalor> <,OFFDISTvalor>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:RevisarEnElManualDeInstalacionLaSintaxis a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar en el manual de instalación la sintaxis" ;
+    ns1:solucionaFallo ns1:CNCEXBloqueMarcaCanal,
+        ns1:CNCRDVariableRegistroMarca,
+        ns1:CNCWRRegistroVariableMarca,
+        ns1:SobraParametroEnSentencia ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
 
-ns1:Error8903 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de sintaxis en sentencia #TECHTABLE" ;
-    ns1:identificador "8903" ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "#TECHTABLE<[N\"nombreFicheroMaterial\",> \"nombreTabla\" <OFF]> <Tvalor params> DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:CNCEXBloqueMarcaCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "CNCEX(bloque,marca <,canal>)" ;
+    ns1:identificador "8885" ;
+    ns1:textoExtracto "8885 CNCEX(bloque,marca <,canal>)." .
 
-ns1:Error8904 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de sintaxis en comando CNCRD" ;
-    ns1:identificador "8904" ;
-    ns1:textoExtracto "CNCRD(idVar, canal, ejeLog, idxArray1, idxArray2, registro, marca <,registroError>) DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA La sintaxis del comando no es correcta." .
+ns1:CNCRDVariableRegistroMarca a ns1:DiagnosticoFallo ;
+    rdfs:label "CNCRD(variable,registro,marca)" ;
+    ns1:identificador "8883" ;
+    ns1:textoExtracto "8883 CNCRD(variable,registro,marca)." .
 
-ns1:Sentencia_GAPCTRL a ns1:Componente ;
-    rdfs:label "Sentencia #GAPCTRL" ;
-    ns1:identificador "#GAPCTRL" ;
-    ns1:textoExtracto "#GAPCTRL ON/OFF[<INC> <nombreEje posiciónEje> <,GAPvalor> <,Fvalor> <,F3DPvalor> <,OFFDISTvalor>]" ;
-    ns1:tieneComponente ns1:Parametro_F3DPvalor,
-        ns1:Parametro_Fvalor,
-        ns1:Parametro_GAPvalor,
-        ns1:Parametro_OFFDISTvalor .
+ns1:CNCWRRegistroVariableMarca a ns1:DiagnosticoFallo ;
+    rdfs:label "CNCWR(registro,variable,marca)" ;
+    ns1:identificador "8884" ;
+    ns1:textoExtracto "8884 CNCWR(registro,variable,marca)." .
 
-ns1:Sentencia_TECHTABLE a ns1:Componente ;
-    rdfs:label "Sentencia #TECHTABLE" ;
-    ns1:identificador "#TECHTABLE" ;
-    ns1:textoExtracto "#TECHTABLE<[N\"nombreFicheroMaterial\",> \"nombreTabla\" <OFF]> <Tvalor params>" .
-
-ns1:Parametro_F3DPvalor a ns1:Parametro ;
-    rdfs:label "Parámetro F3DPvalor" ;
-    ns1:identificador "F3DPvalor" ;
-    ns1:textoExtracto "<F3DPvalor>" .
-
-ns1:Parametro_Fvalor a ns1:Parametro ;
-    rdfs:label "Parámetro Fvalor" ;
-    ns1:identificador "Fvalor" ;
-    ns1:textoExtracto "<Fvalor>" .
-
-ns1:Parametro_GAPvalor a ns1:Parametro ;
-    rdfs:label "Parámetro GAPvalor" ;
-    ns1:identificador "GAPvalor" ;
-    ns1:textoExtracto "<GAPvalor>" .
-
-ns1:Parametro_OFFDISTvalor a ns1:Parametro ;
-    rdfs:label "Parámetro OFFDISTvalor" ;
-    ns1:identificador "OFFDISTvalor" ;
-    ns1:textoExtracto "<OFFDISTvalor>" .
-
-ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:SobraParametroEnSentencia a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobra parámetro en sentencia" ;
+    ns1:identificador "8882" ;
+    ns1:textoExtracto "8882 Sobra parámetro en sentencia." .
 

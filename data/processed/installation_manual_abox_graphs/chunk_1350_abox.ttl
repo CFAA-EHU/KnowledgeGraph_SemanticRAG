@@ -1,40 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sentencia_PLC a ns1:InterfazUsuario ;
-    rdfs:label "Sentencia #PLC" ;
-    ns1:controla ns1:Marca_PIERCING ;
-    ns1:identificador "#PLC" ;
-    ns1:textoExtracto "La sentencia #PLC permite gestionar una marca de PLC desde el programa pieza o subrutina, sin detener la preparación de bloques." .
+ns1:ActivacionDeMarcaCUTTING a ns1:TareaMantenimiento ;
+    rdfs:label "Activación de marca CUTTING" ;
+    ns1:textoExtracto "el OEM debe activar la marca CUTTING (asignarle valor 1) para indicar al PLC que empieza la operación de cutting." .
 
-ns1:Variable_PLC_PIERCING a ns1:Parametro ;
-    rdfs:label "Variable V.PLC.PIERCING" ;
-    ns1:identificador "V.PLC.PIERCING" ;
-    ns1:monitoreaParametro ns1:Subrutina_Piercing ;
-    ns1:textoExtracto "Esta marca refleja el estado de la variable V.PLC.PIERCING. [...] Escribir esta variable detiene la preparación de bloques." .
+ns1:GarantizarSeguridadEnSubrutinasLaser a ns1:AccionProhibida ;
+    rdfs:label "Garantizar seguridad en subrutinas láser" ;
+    ns1:documentadoEn ns1:ConfiguracionDeSubrutinasLaser ;
+    ns1:textoExtracto "Es su responsabilidad del OEM garantizar que la subrutina cumple todos los aspectos de seguridad relativos al manejo del láser." .
 
-ns1:Variable_TTPIR a ns1:Parametro ;
-    rdfs:label "Variable TTPIR.name" ;
-    ns1:identificador "TTPIR.name" ;
-    ns1:monitoreaParametro ns1:Subrutina_Piercing ;
-    ns1:textoExtracto "El comando #PIERCING ejecuta la subrutina que tiene asociada después de actualizar las variables del piercing ((V.)TTPIR.name)." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "indicar al PLC que empieza la operación de cutting." .
 
-ns1:Comando_PIERCING a ns1:InterfazUsuario ;
-    rdfs:label "Comando #PIERCING" ;
-    ns1:identificador "#PIERCING" ;
-    ns1:textoExtracto "El comando #PIERCING ejecuta la subrutina que tiene asociada después de actualizar las variables del piercing ((V.)TTPIR.name). Este comando esta orientado a máquina láser, donde esta subrutina debe realizar las operaciones iniciales del piercing." .
+ns1:VariableDelCorteTTCUTName a ns1:Parametro ;
+    rdfs:label "Variable del corte TTCUT.name" ;
+    ns1:identificador "TTCUT.name" ;
+    ns1:textoExtracto "El comando #CUTTINGON ejecuta la subrutina que tiene asociada después de actualizar las variables del cutting ((V.)TTCUT.name)." .
 
-ns1:Marca_PIERCING a ns1:Parametro ;
-    rdfs:label "Marca PIERCING" ;
-    ns1:identificador "PIERCING" ;
-    ns1:monitoreaParametro ns1:Subrutina_Piercing ;
-    ns1:textoExtracto "Gestión de la marca PIERCING en la subrutina. [...] Al comienzo de la subrutina (o cuando el OEM lo considere necesario), el OEM debe activar la marca PIERCING (asignarle valor 1) para indicar al PLC que empieza la operación de piercing. Al final de la subrutina (o cuando el OEM lo considere necesario), el OEM debe desactivar esta marca (asignarle valor 0) para indicar al CNC que ha finalizado la operación de piercing." ;
-    ns1:valor "0",
-        "1" .
-
-ns1:Subrutina_Piercing a ns1:Sistema ;
-    rdfs:label "Subrutina Piercing.fst" ;
-    ns1:documentadoEn ns1:Comando_PIERCING ;
-    ns1:identificador "Piercing.fst" ;
-    ns1:textoExtracto "Subrutina orientada al modelo láser. Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM. [...] El OEM debe gestionar la marca PIERCING desde esta subrutina." .
+ns1:ConfiguracionDeSubrutinasLaser a ns1:TareaMantenimiento ;
+    rdfs:label "Configuración de subrutinas láser" ;
+    ns1:textoExtracto "Las subrutinas suministradas por Fagor ofrecen una gestión básica del láser, por lo que deben ser configuradas de forma apropiada por el OEM." .
 

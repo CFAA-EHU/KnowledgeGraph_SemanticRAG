@@ -1,92 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Eje_C a ns1:ComponenteMecanico ;
-    rdfs:label "Eje C" ;
-    ns1:textoExtracto "eje C" ;
-    ns1:tieneComponente ns1:Cabezal .
+ns1:CNC8070_501a0e57cb a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:PongaseEnContactoConFagor ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Error_3049 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3049: La gama programada no existe" ;
-    ns1:identificador "3049" ;
-    ns1:textoExtracto "'La gama programada no existe' DETECCIÓN Durante la ejecución. CAUSA Tras interrumpir un programa y cambiar al modo MHFS, el usuario ha editado una función M asociada a una gama que no existe en el cabezal. SOLUCIÓN Programar la gama correcta." .
+ns1:CerrarLasAplicacionesQueNoEstanRelacionadasConElCNC a ns1:TareaMantenimiento ;
+    rdfs:label "Cerrar las aplicaciones que no están relacionadas con el CNC" ;
+    ns1:solucionaFallo ns1:DemasiadosParametrosPendientesDeReportar ;
+    ns1:textoExtracto "SOLUCIÓN Cerrar las aplicaciones que no están relacionadas con el CNC." .
 
-ns1:Error_3050 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3050: No se admite cambio de S si el cabezal trabaja como eje C" ;
-    ns1:identificador "3050" ;
-    ns1:textoExtracto "'No se admite cambio de S si el cabezal trabaja como eje C' DETECCIÓN Durante la ejecución. CAUSA El usuario ha intentado cambiar la velocidad de un cabezal que está activo como eje C. SOLUCIÓN Programar un avance F para el eje C o desactivar el eje C (#CAX) para programar una velocidad." .
+ns1:EjeHirth a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Hirth" ;
+    ns1:solucionaFallo ns1:ReposicionarElEjeHirth ;
+    ns1:textoExtracto "El eje hirth no se encuentra posicionado en un número múltiplo de su paso." .
 
-ns1:Error_3051 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3051: Ms incompatibles para el mismo cabezal" ;
-    ns1:identificador "3051" ;
-    ns1:textoExtracto "'Ms incompatibles para el mismo cabezal' DETECCIÓN Durante la ejecución. CAUSA Tras interrumpir un programa y cambiar al modo MHFS, el usuario ha editado algunas funciones M3, M4, M5, M19 ó M41 a M44 incompatibles para el mismo cabezal. SOLUCIÓN Decidir cuál es la función M a ejecutar o ejecutar ambas de forma sucesiva pero no simultánea." .
+ns1:TiempoDeEsperaDelEje a ns1:Parametro ;
+    rdfs:label "Tiempo de espera del eje" ;
+    ns1:identificador "DWELL" ;
+    ns1:textoExtracto "de la señal SERVO(axis)ON o aumentar el valor del parámetro DWELL del eje." .
 
-ns1:Error_3052 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3052: El estado del cabezal debe coincidir con el del momento de la interrupción" ;
-    ns1:identificador "3052" ;
-    ns1:textoExtracto "'El estado del cabezal debe coincidir con el del momento de la interrupción' DETECCIÓN Durante la ejecución. CAUSA Tras interrumpir un programa y cambiar al modo MHFS, el usuario intenta salir de este modo con el cabezal en un estado M3, M4, M5 o M19 diferente al inicial. SOLUCIÓN Programar un nuevo cambio de estado del cabezal, de manera que este quede en el mismo estado que antes de la interrupción." .
+ns1:DemasiadosParametrosPendientesDeReportar a ns1:DiagnosticoFallo ;
+    rdfs:label "Demasiados parámetros pendientes de reportar" ;
+    ns1:textoExtracto "3038 'Demasiados parámetros pendientes de reportar' DETECCIÓN Durante la ejecución. CAUSA El sistema está sobrecargado." .
 
-ns1:Error_3056 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 3056: Error en el cálculo de la transformada inversa del eje inclinado #ANGAX" ;
-    ns1:identificador "3056" ;
-    ns1:textoExtracto "'Error en el cálculo de la transformada inversa del eje inclinado #ANGAX' DETECCIÓN Durante la ejecución. CAUSA En una transformación angular, el eje inclinado y el ortogonal forma un ángulo de 90º. SOLUCIÓN Si los ejes forman un ángulo de 90º, no es necesaria la transformación angular." .
+ns1:EjeHirthNoPosicionadoCorrectamente a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje Hirth no posicionado correctamente" ;
+    ns1:textoExtracto "3040 'Eje Hirth no posicionado correctamente' DETECCIÓN Durante la ejecución. CAUSA El eje hirth no se encuentra posicionado en un número múltiplo de su paso." .
 
-ns1:Funcion_M19 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M19" ;
-    ns1:identificador "M19" ;
-    ns1:textoExtracto "funciones M19" .
+ns1:PongaseEnContactoConFagor a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor" ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor." .
 
-ns1:Funcion_M3 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M3" ;
-    ns1:identificador "M3" ;
-    ns1:textoExtracto "funciones M3" .
-
-ns1:Funcion_M4 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M4" ;
-    ns1:identificador "M4" ;
-    ns1:textoExtracto "funciones M4" .
-
-ns1:Funcion_M41 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M41" ;
-    ns1:identificador "M41" ;
-    ns1:textoExtracto "funciones M41 a M44" .
-
-ns1:Funcion_M44 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M44" ;
-    ns1:identificador "M44" ;
-    ns1:textoExtracto "funciones M41 a M44" .
-
-ns1:Funcion_M5 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función M5" ;
-    ns1:identificador "M5" ;
-    ns1:textoExtracto "funciones M5" .
-
-ns1:Modo_MHFS a ns1:ModoOperacion ;
-    rdfs:label "Modo MHFS" ;
-    ns1:textoExtracto "modo MHFS" .
-
-ns1:Parametro_F a ns1:Parametro ;
-    rdfs:label "Parámetro F (avance)" ;
-    ns1:identificador "F" ;
-    ns1:textoExtracto "avance F" .
-
-ns1:Parametro_S a ns1:Parametro ;
-    rdfs:label "Parámetro S (velocidad)" ;
-    ns1:identificador "S" ;
-    ns1:textoExtracto "cambio de S" .
-
-ns1:Transformada_ANGAX a ns1:Parametro ;
-    rdfs:label "Transformada inversa del eje inclinado #ANGAX" ;
-    ns1:identificador "#ANGAX" ;
-    ns1:textoExtracto "transformada inversa del eje inclinado #ANGAX" .
-
-ns1:Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "cabezal" .
+ns1:ReposicionarElEjeHirth a ns1:TareaMantenimiento ;
+    rdfs:label "Reposicionar el eje Hirth" ;
+    ns1:solucionaFallo ns1:EjeHirthNoPosicionadoCorrectamente ;
+    ns1:textoExtracto "SOLUCIÓN Cambiar el bloque de parada." .
 

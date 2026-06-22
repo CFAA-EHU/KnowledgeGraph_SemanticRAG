@@ -1,99 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:SistemaMulticanal_CNC a ns1:Sistema ;
-    rdfs:label "Sistema multicanal del CNC (hasta 4 canales)"@es ;
-    ns1:compuestoPor ns1:CanalCNC_1,
-        ns1:CanalCNC_2,
-        ns1:CanalCNC_3,
-        ns1:CanalCNC_4 ;
-    ns1:textoExtracto "El CNC puede disponer de hasta cuatro canales y cada canal puede ejecutar un programa pieza en paralelo con los demás."@es ;
-    ns1:tieneComponente ns1:FuncionAuxiliar_H10,
-        ns1:FuncionAuxiliar_H13,
-        ns1:FuncionAuxiliar_H8 .
+ns1:AuxEnd a ns1:ComponenteElectrico ;
+    rdfs:label "Entrada general AUXEND" ;
+    ns1:textoExtracto "el CNC espera la activación de la entrada general AUXEND, indicativo de fin de ejecución del PLC." .
 
-ns1:CanalCNC_1 a ns1:Componente ;
-    rdfs:label "Primer canal del CNC"@es ;
-    ns1:textoExtracto "HFUN1C1 - HFUN7C1 para el primer canal."@es ;
-    ns1:tieneComponente ns1:Registro_HFUN1C1,
-        ns1:Registro_HFUN2C1,
-        ns1:Registro_HFUN3C1,
-        ns1:Registro_HFUN4C1,
-        ns1:Registro_HFUN5C1,
-        ns1:Registro_HFUN6C1,
-        ns1:Registro_HFUN7C1 .
+ns1:CNC8070_88ec3943a9 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:SalidaLogicaGeneralHSTROBE,
+        ns1:SalidaLogicaGeneralMSTROBE,
+        ns1:SalidaLogicaGeneralSSTROBE ;
+    ns1:textoExtracto "El CNC asigna a los registros MFUN1 a MFUN7 del canal los números de las funciones M programadas en el bloque." .
 
-ns1:CanalCNC_2 a ns1:Componente ;
-    rdfs:label "Segundo canal del CNC"@es ;
-    ns1:textoExtracto "HFUN1C2 - HFUN7C2 para el segundo canal."@es ;
-    ns1:tieneComponente ns1:Registro_HFUN1C2,
-        ns1:Registro_HFUN2C2,
-        ns1:Registro_HFUN3C2,
-        ns1:Registro_HFUN4C2,
-        ns1:Registro_HFUN5C2,
-        ns1:Registro_HFUN6C2,
-        ns1:Registro_HFUN7C2 .
+ns1:TiempoDeEsperaParaLaFinalizacionDeEjecucion a ns1:Parametro ;
+    rdfs:label "Tiempo de espera para la finalización de ejecución" ;
+    ns1:textoExtracto "Esta marca se mantiene a (=1) durante el tiempo indicado en el parámetro MINAENDW." .
 
-ns1:CanalCNC_3 a ns1:Componente ;
-    rdfs:label "Tercer canal del CNC"@es ;
-    ns1:textoExtracto "HFUN1C3 - HFUN7C3 para el tercer canal."@es .
+ns1:SalidaLogicaGeneralHSTROBE a ns1:ComponenteElectrico ;
+    rdfs:label "Salida lógica general HSTROBE" ;
+    ns1:textoExtracto "EL CNC activa la salida lógica general HSTROBE para indicar al PLC que debe ejecutarlas." .
 
-ns1:CanalCNC_4 a ns1:Componente ;
-    rdfs:label "Cuarto canal del CNC"@es ;
-    ns1:textoExtracto "HFUN1C4 - HFUN7C4 para el cuarto canal."@es .
+ns1:SalidaLogicaGeneralMSTROBE a ns1:ComponenteElectrico ;
+    rdfs:label "Salida lógica general MSTROBE" ;
+    ns1:textoExtracto "El CNC activa la salida lógica general MSTROBE para indicar al PLC que debe ejecutarlas." .
 
-ns1:FuncionAuxiliar_H10 a ns1:Componente,
-        ns1:Tabla ;
-    rdfs:label "Función auxiliar H10"@es ;
-    ns1:identificador "H10" ;
-    ns1:textoExtracto "las funciones H10 y H13 [...] programadas en el bloque en ejecución."@es .
-
-ns1:FuncionAuxiliar_H13 a ns1:Componente,
-        ns1:Tabla ;
-    rdfs:label "Función auxiliar H13"@es ;
-    ns1:identificador "H13" ;
-    ns1:textoExtracto "las funciones H10 y H13 [...] programadas en el bloque en ejecución."@es .
-
-ns1:FuncionAuxiliar_H8 a ns1:Componente,
-        ns1:Tabla ;
-    rdfs:label "Función auxiliar H8"@es ;
-    ns1:identificador "H8" ;
-    ns1:textoExtracto "en el segundo canal las funciones H8 y H10"@es .
-
-ns1:Registro_HFUN1C1 a ns1:Parametro ;
-    rdfs:label "Registro HFUN1C1"@es ;
-    ns1:identificador "HFUN1C1" ;
-    ns1:textoExtracto "HFUN1C1 - HFUN7C1 para el primer canal. Cada uno de los registros indica el número de una de las funciones H programadas en el bloque."@es ;
-    ns1:valor "10"^^xsd:hexBinary .
-
-ns1:Registro_HFUN1C2 a ns1:Parametro ;
-    rdfs:label "Registro HFUN1C2"@es ;
-    ns1:identificador "HFUN1C2" ;
-    ns1:textoExtracto "HFUN1C2 - HFUN7C2 para el segundo canal."@es ;
-    ns1:valor "8"^^xsd:hexBinary .
-
-ns1:Registro_HFUN2C1 a ns1:Parametro ;
-    rdfs:label "Registro HFUN2C1"@es ;
-    ns1:identificador "HFUN2C1" ;
-    ns1:textoExtracto "HFUN1C1 - HFUN7C1 para el primer canal."@es ;
-    ns1:valor "13"^^xsd:hexBinary .
-
-ns1:Registro_HFUN2C2 a ns1:Parametro ;
-    rdfs:label "Registro HFUN2C2"@es ;
-    ns1:identificador "HFUN2C2" ;
-    ns1:textoExtracto "HFUN1C2 - HFUN7C2 para el segundo canal."@es ;
-    ns1:valor "10"^^xsd:hexBinary .
-
-ns1:Registro_HFUN3C1 a ns1:Parametro ;
-    rdfs:label "Registro HFUN3C1"@es ;
-    ns1:identificador "HFUN3C1" ;
-    ns1:textoExtracto "HFUN3C1 - HFUN7C1 [...] $FFFFFFFF"@es ;
-    ns1:valor "ffffffff"^^xsd:hexBinary .
-
-ns1:Registro_HFUN3C2 a ns1:Parametro ;
-    rdfs:label "Registro HFUN3C2"@es ;
-    ns1:identificador "HFUN3C2" ;
-    ns1:textoExtracto "HFUN3C2 - HFUN7C2 [...] $FFFFFFFF"@es ;
-    ns1:valor "ffffffff"^^xsd:hexBinary .
+ns1:SalidaLogicaGeneralSSTROBE a ns1:ComponenteElectrico ;
+    rdfs:label "Salida lógica general SSTROBE" ;
+    ns1:textoExtracto "El CNC activa la salida lógica general SSTROBE para indicar al PLC que debe ejecutarla." .
 

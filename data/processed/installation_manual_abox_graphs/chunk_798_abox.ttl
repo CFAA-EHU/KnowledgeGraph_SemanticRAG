@@ -1,34 +1,28 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:textoExtracto "velocidad de giro del cabezal con M03 y M04"@es .
+ns1:CNC8070_403b815963 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC indica en los registros MFUN1 a MFUN7 del canal las funciones M programadas en el bloque y activa la marca MSTROBE para que el PLC las ejecute." .
 
-ns1:FuncionAuxiliar_S a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función auxiliar S"@es ;
-    ns1:detalladoEnEsquema ns1:Esquema_TransferenciaFuncionesAuxiliares ;
-    ns1:monitoreaParametro ns1:Parametro_S_Posicion,
-        ns1:Parametro_S_Velocidad ;
-    ns1:textoExtracto "La función auxiliar S indica la velocidad de giro del cabezal con M03 y M04, o la posición a orientar el cabezal con M19."@es .
+ns1:MarcaAUXEND a ns1:ComponenteElectrico ;
+    rdfs:label "Marca AUXEND" ;
+    ns1:textoExtracto "El PLC debe desactivar la marca AUXEND para indicar al CNC que comienza la ejecución." .
 
-ns1:Parametro_SPDLTIME a ns1:Parametro ;
-    rdfs:label "Parámetro SPDLTIME"@es ;
-    ns1:textoExtracto "El comando SFUN sólo toma el valor de la S programada si el parámetro de cabezal SPDLTIME es distinto de cero."@es .
+ns1:MarcaMSTROBE a ns1:ComponenteElectrico ;
+    rdfs:label "Marca MSTROBE" ;
+    ns1:textoExtracto "El CNC indica en los registros MFUN1 a MFUN7 del canal las funciones M programadas en el bloque y activa la marca MSTROBE para que el PLC las ejecute." .
 
-ns1:Esquema_TransferenciaFuncionesAuxiliares a ns1:Esquema ;
-    rdfs:label "Transferencia de las funciones auxiliares –M–, –H–, –S–"@es ;
-    ns1:ilustradoEn ns1:Pagina_400 ;
-    ns1:textoExtracto "La transferencia de la función S está detallada más adelante en este mismo capítulo. Ver en la página 400. \"5.4 Transferencia de las funciones auxiliares –M–, –H–, –S–.\""@es .
+ns1:MarcaSSTROBE a ns1:ComponenteElectrico ;
+    rdfs:label "Marca SSTROBE" ;
+    ns1:textoExtracto "El CNC indica en los registros SFUN1 a SFUN4 el valor de la S programada en el bloque y activa la marca SSTROBE para que el PLC las ejecute." .
 
-ns1:Parametro_S_Posicion a ns1:Parametro ;
-    rdfs:label "Parámetro S (posición de orientación)"@es ;
-    ns1:textoExtracto "la posición a orientar el cabezal con M19"@es ;
-    ns1:valor "SFUN1 (registro 32 bits)"@es .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "El PLC debe desactivar la marca AUXEND para indicar al CNC que comienza la ejecución." .
 
-ns1:Parametro_S_Velocidad a ns1:Parametro ;
-    rdfs:label "Parámetro S (velocidad de giro)"@es ;
-    ns1:textoExtracto "La función auxiliar S indica la velocidad de giro del cabezal con M03 y M04"@es ;
-    ns1:valor "SFUN1 (registro 32 bits)"@es .
+ns1:TiempoMinimoDeEsperaParaFinalizacionDeFuncionesAuxiliares a ns1:Parametro ;
+    rdfs:label "Tiempo mínimo de espera para finalización de funciones auxiliares" ;
+    ns1:identificador "MINAENDW" ;
+    ns1:textoExtracto "La marca AUXEND debe mantenerse a (=1) un tiempo superior al definido en el parámetro MINAENDW." .
 

@@ -1,25 +1,62 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_9505 a ns1:Alarma ;
-    rdfs:label "Alarma de pulsos entre I0s"@es ;
-    ns1:activaAlarma ns1:Sistema_Regulador ;
-    ns1:identificador "9505" ;
-    ns1:textoExtracto "9505 Alarma de pulsos entre I0s. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El regulador ha detectado un error en la correlación del pulsos entre dos señales de I0"@es .
+ns1:AvisoSeguridad_098eace14b a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de DEFAULSET incompatible con REFERENCEID",
+        "Aviso de compartir REFERENCEID entre ejes/cabezales" ;
+    ns1:mitigaRiesgo ns1:CompartirREFERENCEIDEntreDistintosEjesCabezales,
+        ns1:DEFAULSETIncompatibleConEjesCabezalesQueCompartenREFERENCEID ;
+    ns1:textoExtracto "Revisar la parametrización de DEFAULTSET y REFERENCEID de los distintos sets de los ejes/cabezales implicados." .
 
-ns1:Componente_Encoder a ns1:ComponenteElectrico ;
-    rdfs:label "Encoder"@es ;
-    ns1:textoExtracto "conexionado del encoder"@es .
+ns1:AvisoSeguridad_5d71c3ebc5 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de parametrización CURRBFID en eje analógico" ;
+    ns1:mitigaRiesgo ns1:ParametrizarCURRBFIDEnEjeAnalogico ;
+    ns1:textoExtracto "Para eje/cabezal analógico, dejar esta parámetro en blanco." .
 
-ns1:DiagnosticoFallo_Encoder a ns1:DiagnosticoFallo ;
-    ns1:solucionaFallo ns1:Sistema_Regulador ;
-    ns1:textoExtracto "Revisar el conexionado del encoder"@es .
+ns1:AvisoSeguridad_75972a27f0 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de validación durante cambio de gama" ;
+    ns1:mitigaRiesgo ns1:ValidacionDeParametrosDuranteCambioDeGama_505fc63630 ;
+    ns1:textoExtracto "Esperar a que acabe el cambio de gama para validar los parámetros máquina." .
 
-ns1:Parametro_Vpp_Encoder a ns1:Parametro ;
-    rdfs:label "Señales Vpp del encoder"@es ;
-    ns1:textoExtracto "señales Vpp del encoder"@es .
+ns1:AvisoSeguridad_ab2addc330 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de motor desconocido parametrizado como AUTODETECT" ;
+    ns1:mitigaRiesgo ns1:AccionProhibida_a8818875fd ;
+    ns1:textoExtracto "El CNC no reconoce un motor parametrizado como AUTODETECT; el motor no está disponible en Motors.xml." .
 
-ns1:Sistema_Regulador a ns1:Sistema ;
-    ns1:monitoreaParametro ns1:Parametro_Vpp_Encoder ;
-    ns1:textoExtracto "El regulador ha detectado un error en las señales Vpp del encoder"@es .
+ns1:AvisoSeguridad_c7134730c4 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de modificación del número de canales, ejes o cabezales" ;
+    ns1:mitigaRiesgo ns1:ModificarNumeroDeCanalesEjesOCabezalesSinRearrancarElCNC ;
+    ns1:textoExtracto "Para validar el número de canales, ejes o cabezales es necesario rearrancar el CNC." .
+
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
+
+ns1:RevisarLaParametrizacionDeDEFAULTSETYREFERENCEID a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la parametrización de DEFAULTSET y REFERENCEID" ;
+    ns1:textoExtracto "Revisar la parametrización de DEFAULTSET y REFERENCEID de los distintos sets de los ejes/cabezales implicados." .
+
+ns1:AccionProhibida_a8818875fd a ns1:AccionProhibida ;
+    rdfs:label "Motor desconocido parametrizado como AUTODETECT" ;
+    ns1:textoExtracto "El CNC no reconoce un motor parametrizado como AUTODETECT; el motor no está disponible en Motors.xml." .
+
+ns1:CompartirREFERENCEIDEntreDistintosEjesCabezales a ns1:AccionProhibida ;
+    rdfs:label "Compartir REFERENCEID entre distintos ejes/cabezales" ;
+    ns1:textoExtracto "Distintos ejes/cabezales no pueden compartir el mismo REFERENCEID al mismo tiempo." .
+
+ns1:DEFAULSETIncompatibleConEjesCabezalesQueCompartenREFERENCEID a ns1:AccionProhibida ;
+    rdfs:label "DEFAULSET incompatible con ejes/cabezales que comparten REFERENCEID" ;
+    ns1:textoExtracto "DEFAULSET incompatible con ejes/cabezales que comparten el mismo REFERENCEID." .
+
+ns1:ModificarNumeroDeCanalesEjesOCabezalesSinRearrancarElCNC a ns1:AccionProhibida ;
+    rdfs:label "Modificar número de canales, ejes o cabezales sin rearrancar el CNC" ;
+    ns1:textoExtracto "Para modificar el número de canales, ejes o cabezales es necesario rearrancar el CNC." .
+
+ns1:ParametrizarCURRBFIDEnEjeAnalogico a ns1:AccionProhibida ;
+    rdfs:label "Parametrizar CURRBFID en eje analógico" ;
+    ns1:textoExtracto "No se admite CURRBFID en ejes analógicos." .
+
+ns1:ValidacionDeParametrosDuranteCambioDeGama_505fc63630 a ns1:AccionProhibida ;
+    rdfs:label "Validación de parámetros durante cambio de gama" ;
+    ns1:textoExtracto "Se ha intentado validar la tabla de parámetros máquina durante un cambio de gama." .
 

@@ -1,40 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:OpcionSoftware_SistemaAbierto a ns1:Parametro ;
-    rdfs:label "Opción de software 'Sistema abierto'"@es ;
-    ns1:identificador "Sistema abierto" ;
-    ns1:monitoreaParametro ns1:SistemaProteccionSoftware_CNC ;
-    ns1:textoExtracto "El acceso al modo administrador se habilita con el código de validación (opción de software 'Sistema abierto')."@es .
+ns1:CNC8070_f226fe5ced a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "En una actualización de software desde una versión en la que el equipo tiene un disco sin protección contra la escritura, no existirán estos modos de trabajo." ;
+    ns1:tieneComponente ns1:HotkeyALT_D,
+        ns1:ModoAdministrador,
+        ns1:ModoTrabajo,
+        ns1:VentanaDiskMonitor .
 
-ns1:OpcionSoftware_SistemaCerrado a ns1:Parametro ;
-    rdfs:label "Opción de software 'Sistema cerrado'"@es ;
-    ns1:identificador "Sistema cerrado" ;
-    ns1:monitoreaParametro ns1:SistemaProteccionSoftware_CNC ;
-    ns1:textoExtracto "Si usted no dispone de esta opción de software (es decir, dispone de un 'Sistema cerrado'), no podrá acceder al modo administrador."@es .
+ns1:SistemaAbierto a ns1:Directiva ;
+    rdfs:label "Sistema abierto" ;
+    ns1:textoExtracto "Si usted no dispone de esta opción de software (es decir, dispone de un \"Sistema cerrado\"), no podrá acceder al modo." .
 
-ns1:ModoAdministrador_CNC a ns1:ModoOperacion ;
-    rdfs:label "Modo administrador (CNC)"@es ;
-    ns1:textoExtracto "Modo administrador. El acceso al modo administrador se habilita con el código de validación (opción de software 'Sistema abierto')."@es .
+ns1:SistemaCerrado a ns1:Directiva ;
+    rdfs:label "Sistema cerrado" ;
+    ns1:textoExtracto "Si usted no dispone de esta opción de software (es decir, dispone de un \"Sistema cerrado\"), no podrá acceder al modo." .
 
-ns1:ModoUtilidades_CNC a ns1:ModoOperacion ;
-    rdfs:label "Modo utilidades (CNC)"@es ;
-    ns1:textoExtracto "Desde el modo utilidades, desde el menú de softkeys se podrá seleccionar el modo de trabajo deseado."@es .
+ns1:HotkeyALT_D a ns1:ComponenteElectrico ;
+    rdfs:label "[ALT][D]" ;
+    ns1:textoExtracto "Con la aplicación CNC apagada, el cambio del modo de trabajo se realiza con la hotkey [ALT][D]." .
 
-ns1:Ventana_DiskMonitor a ns1:InterfazUsuario ;
-    rdfs:label "Ventana DiskMonitor"@es ;
-    ns1:habilitadoPor ns1:ModoTrabajo_CNC ;
-    ns1:textoExtracto "el equipo muestra la ventana DiskMonitor para cambiar de un modo de trabajo a otro."@es .
+ns1:ModoAdministrador a ns1:ModoOperacion ;
+    rdfs:label "modo administrador" ;
+    ns1:textoExtracto "El acceso al modo administrador se habilita con el código de validación (opción de software \"Sistema abierto\")." .
 
-ns1:ModoTrabajo_CNC a ns1:ModoOperacion ;
-    rdfs:label "Modo de trabajo (CNC)"@es ;
-    ns1:textoExtracto "Cambio del modo de trabajo (ventana diskMonitor). [...] Este proceso implica reiniciar el equipo, y si el fabricante lo ha definido así, también será necesario introducir la contraseña correspondiente."@es .
+ns1:ModoTrabajo a ns1:ModoOperacion ;
+    rdfs:label "Modo de Trabajo" ;
+    ns1:textoExtracto "Cambio del modo de trabajo (ventana diskMonitor)." .
 
-ns1:SistemaProteccionSoftware_CNC a ns1:Sistema ;
-    rdfs:label "Sistema de protección de software (CNC)"@es ;
-    ns1:textoExtracto "En una actualización de software desde una versión en la que el equipo tiene un disco sin protección contra la escritura, no existirán estos modos de trabajo. Al no tener protecciones contra la escritura las modificaciones que se realicen se mantienen."@es ;
-    ns1:tieneComponente ns1:ModoAdministrador_CNC,
-        ns1:ModoTrabajo_CNC,
-        ns1:ModoUtilidades_CNC,
-        ns1:Ventana_DiskMonitor .
+ns1:VentanaDiskMonitor a ns1:InterfazUsuario ;
+    rdfs:label "ventana DiskMonitor" ;
+    ns1:textoExtracto "el equipo muestra la ventana DiskMonitor para cambiar de un modo de trabajo a otro." .
 

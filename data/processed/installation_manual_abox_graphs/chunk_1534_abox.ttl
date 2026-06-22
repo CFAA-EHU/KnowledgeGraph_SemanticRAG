@@ -1,72 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Esquema_CompensacionLaserCO2 a ns1:Esquema ;
-    rdfs:label "Diagrama de compensación por recorrido del láser de CO₂"@es ;
-    ns1:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser."@es .
+ns1:EsquemaConfiguracionEjesRotativos a ns1:Esquema ;
+    rdfs:label "Configuración de los ejes rotativos" ;
+    ns1:ilustra ns1:SentidoDeGiroUnico_1ecb002b83 ;
+    ns1:textoExtracto "Ilustran cómo, en G90/G91, el recorrido efectivo es inferior a una vuelta, y cómo el signo fija el sentido cuando no hay SHORTESTWAY ni UNIDIR." .
 
-ns1:Esquema_GAPTONEG_No a ns1:Esquema ;
-    rdfs:label "Esquema GAPTONEG = No (eje Z invertido)"@es ;
-    ns1:ilustradoEn ns1:Componente_CabezalLaser,
-        ns1:Param_GAPTONEG ;
-    ns1:textoExtracto "Esquema 'GAPTONEG = No': representa un eje Z invertido (Z+ hacia abajo). El movimiento para lograr el gap se realiza en sentido positivo."@es .
+ns1:EsquemaPosicionamientoCortoCamino a ns1:Esquema ;
+    rdfs:label "Posicionamiento por el camino más corto (SHORTESTWAY = Sí)" ;
+    ns1:ilustra ns1:PosicionamientoPorElCaminoMasCorto_58d417b415 ;
+    ns1:textoExtracto "Esquema circular con arcos y flechas que ilustra 'Posicionamiento por el camino más corto (SHORTESTWAY = Sí)'. Se visualiza cómo, en G90, el eje elige el arco mínimo hasta la posición objetivo." .
 
-ns1:Esquema_GAPTONEG_Si a ns1:Esquema ;
-    rdfs:label "Esquema GAPTONEG = Sí (eje Z estándar)"@es ;
-    ns1:ilustradoEn ns1:Componente_CabezalLaser,
-        ns1:Param_GAPTONEG ;
-    ns1:textoExtracto "Esquema 'GAPTONEG = Sí': orienta el eje Z con Z+ hacia arriba (condición normal). El cabezal láser desciende (movimiento en sentido negativo) hasta alcanzar el gap respecto a la pieza (WORKPIECE)."@es .
+ns1:EsquemaSentidoGiroUnico a ns1:Esquema ;
+    rdfs:label "Sentido de giro único (UNIDIR = Positivo)" ;
+    ns1:ilustra ns1:SentidoDeGiroUnico_1ecb002b83 ;
+    ns1:textoExtracto "Esquema circular con arcos que muestran el 'Sentido de giro único (UNIDIR = Positivo)'. Se representan posiciones a 90°, 300° y –300° y la imposibilidad de girar en el sentido contrario." .
 
-ns1:Esquema_GapControlLoop a ns1:Esquema ;
-    rdfs:label "Diagrama funcional del lazo de control del gap"@es ;
-    ns1:detalladoEnEsquema ns1:Filtro_Cutoff,
-        ns1:Param_GAP_PGAIN,
-        ns1:Sensor_Gap ;
-    ns1:textoExtracto "Diagrama funcional del lazo de control del gap: la realimentación del sensor (GAP SENSOR FEEDBACK) entra a un bucle de posición (POSITION LOOP) con ganancia proporcional de gap (GAP P-GAIN) y un filtro de corte (CUTOFF FILTER)."@es .
+ns1:Render3DTornoEjeC a ns1:Esquema ;
+    rdfs:label "Render 3D del torno mostrando el eje C activado" ;
+    ns1:textoExtracto "Render 3D del torno mostrando el eje C activado y el plano de trabajo XC (ejes X–C con Z visible al fondo)." .
 
-ns1:Esquema_GapSensorGraph a ns1:Esquema ;
-    rdfs:label "Gráfico del sensor de gap (señal vs. offset)"@es ;
-    ns1:ilustradoEn ns1:Param_GAPDISTLIMIT,
-        ns1:Param_GAPSENSOROFFSET,
-        ns1:Param_GAPVOLTLIMIT ;
-    ns1:textoExtracto "Gráfico del sensor de gap con ejes mV (horizontal) y mm/inch (vertical). Representa la señal del sensor (SENSOR SIGNAL) frente al offset aplicado (GAPSENSOROFFSET), el límite de voltaje (GAPVOLTLIMIT) y el límite de distancia (GAPDISTLIMIT)."@es .
+ns1:PosicionamientoPorElCaminoMasCorto_58d417b415 a ns1:Parametro ;
+    rdfs:label "Posicionamiento por el camino más corto" ;
+    ns1:textoExtracto "Se visualiza cómo, en G90, el eje elige el arco mínimo hasta la posición objetivo (ejemplo a 90° y 30°), con anotaciones B90/B–300/B300." .
 
-ns1:Filtro_Cutoff a ns1:ComponenteElectrico ;
-    rdfs:label "Filtro de corte (CUTOFF FILTER)"@es ;
-    ns1:textoExtracto "filtro de corte (CUTOFF FILTER), esquematizando dónde se atenúa la alta frecuencia antes del control de posición."@es .
-
-ns1:Param_GAPVOLTLIMIT a ns1:Parametro ;
-    rdfs:label "GAPVOLTLIMIT" ;
-    ns1:identificador "GAPVOLTLIMIT" ;
-    ns1:textoExtracto "límite de voltaje (GAPVOLTLIMIT)"@es .
-
-ns1:Param_GAP_PGAIN a ns1:Parametro ;
-    rdfs:label "GAP P-GAIN" ;
-    ns1:identificador "GAP P-GAIN" ;
-    ns1:textoExtracto "ganancia proporcional de gap (GAP P-GAIN)"@es .
-
-ns1:Sensor_Gap a ns1:Sensor ;
-    rdfs:label "Sensor de gap"@es ;
-    ns1:monitoreaParametro ns1:Param_GAPDISTLIMIT,
-        ns1:Param_GAPSENSOROFFSET ;
-    ns1:textoExtracto "señal del sensor (SENSOR SIGNAL) frente al offset aplicado (GAPSENSOROFFSET)"@es .
-
-ns1:Componente_CabezalLaser a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal láser"@es ;
-    ns1:textoExtracto "El cabezal láser desciende (movimiento en sentido negativo) hasta alcanzar el gap respecto a la pieza (WORKPIECE)."@es .
-
-ns1:Param_GAPDISTLIMIT a ns1:Parametro ;
-    rdfs:label "GAPDISTLIMIT" ;
-    ns1:identificador "GAPDISTLIMIT" ;
-    ns1:textoExtracto "límite de distancia (GAPDISTLIMIT)"@es .
-
-ns1:Param_GAPSENSOROFFSET a ns1:Parametro ;
-    rdfs:label "GAPSENSOROFFSET" ;
-    ns1:identificador "GAPSENSOROFFSET" ;
-    ns1:textoExtracto "offset aplicado (GAPSENSOROFFSET)"@es .
-
-ns1:Param_GAPTONEG a ns1:Parametro ;
-    rdfs:label "GAPTONEG" ;
-    ns1:identificador "GAPTONEG" ;
-    ns1:textoExtracto "Parámetro para orientación del eje Z (GAPTONEG = Sí/No)."@es .
+ns1:SentidoDeGiroUnico_1ecb002b83 a ns1:Parametro ;
+    rdfs:label "Sentido de giro único" ;
+    ns1:textoExtracto "Se representan posiciones a 90°, 300° y –300° y la imposibilidad de girar en el sentido contrario." .
 

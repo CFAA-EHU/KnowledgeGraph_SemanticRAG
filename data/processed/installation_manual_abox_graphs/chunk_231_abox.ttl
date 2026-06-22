@@ -1,49 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_M3 a ns1:ModoOperacion ;
-    rdfs:label "M3" ;
-    ns1:controla ns1:Parametro_ACCEL,
-        ns1:Parametro_ACCJERK,
-        ns1:Parametro_DECEL,
-        ns1:Parametro_DECJERK ;
-    ns1:textoExtracto "El parámetro SLOPETYPE no afecta al cabezal (M3/M4), que siempre utiliza aceleración con jerk" .
+ns1:AceleracionLineal a ns1:Parametro ;
+    rdfs:label "Aceleración lineal" ;
+    ns1:documentadoEn ns1:SistemaCNC8070_32ce6ad793 ;
+    ns1:textoExtracto "La peor respuesta se consigue con la aceleración lineal." .
 
-ns1:ModoOperacion_M4 a ns1:ModoOperacion ;
-    rdfs:label "M4" ;
-    ns1:controla ns1:Parametro_ACCEL,
-        ns1:Parametro_ACCJERK,
-        ns1:Parametro_DECEL,
-        ns1:Parametro_DECJERK ;
-    ns1:textoExtracto "El parámetro SLOPETYPE no afecta al cabezal (M3/M4), que siempre utiliza aceleración con jerk" .
+ns1:AceleracionSenoCuadrado a ns1:Parametro ;
+    rdfs:label "Aceleración seno cuadrado" ;
+    ns1:documentadoEn ns1:SistemaCNC8070_32ce6ad793 ;
+    ns1:textoExtracto "La aceleración seno cuadrado es una mejora a la aceleración trapezoidal, que suaviza el jerk para que los desplazamientos sean más suaves y sufra menos la mecánica del eje." .
 
-ns1:Parametro_SLOPETYPE a ns1:Parametro ;
-    rdfs:label "SLOPETYPE" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal ;
-    ns1:textoExtracto "Parámetro SLOPETYPE en el cabezal. El parámetro SLOPETYPE no afecta al cabezal (M3/M4), que siempre utiliza aceleración con jerk (parámetros ACCEL/DECEL y ACCJERK/DECJERK)." .
+ns1:AceleracionTrapezoidal a ns1:Parametro ;
+    rdfs:label "Aceleración trapezoidal" ;
+    ns1:documentadoEn ns1:SistemaCNC8070_32ce6ad793 ;
+    ns1:textoExtracto "La aceleración trapezoidal permite programar rampas con objeto de suavizar los cambios de aceleración y deceleración." .
 
-ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "Parámetro SLOPETYPE en el cabezal. Cuando el cabezal trabaja como eje C, utilizará aceleración lineal o aceleración con jerk en función del tipo de mecanizado." ;
-    ns1:tieneComponente ns1:Componente_EjeC .
-
-ns1:Componente_EjeC a ns1:ComponenteMecanico ;
-    rdfs:label "Eje C" ;
-    ns1:textoExtracto "Cuando el cabezal trabaja como eje C, utilizará aceleración lineal o aceleración con jerk en función del tipo de mecanizado." .
-
-ns1:Parametro_ACCEL a ns1:Parametro ;
-    rdfs:label "ACCEL" ;
-    ns1:textoExtracto "aceleración con jerk (parámetros ACCEL/DECEL y ACCJERK/DECJERK)" .
-
-ns1:Parametro_ACCJERK a ns1:Parametro ;
-    rdfs:label "ACCJERK" ;
-    ns1:textoExtracto "aceleración con jerk (parámetros ACCEL/DECEL y ACCJERK/DECJERK)" .
-
-ns1:Parametro_DECEL a ns1:Parametro ;
-    rdfs:label "DECEL" ;
-    ns1:textoExtracto "aceleración con jerk (parámetros ACCEL/DECEL y ACCJERK/DECJERK)" .
-
-ns1:Parametro_DECJERK a ns1:Parametro ;
-    rdfs:label "DECJERK" ;
-    ns1:textoExtracto "aceleración con jerk (parámetros ACCEL/DECEL y ACCJERK/DECJERK)" .
+ns1:SistemaCNC8070_32ce6ad793 a ns1:Sistema ;
+    rdfs:label "Sistema CNC 8070" ;
+    ns1:textoExtracto "Para seleccionar una aceleración distinta desde el programa pieza, para el modo automático, utilizar la sentencia #SLOPE." .
 

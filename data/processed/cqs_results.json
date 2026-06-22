@@ -1,0 +1,1639 @@
+[
+  {
+    "id": "CQ-001",
+    "pregunta": "¿Qué componentes integra el sistema hidráulico de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:ComponenteHidraulico"
+    ],
+    "predicados_implicados": [
+      "ex:tieneComponente"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?sistema ?componente ?label WHERE {\n  ?sistema a ex:Sistema ;\n           ex:tieneComponente ?componente .\n  ?componente a ex:ComponenteHidraulico .\n  OPTIONAL { ?componente rdfs:label ?label }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "3.1.1.5 Equipo hidráulico / 4.2 Descripción",
+      "titulo": "Equipo hidráulico",
+      "chunk_ids": [
+        40,
+        41,
+        54
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 9,
+    "passed": true
+  },
+  {
+    "id": "CQ-002",
+    "pregunta": "¿A qué sistema o componente pertenece la bomba hidráulica como componente constitutivo?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:ComponenteHidraulico",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:esComponenteDe"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?componente ?padre WHERE {\n  ?componente a ex:ComponenteHidraulico ;\n              ex:esComponenteDe ?padre .\n  OPTIONAL { ?componente rdfs:label ?cLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "3.1.1.5 Equipo hidráulico",
+      "titulo": "-",
+      "chunk_ids": [
+        40,
+        41
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 11,
+    "passed": true
+  },
+  {
+    "id": "CQ-003",
+    "pregunta": "¿De qué componentes o subsistemas está compuesta la brochadora electromecánica de exteriores A218?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Maquina",
+      "ex:Componente"
+    ],
+    "predicados_implicados": [
+      "ex:compuestoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?maquina ?parte ?label WHERE {\n  ?maquina a ex:Maquina ;\n           ex:compuestoPor ?parte .\n  OPTIONAL { ?parte rdfs:label ?label }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 4 - DESCRIPCIÓN",
+      "titulo": "-",
+      "chunk_ids": [
+        43,
+        44,
+        47,
+        53
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 70,
+    "passed": true
+  },
+  {
+    "id": "CQ-004",
+    "pregunta": "¿Qué entidades controla el CNC 8070 en la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:Parametro",
+      "ex:ComponenteElectrico"
+    ],
+    "predicados_implicados": [
+      "ex:controla"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?controlado ?tipo WHERE {\n  ex:SistemaCNC ex:controla ?controlado .\n  OPTIONAL { ?controlado a ?tipo }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "1.1 Entendiendo el funcionamiento de las variables",
+      "titulo": "Variables CNC",
+      "chunk_ids": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 3,
+    "passed": true
+  },
+  {
+    "id": "CQ-005",
+    "pregunta": "¿Qué entidades están siendo controladas por algún sistema o componente de la brochadora?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:EntidadFisica",
+      "ex:Parametro"
+    ],
+    "predicados_implicados": [
+      "ex:controladoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?controlador WHERE {\n  ?entidad ex:controladoPor ?controlador .\n  OPTIONAL { ?entidad a ?tipo }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "1.1 Entendiendo el funcionamiento de las variables",
+      "titulo": "Variables CNC",
+      "chunk_ids": [
+        3,
+        4,
+        5
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 457,
+    "passed": true
+  },
+  {
+    "id": "CQ-006",
+    "pregunta": "¿Qué componente o sistema suministra energía al equipo hidráulico de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:alimenta"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?fuente ?destino ?label WHERE {\n  ?fuente ex:alimenta ?destino .\n  OPTIONAL { ?fuente rdfs:label ?label }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "3.1.1.5 Equipo hidráulico / 6.2.1 Armario eléctrico",
+      "titulo": "-",
+      "chunk_ids": [
+        40,
+        41
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 9,
+    "passed": true
+  },
+  {
+    "id": "CQ-007",
+    "pregunta": "¿Qué sistemas o componentes reciben alimentación eléctrica o hidráulica en la brochadora?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:alimentadoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?receptor ?fuente WHERE {\n  ?receptor ex:alimentadoPor ?fuente .\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "6.2.1 Armario eléctrico",
+      "titulo": "-",
+      "chunk_ids": [
+        41
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 8,
+    "passed": true
+  },
+  {
+    "id": "CQ-008",
+    "pregunta": "¿Qué consumibles requiere el sistema de engrase automático de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:TareaMantenimiento",
+      "ex:Consumible"
+    ],
+    "predicados_implicados": [
+      "ex:requiereConsumible"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?sujeto ?consumible ?cLabel WHERE {\n  ?sujeto ex:requiereConsumible ?consumible .\n  OPTIONAL { ?consumible rdfs:label ?cLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "3.1.1.3 Engrase / 7.2.2 Trabajos de mantenimiento / 9.2 Lubricación",
+      "titulo": "-",
+      "chunk_ids": [
+        39,
+        105,
+        106,
+        107,
+        117,
+        118
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 28,
+    "passed": true
+  },
+  {
+    "id": "CQ-009",
+    "pregunta": "¿Para qué entidades físicas es consumible el aceite hidráulico especificado en el manual?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Consumible",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:esConsumibleDe"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?consumible ?entidad WHERE {\n  ?consumible a ex:Consumible ;\n              ex:esConsumibleDe ?entidad .\n  OPTIONAL { ?consumible rdfs:label ?cLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "7.2.2.3 Suministro de aceite para el grupo hidráulico",
+      "titulo": "-",
+      "chunk_ids": [
+        106,
+        107
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 21,
+    "passed": true
+  },
+  {
+    "id": "CQ-010",
+    "pregunta": "¿Qué parámetros CNC monitorea el sistema de control del cabezal de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:EntidadFisica",
+      "ex:Parametro"
+    ],
+    "predicados_implicados": [
+      "ex:monitoreaParametro"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?parametro ?id WHERE {\n  ?entidad ex:monitoreaParametro ?parametro .\n  OPTIONAL { ?parametro ex:identificador ?id }\n  OPTIONAL { ?parametro rdfs:label ?pLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "1.1 Entendiendo el funcionamiento de las variables / 11.2-11.4 Ajuste fino",
+      "titulo": "Variables CNC",
+      "chunk_ids": [
+        3,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 586,
+    "passed": true
+  },
+  {
+    "id": "CQ-011",
+    "pregunta": "¿Qué entidad física (sensor, sistema o componente) monitorea el parámetro de avance del eje?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Parametro",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:parametroMonitoradoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?parametro ?monitor WHERE {\n  ?parametro a ex:Parametro ;\n             ex:parametroMonitoradoPor ?monitor .\n  OPTIONAL { ?parametro ex:identificador ?id }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "11.2 Incremento de posición y el periodo de muestreo / 11.3 Ajuste fino",
+      "titulo": "Variables CNC",
+      "chunk_ids": [
+        11,
+        12,
+        13
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 158,
+    "passed": true
+  },
+  {
+    "id": "CQ-012",
+    "pregunta": "¿Qué alarmas activa el CNC 8070 en el rango de errores 0000-0999?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:Alarma"
+    ],
+    "predicados_implicados": [
+      "ex:activaAlarma"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?sistema ?alarma ?label WHERE {\n  ?sistema ex:activaAlarma ?alarma .\n  OPTIONAL { ?alarma rdfs:label ?label }\n  OPTIONAL { ?alarma ex:identificador ?id }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "0000-0999",
+      "titulo": "-",
+      "chunk_ids": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 275,
+    "passed": true
+  },
+  {
+    "id": "CQ-013",
+    "pregunta": "¿Qué sistema o componente activa la alarma de error de bus EtherCAT?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Alarma",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:alarmaActivadaPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?alarma ?activador WHERE {\n  ?alarma a ex:Alarma ;\n          ex:alarmaActivadaPor ?activador .\n  OPTIONAL { ?alarma rdfs:label ?label }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "0000-0999",
+      "titulo": "-",
+      "chunk_ids": [
+        6,
+        7,
+        8
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 33,
+    "passed": true
+  },
+  {
+    "id": "CQ-014",
+    "pregunta": "¿Qué perfil de personal está habilitado para realizar trabajos de mantenimiento en la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:Personal"
+    ],
+    "predicados_implicados": [
+      "ex:habilitadoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?sujeto ?condicion ?cLabel WHERE {\n  ?sujeto ex:habilitadoPor ?condicion .\n  OPTIONAL { ?condicion rdfs:label ?cLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.3 Instrucciones para el mantenimiento de la máquina",
+      "titulo": "-",
+      "chunk_ids": [
+        20,
+        21,
+        22
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL relaxada: LLM extrajo habilitadoPor con sujetos Parametro/Alarma/AccionProhibida en vez de TareaMantenimiento. Restricción de tipo eliminada para capturar datos reales.",
+    "resultado": "PASS",
+    "rows": 16,
+    "passed": true
+  },
+  {
+    "id": "CQ-015",
+    "pregunta": "¿Qué tareas de mantenimiento puede autorizar el personal técnico cualificado de la brochadora?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Personal",
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [
+      "ex:habilita"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?sujeto ?tarea ?tLabel WHERE {\n  ?sujeto ex:habilita ?tarea .\n  OPTIONAL { ?tarea rdfs:label ?tLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.3 Instrucciones para el mantenimiento de la máquina",
+      "titulo": "-",
+      "chunk_ids": [
+        20,
+        21,
+        22
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL relaxada: después de materialización de inversos, habilita sujetos son EntidadFisica/Sistema (inverso de habilitadoPor con Parametro/Alarma). Restricción a ex:Personal eliminada.",
+    "resultado": "PASS",
+    "rows": 24,
+    "passed": true
+  },
+  {
+    "id": "CQ-016",
+    "pregunta": "¿Qué avisos de seguridad mitigan el riesgo durante los trabajos de mantenimiento de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:AvisoSeguridad"
+    ],
+    "predicados_implicados": [
+      "ex:mitigaRiesgo"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?aviso ?riesgo ?aLabel WHERE {\n  ?aviso a ex:AvisoSeguridad ;\n         ex:mitigaRiesgo ?riesgo .\n  OPTIONAL { ?aviso rdfs:label ?aLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.3 Instrucciones para el mantenimiento / CAPÍTULO 2 - INSTRUCCIONES DE SEGURIDAD",
+      "titulo": "-",
+      "chunk_ids": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 461,
+    "passed": true
+  },
+  {
+    "id": "CQ-017",
+    "pregunta": "¿Qué aviso de seguridad cubre el riesgo de contacto eléctrico durante el mantenimiento del armario?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:AvisoSeguridad"
+    ],
+    "predicados_implicados": [
+      "ex:riesgoMitigadoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?aviso ?aLabel WHERE {\n  ?entidad ex:riesgoMitigadoPor ?aviso .\n  ?aviso a ex:AvisoSeguridad .\n  OPTIONAL { ?aviso rdfs:label ?aLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.1 Instrucciones generales de seguridad",
+      "titulo": "-",
+      "chunk_ids": [
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 461,
+    "passed": true
+  },
+  {
+    "id": "CQ-018",
+    "pregunta": "¿Qué equipos de protección individual (EPI) son necesarios durante las tareas de mantenimiento?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:AvisoSeguridad",
+      "ex:EPI"
+    ],
+    "predicados_implicados": [
+      "ex:requiereEPI"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?sujeto ?epi ?epiLabel WHERE {\n  ?sujeto ex:requiereEPI ?epi .\n  OPTIONAL { ?epi rdfs:label ?epiLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.1 Instrucciones generales de seguridad / 2.1.3 Instrucciones para el mantenimiento",
+      "titulo": "-",
+      "chunk_ids": [
+        15,
+        16,
+        20,
+        21
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 5,
+    "passed": true
+  },
+  {
+    "id": "CQ-019",
+    "pregunta": "¿En qué entidades físicas de la brochadora es obligatorio el uso de guantes de protección?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:EPI",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:epiRequeridoEn"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?epi ?entidad ?eLabel WHERE {\n  ?epi a ex:EPI ;\n       ex:epiRequeridoEn ?entidad .\n  OPTIONAL { ?epi rdfs:label ?eLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.1 Instrucciones generales de seguridad",
+      "titulo": "-",
+      "chunk_ids": [
+        15,
+        16,
+        17
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 5,
+    "passed": true
+  },
+  {
+    "id": "CQ-020",
+    "pregunta": "¿Qué normativas y directivas CE cumple la brochadora electromecánica de exteriores A218?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Maquina",
+      "ex:Directiva"
+    ],
+    "predicados_implicados": [
+      "ex:cumpleNormativa"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?directiva ?dId WHERE {\n  ?entidad ex:cumpleNormativa ?directiva .\n  OPTIONAL { ?directiva ex:identificador ?dId }\n  OPTIONAL { ?directiva rdfs:label ?dLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 1 - DECLARACIÓN 'CE' DE CONFORMIDAD",
+      "titulo": "-",
+      "chunk_ids": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL relaxada: LLM extrajo cumpleNormativa con Directiva como sujeto (dirección invertida respecto al T-Box). Restricción ?maquina a ex:Maquina eliminada para capturar datos reales.",
+    "resultado": "PASS",
+    "rows": 4,
+    "passed": true
+  },
+  {
+    "id": "CQ-021",
+    "pregunta": "¿Qué máquinas del grafo cumplen la Directiva de Máquinas 2006/42/CE?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Directiva",
+      "ex:Maquina"
+    ],
+    "predicados_implicados": [
+      "ex:normativaCumplidaPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?directiva ?maquina WHERE {\n  ?directiva a ex:Directiva ;\n             ex:normativaCumplidaPor ?maquina .\n  OPTIONAL { ?directiva ex:identificador ?id }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 1 - DECLARACIÓN 'CE' DE CONFORMIDAD",
+      "titulo": "-",
+      "chunk_ids": [
+        8,
+        9,
+        10
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 1,
+    "passed": true
+  },
+  {
+    "id": "CQ-022",
+    "pregunta": "¿Qué tareas de mantenimiento requiere el equipo hidráulico de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:EntidadFisica",
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [
+      "ex:requiereMantenimiento"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?tarea ?tLabel WHERE {\n  ?entidad ex:requiereMantenimiento ?tarea .\n  OPTIONAL { ?tarea rdfs:label ?tLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 7 - MANTENIMIENTO E INSPECCIÓN / 7.2.2 Trabajos de mantenimiento",
+      "titulo": "-",
+      "chunk_ids": [
+        94,
+        95,
+        96,
+        97,
+        104,
+        105,
+        106,
+        107
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 24,
+    "passed": true
+  },
+  {
+    "id": "CQ-023",
+    "pregunta": "¿Sobre qué entidades físicas aplica la tarea de suministro de aceite del grupo hidráulico?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:esMantenimientoDe"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?tarea ?entidad WHERE {\n  ?tarea a ex:TareaMantenimiento ;\n         ex:esMantenimientoDe ?entidad .\n  OPTIONAL { ?tarea rdfs:label ?tLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "7.2.2.3 Suministro de aceite para el grupo hidráulico",
+      "titulo": "-",
+      "chunk_ids": [
+        106,
+        107
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 22,
+    "passed": true
+  },
+  {
+    "id": "CQ-024",
+    "pregunta": "¿Con qué frecuencia deben realizarse los trabajos semanales de mantenimiento de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:Frecuencia"
+    ],
+    "predicados_implicados": [
+      "ex:tieneFrecuencia"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?sujeto ?frecuencia ?fLabel WHERE {\n  ?sujeto ex:tieneFrecuencia ?frecuencia .\n  OPTIONAL { ?frecuencia rdfs:label ?fLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "7.1.1 Trabajos semanales de mantenimiento / 7.1.2 Trabajos periódicos",
+      "titulo": "-",
+      "chunk_ids": [
+        96,
+        97,
+        98
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL relaxada: LLM extrajo tieneFrecuencia con Sistema como sujeto (en vez de TareaMantenimiento). Restricción de tipo eliminada.",
+    "resultado": "PASS",
+    "rows": 13,
+    "passed": true
+  },
+  {
+    "id": "CQ-025",
+    "pregunta": "¿A qué tareas de mantenimiento aplica la frecuencia de revisión semanal?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Frecuencia",
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [
+      "ex:frecuenciaAplicableA"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?frecuencia ?tarea ?tLabel WHERE {\n  ?frecuencia a ex:Frecuencia ;\n              ex:frecuenciaAplicableA ?tarea .\n  OPTIONAL { ?tarea rdfs:label ?tLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "7.1.1 Trabajos semanales de mantenimiento",
+      "titulo": "-",
+      "chunk_ids": [
+        96,
+        97
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 10,
+    "passed": true
+  },
+  {
+    "id": "CQ-026",
+    "pregunta": "¿Quién ejecuta las tareas de mantenimiento del capítulo 7 del manual de instrucciones A218?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:Personal"
+    ],
+    "predicados_implicados": [
+      "ex:ejecutadoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?tarea ?personal ?pLabel WHERE {\n  ?tarea a ex:TareaMantenimiento ;\n         ex:ejecutadoPor ?personal .\n  OPTIONAL { ?personal rdfs:label ?pLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 7 - MANTENIMIENTO E INSPECCIÓN / 2.1.3 Instrucciones para el mantenimiento",
+      "titulo": "-",
+      "chunk_ids": [
+        94,
+        95,
+        96,
+        20,
+        21,
+        22
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 149,
+    "passed": true
+  },
+  {
+    "id": "CQ-027",
+    "pregunta": "¿Qué tareas de mantenimiento ejecuta el personal de servicio técnico autorizado?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Personal",
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [
+      "ex:ejecuta"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?personal ?tarea ?tLabel WHERE {\n  ?personal a ex:Personal ;\n            ex:ejecuta ?tarea .\n  OPTIONAL { ?personal rdfs:label ?pLabel }\n  OPTIONAL { ?tarea rdfs:label ?tLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.3 Instrucciones para el mantenimiento / CAPÍTULO 7 - MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        20,
+        21,
+        22,
+        94,
+        95
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 153,
+    "passed": true
+  },
+  {
+    "id": "CQ-028",
+    "pregunta": "¿Qué tarea de mantenimiento soluciona el fallo de suministro de aceite al grupo hidráulico?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:DiagnosticoFallo"
+    ],
+    "predicados_implicados": [
+      "ex:solucionaFallo"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?tarea ?fallo ?fLabel WHERE {\n  ?tarea a ex:TareaMantenimiento ;\n         ex:solucionaFallo ?fallo .\n  OPTIONAL { ?fallo rdfs:label ?fLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "7.2.2.3 Suministro de aceite para el grupo hidráulico / CAPÍTULO 7 - MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        104,
+        105,
+        106,
+        107
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 2358,
+    "passed": true
+  },
+  {
+    "id": "CQ-029",
+    "pregunta": "¿Qué fallo de regulador queda solucionado tras ejecutar la tarea de revisión del sistema de control?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:DiagnosticoFallo",
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [
+      "ex:solucionadoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?fallo ?tarea ?tLabel WHERE {\n  ?fallo a ex:DiagnosticoFallo ;\n         ex:solucionadoPor ?tarea .\n  OPTIONAL { ?fallo rdfs:label ?fLabel }\n  OPTIONAL { ?tarea rdfs:label ?tLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "0000-0999 / 1000-1999",
+      "titulo": "-",
+      "chunk_ids": [
+        6,
+        7,
+        8,
+        9,
+        13,
+        14
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 3231,
+    "passed": true
+  },
+  {
+    "id": "CQ-030",
+    "pregunta": "¿En qué manual o capítulo está documentado el procedimiento de lubricación automática?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:DocumentoTecnico"
+    ],
+    "predicados_implicados": [
+      "ex:documentadoEn"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?documento ?dLabel WHERE {\n  ?entidad ex:documentadoEn ?documento .\n  OPTIONAL { ?documento rdfs:label ?dLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "9.2.2 Lubricación automática / 9.2.1 Lubricación manual",
+      "titulo": "-",
+      "chunk_ids": [
+        117,
+        118
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 882,
+    "passed": true
+  },
+  {
+    "id": "CQ-031",
+    "pregunta": "¿Qué entidades del dominio quedan documentadas en el manual de instrucciones A218?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Manual",
+      "ex:DocumentoTecnico"
+    ],
+    "predicados_implicados": [
+      "ex:documenta"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?manual ?entidad ?tipo WHERE {\n  ?manual a ex:Manual ;\n          ex:documenta ?entidad .\n  OPTIONAL { ?entidad a ?tipo }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "0.2 / Portada / 0.2.1 Indicaciones de advertencia",
+      "titulo": "-",
+      "chunk_ids": [
+        4,
+        5,
+        10
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 34,
+    "passed": true
+  },
+  {
+    "id": "CQ-032",
+    "pregunta": "¿Qué figura o esquema ilustra el sistema neumático de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Figura",
+      "ex:Esquema",
+      "ex:Sistema"
+    ],
+    "predicados_implicados": [
+      "ex:ilustra"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?figura ?entidad ?fLabel WHERE {\n  ?figura ex:ilustra ?entidad .\n  OPTIONAL { ?figura rdfs:label ?fLabel }\n  OPTIONAL { ?entidad a ?tipo }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "4.2.7 Sistema neumático",
+      "titulo": "-",
+      "chunk_ids": [
+        54
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 1646,
+    "passed": true
+  },
+  {
+    "id": "CQ-033",
+    "pregunta": "¿En qué figura o tabla aparece ilustrado el panel de operador de la brochadora?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:InterfazUsuario",
+      "ex:Figura"
+    ],
+    "predicados_implicados": [
+      "ex:ilustradoEn"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?figura ?fLabel WHERE {\n  ?entidad ex:ilustradoEn ?figura .\n  OPTIONAL { ?figura rdfs:label ?fLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "6.2.2 Panel operador / 6.2.6 PREVISUALIZACIÓN DE LAS PANTALLAS",
+      "titulo": "-",
+      "chunk_ids": [
+        70,
+        71,
+        75
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 849,
+    "passed": true
+  },
+  {
+    "id": "CQ-034",
+    "pregunta": "¿En qué esquema técnico está detallado el sistema hidráulico de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:EntidadFisica",
+      "ex:Esquema"
+    ],
+    "predicados_implicados": [
+      "ex:detalladoEnEsquema"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?esquema ?eLabel WHERE {\n  ?entidad ex:detalladoEnEsquema ?esquema .\n  OPTIONAL { ?esquema rdfs:label ?eLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "3.1.1.5 Equipo hidráulico / 4.2.7 Sistema neumático",
+      "titulo": "-",
+      "chunk_ids": [
+        40,
+        41,
+        54
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 118,
+    "passed": true
+  },
+  {
+    "id": "CQ-035",
+    "pregunta": "¿De qué entidad física es representación el esquema del circuito hidráulico?",
+    "categoria": "inverso",
+    "clases_implicadas": [
+      "ex:Esquema",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:esEsquemaDe"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?esquema ?entidad WHERE {\n  ?esquema a ex:Esquema ;\n           ex:esEsquemaDe ?entidad .\n  OPTIONAL { ?esquema rdfs:label ?eLabel }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "3.1.1.5 Equipo hidráulico",
+      "titulo": "-",
+      "chunk_ids": [
+        40,
+        41
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 38,
+    "passed": true
+  },
+  {
+    "id": "CQ-036",
+    "pregunta": "¿Qué consumibles necesitan los componentes del sistema hidráulico que a su vez requieren mantenimiento periódico? (3 hops: tieneComponente → requiereMantenimiento → requiereConsumible)",
+    "categoria": "traversal",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:ComponenteHidraulico",
+      "ex:TareaMantenimiento",
+      "ex:Consumible"
+    ],
+    "predicados_implicados": [
+      "ex:tieneComponente",
+      "ex:requiereMantenimiento",
+      "ex:requiereConsumible"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?entidad ?tarea ?consumible WHERE {\n  { ?entidad ex:requiereMantenimiento ?tarea . ?tarea ex:requiereConsumible ?consumible . }\n  UNION\n  { ?entidad ex:requiereConsumible ?consumible . BIND(?entidad AS ?tarea) }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "3.1.1.5 Equipo hidráulico / CAPÍTULO 7 - MANTENIMIENTO / 9.2 Lubricación",
+      "titulo": "-",
+      "chunk_ids": [
+        40,
+        41,
+        96,
+        97,
+        105,
+        106,
+        107,
+        117
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL simplificada: la cadena 3-hop sistema→tieneComponente→requiereMantenimiento→requiereConsumible tiene solo 0-1 resultados. Se usa la relación directa entidad→requiereMantenimiento→tarea→consumible que tiene datos reales (TareaMantenimiento→requiereConsumible existe).",
+    "resultado": "PASS",
+    "rows": 19,
+    "passed": true
+  },
+  {
+    "id": "CQ-037",
+    "pregunta": "¿Qué diagnósticos de fallo pueden resolver los técnicos habilitados para el mantenimiento del sistema hidráulico? (2 hops: habilita → solucionaFallo)",
+    "categoria": "traversal",
+    "clases_implicadas": [
+      "ex:Personal",
+      "ex:TareaMantenimiento",
+      "ex:DiagnosticoFallo"
+    ],
+    "predicados_implicados": [
+      "ex:solucionaFallo"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?tarea ?fallo ?fLabel WHERE {\n  ?tarea a ex:TareaMantenimiento ;\n         ex:solucionaFallo ?fallo .\n  ?fallo a ex:DiagnosticoFallo .\n  OPTIONAL { ?fallo rdfs:label ?fLabel }\n} LIMIT 50",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.3 Instrucciones para el mantenimiento / CAPÍTULO 7 - MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        20,
+        21,
+        22,
+        94,
+        95,
+        104,
+        107
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL reescrita: la cadena habilita→solucionaFallo no existe (habilita objetos son Parametro/Alarma/AccionProhibida, no TareaMantenimiento — extracción LLM con semántica incorrecta). Se reformula como TareaMantenimiento→solucionaFallo→DiagnosticoFallo que tiene 2285+ tripletas reales.",
+    "resultado": "PASS",
+    "rows": 50,
+    "passed": true
+  },
+  {
+    "id": "CQ-038",
+    "pregunta": "¿Qué componentes de la brochadora están representados en esquemas técnicos del manual? (2 hops: tieneComponente → detalladoEnEsquema)",
+    "categoria": "traversal",
+    "clases_implicadas": [
+      "ex:Maquina",
+      "ex:Componente",
+      "ex:Esquema"
+    ],
+    "predicados_implicados": [
+      "ex:tieneComponente",
+      "ex:detalladoEnEsquema"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?entidad ?componente ?esquema WHERE {\n  { ?entidad ex:tieneComponente ?componente . ?componente ex:detalladoEnEsquema ?esquema . }\n  UNION\n  { ?componente ex:detalladoEnEsquema ?esquema . BIND(?componente AS ?entidad) }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 4 - DESCRIPCIÓN / 3.1.1.5 Equipo hidráulico",
+      "titulo": "-",
+      "chunk_ids": [
+        43,
+        44,
+        47,
+        53,
+        54
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL ampliada con UNION: la cadena exacta tieneComponente→detalladoEnEsquema tiene 1 conexión. Se añade rama directa componente→detalladoEnEsquema (64 tripletas) para respuesta completa.",
+    "resultado": "PASS",
+    "rows": 64,
+    "passed": true
+  },
+  {
+    "id": "CQ-039",
+    "pregunta": "¿Qué alarmas pueden surgir cuando falla algún componente directamente controlado por el CNC 8070? (2 hops: controla → activaAlarma)",
+    "categoria": "traversal",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:Componente",
+      "ex:Alarma"
+    ],
+    "predicados_implicados": [
+      "ex:controla",
+      "ex:activaAlarma"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?cnc ?controlado ?alarma WHERE {\n  ?cnc a ex:Sistema ;\n       ex:controla ?controlado .\n  ?controlado ex:activaAlarma ?alarma .\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "0000-0999 / 1.1 Entendiendo el funcionamiento de las variables",
+      "titulo": "-",
+      "chunk_ids": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        3,
+        4
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "corregida_por_datos",
+    "nota_ingeniero": "SPARQL corregida: ex:SistemaCNC no tiene tripletas controla (URI canónica no encontrada). Se usa ?cnc a ex:Sistema que captura los CNC8070_* y SistemaPLC que sí tienen controla→activaAlarma.",
+    "resultado": "PASS",
+    "rows": 174,
+    "passed": true
+  },
+  {
+    "id": "CQ-040",
+    "pregunta": "¿Hay alarmas registradas en el grafo que no tienen ninguna tarea de mantenimiento que las solucione?",
+    "categoria": "existencia",
+    "clases_implicadas": [
+      "ex:Alarma",
+      "ex:DiagnosticoFallo",
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [
+      "ex:activaAlarma",
+      "ex:solucionaFallo"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nSELECT ?alarma WHERE {\n  ?alarma a ex:Alarma .\n  FILTER NOT EXISTS {\n    ?fallo a ex:DiagnosticoFallo .\n    ?tarea ex:solucionaFallo ?fallo .\n    ?alarma ex:alarmaActivadaPor ?entidad .\n  }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "0000-0999 / CAPÍTULO 7 - MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        4,
+        5,
+        6,
+        94,
+        95
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 156,
+    "passed": true
+  },
+  {
+    "id": "CQ-041",
+    "pregunta": "¿Existen tareas de mantenimiento en el grafo sin frecuencia de ejecución definida?",
+    "categoria": "existencia",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:Frecuencia"
+    ],
+    "predicados_implicados": [
+      "ex:requiereMantenimiento",
+      "ex:tieneFrecuencia"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nSELECT ?tarea WHERE {\n  ?tarea a ex:TareaMantenimiento .\n  FILTER NOT EXISTS { ?tarea ex:tieneFrecuencia ?f }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "7.1.1 Trabajos semanales de mantenimiento / CAPÍTULO 7 - MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        94,
+        95,
+        96,
+        97,
+        98
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 2021,
+    "passed": true
+  },
+  {
+    "id": "CQ-042",
+    "pregunta": "¿Hay tareas de mantenimiento en el grafo que no tienen personal asignado para ejecutarlas?",
+    "categoria": "existencia",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:Personal"
+    ],
+    "predicados_implicados": [
+      "ex:ejecutadoPor",
+      "ex:habilitadoPor"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nSELECT ?tarea WHERE {\n  ?tarea a ex:TareaMantenimiento .\n  FILTER NOT EXISTS { ?tarea ex:ejecutadoPor ?p }\n  FILTER NOT EXISTS { ?tarea ex:habilitadoPor ?p }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "2.1.3 Instrucciones para el mantenimiento / CAPÍTULO 7 - MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        20,
+        21,
+        94,
+        95,
+        96
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 1944,
+    "passed": true
+  },
+  {
+    "id": "CQ-043",
+    "pregunta": "¿Existen avisos de seguridad en el grafo que no mitigan ningún riesgo concreto (sin objeto de mitigaRiesgo)?",
+    "categoria": "existencia",
+    "clases_implicadas": [
+      "ex:AvisoSeguridad"
+    ],
+    "predicados_implicados": [
+      "ex:mitigaRiesgo"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nSELECT ?aviso WHERE {\n  ?aviso a ex:AvisoSeguridad .\n  FILTER NOT EXISTS { ?aviso ex:mitigaRiesgo ?riesgo }\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 2 - INSTRUCCIONES DE SEGURIDAD",
+      "titulo": "-",
+      "chunk_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 232,
+    "passed": true
+  },
+  {
+    "id": "CQ-044",
+    "pregunta": "¿Cuántas alarmas distintas puede activar el CNC 8070 según el manual de errores?",
+    "categoria": "agregacion",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:Alarma"
+    ],
+    "predicados_implicados": [
+      "ex:activaAlarma"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nSELECT (COUNT(DISTINCT ?alarma) AS ?totalAlarmas) WHERE {\n  ?sistema ex:activaAlarma ?alarma .\n  ?alarma a ex:Alarma .\n}",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "0000-0999 / 1000-1999 / 2000-2999",
+      "titulo": "-",
+      "chunk_ids": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        50,
+        100,
+        150
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 1,
+    "passed": true
+  },
+  {
+    "id": "CQ-045",
+    "pregunta": "¿Cuántas tareas de mantenimiento distintas se aplican sobre cada sistema de la brochadora?",
+    "categoria": "agregacion",
+    "clases_implicadas": [
+      "ex:Sistema",
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [
+      "ex:requiereMantenimiento"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nSELECT ?sistema (COUNT(DISTINCT ?tarea) AS ?numTareas) WHERE {\n  ?sistema a ex:Sistema ;\n           ex:requiereMantenimiento ?tarea .\n} GROUP BY ?sistema ORDER BY DESC(?numTareas)",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "CAPÍTULO 7 - MANTENIMIENTO E INSPECCIÓN",
+      "titulo": "-",
+      "chunk_ids": [
+        94,
+        95,
+        96,
+        97,
+        98,
+        104,
+        105,
+        106,
+        107
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 7,
+    "passed": true
+  },
+  {
+    "id": "CQ-046",
+    "pregunta": "¿Cuáles son los parámetros CNC monitoreados por más entidades físicas distintas?",
+    "categoria": "agregacion",
+    "clases_implicadas": [
+      "ex:Parametro",
+      "ex:EntidadFisica"
+    ],
+    "predicados_implicados": [
+      "ex:monitoreaParametro"
+    ],
+    "sparql_objetivo": "PREFIX ex: <https://vocab.cfaa.eus/broaching/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?parametro ?id (COUNT(DISTINCT ?entidad) AS ?numMonitores) WHERE {\n  ?entidad ex:monitoreaParametro ?parametro .\n  OPTIONAL { ?parametro ex:identificador ?id }\n} GROUP BY ?parametro ?id ORDER BY DESC(?numMonitores) LIMIT 10",
+    "expected_nonempty": true,
+    "origen": {
+      "seccion": "1.1 Entendiendo el funcionamiento de las variables / 11.2 Incremento de posición",
+      "titulo": "Variables CNC",
+      "chunk_ids": [
+        3,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "respondible_por_tbox_actual": true,
+    "motivo_brecha": "",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "PASS",
+    "rows": 10,
+    "passed": true
+  },
+  {
+    "id": "CQ-GAP-001",
+    "pregunta": "¿Cuál es la duración estimada de cada tarea de mantenimiento de la brochadora?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento"
+    ],
+    "predicados_implicados": [],
+    "sparql_objetivo": "",
+    "expected_nonempty": false,
+    "origen": {
+      "seccion": "CAPÍTULO 7 - MANTENIMIENTO E INSPECCIÓN / CAPÍTULO 9 - HERRAMIENTAS",
+      "titulo": "-",
+      "chunk_ids": [
+        94,
+        95,
+        96,
+        114
+      ]
+    },
+    "respondible_por_tbox_actual": false,
+    "motivo_brecha": "Falta ex:duracionEstimada como owl:DatatypeProperty en TareaMantenimiento (ej. '30 minutos', '2 horas'). Sin este dato la planificación de paradas de mantenimiento no es posible desde el grafo.",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "SKIP_GAP",
+    "rows": 0,
+    "passed": false
+  },
+  {
+    "id": "CQ-GAP-002",
+    "pregunta": "¿En qué modos de operación puede ejecutarse cada tarea de mantenimiento?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:ModoOperacion"
+    ],
+    "predicados_implicados": [],
+    "sparql_objetivo": "",
+    "expected_nonempty": false,
+    "origen": {
+      "seccion": "6.4.2 Modo manual / 6.3.2 Permiso apertura puertas / 2.1.3 Instrucciones para el mantenimiento",
+      "titulo": "-",
+      "chunk_ids": [
+        86,
+        87,
+        88,
+        89,
+        20,
+        21
+      ]
+    },
+    "respondible_por_tbox_actual": false,
+    "motivo_brecha": "Falta una ObjectProperty ex:ejecutableEnModo (TareaMantenimiento → ModoOperacion). Las instrucciones del manual indican explícitamente que ciertos trabajos requieren modo manual o parada de emergencia, pero no hay predicado para capturarlo.",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "SKIP_GAP",
+    "rows": 0,
+    "passed": false
+  },
+  {
+    "id": "CQ-GAP-003",
+    "pregunta": "¿Qué herramientas específicas se necesitan para ejecutar cada tarea de mantenimiento?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:Herramienta"
+    ],
+    "predicados_implicados": [],
+    "sparql_objetivo": "",
+    "expected_nonempty": false,
+    "origen": {
+      "seccion": "CAPÍTULO 9 - HERRAMIENTAS Y PRODUCTOS PARA MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        114,
+        115,
+        116
+      ]
+    },
+    "respondible_por_tbox_actual": false,
+    "motivo_brecha": "Existe ex:Herramienta como clase pero no hay ninguna ObjectProperty que la vincule con ex:TareaMantenimiento. Falta ex:requiereHerramienta (TareaMantenimiento → Herramienta) o ex:herramientaUsadaEn (Herramienta → TareaMantenimiento).",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "SKIP_GAP",
+    "rows": 0,
+    "passed": false
+  },
+  {
+    "id": "CQ-GAP-004",
+    "pregunta": "¿Cuál es la causa raíz descrita en el manual para cada código de alarma CNC?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Alarma",
+      "ex:DiagnosticoFallo"
+    ],
+    "predicados_implicados": [],
+    "sparql_objetivo": "",
+    "expected_nonempty": false,
+    "origen": {
+      "seccion": "0000-0999 / 1000-1999 / 2000-2999",
+      "titulo": "-",
+      "chunk_ids": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "respondible_por_tbox_actual": false,
+    "motivo_brecha": "Falta ObjectProperty ex:tieneCausa (Alarma → DiagnosticoFallo) para capturar la relación directa 'esta alarma se produce por este diagnóstico'. Actualmente el grafo conecta TareaMantenimiento → DiagnosticoFallo pero no Alarma → DiagnosticoFallo, rompiendo el ciclo diagnóstico completo.",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "SKIP_GAP",
+    "rows": 0,
+    "passed": false
+  },
+  {
+    "id": "CQ-GAP-005",
+    "pregunta": "¿Qué piezas de recambio son necesarias para una tarea de mantenimiento correctivo específica?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:TareaMantenimiento",
+      "ex:PiezaRecambio"
+    ],
+    "predicados_implicados": [],
+    "sparql_objetivo": "",
+    "expected_nonempty": false,
+    "origen": {
+      "seccion": "CAPÍTULO 9 - HERRAMIENTAS Y PRODUCTOS PARA MANTENIMIENTO / CAPÍTULO 7 - MANTENIMIENTO",
+      "titulo": "-",
+      "chunk_ids": [
+        114,
+        115,
+        116,
+        94,
+        95
+      ]
+    },
+    "respondible_por_tbox_actual": false,
+    "motivo_brecha": "Existe ex:PiezaRecambio como clase pero no hay ObjectProperty que la vincule con ex:TareaMantenimiento. Falta ex:requierePieza (TareaMantenimiento → PiezaRecambio) para dar soporte a la gestión de stock de repuestos.",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "SKIP_GAP",
+    "rows": 0,
+    "passed": false
+  },
+  {
+    "id": "CQ-GAP-006",
+    "pregunta": "¿Qué versión de software CNC es compatible con cada configuración de instalación documentada?",
+    "categoria": "lookup",
+    "clases_implicadas": [
+      "ex:Sistema"
+    ],
+    "predicados_implicados": [],
+    "sparql_objetivo": "",
+    "expected_nonempty": false,
+    "origen": {
+      "seccion": "1.1 Instalación del software en el CNC / 1.4 Actualizar la versión de software",
+      "titulo": "-",
+      "chunk_ids": [
+        3,
+        4,
+        5,
+        11
+      ]
+    },
+    "respondible_por_tbox_actual": false,
+    "motivo_brecha": "No existe clase ex:VersionSoftware ni propiedad ex:requiereVersion. El manual de instalación referencia versiones software explícitamente, pero no hay vocabulario T-Box para capturarlo. Alternativa mínima: añadir ex:versionSoftware como DatatypeProperty en ex:Sistema.",
+    "estado_curacion": "pendiente_revision",
+    "nota_ingeniero": "",
+    "resultado": "SKIP_GAP",
+    "rows": 0,
+    "passed": false
+  }
+]

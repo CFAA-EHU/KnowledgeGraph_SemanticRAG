@@ -1,53 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_2501 a ns1:Alarma ;
-    rdfs:label "Alarma 2501: Movimiento de eje lineal/rotativo no permitido con RTCP STATIC"@es ;
-    ns1:activaAlarma ns1:Componente_EjeLineal,
-        ns1:Componente_EjeRotativo ;
-    ns1:identificador "2501" ;
-    ns1:textoExtracto "CAUSA Se ha intentado mover un eje lineal junto a un eje rotativo de la cinemática, con RTCP STATIC activo. SOLUCIÓN Mover el eje rotativo y el eje lineal individualmente."@es .
+ns1:ActivarTablaDeCalibracionGap a ns1:TareaMantenimiento ;
+    rdfs:label "Activar Tabla de Calibración Gap" ;
+    ns1:solucionaFallo ns1:Error2488 ;
+    ns1:textoExtracto "SOLUCIÓN Activar una tabla de calibración del gap mediante el comando #LOAD GAPTABLE." .
 
-ns1:Alarma_2502 a ns1:Alarma ;
-    rdfs:label "Alarma 2502: Movimiento de eje rotativo no permitido en inspección con RTCP STATIC"@es ;
-    ns1:activaAlarma ns1:Componente_EjeRotativo ;
-    ns1:identificador "2502" ;
-    ns1:mitigaRiesgo ns1:Herramienta_Inspeccion ;
-    ns1:textoExtracto "CAUSA Durante la inspección de herramienta, se ha intentado mover un eje rotativo de la cinemática RTCP STATIC activo. SOLUCIÓN Desactivar la funcionalidad de RTCP STATIC para poder mover el eje rotativo."@es .
+ns1:RevisarComodinFueraSubrutina a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar Comodín Fuera Subrutina" ;
+    ns1:solucionaFallo ns1:Error2492 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Dentro de la subrutina, programar #CAX sin parámetros." .
 
-ns1:Alarma_2503 a ns1:Alarma ;
-    rdfs:label "Alarma 2503: Radio programado incorrectamente en G36/37/38/39"@es ;
-    ns1:activaAlarma ns1:Parametro_Radio_G36_39 ;
-    ns1:identificador "2503" ;
-    ns1:textoExtracto "CAUSA Se ha programado incorrectamente el radio del redondeo (G36), chaflán (G39) o entrada/salida tangencial (G37/G38). SOLUCIÓN Revisar la programación. Programar el radio o chaflán con el comando \"I\"."@es .
+ns1:RevisarProgramacionRTCP a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar Programación RTCP" ;
+    ns1:solucionaFallo ns1:Error2489 ;
+    ns1:textoExtracto "SOLUCIÓN Mantener en el sistema #KIN ID [TIP] o #RTCP durante la inspección de herramienta." .
 
-ns1:Alarma_2504 a ns1:Alarma ;
-    rdfs:label "Alarma 2504: Falta programación del segundo punto en G107"@es ;
-    ns1:identificador "2504" ;
-    ns1:textoExtracto "G107: Falta programar el segundo punto (XYZ)."@es .
+ns1:RevisarProgramacionSubrutinaCAX a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar Programación Subrutina CAX" ;
+    ns1:solucionaFallo ns1:Error2491 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Dentro de la subrutina, programar #CAX sin parámetros." .
 
-ns1:Componente_EjeLineal a ns1:ComponenteMecanico ;
-    rdfs:label "Eje lineal de la cinemática"@es ;
-    ns1:controla ns1:Sistema_RTCP ;
-    ns1:textoExtracto "eje lineal"@es .
+ns1:RevisarSecuenciaRTCP a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar Secuencia RTCP" ;
+    ns1:solucionaFallo ns1:Error2490 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Programar la secuencia correcta." .
 
-ns1:Parametro_Radio_G36_39 a ns1:Parametro ;
-    rdfs:label "Parámetro de radio para G36/G37/G38/G39"@es ;
-    ns1:textoExtracto "radio del redondeo (G36), chaflán (G39) o entrada/salida tangencial (G37/G38)"@es ;
-    ns1:valor "I" .
+ns1:Error2488 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 2488" ;
+    ns1:textoExtracto "Se ha intentado usar la sonda del gap (#GAPCTRL ON o #LEAP) sin activar dicha tabla." .
 
-ns1:Componente_EjeRotativo a ns1:ComponenteMecanico ;
-    rdfs:label "Eje rotativo de la cinemática"@es ;
-    ns1:controla ns1:Sistema_RTCP ;
-    ns1:requiereMantenimiento ns1:Herramienta_Inspeccion ;
-    ns1:textoExtracto "eje rotativo de la cinemática"@es .
+ns1:Error2489 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 2489" ;
+    ns1:textoExtracto "No se permite programar #RTCP en INSPECCIÓN, con KINID TIP activo." .
 
-ns1:Herramienta_Inspeccion a ns1:Herramienta ;
-    rdfs:label "Herramienta de inspección"@es ;
-    ns1:textoExtracto "inspección de herramienta"@es .
+ns1:Error2490 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 2490" ;
+    ns1:textoExtracto "La secuencia de activación y desactivación del RTCP y CS/ACS, en las cinemáticas de mesas sin giro del sistema de coordenadas, es fija." .
 
-ns1:Sistema_RTCP a ns1:Sistema ;
-    rdfs:label "Sistema RTCP (Rotary Tool Center Point)"@es ;
-    ns1:identificador "RTCP" ;
-    ns1:textoExtracto "RTCP STATIC activo"@es .
+ns1:Error2491 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 2491" ;
+    ns1:textoExtracto "Se ha programado la sentencia #CAX con parámetros de llamada, dentro de la subrutina asociada a #CAX." .
+
+ns1:Error2492 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error 2492" ;
+    ns1:textoExtracto "Se ha programado el comodín @S o @C fuera de la subrutina asociada a la sentencia #CAX (parámetro máquina CAXSUB)." .
 

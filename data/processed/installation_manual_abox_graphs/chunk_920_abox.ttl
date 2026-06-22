@@ -1,51 +1,16 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Aviso_LimiteRecorrido a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso de límite de recorrido"@es ;
-    ns1:mitigaRiesgo ns1:ErrorLimiteEje ;
-    ns1:textoExtracto "Detiene el avance de los ejes y el giro del cabezal, visualizando en la pantalla el error correspondiente."@es .
+ns1:LimiteDeSoftware a ns1:Parametro ;
+    rdfs:label "Límite de Software" ;
+    ns1:textoExtracto "Los límites de software se pueden fijar mediante los parámetros máquina, mediante las funciones G198/G199 o mediante variables." .
 
-ns1:Parametro_REFFEED1 a ns1:Parametro ;
-    rdfs:label "REFFEED1" ;
-    ns1:identificador "REFFEED1" ;
-    ns1:textoExtracto "avance rápido indicado por el parámetro máquina REFFEED1"@es ;
-    ns1:valor "avance rápido"@es .
+ns1:SistemaPLC920 a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:CNC8070_2258f5cfbb ;
+    ns1:textoExtracto "Si el PLC desactiva esta marca, el CNC vuelve a tener en cuenta los límites de software y las zonas de trabajo en el eje indicado." .
 
-ns1:Parametro_REFFEED2 a ns1:Parametro ;
-    rdfs:label "REFFEED2" ;
-    ns1:identificador "REFFEED2" ;
-    ns1:textoExtracto "avance lento indicado por el parámetro máquina REFFEED2"@es ;
-    ns1:valor "avance lento"@es .
-
-ns1:Proceso_BusquedaReferencia a ns1:TareaMantenimiento ;
-    rdfs:label "Búsqueda de referencia máquina"@es ;
-    ns1:controla ns1:Se_al_DECEL_axis ;
-    ns1:requiereMantenimiento ns1:ModoManual ;
-    ns1:textoExtracto "Esta marca se usa durante la búsqueda de referencia máquina. [...] El CNC decelera el eje, pasa del avance rápido [...] al avance lento. [...] búsqueda de cero."@es .
-
-ns1:SistemaControlEjes a ns1:Sistema ;
-    rdfs:label "Sistema de control de ejes y cabezales"@es ;
-    ns1:activaAlarma ns1:ErrorLimiteEje ;
-    ns1:controla ns1:AvanceEje ;
-    ns1:textoExtracto "El PLC la pone a (=1) para indicar que el micro de búsqueda de referencia máquina está pulsado. [...] En la búsqueda de referencia de ejes con I0 codificados, el PLC pone esta marca a (=1) para indicar que el eje ha alcanzado el límite de recorrido."@es ;
-    ns1:tieneComponente ns1:Se_al_DECEL_axis .
-
-ns1:ModoManual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual"@es ;
-    ns1:textoExtracto "Para llevar el eje a la zona permitida acceder al modo manual y mover el eje o cabezal que ha sobrepasado el límite."@es .
-
-ns1:AvanceEje a ns1:Parametro ;
-    rdfs:label "Avance de eje"@es ;
-    ns1:textoExtracto "El CNC decelera el eje, pasa del avance rápido indicado por el parámetro máquina REFFEED1, al avance lento indicado por el parámetro máquina REFFEED2."@es .
-
-ns1:ErrorLimiteEje a ns1:Alarma ;
-    rdfs:label "Error de límite de eje/cabezal"@es ;
-    ns1:textoExtracto "visualizando en la pantalla el error correspondiente. [...] ha sobrepasado el límite. [...] es necesario invertir el sentido de movimiento para continuar con la búsqueda de cero."@es .
-
-ns1:Se_al_DECEL_axis a ns1:Parametro ;
-    rdfs:label "Señal DECEL(axis)"@es ;
-    ns1:identificador "DECEL(axis)" ;
-    ns1:monitoreaParametro ns1:AvanceEje ;
-    ns1:textoExtracto "DECEL(axis) Esta marca se usa durante la búsqueda de referencia máquina. El PLC la pone a (=1) para indicar que el micro de búsqueda de referencia máquina está pulsado."@es .
+ns1:CNC8070_2258f5cfbb a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "el CNC vuelve a tener en cuenta los límites de software y las zonas de trabajo en el eje indicado." .
 

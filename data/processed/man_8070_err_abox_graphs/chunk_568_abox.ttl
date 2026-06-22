@@ -1,62 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Actuador_CNC a ns1:Actuador ;
-    rdfs:label "CNC"@es ;
-    ns1:monitoreaParametro ns1:Parametro_CompensacionModulo ;
-    ns1:textoExtracto "En los eje Sercos posición, el CNC mantiene la cuenta de la compensación de módulo de forma absoluta"@es .
+ns1:AccionProhibidaAjusteInadecuadoEje a ns1:AccionProhibida ;
+    ns1:textoExtracto "Puede ser debido a un ajuste inadecuado del eje" .
 
-ns1:Actuador_PLC a ns1:Actuador ;
-    rdfs:label "PLC"@es ;
-    ns1:controla ns1:Componente_Cabezal,
-        ns1:Componente_EjeGantry,
-        ns1:Componente_EjeTandem ;
-    ns1:textoExtracto "El PLC intenta aparcar un eje... Eliminar la señal de aparcar el eje o cabezal desde PLC."@es .
+ns1:AccionProhibidaFallaSistemaCaptacionMotor a ns1:AccionProhibida ;
+    ns1:textoExtracto "en el sistema de captación y/o en la mecánica" .
 
-ns1:Fallo_3715 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sobrepasamiento en la compensación de módulo"@es ;
-    ns1:identificador "3715" ;
-    ns1:solucionaFallo ns1:Tarea_BusquedaReferenciaMaquina ;
-    ns1:textoExtracto "3715 'Sobrepasamiento en la compensación de módulo' DETECCIÓN Durante el movimiento de un eje rotativo o cabezal. CAUSA En los eje Sercos posición, el CNC mantiene la cuenta de la compensación de módulo de forma absoluta; si todos los movimientos del eje se realizan en el mismo sentido, el CNC va acumulando la compensación. SOLUCIÓN Realizar una búsqueda de referencia máquina."@es .
+ns1:AccionProhibidaFaltaHabilitarEje a ns1:AccionProhibida ;
+    ns1:textoExtracto "a que falta habilitar el eje" .
 
-ns1:Fallo_AparcamientoEjeGantryTandem a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo al aparcar eje gantry/tándem o cabezal habilitado"@es ;
-    ns1:solucionaFallo ns1:Tarea_DeshabilitarEjeDRENASPENA,
-        ns1:Tarea_EliminarSenalAparcamiento ;
-    ns1:textoExtracto "o cabezal desde PLC. CAUSA El PLC intenta aparcar un eje que forma parte de una pareja gantry, un eje o cabezal que forma parte de una pareja tándem o un eje habilitado (DRENA/SPENA). SOLUCIÓN Las posibles soluciones son las siguientes: • Los ejes gantry y tándem no se pueden aparcar, ni desde el PLC ni desde el CNC. Eliminar la señal de aparcar el eje o cabezal desde PLC. • Deshabilitar el eje antes de aparcarlo (señales DRENA/SPENA)."@es .
+ns1:DiagnosticoFalloMotor a ns1:DiagnosticoFallo ;
+    ns1:textoExtracto "algún fallo en el motor" .
 
-ns1:Sistema_EjesGantryTandem a ns1:Sistema ;
-    rdfs:label "Sistema de ejes gantry/tándem"@es ;
-    ns1:textoExtracto "eje que forma parte de una pareja gantry, un eje o cabezal que forma parte de una pareja tándem"@es ;
-    ns1:tieneComponente ns1:Componente_Cabezal,
-        ns1:Componente_EjeGantry,
-        ns1:Componente_EjeTandem .
+ns1:DiagnosticoFalloRegulador a ns1:DiagnosticoFallo ;
+    ns1:textoExtracto "algún fallo en el regulador" .
 
-ns1:Parametro_CompensacionModulo a ns1:Parametro ;
-    rdfs:label "Compensación de módulo (eje Sercos)"@es ;
-    ns1:textoExtracto "el CNC mantiene la cuenta de la compensación de módulo de forma absoluta; si todos los movimientos del eje se realizan en el mismo sentido, el CNC va acumulando la compensación."@es .
+ns1:LimitePositivoDefinidoPorMaquina a ns1:Parametro ;
+    rdfs:label "Límite positivo definido por máquina" ;
+    ns1:identificador "LIMIT+" ;
+    ns1:textoExtracto "parámetro máquina LIMIT+" .
 
-ns1:Tarea_BusquedaReferenciaMaquina a ns1:TareaMantenimiento ;
-    rdfs:label "Búsqueda de referencia máquina"@es ;
-    ns1:textoExtracto "Realizar una búsqueda de referencia máquina."@es .
+ns1:RevisionDeParametrosYAjustes a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de parámetros y ajustes" ;
+    ns1:solucionaFallo ns1:LimiteDeSoftwarePositivoSobrepasado_60358c061a ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina, el ajuste del eje, el conexionado, el estado del regulador y el sistema captación-motor." .
 
-ns1:Tarea_DeshabilitarEjeDRENASPENA a ns1:TareaMantenimiento ;
-    rdfs:label "Deshabilitar eje (DRENA/SPENA)"@es ;
-    ns1:textoExtracto "Deshabilitar el eje antes de aparcarlo (señales DRENA/SPENA)."@es .
+ns1:VariableDePosicionLimite a ns1:Parametro ;
+    rdfs:label "Variable de posición límite" ;
+    ns1:identificador "V.A.RTPOSLIMIT.xn" ;
+    ns1:textoExtracto "variable V.A.RTPOSLIMIT.xn" .
 
-ns1:Tarea_EliminarSenalAparcamiento a ns1:TareaMantenimiento ;
-    rdfs:label "Eliminar señal de aparcamiento desde PLC"@es ;
-    ns1:textoExtracto "Eliminar la señal de aparcar el eje o cabezal desde PLC."@es .
-
-ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:textoExtracto "eje o cabezal que forma parte de una pareja tándem"@es .
-
-ns1:Componente_EjeGantry a ns1:ComponenteMecanico ;
-    rdfs:label "Eje gantry"@es ;
-    ns1:textoExtracto "eje que forma parte de una pareja gantry"@es .
-
-ns1:Componente_EjeTandem a ns1:ComponenteMecanico ;
-    rdfs:label "Eje tándem"@es ;
-    ns1:textoExtracto "eje o cabezal que forma parte de una pareja tándem"@es .
+ns1:LimiteDeSoftwarePositivoSobrepasado_60358c061a a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de software positivo sobrepasado" ;
+    ns1:textoExtracto "'Límite de software positivo sobrepasado'" .
 

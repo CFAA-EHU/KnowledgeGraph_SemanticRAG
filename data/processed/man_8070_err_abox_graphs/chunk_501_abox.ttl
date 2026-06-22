@@ -1,50 +1,41 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_3010 a ns1:DiagnosticoFallo ;
-    rdfs:label "El eje no se ha definido como palpador (PROBEAXIS)"@es ;
-    ns1:identificador "3010" ;
-    ns1:textoExtracto "3010 'El eje no se ha definido como palpador (PROBEAXIS)' DETECCIÓN Durante la ejecución."@es .
+ns1:ModificarElValorAEscribir a ns1:TareaMantenimiento ;
+    rdfs:label "modificar el valor a escribir" ;
+    ns1:solucionaFallo ns1:DeteccionDeEscrituraFueraDeRango ;
+    ns1:textoExtracto "SOLUCIÓN Modificar el valor a escribir." .
 
-ns1:Parametro_PROBEAXIS a ns1:Parametro ;
-    rdfs:label "PROBEAXIS (Definición de eje como palpador)"@es ;
-    ns1:monitoreaParametro ns1:Sensor_Palpador ;
-    ns1:textoExtracto "El eje no se ha definido como palpador (PROBEAXIS)"@es .
+ns1:Parametro_3ca34d22f2 a ns1:Parametro ;
+    rdfs:label "parámetro ORBIT" ;
+    ns1:identificador "ORBIT" ;
+    ns1:textoExtracto "Parámetro ORBIT fuera de rango." .
 
-ns1:ContactarConProveedorParaConfiguracionDePalpado a ns1:AccionProhibida ;
-    rdfs:label "Contactar con proveedor para configuración de palpado"@es ;
-    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con su proveedor."@es .
+ns1:Parametro_ed9f1e1351 a ns1:Parametro ;
+    rdfs:label "parámetro K de ORBIT" ;
+    ns1:identificador "K" ;
+    ns1:textoExtracto "El valor de K debe ser 1 o 2." .
 
-ns1:Fallo_3007 a ns1:DiagnosticoFallo ;
-    rdfs:label "Se ha recibido señal del palpador antes del movimiento"@es ;
-    ns1:identificador "3007" ;
-    ns1:solucionaFallo ns1:ContactarConProveedorParaConfiguracionDePalpado ;
-    ns1:textoExtracto "proceso de palpado. [...] 3007 'Se ha recibido señal del palpador antes del movimiento' DETECCIÓN Tras detectar la señal de palpador. CAUSA Proceso de palpado habilitado sin G100 programada. SOLUCIÓN Póngase en contacto con su proveedor."@es .
+ns1:Parametro_ee0a746269 a ns1:Parametro ;
+    rdfs:label "parámetro R de ORBIT" ;
+    ns1:identificador "R" ;
+    ns1:textoExtracto "El valor de R/J debe ser positivo y no nulo. El valor de R debe ser mayor que el diámetro de la herramienta." .
 
-ns1:Fallo_3008 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en el proceso de palpador"@es ;
-    ns1:identificador "3008" ;
-    ns1:solucionaFallo ns1:VerificacionDeEjesProgramadosEnPalpado ;
-    ns1:textoExtracto "3008 'Error en el proceso de palpador' DETECCIÓN Tras detectar la señal de palpador. CAUSA Es una seguridad de habilitación del proceso de palpado. SOLUCIÓN Comprobar la validez y disponibilidad de los ejes programados."@es .
+ns1:Parametro_ff5a113b44 a ns1:Parametro ;
+    rdfs:label "parámetro J de ORBIT" ;
+    ns1:identificador "J" ;
+    ns1:textoExtracto "El valor de R/J debe ser positivo y no nulo. El valor de R debe ser mayor que el diámetro de la herramienta." .
 
-ns1:Fallo_3009 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se ha recibido señal del palpador"@es ;
-    ns1:identificador "3009" ;
-    ns1:solucionaFallo ns1:RevisionDeParametrizacionYSenalesFisicasDelPalpador ;
-    ns1:textoExtracto "3009 No se ha recibido señal del palpador. DETECCIÓN Durante la ejecución. CAUSA No ha llegado la señal del palpador tras un movimiento de palpado. SOLUCIÓN Revisar la parametrización del palpador y señales físicas."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "revisar la programación" ;
+    ns1:solucionaFallo ns1:DeteccionDeSintaxisIncorrectaEnSentenciaORBIT ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:RevisionDeParametrizacionYSenalesFisicasDelPalpador a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de parametrización y señales físicas del palpador"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la parametrización del palpador y señales físicas."@es .
+ns1:DeteccionDeEscrituraFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "detección de escritura fuera de rango" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA No es posible escribir ese valor en la variable." .
 
-ns1:Sensor_Palpador a ns1:Sensor ;
-    rdfs:label "Palpador"@es ;
-    ns1:activaAlarma ns1:Fallo_3007,
-        ns1:Fallo_3008,
-        ns1:Fallo_3009 ;
-    ns1:textoExtracto "proceso de palpado [...] señal del palpador [...] señal de palpador [...] parametrización del palpador"@es .
-
-ns1:VerificacionDeEjesProgramadosEnPalpado a ns1:TareaMantenimiento ;
-    rdfs:label "Verificación de ejes programados en palpado"@es ;
-    ns1:textoExtracto "SOLUCIÓN Comprobar la validez y disponibilidad de los ejes programados."@es .
+ns1:DeteccionDeSintaxisIncorrectaEnSentenciaORBIT a ns1:DiagnosticoFallo ;
+    rdfs:label "detección de sintaxis incorrecta en sentencia #ORBIT" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición o preparación de bloques. CAUSA La sintaxis de la sentencia no es correcta." .
 

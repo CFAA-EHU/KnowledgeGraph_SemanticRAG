@@ -1,0 +1,66 @@
+@prefix ex: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:SistemaCNC a ex:Sistema ;
+    rdfs:label "CNC 8070" .
+
+ex:ParametroMAXMANFEED a ex:Parametro ;
+    ex:identificador "MAXMANFEED" ;
+    rdfs:label "Velocidad máxima de manual" ;
+    ex:textoExtracto "'La velocidad máxima de manual supera la velocidad máxima del eje'" .
+
+ex:ParametroG00FEED a ex:Parametro ;
+    ex:identificador "G00FEED" ;
+    rdfs:label "Velocidad máxima del eje" ;
+    ex:textoExtracto "'La velocidad máxima de manual supera la velocidad máxima del eje'" .
+
+ex:DiagnosticoFalloMaxManFeed a ex:DiagnosticoFallo ;
+    rdfs:label "La velocidad máxima de manual supera la velocidad máxima del eje" ;
+    ex:textoExtracto "'La velocidad máxima de manual supera la velocidad máxima del eje'" ;
+    ex:deteccion "Durante la validación de los parámetros máquina." ;
+    ex:causa "El parámetro MAXMANFEED es superior a G00FEED." ;
+    ex:solucion "Disminuir el valor del parámetro MAXMANFEED; debe ser inferior a G00FEED." .
+
+ex:ParametroJOGRAPFEED a ex:Parametro ;
+    ex:identificador "JOGRAPFEED" ;
+    rdfs:label "Velocidad rápida de manual" ;
+    ex:textoExtracto "'La velocidad rápida de manual supera la velocidad máxima del eje'" .
+
+ex:DiagnosticoFalloJogRap a ex:DiagnosticoFallo ;
+    rdfs:label "La velocidad rápida de manual supera la velocidad máxima del eje" ;
+    ex:textoExtracto "'La velocidad rápida de manual supera la velocidad máxima del eje'" ;
+    ex:deteccion "Durante la validación de los parámetros máquina." ;
+    ex:causa "El parámetro JOGRAPFEED es superior a G00FEED." ;
+    ex:solucion "Disminuir el valor del parámetro JOGRAPFEED; debe ser inferior a G00FEED." .
+
+ex:ParametroJOGFEED a ex:Parametro ;
+    ex:identificador "JOGFEED" ;
+    rdfs:label "Velocidad de jog continuo" ;
+    ex:textoExtracto "'La velocidad de jog continuo supera la velocidad máxima del eje'" .
+
+ex:DiagnosticoFalloJog a ex:DiagnosticoFallo ;
+    rdfs:label "La velocidad de jog continuo supera la velocidad máxima del eje" ;
+    ex:textoExtracto "'La velocidad de jog continuo supera la velocidad máxima del eje'" ;
+    ex:deteccion "Durante la validación de los parámetros máquina." ;
+    ex:causa "El parámetro JOGFEED es superior a G00FEED." ;
+    ex:solucion "Disminuir el valor del parámetro JOGFEED; debe ser inferior a G00FEED." .
+
+ex:TareaReiniciarCNC a ex:TareaMantenimiento ;
+    rdfs:label "Reiniciar CNC" ;
+    ex:textoExtracto "'Para asumir los cambios en la tabla de HMI es necesario rearrancar el CNC'" ;
+    ex:solucion "Reiniciar el CNC." .
+
+ex:AccionModificarTablaHMI a ex:AccionProhibida ;
+    rdfs:label "Modificación de tabla HMI" ;
+    ex:textoExtracto "'Para asumir los cambios en la tabla de HMI es necesario rearrancar el CNC'" ;
+    ex:solucion "Reiniciar el CNC." .
+
+ex:AccionModificarTablaAlmacen a ex:AccionProhibida ;
+    rdfs:label "Modificación de tabla del almacén" ;
+    ex:textoExtracto "'Para asumir los cambios en la tabla del almacén es necesario rearrancar el CNC'" ;
+    ex:solucion "Reiniciar el CNC." .
+
+ex:SistemaCNC ex:activaAlarma ex:AccionModificarTablaHMI .
+ex:SistemaCNC ex:activaAlarma ex:AccionModificarTablaAlmacen .

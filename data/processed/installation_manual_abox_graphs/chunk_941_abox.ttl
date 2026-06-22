@@ -1,35 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CNC_SistemaControl a ns1:Sistema ;
-    rdfs:label "CNC (Sistema de control)" ;
-    ns1:controla ns1:Cabezal_EjeC,
-        ns1:Cabezal_Roscado ;
-    ns1:textoExtracto "El CNC ignora las peticiones del PLC en los siguientes casos... Cuando el estado del CNC es 'En error' o 'No ready', está realizando un reset o validando parámetros." .
+ns1:ControlDeLaPotenciaDelPWM a ns1:Parametro ;
+    rdfs:label "Control de la potencia del PWM" ;
+    ns1:documentadoEn ns1:CNC8070_2e76add390 ;
+    ns1:identificador "PWMOUT.ENABLEPWRFREQ" ;
+    ns1:textoExtracto "Esta marca está asociada al control de la potencia del PWM (#PWRCTRL ON [FREQ])." .
 
-ns1:FuncionM_Programa a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función M (programa en ejecución)" ;
-    ns1:textoExtracto "Si el PLC activa estas marcas durante la sincronización de otra función M del programa en ejecución..." .
+ns1:ControlDutyDelPWM_85f6686216 a ns1:Parametro ;
+    rdfs:label "Control duty del PWM" ;
+    ns1:documentadoEn ns1:CNC8070_2e76add390 ;
+    ns1:identificador "PWRCTRL ON [DUTY]" ;
+    ns1:textoExtracto "Esta marca está asociada al control duty del PWM (#PWRCTRL ON [DUTY])." .
 
-ns1:PLC_ControlCabezales a ns1:Actuador ;
-    rdfs:label "PLC (Control de cabezales)" ;
-    ns1:monitoreaParametro ns1:MarcaSLIMITACSPDL ;
-    ns1:textoExtracto "Si durante la inspección de herramienta, el PLC cambia el sentido de giro de un cabezal con estas marcas, el cambio será identificado en la reposición y aparecerá como pendiente de reposicionar." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:CNC8070_2e76add390 ;
+    ns1:textoExtracto "El PLC desactiva esta marca para deshabilitar el control de duty activo." .
 
-ns1:Cabezal_EjeC a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal (modo eje C)" ;
-    ns1:controla ns1:MarcaSLIMITACSPDL ;
-    ns1:textoExtracto "Cuando el cabezal está trabajando como eje C" .
-
-ns1:Cabezal_Roscado a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal (modo roscado)" ;
-    ns1:controla ns1:MarcaSLIMITACSPDL ;
-    ns1:textoExtracto "Cuando el cabezal está roscando (ya sea roscado rígido, roscado con macho no rígido o roscado electrónico)." .
-
-ns1:MarcaSLIMITACSPDL a ns1:Parametro ;
-    rdfs:label "Marca SLIMITACSPDL" ;
-    ns1:identificador "SLIMITACSPDL" ;
-    ns1:textoExtracto "Hay una marca para cada cabezal. Los mnemónicos para cada cabezal son los siguientes." ;
-    ns1:valor "SLIMITACSPDL" .
+ns1:CNC8070_2e76add390 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC deshabilita el control de duty, y éste queda fijado al máximo definido en la sentencia #PWMOUT." .
 

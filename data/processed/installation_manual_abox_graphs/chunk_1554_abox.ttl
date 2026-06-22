@@ -1,71 +1,51 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Esquema_21_21_1 a ns1:Esquema ;
-    ns1:textoExtracto "Conjunto de diagramas de mesa basados en vectores T1/T2 y V1/V2. Se representan dos configuraciones espaciales con ejes X-Y-Z, flechas de giro y etiquetas TDATA1–16 para posiciones, direcciones y reposo/sentido del eje principal." ;
-    ns1:tieneComponente ns1:Etiqueta_TDATA1_16,
-        ns1:Vector_T1,
-        ns1:Vector_T2,
-        ns1:Vector_V1,
-        ns1:Vector_V2 .
+ns1:AnguloEntreEjesXYX a ns1:Parametro ;
+    rdfs:label "Ángulo entre ejes X y X'" ;
+    ns1:identificador "ANGANTR" ;
+    ns1:textoExtracto "Las etiquetas 'ANGAXNA=X ORTAXNA=Z ANGANTR=60º' refuerzan la configuración." .
 
-ns1:Esquema_21_21_2 a ns1:Esquema ;
-    ns1:textoExtracto "Vista detallada de los vectores T1/T2 y V1/V2 con componentes TDATA1–6 y TDATA11–16. Se marcan con signos (+/−) las proyecciones sobre cada eje y se indica la relación geométrica entre los dos ejes rotativos de la mesa." ;
-    ns1:tieneComponente ns1:Componente_TDATA11_16,
-        ns1:Componente_TDATA1_6,
-        ns1:Vector_T1,
-        ns1:Vector_T2,
-        ns1:Vector_V1,
-        ns1:Vector_V2 .
+ns1:CNC8070_37142c1bb7 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Escena del tipo 'Asíncrono': un carrusel-gantry y brazo de doble pinza realizan el intercambio con la herramienta; flechas indican secuencia alrededor del cabezal." ;
+    ns1:tieneComponente ns1:BrazoDoblePinza,
+        ns1:CabezalHusillo,
+        ns1:Carrusel,
+        ns1:CarruselGantry .
 
-ns1:Esquema_21_21_3 a ns1:Esquema ;
-    ns1:textoExtracto "Ilustración de mano y ejes para sentido de giro, complementada por dos diagramas circulares comparativos que muestran el origen RTCP respecto a cero máquina (C=0°) frente a cero pieza (C'=0°). Incluye ejes X-Y y referencias X'-Y'." ;
-    ns1:tieneComponente ns1:Diagrama_RTCP,
-        ns1:Eje_X_Prima_Y_Prima,
-        ns1:Eje_X_Y .
+ns1:EjeOrtogonalX a ns1:Parametro ;
+    rdfs:label "Eje ortogonal X" ;
+    ns1:identificador "ANGAXNA" ;
+    ns1:textoExtracto "Las etiquetas 'ANGAXNA=X ORTAXNA=Z ANGANTR=60º' refuerzan la configuración." .
 
-ns1:Esquema_21_21_4 a ns1:Esquema ;
-    ns1:textoExtracto "Esquemas de RTCP con pieza girando alrededor de B y dos escenarios del sistema de coordenadas pieza (TDATA31=0/1). Se dibujan X', Z' y la orientación B-30°, explicando si el sistema gira con la pieza o permanece paralelo al de máquina." ;
-    ns1:tieneComponente ns1:Diagrama_RTCP,
-        ns1:Eje_B,
-        ns1:Eje_X_Prima,
-        ns1:Eje_Z_Prima .
+ns1:EjeOrtogonalZ a ns1:Parametro ;
+    rdfs:label "Eje ortogonal Z" ;
+    ns1:identificador "ORTAXNA" ;
+    ns1:textoExtracto "Las etiquetas 'ANGAXNA=X ORTAXNA=Z ANGANTR=60º' refuerzan la configuración." .
 
-ns1:Componente_TDATA11_16 a ns1:Componente ;
-    ns1:textoExtracto "componentes TDATA11–16" .
+ns1:Husillo a ns1:ComponenteMecanico ;
+    rdfs:label "Husillo" ;
+    ns1:textoExtracto "Ilustración de cinemática de ejes paralelos aplicada al husillo/herramienta: un cabezal con fresa y dos flechas curvas azules paralelas indican suma de desplazamientos de un eje aditivo sobre el eje principal." .
 
-ns1:Componente_TDATA1_6 a ns1:Componente ;
-    ns1:textoExtracto "componentes TDATA1–6" .
+ns1:OffsetEntreElCeroMaquinaYElOrigenDelSistemaInclinado a ns1:Parametro ;
+    rdfs:label "Offset entre el cero máquina y el origen del sistema inclinado" ;
+    ns1:identificador "OFFANGAX" ;
+    ns1:textoExtracto "aparece una cota de offset 'OFFANGAX' entre el cero máquina y el origen del sistema inclinado." .
 
-ns1:Eje_B a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "eje B" .
+ns1:BrazoDoblePinza a ns1:ComponenteMecanico ;
+    rdfs:label "Brazo de doble pinza" ;
+    ns1:textoExtracto "Escena del tipo 'Asíncrono': un carrusel-gantry y brazo de doble pinza realizan el intercambio con la herramienta; flechas indican secuencia alrededor del cabezal." .
 
-ns1:Eje_X_Prima a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "X'" .
+ns1:CabezalHusillo a ns1:ComponenteMecanico ;
+    rdfs:label "Cabezal con fresa" ;
+    ns1:textoExtracto "Ilustración de cinemática de ejes paralelos aplicada al husillo/herramienta: un cabezal con fresa y dos flechas curvas azules paralelas indican suma de desplazamientos de un eje aditivo sobre el eje principal." .
 
-ns1:Eje_X_Prima_Y_Prima a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "referencias X'-Y'" .
+ns1:Carrusel a ns1:ComponenteMecanico ;
+    rdfs:label "Carrusel" ;
+    ns1:textoExtracto "Escena del tipo 'Síncrono': un carrusel se aproxima al cabezal sin brazo cambiador; flechas de aproximación/retirada muestran la imposibilidad de cambiar durante el mecanizado." .
 
-ns1:Eje_X_Y a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "ejes X-Y" .
-
-ns1:Eje_Z_Prima a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "Z'" .
-
-ns1:Etiqueta_TDATA1_16 a ns1:Componente ;
-    ns1:textoExtracto "etiquetas TDATA1–16" .
-
-ns1:Diagrama_RTCP a ns1:Esquema ;
-    ns1:textoExtracto "diagramas circulares comparativos que muestran el origen RTCP" .
-
-ns1:Vector_T1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "vectores T1/T2" .
-
-ns1:Vector_T2 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "vectores T1/T2" .
-
-ns1:Vector_V1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "vectores V1/V2" .
-
-ns1:Vector_V2 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "vectores V1/V2" .
+ns1:CarruselGantry a ns1:ComponenteMecanico ;
+    rdfs:label "Carrusel-Gantry" ;
+    ns1:textoExtracto "Escena del tipo 'Asíncrono': un carrusel-gantry y brazo de doble pinza realizan el intercambio con la herramienta; flechas indican secuencia alrededor del cabezal." .
 

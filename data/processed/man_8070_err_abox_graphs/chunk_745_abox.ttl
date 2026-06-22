@@ -1,24 +1,55 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AvisoSeguridad_CodigoValidacionTemporal_8046 a ns1:AvisoSeguridad ;
-    rdfs:label "Código de validación temporal detectado"@es ;
-    ns1:identificador "8046" ;
-    ns1:textoExtracto "8046 'El código de validación temporal ha sido"@es .
+ns1:CNC8070_688c84c35a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:CNCTrabajandoEnModoPuestaAPunto,
+        ns1:MemoriaEnDiscoPorDebajoDelMinimoRecomendado,
+        ns1:NoSePermiteCompilarElPLCSiElCNCSeEncuentraEnEjecucionOInterrumpido,
+        ns1:NoSePermiteCompilarElPLCSiHayAlgunCabezalEnMovimiento,
+        ns1:NoSePermiteCompilarElPLCSiHayAlgunCabezalSincronizado,
+        ns1:NoSePermiteCompilarElPLCSiHayAlgunEjeEnMovimientoOSincronizado ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:ModoOperacion_CNC_Estandar a ns1:ModoOperacion ;
-    rdfs:label "Modo CNC estándar"@es ;
-    ns1:habilitadoPor ns1:TareaMantenimiento_ReinicioCNC_8045 ;
-    ns1:textoExtracto "Pase a modo CNC estándar para editar o ejecutar el programa."@es .
+ns1:ComprobarSiHayArrancadaAlgunaAplicacionDeTercerosQueEsteConsumiendoRe_161d9d0d22 a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar si hay arrancada alguna aplicación de terceros que esté consumiendo recursos del sistema, y si es así, cerrarla. Apagar y encender el CNC." ;
+    ns1:solucionaFallo ns1:MemoriaEnDiscoPorDebajoDelMinimoRecomendado ;
+    ns1:textoExtracto "Comprobar si hay arrancada alguna aplicación de terceros que esté consumiendo recursos del sistema, y si es así, cerrarla. Apagar y encender el CNC." .
 
-ns1:AvisoSeguridad_CodigoValidacionExpirado_8045 a ns1:AvisoSeguridad ;
-    rdfs:label "Código de validación expirado. Reinicie el CNC"@es ;
-    ns1:identificador "8045" ;
-    ns1:mitigaRiesgo ns1:TareaMantenimiento_ReinicioCNC_8045 ;
-    ns1:textoExtracto "8045 'Código de validación expirado. Reinicie el CNC' [...] CAUSA El CNC ha detectado que su código de validación temporal ha expirado. El CNC no permitirá la marcha hasta que el usuario haya reiniciado el CNC."@es .
+ns1:DetenerLosProgramasEnEjecucion_f7c7918be6 a ns1:TareaMantenimiento ;
+    rdfs:label "Detener los programas en ejecución." ;
+    ns1:solucionaFallo ns1:NoSePermiteCompilarElPLCSiElCNCSeEncuentraEnEjecucionOInterrumpido,
+        ns1:NoSePermiteCompilarElPLCSiHayAlgunCabezalEnMovimiento,
+        ns1:NoSePermiteCompilarElPLCSiHayAlgunCabezalSincronizado,
+        ns1:NoSePermiteCompilarElPLCSiHayAlgunEjeEnMovimientoOSincronizado ;
+    ns1:textoExtracto "Detener los programas en ejecución." .
 
-ns1:TareaMantenimiento_ReinicioCNC_8045 a ns1:TareaMantenimiento ;
-    rdfs:label "Reinicio del CNC (solución para código 8045)"@es ;
-    ns1:solucionaFallo ns1:AvisoSeguridad_CodigoValidacionExpirado_8045 ;
-    ns1:textoExtracto "SOLUCIÓN Reiniciar el CNC."@es .
+ns1:PongaseEnContactoConElServicioDeAsistenciaTecnica_bda10638bd a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con el servicio de asistencia técnica." ;
+    ns1:solucionaFallo ns1:MemoriaEnDiscoPorDebajoDelMinimoRecomendado ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ns1:CNCTrabajandoEnModoPuestaAPunto a ns1:AccionProhibida ;
+    rdfs:label "CNC trabajando en Modo Puesta a Punto" ;
+    ns1:textoExtracto "'CNC trabajando en Modo Puesta a Punto'" .
+
+ns1:NoSePermiteCompilarElPLCSiElCNCSeEncuentraEnEjecucionOInterrumpido a ns1:AccionProhibida ;
+    rdfs:label "No se permite compilar el PLC si el CNC se encuentra en ejecución o interrumpido." ;
+    ns1:textoExtracto "'No se permite generar el plc mientras algún canal se encuentre en ejecución o interrumpido'" .
+
+ns1:NoSePermiteCompilarElPLCSiHayAlgunCabezalEnMovimiento a ns1:AccionProhibida ;
+    rdfs:label "No se permite compilar el PLC si hay algún cabezal en movimiento." ;
+    ns1:textoExtracto "'No se permite generar el plc:Cabezal en marcha'" .
+
+ns1:NoSePermiteCompilarElPLCSiHayAlgunCabezalSincronizado a ns1:AccionProhibida ;
+    rdfs:label "No se permite compilar el PLC si hay algún cabezal sincronizado." ;
+    ns1:textoExtracto "'No se permite generar el plc:Cabezal en sincronización'" .
+
+ns1:NoSePermiteCompilarElPLCSiHayAlgunEjeEnMovimientoOSincronizado a ns1:AccionProhibida ;
+    rdfs:label "No se permite compilar el PLC si hay algún eje en movimiento o sincronizado." ;
+    ns1:textoExtracto "'No se permite generar el plc:Eje en movimiento o en sincronización'" .
+
+ns1:MemoriaEnDiscoPorDebajoDelMinimoRecomendado a ns1:AccionProhibida ;
+    rdfs:label "Memoria en disco por debajo del mínimo recomendado" ;
+    ns1:textoExtracto "'Memoria en disco por debajo del mínimo recomendado'" .
 

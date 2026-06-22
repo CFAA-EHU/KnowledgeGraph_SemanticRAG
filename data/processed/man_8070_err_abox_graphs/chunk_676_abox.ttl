@@ -1,89 +1,45 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AlarmaCaptacion_6000 a ns1:Alarma ;
-    rdfs:label "Alarma de captación (6000)"@es ;
-    ns1:identificador "6000" ;
-    ns1:monitoreaParametro ns1:Parametro_FBACKAL ;
-    ns1:textoExtracto """
-    6000 'Alarma de captación'
-    DETECCIÓN Durante la ejecución.
-    CAUSA Alarma de captación en algún eje analógico (parámetro FBACKAL).
-    """@es .
+ns1:AvisoSeguridad_1f70bd4550 a ns1:AvisoSeguridad ;
+    rdfs:label "Alarma de sobrecorriente en salida analógica local (report desde PLC)" ;
+    ns1:mitigaRiesgo ns1:CortocircuitoEnSalidaAnalogicaLocal ;
+    ns1:textoExtracto "'Cortocircuito en salida analógica local (report desde PLC)'" .
 
-ns1:AlarmaTestTendencia_6001 a ns1:Alarma ;
-    rdfs:label "Alarma del test de tendencia activada (6001)"@es ;
-    ns1:identificador "6001" ;
-    ns1:monitoreaParametro ns1:Parametro_ESTDELAY ;
-    ns1:textoExtracto """
-    6001 'Alarma del test de tendencia activada'
-    DETECCIÓN Cuando un eje se embala y está activa la vigilancia del test de tendencia.
-    CAUSA Realimentación positiva en el eje durante un tiempo superior al definido en el parámetro ESTDELAY.
-    """@es .
+ns1:ErrorAlConfigurarLosRecursosRemotos a ns1:AvisoSeguridad ;
+    rdfs:label "Error al configurar los recursos remotos" ;
+    ns1:mitigaRiesgo ns1:ErrorEnConfiguracionDeModulosRemotos ;
+    ns1:textoExtracto "'Error al configurar los módulos remotos.'" .
 
-ns1:ComponenteElectrico_CablesSenalA a ns1:ComponenteElectrico ;
-    rdfs:label "Cable de señal A (y su negada)"@es ;
-    ns1:textoExtracto "Uno o más cables rotos (señales A, B o sus negadas)."@es .
+ns1:LaVariableUnicamenteAdmiteElValor0 a ns1:AvisoSeguridad ;
+    rdfs:label "La variable únicamente admite el valor '0'" ;
+    ns1:mitigaRiesgo ns1:EscribirValorDiferenteDe0EnVariableQueSoloAdmite0 ;
+    ns1:textoExtracto "'CNCWR: La variable únicamente admite el valor '0''" .
 
-ns1:ComponenteElectrico_CablesSenalB a ns1:ComponenteElectrico ;
-    rdfs:label "Cable de señal B (y su negada)"@es ;
-    ns1:textoExtracto "Uno o más cables rotos (señales A, B o sus negadas)."@es .
+ns1:RevisarConexionDeSalidaAnalogicaDelCNC a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar conexión de salida analógica del CNC" ;
+    ns1:solucionaFallo ns1:CortocircuitoEnSalidaAnalogicaLocal ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar el conexionado de la salida analógica del CNC.'" .
 
-ns1:ComponenteElectrico_EntradaCaptacion a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada de captación en la contadora"@es ;
-    ns1:textoExtracto """
-    Entrada de captación desconectada en la contadora.
-    """@es .
+ns1:RevisarConfiguracionDeModulosRemotos a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar configuración de módulos remotos" ;
+    ns1:solucionaFallo ns1:ErrorEnConfiguracionDeModulosRemotos ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar la configuración de los módulos remotos.'" .
 
-ns1:Parametro_AXISCHG a ns1:Parametro ;
-    rdfs:label "AXISCHG" ;
-    ns1:identificador "AXISCHG" ;
-    ns1:textoExtracto "parámetro AXISCHG"@es .
+ns1:RevisarProgramaPLCYEscribirValor0EnVariableOEliminarComandoCNCWR a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programa PLC y escribir valor 0 en variable o eliminar comando CNCWR" ;
+    ns1:solucionaFallo ns1:EscribirValorDiferenteDe0EnVariableQueSoloAdmite0 ;
+    ns1:textoExtracto "'SOLUCIÓN Revisar el programa de PLC. Escribir el valor 0 en la variable o eliminar el comando CNCWR.'" .
 
-ns1:Parametro_LOOPCHG a ns1:Parametro ;
-    rdfs:label "LOOPCHG" ;
-    ns1:identificador "LOOPCHG" ;
-    ns1:textoExtracto "parámetro LOOPCHG"@es .
+ns1:CortocircuitoEnSalidaAnalogicaLocal a ns1:AccionProhibida ;
+    rdfs:label "Cortocircuito en salida analógica local" ;
+    ns1:textoExtracto "'El PLC ha detectado una alarma de sobrecorriente a la hora de escribir la salida analógica local.'" .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:activaAlarma ns1:AlarmaEmergenciaExterna_6003,
-        ns1:AlarmaPLC_6002 ;
-    ns1:textoExtracto "arranque del CNC"@es .
+ns1:ErrorEnConfiguracionDeModulosRemotos a ns1:AccionProhibida ;
+    rdfs:label "Error en configuración de módulos remotos" ;
+    ns1:textoExtracto "'Error al configurar los módulos remotos.'" .
 
-ns1:Sistema_PLC a ns1:Sistema ;
-    rdfs:label "Programa PLC"@es ;
-    ns1:activaAlarma ns1:AlarmaPLC_6002 ;
-    ns1:textoExtracto """
-    El programa de PLC no está en marcha.
-    Instalación de una nueva versión de software.
-    """@es .
-
-ns1:AlarmaEmergenciaExterna_6003 a ns1:Alarma ;
-    rdfs:label "Emergencia externa activada (6003)"@es ;
-    ns1:identificador "6003" ;
-    ns1:textoExtracto """
-    6003 'Emergencia externa activada'
-    DETECCIÓN Durante el arranque del CNC o la monitorización del programa del PLC.
-    CAUSA La marca _EMERGEN del PLC está desactivada.
-    """@es .
-
-ns1:Parametro_ESTDELAY a ns1:Parametro ;
-    rdfs:label "ESTDELAY" ;
-    ns1:identificador "ESTDELAY" ;
-    ns1:textoExtracto "parámetro ESTDELAY"@es .
-
-ns1:Parametro_FBACKAL a ns1:Parametro ;
-    rdfs:label "FBACKAL" ;
-    ns1:identificador "FBACKAL" ;
-    ns1:textoExtracto "parámetro FBACKAL"@es .
-
-ns1:AlarmaPLC_6002 a ns1:Alarma ;
-    rdfs:label "El programa PLC no está en marcha (6002)"@es ;
-    ns1:identificador "6002" ;
-    ns1:textoExtracto """
-    6002 'El programa PLC no está en marcha'
-    DETECCIÓN Durante el arranque del CNC o la monitorización del programa del PLC.
-    CAUSA El programa de PLC no está en marcha.
-    """@es .
+ns1:EscribirValorDiferenteDe0EnVariableQueSoloAdmite0 a ns1:AccionProhibida ;
+    rdfs:label "Escribir valor diferente de 0 en variable que sólo admite 0" ;
+    ns1:textoExtracto "'El PLC ha intentado escribir un valor diferente de 0 en una variable que sólo admite valor 0 (cero).'" .
 

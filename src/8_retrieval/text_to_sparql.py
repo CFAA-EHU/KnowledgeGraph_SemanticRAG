@@ -1572,14 +1572,27 @@ def tokenize_question(question: str) -> list[str]:
 
 
 
+_ALLCAPS_STOP: set[str] = {
+    "DEBE", "PARA", "ESTE", "ESTA", "PERO", "COMO", "TODO", "CADA",
+    "ESTA", "SENAL", "MARCA", "TIPO", "MODO", "VALOR", "DATO",
+}
+
+
 def extract_reference_tokens(question: str) -> list[str]:
     normalized = normalize_text(question)
     refs = re.findall(r"\b\d+(?:[-.]\d+)+\b", normalized)
     alphanum = re.findall(r"\b[a-z]*\d+[a-z0-9/_-]*\b", normalized)
     emails = re.findall(r"\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b", normalized)
+    # ALL_CAPS identifiers (≥4 chars) from original text — e.g. SHUTTERON, LASERON, PWMON.
+    # These are technical PLC/CNC identifiers that contain no digits.
+    allcaps = [
+        t.lower() for t in re.findall(r"\b[A-Z][A-Z0-9]{3,}\b", question)
+        if t not in _ALLCAPS_STOP
+    ]
     seen: list[str] = []
-    for token in refs + alphanum + emails:
-        if token not in seen:
+    for token in refs + alphanum + emails + allcaps:
+        # Exclude bare integers (≤5 digits) — almost always page numbers.
+        if token not in seen and not (token.isdigit() and len(token) <= 5):
             seen.append(token)
     return seen
 

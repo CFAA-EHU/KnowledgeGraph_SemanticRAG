@@ -21,7 +21,7 @@ OUTPUT_DIR = EXPERIMENTAL_TBOX_CHUNKS_DIR
 MAX_CONCURRENCY = 1
 MODEL = "mistral-small-latest"
 
-api_key = "HMXKoCPyStwJ9DjLnGQbKYMg2KqCiEUs"  # os.environ.get("MISTRAL_API_KEY")
+api_key = os.environ.get("MISTRAL_API_KEY")
 if not api_key:
     print("Error: Define la variable de entorno MISTRAL_API_KEY antes de ejecutar.")
     sys.exit(1)

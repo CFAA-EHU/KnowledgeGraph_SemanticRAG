@@ -1,35 +1,41 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1771 a ns1:Alarma ;
-    rdfs:label "Alarma 1771: Perfil de puntos P=0"@es ;
-    ns1:identificador "1771" ;
-    ns1:monitoreaParametro ns1:Parametro_P ;
-    ns1:textoExtracto "'PERFIL DE PUNTOS: P = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P tiene valor 0. No hay profundidad programada. SOLUCIÓN Asignar al parámetro un valor mayor que 0."@es .
+ns1:AsignacionDeParametros a ns1:TareaMantenimiento ;
+    rdfs:label "Asignación de parámetros" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_9468301133,
+        ns1:DiagnosticoFallo_cc360d7c69 ;
+    ns1:textoExtracto "'SOLUCIÓN Asignar al parámetro un valor mayor que 0.' 'Programar una herramienta para la operación de desbaste o acabado.'" .
 
-ns1:Alarma_1772 a ns1:Alarma ;
-    rdfs:label "Alarma 1772: Perfil nulo"@es ;
-    ns1:identificador "1772" ;
-    ns1:textoExtracto "'PERFIL DE PUNTOS: Perfil nulo' DETECCIÓN Durante la ejecución del ciclo. CAUSA Los dos primeros puntos del perfil (P1 y P2) son iguales; el ciclo considera que no hay perfil definido. SOLUCIÓN Definir correctamente los puntos del perfil. Dos puntos iguales indican el final del perfil."@es .
+ns1:OperacionesSinHerramientaProgramada a ns1:AccionProhibida ;
+    rdfs:label "Operaciones sin herramienta programada" ;
+    ns1:textoExtracto "'CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada.'" .
 
-ns1:Alarma_1773 a ns1:Alarma ;
-    rdfs:label "Alarma 1773: Radio de herramienta vs. radio tangencial"@es ;
-    ns1:identificador "1773" ;
-    ns1:monitoreaParametro ns1:Parametro_RadioHerramienta,
-        ns1:Parametro_RadioTangencial ;
-    ns1:textoExtracto "'PERFIL DE PUNTOS: Radio de herramienta mayor o igual que radio de entrada/salida tangencial' DETECCIÓN Durante la ejecución del ciclo."@es .
+ns1:ParametroP a ns1:Parametro ;
+    rdfs:label "Parámetro P" ;
+    ns1:textoExtracto "'1759 'MOYU CIRCULAR: P = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P'" .
 
-ns1:Parametro_P a ns1:Parametro ;
-    rdfs:label "Parámetro P (profundidad)"@es ;
-    ns1:identificador "P" ;
-    ns1:textoExtracto "El parámetro P tiene valor 0. No hay profundidad programada."@es ;
-    ns1:valor "0" .
+ns1:ParametroS a ns1:Parametro ;
+    rdfs:label "Parámetro S" ;
+    ns1:textoExtracto "'CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado.'" .
 
-ns1:Parametro_RadioHerramienta a ns1:Parametro ;
-    rdfs:label "Radio de herramienta"@es ;
-    ns1:textoExtracto "radio de una de las herramientas"@es .
+ns1:ParametroT a ns1:Parametro ;
+    rdfs:label "Parámetro T" ;
+    ns1:textoExtracto "'CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada.'" .
 
-ns1:Parametro_RadioTangencial a ns1:Parametro ;
-    rdfs:label "Radio de entrada/salida tangencial"@es ;
-    ns1:textoExtracto "radio de entrada/salida tangencial"@es .
+ns1:ParametrosConValorCero a ns1:AccionProhibida ;
+    rdfs:label "Parámetros con valor cero" ;
+    ns1:textoExtracto "'CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado.'" .
+
+ns1:ProgramacionDeHerramientas a ns1:TareaMantenimiento ;
+    rdfs:label "Programación de herramientas" ;
+    ns1:textoExtracto "'SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado. Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta.'" .
+
+ns1:DiagnosticoFallo_9468301133 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro con valor cero" ;
+    ns1:textoExtracto "'1758 'MOYU CIRCULAR: T = 0' DETECCIÓN Durante la ejecución del ciclo.'" .
+
+ns1:DiagnosticoFallo_cc360d7c69 a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro P con valor cero" ;
+    ns1:textoExtracto "'1759 'MOYU CIRCULAR: P = 0' DETECCIÓN Durante la ejecución del ciclo.'" .
 

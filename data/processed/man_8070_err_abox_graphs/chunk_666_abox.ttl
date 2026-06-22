@@ -1,64 +1,62 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_5023 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5023: Error en la lectura de entradas digitales locales" ;
-    ns1:identificador "5023" ;
-    ns1:solucionaFallo ns1:ContactoConSoporteTecnicoDeFagorAutomation,
-        ns1:RevisionDeInstalacionDeAplicacionYDriversDelCNC ;
-    ns1:textoExtracto "5023 'Error en la lectura de entradas digitales locales' DETECCIÓN Error en la lectura de entradas digitales locales. CAUSA Fallo en la lectura de las entradas digitales locales de PLC." .
+ns1:ComprobarElNumeroDelContador a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar el número del contador" ;
+    ns1:solucionaFallo ns1:ErrorDePLCNoExisteContador ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar el número del contador; contadores válidos, T1 a T256." .
 
-ns1:Error_5024 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5024: Error en la escritura de salidas digitales locales" ;
-    ns1:identificador "5024" ;
-    ns1:solucionaFallo ns1:ContactoConSoporteTecnicoDeFagorAutomation,
-        ns1:RevisionDeInstalacionDeAplicacionYDriversDelCNC ;
-    ns1:textoExtracto "5024 'Error en la escritura de salidas digitales locales' DETECCIÓN Error en la escritura de salidas digitales locales. CAUSA Fallo en la escritura de las salidas digitales locales de PLC." .
+ns1:ComprobarElNumeroDelTemporizador a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar el número del temporizador" ;
+    ns1:solucionaFallo ns1:ErrorDePLCNoExisteTemporizador ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar el número del temporizador; temporizadores válidos, T1 a T256." .
 
-ns1:Error_5025 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 5025: Contador de PLC deshabilitado" ;
-    ns1:identificador "5025" ;
-    ns1:solucionaFallo ns1:RevisionDeManiobraDelPLCParaEvitarPeticionesAsincronas ;
-    ns1:textoExtracto "5025 'Contador de PLC deshabilitado' DETECCIÓN Durante el arranque del CNC. CAUSA El contador está deshabilitado, desde el programa de PLC o desde monitorización." .
+ns1:ComprobarLosPermisosDeLaVariable a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar los permisos de la variable" ;
+    ns1:solucionaFallo ns1:VariableSinPermisoDeEscrituraParaPLC,
+        ns1:VariableSinPermisoDeLecturaParaPLC ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar los permisos de la variable." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC con controlador Fagor Automation" ;
-    ns1:documentadoEn ns1:DocumentacionDeErrores50235025DelSistemaCNC ;
-    ns1:textoExtracto "CNC con PLC y aplicación controlada por Fagor Automation" ;
-    ns1:tieneComponente ns1:PLC_CNC .
+ns1:VerificarLaSintaxisDeLaVariable a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la sintaxis de la variable" ;
+    ns1:solucionaFallo ns1:CNCRDVariableNoIdentificada ;
+    ns1:textoExtracto "SOLUCIÓN Verificar la sintaxis de la variable. Si el error se produce durante el arranque, condicionar la lectura de la variable a que la marca SERCOSRDY esté activa." .
 
-ns1:ContadorDePLC a ns1:Parametro ;
-    rdfs:label "Contador de PLC" ;
-    ns1:textoExtracto "El contador está deshabilitado, desde el programa de PLC o desde monitorización." .
+ns1:VerificarLaSintaxisDeLaVariableYLosValoresValidos a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la sintaxis de la variable y los valores válidos" ;
+    ns1:solucionaFallo ns1:EscrituraDeVariableDesdePLCFueraDeRango_bbc3d0c28c ;
+    ns1:textoExtracto "SOLUCIÓN Verificar la sintaxis de la variable y los valores válidos." .
 
-ns1:DocumentacionDeErrores50235025DelSistemaCNC a ns1:DiagnosticoFallo ;
-    rdfs:label "Documentación de errores 5023-5025 del sistema CNC" ;
-    ns1:textoExtracto "Errores 5023, 5024 y 5025 relacionados con el PLC del CNC." .
+ns1:VerificarLaSintaxisDeLaVariable_6eae3714f4 a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar la sintaxis de la variable" ;
+    ns1:solucionaFallo ns1:CNCWRVariableNoIdentificada ;
+    ns1:textoExtracto "SOLUCIÓN Verificar la sintaxis de la variable." .
 
-ns1:EntradasDigitalesLocalesDelPLC a ns1:Parametro ;
-    rdfs:label "Entradas digitales locales del PLC" ;
-    ns1:textoExtracto "entradas digitales locales de PLC" .
+ns1:CNCRDVariableNoIdentificada a ns1:DiagnosticoFallo ;
+    rdfs:label "CNCRD: Variable no identificada" ;
+    ns1:textoExtracto "'CNCRD: Variable no identificada' DETECCIÓN Al ejecutar una instrucción CNCRD. CAUSA La variable no existe." .
 
-ns1:PLC_CNC a ns1:ComponenteElectrico ;
-    rdfs:label "PLC del sistema CNC" ;
-    ns1:monitoreaParametro ns1:ContadorDePLC,
-        ns1:EntradasDigitalesLocalesDelPLC,
-        ns1:SalidasDigitalesLocalesDelPLC ;
-    ns1:textoExtracto "Fallo en la lectura/escritura de las entradas/salidas digitales locales de PLC." .
+ns1:CNCWRVariableNoIdentificada a ns1:DiagnosticoFallo ;
+    rdfs:label "CNCWR: Variable no identificada" ;
+    ns1:textoExtracto "'CNCWR: Variable no identificada' DETECCIÓN Al ejecutar una instrucción CNCWR. CAUSA La variable no existe." .
 
-ns1:RevisionDeManiobraDelPLCParaEvitarPeticionesAsincronas a ns1:AccionProhibida ;
-    rdfs:label "Revisión de maniobra del PLC para evitar peticiones asíncronas" ;
-    ns1:textoExtracto "Para eliminar el error, revisar la maniobra del PLC para que no sucedan tantas peticiones asíncronas a la vez." .
+ns1:ErrorDePLCNoExisteContador a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de PLC: No existe contador" ;
+    ns1:textoExtracto "'Error de PLC: No existe contador' DETECCIÓN Procesos de lectura de los datos de contadores de PLC. CAUSA Petición de lectura de un contador que no existe." .
 
-ns1:SalidasDigitalesLocalesDelPLC a ns1:Parametro ;
-    rdfs:label "Salidas digitales locales del PLC" ;
-    ns1:textoExtracto "salidas digitales locales de PLC" .
+ns1:ErrorDePLCNoExisteTemporizador a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de PLC: No existe temporizador" ;
+    ns1:textoExtracto "'Error de PLC: No existe temporizador' DETECCIÓN Procesos de lectura de los datos de temporizadores de PLC. CAUSA Petición de lectura de un temporizador que no existe." .
 
-ns1:ContactoConSoporteTecnicoDeFagorAutomation a ns1:AvisoSeguridad ;
-    rdfs:label "Contacto con soporte técnico de Fagor Automation" ;
-    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation." .
+ns1:EscrituraDeVariableDesdePLCFueraDeRango_bbc3d0c28c a ns1:DiagnosticoFallo ;
+    rdfs:label "Escritura de variable desde PLC fuera de rango" ;
+    ns1:textoExtracto "'Escritura de variable desde PLC fuera de rango' DETECCIÓN Al ejecutar una instrucción CNCWR. CAUSA El valor asignado a la variable no es válido." .
 
-ns1:RevisionDeInstalacionDeAplicacionYDriversDelCNC a ns1:AccionProhibida ;
-    rdfs:label "Revisión de instalación de aplicación y drivers del CNC" ;
-    ns1:textoExtracto "Revisar la instalación de la aplicación y los drivers del CNC." .
+ns1:VariableSinPermisoDeEscrituraParaPLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Variable sin permiso de escritura para PLC" ;
+    ns1:textoExtracto "'Variable sin permiso de escritura para PLC' DETECCIÓN Al ejecutar una instrucción CNCWR. CAUSA Escritura de una variable que no tiene permiso de escritura desde el PLC." .
+
+ns1:VariableSinPermisoDeLecturaParaPLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Variable sin permiso de lectura para PLC" ;
+    ns1:textoExtracto "'Variable sin permiso de lectura para PLC' DETECCIÓN Al ejecutar una instrucción CNCRD. CAUSA Lectura de una variable que no tiene permiso de lectura desde el PLC." .
 

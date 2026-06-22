@@ -1,47 +1,32 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1142 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1142: Sentencia #TIME mal programada" ;
-    ns1:identificador "1142" ;
-    ns1:textoExtracto "'La sentencia #TIME se programa sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación." .
+ns1:ElCNCHaDetectadoUnaInstruccionCASESinUnaInstruccionSWITCHPrevia a ns1:AccionProhibida ;
+    rdfs:label "El CNC ha detectado una instrucción $CASE sin una instrucción $SWITCH previa" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacion_ba32351030 ;
+    ns1:textoExtracto "'No se espera $CASE'" .
 
-ns1:Fallo_1146 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1146: Trayectoria no lineal antes de G37" ;
-    ns1:identificador "1146" ;
-    ns1:textoExtracto "'La trayectoria anterior a G37 debe ser lineal' DETECCIÓN Durante la ejecución. CAUSA El bloque de movimiento anterior a la entrada tangencial no es lineal. SOLUCIÓN Revisar la programación." .
+ns1:ElCNCHaDetectadoUnaInstruccionDEFAULTSinUnaInstruccionSWITCHPrevia a ns1:AccionProhibida ;
+    rdfs:label "El CNC ha detectado una instrucción $DEFAULT sin una instrucción $SWITCH previa" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacion_ba32351030 ;
+    ns1:textoExtracto "'No se espera $DEFAULT'" .
 
-ns1:Fallo_1147 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1147: Trayectoria no lineal después de G38" ;
-    ns1:identificador "1147" ;
-    ns1:textoExtracto "'La trayectoria posterior a G38 debe ser lineal' DETECCIÓN Durante la ejecución. CAUSA El bloque de movimiento posterior a la salida tangencial no es lineal. SOLUCIÓN Revisar la programación." .
+ns1:ElCNCHaDetectadoUnaInstruccionELSEIFSinUnaInstruccionIFPrevia a ns1:AccionProhibida ;
+    rdfs:label "El CNC ha detectado una instrucción $ELSEIF sin una instrucción $IF previa" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacion_ba32351030 ;
+    ns1:textoExtracto "'No se espera $ELSEIF'" .
 
-ns1:Fallo_1149 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1149: Empalme de trayectoria imposible (G36/G37/G38/G39)" ;
-    ns1:identificador "1149" ;
-    ns1:textoExtracto "'No es posible ejecutar G36/G37/G38/G39 programada' DETECCIÓN Durante la ejecución. CAUSA El CNC no puede realizar la trayectoria de empalme con el radio programado. SOLUCIÓN Revisar el radio programado. Comprobar que el empalme es realmente posible entre los bloques inicial y final." .
+ns1:ElCNCHaDetectadoUnaInstruccionENDIFSinUnaInstruccionIFPrevia a ns1:AccionProhibida ;
+    rdfs:label "El CNC ha detectado una instrucción $ENDIF sin una instrucción $IF previa" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacion_ba32351030 ;
+    ns1:textoExtracto "'No se espera $ENDIF'" .
 
-ns1:Fallo_1150 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1150: Funciones G36/G37/G38/G39 sin bloque de movimiento siguiente" ;
-    ns1:identificador "1150" ;
-    ns1:textoExtracto "'Las funciones G36/G37/G38/G39 deben estar seguidas de un bloque de movimiento' DETECCIÓN Durante la ejecución. CAUSA El CNC no dispone de un segundo bloque de movimiento para realizar la trayectoria de empalme. SOLUCIÓN No programar ningún bloque entre la función G que define la trayectoria de empalme y el segundo bloque de movimiento." .
+ns1:LaSentenciaNoEstaProgramadaSolaEnElBloque a ns1:AccionProhibida ;
+    rdfs:label "La sentencia no está programada sola en el bloque" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacion_ba32351030 ;
+    ns1:textoExtracto "'La sentencia $ELSEIF <condición> se programa sola en el bloque'" .
 
-ns1:Fallo_1151 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1151: Funciones G8/G36/G37/G38/G39 sin bloque de movimiento previo" ;
-    ns1:identificador "1151" ;
-    ns1:textoExtracto "'Las funciones G8/G36/G37/G38/G39 deben estar precedidas de un bloque de movimiento' DETECCIÓN Durante la ejecución. CAUSA El CNC no dispone de un primer bloque de movimiento para realizar la trayectoria de empalme. SOLUCIÓN No programar ningún bloque entre la función G que define la trayectoria de empalme y el primer bloque de movimiento." .
-
-ns1:Fallo_1152 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1152: Anidamiento de subrutinas excedido" ;
-    ns1:identificador "1152" ;
-    ns1:textoExtracto "'Anidamiento de subrutinas sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha superado el número de niveles de imbricación permitido." .
-
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC (Control Numérico Computarizado)" ;
-    ns1:textoExtracto "El CNC no puede realizar la trayectoria de empalme con el radio programado. [...] El CNC no dispone de un segundo bloque de movimiento para realizar la trayectoria de empalme. [...] El CNC ha superado el número de niveles de imbricación permitido." ;
-    ns1:tieneComponente ns1:Parametro_RadioProgramado .
-
-ns1:Parametro_RadioProgramado a ns1:Parametro ;
-    rdfs:label "Radio programado para empalme de trayectoria" ;
-    ns1:textoExtracto "Revisar el radio programado. Comprobar que el empalme es realmente posible entre los bloques inicial y final." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 

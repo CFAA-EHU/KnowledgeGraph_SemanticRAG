@@ -1,31 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:textoExtracto "cabezal [...] sincronización de dos cabezales [...] sincronizar un cabezal"@es .
+ns1:CNC8070_2b73d7f5f8 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:EnLaSincronizacionDeCabezalesElValorDelDenominadorDeLaRelacionDeTrans_ab3047aa9b,
+        ns1:EnLaSincronizacionDeCabezalesElValorDelNumeradorDeLaRelacionDeTransmi_ecad08533f,
+        ns1:EnLaSincronizacionElCabezalEsclavoEsElMismoQueElMaestro,
+        ns1:LaSintaxisDeLaSentenciaNoEsCorrectaOHayMasInformacionEnElBloque ;
+    ns1:textoExtracto "1590 'Programar #SYNC[Sm,Ss,Nx,Dx,Ox,CLOOP/OLOOP,CANCEL/NOCANCEL]' DETECCIÓN Durante la ejecución." .
 
-ns1:FuncionEjeC a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función eje C"@es ;
-    ns1:textoExtracto "trabajando como eje C"@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:EnLaSincronizacionElCabezalEsclavoEsElMismoQueElMaestro,
+        ns1:LaSintaxisDeLaSentenciaNoEsCorrectaOHayMasInformacionEnElBloque ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:FuncionG63 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función G63"@es ;
-    ns1:textoExtracto "tiene la función G63 activa"@es .
+ns1:EnLaSincronizacionDeCabezalesElValorDelDenominadorDeLaRelacionDeTrans_ab3047aa9b a ns1:DiagnosticoFallo ;
+    rdfs:label "En la sincronización de cabezales, el valor del denominador de la relación de transmisión no es válido; por ejemplo, es cero" ;
+    ns1:textoExtracto "CAUSA En la sincronización de cabezales, el valor del denominador de la relación de transmisión no es válido; por ejemplo, es cero." .
 
-ns1:SincronizacionCabezales a ns1:ModoOperacion ;
-    rdfs:label "Sincronización de cabezales"@es ;
-    ns1:textoExtracto "Durante la sincronización de dos cabezales, el CNC no permite el cambio de gama en ninguno de ellos."@es .
+ns1:EnLaSincronizacionDeCabezalesElValorDelNumeradorDeLaRelacionDeTransmi_ecad08533f a ns1:DiagnosticoFallo ;
+    rdfs:label "En la sincronización de cabezales, el valor del numerador de la relación de transmisión no es válido; por ejemplo, es cero" ;
+    ns1:textoExtracto "CAUSA En la sincronización de cabezales, el valor del numerador de la relación de transmisión no es válido; por ejemplo, es cero. SOLUCIÓN El valor puede ser positivo o negativo, no necesariamente entero, pero distinto de cero." .
 
-ns1:SolucionCancelarSincronizacion a ns1:TareaMantenimiento ;
-    rdfs:label "Cancelar sincronización para cambio de gama"@es ;
-    ns1:solucionaFallo ns1:FalloSincronizacionCabezales_1600 ;
-    ns1:textoExtracto "Cancelar la sincronización para cambiar la gama del cabezal."@es .
+ns1:EnLaSincronizacionElCabezalEsclavoEsElMismoQueElMaestro a ns1:DiagnosticoFallo ;
+    rdfs:label "En la sincronización, el cabezal esclavo es el mismo que el maestro" ;
+    ns1:textoExtracto "CAUSA En la sincronización, el cabezal esclavo es el mismo que el maestro. SOLUCIÓN Revisar la programación." .
 
-ns1:FalloSincronizacionCabezales_1600 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1600: Cabezal sincronizado no puede trabajar como eje C o en G63"@es ;
-    ns1:identificador "1600" ;
-    ns1:textoExtracto "1600 'Un cabezal sincronizado no puede trabajar como eje C o en G63' [...] Durante la sincronización de dos cabezales, el CNC no permite el cambio de gama en ninguno de ellos. [...] El CNC ha intentado sincronizar un cabezal y éste está trabajando como eje C o tiene la función G63 activa."@es .
+ns1:LaSintaxisDeLaSentenciaNoEsCorrectaOHayMasInformacionEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "La sintaxis de la sentencia no es correcta o hay más información en el bloque" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque. SOLUCIÓN Revisar la programación." .
 

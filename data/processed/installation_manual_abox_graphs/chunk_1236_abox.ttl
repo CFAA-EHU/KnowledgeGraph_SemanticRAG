@@ -1,42 +1,47 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CompensacionCruzada a ns1:ModoOperacion ;
-    rdfs:label "Compensación cruzada" ;
-    ns1:textoExtracto "La compensación volumétrica incluye la compensación cruzada, por lo que no es necesario definir esta última; no obstante, si está definida, el CNC la tiene en cuenta. El CNC primero aplica la compensación cruzada y de husillo, y a continuación la compensación volumétrica." .
+ns1:ArchivoConLosDatosParaLaCompensacionVolumetricaBasica a ns1:Parametro ;
+    rdfs:label "Archivo con los datos para la compensación volumétrica básica" ;
+    ns1:identificador "VCOMPFILE" ;
+    ns1:textoExtracto "El OEM o la empresa responsable de la calibración deben generar este archivo y definirlo en el parámetro máquina VCOMPFILE." .
 
-ns1:CompensacionHusillo a ns1:ModoOperacion ;
-    rdfs:label "Compensación de husillo" ;
-    ns1:textoExtracto "La compensación volumétrica incluye la compensación de husillo, por lo que no es necesario definir esta última; no obstante, si está definida, el CNC la tiene en cuenta. El CNC primero aplica la compensación cruzada y de husillo, y a continuación la compensación volumétrica." .
+ns1:CNC8070_4bdb2ce273 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Las unidades de los datos del archivo (milímetros o pulgadas) deben ser las definidas en el CNC (parámetro INCHES)." .
 
-ns1:FicheroDatosCompensacion a ns1:InterfazUsuario ;
-    rdfs:label "Fichero de datos de compensación" ;
-    ns1:requiereMantenimiento ns1:CompensacionVolumetrica_Basica,
-        ns1:CompensacionVolumetrica_Grande,
-        ns1:CompensacionVolumetrica_Media ;
-    ns1:textoExtracto "El OEM debe seleccionar el fichero que contiene los datos de la compensación." .
+ns1:EjeXParaCompensacionVolumetrica a ns1:Parametro ;
+    rdfs:label "Eje X para compensación volumétrica" ;
+    ns1:identificador "VCOMPAXIS1" ;
+    ns1:textoExtracto "Las columnas corresponden a los ejes definidos en los parámetros VCOMPAXIS1 (primera columna), VCOMPAXIS2 (segunda columna) y VCOMPAXIS3 (tercera columna)." .
 
-ns1:ParametrosMaquina_Compensacion a ns1:Parametro ;
-    rdfs:label "Parámetros máquina para compensación" ;
-    ns1:monitoreaParametro ns1:CompensacionVolumetrica_Basica ;
-    ns1:textoExtracto "El OEM debe definir en los parámetros máquina todos los datos de la compensación (ejes que se mueven, ejes a compensar, posición y tamaño del volumen a compensar, etc) y seleccionar el fichero que contiene los datos de la compensación." .
+ns1:EjeYParaCompensacionVolumetrica a ns1:Parametro ;
+    rdfs:label "Eje Y para compensación volumétrica" ;
+    ns1:identificador "VCOMPAXIS2" ;
+    ns1:textoExtracto "Las columnas corresponden a los ejes definidos en los parámetros VCOMPAXIS1 (primera columna), VCOMPAXIS2 (segunda columna) y VCOMPAXIS3 (tercera columna)." .
 
-ns1:TablaCompensacionVolumetrica a ns1:Tabla ;
-    rdfs:label "Tabla de compensación volumétrica" ;
-    ns1:documentadoEn ns1:CompensacionVolumetrica_Basica,
-        ns1:CompensacionVolumetrica_Grande,
-        ns1:CompensacionVolumetrica_Media ;
-    ns1:textoExtracto "Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC." .
+ns1:EjeZParaCompensacionVolumetrica a ns1:Parametro ;
+    rdfs:label "Eje Z para compensación volumétrica" ;
+    ns1:identificador "VCOMPAXIS3" ;
+    ns1:textoExtracto "Las columnas corresponden a los ejes definidos en los parámetros VCOMPAXIS1 (primera columna), VCOMPAXIS2 (segunda columna) y VCOMPAXIS3 (tercera columna)." .
 
-ns1:CompensacionVolumetrica_Grande a ns1:ModoOperacion ;
-    rdfs:label "Compensación volumétrica grande" ;
-    ns1:textoExtracto "Volumen a compensar más de 10 m³ (grande). Esta compensación corrige los 21 componentes del error geométrico (traslación, rotación y cuadratura). Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC. El OEM sólo debe definir en los parámetros máquina los ejes a compensar y seleccionar el fichero que contiene los datos de la calibración. La compensación grande es más precisa que la básica, pero es más lenta de calibrar." .
+ns1:NumeroDePuntosEnElEjeX a ns1:Parametro ;
+    rdfs:label "Número de puntos en el eje X" ;
+    ns1:identificador "NPOINTSAX1" ;
+    ns1:textoExtracto "VMOVAXIS1=X NPOINTSAX1=3 INCREAX1=30 VCOMPAXIS1=X" .
 
-ns1:CompensacionVolumetrica_Media a ns1:ModoOperacion ;
-    rdfs:label "Compensación volumétrica media" ;
-    ns1:textoExtracto "Volumen a compensar hasta 10 m³ (media). Esta compensación corrige los 21 componentes del error geométrico (traslación, rotación y cuadratura). Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC. El OEM sólo debe definir en los parámetros máquina los ejes a compensar y seleccionar el fichero que contiene los datos de la calibración. La compensación media es más precisa que la básica, pero es más lenta de calibrar." .
+ns1:NumeroDePuntosEnElEjeY a ns1:Parametro ;
+    rdfs:label "Número de puntos en el eje Y" ;
+    ns1:identificador "NPOINTSAX2" ;
+    ns1:textoExtracto "VMOVAXIS2=Y NPOINTSAX2=2 INCREAX2=30 VCOMPAXIS2=Y" .
 
-ns1:CompensacionVolumetrica_Basica a ns1:ModoOperacion ;
-    rdfs:label "Compensación volumétrica básica" ;
-    ns1:textoExtracto "El volumen a compensar está definido por hasta 25 puntos en cada eje. Esta compensación corrige los errores de traslación. Las tablas de compensación las genera la aplicación de calibración; no son editables desde el CNC. El OEM debe definir en los parámetros máquina todos los datos de la compensación (ejes que se mueven, ejes a compensar, posición y tamaño del volumen a compensar, etc) y seleccionar el fichero que contiene los datos de la compensación. La compensación básica es la más rápida de calibrar, pero puede ser menos precisa que las otras (corrige menos componentes de error)." .
+ns1:NumeroDePuntosEnElEjeZ a ns1:Parametro ;
+    rdfs:label "Número de puntos en el eje Z" ;
+    ns1:identificador "NPOINTSAX3" ;
+    ns1:textoExtracto "VMOVAXIS3=Z NPOINTSAX3=2 INCREAX3=36 VCOMPAXIS3=Z" .
+
+ns1:UnidadesDelCNCMilimetrosOPulgadas a ns1:Parametro ;
+    rdfs:label "Unidades del CNC (milímetros o pulgadas)" ;
+    ns1:identificador "INCHES" ;
+    ns1:textoExtracto "Las unidades de los datos del archivo (milímetros o pulgadas) deben ser las definidas en el CNC (parámetro INCHES)." .
 

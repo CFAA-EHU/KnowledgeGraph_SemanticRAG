@@ -1,21 +1,60 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_883 a ns1:DiagnosticoFallo ;
-    rdfs:label "Carácter programado incorrecto" ;
-    ns1:solucionaFallo ns1:ManualInstalacion ;
-    ns1:textoExtracto "Algún carácter programado no es correcto. SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
+ns1:RevisarEnElManualDeInstalacionLaSintaxis a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar en el manual de instalación la sintaxis" ;
+    ns1:solucionaFallo ns1:DosOperandosDeLaExpresionANDIguales,
+        ns1:DosOperandosDeLaExpresionCPSIguales,
+        ns1:DosOperandosDeLaExpresionORIguales,
+        ns1:DosOperandosDeLaExpresionXORIguales ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
 
-ns1:Fallo_8839 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta índice de entrada de arranque" ;
-    ns1:identificador "8839" ;
-    ns1:textoExtracto "Falta índice de entrada de arranque. Suponemos TG1. DETECCIÓN Durante la edición del programa PLC. CAUSA Falta programar el índice de la entrada de arranque. SOLUCIÓN Programar una entrada de arranque dentro del rango TG1 a TG4." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:activaAlarma ns1:DosOperandosDeLaExpresionANDIguales,
+        ns1:DosOperandosDeLaExpresionCPSIguales,
+        ns1:DosOperandosDeLaExpresionORIguales,
+        ns1:DosOperandosDeLaExpresionXORIguales,
+        ns1:EntradaFueraDeRangoPermitido,
+        ns1:LosRecursosDeOrigenYDestinoDeLaInstruccionMOVSonIguales,
+        ns1:LosRegistrosDeOrigenYDestinoDeLaInstruccionMOVSonIguales,
+        ns1:SalidaFueraDeRangoPermitido_392220fd9a,
+        ns1:UnSimboloNoPuedeComenzarPorUnDigito ;
+    ns1:textoExtracto "Durante la edición o compilación del programa PLC." .
 
-ns1:Fallo_8840 a ns1:DiagnosticoFallo ;
-    rdfs:label "Recurso obsoleto PIC o PAG" ;
-    ns1:identificador "8840" ;
-    ns1:textoExtracto "Recurso obsoleto PIC o PAG; sustituido por MSG." .
+ns1:EntradaFueraDeRangoPermitido a ns1:DiagnosticoFallo ;
+    rdfs:label "Entrada fuera de rango permitido" ;
+    ns1:textoExtracto "8815 Entrada fuera de rango permitido. DETECCIÓN Durante la edición del programa PLC. CAUSA El número de la entrada digital no es valido." .
 
-ns1:ManualInstalacion a ns1:Manual ;
-    ns1:textoExtracto "Revisar en el manual de instalación la sintaxis." .
+ns1:LosRecursosDeOrigenYDestinoDeLaInstruccionMOVSonIguales a ns1:DiagnosticoFallo ;
+    rdfs:label "Los recursos de origen y destino de la instrucción MOV son iguales" ;
+    ns1:textoExtracto "8812 Los recursos del MOV son iguales. DETECCIÓN Durante la edición del programa PLC. CAUSA Los recursos de origen y destino de la instrucción MOV son iguales." .
+
+ns1:LosRegistrosDeOrigenYDestinoDeLaInstruccionMOVSonIguales a ns1:DiagnosticoFallo ;
+    rdfs:label "Los registros de origen y destino de la instrucción MOV son iguales" ;
+    ns1:textoExtracto "8813 Los registros del MOV son iguales. DETECCIÓN Durante la edición del programa PLC. CAUSA Los registros de origen y destino de la instrucción MOV son iguales." .
+
+ns1:SalidaFueraDeRangoPermitido_392220fd9a a ns1:DiagnosticoFallo ;
+    rdfs:label "Salida fuera de rango permitido" ;
+    ns1:textoExtracto "8816 Salida fuera de rango permitido. DETECCIÓN Durante la edición del programa PLC. CAUSA El número de la salida digital no es valido." .
+
+ns1:UnSimboloNoPuedeComenzarPorUnDigito a ns1:DiagnosticoFallo ;
+    rdfs:label "Un símbolo no puede comenzar por un dígito" ;
+    ns1:textoExtracto "8814 Un símbolo no puede comenzar por un dígito. DETECCIÓN Durante la edición del programa PLC. CAUSA El primer carácter del símbolo es un número." .
+
+ns1:DosOperandosDeLaExpresionANDIguales a ns1:DiagnosticoFallo ;
+    rdfs:label "Dos operandos de la expresión 'AND' iguales" ;
+    ns1:textoExtracto "8809 Los operandos de la expresión AND son iguales. DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA Dos operandos de la expresión \"AND\" iguales." .
+
+ns1:DosOperandosDeLaExpresionCPSIguales a ns1:DiagnosticoFallo ;
+    rdfs:label "Dos operandos de la expresión 'CPS' iguales" ;
+    ns1:textoExtracto "8811 Los operandos de la expresión CPS son iguales. DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA Dos operandos de la expresión \"CPS\" iguales." .
+
+ns1:DosOperandosDeLaExpresionORIguales a ns1:DiagnosticoFallo ;
+    rdfs:label "Dos operandos de la expresión 'OR' iguales" ;
+    ns1:textoExtracto "8809 Los operandos de la expresión AND son iguales. DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA Dos operandos de la expresión \"AND\" iguales." .
+
+ns1:DosOperandosDeLaExpresionXORIguales a ns1:DiagnosticoFallo ;
+    rdfs:label "Dos operandos de la expresión 'XOR' iguales" ;
+    ns1:textoExtracto "8810 Los operandos de la expresión XOR son iguales. DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA Dos operandos de la expresión \"XOR\" iguales." .
 

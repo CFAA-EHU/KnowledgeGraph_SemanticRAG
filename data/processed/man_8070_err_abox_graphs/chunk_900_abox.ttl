@@ -1,16 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_8894 a ns1:DiagnosticoFallo ;
-    rdfs:label "Instrucción anterior incorrecta" ;
-    ns1:identificador "8894" ;
-    ns1:textoExtracto "DETECCIÓN Al compilar el programa PLC. CAUSA El análisis del programa de PLC que realiza el compilador, antes de su conversión a C, ha detectado una instrucción incorrecta. La salida de errores señala la instrucción siguiente a la incorrecta. SOLUCIÓN Corregir, eliminar o comentar la instrucción incorrecta." .
+ns1:AsegurarExistenciaDelModuloPRG a ns1:TareaMantenimiento ;
+    rdfs:label "Asegurar existencia del módulo PRG" ;
+    ns1:solucionaFallo ns1:NoProgramarModuloPRG ;
+    ns1:textoExtracto "SOLUCIÓN El módulo PRG debe existir en el programa." .
 
-ns1:Fallo_8895 a ns1:DiagnosticoFallo ;
-    rdfs:label "Instrucción incorrecta" ;
-    ns1:identificador "8895" ;
-    ns1:textoExtracto "DETECCIÓN Al compilar el programa PLC. CAUSA El análisis del programa de PLC que realiza" .
+ns1:DividirLineaEnVariasInstrucciones a ns1:TareaMantenimiento ;
+    rdfs:label "Dividir línea en varias instrucciones" ;
+    ns1:solucionaFallo ns1:DefinirLineaDemasiadoLarga ;
+    ns1:textoExtracto "SOLUCIÓN Dividir la línea en varias instrucciones." .
 
-ns1:Manual_Instalacion_PLC a ns1:Manual ;
-    ns1:textoExtracto "Revisar en el manual de instalación la sintaxis." .
+ns1:RevisarInstruccionesDeSaltoOBorrarEtiqueta a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar instrucciones de salto o borrar etiqueta" ;
+    ns1:solucionaFallo ns1:DefinirEtiquetaSinInstruccionDeSalto ;
+    ns1:textoExtracto "SOLUCIÓN Revisar las instrucciones de salto o borrar la etiqueta si no se usa." .
+
+ns1:RevisarSintaxisDeModulosPeriodicos a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis de módulos periódicos" ;
+    ns1:solucionaFallo ns1:ErrorDelLexerAlReconocerModulosPeriodicos ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
+
+ns1:RevisarSubrutinasDefinidas a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar subrutinas definidas" ;
+    ns1:solucionaFallo ns1:DefinirSubrutinaIndefinida ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
+
+ns1:DefinirEtiquetaSinInstruccionDeSalto a ns1:AccionProhibida ;
+    rdfs:label "Definir etiqueta sin instrucción de salto" ;
+    ns1:textoExtracto "Hay definida una etiqueta en el programa pero no hay ninguna instrucción de salto a ella (=JMP etiqueta)." .
+
+ns1:DefinirLineaDemasiadoLarga a ns1:AccionProhibida ;
+    rdfs:label "Definir línea demasiado larga" ;
+    ns1:textoExtracto "La línea del programa es demasiado larga." .
+
+ns1:DefinirSubrutinaIndefinida a ns1:AccionProhibida ;
+    rdfs:label "Definir subrutina indefinida" ;
+    ns1:textoExtracto "Subrutina indefinida." .
+
+ns1:ErrorDelLexerAlReconocerModulosPeriodicos a ns1:AccionProhibida ;
+    rdfs:label "Error del lexer al reconocer módulos periódicos" ;
+    ns1:textoExtracto "Fallo del lexer al reconocer módulos periódicos. Error al convertir una cadena de caracteres a un módulo periódico." .
+
+ns1:NoProgramarModuloPRG a ns1:AccionProhibida ;
+    rdfs:label "No programar módulo PRG" ;
+    ns1:textoExtracto "No se ha programado el módulo PRG." .
 

@@ -1,30 +1,13 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Sistema_CompensacionHolgura a ns1:Sistema ;
-    rdfs:label "Sistema de compensación de holgura por pico de inversión" ;
-    ns1:monitoreaParametro ns1:Parametro_PEAKDISP,
-        ns1:Parametro_REVEHYST ;
-    ns1:textoExtracto "la compensación de holgura a cuando el CNC detecta una inversión en el sentido del movimiento, de manera que no se aplique siempre que el CNC reciba una consigna de inversión" ;
-    ns1:tieneComponente ns1:Parametro_BACKLASH,
-        ns1:Parametro_PEAKDISP,
-        ns1:Parametro_REVEHYST .
+ns1:CNC8070_8630088267 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "el CNC no activará la compensación en las inversiones posteriores a la primera mientras la posición del eje no varíe al menos el valor definido en este parámetro." .
 
-ns1:Parametro_BACKLASH a ns1:Parametro ;
-    rdfs:label "BACKLASH" ;
-    ns1:identificador "BACKLASH" ;
-    ns1:textoExtracto "En el caso de que se tengan ejes definidos como visualizador, en estos ejes se tendrá en cuenta el valor del parámetro BACKLASH" .
-
-ns1:Parametro_PEAKDISP a ns1:Parametro ;
-    rdfs:label "PEAKDISP" ;
-    ns1:identificador "PEAKDISP" ;
-    ns1:textoExtracto "parámetros PEAKDISP. Posición teórica. movimiento (PEAKDISP)" ;
-    ns1:valor "0 a 99999.9999 mm / 0 a 3937.00787 inch / 0 a 99999.9999 grados"^^xsd:string .
-
-ns1:Parametro_REVEHYST a ns1:Parametro ;
-    rdfs:label "REVEHYST" ;
+ns1:CancelacionDeLaCompensacionDeHolgura a ns1:Parametro ;
+    rdfs:label "Cancelación de la compensación de holgura" ;
     ns1:identificador "REVEHYST" ;
-    ns1:textoExtracto "Feedback de REVEHYST. Histéresis para aplicar el impulso adicional de consigna en las inversiones de movimiento. Parámetro válido para ejes lineales, rotativos y cabezales. Variable asociada: (V.)[ch].MPA.REVEHYST[set].xn" ;
-    ns1:valor "0 a 99999.9999"^^xsd:string .
+    ns1:textoExtracto "Si REVEHYST= 0.0005 mm, el CNC no activará la compensación en las inversiones posteriores a la primera mientras la posición del eje no varíe al menos el valor definido en este parámetro." ;
+    ns1:valor "0.0005 mm" .
 

@@ -1,52 +1,51 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CartelaEstado_Administrador a ns1:InterfazUsuario ;
-    rdfs:label "Cartela de estado 'ADMINISTRATOR MODE'"@es ;
-    ns1:ilustradoEn ns1:ModoAdministrador ;
-    ns1:textoExtracto "imagen de escritorio [...] fondo rojo y texto 'ADMINISTRATOR MODE'. Funciona como señalización visual del modo activo"@es .
+ns1:CNC8070_c6635d4df1 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "útil para ajustar offset y límites del sensor desde el CNC." .
 
-ns1:CartelaEstado_Setup a ns1:InterfazUsuario ;
-    rdfs:label "Cartela de estado 'SETUP MODE'"@es ;
-    ns1:ilustradoEn ns1:ModoSetup ;
-    ns1:textoExtracto "imagen de escritorio [...] fondo amarillo y texto 'SETUP MODE'. Funciona como señalización visual del modo activo"@es .
+ns1:DiagramaCompensacion a ns1:Figura ;
+    rdfs:label "Diagrama de compensación con eje esclavo" ;
+    ns1:textoExtracto "Diagrama de compensación con eje esclavo (SLAVE) y trayectorias del rayo láser." .
 
-ns1:InterfazConfiguracion_Disk a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de configuración 'Configuration > Disk'"@es ;
-    ns1:monitoreaParametro ns1:Parametro_Disco_M2_SATA ;
-    ns1:textoExtracto "Captura de interfaz del panel 'Configuration > Disk' con lectura S.M.A.R.T. del disco M2-SATA. Se muestra una lista de atributos (modelo, firmware, recuento de errores, temperatura, horas de encendido, etc.) en un cuadro con iconos y valores por columna."@es .
+ns1:EsquemaGapControl a ns1:Esquema ;
+    rdfs:label "Diagrama funcional del lazo de control del gap" ;
+    ns1:textoExtracto "Diagrama funcional del lazo de control del gap: la realimentación del sensor (GAP SENSOR FEEDBACK) entra a un bucle de posición (POSITION LOOP)" .
 
-ns1:PaginaDescargas_FagorAutomation a ns1:InterfazUsuario ;
-    rdfs:label "Página de descargas de Fagor Automation"@es ;
-    ns1:documentadoEn ns1:Software_CNC_Help_Language_Changer ;
-    ns1:textoExtracto "Captura de un navegador en la página de descargas de Fagor Automation. Se aprecian campos de búsqueda/filtrado y el listado donde figura 'CNC Help Language Changer'."@es .
+ns1:EsquemaGapOrientation a ns1:Esquema ;
+    rdfs:label "Orientación del eje Z" ;
+    ns1:textoExtracto "Esquema 'GAPTONEG = Sí': orienta el eje Z con Z+ hacia arriba (condición normal). El cabezal láser desciende (movimiento en sentido negativo) hasta alcanzar el gap respecto a la pieza (WORKPIECE)" .
 
-ns1:VentanaReinicio_Sistema a ns1:InterfazUsuario ;
-    rdfs:label "Ventana 'RESTART WINDOWS'"@es ;
-    ns1:habilitadoPor ns1:ModoAdministrador,
-        ns1:ModoSetup,
-        ns1:ModoUsuario ;
-    ns1:textoExtracto "Ventana de sistema 'RESTART WINDOWS' con tres botones que representan los modos de trabajo: 'Restart Windows in Administrator Mode', 'Restart Windows in Setup Mode' y 'Restart Windows in User Mode'."@es .
+ns1:EsquemaGapOrientationInverted a ns1:Esquema ;
+    rdfs:label "Orientación del eje Z invertido" ;
+    ns1:textoExtracto "Esquema 'GAPTONEG = No': representa un eje Z invertido (Z+ hacia abajo). El movimiento para lograr el gap se realiza en sentido positivo." .
 
-ns1:ModoUsuario a ns1:ModoOperacion ;
-    rdfs:label "User Mode"@en ;
-    ns1:textoExtracto "botón 'Restart Windows in User Mode'"@es .
+ns1:FiltroDeCorte a ns1:Parametro ;
+    rdfs:label "Filtro de corte" ;
+    ns1:textoExtracto "Diagrama funcional del lazo de control del gap: ... un filtro de corte (CUTOFF FILTER), esquematizando dónde se atenúa la alta frecuencia antes del control de posición." .
 
-ns1:Parametro_Disco_M2_SATA a ns1:Parametro ;
-    rdfs:label "Parámetros S.M.A.R.T. del disco M2-SATA"@es ;
-    ns1:textoExtracto "atributos (modelo, firmware, recuento de errores, temperatura, horas de encendido, etc.)"@es ;
-    ns1:valor "Estado/vida útil (>75% aviso, >90% error)"@es .
+ns1:GananciaProporcionalDelGap a ns1:Parametro ;
+    rdfs:label "Ganancia proporcional del gap" ;
+    ns1:textoExtracto "Diagrama funcional del lazo de control del gap: la realimentación del sensor (GAP SENSOR FEEDBACK) entra a un bucle de posición (POSITION LOOP) con ganancia proporcional de gap (GAP P-GAIN)" .
 
-ns1:Software_CNC_Help_Language_Changer a ns1:Manual ;
-    rdfs:label "CNC Help Language Changer (SetupHelp_Vxx.xx.exe)"@es ;
-    ns1:identificador "SetupHelp_Vxx.xx.exe" ;
-    ns1:textoExtracto "procedimiento de obtención del instalador SetupHelp_Vxx.xx.exe y los tipos/idiomas de ayuda soportados."@es .
+ns1:LimiteDeDistanciaDelSensorDeGap a ns1:Parametro ;
+    rdfs:label "Límite de distancia del sensor de gap" ;
+    ns1:textoExtracto "Gráfico del sensor de gap con ejes mV (horizontal) y mm/inch (vertical). Representa la señal del sensor (SENSOR SIGNAL) frente al offset aplicado (GAPSENSOROFFSET), el límite de voltaje (GAPVOLTLIMIT) y el límite de distancia (GAPDISTLIMIT)" .
 
-ns1:ModoAdministrador a ns1:ModoOperacion ;
-    rdfs:label "Administrator Mode"@en ;
-    ns1:textoExtracto "botón 'Restart Windows in Administrator Mode' [...] cartela de estado con fondo rojo y texto 'ADMINISTRATOR MODE' [...] entornos no protegidos."@es .
+ns1:LimiteDeVoltajeDelSensorDeGap a ns1:Parametro ;
+    rdfs:label "Límite de voltaje del sensor de gap" ;
+    ns1:textoExtracto "Gráfico del sensor de gap con ejes mV (horizontal) y mm/inch (vertical). Representa la señal del sensor (SENSOR SIGNAL) frente al offset aplicado (GAPSENSOROFFSET), el límite de voltaje (GAPVOLTLIMIT)" .
 
-ns1:ModoSetup a ns1:ModoOperacion ;
-    rdfs:label "Setup Mode"@en ;
-    ns1:textoExtracto "botón 'Restart Windows in Setup Mode' [...] cartela de estado con fondo amarillo y texto 'SETUP MODE' [...] entornos no protegidos."@es .
+ns1:OffsetAplicadoDelSensorDeGap a ns1:Parametro ;
+    rdfs:label "Offset aplicado del sensor de gap" ;
+    ns1:textoExtracto "Gráfico del sensor de gap con ejes mV (horizontal) y mm/inch (vertical). Representa la señal del sensor (SENSOR SIGNAL) frente al offset aplicado (GAPSENSOROFFSET)" .
+
+ns1:OrientacionDelEjeZ a ns1:Parametro ;
+    rdfs:label "Orientación del eje Z" ;
+    ns1:textoExtracto "Esquema 'GAPTONEG = Sí': orienta el eje Z con Z+ hacia arriba (condición normal). El cabezal láser desciende (movimiento en sentido negativo) hasta alcanzar el gap respecto a la pieza (WORKPIECE)" .
+
+ns1:PiezaDeTrabajo a ns1:Componente ;
+    rdfs:label "Pieza de trabajo" ;
+    ns1:textoExtracto "Esquema 'GAPTONEG = Sí': orienta el eje Z con Z+ hacia arriba (condición normal). El cabezal láser desciende (movimiento en sentido negativo) hasta alcanzar el gap respecto a la pieza (WORKPIECE)" .
 

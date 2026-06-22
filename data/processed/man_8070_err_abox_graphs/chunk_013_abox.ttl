@@ -1,37 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ArchivoPLC_SYM a ns1:Componente ;
-    rdfs:label "plc_prg.sym" ;
-    ns1:documentadoEn ns1:ProgramaPLC ;
-    ns1:identificador "plc_prg.sym" ;
-    ns1:textoExtracto "El archivo plc_prg.sym que contiene la información necesaria para crear las variables asociadas a los símbolos externos PDEF está corrupto. SOLUCIÓN Borrar el archivo plc_prg.sym y compilar el programa PLC para volver a crear este archivo." .
+ns1:ConsultarManualDeOperacionParaVariablesPermitidas a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar manual de operación para variables permitidas" ;
+    ns1:solucionaFallo ns1:VariableNoPermitidaEnElEntornoDePuestaAPunto ;
+    ns1:textoExtracto "Consultar en el manual de operación la lista de variables permitidas." .
 
-ns1:Error0024 a ns1:AvisoSeguridad ;
+ns1:DefinirVariableNoPermitidaEnElEntornoDePuestaAPunto a ns1:AccionProhibida ;
+    rdfs:label "Definir variable no permitida en el entorno de puesta a punto" ;
+    ns1:textoExtracto "'Variable no permitida en el entorno de la puesta a punto'" .
+
+ns1:ErrorIniciandoLaTraza_cd851e1ae8 a ns1:DiagnosticoFallo ;
     rdfs:label "Error iniciando la traza" ;
-    ns1:identificador "0024" ;
-    ns1:mitigaRiesgo ns1:ComprobarLasVariablesDefinidasEnLosCanalesDelOsciloscopio ;
-    ns1:textoExtracto "0024 'Error iniciando la traza' DETECCIÓN Al iniciar una traza en el osciloscopio. CAUSA No hay ninguna variable definida en los canales del osciloscopio, hay más de dos variables Sercos del mismo regulador o la sintaxis de alguna de las variables no es correcta. SOLUCIÓN Comprobar las variables definidas en los canales del osciloscopio. El osciloscopio sólo puede acceder a dos variables Sercos de cada regulador." .
+    ns1:textoExtracto "'Error iniciando la traza'" .
 
-ns1:Error0025 a ns1:AvisoSeguridad ;
-    rdfs:label "Error al registrar defines de PLC" ;
-    ns1:identificador "0025" ;
-    ns1:mitigaRiesgo ns1:BorrarElArchivoPlcPrgSymYCompilarElProgramaPLCParaVolverACrearEsteArchivo ;
-    ns1:textoExtracto "0025 'Error al registrar defines de PLC' DETECCIÓN Durante el registro de las variables asociadas a los símbolos externos PDEF definidos en el programa de PLC. CAUSA El archivo plc_prg.sym que contiene la información necesaria para crear las variables asociadas a los símbolos externos PDEF está corrupto. SOLUCIÓN Borrar el archivo plc_prg.sym y compilar el programa PLC para volver a crear este archivo. Si el error persiste, póngase en contacto con su proveedor." .
+ns1:IniciarTrazaConError a ns1:AccionProhibida ;
+    rdfs:label "Iniciar traza con error" ;
+    ns1:textoExtracto "'Error iniciando la traza'" .
 
-ns1:Osciloscopio a ns1:InterfazUsuario ;
-    ns1:textoExtracto "Al iniciar una traza en el osciloscopio. [...] El osciloscopio sólo puede acceder a dos variables Sercos de cada regulador." .
+ns1:IniciarTrazaConProgramaEnEjecucion a ns1:AccionProhibida ;
+    rdfs:label "Iniciar traza con programa en ejecución" ;
+    ns1:textoExtracto "'Es necesario parar el programa para iniciar la traza por primera vez'" .
 
-ns1:Regulador a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "hay más de dos variables Sercos del mismo regulador" .
+ns1:PararProgramaEnEjecucionAntesDeIniciarTraza a ns1:TareaMantenimiento ;
+    rdfs:label "Parar programa en ejecución antes de iniciar traza" ;
+    ns1:solucionaFallo ns1:ErrorIniciandoLaTrazaConProgramaEnEjecucion ;
+    ns1:textoExtracto "Parar el programa en ejecución." .
 
-ns1:BorrarElArchivoPlcPrgSymYCompilarElProgramaPLCParaVolverACrearEsteArchivo a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "Borrar el archivo plc_prg.sym y compilar el programa PLC para volver a crear este archivo." .
+ns1:ErrorIniciandoLaTrazaConProgramaEnEjecucion a ns1:DiagnosticoFallo ;
+    rdfs:label "Error iniciando la traza con programa en ejecución" ;
+    ns1:textoExtracto "'Es necesario parar el programa para iniciar la traza por primera vez'" .
 
-ns1:ComprobarLasVariablesDefinidasEnLosCanalesDelOsciloscopio a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "Comprobar las variables definidas en los canales del osciloscopio." .
-
-ns1:ProgramaPLC a ns1:Sistema ;
-    rdfs:label "Programa PLC" ;
-    ns1:textoExtracto "Durante el registro de las variables asociadas a los símbolos externos PDEF definidos en el programa de PLC. [...] compilar el programa PLC para volver a crear este archivo." .
+ns1:VariableNoPermitidaEnElEntornoDePuestaAPunto a ns1:DiagnosticoFallo ;
+    rdfs:label "Variable no permitida en el entorno de puesta a punto" ;
+    ns1:textoExtracto "'Variable no permitida en el entorno de la puesta a punto'" .
 

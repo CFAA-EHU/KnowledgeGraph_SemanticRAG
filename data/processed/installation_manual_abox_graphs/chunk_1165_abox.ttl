@@ -1,52 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AplicacionGantry_1165 a ns1:ModoOperacion ;
-    rdfs:label "Configuración gantry con ejes tándem"@es ;
-    ns1:requiereMantenimiento ns1:ConfiguracionEjeTandem_1165 ;
-    ns1:textoExtracto "Una de las muchas aplicaciones [...] se asocia a máquinas gantry. En el siguiente ejemplo se puede ver un eje gantry con dos ejes tándem."@es .
+ns1:CNC8070_345b633aaf a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC cierra el lazo de posición únicamente con la posición del eje maestro del tándem." .
 
-ns1:Parametro_AXISEXCH_1165 a ns1:Parametro ;
-    rdfs:label "AXISEXCH (permiso de cambio de canal)"@es ;
-    ns1:monitoreaParametro ns1:MotorTandemEsclavo_1165,
-        ns1:MotorTandemMaestro_1165 ;
-    ns1:textoExtracto "El permiso de cambio de canal (parámetro AXISEXCH) deberá ser igual en ambos ejes."@es .
+ns1:ComponenteElectrico_94cd4772e7 a ns1:ComponenteElectrico ;
+    rdfs:label "Motor Maestro del Tándem" ;
+    ns1:textoExtracto "El motor maestro del tándem, además de generar par, es el responsable del posicionamiento." .
 
-ns1:Parametro_AXISTYPE_1165 a ns1:Parametro ;
-    rdfs:label "AXISTYPE (tipo de eje)"@es ;
-    ns1:monitoreaParametro ns1:MotorTandemEsclavo_1165,
-        ns1:MotorTandemMaestro_1165 ;
-    ns1:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE [...] iguales para ambos ejes)."@es .
+ns1:ComponenteElectrico_b67ef10490 a ns1:ComponenteElectrico ;
+    rdfs:label "Motor Esclavo del Tándem" ;
+    ns1:textoExtracto "El motor esclavo únicamente suministra par." .
 
-ns1:Parametro_DRIVETYPE_1165 a ns1:Parametro ;
-    rdfs:label "DRIVETYPE (tipo de accionamiento)"@es ;
-    ns1:monitoreaParametro ns1:MotorTandemEsclavo_1165,
-        ns1:MotorTandemMaestro_1165 ;
-    ns1:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros [...] DRIVETYPE iguales para ambos ejes)."@es .
+ns1:EjeEsclavoDelTandem a ns1:Parametro ;
+    rdfs:label "Eje Esclavo del Tándem" ;
+    ns1:identificador "SLAVEAXIS" ;
+    ns1:textoExtracto "Los ejes deberán estar previamente definidos en el parámetro MASTERAXIS y SLAVEAXIS, dentro de la tabla TANDEM." .
 
-ns1:Parametro_LIMIT_1165 a ns1:Parametro ;
-    rdfs:label "LIMIT+ y LIMIT- (límites de software)"@es ;
-    ns1:monitoreaParametro ns1:MotorTandemEsclavo_1165,
-        ns1:MotorTandemMaestro_1165 ;
-    ns1:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)."@es .
+ns1:EjeMaestroDelTandem a ns1:Parametro ;
+    rdfs:label "Eje Maestro del Tándem" ;
+    ns1:identificador "MASTERAXIS" ;
+    ns1:textoExtracto "Los ejes deberán estar previamente definidos en el parámetro MASTERAXIS y SLAVEAXIS, dentro de la tabla TANDEM." .
 
-ns1:ConfiguracionEjeTandem_1165 a ns1:Sistema ;
-    rdfs:label "Configuración de eje tándem (maestro-esclavo)"@es ;
-    ns1:compuestoPor ns1:MotorTandemEsclavo_1165,
-        ns1:MotorTandemMaestro_1165 ;
-    ns1:textoExtracto "Un eje tándem consiste en dos motores acoplados mecánicamente entre sí formando un único sistema de transmisión (eje o cabezal). En el CNC sólo se visualiza y se programa un eje (eje tándem maestro). El otro eje (eje tándem esclavo) no se visualiza y no es programable; es controlado por el CNC."@es ;
-    ns1:tieneComponente ns1:PinonCremalleraSistema_1165 .
+ns1:NombreDelCabezal_64c7ab3ced a ns1:Parametro ;
+    rdfs:label "Nombre del Cabezal" ;
+    ns1:identificador "SPDLNAME" ;
+    ns1:textoExtracto "Los ejes deberán estar previamente definidos en el parámetro AXISNAME y los cabezales en el parámetro SPDLNAME." .
 
-ns1:PinonCremalleraSistema_1165 a ns1:ComponenteMecanico ;
-    rdfs:label "Sistema piñón-cremallera para eje tándem"@es ;
-    ns1:textoExtracto "Ejemplo de un eje tándem compuesto por dos piñones y una cremallera."@es .
+ns1:NombreDelEje_6114635aa5 a ns1:Parametro ;
+    rdfs:label "Nombre del Eje" ;
+    ns1:identificador "AXISNAME" ;
+    ns1:textoExtracto "Los ejes deberán estar previamente definidos en el parámetro AXISNAME y los cabezales en el parámetro SPDLNAME." .
 
-ns1:MotorTandemMaestro_1165 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor tándem maestro"@es ;
-    ns1:controla ns1:MotorTandemEsclavo_1165 ;
-    ns1:textoExtracto "eje (cabezal) tándem maestro [...] es visualiza y se programa un eje"@es .
-
-ns1:MotorTandemEsclavo_1165 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor tándem esclavo"@es ;
-    ns1:textoExtracto "eje (cabezal) tándem esclavo [...] no se visualiza y no es programable; es controlado por el CNC"@es .
+ns1:SistemaTandem a ns1:Sistema ;
+    rdfs:label "Sistema Tándem" ;
+    ns1:textoExtracto "Un sistema tándem podrá estar formado por una pareja de ejes lineales, de ejes rotativos o de cabezales." .
 

@@ -1,67 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_2494 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2494: Sintaxis incorrecta en #DMC ON"@es ;
-    ns1:identificador "2494" ;
-    ns1:solucionaFallo ns1:RevisionDeProgramacionParaSintaxisDMCON ;
-    ns1:textoExtracto "2494 #DMC ON [<PWRSP> <,OVRMIN> <,OVRMAX> <,FZMIN> <,FZMAX> <,ENTRYOVR> <,ENTRYDIST>] [...] CAUSA Error en la sintaxis de la sentencia. SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarLaProgramacionParaEvitarElMovimientoDeEjeRotativoConKINIDTIPAc_c0b1400ab6 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para evitar el movimiento de eje rotativo con KIN ID TIP activo y compensación de radio activa" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Programar un origen distinto del activo." .
 
-ns1:Error_2495 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2495: Sintaxis incorrecta en #GRAPHCMD"@es ;
-    ns1:identificador "2495" ;
-    ns1:solucionaFallo ns1:RevisionDeProgramacionParaSintaxisGRAPHCMD ;
-    ns1:textoExtracto "2495 #GRAPHCMD command <Pi>. [...] CAUSA Error en la sintaxis de la sentencia. SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarLaProgramacionYProgramarUnOrigenDistintoDelActivo a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación y programar un origen distinto del activo" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Programar un origen distinto del activo." .
 
-ns1:Error_2496 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2496: Comando desconocido en #GRAPHCMD"@es ;
-    ns1:identificador "2496" ;
-    ns1:solucionaFallo ns1:RevisionDeProgramacionPorComandoDesconocido ;
-    ns1:textoExtracto "2496 Comando desconocido. [...] CAUSA Se ha programado un comando desconocido en la sentencia #GRAPHCMD. SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarLaProgramacion_54bf067257 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:KINORGNoSeAdmiteElOrigenActivo,
+        ns1:MovimientoDeEjeRotativoNoPermitidoConKINIDTIPActivoYCompensacionDeRad_bc6e1162eb,
+        ns1:SeHaProgramadoLaSentenciaKINIDConUnValorDeTIPNoValido,
+        ns1:SeHaProgramadoLaSentenciaKINORGConUnOrigenNoValido ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. El rango de valores admitido para TIP es 0/1." .
 
-ns1:Error_2497 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2497: Múltiples comandos en #GRAPHCMD"@es ;
-    ns1:identificador "2497" ;
-    ns1:solucionaFallo ns1:RevisionDeProgramacionPorExcesoDeComandos ;
-    ns1:textoExtracto "2497 Sólo se permite programar un comando. [...] CAUSA [implícita: múltiples comandos en #GRAPHCMD]. SOLUCIÓN Revisar la programación."@es .
+ns1:KINORGNoSeAdmiteElOrigenActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "#KINORG: no se admite el origen activo" ;
+    ns1:textoExtracto "CAUSA En la sentencia #KINORG no se permite programar el origen activo." .
 
-ns1:Error_OrigenEjeC a ns1:DiagnosticoFallo ;
-    rdfs:label "Error: Origen de eje C no programado en #FACECYL"@es ;
-    ns1:solucionaFallo ns1:RevisionDeProgramacionParaOrigenDeEjeC ;
-    ns1:textoExtracto "CAUSA No se ha programado el origen del eje C en la instrucción #FACECYL. SOLUCIÓN Revisar la programación."@es .
+ns1:MovimientoDeEjeRotativoNoPermitidoConKINIDTIPActivoYCompensacionDeRad_bc6e1162eb a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento de eje rotativo no permitido con KIN ID TIP activo y compensación de radio activa (G41/G42)" ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. Movimiento de eje rotativo no permitido con KIN ID TIP activo y compensación de radio activa (G41/G42)." .
 
-ns1:Instruccion_DMC_ON a ns1:Parametro ;
-    rdfs:label "#DMC ON [parámetros opcionales]"@es ;
-    ns1:identificador "#DMC ON" ;
-    ns1:textoExtracto "2494 #DMC ON [<PWRSP> <,OVRMIN> <,OVRMAX> <,FZMIN> <,FZMAX> <,ENTRYOVR> <,ENTRYDIST>]."@es .
+ns1:SeHaProgramadoLaSentenciaKINIDConUnValorDeTIPNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha programado la sentencia #KINID con un valor de TIP no válido" ;
+    ns1:textoExtracto "CAUSA Se ha programado la sentencia #KINID con un valor de TIP no válido." .
 
-ns1:Instruccion_FACECYL a ns1:Parametro ;
-    rdfs:label "#FACECYL (programación de origen de eje C)"@es ;
-    ns1:identificador "#FACECYL" ;
-    ns1:textoExtracto "No se ha programado el origen del eje C en la instrucción #FACECYL."@es .
-
-ns1:Instruccion_GRAPHCMD a ns1:Parametro ;
-    rdfs:label "#GRAPHCMD (ejecución de comandos gráficos)"@es ;
-    ns1:identificador "#GRAPHCMD" ;
-    ns1:textoExtracto "#GRAPHCMD command <Pi>."@es .
-
-ns1:RevisionDeProgramacionParaOrigenDeEjeC a ns1:AccionProhibida ;
-    rdfs:label "Revisión de programación para origen de eje C"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisionDeProgramacionParaSintaxisDMCON a ns1:AccionProhibida ;
-    rdfs:label "Revisión de programación para sintaxis #DMC ON"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisionDeProgramacionParaSintaxisGRAPHCMD a ns1:AccionProhibida ;
-    rdfs:label "Revisión de programación para sintaxis #GRAPHCMD"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisionDeProgramacionPorComandoDesconocido a ns1:AccionProhibida ;
-    rdfs:label "Revisión de programación por comando desconocido"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
-
-ns1:RevisionDeProgramacionPorExcesoDeComandos a ns1:AccionProhibida ;
-    rdfs:label "Revisión de programación por exceso de comandos"@es ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
+ns1:SeHaProgramadoLaSentenciaKINORGConUnOrigenNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha programado la sentencia #KINORG con un origen no válido" ;
+    ns1:textoExtracto "CAUSA Se ha programado la sentencia #KINORG con un origen no válido." .
 

@@ -1,68 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:DiagnosticoFallo_1370 a ns1:DiagnosticoFallo ;
-    rdfs:label "Doble programación HSC" ;
-    ns1:identificador "1370" ;
-    ns1:solucionaFallo ns1:ActivarYDesactivarModoHSCEnElMismoBloque ;
-    ns1:textoExtracto "'#HSC: doble programación' DETECCIÓN Durante la ejecución. CAUSA En un mismo bloque está programada la activación y desactivación del modo HSC. SOLUCIÓN Revisar en el manual de programación la sintaxis de las sentencias." .
+ns1:DesactivarEjeC a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar Eje C" ;
+    ns1:solucionaFallo ns1:EjeCActivo ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar el eje C para ejecutar la función." .
 
-ns1:DiagnosticoFallo_1371 a ns1:DiagnosticoFallo ;
-    rdfs:label "Modo HSC no válido" ;
-    ns1:identificador "1371" ;
-    ns1:solucionaFallo ns1:CambiarModoDeTrabajoHSCSinDesactivacionPrevia ;
-    ns1:textoExtracto "'#HSC: modo no válido' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el modo HSC con un parámetro desconocido o ha intentado cambiar el modo de trabajo sin desactivarlo previamente. SOLUCIÓN Revisar la programación." .
+ns1:NoSeAdmiteVelocidadDelCabezalNegativa_b68918bfba a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite velocidad del cabezal negativa" ;
+    ns1:textoExtracto "'No se admite velocidad del cabezal negativa' DETECCIÓN Durante la ejecución." .
 
-ns1:DiagnosticoFallo_1373 a ns1:DiagnosticoFallo ;
-    rdfs:label "Parámetro HSC incorrecto" ;
-    ns1:identificador "1373" ;
-    ns1:solucionaFallo ns1:ParametroFASTCORNERInvalido ;
-    ns1:textoExtracto "'#HSC: parámetro incorrecto' DETECCIÓN Durante la ejecución. CAUSA El parámetro FAST o el parámetro CORNER de la sentencia #HSC tienen un valor incorrecto. SOLUCIÓN Revisar la programación." .
+ns1:NumeroDeIndicesEnVariableDeArraySobrepasado a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de índices en variable de array sobrepasado" ;
+    ns1:textoExtracto "'Número de índices en variable de array sobrepasado' DETECCIÓN Durante la ejecución. CAUSA La variable de usuario es un array multidimensional con más de 4 dimensiones." .
 
-ns1:DiagnosticoFallo_1374 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta M02/M30 en programa" ;
-    ns1:identificador "1374" ;
-    ns1:solucionaFallo ns1:OmitirM02M30AlFinalDelPrograma ;
-    ns1:textoExtracto "'Se espera M02/M30' DETECCIÓN Durante la ejecución. CAUSA Falta programar M02 o M30 al final del programa principal. SOLUCIÓN Revisar la programación." .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar Programación" ;
+    ns1:solucionaFallo ns1:DeclaracionIncorrectaDeVariablesDeArray ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:controla ns1:ModoOperacion_HSC ;
-    ns1:monitoreaParametro ns1:Parametro_CORNER,
-        ns1:Parametro_FAST ;
-    ns1:textoExtracto "El CNC ha intentado activar el modo HSC" .
+ns1:VerificarSintaxisVariable a ns1:TareaMantenimiento ;
+    rdfs:label "Verificar Sintaxis Variable" ;
+    ns1:solucionaFallo ns1:DimensionDeArrayIncorrecta ;
+    ns1:textoExtracto "SOLUCIÓN Verificar la sintaxis de la variable." .
 
-ns1:ActivarYDesactivarModoHSCEnElMismoBloque a ns1:AccionProhibida ;
-    rdfs:label "Activar y desactivar modo HSC en el mismo bloque" ;
-    ns1:textoExtracto "programada la activación y desactivación del modo HSC en un mismo bloque" .
+ns1:DeclaracionIncorrectaDeVariablesDeArray a ns1:DiagnosticoFallo ;
+    rdfs:label "Declaración incorrecta de variables de array" ;
+    ns1:textoExtracto "'Declaración incorrecta de variables de array' DETECCIÓN Durante la ejecución. CAUSA Las variables de usuario que son array deben declararse entre las sentencias #VAR y #ENDVAR." .
 
-ns1:CambiarModoDeTrabajoHSCSinDesactivacionPrevia a ns1:AccionProhibida ;
-    rdfs:label "Cambiar modo de trabajo HSC sin desactivación previa" ;
-    ns1:textoExtracto "cambiar el modo de trabajo sin desactivarlo previamente" .
+ns1:DimensionDeArrayIncorrecta a ns1:DiagnosticoFallo ;
+    rdfs:label "Dimensión de array incorrecta" ;
+    ns1:textoExtracto "'Dimensión de array incorrecta' DETECCIÓN Durante la ejecución. CAUSA La variable es de array pero el número de arrays programados es incorrecto." .
 
-ns1:ModoOperacion_HSC a ns1:ModoOperacion ;
-    rdfs:label "Modo HSC" ;
-    ns1:identificador "HSC" ;
-    ns1:textoExtracto "modo HSC" .
-
-ns1:OmitirM02M30AlFinalDelPrograma a ns1:AccionProhibida ;
-    rdfs:label "Omitir M02/M30 al final del programa" ;
-    ns1:textoExtracto "Falta programar M02 o M30 al final del programa principal" .
-
-ns1:ParametroFASTCORNERInvalido a ns1:Parametro ;
-    rdfs:label "Parámetro FAST/CORNER inválido" ;
-    ns1:identificador "FAST, CORNER" ;
-    ns1:textoExtracto "El parámetro FAST o el parámetro CORNER de la sentencia #HSC tienen un valor incorrecto" ;
-    ns1:valor "incorrecto"^^xsd:string .
-
-ns1:Parametro_CORNER a ns1:Parametro ;
-    rdfs:label "Parámetro CORNER" ;
-    ns1:identificador "CORNER" ;
-    ns1:textoExtracto "parámetro CORNER" .
-
-ns1:Parametro_FAST a ns1:Parametro ;
-    rdfs:label "Parámetro FAST" ;
-    ns1:identificador "FAST" ;
-    ns1:textoExtracto "parámetro FAST" .
+ns1:EjeCActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje C activo" ;
+    ns1:textoExtracto "'con eje C activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar una función G33/G63/G95/G96/G97 con el eje C activo." .
 

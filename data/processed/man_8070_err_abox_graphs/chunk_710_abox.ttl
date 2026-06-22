@@ -1,31 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AnilloSercos_710 a ns1:ComponenteElectrico ;
-    rdfs:label "anillo Sercos"@es ;
-    ns1:textoExtracto "error durante el rearme del [...] anillo Sercos"@es .
+ns1:ComprobarYAjustarElValorDeLOOPTIME a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar y ajustar el valor de LOOPTIME" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_d774c6690d ;
+    ns1:textoExtracto "Comprobar que el valor asignado al parámetro LOOPTIME es múltiplo de 0,5 ms y mayor de 1,5 ms. Aumentar el valor si la configuración CAN así lo aconseja." .
 
-ns1:BusCAN_710 a ns1:ComponenteElectrico ;
-    rdfs:label "bus CAN"@es ;
-    ns1:textoExtracto "error durante el rearme del bus CAN"@es .
+ns1:Parametro_e71834e406 a ns1:Parametro ;
+    rdfs:label "LOOPTIME" ;
+    ns1:identificador "LOOPTIME" ;
+    ns1:textoExtracto "El valor del parámetro LOOPTIME es demasiado pequeño o no es válido." .
 
-ns1:ProcesoValidacionParametros_710 a ns1:ModoOperacion ;
-    rdfs:label "validación de parámetros máquina"@es ;
-    ns1:activaAlarma ns1:ErrorSercos_710 ;
-    ns1:textoExtracto "validación de parámetros máquina"@es .
+ns1:ReducirElementosDelBusCANHastaEntrarEnLosLimites a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir elementos del bus CAN hasta entrar en los límites" ;
+    ns1:solucionaFallo ns1:SobrepasadoElLimiteMaximoDeElementosCANEnElSistema ;
+    ns1:textoExtracto "Apagar el CNC y quitar elementos del bus hasta entrar en los límites." .
 
-ns1:ResetCNC_710 a ns1:ModoOperacion ;
-    rdfs:label "reset del CNC"@es ;
-    ns1:activaAlarma ns1:ErrorSercos_710 ;
-    ns1:textoExtracto "reset del CNC"@es .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:textoExtracto "Apagar el CNC y quitar elementos del bus hasta entrar en los límites." .
 
-ns1:ReleEmergencia_710 a ns1:ComponenteElectrico ;
-    rdfs:label "relé de emergencia"@es ;
-    ns1:textoExtracto "el relé de emergencia ha quedado abierto"@es .
+ns1:DiagnosticoFallo_d774c6690d a ns1:DiagnosticoFallo ;
+    rdfs:label "Parámetro LOOPTIME no es válido para la configuración de CAN" ;
+    ns1:textoExtracto "'Parámetro LOOPTIME no es válido para la configuración de CAN'" .
 
-ns1:ErrorSercos_710 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en Sercos durante un proceso"@es ;
-    ns1:identificador "1" ;
-    ns1:solucionaFallo ns1:ReleEmergencia_710 ;
-    ns1:textoExtracto "Error en Sercos durante un proceso"@es .
+ns1:SobrepasadoElLimiteMaximoDeElementosCANEnElSistema a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobrepasado el límite máximo de elementos CAN en el sistema" ;
+    ns1:textoExtracto "'Sobrepasado el límite máximo de elementos CAN en el sistema'" .
 

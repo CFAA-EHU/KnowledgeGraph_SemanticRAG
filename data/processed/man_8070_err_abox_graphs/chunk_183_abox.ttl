@@ -1,49 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_1360_BorradoVariableCNC a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1360: Borrado de variable CNC no admitido"@es ;
-    ns1:identificador "1360" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Se ha intentado borrar una variable del CNC o se ha intentado crear una nueva variable con uno de los prefijos predefinidos por el CNC. SOLUCIÓN No se pueden borrar las variables predefinidas del CNC. Estos comandos sólo son aplicables a variables con prefijo P y S."@es .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Error_1360_FuncionG_EjeC a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1360: Función G no admitida con eje C activo"@es ;
-    ns1:identificador "1360" ;
-    ns1:mitigaRiesgo ns1:Parametro_EjeC ;
-    ns1:monitoreaParametro ns1:Parametro_FuncionG33,
-        ns1:Parametro_FuncionG63,
-        ns1:Parametro_FuncionG95,
-        ns1:Parametro_FuncionG96,
-        ns1:Parametro_FuncionG97 ;
-    ns1:textoExtracto "'No se admite G33/G63/G95/G96/G97 con eje C activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado ejecutar una función G33/G63/G95/G96/G97 con el eje C activo. SOLUCIÓN Desactivar el eje C para ejecutar la"@es .
+ns1:CaracterNoValidoEntreLasSentenciasVARENDVAR a ns1:AvisoSeguridad ;
+    rdfs:label "Carácter no válido entre las sentencias #VAR/#ENDVAR" ;
+    ns1:mitigaRiesgo ns1:FalloCaracterInvalido ;
+    ns1:textoExtracto "'Carácter no válido entre las sentencias #VAR/#ENDVAR'" .
 
-ns1:Parametro_EjeC a ns1:Parametro ;
-    rdfs:label "Eje C"@es ;
-    ns1:identificador "C" ;
-    ns1:textoExtracto "eje C activo"@es .
+ns1:CotaDelEjeNegativaEnLaActivacionFACE a ns1:AvisoSeguridad ;
+    rdfs:label "Cota del eje negativa en la activación #FACE" ;
+    ns1:mitigaRiesgo ns1:FalloPosicionEjeLineal ;
+    ns1:textoExtracto "'Cota del eje negativa en la activación #FACE'" .
 
-ns1:Parametro_FuncionG33 a ns1:Parametro ;
-    rdfs:label "Función G33"@es ;
-    ns1:identificador "G33" ;
-    ns1:textoExtracto "G33"@es .
+ns1:EntreEstasSentenciasSoloSeAdmiteLaDeclaracionDeVariablesDeUsuarioSepa_cb989ef673 a ns1:TareaMantenimiento ;
+    rdfs:label "Entre estas sentencias sólo se admite la declaración de variables de usuario (separadas por comas si son varias en una misma línea) o la programación del número de bloque." ;
+    ns1:solucionaFallo ns1:FalloCaracterInvalido ;
+    ns1:textoExtracto "Entre estas sentencias sólo se admite la declaración de variables de usuario (separadas por comas si son varias en una misma línea) o la programación del número de bloque." .
 
-ns1:Parametro_FuncionG63 a ns1:Parametro ;
-    rdfs:label "Función G63"@es ;
-    ns1:identificador "G63" ;
-    ns1:textoExtracto "G63"@es .
+ns1:PosicionarElEjeEnLaPartePositivaRespectoDelCentroDeGiroAntesDeActivar_265af5522a a ns1:TareaMantenimiento ;
+    rdfs:label "Posicionar el eje en la parte positiva respecto del centro de giro antes de activar el mecanizado en el eje frontal." ;
+    ns1:solucionaFallo ns1:FalloPosicionEjeLineal ;
+    ns1:textoExtracto "Posicionar el eje en la parte positiva respecto del centro de giro antes de activar el mecanizado en el eje frontal." .
 
-ns1:Parametro_FuncionG95 a ns1:Parametro ;
-    rdfs:label "Función G95"@es ;
-    ns1:identificador "G95" ;
-    ns1:textoExtracto "G95"@es .
+ns1:FalloCaracterInvalido a ns1:DiagnosticoFallo ;
+    rdfs:label "En alguno de los bloques comprendidos entre estas sentencias hay programado un carácter no válido." ;
+    ns1:textoExtracto "En alguno de los bloques comprendidos entre estas sentencias hay programado un carácter no válido." .
 
-ns1:Parametro_FuncionG96 a ns1:Parametro ;
-    rdfs:label "Función G96"@es ;
-    ns1:identificador "G96" ;
-    ns1:textoExtracto "G96"@es .
-
-ns1:Parametro_FuncionG97 a ns1:Parametro ;
-    rdfs:label "Función G97"@es ;
-    ns1:identificador "G97" ;
-    ns1:textoExtracto "G97"@es .
+ns1:FalloPosicionEjeLineal a ns1:DiagnosticoFallo ;
+    rdfs:label "El eje lineal que forma parte de la transformación de eje C frontal, se encuentra posicionado en la parte negativa respecto del centro de giro." ;
+    ns1:textoExtracto "El eje lineal que forma parte de la transformación de eje C frontal, se encuentra posicionado en la parte negativa respecto del centro de giro." .
 

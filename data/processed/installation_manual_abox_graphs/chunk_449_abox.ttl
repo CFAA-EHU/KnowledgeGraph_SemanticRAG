@@ -1,23 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ControlMaquina a ns1:Sistema ;
-    rdfs:label "Sistema de control de la máquina"@es ;
-    ns1:monitoreaParametro ns1:Parametro_SercosPosicion ;
-    ns1:textoExtracto "el tiempo de respuesta del sistema es un valor (normalmente desconocido) que depende de las inercias de la máquina y del ajuste del regulador"@es .
+ns1:CNC8070_f2e9a051d4 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC sólo tiene en cuenta este parámetro cuando trabaja con AC-forward; parámetro ACFWFACTOR." .
 
-ns1:Tarea_AjusteGanancias a ns1:TareaMantenimiento ;
-    rdfs:label "Ajuste de ganancias del regulador"@es ;
-    ns1:requiereMantenimiento ns1:Regulador_Inercia ;
-    ns1:textoExtracto "probar con varios valores. El ajuste óptimo se consigue cuando se minimiza el error de seguimiento al máximo pero sin invertir los picos."@es .
+ns1:FactorDeCompensacionDeAdelantoACForward a ns1:Parametro ;
+    rdfs:label "Factor de compensación de adelanto AC-Forward" ;
+    ns1:identificador "ACFWFACTOR" ;
+    ns1:textoExtracto "La compensación de los retardos se realiza con el parámetro ACFWFACTOR" .
 
-ns1:Regulador_Inercia a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador de inercia"@es ;
-    ns1:controla ns1:Parametro_SercosPosicion ;
-    ns1:textoExtracto "depende de las inercias de la máquina y del ajuste del regulador"@es .
+ns1:PorcentajeDeACForwardEnAutomatico a ns1:Parametro ;
+    rdfs:label "Porcentaje de AC-Forward en automático" ;
+    ns1:identificador "ACFGAIN" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales." .
 
-ns1:Parametro_SercosPosicion a ns1:Parametro ;
-    rdfs:label "Parámetro Sercos posición"@es ;
-    ns1:textoExtracto "Sin función en Sercos posición. Se aconseja asignar a este parámetro un valor del orden del tiempo de respuesta del sistema."@es ;
-    ns1:valor "tiempo de respuesta del sistema (ajustable)"@es .
+ns1:PorcentajeDeACForwardEnManual_a5848c266a a ns1:Parametro ;
+    rdfs:label "Porcentaje de AC-Forward en manual" ;
+    ns1:identificador "MANACFGAIN" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales." .
+
+ns1:TiempoDeTransicion a ns1:Parametro ;
+    rdfs:label "Tiempo de transición" ;
+    ns1:identificador "TRANSDELAY" ;
+    ns1:textoExtracto "el parámetro TRANSDELAY del eje asociado al sensor debe valor 0 (cero)" .
 

@@ -1,62 +1,18 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_ComunicacionSSI_FagorLA a ns1:Sistema ;
-    rdfs:label "Sistema de comunicación SSI para regla absoluta Fagor LA" ;
-    ns1:documentadoEn ns1:Tabla_FrecuenciasMaximasSSI ;
-    ns1:textoExtracto "Ejemplo de parametrización para la conexión de la regla absoluta Fagor LA, configurada con los parámetros por defecto con los que sale de fábrica." ;
-    ns1:tieneComponente ns1:Parametro_SSIALARMBITS,
-        ns1:Parametro_SSIALARMLEVEL,
-        ns1:Parametro_SSICLKFREQ,
-        ns1:Parametro_SSICRCBITS,
-        ns1:Parametro_SSIDATALENGTH,
-        ns1:Parametro_SSIDATAMODE,
-        ns1:Parametro_SSIPACKFORMAT,
-        ns1:Parametro_SSISTARTBITS .
+ns1:TipoDeCaptacionSSIChecksumFagor a ns1:Parametro ;
+    rdfs:label "Tipo de captación SSI - Checksum Fagor" ;
+    ns1:identificador "Checksum Fagor" ;
+    ns1:textoExtracto "Algoritmo de comprobación de datos empleado en las captaciones de Fagor Automation." .
 
-ns1:Parametro_SSIALARMBITS a ns1:Parametro ;
-    rdfs:label "SSIALARMBITS" ;
-    ns1:textoExtracto "SSIALARMBITS = 1 | 1 bit de alarma/acknowledge." ;
-    ns1:valor "1" .
+ns1:TipoDeCaptacionSSIChecksumINDUCTOSYN a ns1:Parametro ;
+    rdfs:label "Tipo de captación SSI - Checksum INDUCTOSYN" ;
+    ns1:identificador "Checksum INDUCTOSYN" ;
+    ns1:textoExtracto "Algoritmo de comprobación de datos empleado en el conexionado con un módulo INDUCTOSYN." .
 
-ns1:Parametro_SSIALARMLEVEL a ns1:Parametro ;
-    rdfs:label "SSIALARMLEVEL" ;
-    ns1:textoExtracto "SSIALARMLEVEL = 1 | El acknowledge se indica con data a 0; por tanto, se produce una señal de alarma cuando el bit es un 1." ;
-    ns1:valor "1" .
-
-ns1:Parametro_SSICRCBITS a ns1:Parametro ;
-    rdfs:label "SSICRCBITS" ;
-    ns1:textoExtracto "SSICRCBITS = 0 | No hay bits de CRC." ;
-    ns1:valor "0" .
-
-ns1:Parametro_SSIDATALENGTH a ns1:Parametro ;
-    rdfs:label "SSIDATALENGTH" ;
-    ns1:identificador "n" ;
-    ns1:textoExtracto "SSIDATALENGTH = n | Longitud de bits de la cota." .
-
-ns1:Parametro_SSIDATAMODE a ns1:Parametro ;
-    rdfs:label "SSIDATAMODE" ;
-    ns1:textoExtracto "SSIDATAMODE = 1 | MSB Primero." ;
-    ns1:valor "1" .
-
-ns1:Parametro_SSIPACKFORMAT a ns1:Parametro ;
-    rdfs:label "SSIPACKFORMAT" ;
-    ns1:textoExtracto "SSIPACKFORMAT = 3 | Data + Alarm." ;
-    ns1:valor "3" .
-
-ns1:Parametro_SSISTARTBITS a ns1:Parametro ;
-    rdfs:label "SSISTARTBITS" ;
-    ns1:textoExtracto "SSISTARTBITS = 0 | No hay bits de start." ;
-    ns1:valor "0" .
-
-ns1:Tabla_FrecuenciasMaximasSSI a ns1:Tabla ;
-    rdfs:label "Frecuencias máximas recomendadas para comunicación SSI según longitud de cable" ;
-    ns1:ilustradoEn ns1:Parametro_SSICLKFREQ ;
-    ns1:textoExtracto "Longitud. | Frecuencia máxima. --- | --- Hasta 20 metros. | 600 kHz. Hasta 50 metros. | 400 kHz. Hasta 75 metros. | 300 kHz. Hasta 100 metros. | 250 kHz." .
-
-ns1:Parametro_SSICLKFREQ a ns1:Parametro ;
-    rdfs:label "SSICLKFREQ" ;
-    ns1:identificador "V.[ch].MPA.SSICLKFREQ[set].xn" ;
-    ns1:textoExtracto "SSICLKFREQ = 1 / T = 400. | 400 kHz. Frecuencia para la comunicación SSI. Valores posibles: De 59 a 7500 kHz. Valor por defecto: 150 kHz." ;
-    ns1:valor "400" .
+ns1:TipoDeCaptacionSSINoCalcularCRC a ns1:Parametro ;
+    rdfs:label "Tipo de captación SSI - No calcular CRC" ;
+    ns1:identificador "No calcular CRC" ;
+    ns1:textoExtracto "Aunque el CNC recibe los bits de CRC, no se hace ningún procesamiento de los mismos y por lo tanto no se reportan errores si la transmisión es errónea." .
 

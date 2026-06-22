@@ -1,29 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_Programacion a ns1:Sistema ;
-    rdfs:label "Sistema de programación de máquina" ;
-    ns1:activaAlarma ns1:Alarma_1530,
-        ns1:Alarma_1531 ;
-    ns1:textoExtracto "Sistema que gestiona la ejecución de funciones G (ej. G53) y sentencias de programación (ej. #EXBLK)" .
+ns1:FaltaDeProgramacionTEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta de Programación T en el bloque" ;
+    ns1:textoExtracto "1523 Falta programar T en el bloque. DETECCIÓN Durante la ejecución." .
 
-ns1:AccionProhibida_1530 a ns1:AccionProhibida ;
-    rdfs:label "Programación de G53 con coordenadas polares" ;
-    ns1:textoExtracto "No se permite programar G53 con coordenadas polares" .
+ns1:ProgramacionCorrectaDePOSYMZ a ns1:TareaMantenimiento ;
+    rdfs:label "Programación Correcta de POS y MZ" ;
+    ns1:solucionaFallo ns1:ProgramacionDePOSYOMZSinHerramienta ;
+    ns1:textoExtracto "SOLUCIÓN Los comandos POS y MZ se deben programar en el mismo bloque que la herramienta." .
 
-ns1:AccionProhibida_1531 a ns1:AccionProhibida ;
-    rdfs:label "Sintaxis incorrecta en sentencia #EXBLK" ;
-    ns1:textoExtracto "La sintaxis de la sentencia #EXBLK no es correcta" .
+ns1:RevisionDeProgramacion_2f5a95c092 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de Programación" ;
+    ns1:solucionaFallo ns1:NumeroNegativoDeRepeticionesDeBloque ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1530 a ns1:Alarma ;
-    rdfs:label "Alarma 1530: Coordenadas polares en G53" ;
-    ns1:identificador "1530" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1530 ;
-    ns1:textoExtracto "'No se permite programar G53 con coordenadas polares' DETECCIÓN Durante la ejecución. CAUSA En la función G53, las cotas del punto final están definidas en coordenadas polares o cilíndricas. SOLUCIÓN Programando respecto al cero máquina solo se pueden definir las cotas en coordenadas cartesianas." .
+ns1:NumeroNegativoDeRepeticionesDeBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "Número negativo de repeticiones de bloque" ;
+    ns1:textoExtracto "CAUSA Se ha programado un número negativo de repeticiones de bloque (NR). SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1531 a ns1:Alarma ;
-    rdfs:label "Alarma 1531: Sintaxis incorrecta en #EXBLK" ;
-    ns1:identificador "1531" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_1531 ;
-    ns1:textoExtracto "'Programar: #EXBLK [bloque, canal]' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más" .
+ns1:ProgramacionDePOSYOMZSinHerramienta a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación de POS y/o MZ sin herramienta" ;
+    ns1:textoExtracto "CAUSA Se ha programado POS y/o MZ en un bloque sin programar la herramienta. SOLUCIÓN Los comandos POS y MZ se deben programar en el mismo bloque que la herramienta." .
 

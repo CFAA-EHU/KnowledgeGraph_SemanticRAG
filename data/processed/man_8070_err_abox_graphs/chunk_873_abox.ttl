@@ -1,30 +1,63 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Directiva_PE a ns1:Parametro ;
-    rdfs:label "Directiva de período (PE)"@es ;
-    ns1:identificador "PE" ;
-    ns1:textoExtracto "En la directiva \"PE\" se ha programado un periodo menor o igual que cero."@es ;
-    ns1:valor "> 0"^^xsd:string .
+ns1:FaltanDosArgumentosEnLaInstruccionDeAccionAND_46db00d0be a ns1:DiagnosticoFallo ;
+    rdfs:label "Faltan dos argumentos en la instrucción de acción AND" ;
+    ns1:textoExtracto "Faltan dos argumentos en la instrucción de acción AND. DETECCIÓN Durante la edición del programa PLC." .
 
-ns1:Error_8795 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error sintáctico. No se esperaba %"@es ;
-    ns1:identificador "8795" ;
-    ns1:textoExtracto "8795 Error sintáctico. No se esperaba %. DETECCIÓN Durante la edición del programa PLC. CAUSA La instrucción programada no admite el argumento indicado. SOLUCIÓN Corregir la sintaxis de la línea."@es .
+ns1:ProgramarANDOperandoOperandoResultado a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'AND operando operando resultado'" ;
+    ns1:solucionaFallo ns1:FaltaUnArgumentoEnLaInstruccionDeAccionAND ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"AND operando operando resultado\"." .
 
-ns1:Error_8796 a ns1:DiagnosticoFallo ;
-    rdfs:label "Cadena de warning vacía"@es ;
-    ns1:identificador "8796" ;
-    ns1:textoExtracto "8796 Cadena de warning vacía. DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA Hay definido un warning sin texto. SOLUCIÓN Definir el texto de warning."@es .
+ns1:ProgramarDVSOperandoOperandoResultado a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'DVS operando operando resultado'" ;
+    ns1:solucionaFallo ns1:FaltanDosArgumentosEnLaOperacionDVS,
+        ns1:FaltanTodosLosArgumentosEnLaOperacionDVS ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"DVS operando operando resultado\"." .
 
-ns1:Error_8797 a ns1:DiagnosticoFallo ;
-    rdfs:label "El segundo argumento debe ser un índice en ERA"@es ;
-    ns1:identificador "8797" ;
-    ns1:textoExtracto "8797 El segundo argumento debe ser un índice en ERA. DETECCIÓN Durante la edición del programa PLC. CAUSA El segundo argumento debe ser un número. SOLUCIÓN El segundo argumento debe ser un número; no hay que programar el tipo de recurso."@es .
+ns1:ProgramarMDSOperandoOperandoResultado a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'MDS operando operando resultado'" ;
+    ns1:solucionaFallo ns1:FaltaUnArgumentoEnLaOperacionMDS,
+        ns1:FaltanDosArgumentosEnLaOperacionMDS,
+        ns1:FaltanTodosLosArgumentosEnLaOperacionMDS ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"MDS operando operando resultado\"." .
 
-ns1:Error_8798 a ns1:DiagnosticoFallo ;
-    rdfs:label "El período debe ser mayor que cero"@es ;
-    ns1:identificador "8798" ;
-    ns1:textoExtracto "8798 El período debe ser mayor que cero. DETECCIÓN Durante la edición o compilación del programa PLC. CAUSA En la directiva \"PE\" se ha programado un periodo menor o igual que cero. SOLUCIÓN Programar en la directiva \"PE\" un valor mayor que cero."@es .
+ns1:ProgramarNGURegistro a ns1:TareaMantenimiento ;
+    rdfs:label "Programar 'NGU registro'" ;
+    ns1:solucionaFallo ns1:FaltaRegistroEnNGS,
+        ns1:FaltaRegistroEnNGU ;
+    ns1:textoExtracto "SOLUCIÓN Programar \"NGU registro\"." .
+
+ns1:FaltaRegistroEnNGS a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta registro en NGS" ;
+    ns1:textoExtracto "Falta registro en NGU. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:FaltaRegistroEnNGU a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta registro en NGU" ;
+    ns1:textoExtracto "Falta registro en NGU. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:FaltaUnArgumentoEnLaInstruccionDeAccionAND a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta un argumento en la instrucción de acción AND" ;
+    ns1:textoExtracto "Falta un argumento en la instrucción de acción AND. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:FaltaUnArgumentoEnLaOperacionMDS a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta un argumento en la operación MDS" ;
+    ns1:textoExtracto "Falta un argumento en la operación MDS. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:FaltanDosArgumentosEnLaOperacionDVS a ns1:DiagnosticoFallo ;
+    rdfs:label "Faltan dos argumentos en la operación DVS" ;
+    ns1:textoExtracto "Faltan dos argumentos en la operación DVS. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:FaltanDosArgumentosEnLaOperacionMDS a ns1:DiagnosticoFallo ;
+    rdfs:label "Faltan dos argumentos en la operación MDS" ;
+    ns1:textoExtracto "Faltan dos argumentos en la operación MDS. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:FaltanTodosLosArgumentosEnLaOperacionDVS a ns1:DiagnosticoFallo ;
+    rdfs:label "Faltan todos los argumentos en la operación DVS" ;
+    ns1:textoExtracto "Faltan todos los argumentos en la operación DVS. DETECCIÓN Durante la edición del programa PLC." .
+
+ns1:FaltanTodosLosArgumentosEnLaOperacionMDS a ns1:DiagnosticoFallo ;
+    rdfs:label "Faltan todos los argumentos en la operación MDS" ;
+    ns1:textoExtracto "Faltan todos los argumentos en la operación MDS. DETECCIÓN Durante la edición del programa PLC." .
 

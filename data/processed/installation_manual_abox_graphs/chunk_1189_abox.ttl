@@ -1,72 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:GrupoMultieje_A1A2 a ns1:Sistema ;
-    rdfs:label "Grupo multieje A1-A2"@es ;
-    ns1:textoExtracto "Grupo multieje compuesto por dos ejes controlados por un único motor. La captación interna (motor) de ambos ejes estará ubicada en el regulador mientras que la captación externa (directa) de cada eje podrá estar situada en los módulos remotos, en un regulador Sercos o de forma local en la propia unidad central."@es ;
-    ns1:tieneComponente ns1:Eje_A1,
-        ns1:Eje_A2,
-        ns1:Motor_GrupoA1A2,
-        ns1:Regulador_GrupoA1A2,
-        ns1:SistemaCaptacion_A1,
-        ns1:SistemaCaptacion_A2,
-        ns1:SistemaCaptacion_Compartido .
+ns1:CNC8070_78f98c2256 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:documentadoEn ns1:ParametrizarSetsDelRegulador ;
+    ns1:textoExtracto "El CNC asume el set por defecto (parámetro DEFAULTSET)." .
 
-ns1:LimiteSets_8 a ns1:Frecuencia ;
-    rdfs:label "Límite de 8 sets de parámetros por regulador"@es ;
-    ns1:textoExtracto "la suma total de sets de todos los ejes y/o cabezales incluidos en un grupo no podrá superar los 8 sets disponibles en el regulador."@es ;
-    ns1:valor "8" .
+ns1:SetPorDefecto a ns1:Parametro ;
+    rdfs:label "Set por defecto" ;
+    ns1:identificador "DEFAULTSET" ;
+    ns1:textoExtracto "El CNC asume el set por defecto (parámetro DEFAULTSET)." .
 
-ns1:ModoOperacion_A1 a ns1:ModoOperacion ;
-    rdfs:label "Modo de operación del eje A1 (posición/velocidad)"@es ;
-    ns1:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)."@es .
+ns1:SistemaReguladorSercos a ns1:Sistema ;
+    rdfs:label "Regulador Sercos" ;
+    ns1:textoExtracto "Homogeneización de parámetros entre el CNC y el regulador Sercos." .
 
-ns1:ModoOperacion_A2 a ns1:ModoOperacion ;
-    rdfs:label "Modo de operación del eje A2 (posición/velocidad)"@es ;
-    ns1:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)."@es .
-
-ns1:Motor_GrupoA1A2 a ns1:ComponenteElectrico ;
-    rdfs:label "Motor del grupo multieje A1-A2"@es ;
-    ns1:controla ns1:Eje_A1,
-        ns1:Eje_A2 ;
-    ns1:textoExtracto "Grupo multieje compuesto por dos ejes controlados por un único motor."@es .
-
-ns1:Parametro_DRIVEID a ns1:Parametro ;
-    rdfs:label "Parámetro DRIVEID (dirección Sercos)"@es ;
-    ns1:textoExtracto "todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID)."@es .
-
-ns1:Parametro_OPMODEP a ns1:Parametro ;
-    rdfs:label "Parámetro OPMODEP (modo de operación Sercos)"@es ;
-    ns1:textoExtracto "Todos los ejes de un grupo deben trabajar en el mismo modo de operación Sercos, posición o velocidad (parámetro OPMODEP)."@es .
-
-ns1:Regulador_GrupoA1A2 a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador Sercos del grupo multieje A1-A2"@es ;
-    ns1:monitoreaParametro ns1:Parametro_DRIVEID,
-        ns1:Parametro_OPMODEP ;
-    ns1:textoExtracto "La captación interna (motor) de ambos ejes estará ubicada en el regulador [...] Como los ejes están controlados con el mismo regulador, todos los ejes de un grupo deben tener la misma dirección Sercos (parámetro DRIVEID)."@es ;
-    ns1:tieneFrecuencia ns1:LimiteSets_8 .
-
-ns1:SistemaCaptacion_Compartido a ns1:Sensor ;
-    rdfs:label "Sistema de captación compartido para A1-A2"@es ;
-    ns1:textoExtracto "Ambos ejes pueden compartir el mismo sistema de captación."@es .
-
-ns1:Eje_A1 a ns1:ComponenteMecanico ;
-    rdfs:label "Eje A1"@es ;
-    ns1:controla ns1:SistemaCaptacion_A1 ;
-    ns1:requiereMantenimiento ns1:ModoOperacion_A1 ;
-    ns1:textoExtracto "Grupo multieje compuesto por dos ejes controlados por un único motor."@es .
-
-ns1:Eje_A2 a ns1:ComponenteMecanico ;
-    rdfs:label "Eje A2"@es ;
-    ns1:controla ns1:SistemaCaptacion_A2 ;
-    ns1:requiereMantenimiento ns1:ModoOperacion_A2 ;
-    ns1:textoExtracto "Grupo multieje compuesto por dos ejes controlados por un único motor."@es .
-
-ns1:SistemaCaptacion_A1 a ns1:Sensor ;
-    rdfs:label "Sistema de captación del eje A1"@es ;
-    ns1:textoExtracto "Cada eje puede disponer de un sistema de captación propio [...] la captación externa (directa) de cada eje podrá estar situada en los módulos remotos, en un regulador Sercos o de forma local en la propia unidad central."@es .
-
-ns1:SistemaCaptacion_A2 a ns1:Sensor ;
-    rdfs:label "Sistema de captación del eje A2"@es ;
-    ns1:textoExtracto "Cada eje puede disponer de un sistema de captación propio [...] la captación externa (directa) de cada eje podrá estar situada en los módulos remotos, en un regulador Sercos o de forma local en la propia unidad central."@es .
+ns1:ParametrizarSetsDelRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Parametrizar sets del regulador" ;
+    ns1:textoExtracto "el resto de sets del regulador hay que parametrizarlos desde el DDSSetup o en el propio regulador." .
 

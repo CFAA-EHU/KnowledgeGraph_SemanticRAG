@@ -1,39 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1625 a ns1:Alarma ;
-    rdfs:label "Un eje en control tangencial activo debe ser rotativo no HIRTH y no pertenecer al triedro activo"@es ;
-    ns1:identificador "1625" ;
-    ns1:textoExtracto "1625 'Un eje en control tangencial activo debe ser rotativo no HIRTH y no pertenecer al triedro activo' DETECCIÓN Durante la ejecución. CAUSA Los ejes a activar en el control tangencial debe ser rotativos, no hirth y no deben formar parte del triedro activo ni ser el eje longitudinal. SOLUCIÓN Revisar la programación."@es .
+ns1:ParametroQ a ns1:Parametro ;
+    rdfs:label "parámetro Q" ;
+    ns1:textoExtracto "Para la programación en polares utilizar el parámetro Q." .
 
-ns1:Alarma_1626 a ns1:Alarma ;
-    rdfs:label "Programar eje para #TANGCTRL ON/OFF/SUSP/RESUME"@es ;
-    ns1:identificador "1626" ;
-    ns1:textoExtracto "1626 'Programar eje para #TANGCTRL ON/OFF/SUSP/RESUME' DETECCIÓN Durante la ejecución. CAUSA Falta programar el eje o los ejes en la sentencia. SOLUCIÓN Revisar la programación."@es .
+ns1:ParametroQ1 a ns1:Parametro ;
+    rdfs:label "parámetro Q1" ;
+    ns1:textoExtracto "Para la función G33 utilizar el parámetro Q1." .
 
-ns1:Alarma_1627 a ns1:Alarma ;
-    rdfs:label "#TANGCTRL: programar valores de ángulo entre 0 y +/-359.9999"@es ;
-    ns1:identificador "1627" ;
-    ns1:monitoreaParametro ns1:Parametro_TANGCTRL_Angulo ;
-    ns1:textoExtracto "1627 '#TANGCTRL: programar valores de ángulo entre 0 y +/-359.9999' DETECCIÓN Durante la ejecución. CAUSA El ángulo programado en la sentencia es incorrecto. SOLUCIÓN Revisar la programación. El valor del ángulo debe estar entre 0 y ±359.9999."@es .
+ns1:RevisarLaProgramacion_17e9d559bb a ns1:AccionProhibida ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FalloValorQDoblementeProgramado ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_1628 a ns1:Alarma ;
-    rdfs:label "No se puede eliminar de la configuración un eje con control tangencial activo"@es ;
-    ns1:identificador "1628" ;
-    ns1:textoExtracto "1628 'No se puede eliminar de la configuración un eje con control tangencial activo' DETECCIÓN Durante la ejecución. CAUSA El CNC no puede eliminar el eje tangencial de la configuración si el control tangencial está activo. SOLUCIÓN Para eliminar este eje de la configuración, cancelar el control tangencial."@es .
+ns1:RevisarLaProgramacion_267862cf0a a ns1:AccionProhibida ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:FalloValorQ1DoblementeProgramado ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. 1619 'Valor Q1 doblemente" .
 
-ns1:Alarma_1629 a ns1:Alarma ;
-    rdfs:label "No se admite programar un eje en control tangencial"@es ;
-    ns1:identificador "1629" ;
-    ns1:textoExtracto "1629 'No se admite programar un eje en control tangencial' DETECCIÓN Durante la ejecución. CAUSA Con el control tangencial activo, hay programado un movimiento u otra operación para el eje tangencial. SOLUCIÓN Con el control tangencial activo, no se permite programar desplazamientos del eje tangencial; es el CNC el encargado de orientar este eje. Para utilizar este eje, cancelar el control tangencial."@es .
+ns1:FalloValorQ1DoblementeProgramado a ns1:DiagnosticoFallo ;
+    rdfs:label "'Valor Q1 doblemente programado'" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. 1619 'Valor Q1 doblemente" .
 
-ns1:Alarma_1630 a ns1:Alarma ;
-    rdfs:label "Programación de perfil mediante etiquetas incorrecta"@es ;
-    ns1:identificador "1630" ;
-    ns1:textoExtracto "1630 'Programación de perfil mediante etiquetas incorrecta' DETECCIÓN Durante la ejecución. CAUSA En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E)."@es .
-
-ns1:Parametro_TANGCTRL_Angulo a ns1:Parametro ;
-    rdfs:label "Ángulo de control tangencial (#TANGCTRL)"@es ;
-    ns1:textoExtracto "El valor del ángulo debe estar entre 0 y ±359.9999"@es ;
-    ns1:valor "0 a ±359.9999" .
+ns1:FalloValorQDoblementeProgramado a ns1:DiagnosticoFallo ;
+    rdfs:label "'Valor Q doblemente programado'" ;
+    ns1:textoExtracto "'Valor Q doblemente programado' DETECCIÓN Durante la ejecución. CAUSA El parámetro Q está programado más de una vez en el mismo bloque." .
 

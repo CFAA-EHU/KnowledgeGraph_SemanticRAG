@@ -1,28 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Herramienta_Cabezal a ns1:Herramienta ;
-    rdfs:label "Herramienta del cabezal"@es ;
-    ns1:textoExtracto "facilita llevar la herramienta de nuevo a una zona permitida"@es .
+ns1:EjeEsclavoTandemC a ns1:Sistema ;
+    rdfs:label "Eje esclavo del tándem C" ;
+    ns1:controladoPor ns1:CNC8070_8ebb4aec40 ;
+    ns1:textoExtracto "Esta marca hace referencia al eje o cabezal esclavo del tándem." .
 
-ns1:SistemaControl_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC de control de ejes"@es ;
-    ns1:controla ns1:LimitesSoftware_Eje ;
-    ns1:textoExtracto "El CNC aplica siempre los límites de recorrido"@es ;
-    ns1:tieneComponente ns1:MarcaPLC_Se_alEje .
+ns1:AccionProhibida_d658687ffd a ns1:AccionProhibida ;
+    rdfs:label "Marca de desacople del eje esclavo" ;
+    ns1:textoExtracto "Esta marca hace referencia al eje o cabezal esclavo del tándem." .
 
-ns1:ZonaProhibida_Eje a ns1:AccionProhibida ;
-    rdfs:label "Invasión de zona prohibida del eje"@es ;
-    ns1:mitigaRiesgo ns1:MarcaPLC_Se_alEje ;
-    ns1:textoExtracto "en caso de que [la herramienta] haya superado los límites de software o haya invadido una zona prohibida"@es .
-
-ns1:LimitesSoftware_Eje a ns1:Parametro ;
-    rdfs:label "Límites de software del eje"@es ;
-    ns1:textoExtracto "Los límites de software se pueden fijar mediante los parámetros máquina, mediante las funciones G198/G199 o mediante variables."@es ;
-    ns1:valor "Configurable (G198/G199/parámetros máquina)"@es .
-
-ns1:MarcaPLC_Se_alEje a ns1:ComponenteElectrico ;
-    rdfs:label "Marca PLC para desactivación de límites de software"@es ;
-    ns1:monitoreaParametro ns1:LimitesSoftware_Eje ;
-    ns1:textoExtracto "Si el PLC desactiva esta marca, el CNC vuelve a tener en cuenta los límites de software y las zonas de trabajo en el eje indicado."@es .
+ns1:CNC8070_8ebb4aec40 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:AccionProhibida_d658687ffd ;
+    ns1:textoExtracto "Si el PLC activa esta marca, el eje esclavo se desacopla del maestro," .
 

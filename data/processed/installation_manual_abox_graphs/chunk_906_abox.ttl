@@ -1,53 +1,36 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CNC_Sistema a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:controla ns1:PanelJog ;
-    ns1:textoExtracto "el CNC siempre asume la configuración de teclados definida en los parámetros máquina" ;
-    ns1:tieneComponente ns1:Registro_KEYBD1CH,
-        ns1:Registro_KEYBD8CH .
+ns1:CNC8070_0079dcbefa a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:monitoreaParametro ns1:Parametro_c8e1032762 ;
+    ns1:textoExtracto "Si el PLC desactiva esta marca, el CNC recupera la velocidad programada." .
 
-ns1:ConfiguracionTeclados_Defecto a ns1:Parametro ;
-    rdfs:label "Configuración de teclados por defecto" ;
-    ns1:identificador "Configuración_teclados_defecto" ;
-    ns1:textoExtracto "el CNC siempre asume la configuración de teclados definida en los parámetros máquina." .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controla ns1:Parametro_0a8cbac0da,
+        ns1:Parametro_8126d673b2 ;
+    ns1:textoExtracto "El PLC dispone de las siguientes marcas para poder deshabilitar la sonda temporalmente (por ejemplo, en un cambio de cabezal)." .
 
-ns1:Marca_ENABLE_axis a ns1:Parametro ;
-    rdfs:label "Marca ENABLE(axis)" ;
-    ns1:identificador "ENABLE(axis)" ;
-    ns1:textoExtracto "Si se trata de un volante individual, asociado a un eje, la marca ENABLE(axis) del eje permanecerá activa." .
+ns1:SondaDeLaEntrada1 a ns1:ComponenteElectrico ;
+    rdfs:label "Sonda de la entrada 1" ;
+    ns1:textoExtracto "La marca PT100OFF1 corresponde a la sonda de la entrada 1" .
 
-ns1:ModoManual_Volante a ns1:ModoOperacion ;
-    rdfs:label "Modo manual de volante" ;
-    ns1:textoExtracto "Si en el modo manual está seleccionado el modo volante para dicho eje, éste se mostrará en video inverso aunque el PLC haya inhibido los volantes que pueden moverlo." .
+ns1:SondaDeLaEntrada2 a ns1:ComponenteElectrico ;
+    rdfs:label "Sonda de la entrada 2" ;
+    ns1:textoExtracto "La marca PT100OFF2 corresponde a la sonda de la entrada 2" .
 
-ns1:PLC_SistemaControl a ns1:Sistema ;
-    rdfs:label "PLC del sistema de control" ;
-    ns1:controla ns1:Volante ;
-    ns1:textoExtracto "el PLC haya inhibido los volantes que pueden moverlo" .
+ns1:Parametro_0a8cbac0da a ns1:Parametro ;
+    rdfs:label "Marca para deshabilitar temporalmente la sonda de la entrada 2" ;
+    ns1:identificador "PT100OFF2" ;
+    ns1:textoExtracto "La marca PT100OFF2 corresponde a la sonda de la entrada 2" .
 
-ns1:Variable_V_G_HANDP_hw a ns1:Parametro ;
-    rdfs:label "Variable V.G.HANDP[hw]" ;
-    ns1:identificador "V.G.HANDP[hw]" ;
-    ns1:monitoreaParametro ns1:Volante ;
-    ns1:textoExtracto "Número de impulsos enviados por el volante desde el arranque del sistema." .
+ns1:Parametro_8126d673b2 a ns1:Parametro ;
+    rdfs:label "Marca para deshabilitar temporalmente la sonda de la entrada 1" ;
+    ns1:identificador "PT100OFF1" ;
+    ns1:textoExtracto "La marca PT100OFF1 corresponde a la sonda de la entrada 1" .
 
-ns1:PanelJog a ns1:InterfazUsuario ;
-    rdfs:label "Panel de jog" ;
-    ns1:textoExtracto "asociar un panel de jog a un canal en concreto, siempre al canal activo o recuperar la configuración definida en los parámetros máquina." .
-
-ns1:Registro_KEYBD1CH a ns1:Parametro ;
-    rdfs:label "Registro KEYBD1CH" ;
-    ns1:identificador "KEYBD1CH" ;
-    ns1:textoExtracto "KEYBD1CH [...] permiten modificar el comportamiento por defecto de los teclados respecto a los canales" .
-
-ns1:Registro_KEYBD8CH a ns1:Parametro ;
-    rdfs:label "Registro KEYBD8CH" ;
-    ns1:identificador "KEYBD8CH" ;
-    ns1:textoExtracto "KEYBD8CH [...] permiten modificar el comportamiento por defecto de los teclados respecto a los canales" .
-
-ns1:Volante a ns1:ComponenteElectrico ;
-    rdfs:label "Volante (dispositivo de entrada)" ;
-    ns1:textoExtracto "Mientras el volante está inhibido, la variable asociada al volante no guarda los impulsos que envía el volante." .
+ns1:Parametro_c8e1032762 a ns1:Parametro ;
+    rdfs:label "Parámetro máquina que activa las entradas PT100" ;
+    ns1:textoExtracto "Las entradas PT100 se activan desde los parámetros máquina." .
 

@@ -1,59 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_0200 a ns1:Alarma ;
-    rdfs:label "Fallo en la petición a un VxD"@es ;
-    ns1:identificador "0200" ;
-    ns1:textoExtracto "0200 'Fallo en la petición a un VxD' DETECCIÓN Al leer el estado de la batería. CAUSA El CNC no se puede conectar con VcompciD. SOLUCIÓN Póngase en contacto con su proveedor."@es .
+ns1:AjustarParametroLOOPTIME a ns1:TareaMantenimiento ;
+    rdfs:label "Ajustar parámetro LOOPTIME" ;
+    ns1:solucionaFallo ns1:InterrupcionesDeTiempoRealSuperanElTiempoPermitido ;
+    ns1:textoExtracto "Si el error se repite con frecuencia, puede ser necesario ajustar el parámetro LOOPTIME." .
 
-ns1:Alarma_0201 a ns1:Alarma ;
-    rdfs:label "Corte en la red. PC alimentado con batería"@es ;
-    ns1:identificador "0201" ;
-    ns1:textoExtracto "0201 'Corte en la red. PC alimentado con batería' DETECCIÓN Al leer el estado de la batería."@es .
+ns1:AvisoSeguridad_5c6e8d0392 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de error #OPEN" ;
+    ns1:solucionaFallo ns1:ElArchivoOPathIndicadoNoExiste ;
+    ns1:textoExtracto "#OPEN:El fichero o path indicado no existe." .
 
-ns1:BateriaCNC a ns1:ComponenteElectrico ;
-    rdfs:label "Batería del CNC"@es ;
-    ns1:textoExtracto "DETECCIÓN Al leer el estado de **la batería**."@es .
+ns1:AvisoSeguridad_92739e66f0 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de error 'RT IT Overflow'" ;
+    ns1:textoExtracto "'RT IT Overflow' DETECCIÓN Durante el funcionamiento del CNC." .
 
-ns1:Parametro_MOVAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro MOVAXIS"@es ;
-    ns1:identificador "MOVAXIS" ;
-    ns1:monitoreaParametro ns1:Alarma_0174 ;
-    ns1:textoExtracto "El CNC no puede activar la compensación volumétrica porque entre los ejes que se mueven (**parámetro MOVAXIS**) hay más de un eje rotativo módulo, y el recorrido del segundo eje no es completo (0 a 360º)."@es .
+ns1:ElArchivoOPathIndicadoNoExiste a ns1:DiagnosticoFallo ;
+    rdfs:label "El archivo o path indicado no existe" ;
+    ns1:textoExtracto "La sentencia #OPEN ha comprobado que el archivo no existe (comando \"R\")." .
 
-ns1:Parametro_TemperaturaAmbiente a ns1:Parametro ;
-    rdfs:label "Temperatura ambiente"@es ;
-    ns1:monitoreaParametro ns1:Alarma_0173 ;
-    ns1:textoExtracto "el CNC comprueba que **la temperatura ambiente** no sobrepase los **65ºC (149ºF)**"@es ;
-    ns1:valor "65" .
-
-ns1:TareaMantenimiento_ValidacionCompensacionVolumetrica a ns1:TareaMantenimiento ;
-    rdfs:label "Validación de compensación volumétrica"@es ;
-    ns1:solucionaFallo ns1:Alarma_0174 ;
-    ns1:textoExtracto "Definir el módulo del segundo eje rotativo entre 0 y 360º y **validar la compensación volumétrica**."@es .
-
-ns1:TareaMantenimiento_VentilacionHabitaculo a ns1:TareaMantenimiento ;
-    rdfs:label "Instalación de ventiladores para airear el habitáculo"@es ;
-    ns1:solucionaFallo ns1:Alarma_0173 ;
-    ns1:textoExtracto "En caso necesario, **instalar ventiladores para airear el habitáculo**."@es .
-
-ns1:SistemaRefrigeracion a ns1:Sistema ;
-    rdfs:label "Sistema de refrigeración del hardware"@es ;
-    ns1:textoExtracto "La causa del aumento de temperatura puede ser un fallo en el **sistema de refrigeración del hardware** o una temperatura ambiente muy elevada."@es ;
-    ns1:tieneComponente ns1:VentiladorCNC .
-
-ns1:VentiladorCNC a ns1:ComponenteMecanico ;
-    rdfs:label "Ventilador del CNC"@es ;
-    ns1:textoExtracto "normal de funcionamiento del CNC, éste monitoriza y vigila que **dicho ventilador** esté en marcha. Dicho testeo se realizará cada minuto, al igual que la vigilancia de temperatura."@es .
-
-ns1:Alarma_0173 a ns1:Alarma ;
-    rdfs:label "Marcha no permitida por sobrepasar temperatura de seguridad"@es ;
-    ns1:identificador "0173" ;
-    ns1:mitigaRiesgo ns1:SistemaRefrigeracion ;
-    ns1:textoExtracto "0173 Marcha no permitida por sobrepasar temperatura de seguridad. Apagar el cnc y contactar con el SAT. DETECCIÓN Durante el funcionamiento del CNC. CAUSA Cada vez que se pulsa [START], el CNC comprueba que la temperatura ambiente no sobrepase los 65ºC (149ºF), y en caso de superar dicho valor, invalida el [START] y muestra este error. La causa del aumento de temperatura puede ser un fallo en el sistema de refrigeración del hardware o una temperatura ambiente muy elevada. El error muestra la temperatura actual."@es .
-
-ns1:Alarma_0174 a ns1:Alarma ;
-    rdfs:label "Ejes rotativos, es necesario completar la vuelta completa"@es ;
-    ns1:identificador "0174" ;
-    ns1:textoExtracto "0174 Ejes rotativos, es necesario completar la vuelta completa. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El CNC no puede activar la compensación volumétrica porque entre los ejes que se mueven (parámetro MOVAXIS) hay más de un eje rotativo módulo, y el recorrido del segundo eje no es completo (0 a 360º)."@es .
+ns1:InterrupcionesDeTiempoRealSuperanElTiempoPermitido a ns1:DiagnosticoFallo ;
+    rdfs:label "Interrupciones de tiempo real superan el tiempo permitido" ;
+    ns1:textoExtracto "Las interrupciones de tiempo real superan el tiempo permitido." .
 

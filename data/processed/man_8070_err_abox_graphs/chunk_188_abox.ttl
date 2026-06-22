@@ -1,53 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_Aritmetico_Protegido a ns1:Parametro ;
-    rdfs:label "Parámetro aritmético protegido contra escritura" ;
-    ns1:identificador "param_aritm_protegido" ;
-    ns1:textoExtracto "El parámetro aritmético no existe o está protegido contra escritura" .
+ns1:RevisarLaProgramacionDeInterpolacionCircular a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación de interpolación circular" ;
+    ns1:solucionaFallo ns1:NoSePermiteProgramarCentroYRadioDelCirculoSimultaneamente ;
+    ns1:textoExtracto "SOLUCIÓN En una interpolación circular hay que programar las cotas del punto final y además el radio o el centro del círculo." .
 
-ns1:Tarea_DefinirNombreEjeC a ns1:TareaMantenimiento ;
-    rdfs:label "Definir nombre del eje C en sentencia #CAX" ;
-    ns1:monitoreaParametro ns1:Parametro_CAXIS,
-        ns1:Sentencia_CAX ;
-    ns1:solucionaFallo ns1:Fallo_1376 ;
-    ns1:textoExtracto "SOLUCIÓN Indicar en la sentencia #CAX el nombre con el que identificará al eje C." .
-
-ns1:Tarea_RevisionProgramacion a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de programación (solución a fallos 1375, 1376, 1377)" ;
-    ns1:solucionaFallo ns1:Fallo_1375,
-        ns1:Fallo_1376,
-        ns1:Fallo_1377,
-        ns1:Fallo_Programacion_M02_M30 ;
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteVelocidadDelCabezalNegativa,
+        ns1:NoSePermiteUnCambioDeGamaYMovimientoDelCabezalSimultaneos ;
     ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Fallo_1375 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1375: 'Se espera M17/M29/#RET'" ;
-    ns1:identificador "1375" ;
-    ns1:textoExtracto "1375 'Se espera M17/M29/#RET' [...] CAUSA Falta programar M17, M29 o #RET al final de la subrutina." .
+ns1:NoSeAdmiteVelocidadDelCabezalNegativa a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite velocidad del cabezal negativa" ;
+    ns1:textoExtracto "'No se admite velocidad del cabezal negativa'" .
 
-ns1:Fallo_1377 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1377: 'Escritura de parámetro con índice no válido'" ;
-    ns1:identificador "1377" ;
-    ns1:textoExtracto "1377 'Escritura de parámetro con índice no válido' [...] CAUSA El parámetro aritmético no existe o está protegido contra escritura." .
+ns1:NoSePermiteProgramarCentroYRadioDelCirculoSimultaneamente a ns1:DiagnosticoFallo ;
+    rdfs:label "No se permite programar centro y radio del círculo simultáneamente" ;
+    ns1:textoExtracto "'No se permite programar centro y radio del círculo simultáneamente'" .
 
-ns1:Fallo_Programacion_M02_M30 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo de programación: M02/M30 no programado" ;
-    ns1:identificador "M02_M30_missing" ;
-    ns1:textoExtracto "CAUSA Falta programar M02 o M30 al final del programa principal." .
-
-ns1:Parametro_CAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro máquina CAXIS (nombre por defecto del eje C)" ;
-    ns1:identificador "CAXIS" ;
-    ns1:textoExtracto "parámetros máquina no está indicado el nombre por defecto (parámetro CAXIS)" .
-
-ns1:Sentencia_CAX a ns1:Parametro ;
-    rdfs:label "Sentencia #CAX (definición del eje C)" ;
-    ns1:identificador "#CAX" ;
-    ns1:textoExtracto "En la sentencia #CAX falta indicar el nombre del eje C" .
-
-ns1:Fallo_1376 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1376: 'No se ha definido nombre por defecto para el eje C'" ;
-    ns1:identificador "1376" ;
-    ns1:textoExtracto "1376 'No se ha definido nombre por defecto para el eje C' [...] CAUSA En la sentencia #CAX falta indicar el nombre del eje C y en los parámetros máquina no está indicado el nombre por defecto (parámetro CAXIS)." .
+ns1:NoSePermiteUnCambioDeGamaYMovimientoDelCabezalSimultaneos a ns1:DiagnosticoFallo ;
+    rdfs:label "No se permite un cambio de gama y movimiento del cabezal simultáneos" ;
+    ns1:textoExtracto "'No se permite un cambio de gama y movimiento del cabezal simultáneos'" .
 

@@ -1,32 +1,36 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:OperacionEscrituraCNC a ns1:AccionProhibida ;
-    rdfs:label "CNCWR (Escritura de variables CNC)"@es ;
-    ns1:identificador "CNCWR" ;
-    ns1:monitoreaParametro ns1:MarcaOperacionCNC,
-        ns1:RegistroCNC,
-        ns1:VariableCNC ;
-    ns1:textoExtracto "CNCWR [...] Permiten la [...] escritura (CNCWR) de las variables internas del CNC, siendo su formato de programación: CNCWR (Registro, Variable, Marca)"@es .
+ns1:AccionLevaNoPeriodica a ns1:AccionProhibida ;
+    rdfs:label "Accion Leva No Periódica" ;
+    ns1:textoExtracto "Se define asignando al parámetro type el valor \"ONCE\"." .
 
-ns1:OperacionLecturaCNC a ns1:AccionProhibida ;
-    rdfs:label "CNCRD (Lectura de variables CNC)"@es ;
-    ns1:identificador "CNCRD" ;
-    ns1:monitoreaParametro ns1:MarcaOperacionCNC,
-        ns1:RegistroCNC,
-        ns1:VariableCNC ;
-    ns1:textoExtracto "CNCRD [...] Permiten la lectura (CNCRD) de las variables internas del CNC, siendo su formato de programación: CNCRD (Variable, Registro, Marca)"@es .
+ns1:AccionLevaPeriodica a ns1:AccionProhibida ;
+    rdfs:label "Accion Leva Periódica" ;
+    ns1:textoExtracto "Se define asignando al parámetro type el valor \"CONT\"." .
 
-ns1:MarcaOperacionCNC a ns1:Parametro ;
-    rdfs:label "Marca de estado de operación CNC"@es ;
-    ns1:textoExtracto "Marca [...] se pone a \"1\" cuando comienza la operación y se mantiene a dicho valor hasta que finaliza la misma"@es ;
-    ns1:valor "1" .
+ns1:PosicionDeInicioDelEjeEsclavo a ns1:Parametro ;
+    rdfs:label "Posición de inicio del eje esclavo" ;
+    ns1:identificador "slave_off" ;
+    ns1:textoExtracto "La leva aplica al eje esclavo cuando éste se encuentra entre \"slave_off\" y \"slave_off + range_slave\"." .
 
-ns1:RegistroCNC a ns1:Parametro ;
-    rdfs:label "Registro de operación CNC"@es ;
-    ns1:textoExtracto "Registro [...] CNCRD carga el contenido de la variable en el registro [...] CNCWR carga el contenido del registro en la variable"@es .
+ns1:PosicionDeInicioDelEjeMaestro a ns1:Parametro ;
+    rdfs:label "Posición de inicio del eje maestro" ;
+    ns1:identificador "master_off" ;
+    ns1:textoExtracto "La leva se activa cuando el eje maestro se encuentra entre las posiciones \"master_off\" y \"master_off + range_master\"." .
 
-ns1:VariableCNC a ns1:Parametro ;
-    rdfs:label "Variable interna del CNC"@es ;
-    ns1:textoExtracto "variables internas del CNC"@es .
+ns1:RangoDeActivacionDelEjeEsclavo a ns1:Parametro ;
+    rdfs:label "Rango de activación del eje esclavo" ;
+    ns1:identificador "range_slave" ;
+    ns1:textoExtracto "La leva aplica al eje esclavo cuando éste se encuentra entre \"slave_off\" y \"slave_off + range_slave\"." .
+
+ns1:RangoDeActivacionDelEjeMaestro a ns1:Parametro ;
+    rdfs:label "Rango de activación del eje maestro" ;
+    ns1:identificador "range_master" ;
+    ns1:textoExtracto "La leva se activa cuando el eje maestro se encuentra entre las posiciones \"master_off\" y \"master_off + range_master\"." .
+
+ns1:TipoDeLeva a ns1:Parametro ;
+    rdfs:label "Tipo de leva" ;
+    ns1:identificador "type" ;
+    ns1:textoExtracto "La selección se realiza mediante el parámetro type." .
 

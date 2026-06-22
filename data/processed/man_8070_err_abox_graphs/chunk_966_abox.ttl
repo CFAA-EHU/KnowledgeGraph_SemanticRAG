@@ -1,29 +1,30 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:TareaRevisionTensionRed a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de tensiones de red y cableado"@es ;
-    ns1:solucionaFallo ns1:FalloTensionRed_9550 ;
-    ns1:textoExtracto "SOLUCIÓN Revisar tensiones de red y cableado hasta la tarjeta sense."@es .
+ns1:PonerseEnContactoConFagorAutomation a ns1:AccionProhibida ;
+    rdfs:label "Ponerse en contacto con Fagor Automation" ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation." .
 
-ns1:TarjetaSense a ns1:ComponenteElectrico ;
-    rdfs:label "Tarjeta sense"@es ;
-    ns1:textoExtracto "cableado hasta la tarjeta sense"@es .
+ns1:RevisionDelDipswitchS50 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión del dipswitch S50" ;
+    ns1:solucionaFallo ns1:ErrorDesconocidoDelModuloABSIND ;
+    ns1:textoExtracto "Revise el estado del dipswitch S50 del módulo ABSIND. El valor seleccionado debe ser coherente con el parámetro máquina SSITYPE del CNC y con el tipo de captador (inductosyn/resolver) conectado al módulo ABSIND." .
 
-ns1:FalloTensionRed_9550 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo por tensión de red insuficiente (9550)"@es ;
-    ns1:identificador "9550" ;
-    ns1:monitoreaParametro ns1:ParametroTensionRed_70porciento,
-        ns1:ParametroTensionRed_80porciento ;
-    ns1:textoExtracto "Nivel de tensión por debajo del 70%. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Bajada en la tensión de red."@es .
+ns1:SistemaCNC8070_d5361873a8 a ns1:Sistema ;
+    rdfs:label "Sistema CNC 8070" ;
+    ns1:monitoreaParametro ns1:ParametroSSITYPE ;
+    ns1:textoExtracto "El valor del parámetro SSITYPE del CNC no coincide con el valor seleccionado en el dipswitch S50 del módulo ABSIND." .
 
-ns1:ParametroTensionRed_70porciento a ns1:Parametro ;
-    rdfs:label "Tensión de red (umbral 70%)"@es ;
-    ns1:textoExtracto "Nivel de tensión por debajo del 70%"@es ;
-    ns1:valor "70%" .
+ns1:SustitucionDelModuloABSIND_93c2ebbca1 a ns1:AccionProhibida ;
+    rdfs:label "Sustitución del módulo ABSIND" ;
+    ns1:solucionaFallo ns1:ErrorDesconocidoDelModuloABSIND ;
+    ns1:textoExtracto "Si el error es repetitivo y persiste pruebe a sustituir el módulo ABSIND asociado a esa captación." .
 
-ns1:ParametroTensionRed_80porciento a ns1:Parametro ;
-    rdfs:label "Tensión de red (umbral 80%)"@es ;
-    ns1:textoExtracto "la tensión de red no ha alcanzado el 80 % del valor esperado"@es ;
-    ns1:valor "80%" .
+ns1:ParametroSSITYPE a ns1:Parametro ;
+    rdfs:label "Parámetro SSITYPE" ;
+    ns1:textoExtracto "El valor del parámetro SSITYPE del CNC no coincide con el valor seleccionado en el dipswitch S50 del módulo ABSIND." .
+
+ns1:ErrorDesconocidoDelModuloABSIND a ns1:DiagnosticoFallo ;
+    rdfs:label "Error desconocido del módulo ABSIND" ;
+    ns1:textoExtracto "El módulo ABSIND ha generado un error desconocido. Es probable que el error pueda deberse a un mal funcionamiento del módulo ABSIND." .
 

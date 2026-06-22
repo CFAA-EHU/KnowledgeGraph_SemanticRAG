@@ -1,29 +1,55 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_8254 a ns1:DiagnosticoFallo ;
-    rdfs:label "Sobran ejes en G20" ;
-    ns1:identificador "8254" ;
-    ns1:solucionaFallo ns1:Parametro_G20 ;
-    ns1:textoExtracto "8254 'Sobran ejes en G20' DETECCIÓN Durante la edición. CAUSA Algunos de los parámetros programados para la función G20 no están permitidos. SOLUCIÓN Revisar la sintaxis de programación de la función G20." .
+ns1:AccionProhibida_07da0e8204 a ns1:AccionProhibida ;
+    rdfs:label "Función M fuera de rango" ;
+    ns1:textoExtracto "'Función M fuera de rango' DETECCIÓN Durante la edición. CAUSA La función M programada no existe." .
 
-ns1:Fallo_8256 a ns1:DiagnosticoFallo ;
-    rdfs:label "Instrucción de ciclo de interpolador inexistente" ;
-    ns1:identificador "8256" ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "8256 'Instrucción de ciclo de interpolador inexistente' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA La instrucción programada no existe. SOLUCIÓN Revisar el manual de programación." .
+ns1:AccionProhibida_a8d2ba8e03 a ns1:AccionProhibida ;
+    rdfs:label "Función G fuera de rango" ;
+    ns1:textoExtracto "'Función G fuera de rango' DETECCIÓN Durante la edición y ejecución en MDI." .
 
-ns1:Fallo_8257 a ns1:DiagnosticoFallo ;
-    rdfs:label "Carácter incorrecto en nombre de programa/subrutina" ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "8257" ;
-    ns1:textoExtracto "8257 'No puede haber nada después del nombre del programa o subrutina' DETECCIÓN Durante la edición. CAUSA En el nombre del programa principal o de la subrutina hay un carácter incorrecto. SOLUCIÓN La definición del nombre del programa principal o subrutina tan solo puede ir acompañada de comentario. Los caracteres prohibidos son: • Programa principal: \\ / : * ? \" < > | y espacio en blanco." .
+ns1:AccionProhibida_ccee06cd36 a ns1:AccionProhibida ;
+    rdfs:label "Función M inexistente" ;
+    ns1:textoExtracto "'Función M inexistente' DETECCIÓN Durante la edición. CAUSA La función M programada no existe." .
 
-ns1:Parametro_G20 a ns1:Parametro ;
-    rdfs:label "Parámetros obligatorios de la función G20" ;
-    ns1:textoExtracto "CAUSA No se han programado todos los parámetros obligatorios en la función G20. SOLUCIÓN Revisar la sintaxis de programación de la función G20." .
+ns1:ErrorSintactico a ns1:AccionProhibida ;
+    rdfs:label "Error sintáctico" ;
+    ns1:textoExtracto "'Error sintáctico' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA La sintaxis de la sentencia o variable programada no es correcta." .
+
+ns1:ExclusividadMutuaOFuncionesMIguales a ns1:AccionProhibida ;
+    rdfs:label "Exclusividad mutua o funciones M iguales" ;
+    ns1:textoExtracto "'Exclusividad mutua o funciones M iguales' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA Hay una función M programada más de una vez en el mismo bloque o hay dos funciones M incompatibles en el mismo bloque." .
 
 ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar el manual de programación." .
+    rdfs:label "manual de programación" ;
+    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia o variable." .
+
+ns1:RevisarExclusividadMutuaDeLasFuncionesM a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar exclusividad mutua de las funciones M" ;
+    ns1:textoExtracto "'Exclusividad mutua o funciones M iguales' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA Hay una función M programada más de una vez en el mismo bloque o hay dos funciones M incompatibles en el mismo bloque. SOLUCIÓN Una función M sólo debe programarse una vez en el bloque. Revisar el manual de programación para comprobar la exclusividad mutua de las funciones M." .
+
+ns1:RevisarFuncionesMExistentes a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar funciones M existentes" ;
+    ns1:textoExtracto "'Función M inexistente' DETECCIÓN Durante la edición. CAUSA La función M programada no existe. SOLUCIÓN Revisar en el manual de programación las funciones M existentes." .
+
+ns1:RevisarFuncionesMExistentes_edadf1dec3 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar funciones M existentes" ;
+    ns1:textoExtracto "'Función M fuera de rango' DETECCIÓN Durante la edición. CAUSA La función M programada no existe. SOLUCIÓN Revisar en el manual de programación las funciones M existentes." .
+
+ns1:RevisarSintaxisDeLaSentenciaOVariable a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis de la sentencia o variable" ;
+    ns1:textoExtracto "'Error sintáctico' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA La sintaxis de la sentencia o variable programada no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia o variable." .
+
+ns1:RevisarSintaxisDeLaSentencia_3172eabf9c a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis de la sentencia" ;
+    ns1:textoExtracto "'Cadena de error vacía' DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:RevisarSintaxisDeLaSentencia_53eeecbc7a a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis de la sentencia" ;
+    ns1:textoExtracto "'Cadena de Warning vacía' DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+
+ns1:RevisarSintaxisDelBloque a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis del bloque" ;
+    ns1:textoExtracto "'Carácter no válido' DETECCIÓN Durante la edición. CAUSA Detectado un carácter no válido en el bloque. SOLUCIÓN Revisar la sintaxis del bloque." .
 

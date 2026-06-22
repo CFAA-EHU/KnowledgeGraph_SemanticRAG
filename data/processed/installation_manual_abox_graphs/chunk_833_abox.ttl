@@ -1,35 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ProgramaPieza a ns1:InterfazUsuario ;
-    rdfs:label "Programa pieza" ;
-    ns1:controla ns1:SenalSincronizacionCNC ;
-    ns1:textoExtracto "Las señales de sincronización se pueden ejecutar desde el programa pieza mediante las sentencias #WAIT o #MEET." .
+ns1:CNC8070_5dcac5d768 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:Parametro_8ee555b09f,
+        ns1:Parametro_91ce561a1c,
+        ns1:Parametro_c78acc4fd3,
+        ns1:Parametro_cb027595b8,
+        ns1:Parametro_d77d9c9d9b,
+        ns1:Parametro_f08341ce9f ;
+    ns1:textoExtracto "El CNC activa esta marca cuando está activa la opción de pasadas iguales sincronizadas (#DINDIST[1]). El CNC desactiva esta marca cuando está activa la opción de reparto de pasadas entre canales (#DINDIST[0])." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:textoExtracto "sistema operativo CNC" ;
-    ns1:tieneComponente ns1:MarcaMMCWDG .
+ns1:Parametro_8ee555b09f a ns1:Parametro ;
+    rdfs:label "Marca asociada a la distribución dinámica del mecanizado entre canales para el canal 2" ;
+    ns1:identificador "DINDISTYPEC2" ;
+    ns1:textoExtracto "Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
 
-ns1:EstadoSincronizacionCNC a ns1:Parametro ;
-    rdfs:label "Estado de sincronización CNC-PLC" ;
-    ns1:textoExtracto "El canal del CNC pone esta señal a (=1) para indicar al PLC que está esperando una señal de sincronización." ;
-    ns1:valor "1" .
+ns1:Parametro_91ce561a1c a ns1:Parametro ;
+    rdfs:label "Marca asociada a la distribución dinámica del mecanizado entre canales para el canal 1" ;
+    ns1:identificador "DINDISTYPEC1" ;
+    ns1:textoExtracto "Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
 
-ns1:EstadoSistemaOperativoCNC a ns1:Parametro ;
-    rdfs:label "Estado del sistema operativo CNC" ;
-    ns1:textoExtracto "Tiene el valor (=0) cuando el sistema operativo CNC funciona correctamente y valor (=1) en caso de bloqueo del sistema." ;
-    ns1:valor "0",
-        "1" .
+ns1:Parametro_c78acc4fd3 a ns1:Parametro ;
+    rdfs:label "Marca asociada a la distribución dinámica del mecanizado entre canales para el canal 3" ;
+    ns1:identificador "DINDISTYPEC3" ;
+    ns1:textoExtracto "Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
 
-ns1:MarcaMMCWDG a ns1:Sensor ;
-    rdfs:label "MMCWDG" ;
-    ns1:identificador "MMCWDG" ;
-    ns1:monitoreaParametro ns1:EstadoSistemaOperativoCNC ;
-    ns1:textoExtracto "MMCWDG. Esta marca indica el estado del sistema operativo." .
+ns1:Parametro_cb027595b8 a ns1:Parametro ;
+    rdfs:label "Marca que indica el estado de la temperatura del CNC" ;
+    ns1:identificador "OVERTEMP" ;
+    ns1:textoExtracto "Esta marca indica el estado de la temperatura del CNC." .
 
-ns1:SenalSincronizacionCNC a ns1:Sensor ;
-    rdfs:label "Señal de sincronización CNC-PLC" ;
-    ns1:monitoreaParametro ns1:EstadoSincronizacionCNC ;
-    ns1:textoExtracto "El canal del CNC pone esta señal a (=1) para indicar al PLC que está esperando una señal de sincronización. Las señales de sincronización se pueden ejecutar desde el programa pieza mediante las sentencias #WAIT o #MEET." .
+ns1:Parametro_d77d9c9d9b a ns1:Parametro ;
+    rdfs:label "Marca asociada al cambio de la gama de trabajo o del set de parámetros de un regulador Sercos" ;
+    ns1:identificador "SERPLCAC" ;
+    ns1:textoExtracto "Esta marca está asociada al cambio de la gama de trabajo o del set de parámetros de un regulador Sercos (variable (V.)[ch].A.SETGE.xn)." .
+
+ns1:Parametro_f08341ce9f a ns1:Parametro ;
+    rdfs:label "Marca asociada a la distribución dinámica del mecanizado entre canales para el canal 4" ;
+    ns1:identificador "DINDISTYPEC4" ;
+    ns1:textoExtracto "Esta marca está asociada a la distribución dinámica del mecanizado entre canales (sentencia #DINDIST) e indica el tipo activo." .
 

@@ -1,0 +1,48 @@
+PREFIX ex: <https://vocab.cfaa.eus/broaching/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:AccionProhibidaFaltaProgramarCotaFinal a ex:AccionProhibida ;
+    rdfs:label "Falta programar la cota final del movimiento" ;
+    ex:textoExtracto "'Falta programar la cota final del movimiento' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. Falta la cota final de movimiento en G8, G9 o G33." .
+
+ex:AccionProhibidaValorIncorrectoNumeroBloques a ex:AccionProhibida ;
+    rdfs:label "Valor incorrecto del número de bloques (0-50)" ;
+    ex:textoExtracto "'Valor incorrecto del número de bloques (0-50)' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. Valor incorrecto del número de bloques en G41/G42." .
+
+ex:AccionProhibidaProgramarSoloParametroE a ex:AccionProhibida ;
+    rdfs:label "Programar sólo parámetro E" ;
+    ex:textoExtracto "'Programar sólo parámetro E' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. Si en la función G49 se programa el parámetro E, la función no permite más parámetros." .
+
+ex:AccionProhibidaDobleProgramacionComodin a ex:AccionProhibida ;
+    rdfs:label "Doble programación comodín" ;
+    ex:textoExtracto "'Doble programación comodín' DETECCIÓN Durante la edición. CAUSA El comodín '?'." .
+
+ex:DiagnosticoFallo8503 a ex:DiagnosticoFallo ;
+    rdfs:label "Error al programar en lenguaje del 8055. Falta la cota final de movimiento en G8, G9 o G33" ;
+    ex:textoExtracto "'Falta programar la cota final del movimiento' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. Falta la cota final de movimiento en G8, G9 o G33." .
+
+ex:DiagnosticoFallo8504 a ex:DiagnosticoFallo ;
+    rdfs:label "Error al programar en lenguaje del 8055. Valor incorrecto del número de bloques en G41/G42" ;
+    ex:textoExtracto "'Valor incorrecto del número de bloques (0-50)' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. Valor incorrecto del número de bloques en G41/G42." .
+
+ex:DiagnosticoFallo8506 a ex:DiagnosticoFallo ;
+    rdfs:label "Error al programar en lenguaje del 8055. Si en la función G49 se programa el parámetro E, la función no permite más parámetros" ;
+    ex:textoExtracto "'Programar sólo parámetro E' DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. Si en la función G49 se programa el parámetro E, la función no permite más parámetros." .
+
+ex:DiagnosticoFallo8507 a ex:DiagnosticoFallo ;
+    rdfs:label "El comodín '?' está programado incorrectamente" ;
+    ex:textoExtracto "'Doble programación comodín' DETECCIÓN Durante la edición. CAUSA El comodín '?'.").
+
+ex:TareaMantenimientoConsultarManual a ex:TareaMantenimiento ;
+    rdfs:label "Consultar en el manual del 8055 la sintaxis correcta" ;
+    ex:textoExtracto "SOLUCIÓN Consultar en el manual del 8055 la sintaxis correcta." .
+
+ex:AccionProhibidaFaltaProgramarCotaFinal ex:solucionaFallo ex:DiagnosticoFallo8503 .
+ex:AccionProhibidaValorIncorrectoNumeroBloques ex:solucionaFallo ex:DiagnosticoFallo8504 .
+ex:AccionProhibidaProgramarSoloParametroE ex:solucionaFallo ex:DiagnosticoFallo8506 .
+ex:AccionProhibidaDobleProgramacionComodin ex:solucionaFallo ex:DiagnosticoFallo8507 .
+
+ex:TareaMantenimientoConsultarManual ex:solucionaFallo ex:DiagnosticoFallo8503 ;
+    ex:solucionaFallo ex:DiagnosticoFallo8504 ;
+    ex:solucionaFallo ex:DiagnosticoFallo8506 ;
+    ex:solucionaFallo ex:DiagnosticoFallo8507 .

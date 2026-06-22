@@ -1,45 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ComponenteCPLD a ns1:ComponenteElectrico ;
-    rdfs:label "CPLD"@es ;
-    ns1:textoExtracto "versión CPLD"@es .
+ns1:ConfirmarQueElMotorEsCorrecto a ns1:TareaMantenimiento ;
+    rdfs:label "Confirmar que el motor es correcto" ;
+    ns1:solucionaFallo ns1:NuevoMotorDetectado ;
+    ns1:textoExtracto "SOLUCIÓN Confirmar que el motor es correcto." .
 
-ns1:ComponenteFPGA a ns1:ComponenteElectrico ;
-    rdfs:label "FPGA"@es ;
-    ns1:textoExtracto "versión de la FPGA"@es .
+ns1:DesactivarAutophasingDuranteElProceso a ns1:AccionProhibida ;
+    rdfs:label "Desactivar Autophasing durante el proceso" ;
+    ns1:textoExtracto "El Autophasing se ha deshabilitado durante el proceso o devuelve un resultado incoherente." .
 
-ns1:Error9512FPGA a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la actualización de versión FPGA"@es ;
-    ns1:identificador "9512" ;
-    ns1:solucionaFallo ns1:ContactarConSoporteTecnico,
-        ns1:VerificarConexionadoSinAutorizacion ;
-    ns1:textoExtracto "9512 Error en la actualización de versión FPGA. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El CNC no puede actualizar la versión de la FPGA en algún regulador o RPS."@es .
+ns1:Parametro_4e0ce00763 a ns1:Parametro ;
+    rdfs:label "ABSFEEDBACK" ;
+    ns1:identificador "ABSFEEDBACK" ;
+    ns1:textoExtracto "Los valores ABSFEEDBACK = YES y M19SPDLEREV = YES pueden llevar a una pérdida de cota si se aplica un cambio de SDPLEREV." .
 
-ns1:Error9513CPLD a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la actualización de versión CPLD"@es ;
-    ns1:identificador "9513" ;
-    ns1:textoExtracto "9513 Error en la actualización de versión CPLD. DETECCIÓN Durante el"@es .
+ns1:Parametro_977fc26748 a ns1:Parametro ;
+    rdfs:label "M19SPDLEREV" ;
+    ns1:identificador "M19SPDLEREV" ;
+    ns1:textoExtracto "Los valores ABSFEEDBACK = YES y M19SPDLEREV = YES pueden llevar a una pérdida de cota si se aplica un cambio de SDPLEREV." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC"@es ;
-    ns1:textoExtracto "el CNC no puede actualizar la versión de la FPGA en algún regulador o RPS"@es ;
-    ns1:tieneComponente ns1:RPS_0d84cce1ea,
-        ns1:ReguladorConFPGA .
+ns1:RevisarLaHabilitacionDelSistemaYChequearElMotorSeleccionado a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la habilitación del sistema y chequear el motor seleccionado" ;
+    ns1:solucionaFallo ns1:MalFuncionEnElComandoDeAutophasing ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la habilitación del sistema y chequear el motor seleccionado." .
 
-ns1:ContactarConSoporteTecnico a ns1:AvisoSeguridad ;
-    rdfs:label "Contactar con soporte técnico"@es ;
-    ns1:textoExtracto "Si el error persiste, póngase en contacto con Fagor Automation."@es .
+ns1:RevisarLosValoresDeABSFEEDBACKYM19SPDLEREV a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los valores de ABSFEEDBACK y M19SPDLEREV" ;
+    ns1:solucionaFallo ns1:ParametrizacionABSFEEDBACKYM19SPDLEREVIncompatible ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la habilitación del sistema y chequear el motor seleccionado." .
 
-ns1:RPS_0d84cce1ea a ns1:ComponenteElectrico ;
-    rdfs:label "RPS"@es ;
-    ns1:textoExtracto "RPS"@es .
+ns1:SistemaAutophasing a ns1:Sistema ;
+    rdfs:label "Sistema Autophasing" ;
+    ns1:textoExtracto "El Autophasing se ha deshabilitado durante el proceso o devuelve un resultado incoherente." .
 
-ns1:ReguladorConFPGA a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador con FPGA"@es ;
-    ns1:textoExtracto "regulador"@es .
+ns1:MalFuncionEnElComandoDeAutophasing a ns1:DiagnosticoFallo ;
+    rdfs:label "Mal función en el comando de Autophasing" ;
+    ns1:textoExtracto "9373 Mal función en el comando de Autophasing. DETECCIÓN Durante la ejecución." .
 
-ns1:VerificarConexionadoSinAutorizacion a ns1:AccionProhibida ;
-    rdfs:label "Verificar conexionado sin autorización"@es ;
-    ns1:textoExtracto "Compruebe el conexionado."@es .
+ns1:NuevoMotorDetectado a ns1:DiagnosticoFallo ;
+    rdfs:label "Nuevo motor detectado" ;
+    ns1:textoExtracto "9372 Nuevo motor detectado. DETECCIÓN Durante el arranque o validación de los parámetros máquina." .
+
+ns1:ParametrizacionABSFEEDBACKYM19SPDLEREVIncompatible a ns1:DiagnosticoFallo ;
+    rdfs:label "Parametrización ABSFEEDBACK y M19SPDLEREV incompatible" ;
+    ns1:textoExtracto "9375 Parametrización ABSFEEDBACK y M19SPDLEREV incompatible, posible pérdida de posición." .
 

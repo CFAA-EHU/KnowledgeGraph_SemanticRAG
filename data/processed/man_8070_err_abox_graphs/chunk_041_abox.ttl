@@ -1,49 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:DiagnosticoFallo_0085 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 0085: No hay ningún eje digital (Sercos/Mechatrolink)" ;
-    ns1:identificador "0085" ;
-    ns1:solucionaFallo ns1:Sistema_EjesDigitales ;
-    ns1:textoExtracto "0085 'No hay ningún eje digital (Sercos/Mechatrolink)'. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA En la tabla de parámetros OEM hay definidas variables de regulador (DRV) y no hay ejes digitales (Sercos/Mechatrolink) en el sistema. SOLUCIÓN Eliminar las variables de regulador (DRV) definidas o definir los ejes digitales adecuados." .
+ns1:AsegurarQueLosEjesDeUnaParejaGantryTenganElMismoTipoDeRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Asegurar que los ejes de una pareja gantry tengan el mismo tipo de regulador" ;
+    ns1:solucionaFallo ns1:AmbosEjesDeUnaParejaGantryNoTienenElMismoTipoDeRegulador ;
+    ns1:textoExtracto "SOLUCIÓN Los ejes de una pareja gantry tienen que tener el mismo tipo de regulador (parámetro DRIVETYPE)." .
 
-ns1:DiagnosticoFallo_0086 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 0086: No es eje digital (Sercos/Mechatrolink)" ;
-    ns1:identificador "0086" ;
-    ns1:solucionaFallo ns1:Sistema_EjesDigitales ;
-    ns1:textoExtracto "0086 'No es eje digital (Sercos/Mechatrolink)'. DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Hay definida una variable de regulador (DRV) para un eje que no es digital (Sercos/Mechatrolink)." .
+ns1:AsegurarQueLosEjesOCabezalesEstenAsignadosACanales a ns1:TareaMantenimiento ;
+    rdfs:label "Asegurar que los ejes o cabezales estén asignados a canales" ;
+    ns1:solucionaFallo ns1:UnEjeOCabezalNoIntercambiableNoPuedeQuedarSinAsignarAUnCanal ;
+    ns1:textoExtracto "SOLUCIÓN Los cabezales o ejes que no son de intercambio" .
 
-ns1:Parametro_AXISEXCH a ns1:Parametro ;
-    rdfs:label "AXISEXCH" ;
-    ns1:monitoreaParametro ns1:Sistema_AsignacionCanales ;
-    ns1:textoExtracto "Los cabezales o ejes que no son de intercambio (parámetro AXISEXCH) tienen que estar obligatoriamente asignados a un canal." .
+ns1:TipoDeReguladorParaLosEjes a ns1:Parametro ;
+    rdfs:label "Tipo de regulador para los ejes" ;
+    ns1:identificador "DRIVETYPE" ;
+    ns1:textoExtracto "(parámetro DRIVETYPE)" .
 
-ns1:Variable_DRV a ns1:Parametro ;
-    rdfs:label "Variable de regulador (DRV)" ;
-    ns1:documentadoEn ns1:Tabla_ParametrosOEM ;
-    ns1:monitoreaParametro ns1:Sistema_EjesDigitales ;
-    ns1:textoExtracto "variables de regulador (DRV)" .
+ns1:AmbosEjesDeUnaParejaGantryNoTienenElMismoTipoDeRegulador a ns1:DiagnosticoFallo ;
+    rdfs:label "Ambos ejes de una pareja gantry no tienen el mismo tipo de regulador" ;
+    ns1:textoExtracto "CAUSA Ambos ejes de una pareja gantry no tienen el mismo tipo de regulador; analógico, Sercos o Mechatrolink." .
 
-ns1:Cabezal_SinAsignacion a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal/ejes sin permiso de intercambio" ;
-    ns1:textoExtracto "Hay un eje o cabezal sin permiso de intercambio que no está asignado a ningún canal." .
-
-ns1:Eje_Digital a ns1:ComponenteMecanico ;
-    rdfs:label "Eje digital (Sercos/Mechatrolink)" ;
-    ns1:textoExtracto "eje digital (Sercos/Mechatrolink)" .
-
-ns1:Sistema_AsignacionCanales a ns1:Sistema ;
-    rdfs:label "Sistema de asignación de canales de cabezales/ejes" ;
-    ns1:textoExtracto "Hay un eje o cabezal sin permiso de intercambio que no está asignado a ningún canal. Los cabezales o ejes que no son de intercambio tienen que estar obligatoriamente asignados a un canal." ;
-    ns1:tieneComponente ns1:Cabezal_SinAsignacion .
-
-ns1:Tabla_ParametrosOEM a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros OEM" ;
-    ns1:documentadoEn ns1:Manual_Maquina ;
-    ns1:textoExtracto "En la tabla de parámetros OEM hay definidas variables de regulador (DRV) y no hay ejes digitales (Sercos/Mechatrolink) en el sistema." .
-
-ns1:Sistema_EjesDigitales a ns1:Sistema ;
-    rdfs:label "Sistema de ejes digitales (Sercos/Mechatrolink)" ;
-    ns1:textoExtracto "no hay ejes digitales (Sercos/Mechatrolink) en el sistema. Eliminar las variables de regulador (DRV) definidas o definir los ejes digitales adecuados." ;
-    ns1:tieneComponente ns1:Eje_Digital .
+ns1:UnEjeOCabezalNoIntercambiableNoPuedeQuedarSinAsignarAUnCanal a ns1:DiagnosticoFallo ;
+    rdfs:label "Un eje o cabezal no intercambiable no puede quedar sin asignar a un canal" ;
+    ns1:textoExtracto "'Un eje o cabezal no intercambiable no puede quedar sin asignar a un canal'" .
 

@@ -1,29 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1561 a ns1:Alarma ;
-    rdfs:label "Alarma 1561: 'Eje maestro no válido'" ;
-    ns1:identificador "1561" ;
-    ns1:textoExtracto "'Eje maestro no válido' DETECCIÓN Durante la ejecución. CAUSA En las sentencias #CAM o #FOLLOW, el eje maestro es incorrecto. SOLUCIÓN El eje debe pertenecer al canal." .
+ns1:ComprobarElProgramaDePLC a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar el programa de PLC" ;
+    ns1:solucionaFallo ns1:ElPLCNoHaReconocidoElSTARTEnUnaInstruccionEXEC_3d90366421 ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar el programa de PLC." .
 
-ns1:Alarma_1562 a ns1:Alarma ;
-    rdfs:label "Alarma 1562: 'Eje esclavo no válido'" ;
-    ns1:identificador "1562" ;
-    ns1:textoExtracto "'Eje esclavo no válido' DETECCIÓN Durante la ejecución. CAUSA En las sentencias #CAM o #FOLLOW, el eje esclavo es incorrecto. SOLUCIÓN El eje debe pertenecer al canal." .
+ns1:ReducirNumeroDeVariablesDeUsuario a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir número de variables de usuario" ;
+    ns1:solucionaFallo ns1:NumeroDeVariablesDeUsuarioSobrepasado_2f9cf2c4d3 ;
+    ns1:textoExtracto "SOLUCIÓN El máximo número de variables de usuario permitido es 20." .
 
-ns1:Alarma_1564 a ns1:Alarma ;
-    rdfs:label "Alarma 1564: 'No se puede programar un eje aparcado'" ;
-    ns1:identificador "1564" ;
-    ns1:textoExtracto "'No se puede programar un eje aparcado' DETECCIÓN Durante la ejecución. CAUSA La instrucción programada no se puede ejecutar sobre un eje aparcado." .
+ns1:ElPLCNoHaReconocidoElSTARTEnUnaInstruccionEXEC_3d90366421 a ns1:DiagnosticoFallo ;
+    rdfs:label "El PLC no ha reconocido el START en una instrucción #EXEC" ;
+    ns1:textoExtracto "'El PLC no ha reconocido el START en una instrucción #EXEC' DETECCIÓN Durante la ejecución. CAUSA Cuando se va a dar la orden de ejecución de un programa en otro canal, el PLC debe dar el visto bueno al arranque de programa (START). Si no lo da se generará este error." .
 
-ns1:Parametro_REFPSUB a ns1:Parametro ;
-    rdfs:label "Parámetro REFPSUB" ;
-    ns1:identificador "REFPSUB" ;
-    ns1:monitoreaParametro ns1:Alarma_1563 ;
-    ns1:textoExtracto "parámetro REFPSUB" .
-
-ns1:Alarma_1563 a ns1:Alarma ;
-    rdfs:label "Alarma 1563: 'La función G74 se programa con ejes o sola en el bloque'" ;
-    ns1:identificador "1563" ;
-    ns1:textoExtracto "'La función G74 se programa con ejes o sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA Programación incorrecta de la función G74. SOLUCIÓN La función G74 se puede programar bien con los ejes cuya búsqueda de cero se quiere realizar o bien sola en el bloque. Si la función G74 se programa sola en el bloque, el CNC ejecuta su subrutina asociada (parámetro REFPSUB)." .
+ns1:NumeroDeVariablesDeUsuarioSobrepasado_2f9cf2c4d3 a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de variables de usuario sobrepasado" ;
+    ns1:textoExtracto "'Número de variables de usuario sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha superado el máximo número de variables de usuario (prefijos P y S) permitidas." .
 

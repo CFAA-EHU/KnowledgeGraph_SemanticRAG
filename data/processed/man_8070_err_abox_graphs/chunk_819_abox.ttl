@@ -1,16 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_8055_FuncionNoSoportada a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "CAUSA La función programada no tiene equivalente en el del 8055. SOLUCIÓN El CNC no puede traducir la función. Consultar en el manual del 8055 las funciones disponibles." .
+ns1:ConsultarManualDel8055ParaSintaxisCorrecta a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar manual del 8055 para sintaxis correcta" ;
+    ns1:solucionaFallo ns1:LaFuncionProgramadaExigeParametrosIJK ;
+    ns1:textoExtracto "SOLUCIÓN Consultar en el manual del 8055 la sintaxis correcta." .
 
-ns1:Fallo_8477 a ns1:DiagnosticoFallo ;
-    rdfs:label "Minúsculas no permitidas en 8055" ;
-    ns1:identificador "8477" ;
-    ns1:textoExtracto "DETECCIÓN Durante la edición. CAUSA Error al programar en lenguaje del 8055. El lenguaje del 8055 no permite el uso de minúsculas. SOLUCIÓN Programar las palabras reservadas en mayúsculas." .
+ns1:ErrorAlProgramarEnLenguajeDel8055 a ns1:AccionProhibida ;
+    rdfs:label "Error al programar en lenguaje del 8055" ;
+    ns1:solucionaFallo ns1:LaFuncionProgramadaExigeParametrosIJK ;
+    ns1:textoExtracto "CAUSA Error al programar en lenguaje del 8055. El bloque G2/G3 programado no admite los parámetros I, J, K para definir el centro de la interpolación." .
 
-ns1:Fallo_8478 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de sintaxis en función G45" ;
-    ns1:identificador "8478" ;
-    ns1:textoExtracto "G45 <eje1 angulo1 eje2 angulo2 ... DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la" .
+ns1:ErrorAlProgramarFuncionG9EnLenguajeDel8055 a ns1:AccionProhibida ;
+    rdfs:label "Error al programar función G9 en lenguaje del 8055" ;
+    ns1:textoExtracto "CAUSA Error al programar en lenguaje del 8055. La función G9 exige programar el punto intermedio (parámetros I, J, K)" .
+
+ns1:LaFuncionProgramadaExigeParametrosIJK a ns1:DiagnosticoFallo ;
+    rdfs:label "La función programada exige parámetros I, J, K" ;
+    ns1:textoExtracto "'La función programada exige parámetros I, J, K'" .
 

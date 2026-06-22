@@ -1,38 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Herramienta_Roscado a ns1:Herramienta ;
-    rdfs:label "Herramienta de roscado (macho o rígido)" ;
-    ns1:textoExtracto "roscado con macho o un roscado rígido. [...] mover el eje de roscado hasta sacar la herramienta." .
+ns1:LEAPNoActivadoPorAlturaDeSaltoInferiorAUnMinimo_6cf80adb4d a ns1:DiagnosticoFallo ;
+    rdfs:label "LEAP no activado por altura de salto inferior a un mínimo" ;
+    ns1:textoExtracto "3099 LEAP no activado por altura de salto inferior a un mínimo. DETECCIÓN Durante la ejecución." .
 
-ns1:Sistema_FCAS a ns1:Sistema ;
-    rdfs:label "FCAS (Fagor Collision Avoidance System)" ;
-    ns1:activaAlarma ns1:Alarma_3104 ;
-    ns1:textoExtracto "FCAS(Fagor Collision Avoidance System) ha detectado una colisión en alguno de los movimientos que va a ejecutar o simular." .
+ns1:PWRCTRLDUTYActivadoEnOtroCanal_be5bfb06fa a ns1:DiagnosticoFallo ;
+    rdfs:label "El #PWRCTRL DUTY sólo puede estar activo en un canal",
+        "PWRCTRL DUTY activado en otro canal" ;
+    ns1:solucionaFallo ns1:ActivarElPWMAntesDeActivarPWRCTRLDUTY ;
+    ns1:textoExtracto "SOLUCIÓN El #PWRCTRL DUTY sólo puede estar activo en un canal." .
 
-ns1:TareaMantenimiento_RetiradaHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Retirada manual de herramienta de roscado" ;
-    ns1:ejecutadoPor ns1:ModoOperacion_Manual ;
-    ns1:solucionaFallo ns1:Alarma_3105 ;
-    ns1:textoExtracto "SOLUCIÓN Entrar en modo manual y mover el eje de roscado hasta sacar la herramienta." .
+ns1:PWRCTRLOUTActivadoEnOtroCanal_df92df5a20 a ns1:DiagnosticoFallo ;
+    rdfs:label "Activar el PWM antes de activar #PWRCTRL DUTY",
+        "El #PWRCTRL OUT sólo puede estar activo en un canal",
+        "PWRCTRL OUT activado en otro canal" ;
+    ns1:solucionaFallo ns1:ActivarElPWMAntesDeActivarPWRCTRLDUTY ;
+    ns1:textoExtracto "3097 PWRCTRL OUT activado en otro canal. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado activar #PWRCTRL OUT en un canal mientras está activo en otro." .
 
-ns1:TareaMantenimiento_RevisionPrograma a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión y modificación del programa pieza" ;
-    ns1:solucionaFallo ns1:Alarma_3104 ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación y modificar el programa pieza." .
-
-ns1:ModoOperacion_Manual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual" ;
-    ns1:habilitadoPor ns1:Alarma_3105 ;
-    ns1:textoExtracto "Retirada permitida en modo manual. [...] SOLUCIÓN Entrar en modo manual y mover el eje de roscado hasta sacar la herramienta." .
-
-ns1:Alarma_3104 a ns1:Alarma ;
-    rdfs:label "Alarma 3104: Colisión detectada" ;
-    ns1:identificador "3104" ;
-    ns1:textoExtracto "3104 Se ha detectado una colisión. DETECCIÓN Durante la ejecución o la simulación de un programa pieza. Durante la ejecución en MDI. CAUSA FCAS(Fagor Collision Avoidance System) ha detectado una colisión en alguno de los movimientos que va a ejecutar o simular. SOLUCIÓN Revisar la programación y modificar el programa pieza." .
-
-ns1:Alarma_3105 a ns1:Alarma ;
-    rdfs:label "Alarma 3105: Tapping o roscado rígido interrumpido" ;
-    ns1:identificador "3105" ;
-    ns1:textoExtracto "3105 Tapping o roscado rígido interrumpido. Retirada permitida en modo manual. Pulsar ENTER + RESET para confirmar. DETECCIÓN Durante el arranque del CNC o tras interrumpir un roscado con macho o rígido. CAUSA Se ha producido un apagado o un error grave durante la ejecución de un roscado con macho o un roscado rígido. SOLUCIÓN Entrar en modo manual y mover el eje de roscado hasta sacar la herramienta." .
+ns1:ActivarElPWMAntesDeActivarPWRCTRLDUTY a ns1:TareaMantenimiento ;
+    rdfs:label "Activar el PWM antes de activar #PWRCTRL DUTY" ;
+    ns1:textoExtracto "SOLUCIÓN Activar el PWM antes de activar #PWRCTRL DUTY." .
 

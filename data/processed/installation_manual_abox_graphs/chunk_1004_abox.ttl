@@ -1,36 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:OperacionTipo1 a ns1:ModoOperacion ;
-    rdfs:label "Operación tipo 1 (Herramienta activa)" ;
-    ns1:textoExtracto "$CASE 1 ; Asumir la herramienta actual como herramienta activa." .
+ns1:DesactivacionDeEmergenciaPorTeclaUSER13 a ns1:AccionProhibida ;
+    rdfs:label "desactivación de emergencia por tecla USER13" ;
+    ns1:textoExtracto "Si se pulsa la tecla USER13 se quita la emergencia." .
 
-ns1:OperacionTipo3 a ns1:ModoOperacion ;
-    rdfs:label "Operación tipo 3 (Colocación de herramienta)" ;
-    ns1:textoExtracto "$CASE 3 ; Colocar la herramienta" .
+ns1:TeclaUSER12_3b55261641 a ns1:ComponenteElectrico ;
+    rdfs:label "tecla USER12" ;
+    ns1:activaAlarma ns1:ActivacionDeEmergenciaPorTeclaUSER12 ;
+    ns1:textoExtracto "Si se pulsa la tecla USER12 se activa la emergencia." .
 
-ns1:RutinaM06_CambioHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Rutina M06 (Cambio de herramienta)" ;
-    ns1:identificador "M06" ;
-    ns1:requiereMantenimiento ns1:CabezalMaquina ;
-    ns1:textoExtracto "G1 Z_ F_ ; Desplazar el cabezal. # RET %L SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático. [...] M6 ; Orden al gestor para comenzar el cambio de herramienta." .
+ns1:ActivacionDeEmergenciaPorTeclaUSER12 a ns1:AccionProhibida ;
+    rdfs:label "activación de emergencia por tecla USER12" ;
+    ns1:mitigaRiesgo ns1:LamparaDeLaTeclaUSER12 ;
+    ns1:textoExtracto "Si se pulsa la tecla USER12 se activa la emergencia." .
 
-ns1:SistemaControlCNC a ns1:Sistema ;
-    rdfs:label "Sistema de control CNC" ;
-    ns1:controla ns1:CabezalMaquina ;
-    ns1:monitoreaParametro ns1:ParametroEjecucion ;
-    ns1:textoExtracto "$IF [[V.G.FULLSTATUS & 255]<9] | [[V.G.FULLSTATUS & 255]>13]] [...] V.S.EXECUTION = 1 ; Ejecución" .
-
-ns1:TeclaSTOP a ns1:InterfazUsuario ;
-    rdfs:label "Tecla STOP" ;
-    ns1:textoExtracto "#DSTOP ; Deshabilitar tecla STOP" .
-
-ns1:ParametroEjecucion a ns1:Parametro ;
-    rdfs:label "Estado de ejecución (V.S.EXECUTION)" ;
-    ns1:textoExtracto "V.S.EXECUTION = 0 ; Ejecución simulada [...] V.S.EXECUTION = 1 ; Ejecución" ;
-    ns1:valor "0,1" .
-
-ns1:CabezalMaquina a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "G1 Z_ F_ ; Desplazar el cabezal. [...] Llevar el cabezal al punto de cambio automático." .
+ns1:LamparaDeLaTeclaUSER12 a ns1:ComponenteElectrico ;
+    rdfs:label "lámpara de la tecla USER12" ;
+    ns1:textoExtracto "Lámpara de la tecla USER12 iluminada cuando hay emergencia." .
 

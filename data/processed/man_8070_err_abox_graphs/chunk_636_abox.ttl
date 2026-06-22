@@ -1,22 +1,41 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_4501 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en comando Mechatrolink"@es ;
-    ns1:identificador "4501" ;
-    ns1:solucionaFallo ns1:Solucion_4501 ;
-    ns1:textoExtracto "4501 'Error en comando Mechatrolink' DETECCIÓN Durante la ejecución del CNC. CAUSA Fallo en la ejecución de un comando Mechatrolink desde el master a un esclavo determinado."@es .
+ns1:ErrorEnElAnilloSercos2ATsPerdidos a ns1:Alarma ;
+    rdfs:label "'Error en el anillo Sercos (2 ATs perdidos)'" ;
+    ns1:textoExtracto "4211 'Error en el anillo Sercos (2 ATs perdidos)' EJE Número lógico del eje." .
 
-ns1:Motor_4501 a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "conexionado del motor"@es .
+ns1:ErrorEnElAnilloSercosMSTPerdido a ns1:Alarma ;
+    rdfs:label "'Error en el anillo Sercos (MST perdido)'" ;
+    ns1:textoExtracto "4210 'Error en el anillo Sercos (MST perdido)' VALOR Códigos de error que identifican la fuente o fuentes del problema." .
 
-ns1:Regulador_4501 a ns1:ComponenteElectrico ;
-    ns1:monitoreaParametro ns1:Parametro_EstadoRegulador_4501 ;
-    ns1:textoExtracto "estado del regulador"@es .
+ns1:ModoDeOperacion a ns1:Parametro ;
+    rdfs:label "Modo de operación" ;
+    ns1:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc." .
 
-ns1:Parametro_EstadoRegulador_4501 a ns1:Parametro ;
-    ns1:textoExtracto "estado del regulador"@es .
+ns1:PotenciaDeSalidaDelServo a ns1:Parametro ;
+    rdfs:label "Potencia de salida del servo" ;
+    ns1:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc." .
 
-ns1:Solucion_4501 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Identificar el comando que ha producido el error y el esclavo relacionado. Verificar, si las hubiera, las condiciones para que el comando pueda completarse con éxito (estado del regulador, alimentación, potencia, conexionado del motor, etc)."@es .
+ns1:SelectorDeNodoDelRegulador a ns1:Parametro ;
+    rdfs:label "Selector de nodo del regulador" ;
+    ns1:textoExtracto "Selector de nodo del regulador (DriveID)" .
+
+ns1:TasaDeActualizacionDelServo a ns1:Parametro ;
+    rdfs:label "Tasa de actualización del servo" ;
+    ns1:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc." .
+
+ns1:TiempoDeBucle_8d6a26063b a ns1:Parametro ;
+    rdfs:label "Tiempo de bucle" ;
+    ns1:textoExtracto "parámetros LOOPTIME, SERPOWSE, SERBRATE, OPMODE, etc." .
+
+ns1:GarantizarLaConectividadATravesDeTodoElAnillo a ns1:AvisoSeguridad ;
+    rdfs:label "Garantizar la conectividad a través de todo el anillo" ;
+    ns1:mitigaRiesgo ns1:PerdidaDeMSTs ;
+    ns1:textoExtracto "SOLUCIÓN Garantizar la conectividad a través de todo el anillo (fibra óptica, master y esclavos)." .
+
+ns1:PerdidaDeMSTs a ns1:AccionProhibida ;
+    rdfs:label "Pérdida de MSTs" ;
+    ns1:mitigaRiesgo ns1:GarantizarLaConectividadATravesDeTodoElAnillo ;
+    ns1:textoExtracto "0x00000200 Pérdida de MSTs." .
 

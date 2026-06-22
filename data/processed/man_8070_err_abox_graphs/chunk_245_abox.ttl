@@ -1,33 +1,54 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AlmacenHerramientas a ns1:ComponenteMecanico ;
-    rdfs:label "Almacén de herramientas" ;
-    ns1:textoExtracto "posición en el almacén de una herramienta que no está presente en el mismo" .
+ns1:ConsultarEnLosManualesLaListaDeVariables a ns1:TareaMantenimiento ;
+    rdfs:label "Consultar en los manuales la lista de variables" ;
+    ns1:solucionaFallo ns1:LaVariableNoPermiteProgramacionDeEje,
+        ns1:LaVariableNoPermiteProgramacionDeIndiceDeArray,
+        ns1:LaVariableRequiereProgramacionDeEje,
+        ns1:LaVariableRequiereProgramacionDeIndiceDeArray ;
+    ns1:textoExtracto "SOLUCIÓN Consultar en los manuales la lista de variables." .
 
-ns1:Fallo_1510 a ns1:DiagnosticoFallo ;
-    rdfs:label "Eje inexistente o no disponible en el canal" ;
-    ns1:identificador "1510" ;
-    ns1:textoExtracto "1510 'Eje inexistente o no disponible en el canal' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • El CNC ha intentado mover un eje que no existe o que no está disponible en el canal. • El CNC ha intentado ejecutar una sentencia que involucra a un eje que no existe o que no está disponible en el canal. • El CNC ha intentado leer o escribir una variable de un eje que no existe o que no está disponible en el canal." .
+ns1:DefinirEtiquetasInicialYFinalDiferentes a ns1:TareaMantenimiento ;
+    rdfs:label "Definir etiquetas inicial y final diferentes" ;
+    ns1:solucionaFallo ns1:EtiquetasRepetidasEnRPT_f79385d0f0 ;
+    ns1:textoExtracto "SOLUCIÓN Definir etiquetas inicial y final diferentes." .
 
-ns1:Fallo_1512 a ns1:DiagnosticoFallo ;
-    rdfs:label "Posición del almacén libre o inexistente" ;
-    ns1:identificador "1512" ;
-    ns1:textoExtracto "1512 'Posición del almacén libre o inexistente' DETECCIÓN Durante la ejecución." .
+ns1:LaEtiquetaFinalSeDebeProgramarSolaEnElBloque a ns1:TareaMantenimiento ;
+    rdfs:label "La etiqueta final se debe programar sola en el bloque" ;
+    ns1:solucionaFallo ns1:LaSegundaEtiquetaDelRPTDebeProgramarseSolaEnElBloque ;
+    ns1:textoExtracto "SOLUCIÓN La etiqueta final se debe programar sola en el bloque. Programar el comando en la línea anterior si se desea que se ejecute con el #RPT o en la línea inferior si no se desea que se ejecute con el #RPT." .
 
-ns1:Variable_V_TM_P a ns1:Parametro ;
-    rdfs:label "Variable de posición de herramienta en almacén (V.TM.P)" ;
-    ns1:monitoreaParametro ns1:Fallo_1511 ;
-    ns1:textoExtracto "El CNC ha intentado leer mediante la variable V.TM.P la posición en el almacén de una herramienta que no está presente en el mismo." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:EtiquetaNoDefinidaOEtiquetasDelComandoRPTIntercambiadas ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Solucion_1511 a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de programación para herramientas en almacén" ;
-    ns1:requiereMantenimiento ns1:Fallo_1511 ;
-    ns1:textoExtracto "SOLUCIÓN Sólo es posible leer la posición de herramientas que existen en el almacén." .
+ns1:EtiquetaNoDefinidaOEtiquetasDelComandoRPTIntercambiadas a ns1:DiagnosticoFallo ;
+    rdfs:label "Etiqueta no definida o etiquetas del comando #RPT intercambiadas" ;
+    ns1:textoExtracto "'Etiqueta no definida o etiquetas del comando #RPT intercambiadas' DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • Falta definir la segunda etiqueta. • Se ha programado M30 entre la primera y la segunda etiqueta. • En la sentencia #RPT se ha programado primero la segunda etiqueta y luego la primera." .
 
-ns1:Fallo_1511 a ns1:DiagnosticoFallo ;
-    rdfs:label "Herramienta no disponible en el almacén" ;
-    ns1:identificador "1511" ;
-    ns1:solucionaFallo ns1:Solucion_1511 ;
-    ns1:textoExtracto "1511 'La herramienta no está en el almacén' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado leer mediante la variable V.TM.P la posición en el almacén de una herramienta que no está presente en el mismo." .
+ns1:EtiquetasRepetidasEnRPT_f79385d0f0 a ns1:DiagnosticoFallo ;
+    rdfs:label "Etiquetas repetidas en #RPT" ;
+    ns1:textoExtracto "'Etiquetas repetidas en #RPT' DETECCIÓN Durante la ejecución. CAUSA En la sentencia #RPT la etiqueta inicial y final es la misma." .
+
+ns1:LaSegundaEtiquetaDelRPTDebeProgramarseSolaEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "La segunda etiqueta del #RPT debe programarse sola en el bloque" ;
+    ns1:textoExtracto "'La segunda etiqueta del #RPT debe programarse sola en el bloque' DETECCIÓN Durante la ejecución. CAUSA En una repetición de bloques (#RPT), la segunda etiqueta debe programarse sola en el bloque, sin ningún otro tipo de información." .
+
+ns1:LaVariableNoPermiteProgramacionDeEje a ns1:DiagnosticoFallo ;
+    rdfs:label "La variable no permite programación de eje" ;
+    ns1:textoExtracto "'La variable no permite programación de eje' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la variable es incorrecta." .
+
+ns1:LaVariableNoPermiteProgramacionDeIndiceDeArray a ns1:DiagnosticoFallo ;
+    rdfs:label "La variable no permite programación de índice de array" ;
+    ns1:textoExtracto "'La variable no permite programación de índice de array' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la variable es incorrecta." .
+
+ns1:LaVariableRequiereProgramacionDeEje a ns1:DiagnosticoFallo ;
+    rdfs:label "La variable requiere programación de eje" ;
+    ns1:textoExtracto "'La variable requiere programación de eje' DETECCIÓN Durante la ejecución. CAUSA La variable es de eje y no se ha indicado el nombre del eje." .
+
+ns1:LaVariableRequiereProgramacionDeIndiceDeArray a ns1:DiagnosticoFallo ;
+    rdfs:label "La variable requiere programación de índice de array" ;
+    ns1:textoExtracto "'La variable requiere programación de índice de array' DETECCIÓN Durante la ejecución. CAUSA La variable es de array y no se ha indicado el índice." .
 

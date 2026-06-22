@@ -1,78 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_3403 a ns1:Alarma ;
-    rdfs:label "Alarma 3403: No se admiten más operaciones con ejes independientes. En sincronización"@es ;
-    ns1:identificador "3403" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_3403 ;
-    ns1:textoExtracto "3403 'No se admiten mas operaciones con ejes independientes. En sincronización' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar una operación de eje independiente pero existe una sincronización activa. SOLUCIÓN No programar operaciones de eje independiente con levas activas ni programar dos sincronizaciones seguidas. Desde el PLC abortar las sentencias pendientes (marca ABORT) o bien esperar a que finalice la sincronización."@es .
+ns1:AsegurarQueLaPotenciaObjetivoSeaAlMenosUn20DeLaPotenciaEnVacio a ns1:TareaMantenimiento ;
+    rdfs:label "Asegurar que la potencia objetivo sea al menos un 20 % de la potencia en vacío" ;
+    ns1:solucionaFallo ns1:PotenciaObjetivoInsuficienteParaFuncionamientoCorrectoConDMC ;
+    ns1:textoExtracto "La potencia objetivo (programada u obtenida mediante el aprendizaje) debe ser al menos un 20 % de la potencia en vacío." .
 
-ns1:Alarma_3404 a ns1:Alarma ;
-    rdfs:label "Alarma 3404: No se admite #FOLLOW OFF con otra operación pendiente"@es ;
-    ns1:identificador "3404" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_3404 ;
-    ns1:textoExtracto "3404 'No se admite #FOLLOW OFF con otra operación pendiente' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta ejecutar una sentencia #FOLLOW OFF pero existe una operación pendiente. SOLUCIÓN Desde el PLC abortar las sentencias pendientes (marca ABORT) o bien esperar a que haya espacio para almacenarla (marca FREE)."@es .
+ns1:EjecutarSentenciaHSCOSWTEnEjeConMovimientoIndependiente a ns1:AccionProhibida ;
+    rdfs:label "Ejecutar sentencia #HSC o #SWT en eje con movimiento independiente" ;
+    ns1:textoExtracto "No se pueden programar esas sentencias en un eje con movimiento independiente." .
 
-ns1:Alarma_3405 a ns1:Alarma ;
-    rdfs:label "Alarma 3405: No se admite #MOVE INF para un eje con límites"@es ;
-    ns1:identificador "3405" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_3405 ;
-    ns1:textoExtracto "3405 'No se admite #MOVE INF para un eje con límites' DETECCIÓN Durante la ejecución. CAUSA El eje programado en la sentencia #MOVE INF tiene límites de recorrido definidos. SOLUCIÓN Eliminar los límites de software o interrumpir el movimiento antes de que el eje alcance el límite."@es .
+ns1:FuncionamientoConPotenciaObjetivoInsuficiente a ns1:AccionProhibida ;
+    rdfs:label "Funcionamiento con potencia objetivo insuficiente" ;
+    ns1:textoExtracto "Los valores de la potencia en vacío y la potencia objetivo durante el mecanizado son similares." .
 
-ns1:Alarma_3406 a ns1:Alarma ;
-    rdfs:label "Alarma 3406: La velocidad necesaria para sincronizar es superior a la máxima"@es ;
-    ns1:identificador "3406" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_3406 ;
-    ns1:textoExtracto "3406 'La velocidad necesaria para sincronizar es superior a la máxima' DETECCIÓN Durante la ejecución. CAUSA La sincronización programada implica superar el avance máximo del eje. SOLUCIÓN Programar la sincronización con el eje maestro moviéndose a un avance menor o programar un ratio de sincronización menor."@es .
+ns1:NoProgramarSentenciasHSCOSWTEnEjesConMovimientoIndependiente a ns1:TareaMantenimiento ;
+    rdfs:label "No programar sentencias #HSC o #SWT en ejes con movimiento independiente" ;
+    ns1:solucionaFallo ns1:SentenciaNoCompatibleConMovimientoIndependienteActivo ;
+    ns1:textoExtracto "No se pueden programar esas sentencias en un eje con movimiento independiente." .
 
-ns1:Alarma_3407 a ns1:Alarma ;
-    rdfs:label "Alarma 3407: Cota programada para eje independiente superior al límite positivo"@es ;
-    ns1:identificador "3407" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_3407 ;
-    ns1:textoExtracto "3407 'Cota programada para eje independiente superior al límite positivo' DETECCIÓN Durante la ejecución. CAUSA La cota programada en la sentencia #MOVE está fuera de los límites de software. SOLUCIÓN Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC."@es .
+ns1:PotenciaObjetivoInsuficienteParaFuncionamientoCorrectoConDMC a ns1:DiagnosticoFallo ;
+    rdfs:label "Potencia objetivo insuficiente para funcionamiento correcto con DMC" ;
+    ns1:textoExtracto "Los valores de la potencia en vacío y la potencia objetivo durante el mecanizado son similares." .
 
-ns1:Alarma_3408 a ns1:Alarma ;
-    rdfs:label "Alarma 3408: Cota programada para eje independiente inferior al límite negativo"@es ;
-    ns1:identificador "3408" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_3408 ;
-    ns1:textoExtracto "3408 'Cota programada para eje independiente inferior al límite negativo' DETECCIÓN Durante la ejecución."@es .
-
-ns1:Parametro_ABORT a ns1:Parametro ;
-    rdfs:label "Marca ABORT"@es ;
-    ns1:identificador "ABORT" ;
-    ns1:textoExtracto "Desde el PLC abortar las sentencias pendientes (marca ABORT)."@es .
-
-ns1:Parametro_BUSY a ns1:Parametro ;
-    rdfs:label "Marca BUSY"@es ;
-    ns1:identificador "BUSY" ;
-    ns1:textoExtracto "consultar la marca BUSY."@es .
-
-ns1:Parametro_FREE a ns1:Parametro ;
-    rdfs:label "Marca FREE"@es ;
-    ns1:identificador "FREE" ;
-    ns1:textoExtracto "esperar a que haya espacio para almacenarla (marca FREE)."@es .
-
-ns1:AccionProhibida_3403 a ns1:AccionProhibida ;
-    rdfs:label "Programar operaciones de eje independiente con levas activas o sincronizaciones seguidas"@es ;
-    ns1:textoExtracto "No programar operaciones de eje independiente con levas activas ni programar dos sincronizaciones seguidas."@es .
-
-ns1:AccionProhibida_3404 a ns1:AccionProhibida ;
-    rdfs:label "Ejecutar #FOLLOW OFF con operaciones pendientes"@es ;
-    ns1:textoExtracto "El CNC intenta ejecutar una sentencia #FOLLOW OFF pero existe una operación pendiente."@es .
-
-ns1:AccionProhibida_3405 a ns1:AccionProhibida ;
-    rdfs:label "Ejecutar #MOVE INF en ejes con límites de software"@es ;
-    ns1:textoExtracto "El eje programado en la sentencia #MOVE INF tiene límites de recorrido definidos."@es .
-
-ns1:AccionProhibida_3406 a ns1:AccionProhibida ;
-    rdfs:label "Sincronizar con velocidad superior al avance máximo del eje"@es ;
-    ns1:textoExtracto "La sincronización programada implica superar el avance máximo del eje."@es .
-
-ns1:AccionProhibida_3407 a ns1:AccionProhibida ;
-    rdfs:label "Programar cotas fuera de límites de software para ejes independientes"@es ;
-    ns1:textoExtracto "La cota programada en la sentencia #MOVE está fuera de los límites de software."@es .
-
-ns1:AccionProhibida_3408 a ns1:AccionProhibida ;
-    rdfs:label "Programar cotas inferiores al límite negativo para ejes independientes"@es ;
-    ns1:textoExtracto "Cota programada para eje independiente inferior al límite negativo."@es .
+ns1:SentenciaNoCompatibleConMovimientoIndependienteActivo a ns1:DiagnosticoFallo ;
+    rdfs:label "Sentencia no compatible con movimiento independiente activo" ;
+    ns1:textoExtracto "Se ha intentado ejecutar la sentencia #HSC o #SWT en un eje con movimiento independiente." .
 

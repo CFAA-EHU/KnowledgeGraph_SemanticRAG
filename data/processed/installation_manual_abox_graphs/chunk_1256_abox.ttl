@@ -1,70 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_INT a ns1:ModoOperacion ;
-    rdfs:label "Modo aplicación externa (INT)"@es ;
-    ns1:textoExtracto "accesibles desde [...] una aplicación externa (INT)"@es .
+ns1:CorreccionDeParametrosMaquina a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de parámetros máquina" ;
+    ns1:solucionaFallo ns1:EjeInexistente_e290dc00b3 ;
+    ns1:textoExtracto "SOLUCIÓN Corregir los parámetros máquina. Los nombres de eje válidos son los definidos en el parámetro AXISNAME." .
 
-ns1:ModoOperacion_MDI_MDA a ns1:ModoOperacion ;
-    rdfs:label "Modo MDI/MDA"@es ;
-    ns1:textoExtracto "accesibles desde [...] el modo MDI/MDA"@es .
+ns1:OpcionDeSoftwareNoPermitida a ns1:DiagnosticoFallo ;
+    rdfs:label "Opción de software no permitida" ;
+    ns1:textoExtracto "'Opción de software no permitida' DETECCIÓN Durante la ejecución. CAUSA El CNC no dispone de la opción de software necesaria para ejecutar la orden programada. SOLUCIÓN En el modo diagnosis se pueden consultar las opciones de software disponibles en el CNC." .
 
-ns1:ModoOperacion_PLC a ns1:ModoOperacion ;
-    rdfs:label "Modo PLC"@es ;
-    ns1:textoExtracto "El acceso a las variables desde el PLC, tanto para la lectura como para la escritura, será síncrono."@es .
+ns1:RevisionDeProgramacion_2f5a95c092 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de programación" ;
+    ns1:solucionaFallo ns1:ValorDeParametroNoValido ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:ModoOperacion_PRG a ns1:ModoOperacion ;
-    rdfs:label "Modo programa pieza (PRG)"@es ;
-    ns1:textoExtracto "accesibles desde [...] el programa pieza (PRG)"@es .
+ns1:EjeInexistente_e290dc00b3 a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje inexistente" ;
+    ns1:textoExtracto "'Eje inexistente' DETECCIÓN Durante la validación de los parámetros máquina. CAUSA Las posibles causas son las siguientes: • El usuario ha asignado a un parámetro máquina el nombre de un eje que no existe. • En la compensación volumétrica básica, no se ha definido uno de los ejes VMOVAXIS o VCOMPAXIS. SOLUCIÓN Corregir los parámetros máquina. Los nombres de eje válidos son los definidos en el parámetro AXISNAME." .
 
-ns1:Parametro_MPG_VCOMPAXIS1 a ns1:Parametro ;
-    rdfs:label "MPG.VCOMPAXIS1"@es ;
-    ns1:documentadoEn ns1:Tabla_VariablesCompensacionVolumetrica ;
-    ns1:identificador "MPG.VCOMPAXIS1" ;
-    ns1:monitoreaParametro ns1:Maquina_TornoControlNumerico ;
-    ns1:textoExtracto "(V.)MPG.VCOMPAXIS1[tbl] | Nombre del eje que a compensar."@es ;
-    ns1:valor "Nombre del eje a compensar (eje 1)"@es .
-
-ns1:Parametro_MPG_VCOMPAXIS2 a ns1:Parametro ;
-    rdfs:label "MPG.VCOMPAXIS2"@es ;
-    ns1:documentadoEn ns1:Tabla_VariablesCompensacionVolumetrica ;
-    ns1:identificador "MPG.VCOMPAXIS2" ;
-    ns1:monitoreaParametro ns1:Maquina_TornoControlNumerico ;
-    ns1:textoExtracto "(V.)MPG.VCOMPAXIS2[tbl] | Nombre del eje que a compensar."@es ;
-    ns1:valor "Nombre del eje a compensar (eje 2)"@es .
-
-ns1:Parametro_MPG_VCOMPAXIS3 a ns1:Parametro ;
-    rdfs:label "MPG.VCOMPAXIS3"@es ;
-    ns1:documentadoEn ns1:Tabla_VariablesCompensacionVolumetrica ;
-    ns1:identificador "MPG.VCOMPAXIS3" ;
-    ns1:monitoreaParametro ns1:Maquina_TornoControlNumerico ;
-    ns1:textoExtracto "(V.)MPG.VCOMPAXIS3[tbl] | Nombre del eje que a compensar."@es ;
-    ns1:valor "Nombre del eje a compensar (eje 3)"@es .
-
-ns1:Parametro_MPG_VCOMPFILE a ns1:Parametro ;
-    rdfs:label "MPG.VCOMPFILE"@es ;
-    ns1:documentadoEn ns1:Tabla_VariablesCompensacionVolumetrica ;
-    ns1:identificador "MPG.VCOMPFILE" ;
-    ns1:monitoreaParametro ns1:Maquina_TornoControlNumerico ;
-    ns1:textoExtracto "(V.)MPG.VCOMPFILE[tbl] | Archivo con los datos de la compensación volumétrica."@es ;
-    ns1:valor "Archivo de datos de compensación volumétrica"@es .
-
-ns1:Maquina_TornoControlNumerico a ns1:Maquina ;
-    rdfs:label "Máquina-herramienta de control numérico"@es ;
-    ns1:textoExtracto "Parámetros máquina; generales."@es .
-
-ns1:Tabla_VariablesCompensacionVolumetrica a ns1:Tabla ;
-    rdfs:label "Tabla de variables de compensación volumétrica (MPG.VCOMP)"@es ;
-    ns1:documentadoEn ns1:Manual_12_2_3 ;
-    ns1:textoExtracto """
-    | Variables. | PRG | PLC | INT |
-    | --- | --- | --- | --- |
-    | (V.)MPG.VCOMPAXIS1[tbl]
-    (V.)MPG.VCOMPAXIS2[tbl]
-    (V.)MPG.VCOMPAXIS3[tbl]
-    Nombre del eje que a compensar. Unidades: -.
-    | R(*) | R | R |
-    | (V.)MPG.VCOMPFILE[tbl]
-    Archivo con los datos de la compensación volumétrica. Unidades: -.
-    """@es .
+ns1:ValorDeParametroNoValido a ns1:DiagnosticoFallo ;
+    rdfs:label "Valor de parámetro no válido" ;
+    ns1:textoExtracto "'Valor de parámetro no válido' DETECCIÓN Durante la ejecución. CAUSA En una sentencia o en un ciclo fijo, un parámetro tiene un valor no válido. SOLUCIÓN Revisar la programación." .
 

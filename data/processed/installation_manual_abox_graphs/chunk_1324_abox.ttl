@@ -1,59 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:SistemaPalpador a ns1:Sistema ;
-    rdfs:label "Sistema de palpadores para calibración de herramienta" ;
-    ns1:documentadoEn ns1:Manual_CicloCalibracionHerramienta ;
-    ns1:monitoreaParametro ns1:Marca_PROBE1ENA,
-        ns1:Marca_PROBE1MONIT,
-        ns1:Marca_PROBE2ENA,
-        ns1:Marca_PROBE2MONIT ;
-    ns1:textoExtracto "gestión básica de los palpadores [...] ciclo de calibración de herramienta, tanto ISO como del editor" ;
-    ns1:tieneComponente ns1:Subrutina_Sub_Probe_Piece_Begin_fst,
-        ns1:Subrutina_Sub_Probe_Tool_Begin_fst,
-        ns1:Subrutina_Sub_Probe_Tool_End_fst .
+ns1:CNC8070_16577f193f a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:ejecuta ns1:SubrutinaSub_Probe_Piece_Begin,
+        ns1:SubrutinaSub_Probe_Piece_End ;
+    ns1:textoExtracto "El CNC ejecuta antes y después del ciclo." .
 
-ns1:Marca_PROBE1ENA a ns1:Parametro ;
-    rdfs:label "PROBE1ENA" ;
-    ns1:identificador "PROBE1ENA" ;
-    ns1:monitoreaParametro ns1:Subrutina_Sub_Probe_Tool_Begin_fst ;
-    ns1:textoExtracto "marca que indica que el palpador está habilitado. Se recomienda que OEM gestione ambas marcas desde la subrutina Sub_Probe_Tool_Begin.fst, de modo que la ejecución espere hasta que la marca esté activa." .
-
-ns1:Marca_PROBE1MONIT a ns1:Parametro ;
-    rdfs:label "PROBE1MONIT" ;
-    ns1:identificador "PROBE1MONIT" ;
-    ns1:textoExtracto "marca asociada al modo seguro del palpador." .
-
-ns1:Marca_PROBE2ENA a ns1:Parametro ;
-    rdfs:label "PROBE2ENA" ;
-    ns1:identificador "PROBE2ENA" ;
-    ns1:monitoreaParametro ns1:Subrutina_Sub_Probe_Tool_Begin_fst ;
-    ns1:textoExtracto "marca que indica que el palpador está habilitado." .
-
-ns1:Marca_PROBE2MONIT a ns1:Parametro ;
-    rdfs:label "PROBE2MONIT" ;
-    ns1:identificador "PROBE2MONIT" ;
-    ns1:textoExtracto "marca asociada al modo seguro del palpador." .
-
-ns1:Subrutina_Sub_Probe_Piece_Begin_fst a ns1:Componente ;
-    rdfs:label "Sub_Probe_Piece_Begin.fst" ;
-    ns1:documentadoEn ns1:Manual_CicloCalibracionHerramienta ;
-    ns1:identificador "Sub_Probe_Piece_Begin.fst" ;
-    ns1:textoExtracto "subrutina asociada a la entrada de palpador 2." .
-
-ns1:Subrutina_Sub_Probe_Tool_End_fst a ns1:Componente ;
-    rdfs:label "Sub_Probe_Tool_End.fst" ;
-    ns1:documentadoEn ns1:Manual_CicloCalibracionHerramienta ;
-    ns1:identificador "Sub_Probe_Tool_End.fst" ;
-    ns1:textoExtracto "subrutina asociada al final del ciclo de calibración de herramienta." .
-
-ns1:Subrutina_Sub_Probe_Tool_Begin_fst a ns1:Componente ;
+ns1:SubrutinaSub_Probe_Tool_Begin a ns1:Componente ;
     rdfs:label "Sub_Probe_Tool_Begin.fst" ;
-    ns1:documentadoEn ns1:Manual_CicloCalibracionHerramienta ;
-    ns1:identificador "Sub_Probe_Tool_Begin.fst" ;
-    ns1:textoExtracto "subrutina asociada al inicio del ciclo de calibración de herramienta. El ciclo de calibración de herramienta [...] ejecuta antes y después del ciclo. Estas subrutinas se pueden utilizar para habilitar el palpador e indicar si está en modo seguro." .
+    ns1:textoExtracto "Fagor suministra la subrutina Sub_Probe_Tool_Begin.fst asociada a la entrada de palpador 1." .
 
-ns1:Manual_CicloCalibracionHerramienta a ns1:Manual ;
-    rdfs:label "Sección 14.6: Subrutinas asociadas al ciclo de calibración de herramienta" ;
-    ns1:textoExtracto "Las subrutinas suministradas por Fagor ofrecen una gestión básica de los palpadores, por lo que deben ser adaptadas y configuradas apropiadamente por el OEM." .
+ns1:SubrutinaSub_Probe_Piece_Begin a ns1:Componente ;
+    rdfs:label "Sub_Probe_Piece_Begin.fst" ;
+    ns1:textoExtracto "Fagor suministra la subrutina Sub_Probe_Piece_Begin.fst asociada a la entrada de palpador 2." .
+
+ns1:SubrutinaSub_Probe_Piece_End a ns1:Componente ;
+    rdfs:label "Sub_Probe_Piece_End.fst" ;
+    ns1:textoExtracto "Subrutina asociada al final del ciclo de medición de pieza." .
 

@@ -1,19 +1,36 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1228 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1228: Eje longitudinal no definido"@es ;
-    ns1:identificador "1228" ;
-    ns1:solucionaFallo ns1:Parametro_LONGAXIS ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Ningún eje del plano está definido como eje longitudinal. SOLUCIÓN Definir uno de los ejes del plano como eje longitudinal (parámetro LONGAXIS)."@es .
+ns1:RepasarLaConfiguracionDeEjes a ns1:TareaMantenimiento ;
+    rdfs:label "Repasar la configuración de ejes" ;
+    ns1:solucionaFallo ns1:UnaDeLasPosicionesEstaOcupadaPorOtroEje ;
+    ns1:textoExtracto "SOLUCIÓN Repasar la configuración de ejes definida para el canal; dos ejes no pueden estar en la misma posición." .
 
-ns1:Fallo_1229 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1229: Anidamiento de sentencias condicionales sobrepasado"@es ;
-    ns1:identificador "1229" ;
-    ns1:textoExtracto "1229 Anidamiento de sentencias condicionales sobrepasado. DETECCIÓN Durante la ejecución. CAUSA Demasiados anidamientos de sentencias $IF, $SWITCH, $FOR,"@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:ElNombreDeUnoDeLosEjesEstaSiendoUtilizadoPorUnEjeC,
+        ns1:ErrorEnLaSintaxisDeLaSentencia,
+        ns1:FREEAXNoSePermiteEliminarUnEjeActivoEnModoManual,
+        ns1:LaSentenciaFREEAXNoEstaProgramadaSolaEnElBloque ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_LONGAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro LONGAXIS"@es ;
-    ns1:identificador "LONGAXIS" ;
-    ns1:textoExtracto "parámetro LONGAXIS"@es .
+ns1:ElNombreDeUnoDeLosEjesEstaSiendoUtilizadoPorUnEjeC a ns1:DiagnosticoFallo ;
+    rdfs:label "El nombre de uno de los ejes está siendo utilizado por un eje C" ;
+    ns1:textoExtracto "CAUSA El nombre de uno de los ejes está siendo utilizado por un eje C. SOLUCIÓN Revisar la programación." .
+
+ns1:ErrorEnLaSintaxisDeLaSentencia a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la sintaxis de la sentencia" ;
+    ns1:textoExtracto "CAUSA Error en la sintaxis de la sentencia. SOLUCIÓN Revisar la programación." .
+
+ns1:FREEAXNoSePermiteEliminarUnEjeActivoEnModoManual a ns1:DiagnosticoFallo ;
+    rdfs:label "#FREE AX: no se permite eliminar un eje activo en modo manual" ;
+    ns1:textoExtracto "CAUSA #FREE AX: no se permite eliminar un eje activo en modo manual. DETECCIÓN Durante la ejecución." .
+
+ns1:LaSentenciaFREEAXNoEstaProgramadaSolaEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "La sentencia #FREE AX no está programada sola en el bloque" ;
+    ns1:textoExtracto "CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación." .
+
+ns1:UnaDeLasPosicionesEstaOcupadaPorOtroEje a ns1:DiagnosticoFallo ;
+    rdfs:label "Una de las posiciones está ocupada por otro eje" ;
+    ns1:textoExtracto "CAUSA Una de las posiciones está ocupada por otro eje. SOLUCIÓN Repasar la configuración de ejes definida para el canal; dos ejes no pueden estar en la misma posición." .
 

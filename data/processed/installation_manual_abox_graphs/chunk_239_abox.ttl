@@ -1,28 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_G0MODAL a ns1:Parametro ;
-    rdfs:label "G0MODAL" ;
-    ns1:textoExtracto "Aunque la función G0 esté definida como no-modal, con IMOVE=G0 el CNC asume la función G0 en el arranque, tras un reset o M30." ;
-    ns1:valor "No" .
+ns1:CNC8070_b8393bdc6d a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:documentadoEn ns1:ConfiguracionDeG0MODAL ;
+    ns1:monitoreaParametro ns1:AvanceRapidoDefinidoEnElParametroG00FEED,
+        ns1:MantenerLaFuncionG0ModalONo ;
+    ns1:textoExtracto "El CNC asume la función G0. Los desplazamientos en G0 se realizan al avance rápido definido en el parámetro G00FEED." .
 
-ns1:Parametro_G2G3MODAL a ns1:Parametro ;
-    rdfs:label "G2G3MODAL" ;
-    ns1:textoExtracto "G2G3MODAL: La programación en G2/G3 se mantiene modal. Valores posibles: Sí / No. Valor por defecto: Sí." ;
-    ns1:valor "Sí" .
+ns1:AvanceRapidoDefinidoEnElParametroG00FEED a ns1:Parametro ;
+    rdfs:label "Avance rápido definido en el parámetro G00FEED" ;
+    ns1:identificador "G00FEED" ;
+    ns1:textoExtracto "Los desplazamientos en G0 se realizan al avance rápido definido en el parámetro G00FEED." .
 
-ns1:Parametro_IMOVE a ns1:Parametro ;
-    rdfs:label "IMOVE (Tipo de movimiento por defecto)" ;
-    ns1:documentadoEn ns1:Pagina_126 ;
-    ns1:textoExtracto "IMOVE=G0 tiene prioridad sobre G0MODAL=No. [...] Ver 'IMOVE Tipo de movimiento (G0/G1) por defecto.' en la página 126." ;
-    ns1:valor "G0" .
+ns1:ConfiguracionDeG0MODAL a ns1:TareaMantenimiento ;
+    rdfs:label "Configuración de G0MODAL" ;
+    ns1:textoExtracto "Parámetro G0MODAL; mantener la función G0 modal o no. El valor IMOVE=G0 tiene prioridad sobre G0MODAL=No." .
 
-ns1:Variable_V_MPG_G2G3MODAL a ns1:Parametro ;
-    rdfs:label "(V.)[ch].MPG.G2G3MODAL" ;
-    ns1:textoExtracto "Variable asociada: (V.)[ch].MPG.G2G3MODAL. Este parámetro define si las funciones G2/G3 son modales o no." .
-
-ns1:Pagina_126 a ns1:Pagina ;
-    rdfs:label "Página 126" ;
-    ns1:identificador "126" ;
-    ns1:textoExtracto "Ver 'IMOVE Tipo de movimiento (G0/G1) por defecto.' en la página 126." .
+ns1:MantenerLaFuncionG0ModalONo a ns1:Parametro ;
+    rdfs:label "Mantener la función G0 modal o no" ;
+    ns1:identificador "MPG.G0MODAL" ;
+    ns1:textoExtracto "Parámetro G0MODAL; mantener la función G0 modal o no." .
 

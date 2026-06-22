@@ -1,60 +1,82 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_9520 a ns1:DiagnosticoFallo ;
-    rdfs:label "Frecuencia de contaje excesiva"@es ;
-    ns1:identificador "9520" ;
-    ns1:monitoreaParametro ns1:FrecuenciaDeContajeDelEncoder ;
-    ns1:solucionaFallo ns1:ReduccionDeVelocidadDelEje ;
-    ns1:textoExtracto "Captación: Frecuencia de contaje excesiva. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA La velocidad del eje excede la capacidad de muestreo del hardware, para ese tipo de señal del encóder."@es .
+ns1:CNC8070_d2c799413d a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_204d6b03e5,
+        ns1:DiagnosticoFallo_46c568ade0,
+        ns1:DiagnosticoFallo_b54a881c8c,
+        ns1:ErrorDeComunicacionEnRegulador,
+        ns1:SeHaParametrizadoMasDe1VolanteHBH,
+        ns1:SobretensionEnElBusDePotencia ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Fallo_9521 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de comunicación en captación (CRC incorrecto)"@es ;
-    ns1:identificador "9521" ;
-    ns1:textoExtracto "Error de comunicación en captación. CRC incorrecto. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema."@es .
+ns1:EliminarLaCausaDelErrorYResetearElRegulador a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar la causa del error y resetear el regulador" ;
+    ns1:textoExtracto "Eliminar la causa del error y resetear el regulador." .
 
-ns1:SistemaCaptacion a ns1:Sistema ;
-    rdfs:label "Sistema de captación"@es ;
-    ns1:detalladoEnEsquema ns1:DocumentacionDelEncoder ;
-    ns1:textoExtracto "Durante el arranque o funcionamiento habitual del sistema"@es ;
-    ns1:tieneComponente ns1:Encoder .
+ns1:EliminarLaCausaDelErrorYResetearElReguladorParaSolucionarLaComunicacion a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar la causa del error y resetear el regulador para solucionar la comunicación" ;
+    ns1:solucionaFallo ns1:ErrorDeComunicacionEnRegulador ;
+    ns1:textoExtracto "Eliminar la causa del error y resetear el regulador para solucionar la comunicación" .
 
-ns1:DocumentacionDelEncoder a ns1:Esquema ;
-    rdfs:label "Documentación del encóder"@es ;
-    ns1:textoExtracto "Revise la documentación del encóder para determinar el origen de la alarma"@es .
+ns1:RealizarUnResetDelError a ns1:TareaMantenimiento ;
+    rdfs:label "Realizar un reset del error" ;
+    ns1:textoExtracto "• Realizar un reset del error." .
 
-ns1:Encoder a ns1:Sensor ;
-    rdfs:label "Encóder"@es ;
-    ns1:activaAlarma ns1:Fallo_9519 ;
-    ns1:monitoreaParametro ns1:Parametro_FrecuenciaContaje ;
-    ns1:textoExtracto "El encóder ha generado una señal de alarma por un mal funcionamiento del mismo"@es .
+ns1:RealizarUnResetDelErrorParaSolucionarElCortocircuito a ns1:TareaMantenimiento ;
+    rdfs:label "Realizar un reset del error para solucionar el cortocircuito" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_204d6b03e5 ;
+    ns1:textoExtracto "Realizar un reset del error para solucionar el cortocircuito" .
 
-ns1:Fallo_9519 a ns1:DiagnosticoFallo ;
-    rdfs:label "Captación: Recibida señal de alarma"@es ;
-    ns1:activaAlarma ns1:SenalDeAlarmaDelEncoder ;
-    ns1:identificador "9519" ;
-    ns1:solucionaFallo ns1:RevisionDeDocumentacionDelEncoder ;
-    ns1:textoExtracto "Captación: Recibida señal de alarma. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El encóder ha generado una señal de alarma por un mal funcionamiento del mismo."@es .
+ns1:ReiniciarElCNC a ns1:TareaMantenimiento ;
+    rdfs:label "Reiniciar el CNC" ;
+    ns1:textoExtracto "SOLUCIÓN Reiniciar el CNC." .
 
-ns1:FrecuenciaDeContajeDelEncoder a ns1:Parametro ;
-    rdfs:label "Frecuencia de contaje del encóder"@es ;
-    ns1:textoExtracto "Frecuencia de contaje excesiva"@es ;
-    ns1:valor "excesiva"@es .
+ns1:ReiniciarElCNCParaSolucionarLaParametrizacionDelVolanteHBH a ns1:TareaMantenimiento ;
+    rdfs:label "Reiniciar el CNC para solucionar la parametrización del volante HBH" ;
+    ns1:solucionaFallo ns1:SeHaParametrizadoMasDe1VolanteHBH ;
+    ns1:textoExtracto "Reiniciar el CNC para solucionar la parametrización del volante HBH" .
 
-ns1:Parametro_FrecuenciaContaje a ns1:Parametro ;
-    rdfs:label "Frecuencia de contaje"@es ;
-    ns1:textoExtracto "Frecuencia de contaje excesiva"@es ;
-    ns1:valor "excesiva"@es .
+ns1:RevisarElConexionadoDelEncoderParaSolucionarLaAlarmaDeSenalesDeCaptacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado del encoder para solucionar la alarma de señales de captación" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_b54a881c8c ;
+    ns1:textoExtracto "Revisar el conexionado del encoder para solucionar la alarma de señales de captación" .
 
-ns1:ReduccionDeVelocidadDelEje a ns1:TareaMantenimiento ;
-    rdfs:label "Reducción de velocidad del eje"@es ;
-    ns1:textoExtracto "Disminuya la velocidad máxima de movimiento del eje."@es .
+ns1:RevisarElConexionadoDelEncoder_35b5177982 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar el conexionado del encoder" ;
+    ns1:textoExtracto "Revisar el conexionado del encoder." .
 
-ns1:RevisionDeDocumentacionDelEncoder a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de documentación del encóder"@es ;
-    ns1:textoExtracto "Revise la documentación del encóder para determinar el origen de la alarma. Puede tratarse también de un falso positivo debido a un mal conexionado."@es .
+ns1:RevisarLosParametrosYConexionadoDelMotor a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros y conexionado del motor" ;
+    ns1:textoExtracto "Revisar los parámetros y conexionado del motor." .
 
-ns1:SenalDeAlarmaDelEncoder a ns1:Alarma ;
-    rdfs:label "Señal de alarma del encóder"@es ;
-    ns1:textoExtracto "El encóder ha generado una señal de alarma por un mal funcionamiento del mismo."@es .
+ns1:RevisarLosParametrosYConexionadoDelMotorParaSolucionarLaSobrecorriente a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar los parámetros y conexionado del motor para solucionar la sobrecorriente" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_46c568ade0 ;
+    ns1:textoExtracto "Revisar los parámetros y conexionado del motor para solucionar la sobrecorriente" .
+
+ns1:SobretensionEnElBusDePotencia a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobretensión en el bus de potencia" ;
+    ns1:textoExtracto "9500 Sobretensión en el bus de potencia." .
+
+ns1:DiagnosticoFallo_204d6b03e5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Cortocircuito" ;
+    ns1:textoExtracto "9502 Cortocircuito." .
+
+ns1:DiagnosticoFallo_46c568ade0 a ns1:DiagnosticoFallo ;
+    rdfs:label "Sobrecorriente" ;
+    ns1:textoExtracto "9501 Sobrecorriente." .
+
+ns1:DiagnosticoFallo_b54a881c8c a ns1:DiagnosticoFallo ;
+    rdfs:label "Alarma en las señales de captación" ;
+    ns1:textoExtracto "9504 Alarma en las señales de captación." .
+
+ns1:ErrorDeComunicacionEnRegulador a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de comunicación en regulador" ;
+    ns1:textoExtracto "9503 Error de comunicación en regulador." .
+
+ns1:SeHaParametrizadoMasDe1VolanteHBH a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha parametrizado más de 1 volante HBH" ;
+    ns1:textoExtracto "CAUSA Se ha parametrizado más de 1 volante HBH." .
 

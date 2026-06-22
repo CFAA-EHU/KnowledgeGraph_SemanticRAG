@@ -1,59 +1,38 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CarpetaAyudaFabricante a ns1:Sistema ;
-    rdfs:label "Directorio de ayuda del fabricante" ;
-    ns1:identificador "..\\Mtb\\Sub\\Help" ;
-    ns1:textoExtracto "El fabricante de la máquina podrá guardar los ficheros de ayuda en las carpetas ..\\Mtb\\Sub\\Help y ..\\Mtb\\Sub\\Help\\{idioma}" .
+ns1:CNC8070_d7c2cfebc6 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC busca los ficheros de ayuda en ambas carpetas; si los archivos no están ahí, el CNC no mostrará ninguna ayuda." .
 
-ns1:CarpetaAyudaUsuario a ns1:Sistema ;
-    rdfs:label "Directorio de ayuda de usuario" ;
-    ns1:documentadoEn ns1:G180_ArchivoAyuda ;
-    ns1:identificador "..\\Users\\Sub\\Help" ;
-    ns1:textoExtracto "El usuario deberá guardar sus ficheros de ayuda en las carpetas ..\\Users\\Sub\\Help y ..\\Users\\Sub\\Help\\{idioma}" .
+ns1:FicheroAyuda1 a ns1:DocumentoTecnico ;
+    rdfs:label "FAGOR.NC" ;
+    ns1:documentadoEn ns1:ArchivoSubrutinas ;
+    ns1:textoExtracto "Ejemplo de un fichero con una lista de subrutinas." .
 
-ns1:Parametro_G180_P1 a ns1:Parametro ;
-    rdfs:label "Movimiento en X (P1)" ;
-    ns1:identificador "P1" ;
-    ns1:monitoreaParametro ns1:G180_Subrutina ;
-    ns1:textoExtracto "P1 = Movimiento en X" .
+ns1:FicheroAyuda2 a ns1:DocumentoTecnico ;
+    rdfs:label "SUBROUTINE.NC" ;
+    ns1:documentadoEn ns1:ArchivoSubrutinas ;
+    ns1:textoExtracto "Ejemplo de un fichero con una lista de subrutinas." .
 
-ns1:Parametro_G180_P2 a ns1:Parametro ;
-    rdfs:label "Movimiento en Y (P2)" ;
-    ns1:identificador "P2" ;
-    ns1:monitoreaParametro ns1:G180_Subrutina ;
-    ns1:textoExtracto "P2 = Movimiento en Y" .
+ns1:FicheroAyuda3 a ns1:DocumentoTecnico ;
+    rdfs:label "EXAMPLE.NC" ;
+    ns1:documentadoEn ns1:ArchivoSubrutinas ;
+    ns1:textoExtracto "Ejemplo de un fichero con una lista de subrutinas." .
 
-ns1:Parametro_G180_P3 a ns1:Parametro ;
-    rdfs:label "Movimiento en Z (P3)" ;
-    ns1:identificador "P3" ;
-    ns1:monitoreaParametro ns1:G180_Subrutina ;
-    ns1:textoExtracto "P3 = Movimiento en Z" .
+ns1:FicheroAyuda4 a ns1:DocumentoTecnico ;
+    rdfs:label "POSITIONING.NC" ;
+    ns1:documentadoEn ns1:ArchivoSubrutinas ;
+    ns1:textoExtracto "Ejemplo de un fichero con una lista de subrutinas." .
 
-ns1:Parametro_G180_P4 a ns1:Parametro ;
-    rdfs:label "Avance F (P4)" ;
-    ns1:identificador "P4" ;
-    ns1:monitoreaParametro ns1:G180_Subrutina ;
-    ns1:textoExtracto "P4 = Avance F" .
+ns1:ManualDeProgramacion a ns1:Manual ;
+    rdfs:label "Manual de programación" ;
+    ns1:identificador "CNC8070-User-Manual" ;
+    ns1:textoExtracto "El editor permite tener en un archivo de texto (txt) una lista subrutinas que se mostrará durante la edición del programa pieza, cada vez que se edite una sentencia #PCALL ó #MCALL." .
 
-ns1:Parametro_G180_P5 a ns1:Parametro ;
-    rdfs:label "Velocidad S (P5)" ;
-    ns1:identificador "P5" ;
-    ns1:monitoreaParametro ns1:G180_Subrutina ;
-    ns1:textoExtracto "P5 = Velocidad S" .
-
-ns1:G180_EsquemaParametros a ns1:Tabla ;
-    ns1:textoExtracto "#COMMENT BEGIN [...] P1 = Movimiento en X, P2 = Movimiento en Y, P3 = Movimiento en Z, P4 = Avance F, P5 = Velocidad S [...] #COMMENT END" .
-
-ns1:G180_ArchivoAyuda a ns1:InterfazUsuario ;
-    rdfs:label "G180.txt" ;
-    ns1:identificador "G180.txt" ;
-    ns1:ilustradoEn ns1:G180_EsquemaParametros ;
-    ns1:textoExtracto "Nombre de los ficheros de ayuda [...] El nombre de los ficheros será la función a la que está asociada. Por ejemplo G180.txt y G180.bmp" .
-
-ns1:G180_Subrutina a ns1:ModoOperacion ;
-    rdfs:label "G180" ;
-    ns1:documentadoEn ns1:G180_ArchivoAyuda ;
-    ns1:identificador "G180" ;
-    ns1:textoExtracto "G180 P0= P1= P2= P3= P4= P5= [...] P1 = Movimiento en X, P2 = Movimiento en Y, P3 = Movimiento en Z, P4 = Avance F, P5 = Velocidad S" .
+ns1:ArchivoSubrutinas a ns1:DocumentoTecnico ;
+    rdfs:label "Lista de subrutinas" ;
+    ns1:documentadoEn ns1:ManualDeProgramacion ;
+    ns1:identificador "pcall.txt" ;
+    ns1:textoExtracto "El fichero se deberá editar de tal manera que cada línea sea el nombre de una posible subrutina a llamar." .
 

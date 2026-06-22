@@ -1,71 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Parametro_PRBDI1 a ns1:Parametro ;
-    rdfs:label "PRBDI1" ;
-    ns1:identificador "PRBDI1" ;
-    ns1:textoExtracto "El palpador 1 será el asignado al parámetro PRBDI1." .
+ns1:CNC8070_b6792d4813 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:Parametro_0aeef780e9,
+        ns1:Parametro_4d6802ff89,
+        ns1:Parametro_51646c0a56,
+        ns1:Parametro_7107ee1674,
+        ns1:Parametro_f37b85d7ec ;
+    ns1:textoExtracto "El CNC activa esta marca cuando el usuario valida los parámetros de piercing de la tabla activa." .
 
-ns1:Parametro_PRBDI2 a ns1:Parametro ;
-    rdfs:label "PRBDI2" ;
-    ns1:identificador "PRBDI2" ;
-    ns1:textoExtracto "El palpador 2 será el asignado al parámetro PRBDI2." .
+ns1:SistemaPLC_a2399c2e32 a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:mitigaRiesgo ns1:Parametro_4d6802ff89,
+        ns1:Parametro_51646c0a56 ;
+    ns1:textoExtracto "El PLC gestiona los efectos de estas variables sobre los dispositivos de la máquina (salidas analógicas, digitales, etc)." .
 
-ns1:Sistema_InterpoladorIndependiente a ns1:Sistema ;
-    rdfs:label "Interpolador independiente" ;
-    ns1:monitoreaParametro ns1:Se_al_IBUSY,
-        ns1:Se_al_IEND,
-        ns1:Se_al_IFHOUT,
-        ns1:Se_al_IFREE,
-        ns1:Se_al_INSYNC,
-        ns1:Se_al_LATCH1ACTIVE,
-        ns1:Se_al_LATCH2ACTIVE,
-        ns1:Se_al_PROBE1ACTIVE,
-        ns1:Se_al_PROBE2ACTIVE ;
-    ns1:textoExtracto "El interpolador del eje activa esta marca cuando tiene alguna sentencia pendiente de ejecución." .
+ns1:Parametro_0aeef780e9 a ns1:Parametro ;
+    rdfs:label "Parámetro que establece el comportamiento del CNC cuando el gap sobrepasa el rango GAPMIN - GAPMAX" ;
+    ns1:identificador "GAPERRORCANCEL" ;
+    ns1:textoExtracto "El parámetro GAPERRORCANCEL establece el comportamiento del CNC cuando el gap sobrepasa el rango GAPMIN - GAPMAX." .
 
-ns1:Se_al_IBUSY a ns1:Parametro ;
-    rdfs:label "IBUSY(axis)" ;
-    ns1:identificador "IBUSY" ;
-    ns1:textoExtracto "Para los movimientos de eje independiente, el interpolador del eje activa esta marca cuando tiene alguna sentencia pendiente de ejecución." .
+ns1:Parametro_7107ee1674 a ns1:Parametro ;
+    rdfs:label "Parámetro que define el límite inferior del rango de gap" ;
+    ns1:identificador "GAPMIN" ;
+    ns1:textoExtracto "El CNC activa esta marca si el gap está dentro del rango definido por los parámetros GAPMIN-GAPMAX." .
 
-ns1:Se_al_IEND a ns1:Parametro ;
-    rdfs:label "IEND(axis)" ;
-    ns1:identificador "IEND" ;
-    ns1:textoExtracto "Para los movimientos de eje independiente, el interpolador del eje activa esta marca cuando termina de generar el movimiento teórico." .
+ns1:Parametro_f37b85d7ec a ns1:Parametro ;
+    rdfs:label "Parámetro que define el límite superior del rango de gap" ;
+    ns1:identificador "GAPMAX" ;
+    ns1:textoExtracto "El CNC activa esta marca si el gap está dentro del rango definido por los parámetros GAPMIN-GAPMAX." .
 
-ns1:Se_al_IFHOUT a ns1:Parametro ;
-    rdfs:label "IFHOUT(axis)" ;
-    ns1:identificador "IFHOUT" ;
-    ns1:textoExtracto "Para los movimientos de eje independiente, el interpolador del eje activa esta marca cuando la ejecución está detenida." .
+ns1:Parametro_4d6802ff89 a ns1:Parametro ;
+    rdfs:label "Marca activada por el CNC cuando se validan parámetros de piercing" ;
+    ns1:identificador "PIRVARACT" ;
+    ns1:textoExtracto "El CNC activa esta marca cuando el usuario valida los parámetros de piercing de la tabla activa." .
 
-ns1:Se_al_IFREE a ns1:Parametro ;
-    rdfs:label "IFREE(axis)" ;
-    ns1:identificador "IFREE" ;
-    ns1:textoExtracto "Para los movimientos de eje independiente, el interpolador del eje activa esta marca cuando está listo para aceptar un nuevo bloque de movimiento." .
-
-ns1:Se_al_INSYNC a ns1:Parametro ;
-    rdfs:label "INSYNC(axis)" ;
-    ns1:identificador "INSYNC" ;
-    ns1:textoExtracto "Para los movimientos de sincronización de eje independiente y leva electrónica, el interpolador del eje activa esta marca cuando se ha alcanzado la sincronización." .
-
-ns1:Se_al_LATCH1ACTIVE a ns1:Parametro ;
-    rdfs:label "LATCH1ACTIVE(axis)" ;
-    ns1:identificador "LATCH1ACTIVE" ;
-    ns1:textoExtracto "El interpolador independiente activa esta marca al activar un proceso de latcheo en el eje con el palpador 1; la desactiva cuando finaliza el proceso de latcheo o cuando se cancela el proceso." .
-
-ns1:Se_al_LATCH2ACTIVE a ns1:Parametro ;
-    rdfs:label "LATCH2ACTIVE(axis)" ;
-    ns1:identificador "LATCH2ACTIVE" ;
-    ns1:textoExtracto "El interpolador independiente activa esta marca al activar un proceso de latcheo en el eje con el palpador 2; la desactiva cuando finaliza el proceso de latcheo o cuando se cancela el proceso." .
-
-ns1:Se_al_PROBE1ACTIVE a ns1:Parametro ;
-    rdfs:label "PROBE1ACTIVE" ;
-    ns1:identificador "PROBE1ACTIVE" ;
-    ns1:textoExtracto "Se aplica al proceso de latcheo de la cota de un eje. Hay una marca para cada palpador. El palpador 1 será el asignado al parámetro PRBDI1." .
-
-ns1:Se_al_PROBE2ACTIVE a ns1:Parametro ;
-    rdfs:label "PROBE2ACTIVE" ;
-    ns1:identificador "PROBE2ACTIVE" ;
-    ns1:textoExtracto "Se aplica al proceso de latcheo de la cota de un eje. Hay una marca para cada palpador. El palpador 2 será el asignado al parámetro PRBDI2." .
+ns1:Parametro_51646c0a56 a ns1:Parametro ;
+    rdfs:label "Marca que indica si el gap está dentro del rango definido por GAPMIN y GAPMAX" ;
+    ns1:identificador "INPOSGAP" ;
+    ns1:textoExtracto "El CNC activa esta marca si el gap está dentro del rango definido por los parámetros GAPMIN-GAPMAX." .
 

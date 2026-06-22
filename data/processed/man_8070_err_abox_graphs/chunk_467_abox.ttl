@@ -1,113 +1,58 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_2431 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2431: Avance mínimo mayor que avance máximo en #DMC"@es ;
-    ns1:identificador "2431" ;
-    ns1:monitoreaParametro ns1:Parametro_FZMAX,
-        ns1:Parametro_FZMIN ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el avance mínimo es mayor que el avance máximo. SOLUCIÓN El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX). 2431 #DMC ON: OVRMIN debe ser menor que OVRMAX."@es .
+ns1:ActivarTablaTecnologica a ns1:TareaMantenimiento ;
+    rdfs:label "Activar tabla tecnológica" ;
+    ns1:solucionaFallo ns1:FalloPreparacionBloques ;
+    ns1:textoExtracto "SOLUCIÓN Activar una tabla tecnológica, programar el comando material o programar el comando #PIERCING o #CUTTING que está dando el error con un parámetro T correcto (valor entre 1 y 10)." .
 
-ns1:Fallo_2432 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2432: Override mínimo mayor que override máximo en #DMC"@es ;
-    ns1:identificador "2432" ;
-    ns1:monitoreaParametro ns1:Parametro_OVRMAX,
-        ns1:Parametro_OVRMIN ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En la función #DMC, el override mínimo es mayor que el override máximo. SOLUCIÓN El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)."@es .
+ns1:ActivarTablaTecnologicaDesdeElHMI a ns1:TareaMantenimiento ;
+    rdfs:label "Activar tabla tecnológica desde el HMI" ;
+    ns1:solucionaFallo ns1:FalloNoTablaTecnologica ;
+    ns1:textoExtracto "SOLUCIÓN Activar una tabla tecnológica desde el HMI o programar el comando #MATERIAL." .
 
-ns1:Fallo_2433 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2433: DMC no compatible con cabezal analógico"@es ;
-    ns1:identificador "2433" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el DMC sobre un cabezal analógico. SOLUCIÓN El DMC sólo se puede activar sobre cabezales digitales."@es .
+ns1:CorregirSintaxisDelComandoPLC a ns1:TareaMantenimiento ;
+    rdfs:label "Corregir sintaxis del comando PLC" ;
+    ns1:solucionaFallo ns1:FalloSintaxisIncorrectaPLC ;
+    ns1:textoExtracto "#PLC[PLCmark=0/1,PLCmark=0/1,...] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 
-ns1:Fallo_2434 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2434: Falta comando ON/OFF en función DMC"@es ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "2434" ;
-    ns1:solucionaFallo ns1:Comando_DMCOFF,
-        ns1:Comando_DMCON ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Falta programar el comando ON/OFF para activar o anular la función. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia. Incluir el comando ON para activar la función (por ejemplo, #DMCON [...]) o el comando OFF para anularla (por ejemplo, #DMC OFF)."@es .
+ns1:NoDefinirPIERCING a ns1:AccionProhibida ;
+    rdfs:label "No definir #PIERCING" ;
+    ns1:solucionaFallo ns1:FalloPreparacionBloques ;
+    ns1:textoExtracto "o #PIERCING no definido. DETECCIÓN Durante la preparación de bloques. CAUSA El tipo de piercing o cutting es nulo." .
 
-ns1:Fallo_2435 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2435: Función G8078 fuera de macro G8077"@es ;
-    ns1:identificador "2435" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8078 programada fuera de una macro G8077. SOLUCIÓN Revisar la programación. Las funciones G8078 se deben programar a continuación de la macro G8077."@es .
+ns1:NoTenerTablaTecnologicaActiva a ns1:AccionProhibida ;
+    rdfs:label "No tener tabla tecnológica activa" ;
+    ns1:solucionaFallo ns1:FalloNoTablaTecnologica ;
+    ns1:textoExtracto "2424 No hay tabla tecnológica activa (#MATERIAL). DETECCIÓN Durante la preparación de bloques. CAUSA Se ha programado el comando #PIERCING y #CUTTING, y no hay ninguna tabla tecnológica activa." .
 
-ns1:Fallo_2436 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2436: Funciones G8778/G8701/G8702 fuera de macro G8777"@es ;
-    ns1:identificador "2436" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777. SOLUCIÓN Revisar la programación."@es .
+ns1:ProgramarComandoCUTTING a ns1:TareaMantenimiento ;
+    rdfs:label "Programar comando #CUTTING" ;
+    ns1:textoExtracto "SOLUCIÓN Activar una tabla tecnológica, programar el comando material o programar el comando #PIERCING o #CUTTING que está dando el error con un parámetro T correcto (valor entre 1 y 10)." .
 
-ns1:Funcion_DMC a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función #DMC"@es ;
-    ns1:textoExtracto "En la función #DMC, el avance mínimo es mayor que el avance máximo."@es .
+ns1:ProgramarComandoMaterial a ns1:TareaMantenimiento ;
+    rdfs:label "Programar comando material" ;
+    ns1:solucionaFallo ns1:FalloPreparacionBloques ;
+    ns1:textoExtracto "SOLUCIÓN Activar una tabla tecnológica, programar el comando material o programar el comando #PIERCING o #CUTTING que está dando el error con un parámetro T correcto (valor entre 1 y 10)." .
 
-ns1:Funcion_G8078 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función G8078"@es ;
-    ns1:requiereMantenimiento ns1:Funcion_G8077,
-        ns1:Funcion_G8079 ;
-    ns1:textoExtracto "Hay alguna función G8078 programada fuera de una macro G8077."@es .
+ns1:ProgramarComandoPIERCING a ns1:TareaMantenimiento ;
+    rdfs:label "Programar comando #PIERCING" ;
+    ns1:textoExtracto "SOLUCIÓN Activar una tabla tecnológica, programar el comando material o programar el comando #PIERCING o #CUTTING que está dando el error con un parámetro T correcto (valor entre 1 y 10)." .
 
-ns1:Funcion_G8701 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función G8701"@es ;
-    ns1:requiereMantenimiento ns1:Funcion_G8777 ;
-    ns1:textoExtracto "Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777."@es .
+ns1:UsoIncorrectoDelComandoPLC a ns1:AccionProhibida ;
+    rdfs:label "Uso incorrecto del comando PLC" ;
+    ns1:solucionaFallo ns1:FalloSintaxisIncorrectaPLC ;
+    ns1:textoExtracto "#PLC[PLCmark=0/1,PLCmark=0/1,...] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 
-ns1:Funcion_G8702 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función G8702"@es ;
-    ns1:requiereMantenimiento ns1:Funcion_G8777 ;
-    ns1:textoExtracto "Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777."@es .
+ns1:FalloNoTablaTecnologica a ns1:DiagnosticoFallo ;
+    rdfs:label "Error por falta de tabla tecnológica" ;
+    ns1:textoExtracto "DETECCIÓN Durante la preparación de bloques. CAUSA Se ha programado el comando #PIERCING y #CUTTING, y no hay ninguna tabla tecnológica activa." .
 
-ns1:Funcion_G8778 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función G8778"@es ;
-    ns1:requiereMantenimiento ns1:Funcion_G8777 ;
-    ns1:textoExtracto "Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777."@es .
+ns1:FalloSintaxisIncorrectaPLC a ns1:DiagnosticoFallo ;
+    rdfs:label "Error por sintaxis incorrecta del comando PLC" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 
-ns1:Comando_DMCOFF a ns1:InterfazUsuario ;
-    rdfs:label "Comando #DMC OFF"@es ;
-    ns1:textoExtracto "o el comando OFF para anularla (por ejemplo, #DMC OFF)."@es .
-
-ns1:Comando_DMCON a ns1:InterfazUsuario ;
-    rdfs:label "Comando #DMCON"@es ;
-    ns1:textoExtracto "Incluir el comando ON para activar la función (por ejemplo, #DMCON [...])"@es .
-
-ns1:Funcion_G8077 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Macro G8077"@es ;
-    ns1:textoExtracto "Las funciones G8078 se deben programar a continuación de la macro G8077."@es .
-
-ns1:Funcion_G8079 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Macro G8079"@es ;
-    ns1:textoExtracto "Las funciones G8078 se deben programar a continuación de la macro G8079."@es .
-
-ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación"@es ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia."@es .
-
-ns1:Parametro_FZMAX a ns1:Parametro ;
-    rdfs:label "Avance máximo (FZMAX)"@es ;
-    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)."@es .
-
-ns1:Parametro_FZMIN a ns1:Parametro ;
-    rdfs:label "Avance mínimo (FZMIN)"@es ;
-    ns1:textoExtracto "El avance mínimo (FZMIN) debe ser menor que el avance máximo (FZMAX)."@es .
-
-ns1:Parametro_OVRMAX a ns1:Parametro ;
-    rdfs:label "Override máximo (OVRMAX)"@es ;
-    ns1:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)."@es .
-
-ns1:Parametro_OVRMIN a ns1:Parametro ;
-    rdfs:label "Override mínimo (OVRMIN)"@es ;
-    ns1:textoExtracto "El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)."@es .
-
-ns1:Funcion_G8777 a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Macro G8777"@es ;
-    ns1:textoExtracto "Hay alguna función G8778, G8701 o G8702 programada fuera de una macro G8777."@es .
+ns1:FalloPreparacionBloques a ns1:DiagnosticoFallo ;
+    rdfs:label "Error durante la preparación de bloques" ;
+    ns1:textoExtracto "DETECCIÓN Durante la preparación de bloques. CAUSA El tipo de piercing o cutting es nulo." .
 

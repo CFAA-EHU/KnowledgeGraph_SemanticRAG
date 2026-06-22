@@ -1,56 +1,46 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_7034 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de operación: No se pudo encontrar sitio en almacén"@es ;
-    ns1:identificador "7034" ;
-    ns1:solucionaFallo ns1:Accion_ComprobarProgramaPLC ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La maniobra del PLC genera error. SOLUCIÓN Comprobar el programa de PLC."@es .
+ns1:AvisoSeguridad_25ff347674 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para programación de herramientas cargadas" ;
+    ns1:mitigaRiesgo ns1:ProgramarT0EnModoCarga_a66b704d00 ;
+    ns1:textoExtracto "'Esta herramienta ya está cargada'" .
 
-ns1:Fallo_7035 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en la tabla de almacenamiento"@es ;
-    ns1:identificador "7035" ;
-    ns1:solucionaFallo ns1:Accion_ComprobarEstadoAlmacen ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Error en el almacén durante una maniobra. SOLUCIÓN Comprobar el estado del almacén. Es posible que no haya sitio libre en el almacén."@es .
+ns1:AvisoSeguridad_7993b3ab60 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para posición inválida en el almacén" ;
+    ns1:mitigaRiesgo ns1:EspecificarUnaPosicionInvalidaOLlenaEnElAlmacenEnModoCarga ;
+    ns1:textoExtracto "'Posición inválida o no hay sitio en el almacén'" .
 
-ns1:Fallo_7036 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se admite cambio de familia para herramientas en el almacén o en el cabezal"@es ;
-    ns1:identificador "7036" ;
-    ns1:solucionaFallo ns1:Accion_DescargarHerramienta ;
-    ns1:textoExtracto "DETECCIÓN Durante la edición de tablas o durante la ejecución. CAUSA Por motivos de seguridad no se puede cambiar la familia de una herramienta que está en el almacén. SOLUCIÓN Descargar primero la herramienta."@es .
+ns1:AvisoSeguridad_81bd8211ae a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de seguridad para herramientas que no están en el almacén" ;
+    ns1:mitigaRiesgo ns1:IntentarDescargarUnaHerramientaQueNoEstaEnElAlmacen ;
+    ns1:textoExtracto "'T no esta en el almacén'" .
 
-ns1:Fallo_EmergenciaPLC a ns1:DiagnosticoFallo ;
-    rdfs:label "Señal de emergencia activada por PLC en gestor de herramientas"@es ;
-    ns1:solucionaFallo ns1:Accion_AnalizarCausasEmergencia ;
-    ns1:textoExtracto "CAUSA El PLC activa la señal de emergencia en el gestor de herramientas. SOLUCIÓN Quitar la emergencia y analizar las causas por las que el PLC la ha activado."@es .
+ns1:LaHerramientaEstaGastadaORechazada a ns1:DiagnosticoFallo ;
+    rdfs:label "La herramienta está gastada o rechazada" ;
+    ns1:textoExtracto "'En modo carga:La herramienta esta gastada o rechazada'" .
 
-ns1:SistemaGestorHerramientas a ns1:Sistema ;
-    rdfs:label "Gestor de herramientas"@es ;
-    ns1:textoExtracto "El PLC activa la señal de emergencia en el gestor de herramientas."@es ;
-    ns1:tieneComponente ns1:Componente_PLC .
+ns1:ProgramarDosM6ConsecutivasSinHerramientaEnModoCarga a ns1:AccionProhibida ;
+    rdfs:label "Programar dos M6 consecutivas sin herramienta en modo carga" ;
+    ns1:textoExtracto "'En modo carga:T con dos M6'" .
 
-ns1:Accion_AnalizarCausasEmergencia a ns1:TareaMantenimiento ;
-    rdfs:label "Quitar la emergencia y analizar las causas por las que el PLC la ha activado"@es ;
-    ns1:textoExtracto "SOLUCIÓN Quitar la emergencia y analizar las causas por las que el PLC la ha activado."@es .
+ns1:ProgramarM6SinHerramientaEnModoCarga a ns1:AccionProhibida ;
+    rdfs:label "Programar M6 sin herramienta en modo carga" ;
+    ns1:textoExtracto "'En modo carga:M6 sin T'" .
 
-ns1:Accion_ComprobarEstadoAlmacen a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobar el estado del almacén"@es ;
-    ns1:textoExtracto "SOLUCIÓN Comprobar el estado del almacén."@es .
+ns1:ProgramarSoloElCorrectorDEnModoCarga a ns1:AccionProhibida ;
+    rdfs:label "Programar solo el corrector D en modo carga" ;
+    ns1:textoExtracto "'En modo carga:D sola no admitida'" .
 
-ns1:Accion_ComprobarProgramaPLC a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobar el programa de PLC"@es ;
-    ns1:textoExtracto "SOLUCIÓN Comprobar el programa de PLC."@es .
+ns1:EspecificarUnaPosicionInvalidaOLlenaEnElAlmacenEnModoCarga a ns1:AccionProhibida ;
+    rdfs:label "Especificar una posición inválida o llena en el almacén en modo carga" ;
+    ns1:textoExtracto "'En modo carga:Posición inválida o no hay sitio en el almacén'" .
 
-ns1:Accion_DescargarHerramienta a ns1:TareaMantenimiento ;
-    rdfs:label "Descargar primero la herramienta"@es ;
-    ns1:textoExtracto "SOLUCIÓN Descargar primero la herramienta."@es .
+ns1:IntentarDescargarUnaHerramientaQueNoEstaEnElAlmacen a ns1:AccionProhibida ;
+    rdfs:label "Intentar descargar una herramienta que no está en el almacén" ;
+    ns1:textoExtracto "'En modo descarga:T no esta en el almacén'" .
 
-ns1:Alarma_Emergencia a ns1:Alarma ;
-    rdfs:label "Señal de emergencia"@es ;
-    ns1:textoExtracto "El PLC activa la señal de emergencia en el gestor de herramientas."@es .
-
-ns1:Componente_PLC a ns1:ComponenteElectrico ;
-    rdfs:label "PLC del sistema"@es ;
-    ns1:activaAlarma ns1:Alarma_Emergencia ;
-    ns1:textoExtracto "El PLC activa la señal de emergencia en el gestor de herramientas."@es .
+ns1:ProgramarT0EnModoCarga_a66b704d00 a ns1:AccionProhibida ;
+    rdfs:label "Programar T0 en modo carga" ;
+    ns1:textoExtracto "'En modo carga:T0 no admitida'" .
 

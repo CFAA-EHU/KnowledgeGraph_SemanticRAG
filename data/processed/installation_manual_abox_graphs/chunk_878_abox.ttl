@@ -1,78 +1,22 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:InterfazUsuario_Keybd1 a ns1:InterfazUsuario ;
-    rdfs:label "KEYBD1" ;
-    ns1:monitoreaParametro ns1:Parametro_TeclasPulsadas_Keybd1 ;
-    ns1:textoExtracto "KEYBD1 / KEYBD2 / KEYBD3 Estos registros son una copia del mapa de teclas pulsadas del último teclado utilizado." .
+ns1:CNC8070_73a17733c2 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "Con la marca a (=0) el CNC no permite movimientos en jog para los ejes del canal; la pulsación de una tecla de jog no tiene efecto." .
 
-ns1:InterfazUsuario_Keybd2 a ns1:InterfazUsuario ;
-    rdfs:label "KEYBD2" ;
-    ns1:monitoreaParametro ns1:Parametro_TeclasPulsadas_Keybd2 ;
-    ns1:textoExtracto "KEYBD2 / KEYBD2_1 a KEYBD2_8. Teclas genéricas. Selector del feed override. Selector de movimiento (volante, jog incremental o jog continuo)." .
+ns1:DeterminaSiLosMovimientosProgramadosDesdeElPLCEstanAfectadosPorLaMarca a ns1:Parametro ;
+    rdfs:label "Determina si los movimientos programados desde el PLC están afectados por la marca" ;
+    ns1:identificador "XFITOIND" ;
+    ns1:textoExtracto "los programados desde el PLC dependen del parámetro XFITOIND." .
 
-ns1:InterfazUsuario_Keybd3 a ns1:InterfazUsuario ;
-    rdfs:label "KEYBD3" ;
-    ns1:monitoreaParametro ns1:Parametro_TeclasPulsadas_Keybd3 ;
-    ns1:textoExtracto "KEYBD1 / KEYBD2 / KEYBD3 Estos registros son una copia del mapa de teclas pulsadas del último teclado utilizado." .
+ns1:Parametro_7107bca727 a ns1:Parametro ;
+    rdfs:label "Marca que inhibe movimientos en jog" ;
+    ns1:identificador "a" ;
+    ns1:textoExtracto "Con la marca a (=0) el CNC no permite movimientos en jog para los ejes del canal; la pulsación de una tecla de jog no tiene efecto." .
 
-ns1:InterfazUsuario_Keybd3_1 a ns1:InterfazUsuario ;
-    rdfs:label "KEYBD3_1" ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "KEYBD1_1 / KEYBD2_1 / KEYBD3_1 [...] corresponden al primer panel de mando" .
-
-ns1:ModoOperacion_Jog a ns1:ModoOperacion ;
-    rdfs:label "Jog" ;
-    ns1:habilitadoPor ns1:InterfazUsuario_Keybd1_1 ;
-    ns1:textoExtracto "Registros KEYBD1 / KEYBD1_1 a KEYBD1_8. Teclas de jog." .
-
-ns1:ModoOperacion_SpeedOverride a ns1:ModoOperacion ;
-    rdfs:label "Speed override" ;
-    ns1:habilitadoPor ns1:Parametro_SpindleOverride ;
-    ns1:textoExtracto "Cuando el panel de mando dispone de conmutador para el speed override, las teclas asociadas al speed override (bits 0 y 4) dejan de tener esta función y pueden ser configuradas desde el PLC." .
-
-ns1:Parametro_FeedOverride a ns1:Parametro ;
-    rdfs:label "Feed override" ;
-    ns1:monitoreaParametro ns1:InterfazUsuario_Keybd2_1 ;
-    ns1:textoExtracto "Selector del feed override (KEYBD2_1 a KEYBD2_8)." .
-
-ns1:Parametro_MovimientoJog a ns1:Parametro ;
-    rdfs:label "Modo de movimiento (Jog)" ;
-    ns1:monitoreaParametro ns1:InterfazUsuario_Keybd2_1 ;
-    ns1:textoExtracto "Selector de movimiento (volante, jog incremental o jog continuo)." .
-
-ns1:InterfazUsuario_Keybd1_1 a ns1:InterfazUsuario ;
-    rdfs:label "KEYBD1_1" ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "KEYBD1_1 / KEYBD2_1 / KEYBD3_1 [...] corresponden al primer panel de mando" .
-
-ns1:Parametro_SpindleOverride a ns1:Parametro ;
-    rdfs:label "Spindle override" ;
-    ns1:textoExtracto "Spindle override + (bit 0) / Spindle override - (bit 4)" ;
-    ns1:valor "bit 0 (override +), bit 4 (override -)" .
-
-ns1:Parametro_TeclasPulsadas_Keybd1 a ns1:Parametro ;
-    rdfs:label "Teclas pulsadas (KEYBD1)" ;
-    ns1:textoExtracto "Estos registros indican qué tecla se ha pulsado (bit=1)." ;
-    ns1:valor "bit=1" .
-
-ns1:Parametro_TeclasPulsadas_Keybd2 a ns1:Parametro ;
-    rdfs:label "Teclas pulsadas (KEYBD2)" ;
-    ns1:textoExtracto "KEYBD2_1 a KEYBD2_8. Teclas genéricas." ;
-    ns1:valor "bit=1" .
-
-ns1:Parametro_TeclasPulsadas_Keybd3 a ns1:Parametro ;
-    rdfs:label "Teclas pulsadas (KEYBD3)" ;
-    ns1:textoExtracto "Estos registros indican qué tecla se ha pulsado (bit=1)." ;
-    ns1:valor "bit=1" .
-
-ns1:InterfazUsuario_Keybd2_1 a ns1:InterfazUsuario ;
-    rdfs:label "KEYBD2_1" ;
-    ns1:ilustradoEn ns1:Tabla_AsignacionBitsTeclas ;
-    ns1:textoExtracto "KEYBD2_1 a KEYBD2_8. Selector del feed override." .
-
-ns1:Tabla_AsignacionBitsTeclas a ns1:Tabla ;
-    rdfs:label "Tabla de asignación de bits a teclas" ;
-    ns1:documentadoEn ns1:Pagina_432 ;
-    ns1:textoExtracto "| Bit. | Tecla. | --- | --- | 0 | Spindle override + | 1 | Spindle clockwise | [...] | 9 | Generic Key 2 |" .
+ns1:Parametro_859067b115 a ns1:Parametro ;
+    rdfs:label "Marca que inhibe movimientos de eje independiente" ;
+    ns1:identificador "XFERINH" ;
+    ns1:textoExtracto "Si el PLC desactiva la marca _XFERINH, el canal del CNC detiene sus movimientos de eje independiente cuando estos llegan a posición e impide la ejecución del siguiente movimiento." .
 

@@ -1,41 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Interfaz_OverrideJOG a ns1:InterfazUsuario ;
-    rdfs:label "Override JOG (conmutador del panel de mando)" ;
-    ns1:controla ns1:Maquina_CNC ;
-    ns1:textoExtracto "El porcentaje de avance que aplica el DMC se suma al seleccionado desde el conmutador del panel de mando." .
+ns1:ActivarDMCConSentenciaDMCON a ns1:AccionProhibida ;
+    rdfs:label "Activar DMC con sentencia #DMCON" ;
+    ns1:solucionaFallo ns1:DiagnosticoFalloTiempoMecanizado,
+        ns1:DiagnosticoFalloVidaHerramienta ;
+    ns1:textoExtracto "#DMCON activa el DMC, siempre sobre el cabezal master." .
 
-ns1:Parametro_MAXDMCOVR a ns1:Parametro ;
-    rdfs:label "MAXDMCOVR" ;
-    ns1:identificador "MAXDMCOVR" ;
-    ns1:monitoreaParametro ns1:Sistema_DMC ;
-    ns1:textoExtracto "Máximo override DMC de todos los ejes del canal." .
+ns1:HerramientaTipoFresado a ns1:Herramienta ;
+    rdfs:label "Herramienta Tipo Fresado" ;
+    ns1:textoExtracto "El DMC sólo está disponible para operaciones de fresado con herramientas de tipo 'Fresado' y 'Planeado'." .
 
-ns1:Parametro_MAXOVR a ns1:Parametro ;
-    rdfs:label "MAXOVR" ;
-    ns1:identificador "MAXOVR" ;
-    ns1:monitoreaParametro ns1:Maquina_CNC ;
-    ns1:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR." .
+ns1:HerramientaTipoPlaneado a ns1:Herramienta ;
+    rdfs:label "Herramienta Tipo Planeado" ;
+    ns1:textoExtracto "El DMC sólo está disponible para operaciones de fresado con herramientas de tipo 'Fresado' y 'Planeado'." .
 
-ns1:Parametro_MINDMCOVR a ns1:Parametro ;
-    rdfs:label "MINDMCOVR" ;
-    ns1:identificador "MINDMCOVR" ;
-    ns1:monitoreaParametro ns1:Sistema_DMC ;
-    ns1:textoExtracto "Mínimo override DMC de todos los ejes del canal." .
-
-ns1:Sentencia_DMCON a ns1:InterfazUsuario ;
-    rdfs:label "#DMCON" ;
-    ns1:controla ns1:Sistema_DMC ;
-    ns1:identificador "#DMCON" ;
-    ns1:textoExtracto "El porcentaje de avance que aplica el DMC se suma al seleccionado desde el conmutador del panel de mando. Ambos porcentajes se pueden modificar desde la sentencia #DMCON." .
-
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "CNC" ;
-    ns1:textoExtracto "El CNC siempre respeta el límite máximo definido en el parámetro máquina MAXOVR." .
-
-ns1:Sistema_DMC a ns1:Sistema ;
-    rdfs:label "Control Dinámico del Mecanizado (DMC)" ;
-    ns1:controla ns1:Maquina_CNC ;
-    ns1:textoExtracto "control dinámico del mecanizado (DMC)" .
+ns1:SistemaDMC a ns1:Sistema ;
+    rdfs:label "Sistema DMC" ;
+    ns1:textoExtracto "El DMC sólo está disponible para operaciones de fresado con herramientas de tipo 'Fresado' y 'Planeado'." .
 

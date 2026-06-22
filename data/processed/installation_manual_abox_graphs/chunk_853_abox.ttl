@@ -1,63 +1,51 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CNC_853_1 a ns1:Sistema ;
-    ns1:controla ns1:M_quina_853_1 ;
-    ns1:textoExtracto "El proceso de aparcar y desaparcar ejes se podrá realizar desde el CNC o desde el PLC." .
+ns1:CNC8070_20f4c6393d a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC envía al regulador el comando para aparcar el eje." .
 
-ns1:Configuraci_nEjesNormal_853_1 a ns1:ModoOperacion ;
-    ns1:textoExtracto "Con el cabezal normal, configuración de ejes X Y Z." ;
-    ns1:tieneComponente ns1:EjeX_853_1,
-        ns1:EjeY_853_1,
-        ns1:EjeZ_853_1 .
+ns1:EncendidoDelServoDelEjeV a ns1:Parametro ;
+    rdfs:label "Encendido del servo del eje V" ;
+    ns1:identificador "SERVOVON" ;
+    ns1:textoExtracto "NOT (PARKV OR UNPARKV OR PARKEDV) AND··· = DRENAV = SPENAV = SERVOVON" .
 
-ns1:Configuraci_nEjesOrtogonal_853_1 a ns1:ModoOperacion ;
-    ns1:textoExtracto "Con el cabezal ortogonal, configuración de ejes X Y Z A B." ;
-    ns1:tieneComponente ns1:EjeA_853_1,
-        ns1:EjeB_853_1,
-        ns1:EjeX_853_1,
-        ns1:EjeY_853_1,
-        ns1:EjeZ_853_1 .
+ns1:HabilitacionDelEjeV a ns1:Parametro ;
+    rdfs:label "Habilitación del eje V" ;
+    ns1:identificador "SPENAV" ;
+    ns1:textoExtracto "NOT (PARKV OR UNPARKV OR PARKEDV) AND··· = DRENAV = SPENAV" .
 
-ns1:PLC_853_1 a ns1:Sistema ;
-    ns1:controla ns1:M_quina_853_1 ;
-    ns1:textoExtracto "El proceso de aparcar y desaparcar ejes se podrá realizar desde el CNC o desde el PLC." .
+ns1:HabilitacionDelReguladorDelEjeV a ns1:Parametro ;
+    rdfs:label "Habilitación del regulador del eje V" ;
+    ns1:identificador "DRENAV" ;
+    ns1:textoExtracto "NOT (PARKV OR UNPARKV OR PARKEDV) AND··· = DRENAV" .
 
-ns1:CabezalNormal_853_1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "cabezal normal" .
+ns1:Parametro_3384ed3204 a ns1:Parametro ;
+    rdfs:label "Marca de aparcamiento del eje V" ;
+    ns1:identificador "PARKV" ;
+    ns1:textoExtracto "NOT (PARKV OR UNPARKV OR PARKEDV) AND··· = DRENAV" .
 
-ns1:CabezalOrtogonal_853_1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "cabezal ortogonal" .
+ns1:Parametro_697767810c a ns1:Parametro ;
+    rdfs:label "Marca de desaparcamiento del eje V" ;
+    ns1:identificador "UNPARKV" ;
+    ns1:textoExtracto "NOT (PARKV OR UNPARKV OR PARKEDV) AND··· = DRENAV" .
 
-ns1:Reguladores_853_1 a ns1:ComponenteElectrico ;
-    ns1:textoExtracto "reguladores" .
+ns1:Parametro_a7547dbb9a a ns1:Parametro ;
+    rdfs:label "Marca para aparcar eje V" ;
+    ns1:identificador "PARKEDV" ;
+    ns1:textoExtracto "I10 = PARKEDV Eje presente." .
 
-ns1:SistemaCaptaci_n_853_1 a ns1:Sensor ;
-    ns1:textoExtracto "sistemas de captación" .
+ns1:SeleccionDeCaptacion_e87b2c6a39 a ns1:Parametro ;
+    rdfs:label "Selección de captación" ;
+    ns1:identificador "FBACKSEL" ;
+    ns1:textoExtracto "El tipo de captación se podrá conmutar desde el PLC mediante la marca FBACKSEL(axis)." .
 
-ns1:EjeA_853_1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "eje A" .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "Desde al programa de PLC se pone la marca PARKED a (=1) para aparcar el eje correspondiente." .
 
-ns1:EjeB_853_1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "eje B" .
-
-ns1:M_quina_853_1 a ns1:Maquina ;
-    ns1:compuestoPor ns1:CabezalNormal_853_1,
-        ns1:CabezalOrtogonal_853_1,
-        ns1:EjeA_853_1,
-        ns1:EjeB_853_1,
-        ns1:EjeX_853_1,
-        ns1:EjeY_853_1,
-        ns1:EjeZ_853_1,
-        ns1:Reguladores_853_1,
-        ns1:SistemaCaptaci_n_853_1 ;
-    ns1:textoExtracto "Hay máquinas que dependiendo del tipo de mecanizado pueden disponer de 2 configuraciones de ejes distintas." .
-
-ns1:EjeX_853_1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "eje X" .
-
-ns1:EjeY_853_1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "eje Y" .
-
-ns1:EjeZ_853_1 a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "eje Z" .
+ns1:TipoDeCaptacion a ns1:Parametro ;
+    rdfs:label "Tipo de captación" ;
+    ns1:identificador "FBACKSRC" ;
+    ns1:textoExtracto "Consultar el parámetro máquina FBACKSRC." .
 

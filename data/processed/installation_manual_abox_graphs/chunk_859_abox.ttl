@@ -1,81 +1,42 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CNC a ns1:Actuador ;
-    rdfs:label "CNC (Control Numérico Computarizado)"@es ;
-    ns1:controla ns1:SistemaControlEjes ;
-    ns1:textoExtracto "El CNC pone la marca PARK a (=1) y comienza a aparcar el eje."@es .
+ns1:CNC8070_98fd678264 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "set de parámetros seleccionado en el CNC y en el PLC coinciden." .
 
-ns1:ManiobraAparcarEje a ns1:TareaMantenimiento ;
-    rdfs:label "Maniobra para aparcar un eje o cabezal desde el PLC"@es ;
-    ns1:ejecutadoPor ns1:PLC ;
-    ns1:identificador "PARKED=1" ;
-    ns1:textoExtracto "Maniobra para aparcar un eje o cabezal desde el PLC. 1 Desde al programa de PLC se pone la marca PARKED a (=1) para aparcar el eje correspondiente. El CNC pone la marca PARK a (=1) y comienza a aparcar el eje. En el caso de ejes digitales el PLC debe quitar previamente la habilitación del regulador correspondiente al eje a aparcar (DRENA). Además, el CNC envía al regulador el comando para aparcar el eje."@es .
+ns1:Parametro_06ea391adf a ns1:Parametro ;
+    rdfs:label "Marca de coincidencia de set de parámetros para el cabezal 4" ;
+    ns1:identificador "GEAROK4" ;
+    ns1:textoExtracto "GEAROK4" .
 
-ns1:ManiobraDesaparcarEje a ns1:TareaMantenimiento ;
-    rdfs:label "Maniobra para desaparcar un eje o cabezal desde el PLC"@es ;
-    ns1:ejecutadoPor ns1:PLC ;
-    ns1:identificador "PARKED=0" ;
-    ns1:textoExtracto "Maniobra para desaparcar un eje o cabezal desde el PLC. 3 Desde al programa de PLC se pone la marca PARKED a (=0) para desaparcar el eje correspondiente. El CNC pone la marca UNPARK a (=1) y comienza a desaparcar el eje. En el caso de ejes digitales el CNC envía al regulador el comando para desaparcar el eje."@es .
+ns1:Parametro_3589acdd4e a ns1:Parametro ;
+    rdfs:label "Marca de coincidencia de set de parámetros para el cabezal 2" ;
+    ns1:identificador "GEAROK2" ;
+    ns1:textoExtracto "GEAROK2" .
 
-ns1:ParametroFBACKSRC a ns1:Parametro ;
-    rdfs:label "Parámetro máquina FBACKSRC"@es ;
-    ns1:textoExtracto "Consultar el parámetro máquina FBACKSRC. [...] El CNC pone esta marca a (=1) para indicar que se está trabajando con la captación externa (captación directa)."@es ;
-    ns1:valor "1 (captación externa), 0 (captación interna)" .
+ns1:Parametro_abe91eb200 a ns1:Parametro ;
+    rdfs:label "Marca de coincidencia de set de parámetros para el cabezal 3" ;
+    ns1:identificador "GEAROK3" ;
+    ns1:textoExtracto "GEAROK3" .
 
-ns1:Se_alACTFBACK a ns1:Parametro ;
-    rdfs:label "Marca ACTFBACK(axis)"@es ;
-    ns1:monitoreaParametro ns1:SistemaControlEjes ;
-    ns1:textoExtracto "El CNC utiliza esta marca cuando el sistema dispone de captación externa+interna. [...] El CNC pone esta marca a (=1) para indicar que se está trabajando con la captación externa (captación directa)."@es ;
-    ns1:valor "1 (captación externa), 0 (captación interna)" .
+ns1:Parametro_ac7a2456cc a ns1:Parametro ;
+    rdfs:label "Marca de coincidencia de set de parámetros para el cabezal 6" ;
+    ns1:identificador "GEAROK6" ;
+    ns1:textoExtracto "GEAROK6" .
 
-ns1:Se_alDRENAV a ns1:Parametro ;
-    rdfs:label "Habilitación del regulador del eje V (DRENAV)"@es ;
-    ns1:identificador "DRENAV" ;
-    ns1:monitoreaParametro ns1:ReguladorEjeDigital ;
-    ns1:textoExtracto "NOT (PARKV OR UNPARKV OR PARKEDV) AND··· = DRENAV = SPENAV = SERVOVON."@es .
+ns1:Parametro_c07aae3d57 a ns1:Parametro ;
+    rdfs:label "Marca de coincidencia de set de parámetros para el cabezal 5" ;
+    ns1:identificador "GEAROK5" ;
+    ns1:textoExtracto "GEAROK5" .
 
-ns1:Se_alFBACKSEL a ns1:Parametro ;
-    rdfs:label "Marca FBACKSEL(axis)"@es ;
-    ns1:monitoreaParametro ns1:SistemaControlEjes ;
-    ns1:textoExtracto "El tipo de captación se podrá conmutar desde el PLC mediante la marca FBACKSEL(axis)."@es .
+ns1:Parametro_ecc8f5a218 a ns1:Parametro ;
+    rdfs:label "Marca de coincidencia de set de parámetros para el cabezal 1" ;
+    ns1:identificador "GEAROK1" ;
+    ns1:textoExtracto "GEAROK1 (también se puede programar como GEAROK)" .
 
-ns1:Se_alPARK a ns1:Parametro ;
-    rdfs:label "Señal PARK"@es ;
-    ns1:monitoreaParametro ns1:SistemaControlEjes ;
-    ns1:textoExtracto "El CNC pone la marca PARK a (=1) y comienza a aparcar el eje. [...] Se resetea la señal PARK."@es ;
-    ns1:valor "1" .
-
-ns1:Se_alUNPARK a ns1:Parametro ;
-    rdfs:label "Señal UNPARK"@es ;
-    ns1:monitoreaParametro ns1:SistemaControlEjes ;
-    ns1:textoExtracto "El CNC pone la marca UNPARK a (=1) y comienza a desaparcar el eje. [...] Se resetea la señal UNPARK."@es ;
-    ns1:valor "1" .
-
-ns1:SensorPresenciaEjeV a ns1:Sensor ;
-    rdfs:label "Sensor de presencia del eje V"@es ;
-    ns1:identificador "PARKEDV" ;
-    ns1:monitoreaParametro ns1:EjeV ;
-    ns1:textoExtracto "I10 = PARKEDV Eje presente. Sensor de presencia del eje \"V\"."@es .
-
-ns1:EjeV a ns1:ComponenteMecanico ;
-    rdfs:label "Eje V"@es ;
-    ns1:identificador "V" ;
-    ns1:textoExtracto "Sensor de presencia del eje \"V\"."@es .
-
-ns1:PLC a ns1:Actuador ;
-    rdfs:label "PLC (Controlador Lógico Programable)"@es ;
-    ns1:controla ns1:SistemaControlEjes ;
-    ns1:textoExtracto "Desde al programa de PLC se pone la marca PARKED a (=1) para aparcar el eje correspondiente."@es .
-
-ns1:ReguladorEjeDigital a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador de eje digital"@es ;
-    ns1:identificador "DRENA" ;
-    ns1:textoExtracto "En el caso de ejes digitales el PLC debe quitar previamente la habilitación del regulador correspondiente al eje a aparcar (DRENA)."@es .
-
-ns1:SistemaControlEjes a ns1:Sistema ;
-    rdfs:label "Sistema de control de ejes y cabezales"@es ;
-    ns1:controla ns1:EjeV ;
-    ns1:textoExtracto "El CNC pone la marca PARK a (=1) y comienza a aparcar el eje. [...] El CNC envía al regulador el comando para aparcar el eje."@es ;
-    ns1:tieneComponente ns1:ReguladorEjeDigital .
+ns1:ValorPorDefectoDelMaximoErrorEnPosicionPermitido a ns1:Parametro ;
+    rdfs:label "Valor por defecto del máximo error en posición permitido" ;
+    ns1:identificador "DSYNCPOSW" ;
+    ns1:textoExtracto "cuyo valor por defecto se define en el parámetro máquina DSYNCPOSW." .
 

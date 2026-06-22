@@ -1,44 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1490 a ns1:Alarma ;
-    rdfs:label "Alarma 1490: 'G63 necesita programar previamente M19'"@es ;
-    ns1:identificador "1490" ;
-    ns1:textoExtracto "'G63 necesita programar previamente M19' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado hacer un roscado G63 con un cabezal Sercos sin posicionarlo previamente con M19. SOLUCIÓN Programar M19 antes de realizar el roscado."@es .
+ns1:LaSintaxisDeLaSentenciaNoEsCorrectaOHayMasInformacionEnElBloque a ns1:DiagnosticoFallo ;
+    rdfs:label "La sintaxis de la sentencia no es correcta o hay más información en el bloque" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque." .
 
-ns1:Alarma_1491 a ns1:Alarma ;
-    rdfs:label "Alarma 1491: 'Número de palpador incorrecto'"@es ;
-    ns1:identificador "1491" ;
-    ns1:textoExtracto "'Número de palpador incorrecto' DETECCIÓN Durante la ejecución. CAUSA El número de palpador seleccionado con la sentencia #SELECT PROBE no es correcto. SOLUCIÓN El número de palpador seleccionado deber ser 1 ó 2."@es .
+ns1:NumeroDeCanalNoValidoEnLaSentenciaEXECMEETOWAIT a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de canal no válido en la sentencia #EXEC, #MEET o #WAIT" ;
+    ns1:textoExtracto "CAUSA Número de canal no válido en la sentencia #EXEC, #MEET o #WAIT." .
 
-ns1:Alarma_1492 a ns1:Alarma ;
-    rdfs:label "Alarma 1492: 'No existe entrada digital asociada al palpador (PRBDI1/2)'"@es ;
-    ns1:identificador "1492" ;
-    ns1:monitoreaParametro ns1:Parametro_PRBDI1,
-        ns1:Parametro_PRBDI2 ;
-    ns1:textoExtracto "'No existe entrada digital asociada al palpador (PRBDI1/2)' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado seleccionar un palpador (#SELECT PROBE) o realizar un movimiento de palpado (G100) y no existe ninguna entrada digital asociada al palpador. SOLUCIÓN Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)."@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:NumeroDeSenalFueraDeRango,
+        ns1:WAITMEETNoEfectivo ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:ComponenteElectrico_Palpador_1 a ns1:ComponenteElectrico ;
-    rdfs:label "Palpador 1"@es ;
-    ns1:identificador "1" ;
-    ns1:textoExtracto "número de palpador seleccionado deber ser 1"@es .
+ns1:RevisarProgramacion_a8bb4bbddd a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque." .
 
-ns1:ComponenteElectrico_Palpador_2 a ns1:ComponenteElectrico ;
-    rdfs:label "Palpador 2"@es ;
-    ns1:identificador "2" ;
-    ns1:textoExtracto "número de palpador seleccionado deber ser 1 ó 2"@es .
+ns1:NumeroDeSenalFueraDeRango a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de señal fuera de rango" ;
+    ns1:textoExtracto "CAUSA El número de señal programada en la sentencia #WAIT, #MEET o #SIGNAL no es correcto." .
 
-ns1:ComponenteMecanico_CabezalSercos a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal Sercos"@es ;
-    ns1:textoExtracto "roscado G63 con un cabezal Sercos"@es .
-
-ns1:Parametro_PRBDI1 a ns1:Parametro ;
-    rdfs:label "Parámetro PRBDI1 (entrada digital para palpador 1)"@es ;
-    ns1:identificador "PRBDI1" ;
-    ns1:textoExtracto "parámetro PRBDI1"@es .
-
-ns1:Parametro_PRBDI2 a ns1:Parametro ;
-    rdfs:label "Parámetro PRBDI2 (entrada digital para palpador 2)"@es ;
-    ns1:identificador "PRBDI2" ;
-    ns1:textoExtracto "parámetro PRBDI2"@es .
+ns1:WAITMEETNoEfectivo a ns1:DiagnosticoFallo ;
+    rdfs:label "#WAIT/#MEET no efectivo" ;
+    ns1:textoExtracto "CAUSA La sentencia #WAIT o #MEET no va a generar ninguna espera, porque la marca de sincronización está programada para el mismo canal que las sentencias." .
 

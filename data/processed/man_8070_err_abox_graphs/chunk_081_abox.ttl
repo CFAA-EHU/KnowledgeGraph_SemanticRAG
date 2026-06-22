@@ -1,79 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_1017 a ns1:AvisoSeguridad ;
-    rdfs:label "Límite de software negativo fuera de rango" ;
-    ns1:identificador "1017" ;
-    ns1:monitoreaParametro ns1:Parametro_LimiteSoftwareNegativo ;
-    ns1:textoExtracto "G198: límite de software negativo fuera de rango. DETECCIÓN Durante la ejecución. CAUSA El límite negativo de software tiene un valor demasiado alto. SOLUCIÓN Revisar la programación." .
+ns1:LaFuncionProgramadaRequiereAlgunEjePrincipalNoExistente a ns1:DiagnosticoFallo ;
+    rdfs:label "La función programada requiere algún eje principal no existente" ;
+    ns1:textoExtracto "'La función programada requiere algún eje principal no existente' DETECCIÓN Durante la ejecución." .
 
-ns1:Error_1018 a ns1:AvisoSeguridad ;
-    rdfs:label "Límite de software positivo fuera de rango" ;
-    ns1:identificador "1018" ;
-    ns1:monitoreaParametro ns1:Parametro_LimiteSoftwarePositivo ;
-    ns1:textoExtracto "G199: límite de software positivo fuera de rango. DETECCIÓN Durante la ejecución. CAUSA El límite positivo de software tiene un valor demasiado alto. SOLUCIÓN Revisar la programación." .
+ns1:ProgramarElAvanceF a ns1:TareaMantenimiento ;
+    rdfs:label "Programar el avance F" ;
+    ns1:solucionaFallo ns1:BloqueDeMovimientoConAvanceNulo_fd11dc9c9b ;
+    ns1:textoExtracto "SOLUCIÓN Programar el avance F." .
 
-ns1:Error_1019 a ns1:AvisoSeguridad ;
-    rdfs:label "Offset de medición no realizado" ;
-    ns1:identificador "1019" ;
-    ns1:textoExtracto "No se ha realizado medición en el eje(s) solicitado. DETECCIÓN Durante la ejecución. CAUSA La función G101 intenta incluir el offset de medición en un eje que no ha intervenido en la medición o el offset ha sido cancelado (G102). SOLUCIÓN Para incluir un offset de medición (G101), el eje debe haber realizado una medición." .
+ns1:ProgramarUnaVelocidadDeCabezal a ns1:TareaMantenimiento ;
+    rdfs:label "Programar una velocidad de cabezal" ;
+    ns1:solucionaFallo ns1:VelocidadDeCabezalNula_94335840e5 ;
+    ns1:textoExtracto "SOLUCIÓN Programar una velocidad de cabezal." .
 
-ns1:Error_1020 a ns1:AvisoSeguridad ;
-    rdfs:label "Tiempo de rampa negativo" ;
-    ns1:identificador "1020" ;
-    ns1:monitoreaParametro ns1:Parametro_TiempoRampa ;
-    ns1:textoExtracto "Tiempo de rampa negativo. DETECCIÓN Durante la ejecución. CAUSA El tiempo de rampa de la función G132 es negativo. SOLUCIÓN Programar un valor mayor o igual que cero." .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:G20NoSeAdmiteCabezal_c35fef3143,
+        ns1:LaFuncionOSentenciaRequiereProgramacionDeEjes ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Error_1021 a ns1:AvisoSeguridad ;
-    rdfs:label "Tiempo de rampa fuera de rango" ;
-    ns1:identificador "1021" ;
-    ns1:monitoreaParametro ns1:Parametro_TiempoRampa ;
-    ns1:textoExtracto "Tiempo de rampa fuera de rango. DETECCIÓN Durante la ejecución. CAUSA El tiempo de rampa de la función G132 es demasiado alto. SOLUCIÓN Revisar la programación." .
+ns1:BloqueDeMovimientoConAvanceNulo_fd11dc9c9b a ns1:DiagnosticoFallo ;
+    rdfs:label "Bloque de movimiento con avance nulo" ;
+    ns1:textoExtracto "'Bloque de movimiento con avance nulo' DETECCIÓN Durante la ejecución. CAUSA No hay un avance activo en el canal." .
 
-ns1:Error_1022 a ns1:AvisoSeguridad ;
-    rdfs:label "Porcentaje de Feed-Forward fuera de rango" ;
-    ns1:identificador "1022" ;
-    ns1:monitoreaParametro ns1:Parametro_PorcentajeFeedForward ;
-    ns1:textoExtracto "Porcentaje de Feed-Forward fuera de rango. DETECCIÓN Durante la ejecución. CAUSA El porcentaje de feed forward (G134) o AC forward (G135) es demasiado alto. SOLUCIÓN El porcentaje de feed forward o AC forward debe ser mayor que cero y menor que 120." .
+ns1:G20NoSeAdmiteCabezal_c35fef3143 a ns1:DiagnosticoFallo ;
+    rdfs:label "G20: no se admite cabezal" ;
+    ns1:textoExtracto "'G20: no se admite cabezal' DETECCIÓN Durante la ejecución. CAUSA La función G20 no admite la programación de cabezal." .
 
-ns1:Error_1023 a ns1:AvisoSeguridad ;
-    rdfs:label "Número de gama no válido" ;
-    ns1:identificador "1023" ;
-    ns1:monitoreaParametro ns1:Parametro_NumeroGama ;
-    ns1:textoExtracto "Número de gama no válido. DETECCIÓN Durante la ejecución. CAUSA El número de gama (set) del eje es incorrecto." .
+ns1:LaFuncionOSentenciaRequiereProgramacionDeEjes a ns1:DiagnosticoFallo ;
+    rdfs:label "La función o sentencia requiere programación de ejes" ;
+    ns1:textoExtracto "'La función o sentencia requiere programación de ejes' DETECCIÓN Durante la ejecución. CAUSA Falta programar los ejes sobre los que debe actuar la sentencia o función G programada." .
 
-ns1:Funcion_G101 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G101 (Offset de medición)" ;
-    ns1:textoExtracto "La función G101 intenta incluir el offset de medición en un eje que no ha intervenido en la medición." .
-
-ns1:Funcion_G132 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "Función G132 (Tiempo de rampa)" ;
-    ns1:textoExtracto "El tiempo de rampa de la función G132 es negativo o demasiado alto." .
-
-ns1:Parametro_DIAMPROG a ns1:Parametro ;
-    rdfs:label "Parámetro DIAMPROG (Programación en diámetros)" ;
-    ns1:textoExtracto "La programación en diámetros activa (parámetro DIAMPROG)." .
-
-ns1:Parametro_LimiteSoftwareNegativo a ns1:Parametro ;
-    rdfs:label "Límite de software negativo" ;
-    ns1:textoExtracto "El límite negativo de software tiene un valor demasiado alto." .
-
-ns1:Parametro_LimiteSoftwarePositivo a ns1:Parametro ;
-    rdfs:label "Límite de software positivo" ;
-    ns1:textoExtracto "El límite positivo de software tiene un valor demasiado alto." .
-
-ns1:Parametro_NumeroGama a ns1:Parametro ;
-    rdfs:label "Número de gama (set)" ;
-    ns1:textoExtracto "El número de gama (set) del eje es incorrecto." .
-
-ns1:Parametro_PorcentajeFeedForward a ns1:Parametro ;
-    rdfs:label "Porcentaje de Feed-Forward" ;
-    ns1:textoExtracto "El porcentaje de feed forward (G134) o AC forward (G135) es demasiado alto." ;
-    ns1:valor "0-120" .
-
-ns1:Parametro_TiempoRampa a ns1:Parametro ;
-    rdfs:label "Tiempo de rampa" ;
-    ns1:textoExtracto "El tiempo de rampa de la función G132 es negativo o demasiado alto." .
+ns1:VelocidadDeCabezalNula_94335840e5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Velocidad de cabezal nula" ;
+    ns1:textoExtracto "'Velocidad de cabezal nula' DETECCIÓN Durante la ejecución. CAUSA El cabezal utilizado con la función G63 tiene velocidad cero." .
 

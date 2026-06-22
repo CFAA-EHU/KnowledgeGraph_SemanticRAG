@@ -1,69 +1,32 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Tabla_ConfiguracionMultieje_1203 a ns1:Tabla ;
-    rdfs:label "Configuración del grupo multieje (MULTIAXIS GROUP_1)"@es ;
-    ns1:documentadoEn ns1:SistemaMultieje_1203 ;
-    ns1:textoExtracto "Sercos CAN Configuración del grupo multieje. | MULTIAXIS | GROUP_1 | --- | --- | MULNGROUP = 1 | MULNAXIS = 2 | MULAXISNAME_1 = | MULAXISNAME_2 = | A1 A2 Configuración de los ejes. | DRIVEID | OPMODEP FBACK | SRC COUNTERTYPE | COUNTERID | Eje A1 | 1 | Velocidad Externa Regulador | 1 | Eje A2 | 1 | Velocidad Externa Remoto | 1"@es .
+ns1:ElEjeDisponeDeMicroParaLaBusquedaDeReferencia a ns1:Parametro ;
+    rdfs:label "El eje dispone de micro para la búsqueda de referencia" ;
+    ns1:identificador "DECINPUT" ;
+    ns1:textoExtracto "DECINPUT | El eje dispone de micro para la búsqueda de referencia." .
 
-ns1:Regulador_1203_A1A2 a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador de velocidad para ejes A1 y A2"@es ;
-    ns1:controla ns1:Motor_1203 ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadExterna_1203 ;
-    ns1:textoExtracto "Un único regulador controla dos ejes con el mismo motor."@es .
+ns1:NoCodificado a ns1:Parametro ;
+    rdfs:label "No codificado" ;
+    ns1:identificador "I0TYPE" ;
+    ns1:textoExtracto "I0TYPE | No codificado." .
 
-ns1:SistemaMultieje_1203 a ns1:Sistema ;
-    rdfs:label "Sistema con dos ejes y un único motor (Ejemplo 2)"@es ;
-    ns1:compuestoPor ns1:ComponenteElectrico_ModuloRemoto_A1_1203,
-        ns1:ComponenteElectrico_ModuloRemoto_A2_1203,
-        ns1:Sensor_CaptacionDirecta_A1_1203,
-        ns1:Sensor_CaptacionDirecta_A2_1203 ;
-    ns1:textoExtracto "Ejemplo 2. Sistema con dos ejes y sólo un motor. El sistema tiene las siguientes características: Un único regulador controla dos ejes con el mismo motor. Cada eje utiliza un tipo de captación diferente."@es ;
-    ns1:tieneComponente ns1:EjeA1_1203,
-        ns1:EjeA2_1203,
-        ns1:Motor_1203,
-        ns1:Regulador_1203_A1A2 .
+ns1:SentidoDelMovimientoParaLaBusquedaDeReferencia a ns1:Parametro ;
+    rdfs:label "Sentido del movimiento para la búsqueda de referencia" ;
+    ns1:identificador "REFDIREC" ;
+    ns1:textoExtracto "REFDIREC | Sentido del movimiento para la búsqueda de referencia." .
 
-ns1:ComponenteElectrico_ModuloRemoto_A1_1203 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto para captación del Eje A1"@es ;
-    ns1:textoExtracto "Eje A1: La captación externa (directa) está conectada a los módulos remotos."@es .
+ns1:SistemaCaptacionSinI0 a ns1:Sistema ;
+    rdfs:label "Sistema de captación sin I0s codificados" ;
+    ns1:textoExtracto "Búsqueda de referencia con un sistema de captación que no dispone de I0s codificados." .
 
-ns1:ComponenteElectrico_ModuloRemoto_A2_1203 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo remoto para captación del Eje A2"@es ;
-    ns1:textoExtracto "Eje A2: La captación externa (directa) está conectada a los módulos remotos."@es .
+ns1:VelocidadLentaDeBusquedaDeReferencia_98808667fb a ns1:Parametro ;
+    rdfs:label "Velocidad lenta de búsqueda de referencia" ;
+    ns1:identificador "REFFEED2" ;
+    ns1:textoExtracto "REFFEED2 | Velocidad lenta de búsqueda de referencia." .
 
-ns1:EjeA1_1203 a ns1:ComponenteMecanico ;
-    rdfs:label "Eje A1"@es ;
-    ns1:identificador "A1" ;
-    ns1:textoExtracto "Eje A1: La captación externa (directa) está conectada a los módulos remotos."@es ;
-    ns1:tieneComponente ns1:ComponenteElectrico_ModuloRemoto_A1_1203,
-        ns1:Sensor_CaptacionDirecta_A1_1203 .
-
-ns1:EjeA2_1203 a ns1:ComponenteMecanico ;
-    rdfs:label "Eje A2"@es ;
-    ns1:identificador "A2" ;
-    ns1:textoExtracto "Eje A2: La captación externa (directa) está conectada a los módulos remotos."@es ;
-    ns1:tieneComponente ns1:ComponenteElectrico_ModuloRemoto_A2_1203,
-        ns1:Sensor_CaptacionDirecta_A2_1203 .
-
-ns1:Motor_1203 a ns1:ComponenteElectrico ;
-    rdfs:label "Motor compartido por ejes A1 y A2"@es ;
-    ns1:alimenta ns1:EjeA1_1203,
-        ns1:EjeA2_1203 ;
-    ns1:textoExtracto "Un único regulador controla dos ejes con el mismo motor."@es .
-
-ns1:Sensor_CaptacionDirecta_A1_1203 a ns1:Sensor ;
-    rdfs:label "Sensor de captación directa para Eje A1"@es ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadExterna_1203 ;
-    ns1:textoExtracto "Eje A1: La captación externa (directa) está conectada a los módulos remotos."@es .
-
-ns1:Sensor_CaptacionDirecta_A2_1203 a ns1:Sensor ;
-    rdfs:label "Sensor de captación directa para Eje A2"@es ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadExterna_1203 ;
-    ns1:textoExtracto "Eje A2: La captación externa (directa) está conectada a los módulos remotos."@es .
-
-ns1:Parametro_VelocidadExterna_1203 a ns1:Parametro ;
-    rdfs:label "Velocidad externa (regulada)"@es ;
-    ns1:textoExtracto "Velocidad Externa Regulador"@es ;
-    ns1:valor "Externa"@es .
+ns1:VelocidadRapidaDeBusquedaDeReferencia_22cbb8d792 a ns1:Parametro ;
+    rdfs:label "Velocidad rápida de búsqueda de referencia" ;
+    ns1:identificador "REFFEED1" ;
+    ns1:textoExtracto "REFFEED1 | Velocidad rápida de búsqueda de referencia." .
 

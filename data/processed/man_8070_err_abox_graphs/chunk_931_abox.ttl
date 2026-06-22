@@ -1,35 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Aviso_IncompatibilidadParametros a ns1:AvisoSeguridad ;
-    rdfs:label "Aviso de incompatibilidad entre parámetros HBLS y MODBUSSVRRS"@es ;
-    ns1:mitigaRiesgo ns1:Error_9336 ;
-    ns1:textoExtracto "Hay activas dos prestaciones que son incompatibles entre sí. Los parámetros máquina relacionados aparecen en el mensaje de error"@es .
+ns1:PongaseEnContactoConFagorAutomation_98c1273348 a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:solucionaFallo ns1:NoHayHardwareParaEjesMechatrolink ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor Automation." .
 
-ns1:Parametro_HBLS a ns1:Parametro ;
-    rdfs:label "Parámetro HBLS"@es ;
-    ns1:identificador "HBLS" ;
-    ns1:textoExtracto "los parámetros HBLS y MODBUSSVRRS no son compatibles porque ambos utilizan la línea serie"@es .
+ns1:RevisionDeLosParametrosMaquina a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de los parámetros máquina" ;
+    ns1:solucionaFallo ns1:EjesDeUnGrupoMULTIAXISConDiferenteParametroDRIVETYPE ;
+    ns1:textoExtracto "SOLUCIÓN Revisar los parámetros máquina. Todos los ejes de un grupo MULTIAXIS deben tener el parámetro DRIVETYPE igual; todos los ejes deben analógicos o todos Sercos." .
 
-ns1:Parametro_MODBUSSVRRS a ns1:Parametro ;
-    rdfs:label "Parámetro MODBUSSVRRS"@es ;
-    ns1:identificador "MODBUSSVRRS" ;
-    ns1:textoExtracto "los parámetros HBLS y MODBUSSVRRS no son compatibles porque ambos utilizan la línea serie"@es .
+ns1:TipoDeControlDelEje a ns1:Parametro ;
+    rdfs:label "Tipo de control del eje" ;
+    ns1:textoExtracto "Hay un grupo MULTIAXIS cuyos ejes tienen diferente parámetro DRIVETYPE." .
 
-ns1:Solucion_9336_AnularParametro a ns1:TareaMantenimiento ;
-    rdfs:label "Anular uno de los dos parámetros incompatibles (HBLS o MODBUSSVRRS)"@es ;
-    ns1:solucionaFallo ns1:Error_9336 ;
-    ns1:textoExtracto "SOLUCIÓN Anular uno de los dos"@es .
+ns1:EjesDeUnGrupoMULTIAXISConDiferenteParametroDRIVETYPE a ns1:DiagnosticoFallo ;
+    rdfs:label "Ejes de un grupo MULTIAXIS con diferente parámetro DRIVETYPE" ;
+    ns1:textoExtracto "Hay un grupo MULTIAXIS cuyos ejes tienen diferente parámetro DRIVETYPE." .
 
-ns1:Solucion_9336_CambiarTipoCaptacion a ns1:TareaMantenimiento ;
-    rdfs:label "Cambiar el tipo de captación en los sets diferentes"@es ;
-    ns1:solucionaFallo ns1:Error_9336 ;
-    ns1:textoExtracto "SOLUCIÓN Cambiar el tipo de captación en los sets diferentes."@es .
-
-ns1:Error_9336 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 9336: Parámetros máquina incompatibles"@es ;
-    ns1:identificador "9336" ;
-    ns1:solucionaFallo ns1:Solucion_9336_AnularParametro,
-        ns1:Solucion_9336_CambiarTipoCaptacion ;
-    ns1:textoExtracto "9336 'Parámetros máquina incompatibles' [...] Los parámetros máquina relacionados aparecen en el mensaje de error (por ejemplo, los parámetros HBLS y MODBUSSVRRS no son compatibles porque ambos utilizan la línea serie)."@es .
+ns1:NoHayHardwareParaEjesMechatrolink a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay Hardware para ejes Mechatrolink" ;
+    ns1:textoExtracto "DETECCIÓN Durante la validación de los parámetros máquina o el arranque del CNC. CAUSA No se dispone del hardware necesario para trabajar con ejes Mechatrolink." .
 

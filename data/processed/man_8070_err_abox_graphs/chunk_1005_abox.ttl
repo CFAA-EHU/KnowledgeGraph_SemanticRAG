@@ -1,92 +1,46 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ComponenteElectrico_Cabezal a ns1:ComponenteElectrico ;
-    rdfs:label "Cabezal %x"@es ;
-    ns1:textoExtracto "Esperando cabezal %x parado... Esperando señal REVOK del cabezal %x para iniciar G33/G34."@es .
+ns1:ComprobarCableDeCaptacion a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar cable de captación" ;
+    ns1:solucionaFallo ns1:ErrorDeVelocidadNoSuperandoGP8 ;
+    ns1:textoExtracto "• Comprobar que el cable de captación no esta deteriorado y que el conexionado entre pines es correcto (especialmente si el cable ha sido confeccionado por el usuario)." .
 
-ns1:ComponenteElectrico_Regulador a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador"@es ;
-    ns1:textoExtracto "Esperando confirmación de gama por el regulador... Esperando final de maniobra #PARK en el regulador."@es .
+ns1:ComprobarCablesDePotencia a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar cables de potencia" ;
+    ns1:solucionaFallo ns1:ErrorDeVelocidadNoSuperandoGP8 ;
+    ns1:textoExtracto "• Comprobar que no existen dos fases intercambiadas y que los cables de potencia tienen un buen contacto en su amarre." .
 
-ns1:Sistema_Control a ns1:Sistema ;
-    rdfs:label "Sistema de control de la máquina"@es ;
-    ns1:activaAlarma ns1:Alarma_20001,
-        ns1:Alarma_20002,
-        ns1:Alarma_20003,
-        ns1:Alarma_20004,
-        ns1:Alarma_20005,
-        ns1:Alarma_20006,
-        ns1:Alarma_20007 ;
-    ns1:textoExtracto "Durante el funcionamiento habitual del sistema."@es .
+ns1:ComprobarParametrizacionNP116 a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar parametrización NP116" ;
+    ns1:solucionaFallo ns1:ErrorDeVelocidadNoSuperandoGP8 ;
+    ns1:textoExtracto "• Comprobar que el valor con el que se ha parametrizado NP116 (con motores no Fagor) es correcto." .
 
-ns1:AccionProhibida_20001 a ns1:AccionProhibida ;
-    rdfs:label "Ignorar espera AUXEND de PLC"@es ;
-    ns1:textoExtracto "El PLC debe responder cuando se cumplan las condiciones adecuadas o pulsar [RESET]."@es .
+ns1:ComprobarParametrizacionRV3ORP5 a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar parametrización RV3 o RP5" ;
+    ns1:solucionaFallo ns1:ErrorDeVelocidadNoSuperandoGP8 ;
+    ns1:textoExtracto "• El valor de RV3 (o RP5 si se dispone de resolver) es correcto." .
 
-ns1:AccionProhibida_20002 a ns1:AccionProhibida ;
-    rdfs:label "Ignorar espera de cabezal %x parado"@es ;
-    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
+ns1:ErrorEnElSeguimientoDeLaRampaDeEmergenciaEnFrenada_49727b8914 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en el seguimiento de la rampa de emergencia en frenada" ;
+    ns1:textoExtracto "9724 Error en el seguimiento de la rampa de emergencia en frenada. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." .
 
-ns1:AccionProhibida_20003 a ns1:AccionProhibida ;
-    rdfs:label "Ignorar espera de carga de programa"@es ;
-    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
+ns1:LiberarAccionamientoYAjustarValores a ns1:TareaMantenimiento ;
+    rdfs:label "Liberar accionamiento y ajustar valores" ;
+    ns1:solucionaFallo ns1:ErrorDeVelocidadNoSuperandoGP8 ;
+    ns1:textoExtracto "• Liberar el accionamiento y si el error se repite sin un motivo aumentar los valores de GP7 y/o GP8. Para desactivar este error y hacer que este no vuelva a presentarse, parametrizar GP7=0." .
 
-ns1:AccionProhibida_20004 a ns1:AccionProhibida ;
-    rdfs:label "Ignorar espera de señal REVOK del cabezal %x"@es ;
-    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
+ns1:TiempoParaSuperarGP8 a ns1:Parametro ;
+    rdfs:label "Tiempo para superar GP8" ;
+    ns1:identificador "GP7" ;
+    ns1:textoExtracto "aumentar los valores de GP7 y/o GP8." .
 
-ns1:AccionProhibida_20005 a ns1:AccionProhibida ;
-    rdfs:label "Ignorar espera de confirmación de gama por el regulador"@es ;
-    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
+ns1:VelocidadLimite a ns1:Parametro ;
+    rdfs:label "Velocidad límite" ;
+    ns1:identificador "GP8" ;
+    ns1:textoExtracto "velocidad de giro no ha superado GP8 durante un tiempo superior a GP7." .
 
-ns1:AccionProhibida_20006 a ns1:AccionProhibida ;
-    rdfs:label "Ignorar espera de final de maniobra #PARK"@es ;
-    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
-
-ns1:AccionProhibida_20007 a ns1:AccionProhibida ;
-    rdfs:label "Ignorar espera de canal disponible para #EXEC/#EXBLK"@es ;
-    ns1:textoExtracto "Pulsar [RESET] y analizar las causas del retraso. El canal debe quedar libre cuando finaliza la ejecución."@es .
-
-ns1:Alarma_20001 a ns1:Alarma ;
-    rdfs:label "Espera AUXEND de PLC"@es ;
-    ns1:identificador "20001" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_20001 ;
-    ns1:textoExtracto "20001 Esperando AUXEND de PLC. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo. SOLUCIÓN El PLC debe responder cuando se cumplan las condiciones adecuadas o pulsar [RESET]."@es .
-
-ns1:Alarma_20002 a ns1:Alarma ;
-    rdfs:label "Espera cabezal %x parado"@es ;
-    ns1:identificador "20002" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_20002 ;
-    ns1:textoExtracto "20002 Esperando cabezal %x parado. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo. SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
-
-ns1:Alarma_20003 a ns1:Alarma ;
-    rdfs:label "Espera carga de programa"@es ;
-    ns1:identificador "20003" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_20003 ;
-    ns1:textoExtracto "20003 Esperando carga de programa. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo. SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
-
-ns1:Alarma_20004 a ns1:Alarma ;
-    rdfs:label "Espera señal REVOK del cabezal %x"@es ;
-    ns1:identificador "20004" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_20004 ;
-    ns1:textoExtracto "20004 Esperando señal REVOK del cabezal %x para iniciar G33/G34. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo. SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
-
-ns1:Alarma_20005 a ns1:Alarma ;
-    rdfs:label "Espera confirmación de gama por el regulador"@es ;
-    ns1:identificador "20005" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_20005 ;
-    ns1:textoExtracto "20005 Esperando confirmación de gama por el regulador. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo. SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
-
-ns1:Alarma_20006 a ns1:Alarma ;
-    rdfs:label "Espera final de maniobra #PARK en el regulador"@es ;
-    ns1:identificador "20006" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_20006 ;
-    ns1:textoExtracto "20006 Esperando final de maniobra #PARK en el regulador. DETECCIÓN Durante la ejecución. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo. SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso. El proceso debe finalizar."@es .
-
-ns1:Alarma_20007 a ns1:Alarma ;
-    rdfs:label "Espera canal disponible para #EXEC/#EXBLK"@es ;
-    ns1:identificador "20007" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_20007 ;
-    ns1:textoExtracto "20007 Esperando canal disponible para #EXEC/#EXBLK. DETECCIÓN Durante la ejecución. CAUSA La espera ha superado un tiempo determinado por causa justificada o bloqueo. SOLUCIÓN Pulsar [RESET] y analizar las causas del retraso. El canal debe quedar libre cuando finaliza la ejecución."@es .
+ns1:ErrorDeVelocidadNoSuperandoGP8 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de velocidad no superando GP8" ;
+    ns1:textoExtracto "Con par motor muy elevado la velocidad de giro no ha superado GP8 durante un tiempo superior a GP7." .
 

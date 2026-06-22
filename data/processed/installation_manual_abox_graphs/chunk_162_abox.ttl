@@ -1,51 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Parametro_SWTOUTPUT a ns1:Parametro ;
-    rdfs:label "SWTOUTPUT" ;
-    ns1:identificador "SWTOUTPUT" ;
-    ns1:textoExtracto "mismo valor en los parámetros SWTOUTPUT y PWMOUTPUT" .
+ns1:AFeedXn a ns1:Parametro ;
+    rdfs:label "Avance real" ;
+    ns1:textoExtracto "El CNC gestiona la potencia en función del avance real (variable (V.)A.FEED.xn)." .
 
-ns1:Sistema_PWM a ns1:Sistema ;
-    rdfs:label "Sistema de modulación PWM" ;
-    ns1:monitoreaParametro ns1:Parametro_NLOCOUT,
-        ns1:Parametro_PWMCANCEL,
-        ns1:Parametro_PWMOUTPUT ;
-    ns1:textoExtracto "PWMOUTPUT Salida digital local asociada al PWM. [...] PWMCANCEL Cancelar el PWM tras M30 o reset." ;
-    ns1:tieneComponente ns1:ComponenteElectrico_LIO1,
-        ns1:ComponenteElectrico_LIO2 .
+ns1:AvanceTeorico a ns1:Parametro ;
+    rdfs:label "Avance teórico" ;
+    ns1:textoExtracto "El CNC gestiona la potencia en función del avance teórico (variable (V.)A.TFEED.xn)." .
 
-ns1:Tabla_ValoresPWMOUTPUT a ns1:Tabla ;
-    rdfs:label "Tabla de valores para PWMOUTPUT" ;
-    ns1:ilustradoEn ns1:Parametro_PWMOUTPUT ;
-    ns1:textoExtracto "| PWMOUTPUT | Significado. | --- | --- | 0 | No hay PWM. | 1 | Salida local 1 (pin LI/O1). | 2 | Salida local 2 (pin LI/O2)." .
+ns1:CancelarElControlDePotenciaConResetM2M30 a ns1:Parametro ;
+    rdfs:label "Cancelar el control de potencia con reset/M2/M30" ;
+    ns1:identificador "MPG.PWRCTRLCANCEL" ;
+    ns1:textoExtracto "PWRCTRLCANCEL Cancelar el control de potencia con reset/M2/M30. Valores posibles: Sí / No. Valor por defecto: No." .
 
-ns1:ComponenteElectrico_LIO1 a ns1:ComponenteElectrico ;
-    rdfs:label "Salida local 1 (pin LI/O1)" ;
-    ns1:identificador "LI/O1" ;
-    ns1:textoExtracto "Salida local 1 (pin LI/O1)" .
-
-ns1:ComponenteElectrico_LIO2 a ns1:ComponenteElectrico ;
-    rdfs:label "Salida local 2 (pin LI/O2)" ;
-    ns1:identificador "LI/O2" ;
-    ns1:textoExtracto "Salida local 2 (pin LI/O2)" .
-
-ns1:Parametro_NLOCOUT a ns1:Parametro ;
-    rdfs:label "NLOCOUT" ;
-    ns1:identificador "NLOCOUT" ;
-    ns1:textoExtracto "parametrizar el parámetro NLOCOUT con valor 8" ;
-    ns1:valor 8 .
-
-ns1:Parametro_PWMCANCEL a ns1:Parametro ;
-    rdfs:label "PWMCANCEL" ;
-    ns1:identificador "PWMCANCEL" ;
-    ns1:textoExtracto "PWMCANCEL Cancelar el PWM tras M30 o reset. Valores posibles: Sí / No. Valor por defecto: No." ;
-    ns1:valor "No" .
-
-ns1:Parametro_PWMOUTPUT a ns1:Parametro ;
-    rdfs:label "PWMOUTPUT" ;
-    ns1:identificador "PWMOUTPUT" ;
-    ns1:textoExtracto "PWMOUTPUT Salida digital local asociada al PWM. Valores posibles: De 0 a 2. Valor por defecto: 0." ;
-    ns1:valor 0 .
+ns1:GestionarLaPotenciaEnFuncionDelAvanceReal a ns1:Parametro ;
+    rdfs:label "Gestionar la potencia en función del avance real" ;
+    ns1:identificador "MPG.PWRCTRLACT" ;
+    ns1:textoExtracto "PWRCTRLACT Gestionar la potencia en función del avance real. Valores posibles: Sí / No. Valor por defecto: No." .
 

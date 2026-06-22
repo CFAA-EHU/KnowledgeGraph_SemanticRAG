@@ -1,44 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1633 a ns1:Alarma ;
-    rdfs:label "Alarma 1633: Error de sintaxis en programación de cabezal"@es ;
-    ns1:identificador "1633" ;
-    ns1:monitoreaParametro ns1:Parametro_ProgramacionCabezales ;
-    ns1:textoExtracto "'Programar: #DGSPSL <nombre de cabezal>' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:CNC8070_60269b2193 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "es el CNC el encargado de orientar este eje." .
 
-ns1:Alarma_1634 a ns1:Alarma ;
-    rdfs:label "Alarma 1634: Error en sentencia #MOVE (eje/canal inválido)"@es ;
-    ns1:identificador "1634" ;
-    ns1:monitoreaParametro ns1:Parametro_EjeCanal ;
-    ns1:textoExtracto "'La sentencia #MOVE sólo admite un eje y debe pertenecer al canal' DETECCIÓN Durante la ejecución. CAUSA No se ha programado un nombre de eje correcto, el eje está en otro canal o no es un eje del sistema. No se permite la programación de cabezales, excepto cuando estén trabajando como eje C, en cuyo caso se debe programar con el nombre del eje C. SOLUCIÓN Revisar la programación."@es .
+ns1:ConElControlTangencialActivoNoSePermiteProgramarDesplazamientosDelEjeTangencial a ns1:TareaMantenimiento ;
+    rdfs:label "Con el control tangencial activo, no se permite programar desplazamientos del eje tangencial" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteProgramarUnEjeEnControlTangencial_c0ce4b2150 ;
+    ns1:textoExtracto "SOLUCIÓN Con el control tangencial activo, no se permite programar desplazamientos del eje tangencial; es el CNC el encargado de orientar este eje." .
 
-ns1:Alarma_1635 a ns1:Alarma ;
-    rdfs:label "Alarma 1635: Exceso de ejes en transformación de coordenadas"@es ;
-    ns1:identificador "1635" ;
-    ns1:monitoreaParametro ns1:Parametro_NKINAX ;
-    ns1:textoExtracto "'El número de ejes en la transformación excede al permitido' DETECCIÓN Durante la ejecución. CAUSA La transformación de coordenadas tiene definido en el parámetro NKINAX más ejes de los permitidos en el CNC. SOLUCIÓN Corregir el parámetro máquina NKINAX."@es .
+ns1:ParaEliminarEsteEjeDeLaConfiguracionCancelarElControlTangencial a ns1:TareaMantenimiento ;
+    rdfs:label "Para eliminar este eje de la configuración, cancelar el control tangencial" ;
+    ns1:solucionaFallo ns1:NoSePuedeEliminarDeLaConfiguracionUnEjeConControlTangencialActivo_60328db009 ;
+    ns1:textoExtracto "SOLUCIÓN Para eliminar este eje de la configuración, cancelar el control tangencial." .
 
-ns1:Maquina a ns1:Maquina ;
-    rdfs:label "Máquina-herramienta con control CNC"@es ;
-    ns1:textoExtracto "Corregir el parámetro máquina NKINAX"@es ;
-    ns1:tieneComponente ns1:SistemaCNC .
+ns1:ProgramacionDePerfilMedianteEtiquetasIncorrecta_958b283788 a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación de perfil mediante etiquetas incorrecta" ;
+    ns1:textoExtracto "'Programación de perfil mediante etiquetas incorrecta'" .
 
-ns1:Parametro_EjeCanal a ns1:Parametro ;
-    rdfs:label "Parámetro de asignación eje/canal (sentencia #MOVE)"@es ;
-    ns1:textoExtracto "el eje está en otro canal o no es un eje del sistema [...] excepto cuando estén trabajando como eje C"@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:ProgramarEjeParaTANGCTRLONOFFSUSPRESUME_b65e627a29,
+        ns1:TANGCTRLProgramarValoresDeAnguloEntre0Y3599999_8315626aec,
+        ns1:UnEjeEnControlTangencialActivoDebeSerRotativoNoHIRTHYNoPertenecerAlTriedroActivo_a23a0fcd19 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Parametro_ProgramacionCabezales a ns1:Parametro ;
-    rdfs:label "Parámetro de programación de cabezales (#DGSPSL)"@es ;
-    ns1:textoExtracto "sintaxis de la sentencia #DGSPSL <nombre de cabezal>"@es .
+ns1:NoSeAdmiteProgramarUnEjeEnControlTangencial_c0ce4b2150 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite programar un eje en control tangencial" ;
+    ns1:textoExtracto "'No se admite programar un eje en control tangencial'" .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC de la máquina"@es ;
-    ns1:textoExtracto "el eje está en otro canal o no es un eje del sistema [...] más ejes de los permitidos en el CNC"@es ;
-    ns1:tieneComponente ns1:Parametro_NKINAX .
+ns1:NoSePuedeEliminarDeLaConfiguracionUnEjeConControlTangencialActivo_60328db009 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede eliminar de la configuración un eje con control tangencial activo" ;
+    ns1:textoExtracto "'No se puede eliminar de la configuración un eje con control tangencial activo'" .
 
-ns1:Parametro_NKINAX a ns1:Parametro ;
-    rdfs:label "Parámetro NKINAX (número de ejes en transformación de coordenadas)"@es ;
-    ns1:identificador "NKINAX" ;
-    ns1:textoExtracto "parámetro NKINAX [...] más ejes de los permitidos en el CNC"@es .
+ns1:ProgramarEjeParaTANGCTRLONOFFSUSPRESUME_b65e627a29 a ns1:DiagnosticoFallo ;
+    rdfs:label "Programar eje para #TANGCTRL ON/OFF/SUSP/RESUME" ;
+    ns1:textoExtracto "'Programar eje para #TANGCTRL ON/OFF/SUSP/RESUME'" .
+
+ns1:TANGCTRLProgramarValoresDeAnguloEntre0Y3599999_8315626aec a ns1:DiagnosticoFallo ;
+    rdfs:label "#TANGCTRL: programar valores de ángulo entre 0 y +/-359.9999" ;
+    ns1:textoExtracto "'#TANGCTRL: programar valores de ángulo entre 0 y +/-359.9999'" .
+
+ns1:UnEjeEnControlTangencialActivoDebeSerRotativoNoHIRTHYNoPertenecerAlTriedroActivo_a23a0fcd19 a ns1:DiagnosticoFallo ;
+    rdfs:label "Un eje en control tangencial activo debe ser rotativo no HIRTH y no pertenecer al triedro activo" ;
+    ns1:textoExtracto "'Un eje en control tangencial activo debe ser rotativo no HIRTH y no pertenecer al triedro activo'" .
 

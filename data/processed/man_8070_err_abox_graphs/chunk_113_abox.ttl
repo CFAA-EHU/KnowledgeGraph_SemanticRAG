@@ -1,61 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:TareaRevisarProgramacion a ns1:TareaMantenimiento ;
-    rdfs:label "Revisar la programación"@es ;
-    ns1:solucionaFallo ns1:Error1115,
-        ns1:Error1116,
-        ns1:Error1117,
-        ns1:Error1118,
-        ns1:Error1119,
-        ns1:Error1120,
-        ns1:Error1121,
-        ns1:Error1122,
-        ns1:Error1123 ;
-    ns1:textoExtracto "SOLUCIÓN Revisar la programación."@es .
+ns1:EliminarCaracterDelPrograma a ns1:TareaMantenimiento ;
+    rdfs:label "Eliminar carácter '%' del programa" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteElCaracterDentroDelProgramaPrincipal_b2ca471c5d ;
+    ns1:textoExtracto "SOLUCIÓN Eliminar este carácter del programa." .
 
-ns1:Error1115 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1115: 'No se espera $ELSEIF'"@es ;
-    ns1:identificador "1115" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $ELSEIF sin una instrucción $IF previa. SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarProgramacionDeLaFuncionO a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación de la función O" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_890b7ef9e5 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Error1116 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1116: 'La sentencia $ELSEIF <condición> se programa sola en el bloque'"@es ;
-    ns1:identificador "1116" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarProgramacionDelIndiceR a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación del índice R" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteIndiceParaRDistintoDe1_bb83cd667f ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Error1117 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1117: 'No se espera $ENDIF'"@es ;
-    ns1:identificador "1117" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $ENDIF sin una instrucción $IF previa. SOLUCIÓN Revisar la programación."@es .
+ns1:RevisarProgramacionSentenciaIPOPOS a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación Sentencia IPOPOS" ;
+    ns1:solucionaFallo ns1:SentenciaSETIPOPOSMalProgramada_6cadca48f9 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque." .
 
-ns1:Error1118 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1118: 'La sentencia $ENDIF se programa sola en el bloque'"@es ;
-    ns1:identificador "1118" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:DiagnosticoFallo_890b7ef9e5 a ns1:DiagnosticoFallo ;
+    rdfs:label "Función O inexistente" ;
+    ns1:textoExtracto "'Función O inexistente' DETECCIÓN Durante la ejecución. CAUSA La función O no existe." .
 
-ns1:Error1119 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1119: 'La sentencia $SWITCH <expresión> se programa sola en el bloque'"@es ;
-    ns1:identificador "1119" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:NoSeAdmiteElCaracterDentroDelProgramaPrincipal_b2ca471c5d a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite el carácter '%' dentro del programa principal" ;
+    ns1:textoExtracto "'No se admite el carácter \"%\" dentro del programa principal' DETECCIÓN Durante la ejecución. CAUSA Sólo se permite usar el carácter \"%\" como primer carácter en la definición del nombre del programa principal o de una subrutina local." .
 
-ns1:Error1120 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1120: 'No se espera $CASE'"@es ;
-    ns1:identificador "1120" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $CASE sin una instrucción $SWITCH previa. SOLUCIÓN Revisar la programación."@es .
+ns1:NoSeAdmiteIndiceParaRDistintoDe1_bb83cd667f a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite índice para R distinto de 1" ;
+    ns1:textoExtracto "'No se admite índice para R distinto de 1' DETECCIÓN Durante la ejecución. CAUSA Sólo se permite programar el radio con R o R1." .
 
-ns1:Error1121 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1121: 'La sentencia $CASE <expresión> se programa sola en el bloque'"@es ;
-    ns1:identificador "1121" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
-
-ns1:Error1122 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1122: 'No se espera $DEFAULT'"@es ;
-    ns1:identificador "1122" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado una instrucción $DEFAULT sin una instrucción $SWITCH previa. SOLUCIÓN Revisar la programación."@es .
-
-ns1:Error1123 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1123: 'La sentencia $DEFAULT se programa sola en el bloque'"@es ;
-    ns1:identificador "1123" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA La sentencia no está programada sola en el bloque. SOLUCIÓN Revisar la programación."@es .
+ns1:SentenciaSETIPOPOSMalProgramada_6cadca48f9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Sentencia #SET IPOPOS mal programada" ;
+    ns1:textoExtracto "'Sentencia #SET IPOPOS mal programada' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque." .
 

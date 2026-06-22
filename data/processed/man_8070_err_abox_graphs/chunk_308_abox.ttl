@@ -1,35 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Error1670 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1670: Sentencia #ROTATEMZ inválida para almacén no torreta" ;
-    ns1:identificador "1670" ;
-    ns1:solucionaFallo ns1:FalloProgramacion1670 ;
-    ns1:textoExtracto "1670 'El almacén indicado debe ser de tipo TORRETA' [...] SOLUCIÓN Revisar la programación. Comprobar que el almacén es de tipo torreta." .
+ns1:FaltaProgramarTrasNumeroCanal_103499c2dc a ns1:AccionProhibida ;
+    rdfs:label "Falta programar '.' tras [númeroCanal]" ;
+    ns1:textoExtracto "'Falta programar '.' tras [númeroCanal]' DETECCIÓN Durante la ejecución. CAUSA Comandos CNCRD o CNCWR." .
 
-ns1:Error1671 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1671: Exceso de subrutinas locales" ;
-    ns1:identificador "1671" ;
-    ns1:solucionaFallo ns1:FalloSubrutinas1671 ;
-    ns1:textoExtracto "1671 Demasiadas subrutinas locales en el fichero. [...] SOLUCIÓN Reducir el número de subrutinas locales; agrupar varias subrutinas en una o utilizar subrutinas globales. El CNC permite 130 subrutinas locales por programa." .
+ns1:TablaDeMacros a ns1:Parametro ;
+    rdfs:label "Tabla de macros" ;
+    ns1:textoExtracto "Utilizar el comando #INIT MACROTAB para reiniciar la tabla de macros, el cuál borra todas las macros definidas tanto con #DEF como con #DEF FIX." .
 
-ns1:Error1672 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1672: Códigos G74-G174 no admitidos para cabezales sincronizados" ;
-    ns1:identificador "1672" ;
-    ns1:solucionaFallo ns1:FalloCodigosG1672 ;
-    ns1:textoExtracto "1672 'No se admite G74-G174 para cabezales sincronizados' DETECCIÓN Durante la ejecución." .
+ns1:IndiceDeArrayIncorrecto a ns1:AccionProhibida ;
+    rdfs:label "Indice de array incorrecto" ;
+    ns1:mitigaRiesgo ns1:RevisarLaProgramacion_80e90c8849 ;
+    ns1:textoExtracto "'Indice de array incorrecto' DETECCIÓN Durante la ejecución. CAUSA Comandos CNCRD o CNCWR. Algún índice de array programado en la variable está fuera de rango." .
 
-ns1:FalloCodigosG1672 a ns1:AccionProhibida ;
-    rdfs:label "Uso de códigos G74-G174 en cabezales sincronizados" ;
-    ns1:textoExtracto "No se admite G74-G174 para cabezales sincronizados" .
-
-ns1:FalloProgramacion1670 a ns1:AccionProhibida ;
-    rdfs:label "Uso incorrecto de sentencia #ROTATEMZ" ;
-    ns1:textoExtracto "La sentencia #ROTATEMZ sólo es válida para un almacén de tipo torreta." .
-
-ns1:FalloSubrutinas1671 a ns1:AccionProhibida ;
-    rdfs:label "Exceso de subrutinas locales en programa CNC" ;
-    ns1:textoExtracto "El programa tiene más subrutinas locales que las permitidas por el CNC." ;
-    ns1:valor 130 .
+ns1:RevisarLaProgramacion_80e90c8849 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:IndiceDeArrayIncorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación. Consultar la variable y su rango de valores." .
 

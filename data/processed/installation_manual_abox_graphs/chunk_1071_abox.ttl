@@ -1,58 +1,47 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CabezalMaquina a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal de la máquina" ;
-    ns1:textoExtracto "G1 Z_ F_ ; Desplazar el cabezal." ;
-    ns1:tieneComponente ns1:PuntoCambioAutomatico,
-        ns1:PuntoCambioManual .
+ns1:CNC8070_2b4127f1db a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "La rutina M06 utiliza las siguientes funciones auxiliares M para indicar al PLC qué movimientos debe realizar." .
 
-ns1:HerramientaT a ns1:Herramienta ;
-    rdfs:label "Herramienta T%D" ;
-    ns1:identificador "T%D" ;
-    ns1:textoExtracto "Insertar herramienta T%D" .
+ns1:CodigoDeOperacionDelGestorParaElPLC a ns1:Parametro ;
+    rdfs:label "Código de operación del gestor para el PLC" ;
+    ns1:identificador "TMOPERATION" ;
+    ns1:textoExtracto "el gestor envía al PLC el código TMOPERATION=11." .
 
-ns1:InterfazMensajeM06 a ns1:InterfazUsuario ;
-    rdfs:label "Mensaje de inserción de herramienta (M06)" ;
-    ns1:ilustradoEn ns1:RutinaM06 ;
-    ns1:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." .
+ns1:Parametro_1823548c27 a ns1:Parametro ;
+    rdfs:label "Marca que indica herramienta de pinza 1 al cabezal" ;
+    ns1:identificador "CH1TOSPDL" ;
+    ns1:textoExtracto "DFU M1102 = SET CH1TOSPDL" .
 
-ns1:MarcaGRTOSPDL a ns1:Parametro ;
-    rdfs:label "Marca GRTOSPDL (M[1108])" ;
-    ns1:identificador "M[1108]" ;
-    ns1:monitoreaParametro ns1:RutinaM06 ;
-    ns1:textoExtracto "V.PLC.M[1108]=1 ; Marca GRTOSPDL al gestor." ;
-    ns1:valor "1" .
+ns1:Parametro_63e02acfc4 a ns1:Parametro ;
+    rdfs:label "Marca que indica herramienta de pinza 2 al almacén" ;
+    ns1:identificador "CH2TOMZ" ;
+    ns1:textoExtracto "DFU M1106 = SET CH2TOMZ" .
 
-ns1:TeclaMarcha a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla MARCHA" ;
-    ns1:textoExtracto "pulsar MARCHA" .
+ns1:Parametro_7959033478 a ns1:Parametro ;
+    rdfs:label "Marca que indica herramienta de tierra al cabezal" ;
+    ns1:identificador "GRTOSPDL" ;
+    ns1:textoExtracto "DFU M1108 = SET GRTOSPDL" .
 
-ns1:TeclaSTOP a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla STOP" ;
-    ns1:controla ns1:RutinaM06 ;
-    ns1:textoExtracto "Deshabilitar tecla STOP" .
+ns1:Parametro_92b7e6b9ba a ns1:Parametro ;
+    rdfs:label "Marca que indica herramienta en pinza 1" ;
+    ns1:identificador "MZTOCH1" ;
+    ns1:textoExtracto "DFU M1101 = SET MZTOCH1" .
 
-ns1:CambioHerramienta a ns1:ModoOperacion ;
-    rdfs:label "Cambio de herramienta (manual/automático)" ;
-    ns1:ejecutadoPor ns1:PersonalOperario ;
-    ns1:textoExtracto "SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual. [...] SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
+ns1:Parametro_94a80a9622 a ns1:Parametro ;
+    rdfs:label "Marca que indica finalización de operación" ;
+    ns1:identificador "MZROT" ;
+    ns1:textoExtracto "activa la marca MZROT para indicar que ha finalizado la operación." .
 
-ns1:PersonalOperario a ns1:Personal ;
-    rdfs:label "Operario de máquina" ;
-    ns1:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; Mensaje al operario para que ponga la herramienta." .
+ns1:Parametro_aed1a67bbe a ns1:Parametro ;
+    rdfs:label "Marca que indica herramienta de cabezal a tierra" ;
+    ns1:identificador "SPDLTOGR" ;
+    ns1:textoExtracto "DFU M1107 = SET SPDLTOGR" .
 
-ns1:PuntoCambioAutomatico a ns1:ComponenteMecanico ;
-    rdfs:label "Punto de cambio automático de herramienta" ;
-    ns1:textoExtracto "SUB_SPD_AUTCHG ; Llevar el cabezal al punto de cambio automático." .
-
-ns1:PuntoCambioManual a ns1:ComponenteMecanico ;
-    rdfs:label "Punto de cambio manual de herramienta" ;
-    ns1:textoExtracto "SUB_SPD_GMCHG ; Llevar el cabezal al punto de cambio manual." .
-
-ns1:RutinaM06 a ns1:TareaMantenimiento ;
-    rdfs:label "Rutina M06 (Cambio de herramienta)" ;
-    ns1:identificador "M06" ;
-    ns1:requiereMantenimiento ns1:CambioHerramienta ;
-    ns1:textoExtracto "MSG [\"Insertar herramienta T%D y pulsar MARCHA\", V.TM.NXTOOL] ; [...] M6 ; Orden al gestor para comenzar el cambio de herramienta." .
+ns1:Parametro_d80576b55d a ns1:Parametro ;
+    rdfs:label "Marca que indica herramienta de cabezal a pinza 2" ;
+    ns1:identificador "SPDLTOCH2" ;
+    ns1:textoExtracto "DFU M1104 = SET SPDLTOCH2" .
 

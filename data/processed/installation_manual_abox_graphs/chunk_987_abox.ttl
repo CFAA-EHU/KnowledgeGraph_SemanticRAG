@@ -1,44 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:CabezalHerramienta a ns1:ComponenteMecanico ;
-    ns1:textoExtracto "cabezal" .
+ns1:CNC8070_4d9b0d5491 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controladoPor ns1:SistemaGestorHerramientas ;
+    ns1:textoExtracto "El CNC ejecuta la función T y la subrutina el bloque M06." .
 
-ns1:GestorHerramientas a ns1:Sistema ;
-    ns1:textoExtracto "gestor de herramientas para este almacén" ;
-    ns1:tieneComponente ns1:OperacionValida0,
-        ns1:OperacionValida3,
-        ns1:OperacionValida4,
-        ns1:OperacionValida8 .
+ns1:CambioDeHerramienta_9905614d85 a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:textoExtracto "La rutina asociada a la función T ejecuta la función M06. La rutina M06 también puede tener una rutina asociada." .
 
-ns1:HerramientaDeTierra_a4f289a80a a ns1:PiezaRecambio ;
-    ns1:textoExtracto "herramienta de tierra" .
+ns1:ComponenteMecanico_23a4cfcdee a ns1:ComponenteMecanico ;
+    rdfs:label "Almacén tipo torreta" ;
+    ns1:textoExtracto "El gestor envía una orden al PLC para que seleccione la próxima herramienta en el almacén." .
 
-ns1:TablaResumenMarcasPLC a ns1:Tabla ;
-    ns1:textoExtracto "Tabla resumen de las marcas que debe activar el PLC al finalizar cada operación." ;
-    ns1:tieneComponente ns1:OperacionValida0,
-        ns1:OperacionValida3,
-        ns1:OperacionValida4,
-        ns1:OperacionValida8 .
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:controladoPor ns1:SistemaGestorHerramientas ;
+    ns1:textoExtracto "El gestor envía una orden al PLC para efectuar el cambio." .
 
-ns1:OperacionValida0 a ns1:TareaMantenimiento ;
-    rdfs:label "No hay que hacer nada" ;
-    ns1:textoExtracto "No hay que hacer nada." ;
-    ns1:valor 0 .
-
-ns1:OperacionValida3 a ns1:TareaMantenimiento ;
-    rdfs:label "Poner en el cabezal una herramienta de tierra" ;
-    ns1:textoExtracto "Poner en el cabezal una herramienta de tierra." ;
-    ns1:valor 3 .
-
-ns1:OperacionValida4 a ns1:TareaMantenimiento ;
-    rdfs:label "Dejar la herramienta del cabezal en tierra" ;
-    ns1:textoExtracto "Dejar la herramienta del cabezal en tierra." ;
-    ns1:valor 4 .
-
-ns1:OperacionValida8 a ns1:TareaMantenimiento ;
-    rdfs:label "Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra" ;
-    ns1:textoExtracto "Dejar la herramienta del cabezal en tierra y coger una herramienta de tierra." ;
-    ns1:valor 8 .
+ns1:SistemaGestorHerramientas a ns1:Sistema ;
+    rdfs:label "Sistema Gestor de Herramientas" ;
+    ns1:controla ns1:SistemaPLC ;
+    ns1:textoExtracto "Dentro de dicha rutina hay que programar la función M06 para que el CNC indique al gestor que debe comenzar el cambio de herramienta." .
 

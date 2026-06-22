@@ -1,44 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:ENABLEPWM_MarcaControl a ns1:Parametro ;
-    rdfs:label "ENABLEPWM" ;
-    ns1:controla ns1:PWM_Se_alL_gica ;
-    ns1:identificador "ENABLEPWM" ;
-    ns1:textoExtracto "El PLC activa esta marca (cambio de 1 a 0) para habilitar el PWM activo en el CNC; si no hay un PWM activo, esta marca no hace nada." .
+ns1:CNC8070_c55e3d90df a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC consulta esta marca para saber si la herramienta está ejecutando (=1) o no (=0)." .
 
-ns1:ENABLEPWRDUTY_MarcaControl a ns1:Parametro ;
-    rdfs:label "ENABLEPWRDUTY" ;
-    ns1:controla ns1:PWMDUTY ;
-    ns1:identificador "ENABLEPWRDUTY" ;
-    ns1:textoExtracto "Marca activa por defecto. Esta marca está asociada al control duty del PWM (#PWRCTRL ON [DUTY]). El PLC desactiva esta marca para deshabilitar el control de duty activo." .
+ns1:Parametro_0ec228a4f0 a ns1:Parametro ;
+    rdfs:label "Marca que indica que la herramienta debe ser rechazada" ;
+    ns1:identificador "TREJECTC1" ;
+    ns1:textoExtracto "Si el PLC pone esta marca a (=1) el CNC entiende que la herramienta debe ser rechazada." .
 
-ns1:ENABLEPWROUT_MarcaControl a ns1:Parametro ;
-    rdfs:label "ENABLEPWROUT" ;
-    ns1:controla ns1:Cabezal_SalidaPotencia ;
-    ns1:identificador "ENABLEPWROUT" ;
-    ns1:textoExtracto "Marca activa por defecto. Esta marca está asociada al control de potencia a través de la salida analógica asociada al cabezal (#PWRCTRL ON [OUT]). El PLC desactiva esta marca para deshabilitar el control de potencia activo." .
+ns1:Parametro_172ce6feaa a ns1:Parametro ;
+    rdfs:label "Marca para cancelar la emergencia del gestor de herramientas" ;
+    ns1:identificador "RESTMEMZ1" ;
+    ns1:textoExtracto "El PLC pone esta marca a (=1) para cancelar la emergencia del gestor de herramientas." .
 
-ns1:Cabezal_SalidaPotencia a ns1:ComponenteElectrico ;
-    rdfs:label "Cabezal - Salida de control de potencia" ;
-    ns1:textoExtracto "salida analógica asociada al cabezal (#PWRCTRL ON [OUT])." .
+ns1:Parametro_555083edd4 a ns1:Parametro ;
+    rdfs:label "Marca que indica si la herramienta está ejecutando" ;
+    ns1:identificador "CUTTINGONC1" ;
+    ns1:textoExtracto "El CNC consulta esta marca para saber si la herramienta está ejecutando (=1) o no (=0)." .
 
-ns1:PWMFREQ a ns1:Parametro ;
-    rdfs:label "Frecuencia PWM" ;
-    ns1:identificador "PWMFREQ" ;
-    ns1:textoExtracto "Frecuencia del PWM, cuando el PWM ha sido activado desde el PLC (entre 2 y 5000 Hz; por defecto, 0)." ;
-    ns1:valor "2-5000"^^xsd:string .
-
-ns1:PWM_Se_alL_gica a ns1:Parametro ;
-    rdfs:label "Señal PWM modificable" ;
-    ns1:monitoreaParametro ns1:PWMDUTY,
-        ns1:PWMFREQ ;
-    ns1:textoExtracto "Las modificaciones del PWM tanto desde programa como desde PLC se actualizan sin esperar a que termine el ciclo del PWM en proceso, y de la forma más continua posible respecto a las condiciones previas; es decir, no se espera a que la señal por defecto se ponga a cero o a uno en cada cambio." .
-
-ns1:PWMDUTY a ns1:Parametro ;
-    rdfs:label "Ciclo de trabajo PWM" ;
-    ns1:identificador "PWMDUTY" ;
-    ns1:textoExtracto "Ciclo de trabajo del PWM, cuando el PWM ha sido activado desde el PLC (entre 1 y 1000 décimas de %; por defecto, 500)." ;
-    ns1:valor "1-1000"^^xsd:string .
+ns1:Parametro_88e4dec094 a ns1:Parametro ;
+    rdfs:label "Marca para activar la emergencia del gestor de herramientas" ;
+    ns1:identificador "SETTMEMZ1" ;
+    ns1:textoExtracto "El PLC pone esta marca a (=1) para activar la emergencia del gestor de herramientas." .
 

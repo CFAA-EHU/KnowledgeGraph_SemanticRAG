@@ -1,56 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:DiagnosticoFallo_9305 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico 9305: Orden de filtro elevado" ;
-    ns1:identificador "9305" ;
-    ns1:solucionaFallo ns1:Parametro_OrdenFiltroElevado ;
-    ns1:textoExtracto "Durante la validación de los parámetros máquina. Uno de los filtros paso bajo del eje tiene un número de orden demasiado elevado para la frecuencia definida, lo que podría producir un sobrepasamiento. SOLUCIÓN Revisar los parámetros máquina. Reducir el orden del filtro o aumentar la frecuencia." .
+ns1:SustituirElCaracterPor a ns1:TareaMantenimiento ;
+    rdfs:label "Sustituir el carácter '/' por '_'." ;
+    ns1:solucionaFallo ns1:ElCaracterEsIncorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Sustituir el carácter \"/\" por" .
 
-ns1:DiagnosticoFallo_9306 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico 9306: Filtro FAST incompatible" ;
-    ns1:identificador "9306" ;
-    ns1:solucionaFallo ns1:Parametro_IncompatibilidadFiltroFAST ;
-    ns1:textoExtracto "Durante la validación de los parámetros máquina. El CNC no puede activar el filtro automático del modo HSC FAST porque ya hay tres filtros de frecuencia activos en el eje. SOLUCIÓN Eliminar un filtro de frecuencia del eje o eliminar el filtro del modo HSC FAST." .
+ns1:SustituirLaMarcaORegistroPorElRecursoSugerido a ns1:TareaMantenimiento ;
+    rdfs:label "Sustituir la marca o registro por el recurso sugerido" ;
+    ns1:solucionaFallo ns1:LaMarcaORegistroEsIncorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Sustituir la marca o registro por el recurso sugerido." .
 
-ns1:DiagnosticoFallo_OPMODEP a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico: Parámetro OPMODEP inconsistente en ejes maestro/esclavo" ;
-    ns1:solucionaFallo ns1:Parametro_OPMODEP ;
-    ns1:textoExtracto "Hay una pareja gantry o tándem cuyos ejes maestro y esclavo tienen diferente parámetro OPMODEP. SOLUCIÓN Revisar los parámetros máquina. Ambos ejes deben tener el parámetro OPMODEP igual." .
+ns1:ElCaracterEsIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "El carácter '/' es incorrecto" ;
+    ns1:textoExtracto "CAUSA El carácter \"/\" es incorrecto; el PLC lo ha sustituido el carácter \"_\" en el programa compilado." .
 
-ns1:ModoOperacion_HSCFAST a ns1:ModoOperacion ;
-    rdfs:label "Modo HSC FAST" ;
-    ns1:controla ns1:Parametro_IncompatibilidadFiltroFAST ;
-    ns1:textoExtracto "modo HSC FAST" .
-
-ns1:Componente_EjeEsclavo a ns1:ComponenteMecanico ;
-    rdfs:label "Eje esclavo (gantry/tándem)" ;
-    ns1:monitoreaParametro ns1:Parametro_OPMODEP ;
-    ns1:textoExtracto "esclavo" .
-
-ns1:Componente_EjeMaestro a ns1:ComponenteMecanico ;
-    rdfs:label "Eje maestro (gantry/tándem)" ;
-    ns1:monitoreaParametro ns1:Parametro_OPMODEP ;
-    ns1:textoExtracto "ejes maestro" .
-
-ns1:Maquina_GantryTandem a ns1:Maquina ;
-    rdfs:label "Máquina con configuración gantry o tándem" ;
-    ns1:textoExtracto "pareja gantry o tándem cuyos ejes maestro y esclavo" ;
-    ns1:tieneComponente ns1:Componente_EjeEsclavo,
-        ns1:Componente_EjeMaestro .
-
-ns1:Parametro_OrdenFiltroElevado a ns1:Parametro ;
-    rdfs:label "Orden del filtro paso bajo" ;
-    ns1:textoExtracto "número de orden demasiado elevado para la frecuencia definida" ;
-    ns1:valor "elevado"^^xsd:string .
-
-ns1:Parametro_IncompatibilidadFiltroFAST a ns1:Parametro ;
-    rdfs:label "Filtro FAST incompatible con 3º filtro de eje" ;
-    ns1:textoExtracto "El CNC no puede activar el filtro automático del modo HSC FAST porque ya hay tres filtros de frecuencia activos en el eje" .
-
-ns1:Parametro_OPMODEP a ns1:Parametro ;
-    rdfs:label "Parámetro OPMODEP" ;
-    ns1:monitoreaParametro ns1:Maquina_GantryTandem ;
-    ns1:textoExtracto "parámetro OPMODEP" .
+ns1:LaMarcaORegistroEsIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "La marca o registro es incorrecto" ;
+    ns1:textoExtracto "CAUSA La marca o registro es incorrecto; el PLC lo ha sustituido en el programa compilado por el recurso sugerido." .
 

@@ -1,71 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Instruccion_InhibicionTeclaJog a ns1:TareaMantenimiento ;
-    rdfs:label "Inhibición de tecla jog (bit 16, segundo teclado)" ;
-    ns1:requiereMantenimiento ns1:Tecla_Jog16 ;
-    ns1:textoExtracto "La siguiente instrucción inhibe la primera tecla de jog (bit 16) del segundo teclado: ( ) = B16KEYDIS1_2" .
+ns1:Componente_78f5b01a74 a ns1:Componente ;
+    rdfs:label "Herramienta de Tierra" ;
+    ns1:textoExtracto "Se denomina herramienta de tierra a aquella que no se guarda en ningún almacén y que se carga manualmente cuando es solicitada." .
 
-ns1:InterfazUsuario_PanelMando1 a ns1:InterfazUsuario ;
-    rdfs:label "Primer panel de mando" ;
-    ns1:textoExtracto "Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando" ;
-    ns1:tieneComponente ns1:Tecla_Jog1 .
+ns1:ElAlmacenEnElQueSeDejaLaHerramientaYElAlmacenDelQueSeCogeLaHerramientaNuevaPuedenSerDiferentes a ns1:Sistema ;
+    rdfs:label "Almacén de Herramientas" ;
+    ns1:textoExtracto "El almacén en el que se deja la herramienta y el almacén del que se coge la herramienta nueva pueden ser diferentes." .
 
-ns1:InterfazUsuario_PanelMando2 a ns1:InterfazUsuario ;
-    rdfs:label "Segundo panel de mando" ;
-    ns1:textoExtracto "KEYDIS1_2 a KEYDIS4_2 al segundo [panel de mando]" ;
-    ns1:tieneComponente ns1:Tecla_Jog16 .
+ns1:Herramienta a ns1:Componente ;
+    rdfs:label "Herramienta" ;
+    ns1:textoExtracto "Cada herramienta se identifica mediante su número, que es único para todo el sistema;" .
 
-ns1:Registro_KEYDIS1 a ns1:Parametro ;
-    rdfs:label "KEYDIS1" ;
-    ns1:identificador "KEYDIS1" ;
-    ns1:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" .
+ns1:GestorHerramientas a ns1:Sistema ;
+    rdfs:label "Gestor de Herramientas" ;
+    ns1:documentadoEn ns1:TablaHerramientas ;
+    ns1:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas." .
 
-ns1:Registro_KEYDIS1_1 a ns1:Parametro ;
-    rdfs:label "KEYDIS1_1" ;
-    ns1:identificador "KEYDIS1_1" ;
-    ns1:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 [...] inhiben (bit=1) las teclas y los conmutadores en cada panel de mando. Los registros KEYDIS1_1 a KEYDIS4_1 corresponden al primer panel de mando" .
+ns1:TablaHerramientas a ns1:Tabla ;
+    rdfs:label "Tabla de Herramientas" ;
+    ns1:documenta ns1:CNC8070_5bff8283d8 ;
+    ns1:documentadoEn ns1:CNC8070_5bff8283d8 ;
+    ns1:textoExtracto "La lista de herramientas disponibles se guarda en la tabla de herramientas, única para todo el sistema." .
 
-ns1:Registro_KEYDIS1_2 a ns1:Parametro ;
-    rdfs:label "KEYDIS1_2" ;
-    ns1:identificador "KEYDIS1_2" ;
-    ns1:textoExtracto "KEYDIS1_2 [...] corresponde al segundo panel de mando" .
-
-ns1:Registro_KEYDIS1_8 a ns1:Parametro ;
-    rdfs:label "KEYDIS1_8" ;
-    ns1:identificador "KEYDIS1_8" ;
-    ns1:textoExtracto "KEYDIS1_1 / KEYDIS2_1 / KEYDIS3_1 / KEYDIS4_1 [...] KEYDIS1_8 / KEYDIS2_8 / KEYDIS3_8 / KEYDIS4_8 [...] inhiben (bit=1) las teclas y los conmutadores en cada panel de mando" .
-
-ns1:Registro_KEYDIS2 a ns1:Parametro ;
-    rdfs:label "KEYDIS2" ;
-    ns1:identificador "KEYDIS2" ;
-    ns1:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" .
-
-ns1:Registro_KEYDIS3 a ns1:Parametro ;
-    rdfs:label "KEYDIS3" ;
-    ns1:identificador "KEYDIS3" ;
-    ns1:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" .
-
-ns1:Registro_KEYDIS4 a ns1:Parametro ;
-    rdfs:label "KEYDIS4" ;
-    ns1:identificador "KEYDIS4" ;
-    ns1:textoExtracto "KEYDIS1 / KEYDIS2 / KEYDIS3 / KEYDIS4 [...] inhiben (bit=1) las teclas y los conmutadores en todos los paneles de mando simultáneamente" .
-
-ns1:Registro_KEYLEDHBLS1 a ns1:Parametro ;
-    rdfs:label "KEYLEDHBLS1" ;
-    ns1:identificador "KEYLEDHBLS1" ;
-    ns1:textoExtracto "KEYLEDHBLS1 [...] encienden los led (bit=1) de las teclas del volante HBLS. El registro KEYLEDHBLS1 corresponde al primer volante" .
-
-ns1:Registro_KEYLEDHBLS2 a ns1:Parametro ;
-    rdfs:label "KEYLEDHBLS2" ;
-    ns1:identificador "KEYLEDHBLS2" ;
-    ns1:textoExtracto "KEYLEDHBLS2 [...] encienden los led (bit=1) de las teclas del volante HBLS. El registro KEYLEDHBLS2 corresponde al segundo volante" .
-
-ns1:Tecla_Jog1 a ns1:ComponenteElectrico ;
-    rdfs:label "Primera tecla de jog" ;
-    ns1:textoExtracto "La siguiente instrucción inhibe la primera tecla de jog (bit 16) del segundo teclado: ( ) = B16KEYDIS1_2" .
-
-ns1:Tecla_Jog16 a ns1:ComponenteElectrico ;
-    rdfs:label "Tecla de jog (bit 16)" ;
-    ns1:textoExtracto "La siguiente instrucción inhibe la primera tecla de jog (bit 16) del segundo teclado: ( ) = B16KEYDIS1_2" .
+ns1:CNC8070_5bff8283d8 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC dispone de un gestor de herramientas que sabe en todo momento dónde se encuentra cada una de las herramientas." ;
+    ns1:tieneComponente ns1:GestorHerramientas .
 

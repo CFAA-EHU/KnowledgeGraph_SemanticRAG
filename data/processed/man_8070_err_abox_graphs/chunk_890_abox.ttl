@@ -1,24 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Sistema_PLC a ns1:Sistema ;
-    rdfs:label "Sistema PLC (Programmable Logic Controller)" ;
-    ns1:textoExtracto "programa PLC" ;
-    ns1:tieneComponente ns1:Modulo_Programa .
+ns1:ProgramarIndiceDeEntradaDeArranque a ns1:TareaMantenimiento ;
+    rdfs:label "Programar índice de entrada de arranque" ;
+    ns1:solucionaFallo ns1:FaltaIndiceDeEntradaDeArranque ;
+    ns1:textoExtracto "SOLUCIÓN Programar una entrada de arranque dentro del rango TG1 a TG4." .
 
-ns1:Fallo_8863 a ns1:DiagnosticoFallo ;
-    rdfs:label "Etiqueta indefinida" ;
-    ns1:identificador "8863" ;
-    ns1:textoExtracto "DETECCIÓN Durante la compilación del programa PLC. CAUSA Hay definida un salto a una etiquete pero ésta no existe (=JMP etiqueta). SOLUCIÓN Revisar el nombre de las etiquetas y los saltos a las etiquetas." .
+ns1:RecursoObsoletoPICOPAGSustituidoPorMSG a ns1:DiagnosticoFallo ;
+    rdfs:label "Recurso obsoleto PIC o PAG; sustituido por MSG" ;
+    ns1:textoExtracto "8840 Recurso obsoleto PIC o PAG; sustituido por MSG." .
 
-ns1:Fallo_8864 a ns1:DiagnosticoFallo ;
-    rdfs:label "Falta salto de línea tras fin de módulo" ;
-    ns1:identificador "8864" ;
-    ns1:textoExtracto "DETECCIÓN Durante la compilación. CAUSA Hay demasiadas subrutinas definidas en el programa. SOLUCIÓN Utilizar saltos a etiquetas en lugar de subrutinas, o agrupar varias subrutinas en una sola." .
+ns1:RevisarSintaxis_fbd769150c a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis" ;
+    ns1:solucionaFallo ns1:AlgunCaracterProgramadoNoEsCorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
 
-ns1:Modulo_Programa a ns1:Componente ;
-    rdfs:label "Módulo de programa" ;
-    ns1:requiereMantenimiento ns1:Fallo_8863,
-        ns1:Fallo_8864 ;
-    ns1:textoExtracto "programa" .
+ns1:AlgunCaracterProgramadoNoEsCorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "Algún carácter programado no es correcto" ;
+    ns1:textoExtracto "Algún carácter programado no es correcto. SOLUCIÓN Revisar en el manual de instalación la sintaxis." .
+
+ns1:FaltaIndiceDeEntradaDeArranque a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta índice de entrada de arranque" ;
+    ns1:textoExtracto "8839 Falta índice de entrada de arranque. Suponemos TG1." .
 

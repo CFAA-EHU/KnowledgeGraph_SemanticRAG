@@ -1,63 +1,43 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_2404 a ns1:Alarma ;
-    rdfs:label "#GAPCTRL: Índice alterado en canal de eje controlado"@es ;
-    ns1:identificador "2404" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_ModificarEjeConGapActivo ;
-    ns1:textoExtracto """
-    2404 #GAPCTRL: Se ha alterado el índice en el canal del eje controlado.
-    DETECCIÓN Durante la preparación de bloques.
-    CAUSA Las posibles causas son las siguientes:
-    • Con el control del gap activo (#GAPCTRLON), se ha programado una instrucción que altera el índice de dicho eje en el canal (#SETAX, #CALLAX, #FREEAX).
-    • Si el parámetro máquina GAPCTRLCANCEL tiene valor "NO", el eje sigue controlado después de acabar el programa o tras un reset. Si en estas condiciones se altera el índice del eje, también se produce este error.
-    """@es .
+ns1:DETECCIONDuranteLaEjecucionCAUSAElNumeroLogicoProgramadoEnLaVariableNoEsCorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "DETECCIÓN Durante la ejecución. CAUSA El número lógico programado en la variable no es correcto."@es ;
+    ns1:textoExtracto "Número lógico de eje fuera de rango. DETECCIÓN Durante la ejecución. CAUSA El número lógico programado en la variable no es correcto." .
 
-ns1:Comando_GAPCTROFF a ns1:Parametro ;
-    rdfs:label "Comando #GAPCTRL OFF"@es ;
-    ns1:identificador "#GAPCTRL OFF" ;
-    ns1:solucionaFallo ns1:Alarma_2405 ;
-    ns1:textoExtracto "Programar #GAPCTRL OFF."@es .
+ns1:DesactivarGAPCTRLAntesDeModificarSusParametros a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar #GAPCTRL antes de modificar sus parámetros"@es ;
+    ns1:solucionaFallo ns1:DETECCIONDuranteLaEjecucionCAUSASeHaIntentadoModificarLosParametrosDe_ef90628cc1 ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar #GAPCTRL antes de modificar sus parámetros." .
 
-ns1:ModoOperacion_MDI a ns1:ModoOperacion ;
-    rdfs:label "Modo MDI (Manual Data Input)"@es ;
-    ns1:identificador "MDI" ;
-    ns1:textoExtracto "modo MDI"@es .
+ns1:LaPrimeraVezQueSeProgramaLEAPEsObligatorioProgramarElComandoPOSLIMIT a ns1:TareaMantenimiento ;
+    rdfs:label "La primera vez que se programa #LEAP es obligatorio programar el comando POSLIMIT"@es ;
+    ns1:solucionaFallo ns1:DETECCIONDuranteLaEjecucionCAUSAEnElComandoLEAPFaltaProgramarElComandoPOSLIMIT ;
+    ns1:textoExtracto "SOLUCIÓN La primera vez que se programa #LEAP es obligatorio programar el comando POSLIMIT." .
 
-ns1:Parametro_GAPCTRLCANCEL a ns1:Parametro ;
-    rdfs:label "GAPCTRLCANCEL"@es ;
-    ns1:identificador "GAPCTRLCANCEL" ;
-    ns1:monitoreaParametro ns1:Maquina_ControlEjes ;
-    ns1:textoExtracto "Si el parámetro máquina GAPCTRLCANCEL tiene valor \"NO\", el eje sigue controlado después de acabar el programa o tras un reset."@es ;
-    ns1:valor "NO" .
+ns1:Parametro_54944bd501 a ns1:Parametro ;
+    rdfs:label "#LEAP"@es,
+        "POSLIMIT"@es ;
+    ns1:textoExtracto "#LEAP:falta programación de POSLIMIT. DETECCIÓN Durante la ejecución." .
 
-ns1:AccionProhibida_ModificarEjeConGapActivo a ns1:AccionProhibida ;
-    rdfs:label "Modificar posición de ejes con control de gap activo (#GAPCTRLON)"@es ;
-    ns1:textoExtracto "No es posible modificar la posición de los ejes en el canal con el control de gap activo."@es .
+ns1:Parametro_d686f60dee a ns1:Parametro ;
+    rdfs:label "#GAPCTRL"@es ;
+    ns1:textoExtracto "#GAPCTRL ON activo.#GAPCTRL OFF necesario para cambiar parámetros." .
 
-ns1:AccionProhibida_MoverEjeMDIConGapActivo a ns1:AccionProhibida ;
-    rdfs:label "Mover eje en modo MDI con comando #GAPCTRL activo"@es ;
-    ns1:textoExtracto "Se ha intentado mover en MDI un eje que está siendo controlado mediante el comando #GAPCTRL."@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación"@es ;
+    ns1:solucionaFallo ns1:DETECCIONDuranteLaEjecucionCAUSAUnaVezProgramadaLaCotaFinalDelSaltoLE_0682f61a44 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Alarma_2405 a ns1:Alarma ;
-    rdfs:label "Bloque de movimiento anulado por eje con #GAPCTRL"@es ;
-    ns1:identificador "2405" ;
-    ns1:mitigaRiesgo ns1:AccionProhibida_MoverEjeMDIConGapActivo ;
-    ns1:textoExtracto """
-    2405 Bloque de movimiento anulado por tener un eje con #GAPCTRL.
-    DETECCIÓN Durante la inspección de herramienta o modo MDI.
-    CAUSA Se ha intentado mover en MDI un eje que está siendo controlado mediante el comando #GAPCTRL.
-    """@es .
+ns1:DETECCIONDuranteLaEjecucionCAUSAEnElComandoLEAPFaltaProgramarElComandoPOSLIMIT a ns1:DiagnosticoFallo ;
+    rdfs:label "DETECCIÓN Durante la ejecución. CAUSA En el comando #LEAP falta programar el comando POSLIMIT."@es ;
+    ns1:textoExtracto "#LEAP:falta programación de POSLIMIT. DETECCIÓN Durante la ejecución. CAUSA En el comando #LEAP falta programar el comando POSLIMIT." .
 
-ns1:Componente_EjeControlado a ns1:ComponenteMecanico ;
-    rdfs:label "Eje controlado por comando #GAPCTRL"@es ;
-    ns1:textoExtracto "eje controlado mediante el comando #GAPCTRL"@es .
+ns1:DETECCIONDuranteLaEjecucionCAUSASeHaIntentadoModificarLosParametrosDe_ef90628cc1 a ns1:DiagnosticoFallo ;
+    rdfs:label "DETECCIÓN Durante la ejecución. CAUSA Se ha intentado modificar los parámetros de #GAPCTRL mientras está activo."@es ;
+    ns1:textoExtracto "#GAPCTRL ON activo.#GAPCTRL OFF necesario para cambiar parámetros. DETECCIÓN Durante la ejecución. CAUSA Se ha intentado modificar los parámetros de #GAPCTRL mientras está activo." .
 
-ns1:Maquina_ControlEjes a ns1:Maquina ;
-    rdfs:label "Sistema de control de ejes con comando #GAPCTRL"@es ;
-    ns1:textoExtracto """
-    Con el control del gap activo (#GAPCTRLON), se ha programado una instrucción que altera el índice de dicho eje en el canal.
-    El eje sigue controlado después de acabar el programa o tras un reset si GAPCTRLCANCEL = "NO".
-    """@es ;
-    ns1:tieneComponente ns1:Componente_EjeControlado .
+ns1:DETECCIONDuranteLaEjecucionCAUSAUnaVezProgramadaLaCotaFinalDelSaltoLE_0682f61a44 a ns1:DiagnosticoFallo ;
+    rdfs:label "DETECCIÓN Durante la ejecución. CAUSA Una vez programada la cota final del salto (#LEAP[POS]), no se permite cambiarla con #LEAP activo."@es ;
+    ns1:textoExtracto "#LEAP activo. No se puede alterar POS, posición final del salto. DETECCIÓN Durante la ejecución. CAUSA Una vez programada la cota final del salto (#LEAP[POS]), no se permite cambiarla con #LEAP activo." .
 

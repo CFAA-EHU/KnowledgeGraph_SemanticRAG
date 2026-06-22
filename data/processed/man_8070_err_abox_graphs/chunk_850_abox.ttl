@@ -1,31 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CompensacionRadio a ns1:Parametro ;
-    ns1:textoExtracto "Desactivar la compensación de radio." .
+ns1:AccionProhibida_22a3833c09 a ns1:AccionProhibida ;
+    rdfs:label "función G4 mal programada" ;
+    ns1:textoExtracto "Se esperaba K expresión tras G04. DETECCIÓN Durante la edición. CAUSA Función G4 mal programada." .
 
-ns1:ManualProgramacion a ns1:Manual ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:ProgramacionDeCotasSeparadasPorComas a ns1:AccionProhibida ;
+    rdfs:label "programación de cotas separadas por comas" ;
+    ns1:textoExtracto "Sólo G820 permite programar varias cotas en el bloque. DETECCIÓN Durante la edición y ejecución. CAUSA La sentencia o función G programada en el bloque no permite la programación de cotas separadas por comas." .
 
-ns1:MovimientoIndependiente a ns1:ModoOperacion ;
-    ns1:textoExtracto "activar el movimiento independiente" .
+ns1:ProgramacionIncrementalNoPermitida a ns1:AccionProhibida ;
+    rdfs:label "programación incremental no permitida" ;
+    ns1:textoExtracto "'Programación incremental no permitida' DETECCIÓN Durante la edición y ejecución en MDI. CAUSA Hay programado un movimiento incremental (comando I) en una función que no lo permite." .
 
-ns1:ProgramacionNoPermitidaSinMovimientoIndependiente a ns1:AccionProhibida ;
-    ns1:textoExtracto "Programación no permitida sin movimiento independiente activo." .
+ns1:RadioODiametroInternoMayorQueElExterno a ns1:AccionProhibida ;
+    rdfs:label "radio o diámetro interno mayor que el externo" ;
+    ns1:textoExtracto "El radio o diámetro interno debe ser menor que el externo. DETECCIÓN Durante la edición y ejecución. CAUSA En la pieza circular definida con la sentencia #DGWZ, el radio o diámetro interno es mayor que el externo." .
 
-ns1:SentenciaCYL a ns1:Parametro ;
-    ns1:identificador "#CYL [nombreAbscisa, nombreOrdenada, nombreLong valorRadio <,Q valorOrigenC>] <[númeroCinemática]>" ;
-    ns1:textoExtracto "8587 #CYL [nombreAbscisa, nombreOrdenada, nombreLong valorRadio <,Q valorOrigenC>] <[númeroCinemática]>." .
+ns1:RevisarProgramacionIncremental a ns1:TareaMantenimiento ;
+    rdfs:label "revisar programación incremental" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:SentenciaFACE a ns1:Parametro ;
-    ns1:identificador "#FACE[nombreAbscisa, nombreOrdenada <,nombreLong, Eje4, Eje5, Q valorOrigenC>] <[númeroCinemática]>" ;
-    ns1:textoExtracto "8586 #FACE[nombreAbscisa, nombreOrdenada <,nombreLong, Eje4, Eje5, Q valorOrigenC>] <[númeroCinemática]>." .
+ns1:RevisarSintaxisDeSentencia a ns1:TareaMantenimiento ;
+    rdfs:label "revisar sintaxis de sentencia" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:SentenciaGFuncionNoPermitida a ns1:AccionProhibida ;
-    ns1:textoExtracto "Se ha programado una sentencia o función G no permitida porque no está activo el movimiento independiente." .
+ns1:SintaxisIncorrecta_11892d2818 a ns1:AccionProhibida ;
+    rdfs:label "sintaxis incorrecta" ;
+    ns1:textoExtracto "DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta." .
 
-ns1:SintaxisSentenciaIncorrecta8586 a ns1:AccionProhibida ;
-    ns1:textoExtracto "La sintaxis de la sentencia no es correcta." .
+ns1:SolucionDeTangenciaNoPermitidaEnElBloque a ns1:AccionProhibida ;
+    rdfs:label "solución de tangencia no permitida en el bloque" ;
+    ns1:textoExtracto "Solución de tangencia no permitida en el bloque. DETECCIÓN Durante la edición y ejecución. CAUSA La sentencia o función G programada en el bloque no permite la programación de una solución de tangencia." .
 
-ns1:SintaxisSentenciaIncorrecta8587 a ns1:AccionProhibida ;
-    ns1:textoExtracto "La sintaxis de la sentencia no es correcta." .
+ns1:SolucionDeTangenciaNoValida a ns1:AccionProhibida ;
+    rdfs:label "solución de tangencia no válida" ;
+    ns1:textoExtracto "Solución de tangencia no válida. DETECCIÓN Durante la edición y ejecución. CAUSA Se ha programado en la función G831, G832, G833 una solución de tangencia no válida." .
 

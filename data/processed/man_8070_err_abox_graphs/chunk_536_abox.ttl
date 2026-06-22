@@ -1,32 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AccionProhibida_ZonaNoEntrada a ns1:AccionProhibida ;
-    rdfs:label "Desplazamiento a zona de trabajo de no entrada"@es ;
-    ns1:activaAlarma ns1:Alarma_3093 ;
-    ns1:textoExtracto "El CNC ha intentado desplazar un eje a una cota que se encuentra dentro de una zona de trabajo de no entrada."@es .
+ns1:DisminuirElTiempoDeCicloOElValorDeLosParametrosDeAnticipacion a ns1:TareaMantenimiento ;
+    rdfs:label "Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación" ;
+    ns1:solucionaFallo ns1:ElRetardoCalculadoParaElLaserEsNegativo ;
+    ns1:textoExtracto "SOLUCIÓN Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación." .
 
-ns1:AccionProhibida_ZonaNoSalida a ns1:AccionProhibida ;
-    rdfs:label "Desplazamiento fuera de zona de trabajo de no salida"@es ;
-    ns1:activaAlarma ns1:Alarma_3092 ;
-    ns1:textoExtracto "El CNC ha intentado desplazar un eje a una cota que se encuentra fuera de una zona de trabajo de no salida."@es .
+ns1:DisminuirLaVelocidadOElTiempoDeCiclo a ns1:TareaMantenimiento ;
+    rdfs:label "Disminuir la velocidad o el tiempo de ciclo" ;
+    ns1:solucionaFallo ns1:LaVelocidadDeCorteEsDemasiadoAltaParaElTamanoDeLaRejilla ;
+    ns1:textoExtracto "SOLUCIÓN Disminuir la velocidad o el tiempo de ciclo." .
 
-ns1:Parametro_CotaMovimiento a ns1:Parametro ;
-    rdfs:label "Cota de movimiento de eje"@es ;
-    ns1:monitoreaParametro ns1:Sensor_SondaAproximacion ;
-    ns1:textoExtracto "El CNC ha intentado desplazar un eje a una cota que se encuentra fuera de una zona de trabajo de no salida."@es .
+ns1:ElRetardoCalculadoParaElLaserEsNegativo a ns1:DiagnosticoFallo ;
+    rdfs:label "El retardo calculado para el láser es negativo" ;
+    ns1:textoExtracto "CAUSA El retardo calculado para el láser es negativo; es decir, no queda margen suficiente de ciclos para la anticipación. SOLUCIÓN Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación." .
 
-ns1:Alarma_3092 a ns1:Alarma ;
-    rdfs:label "Límite de zona de trabajo sobrepasado"@es ;
-    ns1:identificador "3092" ;
-    ns1:textoExtracto "3092 'Límite de zona de trabajo sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado desplazar un eje a una cota que se encuentra fuera de una zona de trabajo de no salida. La zona puede estar definida por programa ó por PLC (mediante las variables relativas a zonas de trabajo)."@es .
-
-ns1:Alarma_3093 a ns1:Alarma ;
-    rdfs:label "Punto dentro de zona prohibida"@es ;
-    ns1:identificador "3093" ;
-    ns1:textoExtracto "3093 'Punto dentro de zona prohibida' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado desplazar un eje a una cota que se encuentra dentro de una zona de trabajo de no entrada. La zona puede estar definida por programa ó por PLC (mediante las variables relativas a zonas de trabajo)."@es .
-
-ns1:Sensor_SondaAproximacion a ns1:Sensor ;
-    rdfs:label "Sonda de aproximación"@es ;
-    ns1:textoExtracto "Comprobar también que la sonda está bien conectada. [...] El punto final del movimiento de aproximación indicado en la sentencia #GAPCTRL debe estar a una distancia detectable por el sensor."@es .
+ns1:LaVelocidadDeCorteEsDemasiadoAltaParaElTamanoDeLaRejilla a ns1:DiagnosticoFallo ;
+    rdfs:label "La velocidad de corte es demasiado alta para el tamaño de la rejilla" ;
+    ns1:textoExtracto "CAUSA La velocidad de corte es demasiado alta para el tamaño de la rejilla. SOLUCIÓN Disminuir la velocidad o el tiempo de ciclo." .
 

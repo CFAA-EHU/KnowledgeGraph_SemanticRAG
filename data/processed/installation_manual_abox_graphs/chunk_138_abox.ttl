@@ -1,41 +1,19 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Parametro_DIMODADDR a ns1:Parametro ;
-    rdfs:label "DIMODADDR" ;
-    ns1:detalladoEnEsquema ns1:Tabla_BloquesLogicos ;
-    ns1:monitoreaParametro ns1:Sistema_CANopen ;
-    ns1:textoExtracto "DIMODADDR Direcciones base de los bloques lógicos de entradas digitales. Este parámetro muestra la tabla para personalizar los bloques lógicos de entradas digitales." .
+ns1:CNC8070_57f3e15a6c a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "La configuración debe cumplir los siguientes requisitos. Si la parametrización no se ajusta a estos requisitos, el CNC la ignora y numera las entradas digitales secuencialmente, según el orden en que se encuentren los módulos en el bus." ;
+    ns1:tieneComponente ns1:NumeroDeBloqueLogico,
+        ns1:NumeroDeNodoDeLaCabeceraAlQuePerteneceElBloqueLogicoDeIOs .
 
-ns1:Parametro_NDIMOD a ns1:Parametro ;
-    rdfs:label "NDIMOD" ;
-    ns1:identificador "MPG.NDIMOD" ;
-    ns1:monitoreaParametro ns1:Sistema_CANopen ;
-    ns1:textoExtracto "NDIMOD Número de bloques lógicos de entradas digitales. Valores posibles: De 0 a 42. Valor por defecto: 0 (no se desea personalizar la numeración). Variable asociada: (V.)MPG.NDIMOD Este parámetro indica la cantidad de bloques lógicos en los que se dividen los módulos de entradas digitales conectados en el bus CANopen." ;
-    ns1:valor 0 .
+ns1:NumeroDeBloqueLogico a ns1:Parametro ;
+    rdfs:label "Número de bloque lógico" ;
+    ns1:identificador "MPG.DIMODBLOCK" ;
+    ns1:textoExtracto "Variable asociada: (V.)MPG.DIMODBLOCK[nb] Número de bloque lógico." .
 
-ns1:Modulo_RIO5 a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo RIO5" ;
-    ns1:textoExtracto "En los nodos RIO5 y RIOR, cada módulo es un bloque lógico, no se permite agrupar varios módulos en un bloque ni dividir un módulo en bloques." .
-
-ns1:Modulo_RIOR a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo RIOR" ;
-    ns1:textoExtracto "En los nodos RIO5 y RIOR, cada módulo es un bloque lógico, no se permite agrupar varios módulos en un bloque ni dividir un módulo en bloques." .
-
-ns1:Modulo_RIOW a ns1:ComponenteElectrico ;
-    rdfs:label "Módulo RIOW" ;
-    ns1:textoExtracto "En los nodos RIOW y de terceros, se permite virtualizar los bloques lógicos que se desee, tanto en número como en dimensión." .
-
-ns1:Tabla_BloquesLogicos a ns1:Tabla ;
-    rdfs:label "Tabla de direcciones base de bloques lógicos de entradas digitales" ;
-    ns1:documentadoEn ns1:Manual ;
-    ns1:textoExtracto "Este parámetro muestra la tabla para personalizar los bloques lógicos de entradas digitales. Para cada bloque hay que definir los siguientes campos." .
-
-ns1:Sistema_CANopen a ns1:Sistema ;
-    rdfs:label "Bus CANopen" ;
-    ns1:textoExtracto "módulos de entradas digitales conectados en el bus CANopen" ;
-    ns1:tieneComponente ns1:Modulo_RIO5,
-        ns1:Modulo_RIOR,
-        ns1:Modulo_RIOW .
+ns1:NumeroDeNodoDeLaCabeceraAlQuePerteneceElBloqueLogicoDeIOs a ns1:Parametro ;
+    rdfs:label "Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os" ;
+    ns1:identificador "MPG.DIMODNODE" ;
+    ns1:textoExtracto "Variable asociada: (V.)MPG.DIMODNODE[nb] Número de nodo de la cabecera al que pertenece el bloque lógico de I/Os." .
 

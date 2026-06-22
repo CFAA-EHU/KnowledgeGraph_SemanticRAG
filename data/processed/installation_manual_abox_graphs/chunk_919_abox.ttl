@@ -1,41 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:AccionProhibidaSobrepasoLimite a ns1:AccionProhibida ;
-    ns1:textoExtracto "el CNC entiende que el eje o cabezal correspondiente ha sobrepasado el límite de recorrido en el sentido positivo (POS) o negativo (NEG). Detiene el avance de los ejes y el giro del cabezal" .
+ns1:CNC8070_a0e743a684 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "el CNC espera el tiempo indicado en el parámetro DWELL solamente si SERVOnON está a (=0)." ;
+    ns1:tieneComponente ns1:Parametro_018472477d,
+        ns1:Parametro_07c99aa9d1,
+        ns1:TiempoDeEsperaAntesDeActivarSERVOnON .
 
-ns1:LIMITNEG a ns1:Sensor ;
-    ns1:textoExtracto "LIMITNEG(axis)" .
+ns1:DesactivacionDeLimitesDeSoftware a ns1:AccionProhibida ;
+    rdfs:label "Desactivación de límites de software" ;
+    ns1:textoExtracto "Si el PLC activa esta marca, el CNC no tiene en cuenta los límites de software ni las zonas de trabajo fijadas para el eje correspondiente." .
 
-ns1:LIMITPOS a ns1:Sensor ;
-    ns1:textoExtracto "LIMITPOS(axis)" .
+ns1:ErrorDeEjeBloqueadoEnEmpalmeDeBloques a ns1:AccionProhibida ;
+    rdfs:label "Error de eje bloqueado en empalme de bloques" ;
+    ns1:textoExtracto "puede dar error de eje bloqueado en el empalme de bloques si alguno de los ejes implicados no tiene activa la marca SERVOnON de antemano." .
 
-ns1:LIMITPOS3 a ns1:Sensor ;
-    ns1:textoExtracto "LIMITPOS3" .
+ns1:ErrorDeEjeBloqueado_ee34822e51 a ns1:AccionProhibida ;
+    rdfs:label "Error de eje bloqueado" ;
+    ns1:textoExtracto "el CNC muestra el error 'eje bloqueado'." .
 
-ns1:LIMITPOS5 a ns1:Sensor ;
-    ns1:textoExtracto "LIMITPOS5" .
+ns1:Parametro_018472477d a ns1:Parametro ;
+    rdfs:label "Marca SERVOnON para control del eje" ;
+    ns1:identificador "SERVOnON" ;
+    ns1:textoExtracto "el CNC espera el tiempo indicado en el parámetro DWELL solamente si SERVOnON está a (=0)." .
 
-ns1:LIMITPOSB a ns1:Sensor ;
-    ns1:textoExtracto "LIMITPOSB" .
+ns1:Parametro_07c99aa9d1 a ns1:Parametro ;
+    rdfs:label "Marca DRO para visualizador" ;
+    ns1:identificador "DRO" ;
+    ns1:textoExtracto "Esta marca, junto con la marca SERVOnON correspondiente permite que el eje o cabezal trabaje como visualizador" .
 
-ns1:LIMITPOSS a ns1:Sensor ;
-    ns1:textoExtracto "LIMITPOSS" .
-
-ns1:LIMITPOSX a ns1:Sensor ;
-    ns1:textoExtracto "LIMITPOSX" .
-
-ns1:LIMITPOSZ2 a ns1:Sensor ;
-    ns1:textoExtracto "LIMITPOSZ2" .
-
-ns1:MaquinaEjeB a ns1:Maquina ;
-    ns1:textoExtracto "corresponde al eje B" .
-
-ns1:MaquinaEjeZ a ns1:Maquina ;
-    ns1:textoExtracto "corresponde al eje Z" .
-
-ns1:ModoOperacionLazoCerrado a ns1:ModoOperacion ;
-    ns1:textoExtracto "Cuando el cabezal trabaja en lazo cerrado (M19 ó G63) se comporta como un eje" .
-
-ns1:SistemaControlCNC a ns1:Sistema ;
-    ns1:textoExtracto "el CNC entiende que el eje o cabezal correspondiente ha sobrepasado el límite de recorrido en el sentido positivo (POS) o negativo (NEG). Detiene el avance de los ejes y el giro del cabezal, visualizando en la pantalla el error correspondiente" .
+ns1:TiempoDeEsperaAntesDeActivarSERVOnON a ns1:Parametro ;
+    rdfs:label "Tiempo de espera antes de activar SERVOnON" ;
+    ns1:identificador "DWELL" ;
+    ns1:textoExtracto "el CNC espera el tiempo indicado en el parámetro DWELL solamente si SERVOnON está a (=0)." .
 

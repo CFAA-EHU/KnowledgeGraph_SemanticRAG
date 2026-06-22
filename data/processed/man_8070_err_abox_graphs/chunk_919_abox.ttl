@@ -1,37 +1,50 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_9307 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 9307: Tipo de canal CHTYPE no configurado como PLC"@es ;
-    ns1:identificador "9307" ;
-    ns1:monitoreaParametro ns1:Parametro_CHTYPE ;
-    ns1:solucionaFallo ns1:Tarea_RevisarParametrosMaquina ;
-    ns1:textoExtracto "'Con opción de software Motion Control el tipo de canal \"CHTYPE\" debe ser de PLC'"@es .
+ns1:NoHayMemoriaParaRecursosRegistrosNuevos_f5a4fbf4c2 a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay memoria para recursos registros nuevos" ;
+    ns1:textoExtracto "CAUSA El sistema no dispone de memoria para crear recursos nuevos." .
 
-ns1:Fallo_9308 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 9308: Posiciones de compensación fuera de rango"@es ;
-    ns1:identificador "9308" ;
-    ns1:textoExtracto "'No se permiten posiciones de compensación fuera del rango del módulo'"@es .
+ns1:PongaseEnContactoConFagorAutomation a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con Fagor Automation" ;
+    ns1:solucionaFallo ns1:NoHayMemoriaParaRecursosBinariosDeSistemaNuevos,
+        ns1:NoHayMemoriaParaRecursosBinariosNuevos ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor Automation." .
 
-ns1:FiltroFrecuenciaEje a ns1:ComponenteElectrico ;
-    rdfs:label "Filtro de frecuencia del eje"@es ;
-    ns1:textoExtracto "Eliminar un filtro de frecuencia del eje"@es .
+ns1:SustituirElCaracterPorEnElProgramaDePLC a ns1:TareaMantenimiento ;
+    rdfs:label "Sustituir el carácter '.' por '_' en el programa de PLC",
+        "Sustituir el carácter '/' por '_' en el programa de PLC" ;
+    ns1:solucionaFallo ns1:ElCaracterEsIncorrectoElPLCLoHaSustituidoPorEnElProgramaCompilado ;
+    ns1:textoExtracto "SOLUCIÓN Sustituir el carácter \"/\" por \"_\" en el programa de PLC." .
 
-ns1:Modo_HSC_FAST a ns1:ModoOperacion ;
-    rdfs:label "Modo HSC FAST"@es ;
-    ns1:textoExtracto "eliminar el filtro del modo HSC FAST"@es .
+ns1:SustituirElCaracterPorNEGEnElProgramaDePLC a ns1:TareaMantenimiento ;
+    rdfs:label "Sustituir el carácter '-' por 'NEG' en el programa de PLC" ;
+    ns1:solucionaFallo ns1:ElCaracterEsIncorrectoElPLCLoHaSustituidoPorNEGEnElProgramaCompilado ;
+    ns1:textoExtracto "SOLUCIÓN Sustituir el carácter \"-\" por \"NEG\" en el programa de PLC." .
 
-ns1:Software_MotionControl a ns1:Sistema ;
-    rdfs:label "Software Motion Control"@es ;
-    ns1:controla ns1:Parametro_CHTYPE ;
-    ns1:textoExtracto "Con opción de software Motion Control"@es .
+ns1:SustituirElCaracterPorPOSEnElProgramaDePLC a ns1:TareaMantenimiento ;
+    rdfs:label "Sustituir el carácter '+' por 'POS' en el programa de PLC" ;
+    ns1:solucionaFallo ns1:ElCaracterEsIncorrectoElPLCLoHaSustituidoPorPOSEnElProgramaCompilado ;
+    ns1:textoExtracto "SOLUCIÓN Sustituir el carácter \"+\" por \"POS\" en el programa de PLC." .
 
-ns1:Tarea_RevisarParametrosMaquina a ns1:TareaMantenimiento ;
-    rdfs:label "Revisión de parámetros máquina (modelo MC)"@es ;
-    ns1:textoExtracto "Revisar los parámetros máquina. En el modelo MC, todos los canales deben ser de PLC (parámetro CHTYPE)."@es .
+ns1:ElCaracterEsIncorrectoElPLCLoHaSustituidoPorEnElProgramaCompilado a ns1:DiagnosticoFallo ;
+    rdfs:label "El carácter '.' es incorrecto; el PLC lo ha sustituido por '_' en el programa compilado",
+        "El carácter '/' es incorrecto; el PLC lo ha sustituido por '_' en el programa compilado" ;
+    ns1:textoExtracto "CAUSA El carácter \".\" es incorrecto; el PLC lo ha sustituido el carácter \"_\" en el programa compilado." .
 
-ns1:Parametro_CHTYPE a ns1:Parametro ;
-    rdfs:label "Parámetro CHTYPE (tipo de canal)"@es ;
-    ns1:textoExtracto "tipo de canal \"CHTYPE\" debe ser de PLC"@es ;
-    ns1:valor "PLC" .
+ns1:ElCaracterEsIncorrectoElPLCLoHaSustituidoPorNEGEnElProgramaCompilado a ns1:DiagnosticoFallo ;
+    rdfs:label "El carácter '-' es incorrecto; el PLC lo ha sustituido por 'NEG' en el programa compilado" ;
+    ns1:textoExtracto "CAUSA El carácter \"-\" es incorrecto; el PLC lo ha sustituido por \"NEG\" en el programa compilado." .
+
+ns1:ElCaracterEsIncorrectoElPLCLoHaSustituidoPorPOSEnElProgramaCompilado a ns1:DiagnosticoFallo ;
+    rdfs:label "El carácter '+' es incorrecto; el PLC lo ha sustituido por 'POS' en el programa compilado" ;
+    ns1:textoExtracto "CAUSA El carácter \"+\" es incorrecto; el PLC lo ha sustituido por \"POS\" en el programa compilado." .
+
+ns1:NoHayMemoriaParaRecursosBinariosDeSistemaNuevos a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay memoria para recursos binarios de sistema nuevos" ;
+    ns1:textoExtracto "CAUSA El sistema no dispone de memoria para crear recursos nuevos." .
+
+ns1:NoHayMemoriaParaRecursosBinariosNuevos a ns1:DiagnosticoFallo ;
+    rdfs:label "No hay memoria para recursos binarios nuevos" ;
+    ns1:textoExtracto "CAUSA El sistema no dispone de memoria para crear recursos nuevos." .
 

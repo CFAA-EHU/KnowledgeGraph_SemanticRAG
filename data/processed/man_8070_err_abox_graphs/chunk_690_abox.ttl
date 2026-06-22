@@ -1,68 +1,16 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_6013 a ns1:DiagnosticoFallo ;
-    rdfs:label "Timeout en la inicialización de CAN" ;
-    ns1:identificador "6013" ;
-    ns1:solucionaFallo ns1:Comprobacion_BusCAN_6013 ;
-    ns1:textoExtracto "6013 'Timeout en la inicialización de CAN' [...] Fallo en el proceso de inicialización del bus CAN por problemas en el bus. Secuencia de apagado y encendido demasiado rápida." .
-
-ns1:Error_6015 a ns1:DiagnosticoFallo ;
-    rdfs:label "Contador de errores CAN sobrepaso nivel 1" ;
-    ns1:identificador "6015" ;
-    ns1:solucionaFallo ns1:Comprobacion_BusCAN_6015 ;
-    ns1:textoExtracto "6015 'Contador de errores CAN sobrepaso nivel 1' [...] El contador de tramas de error (Rx/Tx) supera el nivel 1 (96)." .
-
-ns1:CablePlanoCAN_6013 a ns1:ComponenteElectrico ;
-    rdfs:label "Cable plano del bus CAN" ;
-    ns1:textoExtracto "Conexión del cable plano entre los nodos y la fuente." .
-
-ns1:Comprobacion_BusCAN_6013 a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobaciones de integridad del bus CAN (Error 6013)" ;
-    ns1:ejecutadoPor ns1:PersonalServicioTecnico ;
-    ns1:requiereMantenimiento ns1:BusCAN ;
-    ns1:textoExtracto "Realizar las siguientes comprobaciones y acciones para garantizar la integridad del bus CAN: • No hay grupos CAN con la misma dirección seleccionada. • El selector de nodo de la COMPCI debe ser 0. • Terminadores de línea. • Conexión de tierras. • Continuidad del cable CAN. • Conectores del cable CAN (si es necesario, soltarlos y volverlos a montar). • Conexión del cable plano entre los nodos y la fuente. • Fuentes de alimentación de los grupos CAN (niveles, posibles reset, etc.)." .
-
-ns1:Comprobacion_BusCAN_6015 a ns1:TareaMantenimiento ;
-    rdfs:label "Comprobaciones de integridad del bus CAN (Error 6015)" ;
-    ns1:ejecutadoPor ns1:PersonalServicioTecnico ;
-    ns1:requiereMantenimiento ns1:BusCAN ;
-    ns1:textoExtracto "Realizar las comprobaciones oportunas para garantizar la integridad del bus CAN." .
-
-ns1:ConectorCAN_6013 a ns1:ComponenteElectrico ;
-    rdfs:label "Conectores del cable CAN" ;
-    ns1:textoExtracto "Conectores del cable CAN (si es necesario, soltarlos y volverlos a montar)." .
-
-ns1:Error_6014 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo en accesos a DPRAM de la COMPCI" ;
-    ns1:identificador "6014" ;
-    ns1:solucionaFallo ns1:ModoDiagnosis_6014 ;
-    ns1:textoExtracto "6014 'Fallo en accesos a DPRAM de la COMPCI' [...] Falla el acceso a la memoria RAM común de la COMPCI por error de hardware, mal contacto, etc." .
-
-ns1:Herramienta_itfcCAN a ns1:Herramienta ;
-    rdfs:label "itfcCAN.exe" ;
-    ns1:ejecutadoPor ns1:PersonalServicioTecnico ;
-    ns1:identificador "itfcCAN.exe" ;
-    ns1:textoExtracto "Utilizar la herramienta itfcCAN.exe para comprobar el bus CAN (sólo servicio de asistencia técnica)." .
-
-ns1:ModoDiagnosis_6014 a ns1:ModoOperacion ;
-    rdfs:label "Modo diagnosis para fallo DPRAM" ;
-    ns1:mitigaRiesgo ns1:Error_6014 ;
-    ns1:textoExtracto "El modo diagnosis ofrece información adicional al fallo." .
-
-ns1:TerminadorLineaCAN_6013 a ns1:ComponenteElectrico ;
-    rdfs:label "Terminadores de línea del bus CAN" ;
-    ns1:textoExtracto "Terminadores de línea." .
-
-ns1:BusCAN a ns1:Sistema ;
-    rdfs:label "Bus CAN" ;
-    ns1:textoExtracto "Fallo en el proceso de inicialización del bus CAN por problemas en el bus." ;
-    ns1:tieneComponente ns1:CablePlanoCAN_6013,
-        ns1:ConectorCAN_6013,
-        ns1:TerminadorLineaCAN_6013 .
-
-ns1:PersonalServicioTecnico a ns1:Personal ;
-    rdfs:label "Servicio de asistencia técnica" ;
-    ns1:ejecutadoPor ns1:Herramienta_itfcCAN ;
+ns1:PongaseEnContactoConElServicioDeAsistenciaTecnica a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con el servicio de asistencia técnica" ;
     ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ns1:SolucionParaErrorCANRemoto a ns1:TareaMantenimiento ;
+    rdfs:label "Solución para Error CAN remoto" ;
+    ns1:solucionaFallo ns1:ErrorDeCANEnNodoRemoto ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
+
+ns1:ErrorDeCANEnNodoRemoto a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de CAN en nodo remoto" ;
+    ns1:textoExtracto "'Error de CAN en nodo remoto' DETECCIÓN Durante la ejecución." .
 

@@ -1,34 +1,33 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_2415_PWCTRL_OUT a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2415: PWCTRL OUT no permitido sin cabezal master en el canal" ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "2415" ;
-    ns1:solucionaFallo ns1:Comando_OUT ;
-    ns1:textoExtracto "2415 PWCTRL OUT no permitido sin cabezal master en el canal. DETECCIÓN Durante la ejecución. CAUSA El control de potencia se aplica al cabezal master. Se ha intentado activar el control de potencia y no hay un cabezal master activo. SOLUCIÓN Seleccionar un cabezal master (#MASTER) antes de activar el control de potencia." .
+ns1:AnularElControlDelGap a ns1:AccionProhibida ;
+    rdfs:label "Anular el control del gap" ;
+    ns1:textoExtracto "#GAPCTRL OFF. 2408 #LEAP, #GAPCTRL ON #SWTOUT ON: Los tres comandos no pueden estar activos." .
 
-ns1:Error_2416_Sintaxis_PWRCTRL a ns1:AvisoSeguridad ;
-    rdfs:label "Error 2416: Sintaxis incorrecta en comando #PWRCTRL" ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "2416" ;
-    ns1:solucionaFallo ns1:Comando_PWRCTRL ;
-    ns1:textoExtracto "2416 #PWRCTRL ON [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>]. DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:DesactivarUnoDeLosOtrosDosComandosActivos a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar uno de los otros dos comandos activos" ;
+    ns1:solucionaFallo ns1:LosComandosLEAPGAPCTRLONYSWTOUTONNoPuedenEstarActivosSimultaneamente ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar uno de los otros dos comandos activos." .
 
-ns1:Comando_OUT a ns1:Parametro ;
-    rdfs:label "Comando OUT (control de potencia)" ;
-    ns1:textoExtracto "Activar el control de potencia (comando OUT) a adquirir la opción de software correspondiente." .
+ns1:NoProgramarElEjeEsclavoDeFOLLOWMASTER a ns1:TareaMantenimiento ;
+    rdfs:label "No programar el eje esclavo de #FOLLOW [MASTER]" ;
+    ns1:solucionaFallo ns1:ElNombreDeEjeEsclavoEnFOLLOWONMASTEREjeEsclavoCoincideConElParametroM_7c9159134b ;
+    ns1:textoExtracto "SOLUCIÓN No programar el eje esclavo de #FOLLOW [MASTER]." .
 
-ns1:Comando_PWRCTRL a ns1:Parametro ;
-    rdfs:label "Comando #PWRCTRL (control de potencia PWM)" ;
-    ns1:requiereMantenimiento ns1:OpcionSoftware_PWM ;
-    ns1:textoExtracto "#PWRCTRL ON [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>]" .
+ns1:NoSePuedeProgramarElEjeEsclavoLASERFOLLOWAXIS a ns1:AccionProhibida ;
+    rdfs:label "No se puede programar el eje esclavo 'LASER FOLLOW AXIS'" ;
+    ns1:textoExtracto "2409 No se puede programar el eje esclavo 'LASER FOLLOW AXIS'. DETECCIÓN Durante la preparación de bloques. CAUSA El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS." .
 
-ns1:OpcionSoftware_PWM a ns1:Componente ;
-    rdfs:label "Opción de software 'PWM'" ;
-    ns1:textoExtracto "Para activar el control del duty del PWM, es necesario disponer de la opción de software 'PWM'." .
+ns1:PWRCTRLONOFF a ns1:AccionProhibida ;
+    rdfs:label "#PWRCTRL ON/OFF" ;
+    ns1:textoExtracto "#PWRCTRL ON/OFF [<DUTY/D/OUT/O> <,OVRMINvalue> <,OVRMAXvalue> <,FMINvalue> <,FMAXvalue>] DETECCIÓN Durante la edición y ejecución." .
 
-ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:ElNombreDeEjeEsclavoEnFOLLOWONMASTEREjeEsclavoCoincideConElParametroM_7c9159134b a ns1:DiagnosticoFallo ;
+    rdfs:label "El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS" ;
+    ns1:textoExtracto "CAUSA El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS." .
+
+ns1:LosComandosLEAPGAPCTRLONYSWTOUTONNoPuedenEstarActivosSimultaneamente a ns1:DiagnosticoFallo ;
+    rdfs:label "Los comandos #LEAP, #GAPCTRL ON y #SWTOUT ON no pueden estar activos simultáneamente" ;
+    ns1:textoExtracto "CAUSA Los comandos #LEAP, #GAPCTRL ON y #SWTOUT ON no pueden estar activos simultáneamente." .
 

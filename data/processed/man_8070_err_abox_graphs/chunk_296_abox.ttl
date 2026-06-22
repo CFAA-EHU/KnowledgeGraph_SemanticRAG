@@ -1,20 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CabezalAparcadoNoAdmitido a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "1640 'No se admite programar cabezales aparcados' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentando utilizar un cabezal aparcado. SOLUCIÓN Utilizar un cabezal que no esté aparcado o desaparcar el cabezal." .
+ns1:DETECCIONDuranteLaEjecucionCAUSAElCNCHaIntentadoActivarElControlTange_2611ea665c a ns1:AvisoSeguridad ;
+    rdfs:label "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el control tangencial en un eje rotativo de módulo distinto de 360º. SOLUCIÓN El control tangencial sólo se puede activar en ejes rotativos con módulo 360º." ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar el control tangencial en un eje rotativo de módulo distinto de 360º. SOLUCIÓN El control tangencial sólo se puede activar en ejes rotativos con módulo 360º." .
 
-ns1:CabezalEsclavoTandemNoAdmitido a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "1642 'No se admite programar cabezales esclavos TANDEM' DETECCIÓN Durante la ejecución. CAUSA El usuario ha intentado mover o hacer referencia al cabezal esclavo de una pareja tándem. SOLUCIÓN El cabezal esclavo de una pareja tándem es controlado por el CNC, no se puede desplazar individualmente." .
+ns1:DETECCIONDuranteLaEjecucionCAUSAEnLaLlamadaAlCicloSeHanDesignadoDeFor_658378f08b a ns1:AvisoSeguridad ;
+    rdfs:label "DETECCIÓN Durante la ejecución. CAUSA En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E), la subrutina que contiene el perfil (parámetro P) o el fichero que contiene el perfil (parámetro Q). SOLUCIÓN Revisar la programación." ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA En la llamada al ciclo se han designado de forma incorrecta los parámetros que definen el comienzo y el final del perfil (parámetros S y E), la subrutina que contiene el perfil (parámetro P) o el fichero que contiene el perfil (parámetro Q). SOLUCIÓN Revisar la programación." .
 
-ns1:CabezalNoPerteneceCanal a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "1639 'El cabezal programado no pertenece al canal' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentando utilizar un cabezal de otro canal. SOLUCIÓN Un canal sólo puede controlar sus cabezales. Utilizar un cabezal que pertenezca al canal o incluir en la configuración del canal el cabezal que da error." .
+ns1:DETECCIONDuranteLaEjecucionCAUSANoSeHaProgramadoCorrectamenteElNombreDelCabezal a ns1:AvisoSeguridad ;
+    rdfs:label "DETECCIÓN Durante la ejecución. CAUSA No se ha programado correctamente el nombre del cabezal." ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "DETECCIÓN Durante la ejecución. Programar: #DGSPSL <nombre de cabezal>." .
 
-ns1:FaltaValorRadioDesarrolloCilindro a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "1641 '#CYL: Se espera la programación del radio de desarrollo del cilindro' DETECCIÓN Durante la ejecución. CAUSA Falta el valor del radio de desarrollo en la sentencia #CYL. SOLUCIÓN Revisar la programación. para un radio variable, definir valor cero para que el CNC calcule el radio en función de donde se encuentre la herramienta." .
+ns1:LimiteInferiorDelModulo_ca1f49cc8a a ns1:Parametro ;
+    rdfs:label "Límite inferior del módulo" ;
+    ns1:textoExtracto "El límite superior del módulo lo define el parámetro MODUPLIM y el límite inferior el parámetro MODLOWLIM." .
 
-ns1:SentidoGiroIncompatibleHerramienta a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "una de ellas antes de activar la otra. 1637 'Sentido de giro del cabezal incompatible con la herramienta' DETECCIÓN Durante la ejecución. CAUSA El sentido de giro predeterminado de la herramienta es incompatible con el sentido de giro actual del cabezal. SOLUCIÓN Cambiar sentido de giro del cabezal o corregir el sentido de giro definido para la herramienta." .
-
-ns1:TransformacionAngularEjeRotativo a ns1:DiagnosticoFallo ;
-    ns1:textoExtracto "1638 'Los ejes de la transformación angular, #ANGAX, deben ser lineales' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentando activar una transformación angular con un eje rotativo. SOLUCIÓN Los ejes de la transformación angular deben ser lineales." .
+ns1:LimiteSuperiorDelModulo_a3ad6b8ff2 a ns1:Parametro ;
+    rdfs:label "Límite superior del módulo" ;
+    ns1:textoExtracto "El límite superior del módulo lo define el parámetro MODUPLIM y el límite inferior el parámetro MODLOWLIM." .
 

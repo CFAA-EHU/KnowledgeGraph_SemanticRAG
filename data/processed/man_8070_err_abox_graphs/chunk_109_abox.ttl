@@ -1,74 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_1108_EjeDoblementeProgramado a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 1108: Eje doblemente programado"@es ;
-    ns1:identificador "1108" ;
-    ns1:solucionaFallo ns1:ModoOperacion_CYL,
-        ns1:ModoOperacion_FACE,
-        ns1:ModoOperacion_G0,
-        ns1:ModoOperacion_G1,
-        ns1:ModoOperacion_G2,
-        ns1:ModoOperacion_G20,
-        ns1:ModoOperacion_G3,
-        ns1:ModoOperacion_G33,
-        ns1:ModoOperacion_G63,
-        ns1:ModoOperacion_G8,
-        ns1:ModoOperacion_G9 ;
-    ns1:textoExtracto "1108 'Eje doblemente programado' DETECCIÓN Durante la ejecución. CAUSA En alguna de las siguientes funciones hay programado algún eje más de una vez. • Movimiento de ejes en G0, G1, G2, G3, G8 o G9. • Roscado G33 o G63. • Sentencias #FACE o #CYL. • Selección de plano, G20."@es .
+ns1:AvanceF_fbfb90fa35 a ns1:Parametro ;
+    rdfs:label "avance (F)" ;
+    ns1:textoExtracto "El avance (F) debe ser un valor positivo y no nulo." .
 
-ns1:ModoOperacion_CYL a ns1:ModoOperacion ;
-    rdfs:label "Ciclo de fresado cilíndrico (#CYL)"@es ;
-    ns1:identificador "#CYL" ;
-    ns1:textoExtracto "Sentencias #CYL"@es .
+ns1:NoSeAdmiteProgramarLaVelocidadConE_0dcdeb0ae6 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite programar la velocidad con E" ;
+    ns1:textoExtracto "'No se admite programar la velocidad con E'" .
 
-ns1:ModoOperacion_FACE a ns1:ModoOperacion ;
-    rdfs:label "Ciclo de fresado de cara (#FACE)"@es ;
-    ns1:identificador "#FACE" ;
-    ns1:textoExtracto "Sentencias #FACE"@es .
+ns1:ProgramarVelocidadConE a ns1:AccionProhibida ;
+    rdfs:label "Programar velocidad con E" ;
+    ns1:mitigaRiesgo ns1:RevisarLaProgramacion_ba32351030 ;
+    ns1:textoExtracto "El avance se ha programado con la función E." .
 
-ns1:ModoOperacion_G0 a ns1:ModoOperacion ;
-    rdfs:label "Movimiento rápido (G0)"@es ;
-    ns1:identificador "G0" ;
-    ns1:textoExtracto "Movimiento de ejes en G0"@es .
+ns1:NoSeAdmiteProgramarVelocidadFNegativaOCero_3b186abc33 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite programar velocidad F negativa o cero" ;
+    ns1:textoExtracto "'No se admite programar velocidad F negativa o cero'" .
 
-ns1:ModoOperacion_G1 a ns1:ModoOperacion ;
-    rdfs:label "Interpolación lineal (G1)"@es ;
-    ns1:identificador "G1" ;
-    ns1:textoExtracto "Movimiento de ejes en G1"@es .
-
-ns1:ModoOperacion_G2 a ns1:ModoOperacion ;
-    rdfs:label "Interpolación circular (G2)"@es ;
-    ns1:identificador "G2" ;
-    ns1:textoExtracto "Movimiento de ejes en G2"@es .
-
-ns1:ModoOperacion_G20 a ns1:ModoOperacion ;
-    rdfs:label "Selección de plano (G20)"@es ;
-    ns1:identificador "G20" ;
-    ns1:textoExtracto "Selección de plano, G20"@es .
-
-ns1:ModoOperacion_G3 a ns1:ModoOperacion ;
-    rdfs:label "Interpolación circular (G3)"@es ;
-    ns1:identificador "G3" ;
-    ns1:textoExtracto "Movimiento de ejes en G3"@es .
-
-ns1:ModoOperacion_G33 a ns1:ModoOperacion ;
-    rdfs:label "Roscado (G33)"@es ;
-    ns1:identificador "G33" ;
-    ns1:textoExtracto "Roscado G33"@es .
-
-ns1:ModoOperacion_G63 a ns1:ModoOperacion ;
-    rdfs:label "Roscado (G63)"@es ;
-    ns1:identificador "G63" ;
-    ns1:textoExtracto "Roscado G63"@es .
-
-ns1:ModoOperacion_G8 a ns1:ModoOperacion ;
-    rdfs:label "Ciclo de fresado (G8)"@es ;
-    ns1:identificador "G8" ;
-    ns1:textoExtracto "Movimiento de ejes en G8"@es .
-
-ns1:ModoOperacion_G9 a ns1:ModoOperacion ;
-    rdfs:label "Ciclo de fresado (G9)"@es ;
-    ns1:identificador "G9" ;
-    ns1:textoExtracto "Movimiento de ejes en G9"@es .
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:solucionaFallo ns1:NoSeAdmiteProgramarVelocidadFNegativaOCero_3b186abc33 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 

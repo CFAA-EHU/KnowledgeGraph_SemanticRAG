@@ -1,28 +1,48 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_2139 a ns1:DiagnosticoFallo ;
-    rdfs:label "Movimiento nulo en roscado" ;
-    ns1:identificador "2139" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El eje de roscado no se encuentra en el canal. SOLUCIÓN Programar el roscado con los ejes disponibles o configurar los ejes del canal para poder realizar la rosca." .
+ns1:ConfigurarElCanalConDosEjesOProgramarLosMovimientosSinModoSpline a ns1:TareaMantenimiento ;
+    rdfs:label "Configurar el canal con dos ejes o programar los movimientos sin modo spline" ;
+    ns1:solucionaFallo ns1:SPLINESonNecesariosAlMenosDosEjesPrincipales ;
+    ns1:textoExtracto "SOLUCIÓN Configurar el canal con dos ejes o programar los movimientos sin modo spline." .
 
-ns1:Fallo_2140 a ns1:DiagnosticoFallo ;
-    rdfs:label "SLOPE: Parámetro no válido" ;
-    ns1:documentadoEn ns1:ManualProgramacion ;
-    ns1:identificador "2140" ;
-    ns1:monitoreaParametro ns1:Parametro_SLOPE ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA Algún parámetro de la sentencia de programación #SLOPE es incorrecto. SOLUCIÓN Consultar en el manual de programación el formato correcto." .
+ns1:DesactivarElModoSplineEnElBloqueOBloquesQueProvocanElError a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar el modo spline en el bloque o bloques que provocan el error" ;
+    ns1:solucionaFallo ns1:LimiteSoftwareNegativoSobrepasadoEnElSpline,
+        ns1:LimiteSoftwarePositivoSobrepasadoEnElSpline ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar el modo spline en el bloque o bloques que provocan el error." .
 
-ns1:Fallo_2141 a ns1:DiagnosticoFallo ;
-    rdfs:label "Trayectoria circular no permitida sin dos ejes en el plano principal" ;
-    ns1:identificador "2141" ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA No se permiten trayectorias circulares si no hay al menos dos ejes en el canal. SOLUCIÓN Configurar el canal con al menos dos ejes." .
+ns1:ErrorEnLaTransformacionDeRTCP_b2c532fd1d a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la transformación de RTCP" ;
+    ns1:textoExtracto "'Error en la transformación de RTCP'" .
 
-ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:textoExtracto "Consultar en el manual de programación el formato correcto." .
+ns1:ProgramarElPuntoFinalCompatibleConElPasoYLaProfundidadSiLaTrayectoria_b3408422ca a ns1:TareaMantenimiento ;
+    rdfs:label "Programar el punto final compatible con el paso y la profundidad. Si la trayectoria helicoidal son vueltas enteras, programar el paso y la profundidad" ;
+    ns1:solucionaFallo ns1:TrayectoriaHelicoidalMalProgramada ;
+    ns1:textoExtracto "SOLUCIÓN Programar el punto final compatible con el paso y la profundidad. Si la trayectoria helicoidal son vueltas enteras, programar el paso y la profundidad." .
 
-ns1:Parametro_SLOPE a ns1:Parametro ;
-    rdfs:label "Parámetro SLOPE" ;
-    ns1:textoExtracto "parámetro de la sentencia de programación #SLOPE" .
+ns1:ProgramarPuntosDistintos a ns1:TareaMantenimiento ;
+    rdfs:label "Programar puntos distintos" ;
+    ns1:solucionaFallo ns1:SPLINEErrorEnElCalculoDeLaTangente ;
+    ns1:textoExtracto "SOLUCIÓN Programar puntos distintos." .
+
+ns1:LimiteSoftwareNegativoSobrepasadoEnElSpline a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite software negativo sobrepasado en el spline" ;
+    ns1:textoExtracto "'Límite software negativo sobrepasado en el spline'" .
+
+ns1:LimiteSoftwarePositivoSobrepasadoEnElSpline a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite software positivo sobrepasado en el spline" ;
+    ns1:textoExtracto "'Límite software positivo sobrepasado en el spline'" .
+
+ns1:SPLINEErrorEnElCalculoDeLaTangente a ns1:DiagnosticoFallo ;
+    rdfs:label "SPLINE: Error en el cálculo de la tangente" ;
+    ns1:textoExtracto "'SPLINE: Error en el cálculo de la tangente'" .
+
+ns1:SPLINESonNecesariosAlMenosDosEjesPrincipales a ns1:DiagnosticoFallo ;
+    rdfs:label "SPLINE: Son necesarios al menos dos ejes principales" ;
+    ns1:textoExtracto "'SPLINE: Son necesarios al menos dos ejes principales'" .
+
+ns1:TrayectoriaHelicoidalMalProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "Trayectoria helicoidal mal programada" ;
+    ns1:textoExtracto "'Trayectoria helicoidal mal programada'" .
 

@@ -1,28 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Diagnostico_1643 a ns1:DiagnosticoFallo ;
-    rdfs:label "Diagnóstico para error 1643 (cabezales tándem)"@es ;
-    ns1:solucionaFallo ns1:ErrorTandem_1643 ;
-    ns1:textoExtracto "CAUSA El usuario ha intentado mover o hacer referencia al cabezal esclavo de una pareja tándem. SOLUCIÓN El cabezal esclavo de una pareja tándem es controlado por el CNC, no se puede desplazar individualmente. Para desplazar un cabezal esclavo, hay que desplazar el cabezal maestro al que se encuentra asociado."@es .
+ns1:CorregirParametroMaquinaNKINAX a ns1:TareaMantenimiento ;
+    rdfs:label "corregir parámetro máquina NKINAX" ;
+    ns1:solucionaFallo ns1:NumeroDeEjesEnLaTransformacionExcedeElPermitido ;
+    ns1:textoExtracto "SOLUCIÓN Corregir el parámetro máquina NKINAX." .
 
-ns1:SistemaTandem a ns1:Sistema ;
-    rdfs:label "Sistema de cabezales tándem"@es ;
-    ns1:controla ns1:CabezalEsclavo ;
-    ns1:textoExtracto "pareja tándem"@es ;
-    ns1:tieneComponente ns1:CabezalEsclavo,
-        ns1:CabezalMaestro .
+ns1:NumeroMaximoDeEjesEnLaTransformacion a ns1:Parametro ;
+    rdfs:label "Número máximo de ejes en la transformación" ;
+    ns1:textoExtracto "La transformación de coordenadas tiene definido en el parámetro NKINAX más ejes de los permitidos en el CNC." .
 
-ns1:CabezalMaestro a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal maestro (tándem)"@es ;
-    ns1:textoExtracto "Para desplazar un cabezal esclavo, hay que desplazar el cabezal maestro al que se encuentra asociado"@es .
+ns1:ProgramarCabezalesExceptoComoEjeC a ns1:AccionProhibida ;
+    rdfs:label "programar cabezales excepto como eje C" ;
+    ns1:mitigaRiesgo ns1:CNC8070_e85fbe74d2 ;
+    ns1:textoExtracto "'La sentencia #MOVE sólo admite un eje y debe pertenecer al canal'" .
 
-ns1:ErrorTandem_1643 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1643: No se permite aparcar cabezales TANDEM"@es ;
-    ns1:identificador "1643" ;
-    ns1:textoExtracto "1643 'No se permite aparcar cabezales TANDEM'"@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "revisar programación" ;
+    ns1:solucionaFallo ns1:ErrorDeProgramacionEnLaSentenciaMOVE,
+        ns1:ErrorDeSintaxisEnLaSentenciaDGSPSL ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:CabezalEsclavo a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal esclavo (tándem)"@es ;
-    ns1:textoExtracto "El usuario ha intentado mover o hacer referencia al cabezal esclavo de una pareja tándem. [...] El cabezal esclavo de una pareja tándem es controlado por el CNC"@es .
+ns1:CNC8070_e85fbe74d2 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "La transformación de coordenadas tiene definido en el parámetro NKINAX más ejes de los permitidos en el CNC." .
+
+ns1:ErrorDeProgramacionEnLaSentenciaMOVE a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de programación en la sentencia #MOVE" ;
+    ns1:textoExtracto "'La sentencia #MOVE sólo admite un eje y debe pertenecer al canal'" .
+
+ns1:ErrorDeSintaxisEnLaSentenciaDGSPSL a ns1:DiagnosticoFallo ;
+    rdfs:label "Error de sintaxis en la sentencia #DGSPSL" ;
+    ns1:textoExtracto "'Programar: #DGSPSL <nombre de cabezal>' DETECCIÓN Durante la ejecución. CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque." .
+
+ns1:NumeroDeEjesEnLaTransformacionExcedeElPermitido a ns1:DiagnosticoFallo ;
+    rdfs:label "Número de ejes en la transformación excede el permitido" ;
+    ns1:textoExtracto "'El número de ejes en la transformación excede al permitido' DETECCIÓN Durante la ejecución. CAUSA La transformación de coordenadas tiene definido en el parámetro NKINAX más ejes de los permitidos en el CNC." .
 

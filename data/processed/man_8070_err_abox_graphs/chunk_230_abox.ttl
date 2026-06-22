@@ -1,20 +1,64 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Solucion_1470 a ns1:TareaMantenimiento ;
-    rdfs:label "Corrección de cota incremental para eje rotativo UNIDIR"@es ;
-    ns1:solucionaFallo ns1:Fallo_1470 ;
-    ns1:textoExtracto "Si el parámetro máquina UNIDIR del eje rotativo es POSITIVO la cota incremental programada debe ser positiva o nula. Si el parámetro máquina UNIDIR del eje rotativo es NEGATIVO la cota incremental programada debe ser negativa o nula."@es .
+ns1:CNC8070_156e144c9b a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Fallo_1470 a ns1:DiagnosticoFallo ;
-    rdfs:label "Eje rotativo UNIDIR con programación incremental incorrecta"@es ;
-    ns1:identificador "1470" ;
-    ns1:monitoreaParametro ns1:Parametro_UNIDIR ;
-    ns1:textoExtracto "'Eje rotativo UNIDIR con programación incremental incorrecta' DETECCIÓN Durante la ejecución. CAUSA La cota incremental programada para el eje rotativo unidireccional (parámetro UNIDIR) no es válida."@es .
+ns1:CalculoDeLaTrayectoriaTangenteImposible a ns1:DiagnosticoFallo ;
+    rdfs:label "Cálculo de la trayectoria tangente imposible" ;
+    ns1:identificador "G8" ;
+    ns1:textoExtracto "CAUSA No se puede realizar un arco tangente a la trayectoria anterior con el radio y punto final programados." .
 
-ns1:Parametro_UNIDIR a ns1:Parametro ;
-    rdfs:label "Parámetro máquina UNIDIR"@es ;
-    ns1:identificador "UNIDIR" ;
-    ns1:textoExtracto "parámetro máquina UNIDIR del eje rotativo"@es ;
-    ns1:valor "POSITIVO/NEGATIVO"@es .
+ns1:DefinirDosPuntosEnElBloqueJuntoAG9QueJuntoConElPuntoFinalDelMovimient_8748426516 a ns1:TareaMantenimiento ;
+    rdfs:label "Definir dos puntos en el bloque junto a G9, que junto con el punto final del movimiento anterior definan un arco" ;
+    ns1:textoExtracto "SOLUCIÓN Definir dos puntos en el bloque junto a G9, que junto con el punto final del movimiento anterior definan un arco." .
+
+ns1:EjeRotativoProgramadoFueraDelRangoDelModulo a ns1:DiagnosticoFallo ;
+    rdfs:label "Eje rotativo programado fuera del rango del módulo" ;
+    ns1:textoExtracto "CAUSA La cota absoluta (G90) programada para el eje rotativo tipo MODULO no es válida." .
+
+ns1:HayMasDeTresEjesEnElPolinomio a ns1:DiagnosticoFallo ;
+    rdfs:label "Hay más de tres ejes en el polinomio" ;
+    ns1:textoExtracto "CAUSA Hay más de tres ejes en el polinomio." .
+
+ns1:LaCotaProgramadaParaElEjeDebeEncontrarseEntreLosLimitesFijadosPorSusP_14a72de294 a ns1:TareaMantenimiento ;
+    rdfs:label "La cota programada para el eje debe encontrarse entre los límites fijados por sus parámetros máquina MODUPLIM y MODLOWLIM" ;
+    ns1:textoExtracto "SOLUCIÓN La cota programada para el eje debe encontrarse entre los límites fijados por sus parámetros máquina MODUPLIM y MODLOWLIM." .
+
+ns1:LasFuncionesRTCPYTLCSonIncompatibles_c7d581ebab a ns1:DiagnosticoFallo ;
+    rdfs:label "Las funciones RTCP y TLC son incompatibles" ;
+    ns1:textoExtracto "CAUSA El CNC ha intentado activar una de las funciones estando la otra activa." .
+
+ns1:ModificarElTerminoIndependienteDelPolinomioParaCadaEje a ns1:TareaMantenimiento ;
+    rdfs:label "Modificar el término independiente del polinomio para cada eje" ;
+    ns1:textoExtracto "SOLUCIÓN Modificar el término independiente del polinomio para cada eje, de manera que el punto inicial del polinomio coincida con la posición final del bloque anterior." .
+
+ns1:ProgramacionDeLasDosCoordenadasDelPuntoIntermedioDelArco a ns1:TareaMantenimiento ;
+    rdfs:label "Programación de las dos coordenadas del punto intermedio del arco" ;
+    ns1:textoExtracto "SOLUCIÓN La función G9 exige la programación de las dos coordenadas del punto intermedio del arco." .
+
+ns1:PuntoInicialNoValidoEnPOLY a ns1:DiagnosticoFallo ;
+    rdfs:label "Punto inicial no válido en '#POLY'" ;
+    ns1:identificador "#POLY" ;
+    ns1:textoExtracto "CAUSA El punto inicial del polinomio no coincide con la posición actual." .
+
+ns1:RevisarLaProgramacion_ba32351030 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
+
+ns1:RevisarYDesactivarLaFuncionIncompatible a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar y desactivar la función incompatible" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar y desactivar la función incompatible." .
+
+ns1:SoloPuedenIntervenirTresEjesEnLaInterpolacionPolinomica a ns1:TareaMantenimiento ;
+    rdfs:label "Sólo pueden intervenir tres ejes en la interpolación polinómica" ;
+    ns1:textoExtracto "SOLUCIÓN En la interpolación polinómica sólo pueden intervenir tres ejes." .
+
+ns1:TrayectoriaCircularMalProgramada a ns1:DiagnosticoFallo ;
+    rdfs:label "Programación incorrecta del punto intermedio del arco",
+        "Trayectoria circular mal programada" ;
+    ns1:identificador "G9" ;
+    ns1:textoExtracto "CAUSA Es imposible realizar un arco que pase por los tres puntos disponibles.",
+        "CAUSA Falta programar una o las dos coordenadas del punto intermedio del arco." .
 

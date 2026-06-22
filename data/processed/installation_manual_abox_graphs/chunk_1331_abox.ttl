@@ -1,42 +1,12 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Aviso_Probe2_SafeMode a ns1:AvisoSeguridad ;
-    rdfs:label "PROBE NOT IN SAFE MODE" ;
-    ns1:mitigaRiesgo ns1:Probe2_Hardware ;
-    ns1:textoExtracto "$IF [V.PLC.PROBE2MONIT==0] #MSG[\"PROBE NOT IN SAFE MODE\"] $ENDIF"@en .
+ns1:SubrutinaConfiguracion a ns1:Componente ;
+    rdfs:label "Subrutina configuración" ;
+    ns1:documentadoEn ns1:TablaFuncionesM ;
+    ns1:textoExtracto "Esta subrutina debe estar definida en la tabla de funciones \"M\" y estará guardada en la carpeta ..\\Mtb\\Sub." .
 
-ns1:Aviso_Probe2_Touching a ns1:AvisoSeguridad ;
-    rdfs:label "PROBE2 SIGNAL TOUCHING" ;
-    ns1:mitigaRiesgo ns1:Probe2_Hardware ;
-    ns1:textoExtracto "$IF [V.G.PRBST2==1] #WARNING[\"PROBE2 SIGNAL TOUCHING\"] M0 $ENDIF"@en .
-
-ns1:Parametro_PROBE2MONIT a ns1:Parametro ;
-    rdfs:label "PROBE2MONIT" ;
-    ns1:identificador "PROBE2MONIT" ;
-    ns1:textoExtracto "PROBE2MONIT; It activates PROBE2 in SAFE mode. If probe is actived in no G100/3 motion, CNC will stop motion and shows an error. If not used in PLC, it is actived by default."@en ;
-    ns1:valor "0" .
-
-ns1:Subrutina_Sub_Probe_Piece_Begin a ns1:Sistema ;
-    rdfs:label "Sub_Probe_Piece_Begin.fst" ;
-    ns1:identificador "Sub_Probe_Piece_Begin.fst" ;
-    ns1:textoExtracto "Ejemplo de subrutina Sub_Probe_Piece_Begin.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ; Activate PROBE 2 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware."@en ;
-    ns1:tieneComponente ns1:Probe2_Hardware .
-
-ns1:Subrutina_Sub_Probe_Piece_End a ns1:Sistema ;
-    rdfs:label "Sub_Probe_Piece_End.fst" ;
-    ns1:identificador "Sub_Probe_Piece_End.fst" ;
-    ns1:textoExtracto "Ejemplo de subrutina Sub_Probe_Piece_End.fst suministrada por Fagor (a adaptar por el OEM). # ESBLK ; Deactivate PROBE2 Hardware by PLC output # RETDSBLK"@en ;
-    ns1:tieneComponente ns1:Probe2_Hardware .
-
-ns1:Parametro_PROBE2ENA a ns1:Parametro ;
-    rdfs:label "PROBE2ENA" ;
-    ns1:identificador "PROBE2ENA" ;
-    ns1:textoExtracto "PROBE2ENA; PROBE 2 is enabled confirmation signal to CNC. If not used in PLC, it is actived by default."@en ;
-    ns1:valor "1" .
-
-ns1:Probe2_Hardware a ns1:ComponenteElectrico ;
-    rdfs:label "PROBE 2 Hardware" ;
-    ns1:monitoreaParametro ns1:Parametro_PROBE2ENA ;
-    ns1:textoExtracto "Activate PROBE 2 Hardware by PLC output. ; Check PROBE is READY with PLC Input from Probe Hardware."@en .
+ns1:TablaFuncionesM a ns1:Tabla ;
+    rdfs:label "Tabla de funciones M" ;
+    ns1:textoExtracto "Esta subrutina debe estar definida en la tabla de funciones \"M\" y estará guardada en la carpeta ..\\Mtb\\Sub." .
 

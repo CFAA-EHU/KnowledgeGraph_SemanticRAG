@@ -1,48 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_3016 a ns1:DiagnosticoFallo ;
-    rdfs:label "En búsqueda de bloque el modo manual es omitido"@es ;
-    ns1:identificador "3016" ;
-    ns1:monitoreaParametro ns1:Modo_BusquedaBloque,
-        ns1:Modo_Manual ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El usuario ha intentado activar el modo manual durante una búsqueda de bloque y el CNC lo ha ignorado. SOLUCIÓN El CNC no permite activar el modo manual durante la búsqueda de bloque."@es .
+ns1:ComprobarQueLosLimitesDeSoftwareSonCorrectos a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar que los límites de software son correctos" ;
+    ns1:solucionaFallo ns1:LimiteNegativoDeSoftwareSobrepasado_10e8bb5f9e,
+        ns1:LimitePositivoDeSoftwareSobrepasado_39f12b277a ;
+    ns1:textoExtracto "Los ejes deben estar siempre dentro de los límites de software. Comprobar que los límites de software son correctos, que no han sido modificados desde el programa pieza o PLC." .
 
-ns1:Fallo_3017 a ns1:DiagnosticoFallo ;
-    rdfs:label "Búsqueda de bloque ya activada"@es ;
-    ns1:identificador "3017" ;
-    ns1:textoExtracto "DETECCIÓN Durante la búsqueda de bloque. CAUSA El CNC ha intentado activar una búsqueda de bloque estando con otra activa. SOLUCIÓN Póngase en contacto con su proveedor."@es .
+ns1:ErrorDelControlDePosicionEnLaInicializacionDelProcesoDePalpador_6800fb3186 a ns1:DiagnosticoFallo ;
+    rdfs:label "Error del control de posición en la inicialización del proceso de palpador" ;
+    ns1:textoExtracto "'Error del control de posición en la inicialización del proceso de palpador' DETECCIÓN En la inicialización del proceso de palpado. CAUSA Es una seguridad de habilitación del proceso de palpado." .
 
-ns1:Fallo_3018 a ns1:DiagnosticoFallo ;
-    rdfs:label "No se ha alcanzado aún la velocidad de corte constante"@es ;
-    ns1:identificador "3018" ;
-    ns1:monitoreaParametro ns1:Componente_Cabezal,
-        ns1:Parametro_VelocidadCorte ;
-    ns1:solucionaFallo ns1:Parametro_Avance,
-        ns1:Parametro_VelocidadCabezal ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución. CAUSA El cabezal no ha tenido tiempo para alcanzar la velocidad programada. SOLUCIÓN Disminuir el avance, disminuir la velocidad del cabezal o programar la velocidad antes para darle tiempo al cabezal a alcanzar su velocidad."@es .
+ns1:NoSePuedeMoverUnEjeEnModoVisualizador_c6222a5da5 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede mover un eje en modo visualizador" ;
+    ns1:textoExtracto "'No se puede mover un eje en modo visualizador' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta desplazar un eje que se encuentra en modo visualizador." .
 
-ns1:Componente_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:textoExtracto "El cabezal no ha tenido tiempo para alcanzar la velocidad programada"@es .
+ns1:NoSePuedeProgramarUnaTrayectoriaCircularConUnEjeEsclavo_cee81fc802 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se puede programar una trayectoria circular con un eje esclavo" ;
+    ns1:textoExtracto "'No se puede programar una trayectoria circular con un eje esclavo' DETECCIÓN Durante la ejecución. CAUSA El CNC intenta mover individualmente el eje esclavo de un acoplo o de un eje gantry." .
 
-ns1:Modo_BusquedaBloque a ns1:ModoOperacion ;
-    rdfs:label "Búsqueda de bloque"@es ;
-    ns1:textoExtracto "búsqueda de bloque"@es .
+ns1:LimiteNegativoDeSoftwareSobrepasado_10e8bb5f9e a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite negativo de software sobrepasado" ;
+    ns1:textoExtracto "'Límite negativo de software sobrepasado' DETECCIÓN Durante la reposición de un eje. CAUSA Durante el movimiento de reposicionamiento, el eje ha alcanzado los límites de software." .
 
-ns1:Modo_Manual a ns1:ModoOperacion ;
-    rdfs:label "Modo manual"@es ;
-    ns1:textoExtracto "modo manual"@es .
-
-ns1:Parametro_Avance a ns1:Parametro ;
-    rdfs:label "Avance"@es ;
-    ns1:textoExtracto "Disminuir el avance"@es .
-
-ns1:Parametro_VelocidadCabezal a ns1:Parametro ;
-    rdfs:label "Velocidad del cabezal"@es ;
-    ns1:textoExtracto "velocidad del cabezal"@es .
-
-ns1:Parametro_VelocidadCorte a ns1:Parametro ;
-    rdfs:label "Velocidad de corte constante"@es ;
-    ns1:textoExtracto "velocidad de corte constante"@es .
+ns1:LimitePositivoDeSoftwareSobrepasado_39f12b277a a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite positivo de software sobrepasado" ;
+    ns1:textoExtracto "'Límite positivo de software sobrepasado' DETECCIÓN Durante la reposición de un eje. CAUSA Durante el movimiento de reposicionamiento, el eje ha alcanzado los límites de software." .
 

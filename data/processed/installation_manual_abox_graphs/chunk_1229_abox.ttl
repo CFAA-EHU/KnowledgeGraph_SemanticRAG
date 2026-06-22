@@ -1,45 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Caso_Emergencia_Reset_1229 a ns1:ModoOperacion ;
-    rdfs:label "Comportamiento post-emergencia/reset (G198/G199)"@es ;
-    ns1:documentadoEn ns1:Tabla_LimitesSoftware_1229 ;
-    ns1:textoExtracto """
-Los límites modificados se mantienen después de ejecutarse M02 ó M30 y después de una emergencia o un reset.
-"""@es .
+ns1:SistemaCompensacionVolumetricaBasica a ns1:Sistema ;
+    rdfs:label "Sistema de Compensación Volumétrica Básica" ;
+    ns1:documentadoEn ns1:FicheroDatosCompensacion ;
+    ns1:textoExtracto "El volumen a compensar está definido por hasta 25 puntos en cada eje. Esta compensación corrige los errores de traslación." .
 
-ns1:Sistema_CNC_1229 a ns1:Sistema ;
-    rdfs:label "Sistema CNC (gestión de límites de software)"@es ;
-    ns1:controla ns1:Funcion_G198,
-        ns1:Funcion_G199 ;
-    ns1:documentadoEn ns1:Tabla_LimitesSoftware_1229 ;
-    ns1:textoExtracto """
-En el momento del encendido o tras validar los parámetros máquina de ejes, el CNC asume los límites de software definidos en los parámetros máquina. Modificar los límites de software mediante las funciones G198/G199.
-"""@es .
+ns1:SistemaCompensacionVolumetricaMediaGrande a ns1:Sistema ;
+    rdfs:label "Sistema de Compensación Volumétrica Media y Grande" ;
+    ns1:documentadoEn ns1:FicheroDatosCompensacion ;
+    ns1:textoExtracto "Esta compensación corrige los 21 componentes del error geométrico (traslación, rotación y cuadratura)." .
 
-ns1:Funcion_G198 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "G198 (Límite inferior de software)"@es ;
-    ns1:documentadoEn ns1:Tabla_LimitesSoftware_1229 ;
-    ns1:identificador "G198" ;
-    ns1:textoExtracto "G198 | (V.)[ch].A.NEGLIMIT.xn | Límites inferiores de software."@es ;
-    ns1:valor "(V.)[ch].A.NEGLIMIT.xn" .
+ns1:TareaMantenimiento_4a46790d69 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de Calibración de Compensación Volumétrica Básica" ;
+    ns1:textoExtracto "La compensación básica es la más rápida de calibrar, pero puede ser menos precisa que las otras." .
 
-ns1:Funcion_G199 a ns1:Parametro,
-        ns1:Tabla ;
-    rdfs:label "G199 (Límite superior de software)"@es ;
-    ns1:documentadoEn ns1:Tabla_LimitesSoftware_1229 ;
-    ns1:identificador "G199" ;
-    ns1:textoExtracto "G199 | (V.)[ch].A.POSLIMIT.xn | Límites superiores de software."@es ;
-    ns1:valor "(V.)[ch].A.POSLIMIT.xn" .
+ns1:TareaMantenimiento_7e1f158bf5 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de Calibración de Compensación Volumétrica Media y Grande" ;
+    ns1:textoExtracto "La compensación media y grande son más precisas que la básica, pero son más lentas de calibrar." .
 
-ns1:Tabla_LimitesSoftware_1229 a ns1:Tabla ;
-    rdfs:label "Tabla de límites de software (G198/G199)"@es ;
-    ns1:documentadoEn ns1:Manual_11_6_1 ;
-    ns1:textoExtracto """
-| Función. | Variable. | Significado. |
-| --- | --- | --- |
-| G198 | (V.)[ch].A.NEGLIMIT.xn | Límites inferiores de software. |
-| G199 | (V.)[ch].A.POSLIMIT.xn | Límites superiores de software.
-"""@es .
+ns1:FicheroDatosCompensacion a ns1:DocumentoTecnico ;
+    rdfs:label "Fichero de Datos de Compensación" ;
+    ns1:textoExtracto "El OEM debe definir en los parámetros máquina todos los datos de la compensación y seleccionar el fichero que contiene los datos de la compensación." .
 

@@ -1,96 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:ComponenteElectrico_Drive a ns1:ComponenteElectrico ;
-    rdfs:label "Drive/Regulador" ;
-    ns1:textoExtracto "El entorno de ubicación del regulador se encuentra a temperatura excesivamente elevada." .
+ns1:ErrorEnLaPistaAbsolutaDuranteElArranqueOFuncionamientoHabitualDelSistema a ns1:AccionProhibida ;
+    rdfs:label "Error en la pista absoluta durante el arranque o funcionamiento habitual del sistema" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "9642 Captación digital Fagor. Error en la pista absoluta. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema." .
 
-ns1:ComponenteElectrico_TarjetaSense a ns1:ComponenteElectrico ;
-    rdfs:label "Tarjeta sense" ;
-    ns1:textoExtracto "Revisar tensiones de red y cableado hasta la tarjeta sense." .
+ns1:TareaMantenimiento_07c93a1349 a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de solución para error en la captación digital" ;
+    ns1:solucionaFallo ns1:ErrorEnLaCaptacionDigital ;
+    ns1:textoExtracto "Las posibles soluciones son las siguientes: • Comprobar que el encóder o la regla están trabajando a una velocidad apropiada. • Comprobar las tolerancias de montaje. • Limpiar el cristal o la cinta de acero de la regla." .
 
-ns1:ComponenteElectrico_Termistor a ns1:ComponenteElectrico ;
-    rdfs:label "Termistor del motor" ;
-    ns1:textoExtracto "El cableado de medición de temperatura del motor (manguera del sensor de posición) o el termistor están en malas condiciones." .
-
-ns1:ComponenteMecanico_Cabezal a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal" ;
-    ns1:textoExtracto "El eje o cabezal ha superado el valor máximo definido en el parámetro G00FEED." .
-
-ns1:ComponenteMecanico_Eje a ns1:ComponenteMecanico ;
-    rdfs:label "Eje" ;
-    ns1:textoExtracto "El eje o cabezal ha superado el valor máximo definido en el parámetro G00FEED." .
-
-ns1:ComponenteMecanico_Motor a ns1:ComponenteMecanico ;
-    rdfs:label "Motor" ;
-    ns1:textoExtracto "Temperatura superior a la permitida en el motor" ;
-    ns1:tieneComponente ns1:Sensor_TemperaturaMotor .
-
-ns1:Error_9660 a ns1:AvisoSeguridad ;
-    rdfs:label "Nivel de tensión cerca del 0%" ;
-    ns1:identificador "9660" ;
-    ns1:monitoreaParametro ns1:Parametro_TensionRed_9660 ;
-    ns1:textoExtracto "9660 Nivel de tensión cerca del 0%. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Bajada en la tensión de red. Durante un breve periodo, la tensión de red ha sido cercana a 0 V. SOLUCIÓN Revisar tensiones de red y cableado hasta la tarjeta sense." .
-
-ns1:Error_9700 a ns1:AvisoSeguridad ;
-    rdfs:label "Límite del recorrido del eje sobrepasado" ;
-    ns1:identificador "9700" ;
-    ns1:monitoreaParametro ns1:Parametro_RecorridoEje_9700 ;
-    ns1:textoExtracto "9700 Limite del recorrido del eje sobrepasado. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA Limite del recorrido del eje sobrepasado. SOLUCIÓN Tras recuperar potencia en el accionamiento, es posible desplazar el eje a la zona permitida." .
-
-ns1:Error_9702 a ns1:AvisoSeguridad ;
-    rdfs:label "Temperatura superior a la permitida en el drive" ;
-    ns1:identificador "9702" ;
-    ns1:monitoreaParametro ns1:Parametro_TemperaturaDrive_9702 ;
-    ns1:textoExtracto "9702 Temperatura superior a la permitida en el drive. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El entorno de ubicación del regulador se encuentra a temperatura excesivamente elevada. SOLUCIÓN Reducir la temperatura ambiente y del armario." .
-
-ns1:Error_9703 a ns1:AvisoSeguridad ;
-    rdfs:label "Temperatura superior a la permitida en el motor" ;
-    ns1:identificador "9703" ;
-    ns1:monitoreaParametro ns1:Parametro_TemperaturaMotor_9703 ;
-    ns1:textoExtracto "9703 Temperatura superior a la permitida en el motor. DETECCIÓN Durante el arranque o funcionamiento habitual del sistema. CAUSA El motor supera la temperatura máxima permitida. Las posibles causas son las siguientes: • El cableado de medición de temperatura del motor (manguera del sensor de posición) o el termistor están en malas condiciones. • La aplicación exige fuertes picos de corriente. SOLUCIÓN Las posibles soluciones son las siguientes: • Detener el sistema unos minutos y disminuir el grado de esfuerzo exigido al regulador. • Ventilar el motor." .
-
-ns1:Error_9706 a ns1:AvisoSeguridad ;
-    rdfs:label "Velocidad real fuera de límites" ;
-    ns1:identificador "9706" ;
-    ns1:monitoreaParametro ns1:Parametro_Velocidad_9706 ;
-    ns1:textoExtracto "9706 Velocidad real fuera de límites. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El eje o cabezal ha superado el valor máximo definido en el parámetro G00FEED. SOLUCIÓN Revisar el parámetro G00FEED." .
-
-ns1:Error_9709 a ns1:AvisoSeguridad ;
-    rdfs:label "Error de seguimiento excesivo" ;
-    ns1:identificador "9709" ;
-    ns1:monitoreaParametro ns1:Parametro_ErrorSeguimiento_9709 ;
-    ns1:textoExtracto "9709 Error de seguimiento excesivo. DETECCIÓN Durante el funcionamiento habitual del sistema. CAUSA El eje ha superado el error de seguimiento permitido (parámetro MAXFLWE)." .
-
-ns1:Parametro_ErrorSeguimiento_9709 a ns1:Parametro ;
-    rdfs:label "Error de seguimiento (MAXFLWE)" ;
-    ns1:identificador "MAXFLWE" ;
-    ns1:textoExtracto "El eje ha superado el error de seguimiento permitido (parámetro MAXFLWE)." .
-
-ns1:Parametro_RecorridoEje_9700 a ns1:Parametro ;
-    rdfs:label "Recorrido del eje (9700)" ;
-    ns1:textoExtracto "Límite del recorrido del eje sobrepasado" .
-
-ns1:Parametro_TemperaturaDrive_9702 a ns1:Parametro ;
-    rdfs:label "Temperatura del drive (9702)" ;
-    ns1:textoExtracto "Temperatura superior a la permitida en el drive" .
-
-ns1:Parametro_TemperaturaMotor_9703 a ns1:Parametro ;
-    rdfs:label "Temperatura del motor (9703)" ;
-    ns1:textoExtracto "El motor supera la temperatura máxima permitida" .
-
-ns1:Parametro_TensionRed_9660 a ns1:Parametro ;
-    rdfs:label "Tensión de red (9660)" ;
-    ns1:textoExtracto "la tensión de red ha sido cercana a 0 V" ;
-    ns1:valor "0%"^^xsd:string .
-
-ns1:Parametro_Velocidad_9706 a ns1:Parametro ;
-    rdfs:label "Velocidad (G00FEED)" ;
-    ns1:identificador "G00FEED" ;
-    ns1:textoExtracto "El eje o cabezal ha superado el valor máximo definido en el parámetro G00FEED" .
-
-ns1:Sensor_TemperaturaMotor a ns1:Sensor ;
-    rdfs:label "Sensor de temperatura del motor" ;
-    ns1:textoExtracto "El cableado de medición de temperatura del motor (manguera del sensor de posición) o el termistor están en malas condiciones." .
+ns1:ErrorEnLaCaptacionDigital a ns1:DiagnosticoFallo ;
+    rdfs:label "Error en la captación digital" ;
+    ns1:textoExtracto "Las posibles causas son las siguientes: • El captador no puede calcular la posición absoluta. • Pérdida de contaje. • La señal analógica < 0,20 Vpp." .
 

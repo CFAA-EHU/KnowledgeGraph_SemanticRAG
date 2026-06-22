@@ -1,30 +1,24 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Comando_GAPCTRL a ns1:Parametro ;
-    rdfs:label "Comando de control de eje #GAPCTRL"@es ;
-    ns1:identificador "#GAPCTRL" ;
-    ns1:textoExtracto "eje que está siendo controlado mediante el comando #GAPCTRL" ;
-    ns1:valor "ON/OFF" .
+ns1:FREESETAX a ns1:AccionProhibida ;
+    rdfs:label "#FREE/SET AX" ;
+    ns1:textoExtracto "'#FREE/SET AX: No se permite liberar un eje que define una zona de trabajo activa'" .
 
-ns1:Comando_LEAP a ns1:Parametro ;
-    rdfs:label "Instrucción de salto #LEAP"@es ;
-    ns1:identificador "#LEAP" ;
-    ns1:textoExtracto "instrucción #LEAP para ejecutar un salto cuya cota inicial y final"@es .
+ns1:FREESETAX_9b018670b1 a ns1:AccionProhibida ;
+    rdfs:label "#FREE/SET AX" ;
+    ns1:textoExtracto "El CNC ha intentado quitar de la configuración un eje que forma parte de una zona de trabajo activa." .
 
-ns1:Fallo_2406 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2406: #LEAP con #GAPCTRL ON"@es ;
-    ns1:identificador "2406" ;
-    ns1:solucionaFallo ns1:Solucion_GAPCTRL_OFF ;
-    ns1:textoExtracto "2406 #LEAP con #GAPCTRL ON: El salto debe empezar y acabar en la misma cota. DETECCIÓN Durante la preparación de bloques. CAUSA Hay un eje controlado mediante la instrucción #GAPCTRL ON. En esta situación se ha programado la instrucción #LEAP para ejecutar un salto cuya cota inicial y final"@es .
+ns1:NumeroMaximoDeEjes a ns1:Parametro ;
+    rdfs:label "Número máximo de ejes" ;
+    ns1:textoExtracto "Programar un eje lógico correcto; de 1 hasta el número máximo de ejes (parámetro NAXIS)." .
 
-ns1:Fallo_GAPCTRL_MDI a ns1:DiagnosticoFallo ;
-    rdfs:label "Intento de movimiento en MDI con eje bajo #GAPCTRL"@es ;
-    ns1:solucionaFallo ns1:Solucion_GAPCTRL_OFF ;
-    ns1:textoExtracto "CAUSA Se ha intentado mover en MDI un eje que está siendo controlado mediante el comando #GAPCTRL. SOLUCIÓN Programar #GAPCTRL OFF."@es .
+ns1:ProgramarEjeLogicoCorrecto a ns1:TareaMantenimiento ;
+    rdfs:label "Programar eje lógico correcto" ;
+    ns1:solucionaFallo ns1:NumeroLogicoIncorrecto ;
+    ns1:textoExtracto "SOLUCIÓN Programar un eje lógico correcto; de 1 hasta el número máximo de ejes (parámetro NAXIS)." .
 
-ns1:Solucion_GAPCTRL_OFF a ns1:AccionProhibida ;
-    rdfs:label "Desactivación de control #GAPCTRL"@es ;
-    ns1:identificador "#GAPCTRL OFF" ;
-    ns1:textoExtracto "Programar #GAPCTRL OFF."@es .
+ns1:NumeroLogicoIncorrecto a ns1:DiagnosticoFallo ;
+    rdfs:label "Número lógico incorrecto" ;
+    ns1:textoExtracto "El número lógico programado en la variable no es correcto." .
 

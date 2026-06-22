@@ -1,36 +1,55 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1098 a ns1:Alarma ;
-    rdfs:label "Velocidad S doblemente programada"@es ;
-    ns1:identificador "1098" ;
-    ns1:monitoreaParametro ns1:Parametro_VelocidadS ;
-    ns1:textoExtracto "1098 'Velocidad S doblemente programada' DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas para el mismo cabezal dos o más funciones S. SOLUCIÓN En un mismo bloque sólo puede haber una velocidad para cada cabezal."@es .
+ns1:AnularLaCompensacionParaDefinirElNuevoPlanoDeTrabajo a ns1:TareaMantenimiento ;
+    rdfs:label "Anular la compensación para definir el nuevo plano de trabajo"@es ;
+    ns1:solucionaFallo ns1:NoSeAdmiteCambioDePlanoConCompensacionDeRadioActiva ;
+    ns1:textoExtracto "SOLUCIÓN Anular la compensación para definir el nuevo plano de trabajo." .
 
-ns1:Alarma_1100 a ns1:Alarma ;
-    rdfs:label "Índice de parámetro fuera de rango"@es ;
-    ns1:identificador "1100" ;
-    ns1:monitoreaParametro ns1:Parametro_IndiceAritmetico ;
-    ns1:textoExtracto "1100 'Indice de parámetro fuera de rango' DETECCIÓN Durante la ejecución. CAUSA El parámetro aritmético no existe; no está dentro del rango permitido por los parámetros máquina. SOLUCIÓN Revisar la programación. Revisar en los parámetros máquina el rango de parámetros aritméticos valido."@es .
+ns1:DefinirLosEjesDelPlanoActivo a ns1:TareaMantenimiento ;
+    rdfs:label "Definir los ejes del plano activo"@es ;
+    ns1:solucionaFallo ns1:NoSeAdmiteG41G42SiFaltaElPrimerOSegundoEjeDelPlanoActivo_4ea7e3ddf9 ;
+    ns1:textoExtracto "SOLUCIÓN Es imposible compensar el radio de herramienta si falta uno de los dos ejes del plano activo en el canal." .
 
-ns1:Maquina_Brochadora a ns1:Maquina ;
-    rdfs:label "Máquina brochadora"@es ;
-    ns1:controla ns1:Parametro_IndiceAritmetico,
-        ns1:Parametro_VelocidadS ;
-    ns1:textoExtracto "parámetros máquina"@es ;
-    ns1:tieneComponente ns1:Cabezal_Maquina .
+ns1:ProgramarLasFuncionesEnBloquesDiferentes a ns1:TareaMantenimiento ;
+    rdfs:label "Programar las funciones en bloques diferentes"@es ;
+    ns1:solucionaFallo ns1:FuncionesGIncompatiblesG134G135,
+        ns1:FuncionesGIncompatiblesG138G139,
+        ns1:FuncionesGIncompatiblesG200G201G202,
+        ns1:FuncionesGIncompatiblesG264G265,
+        ns1:FuncionesGIncompatiblesG36G37G38G39,
+        ns1:FuncionesGIncompatiblesG6G261G262 ;
+    ns1:textoExtracto "SOLUCIÓN Programar las funciones en bloques diferentes." .
 
-ns1:Cabezal_Maquina a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal"@es ;
-    ns1:textoExtracto "cabezal"@es .
+ns1:FuncionesGIncompatiblesG134G135 a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones G incompatibles (G134/G135)"@es ;
+    ns1:textoExtracto "'Funciones G incompatibles (G134/G135)' DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas dos o más funciones G incompatibles entre sí." .
 
-ns1:Parametro_IndiceAritmetico a ns1:Parametro ;
-    rdfs:label "Parámetro aritmético"@es ;
-    ns1:textoExtracto "parámetro aritmético"@es ;
-    ns1:valor "índice"@es .
+ns1:FuncionesGIncompatiblesG138G139 a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones G incompatibles (G138/G139)"@es ;
+    ns1:textoExtracto "'Funciones G incompatibles (G138/G139)' DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas dos o más funciones G incompatibles entre sí." .
 
-ns1:Parametro_VelocidadS a ns1:Parametro ;
-    rdfs:label "Velocidad S"@es ;
-    ns1:textoExtracto "funciones S"@es ;
-    ns1:valor "velocidad"@es .
+ns1:FuncionesGIncompatiblesG200G201G202 a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones G incompatibles (G200/G201/G202)"@es ;
+    ns1:textoExtracto "'Funciones G incompatibles (G200/G201/G202)' DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas dos o más funciones G incompatibles entre sí." .
+
+ns1:FuncionesGIncompatiblesG264G265 a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones G incompatibles (G264/G265)"@es ;
+    ns1:textoExtracto "'Funciones G incompatibles (G264/G265)' DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas dos o más funciones G incompatibles entre sí." .
+
+ns1:FuncionesGIncompatiblesG36G37G38G39 a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones G incompatibles (G36/G37/G38/G39)"@es ;
+    ns1:textoExtracto "'Funciones G incompatibles (G36/G37/G38/G39)' DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas dos o más funciones G incompatibles entre sí." .
+
+ns1:FuncionesGIncompatiblesG6G261G262 a ns1:DiagnosticoFallo ;
+    rdfs:label "Funciones G incompatibles (G6/G261/G262)"@es ;
+    ns1:textoExtracto "'Funciones G incompatibles (G6/G261/G262)' DETECCIÓN Durante la ejecución. CAUSA En un bloque hay programadas dos o más funciones G incompatibles entre sí." .
+
+ns1:NoSeAdmiteCambioDePlanoConCompensacionDeRadioActiva a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite cambio de plano con compensación de radio activa"@es ;
+    ns1:textoExtracto "'No se admite cambio de plano con compensación de radio activa' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado cambiar el plano de trabajo o los ejes que componen el plano, con la compensación del radio activa." .
+
+ns1:NoSeAdmiteG41G42SiFaltaElPrimerOSegundoEjeDelPlanoActivo_4ea7e3ddf9 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se admite G41/G42 si falta el primer o segundo eje del plano activo"@es ;
+    ns1:textoExtracto "'No se admite G41/G42 si falta el primer o segundo eje del plano activo' DETECCIÓN Durante la ejecución. CAUSA Es imposible compensar el radio de herramienta si falta uno de los dos ejes del plano activo en el canal." .
 

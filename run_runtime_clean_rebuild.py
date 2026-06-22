@@ -42,7 +42,7 @@ from artifact_contracts import (
     RAW_MERGED_ABOX_PATH,
     hash_file_content,
     is_reusable_abox_output,
-    resolve_mistral_model_chain,
+    resolve_ollama_model_chain,
 )
 from abox_resume_policy import load_manifest, save_manifest
 
@@ -92,9 +92,9 @@ ACCEPTED_MANUALS: tuple[ManualRebuildSpec, ...] = (
         artifact_prefix="a218",
     ),
     ManualRebuildSpec(
-        manual_id="8070_quick_ref",
-        source_chunks=RAW_DATA_DIR / "chunks_8070_quick_ref.txt",
-        artifact_prefix="quick_ref",
+        manual_id="variables_cnc_8070",
+        source_chunks=RAW_DATA_DIR / "chunks_manual_variables_cnc_8070.txt",
+        artifact_prefix="variables_cnc",
     ),
     ManualRebuildSpec(
         manual_id="8070_installation",
@@ -103,6 +103,11 @@ ACCEPTED_MANUALS: tuple[ManualRebuildSpec, ...] = (
         eval_dataset_path=REPO_ROOT / "data" / "golden_set" / "QA_chunks_8070_installation_manual.json",
         eval_report_path=PROCESSED_DATA_DIR / "8070_installation_eval_report.json",
         decision_report_path=PROCESSED_DATA_DIR / "8070_installation_decision_report.json",
+    ),
+    ManualRebuildSpec(
+        manual_id="8070_quick_ref",
+        source_chunks=RAW_DATA_DIR / "chunks_8070_quick_ref.txt",
+        artifact_prefix="quick_ref",
     ),
     ManualRebuildSpec(
         manual_id="man_8070_err",
@@ -116,7 +121,7 @@ ACCEPTED_MANUALS: tuple[ManualRebuildSpec, ...] = (
 
 REBUILD_REPORT_PATH = PROCESSED_DATA_DIR / "runtime_clean_rebuild_report.json"
 REBUILD_PREFLIGHT_PATH = PROCESSED_DATA_DIR / "runtime_clean_rebuild_preflight.json"
-ABOX_PROMPT_VERSION = "semantic-guardrails-v3"
+ABOX_PROMPT_VERSION = "semantic-guardrails-v4-identity-rules"
 ABOX_EXTRACTION_MODE = "abox_from_text_chunk"
 
 
@@ -130,14 +135,19 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--retry-profile",
-        choices=["standard", "rate-limit-drain", "micro-batch-recovery"],
-        default="micro-batch-recovery",
+        choices=["standard", "rate-limit-drain", "micro-batch-recovery", "local-high-throughput"],
+        default="local-high-throughput",
         help="Perfil de reintentos del extractor A-Box.",
     )
     parser.add_argument(
         "--skip-publish",
         action="store_true",
         help="No publicar el runtime a GraphDB al finalizar.",
+    )
+    parser.add_argument(
+        "--allow-partial-extraction",
+        action="store_true",
+        help="Continuar el rebuild aunque el extractor A-Box reporte errores parciales (chunks fallidos < 100%).",
     )
     return parser.parse_args()
 
@@ -180,14 +190,17 @@ def snapshot_existing_runtime() -> None:
     write_json(REBUILD_PREFLIGHT_PATH, payload)
 
 
-def run_stage(args: list[str], *, label: str) -> dict:
+def run_stage(args: list[str], *, label: str, allow_partial: bool = False) -> dict:
     command = [sys.executable, *args]
     print(f"\n[clean-rebuild] Ejecutando: {label}")
     started_at = time.time()
     result = subprocess.run(command, cwd=REPO_ROOT)
     duration_seconds = round(time.time() - started_at, 3)
     if result.returncode != 0:
-        raise SystemExit(f"Fallo la fase {label} con codigo {result.returncode}")
+        if allow_partial:
+            print(f"[clean-rebuild] Advertencia: {label} finalizo con codigo {result.returncode} (allow-partial-extraction activo, continuando)")
+        else:
+            raise SystemExit(f"Fallo la fase {label} con codigo {result.returncode}")
     return {
         "label": label,
         "command": command,
@@ -250,7 +263,7 @@ def manual_outputs_match_current_input(manual: ManualRebuildSpec) -> bool:
 
     abox_input = load_abox_input_payload(manual.abox_input_path)
     manifest_entries = load_manifest(manual.manifest_path)
-    model_chain = resolve_mistral_model_chain()
+    model_chain = resolve_ollama_model_chain()
     primary_model = model_chain[0]
     tbox_hash = hash_file_content(OPERATIONAL_TBOX_PATH)
 
@@ -280,7 +293,7 @@ def manual_outputs_match_current_input(manual: ManualRebuildSpec) -> bool:
     return True
 
 
-def extract_and_merge_manuals(stage_records: list[dict], *, mode: str, retry_profile: str) -> None:
+def extract_and_merge_manuals(stage_records: list[dict], *, mode: str, retry_profile: str, allow_partial: bool = False) -> None:
     for manual in ACCEPTED_MANUALS:
         if manual_outputs_match_current_input(manual):
             stage_records.append(
@@ -312,6 +325,7 @@ def extract_and_merge_manuals(stage_records: list[dict], *, mode: str, retry_pro
                         str(manual.debug_dir),
                     ],
                     label=f"{manual.artifact_prefix}_abox_extractor",
+                    allow_partial=allow_partial,
                 )
             )
         stage_records.append(
@@ -536,7 +550,7 @@ def main() -> None:
     snapshot_existing_runtime()
     refresh_terms_cache(stage_records)
     rebuild_density_and_inputs(stage_records)
-    extract_and_merge_manuals(stage_records, mode=args.mode, retry_profile=args.retry_profile)
+    extract_and_merge_manuals(stage_records, mode=args.mode, retry_profile=args.retry_profile, allow_partial=args.allow_partial_extraction)
     mapping = rebuild_global_density_report()
     rebuild_global_abox_input(stage_records)
     synthesize_global_chunk_contract(mapping)

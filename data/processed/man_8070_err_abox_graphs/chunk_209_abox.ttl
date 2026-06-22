@@ -1,45 +1,27 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error1422 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1422: '#CS ON/#ACS ON: modo programado no válido'" ;
-    ns1:identificador "1422" ;
-    ns1:monitoreaParametro ns1:ParametroMODE ;
-    ns1:textoExtracto "'#CS ON/#ACS ON: modo programado no válido' DETECCIÓN Durante la ejecución. CAUSA El parámetro MODE programado no es válido. SOLUCIÓN El valor del parámetro MODE debe ser estar comprendido entre 1 y 6." .
+ns1:LaSentenciaSoloAdmiteUnEje a ns1:AvisoSeguridad ;
+    rdfs:label "la sentencia sólo admite un eje" ;
+    ns1:textoExtracto "'#PARK: la sentencia sólo admite un eje' DETECCIÓN Durante la ejecución. CAUSA La sentencia #PARK solo permite aparcar un eje. SOLUCIÓN Programar un bloque #PARK por cada eje que se desea aparcar." .
 
-ns1:Error1423 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1423: '#CS ON/#ACS ON: el parámetro de eje alineado ha de ser 0 o 1'" ;
-    ns1:identificador "1423" ;
-    ns1:monitoreaParametro ns1:ParametroEjeAlineado ;
-    ns1:textoExtracto "'#CS ON/#ACS ON: el parámetro de eje alineado ha de ser 0 o 1' DETECCIÓN Durante la ejecución. CAUSA El valor programado como modo para alinear el plano no es válido. SOLUCIÓN Revisar la programación." .
+ns1:NoSeAdmiteVelocidadCeroParaPosicionamientoDeCabezal a ns1:AvisoSeguridad ;
+    rdfs:label "No se admite velocidad cero para posicionamiento de cabezal" ;
+    ns1:textoExtracto "'No se admite velocidad cero para posicionamiento de cabezal' DETECCIÓN Durante la ejecución. CAUSA La velocidad de posicionamiento programada para la función M19 es cero. SOLUCIÓN Programar una velocidad de posicionamiento mayor que cero mediante el comando 'S.POS'." .
 
-ns1:Error1424 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1424: 'Función G no permitida con MCS activo'" ;
-    ns1:identificador "1424" ;
-    ns1:monitoreaParametro ns1:ParametroFuncionG ;
-    ns1:textoExtracto "'Función G no permitida con MCS activo' DETECCIÓN Durante la ejecución. CAUSA No es posible ejecutar la función G programada con #MCS activo. SOLUCIÓN Revisar la programación." .
+ns1:NoSePermiteAparcarEjesAcopladosGantryOTandem_6bb260f56d a ns1:AvisoSeguridad ;
+    rdfs:label "No se permite aparcar ejes acoplados, Gantry o Tandem" ;
+    ns1:textoExtracto "'No se permite aparcar ejes acoplados, Gantry o Tandem' DETECCIÓN Durante la ejecución." .
 
-ns1:Error1425 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1425: 'El salto de bloque sólo se admite al comienzo de la línea'" ;
-    ns1:identificador "1425" ;
-    ns1:monitoreaParametro ns1:ParametroSaltoBloque ;
-    ns1:textoExtracto "'El salto de bloque sólo se admite al comienzo de la línea' DETECCIÓN Durante la ejecución. CAUSA El carácter \"/\" solo se admite al comienzo de la línea de programa. SOLUCIÓN Revisar la programación." .
+ns1:NoSePermiteAparcarEjesDeLaCinematicaOTranformadasActivas a ns1:AvisoSeguridad ;
+    rdfs:label "No se permite aparcar ejes de la cinemática o tranformadas activas" ;
+    ns1:textoExtracto "'No se permite aparcar ejes de la cinemática o tranformadas activas' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado aparcar un eje que forma parte de la cinemática activa o de las transformadas #CS, #ACS, #ANGAX, #TANGCTRL. SOLUCIÓN Revisar la programación. Si se desea aparcar dicho eje debe desactivarse la cinemática o transformación activa." .
 
-ns1:ParametroEjeAlineado a ns1:Parametro ;
-    rdfs:label "Parámetro de eje alineado" ;
-    ns1:textoExtracto "el parámetro de eje alineado ha de ser 0 o 1" ;
-    ns1:valor "0,1" .
+ns1:PathDeFicheroDemasiadoLargo a ns1:AvisoSeguridad ;
+    rdfs:label "Path de fichero demasiado largo" ;
+    ns1:textoExtracto "'Path de fichero demasiado largo' DETECCIÓN Durante la ejecución. CAUSA Se ha superado el máximo número de caracteres permitido para el path de un programa o subrutina. SOLUCIÓN El path de un programa o subrutina puede tener un máximo de 120 caracteres. Mover de directorio el programa o subrutina para reducir el número de caracteres en el path." .
 
-ns1:ParametroFuncionG a ns1:Parametro ;
-    rdfs:label "Parámetro de función G" ;
-    ns1:textoExtracto "Función G no permitida con MCS activo" .
-
-ns1:ParametroMODE a ns1:Parametro ;
-    rdfs:label "Parámetro MODE" ;
-    ns1:textoExtracto "El parámetro MODE programado no es válido. [...] El valor del parámetro MODE debe ser estar comprendido entre 1 y 6." ;
-    ns1:valor "1-6" .
-
-ns1:ParametroSaltoBloque a ns1:Parametro ;
-    rdfs:label "Parámetro de salto de bloque" ;
-    ns1:textoExtracto "El salto de bloque sólo se admite al comienzo de la línea. [...] El carácter \"/\" solo se admite al comienzo de la línea de programa." .
+ns1:ZonaDeVisualizacionParaGraficosMalDefinida a ns1:AvisoSeguridad ;
+    rdfs:label "zona de visualización para gráficos mal definida" ;
+    ns1:textoExtracto "'#DGWZ: zona de visualización para gráficos mal definida' DETECCIÓN Durante la ejecución. CAUSA En la sentencia se han definido mal los límites de los ejes. SOLUCIÓN Ambos límites pueden ser positivos o negativos pero siempre los límites inferiores de un eje deberán ser menores que los límites superiores de ese mismo eje." .
 

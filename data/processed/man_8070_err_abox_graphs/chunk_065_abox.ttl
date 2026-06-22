@@ -1,78 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_0158 a ns1:Alarma ;
-    rdfs:label "Alarma 0158: #WRITE sin #OPEN previo" ;
-    ns1:identificador "0158" ;
-    ns1:solucionaFallo ns1:Comando_OPEN ;
-    ns1:textoExtracto "#WRITE necesita un #OPEN previo. DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado escribir (#WRITE) en un archivo que no está abierto." .
+ns1:HandleDeFicheroEnUso a ns1:AvisoSeguridad ;
+    rdfs:label "handle de fichero en uso" ;
+    ns1:textoExtracto "0150 #OPEN: handle de fichero en uso. DETECCIÓN Durante la ejecución. CAUSA El handle de fichero indicado en la sentencia #OPEN está siendo usado por el #OPEN de otro fichero. SOLUCIÓN Utilizar un handle de fichero diferente." .
 
-ns1:Alarma_0159 a ns1:Alarma ;
-    rdfs:label "Alarma 0159: Fichero ya abierto por otro canal" ;
-    ns1:identificador "0159" ;
-    ns1:solucionaFallo ns1:Comando_CLOSE ;
-    ns1:textoExtracto "#OPEN:Fichero ya abierto por otro canal. DETECCIÓN Durante la ejecución. CAUSA Un canal ha intentado abrir un archivo que está abierto por otro canal." .
+ns1:NumeroMaximoDeFicherosAbiertosSobrepasado a ns1:AvisoSeguridad ;
+    rdfs:label "Número máximo de ficheros abiertos sobrepasado" ;
+    ns1:mitigaRiesgo ns1:ReducirElNumeroDeSubrutinasExternas ;
+    ns1:textoExtracto "0150 'Número máximo de ficheros abiertos sobrepasado' DETECCIÓN Durante la ejecución de un programa pieza con subrutinas globales. CAUSA El número de ficheros abiertos (programa principal más subrutinas externas) es superior a 20. SOLUCIÓN Reducir el número de subrutinas externas abiertas simultáneamente en el programa pieza." .
 
-ns1:Alarma_0160 a ns1:Alarma ;
-    rdfs:label "Alarma 0160: Eje/Set no disponible en el sistema" ;
-    ns1:identificador "0160" ;
-    ns1:solucionaFallo ns1:Comando_FREE_AX ;
-    ns1:textoExtracto "'Eje/Set no disponible en el sistema'. DETECCIÓN Durante la ejecución. CAUSA Las posibles causas son las siguientes: • Las sentencias #SET AX o #CALL AX están intentando añadir al canal un eje inexistente o que está en otro canal. • En la función G112 hay programado un set de parámetros inexistente." .
+ns1:TextoOFicheroCncWriteTxtNoEncontrado a ns1:AvisoSeguridad ;
+    rdfs:label "texto o fichero cncWrite.txt no encontrado" ;
+    ns1:textoExtracto "0151 #WRITE: texto o fichero cncWrite.txt no encontrado. DETECCIÓN Durante la ejecución. CAUSA No se encuentra el texto correspondiente al identificador programado. Es posible que no exista el archivo cncWrite.txt o que no esté definido el identificador. SOLUCIÓN Comprobar que existe el archivo cncWrite.txt y que contiene el identificador." .
 
-ns1:Alarma_0161 a ns1:Alarma ;
-    rdfs:label "Alarma 0161: Modo APPEND no permitido sobre fichero no Unicode" ;
-    ns1:identificador "0161" ;
-    ns1:solucionaFallo ns1:ModoOperacion_DELETTE ;
-    ns1:textoExtracto "#OPEN:Modo APPEND no permitido sobre un fichero no Unicode. DETECCIÓN Durante la ejecución. CAUSA Un canal ha intentado abrir un archivo no-Unicode con modo de acceso 'APPEND'." .
+ns1:NumeroMaximoDeFicherosAbiertosSobrepasado_55091cfab9 a ns1:DiagnosticoFallo ;
+    rdfs:label "Número máximo de ficheros abiertos sobrepasado" ;
+    ns1:textoExtracto "El número de ficheros abiertos (programa principal más subrutinas externas) es superior a 20." .
 
-ns1:Alarma_0162 a ns1:Alarma ;
-    rdfs:label "Alarma 0162: Parámetro TYPE no coincide con formato del fichero" ;
-    ns1:identificador "0162" ;
-    ns1:mitigaRiesgo ns1:Parametro_TYPE ;
-    ns1:textoExtracto "#OPEN:El parámetro TYPE no se corresponde con el formato del fichero. DETECCIÓN Durante la ejecución. CAUSA El formato del archivo no coincide con el formato seleccionado en TYPE." .
-
-ns1:ModoOperacion_APPEND a ns1:ModoOperacion ;
-    rdfs:label "Modo APPEND (añadir a archivo)" ;
-    ns1:textoExtracto "modo de acceso 'APPEND'. [...] El modo de acceso 'APPEND' sólo permite abrir archivos Unicode." .
-
-ns1:Parametro_F1_a_F4 a ns1:Parametro ;
-    rdfs:label "Identificadores de archivo (F1 a F4)" ;
-    ns1:textoExtracto "Un canal puede escribir en un archivo abierto por otro canal, si conoce el identificador del archivo (F1 a F4)." .
-
-ns1:Sistema_CNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC (control numérico)" ;
-    ns1:textoExtracto "El CNC ha intentado escribir (#WRITE) en un archivo [...] Un canal ha intentado abrir un archivo [...] Las sentencias #SET AX o #CALL AX están intentando añadir al canal un eje inexistente." ;
-    ns1:tieneComponente ns1:Comando_CLOSE,
-        ns1:Comando_FREE_AX,
-        ns1:Comando_OPEN,
-        ns1:Comando_SET_AX,
-        ns1:Comando_WRITE .
-
-ns1:Comando_SET_AX a ns1:InterfazUsuario ;
-    rdfs:label "Comando #SET AX (asignar eje)" ;
-    ns1:textoExtracto "Las sentencias #SET AX o #CALL AX están intentando añadir al canal un eje inexistente o que está en otro canal." .
-
-ns1:Comando_WRITE a ns1:InterfazUsuario ;
-    rdfs:label "Comando #WRITE (escribir en archivo)" ;
-    ns1:textoExtracto "#WRITE necesita un #OPEN previo. [...] escribir (#WRITE) en un archivo que no está abierto." .
-
-ns1:ModoOperacion_DELETTE a ns1:ModoOperacion ;
-    rdfs:label "Modo DELETTE (borrar contenido)" ;
-    ns1:textoExtracto "El modo de acceso 'DELETTE' puede abrir archivos no-Unicode, pero borra el contenido." .
-
-ns1:Parametro_TYPE a ns1:Parametro ;
-    rdfs:label "Parámetro TYPE (formato de archivo)" ;
-    ns1:textoExtracto "El formato del archivo no coincide con el formato seleccionado en TYPE. [...] el comando TYPE debe coincidir con el formato del archivo." .
-
-ns1:Comando_CLOSE a ns1:InterfazUsuario ;
-    rdfs:label "Comando #CLOSE (cerrar archivo)" ;
-    ns1:textoExtracto "Cierre el archivo (#CLOSE)." .
-
-ns1:Comando_FREE_AX a ns1:InterfazUsuario ;
-    rdfs:label "Comando #FREE AX (liberar eje)" ;
-    ns1:textoExtracto "Si el eje está en otro canal, liberarlo mediante la sentencia #FREE AX." .
-
-ns1:Comando_OPEN a ns1:InterfazUsuario ;
-    rdfs:label "Comando #OPEN (abrir archivo)" ;
-    ns1:textoExtracto "#OPEN previo. [...] El CNC tiene que abrir un archivo (#OPEN) para poder escribir en él (#WRITE)." .
+ns1:ReducirElNumeroDeSubrutinasExternas a ns1:TareaMantenimiento ;
+    rdfs:label "Reducir el número de subrutinas externas" ;
+    ns1:solucionaFallo ns1:NumeroMaximoDeFicherosAbiertosSobrepasado_55091cfab9 ;
+    ns1:textoExtracto "SOLUCIÓN Reducir el número de subrutinas externas abiertas simultáneamente en el programa pieza." .
 

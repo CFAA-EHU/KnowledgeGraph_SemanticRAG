@@ -1,44 +1,39 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_1587 a ns1:Alarma ;
-    rdfs:label "Alarma 1587: Parámetro no modificable desde la puesta a punto" ;
-    ns1:identificador "1587" ;
-    ns1:monitoreaParametro ns1:ParametroMaquina_1587 ;
-    ns1:textoExtracto "1587 'Parámetro no modificable desde la puesta a punto' DETECCIÓN Durante la ejecución. CAUSA El parámetro máquina no tiene permiso de escritura desde el entorno de puesta a punto. SOLUCIÓN El parámetro máquina se podrá modificar directamente en la tabla de parámetros máquina." .
+ns1:DobleProgramacionDelNumeroDeRepeticiones a ns1:AccionProhibida ;
+    rdfs:label "Doble programación del número de repeticiones" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacionParaElError1582 ;
+    ns1:textoExtracto "'NR: doble programación del número de repeticiones'" .
 
-ns1:Alarma_1588 a ns1:Alarma ;
-    rdfs:label "Alarma 1588: Cabezal esclavo debe pertenecer al canal" ;
-    ns1:activaAlarma ns1:SistemaSincronizacion ;
-    ns1:identificador "1588" ;
-    ns1:textoExtracto "1588 'El cabezal esclavo a sincronizar debe pertenecer al canal' DETECCIÓN Durante la ejecución. CAUSA El cabezal master de una sincronización puede ser de cualquier canal, pero el cabezal esclavo debe ser del canal en el que se programa la sincronización. SOLUCIÓN Sincronizar el cabezal esclavo desde su canal, añadirlo a la configuración del canal actual o utilizar otro cabezal del canal como esclavo." .
+ns1:EliminarEjeCDeLaConfiguracion a ns1:AccionProhibida ;
+    rdfs:label "Eliminar eje C de la configuración" ;
+    ns1:solucionaFallo ns1:DesactivarEjeCAntesDeEliminarloDeLaConfiguracion ;
+    ns1:textoExtracto "pueden eliminar el eje C de la configuración si está activo." .
 
-ns1:Alarma_1589 a ns1:Alarma ;
-    rdfs:label "Alarma 1589: Cabezal esclavo coincide con el maestro" ;
-    ns1:activaAlarma ns1:SistemaSincronizacion ;
-    ns1:identificador "1589" ;
-    ns1:textoExtracto "1589 'El cabezal esclavo no puede coincidir con el maestro' DETECCIÓN Durante la ejecución. CAUSA En la sincronización, el cabezal esclavo es el mismo que el maestro." .
+ns1:FOLLOWONElEjeMaestroYEsclavoNoPuedenSerIguales a ns1:AccionProhibida ;
+    rdfs:label "#FOLLOW ON: el eje maestro y esclavo no pueden ser iguales" ;
+    ns1:solucionaFallo ns1:RevisarLaProgramacionParaElError1583 ;
+    ns1:textoExtracto "'#FOLLOW ON: el eje maestro y esclavo no pueden ser iguales'" .
 
-ns1:TablaParametrosMaquina a ns1:Tabla ;
-    rdfs:label "Tabla de parámetros máquina" ;
-    ns1:documentadoEn ns1:Manual_1000_1999 ;
-    ns1:textoExtracto "El parámetro máquina se podrá modificar directamente en la tabla de parámetros máquina." .
+ns1:FOLLOWONElNumeradorYDenominadorDebenSerNumerosEnteros a ns1:AccionProhibida ;
+    rdfs:label "#FOLLOW ON: el numerador y denominador deben ser números enteros" ;
+    ns1:solucionaFallo ns1:ProgramarNumerosEnterosEnLosParametrosQueDefinenElNumeradorYDenominad_8c6a5696cb ;
+    ns1:textoExtracto "'#FOLLOW ON: el numerador y denominador deben ser números enteros'" .
 
-ns1:CabezalEsclavo_1588 a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal esclavo (sincronización)" ;
-    ns1:textoExtracto "El cabezal esclavo debe ser del canal en el que se programa la sincronización." .
+ns1:DesactivarEjeCAntesDeEliminarloDeLaConfiguracion a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar eje C antes de eliminarlo de la configuración" ;
+    ns1:textoExtracto "SOLUCIÓN Desactivar el eje C antes de eliminarlo de la configuración." .
 
-ns1:CabezalMaster_1588 a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal master (sincronización)" ;
-    ns1:textoExtracto "El cabezal master de una sincronización puede ser de cualquier canal" .
+ns1:ProgramarNumerosEnterosEnLosParametrosQueDefinenElNumeradorYDenominad_8c6a5696cb a ns1:TareaMantenimiento ;
+    rdfs:label "Programar números enteros en los parámetros que definen el numerador y denominador de la relación de transmisión" ;
+    ns1:textoExtracto "SOLUCIÓN Programar números enteros en los parámetros que definen el numerador y denominador de la relación de transmisión." .
 
-ns1:ParametroMaquina_1587 a ns1:Parametro ;
-    rdfs:label "Parámetro máquina (no modificable desde puesta a punto)" ;
-    ns1:textoExtracto "El parámetro máquina no tiene permiso de escritura desde el entorno de puesta a punto." .
+ns1:RevisarLaProgramacionParaElError1582 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para el error 1582" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:SistemaSincronizacion a ns1:Sistema ;
-    rdfs:label "Sistema de sincronización de cabezales" ;
-    ns1:compuestoPor ns1:CabezalEsclavo_1588,
-        ns1:CabezalMaster_1588 ;
-    ns1:textoExtracto "El cabezal master de una sincronización puede ser de cualquier canal, pero el cabezal esclavo debe ser del canal en el que se programa la sincronización." .
+ns1:RevisarLaProgramacionParaElError1583 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar la programación para el error 1583" ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 

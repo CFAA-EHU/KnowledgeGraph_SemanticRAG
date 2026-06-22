@@ -1,32 +1,40 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:PLC_Maquina a ns1:ComponenteElectrico ;
-    rdfs:label "PLC de la máquina" ;
-    ns1:monitoreaParametro ns1:ParametroTemperatura ;
-    ns1:textoExtracto "Incluir esta marca en la maniobra del PLC para restringir la operativa del CNC en caso de sobretemperatura." .
+ns1:CNC8070_009e5ee676 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:textoExtracto "El CNC pone esta marca a (=1) para indicar al PLC que va a mover el eje o cabezal correspondiente en lazo cerrado." .
 
-ns1:SistemaCNC a ns1:Sistema ;
-    rdfs:label "Sistema CNC" ;
-    ns1:controla ns1:MarcaSobretemperaturaCNC ;
-    ns1:textoExtracto "El CNC permitirá finalizar la ejecución en marcha, pero no permitirá reanudarla tras una interrupción, una inspección de herramienta, etc." .
+ns1:DireccionDeMovimientoDelEjeX a ns1:Parametro ;
+    rdfs:label "Dirección de movimiento del eje X" ;
+    ns1:identificador "DIRX" ;
+    ns1:textoExtracto "El CNC pone esta marca a (=1) para indicar que el eje se desplaza en sentido negativo y a (=0) cuando se desplaza en sentido positivo." .
 
-ns1:AccionApagadoEquipo a ns1:AccionProhibida ;
-    rdfs:label "Apagado obligatorio del equipo" ;
-    ns1:textoExtracto "Apagar el equipo para evitar [daños por sobretemperatura]." .
+ns1:ParadaDeEjesPorPLC a ns1:AvisoSeguridad ;
+    rdfs:label "Parada de ejes por PLC" ;
+    ns1:textoExtracto "Si el PLC detiene el avance de los ejes (marca _FEEDHOL=0) la señal ENABLE(axis) se mantiene a (=1)." .
 
-ns1:AlarmaSobretemperatura a ns1:Alarma ;
-    rdfs:label "Alarma por sobretemperatura" ;
-    ns1:mitigaRiesgo ns1:AccionApagadoEquipo ;
-    ns1:textoExtracto "Si el PLC activa esta marca, existe riesgo de sobretemperatura y está en peligro la integridad del equipo." .
+ns1:Parametro_0c85107319 a ns1:Parametro ;
+    rdfs:label "Marca de habilitación del eje X" ;
+    ns1:identificador "ENABLEX" ;
+    ns1:textoExtracto "ENABLEX corresponde al eje X." .
 
-ns1:MarcaSobretemperaturaCNC a ns1:InterfazUsuario ;
-    rdfs:label "Marca de sobretemperatura en PLC" ;
-    ns1:activaAlarma ns1:AlarmaSobretemperatura ;
-    ns1:textoExtracto "Incluir esta marca en la maniobra del PLC para restringir la operativa del CNC en caso de sobretemperatura." .
+ns1:Parametro_49dc616caf a ns1:Parametro ;
+    rdfs:label "Marca de habilitación del eje B" ;
+    ns1:identificador "ENABLEB" ;
+    ns1:textoExtracto "ENABLE5 corresponde al eje B." .
 
-ns1:ParametroTemperatura a ns1:Parametro ;
-    rdfs:label "Temperatura del equipo" ;
-    ns1:textoExtracto "riesgo de sobretemperatura" ;
-    ns1:valor "sobretemperatura" .
+ns1:Parametro_67f93aeb0e a ns1:Parametro ;
+    rdfs:label "Marca de habilitación del eje Z2" ;
+    ns1:identificador "ENABLEZ2" ;
+    ns1:textoExtracto "ENABLEZ2 corresponde al eje Z2." .
+
+ns1:Parametro_948dbb952d a ns1:Parametro ;
+    rdfs:label "Marca de habilitación del cabezal S" ;
+    ns1:identificador "ENABLES" ;
+    ns1:textoExtracto "ENABLES corresponde al cabezal S." .
+
+ns1:SistemaPLC a ns1:Sistema ;
+    rdfs:label "Sistema PLC" ;
+    ns1:textoExtracto "El PLC habilita el eje o cabezal si es necesario." .
 

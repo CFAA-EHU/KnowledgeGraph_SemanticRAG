@@ -1,30 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_2426 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2426: Marca no modificable en sentencia #PLC" ;
-    ns1:identificador "2426" ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "2426 #PLC: marca no modificable. DETECCIÓN Durante la edición y ejecución. CAUSA La marca programada en la sentencia #PLC no es modificable. SOLUCIÓN La sentencia #PLC sólo puede activar o desactivar marcas modificables." .
+ns1:DesactivarControlDePotenciaParaCambiarOAparcarCabezalMaster a ns1:TareaMantenimiento ;
+    rdfs:label "Desactivar control de potencia para cambiar o aparcar cabezal master" ;
+    ns1:solucionaFallo ns1:CambiarOAparcarElCabezalMasterConPWRCTRLActivo ;
+    ns1:textoExtracto "Para cambiar o aparcar el cabezal master, desactivar el control de potencia (#PWRCTRL)." .
 
-ns1:Fallo_2427 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2427: Sintaxis incorrecta en sentencia #DMC ON" ;
-    ns1:identificador "2427" ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "2427 #DMC ON[<PWRSP value><,OVRMIN value><,OVRMAX value><,FZMIN value><,FZMAX value>] DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:FOLLOWONConEjeEsclavoYaAsignado a ns1:AccionProhibida ;
+    rdfs:label "#FOLLOW ON con eje esclavo ya asignado" ;
+    ns1:textoExtracto "El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS." .
 
-ns1:Fallo_2428 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2428: Sintaxis incorrecta en sentencia #DMC OFF" ;
-    ns1:identificador "2428" ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "2428 #DMC OFF DETECCIÓN Durante la edición y ejecución. CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:OverrideMaximo a ns1:Parametro ;
+    rdfs:label "Override máximo" ;
+    ns1:textoExtracto "#PWRCTRL ON: OVRMIN debe ser menor que OVRMAX." .
 
-ns1:Fallo_SintaxisGenerico a ns1:DiagnosticoFallo ;
-    rdfs:label "Error genérico de sintaxis en sentencia" ;
-    ns1:solucionaFallo ns1:ManualProgramacion ;
-    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:OverrideMinimo a ns1:Parametro ;
+    rdfs:label "Override mínimo" ;
+    ns1:textoExtracto "#PWRCTRL ON: OVRMIN debe ser menor que OVRMAX." .
 
-ns1:ManualProgramacion a ns1:Manual ;
-    rdfs:label "Manual de programación" ;
-    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
+ns1:ProgramarTodosLosParametrosDePWRCTRL a ns1:TareaMantenimiento ;
+    rdfs:label "Programar todos los parámetros de #PWRCTRL" ;
+    ns1:solucionaFallo ns1:OverrideMinimoMayorQueOverrideMaximo ;
+    ns1:textoExtracto "La primera vez que se programa la función #PWRCTRL es obligatorio programar todos los parámetros." .
+
+ns1:TFOLLOWONMASTER a ns1:AccionProhibida ;
+    rdfs:label "#TFOLLOW ON [MASTER]" ;
+    ns1:textoExtracto "No se permite #TFOLLOW ON [MASTER]. Permitido: #FOLLOW ON [MASTER]." .
+
+ns1:CambiarOAparcarElCabezalMasterConPWRCTRLActivo a ns1:AccionProhibida ;
+    rdfs:label "Cambiar o aparcar el cabezal master con PWRCTRL activo" ;
+    ns1:textoExtracto "No se admite cambiar o aparcar el cabezal master con PWRCTRL activo." .
+
+ns1:OverrideMinimoMayorQueOverrideMaximo a ns1:DiagnosticoFallo ;
+    rdfs:label "Override mínimo mayor que override máximo" ;
+    ns1:textoExtracto "En la función #PWRCTRL, el override mínimo es mayor que el override máximo." .
 

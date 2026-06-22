@@ -1,25 +1,45 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    rdfs:label "Máquina CNC"@es ;
-    ns1:textoExtracto "la aplicación CNC"@es ;
-    ns1:tieneComponente ns1:Parametro_0044 .
+ns1:AsignacionDeValorValidoAlParametroMaquina a ns1:TareaMantenimiento ;
+    rdfs:label "Asignación de valor válido al parámetro máquina" ;
+    ns1:solucionaFallo ns1:FalloValorParametroInvalido ;
+    ns1:textoExtracto "SOLUCIÓN Asignar al parámetro máquina un valor dentro de los límites permitidos." .
 
-ns1:TareaMantenimiento_ReinicioCNC a ns1:TareaMantenimiento ;
-    rdfs:label "Reinicio de aplicación CNC"@es ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_0044 ;
-    ns1:textoExtracto "SOLUCIÓN Reiniciar el CNC."@es .
+ns1:AvisoSeguridad_3ee409befd a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de valor de parámetro máquina no válido" ;
+    ns1:mitigaRiesgo ns1:FalloValorParametroInvalido ;
+    ns1:textoExtracto "'Valor de parámetro máquina no válido' DETECCIÓN Durante la validación de los parámetros máquina." .
 
-ns1:DiagnosticoFallo_0044 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo 0044: Nombre de eje inválido"@es ;
-    ns1:identificador "0044" ;
-    ns1:monitoreaParametro ns1:Parametro_0044 ;
-    ns1:solucionaFallo ns1:Parametro_0044 ;
-    ns1:textoExtracto "0044 'Nombre de eje no válido o nombre de eje sin definir' [...] DETECCIÓN Durante la validación de los parámetros máquina. CAUSA El parámetro máquina está sin definir o tiene un nombre de eje incorrecto. SOLUCIÓN Corregir los parámetros máquina."@es .
+ns1:AvisoSeguridad_d4f4cd26a4 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de reinicio necesario para nuevo valor" ;
+    ns1:mitigaRiesgo ns1:FalloReiniciarCNC ;
+    ns1:textoExtracto "'Para asumir nuevo valor es necesario rearrancar el CNC' DETECCIÓN Durante la validación de los parámetros máquina." .
 
-ns1:Parametro_0044 a ns1:Parametro ;
-    rdfs:label "Parámetro de nombre de eje"@es ;
-    ns1:identificador "0044" ;
-    ns1:textoExtracto "'Nombre de eje no válido o nombre de eje sin definir' [...] El parámetro máquina está sin definir o tiene un nombre de eje incorrecto."@es .
+ns1:AvisoSeguridad_f9ac043894 a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de función M duplicada" ;
+    ns1:mitigaRiesgo ns1:FalloFuncionMDuplicada ;
+    ns1:textoExtracto "'M duplicada en la tabla' DETECCIÓN Durante la validación de los parámetros máquina." .
+
+ns1:CorreccionDeFuncionMDuplicada a ns1:TareaMantenimiento ;
+    rdfs:label "Corrección de función M duplicada" ;
+    ns1:solucionaFallo ns1:FalloFuncionMDuplicada ;
+    ns1:textoExtracto "SOLUCIÓN Corregir la definición de las funciones. En la tabla no puede haber dos funciones M con el mismo número." .
+
+ns1:ReinicioDelCNCParaNuevoValorDelParametro a ns1:TareaMantenimiento ;
+    rdfs:label "Reinicio del CNC para nuevo valor del parámetro" ;
+    ns1:solucionaFallo ns1:FalloReiniciarCNC ;
+    ns1:textoExtracto "SOLUCIÓN Reiniciar la aplicación CNC para que el parámetro asuma su nuevo valor." .
+
+ns1:FalloFuncionMDuplicada a ns1:DiagnosticoFallo ;
+    rdfs:label "Función M duplicada en la tabla" ;
+    ns1:textoExtracto "En la tabla de funciones M, hay una función repetida." .
+
+ns1:FalloReiniciarCNC a ns1:DiagnosticoFallo ;
+    rdfs:label "Reinicio necesario para nuevo valor del parámetro" ;
+    ns1:textoExtracto "El usuario ha modificado un parámetro máquina y es necesario reiniciar la aplicación CNC para que el parámetro asuma su nuevo valor." .
+
+ns1:FalloValorParametroInvalido a ns1:DiagnosticoFallo ;
+    rdfs:label "Valor de parámetro máquina no válido" ;
+    ns1:textoExtracto "El parámetro máquina tiene un valor no válido. límites permitidos." .
 

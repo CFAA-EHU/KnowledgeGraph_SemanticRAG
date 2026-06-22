@@ -1,38 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_3082 a ns1:DiagnosticoFallo ;
-    rdfs:label "No es posible tanta anticipación para activar la salida digital"@es ;
-    ns1:identificador "3082" ;
-    ns1:monitoreaParametro ns1:Parametro_RetardoLaser ;
-    ns1:solucionaFallo ns1:Parametro_Anticipacion,
-        ns1:Parametro_TiempoCiclo ;
-    ns1:textoExtracto "3082 'No es posible tanta anticipación para activar la salida digital' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada). CAUSA El retardo calculado para el láser es negativo; es decir, no queda margen suficiente de ciclos para la anticipación. SOLUCIÓN Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación."@es .
+ns1:AvisoSeguridad_93a3d98b6e a ns1:AvisoSeguridad ;
+    rdfs:label "Aviso de paso y velocidad superando avance máximo" ;
+    ns1:mitigaRiesgo ns1:SistemaCNC ;
+    ns1:textoExtracto "'Paso y S de cabezal programados para G33/G34 superan avance máximo permitido'" .
 
-ns1:Fallo_3083 a ns1:DiagnosticoFallo ;
-    rdfs:label "No es posible tanto retardo para..."@es ;
-    ns1:identificador "3083" ;
-    ns1:textoExtracto "3083 'No es posible tanto retardo para..."@es .
+ns1:TareaMantenimiento_5aa737e1ed a ns1:TareaMantenimiento ;
+    rdfs:label "Tarea de revisión de programación G33/G34" ;
+    ns1:solucionaFallo ns1:FalloAvanceMaximoSuperado ;
+    ns1:textoExtracto "Revisar la programación de la función G33/G34." .
 
-ns1:Fallo_VelocidadCorte a ns1:DiagnosticoFallo ;
-    rdfs:label "Velocidad de corte excesiva para el tamaño de rejilla"@es ;
-    ns1:solucionaFallo ns1:Parametro_TiempoCiclo,
-        ns1:Parametro_VelocidadCorte ;
-    ns1:textoExtracto "CAUSA La velocidad de corte es demasiado alta para el tamaño de la rejilla. SOLUCIÓN Disminuir la velocidad o el tiempo de ciclo."@es .
-
-ns1:Parametro_Anticipacion a ns1:Parametro ;
-    rdfs:label "Parámetros de anticipación"@es ;
-    ns1:textoExtracto "valor de los parámetros de anticipación"@es .
-
-ns1:Parametro_RetardoLaser a ns1:Parametro ;
-    rdfs:label "Retardo calculado para el láser"@es ;
-    ns1:textoExtracto "El retardo calculado para el láser es negativo"@es .
-
-ns1:Parametro_VelocidadCorte a ns1:Parametro ;
-    rdfs:label "Velocidad de corte"@es ;
-    ns1:textoExtracto "velocidad de corte"@es .
-
-ns1:Parametro_TiempoCiclo a ns1:Parametro ;
-    rdfs:label "Tiempo de ciclo"@es ;
-    ns1:textoExtracto "tiempo de ciclo"@es .
+ns1:FalloAvanceMaximoSuperado a ns1:DiagnosticoFallo ;
+    rdfs:label "Fallo por avance máximo superado" ;
+    ns1:textoExtracto "El paso y la velocidad programados implican un avance que supera el máximo permitido." .
 

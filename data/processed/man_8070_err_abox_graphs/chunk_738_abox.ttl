@@ -1,70 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_8025 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 8025: Cambio de fecha detectado"@es ;
-    ns1:identificador "8025" ;
-    ns1:solucionaFallo ns1:Solucion_8025 ;
-    ns1:textoExtracto "'Se ha detectado un cambio de fecha y ha sido necesario restaurarla' DETECCIÓN Durante la ejecución. CAUSA El CNC ha detectado un cambio de fecha u hora y los ha restaurado a sus valores esperados. SOLUCIÓN Compruebe si la fecha y hora son correctos. Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:ComprobarSiElCNCHaArrancadoCorrectamente a ns1:TareaMantenimiento ;
+    rdfs:label "Comprobar si el CNC ha arrancado correctamente" ;
+    ns1:solucionaFallo ns1:ElKernelDeSimulacionNoSeEncuentraActivado,
+        ns1:ErrorRegistrandoTecla ;
+    ns1:textoExtracto "SOLUCIÓN Comprobar si el CNC ha arrancado correctamente." .
 
-ns1:Error_8026 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 8026: Protección OEM activada"@es ;
-    ns1:identificador "8026" ;
-    ns1:solucionaFallo ns1:Solucion_8026 ;
-    ns1:textoExtracto "'Protección de OEM activada:Los cambios tendrán carácter temporal' DETECCIÓN Durante la edición de programas, programa PLC o parámetros máquina. CAUSA El CNC está en modo usuario, con la protección de OEM activada, por lo que todo cambio tendrá carácter temporal y se perderá al apagar el CNC. SOLUCIÓN Apagar el CNC y utilizar la utilidad DiskMonitor para pasar a modo puesta a punto. Volver a arrancar el CNC."@es .
+ns1:PongaseEnContactoConElServicioDeAsistenciaTecnica a ns1:AccionProhibida ;
+    rdfs:label "Póngase en contacto con el servicio de asistencia técnica" ;
+    ns1:solucionaFallo ns1:ElKernelDeSimulacionNoSeEncuentraActivado ;
+    ns1:textoExtracto "Si el error persiste, póngase en contacto con el servicio de asistencia técnica." .
 
-ns1:Error_8027 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 8027: Fallo en arranque del Kernel"@es ;
-    ns1:identificador "8027" ;
-    ns1:solucionaFallo ns1:Solucion_8027 ;
-    ns1:textoExtracto "'Error arrancando Kernel' DETECCIÓN Durante el arranque del sistema. CAUSA El kernel está arrancado pero no está activado. SOLUCIÓN Comprobar si el CNC ha arrancado correctamente. Apagar y encender el CNC. Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:SistemaCNC a ns1:Sistema ;
+    rdfs:label "Sistema CNC" ;
+    ns1:textoExtracto "Comprobar si el CNC ha arrancado correctamente. Apagar y encender el CNC." .
 
-ns1:Error_8028 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 8028: Compilador PLC no disponible"@es ;
-    ns1:identificador "8028" ;
-    ns1:solucionaFallo ns1:Solucion_8028 ;
-    ns1:textoExtracto "'Compilador no disponible' DETECCIÓN Durante el arranque del sistema. CAUSA El CNC no ha encontrado la carpeta en la que se encuentra instalado el compilador de PLC. SOLUCIÓN Póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:ErrorRegistrandoTecla a ns1:DiagnosticoFallo ;
+    rdfs:label "Error registrando tecla" ;
+    ns1:textoExtracto "'Error registrando tecla' DETECCIÓN Durante el arranque del sistema. CAUSA EL CNC no ha podido registrar alguna de las softkeys o de las teclas de acceso rápido." .
 
-ns1:Error_8029 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 8029: Includes PLC no disponibles"@es ;
-    ns1:identificador "8029" ;
-    ns1:solucionaFallo ns1:Solucion_8029 ;
-    ns1:textoExtracto "'Includes del PLC no disponibles' DETECCIÓN Durante el arranque del sistema. CAUSA El CNC no ha encontrado la carpeta en la que se encuentran instalados los includes necesarios para compilar el PLC. SOLUCIÓN Póngase en contacto con el servicio de asistencia técnica."@es .
-
-ns1:Error_8030 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 8030: Librerías PLC no disponibles"@es ;
-    ns1:identificador "8030" ;
-    ns1:solucionaFallo ns1:Solucion_8030 ;
-    ns1:textoExtracto "'Librerias del PLC no disponibles' DETECCIÓN Durante el arranque del sistema. CAUSA El CNC no ha encontrado la carpeta en la que se encuentran instaladas las librerías necesarias para compilar el PLC."@es .
-
-ns1:ModoUsuario a ns1:ModoOperacion ;
-    rdfs:label "Modo usuario"@es ;
-    ns1:textoExtracto "El CNC está en modo usuario, con la protección de OEM activada"@es .
-
-ns1:Utilidad_DiskMonitor a ns1:Herramienta ;
-    rdfs:label "DiskMonitor"@es ;
-    ns1:habilitadoPor ns1:ModoPuestaAPunto ;
-    ns1:textoExtracto "utilice la utilidad DiskMonitor para pasar a modo usuario y trabajar con el disco protegido"@es .
-
-ns1:ModoPuestaAPunto a ns1:ModoOperacion ;
-    rdfs:label "Modo puesta a punto"@es ;
-    ns1:textoExtracto "utilizar la utilidad DiskMonitor para pasar a modo puesta a punto"@es .
-
-ns1:Solucion_8025 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Compruebe si la fecha y hora son correctos. Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
-
-ns1:Solucion_8026 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Apagar el CNC y utilizar la utilidad DiskMonitor para pasar a modo puesta a punto. Volver a arrancar el CNC."@es .
-
-ns1:Solucion_8027 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Comprobar si el CNC ha arrancado correctamente. Apagar y encender el CNC. Si el error persiste, póngase en contacto con el servicio de asistencia técnica."@es .
-
-ns1:Solucion_8028 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Póngase en contacto con el servicio de asistencia técnica."@es .
-
-ns1:Solucion_8029 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Póngase en contacto con el servicio de asistencia técnica."@es .
-
-ns1:Solucion_8030 a ns1:TareaMantenimiento ;
-    ns1:textoExtracto "Póngase en contacto con el servicio de asistencia técnica."@es .
+ns1:ElKernelDeSimulacionNoSeEncuentraActivado a ns1:DiagnosticoFallo ;
+    rdfs:label "El Kernel de simulación no se encuentra activado" ;
+    ns1:textoExtracto "'El Kernel de simulación no se encuentra activado' DETECCIÓN Durante el arranque del sistema. CAUSA El kernel de simulación está arrancado pero no está activado." .
 

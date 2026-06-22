@@ -1,40 +1,35 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Fallo_3083 a ns1:DiagnosticoFallo ;
-    rdfs:label "No es posible tanto retardo para activar la salida digital" ;
-    ns1:identificador "3083" ;
-    ns1:monitoreaParametro ns1:Parametro_TON_TOF ;
-    ns1:textoExtracto "3083 'No es posible tanto retardo para activar la salida digital' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada). CAUSA El retardo programado para el láser es excesivo. SOLUCIÓN Revisar el valor de los parámetros de anticipación TON / TOF." .
+ns1:AccionModificarParametroMaquina a ns1:AccionProhibida ;
+    ns1:mitigaRiesgo ns1:CNC8070_c3d8ff2444 ;
+    ns1:textoExtracto "En caso necesario, revisar los parámetros máquina relacionados con el avance máximo de los ejes implicados en la rosca." .
 
-ns1:Fallo_3084 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error del driver en la activación/desactivación del láser" ;
-    ns1:identificador "3084" ;
-    ns1:monitoreaParametro ns1:Parametro_NLOCOUT ;
-    ns1:solucionaFallo ns1:Solucion_PlacaSercos ;
-    ns1:textoExtracto "3084 'Error del driver en la activación/desactivación del láser' DETECCIÓN Durante la ejecución del corte por láser (conmutación sincronizada). CAUSA No se cumplen las condiciones hardware o de parametrización necesarias para poder utilizar la prestación de corte por láser. SOLUCIÓN Verificar las siguientes condiciones: • Debe existir una placa de expansión tipo Sercos, con ID software igual o superior a 1.2. • El parámetro NLOCOUT debe ser 8." .
+ns1:Parametro_038c29c8bc a ns1:Parametro ;
+    rdfs:label "Parámetro que habilita/deshabilita funciones de Motion Control" ;
+    ns1:textoExtracto "El CNC ha intentado modificar el sistema de coordenadas o la transformación de coordenadas teniendo alguna función de motion control activa y el parámetro IMOVEMACH deshabilitado." .
 
-ns1:Fallo_CicloInsuficiente a ns1:DiagnosticoFallo ;
-    rdfs:label "Margen insuficiente de ciclos para la anticipación" ;
-    ns1:monitoreaParametro ns1:Parametro_TiempoCiclo ;
-    ns1:textoExtracto "no queda margen suficiente de ciclos para la anticipación. SOLUCIÓN Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación." .
+ns1:PongaseEnContactoConFAGOR_0c45beda3f a ns1:TareaMantenimiento ;
+    rdfs:label "Póngase en contacto con Fagor" ;
+    ns1:textoExtracto "SOLUCIÓN Póngase en contacto con Fagor." .
 
-ns1:Parametro_NLOCOUT a ns1:Parametro ;
-    rdfs:label "Parámetro NLOCOUT" ;
-    ns1:textoExtracto "El parámetro NLOCOUT debe ser 8." ;
-    ns1:valor "8" .
+ns1:RevisionDeProgramacion_8f5d6c3a50 a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión de programación" ;
+    ns1:solucionaFallo ns1:DiagnosticoFallo_99ee135a65,
+        ns1:LimiteDeVelocidadEsquinaSobrepasada_05434dec15 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación de la función G33/G34. Para mantener el paso programado, modificar la velocidad programada o, si es posible, aumentar desde el PLC el avance máximo del canal." .
 
-ns1:Parametro_TON_TOF a ns1:Parametro ;
-    rdfs:label "Parámetros de anticipación TON/TOF" ;
-    ns1:textoExtracto "Revisar el valor de los parámetros de anticipación TON / TOF." ;
-    ns1:valor "TON/TOF" .
+ns1:CNC8070_c3d8ff2444 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:DiagnosticoFallo_99ee135a65,
+        ns1:LimiteDeVelocidadEsquinaSobrepasada_05434dec15 ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Parametro_TiempoCiclo a ns1:Parametro ;
-    rdfs:label "Tiempo de ciclo" ;
-    ns1:textoExtracto "Disminuir el tiempo de ciclo o el valor de los parámetros de anticipación." .
+ns1:DiagnosticoFallo_99ee135a65 a ns1:DiagnosticoFallo ;
+    rdfs:label "Función no compatible con Motion Control activo" ;
+    ns1:textoExtracto "3074 'Función no compatible con Motion Control activo' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado modificar el sistema de coordenadas o la transformación de coordenadas teniendo alguna función de motion control activa y el parámetro IMOVEMACH deshabilitado." .
 
-ns1:Solucion_PlacaSercos a ns1:ComponenteElectrico ;
-    rdfs:label "Placa de expansión tipo Sercos" ;
-    ns1:identificador "Sercos v1.2+" ;
-    ns1:textoExtracto "Debe existir una placa de expansión tipo Sercos, con ID software igual o superior a 1.2." .
+ns1:LimiteDeVelocidadEsquinaSobrepasada_05434dec15 a ns1:DiagnosticoFallo ;
+    rdfs:label "Límite de velocidad esquina sobrepasada" ;
+    ns1:textoExtracto "3073 'Límite de velocidad esquina sobrepasada' DETECCIÓN Durante la ejecución. CAUSA El CNC ha sobrepasado la dinámica de algún eje, durante la transición entre dos bloques." .
 

@@ -1,61 +1,29 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Error_3611 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 3611: Cabezal master fuera de gama"@es ;
-    ns1:identificador "3611" ;
-    ns1:mitigaRiesgo ns1:Solucion_3611 ;
-    ns1:textoExtracto "'El cabezal master de la sincronización no está en la gama adecuada (SYNCSET ó CAXSET)' DETECCIÓN Durante la ejecución. CAUSA El cabezal maestro o esclavo no están en la gama adecuada, parámetro SYNCSET o parámetro CAXSET si el cabezal maestro está como eje C."@es .
+ns1:CNC8070_a867d8b2b0 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:activaAlarma ns1:MovimientoProgramadoQueColisionaraConLaSondaDePalpado ;
+    ns1:textoExtracto "CNC 8070" .
 
-ns1:Error_3612 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 3612: SPDLEREV no admitido en sincronización o M19"@es ;
-    ns1:identificador "3612" ;
-    ns1:mitigaRiesgo ns1:Solucion_3612 ;
-    ns1:textoExtracto "3612 No se admite SPDLEREV si el cabezal está sincronizado o en M19. DETECCIÓN Durante la ejecución. CAUSA El PLC ha activado la marca SPDLEREV en un cabezal que está sincronizado, ya sea como maestro o como esclavo."@es .
+ns1:CancelacionDeM3OM4DePLCEnG96SinSProgramada a ns1:AccionProhibida ;
+    rdfs:label "Cancelación de M3 o M4 de PLC en G96 sin S programada" ;
+    ns1:textoExtracto "Cancelada M3 o M4 de PLC en G96 sin S programada." .
 
-ns1:Marca_SPDLEREV a ns1:Parametro ;
-    rdfs:label "SPDLEREV" ;
-    ns1:identificador "SPDLEREV" ;
-    ns1:textoExtracto "marca SPDLEREV"@es .
+ns1:FalloCancelacionM3M4 a ns1:DiagnosticoFallo ;
+    rdfs:label "Se ha cancelado M3 o M4 de PLC en G96 sin S programada" ;
+    ns1:textoExtracto "Se ha cancelada M3 o M4 de PLC en G96 sin S programada." .
 
-ns1:Sistema_Sincronizacion a ns1:Sistema ;
-    rdfs:label "Sistema de sincronización de cabezales"@es ;
-    ns1:controla ns1:Parametro_CAXSET,
-        ns1:Parametro_SYNCSET ;
-    ns1:textoExtracto "cabezal que está sincronizado, ya sea como maestro o como esclavo"@es ;
-    ns1:tieneComponente ns1:Componente_CabezalEsclavo,
-        ns1:Componente_CabezalMaster .
+ns1:RevisionDelMovimientoPosteriorALaPalpacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisión del movimiento posterior a la palpación" ;
+    ns1:solucionaFallo ns1:FalloColisionSonda ;
+    ns1:textoExtracto "SOLUCIÓN Revisar el movimiento posterior a la palpación." .
 
-ns1:Componente_CabezalEsclavo a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal esclavo"@es ;
-    ns1:textoExtracto "El cabezal maestro o esclavo no están en la gama adecuada"@es .
+ns1:FalloColisionSonda a ns1:DiagnosticoFallo ;
+    rdfs:label "Movimiento del eje supera los límites fijados por el movimiento de palpado anterior" ;
+    ns1:textoExtracto "El movimiento del eje va a superar los límites fijados por el movimiento de palpado anterior." .
 
-ns1:Frecuencia_Ejecucion a ns1:Frecuencia ;
-    rdfs:label "Frecuencia de ejecución"@es ;
-    ns1:textoExtracto "Durante la ejecución"@es .
-
-ns1:Parametro_CAXSET a ns1:Parametro ;
-    rdfs:label "CAXSET" ;
-    ns1:identificador "CAXSET" ;
-    ns1:monitoreaParametro ns1:Componente_CabezalMaster ;
-    ns1:textoExtracto "parámetro CAXSET"@es .
-
-ns1:Parametro_SYNCSET a ns1:Parametro ;
-    rdfs:label "SYNCSET" ;
-    ns1:identificador "SYNCSET" ;
-    ns1:monitoreaParametro ns1:Componente_CabezalMaster ;
-    ns1:textoExtracto "parámetro SYNCSET"@es .
-
-ns1:Solucion_3611 a ns1:TareaMantenimiento ;
-    rdfs:label "Solución para error 3611: Ajuste de gama de cabezal"@es ;
-    ns1:textoExtracto "Cambiar la gama del cabezal maestro y/o esclavo en su canal o pasar el cabezal maestro al canal del esclavo para que el cambio de gama sea automático."@es .
-
-ns1:Solucion_3612 a ns1:TareaMantenimiento ;
-    rdfs:label "Solución para error 3612: Desactivar SPDLEREV"@es ;
-    ns1:textoExtracto "Desactivar la marca SPDLEREV del PLC."@es .
-
-ns1:Componente_CabezalMaster a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal master de sincronización"@es ;
-    ns1:textoExtracto "El cabezal master de la sincronización no está en la gama adecuada"@es ;
-    ns1:tieneFrecuencia ns1:Frecuencia_Ejecucion .
+ns1:MovimientoProgramadoQueColisionaraConLaSondaDePalpado a ns1:AccionProhibida ;
+    rdfs:label "Movimiento programado que colisionará con la sonda de palpado" ;
+    ns1:textoExtracto "El movimiento programado va a colisionar con la sonda de palpado." .
 

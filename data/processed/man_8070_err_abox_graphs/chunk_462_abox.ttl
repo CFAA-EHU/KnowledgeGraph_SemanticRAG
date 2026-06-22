@@ -1,67 +1,31 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CabezalMaster a ns1:ComponenteMecanico ;
-    rdfs:label "Cabezal Master" ;
-    ns1:controla ns1:Funcion_PWRCTRL ;
-    ns1:textoExtracto "No se admite cambiar o aparcar el cabezal master con PWRCTRL activo. El control de potencia se aplica al cabezal master" .
+ns1:AccionProhibida_d60931db93 a ns1:AccionProhibida ;
+    rdfs:label "Parámetro PWRCTRL fuera de rango" ;
+    ns1:solucionaFallo ns1:RevisarSintaxisDeLaSentencia ;
+    ns1:textoExtracto "2412 Parámetro PWRCTRL fuera de rango. DETECCIÓN Durante la edición y ejecución. CAUSA Algún comando de la sentencia #PERCTRL tiene un valor no válido." .
 
-ns1:Funcion_FOLLOW a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función #FOLLOW (Sincronización de Ejes)" ;
-    ns1:activaAlarma ns1:Error2420 ;
-    ns1:textoExtracto "#FOLLOW ON[MASTER, ]. El eje esclavo no puede ser esclavo de otro master" .
+ns1:EsObligatorioProgramarDUTYOUT a ns1:AccionProhibida ;
+    rdfs:label "Es obligatorio programar DUTY/OUT" ;
+    ns1:solucionaFallo ns1:RevisarSintaxisDeLaSentencia ;
+    ns1:textoExtracto "2413 Es obligatorio programar DUTY/OUT. DETECCIÓN Durante la edición y ejecución. CAUSA Falta programar el comando DUTY/OUT en la función #PWRCTRL." .
 
-ns1:Parametro_LASERFOLLOWAXIS a ns1:Parametro ;
-    rdfs:label "Parámetro LASERFOLLOWAXIS" ;
-    ns1:monitoreaParametro ns1:Error2420 ;
-    ns1:textoExtracto "El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS" .
+ns1:ManualProgramacion a ns1:Manual ;
+    rdfs:label "manual de programación" ;
+    ns1:textoExtracto "Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:Parametro_OVRMAX a ns1:Parametro ;
-    rdfs:label "Override Máximo (OVRMAX)" ;
-    ns1:monitoreaParametro ns1:Error2418 ;
-    ns1:textoExtracto "el override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)" .
+ns1:PWCTRLDUTYNoPermitidoSiNoHayOpcionDeSoftwarePWM a ns1:AccionProhibida ;
+    rdfs:label "PWCTRL DUTY no permitido si no hay opción de software PWM" ;
+    ns1:solucionaFallo ns1:RevisarSintaxisDeLaSentencia ;
+    ns1:textoExtracto "2414 PWCTRL DUTY no permitido si no hay opción de software PWM. DETECCIÓN Durante la ejecución. CAUSA Para activar el control del duty del PWM, es necesario disponer de la opción de software \"PWM\"." .
 
-ns1:Parametro_OVRMIN a ns1:Parametro ;
-    rdfs:label "Override Mínimo (OVRMIN)" ;
-    ns1:monitoreaParametro ns1:Error2418 ;
-    ns1:textoExtracto "el override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)" .
+ns1:LaSintaxisDeLaSentenciaNoEsCorrecta_21fd4293f0 a ns1:DiagnosticoFallo ;
+    rdfs:label "La sintaxis de la sentencia no es correcta" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta. SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 
-ns1:Variable_FLWMASTER a ns1:Parametro ;
-    rdfs:label "Variable FLWMASTER" ;
-    ns1:monitoreaParametro ns1:Error2422 ;
-    ns1:textoExtracto "Cuando un eje se programa para ser esclavo de la variable FLWMASTER" .
-
-ns1:Error2419 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2419: #PWRCTRL ON - Parámetros incompletos" ;
-    ns1:identificador "2419" ;
-    ns1:textoExtracto "2419 #PWRCTRL ON: la primera vez es obligatorio programar todos los parámetros. DETECCIÓN Durante la ejecución. CAUSA Es la primera vez que se programa la función #PWRCTRL y falta algún parámetro. SOLUCIÓN La primera vez que se programa la función #PWRCTRL es obligatorio programar todos los parámetros." .
-
-ns1:Error2421 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2421: Cambio de cabezal con #PWRCTRL activo" ;
-    ns1:identificador "2421" ;
-    ns1:textoExtracto "2421 No se admite cambiar o aparcar el cabezal master con PWRCTRL activo. DETECCIÓN Durante la ejecución. CAUSA No se admite cambiar o aparcar el cabezal master con PWRCTRL activo. SOLUCIÓN El control de potencia se aplica al cabezal master. Para cambiar o aparcar el cabezal master, desactivar el control de potencia (#PWRCTRL)." .
-
-ns1:Error2422 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2422: #TFOLLOW ON no permitido" ;
-    ns1:identificador "2422" ;
-    ns1:textoExtracto "2422 No se permite #TFOLLOW ON [MASTER]. Permitido: #FOLLOW ON [MASTER] DETECCIÓN Durante la preparación de bloques. CAUSA Cuando un eje se programa para ser esclavo de la variable FLWMASTER, la sincronización solo puede ser sobre las cotas reales; no es posible sincronizar sobre las cotas teóricas." .
-
-ns1:Funcion_PWRCTRL a ns1:ModoOperacion,
-        ns1:Tabla ;
-    rdfs:label "Función #PWRCTRL (Control de Potencia)" ;
-    ns1:activaAlarma ns1:Error2418,
-        ns1:Error2419,
-        ns1:Error2421 ;
-    ns1:textoExtracto "En la función #PWRCTRL, el override mínimo es mayor que el override máximo" .
-
-ns1:Error2420 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2420: #FOLLOW ON - Conflicto de eje esclavo" ;
-    ns1:identificador "2420" ;
-    ns1:textoExtracto "2420 #FOLLOW ON[MASTER, ]. El eje esclavo no puede ser esclavo de otro master. DETECCIÓN Durante la ejecución. CAUSA Existen dos posibilidades. • El nombre de eje esclavo en #FOLLOW ON [MASTER, eje esclavo] coincide con el parámetro máquina LASERFOLLOWAXIS. • El eje esclavo de la sincronización ya es esclavo en otra sincronización. SOLUCIÓN No programar #FOLLOW ON con el eje esclavo que aparece en el mensaje de error, o hacer previamente un #FOLLOW OFF de dicho eje esclavo." .
-
-ns1:Error2418 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 2418: #PWRCTRL ON - OVRMIN > OVRMAX" ;
-    ns1:identificador "2418" ;
-    ns1:textoExtracto "#PWRCTRL ON: OVRMIN debe ser menor que OVRMAX. DETECCIÓN Durante la ejecución. CAUSA En la función #PWRCTRL, el override mínimo es mayor que el override máximo. SOLUCIÓN El override mínimo (OVRMIN) debe ser menor que el override máximo (OVRMAX)." .
+ns1:RevisarSintaxisDeLaSentencia a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar sintaxis de la sentencia" ;
+    ns1:solucionaFallo ns1:LaSintaxisDeLaSentenciaNoEsCorrecta_21fd4293f0 ;
+    ns1:textoExtracto "SOLUCIÓN Revisar en el manual de programación la sintaxis de la sentencia." .
 

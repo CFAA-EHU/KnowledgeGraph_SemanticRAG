@@ -1,38 +1,55 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:ModoOperacion_TemporizadorMonoestable_TG1 a ns1:ModoOperacion ;
-    rdfs:label "Modo monoestable (entrada TG1)"@es ;
-    ns1:controla ns1:Componente_Temporizador ;
-    ns1:textoExtracto "En este modo de funcionamiento el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG1 hasta que transcurre el tiempo indicado en la constante de tiempo. Con TEN=1 y TRS=0 el temporizador se activa al producirse un flanco de subida en la entrada TG1."@es ;
-    ns1:tieneComponente ns1:Parametro_ConstanteTiempo,
-        ns1:Parametro_T,
-        ns1:Parametro_TEN,
-        ns1:Parametro_TRS .
+ns1:ExpresionLogica a ns1:Parametro ;
+    rdfs:label "Expresión lógica" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "I28" ;
+    ns1:textoExtracto "I28 AND I30 ; Expresión lógica" .
 
-ns1:Componente_Temporizador a ns1:ComponenteElectrico ;
-    rdfs:label "Temporizador (modo monoestable)"@es ;
-    ns1:monitoreaParametro ns1:Parametro_T ;
-    ns1:textoExtracto "el estado del temporizador se mantiene a nivel lógico alto (T=1) desde que se activa la entrada TG1 hasta que transcurre el tiempo indicado en la constante de tiempo."@es .
+ns1:InstruccionDeAccion a ns1:Parametro ;
+    rdfs:label "Instrucción de acción" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "M300" ;
+    ns1:textoExtracto "= M300 ; Instrucción de acción" .
 
-ns1:Parametro_ConstanteTiempo a ns1:Parametro ;
-    rdfs:label "Constante de tiempo"@es ;
-    ns1:textoExtracto "el tiempo indicado en la constante de tiempo [...] Una vez transcurrido el tiempo especificado en la constante de tiempo se da por finalizada la temporización."@es .
+ns1:InstruccionDeAccion_c4820c6ee1 a ns1:Parametro ;
+    rdfs:label "Instrucción de acción" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "O25" ;
+    ns1:textoExtracto "= O25 ; Instrucción de acción" .
 
-ns1:Parametro_TEN a ns1:Parametro ;
-    rdfs:label "Parámetro TEN (enable)"@es ;
-    ns1:textoExtracto "Si una vez activado el temporizador se selecciona TEN=0, el PLC detiene la temporización, siendo necesario asignar TEN=1 para que dicha temporización continúe."@es ;
-    ns1:valor 0,
-        1 .
+ns1:InstruccionDeConsulta1aParteDeExpresion a ns1:Parametro ;
+    rdfs:label "Instrucción de consulta (1ª parte de expresión)" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "I32" ;
+    ns1:textoExtracto "I32 \\ ; Instrucción de consulta (1ª parte de expresión)" .
 
-ns1:Parametro_TRS a ns1:Parametro ;
-    rdfs:label "Parámetro TRS (reset)"@es ;
-    ns1:textoExtracto "Si se produce un flanco de subida en la entrada TRS, durante la temporización o después de ella, el PLC inicializa el temporizador, asignando el valor 0 a su estado T y cancelando su cuenta."@es .
+ns1:InstruccionDeConsulta2aParteDeExpresion a ns1:Parametro ;
+    rdfs:label "Instrucción de consulta (2ª parte de expresión)" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "I36" ;
+    ns1:textoExtracto "AND I36 ; Instrucción de consulta (2ª parte de expresión)" .
 
-ns1:Parametro_T a ns1:Parametro ;
-    rdfs:label "Parámetro T (estado temporizador)"@es ;
-    ns1:textoExtracto "La salida de estado del temporizador (T) cambia de estado (T=1) y comienza la temporización [...] La salida de estado (T) cambia (T=0) y el tiempo transcurrido t se mantiene."@es ;
-    ns1:valor 0,
-        1 .
+ns1:ProposicionDirectiva a ns1:Parametro ;
+    rdfs:label "Proposición directiva" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "END" ;
+    ns1:textoExtracto "END ; Proposición directiva" .
+
+ns1:ProposicionDirectiva_c40c981ec0 a ns1:Parametro ;
+    rdfs:label "Proposición directiva" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "PRG" ;
+    ns1:textoExtracto "PRG ; Proposición directiva" .
+
+ns1:ProposicionEjecutable a ns1:Parametro ;
+    rdfs:label "Proposición ejecutable" ;
+    ns1:documentadoEn ns1:EsquemaProgramacionPLC ;
+    ns1:identificador "I100" ;
+    ns1:textoExtracto "I100 = M102 ; Proposición ejecutable" .
+
+ns1:EsquemaProgramacionPLC a ns1:Esquema ;
+    rdfs:label "Ejemplo de programación del PLC" ;
+    ns1:textoExtracto "Ejemplo de programación: PRG ; Proposición directiva I100 = M102 ; Proposición ejecutable I28 AND I30 ; Expresión lógica = O25 ; Instrucción de acción I32 \\ ; Instrucción de consulta (1ª parte de expresión) AND I36 ; Instrucción de consulta (2ª parte de expresión) = M300 ; Instrucción de acción END ; Proposición directiva" .
 

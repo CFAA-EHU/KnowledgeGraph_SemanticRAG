@@ -1,41 +1,44 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Marca_M100 a ns1:Parametro ;
-    rdfs:label "Marca M100"@es ;
-    ns1:identificador "M100" ;
-    ns1:monitoreaParametro ns1:OperacionLectura_PLC ;
-    ns1:textoExtracto "El PLC activa la marca M100 cuando comienza la operación y la mantiene así hasta que finaliza la misma."@es .
+ns1:CNC8070_39a5f50557 a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controladoPor ns1:TeclaUsuarioB0KEYBD1 ;
+    ns1:textoExtracto "El CNC accede al modo manual. El CNC accede al modo MDI. El CNC realiza una búsqueda de referencia máquina del eje X." .
 
-ns1:Registro_R100 a ns1:Parametro ;
-    rdfs:label "Registro R100"@es ;
-    ns1:identificador "R100" ;
-    ns1:textoExtracto "El comando CNCRD guarda el código de la tecla en el registro R100."@es .
+ns1:ModoMDI a ns1:ModoOperacion ;
+    rdfs:label "Modo MDI" ;
+    ns1:textoExtracto "El CNC accede al modo MDI. Tras finalizar la búsqueda de referencia máquina, el CNC sale del modo MDI." .
 
-ns1:Comando_CNCRD a ns1:AccionProhibida ;
-    rdfs:label "Comando CNCRD"@es ;
-    ns1:controla ns1:Variable_G_KEY ;
-    ns1:identificador "CNCRD" ;
-    ns1:requiereMantenimiento ns1:OperacionLectura_PLC ;
-    ns1:textoExtracto "El comando CNCRD guarda el código de la tecla en el registro R100. { condición} = CNCRD(G.KEY,R100,M100)"@es .
+ns1:ModoManual a ns1:ModoOperacion ;
+    rdfs:label "Modo Manual" ;
+    ns1:textoExtracto "El CNC accede al modo manual." .
 
-ns1:InterfazCNC_Teclado a ns1:InterfazUsuario ;
-    rdfs:label "Interfaz de teclado del CNC"@es ;
-    ns1:textoExtracto "La última tecla aceptada por el CNC"@es .
+ns1:SimularElTecladoDesdeElPLC a ns1:TareaMantenimiento ;
+    rdfs:label "Simular el teclado desde el PLC" ;
+    ns1:ejecuta ns1:AccederAlModoMDI,
+        ns1:AccederAlModoManual,
+        ns1:BusquedaReferenciaMaquinaEjeX,
+        ns1:SalirDelModoMDI ;
+    ns1:textoExtracto "La primera tecla de usuario (B0KEYBD1) realiza las siguientes operaciones. 1 El CNC accede al modo manual. 2 El CNC accede al modo MDI. 3 El CNC realiza una búsqueda de referencia máquina del eje X. 4 Tras finalizar la búsqueda de referencia máquina, el CNC sale del modo MDI." .
 
-ns1:PLC_Sistema a ns1:Sistema ;
-    rdfs:label "Sistema PLC"@es ;
-    ns1:controla ns1:Comando_CNCRD ;
-    ns1:textoExtracto "El PLC activa la marca M100 cuando comienza la operación y la mantiene así hasta que finaliza la misma."@es .
+ns1:AccederAlModoMDI a ns1:AccionProhibida ;
+    rdfs:label "Acceder al modo MDI" ;
+    ns1:textoExtracto "El CNC accede al modo MDI." .
 
-ns1:Variable_G_KEY a ns1:Parametro ;
-    rdfs:label "Variable G.KEY"@es ;
-    ns1:identificador "G.KEY" ;
-    ns1:monitoreaParametro ns1:InterfazCNC_Teclado ;
-    ns1:textoExtracto "La variable (V.)G.KEY guarda el código de la última tecla aceptada por el CNC (código de tecla pulsada)."@es .
+ns1:AccederAlModoManual a ns1:AccionProhibida ;
+    rdfs:label "Acceder al modo manual" ;
+    ns1:textoExtracto "El CNC accede al modo manual." .
 
-ns1:OperacionLectura_PLC a ns1:TareaMantenimiento ;
-    rdfs:label "Operación de lectura desde PLC"@es ;
-    ns1:ejecutadoPor ns1:PLC_Sistema ;
-    ns1:textoExtracto "Para leer la variable desde el PLC utilizar el comando CNCRD. Lectura de una variable desde el PLC."@es .
+ns1:BusquedaReferenciaMaquinaEjeX a ns1:AccionProhibida ;
+    rdfs:label "Búsqueda de Referencia Máquina Eje X" ;
+    ns1:textoExtracto "El CNC realiza una búsqueda de referencia máquina del eje X." .
+
+ns1:SalirDelModoMDI a ns1:AccionProhibida ;
+    rdfs:label "Salir del modo MDI" ;
+    ns1:textoExtracto "Tras finalizar la búsqueda de referencia máquina, el CNC sale del modo MDI." .
+
+ns1:TeclaUsuarioB0KEYBD1 a ns1:Componente ;
+    rdfs:label "Tecla Usuario B0KEYBD1" ;
+    ns1:textoExtracto "La primera tecla de usuario (B0KEYBD1) realiza las siguientes operaciones." .
 

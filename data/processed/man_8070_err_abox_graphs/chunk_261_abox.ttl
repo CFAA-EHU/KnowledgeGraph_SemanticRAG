@@ -1,37 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:CNC_ControlNumerico a ns1:Sistema ;
-    rdfs:label "Sistema CNC (Control Numérico Computarizado)" ;
-    ns1:activaAlarma ns1:Error_1549,
-        ns1:Error_1550,
-        ns1:Error_1551,
-        ns1:Error_1552,
-        ns1:Error_1553 ;
-    ns1:textoExtracto "El CNC ha intentado activar un eje C con otro activo... El CNC ha superado el máximo número de variables de usuario (prefijos P y S) permitidas." .
+ns1:NoSeAdmiteG63YM3M4M5M19M41M44EnElMismoBloque a ns1:AccionProhibida ;
+    rdfs:label "No se admite G63 y M3/M4/M5/M19/M41-M44 en el mismo bloque" ;
+    ns1:textoExtracto "'No se admite G63 y M3/M4/M5/M19/M41-M44 en el mismo bloque'" .
 
-ns1:Error_1549 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1549: Nombre de cajera nulo o incorrecto" ;
-    ns1:identificador "1549" ;
-    ns1:textoExtracto "1549 'Nombre de cajera nulo o incorrecto' DETECCIÓN Durante la ejecución. CAUSA Cuando se ha definido una cajera 2D ó 3D con el editor de ciclos, no se ha definido el nombre de la cajera o este nombre es incorrecto. No se permiten como nombre de cajera las instrucciones #DATAP2D y #DATAP3D generadas por el editor de ciclos. SOLUCIÓN Asignarle un nombre distinto a la cajera." .
+ns1:PermiteCambiarDeCanalAlEjeOCabezal a ns1:Parametro ;
+    rdfs:label "Permite cambiar de canal al eje o cabezal" ;
+    ns1:identificador "AXISEXCH" ;
+    ns1:textoExtracto "El parámetro AXISEXCH establece si el eje o cabezal tiene permiso para cambiar de canal, y en caso afirmativo, si el cambio es temporal o permanente;" .
 
-ns1:Error_1550 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1550: No se admite programar dos ejes C en el mismo canal" ;
-    ns1:identificador "1550" ;
-    ns1:textoExtracto "1550 'No se admite programar dos ejes C en el mismo canal' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado activar un eje C con otro activo. SOLUCIÓN Desactivar un eje C antes de activar otro." .
+ns1:SePuedeHacerEnElBloqueAnteriorOPosteriorSegunElResultadoQueSeQuiera a ns1:TareaMantenimiento ;
+    rdfs:label "Se puede hacer en el bloque anterior o posterior según el resultado que se quiera" ;
+    ns1:solucionaFallo ns1:NoSePermiteNingunaFuncionMAsociadaAlCabezalEnElMismoBloqueEnElQueSePr_e795b65ae4 ;
+    ns1:textoExtracto "SOLUCIÓN Se puede hacer en el bloque anterior o posterior según el resultado que se quiera" .
 
-ns1:Error_1551 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1551: Imbricación de parámetros locales sobrepasado" ;
-    ns1:identificador "1551" ;
-    ns1:textoExtracto "1551 'Imbricación de parámetros locales sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El anidamiento de llamadas a subrutinas mediante la sentencia #PCALL o mediante la función G180-G189 aumenta el nivel de imbricación de parámetros locales. El error se da porque se supera el máximo nivel de imbricación de parámetros locales que es 7. SOLUCIÓN Reducir el anidamiento de subrutinas o utilizar las sentencias #CALL, L o LL para llamarlas, que no aumentan el nivel de imbricación de parámetros locales." .
-
-ns1:Error_1552 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1552: El nombre de la variable debe comenzar por 'V.'" ;
-    ns1:identificador "1552" ;
-    ns1:textoExtracto "1552 'El nombre de la variable debe comenzar por \"V.\"' DETECCIÓN Durante la ejecución. CAUSA Desde programa pieza o MDI se ha escrito el nombre de una variable sin el prefijo inicial \"V.\" SOLUCIÓN Añadir el prefijo \"V.\" al nombre de la variable." .
-
-ns1:Error_1553 a ns1:AvisoSeguridad ;
-    rdfs:label "Error 1553: Número de variables de usuario sobrepasado" ;
-    ns1:identificador "1553" ;
-    ns1:textoExtracto "1553 'Número de variables de usuario sobrepasado' DETECCIÓN Durante la ejecución. CAUSA El CNC ha superado el máximo número de variables de usuario (prefijos P y S) permitidas. SOLUCIÓN El máximo número de variables de usuario permitido es 20." .
+ns1:NoSePermiteNingunaFuncionMAsociadaAlCabezalEnElMismoBloqueEnElQueSePr_e795b65ae4 a ns1:DiagnosticoFallo ;
+    rdfs:label "No se permite ninguna función M asociada al cabezal en el mismo bloque en el que se programa un roscado rígido G63" ;
+    ns1:textoExtracto "CAUSA No se permite ninguna función M asociada al cabezal en el mismo bloque en el que se programa un roscado rígido G63." .
 

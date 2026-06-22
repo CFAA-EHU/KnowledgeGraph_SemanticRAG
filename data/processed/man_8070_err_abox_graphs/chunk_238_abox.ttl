@@ -1,74 +1,25 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Componente_Palpador a ns1:Sensor ;
-    rdfs:label "Palpador"@es ;
-    ns1:monitoreaParametro ns1:Parametro_PRBDI1,
-        ns1:Parametro_PRBDI2 ;
-    ns1:textoExtracto "Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)."@es .
+ns1:LimiteDeInformacionEnElBloque a ns1:Parametro ;
+    rdfs:label "Límite de información en el bloque" ;
+    ns1:textoExtracto "Las sentencias se deben programar solas en el bloque, sólo se puede añadir la etiqueta del bloque." .
 
-ns1:Error_1493 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1493: Programación simultánea no permitida"@es ;
-    ns1:identificador "1493" ;
-    ns1:solucionaFallo ns1:Parametro_G136,
-        ns1:Parametro_G41,
-        ns1:Parametro_G42,
-        ns1:Parametro_SPLINE_ON ;
-    ns1:textoExtracto "1493 'Programación simultánea de #SPLINE ON, G41/G42 y G136 no permitida' DETECCIÓN Durante la ejecución. CAUSA El CNC ha intentado tener activas simultáneamente las funciones #SPLINE ON, G41, G42 y G136."@es .
+ns1:Parametro_70e947b322 a ns1:Parametro ;
+    rdfs:label "Señal" ;
+    ns1:textoExtracto "'Programar: #SIGNAL [señal, señal, señal, ...]'" .
 
-ns1:Error_1494 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1494: Índice incorrecto"@es ;
-    ns1:identificador "1494" ;
-    ns1:textoExtracto "1494 'Indice incorrecto' DETECCIÓN Durante la ejecución. CAUSA El número de error indicado en la sentencia #ERROR o #WARNING no existe."@es .
+ns1:RevisarProgramacion a ns1:TareaMantenimiento ;
+    rdfs:label "Revisar programación" ;
+    ns1:solucionaFallo ns1:AccionProhibida_a6350c19a9,
+        ns1:SintaxisDeLaSentenciaNoCorrectaOInformacionAdicionalEnElBloque ;
+    ns1:textoExtracto "SOLUCIÓN Revisar la programación." .
 
-ns1:Error_1495 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error 1495: Eje no válido para ciclo de palpador"@es ;
-    ns1:identificador "1495" ;
-    ns1:solucionaFallo ns1:Parametro_PROBE1 ;
-    ns1:textoExtracto "1495 '#PROBE1: eje no válido para ciclo de palpador' DETECCIÓN Durante la"@es .
+ns1:AccionProhibida_a6350c19a9 a ns1:AccionProhibida ;
+    rdfs:label "Marca de sincronización en el mismo canal que las sentencias" ;
+    ns1:textoExtracto "CAUSA La sentencia #WAIT o #MEET no va a generar ninguna espera, porque la marca de sincronización está programada para el mismo canal que las sentencias." .
 
-ns1:Parametro_ERROR a ns1:Parametro ;
-    rdfs:label "#ERROR"@es ;
-    ns1:identificador "#ERROR" ;
-    ns1:textoExtracto "El número de error indicado en la sentencia #ERROR o #WARNING no existe."@es .
-
-ns1:Parametro_WARNING a ns1:Parametro ;
-    rdfs:label "#WARNING"@es ;
-    ns1:identificador "#WARNING" ;
-    ns1:textoExtracto "El número de error indicado en la sentencia #ERROR o #WARNING no existe."@es .
-
-ns1:Parametro_G136 a ns1:Parametro ;
-    rdfs:label "G136"@es ;
-    ns1:identificador "G136" ;
-    ns1:textoExtracto "El CNC ha intentado tener activas simultáneamente las funciones #SPLINE ON, G41, G42 y G136."@es .
-
-ns1:Parametro_G41 a ns1:Parametro ;
-    rdfs:label "G41"@es ;
-    ns1:identificador "G41" ;
-    ns1:textoExtracto "El CNC ha intentado tener activas simultáneamente las funciones #SPLINE ON, G41, G42 y G136."@es .
-
-ns1:Parametro_G42 a ns1:Parametro ;
-    rdfs:label "G42"@es ;
-    ns1:identificador "G42" ;
-    ns1:textoExtracto "El CNC ha intentado tener activas simultáneamente las funciones #SPLINE ON, G41, G42 y G136."@es .
-
-ns1:Parametro_PRBDI1 a ns1:Parametro ;
-    rdfs:label "Parámetro PRBDI1"@es ;
-    ns1:identificador "PRBDI1" ;
-    ns1:textoExtracto "Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)."@es .
-
-ns1:Parametro_PRBDI2 a ns1:Parametro ;
-    rdfs:label "Parámetro PRBDI2"@es ;
-    ns1:identificador "PRBDI2" ;
-    ns1:textoExtracto "Asociar una entrada digital al palpador (parámetro PRBDI1 ó PRBDI2)."@es .
-
-ns1:Parametro_PROBE1 a ns1:Parametro ;
-    rdfs:label "#PROBE1"@es ;
-    ns1:identificador "#PROBE1" ;
-    ns1:textoExtracto "1495 '#PROBE1: eje no válido para ciclo de palpador'."@es .
-
-ns1:Parametro_SPLINE_ON a ns1:Parametro ;
-    rdfs:label "#SPLINE ON"@es ;
-    ns1:identificador "#SPLINE ON" ;
-    ns1:textoExtracto "El CNC ha intentado tener activas simultáneamente las funciones #SPLINE ON, G41, G42 y G136."@es .
+ns1:SintaxisDeLaSentenciaNoCorrectaOInformacionAdicionalEnElBloque a ns1:AccionProhibida ;
+    rdfs:label "Sintaxis de la sentencia no correcta o información adicional en el bloque" ;
+    ns1:textoExtracto "CAUSA La sintaxis de la sentencia no es correcta o hay más información en el bloque." .
 

@@ -1,49 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Maquina_CNC a ns1:Maquina ;
-    ns1:monitoreaParametro ns1:Variable_V_PLC_F,
-        ns1:Variable_V_PLC_G00FEED ;
-    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Los desplazamientos en G00 se ejecutan al avance definido en el parámetro G00FEED." ;
-    ns1:tieneComponente ns1:Parametro_FRAPIDEN,
-        ns1:Parametro_G00FEED,
-        ns1:Parametro_MAXFEED,
-        ns1:Parametro_RAPIDEN .
+ns1:GananciaProporcional a ns1:Parametro ;
+    rdfs:label "Ganancia proporcional" ;
+    ns1:identificador "MPA.PROGAIN" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ns1:valor "1" .
 
-ns1:ModoOperacion_AvanceRapidoAutomatico a ns1:ModoOperacion ;
-    rdfs:label "Avance rápido para modo automático" ;
-    ns1:controla ns1:Parametro_FRAPIDEN ;
-    ns1:textoExtracto "FRAPIDEN Avance rápido del eje, para los desplazamientos en el modo automático." .
+ns1:PorcentajeDeFeedForwardEnAutomatico a ns1:Parametro ;
+    rdfs:label "Porcentaje de feed forward en automático" ;
+    ns1:identificador "MPA.FFGAIN" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ns1:valor "0" .
 
-ns1:Parametro_G00FEED a ns1:Parametro ;
-    rdfs:label "G00FEED" ;
-    ns1:textoExtracto "Los desplazamientos en G00 se ejecutan al avance definido en el parámetro G00FEED. El avance rápido no podrá superar al definido en los parámetros G00FEED del eje." .
-
-ns1:Parametro_MAXFEED a ns1:Parametro ;
-    rdfs:label "MAXFEED" ;
-    ns1:textoExtracto "El avance rápido podrá superar al definido en el parámetro MAXFEED del canal." .
-
-ns1:Parametro_RAPIDEN a ns1:Parametro ;
-    rdfs:label "RAPIDEN" ;
-    ns1:textoExtracto "Avance máximo del eje para el programa en ejecución, cuando está activo el avance rápido para el modo automático (parámetro RAPIDEN)." .
-
-ns1:Variable_V_MPA_FRAPIDEN_set_xn a ns1:Parametro ;
-    rdfs:label "(V.)[ch].MPA.FRAPIDEN[set].xn" ;
-    ns1:monitoreaParametro ns1:Parametro_FRAPIDEN ;
-    ns1:textoExtracto "Variable asociada: (V.)[ch].MPA.FRAPIDEN[set].xn" .
-
-ns1:Variable_V_PLC_F a ns1:Parametro ;
-    rdfs:label "(V.)PLC.F" ;
-    ns1:textoExtracto "El avance rápido podrá superar al [...] avance activo definido por PLC (variable (V.)PLC.F)." .
-
-ns1:Variable_V_PLC_G00FEED a ns1:Parametro ;
-    rdfs:label "(V.)PLC.G00FEED" ;
-    ns1:textoExtracto "El avance rápido no podrá superar al definido en los parámetros [...] FRAPIDEN del canal, ni tampoco al avance máximo fijado por PLC (variable (V.)PLC.G00FEED)." .
-
-ns1:Parametro_FRAPIDEN a ns1:Parametro ;
-    rdfs:label "FRAPIDEN" ;
-    ns1:monitoreaParametro ns1:Variable_V_MPA_FRAPIDEN_set_xn ;
-    ns1:textoExtracto "FRAPIDEN Avance rápido del eje, para los desplazamientos en el modo automático. Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
-    ns1:valor "0"^^xsd:string .
+ns1:TipoDePreControl a ns1:Parametro ;
+    rdfs:label "Tipo de pre-control" ;
+    ns1:identificador "MPA.FFWTYPE" ;
+    ns1:textoExtracto "Parámetro válido para ejes lineales, rotativos y cabezales. Parámetro válido para regulador analógico, Sercos y simulado." ;
+    ns1:valor "OFF" .
 

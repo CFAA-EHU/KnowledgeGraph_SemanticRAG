@@ -1,76 +1,56 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ModoOperacion_Ranurado a ns1:ModoOperacion ;
-    rdfs:label "Ciclo de ranurado" ;
-    ns1:requiereMantenimiento ns1:Fallo_1780,
-        ns1:Fallo_1781,
-        ns1:Fallo_1782,
-        ns1:Fallo_1783,
-        ns1:Fallo_1784 ;
-    ns1:textoExtracto "ejecución del ciclo [de ranurado]" .
+ns1:CicloSinHerramienta a ns1:AvisoSeguridad ;
+    rdfs:label "Ciclo sin herramienta" ;
+    ns1:textoExtracto "Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta." .
 
-ns1:Fallo_1780 a ns1:DiagnosticoFallo ;
-    rdfs:label "RANURADO: F = 0" ;
-    ns1:identificador "1780" ;
-    ns1:solucionaFallo ns1:ParametroFAvance ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
+ns1:Herramienta a ns1:Componente ;
+    rdfs:label "Herramienta" ;
+    ns1:textoExtracto "Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta." .
 
-ns1:Fallo_1781 a ns1:DiagnosticoFallo ;
-    rdfs:label "RANURADO: S = 0" ;
-    ns1:identificador "1781" ;
-    ns1:solucionaFallo ns1:ParametroSVelocidad ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
+ns1:PERFILDEPUNTOSF0_0fc3f09280 a ns1:AvisoSeguridad ;
+    rdfs:label "PERFIL DE PUNTOS: F = 0" ;
+    ns1:textoExtracto "'PERFIL DE PUNTOS: F = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
 
-ns1:Fallo_1782 a ns1:DiagnosticoFallo ;
-    rdfs:label "RANURADO: T = 0" ;
-    ns1:identificador "1782" ;
-    ns1:requiereConsumible ns1:HerramientaDeRanuradoNoEspecificada ;
-    ns1:solucionaFallo ns1:ParametroTHerramienta ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada. SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado. Si una operación no tiene herramienta, el ciclo no la ejecuta; al menos una operación tiene que tener herramienta." .
+ns1:PERFILDEPUNTOSP0_72bfd1349f a ns1:AvisoSeguridad ;
+    rdfs:label "PERFIL DE PUNTOS: P = 0" ;
+    ns1:textoExtracto "'PERFIL DE PUNTOS: P = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P tiene valor 0. No hay profundidad programada. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
 
-ns1:Fallo_1783 a ns1:DiagnosticoFallo ;
-    rdfs:label "RANURADO: P = 0" ;
-    ns1:identificador "1783" ;
-    ns1:solucionaFallo ns1:ParametroPProfundidad ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P tiene valor 0. No hay profundidad programada. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
+ns1:PERFILDEPUNTOSS0_50b243e1ed a ns1:AvisoSeguridad ;
+    rdfs:label "PERFIL DE PUNTOS: S = 0" ;
+    ns1:textoExtracto "'PERFIL DE PUNTOS: S = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
 
-ns1:Fallo_1784 a ns1:DiagnosticoFallo ;
-    rdfs:label "RANURADO: Diámetro de herramienta menor que DELTA" ;
-    ns1:identificador "1784" ;
-    ns1:requiereConsumible ns1:HerramientaDeRanuradoDiametroAdecuado ;
-    ns1:solucionaFallo ns1:ParametroPasoDeFresado ;
-    ns1:textoExtracto "DETECCIÓN Durante la ejecución del ciclo. CAUSA En la operación de desbaste o acabado, el diámetro de la herramienta es menor que el paso de fresado (parámetro Δ). SOLUCIÓN Reducir el paso de fresado o utilizar una herramienta de diámetro mayor." .
+ns1:PERFILDEPUNTOST0_9fab5ca8dd a ns1:AvisoSeguridad ;
+    rdfs:label "PERFIL DE PUNTOS: T = 0" ;
+    ns1:textoExtracto "'PERFIL DE PUNTOS: T = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada. SOLUCIÓN Programar una herramienta para la operación de desbaste o acabado." .
 
-ns1:HerramientaDeRanuradoDiametroAdecuado a ns1:Herramienta ;
-    rdfs:label "Herramienta de ranurado (diámetro adecuado)" ;
-    ns1:textoExtracto "utilizar una herramienta de diámetro mayor" .
+ns1:PLANEADOL0YH0_1d240b53d7 a ns1:AvisoSeguridad ;
+    rdfs:label "PLANEADO: L = 0 y H = 0" ;
+    ns1:textoExtracto "'PLANEADO: L = 0 y H = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA La longitud (parámetro L) y/o la anchura del planeado (parámetro H) son 0. SOLUCIÓN Definir ambas dimensiones del planeado con un valor distinto de cero." .
 
-ns1:HerramientaDeRanuradoNoEspecificada a ns1:Herramienta ;
-    rdfs:label "Herramienta de ranurado (no especificada)" ;
-    ns1:textoExtracto "Programar una herramienta para la operación de desbaste o acabado" .
+ns1:PLANEADOP0_6a64768370 a ns1:AvisoSeguridad ;
+    rdfs:label "PLANEADO: P = 0" ;
+    ns1:textoExtracto "'PLANEADO: P = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P tiene valor 0. No hay profundidad programada. SOLUCIÓN Asignar al parámetro un valor mayor que 0." .
 
-ns1:ParametroFAvance a ns1:Parametro ;
-    rdfs:label "Parámetro F (avance)" ;
-    ns1:textoExtracto "parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z" ;
-    ns1:valor "0" .
+ns1:Parametro_4ab528adae a ns1:Parametro ;
+    rdfs:label "Parámetro P" ;
+    ns1:identificador "P" ;
+    ns1:textoExtracto "'PLANEADO: P = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro P tiene valor 0. No hay profundidad programada." .
 
-ns1:ParametroPProfundidad a ns1:Parametro ;
-    rdfs:label "Parámetro P (profundidad)" ;
-    ns1:textoExtracto "parámetro P tiene valor 0. No hay profundidad programada" ;
-    ns1:valor "0" .
+ns1:Parametro_6a9d3ea522 a ns1:Parametro ;
+    rdfs:label "Parámetro F" ;
+    ns1:textoExtracto "'PERFIL DE PUNTOS: F = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún parámetro F tiene valor 0; falta programar el avance de desbaste, acabado o profundización en Z." .
 
-ns1:ParametroPasoDeFresado a ns1:Parametro ;
-    rdfs:label "Parámetro Δ (paso de fresado)" ;
-    ns1:textoExtracto "paso de fresado (parámetro Δ)" .
+ns1:Parametro_a7bfded440 a ns1:Parametro ;
+    rdfs:label "Parámetro T" ;
+    ns1:textoExtracto "'PERFIL DE PUNTOS: T = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA El parámetro T de las operaciones de desbaste y acabado tiene valor 0. No hay herramienta programada." .
 
-ns1:ParametroSVelocidad a ns1:Parametro ;
-    rdfs:label "Parámetro S (velocidad)" ;
-    ns1:textoExtracto "parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado" ;
-    ns1:valor "0" .
+ns1:Parametro_d96da4d85b a ns1:Parametro ;
+    rdfs:label "Parámetro S" ;
+    ns1:textoExtracto "'PERFIL DE PUNTOS: S = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA Algún parámetro S tiene valor 0; falta programar la velocidad para el desbaste o acabado." .
 
-ns1:ParametroTHerramienta a ns1:Parametro ;
-    rdfs:label "Parámetro T (herramienta)" ;
-    ns1:textoExtracto "parámetro T [...] tiene valor 0. No hay herramienta programada" ;
-    ns1:valor "0" .
+ns1:ParametrosLYH a ns1:Parametro ;
+    rdfs:label "Parámetros L y H" ;
+    ns1:textoExtracto "'PLANEADO: L = 0 y H = 0' DETECCIÓN Durante la ejecución del ciclo. CAUSA La longitud (parámetro L) y/o la anchura del planeado (parámetro H) son 0." .
 

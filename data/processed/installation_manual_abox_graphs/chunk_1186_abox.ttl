@@ -1,57 +1,21 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ConfiguracionEjesCompartidos_1186 a ns1:ModoOperacion ;
-    rdfs:label "Configuración de 2 ejes con misma entrada de captación y salida analógica"@es ;
-    ns1:controla ns1:Parametro_ABSFEEDBACK_1186,
-        ns1:Parametro_ANAOUTID_1186,
-        ns1:Parametro_COUNTERID_1186,
-        ns1:Parametro_COUNTERTYPE_1186 ;
-    ns1:textoExtracto "Hay máquinas donde existen 2 ejes que nunca están de forma simultánea en la misma configuración, ya que uno de ellos está siempre aparcado; por ejemplo, en el caso de cambio de cabezales con motor interior para mover su articulación. En estos casos, ambos motores están controlados por el mismo regulador y para el CNC sólo hay una entrada de captación y una salida analógica."@es ;
-    ns1:tieneComponente ns1:MotorEje1_1186,
-        ns1:MotorEje2_1186,
-        ns1:ReguladorComun_1186 .
+ns1:CNC8070_8dbfb2dcaa a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:EjeOperativo ;
+    ns1:textoExtracto "el CNC ejecuta la búsqueda de referencia como si el eje fuera analógico" .
 
-ns1:MotorEje1_1186 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor del Eje 1 (cabezal articulado)"@es ;
-    ns1:controla ns1:Parametro_ABSFEEDBACK_1186,
-        ns1:Parametro_ANAOUTID_1186,
-        ns1:Parametro_COUNTERID_1186,
-        ns1:Parametro_COUNTERTYPE_1186 ;
-    ns1:textoExtracto "motor interior para mover su articulación [...] ambos motores son iguales"@es .
+ns1:ModoSercosVelocidad a ns1:ModoOperacion ;
+    rdfs:label "modo Sercos velocidad" ;
+    ns1:textoExtracto "el eje sólo podrá operar en modo Sercos velocidad" .
 
-ns1:MotorEje2_1186 a ns1:ComponenteMecanico ;
-    rdfs:label "Motor del Eje 2 (cabezal aparcado)"@es ;
-    ns1:controla ns1:Parametro_ABSFEEDBACK_1186,
-        ns1:Parametro_ANAOUTID_1186,
-        ns1:Parametro_COUNTERID_1186,
-        ns1:Parametro_COUNTERTYPE_1186 ;
-    ns1:textoExtracto "uno de ellos está siempre aparcado [...] ambos motores son iguales"@es .
+ns1:BusquedaReferencia a ns1:AccionProhibida ;
+    rdfs:label "Búsqueda de Referencia" ;
+    ns1:textoExtracto "el CNC ejecuta la búsqueda de referencia como si el eje fuera analógico; el regulador desconoce que hay una búsqueda de referencia en marcha y no" .
 
-ns1:ReguladorComun_1186 a ns1:ComponenteElectrico ;
-    rdfs:label "Regulador compartido para ambos ejes"@es ;
-    ns1:monitoreaParametro ns1:Parametro_ANAOUTID_1186,
-        ns1:Parametro_COUNTERID_1186,
-        ns1:Parametro_COUNTERTYPE_1186 ;
-    ns1:textoExtracto "ambos motores están controlados por el mismo regulador"@es .
-
-ns1:Parametro_ABSFEEDBACK_1186 a ns1:Parametro ;
-    rdfs:label "ABSFEEDBACK"@es ;
-    ns1:textoExtracto "Tipo de captación [...] los siguientes parámetros máquina deben tener el mismo valor en ambos ejes"@es ;
-    ns1:valor "mismo_valor_en_ambos_ejes"@es .
-
-ns1:Parametro_ANAOUTID_1186 a ns1:Parametro ;
-    rdfs:label "ANAOUTID"@es ;
-    ns1:textoExtracto "el parámetro ANAOUTID de ambos ejes también debe ser igual"@es ;
-    ns1:valor "igual_en_ambos_ejes"@es .
-
-ns1:Parametro_COUNTERID_1186 a ns1:Parametro ;
-    rdfs:label "COUNTERID"@es ;
-    ns1:textoExtracto "los parámetros [...] COUNTERID de ambos ejes debe ser iguales"@es ;
-    ns1:valor "igual_en_ambos_ejes"@es .
-
-ns1:Parametro_COUNTERTYPE_1186 a ns1:Parametro ;
-    rdfs:label "COUNTERTYPE"@es ;
-    ns1:textoExtracto "los parámetros COUNTERTYPE [...] de ambos ejes debe ser iguales"@es ;
-    ns1:valor "igual_en_ambos_ejes"@es .
+ns1:EjeOperativo a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Operativo" ;
+    ns1:textoExtracto "Si la captación externa (captación directa) del eje está conectada a una entrada de contaje local o remota, el eje sólo podrá operar en modo Sercos velocidad." ;
+    ns1:tieneComponente ns1:BusquedaReferencia .
 

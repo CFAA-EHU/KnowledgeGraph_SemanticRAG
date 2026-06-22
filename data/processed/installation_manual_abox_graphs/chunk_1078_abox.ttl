@@ -1,51 +1,26 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Almacen a ns1:Componente ;
-    rdfs:label "almacén" ;
-    ns1:textoExtracto "almacén" .
+ns1:AvisoSeguridad_20423e4c9a a ns1:AvisoSeguridad ;
+    rdfs:label "Marca TCHANGEOK" ;
+    ns1:mitigaRiesgo ns1:ActivarMarcaTCHANGEOKSinHerramientaEnElBrazo ;
+    ns1:textoExtracto "La marca TCHANGEOK es opcional y sólo se debe utilizar cuando es posible." .
 
-ns1:Cabezal a ns1:Componente ;
-    rdfs:label "cabezal" ;
-    ns1:textoExtracto "cabezal" .
+ns1:OperacionDeLaHerramienta a ns1:Parametro ;
+    rdfs:label "Operación de la herramienta" ;
+    ns1:textoExtracto "TMOPERATION" .
 
-ns1:LEAVEPOS a ns1:Parametro ;
-    rdfs:label "LEAVEPOS" ;
-    ns1:textoExtracto "LEAVEPOS" .
+ns1:TablaOperacionesValidasPLC a ns1:Tabla ;
+    rdfs:label "Operaciones válidas y marcas que activa el PLC con cada una de ellas" ;
+    ns1:ilustra ns1:CambioDeHerramienta_000198c399 ;
+    ns1:textoExtracto "TM => PLC |  |  | PLC => TM | | --- | --- | --- | --- | | TMOPERATION | TAKEPOS | LEAVEPOS |  | 1 | -1 | 0 | CH1TOSPDL | 2 | 0 | # | SPDLTOCH2 + TCHANGEOK + CH2TOMZ |" .
 
-ns1:M101 a ns1:TareaMantenimiento ;
-    rdfs:label "M101" ;
-    ns1:identificador "M101" ;
-    ns1:textoExtracto "Seleccionar en el almacén la posición que indica TAKEPOS y coger la herramienta con la pinza 1." .
+ns1:CambioDeHerramienta_000198c399 a ns1:TareaMantenimiento ;
+    rdfs:label "Cambio de herramienta" ;
+    ns1:solucionaFallo ns1:ActivarMarcaTCHANGEOKSinHerramientaEnElBrazo ;
+    ns1:textoExtracto "Una vez efectuado el cambio y la herramienta está en el brazo, activar la marca TCHANGEOK para continuar la ejecución del programa mientras se deja la herramienta en el almacén." .
 
-ns1:M102 a ns1:TareaMantenimiento ;
-    rdfs:label "M102" ;
-    ns1:identificador "M102" ;
-    ns1:textoExtracto "Llevar la herramienta de la pinza 1 al cabezal." .
-
-ns1:M104 a ns1:TareaMantenimiento ;
-    rdfs:label "M104" ;
-    ns1:identificador "M104" ;
-    ns1:textoExtracto "Coger la herramienta del cabezal con la pinza 2." .
-
-ns1:M106 a ns1:TareaMantenimiento ;
-    rdfs:label "M106" ;
-    ns1:identificador "M106" ;
-    ns1:textoExtracto "Seleccionar en el almacén la posición que indica LEAVEPOS y dejar la herramienta de la pinza 2." .
-
-ns1:Pinza1_f2a3cf22da a ns1:Componente ;
-    rdfs:label "pinza 1" ;
-    ns1:textoExtracto "pinza 1" .
-
-ns1:Pinza2_c04bc90632 a ns1:Componente ;
-    rdfs:label "pinza 2" ;
-    ns1:textoExtracto "pinza 2" .
-
-ns1:ProgramacionBasicaPLC a ns1:TareaMantenimiento ;
-    rdfs:label "Programación básica del PLC" ;
-    ns1:textoExtracto "Su programación depende del tipo de máquina. La función auxiliar se dará por finalizada tras ejecutar el movimiento solicitado. En determinadas operaciones hay que utilizar la información que pasa el gestor en los siguientes registros: LEAVEPOS Este registro indica la posición de almacén en la que hay que dejar la herramienta. TAKEPOS Este registro indica la posición de almacén en la que hay que coger la herramienta." .
-
-ns1:TAKEPOS a ns1:Parametro ;
-    rdfs:label "TAKEPOS" ;
-    ns1:textoExtracto "TAKEPOS" .
+ns1:ActivarMarcaTCHANGEOKSinHerramientaEnElBrazo a ns1:AccionProhibida ;
+    rdfs:label "Activar marca TCHANGEOK sin herramienta en el brazo" ;
+    ns1:textoExtracto "activar la marca TCHANGEOK para continuar la ejecución del programa mientras se deja la herramienta en el almacén." .
 

@@ -1,26 +1,37 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:ConfiguracionEjeRotativo_ModoMultiVuelta a ns1:ModoOperacion ;
-    rdfs:label "Configuración: eje rotativo (modo multi-vuelta)"@es ;
-    ns1:textoExtracto "Si el desplazamiento programado es superior al módulo, el eje da más de una vuelta."@es .
+ns1:CNC8070_c146085e9a a ns1:Sistema ;
+    rdfs:label "CNC 8070" ;
+    ns1:controla ns1:EjeTandemEsclavo,
+        ns1:EjeTandemMaestro ;
+    ns1:textoExtracto "En el CNC sólo se visualiza y se programa un eje (eje tándem maestro)." .
 
-ns1:ConfiguracionEjeRotativo_ModoUnicaVuelta a ns1:ModoOperacion ;
-    rdfs:label "Configuración: eje rotativo (modo única vuelta)"@es ;
-    ns1:textoExtracto "Aunque el desplazamiento programado sea superior al módulo, el eje nunca da más de una vuelta."@es .
+ns1:LimiteInferiorSoftware a ns1:Parametro ;
+    rdfs:label "Límite Inferior Software" ;
+    ns1:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)." .
 
-ns1:Parametro_Cota a ns1:Parametro ;
-    rdfs:label "Cota (sentido y valor de desplazamiento)"@es ;
-    ns1:monitoreaParametro ns1:MovimientoIncrementalNormal ;
-    ns1:textoExtracto "El signo de la cota indica el sentido del desplazamiento; el valor absoluto de la cota indica el incremento de posición."@es .
+ns1:LimiteSuperiorSoftware a ns1:Parametro ;
+    rdfs:label "Límite Superior Software" ;
+    ns1:textoExtracto "Ambos ejes deberán tener los mismos límites de software (parámetros LIMIT+ y LIMIT- iguales para ambos ejes)." .
 
-ns1:Parametro_Modulo a ns1:Parametro ;
-    rdfs:label "Módulo (límite de vuelta)"@es ;
-    ns1:monitoreaParametro ns1:MovimientoIncrementalNormal ;
-    ns1:textoExtracto "Aunque el desplazamiento programado sea superior al módulo, el eje nunca da más de una vuelta."@es ;
-    ns1:valor "1 vuelta"@es .
+ns1:PermisoDeCambioDeCanal a ns1:Parametro ;
+    rdfs:label "Permiso de Cambio de Canal" ;
+    ns1:textoExtracto "El permiso de cambio de canal (parámetro AXISEXCH) deberá ser igual en ambos ejes." .
 
-ns1:MovimientoIncrementalNormal a ns1:ModoOperacion ;
-    rdfs:label "Movimiento incremental normal"@es ;
-    ns1:textoExtracto "Movimiento incremental normal. El signo de la cota indica el sentido del desplazamiento; el valor absoluto de la cota indica el incremento de posición."@es .
+ns1:TipoDeEje_4a526239b6 a ns1:Parametro ;
+    rdfs:label "Tipo de Eje" ;
+    ns1:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)." .
+
+ns1:TipoDeRegulador_806ce289c3 a ns1:Parametro ;
+    rdfs:label "Tipo de Regulador" ;
+    ns1:textoExtracto "Ambos ejes y reguladores deberán ser del mismo tipo (parámetros AXISTYPE y DRIVETYPE iguales para ambos ejes)." .
+
+ns1:EjeTandemEsclavo a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Tándem Esclavo" ;
+    ns1:textoExtracto "El otro eje (eje tándem esclavo) no se visualiza y no es programable; es controlado por el CNC." .
+
+ns1:EjeTandemMaestro a ns1:ComponenteMecanico ;
+    rdfs:label "Eje Tándem Maestro" ;
+    ns1:textoExtracto "En el CNC sólo se visualiza y se programa un eje (eje tándem maestro)." .
 

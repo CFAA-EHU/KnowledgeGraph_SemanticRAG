@@ -1,89 +1,17 @@
 @prefix ns1: <https://vocab.cfaa.eus/broaching/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ns1:Alarma_6058 a ns1:Alarma ;
-    rdfs:label "Alarma 6058: Nodo CANopen no operacional" ;
-    ns1:identificador "6058" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_6058 ;
-    ns1:textoExtracto "Algún nodo CANopen no se encuentra en fase operacional. DETECCIÓN Tras un reset del CNC. CAUSA En la reinicialización de CANopen que se hace durante el reset de CNC, alguno de los nodos no ha conseguido llegar a fase operacional." .
+ns1:AlimentarLasIOsLocalesCon24V a ns1:TareaMantenimiento ;
+    rdfs:label "Alimentar las I/Os locales con 24 V" ;
+    ns1:solucionaFallo ns1:FaltaAlimentacionDeIOsLocales ;
+    ns1:textoExtracto "SOLUCIÓN Alimentar las I/Os locales con 24 V." .
 
-ns1:Alarma_6059 a ns1:Alarma ;
-    rdfs:label "Alarma 6059: Error en configuración de entrada analógica" ;
-    ns1:identificador "6059" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_6059 ;
-    ns1:textoExtracto "Error en la configuración de una entrada analógica. DETECCIÓN Durante el arranque del CNC o tras un reset. CAUSA En la inicialización del bus CANopen, no se ha conseguido configurar correctamente alguna de las entradas parametrizadas en corriente." .
+ns1:Parametro_e71834e406 a ns1:Parametro ;
+    rdfs:label "Parámetro LOOPTIME" ;
+    ns1:identificador "LOOPTIME" ;
+    ns1:textoExtracto "'Parámetro LOOPTIME no es válido'" .
 
-ns1:Alarma_6060 a ns1:Alarma ;
-    rdfs:label "Alarma 6060: Error en configuración de salida analógica" ;
-    ns1:identificador "6060" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_6060 ;
-    ns1:textoExtracto "Error en la configuración de una salida analógica. DETECCIÓN Durante el arranque del CNC o tras un reset. CAUSA En la inicialización del bus CANopen no se ha conseguido configurar correctamente alguna de las salidas parametrizadas en corriente." .
-
-ns1:Alarma_6061 a ns1:Alarma ;
-    rdfs:label "Alarma 6061: Nodos CANopen no Fagor sin licencia" ;
-    ns1:identificador "6061" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_6061 ;
-    ns1:textoExtracto "Nodos CANopen no Fagor. Opción de software no permitida. DETECCIÓN En la inicialización del bus CANopen, durante el arranque del CNC o tras un reset. CAUSA Durante la inicialización del bus CANopen, se han detectado nodos de terceros sin disponer de la correspondiente opción de software." .
-
-ns1:Alarma_6062 a ns1:Alarma ;
-    rdfs:label "Alarma 6062: Relé de emergencia abierto por error de bus" ;
-    ns1:identificador "6062" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_6062 ;
-    ns1:textoExtracto "Relé de emergencia abierto por error en reinicialización de bus. DETECCIÓN Tras un reset del CNC o durante la validación de parámetros máquina. CAUSA En reset o validación de parámetros máquina, no se ha conseguido finalizar correctamente la ejecución de dicho proceso debido a un error durante el rearme del bus CAN o del anillo Sercos." .
-
-ns1:Alarma_CaptacionVolante a ns1:Alarma ;
-    rdfs:label "Alarma de captación en volante local" ;
-    ns1:solucionaFallo ns1:DiagnosticoFallo_CaptacionVolante ;
-    ns1:textoExtracto "Alarma de captación en volante conectado al contaje local. DETECCIÓN Durante la ejecución del CNC. CAUSA Alarma de captación en volante conectado al contaje local." .
-
-ns1:ComponenteElectrico_Rel_Emergencia a ns1:ComponenteElectrico ;
-    rdfs:label "Relé de emergencia" ;
-    ns1:textoExtracto "Relé de emergencia" .
-
-ns1:ComponenteElectrico_VolanteLocal a ns1:ComponenteElectrico ;
-    rdfs:label "Volante local con contaje" ;
-    ns1:textoExtracto "volante conectado al contaje local" .
-
-ns1:Sistema_BusCANopen a ns1:Sistema ;
-    rdfs:label "Bus CANopen" ;
-    ns1:textoExtracto "inicialización del bus CANopen" ;
-    ns1:tieneComponente ns1:ComponenteElectrico_NodoCANopen .
-
-ns1:ComponenteElectrico_EntradaAnalogica a ns1:ComponenteElectrico ;
-    rdfs:label "Entrada analógica parametrizada en corriente" ;
-    ns1:textoExtracto "entradas parametrizadas en corriente" .
-
-ns1:ComponenteElectrico_NodoCANopen a ns1:ComponenteElectrico ;
-    rdfs:label "Nodo CANopen" ;
-    ns1:compuestoPor ns1:ComponenteElectrico_EntradaAnalogica,
-        ns1:ComponenteElectrico_SalidaAnalogica ;
-    ns1:textoExtracto "nodos CANopen" .
-
-ns1:ComponenteElectrico_SalidaAnalogica a ns1:ComponenteElectrico ;
-    rdfs:label "Salida analógica parametrizada en corriente" ;
-    ns1:textoExtracto "salidas parametrizadas en corriente" .
-
-ns1:DiagnosticoFallo_6058 a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo en nodos CANopen tras reset" ;
-    ns1:textoExtracto "Revisar el conexionado y configuración de los nodos CANopen." .
-
-ns1:DiagnosticoFallo_6059 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de parametrización en entradas analógicas" ;
-    ns1:textoExtracto "Revisar la parametrización de entradas analógicas en corriente." .
-
-ns1:DiagnosticoFallo_6060 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error de parametrización en salidas analógicas" ;
-    ns1:textoExtracto "Revisar la parametrización de salidas analógicas en corriente." .
-
-ns1:DiagnosticoFallo_6061 a ns1:DiagnosticoFallo ;
-    rdfs:label "Nodos no Fagor en bus CANopen" ;
-    ns1:textoExtracto "Desconectar del bus CANopen aquellos nodos que no sean Fagor, o comprar la opción de software que permita su empleo." .
-
-ns1:DiagnosticoFallo_6062 a ns1:DiagnosticoFallo ;
-    rdfs:label "Error en rearme de bus CAN/Sercos" ;
-    ns1:textoExtracto "Error durante el rearme del bus CAN o del anillo Sercos." .
-
-ns1:DiagnosticoFallo_CaptacionVolante a ns1:DiagnosticoFallo ;
-    rdfs:label "Fallo en conexionado de volantes locales" ;
-    ns1:textoExtracto "Revisar el conexionado y alimentación de los volantes locales." .
+ns1:FaltaAlimentacionDeIOsLocales a ns1:DiagnosticoFallo ;
+    rdfs:label "Falta alimentación de IOs locales" ;
+    ns1:textoExtracto "'Falta alimentación de IOs locales'" .
 
